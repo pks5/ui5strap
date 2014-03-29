@@ -65,6 +65,7 @@
 	 * Creates the ui5 app control
 	 */
 	StrapFrameProto._createUi5App = function(){
+		var frame = this;
 		var navContainer = new de_pksoftware.ui5strap.controls.NavContainer();
 
 		var navBar = new de_pksoftware.ui5strap.controls.NavBar();
@@ -90,11 +91,34 @@
 		navItemAbout.addContent(navItemAboutLink);
 		navLeft.addItems(navItemAbout);
 
+
+
 		var navItemContact = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemContactLink = new de_pksoftware.ui5strap.controls.Link();
 		navItemContactLink.setText('Contact');
 		navItemContact.addContent(navItemContactLink);
 		navLeft.addItems(navItemContact);
+
+		navItemHomeLink.attachEvent('click', {}, function(){
+			navItemHome.setActive(true);
+			navItemAbout.setActive(false);
+			navItemContact.setActive(false);
+			frame.gotoHome();
+		});
+
+		navItemAboutLink.attachEvent('click', {}, function(){
+			navItemHome.setActive(false);
+			navItemAbout.setActive(true);
+			navItemContact.setActive(false);
+			frame.gotoAbout();
+		});
+
+		navItemContactLink.attachEvent('click', {}, function(){
+			navItemHome.setActive(false);
+			navItemAbout.setActive(false);
+			navItemContact.setActive(true);
+			frame.gotoContact();
+		});
 
 		this._app = navContainer;
 	};
@@ -102,8 +126,26 @@
 	StrapFrameProto.gotoHome = function(){
 		this._navTo(null, null, {
 			target : 'content',
-			viewId : 'hello-world',
+			id : 'hello-world',
 			viewName : 'de_pksoftware.ui5strap.views.HelloWorld',
+			type : 'HTML'
+		});
+	};
+
+	StrapFrameProto.gotoAbout = function(){
+		this._navTo(null, null, {
+			target : 'content',
+			id : 'about-ui5strap',
+			viewName : 'de_pksoftware.ui5strap.views.About',
+			type : 'HTML'
+		});
+	};
+
+	StrapFrameProto.gotoContact = function(){
+		this._navTo(null, null, {
+			target : 'content',
+			id : 'contact-ui5strap',
+			viewName : 'de_pksoftware.ui5strap.views.Contact',
 			type : 'HTML'
 		});
 	};
