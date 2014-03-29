@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	</head>
+	
+	<body role="application">
+		
+		<div id="sapUiBody">
+			<!-- OpenUI5 will inject the generated html here -->
+		</div>
+		
+		<!-- OpenUI5 Library -->
+		<script id="sap-ui-bootstrap" src="resources/sap-ui-core.js" data-sap-ui-xx-fakeOS="ipad"></script>
+		
+		<script>
+				//Define package "de_pksoftware.ui5strap" to be found at "."
+				jQuery.sap.registerModulePath("de_pksoftware.ui5strap", ".");
+				
+				//Require de_pksoftware.ui5strap.StrapApp (resolved to "./StrapApp.js")
+				jQuery.sap.require("de_pksoftware.ui5strap.StrapApp");
+				
+				//Create a new Instance of my_package.MyApp
+				de_pksoftware.ui5strap.StrapApp.getInstance().init();
+		
+		</script>
+		
+	</body>
+
+</html>
