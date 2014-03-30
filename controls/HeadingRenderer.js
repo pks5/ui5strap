@@ -24,12 +24,16 @@
 
 	de_pksoftware.ui5strap.controls.HeadingRenderer.render = function(rm, oControl) {
 		var level = oControl.getLevel(),
-			content = oControl.getContent();
+			content = oControl.getContent(),
+			parent = oControl.getParent();
 
 		rm.write("<h" + level);
 		rm.writeControlData(oControl);
-		    //rm.addClass("container");
-		    //rm.writeClasses();
+		if(parent instanceof de_pksoftware.ui5strap.controls.ListGroupItem){
+			rm.addClass("list-group-item-heading");
+		}
+		
+		rm.writeClasses();
 		rm.write(">");
 		    
 		var text = oControl.getText();
