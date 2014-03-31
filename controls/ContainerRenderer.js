@@ -27,7 +27,7 @@
 		var content = oControl.getContent();
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("container");
+		rm.addClass(oControl.getFluid() ? "container-fluid" : "container");
 		rm.addClass(oControl.getCssClass());
 		rm.writeClasses();
 		rm.write(">");

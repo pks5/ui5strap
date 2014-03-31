@@ -53,6 +53,10 @@
 				rm.addClass("disabled");
 			}
 
+			if(oControl.getBlock()){
+				rm.addClass("btn-block");
+			}
+
 		    rm.writeClasses();
 		    rm.write(">");
 

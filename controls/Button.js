@@ -48,6 +48,10 @@
 					"type": "string", 
 					"defaultValue": ""
 				},
+				block : {
+					type:"boolean",
+					defaultValue:false
+				},
 				active : {
 					type:"boolean", 
 					defaultValue:false

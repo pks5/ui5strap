@@ -23,13 +23,16 @@
 	de_pksoftware.ui5strap.controls.ParagraphRenderer = {};
 
 	de_pksoftware.ui5strap.controls.ParagraphRenderer.render = function(rm, oControl) {
-		var content = oControl.getContent();
+		var content = oControl.getContent(),
+			cssClass = oControl.getCssClass();
 
 		rm.write("<p");
 		
 		rm.writeControlData(oControl);
-		//rm.addClass("container");
-		//rm.writeClasses();
+		if('' !== cssClass){
+			rm.addClass(cssClass);
+		}
+		rm.writeClasses();
 		rm.write(">");
 		
 		var subText = oControl.getText();

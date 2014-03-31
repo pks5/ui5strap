@@ -32,6 +32,10 @@
 					cssClass : {
 						type:"string", 
 						defaultValue:null
+					},
+					fluid : {
+						type:"boolean", 
+						defaultValue:false
 					}
 			},
 			aggregations : { 

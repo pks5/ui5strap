@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * Paragraph
+ * Image
  * 
  * Author: Jan Philipp Knöller
  * 
@@ -18,28 +18,24 @@
 
 (function(){
 
-	jQuery.sap.declare("de_pksoftware.ui5strap.controls.Paragraph");
+	jQuery.sap.declare("de_pksoftware.ui5strap.controls.Image");
 	
-	sap.ui.core.Control.extend("de_pksoftware.ui5strap.controls.Paragraph", {
+	sap.ui.core.Control.extend("de_pksoftware.ui5strap.controls.Image", {
 		metadata : {
 
-			// ---- object ----
-			defaultAggregation : "content",
-			// ---- control specific ----
 			library : "de_pksoftware.ui5strap",
 			properties : { 
-				text : {
+				src : {
 					type:"string", 
 					defaultValue:""
 				},
-				cssClass : {
+				cssClass  : {
+					type:"string", 
+					defaultValue : ""
+				},
+				alt : {
 					type:"string", 
 					defaultValue:""
-				}
-			},
-			aggregations : { 
-				"content" : {
-					singularName: "content"
 				}
 			}
 
