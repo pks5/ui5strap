@@ -7,6 +7,11 @@ Therefore, the library contains one OpenUI5 control for each bootstrap component
 
 The UI5Strap library also contains a basic example application that you can use as a starting point for your responsive website or app.
 
+DEMO
+----
+
+See the example application in action at http://ui5strap.pksoftware.de/
+
 INSTALL
 -------
 
