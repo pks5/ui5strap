@@ -54,7 +54,10 @@
 			rm.addClass("navbar-header");
 			rm.writeClasses();
 			rm.write(">");
-			
+				rm.write('<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#' + oControl.getId() + '--collapse">');
+				rm.write('<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>');
+				rm.write('</button>');
+
 				if("" !== brand){
 					rm.write("<a");
 					rm.addClass("navbar-brand");
@@ -67,7 +70,7 @@
 			rm.write("</div>");
 
 			//Collapse
-			rm.write("<div");
+			rm.write("<div id='" + oControl.getId() + "--collapse'");
 			rm.addClass("collapse navbar-collapse");
 			rm.writeClasses();
 			rm.write(">");

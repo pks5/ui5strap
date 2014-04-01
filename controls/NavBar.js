@@ -19,6 +19,7 @@
 (function(){
 
 	jQuery.sap.declare("de_pksoftware.ui5strap.controls.NavBar");
+	jQuery.sap.require("de_pksoftware.ui5strap.includes.collapse");
 	
 	sap.ui.core.Control.extend("de_pksoftware.ui5strap.controls.NavBar", {
 		metadata : {
