@@ -60,4 +60,15 @@
 		}
 	});
 
+	var NavProto = de_pksoftware.ui5strap.controls.Nav.prototype;
+
+	NavProto.setItemActive = function(itemIndex){
+
+		var items = this.getItems();
+		for(var i = 0; i < items.length; i++){
+			items[i].setActive(i === itemIndex);
+		}
+		
+	};
+
 }());

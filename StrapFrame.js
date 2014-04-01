@@ -69,21 +69,37 @@
 		var navContainer = new de_pksoftware.ui5strap.controls.NavContainer();
 
 		var navBar = new de_pksoftware.ui5strap.controls.NavBar();
-		navBar.setBrand('UI5Strap theme');
+
+		
+
+		navBar.setBrand('UI5Strap');
 		navBar.setInverse(true);
 		navBar.setAlign('fixed-top');
 		navContainer.setNavBar(navBar);
 
 		var navLeft = new de_pksoftware.ui5strap.controls.Nav();
+		this._navLeft = navLeft;
 		navLeft.setInNavbar(true);
 		navBar.addCollapse(navLeft);
 
 		var navItemHome = new de_pksoftware.ui5strap.controls.NavItem();
-		navItemHome.setActive(true);
+		
 		var navItemHomeLink = new de_pksoftware.ui5strap.controls.Link();
 		navItemHomeLink.setText('Home');
 		navItemHome.addContent(navItemHomeLink);
 		navLeft.addItems(navItemHome);
+
+		var navItemGetStarted = new de_pksoftware.ui5strap.controls.NavItem();
+		var navItemGetStartedLink = new de_pksoftware.ui5strap.controls.Link();
+		navItemGetStartedLink.setText('Get Started');
+		navItemGetStarted.addContent(navItemGetStartedLink);
+		navLeft.addItems(navItemGetStarted);
+
+		var navItemControls = new de_pksoftware.ui5strap.controls.NavItem();
+		var navItemControlsLink = new de_pksoftware.ui5strap.controls.Link();
+		navItemControlsLink.setText('Controls');
+		navItemControls.addContent(navItemControlsLink);
+		navLeft.addItems(navItemControls);
 
 		var navItemAbout = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemAboutLink = new de_pksoftware.ui5strap.controls.Link();
@@ -99,24 +115,24 @@
 		navItemContact.addContent(navItemContactLink);
 		navLeft.addItems(navItemContact);
 
+		//TODO a better solution for switching active state!!!
 		navItemHomeLink.attachEvent('click', {}, function(){
-			navItemHome.setActive(true);
-			navItemAbout.setActive(false);
-			navItemContact.setActive(false);
 			frame.gotoHome();
 		});
 
+		navItemGetStartedLink.attachEvent('click', {}, function(){
+			frame.gotoGetStarted();
+		});
+
+		navItemControlsLink.attachEvent('click', {}, function(){
+			frame.gotoControls();
+		});
+
 		navItemAboutLink.attachEvent('click', {}, function(){
-			navItemHome.setActive(false);
-			navItemAbout.setActive(true);
-			navItemContact.setActive(false);
 			frame.gotoAbout();
 		});
 
 		navItemContactLink.attachEvent('click', {}, function(){
-			navItemHome.setActive(false);
-			navItemAbout.setActive(false);
-			navItemContact.setActive(true);
 			frame.gotoContact();
 		});
 
@@ -124,15 +140,37 @@
 	};
 
 	StrapFrameProto.gotoHome = function(){
+		this._navLeft.setItemActive(0);
 		this._navTo(null, null, {
 			target : 'content',
-			id : 'hello-world',
-			viewName : 'de_pksoftware.ui5strap.views.HelloWorld',
+			id : 'home',
+			viewName : 'de_pksoftware.ui5strap.views.Home',
+			type : 'HTML'
+		});
+	};
+
+	StrapFrameProto.gotoGetStarted = function(){
+		this._navLeft.setItemActive(1);
+		this._navTo(null, null, {
+			target : 'content',
+			id : 'get-started',
+			viewName : 'de_pksoftware.ui5strap.views.GetStarted',
+			type : 'HTML'
+		});
+	};
+
+	StrapFrameProto.gotoControls = function(){
+		this._navLeft.setItemActive(2);
+		this._navTo(null, null, {
+			target : 'content',
+			id : 'controls',
+			viewName : 'de_pksoftware.ui5strap.views.Controls',
 			type : 'HTML'
 		});
 	};
 
 	StrapFrameProto.gotoAbout = function(){
+		this._navLeft.setItemActive(3);
 		this._navTo(null, null, {
 			target : 'content',
 			id : 'about-ui5strap',
@@ -142,6 +180,7 @@
 	};
 
 	StrapFrameProto.gotoContact = function(){
+		this._navLeft.setItemActive(4);
 		this._navTo(null, null, {
 			target : 'content',
 			id : 'contact-ui5strap',
@@ -149,6 +188,10 @@
 			type : 'HTML'
 		});
 	};
+
+	
+
+	
 
 	/*
 	 * Places the ui5 app control in DOM

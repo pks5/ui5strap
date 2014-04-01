@@ -24,10 +24,14 @@
 	};
 
 	de_pksoftware.ui5strap.controls.RowRenderer.render = function(rm, oControl) {
-		var content = oControl.getContent();
+		var content = oControl.getContent(),
+			cssClass = oControl.getCssClass();
 		rm.write("<div");
 		rm.writeControlData(oControl);
 		rm.addClass("row");
+		if('' !== cssClass){
+			rm.addClass(cssClass);
+		}
 		rm.writeClasses();
 		rm.write(">");
 		

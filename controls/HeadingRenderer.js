@@ -29,7 +29,11 @@
 
 		rm.write("<h" + level);
 		rm.writeControlData(oControl);
-		if(parent instanceof de_pksoftware.ui5strap.controls.ListGroupItem){
+
+		//TODO better solution
+		var ListGroupItem = de_pksoftware.ui5strap.controls.ListGroupItem;
+
+		if(ListGroupItem && parent instanceof ListGroupItem){
 			rm.addClass("list-group-item-heading");
 		}
 		

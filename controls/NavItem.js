@@ -54,12 +54,16 @@
 		}
 	});
 
-	de_pksoftware.ui5strap.controls.NavItem.prototype.ontap = function(){
+	var NavItemProto = de_pksoftware.ui5strap.controls.NavItem.prototype;
+
+	NavItemProto.ontap = function(){
 		this.fireTap();
 	};
 
-	de_pksoftware.ui5strap.controls.NavItem.prototype.onclick = function(){
+	NavItemProto.onclick = function(){
 		this.fireClick();
 	};
+
+	
 
 }());

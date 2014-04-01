@@ -29,7 +29,13 @@
 			// ---- control specific ----
 			library : "de_pksoftware.ui5strap",
 			
-			properties : { },
+			properties : { 
+				
+				cssClass : {
+					type:"string", 
+					defaultValue:""
+				}
+			},
 			
 			aggregations : { 
 				"content" : {
