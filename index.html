@@ -22,13 +22,13 @@
 		
 		<script>
 				//Define package "de_pksoftware.ui5strap" to be found at "."
-				jQuery.sap.registerModulePath("de_pksoftware.ui5strap", ".");
+				jQuery.sap.registerModulePath("de_pksoftware.ui5strap_docs", "./app");
 				
 				//Require de_pksoftware.ui5strap.StrapApp (resolved to "./StrapApp.js")
-				jQuery.sap.require("de_pksoftware.ui5strap.StrapApp");
+				jQuery.sap.require("de_pksoftware.ui5strap_docs.StrapApp");
 				
 				//Create a new Instance of my_package.MyApp
-				de_pksoftware.ui5strap.StrapApp.getInstance().init();
+				de_pksoftware.ui5strap_docs.StrapApp.getInstance().init();
 		
 		</script>
 		

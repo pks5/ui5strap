@@ -18,11 +18,11 @@
 
  (function(){
 
-	jQuery.sap.declare("de_pksoftware.ui5strap.StrapApp");
+	jQuery.sap.declare("de_pksoftware.ui5strap_docs.StrapApp");
 
-	sap.ui.base.Object.extend("de_pksoftware.ui5strap.StrapApp");
+	sap.ui.base.Object.extend("de_pksoftware.ui5strap_docs.StrapApp");
 
-	var MyApp = de_pksoftware.ui5strap.StrapApp,
+	var MyApp = de_pksoftware.ui5strap_docs.StrapApp,
 		MyAppProto = MyApp.prototype;
 
 	MyApp._instance = null;
@@ -37,19 +37,22 @@
 	MyAppProto.init = function(){
 		var app = this;
 
-		this._appRoot = jQuery.sap.getModulePath("de_pksoftware.ui5strap");
+		jQuery.sap.registerModulePath("de_pksoftware.ui5strap", "./lib/ui5strap");
+
+		this._strapRoot = jQuery.sap.getModulePath("de_pksoftware.ui5strap");
+		this._appRoot = jQuery.sap.getModulePath("de_pksoftware.ui5strap_docs");
 		
 		this._initLocalization();
 
 		//Require frame module
-		jQuery.sap.require("de_pksoftware.ui5strap.StrapFrame");
+		jQuery.sap.require("de_pksoftware.ui5strap_docs.StrapFrame");
 			
 		//Create a new frame instance
-		this._appFrame = new de_pksoftware.ui5strap.StrapFrame();
+		this._appFrame = new de_pksoftware.ui5strap_docs.StrapFrame();
 		//this._appFrame.init();
 
 		this.sheets = [
-			this._appRoot + "/bootstrap-3.1.1-dist/css/bootstrap.min.css",
+			this._strapRoot + "/bootstrap-3.1.1-dist/css/bootstrap.min.css",
 			//this._appRoot + "/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css",
 			this._appRoot + "/css/theme.css"
 		];	

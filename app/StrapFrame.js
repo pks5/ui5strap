@@ -18,14 +18,14 @@
 
 (function(){
 
-	jQuery.sap.declare("de_pksoftware.ui5strap.StrapFrame");
+	jQuery.sap.declare("de_pksoftware.ui5strap_docs.StrapFrame");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavContainer");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavBar");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.Nav");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavItem");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.Link");
 
-	sap.ui.base.ManagedObject.extend("de_pksoftware.ui5strap.StrapFrame", {
+	sap.ui.base.ManagedObject.extend("de_pksoftware.ui5strap_docs.StrapFrame", {
 		metadata : {
 			
 			publicMethods : [],
@@ -41,7 +41,7 @@
 		}
 	});
 
-	var StrapFrame = de_pksoftware.ui5strap.StrapFrame,
+	var StrapFrame = de_pksoftware.ui5strap_docs.StrapFrame,
 		StrapFrameProto = StrapFrame.prototype;
 
 
@@ -144,7 +144,7 @@
 		this._navTo(null, null, {
 			target : 'content',
 			id : 'home',
-			viewName : 'de_pksoftware.ui5strap.views.Home',
+			viewName : 'de_pksoftware.ui5strap_docs.views.Home',
 			type : 'HTML'
 		});
 	};
@@ -154,7 +154,7 @@
 		this._navTo(null, null, {
 			target : 'content',
 			id : 'get-started',
-			viewName : 'de_pksoftware.ui5strap.views.GetStarted',
+			viewName : 'de_pksoftware.ui5strap_docs.views.GetStarted',
 			type : 'HTML'
 		});
 	};
@@ -164,7 +164,7 @@
 		this._navTo(null, null, {
 			target : 'content',
 			id : 'controls',
-			viewName : 'de_pksoftware.ui5strap.views.Controls',
+			viewName : 'de_pksoftware.ui5strap_docs.views.Controls',
 			type : 'HTML'
 		});
 	};
@@ -174,7 +174,7 @@
 		this._navTo(null, null, {
 			target : 'content',
 			id : 'about-ui5strap',
-			viewName : 'de_pksoftware.ui5strap.views.About',
+			viewName : 'de_pksoftware.ui5strap_docs.views.About',
 			type : 'HTML'
 		});
 	};
@@ -184,7 +184,7 @@
 		this._navTo(null, null, {
 			target : 'content',
 			id : 'contact-ui5strap',
-			viewName : 'de_pksoftware.ui5strap.views.Contact',
+			viewName : 'de_pksoftware.ui5strap_docs.views.Contact',
 			type : 'HTML'
 		});
 	};
