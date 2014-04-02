@@ -68,6 +68,11 @@
 
 	MyAppProto.start = function(){
 		this._appFrame.gotoHome();
+		this.showLoader(false);
+	};
+
+	MyAppProto.showLoader = function(visible){
+		jQuery('#loader').css('display', visible ? 'block' : 'none');
 	};
 
 	MyAppProto._initStyle = function(sheets, callback){
