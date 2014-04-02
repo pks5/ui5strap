@@ -9,8 +9,7 @@ html, body{
 #sapUiBody{
 	width:100%;
 	height:100%;
-	overflow-y: scroll; /* has to be scroll, not auto */
-  -webkit-overflow-scrolling: touch;
+	
 }
 
 #loader{
@@ -20,4 +19,11 @@ html, body{
 	width:100%;
 	height:100%;
 	background-color: rgba(0,0,0,0.9);
+}
+
+.sapUiHTMLView{
+	width:100%;
+	height:100%;
+	overflow-y: scroll; /* has to be scroll, not auto */
+  	-webkit-overflow-scrolling: touch;
 }
