@@ -48,16 +48,13 @@
 		this._appFrame = new de_pksoftware.ui5strap.StrapFrame();
 		//this._appFrame.init();
 
-		
-
-		var sheets = [
+		this.sheets = [
 			this._appRoot + "/bootstrap-3.1.1-dist/css/bootstrap.min.css",
-			this._appRoot + "/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css",
+			//this._appRoot + "/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css",
 			this._appRoot + "/css/theme.css"
-				
-		];
+		];	
 
-		this._initStyle(sheets, function(){
+		this._initStyle(this.sheets, function(){
 			app.start();
 		});
 	};

@@ -75,7 +75,7 @@
 	});
 
 	de_pksoftware.ui5strap.controls.Button.prototype.onclick = function(){
-		this.fireClicked();
+		this.fireClick();
 	};
 
 	de_pksoftware.ui5strap.controls.Button.prototype.ontap = function(){
