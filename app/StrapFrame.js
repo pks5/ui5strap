@@ -115,6 +115,10 @@
 		navItemContact.addContent(navItemContactLink);
 		navLeft.addItems(navItemContact);
 
+		navBar.attachEvent('brandTap', {}, function(){
+			frame.gotoHome();
+		});
+
 		//TODO a better solution for switching active state!!!
 		navItemHomeLink.attachEvent('click', {}, function(){
 			frame.gotoHome();
