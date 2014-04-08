@@ -24,6 +24,8 @@
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.Nav");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavItem");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.Link");
+	jQuery.sap.require("de_pksoftware.ui5strap.controls.ButtonGroup");
+	jQuery.sap.require("de_pksoftware.ui5strap.controls.Button");
 
 	sap.ui.base.ManagedObject.extend("de_pksoftware.ui5strap_docs.StrapFrame", {
 		metadata : {
@@ -42,7 +44,10 @@
 	});
 
 	var StrapFrame = de_pksoftware.ui5strap_docs.StrapFrame,
-		StrapFrameProto = StrapFrame.prototype;
+		StrapFrameProto = StrapFrame.prototype,
+		strapApp = de_pksoftware.ui5strap_docs.StrapApp.getInstance(),
+		localization = strapApp.getLocalization(),
+		configuration = sap.ui.getCore().getConfiguration();
 
 
 	/*
@@ -68,6 +73,7 @@
 		var frame = this;
 		var navContainer = new de_pksoftware.ui5strap.controls.NavContainer();
 
+
 		var navBar = new de_pksoftware.ui5strap.controls.NavBar();
 
 		
@@ -85,25 +91,25 @@
 		var navItemHome = new de_pksoftware.ui5strap.controls.NavItem();
 		
 		var navItemHomeLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemHomeLink.setText('Home');
+		navItemHomeLink.bindProperty('text', {path : 'i18n>MENU_HOME'});
 		navItemHome.addContent(navItemHomeLink);
 		navLeft.addItems(navItemHome);
 
 		var navItemGetStarted = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemGetStartedLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemGetStartedLink.setText('Get Started');
+		navItemGetStartedLink.bindProperty('text', {path : 'i18n>MENU_GET_STARTED'});
 		navItemGetStarted.addContent(navItemGetStartedLink);
 		navLeft.addItems(navItemGetStarted);
 
 		var navItemControls = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemControlsLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemControlsLink.setText('Controls');
+		navItemControlsLink.bindProperty('text', {path : 'i18n>MENU_CONTROLS'});
 		navItemControls.addContent(navItemControlsLink);
 		navLeft.addItems(navItemControls);
 
 		var navItemAbout = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemAboutLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemAboutLink.setText('About');
+		navItemAboutLink.bindProperty('text', {path : 'i18n>MENU_ABOUT'});
 		navItemAbout.addContent(navItemAboutLink);
 		navLeft.addItems(navItemAbout);
 
@@ -111,7 +117,7 @@
 
 		var navItemContact = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemContactLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemContactLink.setText('Contact');
+		navItemContactLink.bindProperty('text', {path : 'i18n>MENU_CONTACT'});
 		navItemContact.addContent(navItemContactLink);
 		navLeft.addItems(navItemContact);
 
@@ -138,6 +144,27 @@
 
 		navItemContactLink.attachEvent('click', {}, function(){
 			frame.gotoContact();
+		});
+
+		var navButtons = new de_pksoftware.ui5strap.controls.ButtonGroup({navbarAlign : 'right'});
+		var buttonDe = new de_pksoftware.ui5strap.controls.Button({'text' : "DE" });
+		var buttonEn = new de_pksoftware.ui5strap.controls.Button({'text' : "EN", active:true });
+		navButtons.addButtons(buttonEn);
+		navButtons.addButtons(buttonDe);
+		navBar.addCollapse(navButtons);
+
+		buttonEn.attachEvent('click', {}, function(){
+			configuration.setLanguage('en');
+			buttonEn.setActive(true);
+			buttonDe.setActive(false);
+			
+		});
+
+		buttonDe.attachEvent('click', {}, function(){
+			configuration.setLanguage('de');
+			buttonEn.setActive(false);
+			buttonDe.setActive(true);
+			
 		});
 
 		this._app = navContainer;

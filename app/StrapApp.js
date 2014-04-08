@@ -42,7 +42,7 @@
 		this._strapRoot = jQuery.sap.getModulePath("de_pksoftware.ui5strap");
 		this._appRoot = jQuery.sap.getModulePath("de_pksoftware.ui5strap_docs");
 		
-		this._initLocalization();
+		this.getLocalization();
 
 		//Require frame module
 		jQuery.sap.require("de_pksoftware.ui5strap_docs.StrapFrame");
@@ -95,14 +95,19 @@
 		}
 	};
 
-	MyAppProto._initLocalization = function(){
-		//Localization
-		this._localization = new sap.ui.model.resource.ResourceModel({
-			bundleUrl : this._appRoot + "/i18n/i18n.properties"
-		});
-		sap.ui.getCore().setModel(this._localization, "i18n");
-		
-		document.title = this._localization.getProperty("HTML_TITLE");
+	MyAppProto.getLocalization = function(){
+		if(!this._localization){
+			//Localization
+			this._localization = new sap.ui.model.resource.ResourceModel({
+				bundleUrl : this._appRoot + "/i18n/i18n.properties"
+			});
+			sap.ui.getCore().setModel(this._localization, "i18n");
+			
+			document.title = this._localization.getProperty("HTML_TITLE");
+		}
+		else{
+			return this._localization;
+		}
 	};
 
 }());
