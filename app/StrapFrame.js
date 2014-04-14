@@ -92,23 +92,35 @@
 		
 		var navItemHomeLink = new de_pksoftware.ui5strap.controls.Link();
 		navItemHomeLink.bindProperty('text', {path : 'i18n>MENU_HOME'});
+		navItemHomeLink.attachEvent('click', {}, function(){
+			frame.gotoHome();
+		});
 		navItemHome.addContent(navItemHomeLink);
 		navLeft.addItems(navItemHome);
 
 		var navItemGetStarted = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemGetStartedLink = new de_pksoftware.ui5strap.controls.Link();
+		navItemGetStartedLink.attachEvent('click', {}, function(){
+			frame.gotoGetStarted();
+		});
 		navItemGetStartedLink.bindProperty('text', {path : 'i18n>MENU_GET_STARTED'});
 		navItemGetStarted.addContent(navItemGetStartedLink);
 		navLeft.addItems(navItemGetStarted);
 
 		var navItemControls = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemControlsLink = new de_pksoftware.ui5strap.controls.Link();
+		navItemControlsLink.attachEvent('click', {}, function(){
+			frame.gotoControls();
+		});
 		navItemControlsLink.bindProperty('text', {path : 'i18n>MENU_CONTROLS'});
 		navItemControls.addContent(navItemControlsLink);
 		navLeft.addItems(navItemControls);
 
 		var navItemAbout = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemAboutLink = new de_pksoftware.ui5strap.controls.Link();
+		navItemAboutLink.attachEvent('click', {}, function(){
+			frame.gotoAbout();
+		});
 		navItemAboutLink.bindProperty('text', {path : 'i18n>MENU_ABOUT'});
 		navItemAbout.addContent(navItemAboutLink);
 		navLeft.addItems(navItemAbout);
@@ -117,6 +129,9 @@
 
 		var navItemContact = new de_pksoftware.ui5strap.controls.NavItem();
 		var navItemContactLink = new de_pksoftware.ui5strap.controls.Link();
+		navItemContactLink.attachEvent('click', {}, function(){
+			frame.gotoContact();
+		});
 		navItemContactLink.bindProperty('text', {path : 'i18n>MENU_CONTACT'});
 		navItemContact.addContent(navItemContactLink);
 		navLeft.addItems(navItemContact);
@@ -125,26 +140,6 @@
 			frame.gotoHome();
 		});
 
-		//TODO a better solution for switching active state!!!
-		navItemHomeLink.attachEvent('click', {}, function(){
-			frame.gotoHome();
-		});
-
-		navItemGetStartedLink.attachEvent('click', {}, function(){
-			frame.gotoGetStarted();
-		});
-
-		navItemControlsLink.attachEvent('click', {}, function(){
-			frame.gotoControls();
-		});
-
-		navItemAboutLink.attachEvent('click', {}, function(){
-			frame.gotoAbout();
-		});
-
-		navItemContactLink.attachEvent('click', {}, function(){
-			frame.gotoContact();
-		});
 
 		var navButtons = new de_pksoftware.ui5strap.controls.ButtonGroup({navbarAlign : 'right'});
 		var buttonDe = new de_pksoftware.ui5strap.controls.Button({'text' : "DE" });

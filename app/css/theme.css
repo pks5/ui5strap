@@ -1,10 +1,30 @@
 body{
 	padding-top: 70px;
-	padding-bottom: 30px;
+	padding-bottom: 40px;
+}
+
+.ui5strap-nav-container{
+	height:100%;
+}
+
+.ui5strap-nav-container > .ui5strap-nav-container-content{
+	height:100%;
+}
+
+.ui5strap-nav-container > .ui5strap-nav-container-content > .sapUiView{
+	height:100%;
 }
 
 .footer{
-	margin-top:30px;
+	background-color:#f0f0f0; 
+	height:30px; 
+	line-height:30px; 
+	width:100%; 
+	position:fixed; 
+	left:0; 
+	bottom:0;
+	font-size:12px;
+	padding-left:10px;
 }
 
 .nav > li > a{
