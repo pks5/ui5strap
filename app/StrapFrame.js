@@ -78,7 +78,7 @@
 
 		
 
-		navBar.setBrand('UI5Strap');
+		navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
 		navBar.setInverse(true);
 		navBar.setAlign('fixed-top');
 		navContainer.setNavBar(navBar);
