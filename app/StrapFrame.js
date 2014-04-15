@@ -143,7 +143,7 @@
 
 		var navButtons = new de_pksoftware.ui5strap.controls.ButtonGroup({navbarAlign : 'right'});
 		var buttonDe = new de_pksoftware.ui5strap.controls.Button({'text' : "DE" });
-		var buttonEn = new de_pksoftware.ui5strap.controls.Button({'text' : "EN", active:true });
+		var buttonEn = new de_pksoftware.ui5strap.controls.Button({'text' : "EN" });
 		navButtons.addButtons(buttonEn);
 		navButtons.addButtons(buttonDe);
 		navBar.addCollapse(navButtons);
@@ -161,6 +161,13 @@
 			buttonDe.setActive(true);
 			
 		});
+
+		if('de' === configuration.getLanguage()){
+			buttonDe.setActive(true);
+		}
+		else{
+			buttonEn.setActive(true);
+		}
 
 		this._app = navContainer;
 	};
