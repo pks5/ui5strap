@@ -51,6 +51,8 @@
 		this._appFrame = new de_pksoftware.ui5strap_docs.StrapFrame();
 		//this._appFrame.init();
 
+		this._appFrame.navContainer.placeAt('ui5strap-body');
+
 		this.sheets = [
 			this._strapRoot + "/bootstrap-3.1.1-dist/css/bootstrap.min.css",
 			//this._appRoot + "/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css",

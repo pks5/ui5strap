@@ -32,13 +32,7 @@
 			
 			publicMethods : [],
 			
-			properties : {
-				"root" : {
-					type : "string", 
-					group : "Misc", 
-					defaultValue : "sapUiBody"
-				}
-			}
+			properties : {}
 		
 		}
 	});
@@ -49,96 +43,108 @@
 		localization = strapApp.getLocalization(),
 		configuration = sap.ui.getCore().getConfiguration();
 
-
 	/*
-	 * Initializes the Managed object
-	 * TODO Ensure its allowed to override init method
-	 */
-	StrapFrameProto.init = function(){
-		this._pages = {};
-		
-		this._createUi5App();
+	* available pages
+	*/
+	var _pages = {
 
-		this._placeUi5App();
-	    
-	    this._registerNavHandlers();
-	    
-	    //this._initHistory();
+		// EXAMPLE
+		//
+		//'myPage': {
+		//	target : 'content',
+		//	id : 'my-page-in-my-app',
+		//	viewName : 'my_company.my_app.views.MyView',
+		//	type : 'HTML',
+		//	label : 'i18n>MENU_MY_PAGE'
+		//},
+		
+		'home' : {
+			target : 'content',
+			id : 'home-ui5strap',
+			viewName : 'de_pksoftware.ui5strap_docs.views.Home',
+			type : 'HTML',
+			label : 'i18n>MENU_HOME'
+		},
+
+		'getStarted' : {
+			target : 'content',
+			id : 'get-started-ui5strap',
+			viewName : 'de_pksoftware.ui5strap_docs.views.GetStarted',
+			type : 'HTML',
+			label : 'i18n>MENU_GET_STARTED'
+		},
+		
+		'controls' : {
+			target : 'content',
+			id : 'controls-ui5strap',
+			viewName : 'de_pksoftware.ui5strap_docs.views.Controls',
+			type : 'HTML',
+			label : 'i18n>MENU_CONTROLS'
+		},
+		
+		'about' : {
+			target : 'content',
+			id : 'about-ui5strap',
+			viewName : 'de_pksoftware.ui5strap_docs.views.About',
+			type : 'HTML',
+			label : 'i18n>MENU_ABOUT'
+		},
+		
+		'contact': {
+			target : 'content',
+			id : 'contact-ui5strap',
+			viewName : 'de_pksoftware.ui5strap_docs.views.Contact',
+			type : 'HTML',
+			label : 'i18n>MENU_CONTACT'
+		}
+
 	};
 
 	/*
-	 * Creates the ui5 app control
+	* pages that should be shown in the menu specified by _pages keys.
+	*/
+	var _menu = ['about', 'getStarted', 'controls', 'contact'];
+
+	/*
+	 * creates the nav container
 	 */
-	StrapFrameProto._createUi5App = function(){
-		var frame = this;
+	var _createNavContainer = function(frame){
 		var navContainer = new de_pksoftware.ui5strap.controls.NavContainer();
-
-
 		var navBar = new de_pksoftware.ui5strap.controls.NavBar();
-
-		
 
 		navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
 		navBar.setInverse(true);
 		navBar.setAlign('fixed-top');
-		navContainer.setNavBar(navBar);
-
-		var navLeft = new de_pksoftware.ui5strap.controls.Nav();
-		this._navLeft = navLeft;
-		navLeft.setInNavbar(true);
-		navBar.addCollapse(navLeft);
-
-		var navItemHome = new de_pksoftware.ui5strap.controls.NavItem();
-		
-		var navItemHomeLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemHomeLink.bindProperty('text', {path : 'i18n>MENU_HOME'});
-		navItemHomeLink.attachEvent('click', {}, function(){
-			frame.gotoHome();
-		});
-		navItemHome.addContent(navItemHomeLink);
-		navLeft.addItems(navItemHome);
-
-		var navItemGetStarted = new de_pksoftware.ui5strap.controls.NavItem();
-		var navItemGetStartedLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemGetStartedLink.attachEvent('click', {}, function(){
-			frame.gotoGetStarted();
-		});
-		navItemGetStartedLink.bindProperty('text', {path : 'i18n>MENU_GET_STARTED'});
-		navItemGetStarted.addContent(navItemGetStartedLink);
-		navLeft.addItems(navItemGetStarted);
-
-		var navItemControls = new de_pksoftware.ui5strap.controls.NavItem();
-		var navItemControlsLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemControlsLink.attachEvent('click', {}, function(){
-			frame.gotoControls();
-		});
-		navItemControlsLink.bindProperty('text', {path : 'i18n>MENU_CONTROLS'});
-		navItemControls.addContent(navItemControlsLink);
-		navLeft.addItems(navItemControls);
-
-		var navItemAbout = new de_pksoftware.ui5strap.controls.NavItem();
-		var navItemAboutLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemAboutLink.attachEvent('click', {}, function(){
-			frame.gotoAbout();
-		});
-		navItemAboutLink.bindProperty('text', {path : 'i18n>MENU_ABOUT'});
-		navItemAbout.addContent(navItemAboutLink);
-		navLeft.addItems(navItemAbout);
-
-
-
-		var navItemContact = new de_pksoftware.ui5strap.controls.NavItem();
-		var navItemContactLink = new de_pksoftware.ui5strap.controls.Link();
-		navItemContactLink.attachEvent('click', {}, function(){
-			frame.gotoContact();
-		});
-		navItemContactLink.bindProperty('text', {path : 'i18n>MENU_CONTACT'});
-		navItemContact.addContent(navItemContactLink);
-		navLeft.addItems(navItemContact);
 
 		navBar.attachEvent('brandTap', {}, function(){
 			frame.gotoHome();
 		});
+
+		navContainer.setNavBar(navBar);
+
+		var navLeft = new de_pksoftware.ui5strap.controls.Nav();
+		
+		navLeft.setInNavbar(true);
+		navBar.addCollapse(navLeft);
+
+		for (var i = 0; i < _menu.length; i++){
+			var pageKey = _menu[i];
+			var menuPage = _pages[pageKey];
+			
+			var navItem = new de_pksoftware.ui5strap.controls.NavItem();
+			var navItemLink = new de_pksoftware.ui5strap.controls.Link();
+			navItemLink.data('pageKey', pageKey);
+			navItemLink.data('menuActiveIndex', i);
+
+			navItemLink.attachEvent('click', {}, function(oEvent){
+				var linkItem = oEvent.getSource();
+				frame.gotoPage(linkItem.data('pageKey'), linkItem.data('menuActiveIndex'));
+			});
+
+			navItemLink.bindProperty('text', {path : menuPage.label});
+			navItem.addContent(navItemLink);
+			navLeft.addItems(navItem);
+		}
 
 
 		var navButtons = new de_pksoftware.ui5strap.controls.ButtonGroup({navbarAlign : 'right'});
@@ -149,119 +155,78 @@
 		navBar.addCollapse(navButtons);
 
 		buttonEn.attachEvent('click', {}, function(){
-			configuration.setLanguage('en');
+			configuration.setLanguage('en-us');
 			buttonEn.setActive(true);
 			buttonDe.setActive(false);
 			
 		});
 
 		buttonDe.attachEvent('click', {}, function(){
-			configuration.setLanguage('de');
+			configuration.setLanguage('de-de');
 			buttonEn.setActive(false);
 			buttonDe.setActive(true);
 			
 		});
 
-		if('de' === configuration.getLanguage()){
+		if('de-de' === configuration.getLanguage()){
 			buttonDe.setActive(true);
 		}
 		else{
 			buttonEn.setActive(true);
 		}
 
-		this._app = navContainer;
-	};
-
-	StrapFrameProto.gotoHome = function(){
-		this._navLeft.setItemActive(0);
-		this._navTo(null, null, {
-			target : 'content',
-			id : 'home',
-			viewName : 'de_pksoftware.ui5strap_docs.views.Home',
-			type : 'HTML'
-		});
-	};
-
-	StrapFrameProto.gotoGetStarted = function(){
-		this._navLeft.setItemActive(1);
-		this._navTo(null, null, {
-			target : 'content',
-			id : 'get-started',
-			viewName : 'de_pksoftware.ui5strap_docs.views.GetStarted',
-			type : 'HTML'
-		});
-	};
-
-	StrapFrameProto.gotoControls = function(){
-		this._navLeft.setItemActive(2);
-		this._navTo(null, null, {
-			target : 'content',
-			id : 'controls',
-			viewName : 'de_pksoftware.ui5strap_docs.views.Controls',
-			type : 'HTML'
-		});
-	};
-
-	StrapFrameProto.gotoAbout = function(){
-		this._navLeft.setItemActive(3);
-		this._navTo(null, null, {
-			target : 'content',
-			id : 'about-ui5strap',
-			viewName : 'de_pksoftware.ui5strap_docs.views.About',
-			type : 'HTML'
-		});
-	};
-
-	StrapFrameProto.gotoContact = function(){
-		this._navLeft.setItemActive(4);
-		this._navTo(null, null, {
-			target : 'content',
-			id : 'contact-ui5strap',
-			viewName : 'de_pksoftware.ui5strap_docs.views.Contact',
-			type : 'HTML'
-		});
-	};
-
-	
-
-	
-
-	/*
-	 * Places the ui5 app control in DOM
-	 */
-	StrapFrameProto._placeUi5App = function(){
-		this._app.placeAt(this.getRoot());
+		frame.navContainer = navContainer;
+		frame.mainMenu = navLeft;
 	};
 
 	/*
-	 * Registers the navigation handlers
+	* create the goto* methods for navigation
+	*/
+	var _createGotoMethods = function(frame){
+		for (var pageKey in _pages){
+			var menuPage = _pages[pageKey];
+			frame['goto' + jQuery.sap.charToUpperCase(pageKey, 0)] = (function(pk, ii){ 
+				return function(){
+					frame.gotoPage(pk, ii);
+				}
+			})(pageKey, jQuery.inArray(pageKey, _menu));
+		}
+	};
+
+	/*
+	 * called by constructor
 	 */
-	StrapFrameProto._registerNavHandlers = function(){
-		var oBus = sap.ui.getCore().getEventBus();
+	StrapFrameProto.init = function(){
+		this._pages = {};
 		
-		oBus.subscribe("nav", "to", jQuery.proxy(this._navTo, this));
-		oBus.subscribe("nav", "back", jQuery.proxy(this._navBack, this));
+		_createGotoMethods(this);
+		_createNavContainer(this);
+
+		//this._initHistory();
 	};
 
 	/*
-	 * Evemt handler for back events
-	 * @TODO to be implemented
-	 */
-	StrapFrameProto._navBack = function (channelId, eventId, data) {
+	* shows a page defined in _pages
+	*/
+	StrapFrameProto.gotoPage = function(pageKey, menuActiveIndex){
+		if(!(pageKey in _pages)){
+			throw new Error('Invalid page: ' + pageKey);
+		}
+		this.mainMenu.setItemActive(menuActiveIndex);
 		
-		
+		this.showPage(_pages[pageKey]);
 	};
 
 	/*
-	 * Evemt handler for nav-to events
+	 * shows a page defined by given data
 	 */
-	StrapFrameProto._navTo = function (channelId, eventId, data) {
+	StrapFrameProto.showPage = function (data) {
 		var page = this._addPage(data);
 		
 		var historyPath = null;
 		if(data.target === 'content'){
-			this._app.removeAllContent();
-			this._app.addContent(page);
+			this.navContainer.removeAllContent();
+			this.navContainer.addContent(page);
 			//historyPath = HISTORY_PATH_MASTER;
 		}
 		
@@ -275,6 +240,29 @@
 	};
 
 	/*
+	 * adds a page to the internal cache
+	 */
+	StrapFrameProto._addPage = function(pageProperties){
+		if(this._pages[pageProperties.id]){
+			return this._pages[pageProperties.id];
+		}
+
+		var page = new sap.ui.view(pageProperties);
+			
+		this._pages[pageProperties.id] = page;
+		
+		return page;
+	};
+
+	/*
+	
+	StrapFrameProto._registerNavHandlers = function(){
+		var oBus = sap.ui.getCore().getEventBus();
+		
+		oBus.subscribe("nav", "to", jQuery.proxy(this._navTo, this));
+		oBus.subscribe("nav", "back", jQuery.proxy(this._navBack, this));
+	};
+
 	StrapFrameProto._initHistory = function () {
 
 		_self = this;
@@ -313,23 +301,6 @@
 			}
 		});
 	};
+
 	*/
-
-	/*
-	 * Adds a new page to the ui5 app control
-	 */
-	StrapFrameProto._addPage = function(pageProperties){
-		if(this._pages[pageProperties.id]){
-			return this._pages[pageProperties.id];
-		}
-
-		var page = new sap.ui.view(pageProperties);
-			
-		this._pages[pageProperties.id] = page;
-		
-		return page;
-	};
-
 }());
-
-
