@@ -83,12 +83,12 @@
 			label : 'i18n>MENU_ABOUT'
 		},
 		
-		'contact': {
+		'support': {
 			target : 'content',
-			id : 'contact-ui5strap',
-			viewName : packageName + '.views.Contact',
+			id : 'support-ui5strap',
+			viewName : packageName + '.views.Support',
 			type : 'HTML',
-			label : 'i18n>MENU_CONTACT'
+			label : 'i18n>MENU_SUPPORT'
 		}
 
 	};
@@ -96,7 +96,7 @@
 	/*
 	* pages that should be shown in the menu specified by _pages keys.
 	*/
-	var _menu = ['about', 'getStarted', 'controls', 'contact'];
+	var _menu = ['about', 'getStarted', 'controls', 'support'];
 
 	/*
 	 * creates the nav container
