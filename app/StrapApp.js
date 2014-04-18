@@ -29,7 +29,6 @@
 	var MyApp = com_mycompany.my_app.StrapApp,
 		MyAppProto = MyApp.prototype;
 
-	MyApp.packageName = packageName;
 	MyApp._instance = null;
 
 	jQuery.sap.require(packageName + ".StrapFrame");

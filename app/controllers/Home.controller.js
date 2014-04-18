@@ -6,6 +6,10 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 		this.app.getFrame().gotoGetStarted();
 	},
 
+	gotoAbout : function(){
+		this.app.getFrame().gotoAbout();
+	},
+
 	switchTheme : function(oEvent){
 		var app = this.app;
 		app.showLoader(true);

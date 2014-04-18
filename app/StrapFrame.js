@@ -18,7 +18,7 @@
 
 (function(){
 
-	var packageName = com_mycompany.my_app.StrapApp.packageName,
+	var packageName = "com_mycompany.my_app",
 		moduleName = packageName + ".StrapFrame";
 
 	jQuery.sap.declare(moduleName);
