@@ -18,7 +18,10 @@
 
 (function(){
 
-	jQuery.sap.declare("de_pksoftware.ui5strap_docs.StrapFrame");
+	var packageName = com_mycompany.my_app.StrapApp.packageName,
+		moduleName = packageName + ".StrapFrame";
+
+	jQuery.sap.declare(moduleName);
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavContainer");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavBar");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.Nav");
@@ -27,20 +30,10 @@
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.ButtonGroup");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.Button");
 
-	sap.ui.base.ManagedObject.extend("de_pksoftware.ui5strap_docs.StrapFrame", {
-		metadata : {
-			
-			publicMethods : [],
-			
-			properties : {}
-		
-		}
-	});
+	sap.ui.base.Object.extend(moduleName);
 
-	var StrapFrame = de_pksoftware.ui5strap_docs.StrapFrame,
+	var StrapFrame = com_mycompany.my_app.StrapFrame,
 		StrapFrameProto = StrapFrame.prototype,
-		strapApp = de_pksoftware.ui5strap_docs.StrapApp.getInstance(),
-		localization = strapApp.getLocalization(),
 		configuration = sap.ui.getCore().getConfiguration();
 
 	/*
@@ -61,7 +54,7 @@
 		'home' : {
 			target : 'content',
 			id : 'home-ui5strap',
-			viewName : 'de_pksoftware.ui5strap_docs.views.Home',
+			viewName : packageName + '.views.Home',
 			type : 'HTML',
 			label : 'i18n>MENU_HOME'
 		},
@@ -69,7 +62,7 @@
 		'getStarted' : {
 			target : 'content',
 			id : 'get-started-ui5strap',
-			viewName : 'de_pksoftware.ui5strap_docs.views.GetStarted',
+			viewName : packageName + '.views.GetStarted',
 			type : 'HTML',
 			label : 'i18n>MENU_GET_STARTED'
 		},
@@ -77,7 +70,7 @@
 		'controls' : {
 			target : 'content',
 			id : 'controls-ui5strap',
-			viewName : 'de_pksoftware.ui5strap_docs.views.Controls',
+			viewName : packageName + '.views.Controls',
 			type : 'HTML',
 			label : 'i18n>MENU_CONTROLS'
 		},
@@ -85,7 +78,7 @@
 		'about' : {
 			target : 'content',
 			id : 'about-ui5strap',
-			viewName : 'de_pksoftware.ui5strap_docs.views.About',
+			viewName : packageName + '.views.About',
 			type : 'HTML',
 			label : 'i18n>MENU_ABOUT'
 		},
@@ -93,7 +86,7 @@
 		'contact': {
 			target : 'content',
 			id : 'contact-ui5strap',
-			viewName : 'de_pksoftware.ui5strap_docs.views.Contact',
+			viewName : packageName + '.views.Contact',
 			type : 'HTML',
 			label : 'i18n>MENU_CONTACT'
 		}
@@ -203,6 +196,13 @@
 		_createNavContainer(this);
 
 		//this._initHistory();
+	};
+
+	/*
+	 * places this frame in dom
+	 */
+	StrapFrameProto.placeAt = function(domId){
+		return this.navContainer.placeAt(domId);
 	};
 
 	/*

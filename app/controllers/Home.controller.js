@@ -1,11 +1,13 @@
-sap.ui.controller("de_pksoftware.ui5strap_docs.controllers.Home", {
+sap.ui.controller("com_mycompany.my_app.controllers.Home", {
+
+	app : com_mycompany.my_app.StrapApp.getInstance(),
 
 	gotoGetStarted : function(){
-		de_pksoftware.ui5strap_docs.StrapApp.getInstance().getFrame().gotoGetStarted();
+		this.app.getFrame().gotoGetStarted();
 	},
 
 	switchTheme : function(oEvent){
-		var app = de_pksoftware.ui5strap_docs.StrapApp.getInstance();
+		var app = this.app;
 		app.showLoader(true);
 		var btn = oEvent.getSource();
 		var newTheme = btn.getCustomData()[0].getValue('theme');

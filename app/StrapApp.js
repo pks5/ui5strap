@@ -17,15 +17,24 @@
  */
 
  (function(){
+ 	var packageName = "com_mycompany.my_app",
+ 		moduleName = packageName + ".StrapApp";
 
-	jQuery.sap.declare("de_pksoftware.ui5strap_docs.StrapApp");
+ 	jQuery.sap.registerModulePath("de_pksoftware.ui5strap", "./lib/ui5strap");
 
-	sap.ui.base.Object.extend("de_pksoftware.ui5strap_docs.StrapApp");
+	jQuery.sap.declare(moduleName);
+	
+	sap.ui.base.Object.extend(moduleName);
 
-	var MyApp = de_pksoftware.ui5strap_docs.StrapApp,
+	var MyApp = com_mycompany.my_app.StrapApp,
 		MyAppProto = MyApp.prototype;
 
+	MyApp.packageName = packageName;
 	MyApp._instance = null;
+
+	jQuery.sap.require(packageName + ".StrapFrame");
+
+	var MyAppFrame =  com_mycompany.my_app.StrapFrame;
 
 	MyApp.getInstance = function(){
 		if(null === MyApp._instance){
@@ -37,21 +46,20 @@
 	MyAppProto.init = function(){
 		var app = this;
 
-		jQuery.sap.registerModulePath("de_pksoftware.ui5strap", "./lib/ui5strap");
+		
 
 		this._strapRoot = jQuery.sap.getModulePath("de_pksoftware.ui5strap");
-		this._appRoot = jQuery.sap.getModulePath("de_pksoftware.ui5strap_docs");
+		this._appRoot = jQuery.sap.getModulePath(packageName);
 		
 		this.getLocalization();
 
-		//Require frame module
-		jQuery.sap.require("de_pksoftware.ui5strap_docs.StrapFrame");
+		
 			
 		//Create a new frame instance
-		this._appFrame = new de_pksoftware.ui5strap_docs.StrapFrame();
+		this._appFrame = new MyAppFrame();
 		//this._appFrame.init();
-
-		this._appFrame.navContainer.placeAt('ui5strap-body');
+		this._appFrame.init();
+		this._appFrame.placeAt('ui5strap-body');
 
 		this.sheets = [
 			this._strapRoot + "/bootstrap-3.1.1-dist/css/bootstrap.min.css",

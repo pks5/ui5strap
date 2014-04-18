@@ -26,14 +26,17 @@
 		<script id="sap-ui-bootstrap" src="resources/sap-ui-core.js" data-sap-ui-xx-fakeOS="ipad"></script>
 		
 		<script>
-				//Define package "de_pksoftware.ui5strap" to be found at "."
-				jQuery.sap.registerModulePath("de_pksoftware.ui5strap_docs", "./app");
+
+				var packageName = "com_mycompany.my_app";
+
+				//Define package "de_pksoftware.ui5strap" to be found at "./app"
+				jQuery.sap.registerModulePath(packageName, "./app");
 				
-				//Require de_pksoftware.ui5strap.StrapApp (resolved to "./StrapApp.js")
-				jQuery.sap.require("de_pksoftware.ui5strap_docs.StrapApp");
+				//Require de_pksoftware.ui5strap.StrapApp (resolved to "./app/StrapApp.js")
+				jQuery.sap.require(packageName + ".StrapApp");
 				
 				//Create a new Instance of my_package.MyApp
-				de_pksoftware.ui5strap_docs.StrapApp.getInstance().init();
+				com_mycompany.my_app.StrapApp.getInstance().init();
 		
 		</script>
 		
