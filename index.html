@@ -27,17 +27,20 @@
 		
 		<script>
 
+				//Define package name
 				var packageName = "com_mycompany.my_app";
-
-				//Define package "de_pksoftware.ui5strap" to be found at "./app"
+				
+				//Package can be found at "./app" (relative to the index.html file)
 				jQuery.sap.registerModulePath(packageName, "./app");
 				
-				//Require de_pksoftware.ui5strap.StrapApp (resolved to "./app/StrapApp.js")
+				//Require com_mycompany.my_app.StrapApp (resolved to "./app/StrapApp.js")
 				jQuery.sap.require(packageName + ".StrapApp");
 				
-				//Create a new Instance of my_package.MyApp
-				com_mycompany.my_app.StrapApp.getInstance().init();
-		
+				//Get the instance of the app main module
+				var app = com_mycompany.my_app.StrapApp.getInstance();
+				
+				//Initialize the app main module
+				app.init();
 		</script>
 		
 	</body>
