@@ -156,6 +156,66 @@
 				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ProgressBar" data-type="warning" data-value="10"></div>
 			</div>
 
+			<!-- Forms -->
+			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Forms"></div>
+
+			<div data-sap-ui-type="de_pksoftware.ui5strap.form.Form">
+				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Name">
+					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-type="text" data-placeholder="Name"></div>
+				</div>
+				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Email" data-type="error" data-feedback="true">
+					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-type="email" data-placeholder="Email" data-value="no@valid@email"></div>
+					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="remove" data-within-form="true"></div>
+				</div>
+				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Address">
+					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-type="text" data-placeholder="Address"></div>
+				</div>
+				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-text="Submit" data-type="success"></div>
+			</div>
+
+
+			<div data-sap-ui-type="de_pksoftware.ui5strap.form.Form" data-type="horizontal">
+				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Name">
+					<div data-sap-ui-aggregation="formControls">
+						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="10">
+							<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-type="text" data-placeholder="Name"></div>
+						</div>
+					</div>
+					<div data-sap-ui-aggregation="labelColumn">
+						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="2"></div>
+					</div>
+				</div>
+				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Email" data-type="error" data-feedback="true">
+					<div data-sap-ui-aggregation="formControls">
+						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="10">
+							<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-type="email" data-placeholder="Email" data-value="no@valid@email"></div>
+							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="remove" data-within-form="true"></div>
+						</div>
+					</div>
+					<div data-sap-ui-aggregation="labelColumn">
+						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="2"></div>
+					</div>
+				</div>
+				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Address" data-type="success" data-feedback="true">
+					<div data-sap-ui-aggregation="formControls">
+						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="5">
+							<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-value="Some Street"  data-type="text" data-placeholder="Address"></div>
+							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="ok" data-within-form="true"></div>
+						</div>
+						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="5">
+							<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-value="25a" data-type="text" data-placeholder="Address"></div>
+							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="ok" data-within-form="true"></div>
+						</div>
+					</div>
+					<div data-sap-ui-aggregation="labelColumn">
+						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="2"></div>
+					</div>
+				</div>
+				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-offset-small="2">
+					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-text="Submit" data-type="success"></div>
+				</div>
+			</div>
+
 
 			<!-- Thumbnails -->
 			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Thumbnails"></div>
