@@ -107,7 +107,7 @@
 
 		navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
 		navBar.setInverse(true);
-		navBar.setAlign('fixed-top');
+		navBar.setPosition(de_pksoftware.ui5strap.NavBarPosition.FixedTop);
 
 		navBar.attachEvent('brandTap', {}, function(){
 			frame.gotoHome();
@@ -117,7 +117,7 @@
 
 		var navLeft = new de_pksoftware.ui5strap.controls.Nav();
 		
-		navLeft.setInNavbar(true);
+		navLeft.setNavbarAlign(de_pksoftware.ui5strap.NavBarAlignment.Left);
 		navBar.addCollapse(navLeft);
 
 		for (var i = 0; i < _menu.length; i++){
@@ -140,7 +140,7 @@
 		}
 
 
-		var navButtons = new de_pksoftware.ui5strap.controls.ButtonGroup({navbarAlign : 'right'});
+		var navButtons = new de_pksoftware.ui5strap.controls.ButtonGroup({navbarAlign : de_pksoftware.ui5strap.NavBarAlignment.Right});
 		var buttonDe = new de_pksoftware.ui5strap.controls.Button({'text' : "DE" });
 		var buttonEn = new de_pksoftware.ui5strap.controls.Button({'text' : "EN" });
 		navButtons.addButtons(buttonEn);
