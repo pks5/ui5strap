@@ -1,11 +1,6 @@
 <template  data-controller-name="com_mycompany.my_app.controllers.Home">
 	<div data-sap-ui-type="de_pksoftware.ui5strap.ex.ScrollContainer" data-vertical="true">
-		<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Container">
-
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Alert" data-strong-text="Please note! " data-text="Currently, not every Bootstrap component is supported natively by UI5Strap. We recommend to clone the UI5Strap repository locally, and update it regulary to receive the latest changes."></div>
-
-			
+		<div data-sap-ui-type="ui5strap.Container" data-type="Page">
 			<!-- Themes -->
 			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Themes" data-lead="Push a button to change the site's theme."></div>
 
@@ -84,200 +79,7 @@
 					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-size="ExtraSmall" data-text="Danger" data-severity="Danger"></div>
 			</div>
 
-			<!-- Button Groups -->
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Button Groups"></div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonToolbar">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonGroup" data-size="Large">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonGroup" data-size="Large">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="file"></div>
-					</div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="folder-open"></div>
-					</div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="floppy-disk"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonGroup" data-size="Large">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonToolbar">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonGroup">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonToolbar">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonGroup" data-size="Small">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonToolbar">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ButtonGroup" data-size="ExtraSmall">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
-
-			<!-- Progress -->
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Progress"></div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Progress">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ProgressBar" data-value="60"></div>
-			</div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Progress" data-striped="true">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ProgressBar" data-label-format="[per]%" data-severity="Warning" data-value="60"></div>
-			</div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Progress" data-striped="true" data-active="true">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ProgressBar" data-min-value="20" data-max-value="200" data-label-format="[val]/[max] ([per]%, min: [min])" data-severity="Danger" data-value="60"></div>
-			</div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Progress">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ProgressBar" data-severity="Success" data-value="20"></div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ProgressBar" data-severity="Info" data-value="30"></div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ProgressBar" data-severity="Warning" data-value="10"></div>
-			</div>
-
-			<!-- Forms -->
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Forms"></div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Heading" data-level="4" data-text="Vertical forms"></div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.form.Form">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Name">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-placeholder="Name"></div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Email" data-severity="Error" data-feedback="true">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-input-type="email" data-placeholder="Email" data-value="no@valid@email"></div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="remove" data-within-form="true"></div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Address">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-type="text" data-placeholder="Address"></div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Some option">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Checkbox" data-label="Option 1"></div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Radio" data-label="Option A"></div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Radio" data-label="Option B"></div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-text="Submit" data-severity="Success"></div>
-			</div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Heading" data-level="4" data-text="Horizontal forms"></div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.form.Form" data-type="Horizontal">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Name" data-label-small="2">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="10">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-placeholder="Name"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Number" data-label-small="2">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="10">
-							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-form-static="true" data-text="ABV323GDBS223"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Email"  data-label-small="2" data-severity="Error" data-feedback="true">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="10">
-							<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-type="email" data-placeholder="Email" data-value="no@valid@email"></div>
-							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="remove" data-within-form="true"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup" data-label="Address"  data-label-small="2" data-severity="Success" data-feedback="true">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="5">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-value="Some Street" data-placeholder="Address"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="ok" data-within-form="true"></div>
-					</div>
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="5">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-value="25a" data-placeholder="Address"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Icon" data-icon="ok" data-within-form="true"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-offset-small="2" data-columns-small="10">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.form.Checkbox" data-label="Option 1"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-offset-small="2" data-columns-small="10">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.form.Radio" data-label="Option A"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-offset-small="2" data-columns-small="10">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.form.Radio" data-label="Option B"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-offset-small="2" data-colums-small="10">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-text="Submit" data-severity="Success"></div>
-				</div>
-			</div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Heading" data-level="4" data-text="In Navbar"></div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.NavBar" data-Brand="Brand">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.form.Form" data-navbar-align="Left">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.form.FormGroup">
-							<div data-sap-ui-type="de_pksoftware.ui5strap.form.Input" data-placeholder="Name"></div>
-						</div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Button" data-text="Submit" data-severity="Success"></div>
-					</div>
-			</div>
-
-			<!-- Thumbnails -->
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Thumbnails"></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Row">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="2">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Link" data-css-class="thumbnail">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Image" data-src="./app/img/awesome.png" data-alt="Image"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="2">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Link" data-css-class="thumbnail">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Image" data-src="./app/img/awesome.png" data-alt="Image"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="2">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Link" data-css-class="thumbnail">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Image" data-src="./app/img/awesome.png" data-alt="Image"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="2">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Link" data-css-class="thumbnail">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Image" data-src="./app/img/awesome.png" data-alt="Image"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="2">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Link" data-css-class="thumbnail">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Image" data-src="./app/img/awesome.png" data-alt="Image"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="2">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Link" data-css-class="thumbnail">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Image" data-src="./app/img/awesome.png" data-alt="Image"></div>
-					</div>
-				</div>
-			</div>
+			
 
 			<!-- Alerts -->
 			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Alerts"></div>
@@ -287,45 +89,7 @@
 			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Alert" data-severity="Warning" data-strong-text="Warning! " data-text="Best check yo self, you're not looking too good."></div>
 			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Alert" data-severity="Danger" data-strong-text="Oh snap! " data-text="Change a few things up and try submitting again."></div>
 
-			<!-- List groups -->
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="List groups"></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Row">
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="4">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroup">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-text="Cras justo odio" data-badge="3"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-text="Dapibus ac facilisis in" data-badge="9"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-text="Morbi leo risus" data-badge="8"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-text="Porta ac consectetur ac" data-badge="2"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-text="Vestibulum at eros" data-badge="1"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="4">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroup" data-use-div="true">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-active="true" data-text="Cras justo odio"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-text="Dapibus ac facilisis in"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-text="Morbi leo risus"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-text="Porta ac consectetur ac"></div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-text="Vestibulum at eros"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Col" data-columns-small="4">
-					<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroup" data-use-div="true">
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem" data-active="true">
-							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Heading" data-level="4" data-text="List group item heading"></div>
-							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit."></div>
-						</div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem">
-							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Heading" data-level="4" data-text="List group item heading"></div>
-							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit."></div>
-						</div>
-						<div data-sap-ui-type="de_pksoftware.ui5strap.controls.ListGroupItem">
-							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Heading" data-level="4" data-text="List group item heading"></div>
-							<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit."></div>
-						</div>
-						
-					</div>
-				</div>
-			</div>
+			
 
 			<!-- Panels -->
 			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Panels"></div>
@@ -345,31 +109,7 @@
 				</div>
 			</div>
 
-			<!-- Wells -->
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Wells"></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Well" data-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur."></div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Well" data-size="Large" data-text="Look, I'm in a large well!"></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Well" data-size="Small" data-text="Look, I'm in a small well!"></div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Helper classes"></div>
-		<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="text-muted" data-text="Nullam id dolor id nibh ultricies vehicula ut id elit."></div>
-		<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="text-primary" data-text="Nullam id dolor id nibh ultricies vehicula ut id elit."></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="text-success" data-text="Duis mollis, est non commodo luctus, nisi erat porttitor ligula."></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="text-info" data-text="Maecenas sed diam eget risus varius blandit sit amet non magna."></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="text-warning" data-text="Etiam porta sem malesuada magna mollis euismod."></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="text-danger" data-text="Donec ullamcorper nulla non metus auctor fringilla."></div>
-
-
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="bg-primary" data-text="Nullam id dolor id nibh ultricies vehicula ut id elit."></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="bg-success" data-text="Duis mollis, est non commodo luctus, nisi erat porttitor ligula."></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="bg-info" data-text="Maecenas sed diam eget risus varius blandit sit amet non magna."></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="bg-warning" data-text="Etiam porta sem malesuada magna mollis euismod."></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Paragraph" data-css-class="bg-danger" data-text="Donec ullamcorper nulla non metus auctor fringilla."></div>
-
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.PageHeader" data-text="Misc"></div>
-			<div data-sap-ui-type="de_pksoftware.ui5strap.controls.Link" data-href="http://pksoftware.de" data-text="Link to PKSoftware.de"></div>
+			
 		</div>
 	</div>
 	<!-- Footer (TODO: move into frame) -->

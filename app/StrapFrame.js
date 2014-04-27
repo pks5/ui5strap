@@ -25,7 +25,7 @@
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavContainer");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavBar");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.Nav");
-	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavItem");
+	jQuery.sap.require("ui5strap.ListItem");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.Link");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.ButtonGroup");
 	jQuery.sap.require("de_pksoftware.ui5strap.controls.Button");
@@ -107,7 +107,7 @@
 
 		navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
 		navBar.setInverse(true);
-		navBar.setPosition(de_pksoftware.ui5strap.NavBarPosition.FixedTop);
+		navBar.setPosition(ui5strap.NavBarPosition.FixedTop);
 
 		navBar.attachEvent('brandTap', {}, function(){
 			frame.gotoHome();
@@ -117,14 +117,14 @@
 
 		var navLeft = new de_pksoftware.ui5strap.controls.Nav();
 		
-		navLeft.setNavbarAlign(de_pksoftware.ui5strap.NavBarAlignment.Left);
+		navLeft.setNavbarAlign(ui5strap.NavBarAlignment.Left);
 		navBar.addCollapse(navLeft);
 
 		for (var i = 0; i < _menu.length; i++){
 			var pageKey = _menu[i];
 			var menuPage = _pages[pageKey];
 			
-			var navItem = new de_pksoftware.ui5strap.controls.NavItem();
+			var navItem = new ui5strap.ListItem();
 			var navItemLink = new de_pksoftware.ui5strap.controls.Link();
 			navItemLink.data('pageKey', pageKey);
 			navItemLink.data('menuActiveIndex', i);
@@ -140,7 +140,7 @@
 		}
 
 
-		var navButtons = new de_pksoftware.ui5strap.controls.ButtonGroup({navbarAlign : de_pksoftware.ui5strap.NavBarAlignment.Right});
+		var navButtons = new de_pksoftware.ui5strap.controls.ButtonGroup({navbarAlign : ui5strap.NavBarAlignment.Right});
 		var buttonDe = new de_pksoftware.ui5strap.controls.Button({'text' : "DE" });
 		var buttonEn = new de_pksoftware.ui5strap.controls.Button({'text' : "EN" });
 		navButtons.addButtons(buttonEn);
