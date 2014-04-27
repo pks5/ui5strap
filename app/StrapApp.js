@@ -21,6 +21,7 @@
  		moduleName = packageName + ".StrapApp";
 
  	jQuery.sap.registerModulePath("de_pksoftware.ui5strap", "./lib/ui5strap");
+ 	jQuery.sap.registerModulePath("ui5strap", "./lib/ui5strap");
 
 	jQuery.sap.declare(moduleName);
 	
