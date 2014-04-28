@@ -20,7 +20,7 @@
  	var packageName = "com_mycompany.my_app",
  		moduleName = packageName + ".StrapApp";
 
- 	jQuery.sap.registerModulePath("de_pksoftware.ui5strap", "./lib/ui5strap");
+ 	//jQuery.sap.registerModulePath("de_pksoftware.ui5strap", "./lib/ui5strap");
  	jQuery.sap.registerModulePath("ui5strap", "./lib/ui5strap");
 
 	jQuery.sap.declare(moduleName);
@@ -48,7 +48,7 @@
 
 		
 
-		this._strapRoot = jQuery.sap.getModulePath("de_pksoftware.ui5strap");
+		this._strapRoot = jQuery.sap.getModulePath("ui5strap");
 		this._appRoot = jQuery.sap.getModulePath(packageName);
 		
 		this.getLocalization();

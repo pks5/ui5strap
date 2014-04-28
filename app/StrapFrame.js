@@ -22,13 +22,13 @@
 		moduleName = packageName + ".StrapFrame";
 
 	jQuery.sap.declare(moduleName);
-	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavContainer");
-	jQuery.sap.require("de_pksoftware.ui5strap.controls.NavBar");
-	jQuery.sap.require("de_pksoftware.ui5strap.controls.Nav");
+	jQuery.sap.require("ui5strap.NavContainer");
+	jQuery.sap.require("ui5strap.NavBar");
+	jQuery.sap.require("ui5strap.Nav");
 	jQuery.sap.require("ui5strap.ListItem");
-	jQuery.sap.require("de_pksoftware.ui5strap.controls.Link");
-	jQuery.sap.require("de_pksoftware.ui5strap.controls.ButtonGroup");
-	jQuery.sap.require("de_pksoftware.ui5strap.controls.Button");
+	jQuery.sap.require("ui5strap.Link");
+	jQuery.sap.require("ui5strap.ButtonGroup");
+	jQuery.sap.require("ui5strap.Button");
 
 	sap.ui.base.Object.extend(moduleName);
 
@@ -102,8 +102,8 @@
 	 * creates the nav container
 	 */
 	var _createNavContainer = function(frame){
-		var navContainer = new de_pksoftware.ui5strap.controls.NavContainer();
-		var navBar = new de_pksoftware.ui5strap.controls.NavBar();
+		var navContainer = new ui5strap.NavContainer();
+		var navBar = new ui5strap.NavBar();
 
 		navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
 		navBar.setInverse(true);
@@ -115,7 +115,7 @@
 
 		navContainer.setNavBar(navBar);
 
-		var navLeft = new de_pksoftware.ui5strap.controls.Nav();
+		var navLeft = new ui5strap.Nav();
 		
 		navLeft.setNavbarAlign(ui5strap.NavBarAlignment.Left);
 		navBar.addCollapse(navLeft);
@@ -125,7 +125,7 @@
 			var menuPage = _pages[pageKey];
 			
 			var navItem = new ui5strap.ListItem();
-			var navItemLink = new de_pksoftware.ui5strap.controls.Link();
+			var navItemLink = new ui5strap.Link();
 			navItemLink.data('pageKey', pageKey);
 			navItemLink.data('menuActiveIndex', i);
 
@@ -140,9 +140,9 @@
 		}
 
 
-		var navButtons = new de_pksoftware.ui5strap.controls.ButtonGroup({navbarAlign : ui5strap.NavBarAlignment.Right});
-		var buttonDe = new de_pksoftware.ui5strap.controls.Button({'text' : "DE" });
-		var buttonEn = new de_pksoftware.ui5strap.controls.Button({'text' : "EN" });
+		var navButtons = new ui5strap.ButtonGroup({navbarAlign : ui5strap.NavBarAlignment.Right});
+		var buttonDe = new ui5strap.Button({'text' : "DE" });
+		var buttonEn = new ui5strap.Button({'text' : "EN" });
 		navButtons.addButtons(buttonEn);
 		navButtons.addButtons(buttonDe);
 		navBar.addCollapse(navButtons);
