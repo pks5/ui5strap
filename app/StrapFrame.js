@@ -116,7 +116,7 @@
 		navContainer.setNavBar(navBar);
 
 		var navLeft = new ui5strap.Nav();
-		
+		frame.nav = navLeft;
 		navLeft.setNavbarAlign(ui5strap.NavBarAlignment.Left);
 		navBar.addCollapse(navLeft);
 
@@ -125,19 +125,19 @@
 			var menuPage = _pages[pageKey];
 			
 			var navItem = new ui5strap.ListItem();
+			navItem.data('pageKey', pageKey);
 			var navItemLink = new ui5strap.Link();
-			navItemLink.data('pageKey', pageKey);
-			navItemLink.data('menuActiveIndex', i);
-
-			navItemLink.attachEvent('click', {}, function(oEvent){
-				var linkItem = oEvent.getSource();
-				frame.gotoPage(linkItem.data('pageKey'), linkItem.data('menuActiveIndex'));
-			});
-
 			navItemLink.bindProperty('text', {path : menuPage.label});
 			navItem.addContent(navItemLink);
 			navLeft.addItems(navItem);
 		}
+
+		navLeft.attachEvent('tap', {}, function(oEvent){
+			var listItem = oEvent.getParameter('listItem');
+			
+		
+			frame.gotoPage(listItem.data('pageKey'));
+		});
 
 
 		var navButtons = new ui5strap.ButtonGroup({navbarAlign : ui5strap.NavBarAlignment.Right});
@@ -147,17 +147,16 @@
 		navButtons.addButtons(buttonDe);
 		navBar.addCollapse(navButtons);
 
-		buttonEn.attachEvent('click', {}, function(){
-			configuration.setLanguage('en-us');
-			buttonEn.setActive(true);
-			buttonDe.setActive(false);
-			
-		});
+		navButtons.attachEvent('tap', {}, function(oEvent){
+			var srcButton = oEvent.getParameter('button');
+			navButtons.setSelectedButton(srcButton);
 
-		buttonDe.attachEvent('click', {}, function(){
-			configuration.setLanguage('de-de');
-			buttonEn.setActive(false);
-			buttonDe.setActive(true);
+			if(buttonEn === srcButton){
+				configuration.setLanguage('en-us');
+			}
+			else if(buttonDe === srcButton){
+				configuration.setLanguage('de-de');
+			}
 			
 		});
 
@@ -180,7 +179,7 @@
 			var menuPage = _pages[pageKey];
 			frame['goto' + jQuery.sap.charToUpperCase(pageKey, 0)] = (function(pk, ii){ 
 				return function(){
-					frame.gotoPage(pk, ii);
+					frame.gotoPage(pk);
 				}
 			})(pageKey, jQuery.inArray(pageKey, _menu));
 		}
@@ -208,12 +207,17 @@
 	/*
 	* shows a page defined in _pages
 	*/
-	StrapFrameProto.gotoPage = function(pageKey, menuActiveIndex){
+	StrapFrameProto.gotoPage = function(pageKey){
 		if(!(pageKey in _pages)){
 			throw new Error('Invalid page: ' + pageKey);
 		}
-		this.mainMenu.setItemActive(menuActiveIndex);
-		
+		var menuIndex = jQuery.inArray(pageKey, _menu);
+		if(menuIndex !== -1){
+			this.nav.setSelectedIndex(menuIndex);
+		}
+		else{
+			this.nav.setSelectedItem(null);
+		}
 		this.showPage(_pages[pageKey]);
 	};
 
