@@ -34,8 +34,7 @@
 }
 
 .ui5strap-nc-page > .sapUiView{
-  height:100%;padding-top:70px;
-  padding-bottom:30px;
+  height:100%;
 }
 
 .ui5strap-nc-split > .ui5strap-nc-aggregation{
@@ -199,11 +198,7 @@
 
 .transition-flip *{
 
-   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
+   
 }
 
 .transition-flip-current{

@@ -28,3 +28,13 @@ body{
 	margin-top:10px;
 	margin-bottom:10px;
 }
+
+.ui5strap-nc-page > .sapUiView{
+  padding-top:70px;
+  padding-bottom:30px;
+
+}
+
+.ui5strap-scroll-container{
+	background-color:white;
+}
