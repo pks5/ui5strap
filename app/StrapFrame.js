@@ -56,7 +56,8 @@
 			id : 'home-ui5strap',
 			viewName : packageName + '.views.Home',
 			type : 'HTML',
-			label : 'i18n>MENU_HOME'
+			label : 'i18n>MENU_HOME',
+			transition : 'transition-slide'
 		},
 
 		'getStarted' : {
@@ -64,7 +65,8 @@
 			id : 'get-started-ui5strap',
 			viewName : packageName + '.views.GetStarted',
 			type : 'HTML',
-			label : 'i18n>MENU_GET_STARTED'
+			label : 'i18n>MENU_GET_STARTED',
+			transition : 'transition-slide'
 		},
 		
 		'controls' : {
@@ -72,7 +74,8 @@
 			id : 'controls-ui5strap',
 			viewName : packageName + '.views.Controls',
 			type : 'HTML',
-			label : 'i18n>MENU_CONTROLS'
+			label : 'i18n>MENU_CONTROLS',
+			transition : 'transition-slide'
 		},
 		
 		'about' : {
@@ -80,7 +83,8 @@
 			id : 'about-ui5strap',
 			viewName : packageName + '.views.About',
 			type : 'HTML',
-			label : 'i18n>MENU_ABOUT'
+			label : 'i18n>MENU_ABOUT',
+			transition : 'transition-zoom'
 		},
 		
 		'support': {
@@ -88,7 +92,8 @@
 			id : 'support-ui5strap',
 			viewName : packageName + '.views.Support',
 			type : 'HTML',
-			label : 'i18n>MENU_SUPPORT'
+			label : 'i18n>MENU_SUPPORT',
+			transition : 'transition-flip'
 		}
 
 	};
@@ -229,7 +234,7 @@
 		
 		var historyPath = null;
 		if(data.target === 'content'){
-			this.navContainer.setPage(page, 'content', 'transition-slide');
+			this.navContainer.setPage(page, 'content', 'transition' in data ? data.transition : 'transition-slide');
 			//historyPath = HISTORY_PATH_MASTER;
 		}
 		
