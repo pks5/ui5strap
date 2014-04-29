@@ -21,8 +21,8 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 		if(!this.activeButton){
 			this.activeButton = this.getView().byId('defaultThemeButton');
 		}
-		this.activeButton.setActive(false);
-		btn.setActive(true);
+		this.activeButton.setSelected(false);
+		btn.setSelected(true);
 		this.activeButton = btn;
 		jQuery.sap.includeStyleSheet(newTheme, 'style-sheet-0', function(){
 			app.showLoader(false);

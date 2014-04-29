@@ -161,10 +161,10 @@
 		});
 
 		if('de-de' === configuration.getLanguage()){
-			buttonDe.setActive(true);
+			buttonDe.setSelected(true);
 		}
 		else{
-			buttonEn.setActive(true);
+			buttonEn.setSelected(true);
 		}
 
 		frame.navContainer = navContainer;
