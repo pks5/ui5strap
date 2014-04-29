@@ -196,11 +196,6 @@
   height:100%;
 }
 
-.transition-flip *{
-
-   
-}
-
 .transition-flip-current{
   z-index:1;
 }
