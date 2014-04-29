@@ -18,16 +18,21 @@
 
 (function(){
 
-	jQuery.sap.declare("ui5strap.NavContainer");
+	jQuery.sap.require("ui5strap.NavContainerBase");
+
+	var packageName = "com_mycompany.my_app",
+ 		moduleName = packageName + ".modules.NavContainer";
+
+	jQuery.sap.declare(moduleName);
 	
-	sap.ui.core.Control.extend("ui5strap.NavContainer", {
+	ui5strap.NavContainerBase.extend(moduleName, {
 		metadata : {
 
 			// ---- object ----
 			defaultAggregation : "content",
 			
 			// ---- control specific ----
-			library : "ui5strap",
+			library : "com_mycompany.my_app",
 			
 			properties : { },
 			
@@ -44,12 +49,5 @@
 
 		}
 	});
-
-	var NavContainer = ui5strap.NavContainer,
-		NavContainerProto = NavContainer.prototype;
-
-	NavContainerProto.init = function(){
-
-	};
 
 }());

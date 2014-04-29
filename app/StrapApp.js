@@ -62,8 +62,14 @@
 		this._appFrame.placeAt('ui5strap-body');
 
 		this.sheets = [
+			//Bootstrap CSS
 			this._strapRoot + "/bootstrap-3.1.1-dist/css/bootstrap.min.css",
 			//this._appRoot + "/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css",
+			
+			//Ui5Strap CSS
+			this._strapRoot + "/css/ui5strap.css",
+			
+			//App CSS
 			this._appRoot + "/css/theme.css"
 		];	
 
@@ -120,4 +126,30 @@
 		}
 	};
 
+}());
+
+//Provide requestAnimationFrame fuction for older browsers
+(function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame =
+          window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
 }());

@@ -22,7 +22,7 @@
 		moduleName = packageName + ".StrapFrame";
 
 	jQuery.sap.declare(moduleName);
-	jQuery.sap.require("ui5strap.NavContainer");
+	jQuery.sap.require("com_mycompany.my_app.modules.NavContainer");
 	jQuery.sap.require("ui5strap.NavBar");
 	jQuery.sap.require("ui5strap.Nav");
 	jQuery.sap.require("ui5strap.ListItem");
@@ -102,7 +102,7 @@
 	 * creates the nav container
 	 */
 	var _createNavContainer = function(frame){
-		var navContainer = new ui5strap.NavContainer();
+		var navContainer = new com_mycompany.my_app.modules.NavContainer();
 		var navBar = new ui5strap.NavBar();
 
 		navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
@@ -229,8 +229,7 @@
 		
 		var historyPath = null;
 		if(data.target === 'content'){
-			this.navContainer.removeAllContent();
-			this.navContainer.addContent(page);
+			this.navContainer.setPage(page, 'content', 'transition-slide');
 			//historyPath = HISTORY_PATH_MASTER;
 		}
 		

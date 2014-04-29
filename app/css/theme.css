@@ -1,17 +1,6 @@
 body{
-	padding-top: 70px;
-	padding-bottom: 40px;
-}
-
-.ui5strap-nav-container{
-	height:100%;
-}
-
-.ui5strap-nav-container > .ui5strap-nav-container-content{
-	height:100%;
-}
-
-.ui5strap-nav-container > .ui5strap-nav-container-content > .sapUiView{
+	padding:0;
+	margin:0;
 	height:100%;
 }
 
@@ -20,7 +9,7 @@ body{
 	height:30px; 
 	line-height:30px; 
 	width:100%; 
-	position:fixed; 
+	position:absolute; 
 	left:0; 
 	bottom:0;
 	font-size:12px;
