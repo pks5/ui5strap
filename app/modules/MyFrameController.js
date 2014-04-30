@@ -24,14 +24,14 @@
 	jQuery.sap.declare(moduleName);
 	
 	jQuery.sap.require("ui5strap.FrameControllerBase");
-	
+
 	jQuery.sap.require("ui5strap.NavBar");
 	jQuery.sap.require("ui5strap.Nav");
 	jQuery.sap.require("ui5strap.ListItem");
 	jQuery.sap.require("ui5strap.Link");
 	jQuery.sap.require("ui5strap.ButtonGroup");
 	jQuery.sap.require("ui5strap.Button");
-	
+
 	ui5strap.FrameControllerBase.extend(moduleName);
 
 	var StrapFrame = com_mycompany.my_app.modules.MyFrameController,
@@ -126,6 +126,26 @@
 		ui5strap.FrameControllerBase.prototype.init.call(this, frameOptions);
 
 		_createNavContainer(this);
+	};
+
+	StrapFrameProto.setPage = function (data) {
+		ui5strap.FrameControllerBase.prototype.setPage.call(this, data);
+
+		var menuIndex = -1;
+
+		for(var i=0; i<this.options.menu.length; i++){
+			if(data.viewName === this.options.menu[i].viewName){
+				menuIndex = i;
+				break;
+			}
+		}
+
+		if(menuIndex !== -1){
+			this.nav.setSelectedIndex(menuIndex);
+		}
+		else{
+			this.nav.setSelectedItem(null);
+		}
 	};
 
 }());
