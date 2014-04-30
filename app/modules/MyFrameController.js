@@ -129,12 +129,20 @@
 	};
 
 	StrapFrameProto.setPage = function (data) {
-		ui5strap.FrameControllerBase.prototype.setPage.call(this, data);
+		var viewData = liberty.getViewer().getApp().getConfig().getViewData(data.viewName);
+		
+		if(null === viewData){
+			viewData = {};
+		}
+
+		jQuery.extend(viewData, data);
+
+		ui5strap.FrameControllerBase.prototype.setPage.call(this, viewData);
 
 		var menuIndex = -1;
 
 		for(var i=0; i<this.options.menu.length; i++){
-			if(data.viewName === this.options.menu[i].viewName){
+			if(viewData.viewName === this.options.menu[i].viewName){
 				menuIndex = i;
 				break;
 			}
