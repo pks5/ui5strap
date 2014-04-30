@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<title></title>
+		<style>
+			html, body{
+				padding:0;
+				margin:0;
+				height: 100%;
+				font-family: Helvetica;
+			}
+
+			.test-bar{
+				height:50px;
+				background-color:black;
+				margin-bottom:20px;
+			}
+
+			#select-device{
+				height:30px;
+				width:200px;
+				margin:10px 30px;
+				padding:0;
+			}
+
+			.copyright{
+				float:right;
+				color:white;
+				height:100%;
+				padding-right:30px;
+			}
+
+			.copyright a{
+				color:yellow;
+				text-decoration: none;
+				line-height: 50px;
+			}
+
+			.device{
+				position: relative;
+				margin-left:auto;
+				margin-right: auto;
+			}
+
+			.device-body{
+				border-radius:20px;
+				background: #aebcbf; /* Old browsers */
+				background: -moz-linear-gradient(top,  #aebcbf 0%, #6e7774 25%, #0a0e0a 26%, #0a0809 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aebcbf), color-stop(25%,#6e7774), color-stop(26%,#0a0e0a), color-stop(100%,#0a0809)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top,  #aebcbf 0%,#6e7774 25%,#0a0e0a 26%,#0a0809 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top,  #aebcbf 0%,#6e7774 25%,#0a0e0a 26%,#0a0809 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(top,  #aebcbf 0%,#6e7774 25%,#0a0e0a 26%,#0a0809 100%); /* IE10+ */
+				background: linear-gradient(to bottom,  #aebcbf 0%,#6e7774 25%,#0a0e0a 26%,#0a0809 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aebcbf', endColorstr='#0a0809',GradientType=0 ); /* IE6-9 */
+
+				-moz-box-shadow:    0px 0px 3px 0px #000;
+				-webkit-box-shadow: 0px 0px 3px 0px #000;
+				box-shadow:         0px 0px 3px 0px #000;
+
+				width:100%;
+				height:100%;
+			}
+
+			.device-screen{
+				position:absolute;
+			}
+
+			.device-iframe{
+				width:100%;
+				height:100%;
+				border:none;
+				background-color:black;
+			}
+
+			/*
+			* Iphone 4 Portrait
+			*/
+
+			.device.device-iphone4-portrait{
+				width:360px;
+				height:600px;
+			}
+
+			.device.device-iphone4-portrait .device-screen{
+				top:60px;
+				left:20px;
+
+				width:320px;
+				height:480px;
+			}
+
+			/*
+			* Iphone 4 Landscape
+			*/
+
+			.device.device-iphone4-landscape{
+				width:600px;
+				height:360px;
+			}
+
+			.device.device-iphone4-landscape .device-screen{
+				top:20px;
+				left:60px;
+
+				width:480px;
+				height:320px;
+			}
+
+			/*
+			* IPad 2 Portrait
+			*/
+
+			.device.device-ipad2-portrait{
+				width:750px;
+				height:1104px;
+			}
+
+			.device.device-ipad2-portrait .device-screen{
+				top:40px;
+				left:30px;
+
+				width:690px;
+				height:1024px;
+			}
+
+			/*
+			* IPad 2 Landscape
+			*/
+
+			.device.device-ipad2-landscape{
+				width:1104px;
+				height:750px;
+			}
+
+			.device.device-ipad2-landscape .device-screen{
+				top:30px;
+				left:40px;
+
+				width:1024px;
+				height:690px;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div class="test-bar">
+			<select id="select-device">
+				<option value="iphone4-portrait">
+					Iphone4 Portrait
+				</option>
+				<option value="iphone4-landscape">
+					Iphone4 Landscape
+				</option>
+				<option value="ipad2-portrait">
+					IPad2 Portrait
+				</option>
+				<option value="ipad2-landscape">
+					IPad2 Landscape
+				</option>
+			</select>
+
+			<div class="copyright">The Ui5Strap Test Tool - Copyright 2014 <a href="ui5strap.com">Ui5Strap.com</a></div>
+		</div>
+		
+		<div id="device" class="device device-ipad-landscape">
+			<div id="device-body" class="device-body">
+				<div id="device-screen" class="device-screen">
+					<iframe src="index.html" id="device-iframe" class="device-iframe"></iframe>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			var updateDevice = function(){
+				document.getElementById('device').className = 'device device-' + selectBox.value;
+			}
+
+			var selectBox = document.getElementById('select-device');
+			selectBox.onchange = function(){
+				updateDevice();
+			};
+
+			updateDevice();
+				
+		</script>
+		
+	</body>
+
+</html>
