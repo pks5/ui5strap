@@ -23,14 +23,16 @@
 
 	jQuery.sap.declare(moduleName);
 	
+	jQuery.sap.require("ui5strap.FrameControllerBase");
+	
 	jQuery.sap.require("ui5strap.NavBar");
 	jQuery.sap.require("ui5strap.Nav");
 	jQuery.sap.require("ui5strap.ListItem");
 	jQuery.sap.require("ui5strap.Link");
 	jQuery.sap.require("ui5strap.ButtonGroup");
 	jQuery.sap.require("ui5strap.Button");
-
-	sap.ui.base.Object.extend(moduleName);
+	
+	ui5strap.FrameControllerBase.extend(moduleName);
 
 	var StrapFrame = com_mycompany.my_app.modules.MyFrameController,
 		StrapFrameProto = StrapFrame.prototype,
@@ -77,15 +79,10 @@
 		navLeft.attachEvent('tap', {}, function(oEvent){
 			var listItem = oEvent.getParameter('listItem');
 			
-			var viewData = liberty.getViewer().getApp().getViewData(listItem.data('viewName'));
-
-			if(viewData === null){
-				throw new Error('Cannot show menu item: the view must be defined in configuration.');
-			}
-
-			viewData.target = "content";
-
-			frame.setPage(viewData);
+			frame.setPage({
+				viewName : listItem.data('viewName'),
+				target : "content"
+			});
 
 		});
 
@@ -126,157 +123,9 @@
 	 * called by constructor
 	 */
 	StrapFrameProto.init = function(frameOptions){
-		this.options = frameOptions;
+		ui5strap.FrameControllerBase.prototype.init.call(this, frameOptions);
 
-		this._pages = {};
-		
 		_createNavContainer(this);
-
-		//this._initHistory();
 	};
 
-	StrapFrameProto.showInitialContent = function(){
-		var initialViews = this.options.initialViews;
-
-		for(var target in initialViews){
-			var pageData = initialViews[target];
-			
-			var viewData = liberty.getViewer().getApp().getViewData(pageData.viewName);
-			
-			if(viewData === null){
-				throw new Error('Cannot show initial view: the view must be defined in configuration.');
-			}
-
-			jQuery.extend(viewData, pageData);
-			viewData.target = target;
-
-			this.setPage(viewData);
-		}
-
-	};
-
-
-	/*
-	 * places this frame in dom
-	 */
-	StrapFrameProto.placeAt = function(domId){
-		return this.getNavContainer().placeAt(domId);
-	};
-
-	/*
-	 * adds a page to the internal cache
-	 */
-	var _addPageToCache = function(frame, pageProperties){
-		if(!("id" in pageProperties)){
-			return new sap.ui.view(pageProperties);
-		}
-
-		var pageId = pageProperties.id;
-		
-		if(frame._pages[pageId]){
-			return frame._pages[pageId];
-		}
-
-		var page = new sap.ui.view(pageProperties);
-			
-		this._pages[pageId] = page;
-		
-		return page;
-	};
-
-	/*
-	 * shows a page defined by given data
-	 */
-	StrapFrameProto.setPage = function (data) {
-
-		var viewData = liberty.getViewer().getApp().getViewData(data.viewName);
-		
-		if(null === viewData){
-			viewData = {};
-		}
-
-		jQuery.extend(viewData, data);
-
-		var page = _addPageToCache(this, viewData);
-		
-		this.getNavContainer().setPage(page, viewData.target, 'transition' in viewData ? viewData.transition : 'transition-slide');
-		
-		
-		var menuIndex = -1;
-
-		for(var i=0; i<this.options.menu.length; i++){
-			if(viewData.viewName === this.options.menu[i].viewName){
-				menuIndex = i;
-				break;
-			}
-		}
-
-		if(menuIndex !== -1){
-			this.nav.setSelectedIndex(menuIndex);
-		}
-		else{
-			this.nav.setSelectedItem(null);
-		}
-		
-
-		/*
-		// write browser history
-		if (historyPath && data.writeHistory) {
-			var bookmarkable = false;
-			jQuery.sap.history.addHistory(historyPath, data, bookmarkable);
-		}
-		*/
-	};
-
-	
-
-	/*
-	
-	StrapFrameProto._registerNavHandlers = function(){
-		var oBus = sap.ui.getCore().getEventBus();
-		
-		oBus.subscribe("nav", "to", jQuery.proxy(this._navTo, this));
-		oBus.subscribe("nav", "back", jQuery.proxy(this._navBack, this));
-	};
-
-	StrapFrameProto._initHistory = function () {
-
-		_self = this;
-		jQuery.sap.require("jquery.sap.history");
-		jQuery.sap.history({
-			routes : [
-				{
-					path : HISTORY_PATH_MASTER,
-					handler : function (params, navType) {
-						
-						if (navType === jQuery.sap.history.NavType.Back) {
-								
-							}
-						params.writeHistory = false;
-						_self._navTo("nav", "to", params);
-					}
-				},
-				{
-					path : HISTORY_PATH_DETAIL,
-					handler : function (params, navType) {
-						
-						if (navType === jQuery.sap.history.NavType.Back) {
-								
-							}
-						params.writeHistory = false;
-						_self._navTo("nav", "to", params);
-					}
-				}
-			],
-			defaultHandler : function (navType) {
-
-				if (navType === jQuery.sap.history.NavType.Back) {
-					
-				}
-				console.log("route");
-			}
-		});
-	};
-
-	*/
 }());

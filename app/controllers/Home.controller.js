@@ -20,7 +20,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 
 	switchTheme : function(oEvent){
 		var app = this.app;
-		app.showLoader(true);
+		app.setLoaderVisible(true);
 		
 		var btn = oEvent.getSource();
 		var newTheme = btn.getCustomData()[0].getValue('theme');
@@ -34,7 +34,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 		btn.setSelected(true);
 		this.activeButton = btn;
 		jQuery.sap.includeStyleSheet(newTheme, 'ui5strap-css-0', function(){
-			app.showLoader(false);
+			app.setLoaderVisible(false);
 		}, null);
 		
 		
