@@ -44,7 +44,7 @@
 }());
 
  function ui5strapInit(_appBase){
- 	
+
  	var _initConfig = function(callback){
 		var configModel = new sap.ui.model.json.JSONModel();
 		
@@ -73,12 +73,22 @@
 
 		var _instance = null;
 
-		MyApp.getInstance = function(){
-			if(null === _instance){
-				_instance = new MyApp();
+		jQuery.sap.declare('liberty');
+
+		liberty = {};
+
+		var _libertyViewer = {
+			getApp : function(){
+				if(null === _instance){
+					_instance = new MyApp();
+				}
+				return _instance;
 			}
-			return _instance;
 		};
+
+	 	liberty.getViewer = function(){
+	 		return _libertyViewer;
+	 	};
 
 		var _initStyle = function(sheets, callback){
 			var callI = 0;
@@ -113,11 +123,6 @@
 
 			app.getLocalization();
 
-			var resolvePackage = function(packageName){
-				return packageName.replace("{package}", _packageName);
-			};
-			app.resolveModuleName = resolvePackage;
-
 			//Libs
 			var libs = _configData.libraries;
 
@@ -126,25 +131,18 @@
 			}
 
 			//Views
-			var resolvedViews = {};
 			var views = _configData.views;
 
-			for(var viewName in views){
-
-				var resolvedViewName = resolvePackage(viewName);
-				resolvedViews[resolvedViewName] = views[viewName];
-			}
-
 			app.getViewData = function(viewName){
-				if(!(viewName in resolvedViews)){
-					throw new Error('Invalid view: ' + viewName);
+				if(!(viewName in views)){
+					return null;
 				}
-				return jQuery.extend({}, resolvedViews[viewName]);
+				return jQuery.extend({ viewName : viewName }, views[viewName]);
 			};
 
 			//Frame
 			var frameOptions = _configData.frame;
-			var frameModule = resolvePackage(frameOptions.module);
+			var frameModule = frameOptions.module;
 			jQuery.sap.require(frameModule);
 
 			var FrameConstructor = jQuery.sap.getObject(frameModule);
@@ -170,41 +168,12 @@
 				}
 			}
 
-			frame.init(app, frameOptions);
+			frame.init(frameOptions);
 			frame.placeAt('ui5strap-body');
 
 			_initStyle(sheets, function(){
 				_start(app);
 			});
-		};
-
-		/*
-		* shows a page defined in _pages
-		*/
-		MyAppProto.gotoPage = function(pageData){
-			if(!("viewName" in pageData)){
-				throw new Error('Cannot goto page: viewName is missing!');
-			}
-			if(!("target" in pageData)){
-				throw new Error('Cannot goto page: target is missing!');
-			}
-
-			var viewName = this.resolveModuleName(pageData.viewName);
-			
-			var viewData = this.getViewData(viewName);
-
-			viewData.target = pageData.target;
-			if("transition" in pageData){
-				viewData.transition = pageData.transition;
-			}
-
-			viewData.viewName = viewName;
-
-			if("id" in pageData){
-				viewData.id = pageData.id;
-			}
-			
-			this.getFrame().setPage(viewData);
 		};
 
 		MyAppProto.showLoader = function(visible){
@@ -226,7 +195,7 @@
 			}
 		};
 
-		MyApp.getInstance().init();
+		liberty.getViewer().getApp().init();
 
 	}); //End _initConfig
 

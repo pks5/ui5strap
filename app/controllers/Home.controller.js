@@ -1,9 +1,9 @@
 sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 
-	app : com_mycompany.my_app.App.getInstance(),
+	app : liberty.getViewer().getApp(),
 
 	gotoGetStarted : function(){
-		this.app.gotoPage({
+		this.app.getFrame().setPage({
 			viewName : "com_mycompany.my_app.views.GetStarted",
 			transition : "transition-flip",
 			target : "content"
@@ -11,7 +11,11 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 	},
 
 	gotoAbout : function(){
-		this.app.getFrame().gotoAbout();
+		this.app.getFrame().setPage({
+			viewName : "com_mycompany.my_app.views.About",
+			transition : "transition-flip",
+			target : "content"
+		});
 	},
 
 	switchTheme : function(oEvent){

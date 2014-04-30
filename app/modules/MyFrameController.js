@@ -66,7 +66,7 @@
 			var menuPage = menu[i];
 			
 			var navItem = new ui5strap.ListItem();
-			navItem.data('viewName', frame.app.resolveModuleName(menuPage.viewName));
+			navItem.data('viewName', menuPage.viewName);
 			var navItemLink = new ui5strap.Link();
 			navItemLink.bindProperty('text', {path : menuPage.label});
 			navItem.addContent(navItemLink);
@@ -77,10 +77,15 @@
 		navLeft.attachEvent('tap', {}, function(oEvent){
 			var listItem = oEvent.getParameter('listItem');
 			
-			frame.app.gotoPage({
-				target : "content",
-				viewName : listItem.data('viewName')
-			});
+			var viewData = liberty.getViewer().getApp().getViewData(listItem.data('viewName'));
+
+			if(viewData === null){
+				throw new Error('Cannot show menu item: the view must be defined in configuration.');
+			}
+
+			viewData.target = "content";
+
+			frame.setPage(viewData);
 
 		});
 
@@ -120,8 +125,7 @@
 	/*
 	 * called by constructor
 	 */
-	StrapFrameProto.init = function(app, frameOptions){
-		this.app = app;
+	StrapFrameProto.init = function(frameOptions){
 		this.options = frameOptions;
 
 		this._pages = {};
@@ -132,12 +136,21 @@
 	};
 
 	StrapFrameProto.showInitialContent = function(){
-		var initialViews = jQuery.extend({}, this.options.initialViews);
+		var initialViews = this.options.initialViews;
 
 		for(var target in initialViews){
 			var pageData = initialViews[target];
-			pageData.target = target;
-			this.app.gotoPage(pageData);
+			
+			var viewData = liberty.getViewer().getApp().getViewData(pageData.viewName);
+			
+			if(viewData === null){
+				throw new Error('Cannot show initial view: the view must be defined in configuration.');
+			}
+
+			jQuery.extend(viewData, pageData);
+			viewData.target = target;
+
+			this.setPage(viewData);
 		}
 
 	};
@@ -176,15 +189,23 @@
 	 */
 	StrapFrameProto.setPage = function (data) {
 
-		var page = _addPageToCache(this, data);
+		var viewData = liberty.getViewer().getApp().getViewData(data.viewName);
 		
-		this.getNavContainer().setPage(page, data.target, 'transition' in data ? data.transition : 'transition-slide');
+		if(null === viewData){
+			viewData = {};
+		}
+
+		jQuery.extend(viewData, data);
+
+		var page = _addPageToCache(this, viewData);
+		
+		this.getNavContainer().setPage(page, viewData.target, 'transition' in viewData ? viewData.transition : 'transition-slide');
 		
 		
 		var menuIndex = -1;
 
 		for(var i=0; i<this.options.menu.length; i++){
-			if(data.viewName === this.app.resolveModuleName(this.options.menu[i].viewName)){
+			if(viewData.viewName === this.options.menu[i].viewName){
 				menuIndex = i;
 				break;
 			}
