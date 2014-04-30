@@ -21,7 +21,7 @@
 	jQuery.sap.require("ui5strap.NavContainerBase");
 
 	var packageName = "com_mycompany.my_app",
- 		moduleName = packageName + ".modules.NavContainer";
+ 		moduleName = packageName + ".modules.MyNavContainer";
 
 	jQuery.sap.declare(moduleName);
 	

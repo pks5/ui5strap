@@ -19,11 +19,11 @@
 
 (function(){
 
-	jQuery.sap.declare("com_mycompany.my_app.modules.NavContainerRenderer");
+	jQuery.sap.declare("com_mycompany.my_app.modules.MyNavContainerRenderer");
 
 	var NavContainerRenderer = {};
 
-	com_mycompany.my_app.modules.NavContainerRenderer = NavContainerRenderer;
+	com_mycompany.my_app.modules.MyNavContainerRenderer = NavContainerRenderer;
 
 	NavContainerRenderer.render = function(rm, oControl) {
 		var navBar = oControl.getNavBar();

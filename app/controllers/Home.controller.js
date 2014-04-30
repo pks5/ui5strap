@@ -1,9 +1,13 @@
 sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 
-	app : com_mycompany.my_app.StrapApp.getInstance(),
+	app : com_mycompany.my_app.App.getInstance(),
 
 	gotoGetStarted : function(){
-		this.app.getFrame().gotoGetStarted();
+		this.app.gotoPage({
+			viewName : "com_mycompany.my_app.views.GetStarted",
+			transition : "transition-flip",
+			target : "content"
+		});
 	},
 
 	gotoAbout : function(){
@@ -13,10 +17,11 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 	switchTheme : function(oEvent){
 		var app = this.app;
 		app.showLoader(true);
+		
 		var btn = oEvent.getSource();
 		var newTheme = btn.getCustomData()[0].getValue('theme');
 		if('default' === newTheme){
-			newTheme = app.sheets[0];
+			newTheme = jQuery.sap.getModulePath('ui5strap') + '/bootstrap-3.1.1-dist/css/bootstrap.min.css';
 		}
 		if(!this.activeButton){
 			this.activeButton = this.getView().byId('defaultThemeButton');
@@ -24,7 +29,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 		this.activeButton.setSelected(false);
 		btn.setSelected(true);
 		this.activeButton = btn;
-		jQuery.sap.includeStyleSheet(newTheme, 'style-sheet-0', function(){
+		jQuery.sap.includeStyleSheet(newTheme, 'ui5strap-css-0', function(){
 			app.showLoader(false);
 		}, null);
 		

@@ -1,0 +1,89 @@
+{
+        "app" : {
+            "name" : "Ui5Strap Boilerplate",
+            "package" : "com_mycompany.my_app"
+        },
+
+        "developers" : [
+            {
+                "name" : "Jan Philipp Knöller",
+                "email" : "info@pksoftware.de",
+                "timezone" : -1,
+                "roles" : [
+                    "Developer"
+                ]
+            }
+        ],
+
+        "licenses" : [
+            {
+                "name" : "Apache2 License",
+                "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        ],
+
+        "libraries" : {
+            "ui5strap" : "./lib/ui5strap/"
+        },
+
+        "css" : [
+            {
+                "package" : "ui5strap",
+                "src" : "bootstrap-3.1.1-dist/css/bootstrap.min.css"
+            },
+            {
+                "package" : "ui5strap",
+                "src" : "css/ui5strap.css"
+            },
+            "css/theme.css"
+        ],
+
+        "frame" : {
+                "module" : "{package}.modules.MyFrameController",
+                "initialViews" : {
+                    "content" : { 
+                        "viewName" : "{package}.views.Home"
+                    }
+                },
+                "menu" : [
+                    {
+                        "viewName" : "{package}.views.Home",
+                        "label" : "i18n>MENU_HOME"
+                    },
+                    {
+                        "viewName" : "{package}.views.GetStarted",
+                        "label" : "i18n>MENU_GET_STARTED"
+                    },
+                    {
+                        "viewName" : "{package}.views.Controls",
+                        "label" : "i18n>MENU_CONTROLS"
+                    },
+                    {
+                        "viewName" : "{package}.views.Support",
+                        "label" : "i18n>MENU_SUPPORT"
+                    }
+                ]
+        },
+
+        "views" : {
+            "{package}.views.Home" : {
+                "type" : "HTML"
+            },
+
+            "{package}.views.GetStarted" : {
+                "type" : "HTML"
+            },
+            
+            "{package}.views.Controls" : {
+                "type" : "HTML"
+            },
+            
+            "{package}.views.About" : {
+                "type" : "HTML"
+            },
+            
+            "{package}.views.Support" : {
+                "type" : "HTML"
+            }
+        }
+}

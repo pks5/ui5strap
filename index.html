@@ -24,25 +24,10 @@
 		<!-- OpenUI5 Library -->
 		<!-- Get it from http://sap.github.io/openui5/ and put it into the directory structure -->
 		<script id="sap-ui-bootstrap" src="resources/sap-ui-core.js" data-sap-ui-xx-fakeOS="ipad"></script>
-		
+		<script id="ui5strap-bootstrap" src="app/ui5strap-app.js"></script>
 		<script>
-
-				//Define package name
-				var packageName = "com_mycompany.my_app";
-				
-				//Package can be found at "./app" (relative to the index.html file)
-				jQuery.sap.registerModulePath(packageName, "./app");
-				
-				//Require com_mycompany.my_app.StrapApp (resolved to "./app/StrapApp.js")
-				jQuery.sap.require(packageName + ".StrapApp");
-				
-				//Get the instance of the app main module
-				var app = com_mycompany.my_app.StrapApp.getInstance();
-				
-				//Initialize the app main module
-				app.init();
+			ui5strapInit('./app');
 		</script>
-		
 	</body>
 
 </html>

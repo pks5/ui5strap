@@ -19,10 +19,10 @@
 (function(){
 
 	var packageName = "com_mycompany.my_app",
-		moduleName = packageName + ".StrapFrame";
+		moduleName = packageName + ".modules.MyFrameController";
 
 	jQuery.sap.declare(moduleName);
-	jQuery.sap.require("com_mycompany.my_app.modules.NavContainer");
+	
 	jQuery.sap.require("ui5strap.NavBar");
 	jQuery.sap.require("ui5strap.Nav");
 	jQuery.sap.require("ui5strap.ListItem");
@@ -32,82 +32,17 @@
 
 	sap.ui.base.Object.extend(moduleName);
 
-	var StrapFrame = com_mycompany.my_app.StrapFrame,
+	var StrapFrame = com_mycompany.my_app.modules.MyFrameController,
 		StrapFrameProto = StrapFrame.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
-
-	/*
-	* available pages
-	*/
-	var _pages = {
-
-		// EXAMPLE
-		//
-		//'myPage': {
-		//	target : 'content',
-		//	id : 'my-page-in-my-app',
-		//	viewName : 'my_company.my_app.views.MyView',
-		//	type : 'HTML',
-		//	label : 'i18n>MENU_MY_PAGE'
-		//},
-		
-		'home' : {
-			target : 'content',
-			id : 'home-ui5strap',
-			viewName : packageName + '.views.Home',
-			type : 'HTML',
-			label : 'i18n>MENU_HOME',
-			transition : 'transition-slide'
-		},
-
-		'getStarted' : {
-			target : 'content',
-			id : 'get-started-ui5strap',
-			viewName : packageName + '.views.GetStarted',
-			type : 'HTML',
-			label : 'i18n>MENU_GET_STARTED',
-			transition : 'transition-slide'
-		},
-		
-		'controls' : {
-			target : 'content',
-			id : 'controls-ui5strap',
-			viewName : packageName + '.views.Controls',
-			type : 'HTML',
-			label : 'i18n>MENU_CONTROLS',
-			transition : 'transition-slide'
-		},
-		
-		'about' : {
-			target : 'content',
-			id : 'about-ui5strap',
-			viewName : packageName + '.views.About',
-			type : 'HTML',
-			label : 'i18n>MENU_ABOUT',
-			transition : 'transition-zoom'
-		},
-		
-		'support': {
-			target : 'content',
-			id : 'support-ui5strap',
-			viewName : packageName + '.views.Support',
-			type : 'HTML',
-			label : 'i18n>MENU_SUPPORT',
-			transition : 'transition-flip'
-		}
-
-	};
-
-	/*
-	* pages that should be shown in the menu specified by _pages keys.
-	*/
-	var _menu = ['about', 'getStarted', 'controls', 'support'];
 
 	/*
 	 * creates the nav container
 	 */
 	var _createNavContainer = function(frame){
-		var navContainer = new com_mycompany.my_app.modules.NavContainer();
+		jQuery.sap.require("com_mycompany.my_app.modules.MyNavContainer");
+		var navContainer = new com_mycompany.my_app.modules.MyNavContainer();
+
 		var navBar = new ui5strap.NavBar();
 
 		navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
@@ -115,33 +50,38 @@
 		navBar.setPosition(ui5strap.NavBarPosition.FixedTop);
 
 		navBar.attachEvent('brandTap', {}, function(){
-			frame.gotoHome();
+			frame.showInitialContent();
 		});
 
 		navContainer.setNavBar(navBar);
 
 		var navLeft = new ui5strap.Nav();
 		frame.nav = navLeft;
+
 		navLeft.setNavbarAlign(ui5strap.NavBarAlignment.Left);
 		navBar.addCollapse(navLeft);
 
-		for (var i = 0; i < _menu.length; i++){
-			var pageKey = _menu[i];
-			var menuPage = _pages[pageKey];
+		var menu = frame.options.menu;
+		for (var i = 0; i < menu.length; i++){
+			var menuPage = menu[i];
 			
 			var navItem = new ui5strap.ListItem();
-			navItem.data('pageKey', pageKey);
+			navItem.data('viewName', frame.app.resolveModuleName(menuPage.viewName));
 			var navItemLink = new ui5strap.Link();
 			navItemLink.bindProperty('text', {path : menuPage.label});
 			navItem.addContent(navItemLink);
 			navLeft.addItems(navItem);
 		}
 
+
 		navLeft.attachEvent('tap', {}, function(oEvent){
 			var listItem = oEvent.getParameter('listItem');
 			
-		
-			frame.gotoPage(listItem.data('pageKey'));
+			frame.app.gotoPage({
+				target : "content",
+				viewName : listItem.data('viewName')
+			});
+
 		});
 
 
@@ -172,72 +112,92 @@
 			buttonEn.setSelected(true);
 		}
 
-		frame.navContainer = navContainer;
-		frame.mainMenu = navLeft;
-	};
-
-	/*
-	* create the goto* methods for navigation
-	*/
-	var _createGotoMethods = function(frame){
-		for (var pageKey in _pages){
-			var menuPage = _pages[pageKey];
-			frame['goto' + jQuery.sap.charToUpperCase(pageKey, 0)] = (function(pk, ii){ 
-				return function(){
-					frame.gotoPage(pk);
-				}
-			})(pageKey, jQuery.inArray(pageKey, _menu));
-		}
+		frame.getNavContainer = function(){
+			return navContainer;
+		};
 	};
 
 	/*
 	 * called by constructor
 	 */
-	StrapFrameProto.init = function(){
+	StrapFrameProto.init = function(app, frameOptions){
+		this.app = app;
+		this.options = frameOptions;
+
 		this._pages = {};
 		
-		_createGotoMethods(this);
 		_createNavContainer(this);
 
 		//this._initHistory();
 	};
 
+	StrapFrameProto.showInitialContent = function(){
+		var initialViews = jQuery.extend({}, this.options.initialViews);
+
+		for(var target in initialViews){
+			var pageData = initialViews[target];
+			pageData.target = target;
+			this.app.gotoPage(pageData);
+		}
+
+	};
+
+
 	/*
 	 * places this frame in dom
 	 */
 	StrapFrameProto.placeAt = function(domId){
-		return this.navContainer.placeAt(domId);
+		return this.getNavContainer().placeAt(domId);
 	};
 
 	/*
-	* shows a page defined in _pages
-	*/
-	StrapFrameProto.gotoPage = function(pageKey){
-		if(!(pageKey in _pages)){
-			throw new Error('Invalid page: ' + pageKey);
+	 * adds a page to the internal cache
+	 */
+	var _addPageToCache = function(frame, pageProperties){
+		if(!("id" in pageProperties)){
+			return new sap.ui.view(pageProperties);
 		}
-		var menuIndex = jQuery.inArray(pageKey, _menu);
+
+		var pageId = pageProperties.id;
+		
+		if(frame._pages[pageId]){
+			return frame._pages[pageId];
+		}
+
+		var page = new sap.ui.view(pageProperties);
+			
+		this._pages[pageId] = page;
+		
+		return page;
+	};
+
+	/*
+	 * shows a page defined by given data
+	 */
+	StrapFrameProto.setPage = function (data) {
+
+		var page = _addPageToCache(this, data);
+		
+		this.getNavContainer().setPage(page, data.target, 'transition' in data ? data.transition : 'transition-slide');
+		
+		
+		var menuIndex = -1;
+
+		for(var i=0; i<this.options.menu.length; i++){
+			if(data.viewName === this.app.resolveModuleName(this.options.menu[i].viewName)){
+				menuIndex = i;
+				break;
+			}
+		}
+
 		if(menuIndex !== -1){
 			this.nav.setSelectedIndex(menuIndex);
 		}
 		else{
 			this.nav.setSelectedItem(null);
 		}
-		this.showPage(_pages[pageKey]);
-	};
+		
 
-	/*
-	 * shows a page defined by given data
-	 */
-	StrapFrameProto.showPage = function (data) {
-		var page = this._addPage(data);
-		
-		var historyPath = null;
-		if(data.target === 'content'){
-			this.navContainer.setPage(page, 'content', 'transition' in data ? data.transition : 'transition-slide');
-			//historyPath = HISTORY_PATH_MASTER;
-		}
-		
 		/*
 		// write browser history
 		if (historyPath && data.writeHistory) {
@@ -247,20 +207,7 @@
 		*/
 	};
 
-	/*
-	 * adds a page to the internal cache
-	 */
-	StrapFrameProto._addPage = function(pageProperties){
-		if(this._pages[pageProperties.id]){
-			return this._pages[pageProperties.id];
-		}
-
-		var page = new sap.ui.view(pageProperties);
-			
-		this._pages[pageProperties.id] = page;
-		
-		return page;
-	};
+	
 
 	/*
 	
