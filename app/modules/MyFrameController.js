@@ -34,8 +34,8 @@
 
 	ui5strap.LibertyFrame.extend(_moduleName);
 
-	var StrapFrame = com_mycompany.my_app.modules.MyFrameController,
-		StrapFrameProto = StrapFrame.prototype,
+	var FrameController = com_mycompany.my_app.modules.MyFrameController,
+		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
 	var _createPrivateProperties = function(_this){
@@ -49,8 +49,18 @@
 				return navContainer;
 			}
 
-			jQuery.sap.require("com_mycompany.my_app.modules.MyNavContainer");
-			navContainer = new com_mycompany.my_app.modules.MyNavContainer();
+			var frameOptions = _this.getConfig().getFrame();
+			
+			if(!("navContainer" in frameOptions)){
+				throw new Error('Invalid frame options: no nav container defined.');
+			}
+
+			var navContainerModule = frameOptions.navContainer;
+
+			jQuery.sap.require(navContainerModule);
+			var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
+
+			navContainer = new NavContainerConstructor();
 
 			var navBar = new ui5strap.NavBar();
 
@@ -70,13 +80,13 @@
 			navLeft.setNavbarAlign(ui5strap.NavBarAlignment.Left);
 			navBar.addCollapse(navLeft);
 
-			var frameOptions = _this.getConfig().getFrame();
 			var menu = frameOptions.menu;
 			for (var i = 0; i < menu.length; i++){
 				var menuPage = menu[i];
 				
 				var navItem = new ui5strap.ListItem();
 				navItem.data('viewName', menuPage.viewName);
+				navItem.data('target', menuPage.target);
 				var navItemLink = new ui5strap.Link();
 				navItemLink.bindProperty('text', {path : menuPage.label});
 				navItem.addContent(navItemLink);
@@ -89,7 +99,7 @@
 				
 				_this.setPage({
 					viewName : listItem.data('viewName'),
-					target : "content"
+					target : listItem.data('target')
 				});
 
 			});
@@ -128,13 +138,13 @@
 
 	};
 
-	StrapFrameProto.init = function(){
+	FrameControllerProto.init = function(){
 		ui5strap.LibertyFrame.prototype.init.call(this);
 
 		_createPrivateProperties(this);
 	};
 
-	StrapFrameProto.setPage = function (data) {
+	FrameControllerProto.setPage = function (data) {
 		ui5strap.LibertyFrame.prototype.setPage.call(this, data);
 
 		var frameOptions = this.getConfig().getFrame();

@@ -40,29 +40,36 @@
 
         "frame" : {
                 "module" : "com_mycompany.my_app.modules.MyFrameController",
-                "initialViews" : {
-                    "content" : { 
+                "navContainer" : "com_mycompany.my_app.modules.MyNavContainer",
+                "initialViews" : [
+                    { 
+                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Home"
                     }
-                },
+                ],
                 "menu" : [
                     {
+                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Home",
                         "label" : "i18n>MENU_HOME"
                     },
                     {
+                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.About",
                         "label" : "i18n>MENU_ABOUT"
                     },
                     {
+                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.GetStarted",
                         "label" : "i18n>MENU_GET_STARTED"
                     },
                     {
+                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Controls",
                         "label" : "i18n>MENU_CONTROLS"
                     },
                     {
+                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Support",
                         "label" : "i18n>MENU_SUPPORT"
                     }
