@@ -22,9 +22,12 @@
             }
         ],
 
-        "libraries" : {
-            "ui5strap" : "./lib/ui5strap/"
-        },
+        "libraries" : [ 
+            {
+                "package" : "ui5strap",
+                "location" : "./lib/ui5strap/"
+            }
+        ],
 
         "css" : [
             {
@@ -36,6 +39,14 @@
                 "src" : "css/ui5strap.css"
             },
             "css/theme.css"
+        ],
+
+        "models" : [
+            {
+                "src" : "i18n/i18n.properties",
+                "type" : "RESOURCE",
+                "modelName" : "i18n" 
+            }
         ],
 
         "frame" : {

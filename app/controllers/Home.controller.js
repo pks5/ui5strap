@@ -36,7 +36,6 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 		jQuery.sap.includeStyleSheet(newTheme, 'ui5strap-css-0', function(){
 			app.setLoaderVisible(false);
 		}, null);
-		
-		
 	}
+	
 });
