@@ -18,12 +18,12 @@
 
 (function(){
 
-	var packageName = "com_mycompany.my_app",
-		moduleName = packageName + ".modules.MyFrameController";
+	var _packageName = "com_mycompany.my_app",
+		_moduleName = _packageName + ".modules.MyFrameController";
 
-	jQuery.sap.declare(moduleName);
+	jQuery.sap.declare(_moduleName);
 	
-	jQuery.sap.require("ui5strap.FrameControllerBase");
+	jQuery.sap.require("ui5strap.LibertyFrame");
 
 	jQuery.sap.require("ui5strap.NavBar");
 	jQuery.sap.require("ui5strap.Nav");
@@ -32,117 +32,117 @@
 	jQuery.sap.require("ui5strap.ButtonGroup");
 	jQuery.sap.require("ui5strap.Button");
 
-	ui5strap.FrameControllerBase.extend(moduleName);
+	ui5strap.LibertyFrame.extend(_moduleName);
 
 	var StrapFrame = com_mycompany.my_app.modules.MyFrameController,
 		StrapFrameProto = StrapFrame.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
-	/*
-	 * creates the nav container
-	 */
-	var _createNavContainer = function(frame){
-		jQuery.sap.require("com_mycompany.my_app.modules.MyNavContainer");
-		var navContainer = new com_mycompany.my_app.modules.MyNavContainer();
+	var _createPrivateProperties = function(_this){
+		var navContainer = null;
 
-		var navBar = new ui5strap.NavBar();
+		/*
+		 * creates the nav container
+		 */
+		_this.getNavContainer = function(){
+			if(null !== navContainer){
+				return navContainer;
+			}
 
-		navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
-		navBar.setInverse(true);
-		navBar.setPosition(ui5strap.NavBarPosition.FixedTop);
+			jQuery.sap.require("com_mycompany.my_app.modules.MyNavContainer");
+			navContainer = new com_mycompany.my_app.modules.MyNavContainer();
 
-		navBar.attachEvent('brandTap', {}, function(){
-			frame.showInitialContent();
-		});
+			var navBar = new ui5strap.NavBar();
 
-		navContainer.setNavBar(navBar);
+			navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
+			navBar.setInverse(true);
+			navBar.setPosition(ui5strap.NavBarPosition.FixedTop);
 
-		var navLeft = new ui5strap.Nav();
-		frame.nav = navLeft;
-
-		navLeft.setNavbarAlign(ui5strap.NavBarAlignment.Left);
-		navBar.addCollapse(navLeft);
-
-		var menu = frame.options.menu;
-		for (var i = 0; i < menu.length; i++){
-			var menuPage = menu[i];
-			
-			var navItem = new ui5strap.ListItem();
-			navItem.data('viewName', menuPage.viewName);
-			var navItemLink = new ui5strap.Link();
-			navItemLink.bindProperty('text', {path : menuPage.label});
-			navItem.addContent(navItemLink);
-			navLeft.addItems(navItem);
-		}
-
-
-		navLeft.attachEvent('tap', {}, function(oEvent){
-			var listItem = oEvent.getParameter('listItem');
-			
-			frame.setPage({
-				viewName : listItem.data('viewName'),
-				target : "content"
+			navBar.attachEvent('brandTap', {}, function(){
+				_this.showInitialContent();
 			});
 
-		});
+			navContainer.setNavBar(navBar);
 
+			var navLeft = new ui5strap.Nav();
+			_this.nav = navLeft;
 
-		var navButtons = new ui5strap.ButtonGroup({navbarAlign : ui5strap.NavBarAlignment.Right});
-		var buttonDe = new ui5strap.Button({'text' : "DE" });
-		var buttonEn = new ui5strap.Button({'text' : "EN" });
-		navButtons.addButtons(buttonEn);
-		navButtons.addButtons(buttonDe);
-		navBar.addCollapse(navButtons);
+			navLeft.setNavbarAlign(ui5strap.NavBarAlignment.Left);
+			navBar.addCollapse(navLeft);
 
-		navButtons.attachEvent('tap', {}, function(oEvent){
-			var srcButton = oEvent.getParameter('button');
-			navButtons.setSelectedButton(srcButton);
-
-			if(buttonEn === srcButton){
-				configuration.setLanguage('en-us');
+			var frameOptions = _this.getConfig().getFrame();
+			var menu = frameOptions.menu;
+			for (var i = 0; i < menu.length; i++){
+				var menuPage = menu[i];
+				
+				var navItem = new ui5strap.ListItem();
+				navItem.data('viewName', menuPage.viewName);
+				var navItemLink = new ui5strap.Link();
+				navItemLink.bindProperty('text', {path : menuPage.label});
+				navItem.addContent(navItemLink);
+				navLeft.addItems(navItem);
 			}
-			else if(buttonDe === srcButton){
-				configuration.setLanguage('de-de');
+
+
+			navLeft.attachEvent('tap', {}, function(oEvent){
+				var listItem = oEvent.getParameter('listItem');
+				
+				_this.setPage({
+					viewName : listItem.data('viewName'),
+					target : "content"
+				});
+
+			});
+
+
+			var navButtons = new ui5strap.ButtonGroup({navbarAlign : ui5strap.NavBarAlignment.Right});
+			var buttonDe = new ui5strap.Button({'text' : "DE" });
+			var buttonEn = new ui5strap.Button({'text' : "EN" });
+			navButtons.addButtons(buttonEn);
+			navButtons.addButtons(buttonDe);
+			navBar.addCollapse(navButtons);
+
+			navButtons.attachEvent('tap', {}, function(oEvent){
+				var srcButton = oEvent.getParameter('button');
+				navButtons.setSelectedButton(srcButton);
+
+				if(buttonEn === srcButton){
+					configuration.setLanguage('en-us');
+				}
+				else if(buttonDe === srcButton){
+					configuration.setLanguage('de-de');
+				}
+				
+			});
+
+			if('de-de' === configuration.getLanguage()){
+				buttonDe.setSelected(true);
 			}
+			else{
+				buttonEn.setSelected(true);
+			}
+
 			
-		});
-
-		if('de-de' === configuration.getLanguage()){
-			buttonDe.setSelected(true);
-		}
-		else{
-			buttonEn.setSelected(true);
-		}
-
-		frame.getNavContainer = function(){
 			return navContainer;
 		};
+
 	};
 
-	/*
-	 * called by constructor
-	 */
-	StrapFrameProto.init = function(frameOptions){
-		ui5strap.FrameControllerBase.prototype.init.call(this, frameOptions);
+	StrapFrameProto.init = function(){
+		ui5strap.LibertyFrame.prototype.init.call(this);
 
-		_createNavContainer(this);
+		_createPrivateProperties(this);
 	};
 
 	StrapFrameProto.setPage = function (data) {
-		var viewData = liberty.getViewer().getApp().getConfig().getViewData(data.viewName);
-		
-		if(null === viewData){
-			viewData = {};
-		}
+		ui5strap.LibertyFrame.prototype.setPage.call(this, data);
 
-		jQuery.extend(viewData, data);
-
-		ui5strap.FrameControllerBase.prototype.setPage.call(this, viewData);
+		var frameOptions = this.getConfig().getFrame();
 
 		var menuIndex = -1;
 
-		for(var i=0; i<this.options.menu.length; i++){
-			if(viewData.viewName === this.options.menu[i].viewName){
+		for(var i=0; i<frameOptions.menu.length; i++){
+			if(data.viewName === frameOptions.menu[i].viewName){
 				menuIndex = i;
 				break;
 			}

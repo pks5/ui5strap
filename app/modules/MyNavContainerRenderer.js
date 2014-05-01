@@ -43,8 +43,6 @@
 
 		oControl.renderTarget(rm, 'content');
 
-
-
 		oControl.renderEnd(rm);
 	};
 

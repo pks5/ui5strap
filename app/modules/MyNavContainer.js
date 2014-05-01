@@ -20,12 +20,12 @@
 
 	jQuery.sap.require("ui5strap.NavContainerBase");
 
-	var packageName = "com_mycompany.my_app",
- 		moduleName = packageName + ".modules.MyNavContainer";
+	var _packageName = "com_mycompany.my_app",
+ 		_moduleName = _packageName + ".modules.MyNavContainer";
 
-	jQuery.sap.declare(moduleName);
+	jQuery.sap.declare(_moduleName);
 	
-	ui5strap.NavContainerBase.extend(moduleName, {
+	ui5strap.NavContainerBase.extend(_moduleName, {
 		metadata : {
 
 			// ---- object ----
