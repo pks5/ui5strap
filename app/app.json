@@ -54,32 +54,38 @@
                 "navContainer" : "com_mycompany.my_app.modules.MyNavContainer",
                 "initialViews" : [
                     { 
+                        "id" : "my-app-home",
                         "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Home"
                     }
                 ],
                 "menu" : [
                     {
+                        "id" : "my-app-home",
                         "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Home",
                         "label" : "i18n>MENU_HOME"
                     },
                     {
+                        "id" : "my-app-about",
                         "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.About",
                         "label" : "i18n>MENU_ABOUT"
                     },
                     {
+                        "id" : "my-app-get-started",
                         "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.GetStarted",
                         "label" : "i18n>MENU_GET_STARTED"
                     },
                     {
+                        "id" : "my-app-controls",
                         "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Controls",
                         "label" : "i18n>MENU_CONTROLS"
                     },
                     {
+                        "id" : "my-app-support",
                         "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Support",
                         "label" : "i18n>MENU_SUPPORT"

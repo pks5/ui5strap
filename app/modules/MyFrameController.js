@@ -85,8 +85,11 @@
 				var menuPage = menu[i];
 				
 				var navItem = new ui5strap.ListItem();
-				navItem.data('viewName', menuPage.viewName);
-				navItem.data('target', menuPage.target);
+				navItem.data({
+					viewName : menuPage.viewName,
+					target : menuPage.target,
+					id : menuPage.id
+				});
 				var navItemLink = new ui5strap.Link();
 				navItemLink.bindProperty('text', {path : menuPage.label});
 				navItem.addContent(navItemLink);
@@ -97,13 +100,8 @@
 			navLeft.attachEvent('tap', {}, function(oEvent){
 				var listItem = oEvent.getParameter('listItem');
 				
-				_this.setPage({
-					viewName : listItem.data('viewName'),
-					target : listItem.data('target')
-				});
-
+				_this.setPage(listItem.data());
 			});
-
 
 			var navButtons = new ui5strap.ButtonGroup({navbarAlign : ui5strap.NavBarAlignment.Right});
 			var buttonDe = new ui5strap.Button({'text' : "DE" });
