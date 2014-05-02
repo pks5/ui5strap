@@ -38,7 +38,7 @@
                 "package" : "ui5strap",
                 "src" : "css/ui5strap.css"
             },
-            "css/theme.css"
+            "css/my-app.css"
         ],
 
         "models" : [
@@ -46,6 +46,11 @@
                 "src" : "i18n/i18n.properties",
                 "type" : "RESOURCE",
                 "modelName" : "i18n" 
+            },
+            {
+                "src" : "data/data-example.json",
+                "type" : "JSON",
+                "modelName" : "data" 
             }
         ],
 
