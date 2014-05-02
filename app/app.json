@@ -54,7 +54,8 @@
             }
         ],
 
-        "frame" : {
+        "frames" : {
+            "default" : {
                 "module" : "com_mycompany.my_app.modules.MyFrameController",
                 "navContainer" : "com_mycompany.my_app.modules.MyNavContainer",
                 "initialViews" : [
@@ -96,6 +97,7 @@
                         "label" : "i18n>MENU_SUPPORT"
                     }
                 ]
+            }
         },
 
         "views" : {
