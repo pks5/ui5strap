@@ -80,17 +80,18 @@
                         "viewName" : "com_mycompany.my_app.views.Home",
                         "label" : "i18n>MENU_HOME"
                     },
+                    
                     {
-                        "id" : "my-app-about",
+                        "id" : "my-app-installation",
                         "target" : "content",
-                        "viewName" : "com_mycompany.my_app.views.About",
-                        "label" : "i18n>MENU_ABOUT"
+                        "viewName" : "com_mycompany.my_app.views.Installation",
+                        "label" : "i18n>MENU_INSTALLATION"
                     },
                     {
-                        "id" : "my-app-get-started",
+                        "id" : "my-app-themes",
                         "target" : "content",
-                        "viewName" : "com_mycompany.my_app.views.GetStarted",
-                        "label" : "i18n>MENU_GET_STARTED"
+                        "viewName" : "com_mycompany.my_app.views.Themes",
+                        "label" : "i18n>MENU_THEMES"
                     },
                     {
                         "id" : "my-app-controls",
@@ -113,7 +114,7 @@
                 "type" : "HTML"
             },
 
-            "com_mycompany.my_app.views.GetStarted" : {
+            "com_mycompany.my_app.views.Installation" : {
                 "type" : "HTML"
             },
             
@@ -121,7 +122,7 @@
                 "type" : "HTML"
             },
             
-            "com_mycompany.my_app.views.About" : {
+            "com_mycompany.my_app.views.Themes" : {
                 "type" : "HTML"
             },
             
