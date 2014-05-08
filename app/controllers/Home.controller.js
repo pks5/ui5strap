@@ -56,6 +56,40 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 		jQuery.sap.includeStyleSheet(newTheme, 'ui5strap-css-0', function(){
 			app.setLoaderVisible(false);
 		}, null);
+	},
+
+	submitThemeForm : function(oEvent){
+		var app = this.app;
+		
+
+		var newTheme = this.getView().byId('themeInput').getValue();
+
+		if('' === newTheme){
+			return false;
+		}
+
+		if(!this.isValidBootstrapTheme(newTheme)){
+			//Todo Change to BS Modal
+
+			alert(newTheme + ' is not a valid Bootstrap theme!');
+
+			return false;
+		}
+		else{
+			app.setLoaderVisible(true);
+		
+			if(this.activeButton){
+				this.activeButton.setSelected(false);
+			}
+
+			jQuery.sap.includeStyleSheet(newTheme, 'ui5strap-css-0', function(){
+				app.setLoaderVisible(false);
+			}, null);
+		}
+	},
+
+	isValidBootstrapTheme : function(themeUrl){
+ 		return /bootstrap(\.min)?\.css$/.test(themeUrl);
 	}
 	
 });
