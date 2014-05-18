@@ -59,22 +59,29 @@ body{
 
 
 .boilerplateCarousel  > .carousel-inner > .item{
-	height:100%;
+	height:80%;
 	overflow-x:hidden;
 	overflow-y:auto;
+	
+	background-color:white;
 }
 
 .boilerplateCarousel  > .carousel-inner > .item > .sapUiView > .container-fluid{
 	padding-left:200px;
 	padding-right:200px;
+
 }
 
 
 
 .boilerplateCarousel .carousel-indicators li{
-	border-color: black;
+	border-color: #888;
+	-moz-box-shadow: 0 0 15px 3px #888;
+-webkit-box-shadow: 0 0 15px 3px#888;
+box-shadow: 0 0 15px 3px #888;
+background-color:white;
 }
 
 .boilerplateCarousel .carousel-indicators li.active{
-	background-color: black;
+	background-color: #888;
 }
