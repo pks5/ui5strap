@@ -7,7 +7,8 @@
 			<!-- Buttons -->
 			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Buttons"></div>
 
-			
+			<div data-sap-ui-type="ui5strap.Row">
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="6">
 
 			<!-- Normal buttons -->
 			<div data-sap-ui-type="ui5strap.Paragraph">
@@ -17,6 +18,7 @@
 					<div data-sap-ui-type="ui5strap.Button" data-text="Info" data-severity="Info"></div>
 					<div data-sap-ui-type="ui5strap.Button" data-text="Warning" data-severity="Warning"></div>
 					<div data-sap-ui-type="ui5strap.Button" data-text="Danger" data-severity="Danger"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-type="Link" data-text="Link"></div>
 			</div>
 
 			<!-- Normal buttons -->
@@ -27,6 +29,7 @@
 					<div data-sap-ui-type="ui5strap.Button" data-enabled="false" data-text="Info" data-severity="Info"></div>
 					<div data-sap-ui-type="ui5strap.Button" data-enabled="false" data-text="Warning" data-severity="Warning"></div>
 					<div data-sap-ui-type="ui5strap.Button" data-enabled="false" data-text="Danger" data-severity="Danger"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-enabled="false" data-type="Link" data-text="Link"></div>
 			</div>
 			
 
@@ -117,54 +120,53 @@
 					
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-block="true" data-text="Block"></div>
+		</div>
+		<div data-sap-ui-type="ui5strap.Col" data-columns-small="6">
 
-			<div data-sap-ui-type="ui5strap.ButtonToolbar">
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="Large">
+			<div data-sap-ui-type="ui5strap.Button" data-type="Block" data-severity="Default" data-text="Block"></div>
+
+			<div data-sap-ui-type="ui5strap.ButtonGroup" data-type="Justified" data-size="Large">
 					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
 					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
 					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
 				</div>
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="Large">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default">
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="file"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default">
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="folder-open"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default">
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="floppy-disk"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="Large">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
 
 			<div data-sap-ui-type="ui5strap.ButtonToolbar">
 				<div data-sap-ui-type="ui5strap.ButtonGroup">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-text="1"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-text="2"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-text="3"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-text="4"></div>
+				</div>
+				<div data-sap-ui-type="ui5strap.ButtonGroup">
+					<div data-sap-ui-type="ui5strap.Button">
+						<div data-sap-ui-type="ui5strap.Icon" data-icon="file"></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Button">
+						<div data-sap-ui-type="ui5strap.Icon" data-icon="folder-open"></div>
+					</div>
+				</div>
+				<div data-sap-ui-type="ui5strap.ButtonGroup">
+					<div data-sap-ui-type="ui5strap.Button" data-text="5"></div>
+					<div data-sap-ui-type="ui5strap.ButtonDropdown" data-text="Dropdown">
+						<div data-sap-ui-type="ui5strap.ListDropdownMenu">
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Cras justo odio"></div>
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Dapibus ac facilisis in"></div>
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Morbi leo risus"></div>
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Porta ac consectetur ac"></div>
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Vestibulum at eros"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.ButtonToolbar">
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="Small">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
+			<div data-sap-ui-type="ui5strap.ButtonGroup" data-type="Vertical">
+					<div data-sap-ui-type="ui5strap.Button" data-text="Button"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-text="Button"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-text="Button"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-text="Button"></div>
 				</div>
-			</div>
-
-			<div data-sap-ui-type="ui5strap.ButtonToolbar">
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="ExtraSmall">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
+		</div>
+	</div>
 	</div>
 </template>
