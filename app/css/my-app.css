@@ -51,6 +51,7 @@ body{
 	height:540px;
 	
 	overflow:hidden;
+	margin-bottom:10px;
 }
 
 .boilerplateCarousel > .carousel-inner{

@@ -4,9 +4,52 @@
 	<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
 
 		<!-- Navs -->
-			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Navs"></div>
+			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Navigation"></div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Navbar"></div>
+
+			<div data-sap-ui-type="ui5strap.NavBar" data-Brand="Brand">
+					<div data-sap-ui-type="ui5strap.Nav" data-navbar-align="Default" data-selection-mode="Single">
+						<div data-sap-ui-type="ui5strap.ListItem">
+							<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
+						</div>
+						<div data-sap-ui-type="ui5strap.ListItem" data-selected="true">
+							<div data-sap-ui-type="ui5strap.Link" data-text="Library"></div>
+						</div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Form" data-navbar-align="Left">
+						<div data-sap-ui-type="ui5strap.FormGroup">
+							<div data-sap-ui-type="ui5strap.Input" data-placeholder="Name"></div>
+						</div>
+						<div data-sap-ui-type="ui5strap.Button" data-text="Submit" data-severity="Success"></div>
+					</div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.NavBar" data-Brand="Brand" data-inverse="true">
+				<div data-sap-ui-type="ui5strap.Nav" data-navbar-align="Default" data-selection-mode="Single">
+					<div data-sap-ui-type="ui5strap.ListItem">
+						<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.ListItem" data-selected="true">
+						<div data-sap-ui-type="ui5strap.Link" data-text="Library"></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.ListDropdownItem" data-text="Data">
+						<div data-sap-ui-type="ui5strap.ListDropdownMenu">
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Cras justo odio"></div>
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Dapibus ac facilisis in"></div>
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Morbi leo risus"></div>
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Porta ac consectetur ac"></div>
+							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Vestibulum at eros"></div>
+						</div>
+					</div>
+					<div data-sap-ui-type="ui5strap.ListItem">
+						<div data-sap-ui-type="ui5strap.Link" data-text="Contact"></div>
+					</div>
+				</div>
+			</div>
 			
-			<div data-sap-ui-type="ui5strap.Nav" data-type="Pills">
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Navs"></div>
+			<div data-sap-ui-type="ui5strap.Nav" data-type="Pills" data-selection-mode="Single">
 				<div data-sap-ui-type="ui5strap.ListItem">
 					<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
 				</div>
@@ -21,7 +64,7 @@
 				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Nav" data-type="PillsStacked">
+			<div data-sap-ui-type="ui5strap.Nav" data-type="PillsStacked" data-selection-mode="Single">
 				<div data-sap-ui-type="ui5strap.ListItem">
 					<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
 				</div>
@@ -36,7 +79,7 @@
 				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Nav" data-type="PillsJustified">
+			<div data-sap-ui-type="ui5strap.Nav" data-type="PillsJustified" data-selection-mode="Single">
 				<div data-sap-ui-type="ui5strap.ListItem">
 					<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
 				</div>
@@ -51,7 +94,7 @@
 				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Nav" data-type="Tabs">
+			<div data-sap-ui-type="ui5strap.Nav" data-type="Tabs" data-selection-mode="Single">
 				<div data-sap-ui-type="ui5strap.ListItem">
 					<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
 				</div>
@@ -66,7 +109,7 @@
 				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Nav" data-type="TabsJustified">
+			<div data-sap-ui-type="ui5strap.Nav" data-type="TabsJustified" data-selection-mode="Single">
 				<div data-sap-ui-type="ui5strap.ListItem">
 					<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
 				</div>
