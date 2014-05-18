@@ -1,0 +1,26 @@
+<template>
+
+	<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
+
+<!-- Progress -->
+			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Progress"></div>
+
+			<div data-sap-ui-type="ui5strap.Progress">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="60"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress" data-striped="true">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-label-format="[per]%" data-severity="Warning" data-value="60"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress" data-striped="true" data-active="true">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-min-value="20" data-max-value="200" data-label-format="[val]/[max] ([per]%, min: [min])" data-severity="Danger" data-value="60"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Success" data-value="20"></div>
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Info" data-value="30"></div>
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Warning" data-value="10"></div>
+			</div>
+	</div>
+</template>

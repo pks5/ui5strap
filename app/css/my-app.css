@@ -45,3 +45,19 @@ body{
 	border: 1px solid rgba(86,61,124,.2);
 
 }
+
+.boilerplateCarousel{
+	width:100%; 
+	height:500px;
+	
+	overflow:hidden;
+}
+
+
+.boilerplateCarousel .carousel-indicators li{
+	border-color: black;
+}
+
+.boilerplateCarousel .carousel-indicators li.active{
+	background-color: black;
+}

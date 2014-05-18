@@ -1,305 +1,23 @@
-<template  data-controller-name="com_mycompany.my_app.controllers.Home">
+<template  data-controller-name="com_mycompany.my_app.controllers.Controls">
 	<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
 		<div data-sap-ui-type="ui5strap.Container" data-type="Page">
 
 			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Controls" data-lead="Most of the Bootstrap 3.1.1 Components are already available as Ui5Strap Controls."></div>
 
-			<!-- Headings -->
-			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Grid System"></div>
 
-			<div data-sap-ui-type="ui5strap.Container" data-type="Fluid" class="show-grid">
-				<div data-sap-ui-type="ui5strap.Row">
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="1" data-columns-medium="1">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="1"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="ui5strap.Row">
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="8" data-columns-medium="8">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="8"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="4" data-columns-medium="4">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="4"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="ui5strap.Row">
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="4" data-columns-medium="4">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="4"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="4" data-columns-medium="4">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="4"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="4" data-columns-medium="4">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="4"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="ui5strap.Row">
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="6" data-columns-medium="6">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="6"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="6" data-columns-medium="6">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="6"></div>
-					</div>
-				</div>
+			<div data-sap-ui-type="ui5strap.Carousel" class="boilerplateCarousel">
+				<div data-sap-ui-type="sap.ui.core.mvc.HTMLView" data-view-name="com_mycompany.my_app.views.controls.GridSystem"></div>
+				<div data-sap-ui-type="sap.ui.core.mvc.HTMLView" data-view-name="com_mycompany.my_app.views.controls.Headings"></div>
+				<div data-sap-ui-type="sap.ui.core.mvc.HTMLView" data-view-name="com_mycompany.my_app.views.controls.Buttons"></div>
+				<div data-sap-ui-type="sap.ui.core.mvc.HTMLView" data-view-name="com_mycompany.my_app.views.controls.Progress"></div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-text="With Clearfix only for medium screens"></div>
+			
 
-			<div data-sap-ui-type="ui5strap.Container" data-type="Fluid" class="show-grid">
-				<div data-sap-ui-type="ui5strap.Row">
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="6" data-columns-medium="6">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="6"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Clearfix" data-visibility-medium="Visible"></div>
-					<div data-sap-ui-type="ui5strap.Col" data-columns-small="6" data-columns-medium="6">
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="6"></div>
-					</div>
-				</div>
-			</div>
 
-			<!-- Headings -->
-			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Headings"></div>
+			
 
-			<div data-sap-ui-type="ui5strap.Heading" data-level="2" data-text="Nullam id dolor id nibh ">
-				<div data-sap-ui-type="ui5strap.Label" data-severity="Info" data-text="New"></div>
-			</div>
-			<div data-sap-ui-type="ui5strap.Heading" data-level="3" data-text="Maecenas sed diam eget ">
-				<div data-sap-ui-type="ui5strap.Label" data-severity="Success" data-text="New"></div>
-			</div>
-			<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-text="Etiam porta sem malesuada ">
-				<div data-sap-ui-type="ui5strap.Label" data-severity="Warning" data-text="New"></div>
-			</div>
-			<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Donec ullamcorper nulla non ">
-				<div data-sap-ui-type="ui5strap.Label" data-severity="Danger" data-text="New"></div>
-			</div>
-			<div data-sap-ui-type="ui5strap.Heading" data-level="6" data-text="Lorem ipsum dolor sit ">
-				<div data-sap-ui-type="ui5strap.Label" data-severity="Primary" data-text="New"></div>
-			</div>
-
-			<!-- Buttons -->
-			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Buttons"></div>
-
-			<!-- Large buttons -->
-			<div data-sap-ui-type="ui5strap.Paragraph">
-					<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Default" data-severity="Default"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Primary" data-severity="Primary"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Success" data-severity="Success"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Info" data-severity="Info"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Warning" data-severity="Warning"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Danger" data-severity="Danger"></div>
-			</div>
-
-			<!-- Normal buttons -->
-			<div data-sap-ui-type="ui5strap.Paragraph">
-					<div data-sap-ui-type="ui5strap.Button" data-text="Default" data-severity="Default"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-text="Primary" data-severity="Primary"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-text="Success" data-severity="Success"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-text="Info" data-severity="Info"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-text="Warning" data-severity="Warning"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-text="Danger" data-severity="Danger"></div>
-			</div>
-
-			<!-- Small buttons -->
-			<div data-sap-ui-type="ui5strap.Paragraph">
-					<div data-sap-ui-type="ui5strap.Button" data-size="Small" data-text="Default" data-severity="Default"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Small" data-text="Primary" data-severity="Primary"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Small" data-text="Success" data-severity="Success"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Small" data-text="Info" data-severity="Info"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Small" data-text="Warning" data-severity="Warning"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="Small" data-text="Danger" data-severity="Danger"></div>
-			</div>
-
-			<!-- Extra Small buttons -->
-			<div data-sap-ui-type="ui5strap.Paragraph">
-					<div data-sap-ui-type="ui5strap.Button" data-size="ExtraSmall" data-text="Default" data-severity="Default"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="ExtraSmall" data-text="Primary" data-severity="Primary"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="ExtraSmall" data-text="Success" data-severity="Success"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="ExtraSmall" data-text="Info" data-severity="Info"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="ExtraSmall" data-text="Warning" data-severity="Warning"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-size="ExtraSmall" data-text="Danger" data-severity="Danger"></div>
-			</div>
-
-			<!-- Normal buttons -->
-			<div data-sap-ui-type="ui5strap.Paragraph">
-					<div data-sap-ui-type="ui5strap.ButtonDropdown" data-text="Default" data-severity="Default">
-						<div data-sap-ui-type="ui5strap.ListDropdownMenu">
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Cras justo odio"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Dapibus ac facilisis in"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Morbi leo risus"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Porta ac consectetur ac"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Vestibulum at eros"></div>
-						</div>
-					</div>
-					<div data-sap-ui-type="ui5strap.ButtonDropdown" data-text="Primary" data-severity="Primary">
-						<div data-sap-ui-type="ui5strap.ListDropdownMenu">
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Cras justo odio"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Dapibus ac facilisis in"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Morbi leo risus"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Porta ac consectetur ac"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Vestibulum at eros"></div>
-						</div>
-					</div>
-					<div data-sap-ui-type="ui5strap.ButtonDropdown" data-text="Success" data-severity="Success">
-						<div data-sap-ui-type="ui5strap.ListDropdownMenu">
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Cras justo odio"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Dapibus ac facilisis in"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Morbi leo risus"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Porta ac consectetur ac"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Vestibulum at eros"></div>
-						</div>
-					</div>
-					<div data-sap-ui-type="ui5strap.ButtonDropdown" data-split="true" data-text="Info" data-severity="Info">
-						<div data-sap-ui-type="ui5strap.ListDropdownMenu">
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Cras justo odio"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Dapibus ac facilisis in"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Morbi leo risus"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Porta ac consectetur ac"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Vestibulum at eros"></div>
-						</div>
-					</div>
-					<div data-sap-ui-type="ui5strap.ButtonDropdown" data-split="true" data-text="Warning" data-dropup="true" data-severity="Warning">
-						<div data-sap-ui-type="ui5strap.ListDropdownMenu">
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Cras justo odio"></div>
-							</div>
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Dapibus ac facilisis in"></div>
-							</div>
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Morbi leo risus"></div>
-							</div>
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Porta ac consectetur ac"></div>
-							</div>
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Vestibulum at eros"></div>
-							</div>
-						</div>
-					</div>
-					<div data-sap-ui-type="ui5strap.ButtonDropdown" data-split="true" data-text="Danger" data-dropup="true" data-severity="Danger">
-						<div data-sap-ui-type="ui5strap.ListDropdownMenu">
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Cras justo odio"></div>
-							</div>
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Dapibus ac facilisis in"></div>
-							</div>
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Morbi leo risus"></div>
-							</div>
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Porta ac consectetur ac"></div>
-							</div>
-							<div data-sap-ui-type="ui5strap.ListItem">
-								<div data-sap-ui-type="ui5strap.Link" data-text="Vestibulum at eros"></div>
-							</div>
-						</div>
-					</div>
-			</div>
-
-			<!-- Button Groups -->
-			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Button Groups"></div>
-
-			<div data-sap-ui-type="ui5strap.ButtonToolbar">
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="Large">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="Large">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default">
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="file"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default">
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="folder-open"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default">
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="floppy-disk"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="Large">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
-
-			<div data-sap-ui-type="ui5strap.ButtonToolbar">
-				<div data-sap-ui-type="ui5strap.ButtonGroup">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
-
-			<div data-sap-ui-type="ui5strap.ButtonToolbar">
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="Small">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
-
-			<div data-sap-ui-type="ui5strap.ButtonToolbar">
-				<div data-sap-ui-type="ui5strap.ButtonGroup" data-size="ExtraSmall">
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Left"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Middle"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-severity="Default" data-text="Right"></div>
-				</div>
-			</div>
-
-			<!-- Progress -->
-			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Progress"></div>
-
-			<div data-sap-ui-type="ui5strap.Progress">
-				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="60"></div>
-			</div>
-
-			<div data-sap-ui-type="ui5strap.Progress" data-striped="true">
-				<div data-sap-ui-type="ui5strap.ProgressBar" data-label-format="[per]%" data-severity="Warning" data-value="60"></div>
-			</div>
-
-			<div data-sap-ui-type="ui5strap.Progress" data-striped="true" data-active="true">
-				<div data-sap-ui-type="ui5strap.ProgressBar" data-min-value="20" data-max-value="200" data-label-format="[val]/[max] ([per]%, min: [min])" data-severity="Danger" data-value="60"></div>
-			</div>
-
-			<div data-sap-ui-type="ui5strap.Progress">
-				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Success" data-value="20"></div>
-				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Info" data-value="30"></div>
-				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Warning" data-value="10"></div>
-			</div>
+			
 
 			<!-- Forms -->
 			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Forms"></div>
@@ -428,7 +146,7 @@
 			<div data-sap-ui-type="ui5strap.Row">
 				<div data-sap-ui-type="ui5strap.Col" data-columns-small="6">
 					<div data-sap-ui-type="ui5strap.Link" data-type="Thumbnail">
-						<div data-sap-ui-type="ui5strap.Image" data-src="./app/img/awesome.png" data-alt="Image"></div>
+						<div data-sap-ui-type="ui5strap.Image" data-title="Awesome, isn't it?" data-tooltip-placement="Top" data-src="./app/img/awesome.png" data-alt="Image"></div>
 					</div>
 				</div>
 				<div data-sap-ui-type="ui5strap.Col" data-columns-small="6">
@@ -623,6 +341,21 @@
 				</div>
 			</div>
 
+			<!-- Modals -->
+			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Modals"></div>
+			<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Launch Modal" data-severity="Info" data-tap="showModal"></div>
+			
+			<div data-sap-ui-type="ui5strap.Modal" id="myModal">
+				<div data-sap-ui-aggregation="header">
+					<div data-sap-ui-type="ui5strap.Heading" data-text="Modal heading"></div>
+				</div>
+				<div data-sap-ui-aggregation="body">
+					<div data-sap-ui-type="ui5strap.Heading" data-text="Modal heading"></div>
+				</div>
+				<div data-sap-ui-aggregation="footer">
+					<div data-sap-ui-type="ui5strap.Heading" data-text="Modal heading"></div>
+				</div>
+			</div>
 			<!-- Panels -->
 			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Panels"></div>
 
@@ -664,4 +397,6 @@
 	<div data-sap-ui-type="ui5strap.HtmlTag" class="footer">
 		<div data-sap-ui-type="ui5strap.Paragraph" class="text-muted" data-text="{i18n>COPYRIGHT_NOTICE}"></div>
 	</div>
+
+
 </template>
