@@ -65,8 +65,8 @@ body{
 }
 
 .boilerplateCarousel  > .carousel-inner > .item > .sapUiView > .container-fluid{
-	padding-left:180px;
-	padding-right:180px;
+	padding-left:160px;
+	padding-right:160px;
 }
 
 

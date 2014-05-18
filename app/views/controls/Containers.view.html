@@ -1,8 +1,27 @@
 <template>
 
 	<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
-<!-- List groups -->
-			<div data-sap-ui-type="ui5strap.PageHeader" data-text="List groups"></div>
+<!-- Panels -->
+			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Containers"></div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Panels"></div>
+			<div data-sap-ui-type="ui5strap.Row">
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Panel" data-title="Pane title" data-body="Panel content"></div>
+					<div data-sap-ui-type="ui5strap.Panel" data-severity="Success" data-title="Pane title" data-body="Panel content"></div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Panel" data-severity="Warning" data-title="Pane title" data-body="Panel content"></div>
+					<div data-sap-ui-type="ui5strap.Panel" data-severity="Primary" data-title="Pane title" data-body="Panel content"></div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Panel" data-severity="Info" data-title="Pane title" data-body="Panel content"></div>
+					<div data-sap-ui-type="ui5strap.Panel" data-severity="Danger" data-title="Pane title" data-body="Panel content"></div>
+				</div>
+			</div>
+
+	
+			<div data-sap-ui-type="ui5strap.Heading" data-text="List groups"></div>
 			<div data-sap-ui-type="ui5strap.Row">
 				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
 					<div data-sap-ui-type="ui5strap.ListGroup">
@@ -40,5 +59,12 @@
 					</div>
 				</div>
 			</div>
+
+<!-- Wells -->
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Wells"></div>
+			<div data-sap-ui-type="ui5strap.Well" data-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur."></div>
+
+			<div data-sap-ui-type="ui5strap.Well" data-size="Large" data-text="Look, I'm in a large well!"></div>
+			<div data-sap-ui-type="ui5strap.Well" data-size="Small" data-text="Look, I'm in a small well!"></div>
 </div>
 </template>
