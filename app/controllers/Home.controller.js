@@ -21,13 +21,15 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 	},
 
 	gotoControls : function(){
-		//this.app.setLoaderVisible(true);
-		this.app.getFrame().setPage({
-			id : 'my-app-controls',
-			viewName : "com_mycompany.my_app.views.Controls",
-			transition : "transition-flip",
-			target : "content"
+		this.app.setLoaderVisible(true, function(){
+			this.getFrame().setPage({
+				id : 'my-app-controls',
+				viewName : "com_mycompany.my_app.views.Controls",
+				transition : "transition-flip",
+				target : "content"
+			});
 		});
+		
 	},
 
 	gotoSupport : function(){

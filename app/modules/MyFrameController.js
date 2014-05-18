@@ -85,11 +85,7 @@
 				var menuPage = menu[i];
 				
 				var navItem = new ui5strap.ListItem();
-				navItem.data({
-					viewName : menuPage.viewName,
-					target : menuPage.target,
-					id : menuPage.id
-				});
+				navItem.data(menuPage);
 				var navItemLink = new ui5strap.Link();
 				navItemLink.bindProperty('text', {path : menuPage.label});
 				navItem.addContent(navItemLink);
@@ -142,15 +138,13 @@
 		_createPrivateProperties(this);
 	};
 
-	FrameControllerProto.setPage = function (data) {
-		ui5strap.LibertyFrame.prototype.setPage.call(this, data);
-
+	FrameControllerProto.updateMenu = function(viewName){
 		var frameOptions = this.getConfig().getFrame();
 
 		var menuIndex = -1;
 
 		for(var i=0; i<frameOptions.menu.length; i++){
-			if(data.viewName === frameOptions.menu[i].viewName){
+			if(viewName === frameOptions.menu[i].viewName){
 				menuIndex = i;
 				break;
 			}
@@ -161,6 +155,20 @@
 		}
 		else{
 			this.nav.setSelectedItem(null);
+		}
+	};
+
+	FrameControllerProto.setPage = function (data) {
+		var _this = this;
+		this.updateMenu(data.viewName);
+
+		if(data.showLoader){
+			liberty.getViewer().getApp().setLoaderVisible(true, function(){
+				ui5strap.LibertyFrame.prototype.setPage.call(_this, data);
+			})
+		}
+		else{
+			ui5strap.LibertyFrame.prototype.setPage.call(this, data);
 		}
 	};
 

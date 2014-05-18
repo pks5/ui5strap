@@ -97,7 +97,8 @@
                         "id" : "my-app-controls",
                         "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Controls",
-                        "label" : "i18n>MENU_CONTROLS"
+                        "label" : "i18n>MENU_CONTROLS",
+                        "showLoader" : true
                     },
                     {
                         "id" : "my-app-support",
