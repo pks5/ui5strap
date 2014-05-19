@@ -64,11 +64,15 @@
 
 			var navBar = new ui5strap.NavBar();
 
-			navBar.bindProperty('brand', {path : 'i18n>MENU_BRAND'});
+			var brand = new ui5strap.Link()
+
+			brand.bindProperty('text', {path : 'i18n>MENU_BRAND'});
+			navBar.setBrand(brand);
+
 			//navBar.setInverse(true);
 			navBar.setPosition(ui5strap.NavBarPosition.FixedTop);
 
-			navBar.attachEvent('brandTap', {}, function(){
+			brand.attachEvent('tap', {}, function(){
 				_this.showInitialContent();
 			});
 

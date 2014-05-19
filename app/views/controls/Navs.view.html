@@ -8,7 +8,11 @@
 
 			<div data-sap-ui-type="ui5strap.Heading" data-text="Navbar"></div>
 
-			<div data-sap-ui-type="ui5strap.NavBar" data-Brand="Brand">
+			<div data-sap-ui-type="ui5strap.NavBar">
+				<div data-sap-ui-aggregation="brand">
+					<div data-sap-ui-type="ui5strap.Link" data-text="Brand"></div>
+				</div>
+				<div data-sap-ui-aggregation="collapse">
 					<div data-sap-ui-type="ui5strap.Nav" data-navbar-align="Default" data-selection-mode="Single">
 						<div data-sap-ui-type="ui5strap.ListItem">
 							<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
@@ -23,27 +27,30 @@
 						</div>
 						<div data-sap-ui-type="ui5strap.Button" data-text="Submit" data-severity="Success"></div>
 					</div>
+				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.NavBar" data-Brand="Brand" data-inverse="true">
-				<div data-sap-ui-type="ui5strap.Nav" data-navbar-align="Default" data-selection-mode="Single">
-					<div data-sap-ui-type="ui5strap.ListItem">
-						<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.ListItem" data-selected="true">
-						<div data-sap-ui-type="ui5strap.Link" data-text="Library"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.ListDropdownItem" data-text="Data">
-						<div data-sap-ui-type="ui5strap.ListDropdownMenu">
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Cras justo odio"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Dapibus ac facilisis in"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Morbi leo risus"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Porta ac consectetur ac"></div>
-							<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Vestibulum at eros"></div>
+			<div data-sap-ui-type="ui5strap.NavBar" data-inverse="true">
+				<div data-sap-ui-aggregation="collapse">
+					<div data-sap-ui-type="ui5strap.Nav" data-navbar-align="Default" data-selection-mode="Single">
+						<div data-sap-ui-type="ui5strap.ListItem">
+							<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
 						</div>
-					</div>
-					<div data-sap-ui-type="ui5strap.ListItem">
-						<div data-sap-ui-type="ui5strap.Link" data-text="Contact"></div>
+						<div data-sap-ui-type="ui5strap.ListItem" data-selected="true">
+							<div data-sap-ui-type="ui5strap.Link" data-text="Library"></div>
+						</div>
+						<div data-sap-ui-type="ui5strap.ListDropdownItem" data-text="Data">
+							<div data-sap-ui-type="ui5strap.ListDropdownMenu">
+								<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Cras justo odio"></div>
+								<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Dapibus ac facilisis in"></div>
+								<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Morbi leo risus"></div>
+								<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Porta ac consectetur ac"></div>
+								<div data-sap-ui-type="ui5strap.ListLinkItem" data-text="Vestibulum at eros"></div>
+							</div>
+						</div>
+						<div data-sap-ui-type="ui5strap.ListItem">
+							<div data-sap-ui-type="ui5strap.Link" data-text="Contact"></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -79,7 +86,7 @@
 				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Nav" data-type="PillsJustified" data-selection-mode="Single">
+			<div data-sap-ui-type="ui5strap.Nav" id="tabContainer2Pills" data-type="PillsJustified" data-selection-mode="Single">
 				<div data-sap-ui-type="ui5strap.ListItem">
 					<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
 				</div>
@@ -94,7 +101,14 @@
 				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Nav" data-type="Tabs" data-selection-mode="Single">
+			<div data-sap-ui-type="ui5strap.TabContainer" class="tabContainer2" data-source="tabContainer2Pills">
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater."></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Nav" data-type="Tabs" id="tabContainer1Tabs" data-selection-mode="Single">
 				<div data-sap-ui-type="ui5strap.ListItem">
 					<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
 				</div>
@@ -109,7 +123,14 @@
 				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Nav" data-type="TabsJustified" data-selection-mode="Single">
+			<div data-sap-ui-type="ui5strap.TabContainer" class="tabContainer1" data-source="tabContainer1Tabs">
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater."></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Nav" data-type="TabsJustified" id="tabContainer3Tabs" data-selection-mode="Single">
 				<div data-sap-ui-type="ui5strap.ListItem">
 					<div data-sap-ui-type="ui5strap.Link" data-text="Home"></div>
 				</div>
@@ -128,6 +149,13 @@
 				<div data-sap-ui-type="ui5strap.ListItem">
 					<div data-sap-ui-type="ui5strap.Link" data-text="Contact"></div>
 				</div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.TabContainer" class="tabContainer2" data-source="tabContainer3Tabs">
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater."></div>
 			</div>
 
 	</div>
