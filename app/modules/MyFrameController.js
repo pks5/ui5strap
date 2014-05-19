@@ -112,7 +112,7 @@
 
 			navButtons.attachEvent('tap', {}, function(oEvent){
 				var srcButton = oEvent.getParameter('button');
-				navButtons.setSelectedButton(srcButton);
+				navButtons.setSelectedControl(srcButton);
 
 				if(buttonEn === srcButton){
 					configuration.setLanguage('en-us');
@@ -158,7 +158,7 @@
 			this.nav.setSelectedIndex(menuIndex);
 		}
 		else{
-			this.nav.setSelectedItem(null);
+			this.nav.setSelectedControl(null);
 		}
 	};
 
