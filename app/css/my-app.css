@@ -65,8 +65,8 @@ body{
 }
 
 .boilerplateCarousel  > .carousel-inner > .item > .sapUiView{
-	padding-left:120px;
-	padding-right:120px;
+	padding-left:90px;
+	padding-right:90px;
 	height:100%;
 }
 
@@ -90,5 +90,9 @@ border-color: #888;
 
 .boilerplateCarousel .carousel-indicators li.active{
 	background-color: #888;
+}
+
+.boilerplateCarousel .carousel-control{
+	width:10%;
 }
 
