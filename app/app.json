@@ -40,6 +40,10 @@
             },
             {
                 "package" : "ui5strap",
+                "src" : "font-awesome-4.1.0/css/font-awesome.min.css"
+            },
+            {
+                "package" : "ui5strap",
                 "src" : "css/ui5strap.css"
             },
             {
@@ -65,7 +69,7 @@
         "frames" : {
             "default" : {
                 "module" : "com_mycompany.my_app.modules.MyFrameController",
-                "navContainer" : "com_mycompany.my_app.modules.MyNavContainer",
+                "navContainer" : "ui5strap.NavContainerStandard",
                 "initialViews" : [
                     { 
                         "id" : "my-app-home",

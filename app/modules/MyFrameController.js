@@ -31,6 +31,7 @@
 	jQuery.sap.require("ui5strap.Link");
 	jQuery.sap.require("ui5strap.ButtonGroup");
 	jQuery.sap.require("ui5strap.Button");
+	jQuery.sap.require("ui5strap.Icon");
 
 	ui5strap.LibertyFrame.extend(_moduleName);
 
@@ -65,6 +66,15 @@
 			var navBar = new ui5strap.NavBar();
 
 			var brand = new ui5strap.Link()
+
+			var toggle = new ui5strap.Button( { 
+					type : ui5strap.ButtonType.Default, 
+					bsAction : ui5strap.BsAction.ToggleNavBar 
+				} 
+			);
+			toggle.addContent(new ui5strap.Icon( { icon : 'bars', size : ui5strap.IconSize.Large } ));
+
+			navBar.setToggle(toggle);
 
 			brand.bindProperty('text', {path : 'i18n>MENU_BRAND'});
 			navBar.setBrand(brand);

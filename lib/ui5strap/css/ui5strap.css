@@ -37,6 +37,16 @@
   height:100%;
 }
 
+/*
+* NavContainerStandard
+*/
+.ui5strap-nc-standard > .ui5strap-nc-aggregation-content > .ui5strap-nc-page{
+  padding-top:50px;
+}
+
+/**
+* NavContainerSplit
+*/
 .ui5strap-nc-split > .ui5strap-nc-aggregation{
     overflow:hidden;
 }
@@ -65,10 +75,6 @@
 
 .ui5strap-nc-split > .ui5strap-nc-aggregation-footer{
   width:100%; height:50px; background-color:black; position:absolute; bottom:0;
-}
-
-.ui5strap-nc-page > .sapUiView > .coolui5-list-group{
-  margin-left:12px; margin-right:12px;
 }
 
 /*

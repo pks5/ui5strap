@@ -25,12 +25,8 @@
 * CSS for MyNavContainer
 */
 
-.ui5strap-nc-bootstrapDefault > .ui5strap-nc-aggregation-content > .ui5strap-nc-page{
-	padding-top:50px;
-}
-
-.ui5strap-nc-bootstrapDefault > .ui5strap-nc-aggregation-content .sapUiView > .container,
-.ui5strap-nc-bootstrapDefault > .ui5strap-nc-aggregation-content .ui5strap-scroll-container > .container
+.ui5strap-nc-standard > .ui5strap-nc-aggregation-content .sapUiView > .container,
+.ui5strap-nc-standard > .ui5strap-nc-aggregation-content .ui5strap-scroll-container > .container
 {
 	padding-top:20px;
 }
