@@ -69,7 +69,7 @@
 	height:100%;
 	padding-left:5%;
 	padding-right:5%;
-	padding-bottom:80px;
+	
 }
 
 .boilerplateCarousel  > .carousel-inner > .item > .sapUiView{
@@ -79,13 +79,15 @@
 	overflow-y:auto;
 }
 
-
+.boilerplateCarousel  > .carousel-inner > .item > .sapUiView > .container-fluid{
+padding-bottom:80px;
+}
 
 .boilerplateCarousel .carousel-indicators li{
 	margin:3px;
-	-moz-box-shadow: 0 0 5px 0px #888;
-	-webkit-box-shadow: 0 0 5px 0px#888;
-	box-shadow: 0 0 5px 0px #888;
+	-moz-box-shadow: 0 0 5px 0px #090909;
+	-webkit-box-shadow: 0 0 5px 0px#090090;
+	box-shadow: 0 0 5px 0px #090909;
 	background-color:white;
 	border-color: #888;
 }
