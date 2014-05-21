@@ -61,20 +61,22 @@ body{
 
 .boilerplateCarousel  > .carousel-inner > .item{
 	height:100%;
-	
+	padding-left:90px;
+	padding-right:90px;
+	padding-bottom:80px;
 }
 
 .boilerplateCarousel  > .carousel-inner > .item > .sapUiView{
-	padding-left:90px;
-	padding-right:90px;
+	
 	height:100%;
+	overflow-x:hidden;
+	overflow-y:auto;
 }
 
 .boilerplateCarousel  > .carousel-inner > .item > .sapUiView > .container-fluid{
 	height:100%;
-	overflow-x:hidden;
-	overflow-y:auto;
-	padding-bottom:80px;
+	
+	
 }
 
 
