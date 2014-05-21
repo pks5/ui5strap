@@ -73,10 +73,12 @@
 }
 
 .boilerplateCarousel  > .carousel-inner > .item > .sapUiView{
-	
+	width:100%;
 	height:100%;
 	overflow-x:hidden;
 	overflow-y:auto;
+
+	-webkit-overflow-scrolling: touch;
 }
 
 .boilerplateCarousel  > .carousel-inner > .item > .sapUiView > .container-fluid{
