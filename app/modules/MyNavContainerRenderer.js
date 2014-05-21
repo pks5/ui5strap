@@ -28,7 +28,7 @@
 	NavContainerRenderer.render = function(rm, oControl) {
 		var navBar = oControl.getNavBar();
 
-		oControl.renderStart(rm);
+		oControl.renderStart(rm, 'bootstrapDefault');
 
 		if(null !== navBar){
 			rm.write("<div");
