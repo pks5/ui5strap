@@ -26,6 +26,10 @@ sap.ui.controller("com_mycompany.my_app.controllers.Controls", {
 		this._showStatusMessage('You just closed an alert!');
 	},
 
+	closeOtherAlert : function(oEvent){
+		this.getView().byId('otherAlertId').close();
+	},
+
 	modalShown : function(oEvent){
 		this._showStatusMessage('A modal has just been shown!');
 	},
@@ -40,6 +44,10 @@ sap.ui.controller("com_mycompany.my_app.controllers.Controls", {
 
 	popoverHidden : function(oEvent){
 		this.getView().byId('popoverEventIndicator').setText('Popover hidden!');
+	},
+
+	popoverFromOutside : function(oEvent){
+		this.getView().byId('popoverRight').toggle();
 	},
 
 	tooltipShown : function(oEvent){

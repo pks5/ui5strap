@@ -33,6 +33,7 @@
 				<div data-sap-ui-type="ui5strap.Button" id="popTop" data-size="Small" data-text="Top" data-severity="Primary"></div>
 				<div data-sap-ui-type="ui5strap.Button" id="popBottom" data-size="Small" data-text="Bottom" data-severity="Primary"></div>
 				<div data-sap-ui-type="ui5strap.Button" id="popRight" data-size="Small" data-text="Right" data-severity="Primary"></div>
+				<div data-sap-ui-type="ui5strap.Button" id="popRightOutside" data-tap="popoverFromOutside" data-size="Small" data-text="<- From other source" data-severity="Primary"></div>
 				
 				<div data-sap-ui-type="ui5strap.Popover" data-shown="popoverShown" data-hidden="popoverHidden" data-source="popLeft" data-placement="Left" data-title="Popover with title">
 					<div data-sap-ui-type="ui5strap.Text" data-text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></div>
@@ -43,7 +44,7 @@
 				<div data-sap-ui-type="ui5strap.Popover" data-shown="popoverShown" data-hidden="popoverHidden" data-source="popBottom" data-placement="Bottom" data-animate="false">
 					<div data-sap-ui-type="ui5strap.Text" data-text="This popover is placed on bottom has no animation."></div>
 				</div>
-				<div data-sap-ui-type="ui5strap.Popover" data-shown="popoverShown" data-hidden="popoverHidden" data-source="popRight" data-placement="Right">
+				<div data-sap-ui-type="ui5strap.Popover" id="popoverRight" data-shown="popoverShown" data-hidden="popoverHidden" data-source="popRight" data-placement="Right">
 					<div data-sap-ui-type="ui5strap.Text" data-text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></div>
 				</div>
 			</div>
