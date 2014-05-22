@@ -47,7 +47,11 @@ sap.ui.controller("com_mycompany.my_app.controllers.Controls", {
 	},
 
 	popoverFromOutside : function(oEvent){
-		this.getView().byId('popoverRight').toggle();
+		this.getView().byId('popoverBottom').toggle();
+	},
+
+	tooltipFromOutside : function(oEvent){
+		this.getView().byId('tipTop').toggle();
 	},
 
 	tooltipShown : function(oEvent){
