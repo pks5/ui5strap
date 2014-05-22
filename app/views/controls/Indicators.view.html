@@ -4,13 +4,18 @@
 <!-- Alerts -->
 			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Indicators"></div>
 			
-			<div data-sap-ui-type="ui5strap.Alert" data-severity="Success" data-strong-text="Well done! " data-text="You successfully read this important alert message."></div>
-			<div data-sap-ui-type="ui5strap.Alert" data-strong-text="Heads up! " data-text="This alert needs your attention, but it's not super important."></div>
-			<div data-sap-ui-type="ui5strap.Alert" data-severity="Warning" data-strong-text="Warning! " data-text="Best check yo self, you're not looking too good.">
+			<div data-sap-ui-type="ui5strap.Alert" data-severity="Success" data-text="You successfully read this important alert message.">
+				<div data-sap-ui-type="ui5strap.Text" data-type="Strong" data-text="Well done!"></div>
+			</div>
+			<div data-sap-ui-type="ui5strap.Alert" data-text="This alert needs your attention, but it's not super important."></div>
+			
+			<div data-sap-ui-type="ui5strap.Alert" data-severity="Warning" data-text="Best check yo self, you're not looking too good.">
 				<div data-sap-ui-type="ui5strap.Button" data-type="Close" data-bs-action="DismissAlert">
 					<div data-sap-ui-type="ui5strap.Icon" data-icon="times"></div>
 				</div>
+				<div data-sap-ui-type="ui5strap.Text" data-type="Strong" data-text="Warning!"></div>
 			</div>
+			
 			<div data-sap-ui-type="ui5strap.Alert" data-severity="Danger">
 				<div data-sap-ui-type="ui5strap.Button" data-type="Close" data-bs-action="DismissAlert">
 					<div data-sap-ui-type="ui5strap.Icon" data-icon="times"></div>

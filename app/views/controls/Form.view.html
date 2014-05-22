@@ -8,24 +8,57 @@
 			<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-text="Vertical forms"></div>
 
 			<div data-sap-ui-type="ui5strap.Form">
-				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Name">
-					<div data-sap-ui-type="ui5strap.Input" data-placeholder="Name"></div>
+				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Name" data-feedback="true">
+					<div data-sap-ui-type="ui5strap.TextInput" data-placeholder="Name"></div>
+					<div data-sap-ui-type="ui5strap.Icon" data-icon="times" data-type="FormFeedback"></div>
 				</div>
-				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Email" data-severity="Error" data-feedback="true">
-					<div data-sap-ui-type="ui5strap.Input" data-input-type="email" data-placeholder="Email" data-value="no@valid@email"></div>
-					<div data-sap-ui-type="ui5strap.Icon" data-icon="remove" data-within-form="true"></div>
+				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Email" data-severity="Error">
+					<div data-sap-ui-type="ui5strap.InputGroup">
+						<div data-sap-ui-type="ui5strap.Text" data-text="@"></div>
+						<div data-sap-ui-type="ui5strap.TextInput" data-placeholder="Email"></div>
+						<div data-sap-ui-type="ui5strap.Icon" data-icon="times"></div>
+					</div>
+					
 				</div>
+				
 				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Address">
-					<div data-sap-ui-type="ui5strap.Input" data-type="text" data-placeholder="Address"></div>
+					<div data-sap-ui-type="ui5strap.TextInput" data-rows="3" data-placeholder="Address"></div>
+				</div>
+				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Some Things">
+					<div data-sap-ui-type="ui5strap.Row"> 
+						<div data-sap-ui-type="ui5strap.Col" data-columns-small="3">
+							<div data-sap-ui-type="ui5strap.InputGroup">
+								<div data-sap-ui-type="ui5strap.RadioButton" data-type="Default"></div>
+								<div data-sap-ui-type="ui5strap.TextInput" data-placeholder="Name"></div>
+							</div>
+						</div>
+						<div data-sap-ui-type="ui5strap.Col" data-columns-small="3">
+							<div data-sap-ui-type="ui5strap.InputGroup">
+								<div data-sap-ui-type="ui5strap.SelectBox">
+									<div data-sap-ui-type="ui5strap.Item" data-text="Option 1" data-value="option1"></div>
+									<div data-sap-ui-type="ui5strap.Item" data-text="Option 2" data-value="option2"></div>
+									<div data-sap-ui-type="ui5strap.Item" data-text="Option 3" data-value="option3"></div>
+									<div data-sap-ui-type="ui5strap.Item" data-text="Option 4" data-value="option4"></div>
+								</div>
+								<div data-sap-ui-type="ui5strap.Checkbox" data-type="Default"></div>
+							</div>
+						</div>
+						<div data-sap-ui-type="ui5strap.Col" data-columns-small="3">
+							<div data-sap-ui-type="ui5strap.InputGroup">
+								<div data-sap-ui-type="ui5strap.TextInput" data-placeholder="Name"></div>
+								<div data-sap-ui-type="ui5strap.Checkbox" data-type="Default"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Some option">
 					<div data-sap-ui-type="ui5strap.Checkbox" data-label="Option 1"></div>
 				</div>
 				<div data-sap-ui-type="ui5strap.FormGroup">
-					<div data-sap-ui-type="ui5strap.Radio" data-label="Option A"></div>
+					<div data-sap-ui-type="ui5strap.RadioButton" data-label="Option A"></div>
 				</div>
 				<div data-sap-ui-type="ui5strap.FormGroup">
-					<div data-sap-ui-type="ui5strap.Radio" data-label="Option B"></div>
+					<div data-sap-ui-type="ui5strap.RadioButton" data-label="Option B"></div>
 				</div>
 				<div data-sap-ui-type="ui5strap.Button" data-text="Submit" data-severity="Success"></div>
 			</div>
@@ -35,7 +68,11 @@
 			<div data-sap-ui-type="ui5strap.Form" data-type="Horizontal">
 				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Name" data-label-small="2">
 					<div data-sap-ui-type="ui5strap.Col" data-columns-small="10">
-						<div data-sap-ui-type="ui5strap.Input" data-placeholder="Name"></div>
+						<div data-sap-ui-type="ui5strap.InputGroup">
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="pencil"></div>
+							<div data-sap-ui-type="ui5strap.TextInput" data-placeholder="Name"></div>
+							<div data-sap-ui-type="ui5strap.Button" data-text="Check" data-severity="Success"></div>
+						</div>
 					</div>
 				</div>
 				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Number" data-label-small="2">
@@ -45,18 +82,44 @@
 				</div>
 				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Email"  data-label-small="2" data-severity="Error" data-feedback="true">
 					<div data-sap-ui-type="ui5strap.Col" data-columns-small="10">
-							<div data-sap-ui-type="ui5strap.Input" data-type="email" data-placeholder="Email" data-value="no@valid@email"></div>
-							<div data-sap-ui-type="ui5strap.Icon" data-icon="remove" data-within-form="true"></div>
+							<div data-sap-ui-type="ui5strap.TextInput" data-placeholder="Email" data-value="no@valid@email"></div>
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="times" data-type="FormFeedback"></div>
 					</div>
 				</div>
 				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Address"  data-label-small="2" data-severity="Success" data-feedback="true">
 					<div data-sap-ui-type="ui5strap.Col" data-columns-small="5">
-						<div data-sap-ui-type="ui5strap.Input" data-value="Some Street" data-placeholder="Address"></div>
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="ok" data-within-form="true"></div>
+						<div data-sap-ui-type="ui5strap.TextInput" data-value="Some Street" data-placeholder="Address"></div>
+						<div data-sap-ui-type="ui5strap.Icon" data-icon="check" data-type="FormFeedback"></div>
 					</div>
 					<div data-sap-ui-type="ui5strap.Col" data-columns-small="5">
-						<div data-sap-ui-type="ui5strap.Input" data-value="25a" data-placeholder="Address"></div>
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="ok" data-within-form="true"></div>
+						<div data-sap-ui-type="ui5strap.TextInput" data-value="25a" data-placeholder="Address"></div>
+						<div data-sap-ui-type="ui5strap.Icon" data-icon="check" data-type="FormFeedback"></div>
+					</div>
+				</div>
+				<div data-sap-ui-type="ui5strap.FormGroup" data-label="Category"  data-label-small="3">
+					<div data-sap-ui-type="ui5strap.Col" data-columns-small="3">
+						<div data-sap-ui-type="ui5strap.SelectBox">
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 1" data-value="option1"></div>
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 2" data-value="option2"></div>
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 3" data-value="option3"></div>
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 4" data-value="option4"></div>
+						</div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Col" data-columns-small="3">
+						<div data-sap-ui-type="ui5strap.SelectBox">
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 1" data-value="option1"></div>
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 2" data-value="option2"></div>
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 3" data-value="option3"></div>
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 4" data-value="option4"></div>
+						</div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Col" data-columns-small="3">
+						<div data-sap-ui-type="ui5strap.SelectBox">
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 1" data-value="option1"></div>
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 2" data-value="option2"></div>
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 3" data-value="option3"></div>
+							<div data-sap-ui-type="ui5strap.Item" data-text="Option 4" data-value="option4"></div>
+						</div>
 					</div>
 				</div>
 				<div data-sap-ui-type="ui5strap.FormGroup">
@@ -66,12 +129,12 @@
 				</div>
 				<div data-sap-ui-type="ui5strap.FormGroup">
 					<div data-sap-ui-type="ui5strap.Col" data-offset-small="2" data-columns-small="10">
-						<div data-sap-ui-type="ui5strap.Radio" data-label="Option A"></div>
+						<div data-sap-ui-type="ui5strap.RadioButton" data-label="Option A"></div>
 					</div>
 				</div>
 				<div data-sap-ui-type="ui5strap.FormGroup">
 					<div data-sap-ui-type="ui5strap.Col" data-offset-small="2" data-columns-small="10">
-						<div data-sap-ui-type="ui5strap.Radio" data-label="Option B"></div>
+						<div data-sap-ui-type="ui5strap.RadioButton" data-label="Option B"></div>
 					</div>
 				</div>
 				<div data-sap-ui-type="ui5strap.Col" data-offset-small="2" data-colums-small="10">
@@ -79,35 +142,6 @@
 				</div>
 			</div>
 
-			<div data-sap-ui-type="ui5strap.Row">
-				<div data-sap-ui-type="ui5strap.Col" data-columns-small="6">
-					<div data-sap-ui-type="ui5strap.InputGroup">
-						<div data-sap-ui-type="ui5strap.Input" data-placeholder="Name"></div>
-						<div data-sap-ui-type="ui5strap.Button" data-text="Go" data-severity="Success"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.InputGroup">
-						<div data-sap-ui-type="ui5strap.Input" data-placeholder="Name"></div>
-						<div data-sap-ui-type="ui5strap.Text" data-text="@"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.InputGroup">
-						<div data-sap-ui-type="ui5strap.Input" data-placeholder="Name"></div>
-						<div data-sap-ui-type="ui5strap.Checkbox" data-type="Default"></div>
-					</div>
-				</div>
-				<div data-sap-ui-type="ui5strap.Col" data-columns-small="6">
-					<div data-sap-ui-type="ui5strap.InputGroup">
-						<div data-sap-ui-type="ui5strap.Button" data-text="Go" data-severity="Primary"></div>
-						<div data-sap-ui-type="ui5strap.Input" data-placeholder="Name"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.InputGroup">
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="pencil"></div>
-						<div data-sap-ui-type="ui5strap.Input" data-placeholder="Name"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.InputGroup">
-						<div data-sap-ui-type="ui5strap.Radio" data-type="Default"></div>
-						<div data-sap-ui-type="ui5strap.Input" data-placeholder="Name"></div>
-					</div>
-				</div>
-			</div>
+			<
 	</div>
 </template>
