@@ -91,7 +91,7 @@
 			var navLeft = new ui5strap.Nav();
 			_this.nav = navLeft;
 
-			navLeft.setNavbarAlign(ui5strap.NavBarAlignment.Left);
+			navLeft.setAlign(ui5strap.Alignment.NavBarLeft);
 			navBar.addCollapse(navLeft);
 
 			var menu = frameOptions.menu;
@@ -113,7 +113,7 @@
 				_this.setPage(listItem.data());
 			});
 
-			var navButtons = new ui5strap.ButtonGroup({navbarAlign : ui5strap.NavBarAlignment.Right});
+			var navButtons = new ui5strap.ButtonGroup({align : ui5strap.Alignment.NavBarRight});
 			var buttonDe = new ui5strap.Button({'text' : "DE" });
 			var buttonEn = new ui5strap.Button({'text' : "EN" });
 			navButtons.addButtons(buttonEn);
