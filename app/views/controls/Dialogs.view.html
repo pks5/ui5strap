@@ -7,7 +7,7 @@
 			<div data-sap-ui-type="ui5strap.Heading" data-text="Modal"></div>
 			<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Launch Modal" data-severity="Info" data-tap="showModal"></div>
 			
-			<div data-sap-ui-type="ui5strap.Modal" id="myModal">
+			<div data-sap-ui-type="ui5strap.Modal" id="myModal" data-shown="modalShown" data-hidden="modalHidden">
 				<div data-sap-ui-aggregation="header">
 					<div data-sap-ui-type="ui5strap.Button" data-type="Close" data-bs-action="DismissModal">
 						<div data-sap-ui-type="ui5strap.Icon" data-icon="times"></div>
@@ -25,37 +25,41 @@
 			</div>
 
 			<div data-sap-ui-type="ui5strap.Heading" data-text="Popovers"></div>
+
+			<div data-sap-ui-type="ui5strap.Text" data-type="Strong" data-text="Click a button to see the popover status here!" id="popoverEventIndicator"></div>
+
 			<div data-sap-ui-type="ui5strap.Paragraph">
 				<div data-sap-ui-type="ui5strap.Button" id="popLeft" data-size="Small" data-text="Left" data-severity="Primary"></div>
 				<div data-sap-ui-type="ui5strap.Button" id="popTop" data-size="Small" data-text="Top" data-severity="Primary"></div>
 				<div data-sap-ui-type="ui5strap.Button" id="popBottom" data-size="Small" data-text="Bottom" data-severity="Primary"></div>
 				<div data-sap-ui-type="ui5strap.Button" id="popRight" data-size="Small" data-text="Right" data-severity="Primary"></div>
 				
-				<div data-sap-ui-type="ui5strap.Popover" data-source="popLeft" data-placement="Left" data-title="Popover with title">
+				<div data-sap-ui-type="ui5strap.Popover" data-shown="popoverShown" data-hidden="popoverHidden" data-source="popLeft" data-placement="Left" data-title="Popover with title">
 					<div data-sap-ui-type="ui5strap.Text" data-text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></div>
 				</div>
-				<div data-sap-ui-type="ui5strap.Popover" data-source="popTop" data-placement="Top" data-title="Popover with title">
+				<div data-sap-ui-type="ui5strap.Popover" data-shown="popoverShown" data-hidden="popoverHidden" data-source="popTop" data-placement="Top" data-title="Popover with title">
 					<div data-sap-ui-type="ui5strap.Text" data-text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></div>
 				</div>
-				<div data-sap-ui-type="ui5strap.Popover" data-source="popBottom" data-placement="Bottom">
-					<div data-sap-ui-type="ui5strap.Text" data-text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></div>
+				<div data-sap-ui-type="ui5strap.Popover" data-shown="popoverShown" data-hidden="popoverHidden" data-source="popBottom" data-placement="Bottom" data-animate="false">
+					<div data-sap-ui-type="ui5strap.Text" data-text="This popover is placed on bottom has no animation."></div>
 				</div>
-				<div data-sap-ui-type="ui5strap.Popover" data-source="popRight" data-placement="Right">
+				<div data-sap-ui-type="ui5strap.Popover" data-shown="popoverShown" data-hidden="popoverHidden" data-source="popRight" data-placement="Right">
 					<div data-sap-ui-type="ui5strap.Text" data-text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></div>
 				</div>
 			</div>
 
 			<div data-sap-ui-type="ui5strap.Heading" data-text="Tooltips"></div>
+			<div data-sap-ui-type="ui5strap.Text" data-type="Strong" data-text="Hover a button to see the tooltip status here!" id="tooltipEventIndicator"></div>
 			<div data-sap-ui-type="ui5strap.Paragraph">
 				<div data-sap-ui-type="ui5strap.Button" id="tooltipLeft" data-size="Small" data-text="Left" data-severity="Primary" data-title="Tooltip on left"></div>
 				<div data-sap-ui-type="ui5strap.Button" id="tooltipTop" data-size="Small" data-text="Top" data-severity="Primary" data-title="Tooltip on top"></div>
 				<div data-sap-ui-type="ui5strap.Button" id="tooltipBottom" data-size="Small" data-text="Bottom" data-severity="Primary" data-title="Tooltip on bottom"></div>
 				<div data-sap-ui-type="ui5strap.Button" id="tooltipRight" data-size="Small" data-text="Right" data-severity="Primary" data-title="Tooltip on right"></div>
 				
-				<div data-sap-ui-type="ui5strap.Tooltip" data-source="tooltipLeft" data-placement="Left"></div>
-				<div data-sap-ui-type="ui5strap.Tooltip" data-source="tooltipTop" data-placement="Top"></div>
-				<div data-sap-ui-type="ui5strap.Tooltip" data-source="tooltipBottom" data-placement="Bottom"></div>
-				<div data-sap-ui-type="ui5strap.Tooltip" data-source="tooltipRight" data-placement="Right"></div>
+				<div data-sap-ui-type="ui5strap.Tooltip" data-shown="tooltipShown" data-hidden="tooltipHidden" data-source="tooltipLeft" data-placement="Left"></div>
+				<div data-sap-ui-type="ui5strap.Tooltip"  data-shown="tooltipShown" data-hidden="tooltipHidden" data-source="tooltipTop" data-placement="Top"></div>
+				<div data-sap-ui-type="ui5strap.Tooltip"  data-shown="tooltipShown" data-hidden="tooltipHidden" data-source="tooltipBottom" data-placement="Bottom"></div>
+				<div data-sap-ui-type="ui5strap.Tooltip"  data-shown="tooltipShown" data-hidden="tooltipHidden" data-source="tooltipRight" data-placement="Right"></div>
 			</div>
 
 </div>
