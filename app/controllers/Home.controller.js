@@ -3,7 +3,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 	app : liberty.getViewer().getApp(),
 
 	gotoInstallation : function(){
-		this.app.getFrame().setPage({
+		this.app.getFrame().gotoPage({
 			id : 'my-app-installation',
 			viewName : "com_mycompany.my_app.views.Installation",
 			transition : "transition-flip",
@@ -12,7 +12,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 	},
 
 	gotoThemes : function(){
-		this.app.getFrame().setPage({
+		this.app.getFrame().gotoPage({
 			id : 'my-app-themes',
 			viewName : "com_mycompany.my_app.views.Themes",
 			transition : "transition-flip",
@@ -22,7 +22,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 
 	gotoControls : function(){
 		this.app.setLoaderVisible(true, function(){
-			this.getFrame().setPage({
+			this.getFrame().gotoPage({
 				id : 'my-app-controls',
 				viewName : "com_mycompany.my_app.views.Controls",
 				transition : "transition-flip",
@@ -33,7 +33,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 	},
 
 	gotoSupport : function(){
-		this.app.getFrame().setPage({
+		this.app.getFrame().gotoPage({
 			id : 'my-app-support',
 			viewName : "com_mycompany.my_app.views.Support",
 			transition : "transition-flip",

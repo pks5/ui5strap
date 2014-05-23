@@ -124,7 +124,7 @@
 			navLeft.attachEvent('tap', {}, function(oEvent){
 				var listItem = oEvent.getParameter('listItem');
 				
-				_this.toPage(listItem.data());
+				_this.gotoPage(listItem.data());
 			});
 
 			var navButtons = new ui5strap.ButtonGroup({align : ui5strap.Alignment.NavBarRight});
@@ -200,25 +200,29 @@
 
 	/*
 	* @Public
+	* @Override
 	*/
-	FrameControllerProto.toPage = function (data) {
+	FrameControllerProto.gotoPage = function (data) {
 		var _this = this;
 
-		if(data.id && data.id === this.getCurrentPage(data.target).getId()){
-			console.log('isu');
-			return;
+		var viewData = this.validatePage(data);
+
+		if(this.isBusy(viewData.target) || viewData.id && viewData.id === this.getCurrentPage(viewData.target).getId()){
+			return false;
 		}
 
-		this.updateMenu(data.viewName);
+		this.updateMenu(viewData.viewName);
 
 		if(data.showLoader){
 			liberty.getViewer().getApp().setLoaderVisible(true, function(){
-				ui5strap.LibertyFrame.prototype.toPage.call(_this, data);
+				_this.toPage(viewData);
 			})
 		}
 		else{
-			ui5strap.LibertyFrame.prototype.toPage.call(this, data);
+			this.toPage(viewData);
 		}
+
+		return true;
 	};
 
 }());
