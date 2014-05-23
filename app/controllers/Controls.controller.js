@@ -15,11 +15,12 @@ sap.ui.controller("com_mycompany.my_app.controllers.Controls", {
 	},
 
 	buttonTap : function(oEvent){
-		this._showStatusMessage('You just tapped a button!');
+		oEvent.getSource().setText("Tapped!");
 	},
 
 	buttonDropdownTap : function(oEvent){
-		this._showStatusMessage('You just tapped an item within a button dropdown menu!');
+		var newText = oEvent.getParameter('srcControl').getText();
+		oEvent.getSource().getParent().setText(newText);
 	},
 
 	alertClosed : function(oEvent){
