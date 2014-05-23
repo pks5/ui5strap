@@ -62,6 +62,7 @@
 			var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
 
 			navContainer = new NavContainerConstructor();
+			
 
 			var navBar = new ui5strap.NavBar();
 

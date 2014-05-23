@@ -20,10 +20,6 @@
   position:relative;
 }
 
-.ui5strap-nc-aggregation-content{
-  height:100%; 
-} 
-
 .ui5strap-nc-page{
   height:100%; 
   position:relative;
@@ -42,6 +38,14 @@
 */
 .ui5strap-nc-standard > .ui5strap-nc-aggregation-content > .ui5strap-nc-page{
   padding-top:50px;
+}
+
+.ui5strap-nc-standard > .ui5strap-nc-aggregation-content{
+   height:100%; 
+}
+
+.ui5strap-nc-standard > .ui5strap-nc-aggregation-navBar{
+
 }
 
 /**
