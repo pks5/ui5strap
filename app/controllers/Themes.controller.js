@@ -17,9 +17,14 @@ sap.ui.controller("com_mycompany.my_app.controllers.Themes", {
 		this.activeButton.setSelected(false);
 		btn.setSelected(true);
 		this.activeButton = btn;
-		jQuery.sap.includeStyleSheet(newTheme, 'ui5strap-css-0', function(){
-			app.setLoaderVisible(false);
-		}, null);
+		window.setTimeout(function(){
+			jQuery.sap.includeStyleSheet(newTheme, 'ui5strap-css-0', function(){
+				window.setTimeout(function(){
+					app.setLoaderVisible(false);
+				}, 500);
+			}, null);
+		}, 500);
+		
 	},
 
 	submitThemeForm : function(oEvent){

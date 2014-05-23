@@ -43,10 +43,6 @@
                 "src" : "font-awesome-4.1.0/css/font-awesome.min.css"
             },
             {
-                "package" : "ui5strap",
-                "src" : "css/ui5strap.css"
-            },
-            {
                 "package" : "my_lib",
                 "src" : "css/clock.css"
             },

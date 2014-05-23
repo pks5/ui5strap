@@ -39,11 +39,24 @@
 		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
+	/*
+	*
+	* PRIVATE METHODS
+	*
+	*/
+
+	/*
+	* Creates private properties for this object
+	* @Private
+	*/
 	var _createPrivateProperties = function(_this){
 		var navContainer = null;
 
 		/*
-		 * creates the nav container
+		 * Creates the NavContainer if no instance has created yet, otherwise it returns the existing instance.
+		 * @Singleton
+		 * @Override
+		 * @Public
 		 */
 		_this.getNavContainer = function(){
 			if(null !== navContainer){
@@ -62,7 +75,7 @@
 			var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
 
 			navContainer = new NavContainerConstructor();
-			
+			navContainer.setContent(new ui5strap.Button());
 
 			var navBar = new ui5strap.NavBar();
 
@@ -111,7 +124,7 @@
 			navLeft.attachEvent('tap', {}, function(oEvent){
 				var listItem = oEvent.getParameter('listItem');
 				
-				_this.setPage(listItem.data());
+				_this.toPage(listItem.data());
 			});
 
 			var navButtons = new ui5strap.ButtonGroup({align : ui5strap.Alignment.NavBarRight});
@@ -134,7 +147,7 @@
 				
 			});
 
-			if('de-de' === configuration.getLanguage()){
+			if(jQuery.sap.startsWithIgnoreCase(configuration.getLanguage(), 'de')){
 				buttonDe.setSelected(true);
 			}
 			else{
@@ -147,12 +160,24 @@
 
 	};
 
+	/*
+	*
+	* PUBLIC METHODS
+	*
+	*/
+
+	/*
+	* @Public
+	*/
 	FrameControllerProto.init = function(){
 		ui5strap.LibertyFrame.prototype.init.call(this);
 
 		_createPrivateProperties(this);
 	};
 
+	/*
+	* @Public
+	*/
 	FrameControllerProto.updateMenu = function(viewName){
 		var frameOptions = this.getConfig().getFrame();
 
@@ -173,17 +198,26 @@
 		}
 	};
 
-	FrameControllerProto.setPage = function (data) {
+	/*
+	* @Public
+	*/
+	FrameControllerProto.toPage = function (data) {
 		var _this = this;
+
+		if(data.id && data.id === this.getCurrentPage(data.target).getId()){
+			console.log('isu');
+			return;
+		}
+
 		this.updateMenu(data.viewName);
 
 		if(data.showLoader){
 			liberty.getViewer().getApp().setLoaderVisible(true, function(){
-				ui5strap.LibertyFrame.prototype.setPage.call(_this, data);
+				ui5strap.LibertyFrame.prototype.toPage.call(_this, data);
 			})
 		}
 		else{
-			ui5strap.LibertyFrame.prototype.setPage.call(this, data);
+			ui5strap.LibertyFrame.prototype.toPage.call(this, data);
 		}
 	};
 

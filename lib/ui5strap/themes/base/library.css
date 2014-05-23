@@ -1,12 +1,10 @@
-.ui5strap-hidden{
-  display:none;
-}
+
 
 /*
 * Nav Container
 */
 
-.ui5strap-nc{
+.navcontainer{
   height:100%; 
   position:relative; 
   
@@ -15,69 +13,80 @@
   -webkit-perspective: 1000;
 }
 
-.ui5strap-nc-aggregation{
-  
+.navcontainer-aggregation{
   position:relative;
+  
 }
 
-.ui5strap-nc-page{
+.navcontainer-page{
   height:100%; 
   position:relative;
    -webkit-box-sizing: border-box;
    -moz-box-sizing: border-box;
    box-sizing: border-box;
+}
+
+.navcontainer-page-hidden{
+    display:none;
+}
+
+.navcontainer-page-prerendered{
   
 }
 
-.ui5strap-nc-page > .sapUiView{
+.navcontainer-pages{
+  position:relative; height:100%;
+}
+
+.navcontainer-page > .sapUiView{
   height:100%;
 }
 
 /*
 * NavContainerStandard
 */
-.ui5strap-nc-standard > .ui5strap-nc-aggregation-content > .ui5strap-nc-page{
+.navcontainer-standard > .navcontainer-aggregation-content > .navcontainer-pages > .navcontainer-page{
   padding-top:50px;
 }
 
-.ui5strap-nc-standard > .ui5strap-nc-aggregation-content{
+.navcontainer-standard > .navcontainer-aggregation-content{
    height:100%; 
 }
 
-.ui5strap-nc-standard > .ui5strap-nc-aggregation-navBar{
-
+.navcontainer-standard > .navcontainer-aggregation-navBar{
+  position:absolute; top:0px; width:100%; height:50px; z-index:2;
 }
 
 /**
 * NavContainerSplit
 */
-.ui5strap-nc-split > .ui5strap-nc-aggregation{
+.navcontainer-split > .navcontainer-aggregation{
     overflow:hidden;
 }
 
-.ui5strap-nc-split > .ui5strap-nc-aggregation-sidebarLeft{
+.navcontainer-split > .navcontainer-aggregation-sidebarLeft{
    height:100%; float:left;  width:25%; background-color: #f0f0f0; 
 }
 
-.ui5strap-nc-split > .ui5strap-nc-aggregation-content{
+.navcontainer-split > .navcontainer-aggregation-content{
     float:left; width:50%;
 }
 
-.ui5strap-nc-split > .ui5strap-nc-aggregation-sidebarRight{
+.navcontainer-split > .navcontainer-aggregation-sidebarRight{
    height:100%;  float:left;  width:25%; background-color:#f0f0f0; 
 }
 
-.ui5strap-nc-split > .ui5strap-nc-aggregation-sidebarLeft > .ui5strap-nc-page,
-.ui5strap-nc-split > .ui5strap-nc-aggregation-sidebarRight > .ui5strap-nc-page,
-.ui5strap-nc-split > .ui5strap-nc-aggregation-content > .ui5strap-nc-page{
+.navcontainer-split > .navcontainer-aggregation-sidebarLeft > .navcontainer-page,
+.navcontainer-split > .navcontainer-aggregation-sidebarRight > .navcontainer-page,
+.navcontainer-split > .navcontainer-aggregation-content > .navcontainer-page{
   padding-top:50px; padding-bottom: 50px;
 }
 
-.ui5strap-nc-split > .ui5strap-nc-aggregation-header{
+.navcontainer-split > .navcontainer-aggregation-header{
   width:100%; height:50px; background-color:black; position:absolute;
 }
 
-.ui5strap-nc-split > .ui5strap-nc-aggregation-footer{
+.navcontainer-split > .navcontainer-aggregation-footer{
   width:100%; height:50px; background-color:black; position:absolute; bottom:0;
 }
 
