@@ -24,7 +24,13 @@
   cursor:pointer;
 }
 
+/*
+* 
+*/
 
+.panel-collapsible > .panel-heading{
+    cursor:pointer;
+}
 
 /*
 * Nav Container
