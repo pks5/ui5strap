@@ -7,22 +7,7 @@
 			<div data-sap-ui-type="ui5strap.Heading" data-text="Modal"></div>
 			<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Launch Modal" data-severity="Info" data-tap="showModal"></div>
 			
-			<div data-sap-ui-type="ui5strap.Modal" id="myModal" data-shown="modalShown" data-hidden="modalHidden">
-				<div data-sap-ui-aggregation="header">
-					<div data-sap-ui-type="ui5strap.Button" data-type="Close" data-bs-action="DismissModal">
-						<div data-sap-ui-type="ui5strap.Icon" data-icon="times"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Heading" data-text="Modal heading"></div>
-
-				</div>
-				<div data-sap-ui-aggregation="body">
-					<div data-sap-ui-type="ui5strap.Paragraph" data-text="Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros."></div>
-				</div>
-				<div data-sap-ui-aggregation="footer">
-					<div data-sap-ui-type="ui5strap.Button" data-text="OK" data-bs-action="DismissModal" data-severity="Primary"></div>
-					<div data-sap-ui-type="ui5strap.Button" data-text="Cancel" data-bs-action="DismissModal" data-severity="Default"></div>
-				</div>
-			</div>
+			
 
 			<div data-sap-ui-type="ui5strap.Heading" data-text="Popovers"></div>
 
@@ -64,5 +49,22 @@
 				<div data-sap-ui-type="ui5strap.Tooltip"  data-shown="tooltipShown" data-hidden="tooltipHidden" data-source="tooltipRight" data-placement="Right"></div>
 			</div>
 
-</div>
+	</div>
+
+	<div data-sap-ui-type="ui5strap.Modal" id="myModal" data-backdrop="true" data-shown="modalShown" data-hidden="modalHidden">
+				<div data-sap-ui-aggregation="header">
+					<div data-sap-ui-type="ui5strap.Button" data-type="Close" data-bs-action="DismissModal">
+						<div data-sap-ui-type="ui5strap.Icon" data-icon="times"></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Heading" data-text="Modal heading"></div>
+
+				</div>
+				<div data-sap-ui-aggregation="body">
+					<div data-sap-ui-type="ui5strap.Paragraph" data-text="Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros."></div>
+				</div>
+				<div data-sap-ui-aggregation="footer">
+					<div data-sap-ui-type="ui5strap.Button" data-text="OK" data-bs-action="DismissModal" data-severity="Primary"></div>
+					<div data-sap-ui-type="ui5strap.Button" data-text="Cancel" data-bs-action="DismissModal" data-severity="Default"></div>
+				</div>
+			</div>
 </template>
