@@ -1,7 +1,8 @@
 {
         "app" : {
             "name" : "Ui5Strap Boilerplate",
-            "package" : "com_mycompany.my_app"
+            "package" : "com_mycompany.my_app",
+            "title" : "Ui5Strap Boilerplate"
         },
 
         "developers" : [
