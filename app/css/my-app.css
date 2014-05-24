@@ -1,19 +1,4 @@
 /*
-* Show Mouse Pointer on nav items
-*/
-.nav > li > a{
-	cursor:pointer;
-}
-
-.navbar-brand{
-	cursor:pointer;
-}
-
-.container{
-
-}
-
-/*
 * Pictures for get started page
 */
 .get-started-screenshot{

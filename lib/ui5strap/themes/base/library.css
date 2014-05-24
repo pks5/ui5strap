@@ -1,3 +1,15 @@
+/*
+* Show Mouse Pointer on nav items
+*/
+.nav > li > a,
+.dropdown-menu > li > a{
+  cursor:pointer;
+}
+
+.navbar-brand{
+  cursor:pointer;
+}
+
 
 
 /*
