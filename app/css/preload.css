@@ -15,7 +15,7 @@ html, body{
 	overflow:hidden;
 }
 
-#loader{
+#ui5strap-loader{
 	position:absolute;
 	top:0;
 	left:0;
@@ -25,7 +25,7 @@ html, body{
 	z-index:10000;
 }
 
-#loader > img{
+#ui5strap-loader > img{
 	width:16px;
 	height:16px;
 	position:absolute;
@@ -33,4 +33,36 @@ html, body{
 	top:50%;
 	margin-left:-8px;
 	margin-top:-8px;
+}
+
+#ui5strap-splash{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color:white;
+	z-index : 100000;
+
+	background: #f9f9f9; /* Old browsers */
+background: -moz-radial-gradient(center, ellipse cover,  #f9f9f9 0%, #c7bfd3 84%, #c7bfd3 97%); /* FF3.6+ */
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#f9f9f9), color-stop(84%,#c7bfd3), color-stop(97%,#c7bfd3)); /* Chrome,Safari4+ */
+background: -webkit-radial-gradient(center, ellipse cover,  #f9f9f9 0%,#c7bfd3 84%,#c7bfd3 97%); /* Chrome10+,Safari5.1+ */
+background: -o-radial-gradient(center, ellipse cover,  #f9f9f9 0%,#c7bfd3 84%,#c7bfd3 97%); /* Opera 12+ */
+background: -ms-radial-gradient(center, ellipse cover,  #f9f9f9 0%,#c7bfd3 84%,#c7bfd3 97%); /* IE10+ */
+background: radial-gradient(ellipse at center,  #f9f9f9 0%,#c7bfd3 84%,#c7bfd3 97%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#c7bfd3',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+
+}
+
+#ui5strap-splash > img{
+	width:320px;
+	height:320px;
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin-left:-160px;
+	margin-top:-160px;
 }

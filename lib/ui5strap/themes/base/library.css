@@ -1,4 +1,18 @@
 /*
+* Disable text selection
+*/
+.disable-text-select,
+.disable-text-select-recursive,
+.disable-text-select-recursive * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/*
 * Show Mouse Pointer on nav items
 */
 .nav > li > a,

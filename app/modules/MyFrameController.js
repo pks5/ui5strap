@@ -75,7 +75,7 @@
 			var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
 
 			navContainer = new NavContainerConstructor();
-			navContainer.setContent(new ui5strap.Button());
+			//navContainer.setContent(new ui5strap.Button());
 
 			var navBar = new ui5strap.NavBar();
 
@@ -207,7 +207,10 @@
 
 		var viewData = this.validatePage(data);
 
-		if(this.isBusy(viewData.target) || viewData.id && viewData.id === this.getCurrentPage(viewData.target).getId()){
+		var currentPage = this.getCurrentPage(viewData.target);
+
+		if(this.isBusy(viewData.target) || viewData.id && currentPage && viewData.id === currentPage.getId()){
+			console.log('current', currentPage, this.isBusy(viewData.target) );
 			return false;
 		}
 
