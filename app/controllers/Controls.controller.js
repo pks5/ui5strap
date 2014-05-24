@@ -14,6 +14,11 @@ sap.ui.controller("com_mycompany.my_app.controllers.Controls", {
 		alert(message);
 	},
 
+	newAlert : function(oEvent){
+		var al = new ui5strap.Alert({ visible : true, closable : true, text : 'Just a new alert!' });
+		al.placeAt(this.getView().byId('alerts').getId());
+	},
+
 	buttonTap : function(oEvent){
 		oEvent.getSource().setText("Tapped!");
 	},
