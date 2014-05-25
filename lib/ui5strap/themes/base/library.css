@@ -25,7 +25,7 @@
 }
 
 /*
-* 
+* Panel
 */
 
 .panel-collapsible > .panel-heading{
@@ -33,7 +33,20 @@
 }
 
 /*
-* Nav Container
+* Container
+*/
+
+.container-floating{
+  float:left;
+  margin-right:10px;
+}
+
+.container-paragraph{
+  margin-bottom:10px;
+}
+
+/*
+* NavContainer
 */
 
 .navcontainer{
