@@ -210,7 +210,6 @@
 		var currentPage = this.getCurrentPage(viewData.target);
 
 		if(this.isBusy(viewData.target) || viewData.id && currentPage && viewData.id === currentPage.getId()){
-			console.log('current', currentPage, this.isBusy(viewData.target) );
 			return false;
 		}
 

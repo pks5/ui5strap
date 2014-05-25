@@ -39,6 +39,7 @@
 .container-floating{
   float:left;
   margin-right:10px;
+  margin-bottom:10px;
 }
 
 .container-paragraph{
@@ -85,6 +86,14 @@
 
 .navcontainer-page > .sapUiView{
   height:100%;
+}
+
+/*
+* NavContainerDefault
+*/
+
+.navcontainer-default > .navcontainer-aggregation-content{
+   height:100%; 
 }
 
 /*
