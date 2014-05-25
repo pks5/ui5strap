@@ -75,11 +75,10 @@
 			var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
 
 			navContainer = new NavContainerConstructor();
-			//navContainer.setContent(new ui5strap.Button());
-
+			
 			var navBar = new ui5strap.NavBar();
 
-			var brand = new ui5strap.Link()
+			var brand = new ui5strap.Link();
 
 			var toggle = new ui5strap.Button( { 
 					type : ui5strap.ButtonType.Default, 
@@ -93,14 +92,11 @@
 			brand.bindProperty('text', {path : 'i18n>MENU_BRAND'});
 			navBar.setBrand(brand);
 
-			//navBar.setInverse(true);
-			navBar.setPosition(ui5strap.NavBarPosition.FixedTop);
-
 			brand.attachEvent('tap', {}, function(){
 				_this.showInitialContent();
 			});
 
-			navContainer.setNavBar(navBar);
+			navContainer.setNavbar(navBar);
 
 			var navLeft = new ui5strap.Nav();
 			_this.nav = navLeft;

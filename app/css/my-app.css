@@ -10,8 +10,8 @@
 * CSS for MyNavContainer
 */
 
-.navcontainer-standard > .navcontainer-aggregation-content .navcontainer-page > .sapUiView > .container,
-.navcontainer-standard > .navcontainer-aggregation-content .navcontainer-page .ui5strap-scroll-container > .container
+.navcontainer-standard > .navcontainer-aggregation-content .navcontainer-page > .sapUiView > .container-fluid,
+.navcontainer-standard > .navcontainer-aggregation-content .navcontainer-page .ui5strap-scroll-container > .container-fluid
 {
 	padding-top:20px;
 }

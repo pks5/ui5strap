@@ -61,10 +61,10 @@
 
 .navcontainer-aggregation{
   position:relative;
-  
 }
 
 .navcontainer-page{
+  width:100%;
   height:100%; 
   position:relative;
    -webkit-box-sizing: border-box;
@@ -76,15 +76,16 @@
     display:none;
 }
 
-.navcontainer-page-prerendered{
-  
-}
 
 .navcontainer-pages{
-  position:relative; height:100%;
+  position:relative; 
+  width:100%;
+  height:100%;
 }
 
+
 .navcontainer-page > .sapUiView{
+  width:100%;
   height:100%;
 }
 
@@ -99,49 +100,112 @@
 /*
 * NavContainerStandard
 */
-.navcontainer-standard > .navcontainer-aggregation-content > .navcontainer-pages > .navcontainer-page{
-  padding-top:50px;
-}
 
-.navcontainer-standard > .navcontainer-aggregation-content{
-   height:100%; 
-}
-
-.navcontainer-standard > .navcontainer-aggregation-navBar{
-  position:absolute; top:0px; width:100%; height:50px; z-index:2;
-}
-
-/**
-* NavContainerSplit
+/*
+* Content aggregation should fill the whole screen by default
 */
-.navcontainer-split > .navcontainer-aggregation{
-    overflow:hidden;
+.navcontainer-standard > .navcontainer-aggregation-content{
+   position:absolute;
+   left:0;
+   right:0;
+   top:0;
+   bottom:0;
+
+   -webkit-transition:left 0.4s;
+  transition:left 0.4s;
 }
 
-.navcontainer-split > .navcontainer-aggregation-sidebarLeft{
-   height:100%; float:left;  width:25%; background-color: #f0f0f0; 
+/*
+* Navbar is there but hidden by default
+*/
+.navcontainer-standard > .navcontainer-aggregation-navbar{
+   position:absolute; 
+  top:-50px; 
+  left:0;
+  width:100%; 
+  height:50px;
+
+  -webkit-transition:top 0.4s;
+    transition:top 0.4s;
 }
 
-.navcontainer-split > .navcontainer-aggregation-content{
-    float:left; width:50%;
+/*
+* If the option "navbar" is set, show the navbar aggregation
+*/
+.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-navbar{
+    top:0;
+    
 }
 
-.navcontainer-split > .navcontainer-aggregation-sidebarRight{
-   height:100%;  float:left;  width:25%; background-color:#f0f0f0; 
+/*
+* Sidebar and Content should be placed directly beyond the Navbar if the "navbar" option is set
+*/
+.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-sidebar,
+.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-content{
+    top:51px;
 }
 
-.navcontainer-split > .navcontainer-aggregation-sidebarLeft > .navcontainer-page,
-.navcontainer-split > .navcontainer-aggregation-sidebarRight > .navcontainer-page,
-.navcontainer-split > .navcontainer-aggregation-content > .navcontainer-page{
-  padding-top:50px; padding-bottom: 50px;
+/*
+* Sidebar is hidden by default
+*/
+.navcontainer-standard > .navcontainer-aggregation-sidebar{
+    display:none;
+    
+    -webkit-transition:left 0.4s, top 0.4s;
+    transition:left 0.4s, top 0.4s;
+    
 }
 
-.navcontainer-split > .navcontainer-aggregation-header{
-  width:100%; height:50px; background-color:black; position:absolute;
+/*
+* Adapt nav for sidebar
+*/
+.navcontainer-standard > .navcontainer-aggregation-sidebar .nav-sidebar{
+  margin-right: -21px;
+  margin-bottom: 20px;
+  margin-left: -20px;
 }
 
-.navcontainer-split > .navcontainer-aggregation-footer{
-  width:100%; height:50px; background-color:black; position:absolute; bottom:0;
+@media (min-width: 768px){
+    /*
+    * 
+    */
+    .navcontainer-standard > .navcontainer-aggregation-sidebar{
+      display:block;
+      background-color:gray;
+      position: fixed;
+      
+      top:0;
+      bottom:0;
+
+      padding: 20px;
+      
+      overflow-x: hidden;
+      overflow-y: auto;
+      
+      background-color: #f5f5f5;
+      
+      width:25%;
+      left:-25%;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
+        left:25%;
+    }
+}
+
+@media (min-width: 992px){
+    .navcontainer-standard > .navcontainer-aggregation-sidebar{
+        width: 16.66666667%;
+        left: -16.66666667%;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
+        left:16.66666667%;
+    }
+}
+
+.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+    left:0px;
 }
 
 /*

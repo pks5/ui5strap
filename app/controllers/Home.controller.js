@@ -2,6 +2,10 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 
 	app : liberty.getViewer().getApp(),
 
+	onPageShow : function(){
+		this.app.getFrame().getNavContainer().setOption('sidebar', false);
+	},
+
 	gotoInstallation : function(){
 		this.app.getFrame().gotoPage({
 			id : 'my-app-installation',
