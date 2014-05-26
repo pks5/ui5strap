@@ -30,8 +30,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Controls", {
 	},
 
 	buttonDropdownTap : function(oEvent){
-		var newText = oEvent.getParameter('srcControl').getText();
-		oEvent.getSource().getParent().setText(newText);
+
 	},
 
 	alertClosed : function(oEvent){
