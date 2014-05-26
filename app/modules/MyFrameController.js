@@ -76,7 +76,7 @@
 
 			navContainer = new NavContainerConstructor();
 			
-			var navBar = new ui5strap.NavBar();
+			var navBar = new ui5strap.NavBar({ fluid : true });
 
 			var brand = new ui5strap.Link();
 
