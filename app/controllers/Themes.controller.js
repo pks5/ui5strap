@@ -2,7 +2,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Themes", {
 
 	app : liberty.getViewer().getApp(),
 
-	onPageShow : function(){
+	onPageShown : function(){
 		this.app.getFrame().getNavContainer().setOption('sidebar', true);
 	},
 

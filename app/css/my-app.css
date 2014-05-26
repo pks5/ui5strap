@@ -76,7 +76,9 @@ padding-bottom:80px;
 }
 
 .boilerplateCarousel .carousel-indicators li.active{
+
 	background-color: #888;
+	
 }
 
 .boilerplateCarousel .carousel-control{
