@@ -27,7 +27,7 @@
 
 	jQuery.sap.require("ui5strap.NavBar");
 	jQuery.sap.require("ui5strap.Nav");
-	jQuery.sap.require("ui5strap.ListItem");
+	jQuery.sap.require("ui5strap.ListNavItem");
 	jQuery.sap.require("ui5strap.Link");
 	jQuery.sap.require("ui5strap.ButtonGroup");
 	jQuery.sap.require("ui5strap.Button");
@@ -150,7 +150,14 @@
 				buttonEn.setSelected(true);
 			}
 
-			
+			var navSidebar = new ui5strap.Nav();
+			navSidebar.addStyleClass('nav-sidebar');
+			var navItem = new ui5strap.ListNavItem();
+			navItem.setText('Themes');
+			navSidebar.addItems(navItem);
+			navSidebar.setSelectedControl(navItem);
+			navContainer.setSidebar(navSidebar);
+
 			return navContainer;
 		};
 
