@@ -151,11 +151,8 @@
 			}
 
 			var navSidebar = new ui5strap.Nav();
+			_this._navSidebar = navSidebar;
 			navSidebar.addStyleClass('nav-sidebar');
-			var navItem = new ui5strap.ListNavItem();
-			navItem.setText('Themes');
-			navSidebar.addItems(navItem);
-			navSidebar.setSelectedControl(navItem);
 			navContainer.setSidebar(navSidebar);
 
 			return navContainer;
@@ -176,6 +173,13 @@
 		ui5strap.LibertyFrame.prototype.init.call(this);
 
 		_createPrivateProperties(this);
+	};
+
+	/*
+	* @Public
+	*/
+	FrameControllerProto.getNavSidebar = function(){
+		return this._navSidebar;
 	};
 
 	/*

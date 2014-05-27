@@ -4,31 +4,44 @@ sap.ui.controller("com_mycompany.my_app.controllers.Themes", {
 
 	onPageShown : function(){
 		this.app.getFrame().getNavContainer().setOption('sidebar', true);
+		var navSidebar = this.app.getFrame().getNavSidebar();
+
+		navSidebar.removeAllItems();
+
+		var navItem = new ui5strap.ListNavItem();
+			navItem.setText('Themes');
+			navSidebar.addItems(navItem);
+			navSidebar.setSelectedControl(navItem);
+	},
+
+	onPageHide : function(){
+		this.app.getFrame().getNavContainer().setOption('sidebar', false);
 	},
 
 	switchTheme : function(oEvent){
-		var app = this.app;
-		app.setLoaderVisible(true);
-		
-		var btn = oEvent.getSource();
-		var newTheme = btn.getCustomData()[0].getValue('theme');
-		if('default' === newTheme){
-			newTheme = jQuery.sap.getModulePath('ui5strap') + '/bootstrap-3.1.1-dist/css/bootstrap.min.css';
-		}
-		if(!this.activeButton){
-			this.activeButton = this.getView().byId('defaultThemeButton');
-		}
-		this.activeButton.setSelected(false);
-		btn.setSelected(true);
-		this.activeButton = btn;
-		window.setTimeout(function(){
-			jQuery.sap.includeStyleSheet(newTheme, 'ui5strap-css-0', function(){
-				window.setTimeout(function(){
-					app.setLoaderVisible(false);
-				}, 500);
-			}, null);
-		}, 500);
-		
+		var app = this.app,
+			_this = this,
+			btn = oEvent.getSource();
+
+		app.setLoaderVisible(true, function(){
+			var newTheme = btn.getCustomData()[0].getValue('theme');
+			if('default' === newTheme){
+				newTheme = jQuery.sap.getModulePath('ui5strap') + '/bootstrap-3.1.1-dist/css/bootstrap.min.css';
+			}
+			if(!_this.activeButton){
+				_this.activeButton = _this.getView().byId('defaultThemeButton');
+			}
+			_this.activeButton.setSelected(false);
+			btn.setSelected(true);
+			_this.activeButton = btn;
+			window.setTimeout(function(){
+				jQuery.sap.includeStyleSheet(newTheme, 'bootstrap-css', function(){
+					window.setTimeout(function(){
+						app.setLoaderVisible(false);
+					}, 500);
+				}, null);
+			}, 500);
+		}, 'opaque');
 	},
 
 	submitThemeForm : function(oEvent){

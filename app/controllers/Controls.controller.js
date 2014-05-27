@@ -2,10 +2,6 @@ sap.ui.controller("com_mycompany.my_app.controllers.Controls", {
 
 	app : liberty.getViewer().getApp(),
 
-	onPageShow : function(){
-		this.app.getFrame().getNavContainer().setOption('sidebar', false);
-	},
-
 	onAfterRendering : function(){
 		if(this.getView().getViewName() === "com_mycompany.my_app.views.Controls"){
 			this.app.setLoaderVisible(false);

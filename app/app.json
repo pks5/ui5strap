@@ -36,6 +36,7 @@
 
         "css" : [
             {
+                "id" : "bootstrap-css",
                 "package" : "ui5strap",
                 "src" : "bootstrap-3.1.1-dist/css/bootstrap.min.css"
             },

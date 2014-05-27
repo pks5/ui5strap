@@ -35,6 +35,10 @@ html, body{
 	margin-top:-8px;
 }
 
+#ui5strap-loader.ui5strap-loader-opaque{
+	background-color:black;
+}
+
 #ui5strap-splash{
 	position:fixed;
 	left:0;
