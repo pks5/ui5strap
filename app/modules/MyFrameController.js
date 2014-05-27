@@ -214,9 +214,12 @@
 
 		var viewData = this.validatePage(data);
 
+		jQuery.sap.log.debug('FrameController.gotoPage (' + viewData.target + ')');
+
 		var currentPage = this.getCurrentPage(viewData.target);
 
 		if(this.isBusy(viewData.target) || viewData.id && currentPage && viewData.id === currentPage.getId()){
+			jQuery.sap.log.debug('Is current page: ' + viewData.id);
 			return false;
 		}
 
