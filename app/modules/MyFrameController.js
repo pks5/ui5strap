@@ -209,7 +209,7 @@
 	* @Public
 	* @Override
 	*/
-	FrameControllerProto.gotoPage = function (data) {
+	FrameControllerProto.gotoPage = function (data, callback) {
 		var _this = this;
 
 		var viewData = this.validatePage(data);
@@ -224,11 +224,11 @@
 
 		if(data.showLoader){
 			liberty.getViewer().getApp().setLoaderVisible(true, function(){
-				_this.toPage(viewData);
+				_this.toPage(viewData, callback);
 			})
 		}
 		else{
-			this.toPage(viewData);
+			this.toPage(viewData, callback);
 		}
 
 		return true;
