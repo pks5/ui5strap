@@ -18,18 +18,40 @@ sap.ui.controller("com_mycompany.my_app.controllers.Configuration", {
 			_this.activeButton.setSelected(false);
 			btn.setSelected(true);
 			_this.activeButton = btn;
-			window.setTimeout(function(){
+
+			_this.setTheme(newTheme);
+			
+		}, 'opaque');
+	},
+
+	setTheme : function(newTheme){
+		var app = this.app;
+
+		window.setTimeout(function(){
+			
+			//This is a hack: older browser do not fire the onload event for stylesheets
+			//We use window.requestAnimationFrame to find out how old the broser is
+			//TODO: Find a better way to securely detect if the browser does support onload on stylesheets
+			if(window.requestAnimationFrame){
 				jQuery.sap.includeStyleSheet(newTheme, 'bootstrap-css', function(){
 					window.setTimeout(function(){
 						app.setLoaderVisible(false);
 					}, 500);
 				}, null);
-			}, 500);
-		}, 'opaque');
+			}
+			else{
+				jQuery.sap.includeStyleSheet(newTheme, 'bootstrap-css', function(){}, null);
+				window.setTimeout(function(){
+					app.setLoaderVisible(false);
+				}, 800);
+			}
+
+		}, 500);
 	},
 
 	submitThemeForm : function(oEvent){
-		var app = this.app;
+		var app = this.app,
+			_this = this;
 		
 
 		var newTheme = this.getView().byId('themeInput').getValue();
@@ -46,15 +68,15 @@ sap.ui.controller("com_mycompany.my_app.controllers.Configuration", {
 			return false;
 		}
 		else{
-			app.setLoaderVisible(true);
-		
-			if(this.activeButton){
-				this.activeButton.setSelected(false);
-			}
+			app.setLoaderVisible(true, function(){
+			
+				if(this.activeButton){
+					this.activeButton.setSelected(false);
+				}
 
-			jQuery.sap.includeStyleSheet(newTheme, 'ui5strap-css-0', function(){
-				app.setLoaderVisible(false);
-			}, null);
+				_this.setTheme(newTheme);
+
+			}, 'opaque');
 		}
 	},
 
