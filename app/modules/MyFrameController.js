@@ -25,6 +25,7 @@
 	
 	jQuery.sap.require("ui5strap.LibertyFrame");
 
+	jQuery.sap.require("ui5strap.Sidebar");
 	jQuery.sap.require("ui5strap.NavBar");
 	jQuery.sap.require("ui5strap.Nav");
 	jQuery.sap.require("ui5strap.ListNavItem");
@@ -81,13 +82,17 @@
 			var brand = new ui5strap.Link();
 
 			var toggle = new ui5strap.Button( { 
-					type : ui5strap.ButtonType.Default, 
-					bsAction : ui5strap.BsAction.ToggleNavBar 
+					align : ui5strap.Alignment.NavBarLeft
 				} 
 			);
 			toggle.addContent(new ui5strap.Icon( { icon : 'bars', size : ui5strap.IconSize.Large } ));
 
-			navBar.setToggle(toggle);
+			toggle.attachEvent('tap', {}, function(){
+				_this.getNavContainer().toggleOption('sidenav');
+			});
+
+			navBar.addContentLeft(toggle);
+
 
 			brand.bindProperty('text', {path : 'i18n>MENU_BRAND'});
 			navBar.setBrand(brand);
@@ -104,9 +109,9 @@
 			navLeft.setAlign(ui5strap.Alignment.NavBarLeft);
 			navBar.addCollapse(navLeft);
 
-			var menu = frameOptions.menu;
-			for (var i = 0; i < menu.length; i++){
-				var menuPage = menu[i];
+			var menu = _this.getConfig().getMenuData(frameOptions.navbarMenu);
+			for (var i = 0; i < menu.items.length; i++){
+				var menuPage = menu.items[i];
 				
 				var navItem = new ui5strap.ListItem();
 				navItem.data(menuPage);
@@ -121,6 +126,8 @@
 				var listItem = oEvent.getParameter('listItem');
 				
 				_this.gotoPage(listItem.data());
+
+				navBar.setCollapsed(true);
 			});
 
 			var navButtons = new ui5strap.ButtonGroup({align : ui5strap.Alignment.NavBarRight});
@@ -150,10 +157,27 @@
 				buttonEn.setSelected(true);
 			}
 
-			var navSidebar = new ui5strap.Nav();
+
+			var toggleRight = new ui5strap.Button( { 
+					align : ui5strap.Alignment.NavBarRight
+				} 
+			);
+			toggleRight.addContent(new ui5strap.Icon( { icon : 'bars', size : ui5strap.IconSize.Large } ));
+
+			navBar.addContentRight(toggleRight);
+			toggleRight.attachEvent('tap', {}, function(){
+				navBar.toggle();
+			});
+
+
+			var sidebar = new ui5strap.Sidebar();
+
+			var navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked });
 			_this._navSidebar = navSidebar;
 			navSidebar.addStyleClass('nav-sidebar');
-			navContainer.setSidebar(navSidebar);
+			sidebar.addContent(navSidebar);
+
+			navContainer.setSidebar(sidebar);
 
 			return navContainer;
 		};
@@ -186,12 +210,35 @@
 	* @Public
 	*/
 	FrameControllerProto.updateMenu = function(viewName){
+		
+
+		if(this.sidebarMenu){
+			var sidebarMenuIndex = -1;
+			var navSidebar = this.getNavSidebar();
+			var sidebarMenu = this.getConfig().getMenuData(this.sidebarMenu);
+			var sidebarItems = sidebarMenu.items;
+			for(var i=0; i<sidebarItems.length; i++){
+				if(viewName === sidebarItems[i].viewName){
+					sidebarMenuIndex = i;
+					break;
+				}
+			}
+
+			if(sidebarMenuIndex !== -1){
+				navSidebar.setSelectedIndex(sidebarMenuIndex);
+			}
+			else{
+				navSidebar.setSelectedControl(null);
+			}
+		}
+
 		var frameOptions = this.getConfig().getFrame();
+		var menu = this.getConfig().getMenuData(frameOptions.navbarMenu);
 
 		var menuIndex = -1;
 
-		for(var i=0; i<frameOptions.menu.length; i++){
-			if(viewName === frameOptions.menu[i].viewName){
+		for(var i=0; i<menu.items.length; i++){
+			if(viewName === menu.items[i].viewName || (this.sidebarMenu && this.sidebarMenu === menu.items[i].sidebarMenu)){
 				menuIndex = i;
 				break;
 			}
@@ -203,6 +250,50 @@
 		else{
 			this.nav.setSelectedControl(null);
 		}
+
+		
+	};
+
+	FrameControllerProto.setSidebarVisible = function(visible){
+		this.getNavContainer().setOptionEnabled('sidebar', visible);
+	};
+
+	FrameControllerProto.setSidenavVisible = function(visible){
+		this.getNavContainer().setOptionEnabled('sidenav', visible);
+	};
+
+	FrameControllerProto.setNavbarVisible = function(visible){
+		this.getNavContainer().setOptionEnabled('navbar', visible);
+	};
+
+	FrameControllerProto.setSidebarMenu = function(menuData){
+		var navSidebar = this.getNavSidebar(),
+			_this = this;
+		
+		if(menuData === this.sidebarMenu){
+			return;
+		}
+
+		navSidebar.removeAllItems();
+
+		this.sidebarMenu = menuData;
+
+		if(!menuData){
+			return;
+		}
+
+		navSidebar.attachEvent('tap', {}, function(oEvent){
+			_this.gotoPage(oEvent.getParameter('listItem').data());
+		});
+
+		var items = this.getConfig().getMenuData(menuData).items;
+		for(var i = 0; i < items.length; i++){
+			var menuData = items[i];
+			var navItem = new ui5strap.ListNavItem();
+				navItem.bindProperty('text', menuData.label);
+				navItem.data(menuData);
+				navSidebar.addItems(navItem);
+		}
 	};
 
 	/*
@@ -212,9 +303,22 @@
 	FrameControllerProto.gotoPage = function (data, callback) {
 		var _this = this;
 
+		if(data.sidebarMenu && !data.viewName){
+			var submenu = this.getConfig().getMenuData(data.sidebarMenu);
+			this.gotoPage(submenu.items[0], callback);
+			return;
+		}
+
 		var viewData = this.validatePage(data);
 
 		jQuery.sap.log.debug('FrameController.gotoPage (' + viewData.target + ')');
+
+		this.setSidebarVisible(viewData.sidebar);
+		this.setNavbarVisible(viewData.navbar);
+		this.setSidenavVisible(false);
+		
+		this.setSidebarMenu(viewData.sidebarMenu);
+		
 
 		var currentPage = this.getCurrentPage(viewData.target);
 
@@ -225,7 +329,7 @@
 
 		this.updateMenu(viewData.viewName);
 
-		if(data.showLoader){
+		if(viewData.showLoader){
 			liberty.getViewer().getApp().setLoaderVisible(true, function(){
 				_this.toPage(viewData, callback);
 			})

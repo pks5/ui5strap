@@ -71,67 +71,114 @@
                 "navContainer" : "ui5strap.NavContainerStandard",
                 "initialViews" : [
                     { 
-                        "id" : "my-app-home",
-                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Home"
                     }
                 ],
-                "menu" : [
+                "navbarMenu" : "mainMenu"
+            }
+        },
+
+        "menus" : {
+            "mainMenu" : { 
+                "items" : [
                     {
-                        "id" : "my-app-home",
-                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Home",
                         "label" : "i18n>MENU_HOME"
                     },
                     
                     {
-                        "id" : "my-app-installation",
-                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Installation",
                         "label" : "i18n>MENU_INSTALLATION"
                     },
                     {
-                        "id" : "my-app-themes",
-                        "target" : "content",
-                        "viewName" : "com_mycompany.my_app.views.Themes",
-                        "label" : "i18n>MENU_THEMES"
+                        "sidebarMenu" : "configurationMenu",
+                        "label" : "i18n>MENU_CONFIGURATION"
                     },
                     {
-                        "id" : "my-app-controls",
-                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Controls",
-                        "label" : "i18n>MENU_CONTROLS",
-                        "showLoader" : true
+                        "label" : "i18n>MENU_CONTROLS"
                     },
                     {
-                        "id" : "my-app-support",
-                        "target" : "content",
                         "viewName" : "com_mycompany.my_app.views.Support",
                         "label" : "i18n>MENU_SUPPORT"
                     }
+                ]
+            },
+
+            "configurationMenu" : {
+                "parent" : "mainMenu",
+                "items" : [
+                        {
+                            "viewName" : "com_mycompany.my_app.views.configuration.Configuration",
+                            "label" : "i18n>MENU_CONFIG_GENERAL"
+                        },
+                        {
+                            "viewName" : "com_mycompany.my_app.views.configuration.Theme",
+                            "label" : "i18n>MENU_CONFIG_THEME"
+                        },
+                        {
+                            "viewName" : "com_mycompany.my_app.views.configuration.Frame",
+                            "label" : "i18n>MENU_CONFIG_FRAME"
+                        }
                 ]
             }
         },
 
         "views" : {
             "com_mycompany.my_app.views.Home" : {
-                "type" : "HTML"
+                "id" : "my-app-home",
+                "target" : "content",
+                "type" : "HTML",
+                "navbar" : true
             },
 
             "com_mycompany.my_app.views.Installation" : {
-                "type" : "HTML"
+                "id" : "my-app-installation",
+                "target" : "content",
+                "type" : "HTML",
+                "navbar" : true
             },
             
             "com_mycompany.my_app.views.Controls" : {
-                "type" : "HTML"
+                "id" : "my-app-controls",
+                "target" : "content",
+                "type" : "HTML",
+                "showLoader" : true,
+                "navbar" : true
             },
             
-            "com_mycompany.my_app.views.Themes" : {
-                "type" : "HTML"
+            "com_mycompany.my_app.views.configuration.Theme" : {
+                "id" : "my-app-config-theme",
+                "target" : "content",
+                "type" : "HTML",
+                "sidebar" : true,
+                "navbar" : true,
+                "sidebarMenu" : "configurationMenu"
+            },
+
+            "com_mycompany.my_app.views.configuration.Frame" : {
+                "id" : "my-app-config-frame",
+                "target" : "content",
+                "type" : "HTML",
+                "sidebar" : true,
+                "navbar" : true,
+                "sidebarMenu" : "configurationMenu"
+            },
+
+            "com_mycompany.my_app.views.configuration.Configuration" : {
+                "id" : "my-app-configuration",
+                "target" : "content",
+                "type" : "HTML",
+                "sidebar" : true,
+                "navbar" : true,
+                "sidebarMenu" : "configurationMenu"
             },
             
             "com_mycompany.my_app.views.Support" : {
-                "type" : "HTML"
+                "id" : "my-app-support",
+                "target" : "content",
+                "type" : "HTML",
+                "navbar" : true
             }
         }
 }

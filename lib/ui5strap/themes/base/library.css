@@ -24,6 +24,21 @@
   cursor:pointer;
 }
 
+.navbar-header{
+  float:left;
+}
+
+.navbar-content-left{
+  float:left;
+  margin-right:15px;
+}
+
+.navbar-content-right{
+  float:right;
+   margin-left:15px;
+}
+
+
 /*
 * Panel
 */
@@ -45,6 +60,40 @@
 .container-paragraph{
   margin-bottom:10px;
 }
+
+
+
+/*
+* Sidebar
+*/
+
+.sidebar{
+  background-color: #f5f5f5;
+      background-color:rgba(70,70,70,0.9);
+      padding: 20px;
+      width:100%;
+      height:100%;
+}
+
+.sidebar > .sidebar-content{
+
+}
+
+/*
+* Adapt nav for sidebar
+*/
+.sidebar .nav-sidebar{
+  margin-right: -21px;
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+
+.sidebar .nav-sidebar > li > a{
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 0;
+}
+
 
 /*
 * NavContainer
@@ -107,7 +156,7 @@
 .navcontainer-standard > .navcontainer-aggregation-content{
    position:absolute;
    left:0;
-   right:0;
+   width:100%;
    top:0;
    bottom:0;
 
@@ -124,86 +173,160 @@
   left:0;
   width:100%; 
   height:50px;
-
-  -webkit-transition:top 0.2s;
-    transition:top 0.2s;
+  display:none;
+  -webkit-transition:top 0.2s, left 0.2s;
+    transition:top 0.2s, left 0.2s;
 }
 
 /*
-* If the option "navbar" is set, show the navbar aggregation
-*/
-.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-navbar{
-    top:0;
-    
-}
-
-/*
-* Sidebar and Content should be placed directly beyond the Navbar if the "navbar" option is set
-*/
-.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-sidebar,
-.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-content{
-    top:51px;
-}
-
-/*
-* Sidebar is hidden by default
+* Sidebar aggregation
+* @Mobile
 */
 .navcontainer-standard > .navcontainer-aggregation-sidebar{
-    display:none;
     
-    -webkit-transition:left 0.4s, top 0.4s;
-    transition:left 0.4s, top 0.4s;
-
-}
-
-/*
-* Adapt nav for sidebar
-*/
-.navcontainer-standard > .navcontainer-aggregation-sidebar .nav-sidebar{
-  margin-right: -21px;
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-
-.navcontainer-standard > .navcontainer-aggregation-sidebar .nav-sidebar > li > a{
-    padding-right: 20px;
-  padding-left: 20px;
-}
-
-.navcontainer-standard > .navcontainer-aggregation-sidebar .nav-sidebar > .active > a{
-    color: #fff;
-    background-color: #428bca;
-}
-
-@media (min-width: 768px){
-    /*
-    * 
-    */
-    .navcontainer-standard > .navcontainer-aggregation-sidebar{
-      display:block;
-      background-color:gray;
       position: fixed;
       
       top:0;
       bottom:0;
 
-      padding: 20px;
-      
       overflow-x: hidden;
       overflow-y: auto;
-      
-      background-color: #f5f5f5;
-      background-color:rgba(0,0,0,0.1);
-      
+
+    display:block;
+    -webkit-transition:left 0.2s, top 0.2s, width 0.2s;
+    transition:left 0.2s, top 0.2s, width 0.2s;
+
+    width:75%;
+    left:-75%;
+}
+
+
+
+
+.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
+    left:75%;
+}
+
+.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+    left:75%;
+}
+
+/*
+* Hide the left content of the navbar if the sidebar is enabled and the screensize is greater or equal than 576px
+*/
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
+   display:none;
+}
+
+/*
+* Show the left content of the navbar if the sidebar is enabled and the screensize is smaller than 576px
+*/
+.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
+.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
+      display:block;
+}
+
+
+/*
+* Hide the right content of the navbar if the sidebar is enabled and the screensize is greater or equal than 576px
+*/
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right,
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right{
+   display:block;
+}
+
+
+
+/*
+* @SmallPads
+*/
+@media (min-width: 576px){
+
+    /*
+    * Hide the left content of the navbar if the sidebar is enabled and the screensize is greater or equal than 576px
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
+          display:none;
+    }
+
+    /*
+    * Sidebar aggregation
+    */
+    .navcontainer-standard > .navcontainer-aggregation-sidebar{
       width:25%;
       left:-25%;
     }
 
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
+        left:0;
+      }
+
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+        left:0;
+    }
+
+    /*
+    * Content aggregation
+    * with NavContainer option sidebar
+    */
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
         left:25%;
+        right:0;
+        width:auto;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar{
+      left:0;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+        left:0px;
+        display:block;
+    }
+
+    /*
+    * Sidebar should be placed beyond navbar
+    */
+    .navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-sidebar{
+        top:51px;
+     }
+}
+
+/*
+* @Pad
+*/
+@media (min-width: 768px){
+
+  /*
+    * Show the right content of the navbar if the sidebar is enabled and the screensize is smaller than 576px
+    */
+    .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right,
+    .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right{
+          display:none;
+    }
+
+    /*
+    * Sidebar aggregation
+    */
+    .navcontainer-standard > .navcontainer-aggregation-sidebar{
+      width:20%;
+      left:-20%;
+    }
+
+    /*
+    * Content aggregation
+    * with NavContainer option sidebar
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
+        left:20%;
     }
 }
 
+/*
+* @Desktop
+*/
 @media (min-width: 992px){
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
         width: 16.66666667%;
@@ -215,8 +338,34 @@
     }
 }
 
-.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+
+
+/*
+* If the option "navbar" is set, show the navbar aggregation
+*/
+.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-navbar{
+    top:0;
+}
+
+/*
+* Sidebar should be visible if NavContainer option sidebar is set
+* @All
+*/
+.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
     left:0px;
+    display:block;
+}
+
+.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-content{
+    top:51px;
+}
+
+/*
+* Navbar should be visible if NavContainer option navbar is set
+* @All
+*/
+.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-navbar{
+    display:block;
 }
 
 /*

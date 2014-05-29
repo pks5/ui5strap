@@ -1,22 +1,6 @@
-sap.ui.controller("com_mycompany.my_app.controllers.Themes", {
+sap.ui.controller("com_mycompany.my_app.controllers.Configuration", {
 
 	app : liberty.getViewer().getApp(),
-
-	onPageShown : function(){
-		this.app.getFrame().getNavContainer().setOption('sidebar', true);
-		var navSidebar = this.app.getFrame().getNavSidebar();
-
-		navSidebar.removeAllItems();
-
-		var navItem = new ui5strap.ListNavItem();
-			navItem.setText('Themes');
-			navSidebar.addItems(navItem);
-			navSidebar.setSelectedControl(navItem);
-	},
-
-	onPageHide : function(){
-		this.app.getFrame().getNavContainer().setOption('sidebar', false);
-	},
 
 	switchTheme : function(oEvent){
 		var app = this.app,
