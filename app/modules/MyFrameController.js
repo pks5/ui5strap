@@ -85,7 +85,7 @@
 					align : ui5strap.Alignment.NavBarLeft
 				} 
 			);
-			toggle.addContent(new ui5strap.Icon( { icon : 'bars', size : ui5strap.IconSize.Large } ));
+			toggle.addContent(new ui5strap.Icon( { icon : 'columns', size : ui5strap.IconSize.Large } ));
 
 			toggle.attachEvent('tap', {}, function(){
 				_this.getNavContainer().toggleOption('sidenav');
