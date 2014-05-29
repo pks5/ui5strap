@@ -82,11 +82,6 @@
             "mainMenu" : { 
                 "items" : [
                     {
-                        "viewName" : "com_mycompany.my_app.views.Home",
-                        "label" : "i18n>MENU_HOME"
-                    },
-                    
-                    {
                         "viewName" : "com_mycompany.my_app.views.Installation",
                         "label" : "i18n>MENU_INSTALLATION"
                     },

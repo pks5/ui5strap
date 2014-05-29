@@ -14,7 +14,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 	gotoThemes : function(){
 		this.app.getFrame().gotoPage({
 			id : 'my-app-themes',
-			viewName : "com_mycompany.my_app.views.Themes",
+			viewName : "com_mycompany.my_app.views.configuration.Theme",
 			transition : "transition-flip",
 			target : "content"
 		});
