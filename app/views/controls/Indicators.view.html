@@ -29,14 +29,20 @@
 					</div>
 				</div>
 				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
-					<div data-sap-ui-type="ui5strap.Alert" data-severity="Danger" data-closed="alertClosed">
-						<div data-sap-ui-type="ui5strap.Button" data-type="Close">
-							<div data-sap-ui-type="ui5strap.Icon" data-icon="paw"></div>
+					<div data-sap-ui-type="ui5strap.Alert" data-severity="Danger" data-closable="true" data-closed="alertClosed">
+						<div data-sap-ui-aggregation="closeButton">
+							<div data-sap-ui-type="ui5strap.Button" data-type="Close">
+								<div data-sap-ui-type="ui5strap.Icon" data-icon="paw"></div>
+							</div>
 						</div>
-						<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-text="Oh snap!"></div>
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="Change a few things up and try submitting again."></div>
-						<div data-sap-ui-type="ui5strap.Paragraph">
-							<div data-sap-ui-type="ui5strap.Button" data-tap="closeOtherAlert" data-severity="Danger" data-text="Retry"></div>
+						<div data-sap-ui-aggregation="content">
+						
+							<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-text="Oh snap!"></div>
+							<div data-sap-ui-type="ui5strap.Paragraph" data-text="Change a few things up and try submitting again."></div>
+							<div data-sap-ui-type="ui5strap.Paragraph">
+								<div data-sap-ui-type="ui5strap.Button" data-tap="closeOtherAlert" data-severity="Danger" data-text="Retry"></div>
+							</div>
+
 						</div>
 					</div>
 				</div>
