@@ -124,7 +124,8 @@
                 "id" : "my-app-home",
                 "target" : "content",
                 "type" : "HTML",
-                "navbar" : true
+                "navbar" : true,
+                "sidenav" : true
             },
 
             "com_mycompany.my_app.views.Installation" : {
