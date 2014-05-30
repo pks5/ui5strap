@@ -260,11 +260,11 @@
     }
 
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
-        left:0;
+        left:25%;
       }
 
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
-        left:0;
+        left:25%;
     }
 
     /*
@@ -292,6 +292,13 @@
     .navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-sidebar{
         top:51px;
      }
+
+     /*
+    * Sidebar should be placed beyond navbar
+    */
+    .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+        top:0px;
+     }
 }
 
 /*
@@ -315,6 +322,14 @@
       left:-20%;
     }
 
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
+        left:20%;
+      }
+
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+        left:20%;
+    }
+
     /*
     * Content aggregation
     * with NavContainer option sidebar
@@ -334,6 +349,14 @@
     }
 
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
+        left:16.66666667%;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
+        left:16.66666667%;
+      }
+
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
         left:16.66666667%;
     }
 }

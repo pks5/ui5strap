@@ -315,7 +315,7 @@
 
 		this.setSidebarVisible(viewData.sidebar);
 		this.setNavbarVisible(viewData.navbar);
-		this.setSidenavVisible(false);
+		this.setSidenavVisible(viewData.sidenav);
 		
 		this.setSidebarMenu(viewData.sidebarMenu);
 		
