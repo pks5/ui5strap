@@ -6,6 +6,10 @@
             "logLevel" : 0
         },
 
+        "icons" : {
+            "default" : "img/my-app-icon-144x144.png"
+        },
+
         "developers" : [
             {
                 "name" : "Jan Philipp Knöller",
