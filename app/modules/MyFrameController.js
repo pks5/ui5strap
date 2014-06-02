@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * Standard Frame Manager
+ * FrameController Example
  * 
  * Author: Jan Philipp Knöller
  * 
@@ -18,8 +18,8 @@
 
 (function(){
 
-	var _packageName = "com_mycompany.my_app",
-		_moduleName = _packageName + ".modules.MyFrameController";
+	//Change this if you renamed the package in the app.json
+	var _moduleName = "com_mycompany.my_app.modules.MyFrameController";
 
 	jQuery.sap.declare(_moduleName);
 	
@@ -34,9 +34,10 @@
 	jQuery.sap.require("ui5strap.Button");
 	jQuery.sap.require("ui5strap.Icon");
 
+	//FrameControllers must extend the LibertyFrame class
 	ui5strap.LibertyFrame.extend(_moduleName);
 
-	var FrameController = com_mycompany.my_app.modules.MyFrameController,
+	var FrameController = jQuery.sap.getObject(_moduleName),
 		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
@@ -51,7 +52,7 @@
 	* @Private
 	*/
 	var _createPrivateProperties = function(_this){
-		var navContainer = null;
+		var _navContainer = null;
 
 		/*
 		 * Creates the NavContainer if no instance has created yet, otherwise it returns the existing instance.
@@ -60,27 +61,18 @@
 		 * @Public
 		 */
 		_this.getNavContainer = function(){
-			if(null !== navContainer){
-				return navContainer;
+			//This method is a singleton - return existing instance if there is one
+			if(null !== _navContainer){
+				return _navContainer;
 			}
 
+			//Get the frame options
 			var frameOptions = _this.getConfig().getFrame();
 			
-			if(!("navContainer" in frameOptions)){
-				throw new Error('Invalid frame options: no nav container defined.');
-			}
-
-			var navContainerModule = frameOptions.navContainer;
-
-			jQuery.sap.require(navContainerModule);
-			var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
-
-			navContainer = new NavContainerConstructor();
-			
+			//Navbar
 			var navBar = new ui5strap.NavBar({ fluid : true, position : ui5strap.NavBarPosition.StaticTop });
 
-			var brand = new ui5strap.Link();
-
+			//Sidenav toggle
 			var toggle = new ui5strap.Button( { 
 					align : ui5strap.Alignment.NavBarLeft
 				} 
@@ -93,22 +85,20 @@
 
 			navBar.addContentLeft(toggle);
 
-
+			//Brand
+			var brand = new ui5strap.Link();
 			brand.bindProperty('text', {path : 'i18n>MENU_BRAND'});
-			navBar.setBrand(brand);
-
+			
 			brand.attachEvent('tap', {}, function(){
 				_this.showInitialContent();
 			});
 
-			navContainer.setNavbar(navBar);
+			navBar.setBrand(brand);
 
+			//Main menu
 			var navLeft = new ui5strap.Nav();
-			_this.nav = navLeft;
-
 			navLeft.setAlign(ui5strap.Alignment.NavBarLeft);
-			navBar.addCollapse(navLeft);
-
+			
 			var menu = _this.getConfig().getMenuData(frameOptions.navbarMenu);
 			for (var i = 0; i < menu.items.length; i++){
 				var menuPage = menu.items[i];
@@ -121,7 +111,6 @@
 				navLeft.addItems(navItem);
 			}
 
-
 			navLeft.attachEvent('tap', {}, function(oEvent){
 				var listItem = oEvent.getParameter('listItem');
 				
@@ -130,6 +119,10 @@
 				navBar.setCollapsed(true);
 			});
 
+			navBar.addCollapse(navLeft);
+			_this._navNavbar = navLeft;
+
+			//Language select buttons
 			var navButtons = new ui5strap.ButtonGroup({align : ui5strap.Alignment.NavBarRight});
 			var buttonDe = new ui5strap.Button({'text' : "DE" });
 			var buttonEn = new ui5strap.Button({'text' : "EN" });
@@ -157,29 +150,52 @@
 				buttonEn.setSelected(true);
 			}
 
-
+			//Nav menu toggle
 			var toggleRight = new ui5strap.Button( { 
 					align : ui5strap.Alignment.NavBarRight
 				} 
 			);
+			
 			toggleRight.addContent(new ui5strap.Icon( { icon : 'bars', size : ui5strap.IconSize.Large } ));
 
-			navBar.addContentRight(toggleRight);
 			toggleRight.attachEvent('tap', {}, function(){
 				navBar.toggle();
 			});
 
+			navBar.addContentRight(toggleRight);
 
-			var sidebar = new ui5strap.Sidebar();
+			//Sidebar / Sidenav
+			var sidebar = new ui5strap.Sidebar(),
+				navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked });
 
-			var navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked });
-			_this._navSidebar = navSidebar;
+			navSidebar.attachEvent('tap', {}, function(oEvent){
+				_this.gotoPage(oEvent.getParameter('listItem').data());
+			});
+
 			navSidebar.addStyleClass('nav-sidebar');
+			
 			sidebar.addContent(navSidebar);
+			_this._navSidebar = navSidebar;
+			
+			//NavContainer
+			//Check if a NavContainer is defined in the configuration
+			if(!("navContainer" in frameOptions)){
+				throw new Error('Invalid frame options: no nav container defined.');
+			}
 
-			navContainer.setSidebar(sidebar);
+			//Create the NavContainer instance
+			var navContainerModule = frameOptions.navContainer;
 
-			return navContainer;
+			jQuery.sap.require(navContainerModule);
+			var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
+
+			_navContainer = new NavContainerConstructor();
+
+			//Append bars to the NavContainer
+			_navContainer.setSidebar(sidebar);
+			_navContainer.setNavbar(navBar);
+
+			return _navContainer;
 		};
 
 	};
@@ -200,6 +216,19 @@
 	};
 
 	/*
+	*
+	* Returns the reference to the Nav Control within the navbar
+	*
+	* @Public
+	*/
+	FrameControllerProto.getNavNavbar = function(){
+		return this._navNavbar;
+	};
+
+	/*
+	*
+	* Returns the reference to the Nav Control within the sidebar
+	*
 	* @Public
 	*/
 	FrameControllerProto.getNavSidebar = function(){
@@ -207,96 +236,140 @@
 	};
 
 	/*
+	*
+	* Updates the menus
+	*
 	* @Public
 	*/
 	FrameControllerProto.updateMenu = function(viewName){
-		
+		jQuery.sap.log.trace('FrameController.updateMenu ("' + viewName + '")');
+
+		var navSidebar = this.getNavSidebar();
 
 		if(this.sidebarMenu){
-			var sidebarMenuIndex = -1;
-			var navSidebar = this.getNavSidebar();
 			var sidebarMenu = this.getConfig().getMenuData(this.sidebarMenu);
-			var sidebarItems = sidebarMenu.items;
-			for(var i=0; i<sidebarItems.length; i++){
-				if(viewName === sidebarItems[i].viewName){
-					sidebarMenuIndex = i;
-					break;
+			
+			if(null !== sidebarMenu && 'items' in sidebarMenu){
+				var sidebarMenuIndex = -1,
+					sidebarItems = sidebarMenu.items;
+				
+				for(var i=0; i<sidebarItems.length; i++){
+					if(viewName === sidebarItems[i].viewName){
+						sidebarMenuIndex = i;
+						break;
+					}
+				}
+
+				if(sidebarMenuIndex !== -1){
+					navSidebar.setSelectedIndex(sidebarMenuIndex);
+				}
+				else{
+					navSidebar.setSelectedControl(null);
 				}
 			}
-
-			if(sidebarMenuIndex !== -1){
-				navSidebar.setSelectedIndex(sidebarMenuIndex);
-			}
 			else{
-				navSidebar.setSelectedControl(null);
+				throw new Error('Invalid sidebar menu: ' + this.sidebarMenu);
 			}
 		}
 
 		var frameOptions = this.getConfig().getFrame();
-		var menu = this.getConfig().getMenuData(frameOptions.navbarMenu);
+		if(frameOptions.navbarMenu){
+			var menu = this.getConfig().getMenuData(frameOptions.navbarMenu);
 
-		var menuIndex = -1;
+			if(null !== menu && 'items' in menu){
+				var menuIndex = -1,
+					menuItems = menu.items;
 
-		for(var i=0; i<menu.items.length; i++){
-			if(viewName === menu.items[i].viewName || (this.sidebarMenu && this.sidebarMenu === menu.items[i].sidebarMenu)){
-				menuIndex = i;
-				break;
+				for(var i=0; i<menuItems.length; i++){
+					if(viewName === menuItems[i].viewName || (this.sidebarMenu && this.sidebarMenu === menuItems[i].sidebarMenu)){
+						menuIndex = i;
+						break;
+					}
+				}
+
+				if(menuIndex !== -1){
+					this._navNavbar.setSelectedIndex(menuIndex);
+				}
+				else{
+					this._navNavbar.setSelectedControl(null);
+				}
+			}
+			else{
+				throw new Error('Invalid navbar menu: ' + frameOptions.navbarMenu);
 			}
 		}
-
-		if(menuIndex !== -1){
-			this.nav.setSelectedIndex(menuIndex);
-		}
-		else{
-			this.nav.setSelectedControl(null);
-		}
-
-		
 	};
 
+	/*
+	* Shows / hides the sidebar
+	* @Public
+	*/
 	FrameControllerProto.setSidebarVisible = function(visible){
 		this.getNavContainer().setOptionEnabled('sidebar', visible);
 	};
 
+	/*
+	* Shows / hides the sidenav
+	* @Public
+	*/
 	FrameControllerProto.setSidenavVisible = function(visible){
 		this.getNavContainer().setOptionEnabled('sidenav', visible);
 	};
 
+	/*
+	* Shows / hides the navbar
+	* @Public
+	*/
 	FrameControllerProto.setNavbarVisible = function(visible){
 		this.getNavContainer().setOptionEnabled('navbar', visible);
 	};
 
-	FrameControllerProto.setSidebarMenu = function(menuData){
+	/*
+	* Sets the sidebar menu to the menu with name menuName defined in configuration
+	* @Public 
+	*/
+	FrameControllerProto.setSidebarMenu = function(menuName){
 		var navSidebar = this.getNavSidebar(),
 			_this = this;
 		
-		if(menuData === this.sidebarMenu){
+		if(menuName === this.sidebarMenu){
 			return;
 		}
 
 		navSidebar.removeAllItems();
 
-		this.sidebarMenu = menuData;
+		this.sidebarMenu = menuName;
 
-		if(!menuData){
+		if(!menuName){
 			return;
 		}
 
-		navSidebar.attachEvent('tap', {}, function(oEvent){
-			_this.gotoPage(oEvent.getParameter('listItem').data());
-		});
+		var sidebarMenu = this.getConfig().getMenuData(menuName);
 
-		var items = this.getConfig().getMenuData(menuData).items;
-		for(var i = 0; i < items.length; i++){
-			var menuData = items[i];
-			var navItem = new ui5strap.ListNavItem();
-				navItem.bindProperty('text', menuData.label);
-				navItem.data(menuData);
+		if(null !== sidebarMenu && "items" in sidebarMenu){
+
+			var items = sidebarMenu.items;
+			for(var i = 0; i < items.length; i++){
+				var menuItemData = items[i],
+					navItem = new ui5strap.ListNavItem();
+
+				navItem.bindProperty('text', menuItemData.label);
+				navItem.data(menuItemData);
+				
 				navSidebar.addItems(navItem);
+			}
+
+		}
+		else{
+
+			throw new Error('Invalid sidebar menu: ' + menuName);
+
 		}
 	};
 
 	/*
+	* Navigates to a page defined in the data parameter 
+	*
 	* @Public
 	* @Override
 	*/
@@ -304,8 +377,16 @@
 		var _this = this;
 
 		if(data.sidebarMenu && !data.viewName){
+			//if the data contains no viewName but a sidebarMenu only, show the first entry of the submenu
+
 			var submenu = this.getConfig().getMenuData(data.sidebarMenu);
-			this.gotoPage(submenu.items[0], callback);
+			if("items" in submenu && submenu.items.length > 0){
+				this.gotoPage(submenu.items[0], callback);
+			}
+			else{
+				throw new Error('Invalid sidebar menu: ' + data.sidebarMenu);
+			}
+
 			return;
 		}
 

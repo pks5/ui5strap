@@ -2,26 +2,41 @@
 <html>
 	
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<!-- General -->
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		
+		<!-- IE settings -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		
+		<!-- IOS Webapp settings -->
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<link rel="apple-touch-icon" sizes="144x144" href="./app/img/my-app-icon-144x144.png">
+
+		<!-- Preload stylesheet -->
 		<link rel="stylesheet" type="text/css" href="./app/css/preload.css" />
 
-		<link rel="apple-touch-icon" sizes="144x144" href="./app/img/my-app-icon-144x144.png">
+		<!-- If you do not need IE8 support you can remove the following scripts -->
+		<!--[if lt IE 9]>
+      		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
 	</head>
 	
 	<body role="application">
 		
+		<!-- Root Container -->
 		<div id="ui5strap-body">
 			<!-- OpenUI5 will inject the generated html here -->
 		</div>
 
+		<!-- Ajax loader -->
 		<div id="ui5strap-loader">
 			<img src="./app/img/loader.gif" width="16" height="16" />
 		</div>
 
+		<!-- Splash screen -->
 		<div id="ui5strap-splash">
 			<img src="./app/img/splashscreen-image.png" width="600" height="600" />
 		</div>
@@ -29,10 +44,15 @@
 		<!-- OpenUI5 Library -->
 		<!-- Get it from http://sap.github.io/openui5/ and put it into the directory structure -->
 		<script id="sap-ui-bootstrap" src="resources/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
+		
+		<!-- Liberty Lite -->
 		<script id="ui5strap-bootstrap" src="lib/ui5strap/ll.js"></script>
+		
+		<!-- Initialize the app -->
 		<script>
 			libertyLite('./app');
 		</script>
+
 	</body>
 
 </html>
