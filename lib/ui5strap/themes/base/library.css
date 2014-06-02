@@ -1,3 +1,20 @@
+html, body{
+  width:100%;
+  height:100%;
+  
+  padding:0;
+  margin:0;
+
+  overflow:hidden;
+
+}
+
+#ui5strap-body{
+  height:100%;
+  position:relative;
+  overflow:hidden;
+}
+
 /*
 * Disable text selection
 */
@@ -82,13 +99,13 @@
 /*
 * Adapt nav for sidebar
 */
-.sidebar .nav-sidebar{
+.sidebar .sidebar-nav{
   margin-right: -21px;
   margin-bottom: 20px;
   margin-left: -20px;
 }
 
-.sidebar .nav-sidebar > li > a{
+.sidebar .sidebar-nav > li > a{
   padding-right: 20px;
   padding-left: 20px;
   border-radius: 0;
@@ -110,6 +127,7 @@
 
 .navcontainer-aggregation{
   position:relative;
+  overflow:hidden;
 }
 
 .navcontainer-page{
@@ -119,6 +137,7 @@
    -webkit-box-sizing: border-box;
    -moz-box-sizing: border-box;
    box-sizing: border-box;
+   overflow:hidden;
 }
 
 .navcontainer-page-hidden{
@@ -130,12 +149,14 @@
   position:relative; 
   width:100%;
   height:100%;
+  overflow:hidden;
 }
 
 
 .navcontainer-page > .sapUiView{
   width:100%;
   height:100%;
+  overflow:hidden;
 }
 
 /*

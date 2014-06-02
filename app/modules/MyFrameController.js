@@ -166,14 +166,12 @@
 
 			//Sidebar / Sidenav
 			var sidebar = new ui5strap.Sidebar(),
-				navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked });
+				navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked, align : ui5strap.Alignment.Sidebar });
 
 			navSidebar.attachEvent('tap', {}, function(oEvent){
 				_this.gotoPage(oEvent.getParameter('listItem').data());
 			});
 
-			navSidebar.addStyleClass('nav-sidebar');
-			
 			sidebar.addContent(navSidebar);
 			_this._navSidebar = navSidebar;
 			
