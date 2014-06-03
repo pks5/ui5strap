@@ -180,7 +180,18 @@
   display:none;
   -webkit-transition:top 0.2s, left 0.2s;
     transition:top 0.2s, left 0.2s;
+    overflow:visible;
 }
+
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages{
+  overflow:visible;
+}
+
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page{
+  overflow:visible;
+}
+
+
 
 /*
 * Sidebar aggregation
