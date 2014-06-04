@@ -32,7 +32,8 @@
         "libraries" : [ 
             {
                 "package" : "ui5strap",
-                "location" : "./lib/ui5strap/"
+                "location" : "./lib/ui5strap/",
+                "preload" : true
             },
             {
                 "package" : "my_lib",
@@ -129,14 +130,16 @@
                 "id" : "my-app-home",
                 "target" : "content",
                 "type" : "HTML",
-                "navbar" : true
+                "navbar" : true,
+                "preload" : true
             },
 
             "com_mycompany.my_app.views.Installation" : {
                 "id" : "my-app-installation",
                 "target" : "content",
                 "type" : "HTML",
-                "navbar" : true
+                "navbar" : true,
+                "preload" : true
             },
             
             "com_mycompany.my_app.views.Controls" : {
@@ -144,7 +147,8 @@
                 "target" : "content",
                 "type" : "HTML",
                 "showLoader" : true,
-                "navbar" : true
+                "navbar" : true,
+                "preload" : true
             },
             
             "com_mycompany.my_app.views.configuration.Theme" : {
@@ -153,7 +157,8 @@
                 "type" : "HTML",
                 "sidebar" : true,
                 "navbar" : true,
-                "sidebarMenu" : "configurationMenu"
+                "sidebarMenu" : "configurationMenu",
+                "preload" : true
             },
 
             "com_mycompany.my_app.views.configuration.Frame" : {
@@ -162,7 +167,8 @@
                 "type" : "HTML",
                 "sidebar" : true,
                 "navbar" : true,
-                "sidebarMenu" : "configurationMenu"
+                "sidebarMenu" : "configurationMenu",
+                "preload" : true
             },
 
             "com_mycompany.my_app.views.configuration.Configuration" : {
@@ -171,14 +177,16 @@
                 "type" : "HTML",
                 "sidebar" : true,
                 "navbar" : true,
-                "sidebarMenu" : "configurationMenu"
+                "sidebarMenu" : "configurationMenu",
+                "preload" : true
             },
             
             "com_mycompany.my_app.views.Support" : {
                 "id" : "my-app-support",
                 "target" : "content",
                 "type" : "HTML",
-                "navbar" : true
+                "navbar" : true,
+                "preload" : true
             }
         }
 }

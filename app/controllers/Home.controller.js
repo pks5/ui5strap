@@ -2,6 +2,11 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 
 	app : liberty.getViewer().getApp(),
 
+	onInit : function(){
+		//console.log(ui5strap);
+		//console.log(sap.ui.getCore().getLoadedLibraries() );
+	},
+
 	gotoInstallation : function(){
 		this.app.getFrame().gotoPage({
 			id : 'my-app-installation',
