@@ -1,4 +1,4 @@
-<template data-controller-name="com_mycompany.my_app.controllers.Home">
+<template data-controller-name="a__.ActionController">
 	<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
 	<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
 		<div data-sap-ui-type="ui5strap.PageHeader" data-text="{i18n>SUPPORT_HEADING}" data-lead="{i18n>SUPPORT_LEAD}"></div>
@@ -38,7 +38,9 @@
 		</div>
 
 		
-
+		<div data-sap-ui-type="ui5strap.Paragraph">
+			<div data-sap-ui-type="ui5strap.Link"  data-text="ActionTest" data-tap="a__run" data-custom-data:a__modules="a__.AlertAction" data-custom-data:alert="@JSON('message':'This is just a test message!')"></div>
+		</div>
 	</div>
 </div>
 </template>
