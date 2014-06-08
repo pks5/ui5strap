@@ -1,0 +1,7 @@
+{
+	"a__modules" : "a__.GotoPageAction",
+	"gotoPage" : {
+		"viewName" : "com_mycompany.my_app.views.Support",
+		"transition" : "transition-flip"
+	}
+}

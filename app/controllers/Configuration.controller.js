@@ -1,52 +1,41 @@
+jQuery.sap.require('a__.Action');
+
 sap.ui.controller("com_mycompany.my_app.controllers.Configuration", {
 
 	app : liberty.getViewer().getApp(),
 
 	switchTheme : function(oEvent){
-		var app = this.app,
-			_this = this,
-			btn = oEvent.getSource();
+		var btn = oEvent.getSource();
 
-		app.setLoaderVisible(true, function(){
-			var newTheme = btn.getCustomData()[0].getValue('theme');
-			if('default' === newTheme){
-				newTheme = jQuery.sap.getModulePath('ui5strap') + '/bootstrap-3.1.1-dist/css/bootstrap.min.css';
-			}
-			if(!_this.activeButton){
-				_this.activeButton = _this.getView().byId('defaultThemeButton');
-			}
-			_this.activeButton.setSelected(false);
-			btn.setSelected(true);
-			_this.activeButton = btn;
+		if(!this.activeButton){
+			this.activeButton = this.getView().byId('defaultThemeButton');
+		}
 
-			_this.setTheme(newTheme);
+		if(btn !== this.activeButton){
+			this.activeButton.setSelected(false);
 			
-		}, 'opaque');
+			btn.setSelected(true);
+			
+			this.activeButton = btn;
+
+			this.setTheme(btn.getCustomData()[0].getValue('theme'));
+		}
+		
 	},
 
 	setTheme : function(newTheme){
 		var app = this.app;
 
-		window.setTimeout(function(){
-			
-			//This is a hack: older browser do not fire the onload event for stylesheets
-			//We use window.requestAnimationFrame to find out how old the broser is
-			//TODO: Find a better way to securely detect if the browser does support onload on stylesheets
-			if(window.requestAnimationFrame){
-				jQuery.sap.includeStyleSheet(newTheme, 'bootstrap-css', function(){
-					window.setTimeout(function(){
-						app.setLoaderVisible(false);
-					}, 500);
-				}, null);
-			}
-			else{
-				jQuery.sap.includeStyleSheet(newTheme, 'bootstrap-css', function(){}, null);
-				window.setTimeout(function(){
-					app.setLoaderVisible(false);
-				}, 800);
-			}
-
-		}, 500);
+		a__.Action.run({
+			"parameters" : {
+				"a__modules" : "a__.ChangeThemeAction",
+				"changeTheme" : {
+					theme : newTheme
+				}
+			},
+			"app" : this.getView().getViewData().app,
+			"controller" : this
+		});
 	},
 
 	submitThemeForm : function(oEvent){
@@ -68,15 +57,13 @@ sap.ui.controller("com_mycompany.my_app.controllers.Configuration", {
 			return false;
 		}
 		else{
-			app.setLoaderVisible(true, function(){
-			
-				if(this.activeButton){
+
+			if(this.activeButton){
 					this.activeButton.setSelected(false);
-				}
+			}
 
-				_this.setTheme(newTheme);
+			_this.setTheme(newTheme);
 
-			}, 'opaque');
 		}
 	},
 

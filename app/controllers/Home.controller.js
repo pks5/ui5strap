@@ -1,3 +1,5 @@
+jQuery.sap.require('a__.Action');
+
 sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 
 	app : liberty.getViewer().getApp(),
@@ -38,11 +40,26 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 	},
 
 	gotoSupport : function(){
+		/*
 		this.app.getFrame().gotoPage({
 			id : 'my-app-support',
 			viewName : "com_mycompany.my_app.views.Support",
 			transition : "transition-flip",
 			target : "content"
+		});
+		*/
+
+		a__.Action.run({
+			"parameters" : {
+				"a__modules" : "a__.GotoPageAction",
+				"gotoPage" : {
+					id : 'my-app-support',
+					viewName : "com_mycompany.my_app.views.Support",
+					transition : "transition-flip",
+					target : "content"
+				}
+			},
+			"app" : this.getView().getViewData().app
 		});
 	}
 	
