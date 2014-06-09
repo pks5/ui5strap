@@ -1,5 +1,5 @@
 {
-	"a__modules" : "ui5strap.AMGotoPage",
+	"a_modules" : "ui5strap.AMGotoPage",
 	"gotoPage" : {
 		"viewName" : "com_mycompany.my_app.views.Controls",
 		"transition" : "transition-flip"

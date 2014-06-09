@@ -23,7 +23,7 @@
 
 	jQuery.sap.declare(_moduleName);
 	
-	jQuery.sap.require("ui5strap.LibertyFrame");
+	jQuery.sap.require("ui5strap.AppFrame");
 
 	jQuery.sap.require("ui5strap.Sidebar");
 	jQuery.sap.require("ui5strap.NavBar");
@@ -34,8 +34,8 @@
 	jQuery.sap.require("ui5strap.Button");
 	jQuery.sap.require("ui5strap.Icon");
 
-	//FrameControllers must extend the LibertyFrame class
-	ui5strap.LibertyFrame.extend(_moduleName);
+	//FrameControllers must extend the AppFrame class
+	ui5strap.AppFrame.extend(_moduleName);
 
 	var FrameController = jQuery.sap.getObject(_moduleName),
 		FrameControllerProto = FrameController.prototype,
@@ -208,7 +208,7 @@
 	* @Public
 	*/
 	FrameControllerProto.init = function(){
-		ui5strap.LibertyFrame.prototype.init.call(this);
+		ui5strap.AppFrame.prototype.init.call(this);
 
 		_createPrivateProperties(this);
 	};

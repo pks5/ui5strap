@@ -28,7 +28,7 @@ sap.ui.controller("com_mycompany.my_app.controllers.Configuration", {
 
 		ui5strap.Action.run({
 			"parameters" : {
-				"a__modules" : "ui5strap.AMChangeTheme",
+				"a_modules" : "ui5strap.AMChangeTheme",
 				"changeTheme" : {
 					theme : newTheme
 				}
