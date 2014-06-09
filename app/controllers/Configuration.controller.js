@@ -1,4 +1,4 @@
-jQuery.sap.require('a__.Action');
+jQuery.sap.require('ui5strap.Action');
 
 sap.ui.controller("com_mycompany.my_app.controllers.Configuration", {
 
@@ -26,9 +26,9 @@ sap.ui.controller("com_mycompany.my_app.controllers.Configuration", {
 	setTheme : function(newTheme){
 		var app = this.app;
 
-		a__.Action.run({
+		ui5strap.Action.run({
 			"parameters" : {
-				"a__modules" : "a__.ChangeThemeAction",
+				"a__modules" : "ui5strap.AMChangeTheme",
 				"changeTheme" : {
 					theme : newTheme
 				}

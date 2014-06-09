@@ -36,10 +36,6 @@
                 "preload" : true
             },
             {
-                "package" : "a__",
-                "location" : "./lib/a__/"
-            },
-            {
                 "package" : "my_lib",
                 "location" : "./lib/my_lib/"
             }
