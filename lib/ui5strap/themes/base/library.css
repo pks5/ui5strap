@@ -86,6 +86,7 @@
   margin-right: -21px;
   margin-bottom: 20px;
   margin-left: -20px;
+  margin-top: -20px;
 }
 
 .sidebar .sidebar-nav > li > a{
@@ -192,11 +193,25 @@
   overflow:visible;
 }
 
+/*
+* Hide the left content of the navbar (sidenav toggle) if the navbar is enabled and the screensize is smaller than 576px
+*/
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
+   display:none;
+}
+
+/*
+* Show the right content of the navbar (navbar toggle) if the navbar is enabled and the screensize is smaller than 576px
+*/
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right,
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right{
+      display:block;
+}
 
 
 /*
-* Sidebar aggregation
-* @Mobile
+* Sidebar
 */
 .navcontainer-standard > .navcontainer-aggregation-sidebar{
     
@@ -216,8 +231,17 @@
     left:-75%;
 }
 
+/*
+* Show the left content of the navbar if the sidebar is enabled and the screensize is smaller than 576px
+*/
+.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
+.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
+      display:block;
+}
 
-
+/*
+* Sidenav override
+*/ 
 
 .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
     left:75%;
@@ -227,30 +251,6 @@
     left:75%;
 }
 
-/*
-* Hide the left content of the navbar if the sidebar is enabled and the screensize is greater or equal than 576px
-*/
-.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
-.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
-   display:none;
-}
-
-/*
-* Show the left content of the navbar if the sidebar is enabled and the screensize is smaller than 576px
-*/
-.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
-.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
-      display:block;
-}
-
-
-/*
-* Hide the right content of the navbar if the sidebar is enabled and the screensize is greater or equal than 576px
-*/
-.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right,
-.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right{
-   display:block;
-}
 
 
 
@@ -260,25 +260,25 @@
 @media (min-width: 576px){
 
     /*
-    * Hide the left content of the navbar if the sidebar is enabled and the screensize is greater or equal than 576px
+    * Navbar
     */
+    .navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-sidebar{
+        top:51px;
+     }
+
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
           display:none;
     }
 
     /*
-    * Sidebar aggregation
+    * Sidebar
     */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
       width:9%;
       left:-9%;
     }
 
-    /*
-    * Content aggregation
-    * with NavContainer option sidebar
-    */
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
         left:9%;
         right:0;
@@ -294,8 +294,12 @@
         display:block;
     }
 
+    .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+        top:51px;
+    }
+
     /*
-    * Sidebar aggregation
+    * Sidenav override
     */
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
       width:50%;
@@ -304,32 +308,15 @@
 
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
         left:50%;
-      }
+    }
 
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
         left:50%;
     }
     
-    /*
-    * Sidebar should be placed beyond navbar
-    */
-    .navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-sidebar{
-        top:51px;
-     }
-
-     /*
-    * Sidebar should be placed beyond navbar
-    */
-    .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
-        top:51px;
-     }
-
-     /*
-    * Sidebar should be placed beyond navbar
-    */
     .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
         top:0px;
-     }
+    }
 }
 
 /*
@@ -337,8 +324,8 @@
 */
 @media (min-width: 768px){
 
-  /*
-    * Show the right content of the navbar if the sidebar is enabled and the screensize is smaller than 576px
+    /*
+    * Navbar
     */
     .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right,
     .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right{
@@ -346,17 +333,13 @@
     }
 
     /*
-    * Sidebar aggregation
+    * Sidebar
     */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
       width:8%;
       left:-8%;
     }
 
-    /*
-    * Content aggregation
-    * with NavContainer option sidebar
-    */
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
         left:8%;
     }
@@ -366,7 +349,7 @@
     }
 
     /*
-    * Sidebar aggregation in sidenav mode
+    * Sidenav override
     */
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
       width:33%;
@@ -388,6 +371,9 @@
 * @Desktop
 */
 @media (min-width: 992px){
+    /*
+    * Sidebar
+    */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
         width: 16.66666667%;
         left: -16.66666667%;
@@ -401,6 +387,9 @@
         left:0;
     }
 
+    /*
+    * Sidenav override
+    */
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
         width: 25%;
         left: -25%;
@@ -420,40 +409,38 @@
 
 
 /*
-* If the option "navbar" is set, show the navbar aggregation
+* Navbar
 */
 .navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-navbar{
     top:0;
-}
-
-/*
-* Sidebar should be visible if NavContainer option sidebar is set
-* @All
-*/
-.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
-    left:0px;
-    display:block;
 }
 
 .navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-content{
     top:51px;
 }
 
-/*
-* Navbar should be visible if NavContainer option navbar is set
-* @All
-*/
 .navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-navbar{
     display:block;
+}
+
+/*
+* Sidenav Override
+*/
+.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+    left:0px;
+}
+
+.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
+.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
+      display:block;
 }
 
 
 @media (min-width: 576px) and (max-width: 991px){
 
-  .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav{
-     margin-top:-20px;
-  }
-
+  /*
+  * Sidebar
+  */
   .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav > li{
       margin-top:0;
   }
@@ -474,10 +461,6 @@
   /*
   * Sidenav overrides
   */
-  .navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li{
-    margin-top:0;
-  }
-
   .navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li{
       margin-top:2px;
   }
