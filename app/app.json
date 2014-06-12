@@ -106,6 +106,17 @@
                 ]
             },
 
+            "homeMenu" : {
+                "parent" : "mainMenu",
+                "items" : [
+                        {
+                            "viewName" : "com_mycompany.my_app.views.Home",
+                            "label" : "i18n>MENU_HOME_HOME",
+                            "icon" : "home"
+                        }
+                ]
+            },
+
             "configurationMenu" : {
                 "parent" : "mainMenu",
                 "items" : [
@@ -133,6 +144,7 @@
                 "id" : "my-app-home",
                 "target" : "content",
                 "type" : "HTML",
+                "sidebarMenu" : "homeMenu",
                 "navbar" : true,
                 "preload" : true,
                 "sidebar" : true
