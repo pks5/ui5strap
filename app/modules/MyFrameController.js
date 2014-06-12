@@ -304,6 +304,7 @@
 	*/
 	FrameControllerProto.setSidebarVisible = function(visible){
 		this.getNavContainer().setOptionEnabled('sidebar', visible);
+		this.getNavContainer().setOptionEnabled('sidebar2bottom', visible);
 	};
 
 	/*

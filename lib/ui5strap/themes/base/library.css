@@ -86,7 +86,7 @@
   margin-right: -21px;
   margin-bottom: 20px;
   margin-left: -20px;
-  margin-top: -20px;
+  margin-top: -10px;
 }
 
 .sidebar .sidebar-nav > li > a{
@@ -223,35 +223,58 @@
       overflow-x: hidden;
       overflow-y: auto;
 
-    display:block;
-    -webkit-transition:left 0.2s, top 0.2s, width 0.2s;
-    transition:left 0.2s, top 0.2s, width 0.2s;
+    
+    -webkit-transition:left 0.2s, top 0.2s, bottom 0.2s, right 0.2s, width 0.2s, height 0.2s;
+    transition:left 0.2s, top 0.2s, bottom 0.2s, right 0.2s, width 0.2s, height 0.2s;
 
-    width:75%;
-    left:-75%;
+      display:none;
 }
 
-/*
-* Show the left content of the navbar if the sidebar is enabled and the screensize is smaller than 576px
-*/
-.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
-.navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
-      display:block;
+@media (max-width: 575px){
+
+      /*
+      * Sidebar as Sidenav
+      */
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-sidebar{
+          display:block;
+          width:75%;
+          left:-75%;
+      }
+
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-sidebar{
+          display:block;
+          width:auto;
+          left:0;
+          right:0;
+          top:auto;
+          height:50px;
+      }
+
+      /*
+      * Show the left content of the navbar if the sidebar is enabled and the screensize is smaller than 576px
+      */
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
+            display:block;
+      }
+
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-content{
+            bottom:50px;
+      }
+
+      /*
+      * Sidenav override
+      */ 
+
+      .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
+          left:75%;
+      }
+
+      .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+          left:75%;
+      }
+
 }
-
-/*
-* Sidenav override
-*/ 
-
-.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
-    left:75%;
-}
-
-.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
-    left:75%;
-}
-
-
 
 
 /*
@@ -272,13 +295,18 @@
     }
 
     /*
-    * Sidebar
+    * Sidebar Aggregation
     */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
       width:9%;
       left:-9%;
+      height:auto;
+      top:0;
     }
 
+    /*
+    * Sidebar behaviour
+    */
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
         left:9%;
         right:0;
@@ -426,7 +454,8 @@
 /*
 * Sidenav Override
 */
-.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar,
+.navcontainer-standard.navcontainer-standard-sidenav.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-sidebar{
     left:0px;
 }
 
@@ -435,6 +464,34 @@
       display:block;
 }
 
+/*
+* Sidenav within sidebar aggregation
+*/
+@media (max-width: 575px){
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav{
+        margin-left: -20px;
+        margin-top:-20px;
+        margin-bottom:-20px;
+        margin-right:-20px;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li{
+        width:14.285714%; float:left; margin:0;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a{
+      padding:5px 0; font-size: 11px; line-height: 16px; text-align: center;
+
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a > .fa{
+        display:block;
+        font-size:20px;
+        line-height:22px;
+        margin-top:0px;
+        margin-bottom:2px;
+    }
+}
 
 @media (min-width: 576px) and (max-width: 991px){
 
@@ -463,7 +520,7 @@
   */
   .navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li{
       margin-top:2px;
-  }
+   }
 
   .navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li > a{
       padding-left:15px;
