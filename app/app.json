@@ -111,15 +111,18 @@
                 "items" : [
                         {
                             "viewName" : "com_mycompany.my_app.views.configuration.Configuration",
-                            "label" : "i18n>MENU_CONFIG_GENERAL"
+                            "label" : "i18n>MENU_CONFIG_GENERAL",
+                            "icon" : "wrench"
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.configuration.Theme",
-                            "label" : "i18n>MENU_CONFIG_THEME"
+                            "label" : "i18n>MENU_CONFIG_THEME",
+                            "icon" : "tint"
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.configuration.Frame",
-                            "label" : "i18n>MENU_CONFIG_FRAME"
+                            "label" : "i18n>MENU_CONFIG_FRAME",
+                            "icon" : "columns"
                         }
                 ]
             }
@@ -132,7 +135,7 @@
                 "type" : "HTML",
                 "navbar" : true,
                 "preload" : true,
-                "sidenav" : true
+                "sidebar" : true
             },
 
             "com_mycompany.my_app.views.Installation" : {

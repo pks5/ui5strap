@@ -353,6 +353,10 @@
 
 				navItem.bindProperty('text', menuItemData.label);
 				navItem.data(menuItemData);
+
+				if(menuItemData.icon){
+					navItem.addContent(new ui5strap.Icon({ 'icon' : menuItemData.icon}));
+				}
 				
 				navSidebar.addItems(navItem);
 			}

@@ -95,6 +95,7 @@
 }
 
 
+
 /*
 * NavContainer
 */
@@ -270,8 +271,27 @@
     * Sidebar aggregation
     */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
-      width:12%;
-      left:-12%;
+      width:9%;
+      left:-9%;
+    }
+
+    /*
+    * Content aggregation
+    * with NavContainer option sidebar
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
+        left:9%;
+        right:0;
+        width:auto;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar{
+        left:0;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+        left:0px;
+        display:block;
     }
 
     /*
@@ -289,26 +309,6 @@
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
         left:50%;
     }
-
-    /*
-    * Content aggregation
-    * with NavContainer option sidebar
-    */
-    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
-        left:12%;
-        right:0;
-        width:auto;
-    }
-
-    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar{
-        left:0;
-    }
-
-    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
-        left:0px;
-        display:block;
-    }
-
     
     /*
     * Sidebar should be placed beyond navbar
@@ -320,15 +320,15 @@
      /*
     * Sidebar should be placed beyond navbar
     */
-    .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
-        top:0px;
+    .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+        top:51px;
      }
 
      /*
     * Sidebar should be placed beyond navbar
     */
-    .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
-        top:51px;
+    .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+        top:0px;
      }
 }
 
@@ -349,8 +349,8 @@
     * Sidebar aggregation
     */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
-      width:10%;
-      left:-10%;
+      width:8%;
+      left:-8%;
     }
 
     /*
@@ -358,7 +358,7 @@
     * with NavContainer option sidebar
     */
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
-        left:10%;
+        left:8%;
     }
 
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar{
@@ -446,6 +446,45 @@
 .navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-navbar{
     display:block;
 }
+
+
+@media (min-width: 576px) and (max-width: 991px){
+
+  .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav > li{
+      margin-top:0;
+  }
+
+  .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav > li > a{
+      padding-left:0;
+      padding-right:0;
+      text-align:center;
+      font-size:11px;
+  }
+
+  .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav > li > a > .fa{
+      display:block;
+      font-size:20px;
+      margin-bottom:2px;
+  }
+
+  .navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li{
+      margin-top:2px;
+  }
+
+  .navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li > a{
+      padding-left:15px;
+      padding-right:15px;
+      text-align:left;
+      font-size:inherit;
+  }
+
+  .navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li > a > .fa{
+      display:inline;
+      font-size:inherit;
+      margin-bottom:0;
+  }
+}
+
 
 /*
 * Transitions
