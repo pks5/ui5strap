@@ -270,16 +270,24 @@
     * Sidebar aggregation
     */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
-      width:25%;
-      left:-25%;
+      width:12%;
+      left:-12%;
+    }
+
+    /*
+    * Sidebar aggregation
+    */
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+      width:50%;
+      left:-50%;
     }
 
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
-        left:25%;
+        left:50%;
       }
 
     .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
-        left:25%;
+        left:50%;
     }
 
     /*
@@ -287,7 +295,7 @@
     * with NavContainer option sidebar
     */
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
-        left:25%;
+        left:12%;
         right:0;
         width:auto;
     }
@@ -341,16 +349,8 @@
     * Sidebar aggregation
     */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
-      width:20%;
-      left:-20%;
-    }
-
-    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
-        left:20%;
-      }
-
-    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
-        left:20%;
+      width:10%;
+      left:-10%;
     }
 
     /*
@@ -358,12 +358,30 @@
     * with NavContainer option sidebar
     */
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
-        left:20%;
+        left:10%;
     }
 
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar{
         left:0;
     }
+
+    /*
+    * Sidebar aggregation in sidenav mode
+    */
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+      width:33%;
+      left:-33%;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
+        left:33%;
+      }
+
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+        left:33%;
+    }
+
+    
 }
 
 /*
@@ -375,16 +393,6 @@
         left: -16.66666667%;
     }
 
-    
-
-    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
-        left:16.66666667%;
-      }
-
-    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
-        left:16.66666667%;
-    }
-
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
         left:16.66666667%;
     }
@@ -392,6 +400,21 @@
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar{
         left:0;
     }
+
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+        width: 25%;
+        left: -25%;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
+        left:25%;
+      }
+
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+        left:25%;
+    }
+
+    
 }
 
 

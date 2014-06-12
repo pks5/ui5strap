@@ -70,7 +70,7 @@
 			var frameOptions = _this.getConfig().getFrame();
 			
 			//Navbar
-			var navBar = new ui5strap.NavBar({ fluid : true, position : ui5strap.NavBarPosition.StaticTop });
+			var navBar = new ui5strap.NavBar({ inverse : true, fluid : true, position : ui5strap.NavBarPosition.StaticTop });
 
 			//Sidenav toggle
 			var toggle = new ui5strap.Button( { 

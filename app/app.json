@@ -131,7 +131,8 @@
                 "target" : "content",
                 "type" : "HTML",
                 "navbar" : true,
-                "preload" : true
+                "preload" : true,
+                "sidenav" : true
             },
 
             "com_mycompany.my_app.views.Installation" : {
