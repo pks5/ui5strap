@@ -450,6 +450,10 @@
 
 @media (min-width: 576px) and (max-width: 991px){
 
+  .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav{
+     margin-top:-20px;
+  }
+
   .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav > li{
       margin-top:0;
   }
@@ -465,6 +469,13 @@
       display:block;
       font-size:20px;
       margin-bottom:2px;
+  }
+
+  /*
+  * Sidenav overrides
+  */
+  .navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li{
+    margin-top:0;
   }
 
   .navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li{
