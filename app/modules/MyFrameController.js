@@ -303,8 +303,12 @@
 	* @Public
 	*/
 	FrameControllerProto.setSidebarVisible = function(visible){
-		this.getNavContainer().setOptionEnabled('sidebar', visible);
-		this.getNavContainer().setOptionEnabled('sidebar2bottom', visible);
+		this.getNavContainer().setOptionsEnabled(
+			{ 
+				'sidebar' : visible, 
+				'sidebar2bottom' : visible
+			}
+		);
 	};
 
 	/*
@@ -312,7 +316,7 @@
 	* @Public
 	*/
 	FrameControllerProto.setSidenavVisible = function(visible){
-		this.getNavContainer().setOptionEnabled('sidenav', visible);
+		this.getNavContainer().setOptionsEnabled({ 'sidenav' : visible });
 	};
 
 	/*
@@ -320,7 +324,7 @@
 	* @Public
 	*/
 	FrameControllerProto.setNavbarVisible = function(visible){
-		this.getNavContainer().setOptionEnabled('navbar', visible);
+		this.getNavContainer().setOptionsEnabled({ 'navbar' : visible });
 	};
 
 	/*

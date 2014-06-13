@@ -98,10 +98,6 @@
                     {
                         "viewName" : "com_mycompany.my_app.views.Controls",
                         "label" : "i18n>MENU_CONTROLS"
-                    },
-                    {
-                        "viewName" : "com_mycompany.my_app.views.Support",
-                        "label" : "i18n>MENU_SUPPORT"
                     }
                 ]
             },
@@ -113,6 +109,11 @@
                             "viewName" : "com_mycompany.my_app.views.Home",
                             "label" : "i18n>MENU_HOME_HOME",
                             "icon" : "home"
+                        },
+                        {
+                            "viewName" : "com_mycompany.my_app.views.Support",
+                            "label" : "i18n>MENU_SUPPORT",
+                            "icon" : "support"
                         }
                 ]
             },
@@ -201,7 +202,9 @@
                 "id" : "my-app-support",
                 "target" : "content",
                 "type" : "HTML",
-                "navbar" : true,
+                "sidebarMenu" : "homeMenu",
+                "navbar" : false,
+                "sidebar" : true,
                 "preload" : true
             }
         }
