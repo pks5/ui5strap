@@ -468,12 +468,16 @@
     }
 
     .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li{
-        width:14.285714%; float:left; margin:0;
+        width:16.6666666667%; 
+        float:left; 
+        margin:0;
     }
 
     .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a{
-      padding:5px 0; font-size: 11px; line-height: 16px; text-align: center;
-
+        padding:6px 0; 
+        font-size: 11px; 
+        line-height: 14px; 
+        text-align: center;
     }
 
     .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a > .fa{
