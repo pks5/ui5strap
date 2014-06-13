@@ -156,6 +156,7 @@
                 "target" : "content",
                 "type" : "HTML",
                 "navbar" : true,
+                "sidenavToggle" : true,
                 "preload" : true
             },
             

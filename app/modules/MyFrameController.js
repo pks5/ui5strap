@@ -320,6 +320,14 @@
 	};
 
 	/*
+	* Shows / hides the sidenav toggle
+	* @Public
+	*/
+	FrameControllerProto.setSidenavToggleVisible = function(visible){
+		this.getNavContainer().setOptionsEnabled({ 'sidenav-toggle' : visible });
+	};
+
+	/*
 	* Shows / hides the navbar
 	* @Public
 	*/
@@ -404,6 +412,7 @@
 		this.setSidebarVisible(viewData.sidebar);
 		this.setNavbarVisible(viewData.navbar);
 		this.setSidenavVisible(viewData.sidenav);
+		this.setSidenavToggleVisible(viewData.sidenavToggle);
 		
 		this.setSidebarMenu(viewData.sidebarMenu);
 		
