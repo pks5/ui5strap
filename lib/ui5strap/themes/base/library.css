@@ -198,22 +198,9 @@
   overflow:visible;
 }
 
-/*
-* Hide the left content of the navbar (sidenav toggle) if the navbar is enabled and the screensize is smaller than 576px
-*/
-.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
-.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
-   display:none;
+.btn-toggle-navbar{
+   display:block!important;
 }
-
-/*
-* Show the right content of the navbar (navbar toggle) if the navbar is enabled and the screensize is smaller than 576px
-*/
-.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right,
-.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right{
-      display:block;
-}
-
 
 /*
 * Sidebar
@@ -236,6 +223,12 @@
       left:-75%;
 }
 
+.btn-toggle-sidenav{
+   display:none!important;
+}
+
+
+
 @media (max-width: 575px){
 
       /*
@@ -257,9 +250,9 @@
       /*
       * Show the left content of the navbar if the sidebar is enabled and the screensize is smaller than 576px
       */
-      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
-      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
-            display:block;
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav{
+            display:block!important;
       }
 
       .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-content{
@@ -293,9 +286,9 @@
         top:51px;
      }
 
-    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
-    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
-          display:none;
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav{
+          display:none!important;
     }
 
     /*
@@ -358,9 +351,9 @@
     /*
     * Navbar
     */
-    .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right,
-    .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right{
-          display:none;
+    .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right > .btn-toggle-navbar,
+    .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right > .btn-toggle-navbar{
+          display:none!important;
     }
 
     /*
@@ -458,9 +451,9 @@
     left:0px;
 }
 
-.navcontainer-standard.navcontainer-standard-sidenav-toggle > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left,
-.navcontainer-standard.navcontainer-standard-sidenav-toggle > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left{
-      display:block;
+.navcontainer-standard.navcontainer-standard-sidenav-toggle > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
+.navcontainer-standard.navcontainer-standard-sidenav-toggle > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav{
+      display:block!important;
 }
 
 /*

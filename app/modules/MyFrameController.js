@@ -74,7 +74,8 @@
 
 			//Sidenav toggle
 			var toggle = new ui5strap.Button( { 
-					align : ui5strap.Alignment.NavBarLeft
+					align : ui5strap.Alignment.NavBarLeft,
+					bsAction : ui5strap.BsAction.ToggleSidenav
 				} 
 			);
 			toggle.addContent(new ui5strap.Icon( { icon : 'columns', size : ui5strap.IconSize.Large } ));
@@ -152,7 +153,8 @@
 
 			//Nav menu toggle
 			var toggleRight = new ui5strap.Button( { 
-					align : ui5strap.Alignment.NavBarRight
+					align : ui5strap.Alignment.NavBarRight,
+					bsAction : ui5strap.BsAction.ToggleNavbar
 				} 
 			);
 			
