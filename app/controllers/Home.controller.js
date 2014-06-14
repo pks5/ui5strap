@@ -1,5 +1,3 @@
-jQuery.sap.require('a__.Action');
-
 sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 
 	app : liberty.getViewer().getApp(),
@@ -49,9 +47,9 @@ sap.ui.controller("com_mycompany.my_app.controllers.Home", {
 		});
 		*/
 
-		a__.Action.run({
+		ui5strap.Action.run({
 			"parameters" : {
-				"a__modules" : "a__.GotoPageAction",
+				"a_modules" : "ui5strap.GotoPageAction",
 				"gotoPage" : {
 					id : 'my-app-support',
 					viewName : "com_mycompany.my_app.views.Support",
