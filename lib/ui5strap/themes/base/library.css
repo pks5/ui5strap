@@ -279,13 +279,8 @@
 */
 @media (min-width: 576px){
 
-    /*
-    * Navbar
-    */
-    .navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-sidebar{
-        top:51px;
-     }
-
+    
+    
     .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
     .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav{
           display:none!important;

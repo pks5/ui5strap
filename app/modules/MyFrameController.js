@@ -304,13 +304,8 @@
 	* Shows / hides the sidebar
 	* @Public
 	*/
-	FrameControllerProto.setSidebarVisible = function(visible){
-		this.getNavContainer().setOptionsEnabled(
-			{ 
-				'sidebar' : visible, 
-				'sidebar2bottom' : visible
-			}
-		);
+	FrameControllerProto.setSidebarVisible = function(sidebarOptions){
+			this.getNavContainer().setOptionsEnabled(sidebarOptions);
 	};
 
 	/*
@@ -411,7 +406,12 @@
 
 		jQuery.sap.log.debug('FrameController.gotoPage (' + viewData.target + ')');
 
-		this.setSidebarVisible(viewData.sidebar);
+		this.setSidebarVisible({
+			'sidebar' : viewData.sidebar,
+			'sidebar2nav' : viewData.sidebar2nav,
+			'sidebar2bottom' : viewData.sidebar2bottom
+		});
+
 		this.setNavbarVisible(viewData.navbar);
 		this.setSidenavVisible(viewData.sidenav);
 		this.setSidenavToggleVisible(viewData.sidenavToggle);

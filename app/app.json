@@ -166,7 +166,9 @@
                 "type" : "HTML",
                 "showLoader" : true,
                 "navbar" : true,
-                "preload" : true
+                "preload" : true,
+                "sidebar" : true,
+                "sidebar2nav" : true
             },
             
             "com_mycompany.my_app.views.configuration.Theme" : {
@@ -174,6 +176,7 @@
                 "target" : "content",
                 "type" : "HTML",
                 "sidebar" : true,
+                "sidebar2bottom" : true,
                 "navbar" : true,
                 "sidebarMenu" : "configurationMenu",
                 "preload" : true
@@ -184,6 +187,7 @@
                 "target" : "content",
                 "type" : "HTML",
                 "sidebar" : true,
+                "sidebar2bottom" : true,
                 "navbar" : true,
                 "sidebarMenu" : "configurationMenu",
                 "preload" : true
@@ -194,6 +198,7 @@
                 "target" : "content",
                 "type" : "HTML",
                 "sidebar" : true,
+                "sidebar2bottom" : true,
                 "navbar" : true,
                 "sidebarMenu" : "configurationMenu",
                 "preload" : true
