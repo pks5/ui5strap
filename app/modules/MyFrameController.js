@@ -408,7 +408,14 @@
 
 		var viewData = this.validatePage(data);
 
-		jQuery.sap.log.debug('FrameController.gotoPage (' + viewData.target + ')');
+		
+
+		if(this.isBusy(viewData.target)){
+			jQuery.sap.log.debug('Target is busy: ' + viewData.target);
+		}
+		else{
+			jQuery.sap.log.debug('FrameController.gotoPage (' + viewData.target + ')');
+		}
 
 		this.setSidebarVisible({
 			'sidebar' : viewData.sidebar,
@@ -429,9 +436,13 @@
 
 		var currentPage = this.getCurrentPage(viewData.target);
 
+
+
 		if(
 			navContainer.getDomRef() 
-			&& (this.isBusy(viewData.target) || viewData.id && currentPage && viewData.id === currentPage.getId())
+			&& viewData.id 
+			&& currentPage 
+			&& viewData.id === currentPage.getId()
 		){
 			jQuery.sap.log.debug('FrameController.gotoPage: is current page: ' + viewData.id);
 			return false;
