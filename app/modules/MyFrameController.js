@@ -72,6 +72,8 @@
 			//Navbar
 			var navBar = new ui5strap.NavBar({ inverse : true, fluid : true, position : ui5strap.NavBarPosition.StaticTop });
 
+			this._navbar = navBar;
+
 			//Sidenav toggle
 			var toggle = new ui5strap.Button( { 
 					align : ui5strap.Alignment.NavBarLeft,
@@ -170,6 +172,8 @@
 			var sidebar = new ui5strap.Sidebar(),
 				navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked, align : ui5strap.Alignment.Sidebar });
 
+			this._sidebar = sidebar;
+
 			navSidebar.attachEvent('tap', {}, function(oEvent){
 				_this.gotoPage(oEvent.getParameter('listItem').data());
 			});
@@ -191,9 +195,9 @@
 
 			_navContainer = new NavContainerConstructor();
 
-			//Append bars to the NavContainer
-			_navContainer.setSidebar(sidebar);
-			_navContainer.setNavbar(navBar);
+			//_navContainer.setSidebar(this._sidebar);
+			//_navContainer.setNavbar(this._navbar);
+
 
 			return _navContainer;
 		};
@@ -242,7 +246,7 @@
 	* @Public
 	*/
 	FrameControllerProto.updateMenu = function(viewName){
-		jQuery.sap.log.trace('FrameController.updateMenu ("' + viewName + '")');
+		jQuery.sap.log.debug('FrameController.updateMenu ("' + viewName + '")');
 
 		var navSidebar = this.getNavSidebar();
 
@@ -419,9 +423,16 @@
 		this.setSidebarMenu(viewData.sidebarMenu);
 		
 
+		var navContainer = this.getNavContainer();
+		navContainer.setSidebar(this._sidebar);
+		navContainer.setNavbar(this._navbar);
+
 		var currentPage = this.getCurrentPage(viewData.target);
 
-		if(this.isBusy(viewData.target) || viewData.id && currentPage && viewData.id === currentPage.getId()){
+		if(
+			navContainer.getDomRef() 
+			&& (this.isBusy(viewData.target) || viewData.id && currentPage && viewData.id === currentPage.getId())
+		){
 			jQuery.sap.log.debug('FrameController.gotoPage: is current page: ' + viewData.id);
 			return false;
 		}
