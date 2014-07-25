@@ -481,6 +481,7 @@
         line-height:22px;
         margin-top:0px;
         margin-bottom:2px;
+        width:auto;
     }
 }
 
@@ -504,6 +505,7 @@
       display:block;
       font-size:20px;
       margin-bottom:2px;
+      width:auto;
   }
 
   /*
@@ -524,6 +526,7 @@
       display:inline;
       font-size:inherit;
       margin-bottom:0;
+      width:auto;
   }
 }
 
