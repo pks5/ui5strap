@@ -373,7 +373,7 @@
 				navItem.data(menuItemData);
 
 				if(menuItemData.icon){
-					navItem.addContent(new ui5strap.Icon({ 'icon' : menuItemData.icon}));
+					navItem.addContent(new ui5strap.Icon({ 'icon' : menuItemData.icon, 'fixedWidth' : true }));
 				}
 				
 				navSidebar.addItems(navItem);
