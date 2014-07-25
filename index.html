@@ -60,7 +60,17 @@
 		
 		<!-- Initialize the app -->
 		<script>
-			liberty.init('./app');
+			liberty.init(
+				{ 
+					"pathToServletRoot" : '.',
+					"app" : {
+						"type" : "URI",
+						"uriParam" : "sapp",
+						"required" : false,
+						"defaultValue" : "./app/app.json"
+					}
+				}
+			);
 		</script>
 
 	</body>

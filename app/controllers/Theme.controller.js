@@ -1,6 +1,6 @@
 jQuery.sap.require('ui5strap.Action');
 
-sap.ui.controller("com_mycompany.my_app.controllers.Configuration", {
+sap.ui.controller("com_mycompany.my_app.controllers.Theme", {
 
 	app : liberty.getViewer().getApp(),
 

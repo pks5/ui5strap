@@ -85,56 +85,28 @@
         },
 
         "menus" : {
-            "mainMenu" : { 
-                "items" : [
-                    {
-                        "viewName" : "com_mycompany.my_app.views.Installation",
-                        "label" : "i18n>MENU_INSTALLATION"
-                    },
-                    {
-                        "sidebarMenu" : "configurationMenu",
-                        "label" : "i18n>MENU_CONFIGURATION"
-                    },
-                    {
-                        "viewName" : "com_mycompany.my_app.views.Controls",
-                        "label" : "i18n>MENU_CONTROLS"
-                    }
-                ]
-            },
-
             "homeMenu" : {
                 "parent" : "mainMenu",
                 "items" : [
                         {
                             "viewName" : "com_mycompany.my_app.views.Home",
-                            "label" : "i18n>MENU_HOME_HOME",
+                            "label" : "i18n>MENU_HOME",
                             "icon" : "home"
+                        },
+                        {
+                            "viewName" : "com_mycompany.my_app.views.Installation",
+                            "label" : "i18n>MENU_INSTALLATION",
+                            "icon" : "gears"
+                        },
+                        {
+                            "viewName" : "com_mycompany.my_app.views.Theme",
+                            "label" : "i18n>MENU_THEME",
+                            "icon" : "tint"
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.Support",
                             "label" : "i18n>MENU_SUPPORT",
                             "icon" : "support"
-                        }
-                ]
-            },
-
-            "configurationMenu" : {
-                "parent" : "mainMenu",
-                "items" : [
-                        {
-                            "viewName" : "com_mycompany.my_app.views.configuration.Configuration",
-                            "label" : "i18n>MENU_CONFIG_GENERAL",
-                            "icon" : "wrench"
-                        },
-                        {
-                            "viewName" : "com_mycompany.my_app.views.configuration.Theme",
-                            "label" : "i18n>MENU_CONFIG_THEME",
-                            "icon" : "tint"
-                        },
-                        {
-                            "viewName" : "com_mycompany.my_app.views.configuration.Frame",
-                            "label" : "i18n>MENU_CONFIG_FRAME",
-                            "icon" : "columns"
                         }
                 ]
             }
@@ -146,7 +118,8 @@
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "homeMenu",
-                "navbar" : true,
+                "sidebar2bottom" : true,
+                "navbar" : false,
                 "preload" : true,
                 "sidebar" : true
             },
@@ -155,52 +128,21 @@
                 "id" : "my-app-installation",
                 "target" : "content",
                 "type" : "HTML",
-                "navbar" : true,
-                "sidenavToggle" : true,
-                "preload" : true
-            },
-            
-            "com_mycompany.my_app.views.Controls" : {
-                "id" : "my-app-controls",
-                "target" : "content",
-                "type" : "HTML",
-                "showLoader" : true,
-                "navbar" : true,
-                "preload" : true,
-                "sidebar" : true,
-                "sidebar2nav" : true
-            },
-            
-            "com_mycompany.my_app.views.configuration.Theme" : {
-                "id" : "my-app-config-theme",
-                "target" : "content",
-                "type" : "HTML",
-                "sidebar" : true,
+                "sidebarMenu" : "homeMenu",
                 "sidebar2bottom" : true,
-                "navbar" : true,
-                "sidebarMenu" : "configurationMenu",
+                "navbar" : false,
+                "sidebar" : true,
                 "preload" : true
             },
 
-            "com_mycompany.my_app.views.configuration.Frame" : {
-                "id" : "my-app-config-frame",
+            "com_mycompany.my_app.views.Theme" : {
+                "id" : "my-app-theme",
                 "target" : "content",
                 "type" : "HTML",
-                "sidebar" : true,
+                "sidebarMenu" : "homeMenu",
                 "sidebar2bottom" : true,
-                "navbar" : true,
-                "sidebarMenu" : "configurationMenu",
-                "preload" : true
-            },
-
-            "com_mycompany.my_app.views.configuration.Configuration" : {
-                "id" : "my-app-configuration",
-                "target" : "content",
-                "type" : "HTML",
+                "navbar" : false,
                 "sidebar" : true,
-                "sidebar2bottom" : true,
-                "navbar" : true,
-                "sidebarMenu" : "configurationMenu",
                 "preload" : true
             },
             
@@ -209,6 +151,7 @@
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "homeMenu",
+                "sidebar2bottom" : true,
                 "navbar" : false,
                 "sidebar" : true,
                 "preload" : true

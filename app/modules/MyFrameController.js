@@ -103,15 +103,18 @@
 			navLeft.setAlign(ui5strap.Alignment.NavBarLeft);
 			
 			var menu = _this.getConfig().getMenuData(frameOptions.navbarMenu);
-			for (var i = 0; i < menu.items.length; i++){
-				var menuPage = menu.items[i];
-				
-				var navItem = new ui5strap.ListItem();
-				navItem.data(menuPage);
-				var navItemLink = new ui5strap.Link();
-				navItemLink.bindProperty('text', {path : menuPage.label});
-				navItem.addContent(navItemLink);
-				navLeft.addItems(navItem);
+			if(menu){
+				//If a navbarMenu is specified in frameOptions, create the nav menu from it
+				for (var i = 0; i < menu.items.length; i++){
+					var menuPage = menu.items[i];
+					
+					var navItem = new ui5strap.ListItem();
+					navItem.data(menuPage);
+					var navItemLink = new ui5strap.Link();
+					navItemLink.bindProperty('text', {path : menuPage.label});
+					navItem.addContent(navItemLink);
+					navLeft.addItems(navItem);
+				}
 			}
 
 			navLeft.attachEvent('tap', {}, function(oEvent){
@@ -299,7 +302,8 @@
 				}
 			}
 			else{
-				throw new Error('Invalid navbar menu: ' + frameOptions.navbarMenu);
+				jQuery.sap.log.debug("No navbar menu is set.");
+				//throw new Error('Invalid navbar menu: ' + frameOptions.navbarMenu);
 			}
 		}
 	};
@@ -412,6 +416,8 @@
 
 		if(this.isBusy(viewData.target)){
 			jQuery.sap.log.debug('Target is busy: ' + viewData.target);
+
+			return false;
 		}
 		else{
 			jQuery.sap.log.debug('FrameController.gotoPage (' + viewData.target + ')');
