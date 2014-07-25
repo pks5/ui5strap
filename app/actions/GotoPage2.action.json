@@ -1,7 +1,7 @@
 {
 	"a_modules" : "ui5strap.AMGotoPage",
 	"gotoPage" : {
-		"viewName" : "com_mycompany.my_app.views.Installation",
+		"viewName" : "com_mycompany.my_app.views.Page2",
 		"transition" : "transition-flip"
 	}
 }

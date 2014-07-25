@@ -77,35 +77,33 @@
                 "navContainer" : "ui5strap.NavContainerStandard",
                 "initialViews" : [
                     { 
-                        "viewName" : "com_mycompany.my_app.views.Home"
+                        "viewName" : "com_mycompany.my_app.views.Page1"
                     }
-                ],
-                "navbarMenu" : "mainMenu"
+                ]
             }
         },
 
         "menus" : {
-            "homeMenu" : {
-                "parent" : "mainMenu",
+            "myMenu" : {
                 "items" : [
                         {
-                            "viewName" : "com_mycompany.my_app.views.Home",
-                            "label" : "i18n>MENU_HOME",
+                            "viewName" : "com_mycompany.my_app.views.Page1",
+                            "label" : "i18n>MENU_PAGE1",
                             "icon" : "home"
                         },
                         {
-                            "viewName" : "com_mycompany.my_app.views.Installation",
-                            "label" : "i18n>MENU_INSTALLATION",
+                            "viewName" : "com_mycompany.my_app.views.Page2",
+                            "label" : "i18n>MENU_PAGE2",
                             "icon" : "gears"
                         },
                         {
-                            "viewName" : "com_mycompany.my_app.views.Theme",
-                            "label" : "i18n>MENU_THEME",
+                            "viewName" : "com_mycompany.my_app.views.Page3",
+                            "label" : "i18n>MENU_PAGE3",
                             "icon" : "tint"
                         },
                         {
-                            "viewName" : "com_mycompany.my_app.views.Support",
-                            "label" : "i18n>MENU_SUPPORT",
+                            "viewName" : "com_mycompany.my_app.views.Page4",
+                            "label" : "i18n>MENU_PAGE4",
                             "icon" : "support"
                         }
                 ]
@@ -113,44 +111,44 @@
         },
 
         "views" : {
-            "com_mycompany.my_app.views.Home" : {
-                "id" : "my-app-home",
+            "com_mycompany.my_app.views.Page1" : {
+                "id" : "my-app-page1",
                 "target" : "content",
                 "type" : "HTML",
-                "sidebarMenu" : "homeMenu",
+                "sidebarMenu" : "myMenu",
                 "sidebar2bottom" : true,
                 "navbar" : false,
                 "preload" : true,
                 "sidebar" : true
             },
 
-            "com_mycompany.my_app.views.Installation" : {
-                "id" : "my-app-installation",
+            "com_mycompany.my_app.views.Page2" : {
+                "id" : "my-app-page2",
                 "target" : "content",
                 "type" : "HTML",
-                "sidebarMenu" : "homeMenu",
+                "sidebarMenu" : "myMenu",
                 "sidebar2bottom" : true,
                 "navbar" : false,
                 "sidebar" : true,
                 "preload" : true
             },
 
-            "com_mycompany.my_app.views.Theme" : {
-                "id" : "my-app-theme",
+            "com_mycompany.my_app.views.Page3" : {
+                "id" : "my-app-page3",
                 "target" : "content",
                 "type" : "HTML",
-                "sidebarMenu" : "homeMenu",
+                "sidebarMenu" : "myMenu",
                 "sidebar2bottom" : true,
                 "navbar" : false,
                 "sidebar" : true,
                 "preload" : true
             },
             
-            "com_mycompany.my_app.views.Support" : {
-                "id" : "my-app-support",
+            "com_mycompany.my_app.views.Page4" : {
+                "id" : "my-app-page4",
                 "target" : "content",
                 "type" : "HTML",
-                "sidebarMenu" : "homeMenu",
+                "sidebarMenu" : "myMenu",
                 "sidebar2bottom" : true,
                 "navbar" : false,
                 "sidebar" : true,
