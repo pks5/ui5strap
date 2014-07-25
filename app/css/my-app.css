@@ -49,6 +49,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cedce7', end
 	bottom:80px;
 	left:20px;
 	margin:0;
+
+	background-repeat:no-repeat;
+	background-position: center 85%;
+	
+}
+
+@media (max-width: 640px){
+	.index-carousel > .carousel-inner > .item > div > .jumbotron{
+		background-size: 40%;
+	}
 }
 
 .index-carousel > .carousel-inner > .item > div > .jumbotron > h1{
@@ -57,26 +67,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cedce7', end
 
 .index-carousel-page1 > .jumbotron{
 	background-image:url('../img/cat-cd.png');
-	background-repeat:no-repeat;
-	background-position: center 250px;
+	
 }
 
 .index-carousel-page2 > .jumbotron{
 	background-image:url('../img/cat-my-pictures.png');
-	background-repeat:no-repeat;
-	background-position: center 250px;
+	
 }
 
 .index-carousel-page3 > .jumbotron{
 	background-image:url('../img/cat-my-computer.png');
-	background-repeat:no-repeat;
-	background-position: center 250px;
+	
 }
 
 .index-carousel-page4 > .jumbotron{
 	background-image:url('../img/cat-graphics-application.png');
-	background-repeat:no-repeat;
-	background-position: center 250px;
+	
 }
 
 /*

@@ -105,6 +105,11 @@
                             "viewName" : "com_mycompany.my_app.views.Page4",
                             "label" : "i18n>MENU_PAGE4",
                             "icon" : "support"
+                        },
+                        {
+                            "viewName" : "com_mycompany.my_app.views.Page5",
+                            "label" : "i18n>MENU_PAGE5",
+                            "icon" : "support"
                         }
                 ]
             }
@@ -146,6 +151,17 @@
             
             "com_mycompany.my_app.views.Page4" : {
                 "id" : "my-app-page4",
+                "target" : "content",
+                "type" : "HTML",
+                "sidebarMenu" : "myMenu",
+                "sidebar2bottom" : true,
+                "navbar" : false,
+                "sidebar" : true,
+                "preload" : true
+            },
+            
+            "com_mycompany.my_app.views.Page5" : {
+                "id" : "my-app-page5",
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "myMenu",
