@@ -1,37 +1,47 @@
 <template data-controller-name="com_mycompany.my_app.controllers.Page3">
-	<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
-		<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
-			<!-- Themes -->
-			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Theme" data-lead="You can use any Bootstrap 3.1.1 Theme for Ui5Strap, too."></div>
-
-			<!-- Small buttons -->
-			<div data-sap-ui-type="ui5strap.Panel" data-title="Choose a Theme" data-severity="Primary">
-					<div data-sap-ui-type="ui5strap.Paragraph">
-						<div data-sap-ui-type="ui5strap.Button" data-selected="true" id="defaultThemeButton" data-text="Default" data-custom-data:theme="default" data-tap="switchTheme"></div>
-						<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="Readable" data-custom-data:theme="http://bootswatch.com/readable/bootstrap.min.css" data-tap="switchTheme"></div>
-						<div data-sap-ui-type="ui5strap.Button" data-severity="Warning" data-text="Amelia" data-custom-data:theme="http://bootswatch.com/amelia/bootstrap.min.css" data-tap="switchTheme"></div>
-						<div data-sap-ui-type="ui5strap.Button" data-severity="Primary" data-text="Darkly" data-custom-data:theme="http://bootswatch.com/darkly/bootstrap.min.css" data-tap="switchTheme"></div>
-						<div data-sap-ui-type="ui5strap.Button" data-severity="Danger" data-text="Slate" data-custom-data:theme="http://bootswatch.com/slate/bootstrap.min.css" data-tap="switchTheme"></div>
-						<div data-sap-ui-type="ui5strap.Button" data-severity="Success" data-text="Journal" data-custom-data:theme="http://bootswatch.com/journal/bootstrap.min.css" data-tap="switchTheme"></div>
-						<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="Cyborg" data-custom-data:theme="http://bootswatch.com/cyborg/bootstrap.min.css" data-tap="switchTheme"></div>
+	
+		<div data-sap-ui-type="ui5strap.Page">
+			<div data-sap-ui-aggregation="head">
+				<div data-sap-ui-type="ui5strap.Bar">
+					<div data-sap-ui-aggregation="middle">
+						<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE3_HEADING}"></div>
 					</div>
-					<div data-sap-ui-type="ui5strap.Paragraph">
-						<div data-sap-ui-type="ui5strap.Text" data-text="Themes provided by"></div>
-						<div data-sap-ui-type="ui5strap.Link" data-href="http://bootswatch.com" data-text="bootswatch.com"></div>
-					</div>	
-			</div>
-
-			<div data-sap-ui-type="ui5strap.Panel" data-title="Load from URL">
-				<div data-sap-ui-type="ui5strap.Form" data-type="Horizontal" data-submit="submitThemeForm">
-					<div data-sap-ui-type="ui5strap.FormGroup" data-label="Theme URL" data-label-small="2">
-						<div data-sap-ui-type="ui5strap.Col" data-columns-small="10">
-							<div id="themeInput" data-sap-ui-type="ui5strap.TextInput" data-placeholder="URL of any bootstrap(.min).css"></div>
-						</div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Button" data-text="Set Theme"></div>
 				</div>
 			</div>
-			
+			<div data-sap-ui-aggregation="body">
+				<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
+				<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
+
+					<!-- Small buttons -->
+					<div data-sap-ui-type="ui5strap.Panel" data-title="Choose a Theme" data-severity="Primary">
+							<div data-sap-ui-type="ui5strap.Paragraph">
+								<div data-sap-ui-type="ui5strap.Button" data-selected="true" id="defaultThemeButton" data-text="Default" data-custom-data:theme="default" data-tap="switchTheme"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="Readable" data-custom-data:theme="http://bootswatch.com/readable/bootstrap.min.css" data-tap="switchTheme"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-severity="Warning" data-text="Amelia" data-custom-data:theme="http://bootswatch.com/amelia/bootstrap.min.css" data-tap="switchTheme"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-severity="Primary" data-text="Darkly" data-custom-data:theme="http://bootswatch.com/darkly/bootstrap.min.css" data-tap="switchTheme"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-severity="Danger" data-text="Slate" data-custom-data:theme="http://bootswatch.com/slate/bootstrap.min.css" data-tap="switchTheme"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-severity="Success" data-text="Journal" data-custom-data:theme="http://bootswatch.com/journal/bootstrap.min.css" data-tap="switchTheme"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="Cyborg" data-custom-data:theme="http://bootswatch.com/cyborg/bootstrap.min.css" data-tap="switchTheme"></div>
+							</div>
+							<div data-sap-ui-type="ui5strap.Paragraph">
+								<div data-sap-ui-type="ui5strap.Text" data-text="Themes provided by"></div>
+								<div data-sap-ui-type="ui5strap.Link" data-href="http://bootswatch.com" data-text="bootswatch.com"></div>
+							</div>	
+					</div>
+
+					<div data-sap-ui-type="ui5strap.Panel" data-title="Load from URL">
+						<div data-sap-ui-type="ui5strap.Form" data-type="Horizontal" data-submit="submitThemeForm">
+							<div data-sap-ui-type="ui5strap.FormGroup" data-label="Theme URL" data-label-small="2">
+								<div data-sap-ui-type="ui5strap.Col" data-columns-small="10">
+									<div id="themeInput" data-sap-ui-type="ui5strap.TextInput" data-placeholder="URL of any bootstrap(.min).css"></div>
+								</div>
+							</div>
+							<div data-sap-ui-type="ui5strap.Button" data-text="Set Theme"></div>
+						</div>
+					</div>
+				
+				</div>
+				</div>
+			</div>
 		</div>
-	</div>
 </template>

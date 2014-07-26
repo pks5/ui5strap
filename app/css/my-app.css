@@ -85,6 +85,17 @@
 	
 }
 
+#my-app-page2{
+	background: #f9f9f9; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  #f9f9f9 61%, #e2e2e2 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(61%,#f9f9f9), color-stop(100%,#e2e2e2)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  #f9f9f9 61%,#e2e2e2 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  #f9f9f9 61%,#e2e2e2 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  #f9f9f9 61%,#e2e2e2 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  #f9f9f9 61%,#e2e2e2 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#e2e2e2',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
 .dl-carousel-page1{
 	text-align:center;
 	padding:20px;
@@ -104,4 +115,9 @@
 .get-started-screenshot{
 	margin-top:10px;
 	margin-bottom:10px;
+}
+
+
+.res-panel{
+	height:180px;
 }

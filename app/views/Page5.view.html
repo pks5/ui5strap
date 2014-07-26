@@ -1,10 +1,22 @@
 <template>
-	<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
-		<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
-			
-			<div data-sap-ui-type="ui5strap.PageHeader" data-text="{i18n>PAGE5_HEADING}" data-lead="{i18n>PAGE5_LEAD}"></div>
+	<div data-sap-ui-type="ui5strap.Page">
+			<div data-sap-ui-aggregation="head">
+				<div data-sap-ui-type="ui5strap.Bar">
+					<div data-sap-ui-aggregation="middle">
+						<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE5_HEADING}"></div>
+					</div>
+				</div>
+			</div>
+			<div data-sap-ui-aggregation="body">
 
-		</div>
+				<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
+					<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
+						
+						<div data-sap-ui-type="ui5strap.Paragraph" data-text="{i18n>PAGE5_LEAD}"></div>
+
+					</div>
+				</div>
+			</div>
 	</div>
 
 </template>
