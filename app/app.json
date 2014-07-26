@@ -94,22 +94,22 @@
                         {
                             "viewName" : "com_mycompany.my_app.views.Page2",
                             "label" : "i18n>MENU_PAGE2",
-                            "icon" : "gears"
+                            "icon" : "download"
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.Page3",
                             "label" : "i18n>MENU_PAGE3",
-                            "icon" : "tint"
+                            "icon" : "wrench"
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.Page4",
                             "label" : "i18n>MENU_PAGE4",
-                            "icon" : "support"
+                            "icon" : "question-circle"
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.Page5",
                             "label" : "i18n>MENU_PAGE5",
-                            "icon" : "support"
+                            "icon" : "copy"
                         }
                 ]
             }

@@ -59,13 +59,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 #ui5strap-splash > img{
-	width:320px;
-	height:320px;
+	width:160px;
+	height:160px;
 	position:absolute;
 	left:50%;
 	top:50%;
-	margin-left:-160px;
-	margin-top:-160px;
+	margin-left:-80px;
+	margin-top:-80px;
 }
 
 #ui5strap-fatal{
