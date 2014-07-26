@@ -1,0 +1,7 @@
+{
+	"a_modules" : "ui5strap.AMCallControlMethod",
+	"callControlMethod" : {
+		"controlId" : "my-app-page2--carousel-dl",
+		"funcName" : "nextPage"
+	}
+}
