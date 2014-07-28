@@ -1,47 +1,76 @@
 <template data-controller-name="com_mycompany.my_app.controllers.Page3">
 	
-		<div data-sap-ui-type="ui5strap.Page">
-			<div data-sap-ui-aggregation="head">
-				<div data-sap-ui-type="ui5strap.Bar">
-					<div data-sap-ui-aggregation="middle">
-						<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE3_HEADING}"></div>
-					</div>
-				</div>
-			</div>
-			<div data-sap-ui-aggregation="body">
-				<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
-				<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
-
-					<!-- Small buttons -->
-					<div data-sap-ui-type="ui5strap.Panel" data-title="Choose a Theme" data-severity="Primary">
-							<div data-sap-ui-type="ui5strap.Paragraph">
-								<div data-sap-ui-type="ui5strap.Button" data-selected="true" id="defaultThemeButton" data-text="Default" data-custom-data:theme="default" data-tap="switchTheme"></div>
-								<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="Readable" data-custom-data:theme="http://bootswatch.com/readable/bootstrap.min.css" data-tap="switchTheme"></div>
-								<div data-sap-ui-type="ui5strap.Button" data-severity="Warning" data-text="Amelia" data-custom-data:theme="http://bootswatch.com/amelia/bootstrap.min.css" data-tap="switchTheme"></div>
-								<div data-sap-ui-type="ui5strap.Button" data-severity="Primary" data-text="Darkly" data-custom-data:theme="http://bootswatch.com/darkly/bootstrap.min.css" data-tap="switchTheme"></div>
-								<div data-sap-ui-type="ui5strap.Button" data-severity="Danger" data-text="Slate" data-custom-data:theme="http://bootswatch.com/slate/bootstrap.min.css" data-tap="switchTheme"></div>
-								<div data-sap-ui-type="ui5strap.Button" data-severity="Success" data-text="Journal" data-custom-data:theme="http://bootswatch.com/journal/bootstrap.min.css" data-tap="switchTheme"></div>
-								<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="Cyborg" data-custom-data:theme="http://bootswatch.com/cyborg/bootstrap.min.css" data-tap="switchTheme"></div>
-							</div>
-							<div data-sap-ui-type="ui5strap.Paragraph">
-								<div data-sap-ui-type="ui5strap.Text" data-text="Themes provided by"></div>
-								<div data-sap-ui-type="ui5strap.Link" data-href="http://bootswatch.com" data-text="bootswatch.com"></div>
-							</div>	
-					</div>
-
-					<div data-sap-ui-type="ui5strap.Panel" data-title="Load from URL">
-						<div data-sap-ui-type="ui5strap.Form" data-type="Horizontal" data-submit="submitThemeForm">
-							<div data-sap-ui-type="ui5strap.FormGroup" data-label="Theme URL" data-label-small="2">
-								<div data-sap-ui-type="ui5strap.Col" data-columns-small="10">
-									<div id="themeInput" data-sap-ui-type="ui5strap.TextInput" data-placeholder="URL of any bootstrap(.min).css"></div>
-								</div>
-							</div>
-							<div data-sap-ui-type="ui5strap.Button" data-text="Set Theme"></div>
-						</div>
-					</div>
-				
-				</div>
+	<div data-sap-ui-type="ui5strap.Page">
+		<div data-sap-ui-aggregation="head">
+			<div data-sap-ui-type="ui5strap.Bar">
+				<div data-sap-ui-aggregation="middle">
+					<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE3_HEADING}"></div>
 				</div>
 			</div>
 		</div>
+		<div data-sap-ui-aggregation="body">
+
+			<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
+
+				<div data-sap-ui-type="ui5strap.Nav" data-type="Tabs" id="tabContainer1Tabs" data-selection-mode="Single">
+					<div data-sap-ui-type="ui5strap.ListItem" data-selected="true">
+						<div data-sap-ui-type="ui5strap.Link" data-text="Appearance"></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.ListItem">
+						<div data-sap-ui-type="ui5strap.Link" data-text="Layout"></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.ListItem">
+						<div data-sap-ui-type="ui5strap.Link" data-text="Navigation"></div>
+					</div>
+
+				</div>
+
+				<div data-sap-ui-type="ui5strap.TabContainer" class="tabContainer1" data-source="tabContainer1Tabs">
+					<div data-sap-ui-type="ui5strap.Container">
+						<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
+							<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Suspendisse lectus leo"></div>
+
+							<!-- Small buttons -->
+								<div data-sap-ui-type="ui5strap.Paragraph" data-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris."></div>
+								<div data-sap-ui-type="ui5strap.Paragraph">
+									<div data-sap-ui-type="ui5strap.Button" data-selected="true" id="defaultThemeButton" data-text="Default" data-custom-data:theme="default" data-tap="switchTheme"></div>
+									<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="Readable" data-custom-data:theme="http://bootswatch.com/readable/bootstrap.min.css" data-tap="switchTheme"></div>
+									<div data-sap-ui-type="ui5strap.Button" data-severity="Warning" data-text="Amelia" data-custom-data:theme="http://bootswatch.com/amelia/bootstrap.min.css" data-tap="switchTheme"></div>
+									<div data-sap-ui-type="ui5strap.Button" data-severity="Primary" data-text="Darkly" data-custom-data:theme="http://bootswatch.com/darkly/bootstrap.min.css" data-tap="switchTheme"></div>
+									<div data-sap-ui-type="ui5strap.Button" data-severity="Danger" data-text="Slate" data-custom-data:theme="http://bootswatch.com/slate/bootstrap.min.css" data-tap="switchTheme"></div>
+									<div data-sap-ui-type="ui5strap.Button" data-severity="Success" data-text="Journal" data-custom-data:theme="http://bootswatch.com/journal/bootstrap.min.css" data-tap="switchTheme"></div>
+									<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="Cyborg" data-custom-data:theme="http://bootswatch.com/cyborg/bootstrap.min.css" data-tap="switchTheme"></div>
+								</div>
+								
+								<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Class aptent taciti"></div>
+								<div data-sap-ui-type="ui5strap.Paragraph" data-text="Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo."></div>
+							
+								<div data-sap-ui-type="ui5strap.Form" data-type="Horizontal" data-submit="submitThemeForm">
+									<div data-sap-ui-type="ui5strap.FormGroup" data-label="Theme URL" data-label-small="2">
+										<div data-sap-ui-type="ui5strap.Col" data-columns-small="10">
+											<div id="themeInput" data-sap-ui-type="ui5strap.TextInput" data-placeholder="URL of any bootstrap(.min).css"></div>
+										</div>
+									</div>
+									<div data-sap-ui-type="ui5strap.Button" data-text="Set Theme"></div>
+								</div>
+							
+						</div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Container">
+						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Library"></div>
+						<div data-sap-ui-type="ui5strap.Paragraph" data-text="Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit."></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Container">
+						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Data"></div>
+						<div data-sap-ui-type="ui5strap.Paragraph" data-text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork."></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Container">
+						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Contact"></div>
+						<div data-sap-ui-type="ui5strap.Paragraph" data-text="Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater."></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 </template>

@@ -77,7 +77,7 @@
                 "navContainer" : "ui5strap.NavContainerStandard",
                 "initialViews" : [
                     { 
-                        "viewName" : "com_mycompany.my_app.views.Page1"
+                        "viewName" : "com_mycompany.my_app.views.Intro"
                     }
                 ]
             }
@@ -116,8 +116,8 @@
         },
 
         "views" : {
-            "com_mycompany.my_app.views.Page1" : {
-                "id" : "my-app-page1",
+            "com_mycompany.my_app.views.Intro" : {
+                "id" : "my-app-intro",
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "myMenu",
@@ -125,6 +125,17 @@
                 "navbar" : false,
                 "preload" : true,
                 "sidebar" : false
+            },
+
+            "com_mycompany.my_app.views.Page1" : {
+                "id" : "my-app-page1",
+                "target" : "content",
+                "type" : "HTML",
+                "sidebarMenu" : "myMenu",
+                "sidebar2bottom" : true,
+                "navbar" : false,
+                "sidebar" : true,
+                "preload" : true
             },
 
             "com_mycompany.my_app.views.Page2" : {

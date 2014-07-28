@@ -479,7 +479,7 @@
 /*
 * @Desktop
 */
-@media (min-width: 992px){
+@media (min-width: 1025px){
     /*
     * Sidebar
     */
@@ -508,7 +508,7 @@
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
         left:0px;
     }
-    
+
     /*
     * Sidenav override
     */
@@ -588,7 +588,7 @@
     }
 }
 
-@media (min-width: 576px) and (max-width: 991px){
+@media (min-width: 576px) and (max-width: 1024px){
 
   /*
   * Sidebar
