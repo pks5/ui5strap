@@ -309,38 +309,6 @@
 	};
 
 	/*
-	* Shows / hides the sidebar
-	* @Public
-	*/
-	FrameControllerProto.setSidebarVisible = function(sidebarOptions){
-			this.getNavContainer().setOptionsEnabled(sidebarOptions);
-	};
-
-	/*
-	* Shows / hides the sidenav
-	* @Public
-	*/
-	FrameControllerProto.setSidenavVisible = function(visible){
-		this.getNavContainer().setOptionsEnabled({ 'sidenav' : visible });
-	};
-
-	/*
-	* Shows / hides the sidenav toggle
-	* @Public
-	*/
-	FrameControllerProto.setSidenavToggleVisible = function(visible){
-		this.getNavContainer().setOptionsEnabled({ 'sidenav-toggle' : visible });
-	};
-
-	/*
-	* Shows / hides the navbar
-	* @Public
-	*/
-	FrameControllerProto.setNavbarVisible = function(visible){
-		this.getNavContainer().setOptionsEnabled({ 'navbar' : visible });
-	};
-
-	/*
 	* Sets the sidebar menu to the menu with name menuName defined in configuration
 	* @Public 
 	*/
@@ -423,16 +391,15 @@
 			jQuery.sap.log.debug('FrameController.gotoPage (' + viewData.target + ')');
 		}
 
-		this.setSidebarVisible({
+		this.getNavContainer().setOptionsEnabled({
+			'navbar' : viewData.navbar,
 			'sidebar' : viewData.sidebar,
 			'sidebar2nav' : viewData.sidebar2nav,
-			'sidebar2bottom' : viewData.sidebar2bottom
+			'sidebar2bottom' : viewData.sidebar2bottom,
+			'sidenav' : viewData.sidenav,
+			'sidenav-toggle' : viewData.sidenavToggle
 		});
 
-		this.setNavbarVisible(viewData.navbar);
-		this.setSidenavVisible(viewData.sidenav);
-		this.setSidenavToggleVisible(viewData.sidenavToggle);
-		
 		this.setSidebarMenu(viewData.sidebarMenu);
 		
 

@@ -304,12 +304,15 @@
           left:-75%;
       }
 
+      .navcontainer-standard.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-sidebar{
+          top:auto;
+          height:50px;
+      }
+
       .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-sidebar{
           width:auto;
           left:0;
           right:0;
-          top:auto;
-          height:50px;
       }
 
       /*
@@ -355,19 +358,28 @@
     * Sidebar Aggregation
     */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
-      width:10%;
-      left:-10%;
+      width:20%;
+      left:-20%;
       height:auto;
       top:0;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-sidebar{
+        width:10%;
+        left:-10%;
     }
 
     /*
     * Sidebar behaviour
     */
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
-        left:10%;
+        left:20%;
         right:0;
         width:auto;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-content{
+        left:10%;
     }
 
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar{
@@ -420,16 +432,29 @@
     * Sidebar
     */
     .navcontainer-standard > .navcontainer-aggregation-sidebar{
-      width:8%;
+      width:16%;
+      left:-16%;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-sidebar{
+       width:8%;
       left:-8%;
     }
 
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
+        left:16%;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-content{
         left:8%;
     }
 
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar{
         left:0;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+        left:0px;
     }
 
     /*
@@ -467,10 +492,23 @@
         left:16.66666667%;
     }
 
+    .navcontainer-standard.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-sidebar{
+        width: 16.66666667%;
+        left: -16.66666667%;
+    }
+
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom > .navcontainer-aggregation-content{
+        left:16.66666667%;
+    }
+
     .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar{
         left:0;
     }
 
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+        left:0px;
+    }
+    
     /*
     * Sidenav override
     */
@@ -517,30 +555,30 @@
 }
 
 /*
-* Sidenav within sidebar aggregation
+* Bottom menu adaption for small phones
 */
 @media (max-width: 575px){
-    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav{
+    .navcontainer-standard.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav{
         margin-left: -20px;
         margin-top:-20px;
         margin-bottom:-20px;
         margin-right:-20px;
     }
 
-    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li{
+    .navcontainer-standard.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li{
         width:16.6666666667%; 
         float:left; 
         margin:0;
     }
 
-    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a{
+    .navcontainer-standard.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a{
         padding:6px 0; 
         font-size: 11px; 
         line-height: 14px; 
         text-align: center;
     }
 
-    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a > .fa{
+    .navcontainer-standard.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a > .fa{
         display:block;
         font-size:20px;
         line-height:22px;
@@ -555,18 +593,18 @@
   /*
   * Sidebar
   */
-  .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav > li{
+  .navcontainer-standard.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li{
       margin-top:0;
   }
 
-  .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav > li > a{
+  .navcontainer-standard.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a{
       padding-left:0;
       padding-right:0;
       text-align:center;
       font-size:11px;
   }
 
-  .navcontainer-standard.navcontainer-standard-sidebar .sidebar .sidebar-nav > li > a > .fa{
+  .navcontainer-standard.navcontainer-standard-sidebar2bottom .sidebar .sidebar-nav > li > a > .fa{
       display:block;
       font-size:20px;
       margin-bottom:2px;

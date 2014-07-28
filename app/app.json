@@ -165,7 +165,6 @@
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "myMenu",
-                "sidebar2bottom" : true,
                 "navbar" : false,
                 "sidebar" : true,
                 "preload" : true
