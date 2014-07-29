@@ -1,3 +1,21 @@
+/*
+ * 
+ * UI5Strap
+ *
+ * Preload stylesheet for splash screen and layers
+ * 
+ * Author: Jan Philipp Knöller
+ * 
+ * Copyright (c) 2013 Jan Philipp Knöller
+ * 
+ * http://pksoftware.de
+ *
+ * Get the latest version: https://github.com/pks5/ui5strap
+ * 
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
 html, body{
 	width:100%;
 	height:100%;

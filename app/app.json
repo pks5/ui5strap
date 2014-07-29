@@ -118,6 +118,7 @@
         "views" : {
             "com_mycompany.my_app.views.Intro" : {
                 "id" : "my-app-intro",
+                "styleClass" : "page-intro",
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "myMenu",
@@ -129,6 +130,7 @@
 
             "com_mycompany.my_app.views.Page1" : {
                 "id" : "my-app-page1",
+                "styleClass" : "page-white page-1",
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "myMenu",
@@ -140,6 +142,7 @@
 
             "com_mycompany.my_app.views.Page2" : {
                 "id" : "my-app-page2",
+                "styleClass" : "page-white page-2",
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "myMenu",
@@ -151,6 +154,7 @@
 
             "com_mycompany.my_app.views.Page3" : {
                 "id" : "my-app-page3",
+                "styleClass" : "page-white page-3",
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "myMenu",
@@ -162,6 +166,7 @@
             
             "com_mycompany.my_app.views.Page4" : {
                 "id" : "my-app-page4",
+                "styleClass" : "page-white page-4",
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "myMenu",
@@ -173,6 +178,7 @@
             
             "com_mycompany.my_app.views.Page5" : {
                 "id" : "my-app-page5",
+                "styleClass" : "page-white page-5",
                 "target" : "content",
                 "type" : "HTML",
                 "sidebarMenu" : "myMenu",
