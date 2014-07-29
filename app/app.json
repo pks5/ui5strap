@@ -4,7 +4,8 @@
             "package" : "com_mycompany.my_app",
             "title" : "Ui5Strap",
             "id" : "com_mycompany_my_app",
-            "logLevel" : 5
+            "logLevel" : 5,
+            "theme" : "bscyborg"
         },
 
         "icons" : {
@@ -42,15 +43,6 @@
         ],
 
         "css" : [
-            {
-                "id" : "bootstrap-css",
-                "package" : "ui5strap",
-                "src" : "bootstrap-3.1.1-dist/css/bootstrap.min.css"
-            },
-            {
-                "package" : "ui5strap",
-                "src" : "font-awesome-4.1.0/css/font-awesome.min.css"
-            },
             {
                 "package" : "my_lib",
                 "src" : "css/clock.css"
