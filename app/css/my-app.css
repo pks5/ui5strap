@@ -37,20 +37,7 @@
 	height:100%;
 }
 
-/*
-* Index carousel
-*/
-.index-carousel > .carousel-inner > .item > div{
-	background-size: cover;
-	
-	position:absolute;
-	top:0;
-	right:0;
-	left:0;
-	bottom:0;
-
-	padding:20px;
-
+.sapUiTheme-base .page-intro{
 	background: #cedce7; /* Old browsers */
 	background: -moz-linear-gradient(top,  #cedce7 0%, #596a72 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cedce7), color-stop(100%,#596a72)); /* Chrome,Safari4+ */
@@ -59,7 +46,19 @@
 	background: -ms-linear-gradient(top,  #cedce7 0%,#596a72 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #cedce7 0%,#596a72 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cedce7', endColorstr='#596a72',GradientType=0 ); /* IE6-9 */
+}
 
+/*
+* Index carousel
+*/
+.index-carousel > .carousel-inner > .item > div{
+	position:absolute;
+	top:0;
+	right:0;
+	left:0;
+	bottom:0;
+
+	padding:20px;
 }
 
 /*
