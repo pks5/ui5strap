@@ -88,6 +88,12 @@
 .skip-intro-link{
 	position:absolute;
 	bottom:20px;
+	left:20px;
+}
+
+.next-intro-link{
+	position:absolute;
+	bottom:20px;
 	right:20px;
 }
 
