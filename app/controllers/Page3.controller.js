@@ -36,39 +36,6 @@ sap.ui.controller("com_mycompany.my_app.controllers.Page3", {
 			"app" : this.getView().getViewData().app,
 			"controller" : this
 		});
-	},
-
-	submitThemeForm : function(oEvent){
-		var app = this.app,
-			_this = this;
-		
-
-		var newTheme = this.getView().byId('themeInput').getValue();
-
-		if('' === newTheme){
-			return false;
-		}
-
-		if(!this.isValidBootstrapTheme(newTheme)){
-			//Todo Change to BS Modal
-
-			alert(newTheme + ' is not a valid Bootstrap theme!');
-
-			return false;
-		}
-		else{
-
-			if(this.activeButton){
-					this.activeButton.setSelected(false);
-			}
-
-			_this.setTheme(newTheme);
-
-		}
-	},
-
-	isValidBootstrapTheme : function(themeUrl){
- 		return /bootstrap(\.min)?\.css$/.test(themeUrl);
 	}
 	
 });

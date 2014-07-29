@@ -4,8 +4,7 @@
             "package" : "com_mycompany.my_app",
             "title" : "Ui5Strap",
             "id" : "com_mycompany_my_app",
-            "logLevel" : 5,
-            "theme" : "bscyborg"
+            "logLevel" : 5
         },
 
         "icons" : {

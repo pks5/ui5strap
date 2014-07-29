@@ -148,7 +148,7 @@
 /*
 * Standard page with white gradient
 */
-.page-white{
+.sapUiTheme-base .page-white{
 	background: #f9f9f9; /* Old browsers */
 	background: -moz-radial-gradient(center, ellipse cover,  #f9f9f9 61%, #e2e2e2 100%); /* FF3.6+ */
 	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(61%,#f9f9f9), color-stop(100%,#e2e2e2)); /* Chrome,Safari4+ */
