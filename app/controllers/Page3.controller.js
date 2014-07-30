@@ -36,6 +36,49 @@ sap.ui.controller("com_mycompany.my_app.controllers.Page3", {
 			"app" : this.getView().getViewData().app,
 			"controller" : this
 		});
+	},
+
+	toggleSidebar : function(oEvent){
+		var srcButton = oEvent.getSource();
+
+		srcButton.setSelected(!srcButton.getSelected());
+
+		var frame = this.getView().getViewData().app.getFrame();
+
+		frame.getNavContainer().setOptionsEnabled({
+			"sidebar" : srcButton.getSelected()
+		});
+	},
+
+	toggleSidebarOptions : function(oEvent){
+		var srcButton = oEvent.getSource();
+
+		var text = oEvent.getParameter("button").getText();
+
+		var frame = this.getView().getViewData().app.getFrame();
+
+		var options = {
+			"sidebar2bottom" : false,
+			"sidebar2nav" : false
+		};
+
+		if(text !== 'none'){
+			options[text] = true;
+		}
+
+		frame.getNavContainer().setOptionsEnabled(options);
+	},
+
+	toggleNavbar : function(oEvent){
+		var srcButton = oEvent.getSource();
+
+		srcButton.setSelected(!srcButton.getSelected());
+
+		var frame = this.getView().getViewData().app.getFrame();
+
+		frame.getNavContainer().setOptionsEnabled({
+			"navbar" : srcButton.getSelected()
+		});
 	}
 	
 });

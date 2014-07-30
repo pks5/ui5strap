@@ -14,10 +14,7 @@
 
 				<div data-sap-ui-type="ui5strap.Nav" data-type="Tabs" id="tabContainer1Tabs" data-selection-mode="Single">
 					<div data-sap-ui-type="ui5strap.ListItem" data-selected="true">
-						<div data-sap-ui-type="ui5strap.Link" data-text="Appearance"></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.ListItem">
-						<div data-sap-ui-type="ui5strap.Link" data-text="Layout"></div>
+						<div data-sap-ui-type="ui5strap.Link" data-text="Theme"></div>
 					</div>
 					<div data-sap-ui-type="ui5strap.ListItem">
 						<div data-sap-ui-type="ui5strap.Link" data-text="Navigation"></div>
@@ -28,35 +25,45 @@
 				<div data-sap-ui-type="ui5strap.TabContainer" class="tabContainer1" data-source="tabContainer1Tabs">
 					<div data-sap-ui-type="ui5strap.Container">
 						<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
-							<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Suspendisse lectus leo"></div>
+							<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Change Programmatically"></div>
 
 							<!-- Small buttons -->
-								<div data-sap-ui-type="ui5strap.Paragraph" data-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris."></div>
-								<div data-sap-ui-type="ui5strap.Paragraph">
-									<div data-sap-ui-type="ui5strap.Button" data-selected="true" id="defaultThemeButton" data-text="Default" data-custom-data:theme="default" data-tap="switchTheme"></div>
-									<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="Cyborg" data-custom-data:theme="bscyborg" data-tap="switchTheme"></div>
-									<div data-sap-ui-type="ui5strap.Button" data-severity="Success" data-text="BSX" data-custom-data:theme="bsx" data-tap="switchTheme"></div>
-								</div>
-								
-								<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Class aptent taciti"></div>
-								<div data-sap-ui-type="ui5strap.Paragraph" data-text="Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo."></div>
+							<div data-sap-ui-type="ui5strap.Paragraph" data-text="You can easily change the app theme programmatically by calling the AMChangeTheme Action from anywhere in your code. Press one of the following buttons to test."></div>
+							<div data-sap-ui-type="ui5strap.Paragraph">
+								<div data-sap-ui-type="ui5strap.Button" data-selected="true" id="defaultThemeButton" data-text="base" data-custom-data:theme="default" data-tap="switchTheme"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="bscyborg" data-custom-data:theme="bscyborg" data-tap="switchTheme"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-severity="Success" data-text="bsx" data-custom-data:theme="bsx" data-tap="switchTheme"></div>
+							</div>
+
+							<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Change Permanently"></div>
+							<div data-sap-ui-type="ui5strap.Paragraph" data-text="Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo."></div>
 							
-								
+
 							
 						</div>
 					</div>
 					<div data-sap-ui-type="ui5strap.Container">
-						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Library"></div>
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit."></div>
+						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Sidebar"></div>
+						<div data-sap-ui-type="ui5strap.Paragraph" data-text="You can enable / disable the sidebar and set additional options."></div>
+
+						<div data-sap-ui-type="ui5strap.Paragraph">
+							<div data-sap-ui-type="ui5strap.Button" data-tap="toggleSidebar" data-text="Sidebar" data-selected="true"></div>
+
+							<div data-sap-ui-type="ui5strap.ButtonGroup" id="vButtons" data-tap="toggleSidebarOptions" data-selection-mode="Single">
+								<div data-sap-ui-type="ui5strap.Button" data-text="none"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-text="sidebar2bottom" data-selected="true"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-text="sidebar2nav"></div>
+							</div>
+						</div>
+
+						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Navbar"></div>
+						<div data-sap-ui-type="ui5strap.Paragraph" data-text="You can enable / disable the navbar."></div>
+
+						<div data-sap-ui-type="ui5strap.Paragraph">
+							<div data-sap-ui-type="ui5strap.Button" data-tap="toggleNavbar" data-text="Navbar"></div>
+						</div>
 					</div>
-					<div data-sap-ui-type="ui5strap.Container">
-						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Data"></div>
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork."></div>
-					</div>
-					<div data-sap-ui-type="ui5strap.Container">
-						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Contact"></div>
-						<div data-sap-ui-type="ui5strap.Paragraph" data-text="Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater."></div>
-					</div>
+					
 				</div>
 
 			</div>
