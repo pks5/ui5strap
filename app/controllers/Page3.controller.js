@@ -50,6 +50,18 @@ sap.ui.controller("com_mycompany.my_app.controllers.Page3", {
 		});
 	},
 
+	toggleSidenav : function(oEvent){
+		var srcButton = oEvent.getSource();
+
+		srcButton.setSelected(!srcButton.getSelected());
+
+		var frame = this.getView().getViewData().app.getFrame();
+
+		frame.getNavContainer().setOptionsEnabled({
+			"sidenav" : srcButton.getSelected()
+		});
+	},
+
 	toggleSidebarOptions : function(oEvent){
 		var srcButton = oEvent.getSource();
 

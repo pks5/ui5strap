@@ -249,7 +249,7 @@
 	* @Public
 	*/
 	FrameControllerProto.updateMenu = function(viewName){
-		jQuery.sap.log.debug('FrameController.updateMenu ("' + viewName + '")');
+		jQuery.sap.log.debug('[MFR] updateMenu ("' + viewName + '")');
 
 		var navSidebar = this.getNavSidebar();
 
@@ -383,12 +383,12 @@
 		
 
 		if(this.isBusy(viewData.target)){
-			jQuery.sap.log.debug('Target is busy: ' + viewData.target);
+			jQuery.sap.log.debug('[MFR][' + viewData.target + '] is busy!');
 
 			return false;
 		}
 		else{
-			jQuery.sap.log.debug('FrameController.gotoPage (' + viewData.target + ')');
+			jQuery.sap.log.debug('[MFR][' + viewData.target + '] gotoPage');
 		}
 
 		this.getNavContainer().setOptionsEnabled({
@@ -417,7 +417,7 @@
 			&& currentPage 
 			&& viewData.id === currentPage.getId()
 		){
-			jQuery.sap.log.debug('FrameController.gotoPage: is current page: ' + viewData.id);
+			jQuery.sap.log.debug('[MFR] is current page: ' + viewData.id);
 			return false;
 		}
 
