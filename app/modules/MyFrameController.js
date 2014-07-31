@@ -388,7 +388,7 @@
 			return false;
 		}
 		else{
-			jQuery.sap.log.debug('[MFR][' + viewData.target + '] gotoPage');
+			jQuery.sap.log.debug('[MFR][' + viewData.target + '] gotoPage ("' + viewData.viewName + '#' + viewData.id + '")');
 		}
 
 		this.getNavContainer().setOptionsEnabled({
