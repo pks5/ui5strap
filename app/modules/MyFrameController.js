@@ -172,7 +172,7 @@
 			navBar.addContentRight(toggleRight);
 
 			//Sidebar / Sidenav
-			var sidebar = new ui5strap.Sidebar(),
+			var sidebar = new ui5strap.Sidebar({ "inverse" : true }),
 				navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked, align : ui5strap.Alignment.Sidebar });
 
 			this._sidebar = sidebar;
