@@ -1,12 +1,11 @@
 <template  data-controller-name="ui5strap.ActionController">
 	
 	<div data-sap-ui-type="ui5strap.Carousel" id="carousel-intro" class="carousel-full index-carousel" data-controls="false" data-interval="0">
-		<div data-sap-ui-type="ui5strap.Container" class="index-carousel-page1">
-			<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
-				<div data-sap-ui-type="ui5strap.Jumbotron">
+		<div data-sap-ui-type="ui5strap.Container" class="index-carousel-page index-carousel-page1">
+				
 
-					<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="{i18n>INTRO1_HEADING}"></div>
-					<div data-sap-ui-type="ui5strap.Paragraph" data-text="{i18n>INTRO1_LEAD}"></div>
+					<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="{i18n>INTRO1_HEADING}" class="intro-heading"></div>
+					<div data-sap-ui-type="ui5strap.Paragraph" data-text="{i18n>INTRO1_LEAD}" class="intro-lead"></div>
 					<div data-sap-ui-type="ui5strap.Paragraph">
 						<div data-sap-ui-type="ui5strap.Button" data-tap="a_run" data-custom-data:a_id="com_mycompany.my_app.actions.IntroCarouselNext"  data-size="Large" data-text="{i18n>LNK_NEXT_INTRO}" data-severity="Primary"></div>
 					</div>
@@ -17,14 +16,13 @@
 						<div data-sap-ui-type="ui5strap.Icon" data-icon="desktop" class="big-icon" data-trail="Space"></div>
 					</div>
 
-				</div>
-			</div>
+				
+			
 		</div>
-		<div data-sap-ui-type="ui5strap.Container" class="index-carousel-page2">
-			<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
-				<div data-sap-ui-type="ui5strap.Jumbotron">
-					<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="{i18n>INTRO2_HEADING}"></div>
-					<div data-sap-ui-type="ui5strap.Paragraph" data-text="{i18n>INTRO2_LEAD}"></div>
+		<div data-sap-ui-type="ui5strap.Container" class="index-carousel-page index-carousel-page2">
+				
+					<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="{i18n>INTRO2_HEADING}" class="intro-heading"></div>
+					<div data-sap-ui-type="ui5strap.Paragraph" data-text="{i18n>INTRO2_LEAD}" class="intro-lead"></div>
 					<div data-sap-ui-type="ui5strap.Paragraph">
 						<div data-sap-ui-type="ui5strap.Button" data-tap="a_run" data-custom-data:a_id="com_mycompany.my_app.actions.IntroCarouselNext" data-size="Large" data-text="{i18n>LNK_NEXT_INTRO}" data-severity="Primary"></div>
 					</div>
@@ -32,27 +30,26 @@
 					<div data-sap-ui-type="ui5strap.Container" class="big-icons">
 						<div data-sap-ui-type="ui5strap.Icon" data-icon="cogs" class="big-icon"></div>
 					</div>
-					
-					
-				</div>
-			</div>
+
+
+				
+			
 		</div>
 		
-		<div data-sap-ui-type="ui5strap.Container" class="index-carousel-page4">
-			<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
-				<div data-sap-ui-type="ui5strap.Jumbotron">
-					<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="{i18n>INTRO3_HEADING}"></div>
-					<div data-sap-ui-type="ui5strap.Paragraph" data-text="{i18n>INTRO3_LEAD}"></div>
+		<div data-sap-ui-type="ui5strap.Container" class="index-carousel-page index-carousel-page4">
+				
+					<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="{i18n>INTRO3_HEADING}" class="intro-heading"></div>
+					<div data-sap-ui-type="ui5strap.Paragraph" data-text="{i18n>INTRO3_LEAD}" class="intro-lead"></div>
 					<div data-sap-ui-type="ui5strap.Paragraph">
 						<div data-sap-ui-type="ui5strap.Button" data-tap="a_run" data-custom-data:a_id="com_mycompany.my_app.actions.GotoPage2" data-size="Large" data-text="{i18n>BTN_LETS_GO}" data-severity="Primary"></div>
 					</div>
-					
+
 					<div data-sap-ui-type="ui5strap.Container" class="big-icons">
 						<div data-sap-ui-type="ui5strap.Icon" data-icon="cubes" class="big-icon"></div>
 					</div>
-					
-				</div>
-			</div>
+
+				
+			
 		</div>
 	</div>
 	<div data-sap-ui-type="ui5strap.Link" class="skip-intro-link" data-href="#" data-tap="a_run" data-custom-data:a_id="com_mycompany.my_app.actions.GotoPage1">

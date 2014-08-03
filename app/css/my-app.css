@@ -13,79 +13,40 @@
  */
 
 /*
-* Intro page when using default theme
-*/
-.sapUiTheme-base .page-intro{
-	background: #b5bdc8; /* Old browsers */
-	background: -moz-radial-gradient(center, ellipse cover,  #b5bdc8 0%, #828c95 36%, #28343b 100%); /* FF3.6+ */
-	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#b5bdc8), color-stop(36%,#828c95), color-stop(100%,#28343b)); /* Chrome,Safari4+ */
-	background: -webkit-radial-gradient(center, ellipse cover,  #b5bdc8 0%,#828c95 36%,#28343b 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-radial-gradient(center, ellipse cover,  #b5bdc8 0%,#828c95 36%,#28343b 100%); /* Opera 12+ */
-	background: -ms-radial-gradient(center, ellipse cover,  #b5bdc8 0%,#828c95 36%,#28343b 100%); /* IE10+ */
-	background: radial-gradient(ellipse at center,  #b5bdc8 0%,#828c95 36%,#28343b 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#28343b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-}
-
-/*
 * Index carousel
 */
-.index-carousel > .carousel-inner > .item > div{
-	position:absolute;
-	top:0;
-	right:0;
-	left:0;
-	bottom:0;
-
-	
+.index-carousel-page{
+	padding:10px;
+	height:100%;
 }
-
-/*
-* Jumbotron inside index carousel
-*/
-.index-carousel .jumbotron{
-	background-color:transparent;
-}
-
-/*
-* Jumbotron for smaller devices
-*/
-@media (max-width: 640px){
-	.index-carousel  .jumbotron{
-		background-size: 35%;
-	}
-}
-
-
-
 
 /*
 * Heading within index carousel
 */
-.index-carousel .jumbotron > h1{
-	margin-top:0px;
+.intro-heading{
+	font-size: 20px;
+	margin-top:10px;
+}
+
+.intro-lead{
+	font-size: 16px;
 }
 
 .big-icons{
 	text-align: center;
-	font-size: 140px;
-}
-
-.big-icon{
-	
-	
+	font-size: 80px;
+	line-height:80px;
+	margin-top:40px;
 	color:#025D8C;
-	
 }
-
-
 
 /*
 * Skip intro link
 */
 .skip-intro-link{
 	position:absolute;
-	top:20px;
-	right:20px;
+	top:10px;
+	right:10px;
 	font-size: 24px;
 }
 
@@ -94,10 +55,82 @@
 */
 .next-intro-link{
 	position:absolute;
-	bottom:20px;
-	right:20px;
+	bottom:10px;
+	right:10px;
 	font-size: 120%;
 }
+
+@media (min-width: 640px) {
+	.index-carousel-page{
+		padding:15px;
+	}
+
+	.intro-heading{
+		font-size: 22px;
+		margin-top:10px;
+	}
+
+	.big-icons{
+		font-size: 110px;
+	}
+
+	.intro-lead{
+		font-size: 18px;
+	}
+
+}
+
+@media (min-width: 768px) {
+
+	.index-carousel-page{
+		padding:20px;
+	}
+
+	.intro-heading{
+		font-size: 24px;
+		margin-top:10px;
+		margin-bottom:15px;
+	}
+
+	.skip-intro-link{
+		top:20px;
+		right:20px;
+		font-size: 26px;
+	}
+
+	.intro-lead{
+		font-size: 20px;
+		margin-bottom:15px;
+	}
+
+	.big-icons{
+		font-size: 130px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.index-carousel-page{
+		padding:30px;
+	}
+
+	.intro-heading{
+		font-size: 28px;
+		margin-top:10px;
+		margin-bottom:20px;
+	}
+
+	.intro-lead{
+		font-size: 22px;
+		margin-bottom:20px;
+	}
+
+	.big-icons{
+		margin-top:80px;
+		font-size: 150px;
+	}
+}
+
+
 
 /*
 * Standard page with white gradient when using standard theme
