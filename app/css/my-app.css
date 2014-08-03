@@ -36,24 +36,14 @@
 	left:0;
 	bottom:0;
 
-	padding:20px;
+	
 }
 
 /*
 * Jumbotron inside index carousel
 */
 .index-carousel > .carousel-inner > .item > div > .jumbotron{
-	border-radius:10px;
-	position: absolute;
-	top:20px;
-	right:20px;
-	bottom:80px;
-	left:20px;
-	margin:0;
-
-	background-repeat:no-repeat;
-	background-position: center 85%;
-	background-size: 22%;
+	background-color:transparent;
 }
 
 /*
@@ -65,6 +55,9 @@
 	}
 }
 
+
+
+
 /*
 * Heading within index carousel
 */
@@ -72,45 +65,28 @@
 	margin-top:0px;
 }
 
-/*
-* Jumbotron inside index carousel page 1
-*/
-.index-carousel-page1 > .jumbotron{
-	background-image:url('../img/cat-cd.png');
+.big-icons{
+	text-align: center;
+	font-size: 140px;
+}
+
+.big-icon{
+	
+	
+	color:#025D8C;
 	
 }
 
-/*
-* Jumbotron inside index carousel page 2
-*/
-.index-carousel-page2 > .jumbotron{
-	background-image:url('../img/cat-my-pictures.png');
-	
-}
 
-/*
-* Jumbotron inside index carousel page 3
-*/
-.index-carousel-page3 > .jumbotron{
-	background-image:url('../img/cat-my-computer.png');
-	
-}
-
-/*
-* Jumbotron inside index carousel page 4
-*/
-.index-carousel-page4 > .jumbotron{
-	background-image:url('../img/cat-graphics-application.png');
-	
-}
 
 /*
 * Skip intro link
 */
 .skip-intro-link{
 	position:absolute;
-	bottom:20px;
-	left:20px;
+	top:20px;
+	right:20px;
+	font-size: 24px;
 }
 
 /*
@@ -120,6 +96,7 @@
 	position:absolute;
 	bottom:20px;
 	right:20px;
+	font-size: 120%;
 }
 
 /*
