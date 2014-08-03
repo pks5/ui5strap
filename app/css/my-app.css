@@ -42,7 +42,7 @@
 /*
 * Jumbotron inside index carousel
 */
-.index-carousel > .carousel-inner > .item > div > .jumbotron{
+.index-carousel .jumbotron{
 	background-color:transparent;
 }
 
@@ -50,7 +50,7 @@
 * Jumbotron for smaller devices
 */
 @media (max-width: 640px){
-	.index-carousel > .carousel-inner > .item > div > .jumbotron{
+	.index-carousel  .jumbotron{
 		background-size: 35%;
 	}
 }
@@ -61,7 +61,7 @@
 /*
 * Heading within index carousel
 */
-.index-carousel > .carousel-inner > .item > div > .jumbotron > h1{
+.index-carousel .jumbotron > h1{
 	margin-top:0px;
 }
 
