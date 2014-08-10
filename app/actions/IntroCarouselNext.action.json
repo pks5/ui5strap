@@ -1,7 +1,8 @@
 {
 	"a_modules" : "ui5strap.AMCallControlMethod",
 	"callControlMethod" : {
-		"controlId" : "my-app-intro--carousel-intro",
+		"controlId" : "carousel-intro",
+		"scope" : "VIEW",
 		"funcName" : "nextPage"
 	}
 }
