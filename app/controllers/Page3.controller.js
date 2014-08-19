@@ -2,8 +2,6 @@ jQuery.sap.require('ui5strap.Action');
 
 sap.ui.controller("com_mycompany.my_app.controllers.Page3", {
 
-	app : liberty.getViewer().getApp(),
-
 	switchTheme : function(oEvent){
 		var btn = oEvent.getSource();
 
@@ -24,8 +22,6 @@ sap.ui.controller("com_mycompany.my_app.controllers.Page3", {
 	},
 
 	setTheme : function(newTheme){
-		var app = this.app;
-
 		ui5strap.Action.run({
 			"parameters" : {
 				"a_modules" : "ui5strap.AMChangeTheme",

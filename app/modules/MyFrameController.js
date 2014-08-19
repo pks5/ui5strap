@@ -362,8 +362,9 @@
 	* @Override
 	*/
 	FrameControllerProto.gotoPage = function (data, callback) {
-		var _this = this;
-
+		var _this = this,
+			frameOptions = this.getConfig().getFrame();
+		
 		if(data.sidebarMenu && !data.viewName){
 			//if the data contains no viewName but a sidebarMenu only, show the first entry of the submenu
 
@@ -380,8 +381,6 @@
 
 		var viewData = this.validatePage(data);
 
-		
-
 		if(this.isBusy(viewData.target)){
 			jQuery.sap.log.debug('[MFR][' + viewData.target + '] is busy!');
 
@@ -391,26 +390,49 @@
 			jQuery.sap.log.debug('[MFR][' + viewData.target + '] gotoPage ("' + viewData.viewName + '#' + viewData.id + '")');
 		}
 
+		var navbarEnabled = frameOptions.navbar;
+		if("navbar" in viewData){
+			navbarEnabled = viewData.navbar;
+		}
+
+		var sidebarEnabled = frameOptions.sidebar;
+		if("sidebar" in viewData){
+			sidebarEnabled = viewData.sidebar;
+		}
+
+		var sidebarSmall = frameOptions.sidebarSmall;
+		if("sidebarSmall" in viewData){
+			sidebarSmall = viewData.sidebarSmall;
+		}
+
+		var sidenavEnabled = frameOptions.sidenav;
+		if("sidenav" in viewData){
+			sidenavEnabled = viewData.sidenav;
+		}
+
 		this.getNavContainer().setOptionsEnabled({
-			'navbar' : viewData.navbar,
-			'sidebar' : viewData.sidebar,
+			'navbar' :  navbarEnabled,
+			'sidebar' : sidebarEnabled,
+			'sidenav' : sidenavEnabled,
+			
 			'sidebar2nav' : viewData.sidebar2nav,
-			'sidebar2bottom' : viewData.sidebar2bottom,
-			'sidenav' : viewData.sidenav,
+			'sidebar2bottom' : sidebarSmall,
 			'sidenav-toggle' : viewData.sidenavToggle
 		});
 
-		this.setSidebarMenu(viewData.sidebarMenu);
-		
+		if("sidebarMenu" in viewData){
+			this.setSidebarMenu(viewData.sidebarMenu);
+		}
+		else if("sidebarMenu" in frameOptions){
+			this.setSidebarMenu(frameOptions.sidebarMenu);
+		}
 
 		var navContainer = this.getNavContainer();
+		
 		navContainer.setSidebar(this._sidebar);
 		navContainer.setNavbar(this._navbar);
 
 		var currentPage = this.getCurrentPage(viewData.target);
-
-
-
 		if(
 			navContainer.getDomRef() 
 			&& viewData.id 

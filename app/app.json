@@ -63,15 +63,67 @@
             }
         ],
 
-        "frames" : {
-            "default" : {
-                "module" : "com_mycompany.my_app.modules.MyFrameController",
-                "navContainer" : "ui5strap.NavContainerStandard",
-                "initialViews" : [
-                    { 
-                        "viewName" : "com_mycompany.my_app.views.Intro"
-                    }
-                ]
+        "views" : {
+            "com_mycompany.my_app.views.Intro" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-intro",
+                "styleClass" : "page-intro",
+                
+                "target" : "content",
+                "preload" : true,
+
+                "sidebar" : false
+            },
+
+            "com_mycompany.my_app.views.Page1" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page1",
+                "styleClass" : "page-white page-1",
+                
+                "target" : "content",
+                "preload" : true
+            },
+
+            "com_mycompany.my_app.views.Page2" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page2",
+                "styleClass" : "page-white page-2",
+                
+                "target" : "content",
+                "preload" : true
+            },
+
+            "com_mycompany.my_app.views.Page3" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page3",
+                "styleClass" : "page-white page-3",
+                
+                "target" : "content",
+                "preload" : true
+            },
+            
+            "com_mycompany.my_app.views.Page4" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page4",
+                "styleClass" : "page-white page-4",
+                
+                "target" : "content",
+                "preload" : true
+            },
+            
+            "com_mycompany.my_app.views.Page5" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page5",
+                "styleClass" : "page-white page-5",
+                
+                "target" : "content",
+                "preload" : true
             }
         },
 
@@ -107,77 +159,23 @@
             }
         },
 
-        "views" : {
-            "com_mycompany.my_app.views.Intro" : {
-                "id" : "my-app-intro",
-                "styleClass" : "page-intro",
-                "target" : "content",
-                "type" : "HTML",
+        "frames" : {
+            "default" : {
+                
+                "module" : "com_mycompany.my_app.modules.MyFrameController",
+                
+                "navContainer" : "ui5strap.NavContainerStandard",
+                
+                "initialViews" : [
+                    { 
+                        "viewName" : "com_mycompany.my_app.views.Intro"
+                    }
+                ],
+                
                 "sidebarMenu" : "myMenu",
-                "sidebar2bottom" : true,
-                "navbar" : false,
-                "preload" : true,
-                "sidebar" : false
-            },
+                "sidebar" : true,
+                "sidebarSmall" : true
 
-            "com_mycompany.my_app.views.Page1" : {
-                "id" : "my-app-page1",
-                "styleClass" : "page-white page-1",
-                "target" : "content",
-                "type" : "HTML",
-                "sidebarMenu" : "myMenu",
-                "sidebar2bottom" : true,
-                "navbar" : false,
-                "sidebar" : true,
-                "preload" : true
-            },
-
-            "com_mycompany.my_app.views.Page2" : {
-                "id" : "my-app-page2",
-                "styleClass" : "page-white page-2",
-                "target" : "content",
-                "type" : "HTML",
-                "sidebarMenu" : "myMenu",
-                "sidebar2bottom" : true,
-                "navbar" : false,
-                "sidebar" : true,
-                "preload" : true
-            },
-
-            "com_mycompany.my_app.views.Page3" : {
-                "id" : "my-app-page3",
-                "styleClass" : "page-white page-3",
-                "target" : "content",
-                "type" : "HTML",
-                "sidebarMenu" : "myMenu",
-                "sidebar2bottom" : true,
-                "navbar" : false,
-                "sidebar" : true,
-                "preload" : true
-            },
-            
-            "com_mycompany.my_app.views.Page4" : {
-                "id" : "my-app-page4",
-                "styleClass" : "page-white page-4",
-                "target" : "content",
-                "type" : "HTML",
-                "sidebarMenu" : "myMenu",
-                "sidebar2bottom" : true,
-                "navbar" : false,
-                "sidebar" : true,
-                "preload" : true
-            },
-            
-            "com_mycompany.my_app.views.Page5" : {
-                "id" : "my-app-page5",
-                "styleClass" : "page-white page-5",
-                "target" : "content",
-                "type" : "HTML",
-                "sidebarMenu" : "myMenu",
-                "sidebar2bottom" : true,
-                "navbar" : false,
-                "sidebar" : true,
-                "preload" : true
             }
         }
 }
