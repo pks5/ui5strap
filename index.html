@@ -50,22 +50,27 @@
 				Ui5Strap requires JavaScript to be enabled.
 			</div>
 		</noscript>
+
+		<!-- Cordova Library -->
+		<!-- Uncomment if you want to use ui5strap within a cordova container -->
+		<!-- <script type="text/javascript" src="cordova.js"></script> -->
 		
 		<!-- OpenUI5 Library -->
 		<!-- Get it from http://sap.github.io/openui5/ and put it into the directory structure -->
 		<script id="sap-ui-bootstrap" src="resources/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
 		
-		<!-- Liberty Lite -->
+		<!-- Ui5Strap App -->
 		<script id="ui5strap-bootstrap" src="lib/ui5strap/ui5strap-app.js"></script>
 		
 		<!-- Initialize the app -->
 		<script>
-			liberty.init(
+			ui5os.init(
 				{ 
 					"pathToServletRoot" : '.',
+					"cordova" : false,
 					"app" : {
 						"type" : "URI",
-						"uriParam" : "sapp",
+						"uriParam" : "app",
 						"required" : false,
 						"defaultValue" : "./app/app.json"
 					}
