@@ -38,15 +38,12 @@
             },
             {
                 "package" : "my_lib",
-                "location" : "./lib/my_lib/"
+                "location" : "./lib/my_lib/",
+                "preload" : true
             }
         ],
 
         "css" : [
-            {
-                "package" : "my_lib",
-                "src" : "css/clock.css"
-            },
             "css/my-app.css"
         ],
 
