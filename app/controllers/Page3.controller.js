@@ -66,11 +66,11 @@ sap.ui.controller("com_mycompany.my_app.controllers.Page3", {
 		var frame = this.getView().getViewData().app.getFrame();
 
 		var options = {
-			"sidebar2bottom" : false,
-			"sidebar2nav" : false
+			"sidebar-small" : false,
+			"sidebar-2nav" : false
 		};
 
-		if(text !== 'none'){
+		if(text !== 'default'){
 			options[text] = true;
 		}
 

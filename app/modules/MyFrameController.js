@@ -415,8 +415,8 @@
 			'sidebar' : sidebarEnabled,
 			'sidenav' : sidenavEnabled,
 			
-			'sidebar2nav' : viewData.sidebar2nav,
-			'sidebar2bottom' : sidebarSmall,
+			'sidebar-2nav' : viewData.sidebar2nav,
+			'sidebar-small' : sidebarSmall,
 			'sidenav-toggle' : viewData.sidenavToggle
 		});
 
