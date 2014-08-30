@@ -17,7 +17,7 @@ Documentation is online available at http://ui5strap.com/docs/
 EXAMPLES
 --------
 
-See the example application in action at http://ui5strap.com/examples.html
+See Ui5Strap in action at http://ui5strap.com/examples.html
 
 LICENSE
 -------
