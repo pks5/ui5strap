@@ -1,6 +1,6 @@
 jQuery.sap.require('ui5strap.Action');
 
-sap.ui.controller("com_mycompany.my_app.controllers.Page3", {
+ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 
 	switchTheme : function(oEvent){
 		var btn = oEvent.getSource();
