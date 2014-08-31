@@ -1,0 +1,14 @@
+{
+	"a_modules" : ["ui5strap.AMCallControlMethod", "ui5strap.AMChangeTheme"],
+
+	"callControlMethod" : {
+		"scope" : "SELECTION",
+		"funcName" : "data",
+		"funcArgs" : ["theme"],
+		"tgtParam" : "parameters.changeTheme.theme"
+	},
+
+	"changeTheme" : {
+	
+	}
+}

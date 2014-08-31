@@ -30,10 +30,12 @@
 							<!-- Small buttons -->
 							<div data-sap-ui-type="ui5strap.Paragraph" data-text="You can easily change the app theme programmatically by calling the AMChangeTheme Action from anywhere in your code. Press one of the following buttons to test."></div>
 							<div data-sap-ui-type="ui5strap.Paragraph">
-								<div data-sap-ui-type="ui5strap.Button" data-text="base" data-custom-data:theme="base" data-tap="switchTheme"></div>
-								<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="ui5strap_cyborg" data-custom-data:theme="ui5strap_cyborg" data-tap="switchTheme"></div>
-								<div data-sap-ui-type="ui5strap.Button" data-severity="Info" data-text="ui5strap_flatly" data-custom-data:theme="ui5strap_flatly" data-tap="switchTheme"></div>
-								<div data-sap-ui-type="ui5strap.Button" id="defaultThemeButton" data-selected="true" data-severity="Success" data-text="ui5strap_default" data-custom-data:theme="ui5strap_default" data-tap="switchTheme"></div>
+								<div data-sap-ui-type="ui5strap.ButtonGroup" data-select="a_run" data-custom-data:a_id="com_mycompany.my_app.actions.ChangeTheme" data-selection-mode="Single">
+									<div data-sap-ui-type="ui5strap.Button" data-text="base" data-custom-data:theme="base"></div>
+									<div data-sap-ui-type="ui5strap.Button" data-severity="Success" data-text="ui5strap_cyborg" data-custom-data:theme="ui5strap_cyborg"></div>
+									<div data-sap-ui-type="ui5strap.Button" data-severity="Warning" data-text="ui5strap_flatly" data-custom-data:theme="ui5strap_flatly"></div>
+									<div data-sap-ui-type="ui5strap.Button" id="defaultThemeButton" data-selected="true" data-severity="Primary" data-text="ui5strap_default" data-custom-data:theme="ui5strap_default" ></div>
+								</div>
 							</div>
 
 							<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Change Permanently"></div>

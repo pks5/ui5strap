@@ -2,38 +2,6 @@ jQuery.sap.require('ui5strap.Action');
 
 ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 
-	switchTheme : function(oEvent){
-		var btn = oEvent.getSource();
-
-		if(!this.activeButton){
-			this.activeButton = this.getView().byId('defaultThemeButton');
-		}
-
-		if(btn !== this.activeButton){
-			this.activeButton.setSelected(false);
-			
-			btn.setSelected(true);
-			
-			this.activeButton = btn;
-
-			this.setTheme(btn.getCustomData()[0].getValue('theme'));
-		}
-		
-	},
-
-	setTheme : function(newTheme){
-		ui5strap.Action.run({
-			"parameters" : {
-				"a_modules" : "ui5strap.AMChangeTheme",
-				"changeTheme" : {
-					theme : newTheme
-				}
-			},
-			"app" : this.getView().getViewData().app,
-			"controller" : this
-		});
-	},
-
 	toggleSidebar : function(oEvent){
 		var srcButton = oEvent.getSource();
 
