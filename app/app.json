@@ -3,7 +3,7 @@
             "name" : "Ui5Strap Boilerplate",
             "package" : "com_mycompany.my_app",
             "title" : "Ui5Strap",
-            "logLevel" : 5,
+            "logLevel" : 0,
             "theme" : "ui5strap_default"
         },
 
