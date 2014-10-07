@@ -490,7 +490,7 @@
 		}
 
 		if (viewData.writeHistory) {
-			jQuery.sap.history.addHistory(viewData.target, data, viewData.bookmarkable);
+			jQuery.sap.history.addHistory(viewData.target, data, viewData.bookmarkable, viewData.virtual);
 		}
 
 		return true;
