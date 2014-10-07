@@ -229,22 +229,26 @@
 			return false;
 		}
 
-		jQuery.sap.require("jquery.sap.history");
-
 		jQuery.sap.history({
 			routes : [
 				{
 					path : "content",
 					handler : function (params, navType) {
-						
-						params.writeHistory = false;
-						_this.gotoPage(params);
-					
+						if(_this.initialized){
+							params.writeHistory = false;
+							_this.gotoPage(params);
+						}
+						else{
+							_this.onInitialize = function(){
+								params.writeHistory = true;
+								_this.gotoPage(params);
+							};
+						}
 					}
 				}
 			],
 			defaultHandler : function (navType) {
-//alert('test');
+
 				if(_this.initialized){
 					_this.showInitialContent();
 				}
@@ -486,8 +490,7 @@
 		}
 
 		if (viewData.writeHistory) {
-			var bookmarkable = false;
-			jQuery.sap.history.addHistory(viewData.target, data, bookmarkable);
+			jQuery.sap.history.addHistory(viewData.target, data, viewData.bookmarkable);
 		}
 
 		return true;
