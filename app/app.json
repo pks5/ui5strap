@@ -3,6 +3,7 @@
             "name" : "Ui5Strap Boilerplate",
             "package" : "com_mycompany.my_app",
             "title" : "Ui5Strap",
+            "history" : true,
             "logLevel" : 0,
             "theme" : "ui5strap_default"
         },
@@ -138,27 +139,32 @@
                         {
                             "viewName" : "com_mycompany.my_app.views.Page1",
                             "label" : "i18n>MENU_PAGE1",
-                            "icon" : "home"
+                            "icon" : "home",
+                            "writeHistory" : true
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.Page2",
                             "label" : "i18n>MENU_PAGE2",
-                            "icon" : "download"
+                            "icon" : "download",
+                            "writeHistory" : true
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.Page3",
                             "label" : "i18n>MENU_PAGE3",
-                            "icon" : "wrench"
+                            "icon" : "wrench",
+                            "writeHistory" : true
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.Page4",
                             "label" : "i18n>MENU_PAGE4",
-                            "icon" : "question-circle"
+                            "icon" : "question-circle",
+                            "writeHistory" : true
                         },
                         {
                             "viewName" : "com_mycompany.my_app.views.Page5",
                             "label" : "i18n>MENU_PAGE5",
-                            "icon" : "copy"
+                            "icon" : "copy",
+                            "writeHistory" : true
                         }
                 ]
             }

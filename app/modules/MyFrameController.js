@@ -222,6 +222,35 @@
 		_createPrivateProperties(this);
 	};
 
+	FrameControllerProto.initHistory = function(){
+		var _this = this;
+
+		if(!this.getConfig().data.app.history){
+			return false;
+		}
+
+		jQuery.sap.require("jquery.sap.history");
+
+		jQuery.sap.history({
+			routes : [
+				{
+					path : "content",
+					handler : function (params, navType) {
+						
+						params.writeHistory = false;
+						_this.gotoPage(params);
+					
+					}
+				}
+			],
+			defaultHandler : function (navType) {
+
+				_this.showInitialContent();
+		
+			}
+		});
+	};
+
 	/*
 	*
 	* Returns the reference to the Nav Control within the navbar
@@ -452,6 +481,11 @@
 		}
 		else{
 			this.toPage(viewData, callback);
+		}
+
+		if (viewData.writeHistory) {
+			var bookmarkable = false;
+			jQuery.sap.history.addHistory(viewData.target, data, bookmarkable);
 		}
 
 		return true;
