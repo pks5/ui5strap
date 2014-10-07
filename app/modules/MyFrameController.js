@@ -244,9 +244,11 @@
 				}
 			],
 			defaultHandler : function (navType) {
+//alert('test');
+				if(_this.initialized){
+					_this.showInitialContent();
+				}
 
-				_this.showInitialContent();
-		
 			}
 		});
 	};
