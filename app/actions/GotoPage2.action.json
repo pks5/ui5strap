@@ -3,6 +3,7 @@
 	"gotoPage" : {
 		"viewName" : "com_mycompany.my_app.views.Page2",
 		"transition" : "transition-slide",
-		"writeHistory" : true
+		"writeHistory" : true,
+		"bookmarkable" : false
 	}
 }
