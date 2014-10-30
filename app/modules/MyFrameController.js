@@ -99,20 +99,21 @@
 			navBar.setBrand(brand);
 
 			//Main menu
-			var navLeft = new ui5strap.Nav();
-			navLeft.setAlign(ui5strap.Alignment.NavBarLeft);
+			var navLeft = new ui5strap.Nav(),
+				menu = _this.getConfig().getMenuData(frameOptions.navbarMenu);
 			
-			var menu = _this.getConfig().getMenuData(frameOptions.navbarMenu);
 			if(menu){
 				//If a navbarMenu is specified in frameOptions, create the nav menu from it
 				for (var i = 0; i < menu.items.length; i++){
-					var menuPage = menu.items[i];
+					var menuPage = menu.items[i],
+						navItem = new ui5strap.ListItem(),
+						navItemLink = new ui5strap.Link();
 					
-					var navItem = new ui5strap.ListItem();
-					navItem.data(menuPage);
-					var navItemLink = new ui5strap.Link();
 					navItemLink.bindProperty('text', {path : menuPage.label});
+					
 					navItem.addContent(navItemLink);
+					
+					navItem.data(menuPage);
 					navLeft.addItems(navItem);
 				}
 			}
@@ -124,14 +125,16 @@
 
 				navBar.setCollapsed(true);
 			});
+			navLeft.setAlign(ui5strap.Alignment.NavBarLeft);
 
 			navBar.addCollapse(navLeft);
 			_this._navNavbar = navLeft;
 
 			//Language select buttons
-			var navButtons = new ui5strap.ButtonGroup({align : ui5strap.Alignment.NavBarRight});
-			var buttonDe = new ui5strap.Button({'text' : "DE" });
-			var buttonEn = new ui5strap.Button({'text' : "EN" });
+			var navButtons = new ui5strap.ButtonGroup({align : ui5strap.Alignment.NavBarRight}),
+				buttonDe = new ui5strap.Button({'text' : "DE" }),
+				buttonEn = new ui5strap.Button({'text' : "EN" });
+			
 			navButtons.addButtons(buttonEn);
 			navButtons.addButtons(buttonDe);
 			navBar.addCollapse(navButtons);
@@ -241,6 +244,7 @@
 						else{
 							_this.onInitialize = function(){
 								params.writeHistory = true;
+								params.transition = 'none';
 								_this.gotoPage(params);
 							};
 						}
@@ -487,10 +491,6 @@
 		}
 		else{
 			this.toPage(viewData, callback);
-		}
-
-		if (viewData.writeHistory) {
-			jQuery.sap.history.addHistory(viewData.target, data, viewData.bookmarkable, viewData.virtual);
 		}
 
 		return true;
