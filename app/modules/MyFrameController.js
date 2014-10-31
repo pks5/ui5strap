@@ -485,7 +485,7 @@
 		this.updateMenu(viewData.viewName);
 
 		if(viewData.showLoader){
-			liberty.getViewer().getApp().setLoaderVisible(true, function(){
+			ui5os.getViewer().getApp().setLoaderVisible(true, function(){
 				_this.toPage(viewData, callback);
 			})
 		}

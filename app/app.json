@@ -70,6 +70,8 @@
                 
                 "id" : "my-app-intro",
                 "styleClass" : "page-intro",
+
+                "documentTitle" : "i18n>INTRO1_HEADING",
                 
                 "target" : "content",
                 "preload" : true,
@@ -82,6 +84,8 @@
                 
                 "id" : "my-app-page1",
                 "styleClass" : "page-white page-1",
+
+                "documentTitle" : "i18n>PAGE1_HEADING",
                 
                 "target" : "content",
                 "preload" : true
@@ -92,6 +96,8 @@
                 
                 "id" : "my-app-page2",
                 "styleClass" : "page-white page-2",
+
+                "documentTitle" : "i18n>INSTALL_HEADING",
                 
                 "target" : "content",
                 "preload" : true
@@ -102,6 +108,8 @@
                 
                 "id" : "my-app-page3",
                 "styleClass" : "page-white page-3",
+
+                "documentTitle" : "i18n>PAGE3_HEADING",
                 
                 "target" : "content",
                 "preload" : true
@@ -112,6 +120,8 @@
                 
                 "id" : "my-app-page4",
                 "styleClass" : "page-white page-4",
+
+                "documentTitle" : "i18n>PAGE4_HEADING",
                 
                 "target" : "content",
                 "preload" : true
@@ -122,6 +132,8 @@
                 
                 "id" : "my-app-page5",
                 "styleClass" : "page-white page-5",
+
+                "documentTitle" : "i18n>PAGE5_HEADING",
                 
                 "target" : "content",
                 "preload" : true
