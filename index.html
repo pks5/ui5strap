@@ -41,7 +41,8 @@
 
 		<!-- Splash screen -->
 		<div id="ui5strap-splash">
-			<img src="./app/img/splashscreen-image.png" width="600" height="600" />
+			<img src="./app/img/splashscreen-image.png" id="ui5strap-splash-image" width="600" height="600" />
+			<img src="./app/img/splashscreen-loader.gif" id="ui5strap-splash-loader" width="32" height="32" />
 		</div>
 
 		<!-- Fatal error -->
@@ -62,9 +63,17 @@
 		<!-- Get it from http://sap.github.io/openui5/ and put it into the directory structure -->
 		<script id="sap-ui-bootstrap" src="resources/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
 		
-		<!-- Ui5Strap App -->
-		<script id="ui5strap-bootstrap" src="lib/ui5strap/ui5strap-app.js"></script>
+		<!-- Set the UI5 module path for ui5strap -->
+		<script>
+			jQuery.sap.registerModulePath("ui5strap", "lib/ui5strap/");
+		</script>
+
+		<!-- Load the whole ui5strap library at once (faster) -->
+		<script id="ui5strap-bootstrap" src="lib/ui5strap/ui5strap-all.js"></script>
 		
+		<!-- Only load the startup script. All other files will be loaded on demand. -->
+		<!-- <script id="ui5strap-bootstrap" src="lib/ui5strap/ui5strap-app.js"></script> -->
+
 		<!-- Initialize the app -->
 		<script>
 			ui5os.init(

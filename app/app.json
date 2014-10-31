@@ -4,7 +4,7 @@
             "package" : "com_mycompany.my_app",
             "title" : "Ui5Strap",
             "history" : true,
-            "logLevel" : 0,
+            "logLevel" : 5,
             "theme" : "ui5strap_default"
         },
 
@@ -31,11 +31,6 @@
         ],
 
         "libraries" : [ 
-            {
-                "package" : "ui5strap",
-                "location" : "./lib/ui5strap/",
-                "preload" : true
-            },
             {
                 "package" : "my_lib",
                 "location" : "./lib/my_lib/",

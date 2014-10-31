@@ -43,4 +43,6 @@ Thumbs.db
 
 incomplete
 resources
-
+package.json
+Gruntfile.js
+node_modules
