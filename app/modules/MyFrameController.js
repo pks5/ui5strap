@@ -242,11 +242,9 @@
 							_this.gotoPage(params);
 						}
 						else{
-							_this.onInitialize = function(){
-								params.writeHistory = true;
-								params.transition = 'none';
-								_this.gotoPage(params);
-							};
+							params.writeHistory = true;
+							params.transition = 'none';
+							_this.oTargets["content"] = params;
 						}
 					}
 				}
