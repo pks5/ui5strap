@@ -1,6 +1,0 @@
-/*!
- * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP AG or an SAP affiliate company. 
- * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- */
-sap.ui.define(['jquery.sap.global','./Element'],function(q,E){"use strict";var P=function(){this.getMetadata().addPublicMethods(["getParentPopup","isInPopup","getParentPopupId","addToPopup","removeFromPopup"]);this.isInPopup=function(t){var p=this.getParentPopup(t);return p&&p.length>0};this.getParentPopup=function(t){var T=t?t:this;var $=q(T instanceof sap.ui.core.Element?T.getDomRef():T);return $.closest("[data-sap-ui-popup]")};this.getParentPopupId=function(t){var p=this.getParentPopup(t);return p.attr("data-sap-ui-popup")};this.addChildToPopup=function(p,c){var e="sap.ui.core.Popup.addFocusableContent-"+p;sap.ui.getCore().getEventBus().publish("sap.ui",e,{id:c})};this.removeChildFromPopup=function(p){if(!p){p=this.getPopupId()}var e="sap.ui.core.Popup.removeFocusableContent-"+p;sap.ui.getCore().getEventBus().publish("sap.ui",e,{id:this.getId()})};this.closePopup=function(p){var e="sap.ui.core.Popup.closePopup-"+p;sap.ui.getCore().getEventBus().publish("sap.ui",e)};this.increaseZIndex=function(p,i){var e="sap.ui.core.Popup.increaseZIndex-"+p;sap.ui.getCore().getEventBus().publish("sap.ui",e,{isFromParentPopup:i?i:false})}};return P},true);
