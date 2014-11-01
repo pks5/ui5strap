@@ -1,0 +1,55 @@
+{
+  "modules" : [
+    {
+      "name" : "sap/ui/suite/QuickViewUtils.js",
+      "size" : 6116,
+      "compressedSize" : 3824,
+      "required" : ["jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/suite/TaskCircle.js",
+      "description" : "Provides control sap.ui.suite.TaskCircle.",
+      "size" : 12226,
+      "compressedSize" : 1377,
+      "required" : ["sap/ui/suite/library.js", "sap/ui/core/Control.js", "sap/ui/core/EnabledPropagator.js", "jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/suite/TaskCircleRenderer.js",
+      "size" : 3173,
+      "compressedSize" : 1615,
+      "required" : ["jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/suite/VerticalProgressIndicator.js",
+      "description" : "Provides control sap.ui.suite.VerticalProgressIndicator.",
+      "size" : 11795,
+      "compressedSize" : 1678,
+      "required" : ["sap/ui/suite/library.js", "sap/ui/core/Control.js", "sap/ui/core/EnabledPropagator.js", "jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/suite/VerticalProgressIndicatorRenderer.js",
+      "size" : 2188,
+      "compressedSize" : 1086,
+      "required" : ["jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/suite/library.js",
+      "description" : "Initialization Code and shared classes of library sap.ui.suite (1.22.10)",
+      "size" : 2351,
+      "compressedSize" : 705,
+      "required" : ["sap/ui/core/Core.js", "sap/ui/core/library.js", "jquery.sap.global.js"],
+      "includes" : ["sap/ui/suite/TaskCircleColor.js"]
+    },
+    {
+      "name" : "sap/ui/suite/library.properties",
+      "size" : 289,
+      "required" : [],
+      "includes" : []
+    }
+  ]
+}

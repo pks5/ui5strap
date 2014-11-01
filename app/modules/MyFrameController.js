@@ -466,8 +466,8 @@
 
 		var navContainer = this.getNavContainer();
 		
-		navContainer.setSidebar(this._sidebar);
-		navContainer.setNavbar(this._navbar);
+		navContainer.toPage(this._sidebar, 'sidebar');
+		navContainer.toPage(this._navbar, 'navbar');
 
 		var currentPage = this.getCurrentPage(viewData.target);
 		if(
