@@ -201,10 +201,6 @@
 
 			_navContainer = new NavContainerConstructor();
 
-			//_navContainer.setSidebar(this._sidebar);
-			//_navContainer.setNavbar(this._navbar);
-
-
 			return _navContainer;
 		};
 
