@@ -149,7 +149,7 @@
 				else if(buttonDe === srcButton){
 					configuration.setLanguage('de-de');
 				}
-				
+				//alert(configuration.getLanguage());
 			});
 
 			if(jQuery.sap.startsWithIgnoreCase(configuration.getLanguage(), 'de')){
