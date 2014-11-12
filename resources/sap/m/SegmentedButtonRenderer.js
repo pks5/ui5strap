@@ -1,0 +1,7 @@
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ */
+jQuery.sap.declare("sap.m.SegmentedButtonRenderer");sap.m.SegmentedButtonRenderer={};
+sap.m.SegmentedButtonRenderer.render=function(r,c){var b=c.getButtons(),s=c.getSelectedButton(),I,t,B,i=0;if(!c.getVisible()){return}r.write("<ul");r.addClass("sapMSegB");r.addClass("sapMSegBHide");r.writeClasses();if(c.getWidth()&&c.getWidth()!==''){r.addStyle('width',c.getWidth())}r.writeStyles();r.writeControlData(c);var t=c.getTooltip_AsString();if(t){r.writeAttributeEscaped("title",t)}r.write(">");for(;i<b.length;i++){I=b[i];r.write("<li");r.writeControlData(I);r.addClass("sapMSegBBtn");if(s===I.getId()){r.addClass("sapMSegBBtnSel")}if(!I.getEnabled()){r.addClass("sapMSegBBtnDis")}t=I.getTooltip_AsString();if(t){r.writeAttributeEscaped("title",t)}r.writeAttribute("tabindex",I.getEnabled()?"0":"-1");r.writeClasses();var B=I.getWidth();if(B){r.addStyle('width',B);r.writeStyles()}r.write('>');if(I.getIcon()===''&&I.getText()!==''){r.writeEscaped(I.getText(),false)}else if(I.getIcon()!==''&&I.getText()===''){var o=I._getImage((I.getId()+"-img"),I.getIcon());o.onload=function(){sap.m.Image.prototype.onload.call(o);window.setTimeout(function(){c._fCalcBtnWidth()},20)};r.renderControl(o)}else if(I.getIcon()!==''&&I.getText()!==''){jQuery.sap.log.error("SEGMENTED: "+I.getId()+": Icon and Label is not allowed")}r.write("</li>")}r.write("</ul>")};

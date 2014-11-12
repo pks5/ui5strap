@@ -1,0 +1,70 @@
+/* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
+
+
+/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ * 
+ */@import "../base/library.less";
+@import (less) "global.css";
+/* START "shared.css" */
+/* Shared CSS for 'sap_hcb' theme */
+
+:focus {
+	outline-width: 3px;
+	outline-style: solid;
+	outline-color: invert;
+}
+
+html[data-sap-ui-browser^="ff"] :focus {
+	outline-color: #ffffff;
+}
+
+html[data-sap-ui-browser^="cr"] :focus {
+	outline-color: #ffffff;
+} 
+/* END "shared.css" */
+
+
+/* START "BrowserScrollbar.css" */
+
+.sapUiBody {
+	scrollbar-base-color:#666666;
+	scrollbar-face-color:#000000;
+	scrollbar-3dlight-color:#FFFFFF;
+	scrollbar-arrow-color:#FFFFFF;
+	scrollbar-darkshadow-color:#666666;
+	scrollbar-shadow-color:#FFFFFF;
+	scrollbar-track-color:#666666;
+	scrollbar-highlight-color:#000000;
+}
+/* END "BrowserScrollbar.css" */
+
+/* START "BusyIndicator.css" */
+.sapUiBusy {
+  background-image: none;
+}
+
+.sapUiBusy:after {
+	content: url(img/Busy.gif);
+}
+/* END "BusyIndicator.css" */
+
+/* START "LocalBusyIndicator.css" */
+@sapUiLocalBusyIndicatorBoxColor: @sapUiBase;
+@sapUiLocalBusyIndicatorBoxColorActive: @sapUiBaseBG;
+
+@sapUiLocalBusyIndicatorBoxTransitionDuration: ~"125ms";
+/* END "LocalBusyIndicator.css" */
+
+/* START "Shadow.css" */
+
+/* HCB */
+
+.sapUiShd {
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}
+/* END "Shadow.css" */
+

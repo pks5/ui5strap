@@ -1,0 +1,496 @@
+/* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
+
+
+/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ * 
+ */@import "../../../../../../Base/baseLib/baseTheme/base.less"; /* ORIGINAL IMPORT PATH: "base.less" */
+
+@import (less) "global.css";
+/* START "shared.css" */
+/* Shared CSS for 'base' theme */
+
+.sapUiThemeDesignerCustomCssCheck() when(@sapUiThemeDesignerCustomCss = true){
+	visible:true;
+}
+.sapUiThemeDesignerCustomCssCheck() when not(@sapUiThemeDesignerCustomCss = true){
+}
+
+.sapUiThemeDesignerCustomCss{
+	.sapUiThemeDesignerCustomCssCheck;
+}
+
+.sapUiBody {
+	background-color: @sapUiExtraLightBG;
+	color: @sapUiText;
+	font-family: @sapUiFontFamily;
+	font-size: @sapUiFontSize;
+	-webkit-tap-highlight-color: rgba(0,0,0,0); /* to prevent touch highlight on the entire body */
+}
+
+.sapUiArea {
+	background-color: @sapUiExtraLightBG;
+	color: @sapUiText;
+	font-family: @sapUiFontFamily;
+	font-size: @sapUiFontSize;
+}
+
+/* 
+ * used for static (Core) and hidden (HTML) area 
+ * (TODO: think about renaming static area also to hidden since static is not
+ *        required for newer browsers anymore => position: static) 
+ */
+.sapUiHidden {
+	position: absolute;
+	visibility: hidden;
+	top: -10000px;
+	background-color: @sapUiExtraLightBG; /* repeat the body style in case the application adapts it */
+	color: @sapUiText;
+	font-family: @sapUiFontFamily;
+	font-size: @sapUiFontSize;
+}
+
+.sapUiCorePlaintext {
+	font-family: @sapUiFontFamily;
+	font-size: @sapUiFontSize;
+	line-height: @sapUiLineHeight;
+}
+
+.sapUiCoreDefaultFont {
+	font-family: @sapUiFontFamily;
+	font-size: @sapUiFontSize;
+}
+
+.sapUiCoreDefaultCursor {
+	cursor: default;
+}
+
+.sapUiBLy {
+	background-color: #CCCCCC;
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	position: fixed;
+	outline: 0 none;
+}
+
+.sapUiBLyBack{
+	/* to prevent HTML page from scrolling if blocked */
+	overflow: hidden;
+}
+
+.sapUiPopupShield{
+	position: absolute;
+}
+
+[data-sap-ui-type] {
+	visibility:hidden;
+}
+
+/* CSS for windows 8 combi devices */
+.sapUiBody {
+	/* disable pinch zooming */
+	content-zooming: none;
+	-ms-content-zooming: none;
+}
+
+@media (max-width:599px) {
+	.sapUiHideOnPhone {
+		display : none !important;
+	}
+	.sapUiVisibleOnlyOnTablet {
+		display : none !important;
+	}
+	.sapUiVisibleOnlyOnDesktop {
+		display : none !important;
+	}
+}
+
+@media (min-width:600px) and (max-width:1023px) {
+	.sapUiHideOnTablet {
+		display : none !important;
+	}
+	.sapUiVisibleOnlyOnDesktop {
+		display : none !important;
+	}
+	.sapUiVisibleOnlyOnPhone {
+		display : none !important;
+	}
+}
+
+@media (min-width:1024px) {
+	.sapUiHideOnDesktop {
+		display : none !important;
+	}
+	.sapUiVisibleOnlyOnTablet {
+		display : none !important;
+	}
+	.sapUiVisibleOnlyOnPhone {
+		display : none !important;
+	}
+}
+
+.sapUiOverlay {
+	background-color: fade(@sapUiExtraLightBG, 80%);
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+/* END "shared.css" */
+
+
+/* START "BlindLayer.css" */
+.sapUiBliLy {
+	position: absolute;
+	display: inline-block;
+}
+
+.sapUiBliLy > iframe {
+	background-color: transparent;
+	border: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	opacity: 0.01;
+	filter: alpha(opacity=1);
+	width: 100%;
+	height: 100%;
+}
+
+/* END "BlindLayer.css" */
+
+/* START "BusyIndicator.css" */
+.sapUiBusy {
+	background-image: url(img/Busy.gif);
+	display: block;
+	width: 48px;
+	height: 48px;
+	outline: none;
+	cursor: wait;
+	
+	top: 0 !important;
+}
+
+.sapUiBlyBusy {
+	cursor: wait;
+}
+/* END "BusyIndicator.css" */
+
+/* START "Icon.css" */
+
+/* ============================================= */
+/* CSS for control sap.ui.core/Icon.control      */
+/* ============================================= */
+
+.sapUiIcon {
+	text-align: center;
+	display: inline-block;
+	vertical-align: baseline;
+}
+
+.sapUiIconPointer {
+	cursor: pointer;
+}
+
+html[dir=rtl] .sapUiIconMirrorInRTL:not(.sapUiIconSuppressMirrorInRTL) {
+	transform: scale(-1,1);
+	-ms-transform: scale(-1,1); /* IE 9 */
+	-webkit-transform: scale(-1,1); /* Safari and Chrome */
+}
+
+/* IE 8 */
+html[dir=rtl][data-sap-ui-browser*='ie8'] .sapUiIconMirrorInRTL {
+	filter: FlipH;
+	-ms-filter: "FlipH";
+}
+
+html[dir=rtl][data-sap-ui-browser*='ie8'] .sapUiIconMirrorInRTL.sapUiIconSuppressMirrorInRTL {
+	filter: none;
+	-ms-filter: "none";
+}
+
+.sapUiIcon:before {
+	content: attr(data-sap-ui-icon-content);
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* END "Icon.css" */
+
+/* START "LocalBusyIndicator.css" */
+@sapUiLocalBusyIndicatorBG: fade(@sapUiExtraLightBG, 72%); 
+@sapUiLocalBusyIndicatorBG_IE: @sapUiExtraLightBG;
+@sapUiLocalBusyIndicatorBoxSize: 8px;
+
+@sapUiLocalBusyIndicatorBoxColor: @sapUiMediumBG;
+@sapUiLocalBusyIndicatorBoxColorActive: @sapUiBlackBG;
+@sapUiLocalBusyIndicatorBoxTransitionDuration: ~"380ms";
+
+.sapUiLocalBusyIndicator {
+	background-color: @sapUiLocalBusyIndicatorBG;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+HTML[data-sap-ui-browser='ie8'] .sapUiLocalBusyIndicator {
+	background-color: @sapUiLocalBusyIndicatorBG_IE;
+}
+
+.sapUiLocalBusyIndicatorAnimation {
+	position: absolute;
+	width: 50px;
+	top: 50%;
+	left: 50%;
+	margin: -(@sapUiLocalBusyIndicatorBoxSize / 2) 0 0 -(@sapUiLocalBusyIndicatorBoxSize * 5 / 2);
+}
+
+.sapUiLocalBusyIndicatorBox {
+	width: @sapUiLocalBusyIndicatorBoxSize;
+	height : @sapUiLocalBusyIndicatorBoxSize;
+	background-color: @sapUiLocalBusyIndicatorBoxColor;
+	float: left;
+	display: block;
+	margin-left: @sapUiLocalBusyIndicatorBoxSize;
+	
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	
+	-moz-transition-property: background-color;
+	-moz-transition-duration: @sapUiLocalBusyIndicatorBoxTransitionDuration;
+	-moz-transition-timing-function: ease-in;
+	
+	-webkit-transition-property: background-color;
+	-webkit-transition-duration: @sapUiLocalBusyIndicatorBoxTransitionDuration;
+	-webkit-transition-timing-function: ease-in;
+	
+	transition-property: background-color;
+	transition-duration: @sapUiLocalBusyIndicatorBoxTransitionDuration;
+	transition-timing-function: ease-in;
+}
+
+.sapUiLocalBusyIndicatorBox.active {
+	background-color: @sapUiLocalBusyIndicatorBoxColorActive;
+}
+
+.sapUiLocalBusyIndicatorBox:first-child {
+	margin-left: 0; 
+}
+/* END "LocalBusyIndicator.css" */
+
+/* START "media.css" */
+/************ Media queries for screen sizes ************
+
+Usage:
+
+@media (@sapUiMediaQuery_Std_Desktop) {
+      .test {
+            width: 50em;
+      }
+}
+
+*********************************************************/
+
+
+/* see sap.ui.Device.media.RANGESETS.SAP_STANDARD*/
+@sapUiMediaQuery_Std_Desktop:  ~"screen and (min-width : 1024px)";
+@sapUiMediaQuery_Std_Tablet:  ~"screen and (min-width : 600px) and (max-width : 1023px)";
+@sapUiMediaQuery_Std_Phone:  ~"screen and (max-width : 599px)";
+
+/* see sap.ui.Device.media.RANGESETS.SAP_3STEPS*/
+@sapUiMediaQuery_3Step_L:  ~"screen and (min-width : 960px)";
+@sapUiMediaQuery_3Step_M:  ~"screen and (min-width : 520px) and (max-width : 959px)";
+@sapUiMediaQuery_3Step_S:  ~"screen and (max-width : 519px)";
+
+/* see sap.ui.Device.media.RANGESETS.SAP_4STEPS*/
+@sapUiMediaQuery_4Step_XL:  ~"screen and (min-width : 960px)";
+@sapUiMediaQuery_4Step_L:  ~"screen and (min-width : 760px) and (max-width : 959px)";
+@sapUiMediaQuery_4Step_M:  ~"screen and (min-width : 520px) and (max-width : 759px)";
+@sapUiMediaQuery_4Step_S:  ~"screen and (max-width : 519px)";
+
+/* see sap.ui.Device.media.RANGESETS.SAP_6STEPS*/
+@sapUiMediaQuery_6Step_XXL:  ~"screen and (min-width : 960px)";
+@sapUiMediaQuery_6Step_XL:  ~"screen and (min-width : 768px) and (max-width : 959px)";
+@sapUiMediaQuery_6Step_L:  ~"screen and (min-width : 541px) and (max-width : 767px)";
+@sapUiMediaQuery_6Step_M:  ~"screen and (min-width : 400px) and (max-width : 540px)";
+@sapUiMediaQuery_6Step_S:  ~"screen and (min-width : 241px) and (max-width : 399px)";
+@sapUiMediaQuery_6Step_XS:  ~"screen and (max-width : 240px)";
+/* END "media.css" */
+
+/* START "parameterClasses.css" */
+
+/* CSS parameters which are available in base theme */
+
+
+.sapThemeFont {
+	font-family: @sapUiFontFamily;
+	font-size: @sapUiFontSize;
+}
+.sapThemeFontFamily {
+	font-family: @sapUiFontFamily;
+}
+.sapThemeFontSize {
+	font-size: @sapUiFontSize;
+}
+
+
+.sapThemeText,
+.sapThemeText-asColor {
+	color: @sapUiText;
+}
+.sapThemeText-asBackgroundColor {
+	background-color: @sapUiText;
+}
+.sapThemeText-asBorderColor {
+	border-color: @sapUiText;
+}
+
+
+
+.sapThemeTextInverted,
+.sapThemeTextInverted-asColor {
+	color: @sapUiTextInverted;
+}
+
+
+
+.sapThemeBaseBG,
+.sapThemeBaseBG-asBackgroundColor {
+	background-color: @sapUiBaseBG;
+}
+.sapThemeBaseBG-asBorderColor {
+	border-color: @sapUiBaseBG;
+}
+.sapThemeBaseBG-asColor {
+	color: @sapUiBaseBG;
+}
+
+
+
+.sapThemeBrand-asColor {
+	color: @sapUiBrand;
+}
+.sapThemeBrand-asBorderColor {
+	border-color: @sapUiBrand;
+}
+.sapThemeBrand-asBackgroundColor {
+	background-color: @sapUiBrand;
+}
+
+
+
+.sapThemeHighlight-asColor {
+	color: @sapUiHighlight;
+}
+.sapThemeHighlight-asBorderColor {
+	border-color: @sapUiHighlight;
+}
+.sapThemeHighlight-asBackgroundColor {
+	background-color: @sapUiHighlight;
+}
+
+/* END "parameterClasses.css" */
+
+/* START "ScrollBar.css" */
+
+/* ============================================= */
+/* CSS for control sap.ui.core/ScrollBar.control */
+/* ============================================= */
+
+.sapUiScrollBarTouch {
+	-webkit-overflow-scrolling: auto;
+}
+
+.sapUiScrollBarTouch ::-webkit-scrollbar {
+	height: 7px;
+	width: 7px;
+	-webkit-appearance: none;
+}
+
+.sapUiScrollBarTouch ::-webkit-scrollbar-thumb {
+	border-radius: 4px;
+	background-color: rgba(0,0,0,.5);
+	-webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+/* END "ScrollBar.css" */
+
+/* START "Shadow.css" */
+.sapUiShd {
+	box-shadow: @sapUiShadow;
+	-webkit-box-shadow: @sapUiShadow;
+	-moz-box-shadow: @sapUiShadow;
+}
+
+/*
+ * TODO decide whether shadow should generally be enabled for IE8 (will break QTP tests, so visual benefit must be worth the effort ;-)
+html[data-sap-ui-browser=ie8] .sapUiShd {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#808080')";
+}
+*/
+/* END "Shadow.css" */
+
+/* START "TechnicalInfo.css" */
+.sapUiTInf {
+  border: 1px solid @sapUiMediumBorder;
+	background: @sapUiExtraLightBG;
+  padding: 6px;
+}
+
+.sapUiTInfCfg {
+	font-size:0.9em;
+}
+
+.sapUiTInfMList {
+	font-size:0.9em;
+	color:@sapUiTextDisabled;
+	overflow-y:auto;
+	max-height:12em;
+}
+
+.sapUiTInf > table > tbody > tr > td,
+.sapUiTInfMList,
+.sapUiTInfM {
+	-webkit-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+}
+
+.sapUiTInfMEmbd {
+	color:#aaaaaa;
+} 
+
+.sapUiTInfMFail {
+	text-decoration:line-through;
+}
+
+.sapUiTInfMMore {
+	text-decoration:underline;
+	cursor:pointer;
+}
+
+
+/* END "TechnicalInfo.css" */
+
+/* START "View.css" */
+
+/* ========================================= */
+/* CSS for control sap.ui.core/View.control  */
+/* ========================================= */
+.sapUiView {
+	display: inline-block;
+}
+
+.sapUiViewDisplayBlock {
+	display: block;
+}
+/* END "View.css" */
+
