@@ -465,7 +465,7 @@
 		navContainer.toPage(this._sidebar, 'sidebar');
 		navContainer.toPage(this._navbar, 'navbar');
 
-		this.updateTarget(viewData.target, viewData.parameters);
+
 
 		var currentPage = this.getCurrentPage(viewData.target);
 		if(
@@ -474,6 +474,8 @@
 			&& currentPage 
 			&& viewData.id === currentPage.getId()
 		){
+			this.updatePage(currentPage, viewData.parameters);
+
 			jQuery.sap.log.debug('[MFR] is current page: ' + viewData.id);
 			return false;
 		}
