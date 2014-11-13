@@ -465,6 +465,8 @@
 		navContainer.toPage(this._sidebar, 'sidebar');
 		navContainer.toPage(this._navbar, 'navbar');
 
+		this.updateTarget(viewData.target, viewData.parameters);
+
 		var currentPage = this.getCurrentPage(viewData.target);
 		if(
 			navContainer.getDomRef() 
