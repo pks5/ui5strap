@@ -480,6 +480,16 @@
 			return false;
 		}
 
+		if(viewData.documentTitle){
+			var titlePath = viewData.documentTitle.split('>');
+			if(titlePath.length === 2){ 
+				var ressourceModel = this.getOwner().getRootControl().getModel(titlePath[0]);
+				if(ressourceModel){
+					document.title = ressourceModel.getProperty(titlePath[1]);
+				}
+			}
+		}
+
 		this.updateMenu(viewData.viewName);
 
 		if(viewData.showLoader){

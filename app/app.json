@@ -97,7 +97,7 @@
                 "id" : "my-app-page2",
                 "styleClass" : "page-white page-2",
 
-                "documentTitle" : "i18n>INSTALL_HEADING",
+                "documentTitle" : "i18n>PAGE2_HEADING",
                 
                 "target" : "content",
                 "preload" : true
