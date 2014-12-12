@@ -1,6 +1,6 @@
 {
         "app" : {
-            "name" : "Ui5Strap Boilerplate",
+            "name" : "Ui5Strap App Template",
             "package" : "com_mycompany.my_app",
             "title" : "Ui5Strap",
             "history" : true,
@@ -9,7 +9,7 @@
         },
 
         "icons" : {
-            "default" : "img/my-app-icon-144x144.png"
+            "default" : "img/my-app-icon-256x256.png"
         },
 
         "developers" : [
@@ -113,30 +113,6 @@
                 
                 "target" : "content",
                 "preload" : true
-            },
-            
-            "com_mycompany.my_app.views.Page4" : {
-                "type" : "HTML",
-                
-                "id" : "my-app-page4",
-                "styleClass" : "page-white page-4",
-
-                "documentTitle" : "i18n>PAGE4_HEADING",
-                
-                "target" : "content",
-                "preload" : true
-            },
-            
-            "com_mycompany.my_app.views.Page5" : {
-                "type" : "HTML",
-                
-                "id" : "my-app-page5",
-                "styleClass" : "page-white page-5",
-
-                "documentTitle" : "i18n>PAGE5_HEADING",
-                
-                "target" : "content",
-                "preload" : true
             }
         },
 
@@ -159,18 +135,6 @@
                             "viewName" : "com_mycompany.my_app.views.Page3",
                             "label" : "i18n>MENU_PAGE3",
                             "icon" : "wrench",
-                            "writeHistory" : true
-                        },
-                        {
-                            "viewName" : "com_mycompany.my_app.views.Page4",
-                            "label" : "i18n>MENU_PAGE4",
-                            "icon" : "question-circle",
-                            "writeHistory" : true
-                        },
-                        {
-                            "viewName" : "com_mycompany.my_app.views.Page5",
-                            "label" : "i18n>MENU_PAGE5",
-                            "icon" : "copy",
                             "writeHistory" : true
                         }
                 ]
