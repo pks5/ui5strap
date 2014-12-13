@@ -14,26 +14,28 @@
 
 (function(){
 
-	//Change this if you renamed the package in the app.json
-	var _moduleName = "com_mycompany.my_app.modules.MyFrameController";
+	var jQuerySap = jQuery.sap;
 
-	jQuery.sap.declare(_moduleName);
+	jQuerySap.declare("com_mycompany.my_app.modules.MyFrameController");
 	
-	jQuery.sap.require("ui5strap.AppFrame");
+	jQuerySap.require("ui5strap.AppFrame");
 
-	jQuery.sap.require("ui5strap.Sidebar");
-	jQuery.sap.require("ui5strap.NavBar");
-	jQuery.sap.require("ui5strap.Nav");
-	jQuery.sap.require("ui5strap.ListNavItem");
-	jQuery.sap.require("ui5strap.Link");
-	jQuery.sap.require("ui5strap.ButtonGroup");
-	jQuery.sap.require("ui5strap.Button");
-	jQuery.sap.require("ui5strap.Icon");
+	jQuerySap.require("ui5strap.Sidebar");
+	jQuerySap.require("ui5strap.NavBar");
+	jQuerySap.require("ui5strap.Nav");
+	jQuerySap.require("ui5strap.ListNavItem");
+	jQuerySap.require("ui5strap.Link");
+	jQuerySap.require("ui5strap.ButtonGroup");
+	jQuerySap.require("ui5strap.Button");
+	jQuerySap.require("ui5strap.Icon");
+
+	jQuerySap.require("jquery.sap.history");
+	
 
 	//FrameControllers must extend the AppFrame class
-	ui5strap.AppFrame.extend(_moduleName);
+	ui5strap.AppFrame.extend("com_mycompany.my_app.modules.MyFrameController");
 
-	var FrameController = jQuery.sap.getObject(_moduleName),
+	var FrameController = com_mycompany.my_app.modules.MyFrameController,
 		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
