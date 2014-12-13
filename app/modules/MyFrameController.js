@@ -403,10 +403,7 @@
 		if(viewData.documentTitle){
 			var titlePath = viewData.documentTitle.split('>');
 			if(titlePath.length === 2){ 
-				var ressourceModel = this.app.getRootControl().getModel(titlePath[0]);
-				if(ressourceModel){
-					document.title = ressourceModel.getProperty(titlePath[1]);
-				}
+				document.title = this.app.getLocaleString(titlePath[1], titlePath[0]);
 			}
 		}
 

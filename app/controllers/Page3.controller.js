@@ -7,9 +7,7 @@ ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 
 		srcButton.setSelected(!srcButton.getSelected());
 
-		var frame = this.getView().getViewData().app.getFrame();
-
-		frame.getNavContainer().setOptionsEnabled({
+		this.getView().getViewData().app.getFrame().control.setOptionsEnabled({
 			"sidebar" : srcButton.getSelected()
 		});
 	},
@@ -19,9 +17,7 @@ ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 
 		srcButton.setSelected(!srcButton.getSelected());
 
-		var frame = this.getView().getViewData().app.getFrame();
-
-		frame.getNavContainer().setOptionsEnabled({
+		this.getView().getViewData().app.getFrame().control.setOptionsEnabled({
 			"sidenav" : srcButton.getSelected()
 		});
 	},
@@ -30,8 +26,6 @@ ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 		var srcButton = oEvent.getSource();
 
 		var text = oEvent.getParameter("button").getText();
-
-		var frame = this.getView().getViewData().app.getFrame();
 
 		var options = {
 			"sidebar-small" : false,
@@ -42,7 +36,7 @@ ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 			options[text] = true;
 		}
 
-		frame.getNavContainer().setOptionsEnabled(options);
+		this.getView().getViewData().app.getFrame().control.setOptionsEnabled(options);
 	},
 
 	toggleNavbar : function(oEvent){
@@ -50,9 +44,7 @@ ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 
 		srcButton.setSelected(!srcButton.getSelected());
 
-		var frame = this.getView().getViewData().app.getFrame();
-
-		frame.getNavContainer().setOptionsEnabled({
+		this.getView().getViewData().app.getFrame().control.setOptionsEnabled({
 			"navbar" : srcButton.getSelected()
 		});
 	}
