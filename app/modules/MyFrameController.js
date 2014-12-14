@@ -39,6 +39,9 @@
 		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
+	/*
+	* Init the nav container control used by this frame.
+	*/
 	FrameControllerProto._initControl = function(){
 		var _this = this;
 		ui5strap.AppFrame.prototype._initControl.call(this);
@@ -100,9 +103,12 @@
 		}
 
 		navNavbar.attachEvent('tap', {}, function(oEvent){
-			_this.gotoPage(oEvent.getParameter('listItem').data());
+			var listItem = oEvent.getParameter('listItem');
+			if(listItem){
+				_this.gotoPage(listItem.data());
 
-			navbar.setCollapsed(true);
+				navbar.setCollapsed(true);
+			}
 		});
 		navNavbar.setAlign(ui5strap.Alignment.NavBarLeft);
 
@@ -160,13 +166,19 @@
 		this.sidebar = sidebar;
 
 		navSidebar.attachEvent('tap', {}, function(oEvent){
-			_this.gotoPage(oEvent.getParameter('listItem').data());
+			var listItem = oEvent.getParameter('listItem');
+			if(listItem){
+				_this.gotoPage(listItem.data());
+			}
 		});
 
 		sidebar.addContent(navSidebar);
 		this.navSidebar = navSidebar;
 	};
 
+	/*
+	* Init navigation history
+	*/
 	FrameControllerProto._initHistory = function(){
 		var _this = this;
 
@@ -186,6 +198,8 @@
 						else{
 							params.writeHistory = true;
 							params.transition = 'none';
+
+							//The next navigation within target "content" will be replaced
 							_this.oTargets["content"] = params;
 						}
 					}
@@ -203,7 +217,7 @@
 
 	/*
 	*
-	* Updates the menus
+	* Update menu and highlight items that match to current view
 	*
 	* @Public
 	*/
@@ -268,8 +282,8 @@
 	};
 
 	/*
-	* Sets the sidebar menu to the menu with name menuName defined in configuration
-	* @Public 
+	* Sets the sidebar menu
+	* @param menuName Name of menu defined in configuration
 	*/
 	FrameControllerProto.setSidebarMenu = function(menuName){
 		var navSidebar = this.navSidebar,
@@ -315,58 +329,70 @@
 	};
 
 	/*
-	* Navigates to a page defined in the data parameter 
+	* Navigate to a page
 	*
 	* @Public
 	* @Override
 	*/
-	FrameControllerProto.gotoPage = function (data, callback) {
+	FrameControllerProto.gotoPage = function (viewDef, callback) {
 		var _this = this,
 			frameOptions = this.options;
 		
-		if(data.sidebarMenu && !data.viewName){
-			//if the data contains no viewName but a sidebarMenu only, show the first entry of the submenu
+		//If "sidebarMenu" is set, and no "viewName" specified, goto first page of sidebarMenu.
+		if(viewDef.sidebarMenu && !viewDef.viewName){
+			//if the viewDef contains no viewName but a sidebarMenu only, show the first entry of the submenu
 
-			var submenu = this.app.config.getMenuData(data.sidebarMenu);
+			var submenu = this.app.config.getMenuData(viewDef.sidebarMenu);
 			if("items" in submenu && submenu.items.length > 0){
 				this.gotoPage(submenu.items[0], callback);
 			}
 			else{
-				throw new Error('Invalid sidebar menu: ' + data.sidebarMenu);
+				throw new Error('Invalid sidebar menu: ' + viewDef.sidebarMenu);
 			}
 
 			return;
 		}
 
-		var viewData = this.validatePage(data);
+		//Get final view configuration
+		var viewConfig = this.getViewConfig(viewDef);
 
-		if(this.isBusy(viewData.target)){
-			jQuery.sap.log.debug('[MFR][' + viewData.target + '] is busy!');
+		if(this.isBusy(viewConfig.target)){
+			jQuery.sap.log.debug('[MFR][' + viewConfig.target + '] is busy!');
 
 			return false;
 		}
 		else{
-			jQuery.sap.log.debug('[MFR][' + viewData.target + '] gotoPage ("' + viewData.viewName + '#' + viewData.id + '")');
+			jQuery.sap.log.debug('[MFR][' + viewConfig.target + '] gotoPage ("' + viewConfig.viewName + '#' + viewConfig.id + '")');
 		}
 
 		var navbarEnabled = frameOptions.navbar;
-		if("navbar" in viewData){
-			navbarEnabled = viewData.navbar;
+		if("navbar" in viewConfig){
+			navbarEnabled = viewConfig.navbar;
 		}
 
 		var sidebarEnabled = frameOptions.sidebar;
-		if("sidebar" in viewData){
-			sidebarEnabled = viewData.sidebar;
-		}
-
-		var sidebarSmall = frameOptions.sidebarSmall;
-		if("sidebarSmall" in viewData){
-			sidebarSmall = viewData.sidebarSmall;
+		if("sidebar" in viewConfig){
+			sidebarEnabled = viewConfig.sidebar;
 		}
 
 		var sidenavEnabled = frameOptions.sidenav;
-		if("sidenav" in viewData){
-			sidenavEnabled = viewData.sidenav;
+		if("sidenav" in viewConfig){
+			sidenavEnabled = viewConfig.sidenav;
+		}
+
+		var sidebar2Nav = frameOptions.sidebar2Nav;
+		if("sidebar2Nav" in viewConfig){
+			sidebar2Nav = viewConfig.sidebar2Nav;
+		}
+
+		var sidebarSmall = frameOptions.sidebarSmall;
+		if("sidebarSmall" in viewConfig){
+			sidebarSmall = viewConfig.sidebarSmall;
+		}
+
+		var sidenavToggle = frameOptions.sidenavToggle;
+		if("sidenavToggle" in viewConfig){
+			sidenavToggle = viewConfig.sidenavToggle;
 		}
 
 		this.control.setOptionsEnabled({
@@ -374,13 +400,13 @@
 			'sidebar' : sidebarEnabled,
 			'sidenav' : sidenavEnabled,
 			
-			'sidebar-2nav' : viewData.sidebar2nav,
+			'sidebar-2nav' : sidebar2Nav,
 			'sidebar-small' : sidebarSmall,
-			'sidenav-toggle' : viewData.sidenavToggle
+			'sidenav-toggle' : sidenavToggle
 		});
 
-		if("sidebarMenu" in viewData){
-			this.setSidebarMenu(viewData.sidebarMenu);
+		if("sidebarMenu" in viewConfig){
+			this.setSidebarMenu(viewConfig.sidebarMenu);
 		}
 		else if("sidebarMenu" in frameOptions){
 			this.setSidebarMenu(frameOptions.sidebarMenu);
@@ -389,35 +415,35 @@
 		this.control.toPage(this.sidebar, 'sidebar');
 		this.control.toPage(this.navbar, 'navbar');
 
-		var currentPage = this.getCurrentPage(viewData.target);
+		var currentPage = this.getCurrentPage(viewConfig.target);
 		if(
 			_this.control.getDomRef() 
-			&& viewData.id 
+			&& viewConfig.id 
 			&& currentPage 
-			&& viewData.id === currentPage.getId()
+			&& viewConfig.id === currentPage.getId()
 		){
-			this.updatePage(currentPage, viewData.parameters);
+			this.updatePage(currentPage, viewConfig.parameters);
 
-			jQuery.sap.log.debug('[MFR] is current page: ' + viewData.id);
+			jQuery.sap.log.debug('[MFR] is current page: ' + viewConfig.id);
 			return false;
 		}
 
-		if(viewData.documentTitle){
-			var titlePath = viewData.documentTitle.split('>');
+		if(viewConfig.documentTitle){
+			var titlePath = viewConfig.documentTitle.split('>');
 			if(titlePath.length === 2){ 
 				document.title = this.app.getLocaleString(titlePath[1], titlePath[0]);
 			}
 		}
 
-		this.updateMenu(viewData.viewName);
+		this.updateMenu(viewConfig.viewName);
 
-		if(viewData.showLoader){
+		if(viewConfig.showLoader){
 			this.app.setLoaderVisible(true, function(){
-				_this.toPage(viewData, callback);
+				_this.toPage(viewConfig, callback);
 			})
 		}
 		else{
-			this.toPage(viewData, callback);
+			this.toPage(viewConfig, callback);
 		}
 
 		return true;

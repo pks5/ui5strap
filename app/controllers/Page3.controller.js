@@ -2,12 +2,16 @@ jQuery.sap.require('ui5strap.Action');
 
 ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 
+	onInit : function(){
+		this.nc = this.getView().getViewData().app.getFrame().control; 
+	},
+
 	toggleSidebar : function(oEvent){
 		var srcButton = oEvent.getSource();
 
 		srcButton.setSelected(!srcButton.getSelected());
 
-		this.getView().getViewData().app.getFrame().control.setOptionsEnabled({
+		this.nc.setOptionsEnabled({
 			"sidebar" : srcButton.getSelected()
 		});
 	},
@@ -17,7 +21,7 @@ ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 
 		srcButton.setSelected(!srcButton.getSelected());
 
-		this.getView().getViewData().app.getFrame().control.setOptionsEnabled({
+		this.nc.setOptionsEnabled({
 			"sidenav" : srcButton.getSelected()
 		});
 	},
@@ -36,7 +40,7 @@ ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 			options[text] = true;
 		}
 
-		this.getView().getViewData().app.getFrame().control.setOptionsEnabled(options);
+		this.nc.setOptionsEnabled(options);
 	},
 
 	toggleNavbar : function(oEvent){
@@ -44,7 +48,7 @@ ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 
 		srcButton.setSelected(!srcButton.getSelected());
 
-		this.getView().getViewData().app.getFrame().control.setOptionsEnabled({
+		this.nc.setOptionsEnabled({
 			"navbar" : srcButton.getSelected()
 		});
 	}
