@@ -72,32 +72,18 @@
 		<!-- <script id="ui5strap-bootstrap" src="lib/ui5strap/ui5strap-all.js"></script> -->
 
 		<script>
-			/*
-		 	* Error Handling
-		 	*/
-			window.onerror = function(message, file, line) { 
-				jQuery('#ui5strap-fatal').html(message).css('display', 'block');
-			};
-
-			/*
-			* Global Log Level
-			*/
-			jQuery.sap.log.setLevel(jQuery.sap.log.Level.DEBUG);
-
+		
 			/*
 			* Device Options
 			*/
 			var deviceOptions = {};
 
-			//UNCOMMENT when using cordova
-			//document.addEventListener('deviceready', function on_deviceready(){
-					
-				//Device
-				jQuery.sap.require("ui5strap.Device");
-				(new ui5strap.Device(deviceOptions)).ready();
-			
-			//UNCOMMENT when using cordova
-			//}, false);
+			/*
+			* Initialize Device
+			*/
+			jQuery.sap.require("ui5strap.Device");
+			var device = new ui5strap.Device(deviceOptions);
+			device.ready();
 
 		</script>
 
