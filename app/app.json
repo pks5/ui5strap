@@ -141,11 +141,11 @@
             }
         },
 
-        "frames" : {
-            "default" : {
+        "components" : [
+            {
                 
+                "id" : "frame",
                 "module" : "com_mycompany.my_app.modules.MyFrameController",
-                
                 "navContainer" : "ui5strap.NavContainerStandard",
                 
                 "initialViews" : [
@@ -159,5 +159,5 @@
                 "sidebarSmall" : true
 
             }
-        }
+        ]
 }
