@@ -2,7 +2,7 @@
  * 
  * MyFrameController
  *
- * Author: [Your Name]
+ * @author [Your Name]
  * 
  * Copyright (c) 2014 [Your Company]
  * 
@@ -197,7 +197,7 @@
 						}
 						else{
 							params.writeHistory = true;
-							params.transition = 'none';
+							params.transition = 'no-transition';
 
 							//The next navigation within target "content" will be replaced
 							_this.oTargets["content"] = params;
@@ -208,6 +208,7 @@
 			defaultHandler : function (navType) {
 
 				if(_this.initialized){
+					alert('t');
 					_this.showInitialContent();
 				}
 
@@ -222,7 +223,7 @@
 	* @Public
 	*/
 	FrameControllerProto.updateMenu = function(viewName){
-		jQuery.sap.log.debug('[MFR] updateMenu ("' + viewName + '")');
+		jQuery.sap.log.debug(' + [MFR] UPDATE MENU "' + viewName + '"');
 
 		var navSidebar = this.navSidebar;
 
@@ -357,12 +358,12 @@
 		var viewConfig = this.getViewConfig(viewDef);
 
 		if(this.isBusy(viewConfig.target)){
-			jQuery.sap.log.debug('[MFR][' + viewConfig.target + '] is busy!');
+			jQuery.sap.log.debug('[MFR] IS BUSY {' + viewConfig.target + '}');
 
 			return false;
 		}
 		else{
-			jQuery.sap.log.debug('[MFR][' + viewConfig.target + '] gotoPage ("' + viewConfig.viewName + '#' + viewConfig.id + '")');
+			jQuery.sap.log.debug('+++ [MFR] NAVIGATE {' + viewConfig.target + '} "' + viewConfig.viewName + '"');
 		}
 
 		var navbarEnabled = frameOptions.navbar;
@@ -412,6 +413,7 @@
 			this.setSidebarMenu(frameOptions.sidebarMenu);
 		}
 
+		jQuery.sap.log.debug(' + [MFR] SET "sidebar" AND "navbar"');
 		this.control.toPage(this.sidebar, 'sidebar');
 		this.control.toPage(this.navbar, 'navbar');
 

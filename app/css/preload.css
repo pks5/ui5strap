@@ -1,21 +1,20 @@
 /*
  * 
- * UI5Strap
+ * Preload Stylesheet
  *
- * Preload stylesheet for splash screen and layers
+ * @author [Your Name]
  * 
- * Author: Jan Philipp Knöller
+ * Copyright (c) 2014 [Your Company]
  * 
- * Copyright (c) 2013 Jan Philipp Knöller
- * 
- * http://pksoftware.de
+ * [Website]
  *
- * Get the latest version: https://github.com/pks5/ui5strap
- * 
- * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * [License information]
  * 
  */
 
+/*
+* HTML Skeleton
+*/
 html, body{
 	width:100%;
 	height:100%;
@@ -24,15 +23,20 @@ html, body{
 	margin:0;
 
 	overflow:hidden;
-
 }
 
+/*
+* Root Container
+*/
 #ui5strap-body{
 	height:100%;
 	position:relative;
 	overflow:hidden;
 }
 
+/*
+* Loading Screen
+*/
 #ui5strap-loader{
 	position:fixed;
 	top:0;
@@ -57,6 +61,9 @@ html, body{
 	background-color:black;
 }
 
+/*
+* Splash Screen
+*/
 #ui5strap-splash{
 	position:fixed;
 	left:0;
@@ -66,14 +73,13 @@ html, body{
 	z-index : 10001;
 
 	background: #ffffff; /* Old browsers */
-background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
-
+	background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
 }
 
 #ui5strap-splash-image{
@@ -96,6 +102,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin-top:96px;
 }
 
+/*
+* Fatal Error
+*/
 #ui5strap-fatal{
 	z-index:10003;
 	display:none;
@@ -109,6 +118,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	background-color: rgba(0,0,0,0.9);
 }
 
+/*
+* Fatal Error Message
+*/
+#ui5strap-fatal-message{
+
+}
+
+/*
+* No JavaScript
+*/
 #ui5strap-noscript{
 	z-index:10002;
 	position:fixed;
