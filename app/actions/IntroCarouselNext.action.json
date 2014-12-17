@@ -1,4 +1,5 @@
 {
+	"__version" : "1.0",
 	"a_modules" : "ui5strap.AMCallControlMethod",
 	"callControlMethod" : {
 		"controlId" : "carousel-intro",
