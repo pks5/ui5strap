@@ -1,9 +1,7 @@
-jQuery.sap.require('ui5strap.Action');
-
 ui5strap.controller("com_mycompany.my_app.controllers.Page3", {
 
 	onInit : function(){
-		this.nc = this.getView().getViewData().app.getFrame().control; 
+		this.nc = this.getApp().getFrame().control; 
 	},
 
 	toggleSidebar : function(oEvent){
