@@ -355,15 +355,16 @@
 		}
 
 		//Get final view configuration
-		var viewConfig = this.getViewConfig(viewDef);
+		var viewConfig = this.getViewConfig(viewDef),
+			target = viewConfig.target;
 
-		if(this.isBusy(viewConfig.target)){
-			jQuery.sap.log.debug('[MFR] IS BUSY {' + viewConfig.target + '}');
+		if(this.isBusy(target)){
+			jQuery.sap.log.debug('[MFR] IS BUSY {' + target + '}');
 
 			return false;
 		}
 		else{
-			jQuery.sap.log.debug('+++ [MFR] NAVIGATE {' + viewConfig.target + '} "' + viewConfig.viewName + '"');
+			jQuery.sap.log.debug('+++ [MFR] NAVIGATE {' + target + '} "' + viewConfig.viewName + '"');
 		}
 
 		var navbarEnabled = frameOptions.navbar;
@@ -417,7 +418,7 @@
 		this.control.toPage(this.sidebar, 'sidebar');
 		this.control.toPage(this.navbar, 'navbar');
 
-		var currentPage = this.getCurrentPage(viewConfig.target);
+		var currentPage = this.getCurrentPage(target);
 		if(
 			_this.control.getDomRef() 
 			&& viewConfig.id 
@@ -446,6 +447,11 @@
 		}
 		else{
 			this.toPage(viewConfig, callback);
+		}
+
+		//Write history entry for back/forward navigation in browser / using javascript.
+		if (viewConfig.writeHistory && this.app.config.data.app.history) {
+			jQuery.sap.history.addHistory(target, viewConfig.viewData.__ui5strap.viewDef, viewConfig.bookmarkable, viewConfig.virtual);
 		}
 
 		return true;
