@@ -16,7 +16,7 @@
 
 	var jQuerySap = jQuery.sap;
 
-	jQuerySap.declare("com_mycompany.my_app.modules.MyFrameController");
+	jQuerySap.declare("tld__domain.product__app.modules.AppFrameMy");
 	
 	jQuerySap.require("ui5strap.AppFrame");
 
@@ -33,9 +33,9 @@
 	
 
 	//FrameControllers must extend the AppFrame class
-	ui5strap.AppFrame.extend("com_mycompany.my_app.modules.MyFrameController");
+	ui5strap.AppFrame.extend("tld__domain.product__app.modules.AppFrameMy");
 
-	var FrameController = com_mycompany.my_app.modules.MyFrameController,
+	var FrameController = tld__domain.product__app.modules.AppFrameMy,
 		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 

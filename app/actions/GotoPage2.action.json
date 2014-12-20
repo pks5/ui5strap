@@ -2,7 +2,7 @@
 	"__version" : "2.0",
 	"__modules" : "ui5strap.AMGotoPage",
 	"gotoPage" : {
-		"viewName" : "com_mycompany.my_app.views.Page2",
+		"viewName" : "tld__domain.product__app.views.Page2",
 		"transition" : "transition-slide",
 		"writeHistory" : true,
 		"bookmarkable" : false

@@ -1,7 +1,8 @@
 {
         "app" : {
             "name" : "Ui5Strap App Template",
-            "package" : "com_mycompany.my_app",
+            "id" : "tld.domain.product.app",
+            "package" : "tld__domain.product__app",
             "title" : "Ui5Strap",
             "history" : true,
             "logLevel" : 5,
@@ -65,7 +66,7 @@
         },
 
         "views" : {
-            "com_mycompany.my_app.views.Intro" : {
+            "tld__domain.product__app.views.Intro" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-intro",
@@ -79,7 +80,7 @@
                 "sidebar" : false
             },
 
-            "com_mycompany.my_app.views.Page1" : {
+            "tld__domain.product__app.views.Page1" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-page1",
@@ -91,7 +92,7 @@
                 "preload" : true
             },
 
-            "com_mycompany.my_app.views.Page2" : {
+            "tld__domain.product__app.views.Page2" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-page2",
@@ -103,7 +104,7 @@
                 "preload" : true
             },
 
-            "com_mycompany.my_app.views.Page3" : {
+            "tld__domain.product__app.views.Page3" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-page3",
@@ -120,19 +121,19 @@
             "myMenu" : {
                 "items" : [
                         {
-                            "viewName" : "com_mycompany.my_app.views.Page1",
+                            "viewName" : "tld__domain.product__app.views.Page1",
                             "label" : "i18n>MENU_PAGE1",
                             "icon" : "home",
                             "writeHistory" : true
                         },
                         {
-                            "viewName" : "com_mycompany.my_app.views.Page2",
+                            "viewName" : "tld__domain.product__app.views.Page2",
                             "label" : "i18n>MENU_PAGE2",
                             "icon" : "download",
                             "writeHistory" : true
                         },
                         {
-                            "viewName" : "com_mycompany.my_app.views.Page3",
+                            "viewName" : "tld__domain.product__app.views.Page3",
                             "label" : "i18n>MENU_PAGE3",
                             "icon" : "wrench",
                             "writeHistory" : true
@@ -145,11 +146,11 @@
             {
                 
                 "id" : "frame",
-                "module" : "com_mycompany.my_app.modules.MyFrameController",
+                "module" : "tld__domain.product__app.modules.AppFrameMy",
                 
                 "initialViews" : [
                     { 
-                        "viewName" : "com_mycompany.my_app.views.Intro"
+                        "viewName" : "tld__domain.product__app.views.Intro"
                     }
                 ],
                 

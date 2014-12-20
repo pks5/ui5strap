@@ -1,5 +1,5 @@
 {
-	"a_modules" : "ui5strap.AMCallControlMethod",
+	"__modules" : "ui5strap.AMCallControlMethod",
 	"callControlMethod" : {
 		"controlId" : "carousel-intro",
 		"scope" : "VIEW",

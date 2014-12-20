@@ -1,7 +1,7 @@
 {
 	"a_modules" : "ui5strap.AMGotoPage",
 	"gotoPage" : {
-		"viewName" : "com_mycompany.my_app.views.Page3",
+		"viewName" : "tld__domain.product__app.views.Page3",
 		"transition" : "transition-flip",
 		"writeHistory" : true
 	}
