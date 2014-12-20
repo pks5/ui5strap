@@ -1,5 +1,8 @@
 {
-	"a_modules" : ["ui5strap.AMCallControlMethod", "ui5strap.AMChangeTheme"],
+	
+	"__format" : "AJ2.0",
+	"__modules" : ["ui5strap.AMCallControlMethod", "ui5strap.AMChangeTheme"],
+	"__description" : "Change Theme",
 
 	"callControlMethod" : {
 		"scope" : "SELECTION",
@@ -11,4 +14,5 @@
 	"changeTheme" : {
 	
 	}
+	
 }

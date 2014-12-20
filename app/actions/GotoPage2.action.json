@@ -1,10 +1,14 @@
 {
-	"__version" : "2.0",
+	
+	"__format" : "AJ2.0",
 	"__modules" : "ui5strap.AMGotoPage",
+	"__description" : "Goto Page 2",
+
 	"gotoPage" : {
 		"viewName" : "tld__domain.product__app.views.Page2",
 		"transition" : "transition-slide",
 		"writeHistory" : true,
 		"bookmarkable" : false
 	}
+
 }
