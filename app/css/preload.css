@@ -47,6 +47,9 @@ html, body{
 	z-index:10000;
 }
 
+/*
+* Loading Screen Spinner Image
+*/
 #ui5strap-loader > img{
 	width:16px;
 	height:16px;
@@ -57,6 +60,9 @@ html, body{
 	margin-top:-8px;
 }
 
+/*
+* Loading Screen Option (Fully Opaque)
+*/
 #ui5strap-loader.ui5strap-loader-opaque{
 	background-color:black;
 }
@@ -82,6 +88,9 @@ html, body{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
 }
 
+/*
+* Splash Screen Image
+*/
 #ui5strap-splash-image{
 	width:100px;
 	height:100px;
@@ -92,6 +101,9 @@ html, body{
 	margin-top:-50px;
 }
 
+/*
+* Splash Screen Loader
+*/
 #ui5strap-splash-loader{
 	width:16px;
 	height:16px;
@@ -103,7 +115,8 @@ html, body{
 }
 
 /*
-* Fatal Error
+* Fatal Error Screen
+* Shown when a fatal error occurs.
 */
 #ui5strap-fatal{
 	z-index:10003;
@@ -119,14 +132,15 @@ html, body{
 }
 
 /*
-* Fatal Error Message
+* Fatal Error Screen Message
 */
 #ui5strap-fatal-message{
 
 }
 
 /*
-* No JavaScript
+* No Script Screen
+* Only visible when JavaScript is deactivated.
 */
 #ui5strap-noscript{
 	z-index:10002;

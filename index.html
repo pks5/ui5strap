@@ -2,6 +2,7 @@
 <html>
 	
 	<head>
+		
 		<!-- Preload Title -->
 		<title>Ui5Strap</title>
 
@@ -11,60 +12,57 @@
 		<!-- Content Type -->
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 		
-		<!-- IE Settings -->
+		<!-- Internet Explorer -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		
 		<!-- Viewport -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		
-		<!-- IOS Webapp Settings -->
+		<!-- IOS Webapp -->
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<link rel="apple-touch-icon" sizes="144x144" href="./app/img/my-app-icon-144x144.png" />
 
 		<!-- Fav Icon -->
 		<link rel="shortcut icon" href="./app/img/my-app-icon-144x144.png" />
-
+	
 	</head>
 	
 	<body role="application">
 		
-		<!-- Root Container -->
-		<div id="ui5strap-body">
-			<!-- OpenUI5 will inject the generated html here -->
-		</div>
+		<!-- Root Container. OpenUI5 will insert generated html here. -->
+		<div id="ui5strap-body"></div>
 
-		<!-- Loading Screen -->
+		<!-- Loading Screen. Showing while the app is busy. -->
 		<div id="ui5strap-loader">
 			<img src="./app/img/loader.gif" width="16" height="16" />
 		</div>
 
-		<!-- Splash Screen -->
+		<!-- Splash Screen. Showing while the app is starting up. -->
 		<div id="ui5strap-splash">
 			<img src="./app/img/splashscreen-image.png" id="ui5strap-splash-image" width="600" height="600" />
 			<img src="./app/img/splashscreen-loader.gif" id="ui5strap-splash-loader" width="32" height="32" />
 		</div>
 
-		<!-- Fatal Error -->
+		<!-- Fatal Error Screen. Shown when a fatal error occurs. -->
 		<div id="ui5strap-fatal">
 			<div id="ui5strap-fatal-message"></div>
 		</div>
 
-		<!-- No Script -->
+		<!-- No Script Screen. Only visible when JavaScript is deactivated. -->
 		<noscript>
 			<div id="ui5strap-noscript">
 				Ui5Strap requires JavaScript to be enabled.
 			</div>
 		</noscript>
 
-		<!-- Cordova Library -->
-		<!-- Uncomment if you want to use ui5strap within a cordova container -->
+		<!-- Cordova Library (optional). Only needed when building native apps with Cordova. -->
 		<!-- <script type="text/javascript" src="cordova.js"></script> -->
 		
-		<!-- OpenUI5 Library -->
+		<!-- OpenUI5 Library. Contains latest JQuery version. -->
 		<script id="sap-ui-bootstrap" src="resources/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
 		
-		<!-- Ui5Strap library location -->
+		<!-- Set Ui5Strap Library location. -->
 		<script>
 			jQuery.sap.registerModulePath("ui5strap", "lib/ui5strap/");
 		</script>
@@ -72,13 +70,15 @@
 		<!-- Include complete, minified library at startup (optional) -->
 		<!-- <script id="ui5strap-bootstrap" src="lib/ui5strap/ui5strap-all.js"></script> -->
 
-		<!-- Initialize the app -->
+		<!-- App Start -->
 		<script>
 
 			/*
 			* Device Options
 			*/
-			var deviceOptions = {};
+			var deviceOptions = {
+				"app" : "./app/app.json"
+			};
 
 			/*
 			* Initialize Device
