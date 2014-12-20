@@ -32,8 +32,8 @@
 
         "libraries" : [ 
             {
-                "package" : "my_lib",
-                "location" : "./lib/my_lib/",
+                "package" : "tld__domain.shared__lib",
+                "location" : "./lib/tld__domain/shared__lib/",
                 "preload" : true
             }
         ],
