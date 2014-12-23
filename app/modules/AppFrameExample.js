@@ -40,11 +40,11 @@
 		configuration = sap.ui.getCore().getConfiguration();
 
 	/*
-	* Init the nav container control used by this frame.
+	* Create the nav container control used by this frame.
 	*/
-	FrameControllerProto._initControl = function(){
-		var _this = this;
-		ui5strap.AppFrame.prototype._initControl.call(this);
+	FrameControllerProto._createControl = function(){
+		var _this = this,
+			navContainer = ui5strap.AppFrame.prototype._createControl.call(this);
 
 		//Get the frame options
 		var frameOptions = this.options;
@@ -174,6 +174,8 @@
 
 		sidebar.addContent(navSidebar);
 		this.navSidebar = navSidebar;
+
+		return navContainer;
 	};
 
 	/*
