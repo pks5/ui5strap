@@ -16,7 +16,7 @@
 
 	var jQuerySap = jQuery.sap;
 
-	jQuerySap.declare("tld__domain.product__app.modules.AppFrameMy");
+	jQuerySap.declare("tld__domain.product__app.modules.AppFrameExample");
 	
 	jQuerySap.require("ui5strap.AppFrame");
 
@@ -33,9 +33,9 @@
 	
 
 	//FrameControllers must extend the AppFrame class
-	ui5strap.AppFrame.extend("tld__domain.product__app.modules.AppFrameMy");
+	ui5strap.AppFrame.extend("tld__domain.product__app.modules.AppFrameExample");
 
-	var FrameController = tld__domain.product__app.modules.AppFrameMy,
+	var FrameController = tld__domain.product__app.modules.AppFrameExample,
 		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
@@ -217,119 +217,6 @@
 	};
 
 	/*
-	*
-	* Update menu and highlight items that match to current view
-	*
-	* @Public
-	*/
-	FrameControllerProto.updateMenu = function(viewName){
-		jQuery.sap.log.debug(' + [MFR] UPDATE MENU "' + viewName + '"');
-
-		var navSidebar = this.navSidebar;
-
-		if(this.sidebarMenu){
-			var sidebarMenu = this.app.config.getMenuData(this.sidebarMenu);
-			
-			if(null !== sidebarMenu && 'items' in sidebarMenu){
-				var sidebarMenuIndex = -1,
-					sidebarItems = sidebarMenu.items;
-				
-				for(var i=0; i<sidebarItems.length; i++){
-					if(viewName === sidebarItems[i].viewName){
-						sidebarMenuIndex = i;
-						break;
-					}
-				}
-
-				if(sidebarMenuIndex !== -1){
-					navSidebar.setSelectedIndex(sidebarMenuIndex);
-				}
-				else{
-					navSidebar.setSelectedControl(null);
-				}
-			}
-			else{
-				throw new Error('Invalid sidebar menu: ' + this.sidebarMenu);
-			}
-		}
-
-		var frameOptions = this.options;
-		if(frameOptions.navbarMenu){
-			var menu = this.app.config.getMenuData(frameOptions.navbarMenu);
-
-			if(null !== menu && 'items' in menu){
-				var menuIndex = -1,
-					menuItems = menu.items;
-
-				for(var i=0; i<menuItems.length; i++){
-					if(viewName === menuItems[i].viewName || (this.sidebarMenu && this.sidebarMenu === menuItems[i].sidebarMenu)){
-						menuIndex = i;
-						break;
-					}
-				}
-
-				if(menuIndex !== -1){
-					this.navNavbar.setSelectedIndex(menuIndex);
-				}
-				else{
-					this.navNavbar.setSelectedControl(null);
-				}
-			}
-			else{
-				jQuery.sap.log.debug("No navbar menu is set.");
-				//throw new Error('Invalid navbar menu: ' + frameOptions.navbarMenu);
-			}
-		}
-	};
-
-	/*
-	* Sets the sidebar menu
-	* @param menuName Name of menu defined in configuration
-	*/
-	FrameControllerProto.setSidebarMenu = function(menuName){
-		var navSidebar = this.navSidebar,
-			_this = this;
-		
-		if(menuName === this.sidebarMenu){
-			return;
-		}
-
-		navSidebar.removeAllItems();
-
-		this.sidebarMenu = menuName;
-
-		if(!menuName){
-			return;
-		}
-
-		var sidebarMenu = this.app.config.getMenuData(menuName);
-
-		if(null !== sidebarMenu && "items" in sidebarMenu){
-
-			var items = sidebarMenu.items;
-			for(var i = 0; i < items.length; i++){
-				var menuItemData = items[i],
-					navItem = new ui5strap.ListNavItem();
-
-				navItem.bindProperty('text', menuItemData.label);
-				navItem.data(menuItemData);
-
-				if(menuItemData.icon){
-					navItem.addContent(new ui5strap.Icon({ 'icon' : menuItemData.icon, 'fixedWidth' : true }));
-				}
-				
-				navSidebar.addItems(navItem);
-			}
-
-		}
-		else{
-
-			throw new Error('Invalid sidebar menu: ' + menuName);
-
-		}
-	};
-
-	/*
 	* Navigate to a page
 	*
 	* @Public
@@ -456,5 +343,120 @@
 
 		return true;
 	};
+
+	
+	/*
+	*
+	* Update menu and highlight items that match to current view
+	*
+	* @Public
+	*/
+	FrameControllerProto.updateMenu = function(viewName){
+		jQuery.sap.log.debug(' + [MFR] UPDATE MENU "' + viewName + '"');
+
+		var navSidebar = this.navSidebar;
+
+		if(this.sidebarMenu){
+			var sidebarMenu = this.app.config.getMenuData(this.sidebarMenu);
+			
+			if(null !== sidebarMenu && 'items' in sidebarMenu){
+				var sidebarMenuIndex = -1,
+					sidebarItems = sidebarMenu.items;
+				
+				for(var i=0; i<sidebarItems.length; i++){
+					if(viewName === sidebarItems[i].viewName){
+						sidebarMenuIndex = i;
+						break;
+					}
+				}
+
+				if(sidebarMenuIndex !== -1){
+					navSidebar.setSelectedIndex(sidebarMenuIndex);
+				}
+				else{
+					navSidebar.setSelectedControl(null);
+				}
+			}
+			else{
+				throw new Error('Invalid sidebar menu: ' + this.sidebarMenu);
+			}
+		}
+
+		var frameOptions = this.options;
+		if(frameOptions.navbarMenu){
+			var menu = this.app.config.getMenuData(frameOptions.navbarMenu);
+
+			if(null !== menu && 'items' in menu){
+				var menuIndex = -1,
+					menuItems = menu.items;
+
+				for(var i=0; i<menuItems.length; i++){
+					if(viewName === menuItems[i].viewName || (this.sidebarMenu && this.sidebarMenu === menuItems[i].sidebarMenu)){
+						menuIndex = i;
+						break;
+					}
+				}
+
+				if(menuIndex !== -1){
+					this.navNavbar.setSelectedIndex(menuIndex);
+				}
+				else{
+					this.navNavbar.setSelectedControl(null);
+				}
+			}
+			else{
+				jQuery.sap.log.debug("No navbar menu is set.");
+				//throw new Error('Invalid navbar menu: ' + frameOptions.navbarMenu);
+			}
+		}
+	};
+
+	/*
+	* Sets the sidebar menu
+	* @param menuName Name of menu defined in configuration
+	*/
+	FrameControllerProto.setSidebarMenu = function(menuName){
+		var navSidebar = this.navSidebar,
+			_this = this;
+		
+		if(menuName === this.sidebarMenu){
+			return;
+		}
+
+		navSidebar.removeAllItems();
+
+		this.sidebarMenu = menuName;
+
+		if(!menuName){
+			return;
+		}
+
+		var sidebarMenu = this.app.config.getMenuData(menuName);
+
+		if(null !== sidebarMenu && "items" in sidebarMenu){
+
+			var items = sidebarMenu.items;
+			for(var i = 0; i < items.length; i++){
+				var menuItemData = items[i],
+					navItem = new ui5strap.ListNavItem();
+
+				navItem.bindProperty('text', menuItemData.label);
+				navItem.data(menuItemData);
+
+				if(menuItemData.icon){
+					navItem.addContent(new ui5strap.Icon({ 'icon' : menuItemData.icon, 'fixedWidth' : true }));
+				}
+				
+				navSidebar.addItems(navItem);
+			}
+
+		}
+		else{
+
+			throw new Error('Invalid sidebar menu: ' + menuName);
+
+		}
+	};
+
 
 }());

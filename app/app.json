@@ -146,7 +146,7 @@
             {
                 
                 "id" : "frame",
-                "module" : "tld__domain.product__app.modules.AppFrameMy",
+                "module" : "tld__domain.product__app.modules.AppFrameExample",
                 
                 "initialViews" : [
                     { 
