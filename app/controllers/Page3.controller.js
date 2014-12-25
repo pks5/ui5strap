@@ -1,6 +1,6 @@
 ui5strap.controller("tld__domain.product__app.controllers.Page3", {
 
-	onInit : function(){
+	onInit : function(oEvent){
 		this.nc = this.getApp().getFrame().control; 
 	},
 
