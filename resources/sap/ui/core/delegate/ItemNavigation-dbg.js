@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -93,9 +93,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {Element[]} aItemDomRefs Array of DOM elements representing the items for the navigation
 	 * @param {boolean} [bNotInTabChain=false] Whether the selected element should be in the tab chain or not
 	 *
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @constructor
-	 * @name sap.ui.core.delegate.ItemNavigation
+	 * @alias sap.ui.core.delegate.ItemNavigation
 	 * @public
 	 */
 	var ItemNavigation = EventProvider.extend("sap.ui.core.delegate.ItemNavigation", /** @lends sap.ui.core.delegate.ItemNavigation.prototype */ {
@@ -173,8 +173,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {Object} oDisabledModifiers Object that includes event type with disabled keys as an array
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#setDisabledModifiers
-	 * @function
 	 */
 	ItemNavigation.prototype.setDisabledModifiers = function(oDisabledModifiers) {
 		this.oDisabledModifiers = oDisabledModifiers;
@@ -188,8 +186,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {object} oDisabledModifiers
 	 * @return {object} 
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#getDisabledModifiers
-	 * @function
 	 */
 	ItemNavigation.prototype.getDisabledModifiers = function(oDisabledModifiers) {
 		return this.oDisabledModifiers;
@@ -201,8 +197,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {jQuery.Event} oEvent jQuery event
 	 * @return {Boolean} 
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#hasDisabledModifier
-	 * @function
 	 */
 	ItemNavigation.prototype.hasDisabledModifier = function(oEvent) {
 		var aDisabledKeys = this.oDisabledModifiers[oEvent.type.replace("modifiers", "")];
@@ -223,8 +217,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {object} oDomRef
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#setRootDomRef
-	 * @function
 	 */
 	ItemNavigation.prototype.setRootDomRef = function(oDomRef) {
 		this.oDomRef = oDomRef;
@@ -248,8 +240,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @return {Element} root dom reference surrounding the items
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#getRootDomRef
-	 * @function
 	 */
 	ItemNavigation.prototype.getRootDomRef = function() {
 		return this.oDomRef;
@@ -260,8 +250,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @return {Element[]} array of item dom refs
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#getItemDomRefs
-	 * @function
 	 */
 	ItemNavigation.prototype.getItemDomRefs = function() {
 		return this.aItemDomRefs;
@@ -273,8 +261,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {any[]} aItemDomRefs
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#setItemDomRefs
-	 * @function
 	 */
 	ItemNavigation.prototype.setItemDomRefs = function(aItemDomRefs) {
 		this.aItemDomRefs = aItemDomRefs;
@@ -290,7 +276,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 				// Items without tabindex are checked for focusable on the first focusin on the root.
 				if (i == this.iFocusedIndex && !$Item.data("sap.INRoot")) {
 					$Item.attr("tabIndex", this.iActiveTabIndex);
-				} else if ($Item.attr("tabindex") == "0"){ // set tabindex to -1 only if already set to 0
+				} else if ($Item.attr("tabindex") == "0") { // set tabindex to -1 only if already set to 0
 					$Item.attr("tabIndex", -1);
 				}
 
@@ -317,8 +303,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#setItemsTabindex
-	 * @function
 	 */
 	ItemNavigation.prototype.setItemsTabindex = function() {
 
@@ -330,7 +314,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 					// not focusable items (like labels) must not get a tabindex attribute
 					if (i == this.iFocusedIndex && !$Item.data("sap.INRoot")) {
 						$Item.attr("tabIndex", this.iActiveTabIndex);
-					}else{
+					} else {
 						$Item.attr("tabIndex", -1);
 					}
 				}
@@ -348,8 +332,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#setNestedItemsTabindex
-	 * @function
 	 */
 	ItemNavigation.prototype.setNestedItemsTabindex = function() {
 		if (jQuery(this.oDomRef).data("sap.INItem")) {
@@ -366,8 +348,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * Destroys the delegate and releases all dom references.
 	 *
-	 * @name sap.ui.core.delegate.ItemNavigation#destroy
-	 * @function
 	 */
 	ItemNavigation.prototype.destroy = function() {
 
@@ -377,7 +357,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		}
 
 		if (this.aItemDomRefs) {
-			for (var i=0; i<this.aItemDomRefs.length; i++) {
+			for (var i = 0; i < this.aItemDomRefs.length; i++) {
 				if (this.aItemDomRefs[i]) { // separators return null here
 					jQuery(this.aItemDomRefs[i]).removeData("sap.INItem");
 					jQuery(this.aItemDomRefs[i]).removeData("sap.InNavArea");
@@ -396,8 +376,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {boolean} bCycling true if cycling should be done, else false
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#setCycling
-	 * @function
 	 */
 	ItemNavigation.prototype.setCycling = function(bCycling) {
 		this.bCycling = bCycling;
@@ -416,8 +394,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#setTableMode
-	 * @function
 	 */
 	ItemNavigation.prototype.setTableMode = function(bTableMode, bTableList) {
 		this.bTableMode = bTableMode;
@@ -431,8 +407,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {int} iPageSize the pagesize, needs to be at least 1
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#setPageSize
-	 * @function
 	 */
 	ItemNavigation.prototype.setPageSize = function(iPageSize) {
 		this.iPageSize = iPageSize;
@@ -445,8 +419,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {int} iIndex the index of the first selected item
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#setSelectedIndex
-	 * @function
 	 */
 	ItemNavigation.prototype.setSelectedIndex = function(iIndex) {
 		this.iSelectedIndex = iIndex;
@@ -460,8 +432,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {boolean} bNoColumnChange forbid to jump to an other column with up and down keys
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#setColumns
-	 * @function
 	 */
 	ItemNavigation.prototype.setColumns = function(iColumns, bNoColumnChange) {
 		this.iColumns = iColumns;
@@ -476,8 +446,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {boolean} bCtrlEnabled HOME/END with CTRL -> go to first/last item of all
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.delegate.ItemNavigation#setColumns
-	 * @function
 	 */
 	ItemNavigation.prototype.setHomeEndColumnMode = function(bStayInRow, bCtrlEnabled) {
 
@@ -491,8 +459,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @param {int} iIndex the index of the item to focus
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#focusItem
-	 * @function
 	 */
 	ItemNavigation.prototype.focusItem = function(iIndex, oEvent) {
 
@@ -557,8 +523,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {int} iIndex the index of the item
 	 * @return {sap.ui.core.delegate.ItemNavigation} <code>this</code> to allow method chaining
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#setFocusedIndex
-	 * @function
 	 */
 	ItemNavigation.prototype.setFocusedIndex = function(iIndex) {
 		var $Item;
@@ -601,8 +565,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @return {Element} focused dom ref
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#getFocusedDomRef
-	 * @function
 	 */
 	ItemNavigation.prototype.getFocusedDomRef = function() {
 		return this.aItemDomRefs[this.iFocusedIndex];
@@ -613,8 +575,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @return {int} focused index
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#getFocusedIndex
-	 * @function
 	 */
 	ItemNavigation.prototype.getFocusedIndex = function() {
 		return this.iFocusedIndex;
@@ -625,8 +585,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @param {jQuery.Event} oEvent the browser event
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onfocusin
-	 * @function
 	 */
 	ItemNavigation.prototype.onfocusin = function(oEvent) {
 
@@ -658,17 +616,29 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 						break;
 
 					case "sapprevious":
-						iIndex = this.aItemDomRefs.length-1;
+						iIndex = this.aItemDomRefs.length - 1;
 						break;
 
 					default:
-						iIndex = this.iSelectedIndex != -1 ?  this.iSelectedIndex : (this.iFocusedIndex != -1 ? this.iFocusedIndex : 0);
+						if (this.iSelectedIndex != -1) {
+							iIndex = this.iSelectedIndex;
+						} else if (this.iFocusedIndex != -1) {
+							iIndex = this.iFocusedIndex;
+						} else {
+							iIndex = 0;
+						}
 						break;
 				}
 
 				this._sFocusEvent = undefined;
 			} else {
-				iIndex = this.iSelectedIndex != -1 ?  this.iSelectedIndex : (this.iFocusedIndex != -1 ? this.iFocusedIndex : 0);
+				if (this.iSelectedIndex != -1) {
+					iIndex = this.iSelectedIndex;
+				} else if (this.iFocusedIndex != -1) {
+					iIndex = this.iFocusedIndex;
+				} else {
+					iIndex = 0;
+				}
 			}
 
 			this.focusItem(iIndex, oEvent);
@@ -686,7 +656,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 				if (this.iFocusedIndex == -1 && iIndex > 0) {
 
 					// still no item selected, try to find a previous one
-					for (var i=iIndex-1; i>=0; i--) {
+					for (var i = iIndex - 1; i >= 0; i--) {
 						this.focusItem(i, oEvent);
 						if (this.iFocusedIndex == i) {
 							break;
@@ -724,14 +694,20 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @param {jQuery.Event} oEvent the browser event
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsapfocusleave
-	 * @function
 	 */
 	ItemNavigation.prototype.onsapfocusleave = function(oEvent) {
 		if (!oEvent.relatedControlId || !jQuery.sap.containsOrEquals(this.oDomRef, sap.ui.getCore().byId(oEvent.relatedControlId).getFocusDomRef())) {
 
 			// entirely leaving the control handled by this ItemNavigation instance
-			this.setFocusedIndex(this.iSelectedIndex != -1 ?  this.iSelectedIndex : (this.iFocusedIndex != -1 ? this.iFocusedIndex : 0));
+			var iIndex;
+			if (this.iSelectedIndex != -1) {
+				iIndex = this.iSelectedIndex;
+			} else if (this.iFocusedIndex != -1) {
+				iIndex = this.iFocusedIndex;
+			} else {
+				iIndex = 0;
+			}
+			this.setFocusedIndex(iIndex);
 
 			if (jQuery(this.oDomRef).data("sap.INItem")) {
 
@@ -766,13 +742,30 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @param {jQuery.Event} oEvent the browser event
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onmousedown
-	 * @function
 	 */
 	ItemNavigation.prototype.onmousedown = function(oEvent) {
 
 		// set the focus to the clicked element or back to the last
 		var oSource = oEvent.target;
+
+		var checkFocusableParent = function( oDomRef, oItem){
+
+			// as table cell might have focusable content that have not focusable DOM insinde
+			// the table cell should not get the focus but the focusable element inside
+			var bFocusableParent = false;
+			var $CheckDom = jQuery(oDomRef);
+			while (!$CheckDom.is(":sapFocusable") && $CheckDom.get(0) != oItem) {
+				$CheckDom = $CheckDom.parent();
+			}
+
+			if ($CheckDom.get(0) != oItem) {
+				// focusable Dom found inside item
+				bFocusableParent = true;
+			}
+
+			return bFocusableParent;
+
+		};
 
 		if (jQuery.sap.containsOrEquals(this.oDomRef, oSource)) {
 
@@ -788,10 +781,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 						// no oEvent.preventDefault(); because cursor will not be set in Textfield
 						// no oEvent.stopPropagation(); because e.g. DatePicker can not close popup
 					} else {
-
 						// only focus the items if the click did not happen on a
 						// focusable element!
-						if (oItem === oSource || !jQuery(oSource).is(":sapFocusable")) {
+						if (oItem === oSource || !checkFocusableParent(oSource, oItem)) {
 							this.focusItem(i, oEvent);
 
 							// the table mode requires not to prevent the default
@@ -824,8 +816,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @param {jQuery.Event} oEvent the browser event
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsapnext
-	 * @function
 	 */
 	ItemNavigation.prototype.onsapnext = function(oEvent) {
 
@@ -873,9 +863,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 						if ((iIndex + this.iColumns) >= this.aItemDomRefs.length) {
 							if (!this.bNoColumnChange) {
 								// on bottom -> begin on top of next column
-								if ((iIndex % this.iColumns) < (this.iColumns -1)) {
+								if ((iIndex % this.iColumns) < (this.iColumns - 1)) {
 									iIndex = (iIndex % this.iColumns) + 1;
-								} else if(this.bCycling) {
+								} else if (this.bCycling) {
 									iIndex = 0;
 								}
 							} else {
@@ -918,8 +908,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 					}
 
 				// if item is not visible or a dummy item go to the next one
-				} while (!this.aItemDomRefs[iIndex] || !jQuery(this.aItemDomRefs[iIndex]).is(":visible") || jQuery(this.aItemDomRefs[iIndex]).css("visibility") === "hidden"
-					|| !jQuery(this.aItemDomRefs[iIndex]).is(":sapFocusable"));
+				// !jQuery(this.aItemDomRefs[iIndex]).is(":visible") and jQuery(this.aItemDomRefs[iIndex]).css("visibility") === "hidden"
+				// - is not needed as .is(":sapFocusable") do these checks already	
+				} while (!this.aItemDomRefs[iIndex] || !jQuery(this.aItemDomRefs[iIndex]).is(":sapFocusable"));
 			}
 
 			this.focusItem(iIndex, oEvent);
@@ -942,8 +933,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * 
 	 * @see #onsapnext
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsapnextmodifiers
-	 * @function
 	 */
 	ItemNavigation.prototype.onsapnextmodifiers = function(oEvent) {
 		if (this.hasDisabledModifier(oEvent)) {
@@ -959,8 +948,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @param {jQuery.Event} oEvent the browser event
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsapprevious
-	 * @function
 	 */
 	ItemNavigation.prototype.onsapprevious = function(oEvent) {
 
@@ -988,8 +975,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 
 		if (iIndex > -1) {
 			if (this.bTableMode) {
-				var iRowCount = this.aItemDomRefs.length / this.iColumns,
-					iRow = Math.floor(iIndex / this.iColumns),
+				var iRow = Math.floor(iIndex / this.iColumns),
 					iCol = iIndex % this.iColumns;
 
 				if (oEvent.keyCode == jQuery.sap.KeyCodes.ARROW_UP) {
@@ -1019,7 +1005,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 									iIndex = 0;
 								} else {
 									var iRows = Math.ceil(this.aItemDomRefs.length / this.iColumns);
-									iIndex = iCol + ((iRows-1) * this.iColumns);
+									iIndex = iCol + ((iRows - 1) * this.iColumns);
 
 									if (iIndex >= this.aItemDomRefs.length) {
 										iIndex = iIndex - this.iColumns;
@@ -1064,9 +1050,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 						}
 					}
 
-				// if item is not visible or a dummy item go to the next one
-				} while(!this.aItemDomRefs[iIndex] || !jQuery(this.aItemDomRefs[iIndex]).is(":visible") || jQuery(this.aItemDomRefs[iIndex]).css("visibility") === "hidden"
-					|| !jQuery(this.aItemDomRefs[iIndex]).is(":sapFocusable"));
+				// if item is not visible or a dummy item go to the next one	
+				} while (!this.aItemDomRefs[iIndex] || !jQuery(this.aItemDomRefs[iIndex]).is(":sapFocusable"));
 			}
 
 			this.focusItem(iIndex, oEvent);
@@ -1089,8 +1074,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @see #onsapprevious
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsappreviousmodifiers
-	 * @function
 	 */
 	ItemNavigation.prototype.onsappreviousmodifiers = function(oEvent) {
 		if (this.hasDisabledModifier(oEvent)) {
@@ -1105,8 +1088,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * Sets the focus to the previous page item of iPageSize>0
 	 * @param {jQuery.Event} oEvent the browser event
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsappageup
-	 * @function
 	 */
 	ItemNavigation.prototype.onsappageup = function(oEvent) {
 
@@ -1170,8 +1151,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @param {jQuery.Event} oEvent the browser event
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsappagedown
-	 * @function
 	 */
 	ItemNavigation.prototype.onsappagedown = function(oEvent) {
 
@@ -1236,8 +1215,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * Sets the focus to first visible and focusable item
 	 * @param {jQuery.Event} oEvent the browser event
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsaphome
-	 * @function
 	 */
 	ItemNavigation.prototype.onsaphome = function(oEvent) {
 
@@ -1270,9 +1247,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 			if (this._bStayInRow && !(this._bCtrlEnabled && (oEvent.metaKey || oEvent.ctrlKey)) && this.iColumns > 0) {
 				var iRow = Math.floor(this.iFocusedIndex / this.iColumns);
 				iIndex = iRow * this.iColumns;
-			}else {
-				while(!this.aItemDomRefs[iIndex] || !jQuery(this.aItemDomRefs[iIndex]).is(":visible") || jQuery(this.aItemDomRefs[iIndex]).css("visibility") === "hidden"
-					|| !jQuery(this.aItemDomRefs[iIndex]).is(":sapFocusable")) {
+			} else {
+				while (!this.aItemDomRefs[iIndex] || !jQuery(this.aItemDomRefs[iIndex]).is(":sapFocusable")) {
 					iIndex++;
 
 					if (iIndex == this.aItemDomRefs.length) {
@@ -1296,8 +1272,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @see #onsaphome
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsaphomemodifiers
-	 * @function
 	 */
 	ItemNavigation.prototype.onsaphomemodifiers = function(oEvent) {
 		if (this.hasDisabledModifier(oEvent)) {
@@ -1313,8 +1287,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * Sets the focus to last visible and focusable item
 	 * @param {jQuery.Event} oEvent the browser event
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsapend
-	 * @function
 	 */
 	ItemNavigation.prototype.onsapend = function(oEvent) {
 
@@ -1330,7 +1302,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 			return;
 		}
 
-		var iIndex = this.aItemDomRefs.length-1;
+		var iIndex = this.aItemDomRefs.length - 1;
 
 		if (this.bTableMode) {
 			if (!this.bTableList && !(oEvent.metaKey || oEvent.ctrlKey)) {
@@ -1352,9 +1324,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 					// item not exist -> use last one
 					iIndex = this.aItemDomRefs.length - 1;
 				}
-			}else {
-				while (!this.aItemDomRefs[iIndex] || !jQuery(this.aItemDomRefs[iIndex]).is(":visible") || jQuery(this.aItemDomRefs[iIndex]).css("visibility") == "hidden"
-					|| !jQuery(this.aItemDomRefs[iIndex]).is(":sapFocusable")) {
+			} else {
+				while (!this.aItemDomRefs[iIndex] || !jQuery(this.aItemDomRefs[iIndex]).is(":sapFocusable")) {
 					iIndex--;
 
 					if (iIndex < 0) {
@@ -1378,8 +1349,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @see #onsapend
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onsapendmodifiers
-	 * @function
 	 */
 	ItemNavigation.prototype.onsapendmodifiers = function(oEvent) {
 		if (this.hasDisabledModifier(oEvent)) {
@@ -1393,8 +1362,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * Sets tabIndex of the RootElement to 0. Is used, for example in image map for IE browser in order to avoid tabIndex -1 on image with what it would not be tabable at all.
 	 *
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#setTabIndex0
-	 * @function
 	 */
 	ItemNavigation.prototype.setTabIndex0 = function() {
 		this.iTabIndex = 0;
@@ -1405,8 +1372,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * toggle navigation/action mode on F2
 	 *
 	 * @private
-	 * @name sap.ui.core.delegate.ItemNavigation#onkeyup
-	 * @function
 	 */
 	ItemNavigation.prototype.onkeyup = function(oEvent) {
 
@@ -1416,7 +1381,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 
 			if ($DomRef.data("sap.InNavArea")) {
 				$DomRef.data("sap.InNavArea", false);
-			} else if($DomRef.data("sap.InNavArea") === false) { // check for false to avoid undefined
+			} else if ($DomRef.data("sap.InNavArea") === false) { // check for false to avoid undefined
 				$DomRef.data("sap.InNavArea", true);
 			}
 

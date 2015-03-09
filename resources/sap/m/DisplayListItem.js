@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
-jQuery.sap.declare("sap.m.DisplayListItem");jQuery.sap.require("sap.m.library");jQuery.sap.require("sap.m.ListItemBase");sap.m.ListItemBase.extend("sap.m.DisplayListItem",{metadata:{library:"sap.m",properties:{"label":{type:"string",group:"Misc",defaultValue:null},"value":{type:"string",group:"Data",defaultValue:null}}}});
+sap.ui.define(['jquery.sap.global','./ListItemBase','./library'],function(q,L,l){"use strict";var D=L.extend("sap.m.DisplayListItem",{metadata:{library:"sap.m",properties:{label:{type:"string",group:"Misc",defaultValue:null},value:{type:"string",group:"Data",defaultValue:null}}}});return D},true);

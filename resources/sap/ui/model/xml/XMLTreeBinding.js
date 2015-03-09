@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
-sap.ui.define(['jquery.sap.global','sap/ui/model/ClientTreeBinding'],function(q,C){"use strict";var X=C.extend("sap.ui.model.xml.XMLTreeBinding");X.prototype.getNodeContexts=function(c){var s=c.getPath();if(!q.sap.endsWith(s,"/")){s=s+"/"}if(!q.sap.startsWith(s,"/")){s="/"+s}var a=[],n={},t=this,N=this.oModel._getObject(c.getPath()),o,b,d;q.each(N[0].childNodes,function(e,o){if(o.nodeType==1){if(n[o.nodeName]==undefined){n[o.nodeName]=0}else{n[o.nodeName]++}b=s+o.nodeName+"/"+n[o.nodeName];d=t.oModel.getContext(b);if(t.aFilters&&!t.bIsFiltering){if(q.inArray(d,t.filterInfo.aFilteredContexts)!=-1){a.push(d)}}else{a.push(d)}}});return a};return X},true);
+sap.ui.define(['jquery.sap.global','sap/ui/model/ClientTreeBinding'],function(q,C){"use strict";var X=C.extend("sap.ui.model.xml.XMLTreeBinding");X.prototype.getNodeContexts=function(c,s,l){if(!s){s=0}if(!l){l=this.oModel.iSizeLimit}var a=c.getPath();if(!q.sap.endsWith(a,"/")){a=a+"/"}if(!q.sap.startsWith(a,"/")){a="/"+a}var b=[],n={},t=this,N=this.oModel._getObject(c.getPath()),d,o;q.each(N[0].childNodes,function(e,f){if(f.nodeType==1){if(n[f.nodeName]==undefined){n[f.nodeName]=0}else{n[f.nodeName]++}d=a+f.nodeName+"/"+n[f.nodeName];o=t.oModel.getContext(d);if(t.aFilters&&!t.bIsFiltering){if(q.inArray(o,t.filterInfo.aFilteredContexts)!=-1){b.push(o)}}else{b.push(o)}}});return b.slice(s,s+l)};return X},true);

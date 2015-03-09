@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -19,22 +19,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 		 *
 		 * @abstract
 		 * @extends sap.ui.base.Object
-		 * @version 1.24.3
+		 * @version 1.26.7
 		 * @constructor
 		 * @private
-		 * @name sap.ui.core.support.plugins.TechInfo
+		 * @alias sap.ui.core.support.plugins.TechInfo
 		 */
 		var TechInfo = Plugin.extend("sap.ui.core.support.plugins.TechInfo", {
 			constructor : function(oSupportStub) {
 				Plugin.apply(this, ["sapUiSupportTechInfo", "Technical Information", oSupportStub]);
 				this._aEventIds = this.isToolPlugin() ? [
-				    this.getId()+"Data",
-				    this.getId()+"FinishedE2ETrace"
+					this.getId() + "Data",
+					this.getId() + "FinishedE2ETrace"
 				] : [
-					this.getId()+"ToggleDebug",
-					this.getId()+"Refresh",
-					this.getId()+"StartE2ETrace",
-					this.getId()+"ToggleStatistics"
+					this.getId() + "ToggleDebug",
+					this.getId() + "Refresh",
+					this.getId() + "StartE2ETrace",
+					this.getId() + "ToggleStatistics"
 				];
 	
 				if (this.isToolPlugin()) {
@@ -51,8 +51,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 		 * 
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.TechInfo#onsapUiSupportTechInfoData
-		 * @function
 		 */
 		TechInfo.prototype.onsapUiSupportTechInfoData = function(oEvent){
 			var that = this;
@@ -60,9 +58,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 			oData.modules.sort();
 			this.e2eTraceStarted = oData["e2e-trace"].isStarted;
 			var html = ["<div class='sapUiSupportToolbar'>",
-			            "<a href='javascript:void(0);' id='", that.getId(), "-Refresh' class='sapUiSupportLink'>Refresh</a>",
-			            "<div><div class='sapUiSupportTechInfoCntnt'>",
-			            "<table border='0' cellpadding='3'>"];
+						"<a href='javascript:void(0);' id='", that.getId(), "-Refresh' class='sapUiSupportLink'>Refresh</a>",
+						"<div><div class='sapUiSupportTechInfoCntnt'>",
+						"<table border='0' cellpadding='3'>"];
 			line(html, true, true, "SAPUI5 Version", function(buffer){
 				try {
 					var oVersionInfo = sap.ui.getVersionInfo();
@@ -90,9 +88,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 			multiline(html, true, true, "Loaded Libraries", oData.loadedLibraries);
 			line(html, true, true, "Loaded Modules", function(buffer){
 				jQuery.each(oData.modules, function(i,v){
-					if(v.indexOf("sap.ui.core.support") < 0){
+					if (v.indexOf("sap.ui.core.support") < 0) {
 						buffer.push("<span>", v, "</span>");
-						if(i < oData.modules.length-1){
+						if (i < oData.modules.length - 1) {
 							buffer.push(", ");
 						}
 					}
@@ -124,10 +122,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 			this.$().html(html.join(""));
 	
 			this.$("tggleDbgSrc").bind("click", function(){
-				sap.ui.core.support.Support.getStub().sendEvent(that.getId()+"ToggleDebug", {});
+				sap.ui.core.support.Support.getStub().sendEvent(that.getId() + "ToggleDebug", {});
 			});
 			this.$("Refresh").bind("click", function(){
-				sap.ui.core.support.Support.getStub().sendEvent(that.getId()+"Refresh", {});
+				sap.ui.core.support.Support.getStub().sendEvent(that.getId() + "Refresh", {});
 			});
 	
 			this.$("outputE2ETrace").bind("click", function() {
@@ -136,7 +134,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 			});
 	
 			this.$("tggleStatistics").bind("click", function(){
-				sap.ui.core.support.Support.getStub().sendEvent(that.getId()+"ToggleStatistics", {});
+				sap.ui.core.support.Support.getStub().sendEvent(that.getId() + "ToggleStatistics", {});
 			});
 	
 			this.$("startE2ETrace").bind("click", function() {
@@ -160,8 +158,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 		 * 
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.TechInfo#onsapUiSupportTechInfoToggleDebug
-		 * @function
 		 */
 		TechInfo.prototype.onsapUiSupportTechInfoToggleDebug = function(oEvent){
 			jQuery.sap.debug(!jQuery.sap.debug());
@@ -173,8 +169,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 		 * 
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.TechInfo#onsapUiSupportTechInfoStartE2ETrace
-		 * @function
 		 */
 		TechInfo.prototype.onsapUiSupportTechInfoStartE2ETrace = function(oEvent) {
 	
@@ -196,8 +190,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 		 * 
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.TechInfo#onsapUiSupportTechInfoFinishedE2ETrace
-		 * @function
 		 */
 		TechInfo.prototype.onsapUiSupportTechInfoFinishedE2ETrace = function(oEvent) {
 			this.$("startE2ETrace").removeClass("active").text("Start");
@@ -210,8 +202,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 		 * 
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.TechInfo#onsapUiSupportTechInfoRefresh
-		 * @function
 		 */
 		TechInfo.prototype.onsapUiSupportTechInfoRefresh = function(oEvent){
 			sendData(this);
@@ -222,8 +212,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 		 * 
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.TechInfo#onsapUiSupportTechInfoToggleStatistics
-		 * @function
 		 */
 		TechInfo.prototype.onsapUiSupportTechInfoToggleStatistics = function(oEvent){
 			jQuery.sap.statistics(!jQuery.sap.statistics());
@@ -232,7 +220,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 	
 		TechInfo.prototype.init = function(oSupportStub){
 			Plugin.prototype.init.apply(this, arguments);
-			if(!this.isToolPlugin()){
+			if (!this.isToolPlugin()) {
 				sendData(this);
 				return;
 			}
@@ -247,13 +235,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 				"theme": oCfg.getTheme(),
 				"language": oCfg.getLanguage(),
 				"formatLocale": oCfg.getFormatLocale(),
-				"accessibility": ""+oCfg.getAccessibility(),
-				"animation": ""+oCfg.getAnimation(),
-				"rtl": ""+oCfg.getRTL(),
-				"debug": ""+oCfg.getDebug(),
-				"inspect": ""+oCfg.getInspect(),
-				"originInfo": ""+oCfg.getOriginInfo(),
-				"noDuplicateIds": ""+oCfg.getNoDuplicateIds()
+				"accessibility": "" + oCfg.getAccessibility(),
+				"animation": "" + oCfg.getAnimation(),
+				"rtl": "" + oCfg.getRTL(),
+				"debug": "" + oCfg.getDebug(),
+				"inspect": "" + oCfg.getInspect(),
+				"originInfo": "" + oCfg.getOriginInfo(),
+				"noDuplicateIds": "" + oCfg.getNoDuplicateIds()
 			};
 	
 			var oLibs = {};
@@ -299,20 +287,20 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 				};
 			}
 	
-			sap.ui.core.support.Support.getStub().sendEvent(oPlugin.getId()+"Data", { data: oData });
-		};
+			sap.ui.core.support.Support.getStub().sendEvent(oPlugin.getId() + "Data", { data: oData });
+		}
 	
 	
 		function line(buffer, right, border, label, content){
 			buffer.push("<tr><td ", right ? "align='right' " : "", "valign='top'>", "<label class='sapUiSupportLabel'>", jQuery.sap.escapeHTML(label), "</label></td><td",
 					border ? " class='sapUiSupportTechInfoBorder'" : "", ">");
 			var ctnt = content;
-			if(jQuery.isFunction(content)){
+			if (jQuery.isFunction(content)) {
 				ctnt = content(buffer) || "";
 			}
 			buffer.push(jQuery.sap.escapeHTML(ctnt));
 			buffer.push("</td></tr>");
-		};
+		}
 	
 	
 		function multiline(buffer, right, border, label, content){
@@ -320,18 +308,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'jquery.sap.en
 				buffer.push("<table border='0' cellspacing='0' cellpadding='3'>");
 				jQuery.each(content, function(i,v){
 					var val = "";
-					if(v){
-						if(typeof(v) === "string" || typeof(v) === "string" || typeof(v) === "boolean"){
+					if (v) {
+						if (typeof (v) === "string" || typeof (v) === "string" || typeof (v) === "boolean") {
 							val = v;
-						}else if((jQuery.isArray(v) || jQuery.isPlainObject(v)) && window.JSON){
+						} else if ((jQuery.isArray(v) || jQuery.isPlainObject(v)) && window.JSON) {
 							val = window.JSON.stringify(v);
 						}
 					}
-					line(buffer, false, false, i, ""+val);
+					line(buffer, false, false, i, "" + val);
 				});
 				buffer.push("</table>");
 			});
-		};
+		}
 	
 	
 	

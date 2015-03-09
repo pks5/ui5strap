@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -13,7 +13,7 @@ sap.ui.define(['jquery.sap.global'],
 	/**
 	 * @class ScrollBar renderer.
 	 * @static
-	 * @name sap.ui.core.ScrollBarRenderer
+	 * @alias sap.ui.core.ScrollBarRenderer
 	 */
 	var ScrollBarRenderer = {
 	};
@@ -24,12 +24,10 @@ sap.ui.define(['jquery.sap.global'],
 	 *
 	 * @param {sap.ui.core.RenderManager} oRenderManager RenderManager that can be used for writing to the Render-Output-Buffer
 	 * @param {sap.ui.core.Control} oControl Object representation of the control that should be rendered
-	 * @name sap.ui.core.ScrollBarRenderer.render
-	 * @function
 	 */
 	ScrollBarRenderer.render = function(oRenderManager, oScrollBar){
 	
-	    // convenience variable
+		// convenience variable
 		var rm = oRenderManager;
 		var bRTL = sap.ui.getCore().getConfiguration().getRTL();
 	
@@ -38,7 +36,7 @@ sap.ui.define(['jquery.sap.global'],
 		
 		var sScrollBarTouchClass;
 		if (sap.ui.Device.support.touch) {
-			sScrollBarTouchClass = "sapUiScrollBarTouch"
+			sScrollBarTouchClass = "sapUiScrollBarTouch";
 			rm.addClass(sScrollBarTouchClass);
 		}
 	
@@ -46,12 +44,12 @@ sap.ui.define(['jquery.sap.global'],
 		var bVertical = oScrollBar.getVertical();
 		var sSize = oScrollBar.getSize();
 		var sContentSize = oScrollBar.getContentSize();
-	    
+		
 		var oBSS = jQuery.sap.scrollbarSize(sScrollBarTouchClass);
 		var sWidth = oBSS.width;
 		var sHeight = oBSS.height;
 	
-		if (bVertical){
+		if (bVertical) {
 			// First div. <div style="overflow:hidden;width:16px;height:200px">
 			rm.write("<div");
 			rm.writeControlData(oScrollBar);
@@ -66,7 +64,7 @@ sap.ui.define(['jquery.sap.global'],
 			// Middle div - ScrollBar itself.
 			rm.write("<div ");
 			rm.writeAttribute( "id", oScrollBar.getId() + "-sb");
-			rm.write(" style=\"width:" + sWidth*2 + "px;height:100%;overflow-y:scroll;overflow-x:hidden");
+			rm.write(" style=\"width:" + sWidth * 2 + "px;height:100%;overflow-y:scroll;overflow-x:hidden");
 			if (bRTL) {
 				//right to left mode. Special handling for mozilla 3.6 and safari - do not render right margin
 				if ((!(!!sap.ui.Device.browser.firefox && sap.ui.Device.browser.version == 3.6)) && (!!!sap.ui.Device.browser.safari)) {
@@ -89,7 +87,7 @@ sap.ui.define(['jquery.sap.global'],
 			rm.write("</div>");
 			rm.write("</div>");
 	
-			rm.write("<div> <span id=" + oScrollBar.getId() + "-ffsize" +" style='position: absolute; top: -9000px; left: -9000px; visibility: hidden; line-height: normal;'> FF Size</span></div>");
+			rm.write("<div> <span id=" + oScrollBar.getId() + "-ffsize" + " style='position: absolute; top: -9000px; left: -9000px; visibility: hidden; line-height: normal;'> FF Size</span></div>");
 			rm.write("</div>");
 	
 		} else {
@@ -109,7 +107,7 @@ sap.ui.define(['jquery.sap.global'],
 			// Middle div - ScrollBar itself.
 			rm.write("<div ");
 			rm.writeAttribute( "id", oScrollBar.getId() + "-sb");
-	        rm.write(" style=\"height:" + sHeight*2 + "px;margin-top:-" + sHeight + "px;overflow-x:scroll;overflow-y:hidden\">");
+			rm.write(" style=\"height:" + sHeight * 2 + "px;margin-top:-" + sHeight + "px;overflow-x:scroll;overflow-y:hidden\">");
 	
 			//Last div - The content div   <div style="width:1000px;height:16px;"></div>
 			rm.write("<div");

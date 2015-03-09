@@ -1,6 +1,6 @@
 /*
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -24,8 +24,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './delegate/HTM
 	 * @class HTMLViewSerializer class.
 	 * @extends sap.ui.base.EventProvider
 	 * @author SAP SE
-	 * @version 1.24.3
-	 * @name sap.ui.core.util.serializer.HTMLViewSerializer
+	 * @version 1.26.7
+	 * @alias sap.ui.core.util.serializer.HTMLViewSerializer
 	 * @experimental Since 1.15.1. The HTMLViewSerializer is still under construction, so some implementation details can be changed in future.
 	 */
 	var HTMLViewSerializer = EventProvider.extend("sap.ui.core.util.serializer.HTMLViewSerializer", /** @lends sap.ui.core.util.serializer.HTMLViewSerializer.prototype */
@@ -44,8 +44,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './delegate/HTM
 	 * Serializes the given HTML view.
 	 * 
 	 * @returns {string} the serialized HTML view.
-	 * @name sap.ui.core.util.serializer.HTMLViewSerializer#serialize
-	 * @function
 	 */
 	HTMLViewSerializer.prototype.serialize = function () {
 	

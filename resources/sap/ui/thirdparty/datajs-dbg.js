@@ -987,7 +987,7 @@
         // added usage of _createAttributeNS as fallback (see function above)
         var attribute =
             dom.createAttributeNS && dom.createAttributeNS(namespaceURI, qualifiedName) ||
-            dom.createNode && dom.createNode(2, qualifiedName, namespaceURI || undefined) ||
+            "createNode" in dom && dom.createNode(2, qualifiedName, namespaceURI || undefined) ||
             _createAttributeNS(namespaceURI, qualifiedName);
         // ##### END: MODIFIED BY SAP
 
@@ -2530,6 +2530,10 @@
                     if (statusCode >= 200 && statusCode <= 299) {
                         success(response);
                     } else {
+                      	// ##### BEGIN: MODIFIED BY SAP
+                      	// normalize response headers here which is also done in the success function call above
+                      	normalizeHeaders(response.headers);
+                      	// ##### END: MODIFIED BY SAP
                         error({ message: "HTTP request failed", request: request, response: response });
                     }
                 };
@@ -5686,7 +5690,7 @@
             // ##### BEGIN: MODIFIED BY SAP
             Annotation: schemaElement(
             /*attributes*/["Term"],
-            /*elements*/["Record"]
+            /*elements*/["Record", "Collection"]
             ),
             // ##### END: MODIFIED BY SAP
             Association: schemaElement(

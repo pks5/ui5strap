@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -50,7 +50,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * should be deleted the method {@link #removeAll} should be used.
 	 *
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 0.11.0
 	 * @public
 	 * @name jQuery.sap.storage.Storage
@@ -69,28 +69,26 @@ sap.ui.define(['jquery.sap.global'],
 		var sType = "unknown",
 			sPrefix = sStorageKeyPrefix || sStateStorageKeyPrefix;
 		sPrefix += "-";
-		var sTestKey = sPrefix+"___sapui5TEST___",
-			bStorageAccessible = true,
+		var sTestKey = sPrefix + "___sapui5TEST___",
 			oStorage;
 		
 
-		if(!pStorage || typeof(pStorage) === "string") {
+		if (!pStorage || typeof (pStorage) === "string") {
 			sType = pStorage || "session";
-			try{
+			try {
 				oStorage = window[sType + "Storage"];
-			}catch(e){
+			} catch (e) {
 				oStorage = null;
 			}
-			try{ // Test for QUOTA_EXCEEDED_ERR (Happens e.g. in mobile Safari when private browsing active)
-				if(oStorage){
+			try { // Test for QUOTA_EXCEEDED_ERR (Happens e.g. in mobile Safari when private browsing active)
+				if (oStorage) {
 					oStorage.setItem(sTestKey, "1");
 					oStorage.removeItem(sTestKey);
 				}
-			}catch(e){
-				bStorageAccessible = false; //Only for debugging purposes
+			} catch (e) {
 				oStorage = null;
 			}
-		} else if(typeof(pStorage) === "object") {
+		} else if (typeof (pStorage) === "object") {
 			sType = pStorage.getType ? pStorage.getType() : "unknown";
 			oStorage = pStorage;
 		}
@@ -106,10 +104,10 @@ sap.ui.define(['jquery.sap.global'],
 		 * @function
 		 */
 		this.isSupported = function(){
-			if(!bStorageAvailable){ //No storage available at all or not accessible
+			if (!bStorageAvailable) { //No storage available at all or not accessible
 				return false;
 			}
-			if(typeof(oStorage.isSupported) == "function"){ //Possibility to define for custom storage
+			if (typeof (oStorage.isSupported) == "function") { //Possibility to define for custom storage
 				return oStorage.isSupported();
 			}
 			return true;
@@ -134,9 +132,9 @@ sap.ui.define(['jquery.sap.global'],
 			jQuery.sap.assert(typeof sStateToStore === "string" || bSupportJSON, "sStateToStore must be string or JSON must be supported");
 			if (this.isSupported() && sId) {
 				try {
-					oStorage.setItem(sPrefix+sId, bSupportJSON?JSON.stringify(sStateToStore):sStateToStore);
+					oStorage.setItem(sPrefix + sId, bSupportJSON ? JSON.stringify(sStateToStore) : sStateToStore);
 					return true;
-				} catch(e) {
+				} catch (e) {
 					return false;
 				}
 			} else {
@@ -162,9 +160,9 @@ sap.ui.define(['jquery.sap.global'],
 			jQuery.sap.assert(typeof sId === "string" && sId, "sId must be a non-empty string");
 			if (this.isSupported() && sId ) {
 				try {
-					var sItem=oStorage.getItem(sPrefix+sId);
-					return bSupportJSON?JSON.parse(sItem):sItem;
-				} catch(e) {
+					var sItem = oStorage.getItem(sPrefix + sId);
+					return bSupportJSON ? JSON.parse(sItem) : sItem;
+				} catch (e) {
 					return null;
 				}
 			} else {
@@ -191,9 +189,9 @@ sap.ui.define(['jquery.sap.global'],
 			jQuery.sap.assert(typeof sId === "string" && sId, "sId must be a non-empty string");
 			if (this.isSupported() && sId) {
 				try {
-					oStorage.removeItem(sPrefix+sId);
+					oStorage.removeItem(sPrefix + sId);
 					return true;
-				} catch(e) {
+				} catch (e) {
 					return false;
 				}
 			} else {
@@ -224,19 +222,19 @@ sap.ui.define(['jquery.sap.global'],
 					var aKeysToRemove = [];
 					var key, i;
 					var p = sPrefix + (sIdPrefix || "");
-					for(i=0; i<len; i++){
+					for (i = 0; i < len; i++) {
 						key = oStorage.key(i);
-						if(key && key.indexOf(p) == 0){
+						if (key && key.indexOf(p) == 0) {
 							aKeysToRemove.push(key);
 						}
 					}
 					
-					for(i=0; i<aKeysToRemove.length; i++){
+					for (i = 0; i < aKeysToRemove.length; i++) {
 						oStorage.removeItem(aKeysToRemove[i]);
 					}
 					
 					return true;
-				} catch(e) {
+				} catch (e) {
 					return false;
 				}
 			} else {
@@ -265,7 +263,7 @@ sap.ui.define(['jquery.sap.global'],
 				try {
 					oStorage.clear();
 					return true;
-				} catch(e) {
+				} catch (e) {
 					return false;
 				}
 			} else {
@@ -309,7 +307,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @param {string} [sIdPrefix] Prefix used for the Ids. If not set a default prefix is used.    
 	 * @returns {jQuery.sap.storage.Storage}
 	 * 
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 0.11.0
 	 * @namespace
 	 * @type Function
@@ -325,14 +323,14 @@ sap.ui.define(['jquery.sap.global'],
 	 */
 	jQuery.sap.storage = function(oStorage, sIdPrefix){
 		// if nothing or the default was passed in, simply return ourself
-		if(!oStorage) {
+		if (!oStorage) {
 			oStorage = jQuery.sap.storage.Type.session;
 		}
 
-		if(typeof(oStorage) === "string" && jQuery.sap.storage.Type[oStorage]) {
+		if (typeof (oStorage) === "string" && jQuery.sap.storage.Type[oStorage]) {
 			var sKey = oStorage;
-			if(sIdPrefix && sIdPrefix != sStateStorageKeyPrefix){
-				sKey = oStorage+"_"+sIdPrefix;
+			if (sIdPrefix && sIdPrefix != sStateStorageKeyPrefix) {
+				sKey = oStorage + "_" + sIdPrefix;
 			}
 			
 			return mStorages[sKey] || (mStorages[sKey] = new fnStorage(oStorage, sIdPrefix));
@@ -348,7 +346,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @class
 	 * @static
 	 * @public
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 0.11.0
 	 */
 	jQuery.sap.storage.Type = {

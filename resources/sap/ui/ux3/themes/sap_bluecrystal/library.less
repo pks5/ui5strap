@@ -1,20 +1,21 @@
 /* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
 
-
-/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- * 
- */@import "../base/library.less";
+ */
+
+@import "../base/library.less";
 @import "../../../../../../Base/baseLib/sap_bluecrystal/base.less"; /* ORIGINAL IMPORT PATH: "../../../../../sap/ui/core/themes/sap_bluecrystal/base.less" */
 
-@import (less) "../../../../../sap/ui/core/themes/sap_bluecrystal/global.css";
-/* START "shared.css" */
+@import "../../../../../sap/ui/core/themes/sap_bluecrystal/global.less";
+/* START "shared.less" */
 /* This CSS shares it rules with all other CSS of this library */
-/* END "shared.css" */
+/* END "shared.less" */
 
 
-/* START "ActionBar.css" */
+/* START "ActionBar.less" */
 /* =========================================== */
 /* CSS for controlsap.ui.ux3/ActionBar.control */
 /* =========================================== */
@@ -126,6 +127,25 @@ button.sapUiUx3ActionBarLiteMoreButton:focus>span.sapUiBtnTxt  {
 	background-image: url("img/update_hover.png");
 	background-color: @sapUiHighlight;
 	border: 1px solid @sapUiHighlight;
+}
+.sapUiUx3ActionBarUpdateAction:active {
+	background-image: url("img/update_hover.png");
+	background-color: @sapUiHighlight;
+}
+
+.sapUiUx3ActionBarUpdateAction.Selected {
+	background-image: url("img/update_hover.png");
+	background-color: @sapUiToggleButtonPressedBackground;
+}
+
+.sapUiUx3ActionBarUpdateAction.Selected:focus,
+.sapUiUx3ActionBarUpdateAction.Selected:hover {
+	background-color: darken(@sapUiToggleButtonPressedBackground, 6);
+	border: 1px solid transparent;
+}
+
+.sapUiUx3ActionBarUpdateAction.Selected:active {
+	background-color: @sapUiToggleButtonPressedBackground;
 }
 
 .sapUiUx3ActionBarUpdatePopup.sapUiUx3TP {
@@ -303,9 +323,9 @@ button.sapUiUx3ActionBarLiteMoreButton:focus>span.sapUiBtnTxt  {
 	top: 7px;
 }
 
-/* END "ActionBar.css" */
+/* END "ActionBar.less" */
 
-/* START "CollectionInspector.css" */
+/* START "CollectionInspector.less" */
 /* ============================================= */
 /* CSS for control sap.ui.ux3/Collection.control */
 /* ============================================= */
@@ -419,9 +439,9 @@ button.sapUiBtnS.sapUiBtnNorm.sapUiUx3EditCollectionButton.sapUiBtnStd:hover {
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
 }
-/* END "CollectionInspector.css" */
+/* END "CollectionInspector.less" */
 
-/* START "DataSet.css" */
+/* START "DataSet.less" */
 /* ========================================== */
 /* CSS for control sap.ui.ux3/DataSet.control */
 /* ========================================== */
@@ -434,9 +454,9 @@ button.sapUiBtnS.sapUiBtnNorm.sapUiUx3EditCollectionButton.sapUiBtnStd:hover {
 .sapUiUx3DSToolbar {
 	background-color: @sapUiMediumBG;
 }
-/* END "DataSet.css" */
+/* END "DataSet.less" */
 
-/* START "DataSetSimpleView.css" */
+/* START "DataSetSimpleView.less" */
 /* ==================================================== */
 /* CSS for control sap.ui.ux3/DataSetSimpleView.control */
 /* ==================================================== */
@@ -445,9 +465,9 @@ button.sapUiBtnS.sapUiBtnNorm.sapUiUx3EditCollectionButton.sapUiBtnStd:hover {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
 }
-/* END "DataSetSimpleView.css" */
+/* END "DataSetSimpleView.less" */
 
-/* START "Exact.css" */
+/* START "Exact.less" */
 /* ======================================== */
 /* CSS for control sap.ui.ux3/Exact.control */
 /* ======================================== */
@@ -456,9 +476,9 @@ button.sapUiBtnS.sapUiBtnNorm.sapUiUx3EditCollectionButton.sapUiBtnStd:hover {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
 }
-/* END "Exact.css" */
+/* END "Exact.less" */
 
-/* START "ExactArea.css" */
+/* START "ExactArea.less" */
 /* ============================================ */
 /* CSS for control sap.ui.ux3/ExactArea.control */
 /* ============================================ */
@@ -475,9 +495,9 @@ button.sapUiBtnS.sapUiBtnNorm.sapUiUx3EditCollectionButton.sapUiBtnStd:hover {
 .sapUiUx3ExactAreaTbTitle {
 	margin-top: 2px;
 }
-/* END "ExactArea.css" */
+/* END "ExactArea.less" */
 
-/* START "ExactBrowser.css" */
+/* START "ExactBrowser.less" */
 /* =============================================== */
 /* CSS for control sap.ui.ux3/ExactBrowser.control */
 /* =============================================== */
@@ -491,9 +511,9 @@ button.sapUiBtnS.sapUiBtnNorm.sapUiUx3EditCollectionButton.sapUiBtnStd:hover {
 	height: 22px;
 	line-height: 22px;
 }
-/* END "ExactBrowser.css" */
+/* END "ExactBrowser.less" */
 
-/* START "ExactList.css" */
+/* START "ExactList.less" */
 
 /* ================================================== */
 /* GR CSS for control sap.ui.ux3/ExactList.control    */
@@ -698,9 +718,9 @@ html[dir=rtl][data-sap-ui-browser="ie8"] .sapUiUx3ExactLstCollapsed > .sapUiUx3E
 	background-position: center;
 	background-repeat: no-repeat;
 }
-/* END "ExactList.css" */
+/* END "ExactList.less" */
 
-/* START "FacetFilter.css" */
+/* START "FacetFilter.less" */
 /* ========================================================== */
 /* BlueCrystal CSS for control sap.ui.ux3/FacetFilter.control */
 /* ========================================================== */
@@ -709,9 +729,9 @@ html[dir=rtl][data-sap-ui-browser="ie8"] .sapUiUx3ExactLstCollapsed > .sapUiUx3E
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
 }
-/* END "FacetFilter.css" */
+/* END "FacetFilter.less" */
 
-/* START "FacetFilterList.css" */
+/* START "FacetFilterList.less" */
 /* ============================================================== */
 /* BlueCrystal CSS for control sap.ui.ux3/FacetFilterList.control */
 /* ============================================================== */
@@ -743,9 +763,9 @@ html[dir=rtl][data-sap-ui-browser="ie8"] .sapUiUx3ExactLstCollapsed > .sapUiUx3E
 	border-bottom: 1px solid @sapUiDarkBorder;
 }
 
-/* END "FacetFilterList.css" */
+/* END "FacetFilterList.less" */
 
-/* START "Feed.css" */
+/* START "Feed.less" */
 /* ============================================= */
 /* CSS for control sap.ui.ux3/Feed.control       */
 /* Goldreflection                                */
@@ -790,9 +810,9 @@ html[dir=rtl][data-sap-ui-browser="ie8"] .sapUiUx3ExactLstCollapsed > .sapUiUx3E
 .sapUiFeed > section {
 	margin-top: 2px;
 }
-/* END "Feed.css" */
+/* END "Feed.less" */
 
-/* START "FeedChunk.css" */
+/* START "FeedChunk.less" */
 /* ============================================= */
 /* CSS for control sap.ui.ux3/FeedChunk.control  */
 /* Blue Crystal                                  */
@@ -1088,9 +1108,9 @@ html[data-sap-ui-browser="ie8"] .sapUiFeedChunk > section > header{
 	margin-top: 7px;
 	padding-top: 0;
 }
-/* END "FeedChunk.css" */
+/* END "FeedChunk.less" */
 
-/* START "Feeder.css" */
+/* START "Feeder.less" */
 /* ========================================= */
 /* CSS for control sap.ui.ux3/Feeder.control */
 /* Blue Crystal Desktop                      */
@@ -1196,102 +1216,89 @@ html[data-sap-ui-browser="ie8"] .sapUiFeedChunk > section > header{
 	color: @sapUiExtraLightText;
 	font-style: italic;
 }
-/* END "Feeder.css" */
+/* END "Feeder.less" */
 
-/* START "NavigationBar.css" */
-
-
-/** General: Overriding base**/
-
-.sapUiUx3NavBarItem {
-	font-family: @sapUiDesktopFontFamily;
-	font-size: @sapUiDesktopFontSize;
-  font-weight:          normal;
-  color:                @sapUiLightText;
-}
-
-
-/** NavigationBar **/ 
-
+/* START "NavigationBar.less" */
 .sapUiUx3NavBar {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
-    border-bottom:     0px solid @sapUiLink;
-    text-transform:    none;
+	border-bottom: 0px solid @sapUiLink;
+	text-transform: none;
 }
 
 .sapUiUx3NavBarItem:focus {
-    outline:           1px dashed @sapUiKeyboardFocus;
+	outline: 1px dashed @sapUiKeyboardFocus;
 }
 
 .sapUiUx3NavBarItem {
-    color:             @sapUiLightText;
-    font-weight:       normal;
-    font-size:         14px;
+	color: @sapUiLightText;
+	font-family: @sapUiDesktopFontFamily;
+	font-size: (@sapUiDesktopFontSize + 2px);
+	font-weight: normal;
 }
 
 .sapUiUx3NavBarItem:hover {
-    color:             @sapUiHighlight;
-    font-weight:       normal;
-    font-size:         14px;
+	color: @sapUiHighlight;
+	font-weight: normal;
+	font-size: 14px;
 }
 
 .sapUiUx3NavBarItemSel > a {
-    color:             @sapUiDarkText;
-    font-weight:       bold;
-    font-size:         14px;
+	color: @sapUiDarkText;
+	font-weight: bold;
+	font-size: 14px;
 }
 
 .sapUiUx3NavBarItemSel > a:hover {
-    color:             @sapUiLink;
-    font-weight:       bold;
-    font-size:         14px;
+	color: @sapUiLink;
+	font-weight: bold;
+	font-size: 14px;
 }
 
 /** Top-Level NavigationBar **/ 
 
 .sapUiUx3NavBarToplevel {
-    border-bottom:      none;
-    text-transform:     uppercase;
+	border-bottom: none;
+	text-transform: uppercase;
 }
 
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarItem:focus {
-    outline:            0px dashed @sapUiKeyboardFocus;
+	outline: 0px dashed @sapUiKeyboardFocus;
 }
 
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarList > li,
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarItem {
-    color:              @sapUiLightText;
-    font-size:          15px;
+	color: @sapUiLightText;
+	font-size: 15px;
 }
 
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarList > li:hover,
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarItem:hover {
-    color:              @sapUiHighlight;
-    font-size:          15px;
+	color: @sapUiHighlight;
+	font-size: 15px;
 }
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarItemSel > a {
-    color:              @sapUiDarkText;
-    font-size:          15px;
+	color: @sapUiDarkText;
+	font-size: 15px;
 }
 
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarItemSel > a:hover {
-    color:              @sapUiHighlight;
-    font-size:          15px;
+	color: @sapUiHighlight;
+	font-size: 15px;
 }
 
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarItem:focus {
-    outline: 1px dashed @sapUiKeyboardFocus;
+	outline: 1px dashed @sapUiKeyboardFocus;
 }
 
 .sapUiUx3NavBarArrow {
-    display: none;
-    border-color: @sapUiBaseText transparent @sapUiHighlight;
+	display: none;
+	border-color: @sapUiBaseText transparent @sapUiHighlight;
 }
 
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarArrow {
-    display: none;
-    border-color: @sapUiBaseText transparent @sapUiUx3ShellBackgroundColor;
+	display: none;
+	border-color: @sapUiBaseText transparent @sapUiUx3ShellBackgroundColor;
 }
 
 
@@ -1299,36 +1306,36 @@ html[data-sap-ui-browser="ie8"] .sapUiFeedChunk > section > header{
 
 .sapUiUx3NavBarBack,
 .sapUiUx3NavBarForward {
-    color: transparent;
-    font-size: 0;
-    height: 18px;
-    width: 18px;
-    background-position: 4px 3px;
+	color: transparent;
+	font-size: 0;
+	height: 18px;
+	width: 18px;
+	background-position: 4px 3px;
 }
 
 .sapUiUx3NavBarBack {
-    background-image: url(img/navigationbar/facetPrev.png);
+	background-image: url(img/navigationbar/facetPrev.png);
 }
 
 .sapUiUx3NavBarForward {
-    background-image: url(img/navigationbar/facetNext.png);
+	background-image: url(img/navigationbar/facetNext.png);
 }
 
 .sapUiUx3NavBarBack:focus,
 .sapUiUx3NavBarForward:focus {
-    outline: 1px dashed @sapUiKeyboardFocus;
+	outline: 1px dashed @sapUiKeyboardFocus;
 }
 
 .sapUiUx3NavBarScrollBack > .sapUiUx3NavBarBack:hover,
 .sapUiUx3NavBarScrollForward > .sapUiUx3NavBarForward:hover {
-    background-color: @sapUiHighlight;
-    background-position: -13px 3px;
+	background-color: @sapUiHighlight;
+	background-position: -13px 3px;
 }
 
 .sapUiUx3NavBarScrollBack > .sapUiUx3NavBarBack:active,
 .sapUiUx3NavBarScrollForward > .sapUiUx3NavBarForward:active {
-    background-color: @sapUiDarkBG;
-    background-position: -13px 3px;
+	background-color: @sapUiDarkBG;
+	background-position: -13px 3px;
 }
 
 
@@ -1338,89 +1345,89 @@ html[data-sap-ui-browser="ie8"] .sapUiFeedChunk > section > header{
 
 .sapUiUx3NavBarToplevel > .sapUiUx3NavBarBack,
 .sapUiUx3NavBarToplevel > .sapUiUx3NavBarForward {
-    background-position: 3px 3px;
-    padding: 0;
-    height: 22px;
-    width: 22px;
+	background-position: 3px 3px;
+	padding: 0;
+	height: 22px;
+	width: 22px;
 }
 
 .sapUiUx3NavBarToplevel > .sapUiUx3NavBarBack {
-    background-image: url(img/navigationbar/WS_scroll_prev.png);
+	background-image: url(img/navigationbar/WS_scroll_prev.png);
 }
 
 .sapUiUx3NavBarToplevel > .sapUiUx3NavBarForward {
-    background-image: url(img/navigationbar/WS_scroll_next.png);
+	background-image: url(img/navigationbar/WS_scroll_next.png);
 }
 .sapUiUx3NavBar {
-    border-bottom:         0px solid @sapUiHighlight;
-    text-transform:        none;
+	border-bottom: 0px solid @sapUiHighlight;
+	text-transform: none;
 }
 
 .sapUiUx3NavBarToplevel {
-    border-bottom:         none;
-    text-transform:        uppercase;
+	border-bottom: none;
+	text-transform: uppercase;
 }
 
 .sapUiUx3NavBarArrow {
-    border-color:          @sapUiBaseText transparent @sapUiHighlight;
+	border-color: @sapUiBaseText transparent @sapUiHighlight;
 }
 
 .sapUiUx3NavBarToplevel .sapUiUx3NavBarArrow {
-    border-color:          @sapUiBaseText transparent @sapUiUx3ShellBackgroundColor;
+	border-color: @sapUiBaseText transparent @sapUiUx3ShellBackgroundColor;
 }
 
 
 /* standard design arrows */
 .sapUiUx3NavBarBack,
 .sapUiUx3NavBarForward {
-    color:                 transparent;
-    font-size:             0;
-    height:                18px;
-    width:                 18px;
-    background-position:   4px 3px;
+	color: transparent;
+	font-size: 0;
+	height: 18px;
+	width: 18px;
+	background-position: 4px 3px;
 }
 
 .sapUiUx3NavBarBack {
-    background-image:      url(img/navigationbar/facetPrev.png);
+	background-image: url(img/navigationbar/facetPrev.png);
 }
 
 .sapUiUx3NavBarForward {
-    background-image:      url(img/navigationbar/facetNext.png);
+	background-image: url(img/navigationbar/facetNext.png);
 }
 
 .sapUiUx3NavBarBack:focus,
 .sapUiUx3NavBarForward:focus {
-    outline:               1px dashed @sapUiKeyboardFocus;
+	outline: 1px dashed @sapUiKeyboardFocus;
 }
 
 .sapUiUx3NavBarScrollBack > .sapUiUx3NavBarBack:hover,
 .sapUiUx3NavBarScrollForward > .sapUiUx3NavBarForward:hover {
-    background-color: @sapUiHighlight;
-    background-position: -13px 3px;
+	background-color: @sapUiHighlight;
+	background-position: -13px 3px;
 }
 
 .sapUiUx3NavBarScrollBack > .sapUiUx3NavBarBack:active,
 .sapUiUx3NavBarScrollForward > .sapUiUx3NavBarForward:active {
-    background-color: @sapUiDarkBG;
-    background-position: -13px 3px;
+	background-color: @sapUiDarkBG;
+	background-position: -13px 3px;
 }
 
 
 /* toplevel design arrows */
 .sapUiUx3NavBarToplevel > .sapUiUx3NavBarBack,
 .sapUiUx3NavBarToplevel > .sapUiUx3NavBarForward {
-    background-position: 3px 3px;
-    padding: 0;
-    height: 22px;
-    width: 22px;
+	background-position: 3px 3px;
+	padding: 0;
+	height: 22px;
+	width: 22px;
 }
 
 .sapUiUx3NavBarToplevel > .sapUiUx3NavBarBack {
-    background-image: url(img/navigationbar/WS_scroll_prev.png);
+	background-image: url(img/navigationbar/WS_scroll_prev.png);
 }
 
 .sapUiUx3NavBarToplevel > .sapUiUx3NavBarForward {
-    background-image: url(img/navigationbar/WS_scroll_next.png);
+	background-image: url(img/navigationbar/WS_scroll_next.png);
 }
 
 
@@ -1428,7 +1435,7 @@ html[data-sap-ui-browser="ie8"] .sapUiFeedChunk > section > header{
 
 html[dir="rtl"] .sapUiUx3NavBarToplevel > .sapUiUx3NavBarBack,
 html[dir="rtl"] .sapUiUx3NavBarToplevel > .sapUiUx3NavBarForward {
-    background-position: -13px 3px;
+	background-position: -13px 3px;
 }
 
 html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollBack > .sapUiUx3NavBarBack:hover,
@@ -1439,9 +1446,9 @@ html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollForward > .sapUiUx3N
 }
 
 
-/* END "NavigationBar.css" */
+/* END "NavigationBar.less" */
 
-/* START "NotificationBar.css" */
+/* START "NotificationBar.less" */
 /* ================================================== */
 /* CSS for control sap.ui.ux3/NotificationBar.control */
 /* BlueCrystal Desktop                                */   
@@ -1488,9 +1495,9 @@ html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollForward > .sapUiUx3N
 }
 
 /* Workaround end */
-/* END "NotificationBar.css" */
+/* END "NotificationBar.less" */
 
-/* START "Overlay.css" */
+/* START "Overlay.less" */
 /* ========================================== */
 /* CSS for control sap.ui.ux3/Overlay.control */
 /* ========================================== */
@@ -1498,7 +1505,7 @@ html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollForward > .sapUiUx3N
 .sapUiUx3OverlayOverlay {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
-	background-color: @sapUiExtraDarkBG;
+	background-color: @sapUiDarkestBG;
 }
 
 .sapUiUx3OverlayOpenButton {
@@ -1506,9 +1513,19 @@ html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollForward > .sapUiUx3N
 	background-repeat: no-repeat;
 	background-position: right center;
 }
-/* END "Overlay.css" */
 
-/* START "OverlayContainer.css" */
+.sapUiUx3OverlayOpenButton:focus {
+	background-color: transparent;
+	outline: 1px dotted @sapUiTextInverted;
+	outline-offset: -1px;
+}
+
+.sapUiUx3OverlayOpenButton:focus:hover {
+	background-color: @sapUiHighlight;
+}
+/* END "Overlay.less" */
+
+/* START "OverlayContainer.less" */
 /* =================================================== */
 /* CSS for control sap.ui.ux3/OverlayContainer.control */
 /* =================================================== */
@@ -1519,7 +1536,7 @@ html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollForward > .sapUiUx3N
 }
 
 .sapUiUx3OC .sapUiUx3OverlayOverlay {
-	opacity: .40;
+	opacity: .60;
 }
 
 .sapUiUx3OCOverlay {
@@ -1535,9 +1552,9 @@ html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollForward > .sapUiUx3N
 	opacity: 1;
 	padding: 0;
 }
-/* END "OverlayContainer.css" */
+/* END "OverlayContainer.less" */
 
-/* START "OverlayDialog.css" */
+/* START "OverlayDialog.less" */
 
 /* ============================================= */
 /* CSS for control sap.ui.ux3/OverlayDialog.control */
@@ -1557,9 +1574,9 @@ html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollForward > .sapUiUx3N
 	background-color: @sapUiLightestBG;
 }
 
-/* END "OverlayDialog.css" */
+/* END "OverlayDialog.less" */
 
-/* START "QuickView.css" */
+/* START "QuickView.less" */
 /* ==================================== */
 /* CSS for sap.ui.ux3/QuickView.control */
 /* Blue Crystal Theme                   */
@@ -1598,9 +1615,9 @@ html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollForward > .sapUiUx3N
 }
 
 
-/* END "QuickView.css" */
+/* END "QuickView.less" */
 
-/* START "Shell.css" */
+/* START "Shell.less" */
 /* ============================================== */
 /* CSS for sap.ui.ux3.Shell.control    (BC-D theme) */
 /* ============================================== */
@@ -1812,18 +1829,15 @@ html[dir="rtl"] .sapUiUx3NavBarToplevel.sapUiUx3NavBarScrollForward > .sapUiUx3N
 }
 
 .sapUiUx3Shell .sapUiUx3NavBarToplevel .sapUiUx3NavBarArrow {
-	display:			inline-block;
-    width:              12px;
-    height:             12px;
-    padding:            0;
-    margin-top:         0px;
-    background:         @sapUiLightBG;
-    top:                43px;
-    border-color:       transparent;
-    clip:               rect(-8px,14px,14px,-8px);
-    -webkit-transform:  rotate(45deg); 
-    -moz-transform:     rotate(45deg); 
-    -ms-transform:      rotate(45deg); 
+	display: inline-block;
+	bottom: 0px;
+	border-left: 8px solid transparent;
+	border-bottom: 8px solid @sapUiLightBG;
+	border-right: 8px solid transparent;
+}
+
+.sapUiUx3NavBarToplevel > .sapUiUx3NavBarList {
+	height: 37px;
 }
 
 .sapUiUx3ShellWorksetBar > .sapUiUx3NavBarToplevel .sapUiUx3NavBarOverflowBtn {
@@ -2169,23 +2183,25 @@ html[data-sap-ui-browser="ie9"] .sapUiUx3ShellBg {
 	margin: 0;
 }
 
-/* END "Shell.css" */
 
-/* START "ShellColorPicker.css" */
+
+/* END "Shell.less" */
+
+/* START "ShellColorPicker.less" */
 .sapUiUx3ShellColorPicker {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
 }
-/* END "ShellColorPicker.css" */
+/* END "ShellColorPicker.less" */
 
-/* START "ShellPersonalization.css" */
+/* START "ShellPersonalization.less" */
 .sapUiUx3ShellP13n {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
 }
-/* END "ShellPersonalization.css" */
+/* END "ShellPersonalization.less" */
 
-/* START "ThingInspector.css" */
+/* START "ThingInspector.less" */
 /* ================================================= */
 /* CSS for control sap.ui.ux3/ThingInspector.control */
 /* ================================================= */
@@ -2487,9 +2503,9 @@ html[data-sap-ui-browser="ie8"] .sapUiUx3TI.sapUiUx3TINoFrame {
 .sapUiUx3TI.sapUiUx3TINoFrame .sapUiUx3TV > .sapUiUx3TVContent {
 	border-width: 0;
 }
-/* END "ThingInspector.css" */
+/* END "ThingInspector.less" */
 
-/* START "ThingViewer.css" */
+/* START "ThingViewer.less" */
 /* ================================================= */
 /* CSS for control sap.ui.ux3/ThingInspector.control */
 /* ================================================= */
@@ -2595,9 +2611,9 @@ html[data-sap-ui-browser="ie8"] .sapUiUx3TV.sapUiUx3TVNoFrame {
 .sapUiUx3TV.sapUiUx3TVNoFrame > .sapUiUx3TVContent > .sapUiUx3TVFacets {
 	border-color: @sapUiLightestBorder;
 }
-/* END "ThingViewer.css" */
+/* END "ThingViewer.less" */
 
-/* START "ToolPopup.css" */
+/* START "ToolPopup.less" */
 /* ============================================ */
 /* CSS for control sap.ui.ux3/ToolPopup.control */
 /* Blue Crystal                                 */
@@ -2735,5 +2751,5 @@ HTML[data-sap-ui-browser='ie8'] .sapUiUx3TPArrowDown>.sapUiUx3TPArrowBorder {
 	left: 0;
 	top: -17px;
 }
-/* END "ToolPopup.css" */
+/* END "ToolPopup.less" */
 

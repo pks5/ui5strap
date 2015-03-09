@@ -1,15 +1,16 @@
 /* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
 
-
-/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- * 
- */@import "../base/library.less";
+ */
+
+@import "../base/library.less";
 @import "../../../../../../Base/baseLib/sap_bluecrystal/base.less"; /* ORIGINAL IMPORT PATH: "base.less" */
 
-@import (less) "global.css";
-/* START "shared.css" */
+@import "global.less";
+/* START "shared.less" */
 /* Shared CSS for 'sap_bluecrystal' theme */
 
 * {
@@ -121,33 +122,6 @@ html.sap-tablet input, html.sap-tablet textarea, html.sap-tablet [contenteditabl
 	color: @sapUiHeaderText !important;
 	text-shadow: 0 0.0625rem 0 fade(@sapUiLightShadowTint, 50%) !important;
 }
-
-/* margins */
-
-.sapUiNoMargin 		{ margin: 0; }
-.sapUiSmallMargin 	{ margin: @sapUiMarginSmall; }
-.sapUiMediumMargin 	{ margin: @sapUiMarginMedium; }
-.sapUiLargeMargin 	{ margin: @sapUiMarginLarge; }
-
-.sapUiNoMarginTop    { margin-top: 0; }
-.sapUiNoMarginBottom { margin-bottom: 0; }
-.sapUiNoMarginBegin  { margin-left: 0; }
-.sapUiNoMarginEnd    { margin-right: 0; }
-
-.sapUiSmallMarginTop    { margin-top: @sapUiMarginSmall; }
-.sapUiSmallMarginBottom { margin-bottom: @sapUiMarginSmall; }
-.sapUiSmallMarginBegin  { margin-left: @sapUiMarginSmall; }
-.sapUiSmallMarginEnd    { margin-right: @sapUiMarginSmall; }
-
-.sapUiMediumMarginTop    { margin-top: @sapUiMarginMedium; }
-.sapUiMediumMarginBottom { margin-bottom: @sapUiMarginMedium; }
-.sapUiMediumMarginBegin  { margin-left: @sapUiMarginMedium; }
-.sapUiMediumMarginEnd    { margin-right: @sapUiMarginMedium; }
-
-.sapUiLargeMarginTop    { margin-top: @sapUiMarginLarge; }
-.sapUiLargeMarginBottom { margin-bottom: @sapUiMarginLarge; }
-.sapUiLargeMarginBegin  { margin-left: @sapUiMarginLarge; }
-.sapUiLargeMarginEnd    { margin-right: @sapUiMarginLarge; }
 
 
 
@@ -582,10 +556,10 @@ html[data-sap-ui-browser="ie9"] .sapUiBodyBackgroundIE9Layer2 {
 	background-color: fade(@sapUiLightestBG, 80%);
 }
 
-/* END "shared.css" */
+/* END "shared.less" */
 
 
-/* START "BrowserScrollbar.css" */
+/* START "BrowserScrollbar.less" */
 /****** IE ******/
 
 html[data-sap-ui-browser*="ie"] .sapUiBody {
@@ -615,9 +589,9 @@ html[data-sap-ui-browser*="ie"] .sapUiBody {
 	background-color: @sapUiScrollBarTrackColor;
 }
 
-/* END "BrowserScrollbar.css" */
+/* END "BrowserScrollbar.less" */
 
-/* START "BusyIndicator.css" */
+/* START "BusyIndicator.less" */
 .sapUiBusy {
 	height: 5px;
 	width: 100%;
@@ -670,9 +644,9 @@ html[data-sap-ui-browser^=ie] .sapUiBusy {
     	background-position: 200% 0;
     }
 }
-/* END "BusyIndicator.css" */
+/* END "BusyIndicator.less" */
 
-/* START "DatePicker.css" */
+/* START "DatePicker.less" */
 /* ============================================== */
 /* CSS for control sap.ui.core/DatePicker.control */
 /* Bluecrystal                                    */
@@ -685,9 +659,9 @@ html[data-sap-ui-browser^=ie] .sapUiBusy {
 .sapUiDPHead > button{
 	width: 16px;
 }
-/* END "DatePicker.css" */
+/* END "DatePicker.less" */
 
-/* START "Icon.css" */
+/* START "Icon.less" */
 .sapUiIcon:focus {
 	outline: 1px dashed @sapUiKeyboardFocus;
 }
@@ -705,9 +679,9 @@ html[data-sap-ui-browser^=ie] .sapUiBusy {
 .sapUiSizeCondensed .sapUiTableCell>.sapUiIcon:last-child {
 	padding-right: 0.5rem;
 }
-/* END "Icon.css" */
+/* END "Icon.less" */
 
-/* START "parameterClasses.css" */
+/* START "parameterClasses.less" */
 
 /* mobile-specific CSS parameters */
 
@@ -753,11 +727,11 @@ html[data-sap-ui-browser^=ie] .sapUiBusy {
 .sapThemeDarkText{
 	color: @sapUiDarkText;
 }
-/* END "parameterClasses.css" */
+/* END "parameterClasses.less" */
 
-/* START "Shadow.css" */
+/* START "Shadow.less" */
 html[data-sap-ui-browser=ie8] .sapUiShd {
 	outline: 2px solid @sapUiDarkBorder;
 }
-/* END "Shadow.css" */
+/* END "Shadow.less" */
 

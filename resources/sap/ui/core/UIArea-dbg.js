@@ -1,12 +1,12 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 // Provides class sap.ui.core.UIArea
-sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'jquery.sap.act', 'jquery.sap.ui'],
-	function(jQuery, ManagedObject, Element/* , jQuerySap1, jQuerySap */) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', './RenderManager', 'jquery.sap.act', 'jquery.sap.ui'],
+	function(jQuery, ManagedObject, Element, RenderManager /* , jQuerySap1, jQuerySap */) {
 	"use strict";
 
 	/**
@@ -23,7 +23,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	var oRenderLog = jQuery.sap.log.getLogger("sap.ui.Rendering",
 			((window["sap-ui-config"] && window["sap-ui-config"]["xx-debugRendering"]) || /sap-ui-xx-debug(R|-r)endering=(true|x|X)/.test(document.location.search)) ? jQuery.sap.log.Level.DEBUG : Math.min(jQuery.sap.log.Level.INFO, jQuery.sap.log.getLevel())
 		),
-		fnDbgWrap = function(oControl) { return oControl; },
+		fnDbgWrap = function(oControl) {
+			return oControl;
+		},
 		fnDbgReport = jQuery.noop,
 		fnDbgAnalyzeDelta = jQuery.noop;
 	
@@ -36,18 +38,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		 * 
 		 * @private
 		 */
-		fnDbgWrap = function(oControl) { 
+		fnDbgWrap = function(oControl) {
 			var location;
 			try {
 				throw new Error();
-			} catch(e) {
+			} catch (e) {
 				location = e.stack || e.stacktrace || (e.sourceURL ? e.sourceURL + ":" + e.line : null);
 				location = location ? location.split(/\n\s*/g).slice(2) : undefined;
 			}
-			return { 
+			return {
 				obj : oControl,
 				location : location
-			}; 
+			};
 		};
 		
 		/**
@@ -57,17 +59,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		 */
 		fnDbgReport = function(that, mControls) {
 			var oCore = sap.ui.getCore(),
-				mReport = {}, 
+				mReport = {},
 				n, oControl;
 			
-			for(n in mControls) {
+			for (n in mControls) {
 				// resolve oControl anew as it might have changed 
 				oControl = oCore.byId(n);
-				mReport[n] = { 
+				/*eslint-disable no-nested-ternary */
+				mReport[n] = {
 					type: oControl ? oControl.getMetadata().getName() : (mControls[n].obj === that ? "UIArea" : "(no such control)"),
 					location: mControls[n].location,
 					reason : mControls[n].reason
 				};
+				/*eslint-enable no-nested-ternary */
 			}
 			
 			oRenderLog.debug("  UIArea '" + that.getId() + "', pending updates: " + JSON.stringify(mReport, null, "\t"));
@@ -81,15 +85,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		fnDbgAnalyzeDelta = function(mBefore, mAfter) {
 			var n;
 			
-			for(n in mAfter) {
-				if ( mBefore[n] != null ) { 
+			for (n in mAfter) {
+				if ( mBefore[n] != null ) {
 					if ( mBefore[n].obj !== mAfter[n].obj ) {
 						mAfter[n].reason = "replaced during rendering";
 					} else {
 						mAfter[n].reason = "invalidated again during rendering";
 					}
 				} else {
-					mAfter[n].reason = "invalidated during rendering"; 
+					mAfter[n].reason = "invalidated during rendering";
 				}
 			}
 
@@ -109,14 +113,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 *
 	 * @extends sap.ui.base.ManagedObject
 	 * @author SAP SE
-	 * @version 1.24.3
-	 * @param {sap.ui.Core} oCore internal API of the <core>Core</code> that manages this UIArea
+	 * @version 1.26.7
+	 * @param {sap.ui.core.Core} oCore internal API of the <core>Core</code> that manages this UIArea
 	 * @param {object} [oRootNode] reference to the Dom Node that should be 'hosting' the UI Area.
 	 * @public
+	 * @alias sap.ui.core.UIArea
 	 */
 	var UIArea = ManagedObject.extend("sap.ui.core.UIArea", {
+		
 		constructor: function(oCore, oRootNode) {
-			if(arguments.length === 0) {
+			if (arguments.length === 0) {
 				return;
 			}
 	
@@ -138,7 +144,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 			}
 			this.mInvalidatedControls = {};
 	
-			if(!this.bNeedsRerendering) {
+			if (!this.bNeedsRerendering) {
 				this.bRenderSelf = false;
 			} else {
 				// Core needs to be notified about an invalid UIArea
@@ -150,7 +156,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 			// ---- object ----
 			publicMethods : ["setRootNode", "getRootNode", "setRootControl", "getRootControl", "lock","unlock", "isLocked"],
 			aggregations : {
+				/**
+				 * Content that is displayed in the UIArea.
+				 */
 				content : {name : "content", type : "sap.ui.core.Control", multiple : true, singularName : "content"},
+				/**
+				 * Dependent objects whose lifecycle is bound to the UIarea but which are not automatically rendered by the UIArea. 
+				 */
 				dependents : {name : "dependents", type : "sap.ui.core.Control", multiple : true}
 			}
 		}
@@ -160,8 +172,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * Returns whether rerendering is currently suppressed on this UIArea
 	 * @return boolean
 	 * @protected
-	 * @name sap.ui.core.UIArea#isInvalidateSuppressed
-	 * @function
 	 */
 	UIArea.prototype.isInvalidateSuppressed = function() {
 		return this.iSuppressInvalidate > 0;
@@ -171,9 +181,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * Returns this <code>UIArea</code>'s id (as determined from provided RootNode).
 	 * @return {string|null} id of this UIArea
 	 * @public
-	 *
-	 * @name sap.ui.core.UIArea#getId
-	 * @function
 	 */
 	UIArea.prototype.getId = function() {
 		return this.oRootNode ? this.oRootNode.id : null;
@@ -184,8 +191,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 *
 	 * @return {sap.ui.core.UIArea} this
 	 * @protected
-	 * @name sap.ui.core.UIArea#getUIArea
-	 * @function
 	 */
 	UIArea.prototype.getUIArea = function() {
 		return this;
@@ -198,11 +203,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * @param {object}
 	 *            oRootNode the hosting Dom Ref for this instance of <code>UIArea</code>.
 	 * @public
-	 * @name sap.ui.core.UIArea#setRootNode
-	 * @function
 	 */
 	UIArea.prototype.setRootNode = function(oRootNode) {
-		if(this.oRootNode === oRootNode) {
+		if (this.oRootNode === oRootNode) {
 			return;
 		}
 	
@@ -210,7 +213,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		jQuery.sap.assert(!oRootNode || (oRootNode.nodeType === 1 && !jQuery(oRootNode).attr("data-sap-ui-area")), "UIArea root node must be a DOMElement");
 	
 		//TODO IS there something missing
-		if(this.oRootNode) {
+		if (this.oRootNode) {
 			this._ondetach();
 		}
 	
@@ -219,7 +222,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		  this.invalidate();
 		}
 	
-		if(this.oRootNode) {
+		if (this.oRootNode) {
 			// prepare eventing
 			this._onattach();
 		}
@@ -230,8 +233,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 *
 	 * @return {Element} the Root Node hosting this instance of <code>UIArea</code>.
 	 * @public
-	 * @name sap.ui.core.UIArea#getRootNode
-	 * @function
 	 */
 	UIArea.prototype.getRootNode = function() {
 		return this.oRootNode;
@@ -252,8 +253,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 *            oRootControl the Control that should be the Root for this <code>UIArea</code>.
 	 * @public
 	 * @deprecated use functions <code>removeAllContent</code> and <code>addContent</code> instead
-	 * @name sap.ui.core.UIArea#setRootControl
-	 * @function
 	 */
 	UIArea.prototype.setRootControl = function(oRootControl) {
 		this.removeAllContent();
@@ -268,13 +267,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * @return {sap.ui.core.Control} the content control of this <code>UIArea</code> at the specified index.
 	 * @public
 	 * @deprecated use function <code>getContent</code> instead
-	 * @name sap.ui.core.UIArea#getRootControl
-	 * @function
 	 */
 	UIArea.prototype.getRootControl = function(idx) {
 		var aContent = this.getContent();
-		if(aContent.length > 0){
-			if(idx >=0 && idx < aContent.length) {
+		if (aContent.length > 0) {
+			if (idx >= 0 && idx < aContent.length) {
 				return aContent[idx];
 			}
 			return aContent[0];
@@ -283,44 +280,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	};
 	
 	UIArea.prototype._addRemovedContent = function(oDomRef) {
-		if(this.oRootNode && oDomRef) {
+		if (this.oRootNode && oDomRef) {
 			this.aContentToRemove.push(oDomRef);
 		}
 	};
 	
-	/**
-	 * Getter for aggregation <code>content</code>.<br/>
-	 *
-	 * @return {sap.ui.core.Control[]}
-	 * @public
-	 * @name sap.ui.core.UIArea.prototype.getContent
-	 */
-	
-	/**
-	 * Inserts a content into the aggregation named <code>content</code>.
-	 *
-	 * @param {sap.ui.core.Control}
-	 *          oContent the content to insert; if empty, nothing is inserted
-	 * @param {int}
-	 *			iIndex the <code>0</code>-based index the content should be inserted at; for
-	 *             a negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
-	 *             greater than the current size of the aggregation, the content is inserted at
-	 *             the last position
-	 * @return {sap.ui.core.UIArea} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.UIArea.prototype.insertContent
-	 */
-	
-	/**
-	 * Adds some content <code>oContent</code>
-	 * to the aggregation named <code>content</code>.
-	 *
-	 * @param {sap.ui.core.Control}
-	 *            oContent the content to add; if empty, nothing is inserted
-	 * @return {sap.ui.core.UIArea} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.UIArea#addContent
-	 * @function
+	/*
+	 * See generated JSDoc
 	 */
 	UIArea.prototype.addContent = function(oContent, _bSuppressInvalidate) {
 		this.addAggregation("content", oContent, _bSuppressInvalidate);
@@ -331,20 +297,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		return this;
 	};
 	
-	/**
-	 * Removes an content from the aggregation named <code>content</code>.
-	 *
-	 * @param {int | string | sap.ui.core.Control} vContent the content to remove or its index or id
-	 * @return {sap.ui.core.Control} the removed element or null
-	 * @public
-	 * @name sap.ui.core.UIArea#removeContent
-	 * @function
+	/*
+	 * See generated JSDoc
 	 */
 	UIArea.prototype.removeContent = function(vContent, /* internal only */ _bSuppressInvalidate) {
 		var oContent = this.removeAggregation("content", vContent, _bSuppressInvalidate);
 		if ( !_bSuppressInvalidate ) {
 			var oDomRef;
-			if(oContent && oContent.getDomRef) {
+			if (oContent && oContent.getDomRef) {
 				oDomRef = oContent.getDomRef();
 			}
 			this._addRemovedContent(oDomRef);
@@ -353,20 +313,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		return oContent;
 	};
 	
-	/**
-	 * Removes all the controls in the aggregation named <code>content</code>.<br/>
-	 * Additionally unregisters them from the hosting UIArea.
-	 * @return {sap.ui.core.Control[]} an array of the removed elements (might be empty)
-	 * @public
-	 * @name sap.ui.core.UIArea#removeAllContent
-	 * @function
+	/*
+	 * See generated JSDoc
 	 */
 	UIArea.prototype.removeAllContent = function() {
 		var aContent = this.removeAllAggregation("content");
-		for(var idx=0; idx<aContent.length; idx++){
+		for (var idx = 0; idx < aContent.length; idx++) {
 			var oDomRef;
 			var oContent = aContent[idx];
-			if(oContent && oContent.getDomRef) {
+			if (oContent && oContent.getDomRef) {
 				oDomRef = oContent.getDomRef();
 			}
 			this._addRemovedContent(oDomRef);
@@ -375,31 +330,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		return aContent;
 	};
 	
-	/**
-	 * Checks for the provided <code>sap.ui.core.Control</code> in the aggregation named <code>content</code>
-	 * and returns its index if found or -1 otherwise.
-	 *
-	 * @param {sap.ui.core.Control}
-	 *            oContent the content whose index is looked for.
-	 * @return {int} the index of the provided control in the aggregation if found, or -1 otherwise
-	 * @public
-	 * @name sap.ui.core.UIArea.prototype.indexOfContent
-	 */
-	
-	/**
-	 * Destroys all the content in the aggregation
-	 * named <code>content</code>.
-	 * @return {sap.ui.core.UIArea} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.UIArea#destroyContent
-	 * @function
+	/*
+	 * See generated JSDoc
 	 */
 	UIArea.prototype.destroyContent = function() {
 		var aContent = this.getContent();
-		for(var idx=0; idx<aContent.length; idx++){
+		for (var idx = 0; idx < aContent.length; idx++) {
 			var oDomRef;
 			var oContent = aContent[idx];
-			if(oContent && oContent.getDomRef) {
+			if (oContent && oContent.getDomRef) {
 				oDomRef = oContent.getDomRef();
 			}
 			this._addRemovedContent(oDomRef);
@@ -409,92 +348,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		return this;
 	};
 	
-	
-	/**
-	 * Getter for aggregation <code>dependents</code>.<br/>
-	 *
-	 * @return {sap.ui.core.Control[]}
-	 * @function
-	 * @name sap.ui.core.UIArea.prototype.getDependents
-	 * @since 1.19
-	 * @public
-	 */
-	
-	/**
-	 * Inserts a control into the aggregation named <code>dependents</code>.
-	 *
-	 * @param {sap.ui.core.Control}
-	 *          oControl the control to insert; if empty, nothing is inserted
-	 * @param {int}
-	 *             iIndex the <code>0</code>-based index the control should be inserted at; for
-	 *             a negative value of <code>iIndex</code>, the control is inserted at position 0; for a value
-	 *             greater than the current size of the aggregation, the control is inserted at
-	 *             the last position
-	 * @return {sap.ui.core.UIArea} <code>this</code> to allow method chaining
-	 * @function
-	 * @name sap.ui.core.UIArea.prototype.insertDependent
-	 * @since 1.19
-	 * @public
-	 */
-	
-	/**
-	 * Adds some control <code>oControl</code>
-	 * to the aggregation named <code>dependents</code>.
-	 *
-	 * @param {sap.ui.core.Control}
-	 *            oControl the control to add; if empty, nothing is inserted
-	 * @return {sap.ui.core.UIArea} <code>this</code> to allow method chaining
-	 * @function
-	 * @name sap.ui.core.UIArea.prototype.addDependent
-	 * @since 1.19
-	 * @public
-	 */
-	
-	/**
-	 * Removes a control from the aggregation named <code>dependents</code>.
-	 *
-	 * @param {int | string | sap.ui.core.Control} vControl the control to remove or its index or id
-	 * @return {sap.ui.core.Control} the removed control or null
-	 * @function
-	 * @name sap.ui.core.UIArea.prototype.removeDependent
-	 * @since 1.19
-	 * @public
-	 */
-	
-	/**
-	 * Removes all the controls in the aggregation named <code>dependents</code>.<br/>
-	 *
-	 * @return {sap.ui.core.Control[]} an array of the removed controls (might be empty)
-	 * @function
-	 * @name sap.ui.core.UIArea.prototype.removeAllDependents
-	 * @since 1.19
-	 * @public
-	 */
-	
-	/**
-	 * Checks for the provided <code>sap.ui.core.Control</code> in the aggregation named <code>dependents</code>
-	 * and returns its index if found or -1 otherwise.
-	 *
-	 * @param {sap.ui.core.Control}
-	 *            oControl the control whose index is looked for.
-	 * @return {int} the index of the provided control in the aggregation if found, or -1 otherwise
-	 * @function
-	 * @name sap.ui.core.UIArea.prototype.indexOfDependent
-	 * @since 1.19
-	 * @public
-	 */
-	
-	/**
-	 * Destroys all the controls in the aggregation
-	 * named <code>dependents</code>.
-	 * @return {sap.ui.core.UIArea} <code>this</code> to allow method chaining
-	 * @function
-	 * @name sap.ui.core.UIArea.prototype.destroyDependents
-	 * @since 1.19
-	 * @public
-	 */
-	
-	
 	/**
 	 * Locks this instance of UIArea.
 	 *
@@ -502,8 +355,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * {@link #unlock} is called.
 	 *
 	 * @public
-	 * @name sap.ui.core.UIArea#lock
-	 * @function
 	 */
 	UIArea.prototype.lock = function() {
 		this.bLocked = true;
@@ -515,8 +366,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * Rerendering and eventing will now be enabled again.
 	 *
 	 * @public
-	 * @name sap.ui.core.UIArea#unlock
-	 * @function
 	 */
 	UIArea.prototype.unlock = function() {
 		if ( this.bLocked && this.bNeedsRerendering ) {
@@ -529,11 +378,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	
 	/**
 	 * Returns the locked state of the <code>sap.ui.core.UIArea</code>
-	 * @type boolean
-	 * @return locked state
+	 * @return {boolean} locked state
 	 * @public
-	 * @name sap.ui.core.UIArea#isLocked
-	 * @function
 	 */
 	UIArea.prototype.isLocked = function () {
 		return this.bLocked;
@@ -541,11 +387,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	
 	/**
 	 * Provide getBindingContext, as UIArea can be parent of an element.
-	 * Always returns null.
+	 * @return {null} Always returns null.
 	 *
 	 * @protected
-	 * @name sap.ui.core.UIArea#getBindingContext
-	 * @function
 	 */
 	UIArea.prototype.getBindingContext = function(){
 		return null;
@@ -556,8 +400,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * 
 	 * @return {sap.ui.base.EventProvider} the parent event provider
 	 * @protected
-	 * @name sap.ui.core.UIArea#getEventingParent
-	 * @function
 	 */
 	UIArea.prototype.getEventingParent = function() {
 		return this.oCore;
@@ -574,8 +416,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 *
 	 * @return {boolean} True if the control is still in the active DOM
 	 * @protected
-	 * @name sap.ui.core.UIArea#isActive
-	 * @function
 	 */
 	UIArea.prototype.isActive = function() {
 		return jQuery.sap.domById(this.getId()) != null;
@@ -585,8 +425,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * Will be used as end-point for invalidate-bubbling from controls up their hierarchy.<br/> Triggers re-rendering of
 	 * the UIAreas content.
 	 * @protected
-	 * @name sap.ui.core.UIArea#invalidate
-	 * @function
 	 */
 	UIArea.prototype.invalidate = function() {
 		this.addInvalidatedControl(this);
@@ -601,8 +439,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 *
 	 * @param {object} oControl
 	 * @private
-	 * @name sap.ui.core.UIArea#addInvalidatedControl
-	 * @function
 	 */
 	UIArea.prototype.addInvalidatedControl = function(oControl){
 		// if UIArea is already marked for a full rendering, there is no need to record invalidated controls 
@@ -643,8 +479,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * @param {boolean} force true, if the rerendering of the UI area should be forced
 	 * @return {boolean} whether a redraw was necessary or not
 	 * @private
-	 * @name sap.ui.core.UIArea#rerender
-	 * @function
 	 */
 	UIArea.prototype.rerender = function(force){
 		var that = this;
@@ -675,7 +509,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		// pause performance measurement for all UI Areas
 		jQuery.sap.measure.pause("renderPendingUIUpdates");
 		// start performance measurement
-		jQuery.sap.measure.start(this.getId()+"---rerender","Rerendering of "+this.getMetadata().getName());
+		jQuery.sap.measure.start(this.getId() + "---rerender","Rerendering of " + this.getMetadata().getName());
 	
 		fnDbgReport(this, mInvalidatedControls);
 
@@ -686,15 +520,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 				oRenderLog.debug("Full Rendering of UIArea '" + this.getId() + "'");
 
 				// save old content
-				sap.ui.core.RenderManager.preserveContent(this.oRootNode, /* bPreserveRoot */ false, /* bPreserveNodesWithId */ this.bInitial);
+				RenderManager.preserveContent(this.oRootNode, /* bPreserveRoot */ false, /* bPreserveNodesWithId */ this.bInitial);
 				this.bInitial = false;
 				
 				var cleanUpDom = function(aCtnt, bCtrls){
 					var len = aCtnt.length;
 					var oDomRef;
-					for(var i=0; i<len; i++) {
+					for (var i = 0; i < len; i++) {
 						oDomRef = bCtrls ? aCtnt[i].getDomRef() : aCtnt[i];
-						if ( oDomRef && !sap.ui.core.RenderManager.isPreservedContent(oDomRef) && that.oRootNode === oDomRef.parentNode) {
+						if ( oDomRef && !RenderManager.isPreservedContent(oDomRef) && that.oRootNode === oDomRef.parentNode) {
 							jQuery(oDomRef).remove();
 						}
 					}
@@ -707,7 +541,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 				var aContent = this.getContent();
 				var len = cleanUpDom(aContent, true);
 	
-				for(var i=0; i<len; i++){
+				for (var i = 0; i < len; i++) {
 					this.oCore.oRenderManager.render(aContent[i], this.oRootNode, true);
 				}
 				bUpdated = true;
@@ -717,7 +551,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 				// cannot re-render now; wait!
 				oRenderLog.debug("Full Rendering of UIArea '" + this.getId() + "' postponed, no root node");
 
-			} 
+			}
 			
 		} else { // only partial update (invalidated controls)
 			
@@ -754,7 +588,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		// clearRenderingInfo();
 
 		// end performance measurement
-		jQuery.sap.measure.end(this.getId()+"---rerender");
+		jQuery.sap.measure.end(this.getId() + "---rerender");
 		// resume performance measurement for all UI Areas
 		jQuery.sap.measure.resume("renderPendingUIUpdates");
 		
@@ -784,17 +618,23 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * @see sap.ui.core.Control.rerender()
 	 * @param oControl
 	 * @private
-	 * @name sap.ui.core.UIArea.rerenderControl
-	 * @function
 	 */
 	UIArea.rerenderControl = function(oControl){
-		var oDomRef = oControl ? oControl.getDomRef() : null;
+		var oDomRef = null;
+		if (oControl) {
+			oDomRef = oControl.getDomRef();
+			if (!oDomRef) {
+				// If no DOM node was found, look for the invisible placeholder node
+				oDomRef = jQuery.sap.domById(sap.ui.core.RenderPrefixes.Invisible + oControl.getId());
+			}
+		}
+
 		var oParentDomRef = oDomRef && oDomRef.parentNode; // remember parent here as preserveContent() might move the node!
-		if(oParentDomRef){
+		if (oParentDomRef) {
 			var uiArea = oControl.getUIArea();
 			var rm = uiArea ? uiArea.oCore.oRenderManager : sap.ui.getCore().createRenderManager();
 			oRenderLog.debug("Rerender Control '" + oControl.getId() + "'" + (uiArea ? "" : " (using a temp. RenderManager)"));
-			sap.ui.core.RenderManager.preserveContent(oDomRef, /* bPreserveRoot */ true, /* bPreserveNodesWithId */ false);
+			RenderManager.preserveContent(oDomRef, /* bPreserveRoot */ true, /* bPreserveNodesWithId */ false);
 			rm.render(oControl, oParentDomRef);
 		} else {
 			var uiArea = oControl.getUIArea();
@@ -808,8 +648,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	 * registered event handlers.
 	 * @param {jQuery.Event} oEvent the jQuery event object
 	 * @private
-	 * @name sap.ui.core.UIArea#_handleEvent
-	 * @function
 	 */
 	UIArea.prototype._handleEvent = function(/**event*/oEvent) {
 	
@@ -822,19 +660,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		
 		jQuery.sap.act.refresh();
 		
-		if(oElement === null){
+		if (oElement === null) {
 			return;
 		}
 		
 		// the mouse event which is fired by mobile browser with a certain delay after touch event should be suppressed
 		// in event delegation.
-		if(oEvent.isMarked("delayedMouseEvent")){
+		if (oEvent.isMarked("delayedMouseEvent")) {
 			return;
 		}
 	
 		//if event is already handled by inner UIArea (as we use the bubbling phase now), returns.
 		//if capturing phase would be used, here means event is already handled by outer UIArea.
-		if(oEvent.isMarked("handledByUIArea")){
+		if (oEvent.isMarked("handledByUIArea")) {
 		oEvent.setMark("firstUIArea", false);
 			return;
 		}
@@ -864,7 +702,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	
 		// retrieve the pseudo event types
 		var aEventTypes = [];
-		if(oEvent.getPseudoTypes){
+		if (oEvent.getPseudoTypes) {
 			aEventTypes = oEvent.getPseudoTypes();
 		}
 		aEventTypes.push(oEvent.type);
@@ -881,13 +719,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 				// ensure currenTarget is the DomRef of the handling Control
 				oEvent.currentTarget = oElement.getDomRef();
 				oElement._handleEvent(oEvent);
-				if(oEvent.isImmediatePropagationStopped()) {
+				if (oEvent.isImmediatePropagationStopped()) {
 					break;
 				}
 			}
 	
 			// if the propagation is stopped do not bubble up further
-			if(oEvent.isPropagationStopped()) {
+			if (oEvent.isPropagationStopped()) {
 				break;
 			}
 	
@@ -900,7 +738,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 			// This is the (not that common) situation that the element was deleted in its own event handler.
 			// i.e. the Element became 'inactive' (see Element#isActive())
 			var oDomRef = oElement.getDomRef();
-			if(!oDomRef) {
+			if (!oDomRef) {
 				break;
 			}
 	
@@ -943,12 +781,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 		// logging: prevent the logging of some events and for others do some
 		//          info logging into the console
 		var sName = oEvent.type;
-		if (sName!="mousemove" && sName!="mouseover" && sName!="scroll" && sName!="mouseout") {
+		if (sName != "mousemove" && sName != "mouseover" && sName != "scroll" && sName != "mouseout") {
 			var oElem = jQuery(oEvent.target).control(0);
-			if(oElem) {
+			if (oElem) {
 				jQuery.sap.log.debug("Event fired: '" + oEvent.type + "' on " + oElem, "", "sap.ui.core.UIArea");
-			}
-			else {
+			} else {
 				jQuery.sap.log.debug("Event fired: '" + oEvent.type + "'", "", "sap.ui.core.UIArea");
 			}
 		}
@@ -958,8 +795,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	/*
 	* The onattach function is called when the Element is attached to the DOM
 	* @private
-	* @name sap.ui.core.UIArea#_onattach
-	* @function
 	*/
 	UIArea.prototype._onattach = function() {
 	
@@ -1021,8 +856,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	/**
 	* The ondetach function is called when the Element is detached out of the DOM
 	* @private
-	* @name sap.ui.core.UIArea#_ondetach
-	* @function
 	*/
 	UIArea.prototype._ondetach = function() {
 	
@@ -1050,8 +883,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', 'j
 	
 	/**
 	 * An UIArea can't be cloned and throws an error when trying to do so.
-	 * @name sap.ui.core.UIArea#clone
-	 * @function
 	 */
 	UIArea.prototype.clone = function() {
 		throw new Error("UIArea can't be cloned");

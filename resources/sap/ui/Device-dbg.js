@@ -1,36 +1,38 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 /** 
  * Device and Feature Detection API of the SAP UI5 Library.
  *
- * @version 1.24.3
+ * @version 1.26.7
  * @namespace
  * @name sap.ui.Device
  * @public
  */
 
+/*global console */
+
 //Declare Module if API is available
-if(window.jQuery && window.jQuery.sap && window.jQuery.sap.declare){
+if (window.jQuery && window.jQuery.sap && window.jQuery.sap.declare) {
 	window.jQuery.sap.declare("sap.ui.Device", false);
 }
 
 //Introduce namespace if it does not yet exist
-if(typeof window.sap !== "object" && typeof window.sap !== "function" ){
+if (typeof window.sap !== "object" && typeof window.sap !== "function" ) {
 	  window.sap = {};
 }
-if(typeof window.sap.ui !== "object"){
+if (typeof window.sap.ui !== "object") {
 	window.sap.ui = {};
 }
 
 (function() {
 
 	//Skip initialization if API is already available
-	if(typeof window.sap.ui.Device === "object" || typeof window.sap.ui.Device === "function" ){
-		var apiVersion = "1.24.3";
+	if (typeof window.sap.ui.Device === "object" || typeof window.sap.ui.Device === "function" ) {
+		var apiVersion = "1.26.7";
 		window.sap.ui.Device._checkAPIVersion(apiVersion);
 		return;
 	}
@@ -42,9 +44,11 @@ if(typeof window.sap.ui !== "object"){
 	 * solution for the device API
 	 */
 	// helper function for date formatting
-	function pad0(i,w) { return ("000" + String(i)).slice(-w); }
+	function pad0(i,w) {
+		return ("000" + String(i)).slice(-w);
+	}
 
-	var FATAL=0, ERROR=1, WARNING=2, INFO=3, DEBUG=4, TRACE=5;
+	var FATAL = 0, ERROR = 1, WARNING = 2, INFO = 3, DEBUG = 4, TRACE = 5;
 
 	var deviceLogger = function() {
 		this.defaultComponent = 'DEVICE';
@@ -54,16 +58,17 @@ if(typeof window.sap.ui !== "object"){
 			sComponent = sComponent || this.defaultComponent  || '';
 				var oNow = new Date(),
 					oLogEntry = {
-						time     : pad0(oNow.getHours(),2)+":"+pad0(oNow.getMinutes(),2)+":"+pad0(oNow.getSeconds(),2),
-						date     : pad0(oNow.getFullYear(),4) + "-" + pad0(oNow.getMonth()+1,2) + "-" + pad0(oNow.getDate(),2),
+						time     : pad0(oNow.getHours(),2) + ":" + pad0(oNow.getMinutes(),2) + ":" + pad0(oNow.getSeconds(),2),
+						date     : pad0(oNow.getFullYear(),4) + "-" + pad0(oNow.getMonth() + 1,2) + "-" + pad0(oNow.getDate(),2),
 						timestamp: oNow.getTime(),
 						level    : iLevel,
 						message  : sMessage || "",
 						component: sComponent || ""
 					};
+				/*eslint-disable no-console */
 				if (window.console) { // in IE and FF, console might not exist; in FF it might even disappear
 					var logText = oLogEntry.date + " " + oLogEntry.time + " " + this.sWindowName + oLogEntry.message + " - " + oLogEntry.component;
-					switch(iLevel) {
+					switch (iLevel) {
 					case FATAL:
 					case ERROR: console.error(logText); break;
 					case WARNING: console.warn(logText); break;
@@ -72,6 +77,7 @@ if(typeof window.sap.ui !== "object"){
 					case TRACE: console.trace ? console.trace(logText) : console.log(logText); break; // trace not available in IE, fallback to log (no trace)
 					}
 				}
+				/*eslint-enable no-console */
 				return oLogEntry;
 		};
 	};
@@ -84,11 +90,11 @@ if(typeof window.sap.ui !== "object"){
 	
 	//Only used internal to make clear when Device API is loaded in wrong version
 	device._checkAPIVersion = function(sVersion){
-		var v = "1.24.3";
-		if(v != sVersion){
-			logger.log(WARNING, "Device API version differs: "+v+" <-> "+sVersion);
+		var v = "1.26.7";
+		if (v != sVersion) {
+			logger.log(WARNING, "Device API version differs: " + v + " <-> " + sVersion);
 		}
-	}
+	};
 
 
 //******** Event Management ******** (see Event Provider)
@@ -96,11 +102,11 @@ if(typeof window.sap.ui !== "object"){
 	var mEventRegistry = {};
 
 	function attachEvent(sEventId, fnFunction, oListener) {
-		if(!mEventRegistry[sEventId]){
+		if (!mEventRegistry[sEventId]) {
 			mEventRegistry[sEventId] = [];
 		}
 		mEventRegistry[sEventId].push({oListener: oListener, fFunction:fnFunction});
-	};
+	}
 
 	function detachEvent(sEventId, fnFunction, oListener) {
 		var aEventListeners = mEventRegistry[sEventId];
@@ -115,10 +121,10 @@ if(typeof window.sap.ui !== "object"){
 				break;
 			}
 		}
-		if(aEventListeners.length == 0) {
+		if (aEventListeners.length == 0) {
 			delete mEventRegistry[sEventId];
 		}
-	};
+	}
 
 	function fireEvent(sEventId, mParameters) {
 		var aEventListeners = mEventRegistry[sEventId], oInfo;
@@ -129,7 +135,7 @@ if(typeof window.sap.ui !== "object"){
 				oInfo.fFunction.call(oInfo.oListener || window, mParameters);
 			}
 		}
-	};
+	}
 
 //******** OS Detection ********
 
@@ -265,7 +271,7 @@ if(typeof window.sap.ui !== "object"){
 	 * Windows Phone operating system name.
 	 * 
 	 * @see sap.ui.Device.os#name
-	 * @name sap.ui.Device.os.OS#WINDOWS_PHONE
+	 * @alias sap.ui.Device.os.OS#WINDOWS_PHONE
 	 * @public
 	 */
 	
@@ -280,82 +286,86 @@ if(typeof window.sap.ui !== "object"){
 	};
 
 	function getOS(userAgent){ // may return null!!
+
+		userAgent = userAgent || navigator.userAgent;
+
+		var platform, // regular expression for platform
+			result;
+
 		function getDesktopOS(){
 			var pf = navigator.platform;
-			if(pf.indexOf("Win") != -1 ){
+			if (pf.indexOf("Win") != -1 ) {
 				// userAgent in windows 7 contains: windows NT 6.1
 				// userAgent in windows 8 contains: windows NT 6.2 or higher
 				// TODO: update this after windows 9 is released
 				var rVersion = /windows NT 6.(\d)/i;
-				var result = userAgent.match(rVersion);
+				var uaResult = userAgent.match(rVersion);
 				var sVersionStr = "";
-				if(result){
-					if(result[1] == 1){
+				if (uaResult) {
+					if (uaResult[1] == 1) {
 						sVersionStr = "7";
-					}else if(result[1] > 1){
+					} else if (uaResult[1] > 1) {
 						sVersionStr = "8";
 					}
 				}
 				return {"name": OS.WINDOWS, "versionStr": sVersionStr};
-			}else if(pf.indexOf("Mac") != -1){
+			} else if (pf.indexOf("Mac") != -1) {
 				return {"name": OS.MACINTOSH, "versionStr": ""};
-			}else if(pf.indexOf("Linux") != -1){
+			} else if (pf.indexOf("Linux") != -1) {
 				return {"name": OS.LINUX, "versionStr": ""};
 			}
 			logger.log(INFO, "OS detection returned no result");
 			return null;
 		}
 
-		userAgent = userAgent || navigator.userAgent;
-		var platform = /\(([a-zA-Z ]+);\s(?:[U]?[;]?)([\D]+)((?:[\d._]*))(?:.*[\)][^\d]*)([\d.]*)\s/;
-		var result = userAgent.match(platform);
-		if (result){
-			var appleDevices = /iPhone|iPad|iPod/;
-			var bbDevices = /PlayBook|BlackBerry/;
-			if (result[0].match(appleDevices)){
-				result[3] = result[3].replace(/_/g, ".");
-				//result[1] contains info of devices
-				return({"name": OS.IOS, "versionStr": result[3]});
-			} else if (result[2].match(/Android/)) {
-				result[2] = result[2].replace(/\s/g, "");
-				return({"name": OS.ANDROID, "versionStr": result[3]});
-			} else if (result[0].match(bbDevices)) {
-				return({"name": OS.BLACKBERRY, "versionStr": result[4]});
-			} else {
-				// currently we only support iOS, Android, BlackBerry 6.0+ , everything else will be ignored, if more platforms should be supported, logic can be placed here
-				return getDesktopOS();
-			} 
+		// Windows Phone. User agent includes other platforms and therefore must be checked first:
+		platform = /Windows Phone (?:OS )?([\d.]*)/;
+		result = userAgent.match(platform);
+		if (result) {
+			return ({"name": OS.WINDOWS_PHONE, "versionStr": result[1]});
+		}
 
-		} else if (userAgent.indexOf("(BB10;") > 0) { 
-			// BlackBery 10 has a different structure...
+		// BlackBerry 10:
+		if (userAgent.indexOf("(BB10;") > 0) {
 			platform = /\sVersion\/([\d.]+)\s/;
 			result = userAgent.match(platform);
-			if (result){
+			if (result) {
 				return {"name": OS.BLACKBERRY, "versionStr": result[1]};
 			} else {
 				return {"name": OS.BLACKBERRY, "versionStr": '10'};
 			}
+		}
 
-		} else {
-			// Windows phone has a different structure, so we need to check with another regExp.
-			platform = /Windows Phone (?:OS )?([\d.]*)/;
-			result = userAgent.match(platform);
-			if (result){
-				return({"name": OS.WINDOWS_PHONE, "versionStr": result[1]});
-			} else {
-				return getDesktopOS();
+		// iOS, Android, BlackBerry 6.0+:
+		platform = /\(([a-zA-Z ]+);\s(?:[U]?[;]?)([\D]+)((?:[\d._]*))(?:.*[\)][^\d]*)([\d.]*)\s/;
+		result = userAgent.match(platform);
+		if (result) {
+			var appleDevices = /iPhone|iPad|iPod/;
+			var bbDevices = /PlayBook|BlackBerry/;
+			if (result[0].match(appleDevices)) {
+				result[3] = result[3].replace(/_/g, ".");
+				//result[1] contains info of devices
+				return ({"name": OS.IOS, "versionStr": result[3]});
+			} else if (result[2].match(/Android/)) {
+				result[2] = result[2].replace(/\s/g, "");
+				return ({"name": OS.ANDROID, "versionStr": result[3]});
+			} else if (result[0].match(bbDevices)) {
+				return ({"name": OS.BLACKBERRY, "versionStr": result[4]});
 			}
 		}
-	};
+
+		// Desktop
+		return getDesktopOS();
+	}
 	
 	function setOS() {
 		device.os = getOS() || {};
 		device.os.OS = OS;
 		device.os.version = device.os.versionStr ? parseFloat(device.os.versionStr) : -1;
 
-		if(device.os.name){
-			for(var b in OS){
-				if(OS[b] === device.os.name){
+		if (device.os.name) {
+			for (var b in OS) {
+				if (OS[b] === device.os.name) {
 					device.os[b.toLowerCase()] = true;
 				}
 			}
@@ -497,7 +507,7 @@ if(typeof window.sap.ui !== "object"){
 	 * Android stock browser name.
 	 * 
 	 * @see sap.ui.Device.browser#name
-	 * @name sap.ui.Device.browser.BROWSER#ANDROID
+	 * @alias sap.ui.Device.browser.BROWSER#ANDROID
 	 * @public
 	 */
 	
@@ -536,31 +546,32 @@ if(typeof window.sap.ui !== "object"){
 		var rmsienew = /(trident)\/[\w.]+;.*rv:([\w.]+)/;
 		var rmozilla = /(mozilla)(?:.*? rv:([\w.]+))?/;
 
-		var match = rwebkit.exec( _ua ) ||
+		// WinPhone IE11 userAgent contains "WebKit" and "Mozilla" and therefore must be checked first
+		var browserMatch = rmsienew.exec( _ua ) ||
+					rwebkit.exec( _ua ) ||
 					ropera.exec( _ua ) ||
 					rmsie.exec( _ua ) ||
-					rmsienew.exec( _ua ) ||
 					_ua.indexOf("compatible") < 0 && rmozilla.exec( _ua ) ||
 					[];
 
-		var res = { browser: match[1] || "", version: match[2] || "0" };
+		var res = { browser: browserMatch[1] || "", version: browserMatch[2] || "0" };
 		res[res.browser] = true;
 		return res;
-	};
+	}
 
 	function getBrowser(customUa) {
 		var b = calcBrowser(customUa);
 		var _ua = customUa || ua;
-		var oExpMobile;
 
 		// jQuery checks for user agent strings. We differentiate between browsers
+		var oExpMobile;
 		if ( b.mozilla ) {
 			oExpMobile = /Mobile/;
 			if ( _ua.match(/Firefox\/(\d+\.\d+)/) ) {
 				var version = parseFloat(RegExp.$1);
 				return {
 					name: BROWSER.FIREFOX,
-					versionStr: ""+version,
+					versionStr: "" + version,
 					version: version,
 					mozilla: true,
 					mobile: oExpMobile.test(_ua)
@@ -575,43 +586,46 @@ if(typeof window.sap.ui !== "object"){
 		} else if ( b.webkit ) {
 			// webkit version is needed for calculation if the mobile android device is a tablet (calculation of other mobile devices work without)
 			var regExpWebkitVersion = _ua.toLowerCase().match(/webkit[\/]([\d.]+)/);
+			var webkitVersion;
 			if (regExpWebkitVersion) {
-				var webkitVersion = regExpWebkitVersion[1];
+				webkitVersion = regExpWebkitVersion[1];
 			}
 			oExpMobile = /Mobile/;
-			if ( _ua.match(/Chrome\/(\d+\.\d+).\d+/) ) {
-				var version = parseFloat(RegExp.$1);
+			if ( _ua.match(/(Chrome|CriOS)\/(\d+\.\d+).\d+/)) {
+				var version = parseFloat(RegExp.$2);
 				return {
 					name: BROWSER.CHROME,
-					versionStr: ""+version,
+					versionStr: "" + version,
 					version: version,
 					mobile: oExpMobile.test(_ua),
 					webkit: true,
 					webkitVersion: webkitVersion
 				};
-			} else if( _ua.match(/Android .+ Version\/(\d+\.\d+)/) ) {
+			} else if ( _ua.match(/Android .+ Version\/(\d+\.\d+)/) ) {
 				var version = parseFloat(RegExp.$1);
 				return {
 					name: BROWSER.ANDROID,
-					versionStr: ""+version,
+					versionStr: "" + version,
 					version: version,
 					mobile: oExpMobile.test(_ua),
 					webkit: true,
 					webkitVersion: webkitVersion
 				};
 			} else { // Safari might have an issue with _ua.match(...); thus changing
-				var oExp = /Version\/(\d+\.\d+).*Safari/;
-				if(oExp.test(_ua)) {
-					var version = parseFloat(oExp.exec(_ua)[1]);
+				var oExp = /(Version|PhantomJS)\/(\d+\.\d+).*Safari/;
+				if (oExp.test(_ua)) {
+					var aParts = oExp.exec(_ua);
+					var version = parseFloat(aParts[2]);
 					return {
 						name: BROWSER.SAFARI,
-						versionStr: ""+version,
+						versionStr: "" + version,
 						version: version,
 						mobile: oExpMobile.test(_ua),
 						webkit: true,
-						webkitVersion: webkitVersion
+						webkitVersion: webkitVersion,
+						phantomJS: aParts[1] === "PhantomJS"
 					};
-				}else{
+				} else {
 					// unknown webkit browser
 					return {
 						mobile: oExpMobile.test(_ua),
@@ -624,9 +638,9 @@ if(typeof window.sap.ui !== "object"){
 			var version;
 			// recognize IE8 when running in compat mode (only then the documentMode property is there)
 			if (document.documentMode && !customUa) { // only use the actual documentMode when no custom user-agent was given
-				if(document.documentMode === 7) { // OK, obviously we are IE and seem to be 7... but as documentMode is there this cannot be IE7!
+				if (document.documentMode === 7) { // OK, obviously we are IE and seem to be 7... but as documentMode is there this cannot be IE7!
 					version = 8.0;
-				}else{
+				} else {
 					version = parseFloat(document.documentMode);
 				}
 			} else {
@@ -634,7 +648,7 @@ if(typeof window.sap.ui !== "object"){
 			}
 			return {
 				name: BROWSER.INTERNET_EXPLORER,
-				versionStr: ""+version,
+				versionStr: "" + version,
 				version: version,
 				msie: true,
 				mobile: false // TODO: really?
@@ -646,16 +660,16 @@ if(typeof window.sap.ui !== "object"){
 			version: -1,
 			mobile: false
 		};
-	};
+	}
 	device._testUserAgent = getBrowser; // expose the user-agent parsing (mainly for testing), but don't let it be overwritten
 	
 	function setBrowser() {
 		device.browser = getBrowser();
 		device.browser.BROWSER = BROWSER;
 		
-		if(device.browser.name){
-			for(var b in BROWSER){
-				if(BROWSER[b] === device.browser.name){
+		if (device.browser.name) {
+			for (var b in BROWSER) {
+				if (BROWSER[b] === device.browser.name) {
 					device.browser[b.toLowerCase()] = true;
 				}
 			}
@@ -680,6 +694,13 @@ if(typeof window.sap.ui !== "object"){
 	 * Flag indicating whether touch events are supported.
 	 * 
 	 * @name sap.ui.Device.support#touch
+	 * @type boolean
+	 * @public
+	 */
+	/**
+	 * Flag indicating whether pointer events are supported.
+	 * 
+	 * @name sap.ui.Device.support#pointer
 	 * @type boolean
 	 * @public
 	 */
@@ -731,17 +752,19 @@ if(typeof window.sap.ui !== "object"){
 	//Maybe better to but this on device.browser because there are cases that a browser can touch but a device can't!
 	device.support.touch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch);
 
+	device.support.pointer = !!window.PointerEvent;
+
 	device.support.matchmedia = !!window.matchMedia;
 	var m = device.support.matchmedia ? window.matchMedia("screen and (max-width:0px)") : null; //IE10 doesn't like empty string as argument for matchMedia, FF returns null when running within an iframe with display:none
 	device.support.matchmedialistener = !!(m && m.addListener);
-	if(device.browser.safari && device.browser.version < 6){
+	if (device.browser.safari && device.browser.version < 6) {
 		//Safari seems to have addListener but no events are fired ?!
 		device.support.matchmedialistener = false;
 	}
 
 	device.support.orientation = !!("orientation" in window && "onorientationchange" in window);
 
-	device.support.retina = (window.retina||window.devicePixelRatio >= 2);
+	device.support.retina = (window.retina || window.devicePixelRatio >= 2);
 
 	device.support.websocket = ('WebSocket' in window);
 
@@ -802,7 +825,7 @@ if(typeof window.sap.ui !== "object"){
 	 * 	<li>sapUiVisibleOnlyOnTablet - will be visible if the screen has 600px or more but less than 1024px</li>
 	 * 	<li>sapUiVisibleOnlyOnDesktop - will be visible if the screen has 1024px or more</li>
 	 * </ul>
-	 * @name sap.ui.Device.media.RANGESETS#SAP_STANDARD
+	 * @alias sap.ui.Device.media.RANGESETS#SAP_STANDARD
 	 * @public
 	 */
 	
@@ -828,56 +851,56 @@ if(typeof window.sap.ui !== "object"){
 	function getQuery(from, to, unit){
 		unit = unit || "px";
 		var q = "screen";
-		if(from > 0){
-			q = q + " and (min-width:"+from+unit+")";
+		if (from > 0) {
+			q = q + " and (min-width:" + from + unit + ")";
 		}
-		if(to > 0){
-			q = q + " and (max-width:"+to+unit+")";
+		if (to > 0) {
+			q = q + " and (max-width:" + to + unit + ")";
 		}
 		return q;
-	};
+	}
 	
 	function handleChange(name){
-		if(!device.support.matchmedialistener && media_currentwidth == windowSize()[0]){
+		if (!device.support.matchmedialistener && media_currentwidth == windowSize()[0]) {
 			return; //Skip unnecessary resize events
 		}
 		
-		if(_querysets[name].timer){
+		if (_querysets[name].timer) {
 			clearTimeout(_querysets[name].timer);
 			_querysets[name].timer = null;
 		}
 		
 		_querysets[name].timer = setTimeout(function() {
 			var mParams = checkQueries(name, false);
-			if(mParams){
-				fireEvent("media_"+name, mParams);
+			if (mParams) {
+				fireEvent("media_" + name, mParams);
 			}
 		}, media_timeout);
-	};
+	}
 	
 	function getRangeInfo(sSetName, iRangeIdx){
 		var q = _querysets[sSetName].queries[iRangeIdx];
 		var info = {from: q.from, unit: _querysets[sSetName].unit};
-		if(q.to >= 0){
+		if (q.to >= 0) {
 			info.to = q.to;
 		}
-		if(_querysets[sSetName].names){
+		if (_querysets[sSetName].names) {
 			info.name = _querysets[sSetName].names[iRangeIdx];
 		}
 		return info;
-	};
+	}
 	
 	function checkQueries(name, infoOnly){
-		if(_querysets[name]){
+		if (_querysets[name]) {
 			var aQueries = _querysets[name].queries;
 			var info = null;
-			for(var i=0, len = aQueries.length; i < len; i++){
+			for (var i = 0, len = aQueries.length; i < len; i++) {
 				var q = aQueries[i];
-				if((q != _querysets[name].currentquery || infoOnly) && device.media.matches(q.from, q.to, _querysets[name].unit)){
-					if(!infoOnly){
+				if ((q != _querysets[name].currentquery || infoOnly) && device.media.matches(q.from, q.to, _querysets[name].unit)) {
+					if (!infoOnly) {
 						_querysets[name].currentquery = q;
 					}
-					if(!_querysets[name].noClasses && _querysets[name].names && !infoOnly){
+					if (!_querysets[name].noClasses && _querysets[name].names && !infoOnly) {
 						refreshCSSClasses(name, _querysets[name].names[i]);
 					}
 					info = getRangeInfo(name, i);
@@ -888,49 +911,49 @@ if(typeof window.sap.ui !== "object"){
 		}
 		logger.log(WARNING, "No queryset with name " + name + " found", 'DEVICE.MEDIA');
 		return null;
-	};
+	}
 	
 	function refreshCSSClasses(sSetName, sRangeName, bRemove){
-		 var sClassPrefix = "sapUiMedia-"+sSetName+"-";
-		 changeRootCSSClass(sClassPrefix+sRangeName, bRemove, sClassPrefix);
-	};
+		 var sClassPrefix = "sapUiMedia-" + sSetName + "-";
+		 changeRootCSSClass(sClassPrefix + sRangeName, bRemove, sClassPrefix);
+	}
 	
 	function changeRootCSSClass(sClassName, bRemove, sPrefix){
 		var oRoot = document.documentElement;
-		if (oRoot.className.length == 0){
-			if(!bRemove){
+		if (oRoot.className.length == 0) {
+			if (!bRemove) {
 				oRoot.className = sClassName;
 			}
-		}else{
+		} else {
 			var aCurrentClasses = oRoot.className.split(" ");
 			var sNewClasses = "";
-			for(var i=0; i<aCurrentClasses.length; i++){
-				if((sPrefix && aCurrentClasses[i].indexOf(sPrefix) != 0) || (!sPrefix && aCurrentClasses[i] != sClassName)){
+			for (var i = 0; i < aCurrentClasses.length; i++) {
+				if ((sPrefix && aCurrentClasses[i].indexOf(sPrefix) != 0) || (!sPrefix && aCurrentClasses[i] != sClassName)) {
 					sNewClasses = sNewClasses + aCurrentClasses[i] + " ";
 				}
 			}
-			if(!bRemove){
+			if (!bRemove) {
 				sNewClasses = sNewClasses + sClassName;
 			}
 			oRoot.className = sNewClasses;
 		}
-	};
+	}
 	
 	function windowSize(){
 		return [document.documentElement.clientWidth, document.documentElement.clientHeight];
-	};
+	}
 	
 	function convertToPx(val, unit){
-		if(unit === "em" || unit === "rem"){
+		if (unit === "em" || unit === "rem") {
 			var s = window.getComputedStyle || function(e) {
-	  			return e.currentStyle;
-	  		};
-	  		var x = s(document.documentElement).fontSize;
-	  		var f = (x && x.indexOf("px") >= 0) ? parseFloat(x, 10) : 16;
-	  		return val*f;
+					return e.currentStyle;
+				};
+				var x = s(document.documentElement).fontSize;
+				var f = (x && x.indexOf("px") >= 0) ? parseFloat(x, 10) : 16;
+				return val * f;
 		}
 		return val;
-	};
+	}
 
 	function match_legacy(from, to, unit){
 		from = convertToPx(from, unit);
@@ -940,13 +963,13 @@ if(typeof window.sap.ui !== "object"){
 		var a = from < 0 || from <= width;
 		var b = to < 0 || width <= to;
 		return a && b;
-	};
+	}
 
 	function match(from, to, unit){
 		var q = getQuery(from, to, unit);
-		var m = window.matchMedia(q); //FF returns null when running within an iframe with display:none
-		return m && m.matches;
-	};
+		var mm = window.matchMedia(q); //FF returns null when running within an iframe with display:none
+		return mm && mm.matches;
+	}
 
 	device.media.matches = device.support.matchmedia ? match : match_legacy;
 	
@@ -970,7 +993,7 @@ if(typeof window.sap.ui !== "object"){
 	 */
 	device.media.attachHandler = function(fnFunction, oListener, sName){
 		var name = sName || _defaultRangeSet;
-		attachEvent("media_"+name, fnFunction, oListener);
+		attachEvent("media_" + name, fnFunction, oListener);
 	};
 
 	/**
@@ -985,7 +1008,7 @@ if(typeof window.sap.ui !== "object"){
 	 */
 	device.media.detachHandler = function(fnFunction, oListener, sName){
 		var name = sName || _defaultRangeSet;
-		detachEvent("media_"+name, fnFunction, oListener);
+		detachEvent("media_" + name, fnFunction, oListener);
 	};
 	
 	/** 
@@ -1014,20 +1037,20 @@ if(typeof window.sap.ui !== "object"){
 	 * @function
 	 * @public
 	 */
-	device.media.initRangeSet = function(sName, aRangeBorders, sUnit, aRangeNames, bSuppressClasses){	
+	device.media.initRangeSet = function(sName, aRangeBorders, sUnit, aRangeNames, bSuppressClasses){
 		//TODO Do some Assertions and parameter checking
 		var oConfig;
-		if(!sName){
+		if (!sName) {
 			oConfig = device.media._predefinedRangeSets[_defaultRangeSet];
-		}else if(sName && device.media._predefinedRangeSets[sName]){
+		} else if (sName && device.media._predefinedRangeSets[sName]) {
 			oConfig = device.media._predefinedRangeSets[sName];
-		}else{
+		} else {
 			oConfig = {name: sName, unit: (sUnit || "px").toLowerCase(), points: aRangeBorders || [], names: aRangeNames, noClasses: !!bSuppressClasses};
 		}
 		
-		if(device.media.hasRangeSet(oConfig.name)){
-			return;
+		if (device.media.hasRangeSet(oConfig.name)) {
 			logger.log(INFO, "Range set " + oConfig.name + " hase already been initialized", 'DEVICE.MEDIA');
+			return;
 		}
 		
 		sName = oConfig.name;
@@ -1040,8 +1063,8 @@ if(typeof window.sap.ui !== "object"){
 			
 		var from, to, query;
 		var aPoints = oConfig.points;
-		for(var i=0, len = aPoints.length; i <= len; i++){
-			from = (i == 0) ? 0 : aPoints[i-1];
+		for (var i = 0, len = aPoints.length; i <= len; i++) {
+			from = (i == 0) ? 0 : aPoints[i - 1];
 			to = (i == aPoints.length) ? -1 : aPoints[i];
 			query = getQuery(from, to, oConfig.unit);
 			oConfig.queries.push({
@@ -1049,26 +1072,26 @@ if(typeof window.sap.ui !== "object"){
 				from: from,
 				to: to
 			});
-		};
+		}
 		
-		if(oConfig.names && oConfig.names.length != oConfig.queries.length){
+		if (oConfig.names && oConfig.names.length != oConfig.queries.length) {
 			oConfig.names = null;
 		}
 		
 		_querysets[oConfig.name] = oConfig;
 			
-		if(device.support.matchmedialistener){ //FF, Safari, Chrome, IE10?
+		if (device.support.matchmedialistener) { //FF, Safari, Chrome, IE10?
 			var queries = oConfig.queries;
-			for(var i=0; i<queries.length; i++){
+			for (var i = 0; i < queries.length; i++) {
 				var q = queries[i];
 				q.media = window.matchMedia(q.query);
 				q.media.addListener(oConfig.listener);
 			}
-		}else{ //IE, Safari (<6?)	
+		} else { //IE, Safari (<6?)	
 			if (window.addEventListener) {
 				window.addEventListener("resize", oConfig.listener, false);
 				window.addEventListener("orientationchange", oConfig.listener, false);
-			}else{ //IE8
+			} else { //IE8
 				window.attachEvent("onresize", oConfig.listener);
 			}
 		}
@@ -1086,7 +1109,7 @@ if(typeof window.sap.ui !== "object"){
 	 * @public
 	 */
 	device.media.getCurrentRange = function(sName){
-		if(!device.media.hasRangeSet(sName)){
+		if (!device.media.hasRangeSet(sName)) {
 			return null;
 		}
 		return checkQueries(sName, true);
@@ -1116,35 +1139,35 @@ if(typeof window.sap.ui !== "object"){
 	 * @protected
 	 */
 	device.media.removeRangeSet = function(sName){
-		if(!device.media.hasRangeSet(sName)){
+		if (!device.media.hasRangeSet(sName)) {
 			logger.log(INFO, "RangeSet " + sName + " not found, thus could not be removed.", 'DEVICE.MEDIA');
 			return;
 		}
 
-		for(var x in RANGESETS){
-			if(sName === RANGESETS[x]){
+		for (var x in RANGESETS) {
+			if (sName === RANGESETS[x]) {
 				logger.log(WARNING, "Cannot remove default rangeset - no action taken.", 'DEVICE.MEDIA');
-				return; 
+				return;
 			}
 		}
 		
 		var oConfig = _querysets[sName];
-		if(device.support.matchmedialistener){ //FF, Safari, Chrome, IE10?
+		if (device.support.matchmedialistener) { //FF, Safari, Chrome, IE10?
 			var queries = oConfig.queries;
-			for(var i=0; i<queries.length; i++){
+			for (var i = 0; i < queries.length; i++) {
 				queries[i].media.removeListener(oConfig.listener);
 			}
-		}else{ //IE, Safari (<6?)	
+		} else { //IE, Safari (<6?)	
 			if (window.removeEventListener) {
 				window.removeEventListener("resize", oConfig.listener, false);
 				window.removeEventListener("orientationchange", oConfig.listener, false);
-			}else{ //IE8
+			} else { //IE8
 				window.detachEvent("onresize", oConfig.listener);
 			}
 		}
 		
 		refreshCSSClasses(sName, "", true);
-		delete mEventRegistry["media_"+sName];
+		delete mEventRegistry["media_" + sName];
 		delete _querysets[sName];
 	};
 
@@ -1193,7 +1216,7 @@ if(typeof window.sap.ui !== "object"){
 	 * 
 	 * This property is set to true only when both mouse and touch event are natively supported.
 	 * 
-	 * @name sap.ui.Device.system#combi
+	 * @alias sap.ui.Device.system#combi
 	 * @type boolean
 	 * @public
 	 */
@@ -1205,8 +1228,8 @@ if(typeof window.sap.ui !== "object"){
 			"COMBI" : "combi"
 	};
 
-	var isWin8 = device.os.windows && device.os.version === 8;
-	var isWin7 = device.os.windows && device.os.version === 7;
+	var isWin8 = !!device.os.windows && device.os.version === 8;
+	var isWin7 = !!device.os.windows && device.os.version === 7;
 
 	device.system = {};
 
@@ -1215,16 +1238,16 @@ if(typeof window.sap.ui !== "object"){
 		
 		var s = {};
 		s.tablet = ((device.support.touch && !isWin7) || !!_simMobileOnDesktop) && t;
-		s.phone = ((device.support.touch && !isWin7) || !!_simMobileOnDesktop) && !t;
+		s.phone = device.os.windows_phone || ((device.support.touch && !isWin7) || !!_simMobileOnDesktop) && !t;
 		s.desktop = (!s.tablet && !s.phone) || isWin8 || isWin7;
 		s.combi = (s.desktop && s.tablet);
 		s.SYSTEMTYPE = SYSTEMTYPE;
 		
-		for(var type in SYSTEMTYPE){
-			changeRootCSSClass("sap-"+SYSTEMTYPE[type], !s[SYSTEMTYPE[type]]);
+		for (var type in SYSTEMTYPE) {
+			changeRootCSSClass("sap-" + SYSTEMTYPE[type], !s[SYSTEMTYPE[type]]);
 		}
 		return s;
-	};
+	}
 
 	function isTablet() {
 		var android_phone = (/(?=android)(?=.*mobile)/i.test(navigator.userAgent));
@@ -1234,7 +1257,7 @@ if(typeof window.sap.ui !== "object"){
 		if (device.os.name === device.os.OS.IOS) {
 			return /ipad/i.test(navigator.userAgent);
 		} else {
-			if(device.support.touch) {
+			if (device.support.touch) {
 				//in real mobile device
 				var densityFactor = window.devicePixelRatio ? window.devicePixelRatio : 1; // may be undefined in Windows Phone devices
 				if (!bChromeWebView && (device.os.name === device.os.OS.ANDROID) && device.browser.webkit && (device.browser.webkitVersion > 537.10)) {
@@ -1259,7 +1282,7 @@ if(typeof window.sap.ui !== "object"){
 				// So the detected device type depends on the orientation :-(
 				// actually this is a Chrome bug, as "width"/"height" should return the entire screen's dimensions and
 				// "availWidth"/"availHeight" should return the size available after subtracting the browser UI
-				if (isLandscape() 
+				if (isLandscape()
 						&& (window.screen.height === 552 || window.screen.height === 553) // old/new Nexus 7  
 						&& (/Nexus 7/i.test(navigator.userAgent))) {
 					bTablet = true;
@@ -1273,7 +1296,7 @@ if(typeof window.sap.ui !== "object"){
 				return android_tablet;
 			}
 		}
-	};
+	}
 	
 	function setSystem(_simMobileOnDesktop) {
 		device.system = getSystem(_simMobileOnDesktop);
@@ -1368,27 +1391,27 @@ if(typeof window.sap.ui !== "object"){
 	function setOrientationInfo(oInfo){
 		oInfo.landscape = isLandscape(true);
 		oInfo.portrait = !oInfo.landscape;
-	};
+	}
 
 	function handleOrientationChange(){
 		setOrientationInfo(device.orientation);
 		fireEvent("orientation", {landscape: device.orientation.landscape});
-	};
+	}
 
 	function handleResizeChange(){
 		setResizeInfo(device.resize);
 		fireEvent("resize", {height: device.resize.height, width: device.resize.width});
-	};
+	}
 
 	function setResizeInfo(oInfo){
 		oInfo.width = windowSize()[0];
 		oInfo.height = windowSize()[1];
-	};
+	}
 
 	function handleOrientationResizeChange(){
 		var wasL = device.orientation.landscape;
 		var isL = isLandscape();
-		if(wasL != isL){
+		if (wasL != isL) {
 			handleOrientationChange();
 		}
 		//throttle resize events because most browsers throw one or more resize events per pixel
@@ -1397,12 +1420,12 @@ if(typeof window.sap.ui !== "object"){
 		if (!iResizeTimeout) {
 			iResizeTimeout = window.setTimeout(handleResizeTimeout, 150);
 		}
-	};
+	}
 
 	function handleResizeTimeout() {
 		handleResizeChange();
 		iResizeTimeout = null;
-	};
+	}
 
 	var bOrientationchange = false;
 	var bResize = false;
@@ -1416,30 +1439,30 @@ if(typeof window.sap.ui !== "object"){
 	var rInputTagRegex = /INPUT|TEXTAREA|SELECT/;
 	// On iPhone with iOS version 7.0.x and on iPad with iOS version 7.x (tested with all versions below 7.1.1), there's a invalide resize event fired
 	// when changing the orientation while keyboard is shown.
-	var bSkipFirstResize = device.os.ios && device.browser.name === "sf" && 
+	var bSkipFirstResize = device.os.ios && device.browser.name === "sf" &&
 		((device.system.phone && device.os.version >= 7 && device.os.version < 7.1) || (device.system.tablet && device.os.version >= 7));
 	
 	function isLandscape(bFromOrientationChange){
 		if (device.support.touch && device.support.orientation) {
 			//if on screen keyboard is open and the call of this method is from orientation change listener, reverse the last value.
 			//this is because when keyboard opens on android device, the height can be less than the width even in portrait mode.
-			if(bKeyboardOpen && bFromOrientationChange){
+			if (bKeyboardOpen && bFromOrientationChange) {
 				return !device.orientation.landscape;
 			}
 			//when keyboard opens, the last orientation change value will be retured.
-			if(bKeyboardOpen){
+			if (bKeyboardOpen) {
 				return device.orientation.landscape;
 			}
 			//otherwise compare the width and height of window
 		} else {
 			//most desktop browsers and windows phone/tablet which not support orientationchange
-			if(device.support.matchmedia && device.support.orientation){
+			if (device.support.matchmedia && device.support.orientation) {
 				return !!window.matchMedia("(orientation: landscape)").matches;
 			}
 		}
 		var size = windowSize();
 		return size[0] > size[1];
-	};
+	}
 
 	function handleMobileOrientationResizeChange(evt) {
 		if (evt.type == "resize") {
@@ -1453,7 +1476,7 @@ if(typeof window.sap.ui !== "object"){
 			var iWindowWidthNew = windowSize()[0];
 			var iTime = new Date().getTime();
 			//skip multiple resize events by only one orientationchange
-			if(iWindowHeightNew === iWindowHeightOld && iWindowWidthNew === iWindowWidthOld){
+			if (iWindowHeightNew === iWindowHeightOld && iWindowWidthNew === iWindowWidthOld) {
 				return;
 			}
 			bResize = true;
@@ -1463,7 +1486,7 @@ if(typeof window.sap.ui !== "object"){
 				//Asus Transformer tablet fires two resize events when orientation changes while keyboard is open.
 				//Between these two events, only the height changes. The check of if keyboard is open has to be skipped because
 				//it may be judged as keyboard closed but the keyboard is still open which will affect the orientation detection
-				if(!iLastResizeTime || (iTime - iLastResizeTime > 300)){
+				if (!iLastResizeTime || (iTime - iLastResizeTime > 300)) {
 					bKeyboardOpen = (iWindowHeightNew < iWindowHeightOld);
 				}
 				handleResizeChange();
@@ -1473,7 +1496,7 @@ if(typeof window.sap.ui !== "object"){
 			iLastResizeTime = iTime;
 			iWindowHeightOld = iWindowHeightNew;
 
-			if(iClearFlagTimeout){
+			if (iClearFlagTimeout) {
 				window.clearTimeout(iClearFlagTimeout);
 				iClearFlagTimeout = null;
 			}
@@ -1490,7 +1513,7 @@ if(typeof window.sap.ui !== "object"){
 			iOrientationTimeout = null;
 		}
 		iOrientationTimeout = window.setTimeout(handleMobileTimeout, 50);
-	};
+	}
 
 	function handleMobileTimeout() {
 		if (bOrientationchange && bResize) {
@@ -1498,19 +1521,19 @@ if(typeof window.sap.ui !== "object"){
 			handleResizeChange();
 			bOrientationchange = false;
 			bResize = false;
-			if(iClearFlagTimeout){
+			if (iClearFlagTimeout) {
 				window.clearTimeout(iClearFlagTimeout);
 				iClearFlagTimeout = null;
 			}
 		}
 		iOrientationTimeout = null;
-	};
+	}
 
 	function clearFlags(){
 		bOrientationchange = false;
 		bResize = false;
 		iClearFlagTimeout = null;
-	};
+	}
 
 //******** Update browser settings for test purposes ********
 
@@ -1550,7 +1573,9 @@ if(typeof window.sap.ui !== "object"){
 
 	// define module if API is available
 	if (sap.ui.define) {
-		sap.ui.define("sap/ui/Device", [], function() { return device; });
+		sap.ui.define("sap/ui/Device", [], function() {
+			return device;
+		});
 	}
 
 }());

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -10,23 +10,20 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 	"use strict";
 
 
-	
-	/*global JSZip *///declare unusual global vars for JSLint/SAPUI5 validation
-	/*global Blob *///declare unusual global vars for JSLint/SAPUI5 validation
-	/*global Uint8Array *///declare unusual global vars for JSLint/SAPUI5 validation
+	/*global JSZip, Blob, Uint8Array, alert */
 	
 	
 	
-		var $=jQuery;
+		var $ = jQuery;
 		/**
 		 * Creates an instance of sap.ui.core.support.plugins.ControlTree.
 		 * @class This class represents the ControlTree plugin for the support tool functionality of UI5. This class is internal and all its functions must not be used by an application.
 		 * @abstract
 		 * @extends sap.ui.base.Object
-		 * @version 1.24.3
+		 * @version 1.26.7
 		 * @constructor
 		 * @private
-		 * @name sap.ui.core.support.plugins.ControlTree
+		 * @alias sap.ui.core.support.plugins.ControlTree
 		 */
 		var ControlTree = Plugin.extend("sap.ui.core.support.plugins.ControlTree", {
 			constructor : function(oSupportStub) {
@@ -39,15 +36,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 					// TOOLS SIDE!
 	
 					this._aEventIds = [
-					    "sapUiSupportSelectorSelect",
-					    this.getId() + "ReceiveControlTree",
-					    this.getId() + "ReceiveControlTreeExport",
-					    this.getId() + "ReceiveControlTreeExportError",
-					    this.getId() + "TriggerRequestProperties",
-					    this.getId() + "ReceiveProperties",
-					    this.getId() + "ReceiveBindingInfos",
-					    this.getId() + "ReceiveMethods",
-					    this.getId() + "ReceivePropertiesMethods"
+						"sapUiSupportSelectorSelect",
+						this.getId() + "ReceiveControlTree",
+						this.getId() + "ReceiveControlTreeExport",
+						this.getId() + "ReceiveControlTreeExportError",
+						this.getId() + "TriggerRequestProperties",
+						this.getId() + "ReceiveProperties",
+						this.getId() + "ReceiveBindingInfos",
+						this.getId() + "ReceiveMethods",
+						this.getId() + "ReceivePropertiesMethods"
 					];
 	
 					this._breakpointId = "sapUiSupportBreakpoint";
@@ -66,12 +63,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 					// APPS SIDE!
 	
 					this._aEventIds = [
-					    this.getId() + "RequestControlTree",
-					    this.getId() + "RequestControlTreeSerialize",
-					    this.getId() + "RequestProperties",
-					    this.getId() + "RequestBindingInfos",
-					    this.getId() + "ChangeProperty",
-					    this.getId() + "RefreshBinding"
+						this.getId() + "RequestControlTree",
+						this.getId() + "RequestControlTreeSerialize",
+						this.getId() + "RequestProperties",
+						this.getId() + "RequestBindingInfos",
+						this.getId() + "ChangeProperty",
+						this.getId() + "RefreshBinding"
 					];
 	
 					// register as core plugin
@@ -123,7 +120,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 			.on("click", '#sapUiSupportControlPropertiesArea img.sapUiSupportRefreshBinding', $.proxy(this._onRefreshBinding, this));
 	
 			this.renderContentAreas();
-		};
+		}
 	
 		ControlTree.prototype.exit = function(oSupportStub) {
 			Plugin.prototype.exit.apply(this, arguments);
@@ -222,7 +219,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 					rm.write("</ul>");
 				}
 				rm.write("</li>");
-			};
+			}
 	
 			$.each(aControlTree, renderNode);
 	
@@ -626,7 +623,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 			rm.write('<select id="sapUiSupportControlMethodsSelect" class="sapUiSupportAutocomplete"><option></option>');
 	
 			$.each(aMethods, function(iIndex, oValue) {
-				if (!oValue.active)	rm.write('<option>' + oValue.name + '</option>');
+				if (!oValue.active) {
+					rm.write('<option>' + oValue.name + '</option>');
+				}
 			});
 	
 			rm.write('</select>');
@@ -636,7 +635,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 			rm.write('<hr class="no-border"/><ul id="sapUiSupportControlActiveBreakpoints" class="sapUiSupportList sapUiSupportBreakpointList">');
 	
 			$.each(aMethods, function(iIndex, oValue) {
-				if (!oValue.active) return;
+				if (!oValue.active) {
+					return;
+				}
 	
 				rm.write('<li><span>' + oValue.name + '</span>' +
 						 '<img class="remove-breakpoint" style="cursor:pointer;margin-left:5px" ' +
@@ -716,13 +717,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 		};
 		
 		ControlTree.prototype._drawAlert = function(sErrorMessage) {
+			/*eslint-disable no-alert */
 			alert("ERROR: The selected element cannot not be exported.\nPlease choose an other one.\n\nReason:\n" + sErrorMessage);
-		}
+			/*eslint-enable no-alert */
+		};
 			
 		ControlTree.prototype.onsapUiSupportControlTreeReceiveControlTreeExport = function(oEvent) {
-			var zip = undefined;
+			var zip;
 			var mViews = JSON.parse(oEvent.getParameter("serializedViews"));
-			var sType = oEvent.getParameter("sType")
+			var sType = oEvent.getParameter("sType");
 			
 			if (!$.isEmptyObject(mViews)) {
 				zip = new JSZip();
@@ -818,7 +821,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 		ControlTree.prototype._onPropertiesTab = function(oEvent) {
 			if (this.selectTab(this._tab.properties)) {
 				this.requestProperties(this.getSelectedControlId());
-			};
+			}
 		};
 	
 		ControlTree.prototype._onBindingInfosTab = function(oEvent) {
@@ -835,14 +838,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 					controlId: this.getSelectedControlId(),
 					callback: this.getId() + "ReceiveMethods"
 				});
-			};
+			}
 		};
 	
 		ControlTree.prototype._onExportTab = function(oEvent) {
 			if (this.selectTab(this._tab.exports)) {
 				this.renderExportTab();
 	//			this.renderControlTree(JSON.parse(oEvent.getParameter("controlTree")));
-			};
+			}
 		};
 	
 		ControlTree.prototype._autoComplete = function(oEvent) {
@@ -852,13 +855,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 				this._onAddBreakpointClicked();
 			}
 	
-			if (oEvent.keyCode >= jQuery.sap.KeyCodes.ARROW_LEFT && oEvent.keyCode <= jQuery.sap.KeyCodes.ARROW_DOWN) return;
+			if (oEvent.keyCode >= jQuery.sap.KeyCodes.ARROW_LEFT && oEvent.keyCode <= jQuery.sap.KeyCodes.ARROW_DOWN) {
+				return;
+			}
 	
 			var $input = $(oEvent.target),
 				$select = $input.prev("select"),
 				sInputVal = $input.val();
 	
-			if (sInputVal == "") return;
+			if (sInputVal == "") {
+				return;
+			}
 	
 			var aOptions = $select.find("option").map(function() {
 				return $(this).val();
@@ -891,13 +898,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 	
 			var oSelect = oEvent.target;
 	
-			if(oSelect.tagName == "INPUT") {
+			if (oSelect.tagName == "INPUT") {
 				var sValue = oSelect.value;
 				oSelect = oSelect.previousSibling;
 				var aOptions = oSelect.options;
-				for (var i=0;i<aOptions.length;i++) {
+				for (var i = 0;i < aOptions.length;i++) {
 					var sText = aOptions[i].value || aOptions[i].text;
-					if (sText.toUpperCase()== sValue.toUpperCase()) {
+					if (sText.toUpperCase() == sValue.toUpperCase()) {
 						oSelect.selectedIndex = i;
 						break;
 					}
@@ -908,7 +915,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 			var sClassName = oSelect.options[selIndex].value || oSelect.options[selIndex].text;
 	
 			if (oSelect.nextSibling && oSelect.nextSibling.tagName == "INPUT") {
-				oSelect.nextSibling.value= sClassName;
+				oSelect.nextSibling.value = sClassName;
 			}
 	
 		};
@@ -1016,7 +1023,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 	
 			var $button = this.$().find("#sapUiSupportControlTab" + sTab);
 	
-			if ($button.hasClass("active")) return false;
+			if ($button.hasClass("active")) {
+				return false;
+			}
 	
 			this.$().find("#sapUiSupportControlTabs button").removeClass("active");
 			$button.addClass("active");
@@ -1028,7 +1037,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 	
 		Plugin.prototype.getSelectedControlId = function() {
 			var $sret = this.$().find(".sapUiSupportControlTreeSelected");
-			if ($sret.length===0) {
+			if ($sret.length === 0) {
 				return undefined;
 			} else {
 				return $sret.parent().attr("id").substring("sap-debug-controltree-".length);
@@ -1076,7 +1085,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 	
 		function initInApps(oSupportStub) {
 			this.onsapUiSupportControlTreeRequestControlTree();
-		};
+		}
 	
 		ControlTree.prototype.onsapUiSupportControlTreeRequestControlTree = function(oEvent) {
 			this._oStub.sendEvent(this.getId() + "ReceiveControlTree", { controlTree: JSON.stringify(this.getControlTree()) });
@@ -1086,24 +1095,28 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 			var oControl = this.oCore.byId(oEvent.getParameter("controlID"));
 			var sType = oEvent.getParameter("sType");
 			
-			var oViewSerializer = undefined;
-			var mViews = undefined;
+			var oViewSerializer;
+			var mViews;
 			sap.ui.controller(sType + "ViewController", {});
-			sap.ui.jsview(sType + "ViewExported", { 
-				getControllerName : function() { return sType + "ViewController";},
+			sap.ui.jsview(sType + "ViewExported", {
+				getControllerName : function() {
+					return sType + "ViewController";
+				},
 				createContent : function(oController) { }
 			});
 			
 			sap.ui.controller(sType + "ViewController", {});
-			sap.ui.jsview(sType + "ViewExported", { 
-				getControllerName : function() { return sType + "ViewController";},
+			sap.ui.jsview(sType + "ViewExported", {
+				getControllerName : function() {
+					return sType + "ViewController";
+				},
 				createContent : function(oController) { }
 			});
 			
 			try {
 				if (oControl) {
 					var oParentControl = oControl.getParent();
-					var index = undefined;
+					var index;
 					index = oParentControl.indexOfContent(oControl);
 					
 					if (oControl instanceof sap.ui.core.mvc.View) {
@@ -1114,7 +1127,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 						oViewSerializer = new ViewSerializer(oView, window, "sap.m");
 					}
 					// By now just XML and HTML can be serialized
-					mViews = (sType && sType!=="XML") ? oViewSerializer.serializeToHTML() : oViewSerializer.serializeToXML();
+					mViews = (sType && sType !== "XML") ? oViewSerializer.serializeToHTML() : oViewSerializer.serializeToXML();
 					if (index) {
 						oParentControl.insertContent(oControl, index);
 					} else {
@@ -1129,7 +1142,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 					}
 					oViewSerializer = new ViewSerializer(oView, window, "sap.m");
 					// By now just XML and HTML can be serialized
-					mViews = (sType && sType!=="XML") ? oViewSerializer.serializeToHTML() : oViewSerializer.serializeToXML();
+					mViews = (sType && sType !== "XML") ? oViewSerializer.serializeToHTML() : oViewSerializer.serializeToXML();
 					for ( var i = 0; i < aContent.length; i++) {
 						oUIArea.addContent(aContent[i]);
 					}
@@ -1138,7 +1151,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 				if (oViewSerializer) {
 					this._oStub.sendEvent(this.getId() + "ReceiveControlTreeExport", { serializedViews: JSON.stringify(mViews), sType: sType });
 				}
-			} catch(err) {
+			} catch (err) {
 				this._oStub.sendEvent(this.getId() + "ReceiveControlTreeExportError", { errorMessage: err.message });
 			}
 		};
@@ -1272,7 +1285,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 					}
 				}
 				return mElement;
-			};
+			}
 	
 			$.each(oCore.mUIAreas, function(iIndex, oUIArea) {
 				var mElement = serializeElement(oUIArea);
@@ -1348,8 +1361,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 			} else if (oControl) {
 	
 				var oMetadata = oControl.getMetadata();
-	
-				while(oMetadata instanceof sap.ui.core.ElementMetadata) {
+
+				/*eslint-disable no-loop-func */
+				while (oMetadata instanceof sap.ui.core.ElementMetadata) {
 	
 					var mControlProp = {
 						control: oMetadata.getName(),
@@ -1367,7 +1381,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 							}
 	
 							if (sName == '_sGetter' || sName == '_sMutator') {
-								mProperty["bp" + sName] = $.grep(mMethods, function(o) { return o.name === sValue && o.active; }).length === 1;
+								mProperty["bp" + sName] = $.grep(mMethods, function(o) {
+									return o.name === sValue && o.active;
+								}).length === 1;
 							}
 	
 							var oType = sap.ui.base.DataType.getType(oProperty.type);
@@ -1384,7 +1400,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 	
 					var mAggregations = oMetadata.getAggregations();
 					$.each(mAggregations, function(sKey, oAggregation) {
-						if (oAggregation.altTypes && oAggregation.altTypes[0] && pSimpleType.test(oAggregation.altTypes[0]) && typeof(oControl.getAggregation(sKey)) !== 'object') {
+						if (oAggregation.altTypes && oAggregation.altTypes[0] && pSimpleType.test(oAggregation.altTypes[0]) && typeof (oControl.getAggregation(sKey)) !== 'object') {
 							var mAggregation = {};
 							$.each(oAggregation, function(sName, sValue) {
 	
@@ -1393,7 +1409,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 								}
 	
 								if (sName == '_sGetter' || sName == '_sMutator') {
-									mAggregation["bp" + sName] = $.grep(mMethods, function(o) { return o.name === sValue && o.active; }).length === 1;
+									mAggregation["bp" + sName] = $.grep(mMethods, function(o) {
+										return o.name === sValue && o.active;
+									}).length === 1;
 								}
 	
 							});
@@ -1406,6 +1424,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 	
 					oMetadata = oMetadata.getParent();
 				}
+				/*eslint-enable no-loop-func */
 	
 			}
 	
@@ -1421,7 +1440,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 	
 			var oControl = this.oCore.byId(sId);
 	
-			if (!oControl) return mControlBindingInfos;
+			if (!oControl) {
+				return mControlBindingInfos;
+			}
 	
 			var mBindingInfos = oControl.mBindingInfos;
 	
@@ -1473,7 +1494,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 	
 							}
 	
-							mData.absolutePath = (typeof(sAbsolutePath) === 'undefined') ? 'Unresolvable' : sAbsolutePath;
+							mData.absolutePath = (typeof (sAbsolutePath) === 'undefined') ? 'Unresolvable' : sAbsolutePath;
 							mData.isRelative = oBinding.isRelative();
 							mData.model = that.getBindingModelInfo(oBinding, oControl);
 						}
@@ -1527,7 +1548,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 							};
 							break;
 						}
-					} while (oCurrentControl = oCurrentControl.getParent());
+					} while ((oCurrentControl = oCurrentControl.getParent()) !== undefined);
 	
 					mControlBindingInfos.contexts.push(mContext);
 				}
@@ -1570,7 +1591,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 						};
 						break;
 					}
-				} while (oCurrentControl = oCurrentControl.getParent());
+				} while ((oCurrentControl = oCurrentControl.getParent()) !== undefined);
 	
 				// check for core model if no model was found
 				if (!mModelInfo.location) {
@@ -1608,7 +1629,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 			var oControl = this.oCore.byId(sId);
 			var mBindingInfo = oControl.mBindingInfos[sBindingName];
 	
-			if (!oControl || !mBindingInfo) return;
+			if (!oControl || !mBindingInfo) {
+				return;
+			}
 	
 			var oBinding = mBindingInfo.binding;
 	

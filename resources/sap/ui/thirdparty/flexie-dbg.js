@@ -708,6 +708,7 @@ var Flexie = (function (win, doc) {
 		}
 	}
 
+	// ##### BEGIN: SAP modification
 	// Added to incorporate SAPUI5 FlexBox elements into regular Flexie setup
 	function addFlexboxElement(params) {
 		var target = params.target,
@@ -717,7 +718,7 @@ var Flexie = (function (win, doc) {
 		setFlexieId(target);
 
 		// Find possible child node matches
-		children = matchFlexChildren(target, LIBRARY, target.childNodes);
+		matchFlexChildren(target, LIBRARY, target.childNodes);
 
 		// Find any nested flexbox elements
 		params.nestedFlexboxes = selector + " " + flexieParentSelector;
@@ -725,6 +726,7 @@ var Flexie = (function (win, doc) {
 		FLEX_BOXES[target.FLX_DOM_ID] = getParams(params);
 		FLEX_BOXES[target.FLX_DOM_ID].target.setAttribute(FLX_PARENT_ATTR, TRUE);
 	}
+	// ##### END: SAP modification
 
 	function calcPx(element, props, dir) {
 		var dim = dir.replace(dir.charAt(0), dir.charAt(0).toUpperCase()),

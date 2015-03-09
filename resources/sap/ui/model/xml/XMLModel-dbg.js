@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -27,12 +27,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 * @extends sap.ui.model.Model
 	 *
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 *
 	 * @param {object} oData either the URL where to load the XML from or a XML
 	 * @constructor
 	 * @public
-	 * @name sap.ui.model.xml.XMLModel
+	 * @alias sap.ui.model.xml.XMLModel
 	 */
 	var XMLModel = ClientModel.extend("sap.ui.model.xml.XMLModel", /** @lends sap.ui.model.xml.XMLModel.prototype */ {
 		
@@ -56,13 +56,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 *
 	 * @param {string} sXMLText the XML data as string
 	 * @public
-	 * @name sap.ui.model.xml.XMLModel#setXML
-	 * @function
 	 */
 	XMLModel.prototype.setXML = function(sXMLText){
 		var oXMLDocument = jQuery.sap.parseXML(sXMLText);
 	
-		if (oXMLDocument.parseError.errorCode != 0){
+		if (oXMLDocument.parseError.errorCode != 0) {
 			var oParseError = oXMLDocument.parseError;
 			jQuery.sap.log.fatal("The following problem occurred: XML parse Error for " + oParseError.url + " code: " + oParseError.errorCode + " reason: " +
 					oParseError.reason +  " src: " + oParseError.srcText + " line: " +  oParseError.line +  " linepos: " + oParseError.linepos +  " filepos: " + oParseError.filepos);
@@ -78,8 +76,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 *
 	 * @return the XML document serialized as string
 	 * @public
-	 * @name sap.ui.model.xml.XMLModel#getXML
-	 * @function
 	 */
 	XMLModel.prototype.getXML = function(){
 		return jQuery.sap.serializeXML(this.oData);
@@ -90,8 +86,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 *
 	 * @param {object} oData the data to set to the model
 	 * @public
-	 * @name sap.ui.model.xml.XMLModel#setData
-	 * @function
 	 */
 	XMLModel.prototype.setData = function(oData){
 		this.oData = oData;
@@ -111,8 +105,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 * @param {object} mHeaders An object of additional header key/value pairs to send along with the request
 	 *
 	 * @public
-	 * @name sap.ui.model.xml.XMLModel#loadData
-	 * @function
 	 */
 	XMLModel.prototype.loadData = function(sURL, oParameters, bAsync, sType, bCache, mHeaders){
 		var that = this;
@@ -121,8 +113,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 		sType = sType || "GET";
 		bCache = bCache === undefined ? this.bCache : bCache;
 	
-		this.fireRequestSent({url : sURL, type : sType, async : bAsync, headers: mHeaders, 
-			info : "cache="+bCache, infoObject: {cache: bCache}});
+		this.fireRequestSent({url : sURL, type : sType, async : bAsync, headers: mHeaders,
+			info : "cache=" + bCache, infoObject: {cache: bCache}});
 		this._ajax({
 		  url: sURL,
 		  async: bAsync,
@@ -136,15 +128,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 				jQuery.sap.log.fatal("The following problem occurred: No data was retrieved by service: " + sURL);
 			}
 			that.setData(oData);
-			that.fireRequestCompleted({url : sURL, type : sType, async : bAsync, headers: mHeaders, 
-				info : "cache="+bCache, infoObject: {cache: bCache}, success: true});
+			that.fireRequestCompleted({url : sURL, type : sType, async : bAsync, headers: mHeaders,
+				info : "cache=" + bCache, infoObject: {cache: bCache}, success: true});
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown){
 			var oError = { message : textStatus, statusCode : XMLHttpRequest.status, statusText : XMLHttpRequest.statusText, responseText : XMLHttpRequest.responseText};
 			jQuery.sap.log.fatal("The following problem occurred: " + textStatus, XMLHttpRequest.responseText + ","
 						+ XMLHttpRequest.status + "," + XMLHttpRequest.statusText);
 			that.fireRequestCompleted({url : sURL, type : sType, async : bAsync, headers: mHeaders,
-				info : "cache="+bCache, infoObject: {cache: bCache}, success: false, errorobject: oError});
+				info : "cache=" + bCache, infoObject: {cache: bCache}, success: false, errorobject: oError});
 			that.fireRequestFailed(oError);
 		  }
 		});
@@ -156,8 +148,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 * @param {string} sNameSpace the namespace URI
 	 * @param {string} [sPrefix=null] the prefix for the namespace (optional)
 	 * @public
-	 * @name sap.ui.model.xml.XMLModel#setNameSpace
-	 * @function
 	 */
 	XMLModel.prototype.setNameSpace = function(sNameSpace, sPrefix){
 		if (!sPrefix) {
@@ -171,8 +161,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	
 	/**
 	 * @see sap.ui.model.Model.prototype.bindProperty
-	 * @name sap.ui.model.xml.XMLModel#bindProperty
-	 * @function
 	 */
 	XMLModel.prototype.bindProperty = function(sPath, oContext, mParameters) {
 		var oBinding = new XMLPropertyBinding(this, sPath, oContext, mParameters);
@@ -181,8 +169,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	
 	/**
 	 * @see sap.ui.model.Model.prototype.bindList
-	 * @name sap.ui.model.xml.XMLModel#bindList
-	 * @function
 	 */
 	XMLModel.prototype.bindList = function(sPath, oContext, aSorters, aFilters, mParameters) {
 		var oBinding = new XMLListBinding(this, sPath, oContext, aSorters, aFilters, mParameters);
@@ -191,8 +177,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	
 	/**
 	 * @see sap.ui.model.Model.prototype.bindTree
-	 * @name sap.ui.model.xml.XMLModel#bindTree
-	 * @function
 	 */
 	XMLModel.prototype.bindTree = function(sPath, oContext, aFilters, mParameters) {
 		var oBinding = new XMLTreeBinding(this, sPath, oContext, aFilters, mParameters);
@@ -207,12 +191,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 * @param {any}     oValue value to set the property to
 	 * @param {object} [oContext=null] the context which will be used to set the property
 	 * @public
-	 * @name sap.ui.model.xml.XMLModel#setProperty
-	 * @function
 	 */
 	XMLModel.prototype.setProperty = function(sPath, oValue, oContext) {
 		var sObjectPath = sPath.substring(0, sPath.lastIndexOf("/") + 1),
-			sProperty = sPath.substr(sPath.lastIndexOf("/")+1);
+			sProperty = sPath.substr(sPath.lastIndexOf("/") + 1);
 		
 		// check if path / context is valid
 		if (!this.resolve(sPath, oContext)) {
@@ -220,7 +202,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 		}
 		
 		if (!this.oData.documentElement) {
-			jQuery.sap.log.warning("Trying to set property " + sPath + ", but no document exists.")
+			jQuery.sap.log.warning("Trying to set property " + sPath + ", but no document exists.");
 			return;
 		}
 		var oObject;
@@ -248,8 +230,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	* @type any
 	* @return the value of the property
 	* @public
-	* @name sap.ui.model.xml.XMLModel#getProperty
-	* @function
 	*/
 	XMLModel.prototype.getProperty = function(sPath, oContext) {
 		var oResult = this._getObject(sPath, oContext);
@@ -267,8 +247,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	* @type any
 	* @return the object
 	* @public
-	* @name sap.ui.model.xml.XMLModel#getObject
-	* @function
 	*/
 	XMLModel.prototype.getObject = function(sPath, oContext) {
 		var oObject = this._getObject(sPath, oContext);
@@ -282,8 +260,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 * @param {string} sPath
 	 * @param {object} oContext
 	 * @returns {any} the node of the specified path/context
-	 * @name sap.ui.model.xml.XMLModel#_getObject
-	 * @function
 	 */
 	XMLModel.prototype._getObject = function (sPath, oContext) {
 		var oRootNode = this.oData.documentElement;
@@ -291,7 +267,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 			return null;
 		}
 		var oNode = this.isLegacySyntax() ? [oRootNode] : [];
-		if (oContext instanceof sap.ui.model.Context){
+		if (oContext instanceof sap.ui.model.Context) {
 			oNode = this._getObject(oContext.getPath());
 		} else if (oContext) {
 			oNode = [oContext];
@@ -311,7 +287,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 		oNode = oNode.length == undefined ? [oNode] : oNode;
 		oNode = oNode[0] ? oNode : null;
 				
-		while(oNode && oNode.length > 0 && aParts[iIndex]) {
+		while (oNode && oNode.length > 0 && aParts[iIndex]) {
 			sPart = aParts[iIndex];
 			if (sPart.indexOf("@") == 0) {
 				oNode = this._getAttribute(oNode[0], sPart.substr(1));
@@ -331,8 +307,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 * @param {string} sPath
 	 * @param {object} oContext
 	 * @returns {any}
-	 * @name sap.ui.model.xml.XMLModel#_getAttribute
-	 * @function
 	 */
 	XMLModel.prototype._getAttribute = function (oNode, sName) {
 		if (!this.oNameSpaces || sName.indexOf(":") == -1) {
@@ -342,8 +316,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 			sLocalName = this._getLocalName(sName);
 		if (oNode.getAttributeNS) {
 			return oNode.getAttributeNS(sNameSpace, sLocalName);
-		}
-		else { // IE8
+		} else { // IE8
 			if (!this.oDocNSPrefixes) {
 				this.oDocNSPrefixes = this._getDocNSPrefixes();
 			}
@@ -357,8 +330,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	 * @param {object} oNode
 	 * @param {string} sName
 	 * @returns {any}
-	 * @name sap.ui.model.xml.XMLModel#_getChildElementsByTagName
-	 * @function
 	 */
 	XMLModel.prototype._getChildElementsByTagName = function (oNode, sName) {
 		var aChildNodes = oNode.childNodes,
@@ -388,13 +359,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	/**
 	 * @param {string} sName
 	 * @returns {string}
-	 * @name sap.ui.model.xml.XMLModel#_getNameSpace
-	 * @function
 	 */
 	XMLModel.prototype._getNameSpace = function (sName) {
 		var iColonPos = sName.indexOf(":"),
 			sPrefix = "";
-		if (iColonPos > 0){
+		if (iColonPos > 0) {
 			sPrefix = sName.substr(0, iColonPos);
 		}
 		return this.oNameSpaces[sPrefix];
@@ -403,13 +372,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	/**
 	 * @param {string} sName
 	 * @returns {string}
-	 * @name sap.ui.model.xml.XMLModel#_getLocalName
-	 * @function
 	 */
 	XMLModel.prototype._getLocalName = function (sName) {
 		var iColonPos = sName.indexOf(":"),
 			sLocalName = sName;
-		if (iColonPos > 0){
+		if (iColonPos > 0) {
 			sLocalName = sName.substr(iColonPos + 1);
 		}
 		return sLocalName;
@@ -418,8 +385,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	
 	/**
 	 * @returns {object} 
-	 * @name sap.ui.model.xml.XMLModel#_getDocNSPrefixes
-	 * @function
 	 */
 	XMLModel.prototype._getDocNSPrefixes = function () {
 		var oPrefixes = {},
@@ -443,8 +408,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 	
 	/**
 	 * Resolve the path relative to the given context
-	 * @name sap.ui.model.xml.XMLModel#_resolve
-	 * @function
 	 */
 	XMLModel.prototype._resolve = function(sPath, oContext) {
 		var bIsRelative = !jQuery.sap.startsWith(sPath, "/"),
@@ -452,8 +415,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientModel', './XMLListBindin
 		if (bIsRelative) {
 			if (oContext) {
 				sResolvedPath = oContext.getPath() + "/" + sPath;
-			}
-			else {
+			} else {
 				sResolvedPath = this.isLegacySyntax() ? "/" + sPath : undefined;
 			}
 		}

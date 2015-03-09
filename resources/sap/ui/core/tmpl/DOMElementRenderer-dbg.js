@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -13,7 +13,7 @@ sap.ui.define(['jquery.sap.global'],
 	/**
 	 * @class DOM element renderer.
 	 * @static
-	 * @name sap.ui.core.tmpl.DOMElementRenderer
+	 * @alias sap.ui.core.tmpl.DOMElementRenderer
 	 */
 	var DOMElementRenderer = {};
 	
@@ -27,11 +27,9 @@ sap.ui.define(['jquery.sap.global'],
 	 * @param {sap.ui.core.Control}
 	 *            oElement Object representation of the DOM element that should be
 	 *            rendered
-	 * @name sap.ui.core.tmpl.DOMElementRenderer.render
-	 * @function
 	 */
 	DOMElementRenderer.render = function(oRM, oElement) {
-		    
+			
 		// opening tag incl. control data
 		oRM.write("<");
 		oRM.write(oElement.getTag());
@@ -71,7 +69,7 @@ sap.ui.define(['jquery.sap.global'],
 		
 		// create the nested structure (if required)
 		var aElements = oElement.getElements(),
-		    bHasChildren = !!oElement.getText() || aElements.length > 0;
+			bHasChildren = !!oElement.getText() || aElements.length > 0;
 		
 		if (!bHasChildren) {
 			oRM.write("/>");

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -10,6 +10,11 @@ sap.ui.define(['jquery.sap.global', './ViewRenderer'],
 	"use strict";
 
 
+	/**
+	 * @namespace
+	 * @alias sap.ui.core.mvc.XMLViewRenderer
+	 * @private
+	 */
 	var XMLViewRenderer = {
 	};
 	
@@ -19,8 +24,6 @@ sap.ui.define(['jquery.sap.global', './ViewRenderer'],
 	 *
 	 * @param {sap.ui.core.RenderManager} oRenderManager the RenderManager that can be used for writing to the Render-Output-Buffer
 	 * @param {sap.ui.core.mvc.XMLView} oControl an object representation of the control that should be rendered
-	 * @name sap.ui.core.mvc.XMLViewRenderer.render
-	 * @function
 	 */
 	XMLViewRenderer.render = function(rm, oControl) {
 	
@@ -29,7 +32,7 @@ sap.ui.define(['jquery.sap.global', './ViewRenderer'],
 		if ( $oldContent.length === 0 ) {
 			// jQuery.sap.log.debug("rendering " + oControl + " anew");
 			var bSubView = oControl.isSubView();
-			if(!bSubView){
+			if (!bSubView) {
 				rm.write("<div");
 				rm.writeControlData(oControl);
 				rm.addClass("sapUiView");
@@ -51,13 +54,13 @@ sap.ui.define(['jquery.sap.global', './ViewRenderer'],
 			}
 			for (var i = 0; i < oControl._aParsedContent.length; i++) {
 				var fragment = oControl._aParsedContent[i];
-				if(fragment && typeof(fragment) === "string") {
+				if (fragment && typeof (fragment) === "string") {
 					rm.write(fragment);
 				} else {
 					rm.renderControl(fragment);
 					// when the child control did not render anything (e.g. visible=false), we add a placeholder to know where to render the child later 
 					if ( !fragment.bOutput ) {
-						rm.write('<div id="sap-ui-dummy-' + fragment.getId() + '" class="sapUiHidden"/>');
+						rm.write('<div id="' + sap.ui.core.RenderPrefixes.Dummy + fragment.getId() + '" class="sapUiHidden"/>');
 					}
 				}
 			}
@@ -72,12 +75,12 @@ sap.ui.define(['jquery.sap.global', './ViewRenderer'],
 			
 			// jQuery.sap.log.debug("rendering placeholder instead of " + oControl + " (preserved dom)");
 			// preserve mode: render only root tag and child controls
-			rm.write('<div id="sap-ui-dummy-' + oControl.getId() + '" class="sapUiHidden">');
+			rm.write('<div id="' + sap.ui.core.RenderPrefixes.Dummy + oControl.getId() + '" class="sapUiHidden">');
 			for (var i = 0; i < oControl._aParsedContent.length; i++) {
 				var fragment = oControl._aParsedContent[i];
-				if( typeof(fragment) !== "string") {
+				if ( typeof (fragment) !== "string") {
 					// jQuery.sap.log.debug("replacing preserved DOM for child " + fragment + " with a placeholder");
-					jQuery.sap.byId(fragment.getId(), $oldContent).replaceWith('<div id="sap-ui-dummy-' + fragment.getId() + '" class="sapUiHidden"/>');
+					jQuery.sap.byId(fragment.getId(), $oldContent).replaceWith('<div id="' + sap.ui.core.RenderPrefixes.Dummy + fragment.getId() + '" class="sapUiHidden"/>');
 					rm.renderControl(fragment);
 				}
 			}

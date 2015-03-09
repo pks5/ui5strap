@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -14,10 +14,10 @@ sap.ui.define(['jquery.sap.global'],
 	 * @class Base Class for Renderer.
 	 *
 	 * @author Martin Schaus, Daniel Brinkmann
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @static
 	 * @public
-	 * @name sap.ui.core.Renderer
+	 * @alias sap.ui.core.Renderer
 	 */
 	var Renderer = {
 	};
@@ -34,20 +34,17 @@ sap.ui.define(['jquery.sap.global'],
 	 * @return a new class definition that can be enriched.
 	 * @type object
 	 * @public
-	 * @name sap.ui.core.Renderer.extend
-	 * @function
 	 */
 	Renderer.extend = function(oParentClass) {
 		//var oChild = jQuery.extend(new jQuery.sap.newObject(oParentClass), {_super: oParentClass});
 		//return oChild;
 		var oChild = {_super: oParentClass};
-		for(var f in oParentClass) {
-			if(typeof(oParentClass[f]) == "function") {
+		for (var f in oParentClass) {
+			if (typeof (oParentClass[f]) == "function") {
 				oChild[f] = (function(){
-					var sMethod = f,
-						that = oChild;
+					var sMethod = f;
 					return function() {
-						return that._super[sMethod].apply(this, arguments);
+						return oChild._super[sMethod].apply(this, arguments);
 					};
 				}());
 			}
@@ -65,8 +62,6 @@ sap.ui.define(['jquery.sap.global'],
 	 * @return the actual text alignment that must be set for this environment
 	 * @type {string}
 	 * @private
-	 * @name sap.ui.core.Renderer.getTextAlign
-	 * @function
 	 */
 	Renderer.getTextAlign = function(oTextAlign, oTextDirection) {
 		var sTextAlign = "";

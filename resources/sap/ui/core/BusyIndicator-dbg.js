@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -12,7 +12,7 @@ sap.ui.define(['jquery.sap.global', './Popup'],
 	/**
 	 * @class Provides methods to show or hide a waiting animation covering the whole page and blocking user interaction.
 	 * @static 
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @public
 	 * @name sap.ui.core.BusyIndicator
 	 */
@@ -68,7 +68,7 @@ sap.ui.define(['jquery.sap.global', './Popup'],
 			this._iBusyTimeStep = 50;
 			this._iBusyWidth = 500;
 
-			this.attachOpen(this._IEAnimation, this)
+			this.attachOpen(this._IEAnimation, this);
 		}
 	};
 	
@@ -181,17 +181,17 @@ sap.ui.define(['jquery.sap.global', './Popup'],
 	BusyIndicator.hide = function() {
 		jQuery.sap.log.debug("sap.ui.core.BusyIndicator.hide at " + new Date().getTime());
 		
-		var that = BusyIndicator; // Restore scope in case we are called with setTimeout or so...
+		var bi = BusyIndicator; // Restore scope in case we are called with setTimeout or so...
 	
-		that.bOpenRequested = false;
+		bi.bOpenRequested = false;
 	
-		if (that.oDomRef) { // only if the BusyIndicator was shown before!
+		if (bi.oDomRef) { // only if the BusyIndicator was shown before!
 			jQuery("body").removeAttr("aria-busy");
 	
 			// allow an event handler to do something with the indicator
 			this.fireClose({$Busy: this.oPopup._$()});
 	
-			that.oPopup.close(0);
+			bi.oPopup.close(0);
 		}
 		
 		delete this._$BusyIndicator;

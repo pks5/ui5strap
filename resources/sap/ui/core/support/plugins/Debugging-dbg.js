@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -13,7 +13,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 	
 	
 	
-		var $=jQuery;
+		var $ = jQuery;
 		var Debugging = Plugin.extend("sap.ui.core.support.plugins.Debugging", {
 			constructor: function(oSupportStub) {
 				Plugin.apply(this, ["sapUiSupportDebugging", "Debugging", oSupportStub]);
@@ -26,8 +26,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 				this._oStub = oSupportStub;
 	
 				this._aEventIds = [
-				    this.getId() + "ReceiveClasses",
-				    this.getId() + "ReceiveClassMethods"
+					this.getId() + "ReceiveClasses",
+					this.getId() + "ReceiveClassMethods"
 				];
 	
 				this._breakpointId = "sapUiSupportBreakpoint";
@@ -61,8 +61,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 				this._oStub.sendEvent(this._breakpointId + "RequestClasses", {
 					callback: this.getId() + "ReceiveClasses"
 				});
-	
-			} else {
 	
 			}
 	
@@ -111,7 +109,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 			rm.write('<select id="sapUiSupportDebuggingClassSelect" class="sapUiSupportAutocomplete"><option></option>');
 	
 			$.each(aClasses, function(iIndex, oValue) {
-				if (typeof(that._mAddedClasses[oValue]) === 'undefined') rm.write('<option>' + oValue + '</option>');
+				if (typeof (that._mAddedClasses[oValue]) === 'undefined') {
+					rm.write('<option>' + oValue + '</option>');
+				}
 			});
 	
 			rm.write('</select>');
@@ -122,7 +122,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 			rm.write('<hr class="no-border"/><ul id="sapUiSupportDebuggingClassList" class="sapUiSupportList">');
 	
 			$.each(aClasses, function(iIndex, oValue) {
-				if (typeof(that._mAddedClasses[oValue]) === 'undefined') return;
+				if (typeof (that._mAddedClasses[oValue]) === 'undefined') {
+					return;
+				}
 	
 				var bpCount = that._mAddedClasses[oValue].bpCount;
 				var bpCountText = "";
@@ -133,7 +135,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 	
 				rm.write('<li data-class-name="' + oValue + '"');
 	
-				if (that._sSelectedClass === oValue) rm.write(' class="selected"');
+				if (that._sSelectedClass === oValue) {
+					rm.write(' class="selected"');
+				}
 	
 				rm.write('><div><span class="className">' + oValue + '</span>' +
 						 '<span class="breakpoints">' + bpCountText + '</span></div>' +
@@ -151,7 +155,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 	
 			var rm = sap.ui.getCore().createRenderManager();
 	
-			if (typeof(mMethods) === 'undefined') {
+			if (typeof (mMethods) === 'undefined') {
 				rm.write('<p style="text-align:center;font-weight: bold">Please add a class to the list on the left side</p>');
 				rm.flush($("#sapUiSupportDebuggingMethodContainer").get(0));
 				rm.destroy();
@@ -163,7 +167,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 			rm.write('<select id="sapUiSupportDebuggingMethodSelect" class="sapUiSupportAutocomplete"><option></option>');
 	
 			$.each(mMethods, function(iIndex, oValue) {
-				if (!oValue.active) rm.write('<option data-method-type="' + oValue.type + '">' + oValue.name + '</option>');
+				if (!oValue.active) {
+					rm.write('<option data-method-type="' + oValue.type + '">' + oValue.name + '</option>');
+				}
 			});
 	
 			rm.write('</select>');
@@ -174,7 +180,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 			rm.write('<hr class="no-border"/><ul id="sapUiSupportDebuggingBreakpointList" class="sapUiSupportList sapUiSupportBreakpointList">');
 	
 			$.each(mMethods, function(iIndex, oValue) {
-				if (!oValue.active) return;
+				if (!oValue.active) {
+					return;
+				}
 	
 				rm.write('<li data-method-type="' + oValue.type + '"><span>' + oValue.name + '</span>' +
 						 '<img class="remove-breakpoint" style="cursor:pointer;margin-left:5px" ' +
@@ -228,12 +236,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 	
 			}
 	
-			if (oEvent.keyCode >= jQuery.sap.KeyCodes.ARROW_LEFT && oEvent.keyCode <= jQuery.sap.KeyCodes.ARROW_DOWN) return;
+			if (oEvent.keyCode >= jQuery.sap.KeyCodes.ARROW_LEFT && oEvent.keyCode <= jQuery.sap.KeyCodes.ARROW_DOWN) {
+				return;
+			}
 	
 			var $select = $input.prev("select"),
 				sInputVal = $input.val();
 	
-			if (sInputVal == "") return;
+			if (sInputVal == "") {
+				return;
+			}
 	
 			var aOptions = $select.find("option").map(function() {
 				return $(this).val();
@@ -315,13 +327,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 	
 			var oSelect = oEvent.srcElement || oEvent.target;
 	
-			if(oSelect.tagName == "INPUT") {
+			if (oSelect.tagName == "INPUT") {
 				var sValue = oSelect.value;
 				oSelect = oSelect.previousSibling;
 				var aOptions = oSelect.options;
-				for (var i=0;i<aOptions.length;i++) {
+				for (var i = 0;i < aOptions.length;i++) {
 					var sText = aOptions[i].value || aOptions[i].text;
-					if (sText.toUpperCase()== sValue.toUpperCase()) {
+					if (sText.toUpperCase() == sValue.toUpperCase()) {
 						oSelect.selectedIndex = i;
 						break;
 					}
@@ -332,7 +344,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 			var sClassName = oSelect.options[selIndex].value || oSelect.options[selIndex].text;
 	
 			if (oSelect.nextSibling && oSelect.nextSibling.tagName == "INPUT") {
-				oSelect.nextSibling.value= sClassName;
+				oSelect.nextSibling.value = sClassName;
 			}
 	
 		};
@@ -350,7 +362,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 	
 			var $li = $(oEvent.target).parents("li");
 	
-			if ($li.hasClass("selected")) return;
+			if ($li.hasClass("selected")) {
+				return;
+			}
 	
 			var className = $li.find('span.className').text();
 	
@@ -366,7 +380,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 		Debugging.prototype._isClassSelected = function() {
 			var selected = false;
 			$.each(this._mClasses, function(iIndex, oValue) {
-				if (oValue.selected === true) selected = true;
+				if (oValue.selected === true) {
+					selected = true;
+				}
 			});
 			return selected;
 		};
@@ -376,7 +392,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 				className: className,
 				methodName: methodName,
 				active: active,
-				type: parseInt(type),
+				type: parseInt(type, 10),
 				callback: this.getId() + "ReceiveClassMethods"
 			});
 		};

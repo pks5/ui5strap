@@ -1,8 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
-jQuery.sap.declare("sap.m.ActionListItemRenderer");jQuery.sap.require("sap.ui.core.Renderer");jQuery.sap.require("sap.m.ListItemBaseRenderer");sap.m.ActionListItemRenderer=sap.ui.core.Renderer.extend(sap.m.ListItemBaseRenderer);
-sap.m.ActionListItemRenderer.renderLIAttributes=function(r,l){r.addClass("sapMALI")};
-sap.m.ActionListItemRenderer.renderLIContent=function(r,l){var i=l.getText();if(i){r.write("<div class='sapMALIText'>");r.writeEscaped(i);r.write("</div>")}};
+sap.ui.define(['jquery.sap.global','./ListItemBaseRenderer','sap/ui/core/Renderer'],function(q,L,R){"use strict";var A=R.extend(L);A.renderLIAttributes=function(r,l){r.addClass("sapMALI")};A.renderLIContent=function(r,l){var i=l.getText();if(i){r.write("<div class='sapMALIText'>");r.writeEscaped(i);r.write("</div>")}};return A},true);

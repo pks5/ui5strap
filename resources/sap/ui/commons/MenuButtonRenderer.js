@@ -1,8 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
-jQuery.sap.declare("sap.ui.commons.MenuButtonRenderer");jQuery.sap.require("sap.ui.commons.ButtonRenderer");jQuery.sap.require("sap.ui.core.Renderer");sap.ui.commons.MenuButtonRenderer=sap.ui.core.Renderer.extend(sap.ui.commons.ButtonRenderer);
-sap.ui.commons.MenuButtonRenderer.renderButtonAttributes=function(r,c){if(sap.ui.getCore().getConfiguration().getAccessibility()){r.writeAttribute("aria-haspopup","true")}};
-sap.ui.commons.MenuButtonRenderer.renderButtonContentAfter=function(r,c){r.write("<span class=\"sapUiMenuButtonIco\"></span>")};
+sap.ui.define(['jquery.sap.global','./ButtonRenderer','sap/ui/core/Renderer'],function(q,B,R){"use strict";var M=R.extend(B);M.renderButtonAttributes=function(r,c){if(sap.ui.getCore().getConfiguration().getAccessibility()){r.writeAttribute("aria-haspopup","true")}};M.renderButtonContentAfter=function(r,c){r.write("<span class=\"sapUiMenuButtonIco\"></span>")};return M},true);

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		 *  
 		 *            [-------------------- language ----------------------][--- script ---][------- region --------][------------ variants --------------][--------- extensions --------------][------ private use -------]
 		 */
-		var rLocale=/^((?:[A-Z]{2,3}(?:-[A-Z]{3}){0,3})|[A-Z]{4}|[A-Z]{5,8})(?:-([A-Z]{4}))?(?:-([A-Z]{2}|[0-9]{3}))?(-[0-9A-Z]{5,8}|(?:[0-9][0-9A-Z]{3}))*(?:-([0-9A-WYZ](?:-[0-9A-Z]{2,8})+))*(?:-(X(?:-[0-9A-Z]{1,8})+))?$/i;
+		var rLocale = /^((?:[A-Z]{2,3}(?:-[A-Z]{3}){0,3})|[A-Z]{4}|[A-Z]{5,8})(?:-([A-Z]{4}))?(?:-([A-Z]{2}|[0-9]{3}))?(-[0-9A-Z]{5,8}|(?:[0-9][0-9A-Z]{3}))*(?:-([0-9A-WYZ](?:-[0-9A-Z]{2,8})+))*(?:-(X(?:-[0-9A-Z]{1,8})+))?$/i;
 	
 		/**
 		 * Creates an instance of the Locale.
@@ -38,10 +38,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		 *
 		 * @extends sap.ui.base.Object
 		 * @author SAP SE
-		 * @version 1.24.3
+		 * @version 1.26.7
 		 * @constructor
 		 * @public
-		 * @name sap.ui.core.Locale
+		 * @alias sap.ui.core.Locale
 		 */
 		var Locale = BaseObject.extend("sap.ui.core.Locale", /** @lends sap.ui.core.Locale.prototype */ {
 	
@@ -68,11 +68,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 					this.sLanguage = this.sLanguage.toLowerCase();
 				}
 				if ( this.sScript ) {
-					this.sScript = this.sScript.toLowerCase().replace(/^[a-z]/, function($) { return $.toUpperCase(); });
-				} 
+					this.sScript = this.sScript.toLowerCase().replace(/^[a-z]/, function($) {
+						return $.toUpperCase();
+					});
+				}
 				if ( this.sRegion ) {
 					this.sRegion = this.sRegion.toUpperCase();
-				} 
+				}
 			},
 	
 			/**
@@ -195,7 +197,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 			},
 	
 			toString : function() {
-				var r=[this.sLanguage];
+				var r = [this.sLanguage];
 				if ( this.sScript ) {
 					r.push(this.sScript);
 				}
@@ -268,7 +270,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		var M_ISO639_OLD_TO_NEW = {
 				"iw" : "he",
 				"ji" : "yi",
-				"in" : "id", 
+				"in" : "id",
 				"sh" : "sr"
 		};
 
@@ -289,14 +291,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		 * The string literal below is substituted during the build.
 		 * The value is determined from the CLDR JSON files which are 
 		 * bundled with the UI5 runtime.
-		 */ 
+		 */
 		var A_RTL_LOCALES = getDesigntimePropertyAsArray("$cldr-rtl-locales:ar,fa,he$") || [];
 	
 		/**
 		 * A list of locales for which CLDR data is bundled wit the UI5 runtime.
 		 * @private
 		 */
-		Locale._cldrLocales = getDesigntimePropertyAsArray("$cldr-locales:ar,ar_EG,ar_SA,bg,br,ca,cs,da,de,de_AT,de_CH,el,el_CY,en,en_AU,en_GB,en_HK,en_IE,en_IN,en_NZ,en_PG,en_SG,en_ZA,es,es_AR,es_BO,es_CL,es_CO,es_MX,es_PE,es_UY,es_VE,et,fa,fi,fr,fr_BE,fr_CA,fr_CH,fr_LU,he,hi,hr,hu,id,it,it_CH,ja,ko,lt,lv,nb,nl,nl_BE,nn,pl,pt,pt_PT,ro,ru,ru_UA,sk,sl,sr,sv,th,tr,uk,vi,zh_CN,zh_HK,zh_SG,zh_TW$"); 
+		Locale._cldrLocales = getDesigntimePropertyAsArray("$cldr-locales:ar,ar_EG,ar_SA,bg,br,ca,cs,da,de,de_AT,de_CH,el,el_CY,en,en_AU,en_GB,en_HK,en_IE,en_IN,en_NZ,en_PG,en_SG,en_ZA,es,es_AR,es_BO,es_CL,es_CO,es_MX,es_PE,es_UY,es_VE,et,fa,fi,fr,fr_BE,fr_CA,fr_CH,fr_LU,he,hi,hr,hu,id,it,it_CH,ja,ko,lt,lv,nb,nl,nl_BE,nn,pl,pt,pt_PT,ro,ru,ru_UA,sk,sl,sr,sv,th,tr,uk,vi,zh_CN,zh_HK,zh_SG,zh_TW$");
 	
 		/**
 		 * List of locales for which translated texts have been bundled with the UI5 runtime.
@@ -318,8 +320,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		 * As of 3/2013 this is true for all supported locales/regions of UI5.
 		 * 
 		 * @private
-		 * @name sap.ui.core.Locale._impliesRTL
-		 * @function
 		 */
 		Locale._impliesRTL = function(sLanguage) {
 			var oLocale = new Locale(sLanguage);

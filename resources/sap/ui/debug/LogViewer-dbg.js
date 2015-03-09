@@ -1,11 +1,11 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 // Provides a log viewer for debug purposes
-sap.ui.define(['jquery.sap.global'],
+sap.ui.define('sap/ui/debug/LogViewer', ['jquery.sap.global'],
 	function(jQuery) {
 	"use strict";
 
@@ -18,7 +18,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @param {sRootId} sRootId id of the top level element that will contain the log entries
 	 *
 	 * @class HTML LogViewer that displays all entries of a Logger, as long as they match a filter and a minimal log level
-	 * @name sap.ui.debug.LogViewer
+	 * @alias sap.ui.debug.LogViewer
 	 */
 	var LogViewer = function(oWindow, sRootId) {
 		this.oWindow = oWindow;
@@ -26,14 +26,14 @@ sap.ui.define(['jquery.sap.global'],
 		if (!this.oDomNode) {
 			var oDiv = this.oWindow.document.createElement("DIV");
 			oDiv.setAttribute("id", sRootId);
-			oDiv.style.overflow="auto";
-			oDiv.style.tabIndex="-1";
-			oDiv.style.position="absolute";
-			oDiv.style.bottom="0px";
-			oDiv.style.left="0px";
-			oDiv.style.right="202px";
-			oDiv.style.height="200px";
-			oDiv.style.border="1px solid gray";
+			oDiv.style.overflow = "auto";
+			oDiv.style.tabIndex = "-1";
+			oDiv.style.position = "absolute";
+			oDiv.style.bottom = "0px";
+			oDiv.style.left = "0px";
+			oDiv.style.right = "202px";
+			oDiv.style.height = "200px";
+			oDiv.style.border = "1px solid gray";
 			oDiv.style.fontFamily = "Arial monospaced for SAP,monospace";
 			oDiv.style.fontSize   = "11px";
 			oDiv.style.zIndex = "999999";
@@ -46,7 +46,9 @@ sap.ui.define(['jquery.sap.global'],
 		this.setFilter(LogViewer.NO_FILTER);
 	};
 	
-	LogViewer.NO_FILTER = function(oLogMessage) { return true; };
+	LogViewer.NO_FILTER = function(oLogMessage) {
+		return true;
+	};
 	
 	LogViewer.prototype.clear = function() {
 		this.oDomNode.innerHTML = "";
@@ -57,8 +59,6 @@ sap.ui.define(['jquery.sap.global'],
 	 * @param {string} sText the string that is escaped.
 	 * @return {string} an XML escaped version of a given string sText
 	 * @private
-	 * @name sap.ui.debug.LogViewer.xmlEscape
-	 * @function
 	 */
 	LogViewer.xmlEscape = function(sText) {
 		sText = sText.replace(/\&/g, "&amp;");
@@ -70,8 +70,6 @@ sap.ui.define(['jquery.sap.global'],
 	 * Renders a single log entry to the DOM. Could be overwritten in subclasses.
 	 * @param {object} oLogEntry
 	 * @protected
-	 * @name sap.ui.debug.LogViewer#addEntry
-	 * @function
 	 */
 	LogViewer.prototype.addEntry = function(oLogEntry) {
 	
@@ -82,11 +80,11 @@ sap.ui.define(['jquery.sap.global'],
 			// note: setting a class has only an effect when the main.css is loaded (testsuite)
 			oDomEntry.className = this.sLogEntryClassPrefix + oLogEntry.level;
 		} else {
-			oDomEntry.style.overflow="hidden";
-			oDomEntry.style.textOverflow="ellipsis";
-			oDomEntry.style.height="1.3em";
-			oDomEntry.style.width="100%";
-			oDomEntry.style.whiteSpace="noWrap";
+			oDomEntry.style.overflow = "hidden";
+			oDomEntry.style.textOverflow = "ellipsis";
+			oDomEntry.style.height = "1.3em";
+			oDomEntry.style.width = "100%";
+			oDomEntry.style.whiteSpace = "noWrap";
 		}
 	
 		// create text as text node
@@ -112,7 +110,7 @@ sap.ui.define(['jquery.sap.global'],
 	
 		// when attached to a log, clear the dom node and add all entries from the log
 		var aLog = this.oLogger.getLog();
-		for (var i=this.iFirstEntry,l=aLog.length;i<l;i++) {
+		for (var i = this.iFirstEntry,l = aLog.length;i < l;i++) {
 			if ( aLog[i].level <= this.iLogLevel ) {
 				this.addEntry(aLog[i]);
 			}
@@ -133,7 +131,7 @@ sap.ui.define(['jquery.sap.global'],
 	LogViewer.prototype.setFilter = function(oFilter) {
 		this.oFilter = oFilter = oFilter || LogViewer.NO_FILTER;
 		var childNodes = this.oDomNode.childNodes;
-		for (var i=0,l=childNodes.length; i<l; i++) {
+		for (var i = 0,l = childNodes.length; i < l; i++) {
 			var sText = childNodes[i].innerText;
 			if (!sText) {
 				sText = childNodes[i].innerHTML;

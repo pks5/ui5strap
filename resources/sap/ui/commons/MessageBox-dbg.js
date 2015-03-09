@@ -1,164 +1,168 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 // Provides class sap.ui.commons.MessageBox
-jQuery.sap.declare("sap.ui.commons.MessageBox");
-jQuery.sap.require("sap.ui.commons.Button");
-jQuery.sap.require("sap.ui.commons.Dialog");
-jQuery.sap.require("sap.ui.commons.Image");
-jQuery.sap.require("sap.ui.commons.layout.MatrixLayout");
-jQuery.sap.require("sap.ui.commons.TextView");
+sap.ui.define(['jquery.sap.global', 'sap/ui/core/library', 'sap/ui/core/ElementMetadata', 'sap/ui/core/Control', 
+			   './library', './Button', './Dialog', './Image', './TextView', './layout/MatrixLayout', './layout/MatrixLayoutCell'],
+	function(jQuery, core, ElementMetadata, Control, 
+			 commons, Button, Dialog, Image, TextView, MatrixLayout, MatrixLayoutCell) {
 
-/**
- * @class Provides methods to create standard alerts, confirmation dialogs, or arbitrary message boxes.
- *
- * As <code>MessageBox</code> is a static class, a <code>jQuery.sap.require("sap.ui.commons.MessageBox");</code> statement
- * must be explicitly executed before the class can be used. Example:
- * <pre>
- *   jQuery.sap.require("sap.ui.commons.MessageBox");
- *   sap.ui.commons.MessageBox.show(
- *       "This message should appear in the message box.",
- *       sap.ui.commons.MessageBox.Icon.INFORMATION,
- *       "My message box title",
- *       [sap.ui.commons.MessageBox.Action.YES, sap.ui.commons.MessageBox.Action.NO],
- *       function() { / * do something * / }
- *	 );
- * </pre>
- *
- * @static
- * @author Frank Weigel
- * @public
- * @since 0.8.8
- */
-sap.ui.commons.MessageBox = {};
+	"use strict";
 
-/**
- * @class Enumeration of supported actions in a MessageBox.
- *
- * Each action is represented as a button in the message box. The values of this enumeration are used for both,
- * specifying the set of allowed actions as well as reporting back the user choice.
- * @static
- * @public
- */
-sap.ui.commons.MessageBox.Action = {
 
-  /**
-   * Adds an "Ok" button to the message box.
-   * @public
-   */
-  OK : "OK",
+	/**
+	 * Provides methods to create standard alerts, confirmation dialogs, or arbitrary message boxes.
+	 *
+	 * As <code>MessageBox</code> is a static class, a <code>jQuery.sap.require("sap.ui.commons.MessageBox");</code> statement
+	 * must be explicitly executed before the class can be used. Example:
+	 * <pre>
+	 *   jQuery.sap.require("sap.ui.commons.MessageBox");
+	 *   sap.ui.commons.MessageBox.show(
+	 *       "This message should appear in the message box.",
+	 *       sap.ui.commons.MessageBox.Icon.INFORMATION,
+	 *       "My message box title",
+	 *       [sap.ui.commons.MessageBox.Action.YES, sap.ui.commons.MessageBox.Action.NO],
+	 *       function() { / * do something * / }
+	 *   );
+	 * </pre>
+	 *
+	 * @namespace
+	 * @author Frank Weigel
+	 * @public
+	 * @since 0.8.8
+	 * @alias sap.ui.commons.MessageBox
+	 */
+	var MessageBox = {};
+	
+	/**
+	 * Enumeration of supported actions in a MessageBox.
+	 *
+	 * Each action is represented as a button in the message box. The values of this enumeration are used for both,
+	 * specifying the set of allowed actions as well as reporting back the user choice.
+	 * @enum
+	 * @public
+	 */
+	MessageBox.Action = {
 
-  /**
-   * Adds a "Cancel" button to the message box.
-   * @public
-   */
-  CANCEL : "CANCEL",
+		/**
+		 * Adds an "Ok" button to the message box.
+		 * @public
+		 */
+		OK : "OK",
 
-  /**
-   * Adds a "Yes" button to the message box.
-   * @public
-   */
-  YES : "YES",
+		/**
+		 * Adds a "Cancel" button to the message box.
+		 * @public
+		 */
+		CANCEL : "CANCEL",
 
-  /**
-   * Adds a "No" button to the message box.
-   * @public
-   */
-  NO : "NO",
+		/**
+		 * Adds a "Yes" button to the message box.
+		 * @public
+		 */
+		YES : "YES",
 
-  /**
-   * Adds an "Abort" button to the message box.
-   * @public
-   */
-  ABORT : "ABORT",
+		/**
+		 * Adds a "No" button to the message box.
+		 * @public
+		 */
+		NO : "NO",
 
-  /**
-   * Adds a "Retry" button to the message box.
-   * @public
-   */
-  RETRY : "RETRY",
+		/**
+		 * Adds an "Abort" button to the message box.
+		 * @public
+		 */
+		ABORT : "ABORT",
 
-  /**
-   * Adds an "Ignore" button to the message box.
-   * @public
-   */
-  IGNORE : "IGNORE",
+		/**
+		 * Adds a "Retry" button to the message box.
+		 * @public
+		 */
+		RETRY : "RETRY",
 
-  /**
-   * Adds a "Close" button to the message box.
-   * @public
-   */
-  CLOSE : "CLOSE"
-};
+		/**
+		 * Adds an "Ignore" button to the message box.
+		 * @public
+		 */
+		IGNORE : "IGNORE",
 
-/**
- * @class Enumeration of the pre-defined icons that can be used in a MessageBox.
- * @static
- * @public
- */
-sap.ui.commons.MessageBox.Icon = {
+		/**
+		 * Adds a "Close" button to the message box.
+		 * @public
+		 */
+		CLOSE : "CLOSE"
+	};
 
-  /**
-   * Shows no icon in the message box.
-   * @public
-   */
-  NONE : "NONE",
+	/**
+	 * Enumeration of the pre-defined icons that can be used in a MessageBox.
+	 * @enum
+	 * @public
+	 */
+	MessageBox.Icon = {
 
-  /**
-   * Shows the information icon in the message box.
-   * @public
-   */
-  INFORMATION : "INFORMATION",
+		/**
+		 * Shows no icon in the message box.
+		 * @public
+		 */
+		NONE : "NONE",
 
-  /**
-   * Shows the warning icon in the message box.
-   * @public
-   */
-  WARNING : "WARNING",
+		/**
+		 * Shows the information icon in the message box.
+		 * @public
+		 */
+		INFORMATION : "INFORMATION",
 
-  /**
-   * Shows the error icon in the message box.
-   * @public
-   */
-  ERROR : "ERROR",
+		/**
+		 * Shows the warning icon in the message box.
+		 * @public
+		 */
+		WARNING : "WARNING",
 
-  /**
-   * Shows the critical error icon in the message box.
-   * @public
-   * @deprecated since 1.9.1: The error icon is used instead
-   */
-  CRITICAL : "CRITICAL",
+		/**
+		 * Shows the error icon in the message box.
+		 * @public
+		 */
+		ERROR : "ERROR",
 
-  /**
-   * Shows the success icon in the message box.
-   * @public
-   */
-  SUCCESS : "SUCCESS",
+		/**
+		 * Shows the critical error icon in the message box.
+		 * @public
+		 * @deprecated since 1.9.1: The error icon is used instead
+		 */
+		CRITICAL : "CRITICAL",
 
-  /**
-   * Shows the question icon in the message box.
-   * @public
-   */
-  QUESTION : "QUESTION"
-};
+		/**
+		 * Shows the success icon in the message box.
+		 * @public
+		 */
+		SUCCESS : "SUCCESS",
 
-(function() {
+		/**
+		 * Shows the question icon in the message box.
+		 * @public
+		 */
+		QUESTION : "QUESTION"
+	};
 
-	var c = sap.ui.commons,
-		Action = c.MessageBox.Action,
-		Icon = c.MessageBox.Icon,
-		mIconClass = {
-			// Note: keys must be equal to values(!) of the Icon enumeration above
-			INFORMATION : "sapUiMboxInfo",
-			CRITICAL : "sapUiMboxCritical",
-			ERROR : "sapUiMboxError",
-			WARNING : "sapUiMboxWarning",
-			SUCCESS : "sapUiMboxSuccess",
-			QUESTION : "sapUiMboxQuestion"
-		};
+	// some shortcuts for enum types
+	var AccessibleRole = core.AccessibleRole,
+		Action = MessageBox.Action,
+		Icon = MessageBox.Icon,
+		Padding = commons.layout.Padding,
+		VAlign = commons.layout.VAlign;
+
+	var mIconClass = {
+		// Note: keys must be equal to values(!) of the Icon enumeration above
+		INFORMATION : "sapUiMboxInfo",
+		CRITICAL : "sapUiMboxCritical",
+		ERROR : "sapUiMboxError",
+		WARNING : "sapUiMboxWarning",
+		SUCCESS : "sapUiMboxSuccess",
+		QUESTION : "sapUiMboxQuestion"
+	};
 
 	/**
 	 * Creates and displays a simple message box with the given text and buttons, and optionally other parts.
@@ -191,7 +195,7 @@ sap.ui.commons.MessageBox.Icon = {
 	 * @param {string} [sDialogId] ID to be used for the dialog. Intended for test scenarios, not recommended for productive apps
 	 * @public
 	 */
-	sap.ui.commons.MessageBox.show = function(vMessage, oIcon, sTitle, vActions, fnCallback, oDefaultAction, sDialogId) {
+	MessageBox.show = function(vMessage, oIcon, sTitle, vActions, fnCallback, oDefaultAction, sDialogId) {
 
 		var rb = sap.ui.getCore().getLibraryResourceBundle("sap.ui.commons"),
 			oDialog, oResult, oContent, oMsg, oDefaultButton;
@@ -205,12 +209,12 @@ sap.ui.commons.MessageBox.Icon = {
 		}
 
 		// create a unique ID
-		sDialogId = sDialogId || sap.ui.core.ElementMetadata.uid("mbox");
+		sDialogId = sDialogId || ElementMetadata.uid("mbox");
 
 		/** creates a button for the given action */
 		function button(sAction) {
 			var sText = rb && rb.getText("MSGBOX_" + sAction),
-				oButton = new c.Button({
+				oButton = new Button({
 					id : sDialogId + "--btn-" + sAction,
 					text : sText || sAction,
 					press : function () {
@@ -226,16 +230,16 @@ sap.ui.commons.MessageBox.Icon = {
 
 		/** wraps the given control in a top aligned MatrixLayoutCell with no padding */
 		function cell(oContent) {
-			return new c.layout.MatrixLayoutCell({
-				padding: c.layout.Padding.None,
-				vAlign: c.layout.VAlign.Top,
+			return new MatrixLayoutCell({
+				padding: Padding.None,
+				vAlign: VAlign.Top,
 				content: oContent
 			});
 		}
 
 		/** creates an Image for the given icon type */
 		function image(oIcon) {
-			var oImage = new c.Image({
+			var oImage = new Image({
 					id : sDialogId + "--icon",
 					tooltip : rb && rb.getText("MSGBOX_ICON_" + oIcon),
 					decorative : true});
@@ -256,26 +260,26 @@ sap.ui.commons.MessageBox.Icon = {
 			oDialog.destroy();
 		}
 
-		oContent = new c.layout.MatrixLayout({id : sDialogId + "--lyt", layoutFixed:false}).addStyleClass("sapUiMboxCont");
+		oContent = new MatrixLayout({id : sDialogId + "--lyt", layoutFixed:false}).addStyleClass("sapUiMboxCont");
 
-		if (typeof(vMessage) === "string") {
-			oMsg = new c.TextView({id : sDialogId + "--msg"}).setText(vMessage).addStyleClass("sapUiMboxText");
-		} else if (vMessage instanceof sap.ui.core.Control) {
+		if (typeof (vMessage) === "string") {
+			oMsg = new TextView({id : sDialogId + "--msg"}).setText(vMessage).addStyleClass("sapUiMboxText");
+		} else if (vMessage instanceof Control) {
 			oMsg = vMessage.addStyleClass("sapUiMboxText");
 		}
 
-		if ( oIcon !== Icon.NONE ) {
+		if ( oIcon !== MessageBox.Icon.NONE ) {
 			oContent.createRow(cell(image(oIcon)), cell(oMsg));
 		} else {
 			oContent.createRow(cell(oMsg));
 		}
 		// oContent.addStyleClass("sapUiDbgMeasure");
 
-		oDialog = new c.Dialog({
+		oDialog = new Dialog({
 			id : sDialogId,
 			applyContentPadding : false,
 			title : sTitle,
-			accessibleRole : sap.ui.core.AccessibleRole.AlertDialog,
+			accessibleRole : AccessibleRole.AlertDialog,
 			resizable : false,
 			modal: true,
 			buttons : jQuery.map(vActions, button), // determines oDefaultButton as a side effect!
@@ -308,13 +312,13 @@ sap.ui.commons.MessageBox.Icon = {
 	 * @param {string} [sDialogId] ID to be used for the alert box. Intended for test scenarios, not recommended for productive apps
 	 * @public
 	 */
-	sap.ui.commons.MessageBox.alert = function(vMessage, fnCallback, sTitle, sDialogId) {
-		return c.MessageBox.show(vMessage, Icon.NONE, sTitle, Action.OK,
-				function(oAction) {
-					if ( typeof fnCallback === "function" ) {
-						fnCallback();
-					}
-				}, Action.OK, sDialogId || sap.ui.core.ElementMetadata.uid("alert"));
+	MessageBox.alert = function(vMessage, fnCallback, sTitle, sDialogId) {
+		return MessageBox.show(vMessage, Icon.NONE, sTitle, Action.OK,
+			function(oAction) {
+				if ( typeof fnCallback === "function" ) {
+					fnCallback();
+				}
+			}, Action.OK, sDialogId || ElementMetadata.uid("alert"));
 	};
 
 	/**
@@ -339,13 +343,16 @@ sap.ui.commons.MessageBox.Icon = {
 	 * @param {string} [sDialogId] ID to be used for the confirmation dialog. Intended for test scenarios, not recommended for productive apps
 	 * @public
 	 */
-	sap.ui.commons.MessageBox.confirm = function(vMessage, fnCallback, sTitle, sDialogId) {
-		return c.MessageBox.show(vMessage, Icon.QUESTION, sTitle, [Action.OK, Action.CANCEL],
-				function(oAction) {
-					if ( typeof fnCallback === "function" ) {
-						fnCallback(oAction === Action.OK);
-					}
-				},  /* no default */ undefined, sDialogId || sap.ui.core.ElementMetadata.uid("confirm"));
+	MessageBox.confirm = function(vMessage, fnCallback, sTitle, sDialogId) {
+		return MessageBox.show(vMessage, Icon.QUESTION, sTitle, [Action.OK, Action.CANCEL],
+			function(oAction) {
+				if ( typeof fnCallback === "function" ) {
+					fnCallback(oAction === Action.OK);
+				}
+			},  /* no default */ undefined, sDialogId || ElementMetadata.uid("confirm"));
 	};
 
-}());
+
+	return MessageBox;
+
+}, /* bExport= */ true);

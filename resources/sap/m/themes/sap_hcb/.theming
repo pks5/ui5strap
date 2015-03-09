@@ -1,5 +1,6 @@
 {
   "sEntity" : "Theme",
-  "sId" : "base",
+  "sId" : "sap_hcb",
+  "oExtends" : "UI5.sap/m.base",
   "sVendor" : "SAP"
 }

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -21,10 +21,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 		 *
 		 * @abstract
 		 * @extends sap.ui.base.Object
-		 * @version 1.24.3
+		 * @version 1.26.7
 		 * @constructor
 		 * @private
-		 * @name sap.ui.core.support.plugins.Performance
+		 * @alias sap.ui.core.support.plugins.Performance
 		 */
 		var Performance = Plugin.extend("sap.ui.core.support.plugins.Performance", {
 			constructor : function(oSupportStub) {
@@ -35,17 +35,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 				if (this.isToolPlugin()) {
 	
 					this._aEventIds = [this.getId() + "SetMeasurements",
-					                   this.getId() + "SetActive"];
+									   this.getId() + "SetActive"];
 					jQuery.sap.require("sap.ui.core.format.DateFormat");
 					this._oDateFormat = sap.ui.core.format.DateFormat.getTimeInstance({pattern: "HH:mm:ss '+' SSS"});
 	
 				} else {
 	
 					this._aEventIds = [this.getId() + "Refresh",
-					                   this.getId() + "Clear",
-					                   this.getId() + "Start",
-					                   this.getId() + "Stop",
-					                   this.getId() + "Activate"];
+									   this.getId() + "Clear",
+									   this.getId() + "Start",
+									   this.getId() + "Stop",
+									   this.getId() + "Activate"];
 	
 				}
 	
@@ -113,30 +113,28 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 				this._oStub.sendEvent(this.getId() + "Activate", {"active": bActive});
 			}, this));
 	
-		};
+		}
 	
 		function initInApps(oSupportStub) {
 			getPerformanceData.call(this);
-		};
+		}
 	
 		function getPerformanceData(oSupportStub) {
 			var bActive = jQuery.sap.measure.getActive();
-			var aMeasurements = new Array();
+			var aMeasurements = [];
 	
 			if (bActive) {
 				aMeasurements = jQuery.sap.measure.getAllMeasurements();
 			}
 			this._oStub.sendEvent(this.getId() + "SetMeasurements", {"measurements": aMeasurements});
 			this._oStub.sendEvent(this.getId() + "SetActive", {"active": bActive});
-		};
+		}
 	
 		/**
 		 * Handler for sapUiSupportPerfSetMeasurements event
 		 *
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.Performance#onsapUiSupportPerfSetMeasurements
-		 * @function
 		 */
 		Performance.prototype.onsapUiSupportPerfSetMeasurements = function(oEvent) {
 	
@@ -147,12 +145,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 			for ( var i = 0; i < aMeasurements.length; i++) {
 				var oMeasurement = aMeasurements[i];
 				rm.write("<tr>");
-				rm.write("<td>"+oMeasurement.id+"</td>");
-				rm.write("<td>"+oMeasurement.info+"</td>");
-				rm.write("<td>"+this._oDateFormat.format(new Date(oMeasurement.start))+"</td>");
-				rm.write("<td>"+this._oDateFormat.format(new Date(oMeasurement.end))+"</td>");
-				rm.write("<td>"+oMeasurement.time+"</td>");
-				rm.write("<td>"+oMeasurement.duration+"</td>");
+				rm.write("<td>" + oMeasurement.id + "</td>");
+				rm.write("<td>" + oMeasurement.info + "</td>");
+				rm.write("<td>" + this._oDateFormat.format(new Date(oMeasurement.start)) + "</td>");
+				rm.write("<td>" + this._oDateFormat.format(new Date(oMeasurement.end)) + "</td>");
+				rm.write("<td>" + oMeasurement.time + "</td>");
+				rm.write("<td>" + oMeasurement.duration + "</td>");
 				rm.write("</tr>");
 			}
 			rm.flush(oTableBody[0]);
@@ -165,8 +163,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 		 *
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.Performance#onsapUiSupportPerfSetActive
-		 * @function
 		 */
 		Performance.prototype.onsapUiSupportPerfSetActive = function(oEvent) {
 	
@@ -186,8 +182,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 		 *
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.Performance#onsapUiSupportPerfRefresh
-		 * @function
 		 */
 		Performance.prototype.onsapUiSupportPerfRefresh = function(oEvent) {
 	
@@ -200,8 +194,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 		 *
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.Performance#onsapUiSupportPerfClear
-		 * @function
 		 */
 		Performance.prototype.onsapUiSupportPerfClear = function(oEvent) {
 	
@@ -215,12 +207,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 		 *
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.Performance#onsapUiSupportPerfStart
-		 * @function
 		 */
 		Performance.prototype.onsapUiSupportPerfStart = function(oEvent) {
 	
-			jQuery.sap.measure.start(this.getId()+"-perf","Measurement by support tool");
+			jQuery.sap.measure.start(this.getId() + "-perf","Measurement by support tool");
 	
 		};
 	
@@ -229,12 +219,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 		 *
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.Performance#onsapUiSupportPerfEnd
-		 * @function
 		 */
 		Performance.prototype.onsapUiSupportPerfEnd = function(oEvent) {
 	
-			jQuery.sap.measure.end(this.getId()+"-perf");
+			jQuery.sap.measure.end(this.getId() + "-perf");
 	
 		};
 	
@@ -243,8 +231,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', 'sap/ui/core/su
 		 *
 		 * @param {sap.ui.base.Event} oEvent the event
 		 * @private
-		 * @name sap.ui.core.support.plugins.Performance#onsapUiSupportPerfActivate
-		 * @function
 		 */
 		Performance.prototype.onsapUiSupportPerfActivate = function(oEvent) {
 	

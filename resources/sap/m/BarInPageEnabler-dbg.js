@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -30,7 +30,7 @@ sap.ui.define(['sap/ui/base/Object'],
 	 * @class Helper Class for implementing the IBar interface. Should be created once per IBar instance.
 	 * @version 1.22
 	 * @protected
-	 * @name sap.m.IBarInPageEnabler
+	 * @alias sap.m.IBarInPageEnabler
 	 */
 	var BarInPageEnabler = Object.extend("sap.m.BarInPageEnabler", {
 		/**
@@ -51,11 +51,11 @@ sap.ui.define(['sap/ui/base/Object'],
 		 * @protected
 		 */
 		setHTMLTag : function (sNewTag) {
-			if(!sap.m.IBarHTMLTag.hasOwnProperty(sNewTag)) {
+			if (!sap.m.IBarHTMLTag.hasOwnProperty(sNewTag)) {
 				jQuery.sap.log.error(sNewTag + " is no valid entry for sap.m.IBarHTMLTag", this);
 			}
 
-			if(sNewTag === this.sTag) {
+			if (sNewTag === this.sTag) {
 				return this;
 			}
 
@@ -70,7 +70,7 @@ sap.ui.define(['sap/ui/base/Object'],
 		 * @protected
 		 */
 		getHTMLTag : function () {
-			if(!this.hasOwnProperty("sTag")) {
+			if (!this.hasOwnProperty("sTag")) {
 				//Div is the default
 				this.sTag = sap.m.IBarHTMLTag.Div;
 			}
@@ -89,24 +89,24 @@ sap.ui.define(['sap/ui/base/Object'],
 		applyTagAndContextClassFor : function (sContext) {
 			var oOptions = mContexts[sContext];
 
-			if(!oOptions) {
+			if (!oOptions) {
 				jQuery.sap.log.error("The context " + sContext + " is not known", this);
 				return this;
 			}
 
-			if(!this.isContextSensitive || !this.setHTMLTag) {
+			if (!this.isContextSensitive || !this.setHTMLTag) {
 				jQuery.sap.log.error("The bar control you are using does not implement all the members of the IBar interface", this);
 				return this;
 			}
 
 			//If this class does not gets added by the renderer, add it here
-			if(!this.getRenderer().shouldAddIBarContext()) {
+			if (!this.getRenderer().shouldAddIBarContext()) {
 				this.addStyleClass(IBAR_CSS_CLASS + "-CTX");
 			}
 
 			this.setHTMLTag(oOptions.tag);
 
-			if(this.isContextSensitive()) {
+			if (this.isContextSensitive()) {
 				this.addStyleClass(oOptions.contextClass);
 			}
 

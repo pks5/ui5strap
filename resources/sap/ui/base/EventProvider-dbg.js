@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -18,10 +18,10 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 * @abstract
 	 * @extends sap.ui.base.Object
 	 * @author Malte Wedel, Daniel Brinkmann
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @constructor
 	 * @public
-	 * @name sap.ui.base.EventProvider
+	 * @alias sap.ui.base.EventProvider
 	 */
 	var EventProvider = BaseObject.extend("sap.ui.base.EventProvider", /* @lends sap.ui.base.EventProvider */ {
 	
@@ -43,14 +43,12 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 * Map of event names and ids, that are provided by this class
 	 * @private
 	 * @static
-	 * @name sap.ui.base.EventProvider.M_EVENTS
 	 */
 	EventProvider.M_EVENTS = {EventHandlerChange:"EventHandlerChange"};
 	
 	/**
 	 * Pool is defined on the prototype to be shared among all EventProviders
 	 * @private
-	 * @name sap.ui.base.EventProvider#oEventPool
 	 */
 	EventProvider.prototype.oEventPool = new ObjectPool(Event);
 	
@@ -68,20 +66,18 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 *            [oListener] The object, that wants to be notified, when the event occurs
 	 * @return {sap.ui.base.EventProvider} Returns <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.base.EventProvider#attachEvent
-	 * @function
 	 */
 	EventProvider.prototype.attachEvent = function(sEventId, oData, fnFunction, oListener) {
-		jQuery.sap.assert(typeof(sEventId) === "string" && sEventId, "EventProvider.attachEvent: sEventId must be a non-empty string");
-		if(typeof(oData) === "function") {
+		jQuery.sap.assert(typeof (sEventId) === "string" && sEventId, "EventProvider.attachEvent: sEventId must be a non-empty string");
+		if (typeof (oData) === "function") {
 		//one could also increase the check in the line above
 		//if(typeof(oData) === "function" && oListener === undefined) {
 			oListener = fnFunction;
 			fnFunction = oData;
 			oData = undefined;
 		}
-		jQuery.sap.assert(typeof(fnFunction) === "function", "EventProvider.attachEvent: fnFunction must be a function");
-		jQuery.sap.assert(!oListener || typeof(oListener) === "object", "EventProvider.attachEvent: oListener must be empty or an object");
+		jQuery.sap.assert(typeof (fnFunction) === "function", "EventProvider.attachEvent: fnFunction must be a function");
+		jQuery.sap.assert(!oListener || typeof (oListener) === "object", "EventProvider.attachEvent: oListener must be empty or an object");
 	
 		if (!this.mEventRegistry[sEventId]) {
 			this.mEventRegistry[sEventId] = [];
@@ -109,16 +105,14 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 *            [oListener] The object, that wants to be notified, when the event occurs
 	 * @return {sap.ui.base.EventProvider} Returns <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.base.EventProvider#attachEventOnce
-	 * @function
 	 */
 	EventProvider.prototype.attachEventOnce = function(sEventId, oData, fnFunction, oListener) {
-		if(typeof(oData) === "function") {
+		if (typeof (oData) === "function") {
 			oListener = fnFunction;
 			fnFunction = oData;
 			oData = undefined;
 		}
-		function fnOnce() { 
+		function fnOnce() {
 			this.detachEvent(sEventId, fnOnce);  // ‘this’ is always the control, due to the context ‘undefined’ in the attach call below
 			fnFunction.apply(oListener || this, arguments);  // needs to do the same resolution as in fireEvent
 		}
@@ -139,13 +133,11 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 *            [oListener] The object, that wants to be notified, when the event occurs
 	 * @return {sap.ui.base.EventProvider} Returns <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.base.EventProvider#detachEvent
-	 * @function
 	 */
 	EventProvider.prototype.detachEvent = function(sEventId, fnFunction, oListener) {
-		jQuery.sap.assert(typeof(sEventId) === "string" && sEventId, "EventProvider.detachEvent: sEventId must be a non-empty string" );
-		jQuery.sap.assert(typeof(fnFunction) === "function", "EventProvider.detachEvent: fnFunction must be a function");
-		jQuery.sap.assert(!oListener || typeof(oListener) === "object", "EventProvider.detachEvent: oListener must be empty or an object");
+		jQuery.sap.assert(typeof (sEventId) === "string" && sEventId, "EventProvider.detachEvent: sEventId must be a non-empty string" );
+		jQuery.sap.assert(typeof (fnFunction) === "function", "EventProvider.detachEvent: fnFunction must be a function");
+		jQuery.sap.assert(!oListener || typeof (oListener) === "object", "EventProvider.detachEvent: oListener must be empty or an object");
 	
 		var aEventListeners = this.mEventRegistry[sEventId];
 		if (!aEventListeners) {
@@ -165,11 +157,11 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 			}
 		}
 		// If we just deleted the last registered EventHandler, remove the whole entry from our map.
-		if(aEventListeners.length == 0) {
+		if (aEventListeners.length == 0) {
 			delete this.mEventRegistry[sEventId];
 		}
 	
-		if(bListenerDetached){
+		if (bListenerDetached) {
 			// Inform interested parties about changed EventHandlers
 			this.fireEvent(EventProvider.M_EVENTS.EventHandlerChange, {EventId: sEventId, type: 'listenerDetached' });
 		}
@@ -188,8 +180,6 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 * @return {sap.ui.base.EventProvider|boolean} Returns <code>this</code> to allow method chaining or
 	 *		   whether the default action should be executed, when bAllowPreventDefault has been set to true
 	 * @protected
-	 * @name sap.ui.base.EventProvider#fireEvent
-	 * @function
 	 */
 	EventProvider.prototype.fireEvent = function(sEventId, mParameters, bAllowPreventDefault, bEnableEventBubbling) {
 		// at least in BrowserEventManager when firing events of its E_EVENTS enumeration, the type will be an integer... thus avoid this check
@@ -243,8 +233,7 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 		// Only return prevent default result in case it has been enabled, for compatibility
 		if (bAllowPreventDefault) {
 			return !bPreventDefault;
-		}
-		else {
+		} else {
 			return this;
 		}
 	};
@@ -255,8 +244,6 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 * @param {string} sEventId the ID of the event
 	 * @return {boolean} whether there are any listeners
 	 * @private
-	 * @name sap.ui.base.EventProvider#hasListeners
-	 * @function
 	 */
 	EventProvider.prototype.hasListeners = function(sEventId) {
 		return !!this.mEventRegistry[sEventId];
@@ -274,8 +261,6 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 * @return {object} the list of events currently having listeners attached
 	 * @private
 	 * @static
-	 * @name sap.ui.base.EventProvider.getEventList
-	 * @function
 	 */
 	EventProvider.getEventList = function(oEventProvider) {
 		return oEventProvider.mEventRegistry;
@@ -290,8 +275,6 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 *
 	 * @return {sap.ui.base.EventProvider} the parent event provider
 	 * @protected
-	 * @name sap.ui.base.EventProvider#getEventingParent
-	 * @function
 	 */
 	EventProvider.prototype.getEventingParent = function() {
 		return null;
@@ -305,14 +288,11 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 *
 	 * @return {string} a string description of this eventProvider
 	 * @public
-	 * @name sap.ui.base.EventProvider#toString
-	 * @function
 	 */
 	EventProvider.prototype.toString = function() {
 		if ( this.getMetadata ) {
 			return "EventProvider " + this.getMetadata().getName();
-		}
-		else {
+		} else {
 			return "EventProvider";
 		}
 	};
@@ -321,8 +301,6 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	/**
 	 * @see sap.ui.base.Object.prototype.destroy
 	 * @public
-	 * @name sap.ui.base.EventProvider#destroy
-	 * @function
 	 */
 	EventProvider.prototype.destroy = function() {
 		this.mEventRegistry = {};

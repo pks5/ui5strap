@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -18,9 +18,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 *
 	 * @class
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 0.8.6
-	 * @name sap.ui.core.ElementMetadata
+	 * @alias sap.ui.core.ElementMetadata
 	 */
 	var ElementMetadata = function(sClassName, oClassInfo) {
 	
@@ -37,7 +37,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * @return {string} A (hopefully unique) control id
 	 * @public
 	 * @function
-	 * @name sap.ui.core.ElementMetadata.uid
 	 */
 	ElementMetadata.uid = ManagedObjectMetadata.uid;
 	
@@ -45,8 +44,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * By default, the element name is equal to the class name
 	 * @return {string} the qualified name of the UIElement class
 	 * @public
-	 * @name sap.ui.core.ElementMetadata#getElementName
-	 * @function
 	 */
 	ElementMetadata.prototype.getElementName = function() {
 		return this._sClassName;
@@ -54,8 +51,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	
 	/**
 	 * Determines the class name of the renderer for the described control class.
-	 * @name sap.ui.core.ElementMetadata#getRendererName
-	 * @function
 	 */
 	ElementMetadata.prototype.getRendererName = function() {
 		return this._sRendererName;
@@ -63,8 +58,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	
 	/**
 	 * Retrieves the renderer for the described control class
-	 * @name sap.ui.core.ElementMetadata#getRenderer
-	 * @function
 	 */
 	ElementMetadata.prototype.getRenderer = function() {
 	
@@ -77,7 +70,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	
 		// check if renderer class exists already
 		var fnRendererClass = jQuery.sap.getObject(sRendererName);
-		if(fnRendererClass) {
+		if (fnRendererClass) {
 			return fnRendererClass;
 		}
 	

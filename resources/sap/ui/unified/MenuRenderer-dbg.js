@@ -1,129 +1,136 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 // Provides default renderer for control sap.ui.unified.Menu
-jQuery.sap.declare("sap.ui.unified.MenuRenderer");
+sap.ui.define(['jquery.sap.global'],
+	function(jQuery) {
+	"use strict";
 
 
-/**
- * @class Menu renderer.
- * @author SAP - TD Core UI&AM UI Infra
- *
- * @version 1.24.3
- * @static
- */
-sap.ui.unified.MenuRenderer = {
-};
-
-/**
- * Renders the HTML for the given control, using the provided
- * {@link sap.ui.core.RenderManager}.
- *
- * @param {sap.ui.core.RenderManager}
- *            oRenderManager The RenderManager that can be used for writing to the render-output-buffer.
- * @param {sap.ui.core.Control}
- *            oMenu An object representation of the control that should be rendered
- */
-sap.ui.unified.MenuRenderer.render = function(rm, oMenu) {
-	var colCount = 8;
 	
-	if(oMenu.oHoveredItem && oMenu.indexOfItem(oMenu.oHoveredItem) < 0){
-		//Hover item not valid anymore
-		oMenu.oHoveredItem = null;
-	}
+	/**
+	 * Menu renderer.
+	 * @author SAP - TD Core UI&AM UI Infra
+	 *
+	 * @version 1.26.7
+	 * @namespace
+	 */
+	var MenuRenderer = {
+	};
 	
-	rm.write("<div tabindex=\"-1\" hideFocus=\"true\"");
-
-	if(oMenu.getTooltip_AsString()) {
-		rm.writeAttributeEscaped("title", oMenu.getTooltip_AsString());
-	}
-
-	// ARIA
-	var bAccessible = sap.ui.getCore().getConfiguration().getAccessibility();
-	if(bAccessible){
-		rm.writeAttribute("aria-orientation", "vertical");
-		rm.writeAttribute("role", "menu");
-
-		var _getText = function(sKey, aArgs) {
-			var rb = sap.ui.getCore().getLibraryResourceBundle("sap.ui.unified");
-			if(rb) {
-				return rb.getText(sKey, aArgs);
+	/**
+	 * Renders the HTML for the given control, using the provided
+	 * {@link sap.ui.core.RenderManager}.
+	 *
+	 * @param {sap.ui.core.RenderManager}
+	 *            oRenderManager The RenderManager that can be used for writing to the render-output-buffer.
+	 * @param {sap.ui.core.Control}
+	 *            oMenu An object representation of the control that should be rendered
+	 */
+	MenuRenderer.render = function(rm, oMenu) {
+		if (oMenu.oHoveredItem && oMenu.indexOfItem(oMenu.oHoveredItem) < 0) {
+			//Hover item not valid anymore
+			oMenu.oHoveredItem = null;
+		}
+		
+		rm.write("<div tabindex=\"-1\" hideFocus=\"true\"");
+	
+		if (oMenu.getTooltip_AsString()) {
+			rm.writeAttributeEscaped("title", oMenu.getTooltip_AsString());
+		}
+	
+		// ARIA
+		var bAccessible = sap.ui.getCore().getConfiguration().getAccessibility();
+		if (bAccessible) {
+			rm.writeAttribute("role", "menu");
+			rm.writeAttribute("aria-level", oMenu.getMenuLevel());
+			if (oMenu.oHoveredItem) {
+				rm.writeAttribute("aria-activedescendant", oMenu.oHoveredItem.getId());
 			}
-			return sKey;
-		};
-
-		rm.writeAttributeEscaped("aria-label", oMenu.getAriaDescription() ? oMenu.getAriaDescription() : _getText("MNU_ARIA_NAME"));
-		rm.writeAttribute("aria-level", oMenu.getMenuLevel());
-		if(oMenu.oHoveredItem) {
-			rm.writeAttribute("aria-activedescendant", oMenu.oHoveredItem.getId());
 		}
-	}
-
-	rm.addClass("sapUiMnu");
-	if(oMenu.getRootMenu().bUseTopStyle){
-		rm.addClass("sapUiMnuTop");
-	}
-	rm.writeClasses();
-	rm.writeControlData(oMenu);
-	rm.write(">");
-	sap.ui.unified.MenuRenderer.renderItems(rm, oMenu);
-	rm.write("</div>");
-};
-
-sap.ui.unified.MenuRenderer.renderItems = function(rm, oMenu) {
-	var aItems = oMenu.getItems();
-	var bAccessible = sap.ui.getCore().getConfiguration().getAccessibility();
 	
-	rm.write("<ul class=\"sapUiMnuLst");
-
-	var bHasIcons = false;
-	var bHasSubMenus = false;
-	for(var idx=0; idx<aItems.length; idx++){
-		if(aItems[idx].getIcon && aItems[idx].getIcon()){
-			bHasIcons = true;
+		rm.addClass("sapUiMnu");
+		if (oMenu.getRootMenu().bUseTopStyle) {
+			rm.addClass("sapUiMnuTop");
 		}
-		if(aItems[idx].getSubmenu()){
-			bHasSubMenus = true;
-		}
-	}
-
-	if(!bHasIcons) {
-		rm.write(" sapUiMnuNoIco");
-	}
-	if(!bHasSubMenus) {
-		rm.write(" sapUiMnuNoSbMnu");
-	}
-
-	rm.write("\">");
-
-	var iNumberOfVisibleItems = 0;
-	for (var i=0;i<aItems.length;i++) {
-		if(aItems[i].getVisible() && aItems[i].render){
-			iNumberOfVisibleItems++;
-		}
-	}
-
-	var index = 0;
-	// Menu items
-	for (var i=0;i<aItems.length;i++) {
-		var oItem = aItems[i];
-		if(oItem.getVisible() && oItem.render){
-			index++;
-
-			if(oItem.getStartsSection()){
-				rm.write("<li ");
-				if(bAccessible) {
-					rm.write("role=\"separator\" ");
+		rm.writeClasses();
+		rm.writeControlData(oMenu);
+		rm.write(">");
+		MenuRenderer.renderItems(rm, oMenu);
+		if (bAccessible) {
+			var _getText = function(sKey, aArgs) {
+				var rb = sap.ui.getCore().getLibraryResourceBundle("sap.ui.unified");
+				if (rb) {
+					return rb.getText(sKey, aArgs);
 				}
-				rm.write("class=\"sapUiMnuDiv\"><div class=\"sapUiMnuDivL\"></div><hr><div class=\"sapUiMnuDivR\"></div></li>");
-			}
-
-			oItem.render(rm, oItem, oMenu, {bAccessible: bAccessible, iItemNo: index, iTotalItems: iNumberOfVisibleItems});
+				return sKey;
+			};
+			
+			rm.write("<span id='", oMenu.getId(), "-label' class='sapUiInvisibleText' aria-hidden='true'>");
+			rm.writeEscaped(oMenu.getAriaDescription() ? oMenu.getAriaDescription() : _getText("MNU_ARIA_NAME"));
+			rm.write("</span>");
 		}
-	}
+		rm.write("</div>");
+	};
+	
+	MenuRenderer.renderItems = function(rm, oMenu) {
+		var aItems = oMenu.getItems();
+		var bAccessible = sap.ui.getCore().getConfiguration().getAccessibility();
+		
+		rm.write("<ul class=\"sapUiMnuLst");
+	
+		var bHasIcons = false;
+		var bHasSubMenus = false;
+		for (var idx = 0; idx < aItems.length; idx++) {
+			if (aItems[idx].getIcon && aItems[idx].getIcon()) {
+				bHasIcons = true;
+			}
+			if (aItems[idx].getSubmenu()) {
+				bHasSubMenus = true;
+			}
+		}
+	
+		if (!bHasIcons) {
+			rm.write(" sapUiMnuNoIco");
+		}
+		if (!bHasSubMenus) {
+			rm.write(" sapUiMnuNoSbMnu");
+		}
+	
+		rm.write("\">");
+	
+		var iNumberOfVisibleItems = 0;
+		for (var i = 0;i < aItems.length;i++) {
+			if (aItems[i].getVisible() && aItems[i].render) {
+				iNumberOfVisibleItems++;
+			}
+		}
+	
+		var index = 0;
+		// Menu items
+		for (var i = 0;i < aItems.length;i++) {
+			var oItem = aItems[i];
+			if (oItem.getVisible() && oItem.render) {
+				index++;
+	
+				if (oItem.getStartsSection()) {
+					rm.write("<li ");
+					if (bAccessible) {
+						rm.write("role=\"separator\" ");
+					}
+					rm.write("class=\"sapUiMnuDiv\"><div class=\"sapUiMnuDivL\"></div><hr><div class=\"sapUiMnuDivR\"></div></li>");
+				}
+	
+				oItem.render(rm, oItem, oMenu, {bAccessible: bAccessible, iItemNo: index, iTotalItems: iNumberOfVisibleItems});
+			}
+		}
+	
+		rm.write("</ul>");
+	};
 
-	rm.write("</ul>");	
-};
+	return MenuRenderer;
+
+}, /* bExport= */ true);

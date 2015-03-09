@@ -1,14 +1,14 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 
 
 // Provides class sap.ui.model.odata.ODataMetadata
-sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
-	function(jQuery, EventProvider) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', 'sap/ui/thirdparty/datajs'],
+	function(jQuery, EventProvider, datajs) {
 	"use strict";
 
 	/*global OData *///declare unusual global vars for JSLint/SAPUI5 validation
@@ -16,21 +16,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * Constructor for a new ODataMetadata.
 	 *
-	 * @param {string} sMetadataURI
-	 * @param {object} mParams
-	 * @param {boolean} mParams.async
-	 * @param {boolean} mParams.user
-	 * @param {boolean} mParams.password
+	 * @param {string} sMetadataURI needs the correct metadata uri including $metadata
+	 * @param {object} [mParams] optional map of parameters.
+	 * @param {boolean} [mParams.async=true] request is per default async
+	 * @param {string} [mParams.user] user for the service,
+	 * @param {string} [mParams.password] password for service
+	 * @param {object} [mParams.headers] (optional) map of custom headers which should be set with the request.
 	 * 
 	 * @class
 	 * Implementation to access oData metadata
 	 *
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 *
 	 * @constructor
 	 * @public
-	 * @name sap.ui.model.odata.ODataMetadata
+	 * @alias sap.ui.model.odata.ODataMetadata
 	 * @extends sap.ui.base.EventProvider
 	 */
 	var ODataMetadata = sap.ui.base.EventProvider.extend("sap.ui.model.odata.ODataMetadata", /** @lends sap.ui.model.odata.ODataMetadata.prototype */ {
@@ -59,19 +60,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		},
 
 		metadata : {
-			publicMethods : ["getServiceMetadata", "attachFailed", "detachFailed", "attachLoaded", "detachLoaded"]
+			publicMethods : ["getServiceMetadata", "attachFailed", "detachFailed", "attachLoaded", "detachLoaded", "refresh"]
 		}
 
 	});
 
 	ODataMetadata.prototype._setNamespaces = function(mNamespaces) {
 		this.mNamespaces = mNamespaces;
-	}
+	};
 	/**
 	 * Loads the metadata for the service
 	 * @private
-	 * @name sap.ui.model.odata.ODataMetadata#_loadMetadata
-	 * @function
 	 */
 	ODataMetadata.prototype._loadMetadata = function() {
 
@@ -80,7 +79,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		var oRequest = this._createRequest(this.sUrl);
 
 		function _handleSuccess(oMetadata, oResponse) {
-			if(!oMetadata || !oMetadata.dataServices){
+			that.bFailed = false;
+			if (!oMetadata || !oMetadata.dataServices) {
 				var mParameters = {
 						message: "Invalid metadata document",
 						request: oRequest,
@@ -91,7 +91,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 			}
 			that.oMetadata = oMetadata;
 			that.oRequestHandle = null;
-			if(that.bAsync){
+			if (that.bAsync) {
 				that.fireLoaded(that);
 			} else {
 				//delay the event so anyone can attach to this _before_ it is fired, but make
@@ -102,18 +102,23 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		}
 
 		function _handleError(oError) {
-			var mParams = { message: oError.message };
+			that.bFailed = true;
+			var mParams = { 
+				message: oError.message,
+				request: oError.request,
+				response: oError.response
+			};
 			if (oError.response) {
-					mParams.statusCode = oError.response.statusCode;
-					mParams.statusText = oError.response.statusText;
-					mParams.responseText = oError.response.body;
+				mParams.statusCode = oError.response.statusCode;
+				mParams.statusText = oError.response.statusText;
+				mParams.responseText = oError.response.body;
 			}
 
 			if (that.oRequestHandle && that.oRequestHandle.bSuppressErrorHandlerCall) {
 				return;
 			}
 			that.oRequestHandle = null;
-			if(that.bAsync){
+			if (that.bAsync) {
 				that.fireFailed(mParams);
 			} else {
 				that.oFailedEvent = jQuery.sap.delayedCall(0, that, that.fireFailed, [mParams]);
@@ -125,28 +130,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	};
 
 	/**
-	 * Creates a new subclass of class sap.ui.model.odata.ODataMetadata with name <code>sClassName</code>
-	 * and enriches it with the information contained in <code>oClassInfo</code>.
+	 * refreshes the metadata creating a new request to the server  
 	 *
-	 * For a detailed description of <code>oClassInfo</code> or <code>FNMetaImpl</code>
-	 * see {@link sap.ui.base.Object.extend Object.extend}.
-	 *
-	 * @param {string} sClassName name of the class to be created
-	 * @param {object} [oClassInfo] object literal with informations about the class
-	 * @param {function} [FNMetaImpl] alternative constructor for a metadata object
-	 * @return {function} the created class / constructor function
 	 * @public
-	 * @static
-	 * @name sap.ui.model.odata.ODataMetadata.extend
-	 * @function
 	 */
-	
+	ODataMetadata.prototype.refresh = function(){
+		this._loadMetadata();
+		return this;
+	};
+
+
 	/**
 	 * Return the metadata object
 	 *
 	 * @return {Object} metdata object
 	 * @public
-	 * @name sap.ui.model.odata.ODataMetadata#getServiceMetadata
 	 */
 	ODataMetadata.prototype.getServiceMetadata = function() {
 		return this.oMetadata;
@@ -163,6 +161,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	};
 
 	/**
+	 * Checks whether metadata loading has already failed 
+	 * 
+	 * @public
+	 * @returns {boolean} returns whether metadata request has failed
+	 */
+	ODataMetadata.prototype.isFailed = function() {
+		return this.bFailed;
+	};
+	
+	/**
 	 * Fire event loaded to attached listeners.
 	 *
 	 * @return {sap.ui.model.odata.ODataMetadata} <code>this</code> to allow method chaining
@@ -171,7 +179,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	ODataMetadata.prototype.fireLoaded = function() {
 		this.bLoaded = true;
 		this.fireEvent("loaded");
-		jQuery.sap.log.debug('loaded on Metadata object was fired');
+		jQuery.sap.log.debug(this + " - loaded was fired");
 		return this;
 	};
 
@@ -275,8 +283,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * /Categories(1)/Products(1)/Category --> will get the Categories entity type
 	 * /Products --> will get the Products entity type
 	 * @return {object} the entity type or null if not found
-	 * @name sap.ui.model.odata.ODataMetadata#_getEntityTypeByPath
-	 * @function
 	 */
 	ODataMetadata.prototype._getEntityTypeByPath = function(sPath) {
 		if (!sPath) {
@@ -287,21 +293,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 			jQuery.sap.assert(undefined, "No metadata loaded!");
 			return null;
 		}
+		
 		// remove starting and trailing /
 		var sCandidate = sPath.replace(/^\/|\/$/g, ""),
 			aParts = sCandidate.split("/"),
 			iLength = aParts.length,
-			aAssociationName,
-			oAssociation,
 			oParentEntityType,
-			oEnd,
 			aEntityTypeName,
 			oEntityType,
 			oResultEntityType,
 			that = this;
 	
 		// remove key from first path segment if any (e.g. Products(555) --> Products)
-		if (aParts[0].indexOf("(") != -1){
+		if (aParts[0].indexOf("(") != -1) {
 			aParts[0] = aParts[0].substring(0,aParts[0].indexOf("("));
 		}
 	
@@ -311,26 +315,24 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	
 			oParentEntityType = that._getEntityTypeByPath(aParts[0]);
 	
-			for (var i = 1; i < aParts.length; i++ ){
+			for (var i = 1; i < aParts.length; i++ ) {
 				if (oParentEntityType) {
 					// remove key from current part if any
-					if (aParts[i].indexOf("(") != -1){
+					if (aParts[i].indexOf("(") != -1) {
 						aParts[i] = aParts[i].substring(0,aParts[i].indexOf("("));
 					}
 					// check for navigation properties
 					// if no navigation property found we assume that the current part is a normal property so we return the current oParentEntityType
 					// which is the parent entity type of that property
-					if (oParentEntityType.navigationProperty) {
-						oResultEntityType = that._getEntityTypeByNavProperty(oParentEntityType, aParts[i]);
-						if (oResultEntityType) {
-							oParentEntityType = oResultEntityType;
-						}
+					oResultEntityType = that._getEntityTypeByNavProperty(oParentEntityType, aParts[i]);
+					if (oResultEntityType) {
+						oParentEntityType = oResultEntityType;
 					}
 
 					oEntityType = oParentEntityType;
 
 				}
-			};
+			}
 		} else {
 			// if only one part exists it should be the name of the collection and we can get the entity type for it
 			aEntityTypeName = this._splitName(this._getEntityTypeName(aParts[0]));
@@ -345,6 +347,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		if (!oEntityType) {
 			var sFuncCandName = aParts[aParts.length - 1]; // last segment is always a function import
 			var oFuncType = this._getFunctionImportMetadata(sFuncCandName, "GET");
+			if (!oFuncType) {
+				oFuncType = this._getFunctionImportMetadata(sFuncCandName, "POST");
+			}
 			if (oFuncType && oFuncType.entitySet) { // only collections supported which have an entitySet
 				oEntityType = this._getEntityTypeByPath(oFuncType.entitySet);
 				if (oEntityType) {
@@ -365,8 +370,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * 
 	 * #/Category/CategoryName --> will get the Category entity type
 	 * @return {object} the entity type or null if not found
-	 * @name sap.ui.model.odata.ODataMetadata#_getEntityTypeByName
-	 * @function
 	 */
 	ODataMetadata.prototype._getEntityTypeByName = function(sName) {
 		var oEntityType, that = this;
@@ -402,49 +405,55 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * Extracts an Annotation from given path parts 
 	 * @param {array} aMetaParts
 	 * @returns {any}
-	 * @name sap.ui.model.odata.ODataMetadata#_getAnnotation
 	 * @private
-	 * @function
 	 */
 	ODataMetadata.prototype._getAnnotation = function(sPath) {
-		var oNode, sKey, aParts, sMetaPath, aMetaParts, oEntityType, sPropertyPath, oProperty, aPathParts, sPath;
+		var oNode, aParts, sMetaPath, aMetaParts, oEntityType, sPropertyPath, oProperty;
 		
 		aParts = sPath.split('/#');
-		aMetaParts = aParts[1].split('/');  
+		aMetaParts = aParts[1].split('/');
 		
 		//check if we have an absolute meta binding
 		if (!aParts[0]) {
 			// first part must be the entityType
-			oEntityType = this._getEntityTypeByName(aMetaParts[0]);		
+			oEntityType = this._getEntityTypeByName(aMetaParts[0]);
 			
 			jQuery.sap.assert(oEntityType, aMetaParts[0] + " is not a valid EnityType");
 			
-			if (!oEntityType) return;
+			if (!oEntityType) {
+				return;
+			}
 			
 			//extract property
-			sPropertyPath = aParts[1].substr(aParts[1].indexOf('/')+1);
+			sPropertyPath = aParts[1].substr(aParts[1].indexOf('/') + 1);
 			oProperty = this._getPropertyMetadata(oEntityType,sPropertyPath);
 			
 			jQuery.sap.assert(oProperty, sPropertyPath + " is not a valid property path");
-			if(!oProperty) return;
+			if (!oProperty) {
+				return;
+			}
 			
 			sMetaPath = sPropertyPath.substr(sPropertyPath.indexOf(oProperty.name));
-			sMetaPath = sMetaPath.substr(sMetaPath.indexOf('/')+1);
+			sMetaPath = sMetaPath.substr(sMetaPath.indexOf('/') + 1);
 		} else {
 			//getentityType from data Path
 			oEntityType = this._getEntityTypeByPath(aParts[0]);
 			
 			jQuery.sap.assert(oEntityType, aParts[0] + " is not a valid path");
 			
-			if (!oEntityType) return;
+			if (!oEntityType) {
+				return;
+			}
 			
 			//extract property
 			sPath = aParts[0].replace(/^\/|\/$/g, "");
-			sPropertyPath = sPath.substr(sPath.indexOf('/')+1);
+			sPropertyPath = sPath.substr(sPath.indexOf('/') + 1);
 			oProperty = this._getPropertyMetadata(oEntityType,sPropertyPath);
 			
 			jQuery.sap.assert(oProperty, sPropertyPath + " is not a valid property path");
-			if(!oProperty) return;
+			if (!oProperty) {
+				return;
+			}
 			
 			sMetaPath = aMetaParts.join('/');
 		}
@@ -460,13 +469,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * Extract the Annotation Object from a given oProperty and a metadata path  
 	 * 
 	 * @return {object} the annotation object/value
-	 * @name sap.ui.model.odata.ODataMetadata#_getEntityTypeByName
-	 * @function
 	 */
 	ODataMetadata.prototype._getAnnotationObject = function(oEntityType, oObject, sMetaDataPath) {
-		var that = this, aAnnotationParts, aParts, oAnnotation, oNode, sAnnotation;
+		var aAnnotationParts, aParts, oAnnotation, oNode, sAnnotation;
 		
-		if (!oObject) return;
+		if (!oObject) {
+			return;
+		}
 		
 		oNode = oObject;
 		aParts = sMetaDataPath.split('/');
@@ -474,7 +483,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		//V4 annotation
 		if (aParts[0].indexOf('.') > -1) {
 			return this._getV4AnnotationObject(oEntityType, oObject, aParts);
-		}else { 
+		} else {
 			if (aParts.length > 1) {
 				//TODO:namespace handling
 				oNode = oNode[aParts[0]];
@@ -487,7 +496,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 						}
 					}
 				}
-				sMetaDataPath = aParts.splice(0,1)
+				sMetaDataPath = aParts.splice(0,1);
 				oAnnotation = this._getAnnotationObject(oEntityType, oNode, aParts.join('/'));
 			} else {
 				//handle attributes
@@ -501,7 +510,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 							if (oExtension.name === aAnnotationParts[1] && oExtension.namespace === this.mNamespaces[aAnnotationParts[0]]) {
 								oAnnotation = oExtension.value;
 								break;
-							} 
+							}
 						}
 					}
 				} else { // handle nodes
@@ -514,7 +523,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 							if (oExtension.name === aAnnotationParts[1] && oExtension.namespace === this.mNamespaces[aAnnotationParts[0]]) {
 								oAnnotation = oExtension;
 								break;
-							} 
+							}
 						}
 					}
 				}
@@ -534,8 +543,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 			return;
 		}
 		
-		var sTargetName = oEntityType.namespace ? oEntityType.namespace+"." : "";
-		sTargetName += oEntityType.name+"/"+oObject.name;
+		var sTargetName = oEntityType.namespace ? oEntityType.namespace + "." : "";
+		sTargetName += oEntityType.name + "/" + oObject.name;
 		
 		jQuery.each(this.oMetadata.dataServices.schema, function(i, oSchema) {
 			if (oSchema.annotations) {
@@ -557,13 +566,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 				});
 			});
 		}
-		return oAnnotationNode
-	}
+		return oAnnotationNode;
+	};
 	
 	/**
 	 * splits a name e.g. Namespace.Name into [Name, Namespace]
-	 * @name sap.ui.model.odata.ODataMetadata#_splitName
-	 * @function
 	 */
 	ODataMetadata.prototype._splitName = function(sFullName) {
 		var aParts = [];
@@ -578,8 +585,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	
 	/**
 	*  search metadata for specified collection name (= entity set name)
-	* @name sap.ui.model.odata.ODataMetadata#_getEntityTypeName
-	* @function
 	*/
 	ODataMetadata.prototype._getEntityTypeName = function(sCollection) {
 		var sEntityTypeName;
@@ -605,8 +610,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	
 	/**
 	 * get the object of a specified type name and namespace
-	 * @name sap.ui.model.odata.ODataMetadata#_getObjectMetadata
-	 * @function
 	 */
 	ODataMetadata.prototype._getObjectMetadata = function(sObjectType, sObjectName, sNamespace) {
 		var oObject;
@@ -632,9 +635,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	
 	/**
 	 * Get the the use-batch extension value if any
-	 * @name sap.ui.model.odata.ODataMetadata#getUseBatch;
+	 * @return {boolean} true/false
 	 * @public
-	 * @function
 	 */
 	ODataMetadata.prototype.getUseBatch = function() {
 		var bUseBatch = false;
@@ -661,11 +663,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @param {string} sFunctionName The name of the function import to look up
 	 * @param {string} sMethod The HTTP Method for which this function is requested
-	 * @name sap.ui.model.odata.ODataMetadata#_getFunctionImportMetadata
-	 * @function
 	 */
 	ODataMetadata.prototype._getFunctionImportMetadata = function(sFunctionName, sMethod) {
 		var oObject = null;
+		if (sFunctionName.indexOf("/") > -1) {
+			sFunctionName = sFunctionName.substr(sFunctionName.indexOf("/") + 1);
+		}
 		// search in all schemas for the sObjectName
 		jQuery.each(this.oMetadata.dataServices.schema, function(i, oSchema) {
 			// check if we found the right schema which will contain the sObjectName
@@ -684,20 +687,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 			}
 			return !oObject;
 		});
-	//	jQuery.sap.assert(oObject, "FunctionImport for name " + sFunctionName
-	//			+ " and method " + sMethod + " not found!");
 		return oObject;
 	};
 	
 	
 	ODataMetadata.prototype._getEntityTypeByNavProperty = function(oEntityType, sNavPropertyName) {
 		var that = this, aAssociationName, oAssociation, aEntityTypeName, oNavEntityType;
-	
+		
+		if (!oEntityType.navigationProperty) {
+			return undefined;
+		}
 		jQuery.each(oEntityType.navigationProperty, function(k, oNavigationProperty) {
 			if (oNavigationProperty.name === sNavPropertyName) {
 				// get association for navigation property and then the collection name
 				aAssociationName = that._splitName(oNavigationProperty.relationship);
-			    oAssociation = that._getObjectMetadata("association", aAssociationName[0], aAssociationName[1]);
+				oAssociation = that._getObjectMetadata("association", aAssociationName[0], aAssociationName[1]);
 				if (oAssociation) {
 					var oEnd = oAssociation.end[0];
 					if (oEnd.role !== oNavigationProperty.toRole) {
@@ -718,8 +722,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	
 	/**
 	 * get all navigation property names in an array by the specified entity type
-	 * @name sap.ui.model.odata.ODataMetadata#_getNavigationPropertyNames
-	 * @function
 	 */
 	ODataMetadata.prototype._getNavigationPropertyNames = function(oEntityType) {
 		var aNavProps = [];
@@ -733,20 +735,20 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	
 	/**
 	*  extract the property metadata of a specified property of a entity type out of the metadata document
-	* @name sap.ui.model.odata.ODataMetadata#_getPropertyMetadata
-	* @function
 	*/
 	ODataMetadata.prototype._getPropertyMetadata = function(oEntityType, sProperty) {
 		var oPropertyMetadata, that = this;
 		
-		if (!oEntityType) return;
+		if (!oEntityType) {
+			return;
+		}
 		
 		// remove starting/trailing /
 		sProperty = sProperty.replace(/^\/|\/$/g, "");
 		var aParts = sProperty.split("/"); // path could point to a complex type
 	
 		jQuery.each(oEntityType.property, function(k, oProperty) {
-			if (oProperty.name === aParts[0]){
+			if (oProperty.name === aParts[0]) {
 				oPropertyMetadata = oProperty;
 				return false;
 			}
@@ -780,10 +782,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 			this.oRequestHandle.abort();
 			this.oRequestHandle = null;
 		}
-		if(!!this.oLoadEvent){
+		if (!!this.oLoadEvent) {
 			jQuery.sap.clearDelayedCall(this.oLoadEvent);
 		}
-		if(!!this.oFailedEvent){
+		if (!!this.oFailedEvent) {
 			jQuery.sap.clearDelayedCall(this.oFailedEvent);
 		}
 

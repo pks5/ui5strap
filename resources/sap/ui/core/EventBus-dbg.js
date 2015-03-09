@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -18,11 +18,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *
 	 * @extends sap.ui.base.Object
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @constructor
 	 * @public
 	 * @since 1.8.0
-	 * @name sap.ui.core.EventBus
+	 * @alias sap.ui.core.EventBus
 	 */
 	var EventBus = sap.ui.base.Object.extend("sap.ui.core.EventBus", {
 		
@@ -50,21 +50,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *            [oListener] The object, that wants to be notified, when the event occurs
 	 * @return {sap.ui.core.EventBus} Returns <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.EventBus#subscribe
-	 * @function
 	 */
 	EventBus.prototype.subscribe = function(sChannelId, sEventId, fnFunction, oListener) {
-		if(typeof(sEventId) === "function") {
+		if (typeof (sEventId) === "function") {
 			oListener = fnFunction;
 			fnFunction = sEventId;
 			sEventId = sChannelId;
 			sChannelId = null;
 		}
 		
-		jQuery.sap.assert(!sChannelId || typeof(sChannelId) === "string", "EventBus.subscribe: sChannelId must be empty or a non-empty string");
-		jQuery.sap.assert(typeof(sEventId) === "string" && sEventId, "EventBus.subscribe: sEventId must be a non-empty string");
-		jQuery.sap.assert(typeof(fnFunction) === "function", "EventBus.subscribe: fnFunction must be a function");
-		jQuery.sap.assert(!oListener || typeof(oListener) === "object", "EventBus.subscribe: oListener must be empty or an object");
+		jQuery.sap.assert(!sChannelId || typeof (sChannelId) === "string", "EventBus.subscribe: sChannelId must be empty or a non-empty string");
+		jQuery.sap.assert(typeof (sEventId) === "string" && sEventId, "EventBus.subscribe: sEventId must be a non-empty string");
+		jQuery.sap.assert(typeof (fnFunction) === "function", "EventBus.subscribe: fnFunction must be a function");
+		jQuery.sap.assert(!oListener || typeof (oListener) === "object", "EventBus.subscribe: oListener must be empty or an object");
 		
 		var oChannel = getOrCreateChannel(this, sChannelId);
 		oChannel.attachEvent(sEventId, fnFunction, oListener);
@@ -86,38 +84,36 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 *            [oListener] The object, that wants to be notified, when the event occurs
 	 * @return {sap.ui.core.EventBus} Returns <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.EventBus#unsubscribe
-	 * @function
 	 */
 	EventBus.prototype.unsubscribe = function(sChannelId, sEventId, fnFunction, oListener) {
-		if(typeof(sEventId) === "function") {
+		if (typeof (sEventId) === "function") {
 			oListener = fnFunction;
 			fnFunction = sEventId;
 			sEventId = sChannelId;
 			sChannelId = null;
 		}
 		
-		jQuery.sap.assert(!sChannelId || typeof(sChannelId) === "string", "EventBus.unsubscribe: sChannelId must be empty or a non-empty string");
-		jQuery.sap.assert(typeof(sEventId) === "string" && sEventId, "EventBus.unsubscribe: sEventId must be a non-empty string");
-		jQuery.sap.assert(typeof(fnFunction) === "function", "EventBus.unsubscribe: fnFunction must be a function");
-		jQuery.sap.assert(!oListener || typeof(oListener) === "object", "EventBus.unsubscribe: oListener must be empty or an object");
+		jQuery.sap.assert(!sChannelId || typeof (sChannelId) === "string", "EventBus.unsubscribe: sChannelId must be empty or a non-empty string");
+		jQuery.sap.assert(typeof (sEventId) === "string" && sEventId, "EventBus.unsubscribe: sEventId must be a non-empty string");
+		jQuery.sap.assert(typeof (fnFunction) === "function", "EventBus.unsubscribe: fnFunction must be a function");
+		jQuery.sap.assert(!oListener || typeof (oListener) === "object", "EventBus.unsubscribe: oListener must be empty or an object");
 		
 		var oChannel = getChannel(this, sChannelId);
-		if(!oChannel){
+		if (!oChannel) {
 			return this;
 		}
 		
 		oChannel.detachEvent(sEventId, fnFunction, oListener);
-		if(oChannel != this._defaultChannel){ // Check whether Channel is unused
+		if (oChannel != this._defaultChannel) { // Check whether Channel is unused
 			var mEvents = EventProvider.getEventList(oChannel);
 			var bIsEmpty = true;
-			for(var sId in mEvents){
-				if(oChannel.hasListeners(sId)){
+			for (var sId in mEvents) {
+				if (oChannel.hasListeners(sId)) {
 					bIsEmpty = false;
 					break;
 				}
 			}
-			if(bIsEmpty){
+			if (bIsEmpty) {
 				delete this._mChannels[sChannelId];
 			}
 		}
@@ -138,17 +134,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param {object}
 	 * 			  [oData] the parameter map
 	 * @public
-	 * @name sap.ui.core.EventBus#publish
-	 * @function
 	 */
 	EventBus.prototype.publish = function(sChannelId, sEventId, oData) {
 		
-		if(arguments.length == 1){ //sEventId
+		if (arguments.length == 1) { //sEventId
 			oData = null;
 			sEventId = sChannelId;
 			sChannelId = null;
-		}else if(arguments.length == 2){ //sChannelId + sEventId || sEventId + oData
-			if(typeof(sEventId) != "string") {
+		} else if (arguments.length == 2) { //sChannelId + sEventId || sEventId + oData
+			if (typeof (sEventId) != "string") {
 				oData = sEventId;
 				sEventId = sChannelId;
 				sChannelId = null;
@@ -157,12 +151,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		
 		oData = oData ? oData : {};
 		
-		jQuery.sap.assert(!sChannelId || typeof(sChannelId) === "string", "EventBus.publish: sChannelId must be empty or a non-empty string");
-		jQuery.sap.assert(typeof(sEventId) === "string" && sEventId, "EventBus.publish: sEventId must be a non-empty string");
-		jQuery.sap.assert(typeof(oData) === "object", "EventBus.publish: oData must be an object");
+		jQuery.sap.assert(!sChannelId || typeof (sChannelId) === "string", "EventBus.publish: sChannelId must be empty or a non-empty string");
+		jQuery.sap.assert(typeof (sEventId) === "string" && sEventId, "EventBus.publish: sEventId must be a non-empty string");
+		jQuery.sap.assert(typeof (oData) === "object", "EventBus.publish: oData must be an object");
 		
 		var oChannel = getChannel(this, sChannelId);
-		if(!oChannel){
+		if (!oChannel) {
 			return;
 		}
 		
@@ -182,8 +176,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * @see sap.ui.base.Object#getInterface
 	 * @public
-	 * @name sap.ui.core.EventBus#getInterface
-	 * @function
 	 */
 	EventBus.prototype.getInterface = function() {
 		return this;
@@ -192,12 +184,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * @see sap.ui.base.Object#destroy
 	 * @public
-	 * @name sap.ui.core.EventBus#destroy
-	 * @function
 	 */
 	EventBus.prototype.destroy = function() {
 		this._defaultChannel.destroy();
-		for(var channel in this._mChannels){
+		for (var channel in this._mChannels) {
 			this._mChannels[channel].destroy();
 		}
 		this._mChannels = {};
@@ -206,20 +196,20 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	
 	
 	function getChannel(oEventBus, sChannelId){
-		if(!sChannelId){
+		if (!sChannelId) {
 			return oEventBus._defaultChannel;
 		}
 		return oEventBus._mChannels[sChannelId];
-	};
+	}
 	
 	function getOrCreateChannel(oEventBus, sChannelId){
 		var oChannel = getChannel(oEventBus, sChannelId);
-		if(!oChannel && sChannelId){
+		if (!oChannel && sChannelId) {
 			oEventBus._mChannels[sChannelId] = new EventProvider();
 			oChannel = oEventBus._mChannels[sChannelId];
 		}
 		return oChannel;
-	};
+	}
 	
 	
 	

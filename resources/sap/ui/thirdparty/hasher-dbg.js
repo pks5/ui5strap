@@ -114,7 +114,11 @@ var hasher = (function(window){
                     _frame.contentWindow.frameHash = newHash;
                 }
             }
-            hasher.changed.dispatch(_trimHash(newHash), _trimHash(oldHash));
+            // ##### BEGIN: MODIFIED BY SAP
+            return function () {
+            	hasher.changed.dispatch(_trimHash(newHash), _trimHash(oldHash));
+            }
+            // ##### END: MODIFIED BY SAP
         }
     }
 
@@ -134,7 +138,10 @@ var hasher = (function(window){
                 hasher.setHash(_trimHash(frameHash));
             } else if (windowHash !== _hash){
                 //detect if hash changed (manually or using setHash)
-                _registerChange(windowHash);
+                // ##### BEGIN: MODIFIED BY SAP
+            	var dispatchFunction = _registerChange(windowHash);
+            	dispatchFunction && dispatchFunction();
+                // ##### END: MODIFIED BY SAP
             }
         };
     } else {
@@ -144,7 +151,10 @@ var hasher = (function(window){
         _checkHistory = function(){
             var windowHash = _getWindowHash();
             if(windowHash !== _hash){
-                _registerChange(windowHash);
+            	// ##### BEGIN: MODIFIED BY SAP
+            	var dispatchFunction = _registerChange(windowHash);
+            	dispatchFunction && dispatchFunction();
+                // ##### END: MODIFIED BY SAP
             }
         };
     }
@@ -331,12 +341,11 @@ var hasher = (function(window){
             path = _makePath.apply(null, arguments);
             if(path !== _hash){
                 // we should store raw value
-                _registerChange(path);
-                if (path === _hash) {
-                    // we check if path is still === _hash to avoid error in
-                    // case of multiple consecutive redirects [issue #39]
-                    window.location.hash = '#' + _encodePath(path);
-                }
+            	// ##### BEGIN: MODIFIED BY SAP
+            	var dispatchFunction = _registerChange(path);
+                window.location.hash = '#' + _encodePath(path);
+            	dispatchFunction && dispatchFunction();
+                // ##### END: MODIFIED BY SAP
             }
         },
 
@@ -352,12 +361,11 @@ var hasher = (function(window){
             path = _makePath.apply(null, arguments);
             if(path !== _hash){
                 // we should store raw value
-                _registerChange(path, true);
-                if (path === _hash) {
-                    // we check if path is still === _hash to avoid error in
-                    // case of multiple consecutive redirects [issue #39]
-                    window.location.replace('#' + _encodePath(path));
-                }
+            	// ##### BEGIN: MODIFIED BY SAP
+            	var dispatchFunction = _registerChange(path, true);
+            	window.location.replace('#' + _encodePath(path));
+            	dispatchFunction && dispatchFunction();
+                // ##### END: MODIFIED BY SAP
             }
         },
 

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -14,12 +14,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 	 *
 	 * @class Utility class to handle files
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @static
 	 *
 	 * @public
 	 * @since 1.22.0
-	 * @name sap.ui.core.util.File
+	 * @alias sap.ui.core.util.File
 	 */
 	var File = {
 
@@ -48,8 +48,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 		 * @param {string} sCharset file charset
 		 *
 		 * @public
-		 * @name sap.ui.core.util.File.save
-		 * @function
 		 */
 		save: function(sData, sFileName, sFileExtension, sMimeType, sCharset) {
 			var sFullFileName = sFileName + '.' + sFileExtension;

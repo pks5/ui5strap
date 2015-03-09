@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -34,37 +34,26 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientTreeBinding'],
 	 *         If this parameter is not specified then all found arrays in the data structure are bound.
 	 *         If the tree data structure doesn't contain an array you don't have to specify this parameter. 
 	 * 
-	 * @name sap.ui.model.json.JSONTreeBinding
+	 * @alias sap.ui.model.json.JSONTreeBinding
 	 * @extends sap.ui.model.TreeBinding
 	 */
 	var JSONTreeBinding = ClientTreeBinding.extend("sap.ui.model.json.JSONTreeBinding");
 	
 	/**
-	 * Creates a new subclass of class sap.ui.model.json.JSONTreeBinding with name <code>sClassName</code> 
-	 * and enriches it with the information contained in <code>oClassInfo</code>.
-	 * 
-	 * For a detailed description of <code>oClassInfo</code> or <code>FNMetaImpl</code> 
-	 * see {@link sap.ui.base.Object.extend Object.extend}.
-	 *   
-	 * @param {string} sClassName name of the class to be created
-	 * @param {object} [oClassInfo] object literal with informations about the class  
-	 * @param {function} [FNMetaImpl] alternative constructor for a metadata object
-	 * @return {function} the created class / constructor function
-	 * @public
-	 * @static
-	 * @name sap.ui.model.json.JSONTreeBinding.extend
-	 * @function
-	 */
-	
-	/**
 	 * Return node contexts for the tree
 	 * @param {object} oContext to use for retrieving the node contexts
+	 * @param {integer} iStartIndex the startIndex where to start the retrieval of contexts
+	 * @param {integer} iLength determines how many contexts to retrieve beginning from the start index.
 	 * @return {Array} the contexts array
 	 * @protected
-	 * @name sap.ui.model.json.JSONTreeBinding#getNodeContexts
-	 * @function
 	 */
-	JSONTreeBinding.prototype.getNodeContexts = function(oContext) {
+	JSONTreeBinding.prototype.getNodeContexts = function(oContext, iStartIndex, iLength) {
+		if (!iStartIndex) {
+			iStartIndex = 0;
+		}
+		if (!iLength) {
+			iLength = this.oModel.iSizeLimit;
+		}
 	
 		var sContextPath = oContext.getPath();
 		if (!jQuery.sap.endsWith(sContextPath,"/")) {
@@ -77,7 +66,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientTreeBinding'],
 		var aContexts = [],
 			that = this,
 			oNode = this.oModel._getObject(sContextPath),
-			oChild,
 			aArrayNames = this.mParameters && this.mParameters.arrayNames,
 			aChildArray;
 		
@@ -88,22 +76,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientTreeBinding'],
 					if (aChildArray) {
 						jQuery.each(aChildArray, function(sSubName, oSubChild) {
 							that._saveSubContext(oSubChild, aContexts, sContextPath, sArrayName + "/" + sSubName);
-						})
+						});
 					}
 				});
 			} else {
 				jQuery.sap.each(oNode, function(sName, oChild) {
-					if (jQuery.isArray(oChild)){
+					if (jQuery.isArray(oChild)) {
 						jQuery.each(oChild, function(sSubName, oSubChild) {
 							that._saveSubContext(oSubChild, aContexts, sContextPath, sName + "/" + sSubName);
-						})
+						});
 					} else if (oChild && typeof oChild == "object") {
 						that._saveSubContext(oChild, aContexts, sContextPath, sName);
-					}	
+					}
 				});
 			}
 		}
-		return aContexts;
+		return aContexts.slice(iStartIndex, iStartIndex + iLength);
 	};
 	
 	
@@ -111,7 +99,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/ClientTreeBinding'],
 		if (typeof oNode == "object") {
 			var oNodeContext = this.oModel.getContext(sContextPath + sName);
 			// check if there is a filter on this level applied
-			if (this.aFilters && !this.bIsFiltering){
+			if (this.aFilters && !this.bIsFiltering) {
 				if (jQuery.inArray(oNodeContext, this.filterInfo.aFilteredContexts) != -1) {
 					aContexts.push(oNodeContext);
 				}

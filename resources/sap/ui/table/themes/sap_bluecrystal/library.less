@@ -1,16 +1,17 @@
 /* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
 
-
-/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- * 
- */@import "../base/library.less";
+ */
+
+@import "../base/library.less";
 @import "../../../../../../Base/baseLib/sap_bluecrystal/base.less"; /* ORIGINAL IMPORT PATH: "../../../../../sap/ui/core/themes/sap_bluecrystal/base.less" */
 
-@import (less) "../../../../../sap/ui/core/themes/sap_bluecrystal/global.css";
+@import "../../../../../sap/ui/core/themes/sap_bluecrystal/global.less";
 
-/* START "AnalyticalTable.css" */
+/* START "AnalyticalTable.less" */
 /* ======================================================== */
 /* CSS for control sap.ui.analytics/AnalyticalTable.control */
 /* ======================================================== */
@@ -319,9 +320,9 @@
 .sapUiAnalyticalTable .sapUiTableTr.sapUiAnalyticalTableSum td:last-child {
 	border-right: 1px solid @sapUiMediumBorder;
 }
-/* END "AnalyticalTable.css" */
+/* END "AnalyticalTable.less" */
 
-/* START "Table.css" */
+/* START "Table.less" */
 /*******************************************************************************
  * TABLE PARAMETERS
  ******************************************************************************/
@@ -340,7 +341,7 @@
 .sapUiTable {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
-	color: @sapUiLightText;
+	color: @sapUiStandardText;
 }
 
 /*******************************************************************************
@@ -379,9 +380,11 @@
 	border-bottom: 2px solid transparent;
 	height: 30px;
 }
+
 .sapUiTable > .sapUiTableTbr.sapUiTableMTbr {
 	height: 3rem;
 }
+
 .sapUiSizeCompact .sapUiTable > .sapUiTableTbr.sapUiTableMTbr {
 	height: 2rem;
 }
@@ -407,9 +410,12 @@
 */
 
 .sapUiTableColRowHdr,
-.sapUiTableRowHdr,
 .sapUiTableColHdrCnt {
 	background-color: @sapUiListHeaderBackground;
+}
+
+.sapUiTableRowHdr {
+	background-color: @sapUiLightestBG;
 }
 
 .sapUiSizeCompact .sapUiTableCol,
@@ -421,7 +427,7 @@
 
 .sapUiTableColRowHdr,
 .sapUiTableCol {
-	padding-top: 5px;
+	padding-top: 7px;
 	padding-bottom: 5px;
 }
 
@@ -430,10 +436,11 @@
 }
 
 .sapUiTableCol:hover {
-	background-color: darken(@sapUiLightestBG,3);
+	background-color: contrast(@sapUiLightestBG, darken(@sapUiLightestBG, 6), lighten(@sapUiLightestBG, 6));
 }
+
 .sapUiTableColRowHdr:hover {
-	background-color: darken(@sapUiLightestBG,18);
+	background-color: contrast(@sapUiLightBG, darken(@sapUiLightBG, 6), lighten(@sapUiLightBG, 6));
 }
 
 .sapUiTableSelModeSingle .sapUiTableRowHdr.sapUiTableRowSel,
@@ -443,9 +450,10 @@
 }
 
 .sapUiTableRowHdr.sapUiTableRowHvr {
-	background-color: darken(@sapUiLightestBG,18);
 	border-right-color: darken(@sapUiLightestBG,18);
+	background-color: contrast(@sapUiLightBG, darken(@sapUiLightBG, 6), lighten(@sapUiLightBG, 6));
 }
+
 .sapUiTableSelModeSingle .sapUiTableRowHdr.sapUiTableRowSel.sapUiTableRowHvr,
 .sapUiTableSelModeMulti .sapUiTableRowHdr.sapUiTableRowSel.sapUiTableRowHvr {
 	background-color: darken(@sapUiActiveBG,18);
@@ -453,7 +461,7 @@
 }
 
 .sapUiTableColHdrCnt {
-	border-bottom: 1px solid @sapUiLightBorder;
+	border-bottom: 1px solid @sapUiMediumBorder;
 }
 
 .sapUiTableColHdr:not(:first-of-type) .sapUiTableCol {
@@ -461,8 +469,8 @@
 }
 
 .sapUiTableColRowHdr,
-.sapUiTableRowHdr {
-	border-right: 1px solid @sapUiLightBorder;
+.sapUiTableColHdr .sapUiTableCol,.sapUiTableColHdr .sapUiTableTr>td {
+	border-right: 1px solid @sapUiMediumBorder;
 }
 
 .sapUiTableRowHdr,
@@ -473,15 +481,16 @@
 
 .sapUiTableRowHdr {
 	border-bottom: 1px solid @sapUiLightBorder;
+	border-right: 1px solid @sapUiLightBorder;
 	position: relative;
 }
 
 .sapUiSizeCompact .sapUiTableRowHdr {
-	border-bottom: 1px solid #dddddd;
+	border-bottom: 1px solid @sapUiLightBorder;
 }
 
 .sapUiTableTr > td {
-	border-bottom: 1px solid @sapUiLightBorder;
+	border-bottom: 1px solid @sapUiExtraLightBorder;
 }
 
 .sapUiTableCtrl.sapUiTableCtrlRowFixed tr:last-child > td {
@@ -536,28 +545,23 @@ div.sapUiTableRowHdr.sapUiTableFixedBottomRow {
 /* Table Row Selected[+Hover] */
 .sapUiTableCtrl tr.sapUiTableRowSel.sapUiTableRowHvr>td {
 	/* data cells of row */
-	background-color: darken(@sapUiActiveBG, 3);
+	background-color: @sapUiActiveBGHover;
 }
 
 .sapUiTableRowHdr.sapUiTableRowSel.sapUiTableRowHvr {
 	/* row-select-button of row */
-	background-color: darken(@sapUiActiveBG, 3) !important;
+	background-color: @sapUiActiveBGHover !important;
 	border-right-color: @sapUiLightBorder;
 }
 
 /* Table Row (only) Hover */
 .sapUiTableCtrl tr.sapUiTableRowHvr>td { /* data cells of row */
-	background-color: darken(@sapUiLightestBG, 3);
-}
-
-.sapUiTableRowHdr.sapUiTableRowHvr { /* row-select-button of row */
-	background-color: darken(@sapUiLightBG, 3) !important;
-	border-right-color: @sapUiLightBorder;
+	background-color: contrast(@sapUiLightestBG, darken(@sapUiLightestBG, 6), lighten(@sapUiLightestBG, 6)) !important;
 }
 
 .sapUiTableCtrl tr.sapUiTableRowHvr,
 .sapUiTableCtrl tr.sapUiTableRowHvr .sapUiTableColHdrCnt {
-	background-color: darken(@sapUiLightestBG,3);
+	background-color: contrast(@sapUiLightestBG, darken(@sapUiLightestBG, 6), lighten(@sapUiLightestBG, 6)) !important;
 }
 
 .sapUiTableCtrl tr.sapUiTableRowSel > td {
@@ -565,7 +569,7 @@ div.sapUiTableRowHdr.sapUiTableFixedBottomRow {
 }
 
 .sapUiTableCtrl tr.sapUiTableRowSel.sapUiTableRowHvr > td {
-	background-color: darken(@sapUiActiveBG,3);
+	background-color: @sapUiActiveBGHover;
 }
 
 /* support for left border in RowOnly selection behavior */
@@ -612,7 +616,7 @@ div.sapUiTableRowHdr.sapUiTableFixedBottomRow {
 }
 
 .sapUiSizeCompact .sapUiTableSelModeMultiToggle .sapUiTableColRowHdr.sapUiTableSelAllEnabled::after {
-	margin-top: 5px;
+	margin-top: 7px;
 }
 
 .sapUiSizeCompact .sapUiTableSelModeMultiToggle .sapUiTableRowHdr:hover:after {
@@ -643,6 +647,11 @@ div.sapUiTableRowHdr.sapUiTableFixedBottomRow {
 
 .sapUiTableCell {
 	padding: 0 10px;
+}
+
+.sapUiSizeCondensed .sapUiTableCellControlPadding {
+	padding-left:0.5rem;
+	padding-right:0.5rem;
 }
 
 .sapUiTable>div.sapUiTableCnt {
@@ -689,8 +698,8 @@ div.sapUiTableRowHdr.sapUiTableFixedBottomRow {
 }
 
 .sapUiTableCol:hover,.sapUiTableColRowHdr:hover {
-	background-color: darken(@sapUiLightestBG, 3);
-	color: @sapUiLightText;
+	background-color: contrast(@sapUiLightBG, darken(@sapUiLightBG, 6), lighten(@sapUiLightBG, 6));
+	color: @sapUiStandardText;
 }
 
 .sapUiSizeCompact .sapUiTableCol:hover,
@@ -727,7 +736,7 @@ tr.sapUiTableRowHvr .sapUiLnk:hover,
 .sapUiTableCol:hover .sapUiLnk,
 .sapUiTableCol:hover .sapUiLnk:visited,
 .sapUiTableCol:hover .sapUiLnk:hover {
-	color: @sapUiLightText;
+	color: @sapUiStandardText;
 }
 
 .sapUiTableColCell {
@@ -738,18 +747,17 @@ tr.sapUiTableRowHvr .sapUiLnk:hover,
 	padding: 0 8px;
 }
 
-.sapUiTableColCell>.sapUiLbl {
-	font-weight: bold;
-	font-size: 13px;
-	color: @sapUiLightText;
-}
-
 .sapUiSizeCompact .sapUiTableColCell > .sapUiLbl,
 .sapUiSizeCompact .sapUiTableColCell>.sapMLabel,
-.sapUiSizeCompact .sapUiTableCell>.sapMLabel {
+.sapUiSizeCompact .sapUiTableCell>.sapMLabel,
+.sapUiTableColCell>.sapUiLbl {
 	font-weight: normal;
 	font-size: 14px;
 	color: @sapUiStandardText;
+}
+
+.sapUiTableTr > td:focus {
+	outline: 1px dotted @sapUiFocus;
 }
 
 .sapUiTableRSel .sapUiTableColHdrScr,
@@ -832,7 +840,7 @@ tr.sapUiTableRowHvr .sapUiLnk:hover,
 .sapUiSizeCompact .sapUiTableRowHdr.sapUiTableGroupHeader.sapUiTableRowHvr,
 .sapUiSizeCompact .sapUiTableRowHdr.sapUiTableRowHvr .sapUiTableGroupIcon,
 .sapUiSizeCompact .sapUiTableCtrl .sapUiTableRowHvr > td {
-	background-color: darken(lighten(@sapUiLightBG, 7%), 3%) !important;
+	background-color: contrast(@sapUiLightestBG, darken(@sapUiLightestBG, 6), lighten(@sapUiLightestBG, 6)) !important;
 }
 
 .sapUiTableHSb,
@@ -855,5 +863,5 @@ tr.sapUiTableRowHvr .sapUiLnk:hover,
 	font-size: @sapUiFontSize;
 }
 
-/* END "Table.css" */
+/* END "Table.less" */
 

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -41,9 +41,9 @@ sap.ui.define(['jquery.sap.global', './Object'],
 	 *
 	 * @extends sap.ui.base.Object
 	 * @author Malte Wedel
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @constructor
-	 * @name sap.ui.base.ObjectPool
+	 * @alias sap.ui.base.ObjectPool
 	 * @public
 	 */
 	var ObjectPool = BaseObject.extend("sap.ui.base.ObjectPool", /** @lends sap.ui.base.ObjectPool.prototype */ {
@@ -66,8 +66,6 @@ sap.ui.define(['jquery.sap.global', './Object'],
 	 * @param {any} [any] optional initialization parameters for the borrowed object
 	 * @return {object} the borrowed object of the same type that has been specified for this pool
 	 * @public
-	 * @name sap.ui.base.ObjectPool#borrowObject
-	 * @function
 	 */
 	ObjectPool.prototype.borrowObject = function() {
 	
@@ -88,8 +86,6 @@ sap.ui.define(['jquery.sap.global', './Object'],
 	 *
 	 * @param {object} oObject the object to return to the pool
 	 * @public
-	 * @name sap.ui.base.ObjectPool#returnObject
-	 * @function
 	 */
 	ObjectPool.prototype.returnObject = function(oObject) {
 	

@@ -1,538 +1,15 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-/* ----------------------------------------------------------------------------------
- * Hint: This is a derived (generated) file. Changes should be done in the underlying 
- * source files only (*.control, *.js) or they will be lost after the next generation.
- * ---------------------------------------------------------------------------------- */
-
 // Provides control sap.ui.core.mvc.View.
-sap.ui.define(['sap/ui/core/library','sap/ui/core/Control'], function() {
+sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', 'sap/ui/core/Control', 'sap/ui/core/ExtensionPoint', 'sap/ui/core/library'],
+	function(jQuery, ManagedObject, Control, ExtensionPoint, library) {
 	"use strict";
 
 
-/**
- * Constructor for a new mvc/View.
- * 
- * Accepts an object literal <code>mSettings</code> that defines initial 
- * property values, aggregated and associated objects as well as event handlers. 
- * 
- * If the name of a setting is ambiguous (e.g. a property has the same name as an event), 
- * then the framework assumes property, aggregation, association, event in that order. 
- * To override this automatic resolution, one of the prefixes "aggregation:", "association:" 
- * or "event:" can be added to the name of the setting (such a prefixed name must be
- * enclosed in single or double quotes).
- *
- * The supported settings are:
- * <ul>
- * <li>Properties
- * <ul>
- * <li>{@link #getWidth width} : sap.ui.core.CSSSize (default: '100%')</li>
- * <li>{@link #getHeight height} : sap.ui.core.CSSSize</li>
- * <li>{@link #getViewName viewName} : string</li>
- * <li>{@link #getDisplayBlock displayBlock} : boolean (default: false)</li></ul>
- * </li>
- * <li>Aggregations
- * <ul>
- * <li>{@link #getContent content} : sap.ui.core.Control[]</li></ul>
- * </li>
- * <li>Associations
- * <ul></ul>
- * </li>
- * <li>Events
- * <ul>
- * <li>{@link sap.ui.core.mvc.View#event:afterInit afterInit} : fnListenerFunction or [fnListenerFunction, oListenerObject] or [oData, fnListenerFunction, oListenerObject]</li>
- * <li>{@link sap.ui.core.mvc.View#event:beforeExit beforeExit} : fnListenerFunction or [fnListenerFunction, oListenerObject] or [oData, fnListenerFunction, oListenerObject]</li>
- * <li>{@link sap.ui.core.mvc.View#event:afterRendering afterRendering} : fnListenerFunction or [fnListenerFunction, oListenerObject] or [oData, fnListenerFunction, oListenerObject]</li>
- * <li>{@link sap.ui.core.mvc.View#event:beforeRendering beforeRendering} : fnListenerFunction or [fnListenerFunction, oListenerObject] or [oData, fnListenerFunction, oListenerObject]</li></ul>
- * </li>
- * </ul> 
-
- *
- * @param {string} [sId] id for the new control, generated automatically if no id is given 
- * @param {object} [mSettings] initial settings for the new control
- *
- * @class
- * View
- * @extends sap.ui.core.Control
- * @version 1.24.3
- *
- * @constructor
- * @public
- * @name sap.ui.core.mvc.View
- * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
- */
-sap.ui.core.Control.extend("sap.ui.core.mvc.View", { metadata : {
-
-	publicMethods : [
-		// methods
-		"getController"
-	],
-	library : "sap.ui.core",
-	properties : {
-		"width" : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : '100%'},
-		"height" : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : null},
-		"viewName" : {type : "string", group : "Misc", defaultValue : null},
-		"displayBlock" : {type : "boolean", group : "Appearance", defaultValue : false}
-	},
-	aggregations : {
-		"content" : {type : "sap.ui.core.Control", multiple : true, singularName : "content"}
-	},
-	events : {
-		"afterInit" : {}, 
-		"beforeExit" : {}, 
-		"afterRendering" : {}, 
-		"beforeRendering" : {}
-	}
-}});
-
-
-/**
- * Creates a new subclass of class sap.ui.core.mvc.View with name <code>sClassName</code> 
- * and enriches it with the information contained in <code>oClassInfo</code>.
- * 
- * <code>oClassInfo</code> might contain the same kind of informations as described in {@link sap.ui.core.Element.extend Element.extend}.
- *   
- * @param {string} sClassName name of the class to be created
- * @param {object} [oClassInfo] object literal with informations about the class  
- * @param {function} [FNMetaImpl] constructor function for the metadata object. If not given, it defaults to sap.ui.core.ElementMetadata.
- * @return {function} the created class / constructor function
- * @public
- * @static
- * @name sap.ui.core.mvc.View.extend
- * @function
- */
-
-sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExit','afterRendering':'afterRendering','beforeRendering':'beforeRendering'};
-
-
-/**
- * Getter for property <code>width</code>.
- * The width
- *
- * Default value is <code>100%</code>
- *
- * @return {sap.ui.core.CSSSize} the value of property <code>width</code>
- * @public
- * @name sap.ui.core.mvc.View#getWidth
- * @function
- */
-
-/**
- * Setter for property <code>width</code>.
- *
- * Default value is <code>100%</code> 
- *
- * @param {sap.ui.core.CSSSize} sWidth  new value for property <code>width</code>
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#setWidth
- * @function
- */
-
-
-/**
- * Getter for property <code>height</code>.
- * The height
- *
- * Default value is empty/<code>undefined</code>
- *
- * @return {sap.ui.core.CSSSize} the value of property <code>height</code>
- * @public
- * @name sap.ui.core.mvc.View#getHeight
- * @function
- */
-
-/**
- * Setter for property <code>height</code>.
- *
- * Default value is empty/<code>undefined</code> 
- *
- * @param {sap.ui.core.CSSSize} sHeight  new value for property <code>height</code>
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#setHeight
- * @function
- */
-
-
-/**
- * Getter for property <code>viewName</code>.
- * Name of the View
- *
- * Default value is empty/<code>undefined</code>
- *
- * @return {string} the value of property <code>viewName</code>
- * @public
- * @name sap.ui.core.mvc.View#getViewName
- * @function
- */
-
-/**
- * Setter for property <code>viewName</code>.
- *
- * Default value is empty/<code>undefined</code> 
- *
- * @param {string} sViewName  new value for property <code>viewName</code>
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#setViewName
- * @function
- */
-
-
-/**
- * Getter for property <code>displayBlock</code>.
- * Whether the CSS display should be set to "block".
- * Set this to "true" if the default display "inline-block" causes a vertical scrollbar with Views that are set to 100% height.
- * Do not set this to "true" if you want to display other content in the same HTML parent on either side of the View (setting to "true" may push that other content to the next/previous line).
- *
- * Default value is <code>false</code>
- *
- * @return {boolean} the value of property <code>displayBlock</code>
- * @public
- * @name sap.ui.core.mvc.View#getDisplayBlock
- * @function
- */
-
-/**
- * Setter for property <code>displayBlock</code>.
- *
- * Default value is <code>false</code> 
- *
- * @param {boolean} bDisplayBlock  new value for property <code>displayBlock</code>
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#setDisplayBlock
- * @function
- */
-
-
-/**
- * Getter for aggregation <code>content</code>.<br/>
- * Child Controls of the view
- * 
- * @return {sap.ui.core.Control[]}
- * @public
- * @name sap.ui.core.mvc.View#getContent
- * @function
- */
-
-
-/**
- * Inserts a content into the aggregation named <code>content</code>.
- *
- * @param {sap.ui.core.Control}
- *          oContent the content to insert; if empty, nothing is inserted
- * @param {int}
- *             iIndex the <code>0</code>-based index the content should be inserted at; for 
- *             a negative value of <code>iIndex</code>, the content is inserted at position 0; for a value 
- *             greater than the current size of the aggregation, the content is inserted at 
- *             the last position        
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#insertContent
- * @function
- */
-
-/**
- * Adds some content <code>oContent</code> 
- * to the aggregation named <code>content</code>.
- *
- * @param {sap.ui.core.Control}
- *            oContent the content to add; if empty, nothing is inserted
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#addContent
- * @function
- */
-
-/**
- * Removes an content from the aggregation named <code>content</code>.
- *
- * @param {int | string | sap.ui.core.Control} vContent the content to remove or its index or id
- * @return {sap.ui.core.Control} the removed content or null
- * @public
- * @name sap.ui.core.mvc.View#removeContent
- * @function
- */
-
-/**
- * Removes all the controls in the aggregation named <code>content</code>.<br/>
- * Additionally unregisters them from the hosting UIArea.
- * @return {sap.ui.core.Control[]} an array of the removed elements (might be empty)
- * @public
- * @name sap.ui.core.mvc.View#removeAllContent
- * @function
- */
-
-/**
- * Checks for the provided <code>sap.ui.core.Control</code> in the aggregation named <code>content</code> 
- * and returns its index if found or -1 otherwise.
- *
- * @param {sap.ui.core.Control}
- *            oContent the content whose index is looked for.
- * @return {int} the index of the provided control in the aggregation if found, or -1 otherwise
- * @public
- * @name sap.ui.core.mvc.View#indexOfContent
- * @function
- */
-	
-
-/**
- * Destroys all the content in the aggregation 
- * named <code>content</code>.
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#destroyContent
- * @function
- */
-
-
-/**
- * Fired when the View has parsed the UI description and instantiated the contained controls (/control tree).
- *
- * @name sap.ui.core.mvc.View#afterInit
- * @event
- * @param {sap.ui.base.Event} oControlEvent
- * @param {sap.ui.base.EventProvider} oControlEvent.getSource
- * @param {object} oControlEvent.getParameters
- * @public
- */
- 
-/**
- * Attach event handler <code>fnFunction</code> to the 'afterInit' event of this <code>sap.ui.core.mvc.View</code>.<br/>.
- * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener<code> if specified
- * otherwise to this <code>sap.ui.core.mvc.View</code>.<br/> itself. 
- *  
- * Fired when the View has parsed the UI description and instantiated the contained controls (/control tree).
- *
- * @param {object}
- *            [oData] An application specific payload object, that will be passed to the event handler along with the event object when firing the event.
- * @param {function}
- *            fnFunction The function to call, when the event occurs.  
- * @param {object}
- *            [oListener] Context object to call the event handler with. Defaults to this <code>sap.ui.core.mvc.View</code>.<br/> itself.
- *
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#attachAfterInit
- * @function
- */
-
-/**
- * Detach event handler <code>fnFunction</code> from the 'afterInit' event of this <code>sap.ui.core.mvc.View</code>.<br/>
- *
- * The passed function and listener object must match the ones used for event registration.
- *
- * @param {function}
- *            fnFunction The function to call, when the event occurs.
- * @param {object}
- *            oListener Context object on which the given function had to be called.
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#detachAfterInit
- * @function
- */
-
-/**
- * Fire event afterInit to attached listeners.
- *
- * @param {Map} [mArguments] the arguments to pass along with the event.
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @protected
- * @name sap.ui.core.mvc.View#fireAfterInit
- * @function
- */
-
-
-/**
- * Fired when the view has received the request to destroy itself, but before it has destroyed anything.
- *
- * @name sap.ui.core.mvc.View#beforeExit
- * @event
- * @param {sap.ui.base.Event} oControlEvent
- * @param {sap.ui.base.EventProvider} oControlEvent.getSource
- * @param {object} oControlEvent.getParameters
- * @public
- */
- 
-/**
- * Attach event handler <code>fnFunction</code> to the 'beforeExit' event of this <code>sap.ui.core.mvc.View</code>.<br/>.
- * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener<code> if specified
- * otherwise to this <code>sap.ui.core.mvc.View</code>.<br/> itself. 
- *  
- * Fired when the view has received the request to destroy itself, but before it has destroyed anything.
- *
- * @param {object}
- *            [oData] An application specific payload object, that will be passed to the event handler along with the event object when firing the event.
- * @param {function}
- *            fnFunction The function to call, when the event occurs.  
- * @param {object}
- *            [oListener] Context object to call the event handler with. Defaults to this <code>sap.ui.core.mvc.View</code>.<br/> itself.
- *
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#attachBeforeExit
- * @function
- */
-
-/**
- * Detach event handler <code>fnFunction</code> from the 'beforeExit' event of this <code>sap.ui.core.mvc.View</code>.<br/>
- *
- * The passed function and listener object must match the ones used for event registration.
- *
- * @param {function}
- *            fnFunction The function to call, when the event occurs.
- * @param {object}
- *            oListener Context object on which the given function had to be called.
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#detachBeforeExit
- * @function
- */
-
-/**
- * Fire event beforeExit to attached listeners.
- *
- * @param {Map} [mArguments] the arguments to pass along with the event.
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @protected
- * @name sap.ui.core.mvc.View#fireBeforeExit
- * @function
- */
-
-
-/**
- * Fired when the View has been (re-)rendered and its HTML is present in the DOM.
- *
- * @name sap.ui.core.mvc.View#afterRendering
- * @event
- * @param {sap.ui.base.Event} oControlEvent
- * @param {sap.ui.base.EventProvider} oControlEvent.getSource
- * @param {object} oControlEvent.getParameters
- * @public
- */
- 
-/**
- * Attach event handler <code>fnFunction</code> to the 'afterRendering' event of this <code>sap.ui.core.mvc.View</code>.<br/>.
- * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener<code> if specified
- * otherwise to this <code>sap.ui.core.mvc.View</code>.<br/> itself. 
- *  
- * Fired when the View has been (re-)rendered and its HTML is present in the DOM.
- *
- * @param {object}
- *            [oData] An application specific payload object, that will be passed to the event handler along with the event object when firing the event.
- * @param {function}
- *            fnFunction The function to call, when the event occurs.  
- * @param {object}
- *            [oListener] Context object to call the event handler with. Defaults to this <code>sap.ui.core.mvc.View</code>.<br/> itself.
- *
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#attachAfterRendering
- * @function
- */
-
-/**
- * Detach event handler <code>fnFunction</code> from the 'afterRendering' event of this <code>sap.ui.core.mvc.View</code>.<br/>
- *
- * The passed function and listener object must match the ones used for event registration.
- *
- * @param {function}
- *            fnFunction The function to call, when the event occurs.
- * @param {object}
- *            oListener Context object on which the given function had to be called.
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#detachAfterRendering
- * @function
- */
-
-/**
- * Fire event afterRendering to attached listeners.
- *
- * @param {Map} [mArguments] the arguments to pass along with the event.
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @protected
- * @name sap.ui.core.mvc.View#fireAfterRendering
- * @function
- */
-
-
-/**
- * Fired before this View is re-rendered. Use to unbind event handlers from HTML elements etc.
- *
- * @name sap.ui.core.mvc.View#beforeRendering
- * @event
- * @param {sap.ui.base.Event} oControlEvent
- * @param {sap.ui.base.EventProvider} oControlEvent.getSource
- * @param {object} oControlEvent.getParameters
- * @public
- */
- 
-/**
- * Attach event handler <code>fnFunction</code> to the 'beforeRendering' event of this <code>sap.ui.core.mvc.View</code>.<br/>.
- * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener<code> if specified
- * otherwise to this <code>sap.ui.core.mvc.View</code>.<br/> itself. 
- *  
- * Fired before this View is re-rendered. Use to unbind event handlers from HTML elements etc.
- *
- * @param {object}
- *            [oData] An application specific payload object, that will be passed to the event handler along with the event object when firing the event.
- * @param {function}
- *            fnFunction The function to call, when the event occurs.  
- * @param {object}
- *            [oListener] Context object to call the event handler with. Defaults to this <code>sap.ui.core.mvc.View</code>.<br/> itself.
- *
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#attachBeforeRendering
- * @function
- */
-
-/**
- * Detach event handler <code>fnFunction</code> from the 'beforeRendering' event of this <code>sap.ui.core.mvc.View</code>.<br/>
- *
- * The passed function and listener object must match the ones used for event registration.
- *
- * @param {function}
- *            fnFunction The function to call, when the event occurs.
- * @param {object}
- *            oListener Context object on which the given function had to be called.
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @public
- * @name sap.ui.core.mvc.View#detachBeforeRendering
- * @function
- */
-
-/**
- * Fire event beforeRendering to attached listeners.
- *
- * @param {Map} [mArguments] the arguments to pass along with the event.
- * @return {sap.ui.core.mvc.View} <code>this</code> to allow method chaining
- * @protected
- * @name sap.ui.core.mvc.View#fireBeforeRendering
- * @function
- */
-
-
-/**
- * Returns the view's Controller instance (if any)
- *
- * @name sap.ui.core.mvc.View#getController
- * @function
- * @type object
- * @public
- * @ui5-metamodel This method also will be described in the UI5 (legacy) designtime metamodel
- */
-
-
-// Start of sap/ui/core/mvc/View.js
-(function() {
 	/**
 	 * @namespace
 	 * @name sap.ui.core.mvc
@@ -540,11 +17,89 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 	 */
 
 	/**
+	 * Constructor for a new View.
+	 *
+	 * @param {string} [sId] id for the new control, generated automatically if no id is given 
+	 * @param {object} [mSettings] initial settings for the new control
+	 *
+	 * @class A base class for Views. 
+	 * 
+	 * Introduces the relationship to a Controller, some basic visual appearance settings like width and height 
+	 * and provides lifecycle events. 
+	 *  
+	 * @extends sap.ui.core.Control
+	 * @version 1.26.7
+	 *
+	 * @constructor
+	 * @public
+	 * @alias sap.ui.core.mvc.View
+	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
+	 */
+	var View = Control.extend("sap.ui.core.mvc.View", /** @lends sap.ui.core.mvc.View.prototype */ { metadata : {
+	
+		library : "sap.ui.core",
+		properties : {
+	
+			/**
+			 * The width
+			 */
+			width : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : '100%'},
+	
+			/**
+			 * The height
+			 */
+			height : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : null},
+	
+			/**
+			 * Name of the View
+			 */
+			viewName : {type : "string", group : "Misc", defaultValue : null},
+	
+			/**
+			 * Whether the CSS display should be set to "block".
+			 * Set this to "true" if the default display "inline-block" causes a vertical scrollbar with Views that are set to 100% height.
+			 * Do not set this to "true" if you want to display other content in the same HTML parent on either side of the View (setting to "true" may push that other content to the next/previous line).
+			 */
+			displayBlock : {type : "boolean", group : "Appearance", defaultValue : false}
+		},
+		aggregations : {
+	
+			/**
+			 * Child Controls of the view
+			 */
+			content : {type : "sap.ui.core.Control", multiple : true, singularName : "content"}
+		},
+		events : {
+	
+			/**
+			 * Fired when the View has parsed the UI description and instantiated the contained controls (/control tree).
+			 */
+			afterInit : {},
+	
+			/**
+			 * Fired when the view has received the request to destroy itself, but before it has destroyed anything.
+			 */
+			beforeExit : {},
+	
+			/**
+			 * Fired when the View has been (re-)rendered and its HTML is present in the DOM.
+			 */
+			afterRendering : {},
+	
+			/**
+			 * Fired before this View is re-rendered. Use to unbind event handlers from HTML elements etc.
+			 */
+			beforeRendering : {}
+		}
+	}});
+	
+	
+	/**
 	 * initialize the View and connect (create if no instance is given) the Controller
 	 *
 	 * @private
 	 */
-	sap.ui.core.mvc.View.prototype._initCompositeSupport = function(mSettings) {
+	View.prototype._initCompositeSupport = function(mSettings) {
 
 		// init View with constructor settings
 		// (e.g. parse XML or identify default controller)
@@ -553,6 +108,23 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 		this.oViewData = mSettings.viewData;
 		// remember the name of this View
 		this.sViewName = mSettings.viewName;
+		
+		//check if there are custom properties configured for this view, and only if there are, create a settings preprocessor applying these
+		if (sap.ui.core.CustomizingConfiguration && sap.ui.core.CustomizingConfiguration.hasCustomProperties(this.sViewName, this)) {
+			var that = this;
+			this._fnSettingsPreprocessor = function(mSettings) {
+				var sId = this.getId();
+				if (sap.ui.core.CustomizingConfiguration && sId) {
+					if (that.isPrefixedId(sId)) {
+						sId = sId.substring((that.getId() + "--").length);
+					}
+					var mCustomSettings = sap.ui.core.CustomizingConfiguration.getCustomProperties(that.sViewName, sId, that);
+					if (mCustomSettings) {
+						mSettings = jQuery.extend(mSettings, mCustomSettings); // override original property initialization with customized property values
+					}
+				}
+			};
+		}
 
 		if (this.initViewSettings) {
 			this.initViewSettings(mSettings);
@@ -571,23 +143,24 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 	};
 
 	/**
-	 * may return null for controller-less View
+	 * Returns the view's Controller instance or null for a controller-less View.
 	 *
-	 * @return Controller of the View
+	 * @return {object} Controller of this view.
 	 * @public
+	 * @ui5-metamodel This method also will be described in the UI5 (legacy) designtime metamodel
 	 */
-	sap.ui.core.mvc.View.prototype.getController = function() {
+	View.prototype.getController = function() {
 		return this.oController;
 	};
 
 	/**
-	 * Returns an Element by its id in the context of the View
+	 * Returns an Element by its id in the context of the View.
 	 *
 	 * @param {string} sId view local Id of the Element
-	 * @return Element by its id
+	 * @return {sap.ui.core.Element} Element by its id or undefined 
 	 * @public
 	 */
-	sap.ui.core.mvc.View.prototype.byId = function(sId) {
+	View.prototype.byId = function(sId) {
 		return sap.ui.getCore().byId(this.createId(sId));
 	};
 
@@ -596,10 +169,10 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 	 * by prefixing it with the view Id.
 	 *
 	 * @param {string} sId view local Id of the Element
-	 * @return prefixed id
+	 * @return {string} prefixed id
 	 * @public
 	 */
-	sap.ui.core.mvc.View.prototype.createId = function(sId) {
+	View.prototype.createId = function(sId) {
 		if (!this.isPrefixedId(sId)) {
 			// views have 2 dashes as separator, components 3 and controls/elements 1
 			sId = this.getId() + "--" + sId;
@@ -611,54 +184,41 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 	 * Checks whether the given ID is already prefixed with this View's ID
 	 *
 	 * @param {string} potentially prefixed id
-	 * @return whether the ID is already prefixed
+	 * @return {boolean} whether the ID is already prefixed
 	 */
-	sap.ui.core.mvc.View.prototype.isPrefixedId = function(sId) {
-		return (sId && sId.indexOf(this.getId() + "--") === 0);
+	View.prototype.isPrefixedId = function(sId) {
+		return !!(sId && sId.indexOf(this.getId() + "--") === 0);
 	};
 
 	/**
-	 * creates and connects the controller if the controller is not given in the
+	 * Creates and connects the controller if the controller is not given in the
 	 * mSettings
 	 *
 	 * @private
 	 */
-	var createAndConnectController = function(oThis, mSettings) {
+	 function createAndConnectController(oThis, mSettings) {
+		if (!sap.ui.getCore().getConfiguration().getControllerCodeDeactivated()) {
+			// only set when used internally
+			var oController = mSettings.controller;
 
-		// only set when used internally
-		var oController = mSettings.controller;
-
-		// check for default controller
-		if (!oController && oThis.getControllerName) {
-			// get optional default controller name
-			var defaultController = oThis.getControllerName();
-			if (defaultController) {
-				// create controller
-				oController = sap.ui.controller(defaultController);
-			}
-		}
-
-		if (sap.ui.getCore().getConfiguration().getDesignMode() &&
-			!sap.ui.getCore().getConfiguration().getSuppressDeactivationOfControllerCode ()) {
-			// Stub all controller methods in design mode
-			for (var sMethod in oController) {
-				if (typeof oController[sMethod] === "function"
-					// Do not stub abstract controller class methods as they are used internally.
-					// Do not use oController.hasOwnProperty(sMethod),
-					// as there could be a base class of the controller and we want only skip the methods of abstract controller
-					&& !sap.ui.core.mvc.Controller.prototype[sMethod])
-				{
-					oController[sMethod] = function() {};
+			if (!oController && oThis.getControllerName) {
+				// get optional default controller name
+				var defaultController = oThis.getControllerName();
+				if (defaultController) {
+					// create controller
+					oController = sap.ui.controller(defaultController);
 				}
 			}
-		}
 
-		if ( oController ) {
-			oThis.oController = oController;
-			// connect controller
-			oController.connectToView(oThis);
+			if ( oController ) {
+				oThis.oController = oController;
+				// connect controller
+				oController.connectToView(oThis);
+			}
+		} else {
+			oThis.oController = {};
 		}
-	};
+	}
 
 	/**
 	 * Returns user specific data object
@@ -666,7 +226,7 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 	 * @return object viewData
 	 * @public
 	 */
-	sap.ui.core.mvc.View.prototype.getViewData = function(){
+	View.prototype.getViewData = function(){
 		return this.oViewData;
 	};
 
@@ -675,7 +235,7 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 	 *
 	 * @private
 	 */
-	sap.ui.core.mvc.View.prototype.exit = function() {
+	View.prototype.exit = function() {
 		this.fireBeforeExit();
 		this.oController = null;
 	};
@@ -685,7 +245,7 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 	 *
 	 * @private
 	 */
-	sap.ui.core.mvc.View.prototype.onAfterRendering = function() {
+	View.prototype.onAfterRendering = function() {
 		this.fireAfterRendering();
 	};
 
@@ -694,7 +254,7 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 	 *
 	 * @private
 	 */
-	sap.ui.core.mvc.View.prototype.onBeforeRendering = function() {
+	View.prototype.onBeforeRendering = function() {
 		this.fireBeforeRendering();
 	};
 
@@ -709,19 +269,32 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 	 * @return {sap.ui.core.Element} reference to the newly created clone
 	 * @protected
 	 */
-	sap.ui.core.mvc.View.prototype.clone = function(sIdSuffix, aLocalIds) {
+	View.prototype.clone = function(sIdSuffix, aLocalIds) {
 		var mSettings = {}, sKey, oClone;
 		//Clone properties (only those with non-default value)
-		for(sKey in this.mProperties  && !(this.isBound && this.isBound(sKey))) {
+		for (sKey in this.mProperties  && !(this.isBound && this.isBound(sKey))) {
 			if ( this.mProperties.hasOwnProperty(sKey) ) {
 				mSettings[sKey] = this.mProperties[sKey];
 			}
 		}
-		oClone = sap.ui.core.Control.prototype.clone.call(this, sIdSuffix, aLocalIds, {cloneChildren:false, cloneBindings: true});
+		oClone = Control.prototype.clone.call(this, sIdSuffix, aLocalIds, {cloneChildren:false, cloneBindings: true});
 		oClone.applySettings(mSettings);
 		return oClone;
 	};
-	
+
+
+	/**
+	 * An (optional) method to be implemented by Views.
+	 * When no controller instance is given at View instantiation time AND this method exists and returns the (package and class) name of a controller,
+	 * the View tries to load and instantiate the controller and to connect it to itself.
+	 * 
+	 * @return {string} the name of the controller
+	 * @public
+	 * @name sap.ui.core.mvc.View#getControllerName
+	 * @function
+	 */
+
+
 	/**
 	 * Creates a view of the given type, name and with the given id.
 	 *
@@ -778,7 +351,7 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 		
 		// view replacement
 		if (sap.ui.core.CustomizingConfiguration) {
-			var customViewConfig = sap.ui.core.CustomizingConfiguration.getViewReplacement(oView.viewName);
+			var customViewConfig = sap.ui.core.CustomizingConfiguration.getViewReplacement(oView.viewName, ManagedObject._sOwnerId);
 			if (customViewConfig) {
 				jQuery.sap.log.info("Customizing: View replacement for view '" + oView.viewName + "' found and applied: " + customViewConfig.viewName + " (type: " + customViewConfig.type + ")");
 				jQuery.extend(oView, customViewConfig);
@@ -801,26 +374,78 @@ sap.ui.core.mvc.View.M_EVENTS = {'afterInit':'afterInit','beforeExit':'beforeExi
 		} else if (oView.type === sap.ui.core.mvc.ViewType.Template) {
 			view = new sap.ui.core.mvc.TemplateView(oView);
 		} else { // unknown view type
-			throw new Error("Unknown view type "+oView.type+" specified.");
+			throw new Error("Unknown view type " + oView.type + " specified.");
 		}
+
 		return view;
 	};
 
-	
+
 	/**
-	 * An (optional) method to be implemented by Views.
-	 * When no controller instance is given at View instantiation time AND this method exists and returns the (package and class) name of a controller,
-	 * the View tries to load and instantiate the controller and to connect it to itself.
+	 * Helper method to resolve an event handler either locally (from a controller) or globally.
 	 * 
-	 * @return {string} the name of the controller
-	 * @public
-	 * @name sap.ui.core.mvc.View#getControllerName
-	 * @function
+	 * Which contexts are checked for the event handler depends on the syntax of the name: 
+	 * <ul>
+	 * <li><i>relative</i>: names starting with a dot ('.') must specify a handler in 
+	 *     the controller (example: <code>".myLocalHandler"</code>)</li>
+	 * <li><i>absolute</i>: names that contain, but do not start with a dot ('.') are 
+	 *     always assumed to mean a global handler function. {@link jQuery.sap.getObject}
+	 *     will be used to retrieve the function (example: <code>"some.global.handler"</code> )</li>
+	 * <li><i>legacy</i>: Names that contain no dot at all are first interpreted as a relative name 
+	 *     and then - if nothing is found - as an absolute name. This variant is only supported 
+	 *     for backward compatibility (example: <code>"myHandler"</code>)</li>
+	 * </ul>
+	 *
+	 * The returned settings will always use the given <code>oController</code> as context object ('this')
+	 * This should allow the implementation of generic global handlers that might need an easy back link 
+	 * to the controller/view in which they are currently used (e.g. to call createId/byId). It also makes 
+	 * the development of global event handlers more consistent with controller local event handlers.
+	 * 
+	 * <strong>Note</strong>: It is not mandatory but improves readability of declarative views when 
+	 * legacy names are converted to relative names where appropriate.
+	 * 
+	 * @param {string} sName the name to resolve
+	 * @param {sap.ui.core.mvc.Controller} oController the controller to use as context
+	 * @return {any[]} an array with function and context object, suitable for applySettings.
+	 * @private
 	 */
+	View._resolveEventHandler = function(sName, oController) {
 
+		var fnHandler;
 
-}());
+		if (!sap.ui.getCore().getConfiguration().getControllerCodeDeactivated()) {
+			switch (sName.indexOf('.')) {
+				case 0:
+					// starts with a dot, must be a controller local handler
+					fnHandler = oController && oController[sName.slice(1)];
+					break;
+				case -1:
+					// no dot at all: first check for a controller local, then for a global handler
+					fnHandler = oController && oController[sName];
+					if ( fnHandler != null ) {
+						// if the name can be resolved, don't try to find a global handler (even if it is not a function) 
+						break;
+					}
+					// falls through 
+				default:
+					fnHandler = jQuery.sap.getObject(sName);
+			}
+		} else {
+			// When design mode is enabled, controller code is not loaded. That is why we stub the handler functions.
+			fnHandler = function() {};
+		}
 
-	return sap.ui.core.mvc.View;
+		if ( typeof fnHandler === "function" ) {
+			// the handler name is set as property on the function to keep this information
+			// e.g. for serializers which convert a control tree back to a declarative format
+			fnHandler._sapui_handlerName = sName;
+			// always attach the handler with the controller as context ('this')
+			return [ fnHandler, oController ];
+		}
 
-}, /* bExport = */ true);
+		// return undefined
+	};
+	
+	return View;
+
+}, /* bExport= */ true);

@@ -1,31 +1,37 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-jQuery.sap.declare("sap.m.ToolbarSpacerRenderer");
-jQuery.sap.require("sap.ui.core.Renderer");
+sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
+	function(jQuery, Renderer) {
+	"use strict";
 
-/**
- * @class ToolbarSpacer renderer.
- * @static
- */
-sap.m.ToolbarSpacerRenderer = {};
 
-sap.m.ToolbarSpacerRenderer.render = function(rm, oControl) {
-	rm.write("<div");
-	rm.writeControlData(oControl);
-	rm.addClass("sapMTBSpacer");
+	/**
+	 * ToolbarSpacer renderer.
+	 * @namespace
+	 */
+	var ToolbarSpacerRenderer = {};
+	
+	ToolbarSpacerRenderer.render = function(rm, oControl) {
+		rm.write("<div");
+		rm.writeControlData(oControl);
+		rm.addClass("sapMTBSpacer");
+	
+		var sWidth = oControl.getWidth();
+		if (sWidth) {
+			rm.addStyle("width", sWidth);
+		} else {
+			rm.addClass(sap.m.ToolbarSpacer.flexClass);
+		}
+	
+		rm.writeStyles();
+		rm.writeClasses();
+		rm.write("></div>");
+	};
 
-	var sWidth = oControl.getWidth();
-	if (sWidth) {
-		rm.addStyle("width", oControl.getWidth());
-	} else {
-		rm.addClass(sap.m.ToolbarSpacer.flexClass);
-	}
+	return ToolbarSpacerRenderer;
 
-	rm.writeStyles();
-	rm.writeClasses();
-	rm.write("></div>");
-};
+}, /* bExport= */ true);

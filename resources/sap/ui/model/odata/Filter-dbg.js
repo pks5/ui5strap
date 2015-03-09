@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Filter', 'sap/ui/model/FilterO
 	 * @param {object[]} aValues Array of FilterOperators and their values: [{operator:"GE",value1:"val1"},{operator:"LE",value1:"val1"},{operator:"BT",value1:"val1",value2:"val2"}]
 	 * @param {boolean} [bAND=true] If true the values from aValues will be ANDed; otherwise ORed
 	 * @public
-	 * @name sap.ui.model.odata.Filter
+	 * @alias sap.ui.model.odata.Filter
 	 * @deprecated Since 1.22. Please use the sap.ui.model.Filter instead (@link: sap.ui.model.Filter).
 	 */
 	var ODataFilter = sap.ui.base.Object.extend("sap.ui.model.odata.Filter", /** @lends sap.ui.model.odata.Filter.prototype */ {

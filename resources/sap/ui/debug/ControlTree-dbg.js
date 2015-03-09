@@ -1,11 +1,11 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 // Provides a tree of controls for the testsuite
-sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
+sap.ui.define('sap/ui/debug/ControlTree', ['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	function(jQuery, EventProvider) {
 	"use strict";
 
@@ -27,8 +27,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @class Control Tree used for the Debug Environment
 	 * @extends sap.ui.base.EventProvider
 	 * @author Martin Schaus, Frank Weigel
-	 * @version 1.24.3
-	 * @name sap.ui.debug.ControlTree
+	 * @version 1.26.7
+	 * @alias sap.ui.debug.ControlTree
 	 * @private
 	 */
 	var ControlTree = EventProvider.extend("sap.ui.debug.ControlTree", /** @lends sap.ui.debug.ControlTree.prototype */ {
@@ -71,8 +71,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#exit
-	 * @function
 	 */
 	ControlTree.prototype.exit = function() {
 		jQuery(document).unbind();
@@ -82,8 +80,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#renderDelayed
-	 * @function
 	 */
 	ControlTree.prototype.renderDelayed = function() {
 		if (this.oTimer) {
@@ -95,8 +91,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#render
-	 * @function
 	 */
 	ControlTree.prototype.render = function() {
 		var oDomRef = this.oParentDomRef;
@@ -109,7 +103,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 			oDomRef.appendChild(oDomNode);
 	
 			var aRootControls = oUIArea.getContent();
-			for(var i = 0, l = aRootControls.length; i < l; i++){
+			for (var i = 0, l = aRootControls.length; i < l; i++) {
 				this.renderNode(oDomRef,aRootControls[i],1);
 			}
 		}
@@ -118,14 +112,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#createTreeNodeDomRef
-	 * @function
 	 */
 	ControlTree.prototype.createTreeNodeDomRef = function(sId,iLevel,sType,sIcon) {
 		var oDomNode = this.oParentDomRef.ownerDocument.createElement("DIV");
 		oDomNode.setAttribute("id","sap-debug-controltree-" + sId);
-		var sShortType = sType.substring(sType.lastIndexOf(".")>-1?sType.lastIndexOf(".")+1:0);
-		oDomNode.innerHTML = "<img style='height:12px;width:12px;display:none' src='" + this.sSpaceUrl + "' align='absmiddle'/><img style='height:16px;width:16px' src='" + sIcon + "' align='absmiddle'/>&nbsp;<span>" + sShortType + " - " + sId+"</span>";
+		var sShortType = sType.substring(sType.lastIndexOf(".") >  -1 ? sType.lastIndexOf(".") + 1 : 0);
+		oDomNode.innerHTML = "<img style='height:12px;width:12px;display:none' src='" + this.sSpaceUrl + "' align='absmiddle'/><img style='height:16px;width:16px' src='" + sIcon + "' align='absmiddle'/>&nbsp;<span>" + sShortType + " - " + sId + "</span>";
 		oDomNode.style.overflow = "hidden";
 		oDomNode.style.whiteSpace = "nowrap";
 		oDomNode.style.textOverflow = "ellipsis";
@@ -143,14 +135,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#createLinkNode
-	 * @function
 	 */
 	ControlTree.prototype.createLinkNode = function(oParentRef, sId, iLevel, sType) {
 		var oDomNode = this.oParentDomRef.ownerDocument.createElement("DIV");
 		oDomNode.setAttribute("id","sap-debug-controltreelink-" + sId);
-		var sShortType = sType ? sType.substring(sType.lastIndexOf(".")>-1?sType.lastIndexOf(".")+1:0) : "";
-		oDomNode.innerHTML = "<img style='height:12px;width:12px;display:none' src='" + this.sSpaceUrl + "' align='absmiddle'/><img style='height:12px;width:12px' src='" + this.sLinkUrl + "' align='absmiddle'/>&nbsp;<span style='color:#888;border-bottom:1px dotted #888;'>" + (sShortType ? sShortType + " - " : "") + sId+"</span>";
+		var sShortType = sType ? sType.substring(sType.lastIndexOf(".") >  -1 ? sType.lastIndexOf(".") + 1 : 0) : "";
+		oDomNode.innerHTML = "<img style='height:12px;width:12px;display:none' src='" + this.sSpaceUrl + "' align='absmiddle'/><img style='height:12px;width:12px' src='" + this.sLinkUrl + "' align='absmiddle'/>&nbsp;<span style='color:#888;border-bottom:1px dotted #888;'>" + (sShortType ? sShortType + " - " : "") + sId + "</span>";
 		oDomNode.style.overflow = "hidden";
 		oDomNode.style.whiteSpace = "nowrap";
 		oDomNode.style.textOverflow = "ellipsis";
@@ -169,8 +159,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#renderNode
-	 * @function
 	 */
 	ControlTree.prototype.renderNode = function(oDomRef,oControl,iLevel) {
 		if (!oControl) {
@@ -178,7 +166,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		}
 	
 		var oMetadata = oControl.getMetadata();
-		var sIcon = this.sTestResourcePath + oMetadata.getLibraryName().replace(/\./g, "/") + "/images/controls/"+oMetadata.getName()+".gif";
+		var sIcon = this.sTestResourcePath + oMetadata.getLibraryName().replace(/\./g, "/") + "/images/controls/" + oMetadata.getName() + ".gif";
 		var oDomNode = this.createTreeNodeDomRef(oControl.getId(),iLevel,oMetadata.getName(),sIcon);
 		oDomRef.appendChild(oDomNode);
 		var bRequiresExpanding = false;
@@ -187,14 +175,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 				bRequiresExpanding = true;
 				var oAggregation = oControl.mAggregations[n];
 				if (oAggregation && oAggregation.length) {
-					for (var i=0;i<oAggregation.length;i++) {
+					for (var i = 0;i < oAggregation.length;i++) {
 						var o = oAggregation[i];
 						if (o  instanceof sap.ui.core.Element) {
-							this.renderNode(oDomRef,oAggregation[i],iLevel+1);
+							this.renderNode(oDomRef,oAggregation[i],iLevel + 1);
 						}
 					}
 				} else if (oAggregation instanceof sap.ui.core.Element) {
-					this.renderNode(oDomRef,oAggregation,iLevel+1);
+					this.renderNode(oDomRef,oAggregation,iLevel + 1);
 				}
 			}
 		}
@@ -203,21 +191,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 				bRequiresExpanding = true;
 				var oAssociation = oControl.mAssociations[n];
 				if (jQuery.isArray(oAssociation)) {
-					for (var i=0;i<oAssociation.length;i++) {
+					for (var i = 0;i < oAssociation.length;i++) {
 						var o = oAssociation[i];
 						if (typeof o === "string") {
-							this.createLinkNode(oDomRef, o, iLevel+1);
+							this.createLinkNode(oDomRef, o, iLevel + 1);
 						}
 					}
 				} else if (typeof oAssociation === "string") {
-					this.createLinkNode(oDomRef, oAssociation, iLevel+1);
+					this.createLinkNode(oDomRef, oAssociation, iLevel + 1);
 				}
 			}
 		}
 		if ( bRequiresExpanding ) {
 			var oExpandImage = oDomNode.getElementsByTagName("IMG")[0];
-			oExpandImage.src=this.sMinusUrl;
-			oExpandImage.style.display="";
+			oExpandImage.src = this.sMinusUrl;
+			oExpandImage.style.display = "";
 		}
 	
 	};
@@ -225,8 +213,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#onclick
-	 * @function
 	 */
 	ControlTree.prototype.onclick = function(oEvent) {
 		var oSource = oEvent.target;
@@ -268,7 +254,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 				oParent.setAttribute("sap-expanded","true");
 			}
 	
-		} else if (oSource.getAttribute("sap-type") == "UIArea") {
+		//} else if (oSource.getAttribute("sap-type") == "UIArea") {
 	
 		} else {
 			if (oSource.tagName != "SPAN") {
@@ -291,12 +277,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#onmouseover
-	 * @function
 	 */
 	ControlTree.prototype.onmouseover = function(oEvent) {
 		var oSource = oEvent.target;
-		if (oSource.tagName=="SPAN") {
+		if (oSource.tagName == "SPAN") {
 			this.oHoverHighlighter.highlight(this.getTargetDomRef(oSource.parentNode));
 		}
 	};
@@ -304,12 +288,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#onmouseout
-	 * @function
 	 */
 	ControlTree.prototype.onmouseout = function(oEvent) {
 		var oSource = oEvent.target;
-		if (oSource.tagName=="SPAN") {
+		if (oSource.tagName == "SPAN") {
 			if ( this.getTargetDomRef(oSource.parentNode) ) {
 				this.oHoverHighlighter.hide();
 			}
@@ -319,8 +301,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#selectNode
-	 * @function
 	 */
 	ControlTree.prototype.selectNode = function(sId) {
 		if (!sId) {
@@ -343,8 +323,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.ControlTree#deselectNode
-	 * @function
 	 */
 	ControlTree.prototype.deselectNode = function(sId) {
 		if (!sId) {
@@ -368,8 +346,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @param oTreeNodeDomRef the tree node to start the search for
 	 * @return {Element} best matching source DOM node
 	 * @private
-	 * @name sap.ui.debug.ControlTree#getTargetDomRef
-	 * @function
 	 */
 	ControlTree.prototype.getTargetDomRef = function(oTreeNodeDomRef) {
 		var sType = oTreeNodeDomRef.getAttribute("sap-type"),
@@ -392,12 +368,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	/**
 	 * Enables an 'onhover' handler in the content window that allows to see control borders.
 	 * @private
-	 * @name sap.ui.debug.ControlTree#enableInplaceControlSelection
-	 * @function
 	 */
 	ControlTree.prototype.enableInplaceControlSelection = function() {
 		var that = this;
-		jQuery(document).bind("mouseover" , function (oEvt) { that.selectControlInTree(oEvt); });
+		jQuery(document).bind("mouseover" , function (oEvt) {
+			that.selectControlInTree(oEvt);
+		});
 	};
 	
 	ControlTree.prototype.selectControlInTree = function( oEvt ) {

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -20,11 +20,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 	 * @extends sap.ui.base.Object
 	 *
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 *
 	 * @constructor
 	 * @public
-	 * @name sap.ui.model.Type
+	 * @alias sap.ui.model.Type
 	 */
 	var Type = BaseObject.extend("sap.ui.model.Type", /** @lends sap.ui.model.Type.prototype */ {
 		
@@ -36,29 +36,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		metadata : {
 			"abstract" : true,
 			publicMethods : [
-		    // methods
-		    "getName"
+			// methods
+			"getName"
 		  ]
 		}
 		
 	});
-	
-	/**
-	 * Creates a new subclass of class sap.ui.model.Type with name <code>sClassName</code> 
-	 * and enriches it with the information contained in <code>oClassInfo</code>.
-	 * 
-	 * For a detailed description of <code>oClassInfo</code> or <code>FNMetaImpl</code> 
-	 * see {@link sap.ui.base.Object.extend Object.extend}.
-	 *   
-	 * @param {string} sClassName name of the class to be created
-	 * @param {object} [oClassInfo] object literal with informations about the class  
-	 * @param {function} [FNMetaImpl] alternative constructor for a metadata object
-	 * @return {function} the created class / constructor function
-	 * @public
-	 * @static
-	 * @name sap.ui.model.Type.extend
-	 * @function
-	 */
 	
 	
 	/**
@@ -66,8 +49,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 	 *
 	 * @return {String} the name of this type
 	 * @public
-	 * @name sap.ui.model.Type#getName
-	 * @function
 	 */
 	Type.prototype.getName = function() {
 		return this.sName;

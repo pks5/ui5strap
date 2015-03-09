@@ -3,143 +3,137 @@
     {
       "name" : "sap/ui/table/AnalyticalColumn.js",
       "description" : "Provides control sap.ui.table.AnalyticalColumn.",
-      "size" : 14374,
-      "compressedSize" : 5108,
-      "required" : ["sap/ui/table/library.js", "sap/ui/table/Column.js", "jquery.sap.global.js"],
+      "size" : 8741,
+      "compressedSize" : 4384,
+      "required" : ["jquery.sap.global.js", "sap/ui/table/Column.js", "sap/ui/table/library.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/AnalyticalColumnMenu.js",
       "description" : "Provides control sap.ui.table.AnalyticalColumnMenu.",
-      "size" : 5886,
-      "compressedSize" : 2209,
-      "required" : ["sap/ui/table/library.js", "sap/ui/table/ColumnMenu.js", "jquery.sap.global.js"],
+      "size" : 3801,
+      "compressedSize" : 1893,
+      "required" : ["jquery.sap.global.js", "sap/ui/table/ColumnMenu.js", "sap/ui/table/library.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/AnalyticalColumnMenuRenderer.js",
-      "description" : "! SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5) (c) Copyright 2009-2014 SAP SE or an SAP affiliate company.  Licensed under the Apache License, Version 2.0 - see LICENSE.txt.",
-      "size" : 524,
-      "compressedSize" : 469,
-      "required" : ["sap/ui/core/Renderer.js", "sap/ui/table/ColumnMenuRenderer.js", "jquery.sap.global.js"],
+      "description" : "! SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5) (c) Copyright 2009-2015 SAP SE or an SAP affiliate company. Licensed under the Apache License, Version 2.0 - see LICENSE.txt.",
+      "size" : 543,
+      "compressedSize" : 343,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/Renderer.js", "sap/ui/table/ColumnMenuRenderer.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/AnalyticalTable.js",
       "description" : "Provides control sap.ui.table.AnalyticalTable.",
-      "size" : 38544,
-      "compressedSize" : 20430,
-      "required" : ["sap/ui/table/library.js", "sap/ui/table/Table.js", "sap/ui/model/analytics/TreeBindingAdapter.js", "sap/ui/table/AnalyticalColumn.js", "jquery.sap.global.js"],
+      "size" : 34372,
+      "compressedSize" : 18789,
+      "required" : ["jquery.sap.global.js", "sap/ui/model/analytics/TreeBindingAdapter.js", "sap/ui/table/AnalyticalColumn.js", "sap/ui/table/Table.js", "sap/ui/table/library.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/AnalyticalTableRenderer.js",
-      "description" : "! SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5) (c) Copyright 2009-2014 SAP SE or an SAP affiliate company.  Licensed under the Apache License, Version 2.0 - see LICENSE.txt.",
-      "size" : 505,
-      "compressedSize" : 449,
-      "required" : ["sap/ui/core/Renderer.js", "sap/ui/table/TableRenderer.js", "jquery.sap.global.js"],
+      "description" : "! SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5) (c) Copyright 2009-2015 SAP SE or an SAP affiliate company. Licensed under the Apache License, Version 2.0 - see LICENSE.txt.",
+      "size" : 519,
+      "compressedSize" : 338,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/Renderer.js", "sap/ui/table/TableRenderer.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/Column.js",
       "description" : "Provides control sap.ui.table.Column.",
-      "size" : 47468,
-      "compressedSize" : 12506,
-      "required" : ["sap/ui/table/library.js", "sap/ui/core/Element.js", "sap/ui/core/RenderManager.js", "sap/ui/model/Type.js", "sap/ui/model/Filter.js", "sap/ui/model/Sorter.js", "sap/ui/model/type/String.js", "jquery.sap.global.js"],
+      "size" : 26998,
+      "compressedSize" : 11412,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/Element.js", "sap/ui/core/RenderManager.js", "sap/ui/model/Filter.js", "sap/ui/model/Sorter.js", "sap/ui/model/Type.js", "sap/ui/model/type/String.js", "sap/ui/table/library.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/ColumnMenu.js",
       "description" : "Provides control sap.ui.table.ColumnMenu.",
-      "size" : 14412,
-      "compressedSize" : 6365,
-      "required" : ["sap/ui/table/library.js", "sap/ui/unified/Menu.js", "sap/ui/core/RenderManager.js", "sap/ui/unified/MenuItem.js", "jquery.sap.global.js"],
+      "size" : 13051,
+      "compressedSize" : 5955,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/RenderManager.js", "sap/ui/table/library.js", "sap/ui/unified/Menu.js", "sap/ui/unified/MenuItem.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/ColumnMenuRenderer.js",
       "description" : "Provides default renderer for control sap.ui.table.ColumnMenuRenderer",
-      "size" : 591,
-      "compressedSize" : 441,
-      "required" : ["sap/ui/core/Renderer.js", "sap/ui/unified/MenuRenderer.js", "jquery.sap.global.js"],
+      "size" : 613,
+      "compressedSize" : 350,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/Renderer.js", "sap/ui/unified/MenuRenderer.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/DataTable.js",
       "description" : "Provides control sap.ui.table.DataTable.",
-      "size" : 11220,
-      "compressedSize" : 2058,
-      "required" : ["sap/ui/table/library.js", "sap/ui/table/TreeTable.js", "jquery.sap.global.js"],
+      "size" : 4291,
+      "compressedSize" : 1845,
+      "required" : ["jquery.sap.global.js", "sap/ui/table/TreeTable.js", "sap/ui/table/library.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/DataTableRenderer.js",
       "description" : "Provides default renderer for control sap.ui.table.DataTable",
-      "size" : 556,
-      "compressedSize" : 445,
-      "required" : ["sap/ui/core/Renderer.js", "sap/ui/table/TreeTableRenderer.js", "jquery.sap.global.js"],
+      "size" : 575,
+      "compressedSize" : 342,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/Renderer.js", "sap/ui/table/TreeTableRenderer.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/Row.js",
       "description" : "Provides control sap.ui.table.Row.",
-      "size" : 6369,
-      "compressedSize" : 705,
-      "required" : ["sap/ui/table/library.js", "sap/ui/core/Element.js", "jquery.sap.global.js"],
+      "size" : 1638,
+      "compressedSize" : 631,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/Element.js", "sap/ui/table/library.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/Table.js",
       "description" : "Provides control sap.ui.table.Table.",
-      "size" : 219363,
-      "compressedSize" : 74330,
-      "required" : ["sap/ui/table/library.js", "sap/ui/core/Control.js", "sap/ui/model/SelectionModel.js", "sap/ui/core/delegate/ItemNavigation.js", "sap/ui/core/theming/Parameters.js", "sap/ui/core/ScrollBar.js", "sap/ui/core/IntervalTrigger.js", "sap/ui/table/Row.js", "jquery.sap.global.js"],
+      "size" : 170804,
+      "compressedSize" : 78288,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/Control.js", "sap/ui/core/IntervalTrigger.js", "sap/ui/core/ScrollBar.js", "sap/ui/core/delegate/ItemNavigation.js", "sap/ui/core/theming/Parameters.js", "sap/ui/model/SelectionModel.js", "sap/ui/table/Row.js", "sap/ui/table/library.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/TablePersoController.js",
       "description" : "Provides TablePersoController",
-      "size" : 17356,
-      "compressedSize" : 7057,
-      "required" : ["sap/ui/base/ManagedObject.js", "jquery.sap.global.js"],
+      "size" : 13309,
+      "compressedSize" : 6392,
+      "required" : ["jquery.sap.global.js", "sap/ui/base/ManagedObject.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/TableRenderer.js",
       "description" : "Provides default renderer for control sap.ui.table.Table",
-      "size" : 29319,
-      "compressedSize" : 18811,
+      "size" : 30076,
+      "compressedSize" : 18332,
       "required" : ["jquery.sap.global.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/TreeTable.js",
       "description" : "Provides control sap.ui.table.TreeTable.",
-      "size" : 24840,
-      "compressedSize" : 9751,
-      "required" : ["sap/ui/table/library.js", "sap/ui/table/Table.js", "jquery.sap.global.js"],
+      "size" : 17822,
+      "compressedSize" : 9090,
+      "required" : ["jquery.sap.global.js", "sap/ui/table/Table.js", "sap/ui/table/library.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/TreeTableRenderer.js",
       "description" : "Provides default renderer for control sap.ui.table.TreeTable",
-      "size" : 955,
-      "compressedSize" : 750,
-      "required" : ["sap/ui/core/Renderer.js", "sap/ui/table/TableRenderer.js", "jquery.sap.global.js"],
+      "size" : 970,
+      "compressedSize" : 620,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/Renderer.js", "sap/ui/table/TableRenderer.js"],
       "includes" : []
     },
     {
       "name" : "sap/ui/table/library.js",
-      "description" : "Initialization Code and shared classes of library sap.ui.table (1.24.3)",
-      "size" : 9120,
-      "compressedSize" : 2072,
-      "required" : ["sap/ui/core/Core.js", "sap/ui/core/library.js", "sap/ui/unified/library.js", "jquery.sap.global.js"],
-      "includes" : ["sap/ui/table/NavigationMode.js", "sap/ui/table/SelectionBehavior.js", "sap/ui/table/SelectionMode.js", "sap/ui/table/SortOrder.js", "sap/ui/table/VisibleRowCountMode.js"]
-    },
-    {
-      "name" : "sap/ui/table/library.properties",
-      "size" : 950,
-      "required" : [],
+      "description" : "Initialization Code and shared classes of library sap.ui.table.",
+      "size" : 5228,
+      "compressedSize" : 1780,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/library.js", "sap/ui/unified/library.js"],
       "includes" : []
     },
     {
@@ -193,6 +187,18 @@
     {
       "name" : "sap/ui/table/messagebundle_en.properties",
       "size" : 3438,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/table/messagebundle_en_US_sappsd.properties",
+      "size" : 6686,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/table/messagebundle_en_US_saptrc.properties",
+      "size" : 4312,
       "required" : [],
       "includes" : []
     },
@@ -306,7 +312,7 @@
     },
     {
       "name" : "sap/ui/table/messagebundle_ru.properties",
-      "size" : 7458,
+      "size" : 7446,
       "required" : [],
       "includes" : []
     },

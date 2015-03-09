@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -18,9 +18,9 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @class
 	 * @author Frank Weigel
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 0.8.6
-	 * @name sap.ui.base.ManagedObjectMetadata
+	 * @alias sap.ui.base.ManagedObjectMetadata
 	 */
 	var ManagedObjectMetadata = function(sClassName, oClassInfo) {
 	
@@ -32,10 +32,26 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	//chain the prototypes
 	ManagedObjectMetadata.prototype = jQuery.sap.newObject(Metadata.prototype);
 	
+	var rPlural = /(children|ies|ves|oes|ses|ches|shes|xes|s)$/i;
+	var mSingular = {'children' : -3, 'ies' : 'y', 'ves' : 'f', 'oes' : -2, 'ses' : -2, 'ches' : -2, 'shes' : -2, 'xes' : -2, 's' : -1 };
+
+	/**
+	 * Guess a singular name for a given plural name.
+	 * 
+	 * This method is not guaranteed to return a valid result. If the result is not satisfying, 
+	 * the singular name for an aggregation/association should be specified in the class metadata.
+	 * 
+	 * @private
+	 */
+	ManagedObjectMetadata._guessSingularName = function(sName) {
+		return sName.replace(rPlural, function($,sPlural) {
+			var vRepl = mSingular[sPlural.toLowerCase()];
+			return typeof vRepl === "string" ? vRepl : sPlural.slice(0,vRepl);
+		});
+	};
+	
 	/**
 	 * @private
-	 * @name sap.ui.base.ManagedObjectMetadata#applySettings
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.applySettings = function(oClassInfo) {
 	
@@ -43,13 +59,10 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	
 		Metadata.prototype.applySettings.call(this, oClassInfo);
 	
-		var rPlural = /(children|ies|ves|oes|ses|ches|shes|xes|s)$/i;
-		var mSingular = {'children' : -3, 'ies' : 'y', 'ves' : 'f', 'oes' : -2, 'ses' : -2, 'ches' : -2, 'shes' : -2, 'xes' : -2, 's' : -1 };
-	
 		function normalize(mInfoMap, sDefaultName, oDefaultValues) {
 			var sName,oInfo;
 			mInfoMap = mInfoMap || {};
-			for(sName in mInfoMap) {
+			for (sName in mInfoMap) {
 				oInfo = mInfoMap[sName];
 				// if settings are not an object literal and if there is a default setting, set it
 				if ( sDefaultName && typeof oInfo !== "object" ) {
@@ -60,10 +73,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 				oInfo.name = sName;
 				// if info contains a multiple flag but no singular name, calculate one
 				if ( oInfo.multiple === true && !oInfo.singularName) {
-					oInfo.singularName = sName.replace(rPlural, function($,sPlural) {
-						var vRepl = mSingular[sPlural.toLowerCase()];
-						return typeof vRepl === "string" ? vRepl : sPlural.slice(0,vRepl);
-					});
+					oInfo.singularName = ManagedObjectMetadata._guessSingularName(sName);
 				}
 				mInfoMap[sName] = oInfo;
 			}
@@ -71,8 +81,8 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		}
 	
 		function filter(mInfoMap, bPublic) {
-			var mResult={},sName;
-			for(sName in mInfoMap) {
+			var mResult = {},sName;
+			for (sName in mInfoMap) {
 				if ( bPublic === (mInfoMap[sName].visibility === 'public') ) {
 					mResult[sName] = mInfoMap[sName];
 				}
@@ -107,8 +117,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	
 	/**
 	 * @private
-	 * @name sap.ui.base.ManagedObjectMetadata#afterApplySettings
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.afterApplySettings = function() {
 	
@@ -146,8 +154,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * Returns the name of the library that contains the described UIElement.
 	 * @return {string} the name of the library
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getLibraryName
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getLibraryName = function() {
 		return this._sLibraryName;
@@ -157,8 +163,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * Returns whether the class/control is abstract
 	 * @return {boolean} whether the class/control is abstract
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#isAbstract
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.isAbstract = function() {
 		return this._bAbstract;
@@ -175,13 +179,11 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * @param {object} oInfo metadata for the property
 	 * @public
 	 * @see sap.ui.core.EnabledPropagator
-	 * @name sap.ui.base.ManagedObjectMetadata#addProperty
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.addProperty = function(sName, oInfo) {
 		oInfo.name = sName;
 		this._mProperties[sName] = oInfo;
-		if(!this._mAllProperties[sName]) {// ensure extended AllProperties meta-data is also enriched
+		if (!this._mAllProperties[sName]) {// ensure extended AllProperties meta-data is also enriched
 			this._mAllProperties[sName] = oInfo;
 		}
 	
@@ -196,8 +198,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * @param {string} sName name of the property
 	 * @return {boolean} true, if the property exists
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#hasProperty
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.hasProperty = function(sName) {
 		return !!this._mAllProperties[sName];
@@ -212,8 +212,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of property infos keyed by property names
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getProperties
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getProperties = function() {
 		return this._mProperties;
@@ -227,8 +225,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of property infos keyed by property names
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getAllProperties
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getAllProperties = function() {
 		return this._mAllProperties;
@@ -245,8 +241,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of aggregation infos keyed by aggregation names
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getAggregations
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getAggregations = function() {
 		return this._mAggregations;
@@ -257,8 +251,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * @param {string} sName name of the aggregation
 	 * @return {boolean} true, if the aggregation exists
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#hasAggregation
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.hasAggregation = function(sName) {
 		return !!this._mAllAggregations[sName];
@@ -274,8 +266,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of aggregation infos keyed by aggregation names
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getAllAggregations
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getAllAggregations = function() {
 		return this._mAllAggregations;
@@ -291,8 +281,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of aggregation infos keyed by aggregation names
 	 * @protected
-	 * @name sap.ui.base.ManagedObjectMetadata#getAllPrivateAggregations
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getAllPrivateAggregations = function() {
 		return this._mAllPrivateAggregations;
@@ -305,11 +293,9 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * @param {string} sAggregationName name of the aggregation to be retrieved 
 	 * @return {object} aggregation info or null
 	 * @protected
-	 * @name sap.ui.base.ManagedObjectMetadata#getManagedAggregation
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getManagedAggregation = function(sAggregationName) {
-		return this._mAllAggregations[sAggregationName] || this._mAllPrivateAggregations[sAggregationName] 
+		return this._mAllAggregations[sAggregationName] || this._mAllPrivateAggregations[sAggregationName];
 	};
 	
 	/**
@@ -319,8 +305,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * hierarchy defines a default aggregation, null is returned.
 	 *
 	 * @return {string} Name of the default aggregation for this class
-	 * @name sap.ui.base.ManagedObjectMetadata#getDefaultAggregationName
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getDefaultAggregationName = function() {
 		return this._sDefaultAggregation;
@@ -332,8 +316,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * default aggregation of the parent is returned.
 	 *
 	 * @return {string} Name of the default aggregation for this class
-	 * @name sap.ui.base.ManagedObjectMetadata#getDefaultAggregation
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getDefaultAggregation = function() {
 		return this._sDefaultAggregation && this.getAllAggregations()[this._sDefaultAggregation];
@@ -350,8 +332,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of association infos keyed by association names
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getAssociations
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getAssociations = function() {
 		return this._mAssociations;
@@ -362,8 +342,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * @param {string} sName name of the association
 	 * @return {boolean} true, if the association exists
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#hasAssociation
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.hasAssociation = function(sName) {
 		return !!this._mAllAssociations[sName];
@@ -379,8 +357,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of association infos keyed by association names
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getAllAssociations
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getAllAssociations = function() {
 		return this._mAllAssociations;
@@ -395,8 +371,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of event infos keyed by event names
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getEvents
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getEvents = function() {
 		return this._mEvents;
@@ -407,8 +381,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * @param {string} sName name of the event
 	 * @return {boolean} true, if the event exists
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#hasEvent
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.hasEvent = function(sName) {
 		return !!this._mAllEvents[sName];
@@ -422,8 +394,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of event infos keyed by event names
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getAllEvents
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getAllEvents = function() {
 		return this._mAllEvents;
@@ -435,8 +405,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @return {map} Map of default values keyed by property names
 	 * @public
-	 * @name sap.ui.base.ManagedObjectMetadata#getPropertyDefaults
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getPropertyDefaults = function() {
 	
@@ -452,7 +420,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 			mDefaults = {};
 		}
 	
-		for(var s in this._mProperties) {
+		for (var s in this._mProperties) {
 			if ( this._mProperties[s].defaultValue !== null ) {
 				mDefaults[s] = this._mProperties[s].defaultValue;
 			} else {
@@ -467,7 +435,8 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 				}
 			}
 		}
-		return (this._mDefaults = mDefaults);
+		this._mDefaults = mDefaults;
+		return mDefaults;
 	};
 	
 	
@@ -485,8 +454,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * Also ensures that the parent metadata is enriched.
 	 *
 	 * @private
-	 * @name sap.ui.base.ManagedObjectMetadata#_enrichChildInfos
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype._enrichChildInfos = function() {
 	
@@ -504,8 +471,8 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		}
 	
 		// adapt properties
-		m=this._mProperties;
-		for(sName in m) {
+		m = this._mProperties;
+		for (sName in m) {
 			oInfo = m[sName];
 			oInfo._sName = sName;
 			oInfo._sUID = sName;
@@ -516,8 +483,8 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		}
 	
 		// adapt aggregations
-		m=this._mAggregations;
-		for(sName in m) {
+		m = this._mAggregations;
+		for (sName in m) {
 			oInfo = m[sName];
 			oInfo._sName = sName;
 			oInfo._sUID = "aggregation:" + sName;
@@ -536,8 +503,8 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		}
 	
 		// adapt associations
-		m=this._mAssociations;
-		for(sName in m) {
+		m = this._mAssociations;
+		for (sName in m) {
 			oInfo = m[sName];
 			oInfo._sName = sName;
 			oInfo._sUID = "association:" + sName;
@@ -553,8 +520,8 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		}
 	
 		// adapt events
-		m=this._mEvents;
-		for(sName in m) {
+		m = this._mEvents;
+		for (sName in m) {
 			oInfo = m[sName];
 			oInfo._sName = sName;
 			oInfo._sUID = "event:" + sName;
@@ -572,8 +539,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @see sap.ui.core.Element.prototype.applySettings
 	 * @private
-	 * @name sap.ui.base.ManagedObjectMetadata#getJSONKeys
-	 * @function
 	 */
 	ManagedObjectMetadata.prototype.getJSONKeys = function() {
 	
@@ -586,13 +551,13 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		var mJSONKeys = {};
 		function addKeys(m) {
 			var sName, oInfo;
-			for(sName in m) {
+			for (sName in m) {
 				oInfo = m[sName];
 				if ( !mJSONKeys[sName] || oInfo._iKind < mJSONKeys[sName]._iKind ) {
 					mJSONKeys[sName] = oInfo;
-				};
+				}
 				mJSONKeys[oInfo._sUID] = oInfo;
-			};
+			}
 		}
 	
 		addKeys(this.getAllProperties());
@@ -600,21 +565,22 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		addKeys(this.getAllAssociations());
 		addKeys(this.getAllEvents());
 	
-		return (this._mJSONKeys = mJSONKeys);
+		this._mJSONKeys = mJSONKeys;
+		return mJSONKeys;
 	};
 	
 	ManagedObjectMetadata.prototype.generateAccessors = function() {
 	
-		var meta=this;
+		var that = this;
 		var proto = this.getClass().prototype;
 		function method(sPrefix, sName, fn, bDeprecated) {
 			var sName = sPrefix + sName.substring(0,1).toUpperCase() + sName.substring(1);
 			if ( !proto[sName] ) {
 				proto[sName] = bDeprecated ? function() {
-					jQuery.sap.log.warning("Usage of deprecated feature: " + meta.getName() + "." + sName);
+					jQuery.sap.log.warning("Usage of deprecated feature: " + that.getName() + "." + sName);
 					return fn.apply(this, arguments);
-				} : fn; 
-				meta._aPublicMethods.push(sName);
+				} : fn;
+				that._aPublicMethods.push(sName);
 			}
 		}
 	
@@ -693,7 +659,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		 * @return {string} A (hopefully unique) control id
 		 * @public
 		 * @function
-		 * @name sap.ui.base.ManagedObjectMetadata.uid
 		 */
 		ManagedObjectMetadata.uid = uid;
 	
@@ -706,8 +671,6 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		 *
 		 * @return {string} A (hopefully unique) control id
 		 * @public
-		 * @name sap.ui.base.ManagedObjectMetadata#uid
-		 * @function
 		 */
 		ManagedObjectMetadata.prototype.uid = function() {
 	
@@ -716,7 +679,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 				// start with qualified class name
 				sId  = this.getName();
 				// reduce to unqualified name
-				sId = sId.slice(sId.lastIndexOf('.')+1);
+				sId = sId.slice(sId.lastIndexOf('.') + 1);
 				// reduce a camel case, multi word name to the last word
 				sId = sId.replace(/([a-z])([A-Z])/g, "$1 $2").split(" ").slice(-1)[0];
 				// remove unwanted chars (and no trailing digits!) and convert to lower case

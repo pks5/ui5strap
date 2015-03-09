@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -17,14 +17,14 @@ sap.ui.define(['jquery.sap.global'],
 	 *        only the defined functions will be visible, no internals of the class can be accessed.
 	 *
 	 * @author Malte Wedel, Daniel Brinkmann
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @param {sap.ui.base.Object}
 	 *            oObject the instance that needs an interface created
 	 * @param {string[]}
 	 *            aMethods the names of the methods, that should be available on this interface
 	 * @constructor
 	 * @public
-	 * @name sap.ui.base.Interface
+	 * @alias sap.ui.base.Interface
 	 */
 	var Interface = function(oObject, aMethods) {
 	

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	 * @param {sap.ui.model.Filter|sap.ui.model.Filter[]} [aFilters] predefined filter/s (can be either a filter or an array of filters)
 	 * @param {object} [mParameters]
 	 * 
-	 * @name sap.ui.model.ClientListBinding
+	 * @alias sap.ui.model.ClientListBinding
 	 * @extends sap.ui.model.ListBinding
 	 */
 	var ClientListBinding = ListBinding.extend("sap.ui.model.ClientListBinding", /** @lends sap.ui.model.ClientListBinding.prototype */ {
@@ -50,8 +50,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	 *
 	 * @return {Array} the contexts array
 	 * @private
-	 * @name sap.ui.model.ClientListBinding#_getContexts
-	 * @function
 	 */
 	ClientListBinding.prototype._getContexts = function(iStartIndex, iLength) {
 		if (!iStartIndex) {
@@ -68,7 +66,7 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 		
 		if (sPrefix && !jQuery.sap.endsWith(sPrefix, "/")) {
 			sPrefix += "/";
-		}		
+		}
 	
 		for (var i = iStartIndex; i < iEndIndex; i++) {
 			oContext = this.oModel.getContext(sPrefix + this.aIndices[i]);
@@ -81,8 +79,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	/**
 	 * Setter for context
 	 * @param {Object} oContext the new context object
-	 * @name sap.ui.model.ClientListBinding#setContext
-	 * @function
 	 */
 	ClientListBinding.prototype.setContext = function(oContext) {
 		if (this.oContext != oContext) {
@@ -97,8 +93,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	/**
 	 * @see sap.ui.model.ListBinding.prototype.getLength
 	 *
-	 * @name sap.ui.model.ClientListBinding#getLength
-	 * @function
 	 */
 	ClientListBinding.prototype.getLength = function() {
 		return this.iLength;
@@ -108,8 +102,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	 * Return the length of the list
 	 *
 	 * @return {int} the length
-	 * @name sap.ui.model.ClientListBinding#_getLength
-	 * @function
 	 */
 	ClientListBinding.prototype._getLength = function() {
 		return this.aIndices.length;
@@ -117,8 +109,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	
 	/**
 	 * Get indices of the list
-	 * @name sap.ui.model.ClientListBinding#updateIndices
-	 * @function
 	 */
 	ClientListBinding.prototype.updateIndices = function(){
 		this.aIndices = [];
@@ -131,8 +121,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	/**
 	 * @see sap.ui.model.ListBinding.prototype.sort
 	 *
-	 * @name sap.ui.model.ClientListBinding#sort
-	 * @function
 	 */
 	ClientListBinding.prototype.sort = function(aSorters){
 		if (!aSorters) {
@@ -160,8 +148,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	/**
 	 * Sorts the list
 	 * @private
-	 * @name sap.ui.model.ClientListBinding#applySort
-	 * @function
 	 */
 	ClientListBinding.prototype.applySort = function(){
 		var that = this,
@@ -174,31 +160,33 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 			return;
 		}
 		
+		function fnCompare(a, b) {
+			if (b == null) {
+				return -1;
+			}
+			if (a == null) {
+				return 1;
+			}
+			if (typeof a == "string" && typeof b == "string") {
+				return a.localeCompare(b);
+			}
+			if (a < b) {
+				return -1;
+			}
+			if (a > b) {
+				return 1;
+			}
+			return 0;
+		}
 		
-		for(var j=0; j<this.aSorters.length; j++) {
+		for (var j = 0; j < this.aSorters.length; j++) {
 			oSorter = this.aSorters[j];
 			aCompareFunctions[j] = oSorter.fnCompare;
 			
 			if (!aCompareFunctions[j]) {
-				aCompareFunctions[j] = function(a, b) {
-					if (b == null) {
-						return -1;
-					}
-					if (a == null) {
-						return 1;
-					}
-					if (typeof a == "string" && typeof b == "string") {
-						return a.localeCompare(b);
-					}
-					if (a < b) {
-						return -1;
-					}
-					if (a > b) {
-						return 1;
-					}
-					return 0;
-				}
+				aCompareFunctions[j] = fnCompare;
 			}
+			/*eslint-disable no-loop-func */
 			jQuery.each(this.aIndices, function(i, iIndex) {
 				oValue = that.oModel.getProperty(oSorter.sPath, that.oList[iIndex]);
 				if (typeof oValue == "string") {
@@ -209,6 +197,7 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 				}
 				aSortValues[j][iIndex] = oValue;
 			});
+			/*eslint-enable no-loop-func */
 		}
 	
 		this.aIndices.sort(function(a, b) {
@@ -229,7 +218,7 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 			returnValue = -returnValue;
 		}
 		if (returnValue == 0 && this.aSorters[iDepth + 1]) {
-			valueA = aSortValues[iDepth + 1][a],
+			valueA = aSortValues[iDepth + 1][a];
 			valueB = aSortValues[iDepth + 1][b];
 			returnValue = this._applySortCompare(a, b, valueA, valueB, aSortValues, aCompareFunctions, iDepth + 1);
 		}
@@ -250,8 +239,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	 * @return {sap.ui.model.ListBinding} returns <code>this</code> to facilitate method chaining 
 	 * 
 	 * @public
-	 * @name sap.ui.model.ClientListBinding#filter
-	 * @function
 	 */
 	ClientListBinding.prototype.filter = function(aFilters, sFilterType){
 		this.updateIndices();
@@ -295,13 +282,11 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	 * Normalize filter value
 	 * 
 	 * @private
-	 * @name sap.ui.model.ClientListBinding#normalizeFilterValue
-	 * @function
 	 */
 	ClientListBinding.prototype.normalizeFilterValue = function(oValue){
 		if (typeof oValue == "string") {
 			return oValue.toUpperCase();
-		} 
+		}
 		if (oValue instanceof Date) {
 			return oValue.getTime();
 		}
@@ -318,8 +303,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	 * Multiple MultiFilters are ORed.
 	 *
 	 * @private
-	 * @name sap.ui.model.ClientListBinding#applyFilter
-	 * @function
 	 */
 	ClientListBinding.prototype.applyFilter = function(){
 		if (!this.aFilters) {
@@ -387,8 +370,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	 * Resolve the client list binding and check if an index matches
 	 *
 	 * @private
-	 * @name sap.ui.model.ClientListBinding#_resolveMultiFilter
-	 * @function
 	 */
 	ClientListBinding.prototype._resolveMultiFilter = function(oMultiFilter, iIndex){
 		var that = this,
@@ -399,7 +380,7 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 			jQuery.each(aFilters, function(i, oFilter) {
 				var bLocalMatch = false;
 				if (oFilter._bMultiFilter) {
-					bLocalMatch = that._resolveMultiFilter(oFilter, iIndex)
+					bLocalMatch = that._resolveMultiFilter(oFilter, iIndex);
 				} else if (oFilter.sPath !== undefined) {
 					var oValue = that.oModel.getProperty(oFilter.sPath, that.oList[iIndex]);
 					oValue = that.normalizeFilterValue(oValue);
@@ -425,8 +406,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	
 	/**
 	 * Provides a JS filter function for the given filter
-	 * @name sap.ui.model.ClientListBinding#getFilterFunction
-	 * @function
 	 */
 	ClientListBinding.prototype.getFilterFunction = function(oFilter){
 		if (oFilter.fnTest) {
@@ -455,28 +434,28 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 					if (typeof value != "string") {
 						throw new Error("Only \"String\" values are supported for the FilterOperator: \"Contains\".");
 					}
-					return value.indexOf(oValue1) != -1; 
-				}; 
+					return value.indexOf(oValue1) != -1;
+				};
 				break;
 			case "StartsWith":
-				oFilter.fnTest = function(value) { 
+				oFilter.fnTest = function(value) {
 					if (typeof value != "string") {
 						throw new Error("Only \"String\" values are supported for the FilterOperator: \"StartsWith\".");
 					}
-					return value.indexOf(oValue1) == 0; 
-				}; 
+					return value.indexOf(oValue1) == 0;
+				};
 				break;
 			case "EndsWith":
-				oFilter.fnTest = function(value) { 
+				oFilter.fnTest = function(value) {
 					if (typeof value != "string") {
 						throw new Error("Only \"String\" values are supported for the FilterOperator: \"EndsWith\".");
 					}
 					var iPos = value.lastIndexOf(oValue1);
-					if (iPos == -1){
-						return false;					
+					if (iPos == -1) {
+						return false;
 					}
-					return iPos == value.length - new String(oFilter.oValue1).length; 
-				}; 
+					return iPos == value.length - new String(oFilter.oValue1).length;
+				};
 				break;
 			default:
 				oFilter.fnTest = function(value) { return true; };
@@ -490,8 +469,6 @@ sap.ui.define(['jquery.sap.global', './FilterType', './ListBinding'],
 	 * @param {String} sPath
 	 *
 	 * @protected
-	 * @name sap.ui.model.ClientListBinding#getDistinctValues
-	 * @function
 	 */
 	ClientListBinding.prototype.getDistinctValues = function(sPath){
 		var aResult = [],

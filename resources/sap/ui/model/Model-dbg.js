@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -33,11 +33,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @extends sap.ui.base.EventProvider
 	 *
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 *
 	 * @constructor
 	 * @public
-	 * @name sap.ui.model.Model
+	 * @alias sap.ui.model.Model
 	 */
 	var Model = EventProvider.extend("sap.ui.model.Model", /** @lends sap.ui.model.Model.prototype */ {
 		
@@ -67,10 +67,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 		
 		  /* the following would save code, but requires the new ManagedObject (1.9.1) 
 		  , events : {
-		  	"parseError" : {},
-		  	"requestFailed" : {},
-		  	"requestSent" : {},
-		  	"requestCompleted" ; {} 
+				"parseError" : {},
+				"requestFailed" : {},
+				"requestSent" : {},
+				"requestCompleted" ; {} 
 		  }
 		  */
 		
@@ -78,27 +78,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	
 	});
 	
-	/**
-	 * Creates a new subclass of class sap.ui.model.Model with name <code>sClassName</code> 
-	 * and enriches it with the information contained in <code>oClassInfo</code>.
-	 * 
-	 * For a detailed description of <code>oClassInfo</code> or <code>FNMetaImpl</code> 
-	 * see {@link sap.ui.base.Object.extend Object.extend}.
-	 *   
-	 * @param {string} sClassName name of the class to be created
-	 * @param {object} [oClassInfo] object literal with informations about the class  
-	 * @param {function} [FNMetaImpl] alternative constructor for a metadata object
-	 * @return {function} the created class / constructor function
-	 * @public
-	 * @static
-	 * @name sap.ui.model.Model.extend
-	 * @function
-	 */
-	
 	
 	/**
 	 * Map of event names, that are provided by the model.
-	 * @name sap.ui.model.Model.M_EVENTS
 	 */
 	Model.M_EVENTS = {
 		/**
@@ -112,24 +94,29 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 		 * Depending on the model implementation a RequestFailed should be fired if a request to a backend failed.
 		 * Contains the parameters:
 		 * message, statusCode, statusText and responseText
+		 * 
 		 */
 		RequestFailed : "requestFailed",
 	
 		/**
 		 * Depending on the model implementation a RequestSent should be fired when a request to a backend is sent.
 		 * Contains Parameters: url, type, async, info (<strong>deprecated</strong>), infoObject
+		 * 
 		 */
 		RequestSent : "requestSent",
 	
 		/**
 		 * Depending on the model implementation a RequestCompleted should be fired when a request to a backend is completed regardless if the request failed or succeeded.
 		 * Contains Parameters: url, type, async, info (<strong>deprecated</strong>), infoObject, success, errorobject
+		 * 
 		 */
 		RequestCompleted : "requestCompleted"
 	};
 	
 	/**
 	 * The 'requestFailed' event is fired, when data retrieval from a backend failed.
+	 * 
+	 * Note: Subclasses might add additional parameters to the event object. Optional parameters can be omitted.
 	 *
 	 * @name sap.ui.model.Model#requestFailed
 	 * @event
@@ -140,7 +127,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @param {string} oControlEvent.getParameters.message A text that describes the failure.
 	 * @param {string} oControlEvent.getParameters.statusCode HTTP status code returned by the request (if available)
 	 * @param {string} oControlEvent.getParameters.statusText The status as a text, details not specified, intended only for diagnosis output
-	 * @param {string} oControlEvent.getParameters.responseText Response that has been received for the request ,as a text string
+	 * @param {string} [oControlEvent.getParameters.responseText] Response that has been received for the request ,as a text string
 	 * @public
 	 */
 	
@@ -158,8 +145,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.model.Model#attachRequestFailed
-	 * @function
 	 */
 	Model.prototype.attachRequestFailed = function(oData, fnFunction, oListener) {
 		this.attachEvent("requestFailed", oData, fnFunction, oListener);
@@ -177,8 +162,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *            oListener Object on which the given function had to be called.
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.model.Model#detachRequestFailed
-	 * @function
 	 */
 	Model.prototype.detachRequestFailed = function(fnFunction, oListener) {
 		this.detachEvent("requestFailed", fnFunction, oListener);
@@ -196,8 +179,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * 
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @protected
-	 * @name sap.ui.model.Model#fireRequestFailed
-	 * @function
 	 */
 	Model.prototype.fireRequestFailed = function(mArguments) {
 		this.fireEvent("requestFailed", mArguments);
@@ -238,8 +219,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.model.Model#attachParseError
-	 * @function
 	 */
 	Model.prototype.attachParseError = function(oData, fnFunction, oListener) {
 		this.attachEvent("parseError", oData, fnFunction, oListener);
@@ -257,8 +236,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *            oListener Object on which the given function had to be called.
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.model.Model#detachParseError
-	 * @function
 	 */
 	Model.prototype.detachParseError = function(fnFunction, oListener) {
 		this.detachEvent("parseError", fnFunction, oListener);
@@ -279,8 +256,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @protected
-	 * @name sap.ui.model.Model#fireParseError
-	 * @function
 	 */
 	Model.prototype.fireParseError = function(mArguments) {
 		this.fireEvent("parseError", mArguments);
@@ -290,7 +265,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	/**
 	 * The 'requestSent' event is fired, after a request has been sent to a backend.
 	 *
-	 * Note: Subclasses might add additional parameters to the event object.
+	 * Note: Subclasses might add additional parameters to the event object. Optional parameters can be omitted.
 	 * 
 	 * @name sap.ui.model.Model#requestSent
 	 * @event
@@ -298,7 +273,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @param {sap.ui.base.EventProvider} oControlEvent.getSource
 	 * @param {object} oControlEvent.getParameters
 	 * @param {string} oControlEvent.getParameters.url The url which is sent to the backend
-	 * @param {string} oControlEvent.getParameters.type The type of the request (if available)
+	 * @param {string} [oControlEvent.getParameters.type] The type of the request (if available)
 	 * @param {boolean} [oControlEvent.getParameters.async] If the request is synchronous or asynchronous (if available)
 	 * @param {string} [oControlEvent.getParameters.info] Additional information for the request (if available) <strong>deprecated</strong>
 	 * @param {object} [oControlEvent.getParameters.infoObject] Additional information for the request (if available)
@@ -319,8 +294,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.model.Model#attachRequestSent
-	 * @function
 	 */
 	Model.prototype.attachRequestSent = function(oData, fnFunction, oListener) {
 		this.attachEvent("requestSent", oData, fnFunction, oListener);
@@ -338,8 +311,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *            oListener Object on which the given function had to be called.
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.model.Model#detachRequestSent
-	 * @function
 	 */
 	Model.prototype.detachRequestSent = function(fnFunction, oListener) {
 		this.detachEvent("requestSent", fnFunction, oListener);
@@ -357,8 +328,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @param {object} [mArguments.infoObject] Additional information for the request (if available)
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @protected
-	 * @name sap.ui.model.Model#fireRequestSent
-	 * @function
 	 */
 	Model.prototype.fireRequestSent = function(mArguments) {
 		this.fireEvent("requestSent", mArguments);
@@ -369,7 +338,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * The 'requestCompleted' event is fired, after a request has been completed (includes receiving a response), 
 	 * no matter whether the request succeeded or not.
 	 * 
-	 * Note: Subclasses might add additional parameters to the event object.
+	 * Note: Subclasses might add additional parameters to the event object. Optional parameters can be omitted.
 	 * 
 	 * @name sap.ui.model.Model#requestCompleted
 	 * @event
@@ -377,7 +346,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @param {sap.ui.base.EventProvider} oControlEvent.getSource
 	 * @param {object} oControlEvent.getParameters
 	 * @param {string} oControlEvent.getParameters.url The url which was sent to the backend
-	 * @param {string} oControlEvent.getParameters.type The type of the request (if available)
+	 * @param {string} [oControlEvent.getParameters.type] The type of the request (if available)
 	 * @param {boolean} oControlEvent.getParameters.success if the request has been successful or not. In case of errors consult the optional errorobject parameter.
 	 * @param {object} [oControlEvent.getParameters.errorobject] If the request failed the error if any can be accessed in this property.
 	 * @param {boolean} [oControlEvent.getParameters.async] If the request is synchronous or asynchronous (if available)
@@ -400,8 +369,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.model.Model#attachRequestCompleted
-	 * @function
 	 */
 	Model.prototype.attachRequestCompleted = function(oData, fnFunction, oListener) {
 		this.attachEvent("requestCompleted", oData, fnFunction, oListener);
@@ -419,8 +386,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *            oListener Object on which the given function had to be called.
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.model.Model#detachRequestCompleted
-	 * @function
 	 */
 	Model.prototype.detachRequestCompleted = function(fnFunction, oListener) {
 		this.detachEvent("requestCompleted", fnFunction, oListener);
@@ -439,8 +404,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 *
 	 * @return {sap.ui.model.Model} <code>this</code> to allow method chaining
 	 * @protected
-	 * @name sap.ui.model.Model#fireRequestCompleted
-	 * @function
 	 */
 	Model.prototype.fireRequestCompleted = function(mArguments) {
 		this.fireEvent("requestCompleted", mArguments);
@@ -557,8 +520,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * Implement in inheriting classes
 	 * @abstract
 	 *
-	 * @name sap.ui.model.Model.prototype.getObject
-	 * @function
 	 * @param {string}
 	 *         sPath the path to where to read the object
 	 * @param {object}
@@ -595,12 +556,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * otherwise create one using the context constructor.
 	 *
 	 * @param {string} sPath the path
-	 * @name sap.ui.model.Model#getContext
-	 * @function
 	 */
 	Model.prototype.getContext = function(sPath) {
 		if (!jQuery.sap.startsWith(sPath, "/")) {
-			throw new Error("Path " +sPath+" must start with a / ");
+			throw new Error("Path " + sPath + " must start with a / ");
 		}
 		var oContext = this.mContexts[sPath];
 		if (!oContext) {
@@ -623,8 +582,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @param {string} sPath path to resolve
 	 * @param {sap.ui.core.Context} [oContext] context to resolve a relative path against
 	 * @return {string} resolved path or undefined
-	 * @name sap.ui.model.Model#resolve
-	 * @function
 	 */
 	Model.prototype.resolve = function(sPath, oContext) {
 		var bIsRelative = !jQuery.sap.startsWith(sPath, "/"),
@@ -634,8 +591,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 			if (oContext) {
 				sContextPath = oContext.getPath();
 				sResolvedPath = sContextPath + (jQuery.sap.endsWith(sContextPath, "/") ? "" : "/") + sPath;
-			}
-			else {
+			} else {
 				sResolvedPath = this.isLegacySyntax() ? "/" + sPath : undefined;
 			}
 		}
@@ -651,8 +607,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * Add a binding to this model
 	 *
 	 * @param {sap.ui.model.Binding} oBinding the binding to be added
-	 * @name sap.ui.model.Model#addBinding
-	 * @function
 	 */
 	Model.prototype.addBinding = function(oBinding) {
 		this.aBindings.push(oBinding);
@@ -662,8 +616,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * Remove a binding from the model
 	 *
 	 * @param {sap.ui.model.Binding} oBinding the binding to be removed
-	 * @name sap.ui.model.Model#removeBinding
-	 * @function
 	 */
 	Model.prototype.removeBinding = function(oBinding) {
 		for (var i = 0; i < this.aBindings.length; i++) {
@@ -680,8 +632,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @return {sap.ui.model.BindingMode} default binding mode of the model
 	 *
 	 * @public
-	 * @name sap.ui.model.Model#getDefaultBindingMode
-	 * @function
 	 */
 	Model.prototype.getDefaultBindingMode = function() {
 		return this.sDefaultBindingMode;
@@ -695,14 +645,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @param {sap.ui.model.BindingMode} sMode the default binding mode to set for the model
 	 *
 	 * @public
-	 * @name sap.ui.model.Model#setDefaultBindingMode
-	 * @function
 	 */
 	Model.prototype.setDefaultBindingMode = function(sMode) {
 		if (this.isBindingModeSupported(sMode)) {
 			this.sDefaultBindingMode = sMode;
-		}
-		else {
+		} else {
 			throw new Error("Binding mode " + sMode + " is not supported by this model.");
 		}
 	};
@@ -713,8 +660,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @param {sap.ui.model.BindingMode} sMode the binding mode to check
 	 *
 	 * @public
-	 * @name sap.ui.model.Model#isBindingModeSupported
-	 * @function
 	 */
 	Model.prototype.isBindingModeSupported = function(sMode) {
 		return (sMode in this.mSupportedBindingModes);
@@ -731,8 +676,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @param {boolean} bLegacySyntax the path syntax to use
 	 *
 	 * @public
-	 * @name sap.ui.model.Model#setLegacySyntax
-	 * @function
 	 */
 	Model.prototype.setLegacySyntax = function(bLegacySyntax) {
 		this.bLegacySyntax = bLegacySyntax;
@@ -744,8 +687,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @return {boolean} 
 	 * 
 	 * @public
-	 * @name sap.ui.model.Model#isLegacySyntax
-	 * @function
 	 */
 	Model.prototype.isLegacySyntax = function() {
 		return this.bLegacySyntax;
@@ -755,8 +696,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * Set the maximum number of entries which are used for for list bindings.
 	 * @param {int} iSizeLimit collection size limit  
 	 * @public
-	 * @name sap.ui.model.Model#setSizeLimit
-	 * @function
 	 */
 	Model.prototype.setSizeLimit = function(iSizeLimit) {
 		this.iSizeLimit = iSizeLimit;
@@ -764,8 +703,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	
 	/**
 	 * Override getInterface method to avoid creating an Interface object for models
-	 * @name sap.ui.model.Model#getInterface
-	 * @function
 	 */
 	Model.prototype.getInterface = function() {
 		return this;
@@ -777,8 +714,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * 
 	 * @param {boolean} bForceUpdate Update controls even if data has not been changed
 	 * @public
-	 * @name sap.ui.model.Model#refresh
-	 * @function
 	 */
 	Model.prototype.refresh = function(bForceUpdate) {
 		this.checkUpdate(bForceUpdate);
@@ -788,8 +723,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * Private method iterating the registered bindings of this model instance and initiating their check for update
 	 * @param {boolean} bForceUpdate
 	 * @private
-	 * @name sap.ui.model.Model#checkUpdate
-	 * @function
 	 */
 	Model.prototype.checkUpdate = function(bForceUpdate) {
 		var aBindings = this.aBindings.slice(0);
@@ -805,8 +738,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * 
 	 * @see sap.ui.base.Object.prototype.destroy
 	 * @public
-	 * @name sap.ui.model.Model#destroy
-	 * @function
 	 */
 	Model.prototype.destroy = function() {
 		this.oData = {};

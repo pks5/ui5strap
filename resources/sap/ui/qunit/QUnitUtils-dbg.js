@@ -1,10 +1,10 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-/*global QUnit, equal, strictEqual, notStrictEqual, deepEqual, ok, start, stop, qutils:true */// declare unusual global vars for JSLint/SAPUI5 validation
+/*global QUnit, equal, deepEqual, ok, start, stop */
 
 /**
  * SAPUI5 test utilities
@@ -18,7 +18,7 @@
  * The <code>sap.ui.test.qunit</code> namespace contains helper functionality for
  * QUnit tests.
  *
- * @version 1.24.3
+ * @version 1.26.7
  * @namespace
  * @name sap.ui.test.qunit
  * @public
@@ -51,6 +51,28 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 			
 			// Do not reorder tests, as most of the tests depend on each other
 			QUnit.config.reorder = false;
+			
+			// only when instrumentation is done on server-side blanket itself doesn't
+			// take care about rendering the report - in this case we do it manually
+			// when the URL parameter "coverage-report" is set to true or x
+			if (window["sap-ui-qunit-coverage"] !== "client" && /x|true/i.test(jQuery.sap.getUriParameters().get("coverage-report"))) {
+				QUnit.done(function(failures, total) {
+					// only when coverage is available and modern browser (not IE8!)
+					if (window._$blanket && document.addEventListener) {
+						// we remove the QUnit object to avoid blanket to automatically
+						// trigger start on QUnit which leads to failures in qunit-junit-reporter
+						var QUnit = window.QUnit;
+						window.QUnit = undefined;
+						// load the blanket instance
+						jQuery.sap.require("sap.ui.thirdparty.blanket");
+						// reset the QUnit object 
+						window.QUnit = QUnit;
+						// trigger blanket to display the coverage report
+						window.blanket.report({});
+					}
+				});
+			}
+			
 		}
 	}());
 	
@@ -89,13 +111,13 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	 */
 	sap.ui.test.qunit.triggerEvent = function(sEventName, oTarget, oParams) {
 		var tmpEvent = jQuery.Event(sEventName);
-		if(oParams){
-			for(var x in oParams){
+		if (oParams) {
+			for (var x in oParams) {
 				tmpEvent[x] = oParams[x];
 			}
 		}
 	
-		if (typeof(oTarget) == "string") {
+		if (typeof (oTarget) == "string") {
 			oTarget = jQuery.sap.domById(oTarget);
 		}
 		jQuery(oTarget).trigger(tmpEvent);
@@ -112,7 +134,7 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	 * @public
 	 */
 	sap.ui.test.qunit.triggerTouchEvent = function(sEventName, oTarget, oParams) {
-		if (typeof(oTarget) == "string") {
+		if (typeof (oTarget) == "string") {
 			oTarget = jQuery.sap.domById(oTarget);
 		}
 		var $Target = jQuery(oTarget);
@@ -120,16 +142,16 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 		var oEvent = jQuery.Event(sEventName);
 		oEvent.originalEvent = {};
 		oEvent.target = oTarget;
-		if(oParams){
-			for(var x in oParams){
+		if (oParams) {
+			for (var x in oParams) {
 				oEvent[x] = oParams[x];
 				oEvent.originalEvent[x] = oParams[x];
 			}
 		}
 	
 		var oElement = $Target.control(0);
-		if(oElement && oElement["on"+sEventName]){
-			oElement["on"+sEventName].apply(oElement, [oEvent]);
+		if (oElement && oElement["on" + sEventName]) {
+			oElement["on" + sEventName].apply(oElement, [oEvent]);
 		}
 	};
 	
@@ -218,7 +240,7 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	 */
 	sap.ui.test.qunit.triggerKeypress = function(oTarget, sChar, bShiftKey, bAltKey, bCtrlKey) {
 		var _sChar = sChar && sChar.toUpperCase();
-		if(jQuery.sap.KeyCodes[_sChar] === null) {
+		if (jQuery.sap.KeyCodes[_sChar] === null) {
 			ok(false, "Invalid character for triggerKeypress: '" + sChar + "'");
 		}
 		var _iCharCode = sChar.charCodeAt(0);
@@ -246,7 +268,7 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	sap.ui.test.qunit.triggerCharacterInput = function(oInput, sChar) {
 		sap.ui.test.qunit.triggerKeypress(oInput, sChar);
 	
-		if (typeof(oInput) == "string") {
+		if (typeof (oInput) == "string") {
 			oInput = jQuery.sap.domById(oInput);
 		}
 		var $Input = jQuery(oInput);
@@ -333,7 +355,7 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 			_sapTest_cssFontWeight : function() {
 				var v = this.css("font-weight");
 				return v ? FONT_WEIGHTS[v] || v : v;
-			} 
+			}
 		});
 	
 	}());
@@ -348,9 +370,7 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 		 * wrapper around window.console
 		 */
 		function info(msg) {
-			if ( window.console ) {
-				console.info(msg);
-			}
+			jQuery.sap.log.info(msg);
 		}
 	
 		var M_DEFAULT_TEST_VALUES = {
@@ -403,14 +423,12 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	
 				try {
 					jQuery.sap.require(sType);
-				} catch(e) {
+				} catch (e) {
 				}
 				var oType = jQuery.sap.getObject(sType);
-				if ( oType instanceof sap.ui.base.DataType ) {
-					; // ???
-				} else {
-					var r=[];
-					for(var n in oType) {
+				if ( !(oType instanceof sap.ui.base.DataType) ) {
+					var r = [];
+					for (var n in oType) {
 						r.push(oType[n]);
 					}
 					mDefaultTestValues[sType] = r;
@@ -450,15 +468,14 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	
 			var oClass = new oClass().getMetadata().getClass(); // resolves proxy
 			var oTestConfig = oTestConfig || {};
-			var iTestCount  = oTestConfig.testCount || 100;
 			var oTestValues = sap.ui.test.qunit.createSettingsDomain(oClass, oTestConfig.allPairTestValues || {});
 	
 			info("domain");
 			for (var name in oTestValues) {
-				var l=oTestValues[name].length;
-				var s=[];
+				var l = oTestValues[name].length;
+				var s = [];
 				s.push("  ", name, ":", "[");
-				for(var i=0; i<l; i++) {
+				for (var i = 0; i < l; i++) {
 					s.push(oTestValues[name][i], ",");
 				}
 				s.push("]");
@@ -471,9 +488,9 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	
 			function getActualSettings(oControl, oSettings) {
 				var oActualSettings = {};
-				for (var name in oSettings) {
-					if ( oControl[method("get", name)] ) {
-					  oActualSettings[name] = oControl[method("get", name)]();
+				for (var settingsName in oSettings) {
+					if ( oControl[method("get", settingsName)] ) {
+					  oActualSettings[settingsName] = oControl[method("get", settingsName)]();
 					}
 				}
 				return oActualSettings;
@@ -484,12 +501,12 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	
 			// generate "AllPairs" test cases
 			var apg = new sap.ui.test.qunit.AllPairsGenerator(oTestValues);
-			var aTestCases=[];
-			while( apg.hasNext() ) {
+			var aTestCases = [];
+			while ( apg.hasNext() ) {
 				aTestCases.push(apg.next());
 			}
 	
-			var index=0;
+			var index = 0;
 			function testNextCombination() {
 				info("testNextCombination(" + index + ")");
 				if ( index >= aTestCases.length ) {
@@ -498,8 +515,6 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 					start();
 					return;
 				}
-	
-				var oSettings = aTestCases[index];
 	
 				// constructor test
 				oControl = new oClass(oSettings);
@@ -532,28 +547,27 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	
 			function continueAfterRendering() {
 				info("continueAfterRendering(" + index + ")");
-				var oSettings = aTestCases[aTestCases.length-index-1];
-				for(var name in oSettings) {
-					var r = oControl[method("set", name)](oSettings[name]);
-					equal(oControl[method("get", name)](), oSettings[name], "setter for property '" + name + "'");
-					ok(r == oControl, "setter for property '" + name + "' supports chaining (after rendering)");
+				var oTestSettings = aTestCases[aTestCases.length - index - 1];
+				for (var settingsName in oTestSettings) {
+					var r = oControl[method("set", settingsName)](oTestSettings[settingsName]);
+					equal(oControl[method("get", settingsName)](), oTestSettings[settingsName], "setter for property '" + settingsName + "'");
+					ok(r == oControl, "setter for property '" + settingsName + "' supports chaining (after rendering)");
 				}
-				index = index+1;
+				index = index + 1;
 				setTimeout(testNextCombination, 0);
 			}
 	
 		};
-	
-		var lastErrorHandler = undefined;
 	
 		/**
 		 * @TODO DESCRIBE AND CHECK VISIBILITY!
 		 * @private
 		 */
 		sap.ui.test.qunit.suppressErrors = function(bSuppress) {
+			//var lastErrorHandler;
 			if ( bSuppress !== false ) {
 				info("suppress global errors");
-				lastErrorHandler = window.onerror;
+				//lastErrorHandler = window.onerror;
 	//			window.onerror = function(msg) {
 	//				info("global error handler: " + msg);
 	//				return true;
@@ -561,7 +575,7 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 			} else {
 				info("reenable global errors");
 	//			window.onerror = lastErrorHandler;
-				lastErrorHandler = undefined;
+				//lastErrorHandler = undefined;
 			}
 		};
 	
@@ -587,14 +601,14 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 	
 			function createSettings(iCombination) {
 				var oSettings = {};
-				for (var name in oDomain) {
-					var l=oDomain[name] && oDomain[name].length;
+				for (var domainName in oDomain) {
+					var l = oDomain[domainName] && oDomain[domainName].length;
 					if ( l == 1 ) {
-						oSettings[name] = oDomain[name][0];
+						oSettings[domainName] = oDomain[domainName][0];
 						//info("  " + name + ":" + "0");
 					} else if ( l > 1 ) {
 						var c = iCombination % l;
-						oSettings[name] = oDomain[name][c];
+						oSettings[domainName] = oDomain[domainName][c];
 						iCombination = (iCombination - c) / l;
 					}
 				}
@@ -618,8 +632,8 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 		sap.ui.test.qunit.AllPairsGenerator = function (oDomain) {
 	
 			// more suitable access to the params
-			var params=[];
-			for(var name in oDomain) {
+			var params = [];
+			for (var name in oDomain) {
 				params.push({
 					name : name,
 					n : oDomain[name].length,
@@ -656,13 +670,13 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 			 * space, but only the entries params.indexOf(a) * N + params.indexOf(b) (with
 			 * params.indexOf(a) < params.indexOf(b)) are filled.
 			 */
-			var occurs=[];
+			var occurs = [];
 	
 			/**
 			 * Offset for a given combination of properties (a,b) into the occurs[]
 			 * array. For a details description see the occurs[] array.
 			 */
-			var abOffset=[];
+			var abOffset = [];
 	
 			/**
 			 * Number of pairs for which occurs[(a,b)] == 0.
@@ -671,20 +685,20 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 			 * of created entries in the occurs[] array. As all entries are created with
 			 * a value of 0, the definiton above still holds.
 			 */
-			var nPairs=0;
+			var nPairs = 0;
 	
 			/*
 			 * Initialization. Loops over all a,b combinations with (a<b)
 			 * and creates the initial occurs[] and abOccurs[] values.
 			 */
-			for(var a=0; a<N-1; a++) {
+			for (var a = 0; a < N - 1; a++) {
 				var pa = params[a];
-				for(var b=a+1; b<N; b++) {
+				for (var b = a + 1; b < N; b++) {
 					var pb = params[b];
 					// remember offset into occurs array
 					abOffset[a * N + b] = nPairs;
 					// set occurrences for all n*m values to 0
-					for(var i=pa.n*pb.n; i>0; i--) {
+					for (var i = pa.n * pb.n; i > 0; i--) {
 						occurs[nPairs++] = 0;
 					}
 				}
@@ -695,7 +709,7 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 			 * for a given combination of a,b and the values of a and b.
 			 */
 			function offset(a,b,va,vb) {
-				return abOffset[a*N+b]+va*params[b].n+vb;
+				return abOffset[a * N + b] + va * params[b].n + vb;
 			}
 	
 			function findTestCase() {
@@ -715,17 +729,17 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 				 * @return
 				 */
 				function calcCost(a, va) {
-					var score={ va: va, pairs:0, redundant:0 };
-					for(var b=0; b<N; b++) {
+					var score = { va: va, pairs:0, redundant:0 };
+					for (var c = 0; c < N; c++) {
 						var count;
-						if ( b < a ) {
-							count = occurs[offset(b,a,value_index[b],va)];
-						} else if ( b > a ) {
-							var i=offset(a,b,va,0),
-								end=i+params[b].n;
-							for (count = occurs[i]; count > 0 && i<end; i++ ) {
-								if ( occurs[i] < count ) {
-									count = occurs[i];
+						if ( c < a ) {
+							count = occurs[offset(c,a,value_index[c],va)];
+						} else if ( c > a ) {
+							var j = offset(a,c,va,0),
+								end = j + params[c].n;
+							for (count = occurs[j]; count > 0 && i < end; j++ ) {
+								if ( occurs[j] < count ) {
+									count = occurs[j];
 								}
 							}
 						}
@@ -738,13 +752,13 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 				}
 	
 				// loop over all properties and find the "best" value
-				for(var a=0; a<N; a++) {
-					var pa=params[a];
+				for (var d = 0; d < N; d++) {
+					var pd = params[d];
 					// measure the quality of the first possible value
-					var bestCost = calcCost(a, 0);
-					for(var va=1; va<pa.n; va++) {
+					var bestCost = calcCost(d, 0);
+					for (var va = 1; va < pd.n; va++) {
 						// measure the quality of the new combination
-						var cost = calcCost(a, va);
+						var cost = calcCost(d, va);
 						// a new combination is preferred if it either incorporates more unique pairs or if
 						// it incorporates the same number of pairs but with less redundant combinations
 						if ( cost.pairs > bestCost.pairs || (cost.pairs == bestCost.pairs && cost.redundant < bestCost.redundant) ) {
@@ -752,7 +766,7 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 						}
 					}
 	
-					value_index[a] = bestCost.va;
+					value_index[d] = bestCost.va;
 				}
 	
 				return value_index;
@@ -764,10 +778,10 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 			 * @private
 			 */
 			this.hasNext = function() {
-				return nPairs>0;
+				return nPairs > 0;
 			};
 	
-			var lastTest = undefined;
+			var lastTest;
 			var lastPairs = -1;
 	
 			/**
@@ -777,12 +791,12 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 			 */
 			this.next = function() {
 				lastTest = findTestCase();
-				lastPairs=0;
+				lastPairs = 0;
 	
-				var test={};
-				for(var a=0; a<N; a++) {
-					for(var b=a+1; b<N; b++) {
-						var i=offset(a,b,lastTest[a],lastTest[b]);
+				var test = {};
+				for (var a = 0; a < N; a++) {
+					for (var b = a + 1; b < N; b++) {
+						var i = offset(a,b,lastTest[a],lastTest[b]);
 						if ( occurs[i] == 0 ) {
 							nPairs--;
 							lastPairs++;
@@ -795,7 +809,9 @@ sap.ui.define('sap/ui/qunit/QUnitUtils', ['jquery.sap.global'],
 				return test;
 			};
 	
-			this.lastPairs = function() { return lastPairs; };
+			this.lastPairs = function() {
+				return lastPairs;
+			};
 		};
 		
 	}());

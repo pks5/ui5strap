@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @public
 	 */
 	jQuery.sap.endsWith = function endsWith(sString, sEndString) {
-		if (typeof(sEndString)!="string" || sEndString=="") {
+		if (typeof (sEndString) != "string" || sEndString == "") {
 			return false;
 		}
 		var iPos = sString.lastIndexOf(sEndString);
@@ -40,7 +40,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @public
 	 */
 	jQuery.sap.endsWithIgnoreCase = function endsWithIgnoreCase(sString, sEndString) {
-		if (typeof(sEndString)!="string" || sEndString=="") {
+		if (typeof (sEndString) != "string" || sEndString == "") {
 			return false;
 		}
 		sString = sString.toUpperCase();
@@ -60,7 +60,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @public
 	 */
 	jQuery.sap.startsWith = function startsWith(sString, sStartString) {
-		if (typeof(sStartString)!="string" || sStartString=="") {
+		if (typeof (sStartString) != "string" || sStartString == "") {
 			return false;
 		}
 		if (sString == sStartString) {
@@ -81,7 +81,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @public
 	 */
 	jQuery.sap.startsWithIgnoreCase = function startsWithIgnoreCase(sString, sStartString) {
-		if (typeof(sStartString)!="string" || sStartString=="") {
+		if (typeof (sStartString) != "string" || sStartString == "") {
 			return false;
 		}
 		sString = sString.toUpperCase();
@@ -109,10 +109,10 @@ sap.ui.define(['jquery.sap.global'],
 			iPos = 0;
 		}
 		var sChar = sString.charAt(iPos).toUpperCase();
-		if (iPos>0) {
-			return sString.substring(0,iPos) + sChar + sString.substring(iPos+1);
+		if (iPos > 0) {
+			return sString.substring(0,iPos) + sChar + sString.substring(iPos + 1);
 		}
-		return sChar + sString.substring(iPos+1);
+		return sChar + sString.substring(iPos + 1);
 	};
 
 	/**
@@ -170,7 +170,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @public
 	 * @SecPassthrough {0|return}
 	 */
-	jQuery.sap.camelCase = function camelCase(sString) { 
+	jQuery.sap.camelCase = function camelCase(sString) {
 		return sString.replace( rCamelCase, function( sMatch, sChar ) {
 			return sChar.toUpperCase();
 		});
@@ -190,8 +190,8 @@ sap.ui.define(['jquery.sap.global'],
 	 * @SecPassthrough {0|return}
 	 */
 	jQuery.sap.hyphen = function hyphen(sString) {
-		return sString.replace( rHyphen, function(sMatch, sChar) { 
-			return "-" + sChar.toLowerCase(); 
+		return sString.replace( rHyphen, function(sMatch, sChar) {
+			return "-" + sChar.toLowerCase();
 		});
 	};
 
@@ -259,7 +259,7 @@ sap.ui.define(['jquery.sap.global'],
 		jQuery.sap.assert(typeof sPattern === "string" || sPattern instanceof String, "pattern must be string");
 		if (arguments.length > 2 || (aValues != null && !jQuery.isArray(aValues))) {
 			aValues = Array.prototype.slice.call(arguments,1);
-		} 
+		}
 		aValues = aValues || [];
 		return sPattern.replace(rMessageFormat, function($0,$1,$2,$3,offset) {
 			if ( $1 ) {
@@ -279,7 +279,7 @@ sap.ui.define(['jquery.sap.global'],
 			//   --> throw Error 
 			throw new Error("formatMessage: pattern syntax error at pos. " + offset);
 		});
-	}
+	};
 	
 	/**
 	 * Pattern to analyze MessageFormat strings.

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 		if (!oWindow) {
 			oWindow = window;
 		}
-		if (!sId || sId=="") {
+		if (!sId || sId == "") {
 			return null;
 		}
 
@@ -37,7 +37,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 
 		// otherwise try to lookup the name
 		var oRefs = oWindow.document.getElementsByName(sId);
-		for (var i=0;i<oRefs.length;i++) {
+		for (var i = 0;i < oRefs.length;i++) {
 			oDomRef = oRefs[i];
 			if (oDomRef && oDomRef.id == sId) {
 				return oDomRef;
@@ -130,14 +130,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 		sTagName = this.prop("tagName");
 		sType = this.prop("type");
 
-		if( this.length === 1 && ((sTagName == "INPUT" && (sType == "text" || sType == "password" || sType == "search"))
+		if ( this.length === 1 && ((sTagName == "INPUT" && (sType == "text" || sType == "password" || sType == "search"))
 				|| sTagName == "TEXTAREA" )) {
 
 			var oDomRef = this.get(0);
 
 			if (len > 0) { // SET
 
-				if (typeof(oDomRef.selectionStart) == "number") { // FF and IE9+ method
+				if (typeof (oDomRef.selectionStart) == "number") { // FF and IE9+ method
 					oDomRef.focus();
 					oDomRef.selectionStart = iPos;
 					oDomRef.selectionEnd = iPos;
@@ -145,10 +145,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 					oTextRange = oDomRef.createTextRange();
 					var iMaxLength = oDomRef.value.length;
 
-					if(iPos < 0 || iPos > iMaxLength) {
+					if (iPos < 0 || iPos > iMaxLength) {
 						iPos = iMaxLength;
 					}
-					if(oTextRange) {
+					if (oTextRange) {
 						oTextRange.collapse();
 						oTextRange.moveEnd("character",iPos);
 						oTextRange.moveStart("character",iPos);
@@ -160,36 +160,36 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 				// end of SET
 
 			} else { // GET
-				if (typeof(oDomRef.selectionStart) == "number") { // Firefox etc.
+				if (typeof (oDomRef.selectionStart) == "number") { // Firefox etc.
 					return oDomRef.selectionStart;
 				} else if (oDomRef.createTextRange) { // IE 8
 					oTextRange = window.document.selection.createRange();
 					var oCopiedTextRange = oTextRange.duplicate();
 					// Logic in TEXTAREA and INPUT is different in IE -> check for element type
-					if(oDomRef.tagName == "TEXTAREA"){
+					if (oDomRef.tagName == "TEXTAREA") {
 						oCopiedTextRange.moveToElementText(oDomRef);
 						var oCheckTextRange = oCopiedTextRange.duplicate();
 						iLength = oCopiedTextRange.text.length;
 
 						// first check if cursor on last position
 						oCheckTextRange.moveStart("character", iLength);
-						if(oCheckTextRange.inRange(oTextRange)){
+						var iStart = 0;
+						if (oCheckTextRange.inRange(oTextRange)) {
 							iStart = iLength;
-						}else{
+						} else {
 							// find out cursor position using a bisection algorithm
 							var iCheckLength = iLength;
-							var iStart = 0;
-							while(iLength > 1){
+							while (iLength > 1) {
 								iCheckLength = Math.round(iLength / 2);
 								iStart = iStart + iCheckLength;
 
 								oCheckTextRange = oCopiedTextRange.duplicate();
 								oCheckTextRange.moveStart("character", iStart);
-								if(oCheckTextRange.inRange(oTextRange)){
+								if (oCheckTextRange.inRange(oTextRange)) {
 									//cursor is after or on iStart -> Length = not checked Length
 									iLength = iLength - iCheckLength;
 
-								}else{
+								} else {
 									//cursor is before iStart  -> Length = checked Length
 									iStart = iStart - iCheckLength;
 									iLength = iCheckLength;
@@ -216,7 +216,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 	};
 
 	/**
-	 * Sets the text selection in the first element of the collection
+	 * Sets the text selection in the first element of the collection.
+	 * note: This feature is only supported for input element’s type of text, search, url, tel and password.
 	 *
 	 * @param {int} iStart Start position of the selection (inclusive)
 	 * @param {int} iEnd End position of the selection (exclusive)
@@ -235,7 +236,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 		}
 
 		try {
-			if (typeof(oDomRef.selectionStart) === "number") { // Firefox and IE9+
+			if (typeof (oDomRef.selectionStart) === "number") { // Firefox and IE9+
 
 				// sanity checks
 				if (iStart < 0) {
@@ -253,18 +254,49 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 
 				oDomRef.selectionStart = iStart; // TODO: maybe need to decouple via setTimeout?
 				oDomRef.selectionEnd = iEnd;
-			} else if(oDomRef.createTextRange) { // IE
+			} else if (oDomRef.createTextRange) { // IE
 				var oTextEditRange = oDomRef.createTextRange();
 				oTextEditRange.collapse();
 				oTextEditRange.moveStart('character', iStart);
 				oTextEditRange.moveEnd('character', iEnd - iStart);
 				oTextEditRange.select();
 			}
-		} catch (e) {}	// note: some browsers fail to read the "selectionStart" and "selectionEnd" properties from HTMLInputElement: The input element's type "number" does not support selection.
+		} catch (e) {}	// note: some browsers fail to read the "selectionStart" and "selectionEnd" properties from HTMLInputElement, e.g.: The input element's type "number" does not support selection.
 
 		return this;
 	};
 
+	/**
+	 * Retrieve the selected text in the first element of the collection.
+	 * note: This feature is only supported for input element’s type of text, search, url, tel and password.
+	 *
+	 * @return {string} The selected text.
+	 * @public
+	 * @name jQuery#getSelectedText
+	 * @author SAP SE
+	 * @since 1.26.0
+	 * @function
+	 */
+	jQuery.fn.getSelectedText = function() {
+		var oDomRef = this.get(0);
+
+		if (!oDomRef) {
+			return "";
+		}
+
+		try {
+			if (typeof oDomRef.selectionStart === "number") {
+				return oDomRef.value.substring(oDomRef.selectionStart, oDomRef.selectionEnd);
+			}
+
+			// older versions of Internet Explorer do not support the HTML5 "selectionStart" and "selectionEnd" properties
+			if (document.selection) {
+				return document.selection.createRange().text;
+			}
+		} catch (e) {}	// note: some browsers fail to read the "selectionStart" and "selectionEnd" properties from HTMLInputElement, e.g.: The input element's type "number" does not support selection.
+
+		return "";
+	};
 
 	/**
 	 * Returns the outer HTML of the given HTML element
@@ -416,7 +448,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 	 */
 	jQuery.fn.firstFocusableDomRef = function firstFocusableDomRef() {
 		var oContainerDomRef = this.get(0);
-		var visibilityHiddenFilter = function (idx){return jQuery(this).css("visibility") == "hidden";};
+		var visibilityHiddenFilter = function (idx){
+			return jQuery(this).css("visibility") == "hidden";
+		};
 		if (!oContainerDomRef || jQuery(oContainerDomRef).is(':hidden') ||
 				jQuery(oContainerDomRef).filter(visibilityHiddenFilter).length == 1) {
 			return null;
@@ -426,14 +460,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 			oDomRefFound = null;
 
 		while (oCurrDomRef) {
-			if(oCurrDomRef.nodeType == 1 && jQuery(oCurrDomRef).is(':visible')) {
+			if (oCurrDomRef.nodeType == 1 && jQuery(oCurrDomRef).is(':visible')) {
 				if (jQuery(oCurrDomRef).hasTabIndex()) {
 					return oCurrDomRef;
 				}
 
-				if(oCurrDomRef.childNodes) {
+				if (oCurrDomRef.childNodes) {
 					oDomRefFound = jQuery(oCurrDomRef).firstFocusableDomRef();
-					if(oDomRefFound) {
+					if (oDomRefFound) {
 						return oDomRefFound;
 					}
 				}
@@ -457,7 +491,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 	 */
 	jQuery.fn.lastFocusableDomRef = function lastFocusableDomRef() {
 		var oContainerDomRef = this.get(0);
-		var visibilityHiddenFilter = function (idx){return jQuery(this).css("visibility") == "hidden";};
+		var visibilityHiddenFilter = function (idx){
+			return jQuery(this).css("visibility") == "hidden";
+		};
 		if (!oContainerDomRef || jQuery(oContainerDomRef).is(':hidden') ||
 				jQuery(oContainerDomRef).filter(visibilityHiddenFilter).length == 1) {
 			return null;
@@ -467,10 +503,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 			oDomRefFound = null;
 
 		while (oCurrDomRef) {
-			if(oCurrDomRef.nodeType == 1 && jQuery(oCurrDomRef).is(':visible')) {
-				if(oCurrDomRef.childNodes) {
+			if (oCurrDomRef.nodeType == 1 && jQuery(oCurrDomRef).is(':visible')) {
+				if (oCurrDomRef.childNodes) {
 					oDomRefFound = jQuery(oCurrDomRef).lastFocusableDomRef();
-					if(oDomRefFound) {
+					if (oDomRefFound) {
 						return oDomRefFound;
 					}
 				}
@@ -543,19 +579,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 	 * http://api.jqueryui.com/category/ui-core/
 	 */
 	jQuery.support.selectstart = "onselectstart" in document.createElement("div");
-	jQuery.fn.extend({
+	jQuery.fn.extend( /** @lends jQuery.prototype */ {
 
 		/**
 		 * Disable HTML elements selection.
 		 *
 		 * @return {jQuery} <code>this</code> to allow method chaining.
-		 * @public
-		 * @methodOf jQuery.prototype
-		 * @name disableSelection
+		 * @protected
 		 * @since 1.24.0
 		 */
 		disableSelection: function() {
-			return this.on((jQuery.support.selectstart ? "selectstart" : "mousedown") + ".sapui5-disableSelection", function(oEvent) {
+			return this.on((jQuery.support.selectstart ? "selectstart" : "mousedown") + ".ui-disableSelection", function(oEvent) {
 				oEvent.preventDefault();
 			});
 		},
@@ -564,13 +598,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 		 * Enable HTML elements to get selected.
 		 *
 		 * @return {jQuery} <code>this</code> to allow method chaining.
-		 * @public
-		 * @methodOf jQuery.prototype
-		 * @name enableSelection
+		 * @protected
 		 * @since 1.24.0
 		 */
 		enableSelection: function() {
-			return this.off(".sapui5-disableSelection");
+			return this.off(".ui-disableSelection");
 		}
 	});
 
@@ -648,6 +680,46 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 		}
 	};
 
+	
+	/**
+	 * For the given scroll position measured from the "beginning" of a container (the right edge in RTL mode)
+	 * this method returns the scrollLeft value as understood by the current browser in RTL mode.
+	 * This value is specific to the given DOM element, as the computation may involve its dimensions.
+	 *
+	 * So when oDomRef should be scrolled 2px from the beginning, the number "2" must be given as iNormalizedScrollBegin
+	 * and the result of this method (which may be a large or even negative number, depending on the browser) can then be set as
+	 * oDomRef.scrollLeft to achieve the desired (cross-browser-consistent) scrolling position.
+	 * Low values make the right part of the content visible, high values the left part.
+	 *
+	 * This method does no scrolling on its own, it only calculates the value to set (so it can also be used for animations).
+	 *
+	 * Only use this method in RTL mode, as the behavior in LTR mode is undefined and may change!
+	 *
+	 * @param {int} iNormalizedScrollBegin The distance from the rightmost position to which the element should be scrolled
+	 * @param {Element} oDomRef The DOM Element to which scrollLeft will be applied
+	 * @return {int} The scroll position that must be set for the DOM element
+	 * @public
+	 * @author SAP SE
+	 * @since 1.26.1
+	 */
+	jQuery.sap.denormalizeScrollBeginRTL = function(iNormalizedScrollBegin, oDomRef) {
+
+		if (oDomRef) {
+			if (!!Device.browser.internet_explorer) {
+				return iNormalizedScrollBegin;
+
+			} else if (!!Device.browser.webkit) {
+				return oDomRef.scrollWidth - oDomRef.clientWidth - iNormalizedScrollBegin; 
+
+			} else if (!!Device.browser.firefox) {
+				return -iNormalizedScrollBegin;
+
+			} else {
+				// unrecognized browser; it is hard to return a best guess, as browser strategies are very different, so return the actual value
+				return iNormalizedScrollBegin;
+			}
+		}
+	};
 
 
 
@@ -682,7 +754,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 
 	function focusable( element, isTabIndexNotNaN ) {
 		var nodeName = element.nodeName.toLowerCase();
-		if ( "area" === nodeName ) {
+		if ( nodeName === "area" ) {
 			var map = element.parentNode,
 				mapName = map.name,
 				img;
@@ -692,13 +764,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 			img = jQuery( "img[usemap=#" + mapName + "]" )[0];
 			return !!img && visible( img );
 		}
+		/*eslint-disable no-nested-ternary */
 		return ( /input|select|textarea|button|object/.test( nodeName )
 			? !element.disabled
-			: "a" == nodeName
+			: nodeName == "a"
 				? element.href || isTabIndexNotNaN
 				: isTabIndexNotNaN)
 			// the element and all of its ancestors must be visible
 			&& visible( element );
+		/*eslint-enable no-nested-ternary */
 	}
 
 
@@ -825,11 +899,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 	 * @function
 	 */
 	jQuery.fn.parentByAttribute = function parentByAttribute(sAttribute, sValue) {
-		if (this.length>0) {
+		if (this.length > 0) {
 			if (sValue) {
-				return this.first().parents("["+sAttribute+"='"+sValue+"']").get(0);
+				return this.first().parents("[" + sAttribute + "='" + sValue + "']").get(0);
 			} else {
-				return this.first().parents("["+sAttribute+"]").get(0);
+				return this.first().parents("[" + sAttribute + "]").get(0);
 			}
 		}
 	};
@@ -880,11 +954,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 			}
 		}
 		
-		if(_oScrollbarSize[sKey]) {
+		if (_oScrollbarSize[sKey]) {
 			return _oScrollbarSize[sKey];
 		}
 
-		if(!document.body){
+		if (!document.body) {
 			return {width: 0, height: 0};
 		}
 		
@@ -921,7 +995,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 
 		return _oScrollbarSize[sKey];
 	};
-	
+
 	/**
 	 * Search ancestors of the given source DOM element for the specified CSS class name.
 	 * If the class name is found, set it to the root DOM element of the target control.
@@ -931,13 +1005,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'],
 	 * @param {jQuery|Control|string} vSource jQuery object, control or an id of the source element.
 	 * @param {jQuery|Control} vDestination target jQuery object or a control.
 	 * @return {jQuery|Element} Target element
-	 * @name jQuery.sap.syncStyleClass
 	 * @public
 	 * @since 1.22
 	 */
 	jQuery.sap.syncStyleClass = function(sStyleClass, vSource, vDestination) {
 
-		if(!sStyleClass) return vDestination;
+		if (!sStyleClass) {
+			return vDestination;
+		}
 
 		if (vSource instanceof sap.ui.core.Control) {
 			vSource = vSource.$();

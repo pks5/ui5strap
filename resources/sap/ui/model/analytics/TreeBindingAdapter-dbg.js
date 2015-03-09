@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -13,7 +13,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 	 * Adapter for TreeBindings to add the ListBinding functionality and use the 
 	 * tree structure in list based controls.
 	 *
-	 * @name sap.ui.model.analytics.TreeBindingAdapter
+	 * @alias sap.ui.model.analytics.TreeBindingAdapter
 	 * @function
 	 * @experimental This module is only for experimental use!
 	 * @protected
@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 	var TreeBindingAdapter = function() {
 	
 		// ensure only TreeBindings are enhanced which have not been enhanced yet
-		if(!(this instanceof TreeBinding && this.getContexts === undefined)) {
+		if (!(this instanceof TreeBinding && this.getContexts === undefined)) {
 			return;
 		}
 	
@@ -117,7 +117,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 			if (aRootContexts && aRootContexts.length > 0) {
 				this._bInitial = false;
 				var aNewContextInfos = this._createContextInfos(aRootContexts, null, 0, 0, iLength, iThreshold, true, 0, parseInt(iNumberOfExpandedLevels, 10) + 1);
-				if (this.bProvideGrandTotals && this._hasTotaledMeasures()) {
+				if (this.bProvideGrandTotals && this.hasTotaledMeasures()) {
 					this._updateContexts(0, aRootContexts, aNewContextInfos);
 				} else {
 					//If no grand totals should be displayed, we need to expand at least 1 level
@@ -137,7 +137,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 
 		// returns the context from the start index with the specified length 
 		var aContexts = this._aContexts.slice(iStartIndex, iStartIndex + iLength);
-		var aContextInfos = this._aContextInfos.slice(iStartIndex, iStartIndex + iLength);
 
 		var oMissingSections = {};
 	
@@ -169,7 +168,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 			var iSectionLength = oSection.endIndex - oSection.startIndex + 1;
 			var iAutoExpand = Math.max(that.mParameters.numberOfExpandedLevels - oSection.level, 0);
 			var aMissingContexts = that.getNodeContexts(oSection.parent, {
-				startIndex: oSection.startIndex, 
+				startIndex: oSection.startIndex,
 				length: iSectionLength,
 				threshold: iThreshold,
 				level: oSection.level,
@@ -197,7 +196,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 		var aExpandContextInfos = jQuery.grep(aContexts, function(oContextInfo) {
 			return oContextInfo.autoExpand > 0;
 		});
-		for (var i=0; i<aExpandContextInfos.length; i++) {
+		for (var i = 0; i < aExpandContextInfos.length; i++) {
 			this._expandNode(aExpandContextInfos[i], iStartIndex, iLength, iThreshold);
 		}
 	};
@@ -232,7 +231,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 			var iIndexOffset = aContextInfos.length;
 	
 			if (iRealLength > -1) {
-				for (var j=aContexts.length; j<iRealLength; j++) {
+				for (var j = aContexts.length; j < iRealLength; j++) {
 					aContexts.push(undefined);
 					aContextInfos.push(this._createContextInfos([undefined], oContext, iPosition, iLevel, iLength, iThreshold, false, iIndexOffset, oContextInfo.autoExpand ? oContextInfo.autoExpand - 1 : 0)[0]);
 					iPosition++;
@@ -255,20 +254,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 			var oParentContextInfo;
 			iLevel--;
 			var iIteratePosition = iInitialPosition;
-			while (oParentContextInfo = this._aContextInfos[iIteratePosition]) {
+			while ((oParentContextInfo = this._aContextInfos[iIteratePosition]) !== undefined) {
 				if (oParentContextInfo.level == iLevel) {
 					oParentContextInfo.childCount = oParentContextInfo.childCount + iContextLength;
 					iLevel--;
 				}
 				iIteratePosition--;
-				if (iLevel < 0) break;
+				if (iLevel < 0) {
+					break;
+				}
 			}
 			
 			var oLastInsertPositionContexInfo = this._aContextInfos[iLastInsertPosition];
 			if (oLastInsertPositionContexInfo) {
 				var iIncrease = this._aContextInfos[iLastInsertPosition - 1].position - oLastInsertPositionContexInfo.position + 1;
 				
-				for (var j=iLastInsertPosition; j<this._aContextInfos.length; j++) {
+				for (var j = iLastInsertPosition; j < this._aContextInfos.length; j++) {
 					this._aContextInfos[j].position += iIncrease;
 				}
 			}
@@ -279,7 +280,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 			this._updateExpandedInfo(oContextInfo.context, oContextInfo.level, 0, iLength, iThreshold);
 			
 			var bAdded = false;
-			for (var j=0; j<aContexts.length; j++) {
+			for (var j = 0; j < aContexts.length; j++) {
 				if (iInitialLevel <= this.aAggregationLevel.length && this._oOpenGroups[this._getGroupIdFromContext(aContexts[j], iInitialLevel)]) {
 					this._expandNode(aContextInfos[j], iStartIndex, iLength, iThreshold);
 					delete this._oOpenGroups[this._getGroupIdFromContext(aContexts[j], iInitialLevel)];
@@ -299,7 +300,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 		var sAbsolutePath = this._getGroupIdFromContext(oContext, iLevel);
 		var aPath = sAbsolutePath.substr(0, sAbsolutePath.length - 1).split("/");
 		var oExpanded = this._oExpanded;
-		for (var j=0; j<aPath.length; j++) {
+		for (var j = 0; j < aPath.length; j++) {
 			var sPath = aPath[j];
 			if (j == 0) {
 				sPath = "root";
@@ -316,13 +317,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 					});
 				}
 				var bEditedSection = false;
-				for (var k=0; k<oExpanded["sections"].length; k++) {
+				for (var k = 0; k < oExpanded["sections"].length; k++) {
 					var oSection = oExpanded["sections"][k];
 					var iSectionEndIndex = oSection.startIndex + oSection.length + oSection.threshold;
 					var iEndIndex = iStartIndex + iLength + iThreshold;
 					if (oSection.startIndex <= iStartIndex && iSectionEndIndex >= iEndIndex) {
 						//Sections is already part of another section
-						return
+						return;
 					} else if (oSection.startIndex <= iStartIndex && iSectionEndIndex >= iStartIndex) {
 						//Section starts within current section -> enlarge
 						oSection.threshold = Math.max(oSection.threshold, iThreshold);
@@ -387,7 +388,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 		var oExpanded = this._oExpanded["root"];
 		var sAbsolutePath = this._getGroupIdFromContext(oContext, iLevel);
 		var aPath = sAbsolutePath.substr(0, sAbsolutePath.length - 1).split("/");
-		for (var i=1; i<iLevel; i++) {
+		for (var i = 1; i < iLevel; i++) {
 			oExpanded = oExpanded["children"][aPath[i]];
 		}
 		delete oExpanded["children"][aPath[aPath.length - 1]];
@@ -402,19 +403,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 	
 		// update the parent nodes with the new length/child count
 		var oParentContextInfo;
-		while (oParentContextInfo = this._aContextInfos[iPosition]) {
+		while ((oParentContextInfo = this._aContextInfos[iPosition]) !== undefined) {
 			if (oParentContextInfo.level == iLevel) {
 				oParentContextInfo.childCount = oParentContextInfo.childCount - iLength;
 				iLevel--;
 			}
 			iPosition--;
-			if (iLevel < 0) break;
+			if (iLevel < 0) {
+				break;
+			}
 		}
 		
 		if (iRemovePosition < this._aContextInfos.length) {
 			var iDecrease = this._aContextInfos[iRemovePosition - 1].position - this._aContextInfos[iRemovePosition].position + 1;
 			
-			for (var j=iRemovePosition; j<this._aContextInfos.length; j++) {
+			for (var j = iRemovePosition; j < this._aContextInfos.length; j++) {
 				this._aContextInfos[j].position += iDecrease;
 			}
 			
@@ -433,7 +436,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 		if (!iLevel || iLevel < 1) {
 			iLevel = 1;
 		}
-		for (var i=0, j=this._aContextInfos.length; i < j; i++) {
+		for (var i = 0, j = this._aContextInfos.length; i < j; i++) {
 			if (this._aContextInfos[i].level == iLevel) {
 				this.collapse(i);
 				j = this._aContextInfos.length;
@@ -498,14 +501,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 			delete oGroup.children;
 			delete oGroup.childProperty;
 		} else {
-			for(var child in oGroup.children) {
+			for (var child in oGroup.children) {
 				this._removeGroups(oGroup.children[child], iLevel + 1, sPrefix + '/' + child);
 			}
 		}
 
 	};
 	
-	TreeBindingAdapter.prototype._hasTotaledMeasures = function() {
+	TreeBindingAdapter.prototype.hasTotaledMeasures = function() {
 		var bHasMeasures = false;
 		jQuery.each(this.getMeasureDetails(), function(iIndex, oMeasure) {
 			if (oMeasure.analyticalInfo.total) {
@@ -521,8 +524,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 	 * @param {function} fnFunction The function to call, when the event occurs.
 	 * @param {object} [oListener] object on which to call the given function.
 	 * @protected
-	 * @name sap.ui.model.analytics.TreeBindingAdapter#attachContextChange
-	 * @function
 	 */
 	TreeBindingAdapter.prototype.attachContextChange = function(fnFunction, oListener) {
 		this.attachEvent("contextChange", fnFunction, oListener);
@@ -533,8 +534,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 	 * @param {function} fnFunction The function to call, when the event occurs.
 	 * @param {object} [oListener] object on which to call the given function.
 	 * @protected
-	 * @name sap.ui.model.analytics.TreeBindingAdapter#detachContextChange
-	 * @function
 	 */
 	TreeBindingAdapter.prototype.detachContextChange = function(fnFunction, oListener) {
 		this.detachEvent("contextChange", fnFunction, oListener);
@@ -544,11 +543,42 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', './AnalyticalBin
 	 * Fire event contextChange to attached listeners.
 	 * @param {Map} [mArguments] the arguments to pass along with the event.
 	 * @private
-	 * @name sap.ui.model.analytics.TreeBindingAdapter#_fireContextChange
-	 * @function
 	 */
 	TreeBindingAdapter.prototype._fireContextChange = function(mArguments) {
 		this.fireEvent("contextChange", mArguments);
+	};
+	
+	/**
+	 * Sets the number of expanded levels on the TreeBinding (commonly an AnalyticalBinding).
+	 * This is NOT the same as TreeBindingAdapter#collapse or TreeBindingAdapter#expand.
+	 * Setting the number of expanded levels leads to different requests.
+	 * This function is used by the AnalyticalTable for the ungroup/ungroup-all feature.
+	 * @see sap.ui.table.AnalyticalTable#_getGroupHeaderMenu
+	 * @param {int} iLevels the number of levels which should be expanded, minimum is 0
+	 * @protected
+	 * @name sap.ui.model.analytics.TreeBindingAdapter#setNumberOfExpandedLevels
+	 * @function
+	 */
+	TreeBindingAdapter.prototype.setNumberOfExpandedLevels = function(iLevels) {
+		iLevels = iLevels || 0;
+		if (iLevels < 0) {
+			jQuery.sap.log.warning("TreeBindingAdapter: numberOfExpanded levels was set to 0. Negative values are prohibited.");
+			iLevels = 0;
+		}
+		// set the numberOfExpandedLevels on the binding directly
+		// this.mParameters is inherited from the Binding super class
+		this.mParameters.numberOfExpandedLevels = iLevels;
+	};
+	
+	/**
+	 * Retrieves the currently set number of expanded levels from the Binding (commonly an AnalyticalBinding).
+	 * @protected
+	 * @name sap.ui.model.analytics.TreeBindingAdapter#getNumberOfExpandedLevels
+	 * @function
+	 * @returns {int} the number of expanded levels
+	 */
+	TreeBindingAdapter.prototype.getNumberOfExpandedLevels = function() {
+		return this.mParameters.numberOfExpandedLevels;
 	};
 
 	return TreeBindingAdapter;

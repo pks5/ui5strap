@@ -1,23 +1,142 @@
 /* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
 
-
-/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- * 
- */@import "../../../../../../Base/baseLib/baseTheme/base.less"; /* ORIGINAL IMPORT PATH: "../../../../../sap/ui/core/themes/base/base.less" */
+ */
 
-@import (less) "../../../../../sap/ui/core/themes/base/global.css";
+@import "../../../../../../Base/baseLib/baseTheme/base.less"; /* ORIGINAL IMPORT PATH: "../../../../../sap/ui/core/themes/base/base.less" */
 
-/* START "Form.css" */
+@import "../../../../../sap/ui/core/themes/base/global.less";
+
+/* START "FixFlex.less" */
+/* ==========================================================================
+   CSS for control sap.m/FlexBox.control 
+   ========================================================================== */
+
+/* Class for vertical (default) layout 
+   ========================================================================== */
+.sapUiFixFlex {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+    
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+    
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	
+	height: 100%;
+}
+	
+/* Flexible child */
+.sapUiFixFlexFlexible {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+
+	-webkit-box-flex: 1;
+	-webkit-flex-grow: 1;
+	-ms-flex: 1 1;
+	flex-grow: 1;
+	
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+	
+.sapUiFixFlexFlexibleContainer {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	&>.sapUiFixFlex {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+}
+
+
+/* Fixed child */
+.sapUiFixFlexFixed {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+}
+
+/* Class for horizontal layout 
+   ========================================================================== */
+   
+.sapUiFixFlexRow {
+	-webkit-box-direction: normal;
+	-webkit-box-orient: horizontal;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+
+	&>.sapUiFixFlexFlexible,	
+	&>.sapUiFixFlexFixed {
+		width: auto;
+		height: 100%;
+	}
+}
+
+/* Legacy browser support
+   ========================================================================== */
+   
+.sapUiFixFlexRow {
+	&.sapUiFixFlex-Legacy {
+		position: relative;
+
+		&>.sapUiFixFlexFixed, 
+		&>.sapUiFixFlexFlexible {
+			position: relative;
+			float: left;
+		}
+	}
+}
+/* END "FixFlex.less" */
+
+/* START "Form.less" */
 /* ============================================ */
 /* CSS for control sap.ui.layout/Form.control   */
 /* ============================================ */
 
 
-/* END "Form.css" */
+/* END "Form.less" */
 
-/* START "FormLayout.css" */
+/* START "FormLayout.less" */
 /* ================================================ */
 /* CSS for control sap.ui.layout/FormLayout.control */
 /* ================================================ */
@@ -80,9 +199,9 @@
 	font-size: @sapUiFontHeader6Size;
 	color: @sapUiTextTitle;
 }
-/* END "FormLayout.css" */
+/* END "FormLayout.less" */
 
-/* START "Grid.css" */
+/* START "Grid.less" */
 /* UI5 RESPONSIVE GRID */
 
 div[class*="sapUiRespGrid"] > div[class*="sapUiRespGridSpan"] {
@@ -1905,9 +2024,9 @@ L  0.390625% =  4px / 1024px
    1.5625%   = 16px / 1024px
    3.125%    = 32px / 1024px
    ------------------------- */
-/* END "Grid.css" */
+/* END "Grid.less" */
 
-/* START "GridLayout.css" */
+/* START "GridLayout.less" */
 /* ====================================================== */
 /* CSS for control sap.ui.layout/form/GridLayout.control  */
 /* ====================================================== */
@@ -1955,9 +2074,9 @@ html[dir=rtl][data-sap-ui-browser^=ie] .sapUiGrid td > .sapUiFormTitle{
 	bottom: 0;
 	right: 0;
 }
-/* END "GridLayout.css" */
+/* END "GridLayout.less" */
 
-/* START "HorizontalLayout.css" */
+/* START "HorizontalLayout.less" */
 /* ====================================================== */
 /* CSS for control sap.ui.layout/HorizontalLayout.control */
 /* ====================================================== */
@@ -1975,9 +2094,9 @@ html[dir=rtl][data-sap-ui-browser^=ie] .sapUiGrid td > .sapUiFormTitle{
 	display: inline-block;
 	vertical-align: top;
 }
-/* END "HorizontalLayout.css" */
+/* END "HorizontalLayout.less" */
 
-/* START "ResponsiveFlowLayout.css" */
+/* START "ResponsiveFlowLayout.less" */
 /* ========================================================== */
 /* CSS for control sap.ui.layout/ResponsiveFlowLayout.control */
 /* ========================================================== */
@@ -2044,9 +2163,9 @@ HTML[data-sap-ui-browser*='ie'] .sapUiRFL {
 .sapUiRFLMultiContainerContent > .sapUiRFLMultiContent.sapUiRFLPaddingClass:last-child {
 	padding-right: 0;
 }
-/* END "ResponsiveFlowLayout.css" */
+/* END "ResponsiveFlowLayout.less" */
 
-/* START "ResponsiveGridLayout.css" */
+/* START "ResponsiveGridLayout.less" */
 /* =============================================================== */
 /* CSS for control sap.ui.layout.form/ResponsiveGridLayout.control */
 /* =============================================================== */
@@ -2144,9 +2263,9 @@ HTML[data-sap-ui-browser*='ie'] .sapUiRFL {
 	-moz-box-sizing: padding-box;
 	box-sizing: border-box;
 }
-/* END "ResponsiveGridLayout.css" */
+/* END "ResponsiveGridLayout.less" */
 
-/* START "ResponsiveLayout.css" */
+/* START "ResponsiveLayout.less" */
 /* =========================================================== */
 /* CSS for control sap.ui.layout.form/ResponsiveLayout.control */
 /* =========================================================== */
@@ -2177,9 +2296,9 @@ html[data-sap-ui-browser^=ie] .sapUiRLElementWithLabel > .sapUiRFLRow:first-chil
 html[dir=rtl][data-sap-ui-browser^=ie] .sapUiRLElementWithLabel > .sapUiRFLRow:first-child > .sapUiRFLContainer:first-child:not(.sapUiRFLFullLength) > div{
 	text-align: left;
 }
-/* END "ResponsiveLayout.css" */
+/* END "ResponsiveLayout.less" */
 
-/* START "SimpleForm.css" */
+/* START "SimpleForm.less" */
 /* ===================================================== */
 /* CSS for control sap.ui.layout/form/SimpleForm.control */
 /* ===================================================== */
@@ -2196,9 +2315,9 @@ html[dir=rtl][data-sap-ui-browser^=ie] .sapUiRLElementWithLabel > .sapUiRFLRow:f
 .sap-desktop .sapUiFioriObjectPage > section > div > .sapUiSimpleForm {
 	padding: 0 1rem;
 }
-/* END "SimpleForm.css" */
+/* END "SimpleForm.less" */
 
-/* START "Splitter.css" */
+/* START "Splitter.less" */
 
 /* ============================================= */
 /* CSS for control sap.ui.unified/Splitter.control */
@@ -2348,7 +2467,8 @@ html[dir=rtl][data-sap-ui-browser^=ie] .sapUiRLElementWithLabel > .sapUiRFLRow:f
 	line-height: 16px;
 	width: 16px;
 	left: ~"calc(50% - 8px)";
-	top: -5px;
+	top: 0;
+	
 }
 
 .sapUiLoSplitterV > .sapUiLoSplitterBar > .sapUiIcon.sapUiLoSplitterBarIcon::before,
@@ -2380,6 +2500,7 @@ html[dir=rtl][data-sap-ui-browser^=ie] .sapUiRLElementWithLabel > .sapUiRFLRow:f
 .sap-desktop .sapUiLoSplitterV > .sapUiLoSplitterOverlay > .sapUiLoSplitterOverlayBar,
 .sap-desktop .sapUiLoSplitterV .sapUiLoSplitterBarIcon {
 	height: 6px;
+	line-height: 6px;
 }
 
 
@@ -2394,6 +2515,7 @@ html[dir=rtl][data-sap-ui-browser^=ie] .sapUiRLElementWithLabel > .sapUiRFLRow:f
 .sap-tablet .sapUiLoSplitterV > .sapUiLoSplitterOverlay > .sapUiLoSplitterOverlayBar,
 .sap-tablet .sapUiLoSplitterV .sapUiLoSplitterBarIcon {
 	height: 16px;
+	line-height: 16px;
 }
 
 
@@ -2407,6 +2529,7 @@ html[dir=rtl][data-sap-ui-browser^=ie] .sapUiRLElementWithLabel > .sapUiRFLRow:f
 .sap-phone .sapUiLoSplitterV > .sapUiLoSplitterOverlay > .sapUiLoSplitterOverlayBar,
 .sap-phone .sapUiLoSplitterV .sapUiLoSplitterBarIcon {
 	height: 1px;
+	line-height: 1px;
 }
 
 
@@ -2462,9 +2585,10 @@ html[data-sap-ui-browser^=ie].sap-phone .sapUiLoSplitterV > .sapUiLoSplitterBar:
 	border: 1px dotted darken(@sapUiHighlight, 12);
 }
 
-/* END "Splitter.css" */
 
-/* START "VerticalLayout.css" */
+/* END "Splitter.less" */
+
+/* START "VerticalLayout.less" */
 /* ====================================================== */
 /* CSS for control sap.ui.layout/VerticalLayout.control   */
 /* ====================================================== */
@@ -2473,5 +2597,5 @@ html[data-sap-ui-browser^=ie].sap-phone .sapUiLoSplitterV > .sapUiLoSplitterBar:
 	display: inline-block;
 	overflow: hidden;
 }
-/* END "VerticalLayout.css" */
+/* END "VerticalLayout.less" */
 

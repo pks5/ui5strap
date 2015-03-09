@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -42,8 +42,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.dom', 'jquery.s
 					// code for modifying the real user-agent
 					if (Device.browser.safari) {
 						var __originalNavigator = window.navigator;
-						window.navigator = new Object();
+						window.navigator = {};
+						/*eslint-disable no-proto */
 						window.navigator.__proto__ = __originalNavigator;
+						/*eslint-enable no-proto */
 						window.navigator.__defineGetter__('userAgent', function(){ return ua; });
 					} else { // Chrome, IE10
 						Object.defineProperty(navigator, "userAgent", {
@@ -60,10 +62,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.dom', 'jquery.s
 						jQuery.browser.msie = jQuery.browser.opera = jQuery.browser.mozilla = false;
 						jQuery.browser.webkit = true;
 						jQuery.browser.version = "534.46"; // this is not exactly true for all UAs, but there are much bigger shortcomings of this approach than a minor version of the browser, so giving the exact value is not worth the effort
-					} else {
-	
-						// in IE10 with winphone emulation, jQuery.browser has already the correct information
-					}
+					} // else in IE10 with winphone emulation, jQuery.browser has already the correct information
 	
 					// update the sap.ui.Device.browser.* information
 					Device._update($.sap.simulateMobileOnDesktop);
@@ -263,8 +262,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.dom', 'jquery.s
 			 */
 			desktop: Device.system.desktop
 		},$.device.is);
-	
-	
+
+		// Windows Phone specific handling
+		if (sap.ui.Device.os.windows_phone) {
+			// Disable grey highlights over tapped areas.
+			// This meta tag works since Windows 8.1.
+			// Write in-place, otherwise IE ignores it:
+			document.write('<meta name="msapplication-tap-highlight" content="no">');
+			// Style for correct viewport size and scale definition.
+			// It works correctly since Windows 8.1.
+			// Older 8.0 patches return wrong device-width:
+			document.write('<style>@-ms-viewport{width:device-width;}</style>');
+		}
+
 		var _bInitMobileTriggered = false;
 	
 		/**
@@ -296,7 +306,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.dom', 'jquery.s
 		 * @param {boolean} [options.useFullScreenHeight=true] whether the height of the html root element should be set to 100%, which is required for other elements to cover the full height
 		 * @param {string}  [options.homeIcon=undefined] deprecated since 1.12, use jQuery.sap.setIcons instead.
 		 * @param {boolean} [options.homeIconPrecomposed=false] deprecated since 1.12, use jQuery.sap.setIcons instead.
-		 *
+		 * @param {boolean} [options.mobileWebAppCapable=true] whether the Application will be loaded in full screen mode after added to home screen on mobile devices. The default value for this property only enables the full screen mode when runs on iOS device.
+		 * 
 		 * @name jQuery.sap.initMobile
 		 * @function
 		 * @public
@@ -314,7 +325,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.dom', 'jquery.s
 					preventScroll: true,
 					preventPhoneNumberDetection: true,
 					useFullScreenHeight: true,
-					homeIconPrecomposed: false
+					homeIconPrecomposed: false,
+					mobileWebAppCapable: "default"
 				}, options);
 	
 				// en-/disable automatic link generation for phone numbers
@@ -322,7 +334,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.dom', 'jquery.s
 					$head.append($('<meta name="format-detection" content="telephone=no">')); // this only works for all DOM created afterwards
 				} else if (Device.browser.msie) {
 					$head.append($('<meta http-equiv="cleartype" content="on">'));
-					$head.append($('<meta name="msapplication-tap-highlight" content="no"/>'));
+					$head.append($('<meta name="msapplication-tap-highlight" content="no">'));
 				}
 	
 				var bIsIOS7Safari = Device.os.ios && Device.os.version >= 7 && Device.os.version < 8 && Device.browser.name === "sf";
@@ -334,28 +346,32 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.dom', 'jquery.s
 						//the phone zooms into the view although it shouldn't so these two lines will zoom out again see orientation change below
 						//the important part seems to be removing the device width
 						sMeta = 'minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=0';
-					} else if(bIsIOS7Safari && Device.system.tablet){
+					} else if (bIsIOS7Safari && Device.system.tablet) {
 						//remove the width = device width since it will not work correctly if the webside is embedded in a webview
 						sMeta = 'initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
 					} else if ($.device.is.iphone && (Math.max(window.screen.height, window.screen.width) === 568)) {
 						// iPhone 5
 						sMeta = "user-scalable=0, initial-scale=1.0";
-					} else if (Device.os.android && Device.os.version < 3){
+					} else if (Device.os.android && Device.os.version < 3) {
 						sMeta = "width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
-					} else if (Device.os.winphone){
-						sMeta = "width=320, user-scalable=no";
 					} else {
 						// all other devices
 						sMeta = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 					}
 					$head.append($('<meta name="viewport" content="' + sMeta + '">'));
 				}
+				
+				if (options.mobileWebAppCapable === "default") {
+					if (Device.os.ios) {
+						// keep the old behavior for compatibility
+						// enable fullscreen mode only when runs on iOS devices
+						$head.append($('<meta name="apple-mobile-web-app-capable" content="yes">')); // since iOS 2.1
+					}
+				} else {
+					$.sap.setMobileWebAppCapable(options.mobileWebAppCapable);
+				}
 	
 				if (Device.os.ios) {
-	
-					// enable fullscreen when possible
-					$head.append($('<meta name="apple-mobile-web-app-capable" content="yes">')); // since iOS 2.1
-	
 					// set the status bar style on Apple devices
 					$head.append($('<meta name="apple-mobile-web-app-status-bar-style" content="' + options.statusBar + '">')); // "default" or "black" or "black-translucent", since iOS 2.1
 	
@@ -377,28 +393,23 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.dom', 'jquery.s
 					});
 				}
 			}
-	
-			if (options.homeIcon) {
-	
+
+			if (options && options.homeIcon) {
 				var oIcons;
-	
+
 				if (typeof options.homeIcon === "string") {
 					oIcons = { phone: options.homeIcon };
 				} else {
 					oIcons = $.extend({}, options.homeIcon);
 				}
-	
+
 				oIcons.precomposed = options.homeIconPrecomposed || oIcons.precomposed;
 				oIcons.favicon = options.homeIcon.icon || oIcons.favicon;
 				oIcons.icon = undefined;
 				$.sap.setIcons(oIcons);
 			}
 		};
-	
-		
-	
-		
-	
+
 		/**
 		 * Sets the bookmark icon for desktop browsers and the icon to be displayed on the home screen of iOS devices after the user does "add to home screen".
 		 *
@@ -492,7 +503,43 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.dom', 'jquery.s
 				}
 			}
 		};
-	
+
+		/**
+		 * Sets the "apple-mobile-web-app-capable" and "mobile-web-app-capable" meta information which defines whether the application is loaded
+		 * in full screen mode (browser address bar and toolbar are hidden) after the user does "add to home screen" on mobile devices. Currently
+		 * this meta tag is only supported by iOS Safari and mobile Chrome from version 31.
+		 * 
+		 * If the application opens new tabs because of attachments, url and so on, setting this to false will let the user be able to go from the
+		 * new tab back to the application tab after the application is added to home screen.
+		 * 
+		 * Note: this function only has effect when the application runs on iOS Safari and mobile Chrome from version 31.
+		 * 
+		 * @param {boolean} bValue whether the Application will be loaded in full screen mode after added to home screen from iOS Safari or mobile Chrome from version 31.
+		 * @name jQuery.sap.setMobileWebAppCapable
+		 * @function
+		 * @public
+		 */
+		$.sap.setMobileWebAppCapable = function(bValue) {
+			if (!Device.system.tablet && !Device.system.phone) {
+				return;
+			}
+
+			var $Head = $("head"),
+				aPrefixes = ["", "apple"],
+				sNameBase = "mobile-web-app-capable",
+				sContent = bValue ? "yes" : "no",
+				i, sName, $WebAppMeta;
+
+			for (i = 0 ; i < aPrefixes.length ; i++) {
+				sName = aPrefixes[i] ? (aPrefixes[i] + "-" + sNameBase) : sNameBase;
+				$WebAppMeta = $Head.children('meta[name="' + sName + '"]');
+				if ($WebAppMeta.length) {
+					$WebAppMeta.attr("content", sContent);
+				} else {
+					$Head.append($('<meta name="' + sName + '" content="' + sContent + '">'));
+				}
+			}
+		};
 	})(jQuery);
 	
 	return jQuery;

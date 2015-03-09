@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -80,7 +80,34 @@ sap.ui.define(['jquery.sap.global'],
 			return result;
 		};
 	
-	
+		/**
+		 * Returns a ValueState object based on the given integer value
+		 * 
+		 *  0 : ValueState.None
+		 *  1 : ValueState.Warning
+		 *  2 : ValueState.Success
+		 *  3 : ValueState.Error
+		 *
+		 * @param {int} iState the state as an integer
+		 * @return {sap.ui.core.ValueState} the corresponding ValueState object
+		 * @static
+		 * @public
+		 * @name sap.ui.core.ValueStateSupport.formatValueState
+		 * @function
+		 * @since 1.25.0
+		 */
+		ValueStateSupport.formatValueState = function(iState) {
+			switch (iState) {
+				case 1:
+					return sap.ui.core.ValueState.Warning;
+				case 2:
+					return sap.ui.core.ValueState.Success;
+				case 3:
+					return sap.ui.core.ValueState.Error;
+				default:
+					return sap.ui.core.ValueState.None;
+			}
+		};
 	
 
 	return ValueStateSupport;

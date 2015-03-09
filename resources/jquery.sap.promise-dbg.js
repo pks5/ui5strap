@@ -1,10 +1,8 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
-
-/*global Promise *///declare unusual global vars for JSLint/SAPUI5 validation
 
 // Provides ECMA Script 6 Polyfill
 (function(jQuery) {
@@ -17,20 +15,20 @@
 	 */
 	
 	var Promise = function(fAction) {
-		if(typeof(fAction) != "function"){
+		if (typeof (fAction) != "function") {
 			throw new TypeError("Argument is not a function");
 		}
 		
 		this._deferred = new jQuery.Deferred();
 
-		try{
+		try {
 			var that = this;
 			fAction(function(oVal){
 				_finalize(that, oVal, true); //force async resolve
 			}, function(oVal){
 				_finalize(that, oVal, false); //force async reject
 			});
-		}catch(e){ //Error in action rejects the promise
+		} catch (e) { //Error in action rejects the promise
 			_finalize(this, e, false);
 		}
 	};
@@ -52,11 +50,11 @@
 	
 	Promise.all = function(aPromises){
 		return new Promise(function(fResolve, fReject){
-			if(!jQuery.isArray(aPromises)){
+			if (!jQuery.isArray(aPromises)) {
 				fReject({});
 				return;
 			}
-			if(aPromises.length == 0){
+			if (aPromises.length == 0) {
 				fResolve([]);
 				return;
 			}
@@ -67,22 +65,22 @@
 			
 			function _check(iIdx){
 				Promise.resolve(aPromises[iIdx]).then(function(oObj){
-					if(!bFailed){
+					if (!bFailed) {
 						iCount++;
 						aValues[iIdx] = oObj;
-						if(iCount == aPromises.length){
+						if (iCount == aPromises.length) {
 							fResolve(aValues);
 						}
 					}
 				}, function(oObj){
-					if(!bFailed){
+					if (!bFailed) {
 						bFailed = true;
 						fReject(oObj);
 					}
 				});
-			};
+			}
 			
-			for(var i=0; i<aPromises.length; i++){
+			for (var i = 0; i < aPromises.length; i++) {
 				_check(i);
 			}
 		});
@@ -90,24 +88,26 @@
 	
 	Promise.race = function(aPromises){
 		return new Promise(function(fResolve, fReject){
-			if(!jQuery.isArray(aPromises)){
+			if (!jQuery.isArray(aPromises)) {
 				fReject({});
 			}
 			
 			var bFinal = false;
 			
-			for(var i=0; i<aPromises.length; i++){
+			for (var i = 0; i < aPromises.length; i++) {
+				/*eslint-disable no-loop-func */
 				Promise.resolve(aPromises[i]).then(function(oObj){
-					if(!bFinal){
+					if (!bFinal) {
 						bFinal = true;
 						fResolve(oObj);
 					}
 				}, function(oObj){
-					if(!bFinal){
+					if (!bFinal) {
 						bFinal = true;
 						fReject(oObj);
 					}
 				});
+				/*eslint-enable no-loop-func */
 			}
 		});
 	};
@@ -123,27 +123,27 @@
 	
 	// *** Helper functions ***
 	
-	function _dummy(){};
+	function _dummy(){}
 	
 	function _isThenable(oObj){
-		return oObj && oObj.then && typeof(oObj.then) == "function";
-	};
+		return oObj && oObj.then && typeof (oObj.then) == "function";
+	}
 	
 	function _finalize(oPromise, oObj, bResolve){
 		setTimeout(function(){
-			if(_isThenable(oObj) && bResolve){ //Assimilation
+			if (_isThenable(oObj) && bResolve) { //Assimilation
 				_resolve(oPromise, oObj);
-			}else{
+			} else {
 				oPromise._deferred[bResolve ? "resolve" : "reject"](oObj);
 			}
 		}, 0);
 		return oPromise;
-	};
+	}
 	
 	function _resolve(oPromise, oObj){
-		if(_isThenable(oObj)){
+		if (_isThenable(oObj)) {
 			var bFinal = false;
-			try{
+			try {
 				oObj.then(function(oVal){
 					_finalize(oPromise, oVal, true);
 					bFinal = true;
@@ -151,41 +151,41 @@
 					_finalize(oPromise, oVal, false);
 					bFinal = true;
 				});
-			}catch(e){
-				if(!bFinal){
+			} catch (e) {
+				if (!bFinal) {
 					_finalize(oPromise, e, false);
-				}else{
+				} else {
 					jQuery.sap.log.debug("Promise: Error in then: " + e); //Error is ignored
 				}
 			}
-		}else{
+		} else {
 			_finalize(oPromise, oObj, true);
 		}
 		return oPromise;
-	};
+	}
 	
 	function _doWrap(fAction, oPromise, bResolve){
 		return function(oObj){
-			if(!fAction){
+			if (!fAction) {
 				_finalize(oPromise, oObj, bResolve);
-			}else{
-				try{
+			} else {
+				try {
 					_resolve(oPromise, fAction(oObj));
-				}catch(e){ //catch error in fAction
+				} catch (e) { //catch error in fAction
 					_finalize(oPromise, e, false);
 				}
 			}
 		};
-	};
+	}
 	
 	
 	// *** Polyfill ***
 	
-	if(!window.Promise){
+	if (!window.Promise) {
 		window.Promise = Promise;
 	}
 
-	if(window.sap && window.sap.__ui5PublishPromisePolyfill){ //For testing purposes
+	if (window.sap && window.sap.__ui5PublishPromisePolyfill) { //For testing purposes
 		window._UI5Promise = Promise;
 	}
 	

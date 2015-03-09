@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -26,13 +26,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		 * @param {string|object[]} sName The name of the Controller to instantiate. If a Controller is defined as real sub-class,
 		 *                                   the "arguments" of the sub-class constructor should be given instead.
 		 * @public
-		 * @name sap.ui.core.mvc.Controller
+		 * @alias sap.ui.core.mvc.Controller
 		 */
 		var Controller = EventProvider.extend("sap.ui.core.mvc.Controller", /** @lends sap.ui.core.mvc.Controller.prototype */ {
 			
 			constructor : function(sName) {
 				var oToExtend = null;
-				if (typeof(sName) == "string") {
+				if (typeof (sName) == "string") {
 					/* TODO the whole if block is unnecessary, if constructor is really private (as documented) */
 					if (!mRegistry[sName]) {
 						jQuery.sap.require({modName: sName, type: "controller"}); // maybe there is a controller definition, but it has not been loaded yet -> try to load
@@ -54,11 +54,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	
 		});
 	
-		var mControllerLifecycleMethods = { 
-			"onInit": true, 
+		var mControllerLifecycleMethods = {
+			"onInit": true,
 			"onExit": false,
 			"onBeforeRendering": false,
-			"onAfterRendering": true 
+			"onAfterRendering": true
 		};
 		
 		function extendIfRequired(oController, sName) {
@@ -80,7 +80,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 						jQuery.sap.log.error("Attempt to load Extension Controller " + sControllerName + " was not successful - is the Controller correctly defined in its file?");
 					}
 					
-					if (oCustomControllerDef = mRegistry[sControllerName]) { //variable init, not comparison!
+					if ((oCustomControllerDef = mRegistry[sControllerName]) !== undefined) { //variable init, not comparison!
 	
 						for (var memberName in oCustomControllerDef) { // TODO: check whether it is a function? This does not happen until now, so rather not.
 							
@@ -111,9 +111,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 						
 						return oController;
 						
-					} else {
+					}// else {
 						// FIXME: what to do for typed controllers?
-					}
+					//}
 				} else {
 					jQuery.sap.log.debug("Customizing: no Controller extension found for Controller '" + sName + "'.");
 				}
@@ -121,23 +121,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 			return oController;
 		}
 		
-		/**
-		 * Creates a new subclass of class sap.ui.core.mvc.Controller with name <code>sClassName</code> 
-		 * and enriches it with the information contained in <code>oClassInfo</code>.
-		 * 
-		 * For a detailed description of <code>oClassInfo</code> or <code>FNMetaImpl</code> 
-		 * see {@link sap.ui.base.Object.extend Object.extend}.
-		 *   
-		 * @param {string} sClassName name of the class to be created
-		 * @param {object} [oClassInfo] object literal with informations about the class  
-		 * @param {function} [FNMetaImpl] alternative constructor for a metadata object
-		 * @return {function} the created class / constructor function
-		 * @public
-		 * @static
-		 * @name sap.ui.core.mvc.Controller.extend
-		 * @function
-		 */
-	
 		/**
 		 * Defines a controller class or creates an instance of an already defined controller class.
 		 *
@@ -196,8 +179,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		 * Returns the view associated with this controller or undefined.
 		 * @return {sap.ui.core.mvc.View} View connected to this controller.
 		 * @public
-		 * @name sap.ui.core.mvc.Controller#getView
-		 * @function
 		 */
 		Controller.prototype.getView = function() {
 			return this.oView;
@@ -216,11 +197,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		 * @param {string} sId The view-local id
 		 * @return {sap.ui.core.Element} Element by its (view local) id
 		 * @public
-		 * @name sap.ui.core.mvc.Controller#byId
-		 * @function
 		 */
 		Controller.prototype.byId = function(sId) {
-			return this.oView ? this.oView.byId(sId): undefined;
+			return this.oView ? this.oView.byId(sId) : undefined;
 		};
 	
 	
@@ -233,11 +212,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		 * @param {string} sId The view-local id
 		 * @return {string} The prefixed id
 		 * @public
-		 * @name sap.ui.core.mvc.Controller#createId
-		 * @function
 		 */
 		Controller.prototype.createId = function(sId) {
-			return this.oView ? this.oView.createId(sId): undefined;
+			return this.oView ? this.oView.createId(sId) : undefined;
 		};
 
 		/**
@@ -249,18 +226,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 		 * @return {sap.ui.core.Component} The Component instance
 		 * @since 1.23.0
 		 * @public
-		 * @name sap.ui.core.mvc.Controller#getOwnerComponent 
-		 * @function
 		 */
 		Controller.prototype.getOwnerComponent = function () {
 			jQuery.sap.require("sap.ui.core.Component");
-			var vComponentId = sap.ui.core.Component.getOwnerIdFor(this.getView());
-
-			if(vComponentId === undefined) {
-				return undefined;
-			}
-
-			return sap.ui.component(vComponentId);
+			return sap.ui.core.Component.getOwnerComponentFor(this.getView());
 		};
 	
 	

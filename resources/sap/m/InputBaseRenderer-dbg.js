@@ -1,264 +1,286 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-jQuery.sap.declare("sap.m.InputBaseRenderer");
-jQuery.sap.require("sap.ui.core.ValueStateSupport");
+sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer', 'sap/ui/core/ValueStateSupport'],
+	function(jQuery, Renderer, ValueStateSupport) {
+	"use strict";
 
-/**
- * @class Input renderer.
- *
- * @static
- */
-sap.m.InputBaseRenderer = {};
 
-/**
- * Renders the HTML for the given control, using the provided {@link sap.ui.core.RenderManager}.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.m.Select} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.render = function(oRm, oControl) {
-	if (!oControl.getVisible()) {
-		return;
-	}
+	/**
+	 * Input renderer.
+	 *
+	 * @namespace
+	 */
+	var InputBaseRenderer = {};
 
-	var sValueState = oControl.getValueState();
+	/**
+	 * Renders the HTML for the given control, using the provided {@link sap.ui.core.RenderManager}.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.m.Select} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.render = function(oRm, oControl) {
+		var sValueState = oControl.getValueState();
+		var sTextAlign = Renderer.getTextAlign(oControl.getTextAlign());
 
-	oRm.write("<div");
-	oRm.writeControlData(oControl);
+		oRm.write("<div");
+		oRm.writeControlData(oControl);
+	
+		// outer styles
+		this.addOuterStyles(oRm, oControl);
 
-	// outer styles
-	this.addOuterStyles(oRm, oControl);
+		if (oControl.getWidth()) {
+			oRm.addStyle("width", oControl.getWidth());
+		}
+	
+		oRm.writeStyles();
 
-	if (oControl.getWidth()) {
-		oRm.addStyle("width", oControl.getWidth());
-	}
+		// outer classes
+		oRm.addClass("sapMInputBase");
+		this.addCursorClass(oRm, oControl);
+		this.addOuterClasses(oRm, oControl);
 
-	oRm.writeStyles();
+		if (!oControl.getEnabled()) {
+			oRm.addClass("sapMInputBaseDisabled");
+		}
 
-	// outer classes
-	oRm.addClass("sapMInputBase");
-	this.addCursorClass(oRm, oControl);
-	this.addOuterClasses(oRm, oControl);
+		if (!oControl.getEditable()) {
+			oRm.addClass("sapMInputBaseReadonly");
+		}
 
-	if (!oControl.getEnabled()) {
-		oRm.addClass("sapMInputBaseDisabled");
-	}
+		if (sValueState !== sap.ui.core.ValueState.None) {
+			oRm.addClass("sapMInputBaseState");
+			oRm.addClass("sapMInputBase" + sValueState);
+		}
 
-	if (!oControl.getEditable()) {
-		oRm.addClass("sapMInputBaseReadonly");
-	}
+		oRm.writeClasses();
 
-	if(sValueState !== sap.ui.core.ValueState.None){
-		oRm.addClass("sapMInputBaseState");
-		oRm.addClass("sapMInputBase" + sValueState);
-	}
+		// outer attributes
+		this.writeOuterAttributes(oRm, oControl);
+		var sTooltip = ValueStateSupport.enrichTooltip(oControl, oControl.getTooltip_AsString());
 
-	oRm.writeClasses();
+		if (sTooltip) {
+			oRm.writeAttributeEscaped("title", sTooltip);
+		}
 
-	// outer attributes
-	this.writeOuterAttributes(oRm, oControl);
-	var sTooltip = sap.ui.core.ValueStateSupport.enrichTooltip(oControl, oControl.getTooltip_AsString());
-
-	if (sTooltip) {
-		oRm.writeAttributeEscaped("title", sTooltip);
-	}
-
-	oRm.write(">");
-
-	this.prependInnerContent(oRm, oControl);
-
-	// enable self-made placeholder
-	if (oControl._bShowLabelAsPlaceholder) {
-		oRm.write('<label class="sapMInputBasePlaceholder"');
-		oRm.writeAttribute("id", oControl.getId() + "-placeholder");
-		oRm.writeAttribute("for", oControl.getId() + "-inner");
 		oRm.write(">");
-		oRm.writeEscaped(oControl._getPlaceholder());
-		oRm.write("</label>");
-	}
 
-	// start inner
-	this.openInputTag(oRm, oControl);
+		this.prependInnerContent(oRm, oControl);
 
-	// inner attributes
-	oRm.writeAttribute("id", oControl.getId() + "-inner");
+		// enable self-made placeholder
+		if (oControl._bShowLabelAsPlaceholder) {
+			oRm.write('<label class="sapMInputBasePlaceholder"');
+			oRm.writeAttribute("id", oControl.getId() + "-placeholder");
+			oRm.writeAttribute("for", oControl.getId() + "-inner");
+			if (sTextAlign) {
+				oRm.addStyle("text-align", sTextAlign);
+			}
+			this.addPlaceholderStyles(oRm, oControl);
+			oRm.writeStyles();
+			oRm.write(">");
+			oRm.writeEscaped(oControl._getPlaceholder());
+			oRm.write("</label>");
+		}
 
-	// write the name of input
-	if (oControl.getName()) {
-		oRm.writeAttributeEscaped("name", oControl.getName());
-	}
+		// start inner
+		this.openInputTag(oRm, oControl);
 
-	// let the browser handle placeholder
-	if (!oControl._bShowLabelAsPlaceholder && oControl._getPlaceholder()) {
-		oRm.writeAttributeEscaped("placeholder", oControl._getPlaceholder());
-	}
+		// inner attributes
+		oRm.writeAttribute("id", oControl.getId() + "-inner");
 
-	// check if there is a maxLength property
-	if (oControl.getMaxLength && oControl.getMaxLength() > 0) {
-		oRm.writeAttribute("maxlength", oControl.getMaxLength());
-	}
+		// write the name of input
+		if (oControl.getName()) {
+			oRm.writeAttributeEscaped("name", oControl.getName());
+		}
 
-	// check disable and readonly
-	if (!oControl.getEnabled()) {
-		oRm.writeAttribute("disabled", "disabled");
-	} else if (!oControl.getEditable()) {
-		oRm.writeAttribute("tabindex", "-1");
-		oRm.writeAttribute("readonly", "readonly");
-		oRm.addClass("sapMInputBaseReadonlyInner");
-	}
+		// let the browser handle placeholder
+		if (!oControl._bShowLabelAsPlaceholder && oControl._getPlaceholder()) {
+			oRm.writeAttributeEscaped("placeholder", oControl._getPlaceholder());
+		}
 
-	this.writeInnerValue(oRm, oControl);
-	this.writeInnerAttributes(oRm, oControl);
+		// check if there is a maxLength property
+		if (oControl.getMaxLength && oControl.getMaxLength() > 0) {
+			oRm.writeAttribute("maxlength", oControl.getMaxLength());
+		}
 
-	// inner classes
-	oRm.addClass("sapMInputBaseInner");
-	if(sValueState !== sap.ui.core.ValueState.None){
-		oRm.addClass("sapMInputBaseStateInner");
-		oRm.addClass("sapMInputBase" + sValueState + "Inner");
-	}
-	this.addInnerClasses(oRm, oControl);
-	oRm.writeClasses();
+		// check disable and readonly
+		if (!oControl.getEnabled()) {
+			oRm.writeAttribute("disabled", "disabled");
+			oRm.addClass("sapMInputBaseDisabledInner");
+		} else if (!oControl.getEditable()) {
+			oRm.writeAttribute("tabindex", "-1");
+			oRm.writeAttribute("readonly", "readonly");
+			oRm.addClass("sapMInputBaseReadonlyInner");
+		}
 
-	// inner styles
-	this.addInnerStyles(oRm, oControl);
-	oRm.writeStyles();
-	oRm.write(">");
+		this.writeInnerValue(oRm, oControl);
+		this.writeInnerAttributes(oRm, oControl);
 
-	// finish inner
-	this.writeInnerContent(oRm, oControl);
-	this.closeInputTag(oRm, oControl);
+		// inner classes
+		oRm.addClass("sapMInputBaseInner");
+		if (sValueState !== sap.ui.core.ValueState.None) {
+			oRm.addClass("sapMInputBaseStateInner");
+			oRm.addClass("sapMInputBase" + sValueState + "Inner");
+		}
+		this.addInnerClasses(oRm, oControl);
+		oRm.writeClasses();
 
-	// finish outer
-	oRm.write("</div>");
-};
+		// write text-align
+		if (sTextAlign) {
+			oRm.addStyle("text-align", sTextAlign);
+		}
 
-/**
- * This method is reserved for derived classes to add extra attributes to the Input.
- *
- * @deprecated sap.m.InputBaseRenderer#writeInnerAttributes should be called instead of this method.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.writeAttributes = function(oRm, oControl) {
-	jQuery.sap.log.warning("Usage of deprecated function: sap.m.InputBaseRenderer#writeAttributes");
-	this.writeInnerAttributes(oRm, oControl);
-};
+		// inner styles
+		this.addInnerStyles(oRm, oControl);
+		oRm.writeStyles();
+		oRm.write(">");
 
-/**
- * Adds extra CSS class.
- *
- * @deprecated sap.m.InputBaseRenderer#addOuterClasses should be called instead of this method.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.addClasses = function(oRm, oControl) {
-	jQuery.sap.log.warning("Usage of deprecated function: sap.m.InputBaseRenderer#addClasses");
-	this.addOuterClasses(oRm, oControl);
-};
+		// finish inner
+		this.writeInnerContent(oRm, oControl);
+		this.closeInputTag(oRm, oControl);
 
-/**
- * Write the opening tag name of the input.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.openInputTag = function(oRm, oControl) {
-	oRm.write("<input");
-};
+		// finish outer
+		oRm.write("</div>");
+	};
+	
+	/**
+	 * This method is reserved for derived classes to add extra attributes to the Input.
+	 *
+	 * @deprecated sap.m.InputBaseRenderer#writeInnerAttributes should be called instead of this method.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.writeAttributes = function(oRm, oControl) {
+		jQuery.sap.log.warning("Usage of deprecated function: sap.m.InputBaseRenderer#writeAttributes");
+		this.writeInnerAttributes(oRm, oControl);
+	};
 
-/**
- * Write the value of the input.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.writeInnerValue = function(oRm, oControl) {
-	oRm.writeAttributeEscaped("value", oControl.getValue());
-};
+	/**
+	 * Adds extra CSS class.
+	 *
+	 * @deprecated sap.m.InputBaseRenderer#addOuterClasses should be called instead of this method.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.addClasses = function(oRm, oControl) {
+		jQuery.sap.log.warning("Usage of deprecated function: sap.m.InputBaseRenderer#addClasses");
+		this.addOuterClasses(oRm, oControl);
+	};
 
-/**
- * Add cursor class to input container.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.addCursorClass = function(oRm, oControl) {
-};
+	/**
+	 * Write the opening tag name of the input.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.openInputTag = function(oRm, oControl) {
+		oRm.write("<input");
+	};
 
-/**
- * This method is reserved for derived class to add extra styles for input container.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.addOuterStyles = function(oRm, oControl) {};
+	/**
+	 * Write the value of the input.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.writeInnerValue = function(oRm, oControl) {
+		oRm.writeAttributeEscaped("value", oControl.getValue());
+	};
 
-/**
- * This method is reserved for derived classes to add extra classes for input container.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.addOuterClasses = function(oRm, oControl) {};
+	/**
+	 * Add cursor class to input container.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.addCursorClass = function(oRm, oControl) {
+	};
 
-/**
- * This method is reserved for derived class to add extra attributes for input container.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.writeOuterAttributes = function(oRm, oControl) {};
+	/**
+	 * This method is reserved for derived class to add extra styles for input container.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.addOuterStyles = function(oRm, oControl) {};
 
-/**
- * This method is reserved for derived classes to add extra styles for input element.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.addInnerStyles = function(oRm, oControl) {};
+	/**
+	 * This method is reserved for derived classes to add extra classes for input container.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.addOuterClasses = function(oRm, oControl) {};
 
-/**
- * This method is reserved for derived classes to add extra classes for input element.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.addInnerClasses = function(oRm, oControl) {};
+	/**
+	 * This method is reserved for derived class to add extra attributes for input container.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.writeOuterAttributes = function(oRm, oControl) {};
 
-/**
- * This method is reserved for derived classes to add extra attributes for the input element.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.writeInnerAttributes = function(oRm, oControl) {};
+	/**
+	 * This method is reserved for derived classes to add extra styles for input element.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.addInnerStyles = function(oRm, oControl) {};
 
-/**
- * This method is reserved for derived classes to prepend inner content.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.prependInnerContent = function(oRm, oControl) {};
+	/**
+	 * This method is reserved for derived classes to add extra classes for input element.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.addInnerClasses = function(oRm, oControl) {};
 
-/**
- * Write the value of the input.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.writeInnerContent = function(oRm, oControl) {};
+	/**
+	 * This method is reserved for derived classes to add extra attributes for the input element.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.writeInnerAttributes = function(oRm, oControl) {};
 
-/**
- * Write the closing tag name of the input.
- *
- * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
- */
-sap.m.InputBaseRenderer.closeInputTag = function(oRm, oControl) {};
+	/**
+	 * This method is reserved for derived classes to prepend inner content.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.prependInnerContent = function(oRm, oControl) {};
+
+	/**
+	 * Write the value of the input.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.writeInnerContent = function(oRm, oControl) {};
+
+	/**
+	 * Write the closing tag name of the input.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.closeInputTag = function(oRm, oControl) {};
+
+	/**
+	 * This method is reserved for derived classes to add extra styles for the placeholder, if rendered as label.
+	 *
+	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
+	 */
+	InputBaseRenderer.addPlaceholderStyles = function(oRm, oControl) {};
+
+	return InputBaseRenderer;
+
+}, /* bExport= */ true);

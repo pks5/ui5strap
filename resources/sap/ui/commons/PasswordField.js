@@ -1,8 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
-jQuery.sap.declare("sap.ui.commons.PasswordField");jQuery.sap.require("sap.ui.commons.library");jQuery.sap.require("sap.ui.commons.TextField");sap.ui.commons.TextField.extend("sap.ui.commons.PasswordField",{metadata:{library:"sap.ui.commons"}});
-sap.ui.commons.PasswordField.prototype.onfocusin=function(e){sap.ui.commons.TextField.prototype.onfocusin.apply(this,arguments);if(!sap.ui.Device.support.input.placeholder&&this.getPlaceholder()){jQuery(this.getInputDomRef()).attr("type","password")}};
-sap.ui.commons.PasswordField.prototype.onsapfocusleave=function(e){if(!sap.ui.Device.support.input.placeholder&&this.getPlaceholder()){var i=jQuery(this.getInputDomRef());if(!i.val()){i.removeAttr("type")}}sap.ui.commons.TextField.prototype.onsapfocusleave.apply(this,arguments)};
+sap.ui.define(['jquery.sap.global','./TextField','./library'],function(q,T,l){"use strict";var P=T.extend("sap.ui.commons.PasswordField",{metadata:{library:"sap.ui.commons"}});P.prototype.onfocusin=function(e){T.prototype.onfocusin.apply(this,arguments);if(!sap.ui.Device.support.input.placeholder&&this.getPlaceholder()){q(this.getInputDomRef()).attr("type","password")}};P.prototype.onsapfocusleave=function(e){if(!sap.ui.Device.support.input.placeholder&&this.getPlaceholder()){var i=q(this.getInputDomRef());if(!i.val()){i.removeAttr("type")}}T.prototype.onsapfocusleave.apply(this,arguments)};return P},true);

@@ -1,14 +1,15 @@
 /* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
 
-
-/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- * 
- */@import "../../../../../../Base/baseLib/baseTheme/base.less"; /* ORIGINAL IMPORT PATH: "base.less" */
+ */
 
-@import (less) "global.css";
-/* START "shared.css" */
+@import "../../../../../../Base/baseLib/baseTheme/base.less"; /* ORIGINAL IMPORT PATH: "base.less" */
+
+@import "global.less";
+/* START "shared.less" */
 /* Shared CSS for 'base' theme */
 
 .sapUiThemeDesignerCustomCssCheck() when(@sapUiThemeDesignerCustomCss = true){
@@ -142,10 +143,160 @@
 	bottom: 0;
 	right: 0;
 }
-/* END "shared.css" */
+
+/*
+* Enforces 'auto' width. To be used in combination 
+ * with pre-defined margin classes to remove any '100%'
+* width's that might be set.
+*/
+.sapUiForceWidthAuto { width: auto !important; }
+
+/* 
+ * Pre-defined margins classes. These contain css margin
+* properties which are flagged 'important' to make sure
+* margins that come with a control are overwritten (an
+* example for a control with a pre defined margin is the
+* sap.m.List). 
+ *
+* In case your control comes with width '100%', horizontal
+* margins will not work properly. If your control has a
+* width property (which is usually the case), you should
+* set that property to 'auto'.
+*
+* There are some control's though which do not have a width
+* property but still have a default width of '100%' 
+ * (one example would be the SimpleForm). For these cases,  
+ * please use css class 'sapUiForceWidthAuto' to which replace
+* your control's default width with value 'auto'.
+*/
+
+/* Margins all around */
+.sapUiTinyMargin     { margin: @sapUiMarginTiny !important; }
+.sapUiSmallMargin    { margin: @sapUiMarginSmall !important; }
+.sapUiMediumMargin   { margin: @sapUiMarginMedium !important; }
+.sapUiLargeMargin    { margin: @sapUiMarginLarge !important; }
+
+/* Two-sided margins */
+.sapUiTinyMarginBeginEnd { 
+       margin-left: @sapUiMarginTiny !important; 
+       margin-right: @sapUiMarginTiny !important; 
+}
+.sapUiTinyMarginTopBottom {
+       margin-top: @sapUiMarginTiny !important; 
+       margin-bottom: @sapUiMarginTiny !important; 
+}
+.sapUiSmallMarginBeginEnd { 
+       margin-left: @sapUiMarginSmall !important; 
+       margin-right: @sapUiMarginSmall !important; 
+}
+.sapUiSmallMarginTopBottom {
+       margin-top: @sapUiMarginSmall !important; 
+       margin-bottom: @sapUiMarginSmall !important; 
+}
+.sapUiMediumMarginBeginEnd {
+       margin-left: @sapUiMarginMedium !important; 
+       margin-right: @sapUiMarginMedium !important; 
+}
+.sapUiMediumMarginTopBottom {
+       margin-top: @sapUiMarginMedium !important; 
+       margin-bottom: @sapUiMarginMedium !important; 
+}
+.sapUiLargeMarginBeginEnd {
+       margin-left: @sapUiMarginLarge !important; 
+       margin-right: @sapUiMarginLarge !important; 
+}
+.sapUiLargeMarginTopBottom { 
+       margin-top: @sapUiMarginLarge !important; 
+       margin-bottom: @sapUiMarginLarge !important; 
+}
+
+/* Single-sided margins */
+.sapUiTinyMarginTop    { margin-top: @sapUiMarginTiny !important; }
+.sapUiTinyMarginBottom { margin-bottom: @sapUiMarginTiny !important; }
+.sapUiTinyMarginBegin  { margin-left: @sapUiMarginTiny !important; }
+.sapUiTinyMarginEnd    { margin-right: @sapUiMarginTiny !important; }
+
+.sapUiSmallMarginTop    { margin-top: @sapUiMarginSmall !important; }
+.sapUiSmallMarginBottom { margin-bottom: @sapUiMarginSmall !important; }
+.sapUiSmallMarginBegin  { margin-left: @sapUiMarginSmall !important; }
+.sapUiSmallMarginEnd    { margin-right: @sapUiMarginSmall !important; }
+
+.sapUiMediumMarginTop    { margin-top: @sapUiMarginMedium !important; }
+.sapUiMediumMarginBottom { margin-bottom: @sapUiMarginMedium !important; }
+.sapUiMediumMarginBegin  { margin-left: @sapUiMarginMedium !important; }
+.sapUiMediumMarginEnd    { margin-right: @sapUiMarginMedium !important; }
+
+.sapUiLargeMarginTop    { margin-top: @sapUiMarginLarge !important; }
+.sapUiLargeMarginBottom { margin-bottom: @sapUiMarginLarge !important; }
+.sapUiLargeMarginBegin  { margin-left: @sapUiMarginLarge !important; }
+.sapUiLargeMarginEnd    { margin-right: @sapUiMarginLarge !important; }
 
 
-/* START "BlindLayer.css" */
+/* 
+ * Class for responsive margins which adapts to the screen size of the currently used device
+*/
+@media (max-width:599px) {
+       .sapMSplitContainerHideMode > .sapMSplitContainerDetail .sapUiResponsiveMargin,
+       .sapMSplitContainerPortrait > .sapMSplitContainerDetail .sapUiResponsiveMargin,
+       .sapUiResponsiveMargin {
+              margin: 0 0 1rem 0 !important;
+       }
+}
+
+@media (min-width:600px) and (max-width:1023px) {
+       .sapMSplitContainerHideMode > .sapMSplitContainerDetail .sapUiResponsiveMargin,
+       .sapUiResponsiveMargin {
+              margin: 1rem !important;
+       }
+}
+
+@media (min-width:1024px) {
+       .sapMSplitContainerHideMode > .sapMSplitContainerDetail .sapUiResponsiveMargin,
+       .sapUiResponsiveMargin {
+              margin: 1rem 2rem !important;
+       }
+}
+
+/*
+* Content of SplitContainer Master
+* (Left hand-side of SplitContainer)
+*/
+.sapMSplitContainerMaster .sapUiResponsiveMargin
+{
+       margin: 0 0 1rem 0 !important;
+}
+
+/*
+* Content of SplitContainer Detail 
+ * (Right hand-side of SplitContainer)
+*/
+.sapMSplitContainerDetail .sapUiResponsiveMargin{
+       margin: 1rem !important;
+}
+
+
+/*
+* No margins, use these classes to remove existing margins.
+* IMPORTANT: THESE CLASSES MUST COME AFTER ALL OTHER PRE-DEFINED MARGINS
+* to make sure that their 'IMPORTANT' statement wins
+*/
+.sapUiNoMargin    { margin: 0 !important; } /*Removes ALL margins*/
+/*Use the following to remove a margin on a particular side of your container*/    
+.sapUiNoMarginTop    { margin-top: 0 !important; }
+.sapUiNoMarginBottom { margin-bottom: 0 !important; }
+.sapUiNoMarginBegin  { margin-left: 0 !important; }
+.sapUiNoMarginEnd    { margin-right: 0 !important; }
+
+
+.sapUiInvisibleText, .sapUiHiddenPlaceholder {
+	display: none !important;
+}
+
+
+/* END "shared.less" */
+
+
+/* START "BlindLayer.less" */
 .sapUiBliLy {
 	position: absolute;
 	display: inline-block;
@@ -163,9 +314,9 @@
 	height: 100%;
 }
 
-/* END "BlindLayer.css" */
+/* END "BlindLayer.less" */
 
-/* START "BusyIndicator.css" */
+/* START "BusyIndicator.less" */
 .sapUiBusy {
 	background-image: url(img/Busy.gif);
 	display: block;
@@ -180,9 +331,9 @@
 .sapUiBlyBusy {
 	cursor: wait;
 }
-/* END "BusyIndicator.css" */
+/* END "BusyIndicator.less" */
 
-/* START "Icon.css" */
+/* START "Icon.less" */
 
 /* ============================================= */
 /* CSS for control sap.ui.core/Icon.control      */
@@ -222,10 +373,10 @@ html[dir=rtl][data-sap-ui-browser*='ie8'] .sapUiIconMirrorInRTL.sapUiIconSuppres
 	-webkit-font-smoothing: antialiased;
 }
 
-/* END "Icon.css" */
+/* END "Icon.less" */
 
-/* START "LocalBusyIndicator.css" */
-@sapUiLocalBusyIndicatorBG: fade(@sapUiExtraLightBG, 72%); 
+/* START "LocalBusyIndicator.less" */
+@sapUiLocalBusyIndicatorBG: fade(@sapUiExtraLightBG, 72%);
 @sapUiLocalBusyIndicatorBG_IE: @sapUiExtraLightBG;
 @sapUiLocalBusyIndicatorBoxSize: 8px;
 
@@ -243,6 +394,7 @@ html[dir=rtl][data-sap-ui-browser*='ie8'] .sapUiIconMirrorInRTL.sapUiIconSuppres
 }
 HTML[data-sap-ui-browser='ie8'] .sapUiLocalBusyIndicator {
 	background-color: @sapUiLocalBusyIndicatorBG_IE;
+	filter: alpha(opacity=72);
 }
 
 .sapUiLocalBusyIndicatorAnimation {
@@ -260,19 +412,19 @@ HTML[data-sap-ui-browser='ie8'] .sapUiLocalBusyIndicator {
 	float: left;
 	display: block;
 	margin-left: @sapUiLocalBusyIndicatorBoxSize;
-	
+
 	-moz-border-radius: 1px;
 	-webkit-border-radius: 1px;
 	border-radius: 1px;
-	
+
 	-moz-transition-property: background-color;
 	-moz-transition-duration: @sapUiLocalBusyIndicatorBoxTransitionDuration;
 	-moz-transition-timing-function: ease-in;
-	
+
 	-webkit-transition-property: background-color;
 	-webkit-transition-duration: @sapUiLocalBusyIndicatorBoxTransitionDuration;
 	-webkit-transition-timing-function: ease-in;
-	
+
 	transition-property: background-color;
 	transition-duration: @sapUiLocalBusyIndicatorBoxTransitionDuration;
 	transition-timing-function: ease-in;
@@ -283,11 +435,12 @@ HTML[data-sap-ui-browser='ie8'] .sapUiLocalBusyIndicator {
 }
 
 .sapUiLocalBusyIndicatorBox:first-child {
-	margin-left: 0; 
+	margin-left: 0;
 }
-/* END "LocalBusyIndicator.css" */
 
-/* START "media.css" */
+/* END "LocalBusyIndicator.less" */
+
+/* START "media.less" */
 /************ Media queries for screen sizes ************
 
 Usage:
@@ -324,9 +477,9 @@ Usage:
 @sapUiMediaQuery_6Step_M:  ~"screen and (min-width : 400px) and (max-width : 540px)";
 @sapUiMediaQuery_6Step_S:  ~"screen and (min-width : 241px) and (max-width : 399px)";
 @sapUiMediaQuery_6Step_XS:  ~"screen and (max-width : 240px)";
-/* END "media.css" */
+/* END "media.less" */
 
-/* START "parameterClasses.css" */
+/* START "parameterClasses.less" */
 
 /* CSS parameters which are available in base theme */
 
@@ -353,7 +506,9 @@ Usage:
 .sapThemeText-asBorderColor {
 	border-color: @sapUiText;
 }
-
+.sapThemeText-asOutlineColor {
+	outline-color: @sapUiText;
+}
 
 
 .sapThemeTextInverted,
@@ -385,7 +540,9 @@ Usage:
 .sapThemeBrand-asBackgroundColor {
 	background-color: @sapUiBrand;
 }
-
+.sapThemeBrand-asOutlineColor {
+	outline-color: @sapUiBrand;
+}
 
 
 .sapThemeHighlight-asColor {
@@ -397,10 +554,13 @@ Usage:
 .sapThemeHighlight-asBackgroundColor {
 	background-color: @sapUiHighlight;
 }
+.sapThemeHighlight-asOutlineColor {
+	outline-color: @sapUiHighlight;
+}
 
-/* END "parameterClasses.css" */
+/* END "parameterClasses.less" */
 
-/* START "ScrollBar.css" */
+/* START "ScrollBar.less" */
 
 /* ============================================= */
 /* CSS for control sap.ui.core/ScrollBar.control */
@@ -421,9 +581,9 @@ Usage:
 	background-color: rgba(0,0,0,.5);
 	-webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
-/* END "ScrollBar.css" */
+/* END "ScrollBar.less" */
 
-/* START "Shadow.css" */
+/* START "Shadow.less" */
 .sapUiShd {
 	box-shadow: @sapUiShadow;
 	-webkit-box-shadow: @sapUiShadow;
@@ -436,9 +596,9 @@ html[data-sap-ui-browser=ie8] .sapUiShd {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#808080')";
 }
 */
-/* END "Shadow.css" */
+/* END "Shadow.less" */
 
-/* START "TechnicalInfo.css" */
+/* START "TechnicalInfo.less" */
 .sapUiTInf {
   border: 1px solid @sapUiMediumBorder;
 	background: @sapUiExtraLightBG;
@@ -478,9 +638,9 @@ html[data-sap-ui-browser=ie8] .sapUiShd {
 }
 
 
-/* END "TechnicalInfo.css" */
+/* END "TechnicalInfo.less" */
 
-/* START "View.css" */
+/* START "View.less" */
 
 /* ========================================= */
 /* CSS for control sap.ui.core/View.control  */
@@ -492,5 +652,5 @@ html[data-sap-ui-browser=ie8] .sapUiShd {
 .sapUiViewDisplayBlock {
 	display: block;
 }
-/* END "View.css" */
+/* END "View.less" */
 

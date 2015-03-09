@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -20,9 +20,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * @experimental Since 1.9.2. The Component concept is still under construction, so some implementation details can be changed in future.
 	 * @class
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 1.9.2
-	 * @name sap.ui.core.ComponentMetadata
+	 * @alias sap.ui.core.ComponentMetadata
 	 */
 	var ComponentMetadata = function(sClassName, oClassInfo) {
 		
@@ -54,23 +54,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 		// the component metadata will be loaded from the specified file 
 		// which needs to be located next to the Component.js file.
 		var sName = this.getName(),
-	    sPackage = sName.replace(/\.\w+?$/, "");
+		sPackage = sName.replace(/\.\w+?$/, "");
 		if (oStaticInfo._src) {
-			if(oStaticInfo._src == "component.json"){
-				jQuery.sap.log.warning("Usage of declacation \"metadata: 'component.json'\" is deprecated (component " + sName + "). Use \"metadata: 'json'\" instead.");
-			}else if(oStaticInfo._src != "json"){
+			if (oStaticInfo._src == "component.json") {
+				jQuery.sap.log.warning("Usage of declaration \"metadata: 'component.json'\" is deprecated (component " + sName + "). Use \"metadata: 'json'\" instead.");
+			} else if (oStaticInfo._src != "json") {
 				throw new Error("Invalid metadata declaration for component " + sName + ": \"" + oStaticInfo._src + "\"! Use \"metadata: 'json'\" to load metadata from component.json.");
 			}
 			
 			var sResource = sPackage.replace(/\./g, "/") + "/component.json";
 			jQuery.sap.log.info("The metadata of the component " + sName + " is loaded from file " + sResource + ".");
-			try{
+			try {
 				var oResponse = jQuery.sap.loadResource(sResource, {
-					dataType: "json",
-					failOnError : false
+					dataType: "json"
 				});
 				jQuery.extend(oStaticInfo, oResponse);
-			}catch(err){
+			} catch (err) {
 				jQuery.sap.log.error("Failed to load component metadata from \"" + sResource + "\" (component " + sName + ")! Reason: " + err);
 			}
 		}
@@ -94,7 +93,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 		// extract the models and services custom component data
 		// (as models and services are experimental the default value is applied here
 		//  to avoid mentioning those options in the component metadata section!) 
-		this._mModels = oStaticInfo.models || {}; 
+		this._mModels = oStaticInfo.models || {};
 		this._mServices = oStaticInfo.services || {};
 		
 		// some metadata needs to be merged with the metadata for the parent component
@@ -118,8 +117,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * component and the metadata decides whether to execute the static init code
 	 * or not. It will be called the first time a component is initialized.
 	 * @private
-	 * @name sap.ui.core.ComponentMetadata#init
-	 * @function
 	 */
 	ComponentMetadata.prototype.init = function() {
 		if (!this._bInitialized) {
@@ -147,8 +144,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * TODO: Right now it is unclear when this function should be called. Just to
 	 *       make sure that we do not forget this in future. 
 	 * @private
-	 * @name sap.ui.core.ComponentMetadata#exit
-	 * @function
 	 */
 	ComponentMetadata.prototype.exit = function() {
 		if (this._bInitialized) {
@@ -166,8 +161,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * the customizing for this component. This will only be done for the first
 	 * instance and only if a customizing configuration is available.
 	 * @private
-	 * @name sap.ui.core.ComponentMetadata#onInitComponent
-	 * @function
 	 */
 	ComponentMetadata.prototype.onInitComponent = function() {
 		if (this._iInstanceCount === 0 && !jQuery.isEmptyObject(this._mCustomizing)) {
@@ -182,8 +175,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * the customizing for this component. This will only be done for the last
 	 * instance and only if a customizing configuration is available.
 	 * @private
-	 * @name sap.ui.core.ComponentMetadata#onExitComponent
-	 * @function
 	 */
 	ComponentMetadata.prototype.onExitComponent = function() {
 		this._iInstanceCount--;
@@ -216,19 +207,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * @param {boolean} bMerged whether the custom configuration should be merged with components parent custom configuration.
 	 * @return {Object} custom Component configuration with the specified key. 
 	 * @public
-	 * @name sap.ui.core.ComponentMetadata#getCustomEntry
-	 * @function
 	 */
 	ComponentMetadata.prototype.getCustomEntry = function(sKey, bMerged){
-		if(!sKey || sKey.indexOf(".") <= 0){
+		if (!sKey || sKey.indexOf(".") <= 0) {
 			jQuery.sap.log.warning("Component Metadata entries with keys without namespace prefix can not be read via getCustomEntry. Key: " + sKey + ", Component: " + this.getName());
 			return null;
 		}
 		
 		var oData = this._oStaticInfo[sKey] || {};
 		
-		if(!jQuery.isPlainObject(oData)){
-			jQuery.sap.log.warning("Custom Component Metadata entry with key '"+sKey+"' must be an object. Component: " + this.getName());
+		if (!jQuery.isPlainObject(oData)) {
+			jQuery.sap.log.warning("Custom Component Metadata entry with key '" + sKey + "' must be an object. Component: " + this.getName());
 			return null;
 		}
 		
@@ -240,11 +229,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	};
 	
 	/**
+	 * Returns the name of the Component (which is the namespace only with the module name)
+	 * @return {string} Component name
+	 * @public
+	 */
+	ComponentMetadata.prototype.getComponentName = function() {
+		return this._sComponentName;
+	};
+	
+	/**
 	 * Returns the dependencies defined in the metadata of the component. If not specified, the return value is null.
 	 * @return {Object} Component dependencies. 
 	 * @public
-	 * @name sap.ui.core.ComponentMetadata#getDependencies
-	 * @function
 	 */
 	ComponentMetadata.prototype.getDependencies = function() {
 		return this._mDependencies;
@@ -254,8 +250,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * Returns the array of the included files that the Component requires such as css and js. If not specified or the array is empty, the return value is null.
 	 * @return {string[]} Included files.
 	 * @public
-	 * @name sap.ui.core.ComponentMetadata#getIncludes
-	 * @function
 	 */
 	ComponentMetadata.prototype.getIncludes = function() {
 		return (this._aIncludes && this._aIncludes.length > 0) ? this._aIncludes : null;
@@ -265,19 +259,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * Returns the required version of SAP UI5 defined in the metadata of the Component. If returned value is null, then no special UI5 version is required.
 	 * @return {string} Required version of UI5 or if not specified then null.
 	 * @public
-	 * @name sap.ui.core.ComponentMetadata#getUI5Version
-	 * @function
 	 */
 	ComponentMetadata.prototype.getUI5Version = function() {
 		return this._mDependencies ? this._mDependencies.ui5version : null;
-	};   
+	};
 	
 	/**
 	 * Returns array of components specified in the metadata of the Component. If not specified or the array is empty, the return value is null.
 	 * @return {string[]} Required Components.
 	 * @public
-	 * @name sap.ui.core.ComponentMetadata#getComponents
-	 * @function
 	 */
 	ComponentMetadata.prototype.getComponents = function() {
 		var aComponents = null;
@@ -285,7 +275,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 			if (this._mDependencies.components && (this._mDependencies.components.length > 0) ) {
 				aComponents = this._mDependencies.components;
 			}
-		} 
+		}
 		return aComponents;
 	};
 	
@@ -294,8 +284,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * If not specified or the array is empty, the return value is null.
 	 * @return {string[]} Required libraries.
 	 * @public
-	 * @name sap.ui.core.ComponentMetadata#getLibs
-	 * @function
 	 */
 	ComponentMetadata.prototype.getLibs = function() {
 		var aLibs = null;
@@ -303,7 +291,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 			if (this._mDependencies.libs && (this._mDependencies.libs.length > 0) ) {
 				aLibs = this._mDependencies.libs;
 			}
-		} 
+		}
 		return aLibs;
 	};
 	
@@ -311,8 +299,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * Returns the version of the component. If not specified, the return value is null.
 	 * @return {string} The version of the component.
 	 * @public
-	 * @name sap.ui.core.ComponentMetadata#getVersion
-	 * @function
 	 */
 	ComponentMetadata.prototype.getVersion = function() {
 		return this._sVersion;
@@ -326,8 +312,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * @return {object} the value of the configuration property
 	 * @public
 	 * @since 1.15.1
-	 * @name sap.ui.core.ComponentMetadata#getConfig
-	 * @function
 	 */
 	ComponentMetadata.prototype.getConfig = function(sKey) {
 		return this._mConfig ? jQuery.extend({}, sKey ? this._mConfig[sKey] : this._mConfig) : undefined;
@@ -340,8 +324,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * @private
 	 * @since 1.15.1
 	 * @experimental Since 1.15.1. Implementation might change. 
-	 * @name sap.ui.core.ComponentMetadata#getCustomizing
-	 * @function
 	 */
 	ComponentMetadata.prototype.getCustomizing = function() {
 		return this._mCustomizing ? jQuery.extend({}, this._mCustomizing) : undefined;
@@ -355,8 +337,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * @private
 	 * @since 1.15.1 
 	 * @experimental Since 1.15.1. Implementation might change. 
-	 * @name sap.ui.core.ComponentMetadata#getModels
-	 * @function
 	 */
 	ComponentMetadata.prototype.getModels = function() {
 		return this._mModels;
@@ -369,8 +349,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * @private
 	 * @since 1.15.1 
 	 * @experimental Since 1.15.1. Implementation might change. 
-	 * @name sap.ui.core.ComponentMetadata#getServices
-	 * @function
 	 */
 	ComponentMetadata.prototype.getServices = function() {
 		return this._mServices;
@@ -381,8 +359,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * resoloved relative to the component location. 
 	 * 
 	 * @private
-	 * @name sap.ui.core.ComponentMetadata#_loadIncludes
-	 * @function
 	 */
 	ComponentMetadata.prototype._loadIncludes = function() {
 	
@@ -392,7 +368,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 			var that = this;
 			var sLibName = this.getLibraryName();
 			jQuery.each(aIncludes, function(i, sFile) {
-				if (sFile.match(/\.css$/i)) { 
+				if (sFile.match(/\.css$/i)) {
 					var sCssUrl = sap.ui.resource(sLibName, sFile);
 					jQuery.sap.log.info("Component \"" + that.getName() + "\" is loading CSS: \"" + sCssUrl + "\"");
 					jQuery.sap.includeStyleSheet(sCssUrl /* TODO: , sId (do we have a good idea how to create the id?!) */ );
@@ -416,14 +392,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * Load external dependencies (like libraries and components)
 	 * 
 	 * @private
-	 * @name sap.ui.core.ComponentMetadata#_loadDependencies
-	 * @function
 	 */
 	ComponentMetadata.prototype._loadDependencies = function() {
 	
 		// afterwards we load our dependencies!
 		var that = this,
-		    oDep = this.getDependencies();
+			oDep = this.getDependencies();
 		if (oDep) {
 			
 			// load the libraries
@@ -437,7 +411,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 			
 			// load the components
 			var aComponents = oDep.components;
-			if (aComponents){
+			if (aComponents) {
 				jQuery.each(aComponents, function(i, sName){
 					jQuery.sap.log.info("Component \"" + that.getName() + "\" is loading component: \"" + sName + ".Component\"");
 					sap.ui.component.load({

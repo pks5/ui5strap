@@ -1,6 +1,6 @@
 /*
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -25,11 +25,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './delegate/XML
 	 * @class XMLViewSerializer class.
 	 * @extends sap.ui.base.EventProvider
 	 * @author SAP SE
-	 * @version 1.24.3
-	 * @name sap.ui.core.util.serializer.XMLViewSerializer
+	 * @version 1.26.7
+	 * @alias sap.ui.core.util.serializer.XMLViewSerializer
 	 * @experimental Since 1.15.1. The XMLViewSerializer is still under construction, so some implementation details can be changed in future.
 	 */
-	var XMLViewSerializer = EventProvider.extend("sap.ui.core.util.serializer.XMLViewSerializer", /** @lends sap.ui.core.util.serializer.XMLViewSerializer.prototype */ 
+	var XMLViewSerializer = EventProvider.extend("sap.ui.core.util.serializer.XMLViewSerializer", /** @lends sap.ui.core.util.serializer.XMLViewSerializer.prototype */
 	{
 		constructor : function (oView, oWindow, sDefaultNamespace, fnGetControlId, fnGetEventHandlerName) {
 			EventProvider.apply(this);
@@ -47,8 +47,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './delegate/XML
 	 * Serializes the given XML view.
 	 * 
 	 * @returns {string} the serialized XML view.
-	 * @name sap.ui.core.util.serializer.XMLViewSerializer#serialize
-	 * @function
 	 */
 	XMLViewSerializer.prototype.serialize = function () {
 	

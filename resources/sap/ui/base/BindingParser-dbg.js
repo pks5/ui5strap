@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -32,13 +32,13 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 	function makeFormatter(aFragments) {
 		var fnFormatter = function(aValues) {
 			var aResult = [],
-				l=aFragments.length,
+				l = aFragments.length,
 				i;
 			
-			for(i=0; i<l; i++) {
+			for (i = 0; i < l; i++) {
 				if ( typeof aFragments[i] === "number" ) {
 					// a numerical fragment references the part with the same number 
-					aResult.push(arguments[aFragments[i]])
+					aResult.push(arguments[aFragments[i]]);
 				} else {
 					// anything else is a string fragment 
 					aResult.push(aFragments[i]);
@@ -63,7 +63,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 		
 		if ( iPos > 0 ) {
 			oBindingInfo.model = sPath.slice(0,iPos);
-			oBindingInfo.path = sPath.slice(iPos+1);
+			oBindingInfo.path = sPath.slice(iPos + 1);
 		}
 		
 		return oBindingInfo;
@@ -72,7 +72,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 	/**
 	 * @static
 	 * @namespace
-	 * @name sap.ui.base.BindingParser
+	 * @alias sap.ui.base.BindingParser
 	 */
 	var BindingParser = {};
 	
@@ -81,7 +81,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 	BindingParser.simpleParser = function(sString, oContext) {
 
 		if ( jQuery.sap.startsWith(sString, "{") && jQuery.sap.endsWith(sString, "}") ) {
-			return makeSimpleBindingInfo(sString.slice(1,-1));
+			return makeSimpleBindingInfo(sString.slice(1, -1));
 		}
 	
 	};
@@ -92,12 +92,12 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 	};
 	
 	BindingParser.complexParser = function(sString, oContext, bUnescape) {
-		var parseObject=jQuery.sap.parseJS,
+		var parseObject = jQuery.sap.parseJS,
 			oBindingInfo = {parts:[]},
-			aFragments=[],
+			aFragments = [],
 			bUnescaped,
 			oParseResult,
-			p=0,
+			p = 0,
 			m,end;
 
 		function resolveRef(o,sProp) {
@@ -121,7 +121,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 					FNType = jQuery.sap.getObject(o[sProp].slice(1), undefined, oContext);
 				} else {
 					FNType = jQuery.sap.getObject(o[sProp]);
-				} 
+				}
 				// TODO find another solution for the type parameters?
 				if (typeof FNType === "function") {
 					o[sProp] = new FNType(o.formatOptions, o.constraints);
@@ -155,7 +155,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 			}
 		}
 
-		while ( m=rFragments.exec(sString) ) {
+		while ( (m = rFragments.exec(sString)) !== null ) {
 			
 			// check for a skipped literal string fragment  
 			if ( p < m.index ) {
@@ -169,7 +169,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 				aFragments.push(m[1].slice(1));
 				bUnescaped = true;
 				
-			} else { 
+			} else {
 				
 				// an embedded binding: check for a property name that would indicate a complex object 
 				if ( rObject.test(sString.slice(m.index)) ) {
@@ -196,8 +196,8 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 					}
 					
 					aFragments.push(oBindingInfo.parts.length);
-					oBindingInfo.parts.push(makeSimpleBindingInfo(sString.slice(m.index+1, end)));
-					rFragments.lastIndex = end+1;
+					oBindingInfo.parts.push(makeSimpleBindingInfo(sString.slice(m.index + 1, end)));
+					rFragments.lastIndex = end + 1;
 					
 				}
 			}

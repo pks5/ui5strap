@@ -1,13 +1,14 @@
 /* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
 
-
-/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- * 
- */@import "../base/library.less";
-@import (less) "global.css";
-/* START "shared.css" */
+ */
+
+@import "../base/library.less";
+@import "global.less";
+/* START "shared.less" */
 /* Shared CSS for 'sap_hcb' theme */
 
 :focus {
@@ -23,24 +24,57 @@ html[data-sap-ui-browser^="ff"] :focus {
 html[data-sap-ui-browser^="cr"] :focus {
 	outline-color: #ffffff;
 } 
-/* END "shared.css" */
-
-
-/* START "BrowserScrollbar.css" */
 
 .sapUiBody {
-	scrollbar-base-color:#666666;
-	scrollbar-face-color:#000000;
-	scrollbar-3dlight-color:#FFFFFF;
-	scrollbar-arrow-color:#FFFFFF;
-	scrollbar-darkshadow-color:#666666;
-	scrollbar-shadow-color:#FFFFFF;
-	scrollbar-track-color:#666666;
-	scrollbar-highlight-color:#000000;
+	width: 100%;
+	height: 100%;
+	margin: 0;
 }
-/* END "BrowserScrollbar.css" */
 
-/* START "BusyIndicator.css" */
+.sapUiBLy {
+	background-color: fade(@sapHCStandardBG, 30%);
+}
+/* END "shared.less" */
+
+
+/* START "BrowserScrollbar.less" */
+.sapUiBody {
+	scrollbar-base-color: @sapHCStandardBG;
+	scrollbar-face-color: @sapHCStandardFG;
+	scrollbar-3dlight-color: @sapHCStandardFG;
+	scrollbar-arrow-color: @sapHCStandardFG;
+	scrollbar-darkshadow-color:@sapHCStandardBG;
+	scrollbar-shadow-color: @sapHCStandardFG;
+	scrollbar-track-color: @sapHCReducedBG;
+	scrollbar-highlight-color: @sapHCStandardBG;
+}
+
+.sap-desktop ::-webkit-scrollbar {
+	background-color: @sapHCStandardBG;
+	border-left: 1px solid @sapHCReducedAltFG;
+}
+
+.sap-desktop ::-webkit-scrollbar:horizontal {
+	height: 0.75rem;
+}
+
+.sap-desktop ::-webkit-scrollbar:vertical {
+	width: 0.75rem;
+}
+
+.sap-desktop ::-webkit-scrollbar-thumb {
+	background-color: @sapHCReducedAltFG;
+	box-shadow: inset @sapHCStandardBG 0 0 0 0.125rem;
+	border-left: 1px solid @sapHCReducedAltFG;
+}
+
+.sap-desktop ::-webkit-scrollbar-thumb:hover {
+	background-color: @sapHCStandardFG;
+}
+
+/* END "BrowserScrollbar.less" */
+
+/* START "BusyIndicator.less" */
 .sapUiBusy {
   background-image: none;
 }
@@ -48,16 +82,67 @@ html[data-sap-ui-browser^="cr"] :focus {
 .sapUiBusy:after {
 	content: url(img/Busy.gif);
 }
-/* END "BusyIndicator.css" */
+/* END "BusyIndicator.less" */
 
-/* START "LocalBusyIndicator.css" */
+/* START "LocalBusyIndicator.less" */
+@sapUiLocalBusyIndicatorBG: fade(@sapHCStandardBG, 30%);
+@sapUiLocalBusyIndicatorBG_IE: @sapHCStandardBG;
+@sapUiLocalBusyIndicatorBoxSize: 4rem;
+
 @sapUiLocalBusyIndicatorBoxColor: @sapUiBase;
 @sapUiLocalBusyIndicatorBoxColorActive: @sapUiBaseBG;
-
 @sapUiLocalBusyIndicatorBoxTransitionDuration: ~"125ms";
-/* END "LocalBusyIndicator.css" */
 
-/* START "Shadow.css" */
+.sapUiLocalBusyIndicator {
+	background-color: @sapUiLocalBusyIndicatorBG;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+HTML[data-sap-ui-browser='ie8'] .sapUiLocalBusyIndicator {
+	background-color: @sapUiLocalBusyIndicatorBG_IE;
+}
+
+.sapUiLocalBusyIndicatorAnimation {
+	background-color: @sapHCStandardBG;
+	border: 0.125rem solid @sapHCStandardFG;
+	border-radius: 1px;
+	box-shadow: 0 0 2.5rem 0.125rem fade(@sapHCStandardFG, 80%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: @sapUiLocalBusyIndicatorBoxSize;
+	height: @sapUiLocalBusyIndicatorBoxSize;
+	margin: -(@sapUiLocalBusyIndicatorBoxSize / 2) 0 0 -(@sapUiLocalBusyIndicatorBoxSize / 2);
+}
+
+.sapUiLocalBusyIndicatorBox {
+	width: .5rem;
+	height : .5rem;
+	background-color: @sapHCStandardBG;
+	border-radius: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border: 1px solid @sapHCStandardFG;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	float: left;
+	margin: 1.75rem 0 0 .5rem;
+}
+
+.sapUiLocalBusyIndicatorBox.active {
+	background-color: @sapHCStandardFG;
+}
+
+.sapUiLocalBusyIndicatorBox:first-child {
+	margin-left: .75rem; 
+}
+/* END "LocalBusyIndicator.less" */
+
+/* START "Shadow.less" */
 
 /* HCB */
 
@@ -66,5 +151,5 @@ html[data-sap-ui-browser^="cr"] :focus {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-/* END "Shadow.css" */
+/* END "Shadow.less" */
 

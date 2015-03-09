@@ -1,8 +1,10 @@
 /*!
- * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
- * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ * @copyright@
  */
+
+// Disable some ESLint rules. camelcase (some "_" in names to indicate indexed variables (like in math)), valid-jsdoc (not completed yet), no-warning-comments (some TODOs are left)
+// All other warnings, errors should be resolved
+/*eslint-disable camelcase, valid-jsdoc, no-warning-comments */
 
 // Provides API for analytical extensions in OData service metadata
 sap.ui.define(['jquery.sap.global'],
@@ -34,7 +36,7 @@ sap.ui.define(['jquery.sap.global'],
 	odata4analytics.helper = {
 			/*
 			 * Old helpers that got replaced by robust functions provided by the UI5 ODataModel
-			 */ 
+			 */
 /*
 		renderPropertyKeyValue : function(sKeyValue, sPropertyEDMTypeName) {
 			if (typeof sKeyValue == "string" && sKeyValue.charAt(0) == "'")
@@ -195,16 +197,16 @@ sap.ui.define(['jquery.sap.global'],
 			if (typeof mParameter == "string") {
 				throw "Deprecated second argument: Adjust your invocation by passing an object with a property sAnnotationJSONDoc as a second argument instead"
 			}
-			this._mParameter= mParameter;
+			this._mParameter = mParameter;
 			
 			/*
 			 * get access to OData model
 			 */
 	
-			this._oActivatedWorkarounds = new Object();
+			this._oActivatedWorkarounds = {};
 	
 			if (oModelReference && oModelReference.aWorkaroundID) {
-				for (var i = -1, sID; sID = oModelReference.aWorkaroundID[++i];) {
+				for (var i = -1, sID; (sID = oModelReference.aWorkaroundID[++i]) !== undefined;) {
 					this._oActivatedWorkarounds[sID] = true;
 				}
 				oModelReference = oModelReference.oModelReference;
@@ -215,10 +217,11 @@ sap.ui.define(['jquery.sap.global'],
 				throw "Usage with oModelReference being an instance of Model.ReferenceByURI or Model.ReferenceByModel";
 			}
 	
-			if (oModelReference.oModel)
+			if (oModelReference.oModel) {
 				this._oModel = oModelReference.oModel;
-			else
+			} else {
 				this._oModel = new sap.ui.model.odata.ODataModel(oModelReference.sServiceURI);
+			}
 	
 			if (this._oModel.getServiceMetadata().dataServices == undefined) {
 				throw "Model could not be loaded";
@@ -227,24 +230,26 @@ sap.ui.define(['jquery.sap.global'],
 			/*
 			 * add extra annotations if provided
 			 */
-			if (mParameter && mParameter.sAnnotationJSONDoc) this.mergeV2Annotations(mParameter.sAnnotationJSONDoc);
+			if (mParameter && mParameter.sAnnotationJSONDoc) {
+				this.mergeV2Annotations(mParameter.sAnnotationJSONDoc);
+			}
 	
 			/*
 			 * parse OData model for analytic queries
 			 */
 	
-			this._oQueryResultSet = new Object();
-			this._oParameterizationSet = new Object();
-			this._oEntityTypeSet = new Object();
-			this._oEntitySetSet = new Object();
-			this._oEntityTypeNameToEntitySetMap = new Object();
+			this._oQueryResultSet = {};
+			this._oParameterizationSet = {};
+			this._oEntityTypeSet = {};
+			this._oEntitySetSet = {};
+			this._oEntityTypeNameToEntitySetMap = {};
 	
 			// loop over all schemas and entity containers
 			// TODO: extend this implementation to support many schemas
 			var oSchema = this._oModel.getServiceMetadata().dataServices.schema[0];
 	
 			// remember default container
-			for (var i = -1, oContainer; oContainer = oSchema.entityContainer[++i];) {
+			for (var j = -1, oContainer; (oContainer = oSchema.entityContainer[++j]) !== undefined;) {
 				if (oContainer.isDefaultEntityContainer == "true") {
 					this._oDefaultEntityContainer = oContainer;
 					break;
@@ -259,11 +264,11 @@ sap.ui.define(['jquery.sap.global'],
 			// results, parameters
 			var aQueryResultEntityTypes = [], aParameterEntityTypes = [], aUnsortedEntityTypes = [];
 	
-			for (var i = -1, oType; oType = aEntityType[++i];) {
+			for (var k = -1, oType; (oType = aEntityType[++k]) !== undefined;) {
 				var bProcessed = false;
 	
 				if (oType.extensions != undefined) {
-					for (var j = -1, oExtension; oExtension = oType.extensions[++j];) {
+					for (var l = -1, oExtension; (oExtension = oType.extensions[++l]) !== undefined;) {
 						if (oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE
 								&& oExtension.name == "semantics") {
 							bProcessed = true;
@@ -278,24 +283,28 @@ sap.ui.define(['jquery.sap.global'],
 								aUnsortedEntityTypes.push(oType);
 							}
 						}
-						if (bProcessed)
+						if (bProcessed) {
 							continue;
+						}
 					}
-					if (!bProcessed)
+					if (!bProcessed) {
 						aUnsortedEntityTypes.push(oType);
-				} else
+					}
+				} else {
 					aUnsortedEntityTypes.push(oType);
+				}
 			}
 			// A.2 create entity type representations for the unsorted types
-			for (var i = -1, oType; oType = aUnsortedEntityTypes[++i];) {
-				var oEntityType = new odata4analytics.EntityType(this._oModel.getServiceMetadata(), oSchema, oType);
+			for (var m = -1, oType2; (oType2 = aUnsortedEntityTypes[++m]) !== undefined;) {
+				var oEntityType = new odata4analytics.EntityType(this._oModel.getServiceMetadata(), oSchema, oType2);
 				this._oEntityTypeSet[oEntityType.getQName()] = oEntityType;
 				var aEntitySet = this._getEntitySetsOfType(oSchema, oEntityType.getQName());
-				if (aEntitySet.length == 0)
+				if (aEntitySet.length == 0) {
 					throw "Invalid consumption model: No entity set for entity type " + oEntityType.getQName() + " found";
-				if (aEntitySet.length > 1)
-					throw "Unsupported consumption model: More than one entity set for entity type " + oEntityType.getQName()
-							+ " found";
+				}
+				if (aEntitySet.length > 1) {
+					throw "Unsupported consumption model: More than one entity set for entity type " + oEntityType.getQName() + " found";
+				}
 				var oEntitySet = new odata4analytics.EntitySet(this._oModel.getServiceMetadata(), oSchema,
 						aEntitySet[0][0], aEntitySet[0][1], oEntityType);
 				this._oEntitySetSet[oEntitySet.getQName()] = oEntitySet;
@@ -309,38 +318,40 @@ sap.ui.define(['jquery.sap.global'],
 			// parameters semantics
 			var oParameterizationEntityTypeSet = {};
 	
-			for (var i = -1, oType; oType = aParameterEntityTypes[++i];) {
+			for (var n = -1, oType3; (oType3 = aParameterEntityTypes[++n]) !== undefined;) {
 				// B.1.1 create object for OData entity type
-				var oEntityType = new odata4analytics.EntityType(this._oModel.getServiceMetadata(), oSchema, oType);
-				this._oEntityTypeSet[oEntityType.getQName()] = oEntityType;
+				var oEntityType2 = new odata4analytics.EntityType(this._oModel.getServiceMetadata(), oSchema, oType3);
+				this._oEntityTypeSet[oEntityType2.getQName()] = oEntityType2;
 				// B.1.2 get sets with this type
-				var aEntitySet = this._getEntitySetsOfType(oSchema, oEntityType.getQName());
-				if (aEntitySet.length == 0)
-					throw "Invalid consumption model: No entity set for parameter entity type " + oEntityType.getQName() + " found";
-				if (aEntitySet.length > 1)
-					throw "Unsupported consumption model: More than one entity set for parameter entity type "
-							+ oEntityType.getQName() + " found";
+				var aEntitySet2 = this._getEntitySetsOfType(oSchema, oEntityType2.getQName());
+				if (aEntitySet2.length == 0) {
+					throw "Invalid consumption model: No entity set for parameter entity type " + oEntityType2.getQName() + " found";
+				}
+				if (aEntitySet2.length > 1) {
+					throw "Unsupported consumption model: More than one entity set for parameter entity type " + oEntityType2.getQName() + " found";
+				}
 	
 				// B.1.3 create object for OData entity set
-				var oEntitySet = new odata4analytics.EntitySet(this._oModel.getServiceMetadata(), oSchema,
-						aEntitySet[0][0], aEntitySet[0][1], oEntityType);
-				this._oEntitySetSet[oEntitySet.getQName()] = oEntitySet;
-				this._oEntityTypeNameToEntitySetMap[oEntityType.getQName()] = oEntitySet;
+				var oEntitySet2 = new odata4analytics.EntitySet(this._oModel.getServiceMetadata(), oSchema,
+						aEntitySet2[0][0], aEntitySet2[0][1], oEntityType2);
+				this._oEntitySetSet[oEntitySet2.getQName()] = oEntitySet2;
+				this._oEntityTypeNameToEntitySetMap[oEntityType2.getQName()] = oEntitySet2;
 	
 				// B.1.4 create object for parameters and related OData entity
-				var oParameterization = new odata4analytics.Parameterization(oEntityType, oEntitySet);
+				var oParameterization = new odata4analytics.Parameterization(oEntityType2, oEntitySet2);
 				this._oParameterizationSet[oParameterization.getName()] = oParameterization;
-				oParameterizationEntityTypeSet[oEntityType.getQName()] = oParameterization;
+				oParameterizationEntityTypeSet[oEntityType2.getQName()] = oParameterization;
 	
 				// B.1.5 recognize all available parameter value helps
-				var sParameterizationEntityTypeQTypeName = oEntityType.getQName();
+				var sParameterizationEntityTypeQTypeName = oEntityType2.getQName();
 	
 				if (oSchema.association != undefined) {
-					for (var j = -1, oAssoc; oAssoc = oSchema.association[++j];) {
+					for (var p = -1, oAssoc; (oAssoc = oSchema.association[++p]) !== undefined;) {
 						// value help always established by a referential constraint
 						// on an association
-						if (oAssoc.referentialConstraint == undefined)
+						if (oAssoc.referentialConstraint == undefined) {
 							continue;
+						}
 	
 						var sParameterValueHelpEntityTypeQTypeName = null;
 	
@@ -354,17 +365,19 @@ sap.ui.define(['jquery.sap.global'],
 								&& oAssoc.end[0].multiplicity == "1") {
 							sParameterValueHelpEntityTypeQTypeName = oAssoc.end[0].type;
 						}
-						if (!sParameterValueHelpEntityTypeQTypeName)
+						if (!sParameterValueHelpEntityTypeQTypeName) {
 							continue;
+						}
 	
 						// B.1.5.2 check if the referential constraint declares a
 						// parameter property as dependent
-						if (oAssoc.referentialConstraint.dependent.propertyRef.length != 1)
+						if (oAssoc.referentialConstraint.dependent.propertyRef.length != 1) {
 							continue;
-						var oParameter = oParameterization
-								.findParameterByName(oAssoc.referentialConstraint.dependent.propertyRef[0].name);
-						if (oParameter == null)
+						}
+						var oParameter = oParameterization.findParameterByName(oAssoc.referentialConstraint.dependent.propertyRef[0].name);
+						if (oParameter == null) {
 							continue;
+						}
 	
 						// B.1.5.3 Register the recognized parameter value help
 						// entity type and set and link them to the parameter
@@ -377,96 +390,103 @@ sap.ui.define(['jquery.sap.global'],
 	
 			// B.2
 			// B.2 create analytic queries
-			for (var i = -1, oType; oType = aQueryResultEntityTypes[++i];) {
+			for (var r = -1, oType4; (oType4 = aQueryResultEntityTypes[++r]) !== undefined;) {
 	
 				// B.2.1 create object for OData entity
-				var oEntityType = new odata4analytics.EntityType(this._oModel.getServiceMetadata(), oSchema, oType);
-				this._oEntityTypeSet[oEntityType.getQName()] = oEntityType;
-				var sQueryResultEntityTypeQTypeName = oEntityType.getQName();
+				var oEntityType3 = new odata4analytics.EntityType(this._oModel.getServiceMetadata(), oSchema, oType4);
+				this._oEntityTypeSet[oEntityType3.getQName()] = oEntityType3;
+				var sQueryResultEntityTypeQTypeName = oEntityType3.getQName();
 	
 				// B.2.2 find assocs to parameter entity types
-				var oParameterization = null;
+				var oParameterization3 = null;
 				var oAssocFromParamsToResult = null;
 	
 				if (oSchema.association != undefined) {
-					for (var j = -1, oAssoc; oAssoc = oSchema.association[++j];) {
+					for (var s = -1, oAssoc2; (oAssoc2 = oSchema.association[++s]) !== undefined;) {
 						var sParameterEntityTypeQTypeName = null;
-						if (oAssoc.end[0].type == sQueryResultEntityTypeQTypeName)
-							sParameterEntityTypeQTypeName = oAssoc.end[1].type;
-						else if (oAssoc.end[1].type == sQueryResultEntityTypeQTypeName)
-							sParameterEntityTypeQTypeName = oAssoc.end[0].type;
-						else
+						if (oAssoc2.end[0].type == sQueryResultEntityTypeQTypeName) {
+							sParameterEntityTypeQTypeName = oAssoc2.end[1].type;
+						} else if (oAssoc2.end[1].type == sQueryResultEntityTypeQTypeName) {
+							sParameterEntityTypeQTypeName = oAssoc2.end[0].type;
+						} else {
 							continue;
+						}
 	
 						// B.2.2.2 fetch Parameterization object if any
 						var oMatchingParameterization = null;
 	
 						oMatchingParameterization = oParameterizationEntityTypeSet[sParameterEntityTypeQTypeName];
-						if (oMatchingParameterization != null)
-							if (oParameterization != null) {
+						if (oMatchingParameterization != null) {
+							if (oParameterization3 != null) {
 								// TODO: extend this implementation to support more
 								// than one related parameter entity type
 								throw "LIMITATION: Unable to handle multiple parameter entity types of query entity "
-										+ oEntityType.name;
+										+ oEntityType3.name;
 							} else {
-								oParameterization = oMatchingParameterization;
-								oAssocFromParamsToResult = oAssoc;
+								oParameterization3 = oMatchingParameterization;
+								oAssocFromParamsToResult = oAssoc2;
 							}
+						}
 					}
 				}
 	
 				// B.2.3 get sets with this type
-				var aEntitySet = this._getEntitySetsOfType(oSchema, oEntityType.getQName());
-				if (aEntitySet.length != 1)
+				var aEntitySet3 = this._getEntitySetsOfType(oSchema, oEntityType3.getQName());
+				if (aEntitySet3.length != 1) {
 					throw "Invalid consumption model: There must be exactly one entity set for an entity type annotated with aggregating semantics";
-	
+				}
+
 				// B.2.4 create object for OData entity set of analytic query result
-				var oEntitySet = new odata4analytics.EntitySet(this._oModel.getServiceMetadata(), oSchema,
-						aEntitySet[0][0], aEntitySet[0][1], oEntityType);
-				this._oEntitySetSet[oEntitySet.getQName()] = oEntitySet;
-				this._oEntityTypeNameToEntitySetMap[oEntityType.getQName()] = oEntitySet;
+				var oEntitySet3 = new odata4analytics.EntitySet(this._oModel.getServiceMetadata(), oSchema,
+						aEntitySet3[0][0], aEntitySet3[0][1], oEntityType3);
+				this._oEntitySetSet[oEntitySet3.getQName()] = oEntitySet3;
+				this._oEntityTypeNameToEntitySetMap[oEntityType3.getQName()] = oEntitySet3;
 	
 				// B.2.5 create object for analytic query result, related OData
 				// entity type and set and (if any) related parameters
 				// object
-				var oQueryResult = new odata4analytics.QueryResult(this, oEntityType, oEntitySet, oParameterization);
+				var oQueryResult = new odata4analytics.QueryResult(this, oEntityType3, oEntitySet3, oParameterization3);
 				this._oQueryResultSet[oQueryResult.getName()] = oQueryResult;
 	
 				// B.2.6 set target result for found parameterization
-				if (oParameterization)
-					oParameterization.setTargetQueryResult(oQueryResult, oAssocFromParamsToResult);
+				if (oParameterization3) {
+					oParameterization3.setTargetQueryResult(oQueryResult, oAssocFromParamsToResult);
+				}
 	
 				// B.2.7 recognize all available dimension value helps
 				if (oSchema.association != undefined) {
-					for (var j = -1, oAssoc; oAssoc = oSchema.association[++j];) {
+					for (var t = -1, oAssoc3; (oAssoc3 = oSchema.association[++t]) !== undefined;) {
 						// value help always established by a referential constraint
 						// on an association
-						if (oAssoc.referentialConstraint == undefined)
+						if (oAssoc3.referentialConstraint == undefined) {
 							continue;
+						}
 	
 						var sDimensionValueHelpEntityTypeQTypeName = null;
 	
 						// B.2.7.1 relevant only if one end has same type as the
 						// given query result entity type
-						if (oAssoc.end[0].type == sQueryResultEntityTypeQTypeName && oAssoc.end[0].multiplicity == "*"
-								&& oAssoc.end[1].multiplicity == "1") {
-							sDimensionValueHelpEntityTypeQTypeName = oAssoc.end[1].type;
+						if (oAssoc3.end[0].type == sQueryResultEntityTypeQTypeName && oAssoc3.end[0].multiplicity == "*"
+								&& oAssoc3.end[1].multiplicity == "1") {
+							sDimensionValueHelpEntityTypeQTypeName = oAssoc3.end[1].type;
 	
-						} else if (oAssoc.end[1].type == sQueryResultEntityTypeQTypeName && oAssoc.end[1].multiplicity == "*"
-								&& oAssoc.end[0].multiplicity == "1") {
-							sDimensionValueHelpEntityTypeQTypeName = oAssoc.end[0].type;
+						} else if (oAssoc3.end[1].type == sQueryResultEntityTypeQTypeName && oAssoc3.end[1].multiplicity == "*"
+								&& oAssoc3.end[0].multiplicity == "1") {
+							sDimensionValueHelpEntityTypeQTypeName = oAssoc3.end[0].type;
 						}
-						if (!sDimensionValueHelpEntityTypeQTypeName)
+						if (!sDimensionValueHelpEntityTypeQTypeName) {
 							continue;
+						}
 	
 						// B.2.7.2 check if the referential constraint declares a
 						// dimension property as dependent
-						if (oAssoc.referentialConstraint.dependent.propertyRef.length != 1)
+						if (oAssoc3.referentialConstraint.dependent.propertyRef.length != 1) {
 							continue;
-						var oDimension = oQueryResult
-								.findDimensionByName(oAssoc.referentialConstraint.dependent.propertyRef[0].name);
-						if (oDimension == null)
+						}
+						var oDimension = oQueryResult.findDimensionByName(oAssoc3.referentialConstraint.dependent.propertyRef[0].name);
+						if (oDimension == null) {
 							continue;
+						}
 	
 						// B.2.7.3 Register the recognized dimension value help
 						// entity set and link it to the dimension
@@ -533,8 +553,9 @@ sap.ui.define(['jquery.sap.global'],
 	
 			// find "schema" entry in annotation document
 			for ( var propName in oAnnotation) {
-				if (!(this.oUI5ODataModelAnnotatableObject.objectName == propName))
+				if (!(this.oUI5ODataModelAnnotatableObject.objectName == propName)) {
 					continue;
+				}
 				if (!(oAnnotation[propName] instanceof Array)) {
 					continue;
 				}
@@ -554,20 +575,22 @@ sap.ui.define(['jquery.sap.global'],
 	
 		mergeV2AnnotationLevel : function(aMetadata, aAnnotation, oUI5ODataModelAnnotatableObject) {
 	
-			for (var i = -1, oAnnotation; oAnnotation = aAnnotation[++i];) {
-				for (var j = -1, oMetadata; oMetadata = aMetadata[++j];) {
+			for (var i = -1, oAnnotation; (oAnnotation = aAnnotation[++i]) !== undefined;) {
+				for (var j = -1, oMetadata; (oMetadata = aMetadata[++j]) !== undefined;) {
 	
-					if (!(oAnnotation[oUI5ODataModelAnnotatableObject.keyPropName] == oMetadata[oUI5ODataModelAnnotatableObject.keyPropName]))
+					if (!(oAnnotation[oUI5ODataModelAnnotatableObject.keyPropName] == oMetadata[oUI5ODataModelAnnotatableObject.keyPropName])) {
 						continue;
+					}
 					// found match: apply extensions from oAnnotation object to
 					// oMetadata object
 					if (oAnnotation["extensions"] != undefined) {
-						if (oMetadata["extensions"] == undefined)
-							oMetadata["extensions"] = new Array();
+						if (oMetadata["extensions"] == undefined) {
+							oMetadata["extensions"] = [];
+						}
 	
-						for (var l = -1, oAnnotationExtension; oAnnotationExtension = oAnnotation["extensions"][++l];) {
+						for (var l = -1, oAnnotationExtension; (oAnnotationExtension = oAnnotation["extensions"][++l]) !== undefined;) {
 							var bFound = false;
-							for (var m = -1, oMetadataExtension; oMetadataExtension = oMetadata["extensions"][++m];) {
+							for (var m = -1, oMetadataExtension; (oMetadataExtension = oMetadata["extensions"][++m]) !== undefined;) {
 								if (oAnnotationExtension.name == oMetadataExtension.name
 										&& oAnnotationExtension.namespace == oMetadataExtension.namespace) {
 									oMetadataExtension.value = oAnnotationExtension.value;
@@ -575,21 +598,25 @@ sap.ui.define(['jquery.sap.global'],
 									break;
 								}
 							}
-							if (!bFound)
+							if (!bFound) {
 								oMetadata["extensions"].push(oAnnotationExtension);
+							}
 						}
 					}
 					// walk down to sub objects
-					for (var k = -1, oUI5ODataModelAnnotatableSubObject; oUI5ODataModelAnnotatableSubObject = oUI5ODataModelAnnotatableObject.aSubObject[++k];) {
+					for (var k = -1, oUI5ODataModelAnnotatableSubObject; (oUI5ODataModelAnnotatableSubObject = oUI5ODataModelAnnotatableObject.aSubObject[++k]) !== undefined;) {
 	
 						for ( var propName in oAnnotation) {
-							if (!(oUI5ODataModelAnnotatableSubObject.objectName == propName))
+							if (!(oUI5ODataModelAnnotatableSubObject.objectName == propName)) {
 								continue;
-							if (!(oAnnotation[oUI5ODataModelAnnotatableSubObject.objectName] instanceof Array))
+							}
+							if (!(oAnnotation[oUI5ODataModelAnnotatableSubObject.objectName] instanceof Array)) {
 								continue;
+							}
 							if ((oMetadata[oUI5ODataModelAnnotatableSubObject.objectName] == undefined)
-									|| (!(oMetadata[oUI5ODataModelAnnotatableSubObject.objectName] instanceof Array)))
+									|| (!(oMetadata[oUI5ODataModelAnnotatableSubObject.objectName] instanceof Array))) {
 								continue;
+							}
 							this.mergeV2AnnotationLevel(oMetadata[oUI5ODataModelAnnotatableSubObject.objectName],
 									oAnnotation[oUI5ODataModelAnnotatableSubObject.objectName], oUI5ODataModelAnnotatableSubObject);
 							break;
@@ -634,13 +661,15 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.Model#getAllQueryResultNames
 		 */
 		getAllQueryResultNames : function() {
-			if (this._aQueryResultNames)
+			if (this._aQueryResultNames) {
 				return this._aQueryResultNames;
+			}
 	
 			this._aQueryResultNames = new Array(0);
 	
-			for ( var sName in this._oQueryResultSet)
+			for ( var sName in this._oQueryResultSet) {
 				this._aQueryResultNames.push(this._oQueryResultSet[sName].getName());
+			}
 	
 			return this._aQueryResultNames;
 		},
@@ -684,10 +713,11 @@ sap.ui.define(['jquery.sap.global'],
 		_getEntitySetsOfType : function(oSchema, sQTypeName) {
 			var aEntitySet = [];
 	
-			for (var i = -1, oEntityContainer; oEntityContainer = oSchema.entityContainer[++i];) {
-				for (var j = -1, oEntitySet; oEntitySet = oEntityContainer.entitySet[++j];) {
-					if (oEntitySet.entityType == sQTypeName)
+			for (var i = -1, oEntityContainer; (oEntityContainer = oSchema.entityContainer[++i]) !== undefined;) {
+				for (var j = -1, oEntitySet; (oEntitySet = oEntityContainer.entitySet[++j]) !== undefined;) {
+					if (oEntitySet.entityType == sQTypeName) {
 						aEntitySet.push([ oEntityContainer, oEntitySet ]);
+					}
 				}
 			}
 	
@@ -752,67 +782,77 @@ sap.ui.define(['jquery.sap.global'],
 			this._oEntitySet = oEntitySet;
 			this._oParameterization = oParameterization;
 	
-			this._oDimensionSet = new Object();
-			this._oMeasureSet = new Object();
+			this._oDimensionSet = {};
+			this._oMeasureSet = {};
 	
 			// parse entity type for analytic semantics described by annotations
 			var aProperty = oEntityType.getTypeDescription().property;
 			var oAttributeForPropertySet = {};
-			for (var i = -1, oProperty; oProperty = aProperty[++i];) {
-				if (oProperty.extensions == undefined)
+			for (var i = -1, oProperty; (oProperty = aProperty[++i]) !== undefined;) {
+				if (oProperty.extensions == undefined) {
 					continue;
-				for (var j = -1, oExtension; oExtension = oProperty.extensions[++j];) {
+				}
+				for (var j = -1, oExtension; (oExtension = oProperty.extensions[++j]) !== undefined;) {
 	
-					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE)
+					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
+					}
 	
 					switch (oExtension.name) {
 					case "aggregation-role":
 						switch (oExtension.value) {
-						case "dimension":
+						case "dimension": {
 							var oDimension = new odata4analytics.Dimension(this, oProperty);
 							this._oDimensionSet[oDimension.getName()] = oDimension;
 							break;
-						case "measure":
+							}
+						case "measure": {
 							var oMeasure = new odata4analytics.Measure(this, oProperty);
 							this._oMeasureSet[oMeasure.getName()] = oMeasure;
 							break;
+							}
 						case "totaled-properties-list":
 							this._oTotaledPropertyListProperty = oProperty;
 							break;
-						}
+						default:
+							}
 						break;
-					case "attribute-for":
+					case "attribute-for": {
 						var oDimensionAttribute = new odata4analytics.DimensionAttribute(this, oProperty);
 						oAttributeForPropertySet[oDimensionAttribute.getKeyProperty()] = oDimensionAttribute;
 						break;
+						}
+					default:
 					}
 				}
 			}
 	
 			// assign dimension attributes to the respective dimension objects
 			for ( var sDimensionAttributeName in oAttributeForPropertySet) {
-				var oDimensionAttribute = oAttributeForPropertySet[sDimensionAttributeName];
-				oDimensionAttribute.getDimension().addAttribute(oDimensionAttribute);
+				var oDimensionAttribute2 = oAttributeForPropertySet[sDimensionAttributeName];
+				oDimensionAttribute2.getDimension().addAttribute(oDimensionAttribute2);
 			}
 	
 			// apply workaround for missing text properties if requested
 			if (oModel._oActivatedWorkarounds.IdentifyTextPropertiesByName) {
-				var aMatchedTextPropertyName = new Array();
+				var aMatchedTextPropertyName = [];
 				for ( var oDimName in this._oDimensionSet) {
-					var oDimension = this._oDimensionSet[oDimName];
-					if (!oDimension.getTextProperty()) {
+					var oDimension2 = this._oDimensionSet[oDimName];
+					if (!oDimension2.getTextProperty()) {
 						var oTextProperty = null; // order of matching is
 						// significant!
 						oTextProperty = oEntityType.findPropertyByName(oDimName + "Name");
-						if (!oTextProperty)
+						if (!oTextProperty) {
 							oTextProperty = oEntityType.findPropertyByName(oDimName + "Text");
-						if (!oTextProperty)
+						}
+						if (!oTextProperty) {
 							oTextProperty = oEntityType.findPropertyByName(oDimName + "Desc");
-						if (!oTextProperty)
+						}
+						if (!oTextProperty) {
 							oTextProperty = oEntityType.findPropertyByName(oDimName + "Description");
+						}
 						if (oTextProperty) { // any match?
-							oDimension.setTextProperty(oTextProperty); // link
+							oDimension2.setTextProperty(oTextProperty); // link
 							// dimension
 							// with text
 							// property
@@ -822,7 +862,7 @@ sap.ui.define(['jquery.sap.global'],
 				}
 				// make sure that any matched text property is not exposed as
 				// dimension (according to spec)
-				for (var i = -1, sPropertyName; sPropertyName = aMatchedTextPropertyName[++i];) {
+				for (var t = -1, sPropertyName; (sPropertyName = aMatchedTextPropertyName[++t]) !== undefined;) {
 					delete this._oDimensionSet[sPropertyName];
 				}
 			}
@@ -865,9 +905,10 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResult#getAllDimensionNames
 		 */
 		getAllDimensionNames : function() {
-			if (this._aDimensionNames)
+			if (this._aDimensionNames) {
 				return this._aDimensionNames;
-	
+			}
+
 			this._aDimensionNames = [];
 	
 			for ( var sName in this._oDimensionSet)
@@ -901,8 +942,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResult#getAllMeasureNames
 		 */
 		getAllMeasureNames : function() {
-			if (this._aMeasureNames)
+			if (this._aMeasureNames) {
 				return this._aMeasureNames;
+			}
 	
 			this._aMeasureNames = [];
 	
@@ -957,16 +999,19 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResult#findDimensionByPropertyName
 		 */
 		findDimensionByPropertyName : function(sName) {
-			if (this._oDimensionSet[sName]) // the easy case
+			if (this._oDimensionSet[sName]) { // the easy case
 				return this._oDimensionSet[sName];
+			}
 	
 			for ( var sDimensionName in this._oDimensionSet) {
 				var oDimension = this._oDimensionSet[sDimensionName];
 				var oTextProperty = oDimension.getTextProperty();
-				if (oTextProperty && oTextProperty.name == sName)
+				if (oTextProperty && oTextProperty.name == sName) {
 					return oDimension;
-				if (oDimension.findAttributeByName(sName))
+				}
+				if (oDimension.findAttributeByName(sName)) {
 					return oDimension;
+				}
 			}
 			return null;
 		},
@@ -1012,14 +1057,16 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResult#findMeasureByPropertyName
 		 */
 		findMeasureByPropertyName : function(sName) {
-			if (this._oMeasureSet[sName]) // the easy case
+			if (this._oMeasureSet[sName]) { // the easy case
 				return this._oMeasureSet[sName];
+			}
 	
 			for ( var sMeasureName in this._oMeasureSet) {
 				var oMeasure = this._oMeasureSet[sMeasureName];
 				var oFormattedValueProperty = oMeasure.getFormattedValueProperty();
-				if (oFormattedValueProperty && oFormattedValueProperty.name == sName)
+				if (oFormattedValueProperty && oFormattedValueProperty.name == sName) {
 					return oMeasure;
+				}
 			}
 			return null;
 		},
@@ -1106,26 +1153,30 @@ sap.ui.define(['jquery.sap.global'],
 			this._oEntityType = oEntityType;
 			this._oEntitySet = oEntitySet;
 	
-			this._oParameterSet = new Object();
+			this._oParameterSet = {};
 	
 			// parse entity type for analytic semantics described by annotations
 			var aProperty = oEntityType.getTypeDescription().property;
-			for (var i = -1, oProperty; oProperty = aProperty[++i];) {
-				if (oProperty.extensions == undefined)
+			for (var i = -1, oProperty; (oProperty = aProperty[++i]) !== undefined;) {
+				if (oProperty.extensions == undefined) {
 					continue;
+				}
 	
-				for (var j = -1, oExtension; oExtension = oProperty.extensions[++j];) {
+				for (var j = -1, oExtension; (oExtension = oProperty.extensions[++j]) !== undefined;) {
 	
-					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE)
+					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
+					}
 	
 					switch (oExtension.name) {
 					// process parameter semantics
-					case "parameter":
+					case "parameter": {
 						var oParameter = new odata4analytics.Parameter(this, oProperty);
 						this._oParameterSet[oParameter.getName()] = oParameter;
 	
 						break;
+						}
+					default:
 					}
 				}
 			}
@@ -1137,19 +1188,23 @@ sap.ui.define(['jquery.sap.global'],
 			this._oQueryResult = oQueryResult;
 			var sQAssocName = this._oEntityType.getSchema().namespace + "." + oAssociation.name;
 			var aNavProp = this._oEntityType.getTypeDescription().navigationProperty;
-			if (!aNavProp)
+			if (!aNavProp) {
 				throw "Invalid consumption model: Parameters entity type lacks navigation property for association to query result entity type";
-			for (var i = -1, oNavProp; oNavProp = aNavProp[++i];) {
-				if (oNavProp.relationship == sQAssocName)
-					this._oNavPropToQueryResult = oNavProp.name;
 			}
-			if (!this._oNavPropToQueryResult)
+			for (var i = -1, oNavProp; (oNavProp = aNavProp[++i]) !== undefined;) {
+				if (oNavProp.relationship == sQAssocName) {
+					this._oNavPropToQueryResult = oNavProp.name;
+				}
+			}
+			if (!this._oNavPropToQueryResult) {
 				throw "Invalid consumption model: Parameters entity type lacks navigation property for association to query result entity type";
+			}
 		},
 		
 		getTargetQueryResult : function() {
-			if (! this._oQueryResult) 
+			if (! this._oQueryResult) {
 				throw "No target query result set";
+			}
 			return this._oQueryResult;
 		},
 	
@@ -1176,8 +1231,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.Parameterization#getAllParameterNames
 		 */
 		getAllParameterNames : function() {
-			if (this._aParameterNames)
+			if (this._aParameterNames) {
 				return this._aParameterNames;
+			}
 	
 			this._aParameterNames = [];
 	
@@ -1300,10 +1356,11 @@ sap.ui.define(['jquery.sap.global'],
 			var oEntityType = oParameterization.getEntityType();
 	
 			if (oProperty.extensions != undefined) {
-				for (var i = -1, oExtension; oExtension = oProperty.extensions[++i];) {
+				for (var i = -1, oExtension; (oExtension = oProperty.extensions[++i]) !== undefined;) {
 	
-					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE)
+					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
+					}
 	
 					switch (oExtension.name) {
 					case "parameter":
@@ -1332,11 +1389,13 @@ sap.ui.define(['jquery.sap.global'],
 						this._bIntervalBoundaryParameter = true;
 						this._oLowerIntervalBoundaryParameterProperty = oEntityType.findPropertyByName(oExtension.value);
 						break;
+					default:
 					}
 				}
 			}
-			if (!this._sLabelText)
+			if (!this._sLabelText) {
 				this._sLabelText = "";
+			}
 		},
 	
 		// to be called only by Model objects
@@ -1368,9 +1427,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.Parameter#getLabelText
 		 */
 		getLabelText : function() {
-			if (!this._sLabelText
-					&& this._oParameterization._oQueryResult._oModel._oActivatedWorkarounds.CreateLabelsFromTechnicalNames)
+			if (!this._sLabelText && this._oParameterization._oQueryResult._oModel._oActivatedWorkarounds.CreateLabelsFromTechnicalNames) {
 				this._sLabelText = odata4analytics.helper.tokenizeNametoLabelText(this.getName());
+			}
 			return this._sLabelText;
 		},
 	
@@ -1426,12 +1485,14 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		getPeerIntervalBoundaryParameter : function() {
 			var sPeerParamPropName = null;
-			if (this._oLowerIntervalBoundaryParameterProperty)
+			if (this._oLowerIntervalBoundaryParameterProperty) {
 				sPeerParamPropName = this._oLowerIntervalBoundaryParameterProperty.name;
-			else
+			} else {
 				sPeerParamPropName = this._oUpperIntervalBoundaryParameterProperty.name;
-			if (!sPeerParamPropName)
+			}
+			if (!sPeerParamPropName) {
 				throw "Parameter is not an interval boundary";
+			}
 			return this._oParameterization.findParameterByName(sPeerParamPropName);
 		},
 	
@@ -1552,7 +1613,7 @@ sap.ui.define(['jquery.sap.global'],
 			this._oQueryResult = oQueryResult;
 			this._oProperty = oProperty;
 	
-			this._oAttributeSet = new Object();
+			this._oAttributeSet = {};
 		},
 	
 		// to be called only by Model objects
@@ -1596,8 +1657,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.Dimension#getTextProperty
 		 */
 		getTextProperty : function() {
-			if (!this._oTextProperty)
+			if (!this._oTextProperty) {
 				this._oTextProperty = this._oQueryResult.getEntityType().getTextPropertyOfProperty(this.getName());
+			}
 			return this._oTextProperty;
 		},
 	
@@ -1621,10 +1683,12 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.Dimension#getLabelText
 		 */
 		getLabelText : function() {
-			if (!this._sLabelText)
+			if (!this._sLabelText) {
 				this._sLabelText = this._oQueryResult.getEntityType().getLabelOfProperty(this.getName());
-			if (!this._sLabelText && this._oQueryResult._oModel._oActivatedWorkarounds.CreateLabelsFromTechnicalNames)
+			}
+			if (!this._sLabelText && this._oQueryResult._oModel._oActivatedWorkarounds.CreateLabelsFromTechnicalNames) {
 				this._sLabelText = odata4analytics.helper.tokenizeNametoLabelText(this.getName());
+			}
 			return (this._sLabelText == null ? "" : this._sLabelText);
 		},
 	
@@ -1658,8 +1722,9 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		getHierarchy : function() {
 			// set associated hierarchy if any
-			if (!this._oHierarchy)
+			if (!this._oHierarchy) {
 				this._oHierarchy = this._oQueryResult.getEntityType().getHierarchy(this._oProperty.name);
+			}
 	
 			return this._oHierarchy;
 		},
@@ -1673,8 +1738,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.Dimension#getAllAttributeNames
 		 */
 		getAllAttributeNames : function() {
-			if (this._aAttributeNames)
+			if (this._aAttributeNames) {
 				return this._aAttributeNames;
+			}
 	
 			this._aAttributeNames = [];
 	
@@ -1806,10 +1872,11 @@ sap.ui.define(['jquery.sap.global'],
 	
 			if (oProperty.extensions != undefined) {
 	
-				for (var i = -1, oExtension; oExtension = oProperty.extensions[++i];) {
+				for (var i = -1, oExtension; (oExtension = oProperty.extensions[++i]) !== undefined;) {
 	
-					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE)
+					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
+					}
 	
 					switch (oExtension.name) {
 					case "attribute-for":
@@ -1821,6 +1888,7 @@ sap.ui.define(['jquery.sap.global'],
 					case "text":
 						this._oTextProperty = oQueryResult.getEntityType().findPropertyByName(oExtension.value);
 						break;
+					default:
 					}
 				}
 			}
@@ -1876,8 +1944,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.DimensionAttribute#getLabelText
 		 */
 		getLabelText : function() {
-			if (!this._sLabelText && this._oQueryResult._oModel._oActivatedWorkarounds.CreateLabelsFromTechnicalNames)
+			if (!this._sLabelText && this._oQueryResult._oModel._oActivatedWorkarounds.CreateLabelsFromTechnicalNames) {
 				this._sLabelText = odata4analytics.helper.tokenizeNametoLabelText(this.getName());
+			}
 			return this._sLabelText;
 		},
 	
@@ -1936,10 +2005,11 @@ sap.ui.define(['jquery.sap.global'],
 	
 			if (oProperty.extensions != undefined) {
 	
-				for (var i = -1, oExtension; oExtension = oProperty.extensions[++i];) {
+				for (var i = -1, oExtension; (oExtension = oProperty.extensions[++i]) !== undefined;) {
 	
-					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE)
+					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
+					}
 	
 					switch (oExtension.name) {
 					case "label":
@@ -1951,11 +2021,13 @@ sap.ui.define(['jquery.sap.global'],
 					case "unit":
 						this._oUnitProperty = oQueryResult.getEntityType().findPropertyByName(oExtension.value);
 						break;
+					default:
 					}
 				}
 			}
-			if (!this._sLabelText)
+			if (!this._sLabelText) {
 				this._sLabelText = "";
+			}
 		},
 	
 		/**
@@ -2022,8 +2094,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.Measure#getLabelText
 		 */
 		getLabelText : function() {
-			if (!this._sLabelText && this._oQueryResult._oModel._oActivatedWorkarounds.CreateLabelsFromTechnicalNames)
+			if (!this._sLabelText && this._oQueryResult._oModel._oActivatedWorkarounds.CreateLabelsFromTechnicalNames) {
 				this._sLabelText = odata4analytics.helper.tokenizeNametoLabelText(this.getName());
+			}
 			return this._sLabelText;
 		},
 	
@@ -2036,8 +2109,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.Measure#isUpdatable
 		 */
 		isUpdatable : function() {
-			if (this._bIsUpdatable != null)
+			if (this._bIsUpdatable != null) {
 				return this._bIsUpdatable;
+			}
 			var oUpdatablePropertyNameSet = this._oQueryResult.getEntitySet().getUpdatablePropertyNameSet();
 	
 			return (oUpdatablePropertyNameSet[this.getName()] != undefined);
@@ -2096,11 +2170,12 @@ sap.ui.define(['jquery.sap.global'],
 			this._oSchema = oSchema;
 			this._oModel = oModel;
 	
-			if (oSchema.entityContainer.length > 1)
+			if (oSchema.entityContainer.length > 1) {
 				this._sQName = oContainer.name + "." + oEntitySet.name;
-			else
+			} else {
 				// no need to disambiguate this for the simple case
 				this._sQName = oEntitySet.name;
+			}
 		},
 	
 		/**
@@ -2160,13 +2235,14 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.EntitySet#getUpdatablePropertyNameSet
 		 */
 		getUpdatablePropertyNameSet : function() {
-			if (this._oUpdatablePropertyNames)
+			if (this._oUpdatablePropertyNames) {
 				return this._oUpdatablePropertyNames;
+			}
 	
-			this._oUpdatablePropertyNames = new Object();
+			this._oUpdatablePropertyNames = {};
 			var bSetIsUpdatable = true;
 			if (this._oEntitySet.extensions != undefined) {
-				for (var j = -1, oExtension; oExtension = this._oEntitySet.extensions[++j];) {
+				for (var j = -1, oExtension; (oExtension = this._oEntitySet.extensions[++j]) !== undefined;) {
 					if (oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE && oExtension.name == "updatable") {
 						if (oExtension.value == "false") {
 							bSetIsUpdatable = false;
@@ -2180,24 +2256,27 @@ sap.ui.define(['jquery.sap.global'],
 			}
 	
 			var aProperty = this._oEntityType.getTypeDescription().property;
-			for (var i = -1, oProperty; oProperty = aProperty[++i];) {
+			for (var i = -1, oProperty; (oProperty = aProperty[++i]) !== undefined;) {
 				var bPropertyIsUpdatable = true;
 	
-				if (oProperty.extensions == undefined)
+				if (oProperty.extensions == undefined) {
 					continue;
-				for (var j = -1, oExtension; oExtension = oProperty.extensions[++j];) {
-					if (oExtension.namespace != odata4analytics.constants.SAP_NAMESPACE)
+				}
+				for (var k = -1, oExtension2; (oExtension2 = oProperty.extensions[++k]) !== undefined;) {
+					if (oExtension2.namespace != odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
+					}
 	
-					if (oExtension.name == "updatable") {
-						if (oExtension.value == "false") {
+					if (oExtension2.name == "updatable") {
+						if (oExtension2.value == "false") {
 							bPropertyIsUpdatable = false;
 							break;
 						}
 					}
 				}
-				if (bPropertyIsUpdatable)
+				if (bPropertyIsUpdatable) {
 					this._oUpdatablePropertyNames[oProperty.name] = true;
+				}
 			}
 			return this._oUpdatablePropertyNames;
 		},
@@ -2255,11 +2334,11 @@ sap.ui.define(['jquery.sap.global'],
 			this._oModel = oModel;
 	
 			this._aKeyProperties = [];
-			this._oPropertySet = new Object();
+			this._oPropertySet = {};
 			this._aFilterablePropertyNames = [];
 			this._aSortablePropertyNames = [];
 			this._aRequiredFilterPropertyNames = [];
-			this._oPropertyFilterRestrictionSet = new Object();
+			this._oPropertyFilterRestrictionSet = {};
 	
 			this._oPropertyHeadingsSet = {};
 			this._oPropertyQuickInfosSet = {};
@@ -2272,11 +2351,11 @@ sap.ui.define(['jquery.sap.global'],
 			var oRecursiveHierarchies = {}; // temp for collecting all properties participating in hierarchies
 			var oRecursiveHierarchy = null;
 	
-			for (var i = -1, oPropertyRef; oPropertyRef = oEntityType.key.propertyRef[++i];) {
+			for (var i = -1, oPropertyRef; (oPropertyRef = oEntityType.key.propertyRef[++i]) !== undefined;) {
 				this._aKeyProperties.push(oPropertyRef.name);
 			}
 	
-			for (var i = -1, oProperty; oProperty = oEntityType.property[++i];) {
+			for (var k = -1, oProperty; (oProperty = oEntityType.property[++k]) !== undefined;) {
 	
 				// store property references for faster lookup
 				this._oPropertySet[oProperty.name] = oProperty;
@@ -2287,63 +2366,74 @@ sap.ui.define(['jquery.sap.global'],
 				// by default, every property can be sorted
 				this._aSortablePropertyNames.push(oProperty.name);
 	
-				if (oProperty.extensions == undefined)
+				if (oProperty.extensions == undefined) {
 					continue;
-				for (var j = -1, oExtension; oExtension = oProperty.extensions[++j];) {
+				}
+				for (var j = -1, oExtension; (oExtension = oProperty.extensions[++j]) !== undefined;) {
 	
-					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE)
+					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
+					}
 	
 					switch (oExtension.name) {
 					case "filterable":
-						if (oExtension.value == "false")
+						if (oExtension.value == "false") {
 							this._aFilterablePropertyNames.pop(oProperty.name);
+						}
 						break;
 					case "sortable":
-						if (oExtension.value == "false")
+						if (oExtension.value == "false") {
 							this._aSortablePropertyNames.pop(oProperty.name);
+						}
 						break;
 					case "required-in-filter":
-						if (oExtension.value == "true")
+						if (oExtension.value == "true") {
 							this._aRequiredFilterPropertyNames.push(oProperty.name);
+						}
 						break;
 					case "filter-restriction":
 						if (oExtension.value == odata4analytics.EntityType.propertyFilterRestriction.SINGLE_VALUE
 								|| oExtension.value == odata4analytics.EntityType.propertyFilterRestriction.MULTI_VALUE
-								|| oExtension.value == odata4analytics.EntityType.propertyFilterRestriction.INTERVAL)
+								|| oExtension.value == odata4analytics.EntityType.propertyFilterRestriction.INTERVAL) {
 							this._oPropertyFilterRestrictionSet[oProperty.name] = oExtension.value;
+						}
 						break;
 	
 					// hierarchy annotations: build temporary set of
 					// hierarchy-node-id properties with relevant attributes
 					case "hierarchy-node-for":
-						if (!(oRecursiveHierarchy = oRecursiveHierarchies[oProperty.name]))
-							oRecursiveHierarchy = oRecursiveHierarchies[oProperty.name] = new Object();
+						if (!(oRecursiveHierarchy = oRecursiveHierarchies[oProperty.name])) {
+							oRecursiveHierarchy = oRecursiveHierarchies[oProperty.name] = {};
+						}
 						oRecursiveHierarchy.dimensionName = oExtension.value;
 						break;
 					case "hierarchy-parent-node-for":
 					case "hierarchy-parent-nod": // TODO workaround for GW bug
-						if (!(oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value]))
-							oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value] = new Object();
+						if (!(oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value])) {
+							oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value] = {};
+						}
 						oRecursiveHierarchy.parentNodeIDProperty = oProperty;
 						break;
 					case "hierarchy-level-for":
-						if (!(oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value]))
-							oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value] = new Object();
+						if (!(oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value])) {
+							oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value] = {};
+						}
 						oRecursiveHierarchy.levelProperty = oProperty;
 						break;
 					case "hierarchy-drill-state-for":
 					case "hierarchy-drill-stat": // TODO workaround for GW bug
-						if (!(oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value]))
-							oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value] = new Object();
+						if (!(oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value])) {
+							oRecursiveHierarchy = oRecursiveHierarchies[oExtension.value] = {};
+						}
 						oRecursiveHierarchy.drillStateProperty = oProperty;
 						break;
+					default:
 					}
 				}
 			}
 	
 			// post processing: set up hierarchy objects
-			this._oRecursiveHierarchySet = new Object();
+			this._oRecursiveHierarchySet = {};
 			for ( var hierNodeIDPropertyName in oRecursiveHierarchies) {
 				var oHierarchy = oRecursiveHierarchies[hierNodeIDPropertyName];
 				var oHierarchyNodeIDProperty = this._oPropertySet[hierNodeIDPropertyName];
@@ -2414,15 +2504,18 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		getLabelOfProperty : function(sPropertyName) {
 			var oProperty = this._oPropertySet[sPropertyName];
-			if (oProperty == null)
+			if (oProperty == null) {
 				throw "no such property with name " + sPropertyName;
+			}
 	
 			if (oProperty.extensions != undefined) {
-				for (var i = -1, oExtension; oExtension = oProperty.extensions[++i];) {
-					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE)
+				for (var i = -1, oExtension; (oExtension = oProperty.extensions[++i]) !== undefined;) {
+					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
-					if (oExtension.name == "label")
+					}
+					if (oExtension.name == "label") {
 						return oExtension.value;
+					}
 				}
 			}
 			return null;
@@ -2441,18 +2534,22 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		getHeadingOfProperty : function(sPropertyName) {
 			var oProperty = this._oPropertySet[sPropertyName];
-			if (oProperty == null)
+			if (oProperty == null) {
 				throw "no such property with name " + sPropertyName;
-	
+			}
+
+			var sPropertyLabel = null;
 			if (oProperty.extensions != undefined) {
-				var sPropertyLabel = null;
-				for (var i = -1, oExtension; oExtension = oProperty.extensions[++i];) {
-					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE)
+				for (var i = -1, oExtension; (oExtension = oProperty.extensions[++i]) !== undefined;) {
+					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
-					if (oExtension.name == "heading")
+					}
+					if (oExtension.name == "heading") {
 						return oExtension.value;
-					if (oExtension.name == "label")
+					}
+					if (oExtension.name == "label") {
 						sPropertyLabel = oExtension.value;
+					}
 				}
 			}
 			// no heading found, so return property label
@@ -2472,18 +2569,22 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		getQuickInfoOfProperty : function(sPropertyName) {
 			var oProperty = this._oPropertySet[sPropertyName];
-			if (oProperty == null)
+			if (oProperty == null) {
 				throw "no such property with name " + sPropertyName;
-	
+			}
+
+			var sPropertyLabel = null;
 			if (oProperty.extensions != undefined) {
-				var sPropertyLabel = null;
-				for (var i = -1, oExtension; oExtension = oProperty.extensions[++i];) {
-					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE)
+				for (var i = -1, oExtension; (oExtension = oProperty.extensions[++i]) !== undefined;) {
+					if (!oExtension.namespace == odata4analytics.constants.SAP_NAMESPACE) {
 						continue;
-					if (oExtension.name == "quickinfo")
+					}
+					if (oExtension.name == "quickinfo") {
 						return oExtension.value;
-					if (oExtension.name == "label")
+					}
+					if (oExtension.name == "label") {
 						sPropertyLabel = oExtension.value;
+					}
 				}
 			}
 			// no quick info found, so return property label
@@ -2504,13 +2605,15 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		getTextPropertyOfProperty : function(sPropertyName) {
 			var oProperty = this._oPropertySet[sPropertyName];
-			if (oProperty == null)
+			if (oProperty == null) {
 				throw "no such property with name " + sPropertyName;
+			}
 	
 			if (oProperty.extensions != undefined) {
-				for (var i = -1, oExtension; oExtension = oProperty.extensions[++i];) {
-					if (oExtension.name == "text")
+				for (var i = -1, oExtension; (oExtension = oProperty.extensions[++i]) !== undefined;) {
+					if (oExtension.name == "text") {
 						return this.findPropertyByName(oExtension.value);
+					}
 				}
 			}
 			return null;
@@ -2530,13 +2633,15 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		getSuperOrdinatePropertyOfProperty : function(sPropertyName) {
 			var oProperty = this._oPropertySet[sPropertyName];
-			if (oProperty == null)
+			if (oProperty == null) {
 				throw "no such property with name " + sPropertyName;
+			}
 	
 			if (oProperty.extensions != undefined) {
-				for (var i = -1, oExtension; oExtension = oProperty.extensions[++i];) {
-					if (oExtension.name == "super-ordinate")
+				for (var i = -1, oExtension; (oExtension = oProperty.extensions[++i]) !== undefined;) {
+					if (oExtension.name == "super-ordinate") {
 						return this.findPropertyByName(oExtension.value);
+					}
 				}
 			}
 			return null;
@@ -2608,8 +2713,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.EntityType#getAllHierarchyPropertyNames
 		 */
 		getAllHierarchyPropertyNames : function() {
-			if (this._aHierarchyPropertyNames)
+			if (this._aHierarchyPropertyNames) {
 				return this._aHierarchyPropertyNames;
+			}
 	
 			this._aHierarchyPropertyNames = [];
 	
@@ -2633,8 +2739,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.EntityType#getHierarchy
 		 */
 		getHierarchy : function(sName) {
-			if (this._oRecursiveHierarchySet[sName] == undefined)
+			if (this._oRecursiveHierarchySet[sName] == undefined) {
 				return null;
+			}
 			return this._oRecursiveHierarchySet[sName];
 		},
 	
@@ -2844,25 +2951,25 @@ sap.ui.define(['jquery.sap.global'],
 	 * @public
 	 */
 	odata4analytics.FilterExpression = function(oModel, oSchema, oEntityType) {
-	    this._init(oModel, oSchema, oEntityType);
+		this._init(oModel, oSchema, oEntityType);
 	};
 
 	odata4analytics.FilterExpression.prototype = {
-	    /**
-	     * @private
-	     */
-	    _init : function(oModel, oSchema, oEntityType) {
-	        this._oEntityType = oEntityType;
-	        this._oSchema = oSchema;
-	        this._oModel = oModel;
+		/**
+		 * @private
+		 */
+		_init : function(oModel, oSchema, oEntityType) {
+			this._oEntityType = oEntityType;
+			this._oSchema = oSchema;
+			this._oModel = oModel;
 
-	        this._aConditionUI5Filter = new Array();
-	        this._aUI5FilterArray = new Array();
-	    },
+			this._aConditionUI5Filter = [];
+			this._aUI5FilterArray = [];
+		},
 
-	    /**
-	     * @private
-	     */
+		/**
+		 * @private
+		 */
 		_renderPropertyFilterValue : function(sFilterValue, sPropertyEDMTypeName) {
 			// initial implementation called odata4analytics.helper.renderPropertyFilterValue, which had problems with locale-specific input values
 			// this is handled in the ODataModel
@@ -2870,70 +2977,99 @@ sap.ui.define(['jquery.sap.global'],
 					this._oModel.getODataModel().formatValue(sFilterValue, sPropertyEDMTypeName));
 		},
 
-	    /**
-	     * Clear expression from any conditions that may have been set previously
-	     * 
+		/**
+		 * Clear expression from any conditions that may have been set previously
+		 * 
 		 * @public
 		 * @function
 		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#clear
-	     */
-	    clear : function() {
-	        this._aConditionUI5Filter = new Array();
-	        this._aUI5FilterArray = new Array();
-	    },
+		 */
+		clear : function() {
+			this._aConditionUI5Filter = [];
+			this._aUI5FilterArray = [];
+		},
 
-	    /**
-	     * @private
-	     */
-	    _addCondition : function(sProperty, sOperator, oValue1, oValue2) {
-	        // make sure that the condition is new
-	        for ( var i = -1, oUI5Filter; oUI5Filter = this._aConditionUI5Filter[++i];) {
-	            if (oUI5Filter.sPath == sProperty && oUI5Filter.sOperator == sOperator && oUI5Filter.oValue1 == oValue1
-	                    && oUI5Filter.oValue2 == oValue2)
-	                return;
-	        }
-	        this._aConditionUI5Filter.push(new sap.ui.model.Filter(sProperty, sOperator, oValue1, oValue2));
-	    },
+		/**
+		 * @private
+		 */
+		_addCondition : function(sProperty, sOperator, oValue1, oValue2) {
+			// make sure that the condition is new
+			for ( var i = -1, oUI5Filter; (oUI5Filter = this._aConditionUI5Filter[++i]) !== undefined;) {
+				if (oUI5Filter.sPath == sProperty && oUI5Filter.sOperator == sOperator && oUI5Filter.oValue1 == oValue1
+						&& oUI5Filter.oValue2 == oValue2) {
+					return;
+				}
+			}
+			this._aConditionUI5Filter.push(new sap.ui.model.Filter(sProperty, sOperator, oValue1, oValue2));
+		},
 
-	    /**
-	     * @private
-	     */
-	    _addUI5FilterArray : function(aUI5Filter) {
-	        this._aUI5FilterArray.push(aUI5Filter);
-	    },
+		/**
+		 * @private
+		 */
+		_addUI5FilterArray : function(aUI5Filter) {
+			this._aUI5FilterArray.push(aUI5Filter);
+		},
 
-	    /**
-	     * Add a condition to the filter expression.
-	     * 
-	     * Multiple conditions on the same property are combined with a logical OR first, and in a second step conditions for
-	     * different properties are combined with a logical AND.
-	     * 
-	     * @param {string}
-	     *            sPropertyName The name of the property bound in the condition
-	     * @param {sap.ui.model.FilterOperator}
-	     *            sOperator operator used for the condition
-	     * @param {object}
-	     *            oValue value to be used for this condition
-	     * @param {object}
-	     *            oValue2 (optional) as second value to be used for this condition
-	     * @throws Exception
-	     *             if the property is unknown or not filterable
-	     * @returns {sap.ui.model.analytics.odata4analytics.FilterExpression} This object for method chaining
+		/**
+		 * Add a condition to the filter expression.
+		 * 
+		 * Multiple conditions on the same property are combined with a logical OR first, and in a second step conditions for
+		 * different properties are combined with a logical AND.
+		 * 
+		 * @param {string}
+		 *            sPropertyName The name of the property bound in the condition
+		 * @param {sap.ui.model.FilterOperator}
+		 *            sOperator operator used for the condition
+		 * @param {object}
+		 *            oValue value to be used for this condition
+		 * @param {object}
+		 *            oValue2 (optional) as second value to be used for this condition
+		 * @throws Exception
+		 *             if the property is unknown or not filterable
+		 * @returns {sap.ui.model.analytics.odata4analytics.FilterExpression} This object for method chaining
 		 * @public
 		 * @function
 		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#addCondition
-	     */
-	    addCondition : function(sPropertyName, sOperator, oValue, oValue2) {
-	        var oProperty = this._oEntityType.findPropertyByName(sPropertyName);
-	        if (oProperty == null) {
-	            throw "Cannot add filter condition for unknown property name " + sPropertyName; // TODO
-	        }
-	        var aFilterablePropertyNames = this._oEntityType.getFilterablePropertyNames();
-	        if (aFilterablePropertyNames.indexOf(sPropertyName) === -1) {
-	            throw "Cannot add filter condition for not filterable property name " + sPropertyName; // TODO
-	        }
-	        this._addCondition(sPropertyName, sOperator, oValue, oValue2);
-	        return this;
+		 */
+		addCondition : function(sPropertyName, sOperator, oValue, oValue2) {
+			var oProperty = this._oEntityType.findPropertyByName(sPropertyName);
+			if (oProperty == null) {
+				throw "Cannot add filter condition for unknown property name " + sPropertyName; // TODO
+			}
+			var aFilterablePropertyNames = this._oEntityType.getFilterablePropertyNames();
+			if (jQuery.inArray(sPropertyName,aFilterablePropertyNames) === -1) {
+				throw "Cannot add filter condition for not filterable property name " + sPropertyName; // TODO
+			}
+			this._addCondition(sPropertyName, sOperator, oValue, oValue2);
+			return this;
+		},
+
+		/**
+		 * Remove all conditions for some property from the filter expression.
+		 * 
+		 * All previously set conditions for some property are removed from the filter expression.
+		 * 
+		 * @param {string}
+		 *            sPropertyName The name of the property bound in the condition
+		 * @throws Exception
+		 *             if the property is unknown
+		 * @returns {sap.ui.model.analytics.odata4analytics.FilterExpression} This object for method chaining
+		 * @public
+		 * @function
+		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#removeConditions
+		 */
+		removeConditions : function(sPropertyName) {
+			var oProperty = this._oEntityType.findPropertyByName(sPropertyName);
+			if (oProperty == null) {
+				throw "Cannot remove filter conditions for unknown property name " + sPropertyName; // TODO
+			}
+			for (var i = 0; i < this._aConditionUI5Filter.length; i++) {
+				var oUI5Filter = this._aConditionUI5Filter[i];
+				if (oUI5Filter.sPath == sPropertyName) {
+					this._aConditionUI5Filter.splice(i--, 1);
+				}
+			}
+			return this;
 	    },
 
 	    /**
@@ -2952,328 +3088,343 @@ sap.ui.define(['jquery.sap.global'],
 		 * @public
 		 * @function
 		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#addSetCondition
-	     */
-	    addSetCondition : function(sPropertyName, aValues) {
-	        var oProperty = this._oEntityType.findPropertyByName(sPropertyName);
-	        if (oProperty == null) {
-	            throw "Cannot add filter condition for unknown property name " + sPropertyName; // TODO
-	        }
-	        var aFilterablePropertyNames = this._oEntityType.getFilterablePropertyNames();
-	        if (aFilterablePropertyNames.indexOf(sPropertyName) === -1) {
-	            throw "Cannot add filter condition for not filterable property name " + sPropertyName; // TODO
-	        }
-	        for ( var i = -1, oValue; oValue = aValues[++i];)
-	            this._addCondition(sPropertyName, sap.ui.model.FilterOperator.EQ, oValue);
-	        return this;
-	    },
+		 */
+		addSetCondition : function(sPropertyName, aValues) {
+			var oProperty = this._oEntityType.findPropertyByName(sPropertyName);
+			if (oProperty == null) {
+				throw "Cannot add filter condition for unknown property name " + sPropertyName; // TODO
+			}
+			var aFilterablePropertyNames = this._oEntityType.getFilterablePropertyNames();
+			if (jQuery.inArray(sPropertyName, aFilterablePropertyNames) === -1) {
+				throw "Cannot add filter condition for not filterable property name " + sPropertyName; // TODO
+			}
+			for ( var i = -1, oValue; (oValue = aValues[++i]) !== undefined;) {
+				this._addCondition(sPropertyName, sap.ui.model.FilterOperator.EQ, oValue);
+			}
+			return this;
+		},
 
-	    /**
-	     * Add an array of UI5 filter conditions to the filter expression.
-	     * 
-	     * The UI5 filter condition is combined with the other given conditions using a logical AND. This method
-	     * is particularly useful for passing forward already created UI5 filter arrays.  
-	     * 
-	     * @param {array(sap.ui.model.Filter)}
-	     *            aUI5Filter Array of UI5 filter objects
-	     * @returns {sap.ui.model.analytics.odata4analytics.FilterExpression} This object for method chaining
+		/**
+		 * Add an array of UI5 filter conditions to the filter expression.
+		 * 
+		 * The UI5 filter condition is combined with the other given conditions using a logical AND. This method
+		 * is particularly useful for passing forward already created UI5 filter arrays.  
+		 * 
+		 * @param {array(sap.ui.model.Filter)}
+		 *            aUI5Filter Array of UI5 filter objects
+		 * @returns {sap.ui.model.analytics.odata4analytics.FilterExpression} This object for method chaining
 		 * @public
 		 * @function
 		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#addUI5FilterConditions
-	     */
-	    addUI5FilterConditions : function(aUI5Filter) {
-	        if (! Array.isArray(aUI5Filter))
-	            throw "Argument is not an array";
-	        if (aUI5Filter.length == 0) return this;
-	        
-	        // check if a multi filter is included; otherwise every element simply represents a single condition
-	        var bHasMultiFilter = false;
-	        for (var i = 0; i < aUI5Filter.length; i++) {
-	        	if (aUI5Filter[i].aFilters != undefined) {
-	        		bHasMultiFilter = true;
-	        		break;
-	        	}
-	        }
-	        if (bHasMultiFilter) this._addUI5FilterArray(aUI5Filter);
-	        else {
-		        for (var i = 0; i < aUI5Filter.length; i++) {
-		        	this.addCondition(aUI5Filter[i].sPath, aUI5Filter[i].sOperator, aUI5Filter[i].oValue1, aUI5Filter[i].oValue2)
-		        }	        	
-	        }
-	        return this;
-	    },
+		 */
+		addUI5FilterConditions : function(aUI5Filter) {
+			if (! jQuery.isArray(aUI5Filter)) {
+				throw "Argument is not an array";
+			}
+			if (aUI5Filter.length == 0) {
+				return this;
+			}
+			
+			// check if a multi filter is included; otherwise every element simply represents a single condition
+			var bHasMultiFilter = false;
+			for (var i = 0; i < aUI5Filter.length; i++) {
+						if (aUI5Filter[i].aFilters != undefined) {
+							bHasMultiFilter = true;
+							break;
+						}
+			}
+			if (bHasMultiFilter) {
+				this._addUI5FilterArray(aUI5Filter);
+			} else {
+				for (var j = 0; j < aUI5Filter.length; j++) {
+							this.addCondition(aUI5Filter[j].sPath, aUI5Filter[j].sOperator, aUI5Filter[j].oValue1, aUI5Filter[j].oValue2);
+				}
+			}
+			return this;
+		},
 
-	        
-	    /**
-	     * Get an array of SAPUI5 Filter objects corresponding to this expression.
-	     * 
-	     * @returns {array(sap.ui.model.Filter)} List of filter objects representing this expression
+			
+		/**
+		 * Get an array of SAPUI5 Filter objects corresponding to this expression.
+		 * 
+		 * @returns {array(sap.ui.model.Filter)} List of filter objects representing this expression
 		 * @public
 		 * @function
 		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#getExpressionAsUI5FilterArray
-	     */
-	    getExpressionAsUI5FilterArray : function() {
-	        var aFilterObjects = this._aConditionUI5Filter.concat([]);
+		 */
+		getExpressionAsUI5FilterArray : function() {
+			var aFilterObjects = this._aConditionUI5Filter.concat([]);
 
-	        for ( var i = -1, aFilter; aFilter = this._aUI5FilterArray[++i];) {
-	            for ( var j = -1, oFilter; oFilter = aFilter[++j];) {
-	                aFilterObjects.push(oFilter);
-	            }
-	        }
-	        return aFilterObjects;
-	    },
+			for ( var i = -1, aFilter; (aFilter = this._aUI5FilterArray[++i]) !== undefined;) {
+				for ( var j = -1, oFilter; (oFilter = aFilter[++j]) !== undefined;) {
+					aFilterObjects.push(oFilter);
+				}
+			}
+			return aFilterObjects;
+		},
 
 
-	    /*
-	     * @private
-	     */
-	    getPropertiesReferencedByUI5FilterArray : function(aUI5Filter, oReferencedProperties) {
-	        for ( var i = -1, oUI5Filter; oUI5Filter = aUI5Filter[++i];) {
-	            if (oUI5Filter.aFilters != undefined) 
-	                this.getPropertiesReferencedByUI5FilterArray(oUI5Filter.aFilters, oReferencedProperties);
-	            else { 
-	                if (oReferencedProperties[oUI5Filter.sPath] == undefined)
-	                    oReferencedProperties[oUI5Filter.sPath] = [];
-	                oReferencedProperties[oUI5Filter.sPath].push(oUI5Filter);
-	            }                    
-	        }
-	    },
-	    
+		/*
+		 * @private
+		 */
+		getPropertiesReferencedByUI5FilterArray : function(aUI5Filter, oReferencedProperties) {
+			for ( var i = -1, oUI5Filter; (oUI5Filter = aUI5Filter[++i]) !== undefined;) {
+				if (oUI5Filter.aFilters != undefined) {
+					this.getPropertiesReferencedByUI5FilterArray(oUI5Filter.aFilters, oReferencedProperties);
+				} else {
+					if (oReferencedProperties[oUI5Filter.sPath] == undefined) {
+						oReferencedProperties[oUI5Filter.sPath] = [];
+					}
+					oReferencedProperties[oUI5Filter.sPath].push(oUI5Filter);
+				}
+			}
+		},
+		
 
-	    /**
-	     * Get the properties referenced by the filter expression.
-	     * 
-	     * @returns {object} Object containing (JavaScript) properties for all (OData entity type)
-	     *          properties referenced in the filter expression. The value for each of these properties is an array holding all used UI5 filters referencing them. 
-	     * @private
-	     */
-	    getReferencedProperties : function() {
-	        var oReferencedProperties = new Object();
+		/**
+		 * Get the properties referenced by the filter expression.
+		 * 
+		 * @returns {object} Object containing (JavaScript) properties for all (OData entity type)
+		 *          properties referenced in the filter expression. The value for each of these properties is an array holding all used UI5 filters referencing them. 
+		 * @private
+		 */
+		getReferencedProperties : function() {
+			var oReferencedProperties = {};
 
-	        for ( var i = -1, oUI5Filter; oUI5Filter = this._aConditionUI5Filter[++i];) {
-	            if (oReferencedProperties[oUI5Filter.sPath] == undefined)
-	                oReferencedProperties[oUI5Filter.sPath] = [];
-	            oReferencedProperties[oUI5Filter.sPath].push(oUI5Filter);
-	        }
-	        
-	        for ( var i = -1, aUI5Filter; aUI5Filter = this._aUI5FilterArray[++i];) {
-	            this.getPropertiesReferencedByUI5FilterArray(aUI5Filter, oReferencedProperties);
-	        }
-	        return oReferencedProperties;
-	    },
+			for ( var i = -1, oUI5Filter; (oUI5Filter = this._aConditionUI5Filter[++i]) !== undefined;) {
+				if (oReferencedProperties[oUI5Filter.sPath] == undefined) {
+					oReferencedProperties[oUI5Filter.sPath] = [];
+				}
+				oReferencedProperties[oUI5Filter.sPath].push(oUI5Filter);
+			}
+			
+			for ( var j = -1, aUI5Filter; (aUI5Filter = this._aUI5FilterArray[++j]) !== undefined;) {
+				this.getPropertiesReferencedByUI5FilterArray(aUI5Filter, oReferencedProperties);
+			}
+			return oReferencedProperties;
+		},
 
-	    /**
-	     * Render a UI5 Filter as OData condition.
-	     * 
-	     * @param {string} oUI5Filter The filter object to render (must not be a multi filter)
-	     * @returns {string} The $filter value for the given UI5 filter 
-	     * @private
-	     */
-	    renderUI5Filter : function(oUI5Filter) {
-	        var oProperty = this._oEntityType.findPropertyByName(oUI5Filter.sPath);
-	        if (oProperty == null) {
-	            throw "Cannot add filter condition for unknown property name " + oUI5Filter.sPath; // TODO
-	        }
-	        
-	        var sFilterExpression = null;
-	        switch (oUI5Filter.sOperator) {
-	        case sap.ui.model.FilterOperator.BT:
-	            sFilterExpression = "(" + oUI5Filter.sPath + " "
-	                    + sap.ui.model.FilterOperator.GE.toLowerCase() + " "
-	                    + this._renderPropertyFilterValue(oUI5Filter.oValue1, oProperty.type)
-	                    + " and " + oUI5Filter.sPath + " " + sap.ui.model.FilterOperator.LE.toLowerCase() + " "
-	                    + this._renderPropertyFilterValue(oUI5Filter.oValue2, oProperty.type)
-	                    + ")";
-	            break;
-	        case sap.ui.model.FilterOperator.Contains:
-	            sFilterExpression = "substringof(" 
-	            	+ this._renderPropertyFilterValue(oUI5Filter.oValue1, "Edm.String") + "," +  oUI5Filter.sPath + ")";
-	            break;
-	        case sap.ui.model.FilterOperator.StartsWith:
-	        case sap.ui.model.FilterOperator.EndsWith:
-	            sFilterExpression = oUI5Filter.sOperator.toLowerCase() + "("
-	                    + oUI5Filter.sPath + "," 
-	                    + this._renderPropertyFilterValue(oUI5Filter.oValue1, "Edm.String") + ")";
-	            break;
-	        default:
-	            sFilterExpression = oUI5Filter.sPath + " " + oUI5Filter.sOperator.toLowerCase() + " "
-	                    + this._renderPropertyFilterValue(oUI5Filter.oValue1, oProperty.type);
-	        }
-	        
-	        return sFilterExpression;
-	    },
-	    
-	    /*
-	     * @private
-	     */
-	    renderUI5MultiFilter : function(oUI5MultiFilter) {
-	        var aUI5MultiFilter = new Array();
+		/**
+		 * Render a UI5 Filter as OData condition.
+		 * 
+		 * @param {string} oUI5Filter The filter object to render (must not be a multi filter)
+		 * @returns {string} The $filter value for the given UI5 filter 
+		 * @private
+		 */
+		renderUI5Filter : function(oUI5Filter) {
+			var oProperty = this._oEntityType.findPropertyByName(oUI5Filter.sPath);
+			if (oProperty == null) {
+				throw "Cannot add filter condition for unknown property name " + oUI5Filter.sPath; // TODO
+			}
+			
+			var sFilterExpression = null;
+			switch (oUI5Filter.sOperator) {
+			case sap.ui.model.FilterOperator.BT:
+				sFilterExpression = "(" + oUI5Filter.sPath + " "
+						+ sap.ui.model.FilterOperator.GE.toLowerCase() + " "
+						+ this._renderPropertyFilterValue(oUI5Filter.oValue1, oProperty.type)
+						+ " and " + oUI5Filter.sPath + " " + sap.ui.model.FilterOperator.LE.toLowerCase() + " "
+						+ this._renderPropertyFilterValue(oUI5Filter.oValue2, oProperty.type)
+						+ ")";
+				break;
+			case sap.ui.model.FilterOperator.Contains:
+				sFilterExpression = "substringof("
+								+ this._renderPropertyFilterValue(oUI5Filter.oValue1, "Edm.String") + "," +  oUI5Filter.sPath + ")";
+				break;
+			case sap.ui.model.FilterOperator.StartsWith:
+			case sap.ui.model.FilterOperator.EndsWith:
+				sFilterExpression = oUI5Filter.sOperator.toLowerCase() + "("
+						+ oUI5Filter.sPath + ","
+						+ this._renderPropertyFilterValue(oUI5Filter.oValue1, "Edm.String") + ")";
+				break;
+			default:
+				sFilterExpression = oUI5Filter.sPath + " " + oUI5Filter.sOperator.toLowerCase() + " "
+						+ this._renderPropertyFilterValue(oUI5Filter.oValue1, oProperty.type);
+			}
+			
+			return sFilterExpression;
+		},
+		
+		/*
+		 * @private
+		 */
+		renderUI5MultiFilter : function(oUI5MultiFilter) {
+			var aUI5MultiFilter = [];
 
-	        var sOptionString = "";
-	        var sLogicalMultiOperator = oUI5MultiFilter.bAnd == true ? " and " : " or ";
-	        
-	        for (var i = -1, oUI5Filter; oUI5Filter = oUI5MultiFilter.aFilters[++i];) {
-	            if (oUI5Filter.aFilters != undefined) { // defer processing to the end 
-	                aUI5MultiFilter.push(oUI5Filter);
-	                continue;
-	            }
+			var sOptionString = "";
+			var sLogicalMultiOperator = oUI5MultiFilter.bAnd == true ? " and " : " or ";
+			
+			for (var i = -1, oUI5Filter; (oUI5Filter = oUI5MultiFilter.aFilters[++i]) !== undefined;) {
+				if (oUI5Filter.aFilters != undefined) { // defer processing to the end 
+					aUI5MultiFilter.push(oUI5Filter);
+					continue;
+				}
 
-	            sOptionString += (sOptionString == "" ? "" : sLogicalMultiOperator) + "(" + this.renderUI5Filter(oUI5Filter) + ")";
-	        }
-	        // process multi filters if any
-	        if (aUI5MultiFilter.length > 0) {
-	            for (var i = -1, oMultiFilter; oMultiFilter = aUI5MultiFilter[++i];) {
-	                sOptionString += (sOptionString == "" ? "" : sLogicalMultiOperator) + "(" + this.renderUI5MultiFilter(oMultiFilter) + ")";      
-	            }
-	        }
-	        return sOptionString;
-	    },
-	    
-	    /*
-	     * @private
-	     */
-	    renderUI5FilterArray : function(aUI5Filter) {
-	        if (aUI5Filter.length == 0)
-	            return "";
+				sOptionString += (sOptionString == "" ? "" : sLogicalMultiOperator) + "(" + this.renderUI5Filter(oUI5Filter) + ")";
+			}
+			// process multi filters if any
+			if (aUI5MultiFilter.length > 0) {
+				for (var j = -1, oMultiFilter; (oMultiFilter = aUI5MultiFilter[++j]) !== undefined;) {
+					sOptionString += (sOptionString == "" ? "" : sLogicalMultiOperator) + "(" + this.renderUI5MultiFilter(oMultiFilter) + ")";
+				}
+			}
+			return sOptionString;
+		},
+		
+		/*
+		 * @private
+		 */
+		renderUI5FilterArray : function(aUI5Filter) {
+			if (aUI5Filter.length == 0) {
+				return "";
+			}
 
-	        var sOptionString = "";
-	        // 1. Process conditions
-	        aUI5Filter.sort(function(a, b) {
-	            if (a.sPath == b.sPath)
-	                return 0;
-	            if (a.sPath > b.sPath)
-	                return 1;
-	            else
-	                return -1;
-	        });
+			var sOptionString = "";
+			// 1. Process conditions
+			aUI5Filter.sort(function(a, b) {
+				if (a.sPath == b.sPath) {
+					return 0;
+				}
+				if (a.sPath > b.sPath) {
+					return 1;
+				} else {
+					return -1;
+				}
+			});
 
-	        var sPropertyName = aUI5Filter[0].sPath;
-	        var sSubExpression = "";
-	        var aNEFilter = new Array(), aUI5MultiFilter = new Array();
-	        for ( var i = -1, oUI5Filter; oUI5Filter = aUI5Filter[++i];) {
-	            if (oUI5Filter.aFilters != undefined) { // defer processing to the end
-	                aUI5MultiFilter.push(oUI5Filter);
-	                continue;
-	            }
-	            if (sPropertyName != oUI5Filter.sPath) {
-	            	if (sSubExpression != "") sOptionString += (sOptionString == "" ? "" : " and ") + "(" + sSubExpression + ")";
-	                sSubExpression = "";
-	                if (aNEFilter.length > 0) { // handle negated comparisons
-	                    for (var j = -1, oNEFilter; oNEFilter = aNEFilter[++j];) {
-	                        sSubExpression += (sSubExpression == "" ? "" : " and ") + this.renderUI5Filter(oNEFilter);                        
-	                    }
-	                    sOptionString += (sOptionString == "" ? "" : " and ") + "(" + sSubExpression + ")";
-	                    sSubExpression = "";
-	                }
-	                sPropertyName = oUI5Filter.sPath;
-	                aNEFilter = new Array();
-	            }
-	            if (oUI5Filter.sOperator == sap.ui.model.FilterOperator.NE) {
-	                aNEFilter.push(oUI5Filter);
-	                continue;
-	            }
-	            sSubExpression += (sSubExpression == "" ? "" : " or ") + this.renderUI5Filter(oUI5Filter);
-	        }
-	        
-	        // add last sub expression
-	        if (sSubExpression != "") sOptionString += (sOptionString == "" ? "" : " and ") + "(" + sSubExpression + ")";
-	        if (aNEFilter.length > 0) { // handle negated comparisons
+			var sPropertyName = aUI5Filter[0].sPath;
+			var sSubExpression = "";
+			var aNEFilter = [], aUI5MultiFilter = [];
+			for ( var i = -1, oUI5Filter; (oUI5Filter = aUI5Filter[++i]) !== undefined;) {
+				if (oUI5Filter.aFilters != undefined) { // defer processing to the end
+					aUI5MultiFilter.push(oUI5Filter);
+					continue;
+				}
+				if (sPropertyName != oUI5Filter.sPath) {
+								if (sSubExpression != "") {
+									sOptionString += (sOptionString == "" ? "" : " and ") + "(" + sSubExpression + ")";
+								}
+					sSubExpression = "";
+					if (aNEFilter.length > 0) { // handle negated comparisons
+						for (var j = -1, oNEFilter; (oNEFilter = aNEFilter[++j]) !== undefined;) {
+							sSubExpression += (sSubExpression == "" ? "" : " and ") + this.renderUI5Filter(oNEFilter);
+						}
+						sOptionString += (sOptionString == "" ? "" : " and ") + "(" + sSubExpression + ")";
+						sSubExpression = "";
+					}
+					sPropertyName = oUI5Filter.sPath;
+					aNEFilter = [];
+				}
+				if (oUI5Filter.sOperator == sap.ui.model.FilterOperator.NE) {
+					aNEFilter.push(oUI5Filter);
+					continue;
+				}
+				sSubExpression += (sSubExpression == "" ? "" : " or ") + this.renderUI5Filter(oUI5Filter);
+			}
+			
+			// add last sub expression
+			if (sSubExpression != "") {
+				sOptionString += (sOptionString == "" ? "" : " and ") + "(" + sSubExpression + ")";
+			}
+			if (aNEFilter.length > 0) { // handle negated comparisons
                 sSubExpression = "";
-	            for (var j = -1, oNEFilter; oNEFilter = aNEFilter[++j];) {
-	                sSubExpression += (sSubExpression == "" ? "" : " and ") + this.renderUI5Filter(oNEFilter);                        
-	            }
-	            sOptionString += (sOptionString == "" ? "" : " and ") + "(" + sSubExpression + ")";
-	        }
-	        
-	        // process multi filters if any
-	        if (aUI5MultiFilter.length > 0) {
-	            for (var j = -1, oMultiFilter; oMultiFilter = aUI5MultiFilter[++j];) {
-	                sOptionString += (sOptionString == "" ? "" : " and ") + "(" + this.renderUI5MultiFilter(oMultiFilter) + ")";      
-	            }
-	        }
-	        return sOptionString;
-	    },
+				for (var k = -1, oNEFilter2; (oNEFilter2 = aNEFilter[++k]) !== undefined;) {
+					sSubExpression += (sSubExpression == "" ? "" : " and ") + this.renderUI5Filter(oNEFilter2);
+				}
+				sOptionString += (sOptionString == "" ? "" : " and ") + "(" + sSubExpression + ")";
+			}
+			
+			// process multi filters if any
+			if (aUI5MultiFilter.length > 0) {
+				for (var l = -1, oMultiFilter; (oMultiFilter = aUI5MultiFilter[++l]) !== undefined;) {
+					sOptionString += (sOptionString == "" ? "" : " and ") + "(" + this.renderUI5MultiFilter(oMultiFilter) + ")";
+				}
+			}
+			return sOptionString;
+		},
 
-	    /**
-	     * Get the value for the OData system query option $filter corresponding to this expression.
-	     * 
-	     * @returns {string} The $filter value for the filter expression
+		/**
+		 * Get the value for the OData system query option $filter corresponding to this expression.
+		 * 
+		 * @returns {string} The $filter value for the filter expression
 		 * @public
 		 * @function
 		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#getURIFilterOptionValue
-	     */
-	    getURIFilterOptionValue : function() {
-	        var sOptionString = this.renderUI5FilterArray(this._aConditionUI5Filter);
-	        for(var i = -1, aUI5Filter; aUI5Filter = this._aUI5FilterArray[++i]; ) {
-	            sOptionString += (sOptionString == "" ? "" : " and ") + "(" + this.renderUI5FilterArray(aUI5Filter) + ")";
-	        }
-	        return sOptionString;
-	    },
+		 */
+		getURIFilterOptionValue : function() {
+			var sOptionString = this.renderUI5FilterArray(this._aConditionUI5Filter);
+			for (var i = -1, aUI5Filter; (aUI5Filter = this._aUI5FilterArray[++i]) !== undefined; ) {
+				sOptionString += (sOptionString == "" ? "" : " and ") + "(" + this.renderUI5FilterArray(aUI5Filter) + ")";
+			}
+			return sOptionString;
+		},
 
-	    /**
-	     * Check if request is compliant with basic filter constraints expressed in metadata:
-	     * 
-	     * (a) all properties required in the filter expression have been referenced (b) the single-value filter restrictions have been obeyed
-	     * 
-	     * @returns {boolean} The value true. In case the expression violates some of the rules, an exception with some explanatory
-	     *          message is thrown
+		/**
+		 * Check if request is compliant with basic filter constraints expressed in metadata:
+		 * 
+		 * (a) all properties required in the filter expression have been referenced (b) the single-value filter restrictions have been obeyed
+		 * 
+		 * @returns {boolean} The value true. In case the expression violates some of the rules, an exception with some explanatory
+		 *          message is thrown
 		 * @public
 		 * @function
-		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#isValid
-	     */
-	    isValid : function() {
-	        // (a) all properties required in the filter expression have been referenced
-	        var aRequiredFilterPropertyNames = this._oEntityType.getRequiredFilterPropertyNames();
-	        var oPropertiesInFilterExpression = this.getReferencedProperties();
-	        for ( var i = -1, sPropertyName; sPropertyName = aRequiredFilterPropertyNames[++i];) {
-	            if (oPropertiesInFilterExpression[sPropertyName] == undefined)
-	                throw "filter expression does not contain required property " + sPropertyName; // TODO
-	        }
-	        // (b) basic filter restrictions have been obeyed
-	        var oPropertyFilterRestrictionSet = this._oEntityType.getPropertiesWithFilterRestrictions();
-	        for ( var sPropertyName in oPropertyFilterRestrictionSet) {
-	            var sFilterRestriction = oPropertyFilterRestrictionSet[sPropertyName];
-	            var iConditionCount = 0;
+		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#checkValidity
+		 */
+		checkValidity : function() {
+			// (a) all properties required in the filter expression have been referenced
+			var aRequiredFilterPropertyNames = this._oEntityType.getRequiredFilterPropertyNames();
+			var oPropertiesInFilterExpression = this.getReferencedProperties();
+			for ( var i = -1, sPropertyName; (sPropertyName = aRequiredFilterPropertyNames[++i]) !== undefined;) {
+				if (oPropertiesInFilterExpression[sPropertyName] == undefined) {
+					throw "filter expression does not contain required property " + sPropertyName; // TODO
+				}
+			}
+			// (b) basic filter restrictions have been obeyed
+			var oPropertyFilterRestrictionSet = this._oEntityType.getPropertiesWithFilterRestrictions();
+			for ( var sPropertyName2 in oPropertyFilterRestrictionSet) {
+				var sFilterRestriction = oPropertyFilterRestrictionSet[sPropertyName2];
 
-	            if (sFilterRestriction == odata4analytics.EntityType.propertyFilterRestriction.SINGLE_VALUE) {
-	                if (oPropertiesInFilterExpression[sPropertyName] != undefined) {
-	                    if (oPropertiesInFilterExpression[sPropertyName].length > 1 
-	                            || oPropertiesInFilterExpression[sPropertyName][0].sOperator != sap.ui.model.FilterOperator.EQ)
-	                        throw "filter expression may use " + sPropertyName + " only with a single EQ condition"; // TODO
-	                }
-	            }
-	        }
-	        return true;
-	    },
+				if (sFilterRestriction == odata4analytics.EntityType.propertyFilterRestriction.SINGLE_VALUE) {
+					if (oPropertiesInFilterExpression[sPropertyName2] != undefined) {
+						if (oPropertiesInFilterExpression[sPropertyName2].length > 1
+								|| oPropertiesInFilterExpression[sPropertyName2][0].sOperator != sap.ui.model.FilterOperator.EQ) {
+							throw "filter expression may use " + sPropertyName2 + " only with a single EQ condition"; // TODO
+						}
+					}
+				}
+			}
+			return true;
+		},
 
-	    /**
-	     * Get description for this entity type
-	     * 
-	     * @returns {sap.ui.model.analytics.odata4analytics.EntityType} The object representing the entity type
+		/**
+		 * Get description for this entity type
+		 * 
+		 * @returns {sap.ui.model.analytics.odata4analytics.EntityType} The object representing the entity type
 		 * @public
 		 * @function
 		 * @name sap.ui.model.analytics.odata4analytics.FilterExpression#getEntityType
-	     */
-	    getEntityType : function() {
-	        return this._oEntityType;
-	    },
+		 */
+		getEntityType : function() {
+			return this._oEntityType;
+		},
 
-	    getSchema : function() {
-	        return this._oSchema;
-	    },
+		getSchema : function() {
+			return this._oSchema;
+		},
 
-	    getModel : function() {
-	        return this._oModel;
-	    },
+		getModel : function() {
+			return this._oModel;
+		},
 
-	    /**
-	     * Private member attributes
-	     */
+		/**
+		 * Private member attributes
+		 */
 
-	    _oEntityType : null,
-	    _oSchema : null,
-	    _oModel : null,
+		_oEntityType : null,
+		_oSchema : null,
+		_oModel : null,
 
-	    _aFilterCondition : null
+		_aFilterCondition : null
 	};
 
 	/** ******************************************************************** */
@@ -3349,7 +3500,7 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		_containsSorter : function(sPropertyName) {
 			var oResult = null;
-			for (var i = -1, oCurrentSorter; oCurrentSorter = this._aSortCondition[++i];) {
+			for (var i = -1, oCurrentSorter; (oCurrentSorter = this._aSortCondition[++i]) !== undefined;) {
 				if (oCurrentSorter.property.name === sPropertyName) {
 					oResult = {
 						sorter : oCurrentSorter,
@@ -3411,7 +3562,7 @@ sap.ui.define(['jquery.sap.global'],
 				return this;
 			}
 			var aSortablePropertyNames = this._oEntityType.getSortablePropertyNames();
-			if (aSortablePropertyNames.indexOf(sPropertyName) === -1) {
+			if (jQuery.inArray(sPropertyName, aSortablePropertyNames) === -1) {
 				throw "Cannot add sort condition for not sortable property name " + sPropertyName; // TODO
 			}
 	
@@ -3435,8 +3586,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.SortExpression#removeSorter
 		 */
 		removeSorter : function(sPropertyName) {
-			if (!sPropertyName)
+			if (!sPropertyName) {
 				return;
+			}
 	
 			var oSorter = this._containsSorter(sPropertyName);
 			if (oSorter) {
@@ -3456,7 +3608,7 @@ sap.ui.define(['jquery.sap.global'],
 		getExpressionsAsUI5SorterArray : function() {
 			var aSorterObjects = [];
 	
-			for (var i = -1, oCondition; oCondition = this._aSortCondition[++i];) {
+			for (var i = -1, oCondition; (oCondition = this._aSortCondition[++i]) !== undefined;) {
 				aSorterObjects.push(new sap.ui.model.Sorter(oCondition.property.name,
 						oCondition.order == odata4analytics.SortOrder.Descending));
 			}
@@ -3493,13 +3645,15 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.SortExpression#getURIOrderByOptionValue
 		 */
 		getURIOrderByOptionValue : function(oSelectedPropertyNames) {
-			if (this._aSortCondition.length == 0)
+			if (this._aSortCondition.length == 0) {
 				return "";
+			}
 	
 			var sOrderByOptionString = "";
-			for (var i = -1, oCondition; oCondition = this._aSortCondition[++i];) {
-				if (! oSelectedPropertyNames[oCondition.property.name]) 
+			for (var i = -1, oCondition; (oCondition = this._aSortCondition[++i]) !== undefined;) {
+				if (! oSelectedPropertyNames[oCondition.property.name]) {
 					continue; // sorting of aggregated entities is meaningful only if the sorted property is also selected
+				}
 				sOrderByOptionString += (sOrderByOptionString == "" ? "" : ",") + oCondition.property.name + " " + oCondition.order;
 			}
 	
@@ -3561,15 +3715,16 @@ sap.ui.define(['jquery.sap.global'],
 		 * @private
 		 */
 		_init : function(oParameterization) {
-			if (!oParameterization)
+			if (!oParameterization) {
 				throw "No parameterization given"; // TODO
+			}
 			this._oParameterization = oParameterization;
-			this._oParameterValueAssignment = new Array();
+			this._oParameterValueAssignment = [];
 		},
 	
-	    /**
-	     * @private
-	     */
+		/**
+		 * @private
+		 */
 		_renderParameterKeyValue : function(sKeyValue, sPropertyEDMTypeName) {
 			// initial implementation called odata4analytics.helper.renderPropertyKeyValue, which had problems with locale-specific input values
 			// this is handled in the ODataModel
@@ -3610,37 +3765,45 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		setParameterValue : function(sParameterName, sValue, sToValue) {
 			var oParameter = this._oParameterization.findParameterByName(sParameterName);
-			if (!oParameter)
+			if (!oParameter) {
 				throw "Invalid parameter name " + sParameterName; // TODO improve
+			}
 			// error handling
 			if (sToValue != null) {
-				if (!oParameter.isIntervalBoundary())
+				if (!oParameter.isIntervalBoundary()) {
 					// TODO improve error handling
 					throw "Range value cannot be applied to parameter " + sParameterName + " accepting only single values"; // TODO
-				if (!oParameter.isLowerIntervalBoundary())
+				}
+				if (!oParameter.isLowerIntervalBoundary()) {
 					// TODO improve error handling
 					throw "Range value given, but parameter " + sParameterName + " does not hold the lower boundary"; // TODO
+				}
 			}
 			if (!oParameter.isIntervalBoundary()) {
-				if (sValue == null)
+				if (sValue == null) {
 					delete this._oParameterValueAssignment[sParameterName];
-				else
+				} else {
 					this._oParameterValueAssignment[sParameterName] = sValue;
+				}
 			} else {
-				if (sValue == null && sToValue != null)
+				if (sValue == null && sToValue != null) {
 					throw "Parameter " + sParameterName + ": An upper boundary cannot be given without the lower boundary"; // TODO
+				}
 				if (sValue == null) {
 					delete this._oParameterValueAssignment[sParameterName];
 					sToValue = null;
-				} else
+				} else {
 					this._oParameterValueAssignment[sParameterName] = sValue;
+				}
 				var oUpperBoundaryParameter = oParameter.getPeerIntervalBoundaryParameter();
-				if (sToValue == null)
+				if (sToValue == null) {
 					sToValue = sValue;
-				if (sValue == null)
+				}
+				if (sValue == null) {
 					delete this._oParameterValueAssignment[oUpperBoundaryParameter.getName()];
-				else
+				} else {
 					this._oParameterValueAssignment[oUpperBoundaryParameter.getName()] = sToValue;
+				}
 			}
 			return;
 		},
@@ -3687,8 +3850,9 @@ sap.ui.define(['jquery.sap.global'],
 				// true for those marked as optional, because the
 				// omitted value is conveyed by some default value, e.g. as empty
 				// string.
-				if (this._oParameterValueAssignment[sDefinedParameterName] == undefined)
+				if (this._oParameterValueAssignment[sDefinedParameterName] == undefined) {
 					throw "Parameter " + sDefinedParameterName + " has no value assigned"; // TODO
+				}
 			}
 			var sKeyIdentification = "", bFirst = true;
 			for ( var sParameterName in this._oParameterValueAssignment) {
@@ -3741,8 +3905,8 @@ sap.ui.define(['jquery.sap.global'],
 		_init : function(oQueryResult, oParameterizationRequest) {
 			this._oQueryResult = oQueryResult;
 			this._oParameterizationRequest = oParameterizationRequest;
-			this._oAggregationLevel = new Object();
-			this._oMeasures = new Object();
+			this._oAggregationLevel = {};
+			this._oMeasures = {};
 			this._bIncludeEntityKey = false;
 			this._oFilterExpression = null;
 			this._oSortExpression = null;
@@ -3781,15 +3945,18 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		setResourcePath : function(sResourcePath) {
 			this._sResourcePath = sResourcePath;
-			if (this._sResourcePath.indexOf("/") != 0)
+			if (this._sResourcePath.indexOf("/") != 0) {
 				throw "Missing leading / (slash) for resource path";
+			}
 			if (this._oQueryResult.getParameterization()) {
 				var iLastPathSep = sResourcePath.lastIndexOf("/");
-				if (iLastPathSep == -1)
+				if (iLastPathSep == -1) {
 					throw "Missing navigation from parameter entity set to query result in resource path";
+				}
 				var sNavPropName = sResourcePath.substring(iLastPathSep + 1);
-				if (sNavPropName != this._oQueryResult.getParameterization().getNavigationPropertyToQueryResult())
+				if (sNavPropName != this._oQueryResult.getParameterization().getNavigationPropertyToQueryResult()) {
 					throw "Invalid navigation property from parameter entity set to query result in resource path";
+				}
 			}
 		},
 	
@@ -3834,7 +4001,7 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResultRequest#setAggregationLevel
 		 */
 		setAggregationLevel : function(aDimensionName) {
-			this._oAggregationLevel = new Object();
+			this._oAggregationLevel = {};
 			if (!aDimensionName) {
 				aDimensionName = this._oQueryResult.getAllDimensionNames();
 			}
@@ -3854,14 +4021,16 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResultRequest#addToAggregationLevel
 		 */
 		addToAggregationLevel : function(aDimensionName) {
-			if (!aDimensionName)
+			if (!aDimensionName) {
 				return;
+			}
 	
 			this._oSelectedPropertyNames = null; // reset previously compiled list of selected properties
 			
-			for (var i = -1, sDimName; sDimName = aDimensionName[++i];) {
-				if (!this._oQueryResult.findDimensionByName(sDimName))
+			for (var i = -1, sDimName; (sDimName = aDimensionName[++i]) !== undefined;) {
+				if (!this._oQueryResult.findDimensionByName(sDimName)) {
 					throw sDimName + " is not a valid dimension name"; // TODO
+				}
 				this._oAggregationLevel[sDimName] = {
 					key : true,
 					text : false,
@@ -3887,7 +4056,7 @@ sap.ui.define(['jquery.sap.global'],
 			}
 			this._oSelectedPropertyNames = null; // reset previously compiled list of selected properties
 			
-			for (var i = -1, sDimName; sDimName = aDimensionName[++i];) {
+			for (var i = -1, sDimName; (sDimName = aDimensionName[++i]) !== undefined;) {
 				if (!this._oQueryResult.findDimensionByName(sDimName)) {
 					throw sDimName + " is not a valid dimension name"; // TODO
 				}
@@ -3909,7 +4078,7 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResultRequest#getAggregationLevel
 		 */
 		getAggregationLevel : function() {
-			var aDimName = new Array();
+			var aDimName = [];
 			for ( var sDimName in this._oAggregationLevel) {
 				aDimName.push(sDimName);
 			}
@@ -3933,8 +4102,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResultRequest#getAggregationLevelDetails
 		 */
 		getAggregationLevelDetails : function(sDimensionName) {
-			if (this._oAggregationLevel[sDimensionName] == undefined)
+			if (this._oAggregationLevel[sDimensionName] == undefined) {
 				throw "Aggregation level does not include dimension " + sDimensionName;
+			}
 			return this._oAggregationLevel[sDimensionName];
 		},
 	
@@ -3958,10 +4128,11 @@ sap.ui.define(['jquery.sap.global'],
 			}
 			this._oSelectedPropertyNames = null; // reset previously compiled list of selected properties
 			
-			this._oMeasures = new Object();
-			for (var i = -1, sMeasName; sMeasName = aMeasureName[++i];) {
-				if (!this._oQueryResult.findMeasureByName(sMeasName))
+			this._oMeasures = {};
+			for (var i = -1, sMeasName; (sMeasName = aMeasureName[++i]) !== undefined;) {
+				if (!this._oQueryResult.findMeasureByName(sMeasName)) {
 					throw sMeasName + " is not a valid measure name"; // TODO
+				}
 	
 				this._oMeasures[sMeasName] = {
 					value : true,
@@ -3980,7 +4151,7 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResultRequest#getMeasureNames
 		 */
 		getMeasureNames : function() {
-			var aMeasName = new Array();
+			var aMeasName = [];
 			for ( var sMeasName in this._oMeasures) {
 				aMeasName.push(sMeasName);
 			}
@@ -4013,10 +4184,11 @@ sap.ui.define(['jquery.sap.global'],
 		includeDimensionKeyTextAttributes : function(sDimensionName, bIncludeKey, bIncludeText, aAttributeName) {
 			this._oSelectedPropertyNames = null; // reset previously compiled list of selected properties
 	
-			var aDimName = new Array();
+			var aDimName = [];
 			if (sDimensionName) {
-				if (this._oAggregationLevel[sDimensionName] == undefined)
+				if (this._oAggregationLevel[sDimensionName] == undefined) {
 					throw sDimensionName + " is not included in the aggregation level";
+				}
 				aDimName.push(sDimensionName);
 			} else {
 				for ( var sName in this._oAggregationLevel) {
@@ -4024,13 +4196,16 @@ sap.ui.define(['jquery.sap.global'],
 				}
 				aAttributeName = null;
 			}
-			for (var i = -1, sDimName; sDimName = aDimName[++i];) {
-				if (bIncludeKey != null)
+			for (var i = -1, sDimName; (sDimName = aDimName[++i]) !== undefined;) {
+				if (bIncludeKey != null) {
 					this._oAggregationLevel[sDimName].key = bIncludeKey;
-				if (bIncludeText != null)
+				}
+				if (bIncludeText != null) {
 					this._oAggregationLevel[sDimName].text = bIncludeText;
-				if (aAttributeName != null)
+				}
+				if (aAttributeName != null) {
 					this._oAggregationLevel[sDimName].attributes = aAttributeName;
+				}
 			}
 		},
 	
@@ -4059,23 +4234,27 @@ sap.ui.define(['jquery.sap.global'],
 		includeMeasureRawFormattedValueUnit : function(sMeasureName, bIncludeRawValue, bIncludeFormattedValue, bIncludeUnit) {
 			this._oSelectedPropertyNames = null; // reset previously compiled list of selected properties
 	
-			var aMeasName = new Array();
+			var aMeasName = [];
 			if (sMeasureName) {
-				if (this._oMeasures[sMeasureName] == undefined)
+				if (this._oMeasures[sMeasureName] == undefined) {
 					throw sMeasureName + " is not part of the query result";
+				}
 				aMeasName.push(sMeasureName);
 			} else {
 				for ( var sName in this._oMeasures) {
 					aMeasName.push(sName);
 				}
 			}
-			for (var i = -1, sMeasName; sMeasName = aMeasName[++i];) {
-				if (bIncludeRawValue != null)
+			for (var i = -1, sMeasName; (sMeasName = aMeasName[++i]) !== undefined;) {
+				if (bIncludeRawValue != null) {
 					this._oMeasures[sMeasName].value = bIncludeRawValue;
-				if (bIncludeFormattedValue != null)
+				}
+				if (bIncludeFormattedValue != null) {
 					this._oMeasures[sMeasName].text = bIncludeFormattedValue;
-				if (bIncludeUnit != null)
+				}
+				if (bIncludeUnit != null) {
 					this._oMeasures[sMeasName].unit = bIncludeUnit;
+				}
 			}
 		},
 	
@@ -4171,10 +4350,12 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResultRequest#setRequestOptions
 		 */
 		setRequestOptions : function(bIncludeEntityKey, bIncludeCount) {
-			if (bIncludeEntityKey != null)
+			if (bIncludeEntityKey != null) {
 				this._bIncludeEntityKey = bIncludeEntityKey;
-			if (bIncludeCount != null)
+			}
+			if (bIncludeCount != null) {
 				this._bIncludeCount = bIncludeCount;
+			}
 		},
 	
 		/**
@@ -4202,8 +4383,9 @@ sap.ui.define(['jquery.sap.global'],
 				throw "End value must be null or numeric"; // TODO
 			}
 	
-			if (start == null)
+			if (start == null) {
 				start = 1;
+			}
 	
 			if (start < 1 || start > (end == null ? start : end)) {
 				throw "Invalid values for requested page boundaries"; // TODO
@@ -4224,10 +4406,17 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.QueryResultRequest#getResultPageBoundaries
 		 */
 		getResultPageBoundaries : function() {
+			var iEnd = null;
+			if (this._iTopRequestOption != null) {
+				if (this._iSkipRequestOption == null) {
+					iEnd = 1;
+				} else {
+					iEnd = this._iSkipRequestOption + this._iTopRequestOption;
+				}
+			}
 			return {
 				start : (this._iSkipRequestOption == null) ? 1 : this._iSkipRequestOption,
-				end : (this._iTopRequestOption != null) ? (this._iSkipRequestOption == null) ? 1 : this._iSkipRequestOption
-						+ this._iTopRequestOption : null
+				end : iEnd
 			};
 		},
 	
@@ -4249,15 +4438,15 @@ sap.ui.define(['jquery.sap.global'],
 			var sURI = null;
 			if (this._sResourcePath != null) {
 				sURI = (sServiceRootURI ? sServiceRootURI : "") + this._sResourcePath;
+			} else if (this._oQueryResult.getParameterization()) {
+				if (!this._oParameterizationRequest) {
+					throw "Missing parameterization request";
+				} else {
+					sURI = this._oParameterizationRequest.getURIToParameterizationEntry(sServiceRootURI) + "/"
+							+ this._oQueryResult.getParameterization().getNavigationPropertyToQueryResult();
+				}
 			} else {
-				if (this._oQueryResult.getParameterization()) {
-					if (!this._oParameterizationRequest)
-						throw "Missing parameterization request";
-					else
-						sURI = this._oParameterizationRequest.getURIToParameterizationEntry(sServiceRootURI) + "/"
-								+ this._oQueryResult.getParameterization().getNavigationPropertyToQueryResult();
-				} else
-					sURI = (sServiceRootURI ? sServiceRootURI : "") + "/" + this._oQueryResult.getEntitySet().getQName();
+				sURI = (sServiceRootURI ? sServiceRootURI : "") + "/" + this._oQueryResult.getEntitySet().getQName();
 			}
 			return sURI;
 		},
@@ -4282,7 +4471,7 @@ sap.ui.define(['jquery.sap.global'],
 			switch (sQueryOptionName) {
 			case "$select": {
 				var sSelectOption = "";
-				this._oSelectedPropertyNames = new Object();
+				this._oSelectedPropertyNames = {};
 				var sDimensionPropertyName = null;
 				for ( var sDimName in this._oAggregationLevel) {
 					var oDim = this._oQueryResult.findDimensionByName(sDimName);
@@ -4302,7 +4491,7 @@ sap.ui.define(['jquery.sap.global'],
 						}
 					}
 					if (oDimSelect.attributes) {
-						for (var i = -1, sAttrName; sAttrName = oDimSelect.attributes[++i];) {
+						for (var i = -1, sAttrName; (sAttrName = oDimSelect.attributes[++i]) !== undefined;) {
 							sDimensionPropertyName = oDim.findAttributeByName(sAttrName).getName();
 							if (this._oSelectedPropertyNames[sDimensionPropertyName] == undefined) {
 								sSelectOption += (sSelectOption == "" ? "" : ",") + sDimensionPropertyName;
@@ -4341,7 +4530,7 @@ sap.ui.define(['jquery.sap.global'],
 	
 				if (this._bIncludeEntityKey) {
 					var aKeyPropRef = this._oQueryResult.getEntityType().getTypeDescription().key.propertyRef;
-					for (var i = -1, oKeyProp; oKeyProp = aKeyPropRef[++i];) {
+					for (var j = -1, oKeyProp; (oKeyProp = aKeyPropRef[++j]) !== undefined;) {
 						sSelectOption += (sSelectOption == "" ? "" : ",") + oKeyProp.name;
 					}
 				}
@@ -4350,15 +4539,17 @@ sap.ui.define(['jquery.sap.global'],
 			}
 			case "$filter": {
 				var sFilterOption = null;
-				if (this._oFilterExpression)
+				if (this._oFilterExpression) {
 					sFilterOption = this._oFilterExpression.getURIFilterOptionValue();
+				}
 				sQueryOptionValue = (sFilterOption ? sFilterOption : null);
 				break;
 			}
 			case "$orderby": {
 				var sSortOption = null;
-				if (this._oSortExpression)
+				if (this._oSortExpression) {
 					sSortOption = this._oSortExpression.getURIOrderByOptionValue(this._oSelectedPropertyNames);
+				}
 				sQueryOptionValue = (sSortOption ? sSortOption : null);
 				break;
 			}
@@ -4403,11 +4594,13 @@ sap.ui.define(['jquery.sap.global'],
 		getURIToQueryResultEntries : function(sServiceRootURI, sResourcePath) {
 	
 			// construct resource path
-			var sResourcePath = this.getURIToQueryResultEntitySet(sServiceRootURI);
-	
+			if (! sResourcePath) {
+				sResourcePath = this.getURIToQueryResultEntitySet(sServiceRootURI);
+			}
+			
 			// check if request is compliant with filter constraints expressed in
 			// metadata
-			this.getFilterExpression().isValid();
+			this.getFilterExpression().checkValidity();
 	
 			// construct query options
 			var sSelectOption = this.getURIQueryOptionValue("$select");
@@ -4513,7 +4706,7 @@ sap.ui.define(['jquery.sap.global'],
 		 */
 		_init : function(oParameter) {
 			this._oParameter = oParameter;
-			this._oValueSetResult = new Object();
+			this._oValueSetResult = {};
 			this._oFilterExpression = null;
 			this._oSortExpression = null;
 		},
@@ -4531,8 +4724,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.ParameterValueSetRequest#includeParameterText
 		 */
 		includeParameterText : function(bIncludeText) {
-			if (bIncludeText != null)
+			if (bIncludeText != null) {
 				this._oValueSetResult.text = bIncludeText;
+			}
 		},
 	
 		/**
@@ -4631,22 +4825,25 @@ sap.ui.define(['jquery.sap.global'],
 			case "$select": {
 				var sSelectOption = "";
 				sSelectOption += (sSelectOption == "" ? "" : ",") + this._oParameter.getProperty().name;
-				if (this._oValueSetResult.text == true && this._oParameter.getTextProperty())
+				if (this._oValueSetResult.text == true && this._oParameter.getTextProperty()) {
 					sSelectOption += (sSelectOption == "" ? "" : ",") + this._oParameter.getTextProperty().name;
+				}
 				sQueryOptionValue = (sSelectOption ? sSelectOption : null);
 				break;
 			}
 			case "$filter": {
 				var sFilterOption = null;
-				if (this._oFilterExpression)
+				if (this._oFilterExpression) {
 					sFilterOption = this._oFilterExpression.getURIFilterOptionValue();
+				}
 				sQueryOptionValue = (sFilterOption ? sFilterOption : null);
 				break;
 			}
 			case "$orderby": {
 				var sSortOption = null;
-				if (this._oSortExpression)
+				if (this._oSortExpression) {
 					sSortOption = this._oSortExpression.getURIOrderByOptionValue();
+				}
 				sQueryOptionValue = (sSortOption ? sSortOption : null);
 				break;
 			}
@@ -4680,7 +4877,7 @@ sap.ui.define(['jquery.sap.global'],
 	
 			// check if request is compliant with filter constraints expressed in
 			// metadata
-			this.getFilterExpression().isValid();
+			this.getFilterExpression().checkValidity();
 	
 			// construct query options
 			var sSelectOption = this.getURIQueryOptionValue("$select");
@@ -4698,16 +4895,18 @@ sap.ui.define(['jquery.sap.global'],
 				if (!bQuestionmark) {
 					sURI += "?";
 					bQuestionmark = true;
-				} else
+				} else {
 					sURI += "&";
+				}
 				sURI += "$filter=" + sFilterOption;
 			}
 			if (this._oSortExpression && sSortOption) {
 				if (!bQuestionmark) {
 					sURI += "?";
 					bQuestionmark = true;
-				} else
+				} else {
 					sURI += "&";
+				}
 				sURI += "$orderby=" + sSortOption;
 			}
 			return sURI;
@@ -4762,18 +4961,20 @@ sap.ui.define(['jquery.sap.global'],
 			this._oDimension = oDimension;
 			this._oParameterizationRequest = oParameterizationRequest;
 			this._bUseMasterData = bUseMasterData;
-			this._oValueSetResult = new Object();
+			this._oValueSetResult = {};
 			this._oFilterExpression = null;
 			this._oSortExpression = null;
 	
-			if (this._oParameterizationRequest != null && this._bUseMasterData == true)
+			if (this._oParameterizationRequest != null && this._bUseMasterData == true) {
 				throw "LIMITATION: parameterized master data entity sets are not yet implemented";
+			}
 			if (this._bUseMasterData) {
 				this._oEntitySet = this._oDimension.getMasterDataEntitySet();
 			} else {
 				this._oEntitySet = this._oDimension.getContainingQueryResult().getEntitySet();
-				if (this._oDimension.getContainingQueryResult().getParameterization() && !this._oParameterizationRequest)
+				if (this._oDimension.getContainingQueryResult().getParameterization() && !this._oParameterizationRequest) {
 					throw "Missing parameterization request";
+				}
 			}
 		},
 	
@@ -4811,10 +5012,12 @@ sap.ui.define(['jquery.sap.global'],
 				text : false,
 				attributes : false
 			};
-			if (bIncludeText == true)
+			if (bIncludeText == true) {
 				this._oValueSetResult.text = true;
-			if (bIncludeAttributes == true)
+			}
+			if (bIncludeAttributes == true) {
 				this._oValueSetResult.attributes = true;
+			}
 		},
 	
 		/**
@@ -4903,8 +5106,9 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.DimensionMemberSetRequest#setRequestOptions
 		 */
 		setRequestOptions : function(bIncludeCount) {
-			if (bIncludeCount != null)
+			if (bIncludeCount != null) {
 				this._bIncludeCount = bIncludeCount;
+			}
 		},
 	
 		/**
@@ -4932,8 +5136,9 @@ sap.ui.define(['jquery.sap.global'],
 				throw "End value must be null or numeric"; // TODO
 			}
 	
-			if (start == null)
+			if (start == null) {
 				start = 1;
+			}
 	
 			if (start < 1 || start > (end == null ? start : end)) {
 				throw "Invalid values for requested page boundaries"; // TODO
@@ -4954,10 +5159,17 @@ sap.ui.define(['jquery.sap.global'],
 		 * @name sap.ui.model.analytics.odata4analytics.DimensionMemberSetRequest#getResultPageBoundaries
 		 */
 		getResultPageBoundaries : function() {
+			var iEnd = null;
+			if (this._iTopRequestOption != null) {
+				if (this._iSkipRequestOption == null) {
+					iEnd = 1;
+				} else {
+					iEnd = this._iSkipRequestOption + this._iTopRequestOption;
+				}
+			}
 			return {
 				start : (this._iSkipRequestOption == null) ? 1 : this._iSkipRequestOption,
-				end : (this._iTopRequestOption != null) ? (this._iSkipRequestOption == null) ? 1 : this._iSkipRequestOption
-						+ this._iTopRequestOption : null
+				end : iEnd
 			};
 		},
 		
@@ -4986,19 +5198,21 @@ sap.ui.define(['jquery.sap.global'],
 				var aKeyTextPropName = [];
 				// add key properties and, if requested, their text properties
 				if (this._bUseMasterData) {
-					for (var i = -1, sKeyPropName; sKeyPropName = aKeyPropName[++i];) {
+					for (var i = -1, sKeyPropName; (sKeyPropName = aKeyPropName[++i]) !== undefined;) {
 						sSelectOption += (sSelectOption == "" ? "" : ",") + sKeyPropName;
 						var oKeyTextProperty = oEntityType.getTextPropertyOfProperty(sKeyPropName);
 						if (oKeyTextProperty) {
-							if (this._oValueSetResult.text == true)
+							if (this._oValueSetResult.text == true) {
 								sSelectOption += "," + oKeyTextProperty.name;
+							}
 							aKeyTextPropName.push(oKeyTextProperty.name);
 						}
 					}
 				} else { // use query result
 					sSelectOption += (sSelectOption == "" ? "" : ",") + this._oDimension.getKeyProperty().name;
-					if (this._oValueSetResult.text == true && this._oDimension.getTextProperty())
+					if (this._oValueSetResult.text == true && this._oDimension.getTextProperty()) {
 						sSelectOption += (sSelectOption == "" ? "" : ",") + this._oDimension.getTextProperty().name;
+					}
 				}
 				// add further attributes, if requested
 				if (this._oValueSetResult.attributes) {
@@ -5009,27 +5223,29 @@ sap.ui.define(['jquery.sap.global'],
 						var oAllPropertiesSet = oEntityType.getProperties();
 						for ( var sPropName in oAllPropertiesSet) {
 							var bIsKeyOrKeyText = false;
-							for (var i = -1, sKeyPropName; sKeyPropName = aKeyPropName[++i];) {
-								if (sPropName == sKeyPropName) {
+							for (var j = -1, sKeyPropName2; (sKeyPropName2 = aKeyPropName[++j]) !== undefined;) {
+								if (sPropName == sKeyPropName2) {
 									bIsKeyOrKeyText = true;
 									break;
 								}
 							}
-							if (bIsKeyOrKeyText)
+							if (bIsKeyOrKeyText) {
 								continue;
-							for (var i = -1, sKeyTextPropName; sKeyTextPropName = aKeyTextPropName[++i];) {
+							}
+							for (var k = -1, sKeyTextPropName; (sKeyTextPropName = aKeyTextPropName[++k]) !== undefined;) {
 								if (sPropName == sKeyTextPropName) {
 									bIsKeyOrKeyText = true;
 									break;
 								}
 							}
-							if (!bIsKeyOrKeyText)
+							if (!bIsKeyOrKeyText) {
 								sSelectOption += "," + sPropName;
+							}
 						}
 					} else { // use query result, hence include known dimension
 						// attributes
 						var aAttributeName = this._oDimension.getAllAttributeNames();
-						for (var i = -1, sAttrName; sAttrName = aAttributeName[++i];) {
+						for (var l = -1, sAttrName; (sAttrName = aAttributeName[++l]) !== undefined;) {
 							sSelectOption += (sSelectOption == "" ? "" : ",")
 									+ this._oDimension.findAttributeByName(sAttrName).getName();
 						}
@@ -5041,15 +5257,17 @@ sap.ui.define(['jquery.sap.global'],
 			}
 			case "$filter": {
 				var sFilterOption = null;
-				if (this._oFilterExpression)
+				if (this._oFilterExpression) {
 					sFilterOption = this._oFilterExpression.getURIFilterOptionValue();
+				}
 				sQueryOptionValue = (sFilterOption ? sFilterOption : null);
 				break;
 			}
 			case "$orderby": {
 				var sSortOption = null;
-				if (this._oSortExpression)
+				if (this._oSortExpression) {
 					sSortOption = this._oSortExpression.getURIOrderByOptionValue();
+				}
 				sQueryOptionValue = (sSortOption ? sSortOption : null);
 				break;
 			}
@@ -5119,7 +5337,7 @@ sap.ui.define(['jquery.sap.global'],
 	
 			// check if request is compliant with filter constraints expressed in
 			// metadata
-			this.getFilterExpression().isValid();
+			this.getFilterExpression().checkValidity();
 	
 			// construct query options
 			var sSelectOption = this.getURIQueryOptionValue("$select");
@@ -5140,16 +5358,18 @@ sap.ui.define(['jquery.sap.global'],
 				if (!bQuestionmark) {
 					sURI += "?";
 					bQuestionmark = true;
-				} else
+				} else {
 					sURI += "&";
+				}
 				sURI += "$filter=" + sFilterOption;
 			}
 			if (this._oSortExpression && sSortOption) {
 				if (!bQuestionmark) {
 					sURI += "?";
 					bQuestionmark = true;
-				} else
+				} else {
 					sURI += "&";
+				}
 				sURI += "$orderby=" + sSortOption;
 			}
 			if (this._iTopRequestOption && sTopOption) {
@@ -5244,4 +5464,4 @@ sap.ui.define(['jquery.sap.global'],
 	
 	return odata4analytics;
 
-}, /* bExport= */ true);	
+}, /* bExport= */ true);

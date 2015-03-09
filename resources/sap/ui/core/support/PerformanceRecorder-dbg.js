@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -14,7 +14,7 @@ sap.ui.define(['jquery.sap.global'],
 	/**
 	 * @class Performance Recorder
 	 * @static
-	 * @name sap.ui.core.support.PerformanceRecorder
+	 * @alias sap.ui.core.support.PerformanceRecorder
 	 */
 	
 	var PerformanceRecorder = {};
@@ -25,9 +25,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @param {object} oConfig The object holding the configuration
 	 * @param {object[]} aInteractionSteps The array holding the interaction steps
 	 * @return void
-	 * @function
 	 * @public
-	 * @name sap.ui.core.support.PerformanceRecorder.start
 	 */
 	PerformanceRecorder.start = function(oConfig, aInteractionSteps) {
 		PerformanceRecorder.config = oConfig;
@@ -44,9 +42,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Process a step's start trigger
 	 *
 	 * @return void
-	 * @function
 	 * @private
-	 * @name sap.ui.core.support.PerformanceRecorder.processStepStart
 	 */
 	PerformanceRecorder.processStepStart = function() {
 		// Get the relevant steps
@@ -112,9 +108,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Process a step's stop trigger
 	 *
 	 * @return void
-	 * @function
 	 * @private
-	 * @name sap.ui.core.support.PerformanceRecorder.processStepStop
 	 */
 	PerformanceRecorder.processStepStop = function() {
 		// Get the relevant steps
@@ -157,9 +151,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Conclude step/interaction/recording
 	 *
 	 * @return void
-	 * @function
 	 * @private
-	 * @name sap.ui.core.support.PerformanceRecorder.concludeStep
 	 */
 	PerformanceRecorder.concludeStep = function() {
 		var currentInteraction = PerformanceRecorder.interactionSteps[PerformanceRecorder.interactionPointer];
@@ -198,38 +190,36 @@ sap.ui.define(['jquery.sap.global'],
 	 * End recording and beacon results
 	 *
 	 * @return void
-	 * @function
 	 * @private
-	 * @name sap.ui.core.support.PerformanceRecorder.endRecording
 	 */
 	PerformanceRecorder.endRecording = function() {
 		var measurements = PerformanceRecorder.getAllMeasurementsAsHAR();
 		var data = {
-		    log: {
-		    	version: "1.2",
-		    	creator: {
-		    		name: "SAPUI5 PerformanceRecorder",
-		    		version: "1.1"
-		    	},
-		    	browser: {
-		    		name: navigator.userAgent,
-		    		version: sap.ui.Device.browser.version
-		    	}
-		    }
+			log: {
+					version: "1.2",
+					creator: {
+						name: "SAPUI5 PerformanceRecorder",
+						version: "1.1"
+					},
+					browser: {
+						name: navigator.userAgent,
+						version: sap.ui.Device.browser.version
+					}
+			}
 		};
 	
 		var pages = [];
 		var entries = [];
-		for(var i in measurements) {
-			if(measurements[i].id.substr(-5) === "_page") {
+		for (var i in measurements) {
+			if (measurements[i].id.substr(-5) === "_page") {
 				var page = {
-			        startedDateTime: measurements[i].startedDateTime,
-			        id: measurements[i].id,
-			        title: measurements[i].pageref,
-			        pageTimings: {
-			        	onContentLoad: -1,
-			        	onLoad: measurements[i].time
-			        }
+					startedDateTime: measurements[i].startedDateTime,
+					id: measurements[i].id,
+					title: measurements[i].pageref,
+					pageTimings: {
+								onContentLoad: -1,
+								onLoad: measurements[i].time
+					}
 				};
 	
 				pages.push(page);
@@ -253,13 +243,11 @@ sap.ui.define(['jquery.sap.global'],
 	 * Gets all performance measurements in HAR format
 	 *
 	 * @return {object} [] current measurement (false if error)
-	 * @function
 	 * @private
-	 * @name sap.ui.core.support.PerformanceRecorder.getAllMeasurementsAsHAR
 	 */
 	PerformanceRecorder.getAllMeasurementsAsHAR = function() {
 		var origMeasurements = jQuery.sap.measure.getAllMeasurements();
-		var aMeasurements = new Array();
+		var aMeasurements = [];
 		var oFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
 			pattern: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 		});
@@ -270,60 +258,60 @@ sap.ui.define(['jquery.sap.global'],
 	
 			aMeasurements.push({
 				id: oMeasurement.id,
-	            pageref: oMeasurement.info,
-	            startedDateTime: isoDate,
-	            time: oMeasurement.duration,
-	            request: {
-	            	method: "GET",
+				pageref: oMeasurement.info,
+				startedDateTime: isoDate,
+				time: oMeasurement.duration,
+				request: {
+								method: "GET",
 					url: oMeasurement.id,
 					httpVersion: "HTTP/1.1",
 					cookies: [
-					    {
-					    	dummy: ""
-					    }
+						{
+								dummy: ""
+						}
 					],
 					headers: [
-					    {
-					    	name: "",
-					    	value: ""
-					    }
+						{
+								name: "",
+								value: ""
+						}
 					],
 					queryString: [
-					    {
-					    	name: "",
-					    	value: ""
-					    }
+						{
+								name: "",
+								value: ""
+						}
 					],
 					headersSize: 0,
 					bodySize: 0
-	            },
-	            response: {
-	            	status: 200,
+				},
+				response: {
+								status: 200,
 					statusText: "OK",
 					httpVersion: "HTTP/1.1",
 					cookies: [
-					    {
-					    	dummy: ""
-					    }
+						{
+								dummy: ""
+						}
 					],
 					headers: [
-					    {
-					    	name: "",
-					    	value: ""
-					    }
+						{
+								name: "",
+								value: ""
+						}
 					],
 					content: {
-					    size: 0,
-					    compression: 0,
-					    mimeType: "text/html; charset=utf-8",
-					    text: "\n"
+						size: 0,
+						compression: 0,
+						mimeType: "text/html; charset=utf-8",
+						text: "\n"
 					},
 					redirectURL: "",
 					headersSize: 0,
 					bodySize: 0
-	            },
-	            cache: {
-	            	beforeRequest: {
+				},
+				cache: {
+								beforeRequest: {
 						lastAccess: "",
 						eTag: "",
 						hitCount: ""
@@ -333,8 +321,8 @@ sap.ui.define(['jquery.sap.global'],
 						eTag: "",
 						hitCount: ""
 					}
-	            },
-	            timings: {
+				},
+				timings: {
 					blocked: -1,
 					dns: -1,
 					connect: -1,
@@ -342,8 +330,8 @@ sap.ui.define(['jquery.sap.global'],
 					wait: -1,
 					receive: oMeasurement.duration,
 					ssl: -1
-	            }
-		    });
+				}
+			});
 		});
 		return aMeasurements;
 	};

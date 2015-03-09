@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -45,8 +45,7 @@ sap.ui.define(['jquery.sap.global'],
 		if (!sEncoded) {
 			if (rHtmlReplace.test(sChar)) {
 				sEncoded = "&#xfffd;";
-			}
-			else {
+			} else {
 				sEncoded = "&#x" + hex(sChar.charCodeAt(0)) + ";";
 			}
 			mHtmlLookup[sChar] = sEncoded;
@@ -106,8 +105,7 @@ sap.ui.define(['jquery.sap.global'],
 			var iChar = sChar.charCodeAt(0);
 			if (iChar < 256) {
 				sEncoded = "\\x" + hex(iChar, 2);
-			}
-			else {
+			} else {
 				sEncoded = "\\u" + hex(iChar, 4);
 			}
 			mJSLookup[sChar] = sEncoded;
@@ -158,8 +156,7 @@ sap.ui.define(['jquery.sap.global'],
 			else if (iChar < 2048) {
 				sEncoded = "%" + hex((iChar >> 6) | 192, 2) +
 						   "%" + hex((iChar & 63) | 128, 2);
-			}
-			else {
+			} else {
 				sEncoded = "%" + hex((iChar >> 12) | 224, 2) +
 						   "%" + hex(((iChar >> 6) & 63) | 128, 2) +
 						   "%" + hex((iChar & 63) | 128, 2);
@@ -214,8 +211,7 @@ sap.ui.define(['jquery.sap.global'],
 		var iChar = sChar.charCodeAt(0);
 		if (sChar.length == 1) {
 			return "\\" + hex(iChar);
-		}
-		else {
+		} else {
 			return "\\" + hex(iChar) + " " + sChar.substr(1);
 		}
 	};
@@ -252,7 +248,7 @@ sap.ui.define(['jquery.sap.global'],
 		this.path = path;
 	}
 
-	var aWhitelist = new Array();
+	var aWhitelist = [];
 
 	/**
 	 * clears the whitelist for URL valiadtion
@@ -287,7 +283,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @public
 	 */
 	jQuery.sap.removeUrlWhitelist = function(iIndex) {
-		aWhitelist.splice(iIndex,1)
+		aWhitelist.splice(iIndex,1);
 	};
 
 	/**
@@ -322,6 +318,7 @@ sap.ui.define(['jquery.sap.global'],
 			sHash = result[6];
 
 		var rCheck = /[\x00-\x24\x26-\x29\x2b\x2c\x2f\x3a-\x40\x5b-\x5e\x60\x7b-\x7d\x7f-\uffff]/;
+		var rCheckHash = /[\x00-\x24\x26-\x29\x2b\x2c\x3a-\x3e\x5b-\x5e\x60\x7b-\x7d\x7f-\uffff]/;
 		var rCheckMail = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
 		// protocol
@@ -366,7 +363,7 @@ sap.ui.define(['jquery.sap.global'],
 				var iPos = aComponents[i].search("=");
 				if (iPos != -1) {
 					var sPart1 = aComponents[i].substring(0,iPos);
-					var sPart2 = aComponents[i].substring(iPos+1);
+					var sPart2 = aComponents[i].substring(iPos + 1);
 					var bCheck1 = rCheck.test(sPart1);
 					var bCheck2 = rCheck.test(sPart2);
 					if (bCheck1 || bCheck2) {
@@ -379,7 +376,7 @@ sap.ui.define(['jquery.sap.global'],
 
 		// hash
 		if (sHash) {
-			if (rCheck.test(sHash)) {
+			if (rCheckHash.test(sHash)) {
 				// forbidden character found
 				return false;
 			}
@@ -388,7 +385,7 @@ sap.ui.define(['jquery.sap.global'],
 		//filter whitelist
 		if (aWhitelist.length > 0) {
 			var bFound = false;
-			for(var i=0; i<aWhitelist.length; i++){
+			for (var i = 0; i < aWhitelist.length; i++) {
 				jQuery.sap.assert(aWhitelist[i] instanceof WhitelistEntry, "whitelist entry type wrong");
 				if (!sProtocol || !aWhitelist[i].protocol || sProtocol == aWhitelist[i].protocol) {
 					// protocol OK
@@ -400,17 +397,17 @@ sap.ui.define(['jquery.sap.global'],
 						if (rFilter.test(sHost)) {
 							bOk = true;
 						}
-					}else if (!sHost || !aWhitelist[i].host || sHost == aWhitelist[i].host){
+					} else if (!sHost || !aWhitelist[i].host || sHost == aWhitelist[i].host) {
 						bOk = true;
 					}
-					if (bOk){
+					if (bOk) {
 						// host OK
 						if ((!sHost && !sPort) || !aWhitelist[i].port || sPort == aWhitelist[i].port) {
 							// port OK
 							if (aWhitelist[i].path && /\*$/.test(aWhitelist[i].path)) {
 								// check for wildcard search at end
-								var sPathEscaped = aWhitelist[i].path.slice(0,-1).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-								var rFilter = RegExp("^"+sPathEscaped);
+								var sPathEscaped = aWhitelist[i].path.slice(0, -1).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+								var rFilter = RegExp("^" + sPathEscaped);
 								if (rFilter.test(sPath)) {
 									bFound = true;
 								}
@@ -448,7 +445,7 @@ sap.ui.define(['jquery.sap.global'],
 				if (jQuery.sap.validateUrl(sUrl)) {
 					return sUrl;
 				}
-			} 
+			}
 		});
 	};
 	

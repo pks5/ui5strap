@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -9,10 +9,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 	function(jQuery, Plugin) {
 	"use strict";
 
-
+	/*global alert */
 	
 	
-		var $=jQuery;
+		var $ = jQuery;
 		var Breakpoint = Plugin.extend("sap.ui.core.support.plugins.Breakpoint", {
 	
 			constructor : function(oSupportStub) {
@@ -41,12 +41,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 				this._bAlertNoDebugger = false;
 	
 				this._aEventIds = [
-				    this.getId() + "RequestInstanceMethods",
-				    this.getId() + "ChangeInstanceBreakpoint",
-				    this.getId() + "RequestClasses",
-				    this.getId() + "RequestClassMethods",
-				    this.getId() + "ChangeClassBreakpoint",
-				    this.getId() + "RemoveAllClassBreakpoints"
+					this.getId() + "RequestInstanceMethods",
+					this.getId() + "ChangeInstanceBreakpoint",
+					this.getId() + "RequestClasses",
+					this.getId() + "RequestClassMethods",
+					this.getId() + "ChangeClassBreakpoint",
+					this.getId() + "RemoveAllClassBreakpoints"
 				];
 			}
 	
@@ -181,11 +181,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 				aMethods = [];
 	
 			// check if control was found
-			if (!oControl) return aMethods;
+			if (!oControl) {
+				return aMethods;
+			}
 	
 			// loop through control object
 			for (var oProperty in oControl) {
-				if (!$.isFunction(oControl[oProperty])) continue;
+				if (!$.isFunction(oControl[oProperty])) {
+					continue;
+				}
 	
 				aMethods.push({
 					name: oProperty,
@@ -195,7 +199,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 	
 			// return sorted array
 			return aMethods.sort(function(a, b) {
-				return ((a.name < b.name) ? -1 : ((a.name > b.name) ? 1 : 0));
+				if (a.name < b.name) {
+					return -1;
+				} else if (a.name > b.name) {
+					return 1;
+				} else {
+					return 0;
+				}
 			});
 		};
 	
@@ -205,11 +215,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 			var oObj = jQuery.sap.getObject(sClassName);
 			var aMethods = [];
 	
-			if (!oObj) return aMethods;
+			if (!oObj) {
+				return aMethods;
+			}
 	
 			// class methods
 			for (var sKey in oObj) {
-				if (!$.isFunction(oObj[sKey])) continue;
+				if (!$.isFunction(oObj[sKey])) {
+					continue;
+				}
 	
 				aMethods.push({
 					name: sKey,
@@ -220,10 +234,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 	
 			// instance methods
 			for (var sKey in oObj.prototype) {
-				if (!$.isFunction(oObj.prototype[sKey])) continue;
+				if (!$.isFunction(oObj.prototype[sKey])) {
+					continue;
+				}
 	
 				// check if method already exists (happens with getMetadata)
-				if ($.grep(aMethods, function(o) { return (o.name === sKey); }).length === 1) continue;
+				if ($.grep(aMethods, function(o) {
+						return (o.name === sKey);
+					}).length === 1) {
+					continue;
+				}
 	
 				aMethods.push({
 					name: sKey,
@@ -234,7 +254,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 	
 			// sort using method name (ascending)
 			return aMethods.sort(function(a, b) {
-				return ((a.name < b.name) ? -1 : ((a.name > b.name) ? 1 : 0));
+				if (a.name < b.name) {
+					return -1;
+				} else if (a.name > b.name) {
+					return 1;
+				} else {
+					return 0;
+				}
 			});
 		};
 	
@@ -246,13 +272,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 				var aModules = jQuery.sap.getAllDeclaredModules();
 	
 				for (var i = 0; i < aModules.length; i++) {
-					if (aClasses.indexOf(aModules[i]) > -1) continue;
+					if (jQuery.inArray(aModules[i], aClasses) > -1) {
+						continue;
+					}
 	
 					var oObj = jQuery.sap.getObject(aModules[i]);
 	
-					if (typeof(oObj) === 'undefined' || oObj === null) continue;
+					if (typeof (oObj) === 'undefined' || oObj === null) {
+						continue;
+					}
 	
-					if (typeof(oObj.getMetadata) === 'function' &&
+					if (typeof (oObj.getMetadata) === 'function' &&
 						oObj.getMetadata() instanceof sap.ui.core.ElementMetadata) {
 						aClasses.push(oObj.getMetadata().getName());
 					}
@@ -270,10 +300,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 			var oControl = sap.ui.getCore().byId(sControlId);
 	
 			// check if control was found and a method was specified
-			if (!oControl || !sMethodName || !oControl[sMethodName]) return;
+			if (!oControl || !sMethodName || !oControl[sMethodName]) {
+				return;
+			}
 	
 			// check if breakpoint is not already activated / deactivated
-			if (this.isInstanceBreakpointActive(oControl, sMethodName) === bActive) return;
+			if (this.isInstanceBreakpointActive(oControl, sMethodName) === bActive) {
+				return;
+			}
 	
 			if (bActive) {
 				// activate the breakpoint
@@ -290,10 +324,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 			var oClass = jQuery.sap.getObject(sClassName);
 	
 			// check if control was found and a method was specified
-			if (!oClass || !sMethodName) return;
+			if (!oClass || !sMethodName) {
+				return;
+			}
 	
 			// check if breakpoint is not already activated / deactivated
-			if (this.isClassBreakpointActive(sClassName, sMethodName) === bActive) return;
+			if (this.isClassBreakpointActive(sClassName, sMethodName) === bActive) {
+				return;
+			}
 	
 			if (bActive) {
 				// activate the breakpoint
@@ -307,7 +345,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 	
 		Breakpoint.prototype.getInstanceBreakpointData = function(oControl, bInit) {
 	
-			if (typeof(bInit) === 'undefined') bInit = false;
+			if (typeof (bInit) === 'undefined') {
+				bInit = false;
+			}
 	
 			var mClass = this._mBreakpointData.instances[this._classPrefix + oControl.getMetadata().getName()];
 	
@@ -338,7 +378,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 	
 		Breakpoint.prototype.getClassBreakpointData = function(sClassName, bInit) {
 	
-			if (typeof(bInit) === 'undefined') bInit = false;
+			if (typeof (bInit) === 'undefined') {
+				bInit = false;
+			}
 	
 			var mClass = this._mBreakpointData.classes[this._classPrefix + sClassName];
 	
@@ -360,11 +402,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 			// get control map
 			var mControl = this.getInstanceBreakpointData(oControl);
 	
-			if (!mControl) return false;
+			if (!mControl) {
+				return false;
+			}
 	
 			// get method object
 			var oMethod = mControl[this._methodPrefix + sMethodName];
-			if (!oMethod) return false;
+			if (!oMethod) {
+				return false;
+			}
 	
 			// check for active flag
 			return oMethod.active;
@@ -375,11 +421,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 			// get class map
 			var mClass = this.getClassBreakpointData(sClassName);
 	
-			if (!mClass) return false;
+			if (!mClass) {
+				return false;
+			}
 	
 			// get method object
 			var oMethod = mClass[this._methodPrefix + sMethodName];
-			if (!oMethod) return false;
+			if (!oMethod) {
+				return false;
+			}
 	
 			// check for active flag
 			return oMethod.active;
@@ -454,10 +504,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 			return function() {
 	
 				var time = (new Date()).getTime();
-	
+
+				/*eslint-disable no-debugger */
 				debugger;
+				/*eslint-enable no-debugger */
 	
-				if ((new Date().getTime()) - time < 50) { that._alertNoDebugger(); };
+				if ((new Date().getTime()) - time < 50) {
+					that._alertNoDebugger();
+				}
 	
 				// Step into the statement below
 				return method.apply(this, arguments);
@@ -466,7 +520,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 	
 		Breakpoint.prototype._alertNoDebugger = function() {
 	
-			if (this._bAlertNoDebugger) return; // show alert only one time
+			if (this._bAlertNoDebugger) {
+				return; // show alert only one time
+			}
 	
 			var text = null;
 	
@@ -483,7 +539,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin'],
 			}
 	
 			this._bAlertNoDebugger = true;
+			/*eslint-disable no-alert */
 			alert("There is no debugger attached.\n\n" + text);
+			/*eslint-enable no-alert */
 		};
 	
 	

@@ -1,93 +1,102 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 // Provides default renderer for control sap.ui.commons.RangeSlider
-jQuery.sap.declare("sap.ui.commons.RangeSliderRenderer");
-jQuery.sap.require("sap.ui.core.Renderer");
-jQuery.sap.require("sap.ui.commons.SliderRenderer");
+sap.ui.define(['jquery.sap.global', './SliderRenderer', 'sap/ui/core/Renderer'],
+	function(jQuery, SliderRenderer, Renderer) {
+	"use strict";
 
-/**
- * @class RangeSlider renderer.
- * @static
- */
-sap.ui.commons.RangeSliderRenderer = sap.ui.core.Renderer.extend(sap.ui.commons.SliderRenderer);
 
-/**
- * Renders the Grip for the slider control, using the provided {@link sap.ui.fw.RenderManager}.
- * Each slider is handeled as individual single sliders for aria.
- * Min and max values are adjusted when sliders are moved.
- *
- * @param {sap.ui.fw.RenderManager} oRenderManager The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.fw.Control} oControl An object representation of the control that should be rendered.
- */
-sap.ui.commons.RangeSliderRenderer.renderGrip = function(oRenderManager, oSlider){
-	var rm = oRenderManager;
+	/**
+	 * RangeSlider renderer.
+	 * @namespace
+	 */
+	var RangeSliderRenderer = Renderer.extend(SliderRenderer);
 
-	//Left Grip
-	rm.write('<DIV');
+	/**
+	 * Renders the Grip for the slider control, using the provided {@link sap.ui.fw.RenderManager}.
+	 * Each slider is handeled as individual single sliders for aria.
+	 * Min and max values are adjusted when sliders are moved.
+	 *
+	 * @param {sap.ui.fw.RenderManager} oRenderManager The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.commons.RangeSlider} oSlider An object representation of the control that should be rendered.
+	 */
+	RangeSliderRenderer.renderGrip = function(oRenderManager, oSlider){
+		var rm = oRenderManager;
 
-	// Icon for grip
-	rm.writeAttribute('id', oSlider.getId() + '-grip');
-	if (oSlider.getEnabled()) {
-		rm.writeAttribute('tabIndex', '0');
-	}else{
-		rm.writeAttribute('tabIndex', '-1');
-	}
-	rm.writeAttribute('class', 'sapUiSliGrip');
-	rm.writeAttribute('title', oSlider.getValue());
+		//Left Grip
+		rm.write('<DIV');
 
-	// ARIA
-	rm.writeAccessibilityState(oSlider, {
-		role: 'slider',
-		controls: oSlider.getId() + '-grip2',
-		orientation: 'horizontal',
-		valuemin: oSlider.getMin(),
-		valuemax: oSlider.getValue2(),
-		live: 'assertive',
-		disabled: !oSlider.getEditable() || !oSlider.getEnabled(),
-		describedby: oSlider.getTooltip_AsString() ? (oSlider.getId()+'-Descr ' + oSlider.getAriaDescribedBy().join(" ")) : undefined
-	});
+		// Icon for grip
+		rm.writeAttribute('id', oSlider.getId() + '-grip');
+		if (oSlider.getEnabled()) {
+			rm.writeAttribute('tabIndex', '0');
+		} else {
+			rm.writeAttribute('tabIndex', '-1');
+		}
+		rm.writeAttribute('class', 'sapUiSliGrip');
+		rm.writeAttribute('title', oSlider.getValue());
 
-	rm.write('>&#9650;</DIV>'); // Symbol for HCB Theme (Must be hidden in other themes)
+		// ARIA
+		rm.writeAccessibilityState(oSlider, {
+			role: 'slider',
+			controls: oSlider.getId() + '-grip2',
+			orientation: 'horizontal',
+			valuemin: oSlider.getMin(),
+			valuemax: oSlider.getValue2(),
+			live: 'assertive',
+			disabled: !oSlider.getEditable() || !oSlider.getEnabled(),
+			describedby: oSlider.getTooltip_AsString() ? (oSlider.getId() + '-Descr ' + oSlider.getAriaDescribedBy().join(" ")) : undefined
+		});
 
-	//Right Grip
-	rm.write('<DIV');
+		rm.write('>&#9650;</DIV>'); // Symbol for HCB Theme (Must be hidden in other themes)
 
-	// Icon for grip
-	rm.writeAttribute('id', oSlider.getId() + '-grip2');
-	if (oSlider.getEnabled()) {
-		rm.writeAttribute('tabIndex', '0');
-	}else{
-		rm.writeAttribute('tabIndex', '-1');
-	}
-	rm.writeAttribute('class', 'sapUiSliGrip');
-	rm.writeAttribute('title', oSlider.getValue2());
+		//Right Grip
+		rm.write('<DIV');
 
-	// ARIA
-	rm.writeAccessibilityState(oSlider, {
-		role: 'slider',
-		controls: oSlider.getId() + '-grip',
-		orientation: 'horizontal',
-		valuemin: oSlider.getValue(),
-		valuemax: oSlider.getMax(),
-		live: 'assertive',
-		disabled: !oSlider.getEditable() || !oSlider.getEnabled(),
-		describedby: oSlider.getTooltip_AsString() ? (oSlider.getId()+'-Descr ' + oSlider.getAriaDescribedBy().join(" ")) : undefined
-	});
+		// Icon for grip
+		rm.writeAttribute('id', oSlider.getId() + '-grip2');
+		if (oSlider.getEnabled()) {
+			rm.writeAttribute('tabIndex', '0');
+		} else {
+			rm.writeAttribute('tabIndex', '-1');
+		}
+		rm.writeAttribute('class', 'sapUiSliGrip');
+		rm.writeAttribute('title', oSlider.getValue2());
 
-	rm.write('>&#9650;</DIV>'); // Symbol for HCB Theme (Must be hidden in other themes)
+		var sOriantation = 'horizontal';
+		if (oSlider.getVertical()) {
+			sOriantation = 'vertical';
+		}
 
-};
+		// ARIA
+		rm.writeAccessibilityState(oSlider, {
+			role: 'slider',
+			controls: oSlider.getId() + '-grip',
+			orientation: sOriantation,
+			valuemin: oSlider.getValue(),
+			valuemax: oSlider.getMax(),
+			disabled: !oSlider.getEditable() || !oSlider.getEnabled(),
+			describedby: oSlider.getTooltip_AsString() ? (oSlider.getId() + '-Descr ' + oSlider.getAriaDescribedBy().join(" ")) : undefined
+		});
 
-/**
- * Adds extra code to the control (i.e. in subclasses), using the provided {@link sap.ui.fw.RenderManager}.
- *
- * @param {sap.ui.fw.RenderManager} oRenderManager The RenderManager that can be used for writing to the render output buffer.
- * @param {sap.ui.fw.Control} oControl An object representation of the control that should be rendered.
- */
-sap.ui.commons.RangeSliderRenderer.controlAdditionalCode = function(rm, oSlider){
-	rm.addClass('sapUiRSli');
-};
+		rm.write('>&#9650;</DIV>'); // Symbol for HCB Theme (Must be hidden in other themes)
+
+	};
+
+	/**
+	 * Adds extra code to the control (i.e. in subclasses), using the provided {@link sap.ui.fw.RenderManager}.
+	 *
+	 * @param {sap.ui.fw.RenderManager} rm The RenderManager that can be used for writing to the render output buffer.
+	 * @param {sap.ui.commons.RangeSlider} oSlider An object representation of the control that should be rendered.
+	 */
+	RangeSliderRenderer.controlAdditionalCode = function(rm, oSlider){
+		rm.addClass('sapUiRSli');
+	};
+
+	return RangeSliderRenderer;
+
+}, /* bExport= */ true);

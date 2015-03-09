@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -9,7 +9,7 @@ sap.ui.define(['jquery.sap.global'],
 	function(jQuery) {
 	"use strict";
 
-	if(typeof window.jQuery.sap.act === "object" || typeof window.jQuery.sap.act === "function" ){
+	if (typeof window.jQuery.sap.act === "object" || typeof window.jQuery.sap.act === "function" ) {
 		return;
 	}
 	
@@ -30,14 +30,13 @@ sap.ui.define(['jquery.sap.global'],
 		_I_MAX_IDLE_TIME = 10000, //max. idle time in ms
 		_deactivateSupported = !!window.addEventListener, //Just skip IE8
 		_aActivateListeners = [],
-		_aDeactivateListeners = [],
 		_activityDetected = false,
 		_domChangeObserver = null;
 
 	function _onDeactivate(){
 		_deactivatetimer = null;
 		
-		if(_activityDetected){
+		if (_activityDetected) {
 			_onActivate();
 			return;
 		}
@@ -45,24 +44,30 @@ sap.ui.define(['jquery.sap.global'],
 		_active = false;
 		//_triggerEvent(_aDeactivateListeners); //Maybe provide later
 		_domChangeObserver.observe(document.documentElement, {childList: true, attributes: true, subtree: true, characterData: true});
-	};
+	}
 	
 	function _onActivate(){
-		if(!_active){
+		// Never activate when document is not visible to the user
+		if (document.hidden === true) {
+			// In case of IE<10 document.visible is undefined, else it is either true or false
+			return;
+		}
+		
+		if (!_active) {
 			_active = true;
 			_triggerEvent(_aActivateListeners);
 			_domChangeObserver.disconnect();
 		}
-		if(_deactivatetimer){
+		if (_deactivatetimer) {
 			_activityDetected = true;
-		}else{
+		} else {
 			_deactivatetimer = setTimeout(_onDeactivate, _I_MAX_IDLE_TIME);
 			_activityDetected = false;
 		}
-	};
+	}
 	
 	function _triggerEvent(aListeners){
-		if(aListeners.length == 0) {
+		if (aListeners.length == 0) {
 			return;
 		}
 		var aEventListeners = aListeners.slice();
@@ -73,7 +78,7 @@ sap.ui.define(['jquery.sap.global'],
 				oInfo.fFunction.call(oInfo.oListener || window);
 			}
 		}, 0);
-	};
+	}
 	
 	
 	/**
@@ -122,7 +127,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @function
 	 * @name jQuery.sap.act#isActive
 	 */
-	_act.isActive = !_deactivateSupported ? function(){return true;} : function(){return _active;};
+	_act.isActive = !_deactivateSupported ? function(){ return true; } : function(){ return _active; };
 	
 	/**
 	 * Reports an activity.
@@ -139,26 +144,35 @@ sap.ui.define(['jquery.sap.global'],
 	
 	if (_deactivateSupported) {
 		var aEvents = ["resize", "orientationchange", "mousemove", "mousedown", "mouseup", //"mouseout", "mouseover",
-		               "touchstart", "touchmove", "touchend", "touchcancel", "paste", "cut", "keydown", "keyup",
-		               "DOMMouseScroll", "mousewheel"];
-		for(var i=0; i<aEvents.length; i++){
+					   "touchstart", "touchmove", "touchend", "touchcancel", "paste", "cut", "keydown", "keyup",
+					   "DOMMouseScroll", "mousewheel"];
+		for (var i = 0; i < aEvents.length; i++) {
 			window.addEventListener(aEvents[i], _act.refresh, true);
 		}
 		
-		if(window.MutationObserver){
+		if (window.MutationObserver) {
 			_domChangeObserver = new window.MutationObserver(_act.refresh);
-    	}else if(window.WebKitMutationObserver){
-    		_domChangeObserver = new window.WebKitMutationObserver(_act.refresh);
-    	}else{
-    		_domChangeObserver = {
-    			observe : function(){
-    				document.documentElement.addEventListener("DOMSubtreeModified", _act.refresh);
-    			},
-    			disconnect : function(){
-    				document.documentElement.removeEventListener("DOMSubtreeModified", _act.refresh);
-    			}
-    		};
-    	}
+			} else if (window.WebKitMutationObserver) {
+				_domChangeObserver = new window.WebKitMutationObserver(_act.refresh);
+			} else {
+				_domChangeObserver = {
+					observe : function(){
+						document.documentElement.addEventListener("DOMSubtreeModified", _act.refresh);
+					},
+					disconnect : function(){
+						document.documentElement.removeEventListener("DOMSubtreeModified", _act.refresh);
+					}
+				};
+			}
+		
+		if (typeof (document.hidden) === "boolean") {
+			document.addEventListener("visibilitychange", function() {
+				// Only trigger refresh if document has changed to visible
+				if (document.hidden !== true) {
+					_act.refresh();
+				}
+			}, false);
+		}
 		
 		_onActivate();
 	}

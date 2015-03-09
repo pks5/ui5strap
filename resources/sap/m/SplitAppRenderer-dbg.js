@@ -1,25 +1,30 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-jQuery.sap.declare("sap.m.SplitAppRenderer");
-jQuery.sap.require("sap.ui.core.Renderer");
-jQuery.sap.require("sap.m.SplitContainerRenderer");
+sap.ui.define(['jquery.sap.global', './SplitContainerRenderer', 'sap/ui/core/Renderer'],
+	function(jQuery, SplitContainerRenderer, Renderer) {
+	"use strict";
+
 /**
- * @class SplitApp renderer. 
- * @static
- */
-sap.m.SplitAppRenderer = {
-};
+	 * SplitApp renderer. 
+	 * @namespace
+	 */
+	var SplitAppRenderer = {
+	};
+	
+	var SplitAppRenderer = Renderer.extend(SplitContainerRenderer);
+	
+	SplitAppRenderer.renderAttributes = function(oRm, oControl){
+		sap.m.BackgroundHelper.addBackgroundColorStyles(oRm, oControl.getBackgroundColor(),  oControl.getBackgroundImage());
+	};
+	
+	SplitAppRenderer.renderBeforeContent = function(oRm, oControl){
+		sap.m.BackgroundHelper.renderBackgroundImageTag(oRm, oControl, "sapMSplitContainerBG",  oControl.getBackgroundImage(), oControl.getBackgroundRepeat(), oControl.getBackgroundOpacity());
+	};
 
-sap.m.SplitAppRenderer = sap.ui.core.Renderer.extend(sap.m.SplitContainerRenderer);
+	return SplitAppRenderer;
 
-sap.m.SplitAppRenderer.renderAttributes = function(oRm, oControl){
-	sap.m.BackgroundHelper.addBackgroundColorStyles(oRm, oControl.getBackgroundColor(),  oControl.getBackgroundImage());
-};
-
-sap.m.SplitAppRenderer.renderBeforeContent = function(oRm, oControl){
-	sap.m.BackgroundHelper.renderBackgroundImageTag(oRm, oControl, "sapMSplitContainerBG",  oControl.getBackgroundImage(), oControl.getBackgroundRepeat(), oControl.getBackgroundOpacity());
-};
+}, /* bExport= */ true);

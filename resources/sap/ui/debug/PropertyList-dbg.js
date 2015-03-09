@@ -1,11 +1,11 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 // Provides a (modifiable) list of properties for a given control
-sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventProvider', 'sap/ui/core/Core', 'sap/ui/core/Element', 'jquery.sap.strings'],
+sap.ui.define('sap/ui/debug/PropertyList', ['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventProvider', 'sap/ui/core/Core', 'sap/ui/core/Element', 'jquery.sap.strings'],
 	function(jQuery, DataType, EventProvider, Core, Element/* , jQuerySap */) {
 	"use strict";
 
@@ -18,7 +18,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 	 *
 	 * @extends sap.ui.base.EventProvider
 	 * @author Martin Schaus
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 *
 	 * @param {sap.ui.core.Core}
 	 *            oCore the core instance to use for analysis
@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 	 *            oParentDomRef reference to the parent DOM element
 	 *
 	 * @constructor
-	 * @name sap.ui.debug.PropertyList
+	 * @alias sap.ui.debug.PropertyList
 	 * @private
 	 */
 	var PropertyList = EventProvider.extend("sap.ui.debug.PropertyList", /** @lends sap.ui.debug.PropertyList.prototype */ {
@@ -68,8 +68,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.PropertyList#exit
-	 * @function
 	 */
 	PropertyList.prototype.exit = function() {
 		jQuery(this.oParentDomRef).unbind();
@@ -78,8 +76,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.PropertyList#update
-	 * @function
 	 */
 	PropertyList.prototype.update = function(oParams) {
 		var sControlId = oParams.getParameter("controlId");
@@ -90,7 +86,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 			this.oParentDomRef.innerHTML = "Please select a valid control";
 			return;
 		}
-		if(!oControl.getMetadata || !oControl.getMetadata()){
+		if (!oControl.getMetadata || !oControl.getMetadata()) {
 			this.oParentDomRef.innerHTML = "Control does not provide Metadata.";
 			return;
 		}
@@ -99,13 +95,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 			aHTML = [];
 		aHTML.push("<span data-sap-ui-quickhelp='" + this._calcHelpId(oMetadata) + "'>Type : " + oMetadata.getName() + "</span><br >");
 		aHTML.push("Id : " + oControl.getId() + "<br >");
-		aHTML.push("<button id='sap-debug-propertylist-apply' sap-id='"+sControlId+"' style='border:solid 1px gray;background-color:#d0d0d0;font-size:8pt;'>Apply Changes</button>");
+		aHTML.push("<button id='sap-debug-propertylist-apply' sap-id='" + sControlId + "' style='border:solid 1px gray;background-color:#d0d0d0;font-size:8pt;'>Apply Changes</button>");
 		if ( !this.bEmbedded ) {
 			aHTML.push("<div id='sap-ui-quickhelp' style='position:fixed;display:none;padding:5px;background-color:rgb(200,220,231);border:1px solid gray;overflow:hidden'>Help</div>");
 		}
 		aHTML.push("<div style='border-bottom:1px solid gray'>&nbsp;</div><table cellspacing='1' style='font-size:8pt;width:100%;table-layout:fixed'>");
 	
-		while( oMetadata instanceof sap.ui.core.ElementMetadata ) {
+		while ( oMetadata instanceof sap.ui.core.ElementMetadata ) {
 			var mProperties = oMetadata.getProperties();
 			var bHeaderCreated = false;
 			if ( !jQuery.isEmptyObject(mProperties) ) {
@@ -162,7 +158,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 		}
 	
 		var oResult = {};
-		for(var sAggrName in oMetadata.getAggregations() ) {
+		for (var sAggrName in oMetadata.getAggregations() ) {
 			var oAggr = oMetadata.getAggregations()[sAggrName];
 			if ( oAggr.altTypes && oAggr.altTypes[0] && isSimpleType(oAggr.altTypes[0]) ) {
 				oResult[sAggrName] = { name : sAggrName, type : oAggr.altTypes[0], _oParent : oAggr._oParent };
@@ -175,8 +171,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.PropertyList#printProperties
-	 * @function
 	 */
 	PropertyList.prototype.printProperties = function(aHTML, oControl, mProperties, bAggregation) {
 		for (var i in mProperties) {
@@ -191,8 +185,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 			this.mProperties[sName] = sType;
 			aHTML.push("<span data-sap-ui-quickhelp='", this._calcHelpId(mProperties[i]._oParent, i), "' >", sName, '</span>');
 			aHTML.push("</td><td>");
+			var sTitle = "";
 			if (sType == "string" || sType == "int" || sType == "float" || jQuery.sap.endsWith(sType, "[]")) {
-				var sColor='', sTitle='';
+				var sColor = '';
 				if ( oValue === null ) {
 					sColor = 'color:#a5a5a5;';
 					oValue = '(null)';
@@ -206,27 +201,27 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 					}
 					sTitle = ' title="This aggregation currently references an Element. You can set a ' + sType +  ' value instead"';
 				}
-				aHTML.push("<input type='text' style='width:100%;font-size:8pt;background-color:#f5f5f5;"+sColor+"' value='"+ jQuery.sap.escapeHTML("" + oValue)+"'" + sTitle + " sap-name='"+sName+"'/>");
+				aHTML.push("<input type='text' style='width:100%;font-size:8pt;background-color:#f5f5f5;" + sColor + "' value='" + jQuery.sap.escapeHTML("" + oValue) + "'" + sTitle + " sap-name='" + sName + "'/>");
 			} else if (sType == "boolean") {
-				aHTML.push("<input type='checkbox' sap-name='"+sName+"' ");
+				aHTML.push("<input type='checkbox' sap-name='" + sName + "' ");
 				if (oValue == true) {
 					aHTML.push("checked='checked'");
 				}
 				aHTML.push("/>");
-			} else if (sType != "void"){
+			} else if (sType != "void") {
 				//Enum or Custom Type
 				var oEnum = jQuery.sap.getObject(sType);
 				if (!oEnum || oEnum instanceof DataType) {
-					aHTML.push("<input type='text' style='width:100%;font-size:8pt;background-color:#f5f5f5;' value='"+ jQuery.sap.escapeHTML("" + oValue)+"'" + sTitle + " sap-name='"+sName+"'/>");
+					aHTML.push("<input type='text' style='width:100%;font-size:8pt;background-color:#f5f5f5;' value='" + jQuery.sap.escapeHTML("" + oValue) + "'" + sTitle + " sap-name='" + sName + "'/>");
 				} else {
-					aHTML.push("<select style='width:100%;font-size:8pt;background-color:#f5f5f5;' sap-name='"+sName+"'>");
+					aHTML.push("<select style='width:100%;font-size:8pt;background-color:#f5f5f5;' sap-name='" + sName + "'>");
 					sType = sType.replace("/",".");
 					for (var n in oEnum) {
 						aHTML.push("<option ");
-						if (n==oValue) {
+						if (n == oValue) {
 							aHTML.push(" selected ");
 						}
-						aHTML.push("value='"+sType+"."+n+"'>");
+						aHTML.push("value='" + sType + "." + n + "'>");
 						aHTML.push(n);
 						aHTML.push("</option>");
 					}
@@ -242,8 +237,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.PropertyList#onkeydown
-	 * @function
 	 */
 	PropertyList.prototype.onkeydown = function(oEvent) {
 		if (oEvent.keyCode == 13) {
@@ -254,8 +247,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.PropertyList#onclick
-	 * @function
 	 */
 	PropertyList.prototype.onclick = function(oEvent) {
 		var oSource = oEvent.target;
@@ -267,8 +258,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.PropertyList#onfocus
-	 * @function
 	 */
 	PropertyList.prototype.onfocus = function(oEvent) {
 		var oSource = oEvent.target;
@@ -283,42 +272,43 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.PropertyList#applyChanges
-	 * @function
 	 */
 	PropertyList.prototype.applyChanges = function(sId) {
 		var oSource = this.oParentDomRef.ownerDocument.getElementById(sId),
 			sControlId = oSource.getAttribute("sap-id"),
 			oControl = this.oCore.getElementById(sControlId),
 			aInput = oSource.parentNode.getElementsByTagName("INPUT"),
-			aSelect = oSource.parentNode.getElementsByTagName("SELECT");
+			aSelect = oSource.parentNode.getElementsByTagName("SELECT"),
+			oMethod;
 	
-		for (var i=0; i< aInput.length; i++) {
+		for (var i = 0; i < aInput.length; i++) {
 			var oInput = aInput[i],
 				sName = oInput.getAttribute("sap-name");
-				oMethod = oControl["set"+sName];
+				oMethod = oControl["set" + sName];
 			if (!oMethod) {
 				sName = jQuery.sap.charToUpperCase(sName,0);
 			}
-			if (oControl["set"+sName]) {
+			if (oControl["set" + sName]) {
 				var oType = DataType.getType(this.mProperties[sName]);
 				var vValue = this.mProperties[sName] === "boolean" ? oInput.checked : oType.parseValue(oInput.value);
 				if (oType.isValid(vValue) && vValue !== "(null)" ) {
-					oControl["set"+sName](vValue);
+					oControl["set" + sName](vValue);
 				}
 			}
 		}
-		for (var i=0; i< aSelect.length; i++) {
+		for (var i = 0; i < aSelect.length; i++) {
 			var oSelect = aSelect[i],
-				sName = oSelect.getAttribute("sap-name"),
-				oMethod = oControl["set"+sName];
+				sName = oSelect.getAttribute("sap-name");
+			oMethod = oControl["set" + sName];
 			if (!oMethod) {
 				sName = jQuery.sap.charToUpperCase(sName,0);
 			}
-			var	oValue = null;
+			var oValue = null;
 			if (oSelect.value) {
+				/*eslint-disable no-eval */
 				eval("oValue = " + oSelect.value);
-				oControl["set"+sName](oValue);
+				oControl["set" + sName](oValue);
+				/*eslint-enable no-eval */
 			}
 		}
 		this.oCore.applyChanges();
@@ -346,7 +336,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 				this.sCurrentHelpDocPart = undefined;
 				if ( this.sCurrentHelpId.indexOf('#') >= 0 ) {
 					this.sCurrentHelpDoc = this.sCurrentHelpId.substring(0, this.sCurrentHelpId.indexOf('#'));
-					this.sCurrentHelpDocPart = this.sCurrentHelpId.substring(this.sCurrentHelpId.indexOf('#')+1);
+					this.sCurrentHelpDocPart = this.sCurrentHelpId.substring(this.sCurrentHelpId.indexOf('#') + 1);
 				}
 				var sUrl = this.oWindow.jQuery.sap.getModulePath(this.sCurrentHelpDoc, ".control");
 				var that = this;
@@ -354,10 +344,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 					async: true,
 					url : sUrl,
 					dataType : 'xml',
-					error : function(xhr,status) { that.receiveQuickHelp(undefined); },
-					success : function(data) { that.receiveQuickHelp(data); }
+					error : function(xhr,status) {
+						that.receiveQuickHelp(undefined);
+					},
+					success : function(data) {
+						that.receiveQuickHelp(data);
+					}
 				});
-				this.oQuickHelpTimer = setTimeout(function () { that.hideQuickHelp(); }, 2000);
+				this.oQuickHelpTimer = setTimeout(function () {
+					that.hideQuickHelp();
+				}, 2000);
 			}
 		}
 	};
@@ -377,7 +373,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 							result.push(oCandidate);
 						}
 						oCandidate = oCandidate.nextSibling;
-					};
+					}
 					return result;
 				};
 				var aName = get(oControlNode, "name");
@@ -388,7 +384,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 				var aDocumentation = get(oControlNode, "documentation");
 				if ( aDocumentation[0] ) {
 					if ( sName && aDocumentation[0] ) {
-						var doc=[];
+						var doc = [];
 						doc.push("<div style='font-size:10pt;font-weight:bold;padding:5px 0px;margin-bottom:5px;border-bottom:1px solid gray'>", sName.replace('/', '.'), "</div>");
 						doc.push("<div style='padding:2px 0px;'>", aDocumentation[0].text || aDocumentation[0].textContent, "</div>");
 						this.mHelpDocs[this.sCurrentHelpDoc] = doc.join("");
@@ -398,50 +394,49 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 				if ( aProperties[0] ) {
 					aProperties = get(aProperties[0], "property");
 				}
-				for(var i = 0, l = aProperties.length; i < l; i++) {
+				for (var i = 0, l = aProperties.length; i < l; i++) {
 					var oProperty = aProperties[i];
 					var sName = oProperty.getAttribute("name");
 					var sType = oProperty.getAttribute("type") || "string";
 					var sDefaultValue = oProperty.getAttribute("defaultValue") || "empty/undefined";
 					var aDocumentation = get(oProperty, "documentation");
 					if ( sName && aDocumentation[0] ) {
-						var doc=[];
+						var doc = [];
 						doc.push("<div style='font-size:10pt;font-weight:bold;padding:3px 0px;margin-bottom:3px;border-bottom:1px solid gray'>", sName, "</div>");
 						doc.push("<div style='padding:2px 0px;'><i><strong>Type</strong></i>: ", sType, "</div>");
 						doc.push("<div style='padding:2px 0px;'>", aDocumentation[0].text || aDocumentation[0].textContent, "</div>");
 						doc.push("<div style='padding:2px 0px;'><i><strong>Default Value</strong></i>: ", sDefaultValue, "</div>");
 						this.mHelpDocs[this.sCurrentHelpDoc + "#" + sName] = doc.join("");
 					}
-				};
+				}
 				var aProperties = get(oControlNode, "aggregations");
 				if ( aProperties[0] ) {
 					aProperties = get(aProperties[0], "aggregation");
 				}
-				for(var i = 0, l = aProperties.length; i < l; i++) {
+				for (var i = 0, l = aProperties.length; i < l; i++) {
 					var oProperty = aProperties[i];
 					var sName = oProperty.getAttribute("name");
 					var sType = oProperty.getAttribute("type") || "sap.ui.core/Control";
 					var sDefaultValue = oProperty.getAttribute("defaultValue") || "empty/undefined";
 					var aDocumentation = get(oProperty, "documentation");
 					if ( sName && aDocumentation[0] && !this.mHelpDocs[this.sCurrentHelpDoc + "#" + sName]) {
-						var doc=[];
+						var doc = [];
 						doc.push("<div style='font-size:10pt;font-weight:bold;padding:3px 0px;margin-bottom:3px;border-bottom:1px solid gray'>", sName, "</div>");
 						doc.push("<div style='padding:2px 0px;'><i><strong>Type</strong></i>: ", sType, "</div>");
 						doc.push("<div style='padding:2px 0px;'>", aDocumentation[0].text || aDocumentation[0].textContent, "</div>");
 						doc.push("<div style='padding:2px 0px;'><i><strong>Default Value</strong></i>: ", sDefaultValue, "</div>");
 						this.mHelpDocs[this.sCurrentHelpDoc + "#" + sName] = doc.join("");
 					}
-				};
+				}
 			}
 			if ( this.mHelpDocs[this.sCurrentHelpId] ) {
 				this.updateQuickHelp(this.mHelpDocs[this.sCurrentHelpId], 2000);
-			}
-			else {
+			} else {
 				this.updateQuickHelp(undefined, 0);
 			}
 		} else {
 			this.updateQuickHelp(undefined, 0);
-		};
+		}
 	};
 	
 	PropertyList.prototype.updateQuickHelp = function(sNewContent, iTimeout) {
@@ -452,12 +447,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 		var oTooltipDomRef = this.oParentDomRef.ownerDocument.getElementById("sap-ui-quickhelp");
 		if ( oTooltipDomRef ) {
 			if ( !sNewContent ) {
-				oTooltipDomRef.innerHTML = "<i>No quick help...</i>";;
+				oTooltipDomRef.innerHTML = "<i>No quick help...</i>";
 				oTooltipDomRef.style.display = 'none';
 			} else {
 				oTooltipDomRef.innerHTML = sNewContent;
 				var that = this;
-				this.oQuickHelpTimer = setTimeout(function () { that.hideQuickHelp(); }, iTimeout);
+				this.oQuickHelpTimer = setTimeout(function () {
+					that.hideQuickHelp();
+				}, iTimeout);
 			}
 		}
 	};
@@ -484,15 +481,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 				return true;
 			}
 			oDomRef = oDomRef.parentNode;
-		};
+		}
 		return false;
 	};
 	
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.PropertyList#onmouseover
-	 * @function
 	 */
 	PropertyList.prototype.onmouseover = function(oEvent) {
 		var oSource = oEvent.target;
@@ -507,17 +502,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 			if ( oTooltipDomRef ) {
 				oTooltipDomRef.style.opacity = '';
 				oTooltipDomRef.style.filter = '';
-			};
+			}
 		} else if ( oSource.getAttribute("data-sap-ui-quickhelp") ) {
 			this.showQuickHelp(oSource);
-		};
+		}
 	};
 	
 	/**
 	 * TODO: missing internal JSDoc... @author please update
 	 * @private
-	 * @name sap.ui.debug.PropertyList#onmouseout
-	 * @function
 	 */
 	PropertyList.prototype.onmouseout = function(oEvent) {
 		var oSource = oEvent.target;
@@ -528,7 +521,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 			}
 			this.bMovedOverTooltip = false;
 			var that = this;
-			this.oQuickHelpTimer = setTimeout(function () { that.hideQuickHelp(); }, 50);
+			this.oQuickHelpTimer = setTimeout(function () {
+				that.hideQuickHelp();
+			}, 50);
 		} else if (oSource.getAttribute("data-sap-ui-quickhelp")) {
 			if ( this.oQuickHelpTimer ) {
 				clearTimeout(this.oQuickHelpTimer);
@@ -536,8 +531,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', 'sap/ui/base/EventPr
 			}
 			if ( !this.bMovedOverTooltip ) {
 				var that = this;
-				this.oQuickHelpTimer = setTimeout(function () { that.hideQuickHelp(); }, 800);
-			};
+				this.oQuickHelpTimer = setTimeout(function () {
+					that.hideQuickHelp();
+				}, 800);
+			}
 		}
 	};
 

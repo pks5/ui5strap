@@ -1,6 +1,6 @@
 /*
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -22,8 +22,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './HTMLViewSeri
 	 * @class ViewSerializer class.
 	 * @extends sap.ui.base.EventProvider
 	 * @author SAP SE
-	 * @version 1.24.3
-	 * @name sap.ui.core.util.serializer.ViewSerializer
+	 * @version 1.26.7
+	 * @alias sap.ui.core.util.serializer.ViewSerializer
 	 * @experimental Since 1.15.1. The ViewSerializer is still under construction, so some implementation details can be changed in future.
 	 */
 	var ViewSerializer = EventProvider.extend("sap.ui.core.util.serializer.ViewSerializer", /** @lends sap.ui.core.util.serializer.ViewSerializer.prototype */
@@ -41,8 +41,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './HTMLViewSeri
 	 * Serializes all views into XML.
 	 * 
 	 * @returns {map} the serialized views. The keys are the view name.
-	 * @name sap.ui.core.util.serializer.ViewSerializer#serializeToXML
-	 * @function
 	 */
 	ViewSerializer.prototype.serializeToXML = function () {
 		return this.serialize("XML");
@@ -52,8 +50,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './HTMLViewSeri
 	 * Serializes all views into HTML.
 	 * 
 	 * @returns {map} the serialized views. The keys are the view name.
-	 * @name sap.ui.core.util.serializer.ViewSerializer#serializeToHTML
-	 * @function
 	 */
 	ViewSerializer.prototype.serializeToHTML = function () {
 		return this.serialize("HTML");
@@ -65,8 +61,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './HTMLViewSeri
 	 * If left empty the content is left as it was.
 	 * 
 	 * @returns {map} the serialized views. The keys are the view name.
-	 * @name sap.ui.core.util.serializer.ViewSerializer#serialize
-	 * @function
 	 */
 	ViewSerializer.prototype.serialize = function (sConvertToViewType) {
 		this._mViews = {};
@@ -92,8 +86,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './HTMLViewSeri
 	 * @param {sap.ui.core.Control|sap.ui.core.UIArea} oControl the control to serialize
 	 * @returns {map} the serialized views. The keys are the view name.
 	 * @private
-	 * @name sap.ui.core.util.serializer.ViewSerializer#_serializeRecursive
-	 * @function
 	 */
 	ViewSerializer.prototype._serializeRecursive = function (oControl) {
 	
@@ -124,7 +116,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './HTMLViewSeri
 					var oValue = oControl[oAggregation._sGetter]();
 	
 					if (oValue && oValue.length) {
-						for (var i=0;i<oValue.length;i++) {
+						for (var i = 0;i < oValue.length;i++) {
 							var oObj = oValue[i];
 							if (oObj instanceof this._oWindow.sap.ui.core.Element) {
 								this._serializeRecursive(oObj);
@@ -145,8 +137,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './HTMLViewSeri
 	 * @param {sap.ui.core.mvc.View|sap.ui.core.Control|sap.ui.core.UIArea} oView the instance of the view. Needed to determine the type of view serializer.
 	 * @returns {sap.ui.core.util.serializer.XMLViewSerializer|sap.ui.core.util.serializer.HTMLViewSerializer} returns the corresponding serializer for the view type. Returns null when control is not a view.. 
 	 * @private
-	 * @name sap.ui.core.util.serializer.ViewSerializer#_getViewSerializer
-	 * @function
 	 */
 	ViewSerializer.prototype._getViewSerializer = function (oView, sType) {
 	
@@ -159,7 +149,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './HTMLViewSeri
 	
 				// double check that the function is on the controller
 				var oController = oView.getController();
-				if (oController[sHandlerName]) {
+				if (oController[sHandlerName] || sap.ui.getCore().getConfiguration().getControllerCodeDeactivated()) {
 					return sHandlerName;
 				}
 			}
@@ -177,7 +167,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './HTMLViewSeri
 		var fnGetControlId = function (oControl) {
 			// Allow specification of desired controlId as changing ids later on is not possible
 			//This has to be the view relative ID
-			if (oControl._sapui_controlId){
+			if (oControl._sapui_controlId) {
 				return oControl._sapui_controlId;
 			}
 			return oControl.getId().replace(oView.createId(""), "");

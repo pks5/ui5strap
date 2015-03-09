@@ -1,8 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
-jQuery.sap.declare("sap.ui.ux3.ThingAction");jQuery.sap.require("sap.ui.ux3.library");jQuery.sap.require("sap.ui.core.Element");sap.ui.core.Element.extend("sap.ui.ux3.ThingAction",{metadata:{library:"sap.ui.ux3",properties:{"text":{type:"string",group:"Misc",defaultValue:null},"enabled":{type:"boolean",group:"Misc",defaultValue:true}},events:{"select":{}}}});sap.ui.ux3.ThingAction.M_EVENTS={'select':'select'};
-sap.ui.ux3.ThingAction.prototype.onclick=function(e){this.fireSelect({id:this.getId(),action:this})};
-sap.ui.ux3.ThingAction.prototype.onsapselect=function(e){this.fireSelect({id:this.getId(),action:this})};
+sap.ui.define(['jquery.sap.global','sap/ui/core/Element','./library'],function(q,E,l){"use strict";var T=E.extend("sap.ui.ux3.ThingAction",{metadata:{library:"sap.ui.ux3",properties:{text:{type:"string",group:"Misc",defaultValue:null},enabled:{type:"boolean",group:"Misc",defaultValue:true}},events:{select:{parameters:{id:{type:"string"},action:{type:"sap.ui.ux3.ThingAction"}}}}}});T.prototype.onclick=function(e){this.fireSelect({id:this.getId(),action:this})};T.prototype.onsapselect=function(e){this.fireSelect({id:this.getId(),action:this})};return T},true);

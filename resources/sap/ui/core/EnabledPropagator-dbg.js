@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -25,11 +25,11 @@ sap.ui.define(['jquery.sap.global', './Control'],
 	 * </code>
 	 *
 	 * @author Daniel Brinkmann
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @param {boolean} [bDefault=true] the value that should be used as default value for the enhancement of the control.
 	 * @param {boolean} [bLegacy=false] whether the introduced property should use the old name 'Enabled' 
 	 * @public
-	 * @name sap.ui.core.EnabledPropagator
+	 * @alias sap.ui.core.EnabledPropagator
 	 */
 	var EnabledPropagator = function(bDefault, bLegacy) {
 		// Ensure only Controls are enhanced

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/format/NumberFormat', 'sap/ui/m
 	 * @extends sap.ui.model.SimpleType
 	 *
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 *
 	 * @constructor
 	 * @public
@@ -33,9 +33,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/format/NumberFormat', 'sap/ui/m
 	 * @param {string} [oConstraints.contains] an infix that must be contained in any valid value  
 	 * @param {string} [oConstraints.equals] only value that is allowed  
 	 * @param {RegExp} [oConstraints.search] a regular expression that the value must match  
-	 * @name sap.ui.model.type.String
+	 * @alias sap.ui.model.type.String
 	 */
-	var String = SimpleType.extend("sap.ui.model.type.String", /** @lends sap.ui.model.type.String.prototype */ {
+	var StringType = SimpleType.extend("sap.ui.model.type.String", /** @lends sap.ui.model.type.String.prototype */ {
 		
 		constructor : function () {
 			SimpleType.apply(this, arguments);
@@ -48,32 +48,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/format/NumberFormat', 'sap/ui/m
 	});
 	
 	/**
-	 * Creates a new subclass of class sap.ui.model.type.String with name <code>sClassName</code> 
-	 * and enriches it with the information contained in <code>oClassInfo</code>.
-	 * 
-	 * For a detailed description of <code>oClassInfo</code> or <code>FNMetaImpl</code> 
-	 * see {@link sap.ui.base.Object.extend Object.extend}.
-	 *   
-	 * @param {string} sClassName name of the class to be created
-	 * @param {object} [oClassInfo] object literal with informations about the class  
-	 * @param {function} [FNMetaImpl] alternative constructor for a metadata object
-	 * @return {function} the created class / constructor function
-	 * @public
-	 * @static
-	 * @name sap.ui.model.type.String.extend
-	 * @function
-	 */
-	
-	/**
 	 * @see sap.ui.model.SimpleType.prototype.formatValue
-	 * @name sap.ui.model.type.String#formatValue
-	 * @function
 	 */
-	String.prototype.formatValue = function(sValue, sInternalType) {
+	StringType.prototype.formatValue = function(sValue, sInternalType) {
 		if (sValue == undefined || sValue == null) {
 			return null;
 		}
-		switch(sInternalType) {
+		switch (sInternalType) {
 			case "string":
 				return sValue;
 			case "int":
@@ -103,12 +84,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/format/NumberFormat', 'sap/ui/m
 	
 	/**
 	 * @see sap.ui.model.SimpleType.prototype.parseValue
-	 * @name sap.ui.model.type.String#parseValue
-	 * @function
 	 */
-	String.prototype.parseValue = function(oValue, sInternalType) {
-		var sResult;
-		switch(sInternalType) {
+	StringType.prototype.parseValue = function(oValue, sInternalType) {
+		switch (sInternalType) {
 			case "string":
 				return oValue;
 			case "boolean":
@@ -122,10 +100,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/format/NumberFormat', 'sap/ui/m
 	
 	/**
 	 * @see sap.ui.model.SimpleType.prototype.validateValue
-	 * @name sap.ui.model.type.String#validateValue
-	 * @function
 	 */
-	String.prototype.validateValue = function(sValue) {
+	StringType.prototype.validateValue = function(sValue) {
 		if (this.oConstraints) {
 			var aViolatedConstraints = [];
 			jQuery.each(this.oConstraints, function(sName, oContent) {
@@ -185,6 +161,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/format/NumberFormat', 'sap/ui/m
 	
 	
 
-	return String;
+	return StringType;
 
 }, /* bExport= */ true);

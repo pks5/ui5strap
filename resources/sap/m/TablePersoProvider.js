@@ -1,13 +1,6 @@
 /*
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
-jQuery.sap.declare("sap.m.TablePersoProvider");jQuery.sap.require("sap.ui.base.ManagedObject");sap.ui.base.ManagedObject.extend("sap.m.TablePersoProvider",{constructor:function(i,s){sap.ui.base.ManagedObject.apply(this,arguments)},metadata:{"abstract":true,library:"sap.m"}});
-sap.m.TablePersoProvider.prototype.init=function(){jQuery.sap.log.warning("This is the abstract base class for a TablePersoProvider. Do not create instances of this class, but use a concrete sub class instead.");jQuery.sap.log.debug("TablePersoProvider init")};
-sap.m.TablePersoProvider.prototype.getPersData=function(){jQuery.sap.log.debug("TablePersoProvider getPersData")};
-sap.m.TablePersoProvider.prototype.setPersData=function(b){jQuery.sap.log.debug("TablePersoProvider setPersData")};
-sap.m.TablePersoProvider.prototype.delPersData=function(){jQuery.sap.log.debug("TablePersoProvider delPersData")};
-sap.m.TablePersoProvider.prototype.getCaption=function(c){return null};
-sap.m.TablePersoProvider.prototype.getGroup=function(c){return null};
-sap.m.TablePersoProvider.prototype.resetPersData=function(){jQuery.sap.log.debug("TablePersoProvider resetPersData")};
+sap.ui.define(['jquery.sap.global','sap/ui/base/ManagedObject'],function(q,M){"use strict";var T=M.extend("sap.m.TablePersoProvider",{constructor:function(i,s){M.apply(this,arguments)},metadata:{"abstract":true,library:"sap.m"}});T.prototype.init=function(){q.sap.log.warning("This is the abstract base class for a TablePersoProvider. Do not create instances of this class, but use a concrete sub class instead.");q.sap.log.debug("TablePersoProvider init")};T.prototype.getPersData=function(){q.sap.log.debug("TablePersoProvider getPersData")};T.prototype.setPersData=function(b){q.sap.log.debug("TablePersoProvider setPersData")};T.prototype.delPersData=function(){q.sap.log.debug("TablePersoProvider delPersData")};T.prototype.getCaption=function(c){return null};T.prototype.getGroup=function(c){return null};T.prototype.resetPersData=function(){q.sap.log.debug("TablePersoProvider resetPersData")};return T},true);

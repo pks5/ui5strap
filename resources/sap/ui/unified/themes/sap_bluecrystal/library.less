@@ -1,16 +1,17 @@
 /* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
 
-
-/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- * 
- */@import "../base/library.less";
+ */
+
+@import "../base/library.less";
 @import "../../../../../../Base/baseLib/sap_bluecrystal/base.less"; /* ORIGINAL IMPORT PATH: "../../../../../sap/ui/core/themes/sap_bluecrystal/base.less" */
 
-@import (less) "../../../../../sap/ui/core/themes/sap_bluecrystal/global.css";
+@import "../../../../../sap/ui/core/themes/sap_bluecrystal/global.less";
 
-/* START "Calendar.css" */
+/* START "Calendar.less" */
 /* =============================================== */
 /* CSS for control sap.ui.unified/Calendar.control */
 /* Bluecrystal                                     */
@@ -331,7 +332,8 @@ html[data-sap-ui-browser^="ie"] .sapUiCalYearSel:focus{
 }
 
 @media only screen
-and (orientation: portrait) {
+and (orientation: portrait)
+and (min-height: 380px) {
 	.sap-phone .sapUiCal[data-sap-ui-popup] > .sapUiCancel{
 		bottom: 1rem;
 		left: 25%;
@@ -346,9 +348,7 @@ and (orientation: portrait) {
 	}
 }
 
-@media only screen
-and (min-width : 320px)
-and (orientation: landscape) {
+.sapUiCalendarLandscape(){
 	.sap-phone .sapUiCal[data-sap-ui-popup]{
 		overflow: auto;
 	}
@@ -422,7 +422,7 @@ and (orientation: landscape) {
 	.sap-phone .sapUiCal[data-sap-ui-popup] > .sapUiCancel{
 		top: 1rem;
 		right: 1rem;
-		width: 4rem;
+		width: 5rem;
 		height: 30px;
 		padding-top: 0.25rem;
 		padding-bottom: 0.5rem;
@@ -430,6 +430,18 @@ and (orientation: landscape) {
 	}
 }
 
+@media only screen
+and (min-width : 320px)
+and (max-height: 379px) {
+	.sapUiCalendarLandscape();
+}
+
+@media only screen
+and (min-width : 320px)
+and (min-height: 380px)
+and (orientation: landscape) {
+	.sapUiCalendarLandscape();
+}
 
 /* colors for special days */
 .dayColorMixIn(@class, @color){
@@ -461,9 +473,9 @@ and (orientation: landscape) {
 .dayColorMixIn(sapUiCalDayType09, lighten(@sapUiAccent6, 15%));
 .dayColorMixIn(sapUiCalDayType10, darken(@sapUiAccent4, 10%));
 
-/* END "Calendar.css" */
+/* END "Calendar.less" */
 
-/* START "CalendarLegend.css" */
+/* START "CalendarLegend.less" */
 /* =============================================== */
 /* CSS for control sap.ui.unified/CalendarLegend.control */
 /* Bluecrystal                                     */
@@ -549,14 +561,14 @@ and (orientation: landscape) {
 .sapUiCalLegDayType10 {
 	background: darken(@sapUiAccent4, 10%);
 }
-/* END "CalendarLegend.css" */
+/* END "CalendarLegend.less" */
 
-/* START "ContentSwitcher.css" */
+/* START "ContentSwitcher.less" */
 /* BUILD ME!!!! */
 
-/* END "ContentSwitcher.css" */
+/* END "ContentSwitcher.less" */
 
-/* START "Currency.css" */
+/* START "Currency.less" */
 .sapUiUfdCurrency {
 	font-size: 14px;
 	font-size: 0.875rem;
@@ -573,15 +585,80 @@ and (orientation: landscape) {
 	padding-right: 0.5rem;
 	vertical-align: middle;
 }
-/* END "Currency.css" */
+/* END "Currency.less" */
 
-/* START "FileUploader.css" */
+/* START "FileUploader.less" */
+/* ======================================================= */
+/* CSS for control sap.ui.unified.FileUploader control     */
+/* BlueCrystal theme                                       */
+/* ======================================================= */
+
 .sapUiFupGroup > div > div:last-child {
 	padding-left: 4px;
 }
-/* END "FileUploader.css" */
 
-/* START "Menu.css" */
+.sapUiFup:hover .sapMBtnHoverable {
+	background-image: none;
+	background-color: @sapUiBtnBGStandardHover;
+}
+
+.sapUiFup:active .sapMBtnInner {
+	background-image: none;
+	background-color: @sapUiBtnBGStandardDown;
+	border-color:     @sapUiBtnBGStandardDown;
+	color:            @sapUiBtnTextActive;
+	text-shadow:      none;
+}
+
+.sapUiFup:hover .sapUiBtnS.sapUiBtnStdFocus {
+	background-color: @sapUiBtnBGStandardHover;
+}
+
+.sapUiFup:active .sapMBtnInner .sapMBtnIcon {
+	color:            @sapUiBtnTextActive;
+}
+
+.sapUiFup:active .sapUiBtnS {
+	background-color: @sapUiButtonActiveBackground;
+}
+
+.sapUiFup:active .sapUiBtnS.sapUiBtnNorm {
+	border-color: @sapUiButtonActiveBorderColor;
+}
+
+.sapUiFup:hover .sapMBtnHoverable.sapMBtnAccept:not(.sapMBtnActive) {
+	background-color: @sapUiBtnBGPositiveHover;
+	border-color:     @sapUiBtnBGPositiveHover;
+}
+
+.sapUiFup:active .sapMBtnHoverable.sapMBtnAccept:not(.sapMBtnActive) {
+	background-color: @sapUiBtnBGPositiveDown;
+	border-color:     @sapUiBtnBGPositiveDown;
+}
+
+.sapUiFup:hover .sapMBtnHoverable.sapMBtnReject:not(.sapMBtnActive) {
+	background-color: @sapUiBtnBGNegativeHover;
+	border-color:     @sapUiBtnBGNegativeHover;
+}
+
+.sapUiFup:active .sapMBtnHoverable.sapMBtnReject:not(.sapMBtnActive) {
+	background-color: @sapUiBtnBGNegativeDown;
+	border-color:     @sapUiBtnBGNegativeDown;
+}
+
+.sapUiFup:hover .sapMBtnHoverable.sapMBtnEmphasized:not(.sapMBtnActive) {
+	background-color: @sapUiBtnBGEmphasizedHover;
+	border-color:     @sapUiBtnBGEmphasizedHover;
+}
+
+.sapUiFup:active .sapMBtnHoverable.sapMBtnEmphasized:not(.sapMBtnActive) {
+	background-color: @sapUiBtnBGEmphasizedDown;
+	border-color:     @sapUiBtnBGEmphasizedDown;
+	text-shadow:      none;
+}
+/* END "FileUploader.less" */
+
+/* START "Menu.less" */
 @sapUiMnuItmHeight: 2rem;
 @sapUiMnuItmPadding: 0.5rem;
 
@@ -772,11 +849,72 @@ and (orientation: landscape) {
 	right: @sapUiMnuItmDfltFontsize_IE8;
 	right: 1rem;
 }
-/* END "Menu.css" */
+/* END "Menu.less" */
 
-/* START "Shell.css" */
+/* START "Shell.less" */
+/* ========================================================== */
+/* CSS for sap.ui.unfied.Shell.control (bluecrystal)          */
+/* ========================================================== */
+
+/* END "Shell.less" */
+
+/* START "ShellHeader.less" */
 /* ======================================================== */
-/* CSS for sap.ui.unfied.Shell.control (bluecrystal)        */
+/* CSS for sap.ui.unfied.ShellHeader.control (bluecrystal)  */
+/* ======================================================== */
+
+.sapUiUfdShellHeadBegin .sapUiUfdShellHeadItm.sapUiUfdShellHeadItmSep:after {
+    border-left: 1px solid darken(@sapUiHeaderBG,10);
+}
+
+.sapUiUfdShellHeadUsrItm:before,
+.sapUiUfdShellHeadEnd .sapUiUfdShellHeadItm.sapUiUfdShellHeadItmSep:before {
+    border-right: 1px solid darken(@sapUiHeaderBG,10);
+}
+
+.sapUiMedia-Std-Desktop .sapUiUfdShellHeadItm:hover > span,
+.sapUiMedia-Std-Desktop .sapUiUfdShellHeadUsrItm:hover > * {
+	background-color: @sapUiBtnBGStandardHover;
+}
+
+.sapUiMedia-Std-Desktop .sapUiUfdShellHeadItm.sapUiUfdShellHeadItmSel:hover > span {
+	background-color: darken(@sapUiHighlight, 5%);
+}
+
+.sapUiUfdShellHeadItm > span,
+.sapUiUfdShellHeadUsrItm {
+	-webkit-font-smoothing: antialiased;
+	text-shadow: 0 1px 0 fade(@sapUiWhite,50);
+	color: @sapUiLightText;
+}
+
+.sapUiUfdShellHeadItmMarker > div:after {
+	border-bottom-color: mix(@sapUiHighlight, @sapUiWhite, 10); /*#E6F2F9*/
+}
+
+.sapUiUfdShellHeadItmMarker > div:before {
+	border-bottom-color: @sapUiMediumBG;
+}
+
+.sapUiUfdShellHeadItm:active > span,
+.sapUiUfdShellHeadItm.sapUiUfdShellHeadItmSel > span,
+.sapUiUfdShellHeadItm:active:hover > span,
+.sapUiMedia-Std-Desktop .sapUiUfdShellHeadUsrItm:hover:active > *,
+.sapUiUfdShellHeadUsrItm:active > * {
+	color: @sapUiTextInverted;
+}
+
+.sapUiUfdShellHeadUsrItm:focus .sapUiUfdShellHeadUsrItmExp,
+.sapUiUfdShellHeadUsrItm:focus .sapUiUfdShellHeadUsrItmName,
+.sapUiUfdShellHeadUsrItm:focus .sapUiUfdShellHeadUsrItmImg,
+.sapUiUfdShellHeadItm:focus > span {
+	border-color: @sapUiFocus;
+}
+/* END "ShellHeader.less" */
+
+/* START "ShellLayout.less" */
+/* ======================================================== */
+/* CSS for sap.ui.unfied.ShellLayout.control (bluecrystal)  */
 /* ======================================================== */
 
 @sapUiUfdShellCurtainBGStartColor: fade(@sapUiLightestBG,97);
@@ -828,63 +966,9 @@ html[data-sap-ui-browser="ie8"] .sapUiUfdShellCurtain,
 html[data-sap-ui-browser="ie9"] .sapUiUfdShellCurtain {
 	filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorStr='@{sapUiUfdShellCurtainBGStartColor_IE}', EndColorStr='@{sapUiUfdShellCurtainBGEndColor_IE}',GradientType=0)";
 }
+/* END "ShellLayout.less" */
 
-
-
-/* =================================================== */
-/* CSS for ShellHeader Content                         */
-/* =================================================== */
-
-.sapUiUfdShellHeadBegin .sapUiUfdShellHeadItm.sapUiUfdShellHeadItmSep:after {
-    border-left: 1px solid darken(@sapUiHeaderBG,10);
-}
-
-.sapUiUfdShellHeadUsrItm:before,
-.sapUiUfdShellHeadEnd .sapUiUfdShellHeadItm.sapUiUfdShellHeadItmSep:before {
-    border-right: 1px solid darken(@sapUiHeaderBG,10);
-}
-
-.sapUiMedia-Std-Desktop .sapUiUfdShellHeadItm:hover > span,
-.sapUiMedia-Std-Desktop .sapUiUfdShellHeadUsrItm:hover > * {
-	background-color: @sapUiBtnBGStandardHover;
-}
-
-.sapUiMedia-Std-Desktop .sapUiUfdShellHeadItm.sapUiUfdShellHeadItmSel:hover > span {
-	background-color: darken(@sapUiHighlight, 5%);
-}
-
-.sapUiUfdShellHeadItm > span,
-.sapUiUfdShellHeadUsrItm {
-	-webkit-font-smoothing: antialiased;
-	text-shadow: 0 1px 0 fade(@sapUiWhite,50);
-	color: @sapUiLightText;
-}
-
-.sapUiUfdShellHeadItmMarker > div:after {
-	border-bottom-color: mix(@sapUiHighlight, @sapUiWhite, 10); /*#E6F2F9*/
-}
-
-.sapUiUfdShellHeadItmMarker > div:before {
-	border-bottom-color: @sapUiMediumBG;
-}
-
-.sapUiUfdShellHeadItm:active > span,
-.sapUiUfdShellHeadItm.sapUiUfdShellHeadItmSel > span,
-.sapUiUfdShellHeadItm:active:hover > span,
-.sapUiMedia-Std-Desktop .sapUiUfdShellHeadUsrItm:hover:active > *,
-.sapUiUfdShellHeadUsrItm:active > * {
-	color: @sapUiTextInverted;
-}
-
-.sapUiUfdShellHeadUsrItm:focus .sapUiUfdShellHeadUsrItmExp,
-.sapUiUfdShellHeadUsrItm:focus .sapUiUfdShellHeadUsrItmName,
-.sapUiUfdShellHeadUsrItm:focus .sapUiUfdShellHeadUsrItmImg,
-.sapUiUfdShellHeadItm:focus > span {
-	border-color: @sapUiFocus;
-}
-/* END "Shell.css" */
-
-/* START "ShellOverlay.css" */
+/* START "ShellOverlay.less" */
 /* ============================================== */
 /* CSS for sap.ui.unfied.ShellOverlay.control (blue crystal)*/
 /* ============================================== */
@@ -949,12 +1033,12 @@ html[data-sap-ui-browser="ie9"] .sapUiUfdShellCurtain {
 .sapUiMedia-Std-Desktop .sapUiUfdShellOvrlyHeadClose:active:hover {
 	background-color: @sapUiHighlight;
 }
-/* END "ShellOverlay.css" */
+/* END "ShellOverlay.less" */
 
-/* START "SplitContainer.css" */
+/* START "SplitContainer.less" */
 .sapUiUfdSpltContPane {
 	background-color: @sapUiLightestBG;
 }
 
-/* END "SplitContainer.css" */
+/* END "SplitContainer.less" */
 

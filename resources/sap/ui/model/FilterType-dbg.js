@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -11,24 +11,21 @@ sap.ui.define(['jquery.sap.global'],
 
 
 	/**
-	* @class
 	* Operators for the Filter.
 	*
-	* @static
+	* @namespace
 	* @public
-	* @name sap.ui.model.FilterType
+	* @alias sap.ui.model.FilterType
 	*/
 	var FilterType = {
 			/**
 			 * Filters which are changed by the application
-			 * @name sap.ui.model.FilterType#Application
 			 * @public
 			 */
 			Application: "Application",
 	
 			/**
 			 * Filters which are set by the different controls
-			 * @name sap.ui.model.FilterType#Control
 			 * @public
 			 */
 			Control: "Control"

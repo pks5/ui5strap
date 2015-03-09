@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -23,9 +23,8 @@ sap.ui.define(['jquery.sap.global', './Control', 'sap/ui/model/control/ControlMo
 	 * });
 	 * </pre>
 	 *
-	 * @class
-	 * @static
-	 * @name sap.ui.core.CompositeSupport
+	 * @namespace
+	 * @alias sap.ui.core.CompositeSupport
 	 */
 	var CompositeSupport = {};
 	
@@ -43,8 +42,6 @@ sap.ui.define(['jquery.sap.global', './Control', 'sap/ui/model/control/ControlMo
 	 * @param {string} [sFactoryName='ComponentFactory'] name under which the newly created factory class will be added to the control class
 	 * @param {object} [oMethods] default factory methods and helper methods
 	 * @public
-	 * @name sap.ui.core.CompositeSupport.mixInto
-	 * @function
 	 */
 	CompositeSupport.mixInto = function(fnClass, sFactoryName, oMethods) {
 	
@@ -158,7 +155,7 @@ sap.ui.define(['jquery.sap.global', './Control', 'sap/ui/model/control/ControlMo
 	 */
 	sap.ui.core.ComponentFactory.prototype.getModel = function() {
 		if ( !this.oModel ) {
-			var that=this;
+			var that = this;
 			this.oModel = new ControlModel(this.oComposite);
 			this.oModel._onchange = function(e) {
 				that.fireEvent("change", e.getParameters && e.getParameters());

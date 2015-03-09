@@ -1,38 +1,43 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
-jQuery.sap.declare("sap.m.MultiInputRenderer");
-jQuery.sap.require("sap.ui.core.Renderer");
-jQuery.sap.require("sap.m.InputRenderer");
+sap.ui.define(['jquery.sap.global', './InputRenderer', 'sap/ui/core/Renderer'],
+	function(jQuery, InputRenderer, Renderer) {
+	"use strict";
 
-/**
- * @class MultiInput renderer.
- * @static
- */
-sap.m.MultiInputRenderer = sap.ui.core.Renderer.extend(sap.m.InputRenderer);
 
-sap.m.MultiInputRenderer.openInputTag = function(oRm, oControl) {
-	oRm.write("<div class=\"sapMMultiInputBorder\">");
-
-	sap.m.MultiInputRenderer._renderTokens(oRm, oControl);
+	/**
+	 * MultiInput renderer.
+	 * @namespace
+	 */
+	var MultiInputRenderer = Renderer.extend(InputRenderer);
 	
-	sap.m.MultiInputRenderer._renderInput(oRm, oControl);
-};
+	MultiInputRenderer.openInputTag = function(oRm, oControl) {
+		oRm.write("<div id=\"" + oControl.getId() + "-border\" class=\"sapMMultiInputBorder\">");
+	
+		MultiInputRenderer._renderTokens(oRm, oControl);
+		
+		MultiInputRenderer._renderInput(oRm, oControl);
+	};
+	
+	MultiInputRenderer._renderTokens = function(oRm, oControl) {
+		oRm.renderControl(oControl._tokenizer);
+	};
+	
+	MultiInputRenderer._renderInput = function(oRm, oControl) {
+		oRm.write("<div class=\"sapMMultiInputInputContainer\">");
+		InputRenderer.openInputTag.call(this, oRm, oControl);
+	};
+	
+	MultiInputRenderer.closeInputTag = function(oRm, oControl) {
+		InputRenderer.closeInputTag.call(this, oRm, oControl);
+		oRm.write("</div>");
+		oRm.write("</div>");
+		oRm.write("<div class=\"sapMMultiInputShadowDiv\"/>");
+	};
 
-sap.m.MultiInputRenderer._renderTokens = function(oRm, oControl) {
-	oRm.renderControl(oControl._tokenizer);
-};
+	return MultiInputRenderer;
 
-sap.m.MultiInputRenderer._renderInput = function(oRm, oControl) {
-	oRm.write("<div class=\"sapMMultiInputInputContainer\">");
-	sap.m.InputRenderer.openInputTag.call(this, oRm, oControl);
-};
-
-sap.m.MultiInputRenderer.closeInputTag = function(oRm, oControl) {
-	sap.m.InputRenderer.closeInputTag.call(this, oRm, oControl);
-	oRm.write("</div>");
-	oRm.write("</div>");
-	oRm.write("<div class=\"sapMMultiInputShadowDiv\"/>");
-};
+}, /* bExport= */ true);

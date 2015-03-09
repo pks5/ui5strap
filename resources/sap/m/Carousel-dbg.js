@@ -1,1311 +1,1118 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-/* ----------------------------------------------------------------------------------
- * Hint: This is a derived (generated) file. Changes should be done in the underlying 
- * source files only (*.control, *.js) or they will be lost after the next generation.
- * ---------------------------------------------------------------------------------- */
-
 // Provides control sap.m.Carousel.
-jQuery.sap.declare("sap.m.Carousel");
-jQuery.sap.require("sap.m.library");
-jQuery.sap.require("sap.ui.core.Control");
-
-
-/**
- * Constructor for a new Carousel.
- * 
- * Accepts an object literal <code>mSettings</code> that defines initial 
- * property values, aggregated and associated objects as well as event handlers. 
- * 
- * If the name of a setting is ambiguous (e.g. a property has the same name as an event), 
- * then the framework assumes property, aggregation, association, event in that order. 
- * To override this automatic resolution, one of the prefixes "aggregation:", "association:" 
- * or "event:" can be added to the name of the setting (such a prefixed name must be
- * enclosed in single or double quotes).
- *
- * The supported settings are:
- * <ul>
- * <li>Properties
- * <ul>
- * <li>{@link #getHeight height} : sap.ui.core.CSSSize (default: '100%')</li>
- * <li>{@link #getWidth width} : sap.ui.core.CSSSize (default: '100%')</li>
- * <li>{@link #getLoop loop} : boolean (default: false)</li>
- * <li>{@link #getVisible visible} : boolean (default: true)</li>
- * <li>{@link #getShowPageIndicator showPageIndicator} : boolean (default: true)</li>
- * <li>{@link #getPageIndicatorPlacement pageIndicatorPlacement} : sap.m.PlacementType (default: sap.m.PlacementType.Bottom)</li>
- * <li>{@link #getShowBusyIndicator showBusyIndicator} : boolean (default: true)</li>
- * <li>{@link #getBusyIndicatorSize busyIndicatorSize} : sap.ui.core.CSSSize (default: '6em')</li></ul>
- * </li>
- * <li>Aggregations
- * <ul>
- * <li>{@link #getPages pages} <strong>(default aggregation)</strong> : sap.ui.core.Control[]</li></ul>
- * </li>
- * <li>Associations
- * <ul>
- * <li>{@link #getActivePage activePage} : string | sap.ui.core.Control</li></ul>
- * </li>
- * <li>Events
- * <ul>
- * <li>{@link sap.m.Carousel#event:loadPage loadPage} : fnListenerFunction or [fnListenerFunction, oListenerObject] or [oData, fnListenerFunction, oListenerObject]</li>
- * <li>{@link sap.m.Carousel#event:unloadPage unloadPage} : fnListenerFunction or [fnListenerFunction, oListenerObject] or [oData, fnListenerFunction, oListenerObject]</li>
- * <li>{@link sap.m.Carousel#event:pageChanged pageChanged} : fnListenerFunction or [fnListenerFunction, oListenerObject] or [oData, fnListenerFunction, oListenerObject]</li></ul>
- * </li>
- * </ul> 
-
- *
- * @param {string} [sId] id for the new control, generated automatically if no id is given 
- * @param {object} [mSettings] initial settings for the new control
- *
- * @class
- * The Carousel control can be used to navigate through a list of sap.m controls just like flipping through the pages of a book by swiping right or left. An indicator shows the current position within the control list. When displayed in a desktop browser, a left- and right-arrow button is displayed on the carousel's sides, which can be used to navigate through the carousel.
- * 
- * Note: when displa Internet Explorer 9, page changes are not animated.
- * @extends sap.ui.core.Control
- *
- * @author SAP SE
- * @version 1.24.3
- *
- * @constructor
- * @public
- * @name sap.m.Carousel
- * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
- */
-sap.ui.core.Control.extend("sap.m.Carousel", { metadata : {
-
-	publicMethods : [
-		// methods
-		"next", "previous"
-	],
-	library : "sap.m",
-	properties : {
-		"height" : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : '100%'},
-		"width" : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : '100%'},
-		"loop" : {type : "boolean", group : "Misc", defaultValue : false},
-		"visible" : {type : "boolean", group : "Appearance", defaultValue : true},
-		"showPageIndicator" : {type : "boolean", group : "Appearance", defaultValue : true},
-		"pageIndicatorPlacement" : {type : "sap.m.PlacementType", group : "Appearance", defaultValue : sap.m.PlacementType.Bottom},
-		"showBusyIndicator" : {type : "boolean", group : "Appearance", defaultValue : true, deprecated: true},
-		"busyIndicatorSize" : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : '6em', deprecated: true}
-	},
-	defaultAggregation : "pages",
-	aggregations : {
-		"pages" : {type : "sap.ui.core.Control", multiple : true, singularName : "page"}
-	},
-	associations : {
-		"activePage" : {type : "sap.ui.core.Control", multiple : false}
-	},
-	events : {
-		"loadPage" : {deprecated: true}, 
-		"unloadPage" : {deprecated: true}, 
-		"pageChanged" : {}
-	}
-}});
-
-
-/**
- * Creates a new subclass of class sap.m.Carousel with name <code>sClassName</code> 
- * and enriches it with the information contained in <code>oClassInfo</code>.
- * 
- * <code>oClassInfo</code> might contain the same kind of informations as described in {@link sap.ui.core.Element.extend Element.extend}.
- *   
- * @param {string} sClassName name of the class to be created
- * @param {object} [oClassInfo] object literal with informations about the class  
- * @param {function} [FNMetaImpl] constructor function for the metadata object. If not given, it defaults to sap.ui.core.ElementMetadata.
- * @return {function} the created class / constructor function
- * @public
- * @static
- * @name sap.m.Carousel.extend
- * @function
- */
-
-sap.m.Carousel.M_EVENTS = {'loadPage':'loadPage','unloadPage':'unloadPage','pageChanged':'pageChanged'};
-
-
-/**
- * Getter for property <code>height</code>.
- * The height of the carousel. Note that when a percentage value is used, the height of the surrounding container must be defined.
- *
- * Default value is <code>100%</code>
- *
- * @return {sap.ui.core.CSSSize} the value of property <code>height</code>
- * @public
- * @name sap.m.Carousel#getHeight
- * @function
- */
-
-/**
- * Setter for property <code>height</code>.
- *
- * Default value is <code>100%</code> 
- *
- * @param {sap.ui.core.CSSSize} sHeight  new value for property <code>height</code>
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#setHeight
- * @function
- */
-
-
-/**
- * Getter for property <code>width</code>.
- * The width of the carousel. Note that when a percentage value is used, the height of the surrounding container must be defined.
- *
- * Default value is <code>100%</code>
- *
- * @return {sap.ui.core.CSSSize} the value of property <code>width</code>
- * @public
- * @name sap.m.Carousel#getWidth
- * @function
- */
-
-/**
- * Setter for property <code>width</code>.
- *
- * Default value is <code>100%</code> 
- *
- * @param {sap.ui.core.CSSSize} sWidth  new value for property <code>width</code>
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#setWidth
- * @function
- */
-
-
-/**
- * Getter for property <code>loop</code>.
- * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
- *
- * Default value is <code>false</code>
- *
- * @return {boolean} the value of property <code>loop</code>
- * @public
- * @name sap.m.Carousel#getLoop
- * @function
- */
-
-/**
- * Setter for property <code>loop</code>.
- *
- * Default value is <code>false</code> 
- *
- * @param {boolean} bLoop  new value for property <code>loop</code>
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#setLoop
- * @function
- */
-
-
-/**
- * Getter for property <code>visible</code>.
- * Shows or hides the carousel.
- *
- * Default value is <code>true</code>
- *
- * @return {boolean} the value of property <code>visible</code>
- * @public
- * @name sap.m.Carousel#getVisible
- * @function
- */
-
-/**
- * Setter for property <code>visible</code>.
- *
- * Default value is <code>true</code> 
- *
- * @param {boolean} bVisible  new value for property <code>visible</code>
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#setVisible
- * @function
- */
-
-
-/**
- * Getter for property <code>showPageIndicator</code>.
- * Show or hide carousel's page indicator.
- *
- * Default value is <code>true</code>
- *
- * @return {boolean} the value of property <code>showPageIndicator</code>
- * @public
- * @name sap.m.Carousel#getShowPageIndicator
- * @function
- */
-
-/**
- * Setter for property <code>showPageIndicator</code>.
- *
- * Default value is <code>true</code> 
- *
- * @param {boolean} bShowPageIndicator  new value for property <code>showPageIndicator</code>
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#setShowPageIndicator
- * @function
- */
-
-
-/**
- * Getter for property <code>pageIndicatorPlacement</code>.
- * Defines where the carousel's page indicator is displayed. Possible values are sap.m.PlacementType.Top, sap.m.PlacementType.Bottom. Other values are ignored and the default value will be applied. The default value is sap.m.PlacementType.Bottom.
- *
- * Default value is <code>Bottom</code>
- *
- * @return {sap.m.PlacementType} the value of property <code>pageIndicatorPlacement</code>
- * @public
- * @name sap.m.Carousel#getPageIndicatorPlacement
- * @function
- */
-
-/**
- * Setter for property <code>pageIndicatorPlacement</code>.
- *
- * Default value is <code>Bottom</code> 
- *
- * @param {sap.m.PlacementType} oPageIndicatorPlacement  new value for property <code>pageIndicatorPlacement</code>
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#setPageIndicatorPlacement
- * @function
- */
-
-
-/**
- * Getter for property <code>showBusyIndicator</code>.
- * Show or hide busy indicator in the carousel when loading pages after swipe.
- *
- * Default value is <code>true</code>
- *
- * @return {boolean} the value of property <code>showBusyIndicator</code>
- * @public
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded. Therefore busy indicator is not necessary any longer.
- * @name sap.m.Carousel#getShowBusyIndicator
- * @function
- */
-
-/**
- * Setter for property <code>showBusyIndicator</code>.
- *
- * Default value is <code>true</code> 
- *
- * @param {boolean} bShowBusyIndicator  new value for property <code>showBusyIndicator</code>
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded. Therefore busy indicator is not necessary any longer.
- * @name sap.m.Carousel#setShowBusyIndicator
- * @function
- */
-
-
-/**
- * Getter for property <code>busyIndicatorSize</code>.
- * Size of the busy indicators which can be displayed in the carousel.
- *
- * Default value is <code>6em</code>
- *
- * @return {sap.ui.core.CSSSize} the value of property <code>busyIndicatorSize</code>
- * @public
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded. Therefore busy indicator is not necessary any longer.
- * @name sap.m.Carousel#getBusyIndicatorSize
- * @function
- */
-
-/**
- * Setter for property <code>busyIndicatorSize</code>.
- *
- * Default value is <code>6em</code> 
- *
- * @param {sap.ui.core.CSSSize} sBusyIndicatorSize  new value for property <code>busyIndicatorSize</code>
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded. Therefore busy indicator is not necessary any longer.
- * @name sap.m.Carousel#setBusyIndicatorSize
- * @function
- */
-
-
-/**
- * Getter for aggregation <code>pages</code>.<br/>
- * The content which the carousel displays.
- * 
- * <strong>Note</strong>: this is the default aggregation for Carousel.
- * @return {sap.ui.core.Control[]}
- * @public
- * @name sap.m.Carousel#getPages
- * @function
- */
-
-
-/**
- * Inserts a page into the aggregation named <code>pages</code>.
- *
- * @param {sap.ui.core.Control}
- *          oPage the page to insert; if empty, nothing is inserted
- * @param {int}
- *             iIndex the <code>0</code>-based index the page should be inserted at; for 
- *             a negative value of <code>iIndex</code>, the page is inserted at position 0; for a value 
- *             greater than the current size of the aggregation, the page is inserted at 
- *             the last position        
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#insertPage
- * @function
- */
-
-/**
- * Adds some page <code>oPage</code> 
- * to the aggregation named <code>pages</code>.
- *
- * @param {sap.ui.core.Control}
- *            oPage the page to add; if empty, nothing is inserted
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#addPage
- * @function
- */
-
-/**
- * Removes an page from the aggregation named <code>pages</code>.
- *
- * @param {int | string | sap.ui.core.Control} vPage the page to remove or its index or id
- * @return {sap.ui.core.Control} the removed page or null
- * @public
- * @name sap.m.Carousel#removePage
- * @function
- */
-
-/**
- * Removes all the controls in the aggregation named <code>pages</code>.<br/>
- * Additionally unregisters them from the hosting UIArea.
- * @return {sap.ui.core.Control[]} an array of the removed elements (might be empty)
- * @public
- * @name sap.m.Carousel#removeAllPages
- * @function
- */
-
-/**
- * Checks for the provided <code>sap.ui.core.Control</code> in the aggregation named <code>pages</code> 
- * and returns its index if found or -1 otherwise.
- *
- * @param {sap.ui.core.Control}
- *            oPage the page whose index is looked for.
- * @return {int} the index of the provided control in the aggregation if found, or -1 otherwise
- * @public
- * @name sap.m.Carousel#indexOfPage
- * @function
- */
-	
-
-/**
- * Destroys all the pages in the aggregation 
- * named <code>pages</code>.
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#destroyPages
- * @function
- */
-
-
-/**
- * Provides getter and setter for the currently displayed page. For the setter, argument may be the control itself, which must be member of the carousel's page list, or the control's id.
- * The getter will return the control id
- *
- * @return {string} Id of the element which is the current target of the <code>activePage</code> association, or null
- * @public
- * @name sap.m.Carousel#getActivePage
- * @function
- */
-
-/**
- * Provides getter and setter for the currently displayed page. For the setter, argument may be the control itself, which must be member of the carousel's page list, or the control's id.
- * The getter will return the control id
- *
- * @param {string | sap.ui.core.Control} vActivePage 
- *    Id of an element which becomes the new target of this <code>activePage</code> association.
- *    Alternatively, an element instance may be given.
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#setActivePage
- * @function
- */
-
-
-	
-/**
- * Carousel requires a new page to be loaded. This event may be used to fill the content of that page
- *
- * @name sap.m.Carousel#loadPage
- * @event
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded
- * @param {sap.ui.base.Event} oControlEvent
- * @param {sap.ui.base.EventProvider} oControlEvent.getSource
- * @param {object} oControlEvent.getParameters
- * @param {string} oControlEvent.getParameters.pageId Id of the page which will be loaded
- * @public
- */
- 
-/**
- * Attach event handler <code>fnFunction</code> to the 'loadPage' event of this <code>sap.m.Carousel</code>.<br/>.
- * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener<code> if specified
- * otherwise to this <code>sap.m.Carousel</code>.<br/> itself. 
- *  
- * Carousel requires a new page to be loaded. This event may be used to fill the content of that page
- *
- * @param {object}
- *            [oData] An application specific payload object, that will be passed to the event handler along with the event object when firing the event.
- * @param {function}
- *            fnFunction The function to call, when the event occurs.  
- * @param {object}
- *            [oListener] Context object to call the event handler with. Defaults to this <code>sap.m.Carousel</code>.<br/> itself.
- *
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded
- * @name sap.m.Carousel#attachLoadPage
- * @function
- */
-
-/**
- * Detach event handler <code>fnFunction</code> from the 'loadPage' event of this <code>sap.m.Carousel</code>.<br/>
- *
- * The passed function and listener object must match the ones used for event registration.
- *
- * @param {function}
- *            fnFunction The function to call, when the event occurs.
- * @param {object}
- *            oListener Context object on which the given function had to be called.
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded
- * @name sap.m.Carousel#detachLoadPage
- * @function
- */
-
-/**
- * Fire event loadPage to attached listeners.
- * 
- * Expects following event parameters:
- * <ul>
- * <li>'pageId' of type <code>string</code> Id of the page which will be loaded</li>
- * </ul>
- *
- * @param {Map} [mArguments] the arguments to pass along with the event.
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @protected
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded
- * @name sap.m.Carousel#fireLoadPage
- * @function
- */
-
-
-/**
- * Carousel does not display a page any longer and unloads it. This event may be used to clean up the content of that page.
- *
- * @name sap.m.Carousel#unloadPage
- * @event
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded
- * @param {sap.ui.base.Event} oControlEvent
- * @param {sap.ui.base.EventProvider} oControlEvent.getSource
- * @param {object} oControlEvent.getParameters
- * @param {string} oControlEvent.getParameters.pageId Id of the page which will be unloaded
- * @public
- */
- 
-/**
- * Attach event handler <code>fnFunction</code> to the 'unloadPage' event of this <code>sap.m.Carousel</code>.<br/>.
- * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener<code> if specified
- * otherwise to this <code>sap.m.Carousel</code>.<br/> itself. 
- *  
- * Carousel does not display a page any longer and unloads it. This event may be used to clean up the content of that page.
- *
- * @param {object}
- *            [oData] An application specific payload object, that will be passed to the event handler along with the event object when firing the event.
- * @param {function}
- *            fnFunction The function to call, when the event occurs.  
- * @param {object}
- *            [oListener] Context object to call the event handler with. Defaults to this <code>sap.m.Carousel</code>.<br/> itself.
- *
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded
- * @name sap.m.Carousel#attachUnloadPage
- * @function
- */
-
-/**
- * Detach event handler <code>fnFunction</code> from the 'unloadPage' event of this <code>sap.m.Carousel</code>.<br/>
- *
- * The passed function and listener object must match the ones used for event registration.
- *
- * @param {function}
- *            fnFunction The function to call, when the event occurs.
- * @param {object}
- *            oListener Context object on which the given function had to be called.
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded
- * @name sap.m.Carousel#detachUnloadPage
- * @function
- */
-
-/**
- * Fire event unloadPage to attached listeners.
- * 
- * Expects following event parameters:
- * <ul>
- * <li>'pageId' of type <code>string</code> Id of the page which will be unloaded</li>
- * </ul>
- *
- * @param {Map} [mArguments] the arguments to pass along with the event.
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @protected
- * @deprecated Since version 1.18.7. 
- * Since 1.18.7 pages are no longer loaded or unloaded
- * @name sap.m.Carousel#fireUnloadPage
- * @function
- */
-
-
-/**
- * This event is fired after a carousel swipe has been completed. It is triggered both by physical swipe events and through API carousel manipulations such as calling 'next', 'previous' or 'setActivePageId' functions.
- *
- * @name sap.m.Carousel#pageChanged
- * @event
- * @param {sap.ui.base.Event} oControlEvent
- * @param {sap.ui.base.EventProvider} oControlEvent.getSource
- * @param {object} oControlEvent.getParameters
- * @param {string} oControlEvent.getParameters.oldActivePageId Id of the page which was active before the page change.
- * @param {string} oControlEvent.getParameters.newActivePageId Id of the page which is active after the page change.
- * @public
- */
- 
-/**
- * Attach event handler <code>fnFunction</code> to the 'pageChanged' event of this <code>sap.m.Carousel</code>.<br/>.
- * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener<code> if specified
- * otherwise to this <code>sap.m.Carousel</code>.<br/> itself. 
- *  
- * This event is fired after a carousel swipe has been completed. It is triggered both by physical swipe events and through API carousel manipulations such as calling 'next', 'previous' or 'setActivePageId' functions.
- *
- * @param {object}
- *            [oData] An application specific payload object, that will be passed to the event handler along with the event object when firing the event.
- * @param {function}
- *            fnFunction The function to call, when the event occurs.  
- * @param {object}
- *            [oListener] Context object to call the event handler with. Defaults to this <code>sap.m.Carousel</code>.<br/> itself.
- *
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#attachPageChanged
- * @function
- */
-
-/**
- * Detach event handler <code>fnFunction</code> from the 'pageChanged' event of this <code>sap.m.Carousel</code>.<br/>
- *
- * The passed function and listener object must match the ones used for event registration.
- *
- * @param {function}
- *            fnFunction The function to call, when the event occurs.
- * @param {object}
- *            oListener Context object on which the given function had to be called.
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.Carousel#detachPageChanged
- * @function
- */
-
-/**
- * Fire event pageChanged to attached listeners.
- * 
- * Expects following event parameters:
- * <ul>
- * <li>'oldActivePageId' of type <code>string</code> Id of the page which was active before the page change.</li>
- * <li>'newActivePageId' of type <code>string</code> Id of the page which is active after the page change.</li>
- * </ul>
- *
- * @param {Map} [mArguments] the arguments to pass along with the event.
- * @return {sap.m.Carousel} <code>this</code> to allow method chaining
- * @protected
- * @name sap.m.Carousel#firePageChanged
- * @function
- */
-
-
-/**
- * Call this method to display the next page (corresponds to a swipe right). Returns 'this' for method chaining.
- *
- * @name sap.m.Carousel#next
- * @function
- * @type sap.m.Carousel
- * @public
- * @ui5-metamodel This method also will be described in the UI5 (legacy) designtime metamodel
- */
-
-
-/**
- * Call this method to display the previous page (corresponds to a swipe left). Returns 'this' for method chaining.
- *
- * @name sap.m.Carousel#previous
- * @function
- * @type sap.m.Carousel
- * @public
- * @ui5-metamodel This method also will be described in the UI5 (legacy) designtime metamodel
- */
-
-
-// Start of sap\m\Carousel.js
-jQuery.sap.require("sap.ui.thirdparty.mobify-carousel");
-
-
-//Constants convenient class selections
-sap.m.Carousel._INNER_SELECTOR = ".sapMCrslInner";
-sap.m.Carousel._PAGE_INDICATOR_SELECTOR = ".sapMCrslBulleted";
-sap.m.Carousel._HUD_SELECTOR = ".sapMCrslHud";
-sap.m.Carousel._ITEM_SELECTOR = ".sapMCrslItem";
-sap.m.Carousel._LEFTMOST_CLASS = "sapMCrslLeftmost";
-sap.m.Carousel._RIGHTMOST_CLASS = "sapMCrslRightmost";
-sap.m.Carousel._LATERAL_CLASSES = "sapMCrslLeftmost sapMCrslRightmost";
-sap.m.Carousel._bIE9 = (sap.ui.Device.browser.internet_explorer && sap.ui.Device.browser.version < 10);
-
-/**
- * Initialize member variables which are needed later on.
- * 
- * @private
- */
-sap.m.Carousel.prototype.init = function() {
-	//Scroll container list for clean- up
-	this._aScrollContainers = [];
-	
-	//Initialize '_fnAdjustAfterResize' to be used by window
-	//'resize' event
-	this._fnAdjustAfterResize = jQuery.proxy(function() {
-		var $carouselInner = this.$().find(sap.m.Carousel._INNER_SELECTOR);
-		this._oMobifyCarousel.resize($carouselInner);
-	}, this);
-};
-
-
-
-/**
- * Called when the control is destroyed.
- *
- * @private
- */
-sap.m.Carousel.prototype.exit = function() {
-	if(this._oMobifyCarousel) {
-		this._oMobifyCarousel.destroy();
-		delete this._oMobifyCarousel;
-	}
-	
-	if(this._oArrowLeft) {
-		this._oArrowLeft.destroy();
-		delete this._oArrowLeft;
-	}
-	if(this._oArrowRight) {
-		this._oArrowRight.destroy();
-		delete this._oArrowRight;
-	}
-	
-	if (this._sResizeListenerId) {
-		sap.ui.core.ResizeHandler.deregister(this._sResizeListenerId);
-		this._sResizeListenerId = null;
-	}
-	this.$().off('afterSlide');
-	
-	this._cleanUpScrollContainer();
-	this._fnAdjustAfterResize = null;
-	this._aScrollContainers = null;
-	if(!sap.m.Carousel._bIE9 && this._$InnerDiv) {
-		jQuery(window).off("resize", this._fnAdjustAfterResize);
-	}
-	this._$InnerDiv = null;
-};
-
-/**
- * Housekeeping for scroll containers: Removes content for each container,
- * destroys the contianer and clears the local container list.
- * 
- * @private
- */
-sap.m.Carousel.prototype._cleanUpScrollContainer = function() {
-	var oScrollCont;
-	while (this.length > 0) {
-		oScrollCont = this._aScrollContainers.pop();
-		oScrollCont.removeAllContent();
-		if(oScrollCont && typeof oScrollCont.destroy === 'function') {
-			oScrollCont.destroy();
-		}
-	}
-};
-
-/**
- * Delegates 'touchstart' event to mobify carousel
- * 
- * @param oEvent
- */
-sap.m.Carousel.prototype.ontouchstart = function(oEvent) {
-	if(this._oMobifyCarousel) {
-		this._oMobifyCarousel.touchstart(oEvent);
-	}
-};
-
-/**
- * Delegates 'touchmove' event to mobify carousel
- * 
- * @param oEvent
- */
-sap.m.Carousel.prototype.ontouchmove = function(oEvent) {
-	if(this._oMobifyCarousel) {
-		this._oMobifyCarousel.touchmove(oEvent);
-	}
-};
-
-/**
- * Delegates 'touchend' event to mobify carousel
- * 
- * @param oEvent
- */
-sap.m.Carousel.prototype.ontouchend = function(oEvent) {
-	if(this._oMobifyCarousel) {
-		this._oMobifyCarousel.touchend(oEvent);
-	}
-};
-
-
-
-/**
- * Cleans up bindings
- * 
- * @private
- */
-sap.m.Carousel.prototype.onBeforeRendering = function() {
-	//make sure, active page has an initial value
-	var sActivePage = this.getActivePage();
-	if(!sActivePage && this.getPages().length > 0) {
-		//if no active page is specified, set first page.
-		this.setAssociation("activePage", this.getPages()[0].getId(), true);
-	}
-	if (this._sResizeListenerId) {
-		sap.ui.core.ResizeHandler.deregister(this._sResizeListenerId);
-		this._sResizeListenerId = null;
-	}
-	if(!sap.m.Carousel._bIE9 && this._$InnerDiv) {
-		jQuery(window).off("resize", this._fnAdjustAfterResize);
-	}
-	return this;
-};
-
-/**
- * When this method is called for the first time, a swipe-view instance is created which is renders
- * itself into its dedicated spot within the DOM tree. This instance is used throughout the
- * Carousel instance's lifecycle.
- * 
- * @private
- */
-sap.m.Carousel.prototype.onAfterRendering = function() {
-	
-	//Check if carousel has been initialized
-	if(this._oMobifyCarousel) {
-		//Clean up existing mobify carousel
-		this._oMobifyCarousel.destroy();
-	}
-	//Create and initialize new carousel
-	this.$().carousel();
-	this._oMobifyCarousel = this.getDomRef()._carousel;
-	this._oMobifyCarousel.setLoop(this.getLoop());
-	this._oMobifyCarousel.setRTL(sap.ui.getCore().getConfiguration().getRTL());
-	
-	
-	
-	//Go to active page: this may be necessary after adding or
-	//removing pages
-	var sActivePage = this.getActivePage();
-	
-	if(sActivePage) {
-		var iIndex = this._getPageNumber(sActivePage);
-		if(isNaN(iIndex) || iIndex == 0) {
-			if(this.getPages().length > 0) {
-				//First page is always shown as default
-				//Do not fire page changed event, though
-				this.setAssociation("activePage", this.getPages()[0].getId(), true);
-				this._adjustHUDVisibility(1);
+sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/thirdparty/mobify-carousel'],
+	function(jQuery, library, Control, mobifycarousel) {
+	"use strict";
+
+
+
+	/**
+	 * Constructor for a new Carousel.
+	 *
+	 * @param {string} [sId] id for the new control, generated automatically if no id is given
+	 * @param {object} [mSettings] initial settings for the new control
+	 *
+	 * @class
+	 * The Carousel control can be used to navigate through a list of sap.m controls just like flipping through the pages of a book by swiping right or left. An indicator shows the current position within the control list. When displayed in a desktop browser, a left- and right-arrow button is displayed on the carousel's sides, which can be used to navigate through the carousel.
+	 *
+	 * Note: when displa Internet Explorer 9, page changes are not animated.
+	 * @extends sap.ui.core.Control
+	 *
+	 * @author SAP SE
+	 * @version 1.26.7
+	 *
+	 * @constructor
+	 * @public
+	 * @alias sap.m.Carousel
+	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
+	 */
+	var Carousel = Control.extend("sap.m.Carousel", /** @lends sap.m.Carousel.prototype */ { metadata : {
+
+		library : "sap.m",
+		properties : {
+
+			/**
+			 * The height of the carousel. Note that when a percentage value is used, the height of the surrounding container must be defined.
+			 */
+			height : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : '100%'},
+
+			/**
+			 * The width of the carousel. Note that when a percentage value is used, the height of the surrounding container must be defined.
+			 */
+			width : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : '100%'},
+
+			/**
+			 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
+			 */
+			loop : {type : "boolean", group : "Misc", defaultValue : false},
+
+			/**
+			 * Show or hide carousel's page indicator.
+			 */
+			showPageIndicator : {type : "boolean", group : "Appearance", defaultValue : true},
+
+			/**
+			 * Defines where the carousel's page indicator is displayed. Possible values are sap.m.PlacementType.Top, sap.m.PlacementType.Bottom. Other values are ignored and the default value will be applied. The default value is sap.m.PlacementType.Bottom.
+			 */
+			pageIndicatorPlacement : {type : "sap.m.PlacementType", group : "Appearance", defaultValue : sap.m.PlacementType.Bottom},
+
+			/**
+			 * Show or hide busy indicator in the carousel when loading pages after swipe.
+			 * @deprecated Since version 1.18.7.
+			 * Since 1.18.7 pages are no longer loaded or unloaded. Therefore busy indicator is not necessary any longer.
+			 */
+			showBusyIndicator : {type : "boolean", group : "Appearance", defaultValue : true, deprecated: true},
+
+			/**
+			 * Size of the busy indicators which can be displayed in the carousel.
+			 * @deprecated Since version 1.18.7.
+			 * Since 1.18.7 pages are no longer loaded or unloaded. Therefore busy indicator is not necessary any longer.
+			 */
+			busyIndicatorSize : {type : "sap.ui.core.CSSSize", group : "Dimension", defaultValue : '6em', deprecated: true}
+		},
+		defaultAggregation : "pages",
+		aggregations : {
+
+			/**
+			 * The content which the carousel displays.
+			 */
+			pages : {type : "sap.ui.core.Control", multiple : true, singularName : "page"}
+		},
+		associations : {
+
+			/**
+			 * Provides getter and setter for the currently displayed page. For the setter, argument may be the control itself, which must be member of the carousel's page list, or the control's id.
+			 * The getter will return the control id
+			 */
+			activePage : {type : "sap.ui.core.Control", multiple : false}
+		},
+		events : {
+
+			/**
+			 * Carousel requires a new page to be loaded. This event may be used to fill the content of that page
+			 * @deprecated Since version 1.18.7.
+			 * Since 1.18.7 pages are no longer loaded or unloaded
+			 */
+			loadPage : {deprecated: true,
+				parameters : {
+
+					/**
+					 * Id of the page which will be loaded
+					 */
+					pageId : {type : "string"}
+				}
+			},
+
+			/**
+			 * Carousel does not display a page any longer and unloads it. This event may be used to clean up the content of that page.
+			 * @deprecated Since version 1.18.7.
+			 * Since 1.18.7 pages are no longer loaded or unloaded
+			 */
+			unloadPage : {deprecated: true,
+				parameters : {
+
+					/**
+					 * Id of the page which will be unloaded
+					 */
+					pageId : {type : "string"}
+				}
+			},
+
+			/**
+			 * This event is fired after a carousel swipe has been completed. It is triggered both by physical swipe events and through API carousel manipulations such as calling 'next', 'previous' or 'setActivePageId' functions.
+			 */
+			pageChanged : {
+				parameters : {
+
+					/**
+					 * Id of the page which was active before the page change.
+					 */
+					oldActivePageId : {type : "string"},
+
+					/**
+					 * Id of the page which is active after the page change.
+					 */
+					newActivePageId : {type : "string"}
+				}
 			}
-		} else {
-			this._oMobifyCarousel.changeAnimation('sapMCrslNoTransition');
-			//mobify carousel is 1-based
-			this._oMobifyCarousel.move(iIndex + 1);
-			this._changePage(iIndex + 1);
 		}
-	}
-	
-	
-	
-	//attach delegate for firing 'PageChanged' events to mobify carousel's
-	//'afterSlide'
-	this.$().on('afterSlide', jQuery.proxy(function(e, iPreviousSlide, iNextSlide) {
-		//the event might bubble up from another carousel inside of this one.
-		//in this case we ignore the event
-		if(e.target !== this.getDomRef()) {
+	}});
+
+
+	//Constants convenient class selections
+	Carousel._INNER_SELECTOR = ".sapMCrslInner";
+	Carousel._PAGE_INDICATOR_SELECTOR = ".sapMCrslBulleted";
+	Carousel._HUD_SELECTOR = ".sapMCrslHud";
+	Carousel._ITEM_SELECTOR = ".sapMCrslItem";
+	Carousel._LEFTMOST_CLASS = "sapMCrslLeftmost";
+	Carousel._RIGHTMOST_CLASS = "sapMCrslRightmost";
+	Carousel._LATERAL_CLASSES = "sapMCrslLeftmost sapMCrslRightmost";
+	Carousel._bIE9 = (sap.ui.Device.browser.internet_explorer && sap.ui.Device.browser.version < 10);
+
+	/**
+	 * Initialize member variables which are needed later on.
+	 *
+	 * @private
+	 */
+	Carousel.prototype.init = function() {
+		//Scroll container list for clean- up
+		this._aScrollContainers = [];
+
+		//Initialize '_fnAdjustAfterResize' to be used by window
+		//'resize' event
+		this._fnAdjustAfterResize = jQuery.proxy(function() {
+			var $carouselInner = this.$().find(Carousel._INNER_SELECTOR);
+			this._oMobifyCarousel.resize($carouselInner);
+		}, this);
+
+		this.data("sap-ui-fastnavgroup", "true", true); // Define group for F6 handling
+	};
+
+
+
+	/**
+	 * Called when the control is destroyed.
+	 *
+	 * @private
+	 */
+	Carousel.prototype.exit = function() {
+		if (this._oMobifyCarousel) {
+			this._oMobifyCarousel.destroy();
+			delete this._oMobifyCarousel;
+		}
+
+		if (this._oArrowLeft) {
+			this._oArrowLeft.destroy();
+			delete this._oArrowLeft;
+		}
+		if (this._oArrowRight) {
+			this._oArrowRight.destroy();
+			delete this._oArrowRight;
+		}
+
+		if (this._sResizeListenerId) {
+			sap.ui.core.ResizeHandler.deregister(this._sResizeListenerId);
+			this._sResizeListenerId = null;
+		}
+		this.$().off('afterSlide');
+
+		this._cleanUpScrollContainer();
+		this._fnAdjustAfterResize = null;
+		this._aScrollContainers = null;
+		if (!Carousel._bIE9 && this._$InnerDiv) {
+			jQuery(window).off("resize", this._fnAdjustAfterResize);
+		}
+		this._$InnerDiv = null;
+	};
+
+	/**
+	 * Housekeeping for scroll containers: Removes content for each container,
+	 * destroys the contianer and clears the local container list.
+	 *
+	 * @private
+	 */
+	Carousel.prototype._cleanUpScrollContainer = function() {
+		var oScrollCont;
+		while (this.length > 0) {
+			oScrollCont = this._aScrollContainers.pop();
+			oScrollCont.removeAllContent();
+			if (oScrollCont && typeof oScrollCont.destroy === 'function') {
+				oScrollCont.destroy();
+			}
+		}
+	};
+
+	/**
+	 * Delegates 'touchstart' event to mobify carousel
+	 *
+	 * @param oEvent
+	 */
+	Carousel.prototype.ontouchstart = function(oEvent) {
+		if (this._oMobifyCarousel) {
+			this._oMobifyCarousel.touchstart(oEvent);
+		}
+	};
+
+	/**
+	 * Delegates 'touchmove' event to mobify carousel
+	 *
+	 * @param oEvent
+	 */
+	Carousel.prototype.ontouchmove = function(oEvent) {
+		if (this._oMobifyCarousel) {
+			this._oMobifyCarousel.touchmove(oEvent);
+		}
+	};
+
+	/**
+	 * Delegates 'touchend' event to mobify carousel
+	 *
+	 * @param oEvent
+	 */
+	Carousel.prototype.ontouchend = function(oEvent) {
+		if (this._oMobifyCarousel) {
+			this._oMobifyCarousel.touchend(oEvent);
+		}
+	};
+
+
+
+	/**
+	 * Cleans up bindings
+	 *
+	 * @private
+	 */
+	Carousel.prototype.onBeforeRendering = function() {
+		//make sure, active page has an initial value
+		var sActivePage = this.getActivePage();
+		if (!sActivePage && this.getPages().length > 0) {
+			//if no active page is specified, set first page.
+			this.setAssociation("activePage", this.getPages()[0].getId(), true);
+		}
+		if (this._sResizeListenerId) {
+			sap.ui.core.ResizeHandler.deregister(this._sResizeListenerId);
+			this._sResizeListenerId = null;
+		}
+		if (!Carousel._bIE9 && this._$InnerDiv) {
+			jQuery(window).off("resize", this._fnAdjustAfterResize);
+		}
+		return this;
+	};
+
+	/**
+	 * When this method is called for the first time, a swipe-view instance is created which is renders
+	 * itself into its dedicated spot within the DOM tree. This instance is used throughout the
+	 * Carousel instance's lifecycle.
+	 *
+	 * @private
+	 */
+	Carousel.prototype.onAfterRendering = function() {
+
+		//Check if carousel has been initialized
+		if (this._oMobifyCarousel) {
+			//Clean up existing mobify carousel
+			this._oMobifyCarousel.destroy();
+		}
+		//Create and initialize new carousel
+		this.$().carousel();
+		this._oMobifyCarousel = this.getDomRef()._carousel;
+		this._oMobifyCarousel.setLoop(this.getLoop());
+		this._oMobifyCarousel.setRTL(sap.ui.getCore().getConfiguration().getRTL());
+
+
+
+		//Go to active page: this may be necessary after adding or
+		//removing pages
+		var sActivePage = this.getActivePage();
+
+		if (sActivePage) {
+			var iIndex = this._getPageNumber(sActivePage);
+			if (isNaN(iIndex) || iIndex == 0) {
+				if (this.getPages().length > 0) {
+					//First page is always shown as default
+					//Do not fire page changed event, though
+					this.setAssociation("activePage", this.getPages()[0].getId(), true);
+					this._adjustHUDVisibility(1);
+				}
+			} else {
+				this._oMobifyCarousel.changeAnimation('sapMCrslNoTransition');
+				//mobify carousel is 1-based
+				this._oMobifyCarousel.move(iIndex + 1);
+				this._changePage(iIndex + 1);
+			}
+		}
+
+
+
+		//attach delegate for firing 'PageChanged' events to mobify carousel's
+		//'afterSlide'
+		this.$().on('afterSlide', jQuery.proxy(function(e, iPreviousSlide, iNextSlide) {
+			//the event might bubble up from another carousel inside of this one.
+			//in this case we ignore the event
+			if (e.target !== this.getDomRef()) {
+				return;
+			}
+
+			if (iNextSlide > 0) {
+				this._changePage(iNextSlide);
+			}
+		}, this));
+		this._$InnerDiv = this.$().find(Carousel._INNER_SELECTOR)[0];
+		if (Carousel._bIE9) {
+			this._sResizeListenerId = sap.ui.core.ResizeHandler.register(this._$InnerDiv, this._fnAdjustAfterResize);
+		} else {
+			jQuery(window).on("resize", this._fnAdjustAfterResize);
+		}
+	};
+
+	/**
+	 * Private method which adjusts the Hud visibility and fires a page change
+	 * event when the active page changes
+	 *
+	 * @param iNewPageIndex index of new page in 'pages' aggregation.
+	 * @private
+	 */
+	Carousel.prototype._changePage = function(iNewPageIndex) {
+		this._adjustHUDVisibility(iNewPageIndex);
+		var sOldActivePageId = this.getActivePage();
+		var sNewActivePageId = this.getPages()[iNewPageIndex - 1].getId();
+		this.setAssociation("activePage", sNewActivePageId, true);
+
+		jQuery.sap.log.debug("sap.m.Carousel: firing pageChanged event: old page: " + sOldActivePageId
+				+ ", new page: " + sNewActivePageId);
+
+		this.firePageChanged( { oldActivePageId: sOldActivePageId,
+			newActivePageId: sNewActivePageId});
+	};
+
+
+
+	/**
+	 * Sets HUD control's visibility after page has changed
+	 *
+	 * @param iNextSlide index of the next active page
+	 * @private
+	 *
+	 */
+	Carousel.prototype._adjustHUDVisibility = function(iNextSlide) {
+		if (sap.ui.Device.system.desktop && !this.getLoop() && this.getPages().length > 1) {
+			//update HUD arrow visibility for left- and
+			//rightmost pages
+			var $HUDContainer = this.$().find(Carousel._HUD_SELECTOR);
+			//clear marker classes first
+			$HUDContainer.removeClass(Carousel._LATERAL_CLASSES);
+
+			if (iNextSlide === 1) {
+				$HUDContainer.addClass(Carousel._LEFTMOST_CLASS);
+			} else if (iNextSlide === this.getPages().length) {
+				$HUDContainer.addClass(Carousel._RIGHTMOST_CLASS);
+			}
+		}
+	};
+
+	/*
+	 * API method to set carousel's active page during runtime.
+	 *
+	 * @param vPage Id of the page or page which shall become active
+	 * @override
+	 *
+	 */
+	Carousel.prototype.setActivePage = function (vPage) {
+		var sPageId = null;
+		if (typeof (vPage) == 'string') {
+			sPageId = vPage;
+		} else if (vPage instanceof Control) {
+			sPageId = vPage.getId();
+		}
+
+		if (sPageId) {
+			if (sPageId === this.getActivePage()) {
+				//page has not changed, nothing to do, return
+				return this;
+			}
+			var iPageNr = this._getPageNumber(sPageId);
+
+			if (!isNaN(iPageNr)) {
+				if (this._oMobifyCarousel) {
+					//mobify carousel's move function is '1' based
+					this._oMobifyCarousel.move(iPageNr + 1);
+				}
+				// if oMobifyCarousel is not present yet, move takes place
+				// 'onAfterRendering', when oMobifyCarousel is created
+			}
+		}
+		this.setAssociation("activePage", sPageId, true);
+
+		return this;
+	};
+
+
+
+	/*
+	 * API method to set the carousel's height
+	 *
+	 * @param {sap.ui.core.CSSSize} oHeight the new height as CSSSize
+	 * @public
+	 * @override
+	 */
+	Carousel.prototype.setHeight = function(oHeight) {
+		//do suppress rerendering
+		this.setProperty("height", oHeight, true);
+		this.$().css("height", oHeight);
+		return this;
+	};
+
+	/*
+	 * API method to set the carousel's width
+	 *
+	 * @param {sap.ui.core.CSSSize} oWidth the new width as CSSSize
+	 * @public
+	 * @override
+	 */
+	Carousel.prototype.setWidth = function(oWidth) {
+		//do suppress rerendering
+		this.setProperty("width", oWidth, true);
+		this.$().css("width", oWidth);
+		return this;
+	};
+
+	/*
+	 * API method to place the page indicator.
+	 *
+	 * @param {sap.m.PlacementType} sPlacement either sap.m.PlacementType.Top or sap.m.PlacementType.Bottom
+	 * @public
+	 * @override
+	 */
+	Carousel.prototype.setPageIndicatorPlacement = function(sPlacement) {
+		if (sap.m.PlacementType.Top != sPlacement &&
+				sap.m.PlacementType.Bottom != sPlacement) {
+			jQuery.sap.assert(false, "sap.m.Carousel.prototype.setPageIndicatorPlacement: invalid value '" +
+					sPlacement + "'. Valid values: sap.m.PlacementType.Top, sap.m.PlacementType.Bottom." +
+							"\nUsing default value sap.m.PlacementType.Bottom");
+			sPlacement = sap.m.PlacementType.Bottom;
+		}
+
+		//do suppress rerendering
+		this.setProperty("pageIndicatorPlacement", sPlacement, true);
+
+		var $PageIndicator = this.$().find(Carousel._PAGE_INDICATOR_SELECTOR);
+
+		//set placement regardless of whether indicator is visible: it may become
+		//visible later on and then it should be at the right place
+		if (sap.m.PlacementType.Top === sPlacement) {
+			this.$().prepend($PageIndicator);
+			$PageIndicator.removeClass('sapMCrslBottomOffset');
+			this.$().find(Carousel._ITEM_SELECTOR).removeClass('sapMCrslBottomOffset');
+		} else {
+			this.$().append($PageIndicator);
+			$PageIndicator.addClass('sapMCrslBottomOffset');
+			this.$().find(Carousel._ITEM_SELECTOR).addClass('sapMCrslBottomOffset');
+		}
+		return this;
+	};
+
+
+	/*
+	 * API method to set whether the carousel should display the page indicator
+	 *
+	 * @param {boolean} bShowPageIndicator the new show property
+	 * @public
+	 * @override
+	 */
+	Carousel.prototype.setShowPageIndicator = function(bShowPageIndicator) {
+
+		var $PageInd = this.$().find(Carousel._PAGE_INDICATOR_SELECTOR);
+
+		bShowPageIndicator ? $PageInd.show() : $PageInd.hide();
+
+		//do suppress rerendering
+		this.setProperty("showPageIndicator", bShowPageIndicator, true);
+		return this;
+	};
+
+
+
+	/*
+	 * API method to set whether the carousel should loop, i.e
+	 * show the first page after the last page is reached and vice
+	 * versa.
+	 *
+	 * @param {boolean} bLoop the new loop property
+	 * @public
+	 * @override
+	 */
+	Carousel.prototype.setLoop = function(bLoop) {
+		//do suppress rerendering
+		this.setProperty("loop", bLoop, true);
+		if (this._oMobifyCarousel) {
+			this._oMobifyCarousel.setLoop(bLoop);
+		}
+		return this;
+	};
+
+	/**
+	 * Gets the icon of the requested arrow (left/right).
+	 * @private
+	 * @param sName left or right
+	 * @returns icon of the requested arrow
+	 */
+	Carousel.prototype._getNavigationArrow = function(sName) {
+		jQuery.sap.require("sap.ui.core.IconPool");
+		var mProperties = {
+			src : "sap-icon://navigation-" + sName + "-arrow"
+		};
+
+		if (sName === "left") {
+			if (!this._oArrowLeft) {
+				this._oArrowLeft = sap.m.ImageHelper.getImageControl(this.getId() + "-arrowScrollLeft", this._oArrowLeft, this, mProperties);
+			}
+			return this._oArrowLeft;
+		} else if (sName === "right") {
+			if (!this._oArrowRight) {
+				this._oArrowRight = sap.m.ImageHelper.getImageControl(this.getId() + "-arrowScrollRight", this._oArrowRight, this, mProperties);
+			}
+			return this._oArrowRight;
+		}
+	};
+
+
+	/**
+	 * Private method that places a given page control into
+	 * a scroll container which does not scroll. That container does
+	 * not scroll itself. This is necessary to achieve the 100% height
+	 * effect with an offset for the page indicator.
+	 *
+	 * @param oPage the page to check
+	 * @private
+	 */
+	Carousel.prototype._createScrollContainer = function(oPage) {
+
+		var cellClasses = oPage instanceof sap.m.Image ? "sapMCrslItemTableCell sapMCrslImg" : "sapMCrslItemTableCell",
+			oContent = new sap.ui.core.HTML({
+			content :	"<div class='sapMCrslItemTable'>" +
+							"<div class='" + cellClasses + "'></div>" +
+						"</div>",
+			afterRendering : function(e) {
+				var rm = sap.ui.getCore().createRenderManager();
+				rm.render(oPage, this.getDomRef().firstChild);
+				rm.destroy();
+			}
+		});
+
+		var oScrollContainer = new sap.m.ScrollContainer({
+			horizontal: false,
+			vertical: false,
+			content:[oContent],
+			width:'100%',
+			height:'100%'
+		});
+		oScrollContainer.setParent(this, null, true);
+		this._aScrollContainers.push(oScrollContainer);
+		return oScrollContainer;
+	};
+
+
+
+
+	/**
+	 * Call this method to display the previous page (corresponds to a swipe left). Returns 'this' for method chaining.
+	 *
+	 * @type sap.m.Carousel
+	 * @public
+	 * @ui5-metamodel This method also will be described in the UI5 (legacy) designtime metamodel
+	 */
+	Carousel.prototype.previous = function () {
+		if (this._oMobifyCarousel) {
+			this._oMobifyCarousel.prev();
+		} else {
+			jQuery.sap.log.warning("Unable to execute sap.m.Carousel.previous: carousel must be rendered first.");
+		}
+		return this;
+	};
+
+	/**
+	 * Call this method to display the next page (corresponds to a swipe right). Returns 'this' for method chaining.
+	 *
+	 * @type sap.m.Carousel
+	 * @public
+	 * @ui5-metamodel This method also will be described in the UI5 (legacy) designtime metamodel
+	 */
+	Carousel.prototype.next = function () {
+		if (this._oMobifyCarousel) {
+			this._oMobifyCarousel.next();
+		} else {
+			jQuery.sap.log.warning("Unable to execute sap.m.Carousel.next: carousel must be rendered first.");
+		}
+		return this;
+	};
+
+	/**
+	 * Determines the position of a given page in the carousel's page list
+	 *
+	 * @return the position of a given page in the carousel's page list or 'undefined' if it does not exist in the list.
+	 * @private
+	 */
+	Carousel.prototype._getPageNumber = function(sPageId) {
+		var i, result;
+
+		for (i = 0; i < this.getPages().length; i++) {
+			if (this.getPages()[i].getId() == sPageId) {
+				result = i;
+				break;
+			}
+		}
+		return result;
+	};
+
+	/**
+	 * Handler for 'tab previous' key event.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 *
+	 */
+	Carousel.prototype.onsaptabprevious = function(oEvent) {
+		this._fnOnTabPress(oEvent, false);
+	};
+
+	/**
+	 * Handler for 'tab next' key event.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 *
+	 */
+	Carousel.prototype.onsaptabnext = function(oEvent) {
+		this._fnOnTabPress(oEvent, true);
+	};
+
+	/**
+	 * This method is called when pressing tab or shift+tab. Perform logic depending
+	 * on the current focused element.
+	 *
+	 * @param oEvent - key event
+	 * @param { bDirection } serving as a reference for the Carousel slide direction
+	 * @private
+	 */
+	Carousel.prototype._fnOnTabPress = function(oEvent, bDirection) {
+		var oSourceDomRef = oEvent.target;
+		var $activePage = this.$().find('.sapMCrslItem.sapMCrslActive');
+
+		// Check if the focus is received form the Carousel
+		if (oSourceDomRef === this.$()[0]) {
+			this._fnOnCarouselEnter(oEvent, bDirection);
 			return;
 		}
 
-		if(iNextSlide > 0){
-			this._changePage(iNextSlide);
-		}
-	}, this));
-	this._$InnerDiv = this.$().find(sap.m.Carousel._INNER_SELECTOR)[0];
-	if(sap.m.Carousel._bIE9) {
-		this._sResizeListenerId = sap.ui.core.ResizeHandler.register(this._$InnerDiv, this._fnAdjustAfterResize);
-	} else {
-		jQuery(window).on("resize", this._fnAdjustAfterResize);
-	}
-};
-
-/**
- * Private method which adjusts the Hud visibility and fires a page change
- * event when the active page changes
- * 
- * @param iNewPageIndex index of new page in 'pages' aggregation.
- * @private
- */
-sap.m.Carousel.prototype._changePage = function(iNewPageIndex) {
-	this._adjustHUDVisibility(iNewPageIndex);
-	var sOldActivePageId = this.getActivePage();
-	var sNewActivePageId = this.getPages()[iNewPageIndex - 1].getId();
-	this.setAssociation("activePage", sNewActivePageId, true);
-
-	jQuery.sap.log.debug("sap.m.Carousel: firing pageChanged event: old page: " + sOldActivePageId 
-			+ ", new page: " + sNewActivePageId);
-
-	this.firePageChanged( { oldActivePageId: sOldActivePageId,
-		newActivePageId: sNewActivePageId});
-};
-
-
-
-/**
- * Sets HUD control's visibility after page has changed
- * 
- * @param iNextSlide index of the next active page
- * @private
- *
- */
-sap.m.Carousel.prototype._adjustHUDVisibility = function(iNextSlide) {
-	if (sap.ui.Device.system.desktop && !this.getLoop() && this.getPages().length > 1) {
-		//update HUD arrow visibility for left- and
-		//rightmost pages
-		var $HUDContainer = this.$().find(sap.m.Carousel._HUD_SELECTOR);
-		//clear marker classes first
-		$HUDContainer.removeClass(sap.m.Carousel._LATERAL_CLASSES);
-		
-		if(iNextSlide === 1) {
-			$HUDContainer.addClass(sap.m.Carousel._LEFTMOST_CLASS);
-		} else if (iNextSlide === this.getPages().length) {
-			$HUDContainer.addClass(sap.m.Carousel._RIGHTMOST_CLASS);
-		}
-	}
-};
-
-
-/**
- * Handler for 'tab previous' key event. Delegates handling to 
- * '_tabKeyPressed' function.
- * 
- * @param oEvent key event
- * @private
- *
- */
-sap.m.Carousel.prototype.onsaptabprevious = function(oEvent) {
-	this._bTabPrevious = true;
-};
-
-/**
- * Handler for 'tab next' key event. Delegates handling to 
- * '_tabKeyPressed' function.
- * 
- * @param oEvent key event
- * @private
- *
- */
-sap.m.Carousel.prototype.onsaptabnext = function(oEvent) {
-	this._bTabNext = true;
-};
-
-
-/**
- * Event handler for the focusin event.
- * If the focused element is the dedicated element (class sapMCrslFirstFE) at the beginning of a page, 
- * the focus is set to the end of the previous page. If the dedicated element the end of a page 
- * (class sapMCrslLastFE) is focussed, the first element of the next page is focused
- * @param {jQuery.EventObject} oEvent The event object
- * @private
- */
-sap.m.Carousel.prototype.onfocusin = function(oEvent){
-	if (sap.ui.Device.system.desktop) {
-		var oSourceDomRef = oEvent.target,
-			iPageIndex = oSourceDomRef.getAttribute('pageIndex'),
-			oNextFocusDomRef,
-			oNextPage;
-		//Invisible Element focused by tab previous
-		if(oSourceDomRef.className === 'sapMCrslFirstFE' && this._bTabPrevious) {
-			if(iPageIndex > 0) {
-				iPageIndex--;
-			} else if(this.getLoop()) {
-				iPageIndex = this.getPages().length - 1;
+		if (bDirection === true) {
+			// If the event is from the last focusable element
+			// focus the next focusable control after the Carousel
+			if (oSourceDomRef === $activePage.lastFocusableDomRef()) {
+				this._handleGroupNavigation(oEvent, false);
 			}
-			
-			oNextPage = this.getPages()[iPageIndex];
-			oNextFocusDomRef = oNextPage.$().parent().lastFocusableDomRef();
-			
-		} else if(oSourceDomRef.className === 'sapMCrslLastFE' && this._bTabNext) {
-			//Invisible Element focused by tab next
-			if(iPageIndex < this.getPages().length - 1) {
-				iPageIndex++;
-			} else if(this.getLoop()) {
-				iPageIndex = 0;
+		} else {
+			// If the event is from the first focusable element
+			// focus the Carousel
+			if (oSourceDomRef === $activePage.firstFocusableDomRef()) {
+				oEvent.preventDefault();
+				this.$().focus();
 			}
-			
-			oNextPage = this.getPages()[iPageIndex];
-			oNextFocusDomRef = oNextPage.$().parent().firstFocusableDomRef();
 		}
-		
-		if(oNextFocusDomRef && oNextPage) {
-			var fnRequestFocus = function() {
-				oNextFocusDomRef.focus();
-			};
-			this._oMobifyCarousel.changeAnimation('', fnRequestFocus, this);
-			this.setActivePage(oNextPage.getId());
-		}
-		this._bTabPrevious = false;
-		this._bTabNext = false;
-	}
-};
 
+		// keep a reference to the current active carousel page
+		this._iLastActivePage = this._getPageNumber(this.getActivePage());
 
-
-
-
-/**
- * API method to set carousel's active page during runtime.
- * 
- * @param vPage Id of the page or page which shall become active
- * @override
- *
- */
-sap.m.Carousel.prototype.setActivePage = function (vPage) {
-	var sPageId = null,
-		bPageFound = false;
-	if(typeof(vPage) == 'string') {
-		sPageId = vPage;
-	} else if (vPage instanceof sap.ui.core.Control) {
-		sPageId = vPage.getId();
-	}
-	
-	if(sPageId) {
-		if(sPageId === this.getActivePage()) {
-			//page has not changed, nothing to do, return
-			return this;
-		}
-		var iPageNr = this._getPageNumber(sPageId);
-		
-		if(!isNaN(iPageNr)) {
-			if(this._oMobifyCarousel) {
-				//mobify carousel's move function is '1' based
-				this._oMobifyCarousel.move(iPageNr + 1);
-			}
-			// if oMobifyCarousel is not present yet, move takes place
-			// 'onAfterRendering', when oMobifyCarousel is created
-		} 
-	} 
-	this.setAssociation("activePage", sPageId, true);
-	
-	return this;
-};
-
-
-
-/**
- * API method to set the carousel's height
- *
- * @param {sap.ui.core.CSSSize} oHeight the new height as CSSSize
- * @public
- * @override
- */
-sap.m.Carousel.prototype.setHeight = function(oHeight) {
-	//do suppress rerendering
-	this.setProperty("height", oHeight, true);
-	this.$().css("height", oHeight);
-	return this;
-};
-
-/**
- * API method to set the carousel's width
- *
- * @param {sap.ui.core.CSSSize} oWidth the new width as CSSSize
- * @public
- * @override
- */
-sap.m.Carousel.prototype.setWidth = function(oWidth) {
-	//do suppress rerendering
-	this.setProperty("width", oWidth, true);
-	this.$().css("width", oWidth);
-	return this;
-};
-
-/**
- * API method to place the page indicator. 
- *
- * @param {sap.m.PlacementType} sPlacement either sap.m.PlacementType.Top or sap.m.PlacementType.Bottom
- * @public
- * @override
- */
-sap.m.Carousel.prototype.setPageIndicatorPlacement = function(sPlacement) {
-	if(sap.m.PlacementType.Top != sPlacement &&
-			sap.m.PlacementType.Bottom != sPlacement) {
-		jQuery.sap.assert(false, "sap.m.Carousel.prototype.setPageIndicatorPlacement: invalid value '" + 
-				sPlacement + "'. Valid values: sap.m.PlacementType.Top, sap.m.PlacementType.Bottom." +
-						"\nUsing default value sap.m.PlacementType.Bottom");
-		sPlacement = sap.m.PlacementType.Bottom;
-	}
-	
-	//do suppress rerendering
-	this.setProperty("pageIndicatorPlacement", sPlacement, true);
-	
-	var $PageIndicator = this.$().find(sap.m.Carousel._PAGE_INDICATOR_SELECTOR); 
-	
-	//set placement regardless of whether indicator is visible: it may become
-	//visible later on and then it should be at the right place
-	if(sap.m.PlacementType.Top === sPlacement) {
-		this.$().prepend($PageIndicator);
-		$PageIndicator.removeClass('sapMCrslBottomOffset');
-		this.$().find(sap.m.Carousel._ITEM_SELECTOR).removeClass('sapMCrslBottomOffset');
-	} else {
-		this.$().append($PageIndicator);
-		$PageIndicator.addClass('sapMCrslBottomOffset');
-		this.$().find(sap.m.Carousel._ITEM_SELECTOR).addClass('sapMCrslBottomOffset');
-	}
-	return this;
-};
-
-
-/**
- * API method to set whether the carousel should display the page indicator
- *
- * @param {boolean} bShowPageIndicator the new show property
- * @public
- * @override
- */
-sap.m.Carousel.prototype.setShowPageIndicator = function(bShowPageIndicator) {
-	
-	var $PageInd = this.$().find(sap.m.Carousel._PAGE_INDICATOR_SELECTOR);
-	
-	bShowPageIndicator ? $PageInd.show() : $PageInd.hide();
-	
-	//do suppress rerendering
-	this.setProperty("showPageIndicator", bShowPageIndicator, true);
-	return this;
-};
-
-
-
-/**
- * API method to set whether the carousel should loop, i.e
- * show the first page after the last page is reached and vice 
- * versa.
- *
- * @param {boolean} bLoop the new loop property
- * @public
- * @override
- */
-sap.m.Carousel.prototype.setLoop = function(bLoop) {
-	//do suppress rerendering
-	this.setProperty("loop", bLoop, true);
-	if(this._oMobifyCarousel) {
-		this._oMobifyCarousel.setLoop(bLoop);
-	}
-	return this;
-};
-
-/**
- * Gets the icon of the requested arrow (left/right).
- * @private
- * @param sName left or right
- * @returns icon of the requested arrow
- */
-sap.m.Carousel.prototype._getNavigationArrow = function(sName) {
-	jQuery.sap.require("sap.ui.core.IconPool");
-	var mProperties = {
-		src : "sap-icon://navigation-" + sName + "-arrow"
+		// keep a reference to the current focused element
+		this._oLastFocusedElement = oSourceDomRef;
 	};
-	
-	if (sName === "left") {
-		if (!this._oArrowLeft) {
-			this._oArrowLeft = sap.m.ImageHelper.getImageControl(this.getId() + "-arrowScrollLeft", this._oArrowLeft, this, mProperties);
+
+	/**
+	 * Checks which time the user is entering the Carousel
+	 *
+	 * @param {jQuery.EventObject}
+	 * @param { bDirection } serving as a reference for the carousel slide direction
+	 * @private
+	 */
+	Carousel.prototype._fnOnCarouselEnter = function(oEvent, bDirection) {
+		var $activePage = this.$().find('.sapMCrslItem.sapMCrslActive');
+
+		// First time entering
+		if (this._bIsTabUsed === undefined) {
+			this._bIsTabUsed = true;
+			oEvent.preventDefault();
+
+			if ($activePage.firstFocusableDomRef() !== null) {
+				$activePage.firstFocusableDomRef().focus();
+			} else {
+				// If there is no focusable element if the page,
+				// focus the next focusable control after the Carousel
+				this._handleGroupNavigation(oEvent, false);
+			}
+
+			return;
 		}
-		return this._oArrowLeft;
-	} else if (sName === "right") {
-		if (!this._oArrowRight) {
-			this._oArrowRight = sap.m.ImageHelper.getImageControl(this.getId() + "-arrowScrollRight", this._oArrowRight, this, mProperties);
+
+		// Entering any consecutive time
+		if (this._iLastActivePage === this._getPageNumber(this.getActivePage()) && this._oLastFocusedElement) {
+			// Checks if the last focused element is child of the current active page
+			if ($activePage.has(this._oLastFocusedElement).length && bDirection === true) {
+				oEvent.preventDefault();
+				this._oLastFocusedElement.focus();
+			}
 		}
-		return this._oArrowRight;
-	}
-};
 
+	};
 
-/**
- * Private method that places a given page control into 
- * a scroll container which does not scroll. That container does
- * not scroll itself. This is necessary to achieve the 100% height 
- * effect with an offset for the page indicator. 
- *
- * @param oPage the page to check
- * @private
- */
-sap.m.Carousel.prototype._createScrollContainer = function(oPage) {
-	
-	var cellClasses = oPage instanceof sap.m.Image ? "sapMCrslItemTableCell sapMCrslImg" : "sapMCrslItemTableCell",
-		oContent = new sap.ui.core.HTML({
-		content :	"<div class='sapMCrslItemTable'>" +
-						"<div class='" + cellClasses + "'></div>" +
-					"</div>",
-		afterRendering : function(e) {
-			var rm = sap.ui.getCore().createRenderManager();
-			rm.render(oPage, this.getDomRef().firstChild);
-			rm.destroy();
+	/**
+	 * Handler for F6 and Shift + F6 group navigation
+	 *
+	 * @param oEvent {jQuery.EventObject}
+	 * @param bShiftKey serving as a reference if shift is used
+	 * @private
+	 */
+	Carousel.prototype._handleGroupNavigation = function(oEvent, bShiftKey) {
+		var oEventF6 = jQuery.Event("keydown");
+
+		// Prevent the event and focus Carousel control
+		oEvent.preventDefault();
+		this.$().focus();
+
+		oEventF6.target = oEvent.target;
+		oEventF6.keyCode = jQuery.sap.KeyCodes.F6;
+		oEventF6.shiftKey = bShiftKey;
+
+		jQuery.sap.handleF6GroupNavigation(oEventF6);
+	};
+
+	/**
+	 * Change Carousel Active Page from given page index.
+	 *
+	 * @param oEvent - The event object
+	 * @param nIndex - The index of the page that need to be shown.
+	 *	If the index is 0 the next shown page will be the first in the Carousel
+	 * @private
+	 */
+	Carousel.prototype._fnSkipToIndex = function(oEvent, nIndex) {
+		oEvent.preventDefault();
+		var nNewIndex = nIndex;
+
+		// Exit the function if the event is not from the Carousel
+		if (oEvent.target !== this.$()[0]) {
+			return;
 		}
-	});
-	
-	var oScrollContainer = new sap.m.ScrollContainer({
-		horizontal: false,
-		vertical: false,
-		content:[oContent],
-		width:'100%',
-		height:'100%',
-	}); 
-	oScrollContainer.setParent(this, null, true);
-	this._aScrollContainers.push(oScrollContainer); 
-	return oScrollContainer; 
-};
 
-
-
-
-/**
- * API method to show the next page in the page list.
- * @public
- */
-sap.m.Carousel.prototype.previous = function () {
-	if(this._oMobifyCarousel) {
-		this._oMobifyCarousel.prev();
-	} else {
-		jQuery.sap.log.warning("Unable to execute sap.m.Carousel.previous: carousel must be rendered first.");
-	}
-	return this;
-}; 
-
-/**
- * API method to show the previous page in the page list.
- * @public
- */
-sap.m.Carousel.prototype.next = function () {
-	if(this._oMobifyCarousel) {
-		this._oMobifyCarousel.next();
-	} else {
-		jQuery.sap.log.warning("Unable to execute sap.m.Carousel.next: carousel must be rendered first.");
-	}
-	return this;
-};
-
-
-
-/**
- * Determines the position of a given page in the carousel's page list
- * 
- * @return the position of a given page in the carousel's page list or 'undefined' if it does not exist in the list.
- * @private
- */
-sap.m.Carousel.prototype._getPageNumber = function(sPageId) {
-	var i, result;
-	
-	for(i=0; i<this.getPages().length; i++) {
-		if(this.getPages()[i].getId() == sPageId) {
-			result = i;
-			break;
+		// Calculate the index of the next page that will be shown
+		if (nIndex !== 0) {
+			nNewIndex = this._getPageNumber(this.getActivePage()) + 1 + nIndex;
 		}
-	}
-	return result;
-};
 
-//DEPRECATED METHODS
+		// Set the index in the interval between 1 and the total page count in the Carousel
+		nNewIndex = Math.max(nNewIndex, 1);
+		nNewIndex = Math.min(nNewIndex, this.getPages().length);
+
+		this._oMobifyCarousel.move(nNewIndex);
+	};
+
+	/**
+	 * Handler for focus event
+	 *
+	 * @param oEvent - The event object
+	 * @private
+	 *
+	 */
+	Carousel.prototype.onfocusin = function(oEvent) {
+		var $activePage = this.$().find('.sapMCrslItem.sapMCrslActive');
+
+		// Create the property if it is not defined before
+		// The property is used as a reference to the first active page when the focus is received
+		if (this.nFirstActivePageIndex === undefined) {
+			this.nFirstActivePageIndex = this._getPageNumber(this.getActivePage());
+		}
+
+		// Check if the event target is the last focusable element in the Carousel
+		// If the current active page is different from the parent page of the last focusable element in the Carousel,
+		// the event is from the keyboard and should be overwritten
+		if (oEvent.target === this.$().lastFocusableDomRef() && oEvent.target.parentNode !== $activePage[0]){
+			oEvent.preventDefault();
+
+			if (this._iLastActivePage === this._getPageNumber(this.getActivePage()) && this._oLastFocusedElement) {
+				this._oLastFocusedElement.focus();
+				return;
+			}
+
+			if ($activePage.lastFocusableDomRef() !== null){
+				$activePage.lastFocusableDomRef().focus();
+			} else {
+				this.$().focus();
+			}
+		}
+
+	};
+
+	/**
+	 * Handler for F6
+	 *
+	 * @param oEvent - The event object
+	 */
+	Carousel.prototype.onsapskipforward = function(oEvent) {
+		oEvent.preventDefault();
+
+		// keep a reference to the current active carousel page
+		this._iLastActivePage = this._getPageNumber(this.getActivePage());
+
+		// keep a reference to the current focused element
+		this._oLastFocusedElement = oEvent.target;
+
+		this._handleGroupNavigation(oEvent, false);
+	};
+
+	/**
+	 * Handler for Shift + F6
+	 *
+	 * @param oEvent - The event object
+	 */
+	Carousel.prototype.onsapskipback = function(oEvent) {
+		oEvent.preventDefault();
+
+		// keep a reference to the current active carousel page
+		this._iLastActivePage = this._getPageNumber(this.getActivePage());
+
+		// keep a reference to the current focused element
+		this._oLastFocusedElement = oEvent.target;
+
+		this._handleGroupNavigation(oEvent, true);
+	};
+
+	/**
+	 * Handler for key down
+	 *
+	 * @param oEvent - The event object
+	 */
+	Carousel.prototype.onkeydown = function(oEvent) {
+		var $activePage;
+
+		// Filter F7 key down
+		if (oEvent.keyCode ===  jQuery.sap.KeyCodes.F7){
+			// Needed for IE
+			oEvent.preventDefault();
+
+			$activePage = this.$().find('.sapMCrslItem.sapMCrslActive');
+
+			// Focus the Carousel if the F7 is from item level
+			if (this._oLastFocusedElementFromF7 === undefined){
+				this.$().focus();
+				this._oLastFocusedElementFromF7 = oEvent.target;
+				return;
+			}
+
+			// Check if F7 is used on the current page
+			if ($activePage.has(this._oLastFocusedElementFromF7).length > 0){
+				// Focus the element from which F7 was accrued
+				this._oLastFocusedElementFromF7.focus();
+				this._oLastFocusedElementFromF7 = undefined;
+			} else {
+				// Focus the Carousel
+				this.$().focus();
+				this._oLastFocusedElementFromF7 = oEvent.target;
+			}
+		}
+
+		// Filter minus key down
+		if (oEvent.keyCode ===  jQuery.sap.KeyCodes.MINUS || oEvent.keyCode === jQuery.sap.KeyCodes.NUMPAD_MINUS){
+			this._fnSkipToIndex(oEvent, -1);
+		}
+
+		// Filter plus key down
+		if (oEvent.keyCode ===  jQuery.sap.KeyCodes.PLUS || oEvent.keyCode === jQuery.sap.KeyCodes.NUMPAD_PLUS){
+			this._fnSkipToIndex(oEvent, 1);
+		}
+	};
+
+	/**
+	 * Set carousel back to the first position it had.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsapescape = function(oEvent) {
+		if (this.nFirstActivePageIndex) {
+			this._oMobifyCarousel.move(this.nFirstActivePageIndex + 1);
+			this._changePage(this.nFirstActivePageIndex + 1);
+		}
+	};
+
+	/**
+	 * Move focus to the next item. If focus is on the last item, do nothing.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsapright = function(oEvent) {
+		this._fnSkipToIndex(oEvent, 1);
+	};
+
+	/**
+	 * Move focus to the next item. If focus is on the last item, do nothing.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsapup = function(oEvent) {
+		this._fnSkipToIndex(oEvent, 1);
+	};
+
+	/**
+	 * Move focus to the previous item. If focus is on the first item, do nothing.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsapleft = function(oEvent) {
+		this._fnSkipToIndex(oEvent, -1);
+	};
+
+	/**
+	 * Move focus to the previous item. If focus is on the first item, do nothing.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsapdown = function(oEvent) {
+		this._fnSkipToIndex(oEvent, -1);
+	};
+
+	/**
+	 * Move focus to the first item.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsaphome = function(oEvent) {
+		this._fnSkipToIndex(oEvent, 0);
+	};
+
+	/**
+	 * Move focus to the last item.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsapend = function(oEvent) {
+		this._fnSkipToIndex(oEvent, this.getPages().length);
+	};
+
+	/**
+	 * Move focus 10 items to the right. If there are less than 10 items right, move
+	 * focus to last item.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsaprightmodifiers = function(oEvent) {
+		if (oEvent.ctrlKey) {
+			this._fnSkipToIndex(oEvent, 10);
+		}
+	};
+
+	/**
+	 * Move focus 10 items to the right. If there are less than 10 items right, move
+	 * focus to last item.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsapupmodifiers = function(oEvent) {
+		if (oEvent.ctrlKey) {
+			this._fnSkipToIndex(oEvent, 10);
+		}
+	};
+
+	/**
+	 * Move focus 10 items to the right. If there are less than 10 items right, move
+	 * focus to last item.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsappageup = function(oEvent) {
+		this._fnSkipToIndex(oEvent, 10);
+	};
+
+	/**
+	 * Move focus 10 items to the left. If there are less than 10 items left, move
+	 * focus to first item.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsapleftmodifiers = function(oEvent) {
+		if (oEvent.ctrlKey) {
+			this._fnSkipToIndex(oEvent, -10);
+		}
+	};
+
+	/**
+	 * Move focus 10 items to the left. If there are less than 10 items left, move
+	 * focus to first item.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsapdownmodifiers = function(oEvent) {
+		if (oEvent.ctrlKey) {
+			this._fnSkipToIndex(oEvent, -10);
+		}
+	};
+
+	/**
+	 * Move focus 10 items to the left. If there are less than 10 items left, move
+	 * focus to first item.
+	 *
+	 * @param oEvent - key event
+	 * @private
+	 */
+	Carousel.prototype.onsappagedown = function(oEvent) {
+		this._fnSkipToIndex(oEvent, -10);
+	};
+
+	//DEPRECATED METHODS
 
 
-/**
- * API method to set whether the carousel should display the busy indicators.
- * This property has been deprecated since 1.18.7. Does nothing and returns the carousel reference.
- *
- * @deprecated
- * @public
- */
-sap.m.Carousel.prototype.setShowBusyIndicator = function() {
-	jQuery.sap.log.warning("sap.m.Carousel: Deprecated function 'setShowBusyIndicator' called. " + 
- 	"Does nothing.");
-	return this;
-};
+	/*
+	 * API method to set whether the carousel should display the busy indicators.
+	 * This property has been deprecated since 1.18.7. Does nothing and returns the carousel reference.
+	 *
+	 * @deprecated
+	 * @public
+	 */
+	Carousel.prototype.setShowBusyIndicator = function() {
+		jQuery.sap.log.warning("sap.m.Carousel: Deprecated function 'setShowBusyIndicator' called. Does nothing.");
+		return this;
+	};
 
-/**
- * API method to check whether the carousel should display the busy indicators.
- * This property has been deprecated since 1.18.7. Always returns false,
- *
- * @deprecated
- * @public
- */
-sap.m.Carousel.prototype.getShowBusyIndicator = function() {
-	jQuery.sap.log.warning("sap.m.Carousel: Deprecated function 'getShowBusyIndicator' called. " + 
- 	"Does nothing.");
-	return false;
-};
+	/*
+	 * API method to check whether the carousel should display the busy indicators.
+	 * This property has been deprecated since 1.18.7. Always returns false,
+	 *
+	 * @deprecated
+	 * @public
+	 */
+	Carousel.prototype.getShowBusyIndicator = function() {
+		jQuery.sap.log.warning("sap.m.Carousel: Deprecated function 'getShowBusyIndicator' called. Does nothing.");
+		return false;
+	};
 
-/**
- * API method to set the carousel's busy indicator size.
- * This property has been deprecated since 1.18.7. Does nothing and returns the carousel reference.
- *
- * @deprecated
- * @public
- */
-sap.m.Carousel.prototype.setBusyIndicatorSize = function() {
-	jQuery.sap.log.warning("sap.m.Carousel: Deprecated function 'setBusyIndicatorSize' called. " + 
- 	"Does nothing.");
-	return this;
-};
+	/*
+	 * API method to set the carousel's busy indicator size.
+	 * This property has been deprecated since 1.18.7. Does nothing and returns the carousel reference.
+	 *
+	 * @deprecated
+	 * @public
+	 */
+	Carousel.prototype.setBusyIndicatorSize = function() {
+		jQuery.sap.log.warning("sap.m.Carousel: Deprecated function 'setBusyIndicatorSize' called. Does nothing.");
+		return this;
+	};
 
 
-/**
- * API method to retrieve the carousel's busy indicator size.
- * This property has been deprecated since 1.18.6. Always returns an empty string.
- *
- * @deprecated
- * @public
- */
-sap.m.Carousel.prototype.getBusyIndicatorSize = function() {
-	jQuery.sap.log.warning("sap.m.Carousel: Deprecated function 'getBusyIndicatorSize' called. " + 
- 	"Does nothing.");
-	return "";
-};
+	/*
+	 * API method to retrieve the carousel's busy indicator size.
+	 * This property has been deprecated since 1.18.6. Always returns an empty string.
+	 *
+	 * @deprecated
+	 * @public
+	 */
+	Carousel.prototype.getBusyIndicatorSize = function() {
+		jQuery.sap.log.warning("sap.m.Carousel: Deprecated function 'getBusyIndicatorSize' called. Does nothing.");
+		return "";
+	};
 
 
+	return Carousel;
+
+}, /* bExport= */ true);

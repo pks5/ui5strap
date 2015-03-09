@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -85,13 +85,13 @@ sap.ui.define(['jquery.sap.global'],
 		EppLib.traceFlags = function(lvl) {
 			switch (lvl) {
 			case 'low' :
-				return new Array(0x00, 0x00);
+				return [0x00, 0x00];
 			case 'medium' :
-				return new Array(0x89, 0x0A);
+				return [0x89, 0x0A];
 			case 'high' :
-				return new Array(0x9F, 0x0D);
+				return [0x9F, 0x0D];
 			default:
-				var rta = new Array();
+				var rta = [];
 				rta.push((parseInt(lvl, 16) & 0xFF00) / 256);
 				rta.push((parseInt(lvl, 16) & 0xFF));
 				return rta;

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -17,22 +17,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Global'],
 	
 	
 	// FIXME Too tough or just right?
-	if(!jQuery.sap) {
+	if (!jQuery.sap) {
 		throw "Initialisation of jQuery.sap.ui failed. jQuery.sap plugin required!";
 	}
-	if(!window.sap || !window.sap.ui) {
+	if (!window.sap || !window.sap.ui) {
 		jQuery.sap.fatal("Initialisation of jQuery.sap.ui failed. Global SAP UI namespace required!");
 	}
 
 	//ensure not to initialize twice
-	if(jQuery.sap.ui) {
+	if (jQuery.sap.ui) {
 		return;
 	}
 
 //	/**
 //	 * Root Namespace for the jQuery UI-Layer plugin provided by SAP SE.
 //	 *
-//	 * @version 1.24.3
+//	 * @version 1.26.7
 //	 * @namespace
 //	 * @public
 //	 */
@@ -55,9 +55,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Global'],
 	 * @public
 	 */
 	jQuery.fn.root = function(oRootControl) {
-		var tmp;
 		// handle 'setRoot'
-		if(oRootControl) {
+		if (oRootControl) {
 			sap.ui.getCore().setRoot(this.get(0), oRootControl);
 			return this;
 		}
@@ -90,7 +89,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Global'],
 	jQuery.fn.uiarea = function(iIdx) {
 		// UIAreas need to have IDs... so reduce to those elements first
 		var aUIAreas = this.slice("[id]").filter(fUIAreaFilter).map(fgetUIArea).get();
-		return typeof(iIdx) === "number"?aUIAreas[iIdx]:aUIAreas;
+		return typeof (iIdx) === "number" ? aUIAreas[iIdx] : aUIAreas;
 	};
 
 	/**
@@ -99,16 +98,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Global'],
 	 */
 	function fgetControl() {
 		// as with jQuery 1.4.3 and 1.4.4 there is a big problem here, we increase checks here
-		if(!this || !this.nodeType || this.nodeType === 9) {
+		if (!this || !this.nodeType || this.nodeType === 9) {
 			return null;
 		} // in this case, we are on the HTML Document and cannot do anything
 		// in IE8 'closest' might fail (e.g. when the element is not in the current document tree)
 		// The following line would probably also work for the 'try-catch' below but induce performance penalty in EVERY call of this method.
 		// if(jQuery(document.documentElement).has(this)) {
-		try{
+		try {
 			var sId = jQuery(this).closest("[data-sap-ui]").attr("id");
 			return sId ? sap.ui.getCore().byId(sId) : null;
-		} catch(e){
+		} catch (e) {
 			// probably IE8 case where element is not in current document tree... ==> there is no current control
 			return null;
 		}
@@ -125,10 +124,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Global'],
 	 */
 	jQuery.fn.control = function(idx) {
 		var aControls = this.map(fgetControl);
-		if(idx === undefined || isNaN(idx)) {
+		if (idx === undefined || isNaN(idx)) {
 			return aControls.get();
-		}
-		else {
+		} else {
 			return aControls.get(idx);
 		}
 	};
@@ -161,7 +159,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Global'],
 				if (fnClass) {
 
 					// TODO: hack for Steffen; remove later
-					if(typeof oConfiguration == 'object' && typeof oConfiguration.press == 'function') {
+					if (typeof oConfiguration == 'object' && typeof oConfiguration.press == 'function') {
 			  oConfiguration.press = jQuery.proxy(oConfiguration.press,this);
 			}
 

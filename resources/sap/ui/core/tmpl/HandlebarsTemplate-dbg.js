@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 /*global Handlebars *///declare unusual global vars for JSLint/SAPUI5 validation
@@ -31,8 +31,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 	 * @extends sap.ui.base.ManagedObject
 	 * @abstract
 	 * @author SAP SE
-	 * @version 1.24.3
-	 * @name sap.ui.core.tmpl.HandlebarsTemplate
+	 * @version 1.26.7
+	 * @alias sap.ui.core.tmpl.HandlebarsTemplate
 	 * @experimental Since 1.15.0. The Template concept is still under construction, so some implementation details can be changed in future.
 	 */
 	var HandlebarsTemplate = Template.extend("sap.ui.core.tmpl.HandlebarsTemplate", /** @lends sap.ui.core.tmpl.HandlebarsTemplate.prototype */
@@ -52,18 +52,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 	/**
 	 * Handlebars helpers for the rendering phase!
 	 * @private
-	 * @name sap.ui.core.tmpl.HandlebarsTemplate.RENDER_HELPERS
 	 */
 	HandlebarsTemplate.RENDER_HELPERS = (function() {
 	
 		// TODO: ERROR HANDLING!!!
-		// TODO: implement support for "if", "unless", "with", ...
+		// TODO: implement support for "with", ...
 	
 		// extended helpers:
 		//   - each
+		//   - if
+		//   - unless
 		//   - with   (TODO)
-		//   - if     (TODO)
-		//   - unless (TODO)
 		
 		// custom helpers:
 		//   - control: allows to declare a UI5 control
@@ -74,11 +73,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 	
 		// define the options to render the properties, aggregations, events, ...
 		var fnEach = Handlebars.helpers["each"],
-		    fnWith = Handlebars.helpers["with"],
-		    fnIf = Handlebars.helpers["if"],
-		    fnUnless = Handlebars.helpers["unless"],
-		    fnParsePath = Template.parsePath,
-		    oRenderManager = new RenderManager();
+			fnWith = Handlebars.helpers["with"],
+			fnIf = Handlebars.helpers["if"],
+			fnUnless = Handlebars.helpers["unless"],
+			oRenderManager = new RenderManager();
 		
 		// this special RenderManager is used to write the controlData, classes
 		// and styles into the buffer and extract it later on via getHTML!
@@ -99,13 +97,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 					
 					// parse the path & find the model
 					var oRM = options.data.renderManager,
-					    oRootControl = options.data.rootControl,
-					    sParentPath = options.data.path,
-					    oParentControl = options.data.parentControl,
-					    sPath = (jQuery.sap.startsWith(options.hash.path, "/") ? "" : (sParentPath || "")) + options.hash.path,
-					    oProperty = oRootControl.bindList(sPath),
-					    aHTML = [],
-					    data;
+						oRootControl = options.data.rootControl,
+						sParentPath = options.data.path,
+						oParentControl = options.data.parentControl,
+						sPath = (jQuery.sap.startsWith(options.hash.path, "/") ? "" : (sParentPath || "")) + options.hash.path,
+						oProperty = oRootControl.bindList(sPath),
+						aHTML = [],
+						data;
 					
 					// frame the data (isolation)
 					if (options.data) {
@@ -143,8 +141,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 				if (!options.hash.path) {
 					// call the original function
 					return fnWith.apply(this, arguments);
-				} else {
-				}	
+				}
 			},
 			
 			"if": function(conditional, options) {
@@ -153,7 +150,24 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 					// call the original function
 					return fnIf.apply(this, arguments);
 				} else {
-				}	
+					
+					// lookup the required infos
+					var oRootControl = options.data.rootControl,
+					sParentPath = options.data.path,
+					sPath = (jQuery.sap.startsWith(options.hash.path, "/") ? "" : (sParentPath || "")) + options.hash.path;
+					
+					// only in case of a path is specified the handler can work
+					if (sPath) {
+						// bind and returns true/false dependent on the value
+						var oValue = oRootControl.bindProp(sPath);
+						if (oValue) {
+							return options.fn(this);
+						} else {
+							return options.inverse(this);
+						}
+					}
+					
+				}
 			},
 			
 			"unless": function(conditional, options) {
@@ -162,7 +176,24 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 					// call the original function
 					return fnUnless.apply(this, arguments);
 				} else {
-				}	
+					
+					// lookup the required infos
+					var oRootControl = options.data.rootControl,
+					sParentPath = options.data.path,
+					sPath = (jQuery.sap.startsWith(options.hash.path, "/") ? "" : (sParentPath || "")) + options.hash.path;
+					
+					// only in case of a path is specified the handler can work
+					if (sPath) {
+						// bind and returns true/false dependent on the value
+						var oValue = oRootControl.bindProp(sPath);
+						if (!oValue) {
+							return options.fn(this);
+						} else {
+							return options.inverse(this);
+						}
+					}
+					
+				}
 			},
 			
 			"text": function(context, options) {
@@ -170,8 +201,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 				
 				// lookup the required infos
 				var oRootControl = options.data.rootControl,
-		        sParentPath = options.data.path,
-		        sPath = (jQuery.sap.startsWith(options.hash.path, "/") ? "" : (sParentPath || "")) + options.hash.path;
+				sParentPath = options.data.path,
+				sPath = (jQuery.sap.startsWith(options.hash.path, "/") ? "" : (sParentPath || "")) + options.hash.path;
 				
 				// only in case of a path is specified the handler can work
 				if (sPath) {
@@ -189,16 +220,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 				
 				// create and return the DOM element
 				var oRM = options.data.renderManager,
-				    oRootControl = options.data.rootControl,
-				    oElement = oRootControl.createDOMElement(options.hash, options.data.path),
-				    oParentElement = options.data.parentElement;
+					oRootControl = options.data.rootControl,
+					oElement = oRootControl.createDOMElement(options.hash, options.data.path),
+					oParentElement = options.data.parentElement;
 	
 				// Example for defining nested elements:
 				// {{#element ...}}
 				//   {{element ...}}   <-- nested element
 				// {{/element}} 
 				if (options.fn) {
-					var oChild = options.fn({}, {
+					options.fn({}, {
 						data: {
 							renderManager: oRM,
 							rootControl: oRootControl,
@@ -224,7 +255,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 				
 				// extract the data information
 				var oRM = options.data.renderManager,
-				    oControl = options.data.control;
+					oControl = options.data.control;
 				
 				// aggregation support to render the control only (to support markup)
 				// e.g.:
@@ -239,12 +270,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 				
 				// extract the rest of the information which is required now
 				var oRootControl = options.data.rootControl,
-				    sParentPath = options.data.path,
-				    mParentChildren = options.data.children,
-				    sType = options.hash["sap-ui-type"],
-				    oMetadata = jQuery.sap.getObject(sType).getMetadata(),
-				    sDefaultAggregation = options.hash["sap-ui-default-aggregation"] || oMetadata.getDefaultAggregationName(),
-				    oView = options.data.view;
+					sParentPath = options.data.path,
+					mParentChildren = options.data.children,
+					sType = options.hash["sap-ui-type"],
+					oMetadata = jQuery.sap.getObject(sType).getMetadata(),
+					sDefaultAggregation = options.hash["sap-ui-default-aggregation"] || oMetadata.getDefaultAggregationName(),
+					oView = options.data.view;
 				
 				// Nested controls will get the reference to the parent control in order
 				// to add them to the defined aggregation. Example of nested controls:
@@ -285,8 +316,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 					jQuery.each(mChildren, function(sAggregationName, aChildAggregation) {
 						for (var i = 0, l = aChildAggregation.length; i < l; i++) {
 							var oChildControl = aChildAggregation[i],
-							    oAggregation = oAllAggregation[sAggregationName],
-							    bMultiple = oAggregation && oAggregation.multiple;
+								oAggregation = oAllAggregation[sAggregationName],
+								bMultiple = oAggregation && oAggregation.multiple;
 							if (typeof mSettings[sAggregationName] === "string") {
 								// the aggregation is bound => so we create a binding info object 
 								// which is used in the createControl function of the TemplateControl
@@ -326,9 +357,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 				
 				// use the getter to access the property
 				var oRootControl = options.data.rootControl,
-				    oMetadata = oRootControl.getMetadata(),
-				    sPropertyName = options.hash.name,
-				    sGetter = oMetadata.getAllProperties()[sPropertyName]._sGetter;
+					oMetadata = oRootControl.getMetadata(),
+					sPropertyName = options.hash.name,
+					sGetter = oMetadata.getAllProperties()[sPropertyName]._sGetter;
 				return oRootControl[sGetter]();
 				
 			},
@@ -336,37 +367,65 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 			"aggregation": function(context, options) {
 				options = options || context;
 				
-				// extract the required info
-				var oRM = options.data.renderManager,
-		        oRootControl = options.data.rootControl,
-		        oMetadata = oRootControl.getMetadata(),
-		        sAggregationName = options.hash.name,
-		        sGetter = oMetadata.getAllAggregations()[sAggregationName]._sGetter,
-		        aHTML = [];
-				
-				// retrieve the child elements via the specific getter
-				// and create the markup for the nested elements
-				var aChildren = oRootControl[sGetter]();
-				if (aChildren) {
-					for (var i = 0, l = aChildren.length; i < l; i++) {
-						// if the aggregation contains nested content => execute it!
-						if (options.fn) {
-							aHTML.push(options.fn({}, {
-								data: {
-									renderManager: oRM,
-								  rootControl: oRootControl,
-									control: aChildren[i]
-								}
-							}));
-						} else {
-							// simply render the control
-							aHTML.push(oRM.getHTML(aChildren[i]));
+				// when data provides the children object we are running in 
+				// the use case to be used as kind of scope for the aggregation
+				// to be used and when running without children object the 
+				// aggregation helper is used for defining an aggregation
+				// of a new control type being declared as template
+				if (options.data.children) {
+					
+					// extract the required info
+					var sAggregationName = options.hash.name;
+					
+					// By defining the aggregation helper the default aggregation
+					// of nested controls can be adopted
+					// {{#aggregation ...}}
+					//   {{control ...}}   <-- nested control
+					// {{/aggregation}}
+					if (options.fn) {
+						var oData = jQuery.extend({}, options.data, {
+							defaultAggregation: sAggregationName
+						});
+						options.fn({}, {
+							data: oData
+						});
+					}
+					
+				} else {
+					
+					// extract the required info
+					var oRM = options.data.renderManager,
+						oRootControl = options.data.rootControl,
+						oMetadata = oRootControl.getMetadata(),
+						sAggregationName = options.hash.name,
+						sGetter = oMetadata.getAllAggregations()[sAggregationName]._sGetter,
+						aHTML = [];
+					
+					// retrieve the child elements via the specific getter
+					// and create the markup for the nested elements
+					var aChildren = oRootControl[sGetter]();
+					if (aChildren) {
+						for (var i = 0, l = aChildren.length; i < l; i++) {
+							// if the aggregation contains nested content => execute it!
+							if (options.fn) {
+								aHTML.push(options.fn({}, {
+									data: {
+										renderManager: oRM,
+									  rootControl: oRootControl,
+										control: aChildren[i]
+									}
+								}));
+							} else {
+								// simply render the control
+								aHTML.push(oRM.getHTML(aChildren[i]));
+							}
 						}
 					}
+					
+					// return the markup
+					return new Handlebars.SafeString(aHTML.join(""));
+					
 				}
-				
-				// return the markup
-				return new Handlebars.SafeString(aHTML.join(""));
 				
 			},
 			
@@ -397,13 +456,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 		// compile the template 
 		// (TODO - think about avoid to compile the template multiple times)
 		var sTemplate = this.getContent(),
-		    fnTemplate = this._fnTemplate = this._fnTemplate || Handlebars.compile(sTemplate);
+			fnTemplate = this._fnTemplate = this._fnTemplate || Handlebars.compile(sTemplate);
 		
 		// identify the control metadata: properties, aggregations, ... 
 		// the template will be executed with specific options
 		var oMetadata = {},
-		    mJSONKeys = sap.ui.core.tmpl.TemplateControl.getMetadata().getJSONKeys(),
-		    mPrivateAggregations = sap.ui.core.tmpl.TemplateControl.getMetadata().getAllPrivateAggregations();
+			mJSONKeys = sap.ui.core.tmpl.TemplateControl.getMetadata().getJSONKeys(),
+			mPrivateAggregations = sap.ui.core.tmpl.TemplateControl.getMetadata().getAllPrivateAggregations();
 		
 		// the options to identify the properties, aggregations, events, ...
 		var oHelpers = {
@@ -441,7 +500,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 		
 		// ignore the following block helper
 		jQuery.each(["each", "if", "unless", "with"], function(iIndex, sValue) {
-			oHelpers[sValue]= function() {}; 
+			oHelpers[sValue] = function() {};
 		});
 		
 		// execute the templates with the above options
@@ -460,7 +519,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/RenderManager', './Template', '
 		// compile the template 
 		// (TODO - think about avoid to compile the template multiple times)
 		var sTemplate = this.getContent(),
-		    fnTemplate = this._fnTemplate = this._fnTemplate || Handlebars.compile(sTemplate);
+			fnTemplate = this._fnTemplate = this._fnTemplate || Handlebars.compile(sTemplate);
 		
 		// create the renderer for the control
 		var fnRenderer = function(rm, oControl) {

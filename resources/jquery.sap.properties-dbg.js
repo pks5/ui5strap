@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.sjax'],
 	 * currently in the list.
 	 *
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.Properties
 	 * @public
@@ -75,10 +75,10 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.sjax'],
 	 */
 	Properties.prototype.getProperty = function(sKey, sDefaultValue) {
 		var sValue = this.mProperties[sKey];
-		if (typeof(sValue)=="string") {
+		if (typeof (sValue) == "string") {
 			return sValue;
 		}
-		else if(sDefaultValue) {
+		else if (sDefaultValue) {
 			return sDefaultValue;
 		}
 		return null;
@@ -95,10 +95,10 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.sjax'],
 	 * Implements jQuery.sap.util.Properties.prototype.setProperty
 	 */
 	Properties.prototype.setProperty = function(sKey, sValue) {
-		if (typeof(sValue) != "string") {
+		if (typeof (sValue) != "string") {
 			return;
-		}		
-		if (typeof(this.mProperties[sKey])!="string") {
+		}
+		if (typeof (this.mProperties[sKey]) != "string") {
 			this.aKeys.push(sKey);
 		}
 		this.mProperties[sKey] = sValue;
@@ -160,7 +160,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.sjax'],
 		oProp.mProperties = {};
 		oProp.aKeys = [];
 
-		for (i=0; i<aLines.length; i++) {
+		for (i = 0; i < aLines.length; i++) {
 			sLine = aLines[i];
 			// ignore empty lines
 			if (sLine === "" || sLine.charAt(0) === "#" || sLine.charAt(0) === "!" ) {
@@ -168,29 +168,29 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.sjax'],
 			}
 
 			rEscapes.lastIndex = iLastIndex = 0;
-			sValue = ""; 
+			sValue = "";
 			bKey = true;
 
-			while ( m = rEscapes.exec(sLine) ) {
+			while ( (m = rEscapes.exec(sLine)) !== null ) {
 				// handle any raw, unmatched input
 				if ( iLastIndex < m.index ) {
 					sValue += sLine.slice(iLastIndex, m.index);
 				}
 				iLastIndex = rEscapes.lastIndex;
-				if ( m[1] ) { 
+				if ( m[1] ) {
 					// unicode escape
 					if ( m[1].length !== 6 ) {
 						throw new Error("Incomplete Unicode Escape '" + m[1] + "'");
 					}
 					sValue += String.fromCharCode(parseInt(m[1].slice(2), 16));
-				} else if ( m[2] ) { 
+				} else if ( m[2] ) {
 					// special or simple escape
 					sValue += mEscapes[m[2]] || m[2].slice(1);
-				} else if ( m[3] ) { 
+				} else if ( m[3] ) {
 					// continuation line marker
 					sLine = aLines[++i];
 					rEscapes.lastIndex = iLastIndex = 0;
-				} else if ( m[4] ) { 
+				} else if ( m[4] ) {
 					// key/value separator					
 					if ( bKey ) {
 						bKey = false;
@@ -257,15 +257,15 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.sjax'],
 		
 		
 		function _parse(sText){
-			if (typeof(sText) == "string") {
+			if (typeof (sText) == "string") {
 				parse(sText, oProp);
 			}
-		};
+		}
 		
 		function _load(){
 			var oRes;
 			
-			if (typeof(mParams.url) == "string"){
+			if (typeof (mParams.url) == "string") {
 				oRes = jQuery.sap.loadResource({
 					url: mParams.url,
 					dataType: 'text',
@@ -276,28 +276,28 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.sjax'],
 			}
 			
 			return oRes;
-		};
+		}
 		
-		if(bAsync){
+		if (bAsync) {
 			return new window.Promise(function(resolve, reject){
 				var oRes = _load();
-				if(!oRes){
+				if (!oRes) {
 					resolve(oProp);
 					return;
 				}
 				
 				oRes.then(function(oVal){
-					try{
+					try {
 						_parse(oVal);
 						resolve(oProp);
-					}catch(e){
+					} catch (e) {
 						reject(e);
 					}
 				}, function(oVal){
-					reject(oVal instanceof Error ? oVal : new Error("Problem during loading of property file '"+mParams.url+"': "+oVal));
+					reject(oVal instanceof Error ? oVal : new Error("Problem during loading of property file '" + mParams.url + "': " + oVal));
 				});
 			});
-		}else{
+		} else {
 			_parse(_load());
 			return oProp;
 		}

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 /*global Promise */// declare unusual global vars for JSLint/SAPUI5 validation
@@ -99,7 +99,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 						}
 					});
 					return makePromiseJqCompatible(oReturnPromise, oContext);
-				}
+				};
 			});
 			oPromise.pipe = function(fnDoneCallback, fnFailCallback) {
 				printJqPromiseDeprecationWarning("pipe");
@@ -121,40 +121,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 
 		return makePromiseJqCompatible(oOriginalPromise);
 
-	};
+	}
 
 	/**
 	 * Constructor for a new Export.
-	 * 
-	 * Accepts an object literal <code>mSettings</code> that defines initial 
-	 * property values, aggregated and associated objects as well as event handlers. 
-	 * 
-	 * If the name of a setting is ambiguous (e.g. a property has the same name as an event), 
-	 * then the framework assumes property, aggregation, association, event in that order. 
-	 * To override this automatic resolution, one of the prefixes "aggregation:", "association:" 
-	 * or "event:" can be added to the name of the setting (such a prefixed name must be
-	 * enclosed in single or double quotes).
 	 *
-	 * The supported settings are:
-	 * <ul>
-	 * <li>Properties
-	 * <ul></ul>
-	 * </li>
-	 * <li>Aggregations
-	 * <ul>
-	 * <li>{@link #getExportType exportType} : sap.ui.core.util.ExportType</li>
-	 * <li>{@link #getColumns columns} : sap.ui.core.util.ExportColumn[]</li>
-	 * <li>{@link #getRows rows} : sap.ui.core.util.ExportRow[]</li></ul>
-	 * </li>
-	 * <li>Associations
-	 * <ul></ul>
-	 * </li>
-	 * <li>Events
-	 * <ul></ul>
-	 * </li>
-	 * </ul>
-	 *
-	 * @param {string} [sId] id for the new control, generated automatically if no id is given 
+	 * @param {string} [sId] id for the new control, generated automatically if no id is given
 	 * @param {object} [mSettings] initial settings for the new control
 	 *
 	 * @class
@@ -162,12 +134,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 1.22.0
 	 *
 	 * @constructor
 	 * @public
-	 * @name sap.ui.core.util.Export
+	 * @alias sap.ui.core.util.Export
 	 */
 	var Export = Control.extend('sap.ui.core.util.Export', {
 
@@ -183,20 +155,36 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 			library: "sap.ui.core",
 
 			aggregations: {
+
+				/**
+				 * Type that generates the content.
+				 */
 				exportType: {
 					type: 'sap.ui.core.util.ExportType',
 					multiple: false
 				},
+
+				/**
+				 * Columns for the Export.
+				 */
 				columns: {
 					type: 'sap.ui.core.util.ExportColumn',
 					multiple: true,
 					bindable : 'bindable'
 				},
+
+				/**
+				 * Rows of the Export.
+				 */
 				rows: {
 					type: 'sap.ui.core.util.ExportRow',
 					multiple: true,
 					bindable: 'bindable'
 				},
+
+				/**
+				 * Template row used for the export
+				 */
 				_template: {
 					type: 'sap.ui.core.util.ExportRow',
 					multiple: false,
@@ -212,269 +200,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 	Export.getMetadata().getAllAggregations()["rows"]._doesNotRequireFactory = true;
 
 	/**
-	 * Creates a new subclass of class sap.ui.core.util.Export with name <code>sClassName</code> 
-	 * and enriches it with the information contained in <code>oClassInfo</code>.
-	 * 
-	 * <code>oClassInfo</code> might contain the same kind of informations as described in {@link sap.ui.core.Element.extend Element.extend}.
-	 *   
-	 * @param {string} sClassName name of the class to be created
-	 * @param {object} [oClassInfo] object literal with informations about the class  
-	 * @param {function} [FNMetaImpl] constructor function for the metadata object. If not given, it defaults to sap.ui.core.ElementMetadata.
-	 * @return {function} the created class / constructor function
-	 * @public
-	 * @static
-	 * @name sap.ui.core.util.Export.extend
-	 * @function
-	 */
-
-	/**
-	 * Getter for aggregation <code>exportType</code>.<br/>
-	 * Type that generates the content.
-	 *
-	 * @return {sap.ui.core.util.ExportType}
-	 * @public
-	 * @name sap.ui.core.util.Export#getExportType
-	 * @function
-	 */
-
-	/**
-	 * Setter for the aggregated <code>exportType</code>.
-	 * @param {sap.ui.core.util.ExportType} oExportType
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#setExportType
-	 * @function
-	 */
-
-	/**
-	 * Destroys the exportType in the aggregation 
-	 * named <code>exportType</code>.
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#destroyExportType
-	 * @function
-	 */
-
-	/**
-	 * Getter for aggregation <code>columns</code>.<br/>
-	 * Columns for the Export.
-	 *
-	 * @return {sap.ui.core.util.ExportColumn[]}
-	 * @public
-	 * @name sap.ui.core.util.Export#getColumns
-	 * @function
-	 */
-
-	/**
-	 * Inserts a column into the aggregation named <code>columns</code>.
-	 *
-	 * @param {sap.ui.core.util.ExportColumn}
-	 *          oColumn the column to insert; if empty, nothing is inserted
-	 * @param {int}
-	 *             iIndex the <code>0</code>-based index the column should be inserted at; for
-	 *             a negative value of <code>iIndex</code>, the column is inserted at position 0; for a value
-	 *             greater than the current size of the aggregation, the column is inserted at
-	 *             the last position
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#insertColumn
-	 * @function
-	 */
-
-	/**
-	 * Adds some column <code>oColumn</code> 
-	 * to the aggregation named <code>columns</code>.
-	 *
-	 * @param {sap.ui.core.util.ExportColumn}
-	 *            oColumn the column to add; if empty, nothing is inserted
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#addColumn
-	 * @function
-	 */
-
-	/**
-	 * Removes an column from the aggregation named <code>columns</code>.
-	 *
-	 * @param {int | string | sap.ui.core.util.ExportColumn} vColumn the column to remove or its index or id
-	 * @return {sap.ui.core.util.ExportColumn} the removed column or null
-	 * @public
-	 * @name sap.ui.core.util.Export#removeColumn
-	 * @function
-	 */
-
-	/**
-	 * Removes all the controls in the aggregation named <code>columns</code>.<br/>
-	 * Additionally unregisters them from the hosting UIArea.
-	 * @return {sap.ui.core.util.ExportColumn[]} an array of the removed elements (might be empty)
-	 * @public
-	 * @name sap.ui.core.util.Export#removeAllColumns
-	 * @function
-	 */
-
-	/**
-	 * Checks for the provided <code>sap.ui.core.util.ExportColumn</code> in the aggregation named <code>columns</code> 
-	 * and returns its index if found or -1 otherwise.
-	 *
-	 * @param {sap.ui.core.util.ExportColumn}
-	 *            oColumn the column whose index is looked for.
-	 * @return {int} the index of the provided control in the aggregation if found, or -1 otherwise
-	 * @public
-	 * @name sap.ui.core.util.Export#indexOfColumn
-	 * @function
-	 */
-
-	/**
-	 * Destroys all the columns in the aggregation 
-	 * named <code>columns</code>.
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#destroyColumns
-	 * @function
-	 */
-
-	/**
-	 * Binder for aggregation <code>columns</code>.
-	 *
-	 * @param {string} sPath path to a list in the model 
-	 * @param {sap.ui.core.Element} oTemplate the control template for this aggregation
-	 * @param {sap.ui.model.Sorter} oSorter the initial sort order (optional)
-	 * @param {array} aFilters the predefined filters for this aggregation (optional)
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#bindColumns
-	 * @function
-	 */
-
-	/**
-	 * Unbinder for aggregation <code>columns</code>.
-	 *
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#unbindColumns
-	 * @function
-	 */
-
-	/**
-	 * Getter for aggregation <code>rows</code>.<br/>
-	 * Rows of the Export.
-	 * 
-	 * @return {sap.ui.core.util.ExportRow[]}
-	 * @public
-	 * @name sap.ui.core.util.Export#getRows
-	 * @function
-	 */
-
-	/**
-	 * Inserts a row into the aggregation named <code>rows</code>.
-	 *
-	 * @param {sap.ui.core.util.ExportRow}
-	 *          oRow the row to insert; if empty, nothing is inserted
-	 * @param {int}
-	 *             iIndex the <code>0</code>-based index the row should be inserted at; for 
-	 *             a negative value of <code>iIndex</code>, the row is inserted at position 0; for a value 
-	 *             greater than the current size of the aggregation, the row is inserted at 
-	 *             the last position        
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#insertRow
-	 * @function
-	 */
-
-	/**
-	 * Adds some row <code>oRow</code> 
-	 * to the aggregation named <code>rows</code>.
-	 *
-	 * @param {sap.ui.core.util.ExportRow}
-	 *            oRow the row to add; if empty, nothing is inserted
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#addRow
-	 * @function
-	 */
-
-	/**
-	 * Removes an row from the aggregation named <code>rows</code>.
-	 *
-	 * @param {int | string | sap.ui.core.util.ExportRow} vRow the row to remove or its index or id
-	 * @return {sap.ui.core.util.ExportRow} the removed row or null
-	 * @public
-	 * @name sap.ui.core.util.Export#removeRow
-	 * @function
-	 */
-
-	/**
-	 * Removes all the controls in the aggregation named <code>rows</code>.<br/>
-	 * Additionally unregisters them from the hosting UIArea.
-	 * @return {sap.ui.core.util.ExportRow[]} an array of the removed elements (might be empty)
-	 * @public
-	 * @name sap.ui.core.util.Export#removeAllRows
-	 * @function
-	 */
-
-	/**
-	 * Checks for the provided <code>sap.ui.core.util.ExportRow</code> in the aggregation named <code>rows</code> 
-	 * and returns its index if found or -1 otherwise.
-	 *
-	 * @param {sap.ui.core.util.ExportRow}
-	 *            oRow the row whose index is looked for.
-	 * @return {int} the index of the provided control in the aggregation if found, or -1 otherwise
-	 * @public
-	 * @name sap.ui.core.util.Export#indexOfRow
-	 * @function
-	 */
-
-	/**
-	 * Destroys all the rows in the aggregation 
-	 * named <code>rows</code>.
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#destroyRows
-	 * @function
-	 */
-
-	/**
-	 * Binder for aggregation <code>rows</code>.
-	 *
-	 * @param {string} sPath path to a list in the model 
-	 * @param {sap.ui.core.Element} oTemplate the control template for this aggregation
-	 * @param {sap.ui.model.Sorter} oSorter the initial sort order (optional)
-	 * @param {array} aFilters the predefined filters for this aggregation (optional)
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#bindRows
-	 * @function
-	 */
-
-	/**
-	 * Unbinder for aggregation <code>rows</code>.
-	 *
-	 * @return {sap.ui.core.util.Export} <code>this</code> to allow method chaining
-	 * @public
-	 * @name sap.ui.core.util.Export#unbindRows
-	 * @function
-	 */
-
-	/**
 	 * @private
-	 * @name sap.ui.core.util.Export#init
-	 * @function
 	 */
 	Export.prototype.init = function() {
 		this._oPromise = null;
 		this._fnResolvePromise = null;
-		this._oRowBindingInfo = null;
+		this._oRowBindingArgs = null;
 	};
 
 	/**
 	 * @private
-	 * @name sap.ui.core.util.Export#exit
-	 * @function
 	 */
 	Export.prototype.exit = function() {
 		delete this._oPromise;
 		delete this._fnResolvePromise;
-		delete this._oRowBindingInfo;
+		delete this._oRowBindingArgs;
 	};
 
 	/**
@@ -482,8 +222,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 	 *
 	 * @return {sap.ui.core.util.ExportRow} row template
 	 * @private
-	 * @name sap.ui.core.util.Export#_createRowTemplate
-	 * @function
 	 */
 	Export.prototype._createRowTemplate = function() {
 		var oTemplate = new ExportRow(this.getId() + "-row"),
@@ -502,7 +240,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 		if (sName === 'rows') {
 			// skip binding the aggregation for now.
 			// will be bound when generating and unbound afterwards
-			this._oRowBindingInfo = oBindingInfo;
+			this._oRowBindingArgs = arguments;
 			return this;
 		}
 		return Control.prototype.bindAggregation.apply(this, arguments);
@@ -512,8 +250,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 	 * Called when the row aggregation gets updated
 	 *
 	 * @private
-	 * @name sap.ui.core.util.Export#updateRows
-	 * @function
 	 */
 	Export.prototype.updateRows = function(sReason) {
 		if (sReason === 'change' && this._fnResolvePromise) {
@@ -538,38 +274,36 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 	 * with the instance as context (this).<br>
 	 * The promise will be resolved with the generated content
 	 * as a string.
-	 * 
+	 *
 	 * <p><b>Please note: The return value was changed from jQuery Promises to standard ES6 Promises.
-	 * jQuery specific Promise methods ('done', 'fail', 'always', 'pipe' and 'state') are still available but should not be used. 
+	 * jQuery specific Promise methods ('done', 'fail', 'always', 'pipe' and 'state') are still available but should not be used.
 	 * Please use only the standard methods 'then' and 'catch'!</b></p>
 	 *
 	 * @return {Promise} Promise object
 	 *
 	 * @public
-	 * @name sap.ui.core.util.Export#generate
-	 * @function
 	 */
 	Export.prototype.generate = function() {
-		var oExport = this;
+		var that = this;
 
 		if (!this._oPromise) {
 			this._oPromise = createJqCompatiblePromise(function(resolve, reject) {
-				oExport._fnResolvePromise = resolve;
+				that._fnResolvePromise = resolve;
 
-				if (!oExport.hasModel()) {
+				if (!that.hasModel()) {
 					reject("Generate is not possible beause no model was set.");
 				} else {
 					// setup row-template
-					var oTemplate = oExport._createRowTemplate();
-					oExport.setAggregation('_template', oTemplate, true);
+					var oTemplate = that._createRowTemplate();
+					that.setAggregation('_template', oTemplate, true);
 
 					// bind row aggregation (this.bindAggregation would do nothing)
-					Control.prototype.bindAggregation.call(oExport, 'rows', oExport._oRowBindingInfo);
+					Control.prototype.bindAggregation.apply(that, that._oRowBindingArgs);
 
 					// triggers data loading for OData.
 					// TODO: find a cleaner solution (when $count is not supported)
-					if (oExport.getBinding("rows")) {
-						oExport.getBinding("rows").getContexts(0, oExport.getBinding("rows").getLength());
+					if (that.getBinding("rows")) {
+						that.getBinding("rows").getContexts(0, that.getBinding("rows").getLength());
 					}
 				}
 			}, this);
@@ -586,15 +320,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './ExportColumn', './
 	 * <p><b>For information about browser support, see <code>sap.ui.core.util.File.save</code></b></p>
 	 *
 	 * <p><b>Please note: The return value was changed from jQuery Promises to standard ES6 Promises.
-	 * jQuery specific Promise methods ('done', 'fail', 'always', 'pipe' and 'state') are still available but should not be used. 
+	 * jQuery specific Promise methods ('done', 'fail', 'always', 'pipe' and 'state') are still available but should not be used.
 	 * Please use only the standard methods 'then' and 'catch'!</b></p>
 	 *
 	 * @param {string} [sFileName] file name, defaults to 'data'
 	 * @return {Promise} Promise object
 	 *
 	 * @public
-	 * @name sap.ui.core.util.Export#saveFile
-	 * @function
 	 */
 	Export.prototype.saveFile = function(sFileName) {
 		return this.generate().then(function(sContent) {

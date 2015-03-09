@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -15,7 +15,7 @@ sap.ui.define([ 'jquery.sap.global', './Element' ], function(jQuery, Element) {
 	 * @returns {sap.ui.core.PopupSupport}
 	 * @constructor
 	 * @private
-	 * @name sap.ui.core.PopupSupport
+	 * @alias sap.ui.core.PopupSupport
 	 */
 	var PopupSupport = function() {
 		this.getMetadata().addPublicMethods([ "getParentPopup", "isInPopup", "getParentPopupId", "addToPopup", "removeFromPopup" ]);
@@ -117,7 +117,7 @@ sap.ui.define([ 'jquery.sap.global', './Element' ], function(jQuery, Element) {
 		this.closePopup = function(sPopupId) {
 			var sEventId = "sap.ui.core.Popup.closePopup-" + sPopupId;
 			sap.ui.getCore().getEventBus().publish("sap.ui", sEventId);
-		}
+		};
 
 		/**
 		 * This function calls a popup to increase its z-index
@@ -133,8 +133,8 @@ sap.ui.define([ 'jquery.sap.global', './Element' ], function(jQuery, Element) {
 			sap.ui.getCore().getEventBus().publish("sap.ui", sEventId, {
 				isFromParentPopup : bIsParent ? bIsParent : false
 			});
-		}
-	}
+		};
+	};
 
 	return PopupSupport;
 

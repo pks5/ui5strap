@@ -1,35 +1,53 @@
 /* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
 
-
-/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- * 
- */@import "../base/library.less";
-@import (less) "../../../../../sap/ui/core/themes/sap_hcb/global.css";
+ */
 
-/* START "Accordion.css" */
+@import "../base/library.less";
+@import "../../../../../sap/ui/core/themes/sap_hcb/global.less";
+
+/* START "AbsoluteLayout.less" */
+/* ===================================================== */
+/* CSS for control sap.ui.commons.AbsoluteLayout.control */
+/* SAP-HCB Theme                                         */
+/* ===================================================== */
+
+.sapUiLayoutAbs{
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "AbsoluteLayout.less" */
+
+/* START "Accordion.less" */
 /* ================================================ */
 /* CSS for control sap.ui.commons/Accordion.control */
+/* SAP-HCB Theme                                    */
 /* ================================================ */
 
 .sapUiAcd{
 	border: 1px solid @sapUiMediumBorder;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiAcd-section{
 	display: block;
 	position:relative;
 }
-/* END "Accordion.css" */
+/* END "Accordion.less" */
 
-/* START "AccordionSection.css" */
+/* START "AccordionSection.less" */
 /******************************************************
 *	High contrast black
 *******************************************************/
+.sapUiAcdSection {
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiAcdSectionHdr {
 	border-bottom: 1px solid @sapUiMediumBorder;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapuicommons-Accordion-section-last .sapUiAcdSectionHdr {
@@ -89,15 +107,19 @@
 .sapUiAcdSectionHdr > div > span.sapUiAcdSectionHdrRight {
 	margin-right: 7px;
 }
-/* END "AccordionSection.css" */
+/* END "AccordionSection.less" */
 
-/* START "ApplicationHeader.css" */
+/* START "ApplicationHeader.less" */
 /* ============================================ */
 /* HIGH CONTRAST BLACK CSS 
 /*============================================= */
-/* END "ApplicationHeader.css" */
 
-/* START "AutoComplete.css" */
+.sapUiAppHdr {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "ApplicationHeader.less" */
+
+/* START "AutoComplete.less" */
 /* ================================================= */
 /* CSS for control sap.ui.commons/AutoComplete       */
 /* HCB                                               */
@@ -106,9 +128,20 @@
 .sapUiTfBrd.sapUiTfCombo.sapUiTfAutoComp > .sapUiTfInner {
 	padding-right: 3px;
 }
-/* END "AutoComplete.css" */
+/* END "AutoComplete.less" */
 
-/* START "Button.css" */
+/* START "BorderLayout.less" */
+/* ================================================= */
+/* CSS for control layout.uilib/BorderLayout.control */
+/* SAP-HCB Theme                                     */
+/* ================================================= */
+
+.sapUiBorderLayout {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "BorderLayout.less" */
+
+/* START "Button.less" */
 /* ================================================= */
 /* CSS for control sap.ui.commons/Button.control     */
 /* SAP-HCB Theme                                     */
@@ -118,6 +151,7 @@
 
 .sapUiBtnS {
 	border-radius: 2px;
+	font-size: @sapUiDesktopFontSize;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	padding: 0 4px 0 5px;
@@ -185,9 +219,52 @@ html[data-sap-ui-browser^="ie"] .sapUiBtnS.sapUiBtnLite.sapUiBtnDsbl:active {
 .sapUiBtn > span.sapUiBtnIco{
 	margin-top: -1px;
 }
-/* END "Button.css" */
+/* END "Button.less" */
 
-/* START "CheckBox.css" */
+/* START "Callout.less" */
+/* ============================================== */
+/* CSS for control sap.ui.commons/Callout.control */
+/* SAP-HCB Theme                                  */
+/* ============================================== */
+
+.sapUiClt{
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "Callout.less" */
+
+/* START "CalloutBase.less" */
+/* ================================================== */
+/* CSS for control sap.ui.commons/CalloutBase.control */
+/* SAP-HCB Theme                                      */
+/* ================================================== */
+
+.sapUiCltBase{
+	font-size: @sapUiDesktopFontSize;
+}
+
+/* END "CalloutBase.less" */
+
+/* START "Carousel.less" */
+/* ================================================= */
+/* CSS for control sap.ui.commons/Carousel.control   */
+/* SAP-HCB Theme                                     */
+/* ================================================= */
+
+.sapUiCrslCnt {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "Carousel.less" */
+
+/* START "CheckBox.less" */
+/* =============================================== */
+/* CSS for control sap.ui.commons/CheckBox.control */
+/* SAP-HCB Theme                                   */
+/* =============================================== */
+
+.sapUiCb {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiCb > label {
 	vertical-align: top;
 }
@@ -202,17 +279,13 @@ html[data-sap-ui-browser^="ie"] .sapUiBtnS.sapUiBtnLite.sapUiBtnDsbl:active {
 	outline-offset: -2px;
 }
 
-html[data-sap-ui-browser^="ie"] .sapUiCb:focus{
-	position: relative; /* otherwise the Border is not displayed */
-}
-
 html[data-sap-ui-browser^="ie"] .sapUiCb:focus:after {
 	border-width: 2px;
 	border-style: solid;
 }
-/* END "CheckBox.css" */
+/* END "CheckBox.less" */
 
-/* START "ColorPicker.css" */
+/* START "ColorPicker.less" */
 /* ================================================== */
 /* CSS for control sap.ui.commons/ColorPicker.control */
 /* High Contrast Black Theme                          */
@@ -239,9 +312,33 @@ html[data-sap-ui-browser="ie8"] .sapUiColorPicker-ColorPickerAlphaSlider.sapUiSl
 html[data-sap-ui-browser="ie9"] .sapUiColorPicker-ColorPickerAlphaSlider.sapUiSliHori .sapUiSliBar {
 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/ColorPicker/Alphaslider_BG.png') progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#FF000000',GradientType=1 );
 }
-/* END "ColorPicker.css" */
 
-/* START "ComboBox.css" */
+.sapUiColorPicker-ColorPickerSlider.sapUiSliHori .sapUiSliGrip:focus {
+	border-width: 3px;
+	height: 10px;
+	width: 4px;
+	padding: 0;
+}
+
+.sapUiColorPicker-ColorPickerAlphaSlider.sapUiSliHori .sapUiSliGrip:focus {
+	border-width: 3px;
+	height: 10px;
+	width: 4px;
+	padding: 0;
+}
+
+.sapUiColorPicker-ColorPickerSlider.sapUiSliHori .sapUiSliR,
+.sapUiColorPicker-ColorPickerSlider.sapUiSliHori .sapUiSliL{
+	border-color: transparent;
+}
+
+.sapUiColorPicker-ColorPickerAlphaSlider.sapUiSliHori .sapUiSliR,
+.sapUiColorPicker-ColorPickerAlphaSlider.sapUiSliHori .sapUiSliL{
+	border-color: transparent;
+}
+/* END "ColorPicker.less" */
+
+/* START "ComboBox.less" */
 /* =============================================== */
 /* CSS for control sap.ui.commons/ComboBox.control */
 /* HCB theme                                       */
@@ -252,6 +349,7 @@ html[data-sap-ui-browser="ie9"] .sapUiColorPicker-ColorPickerAlphaSlider.sapUiSl
 .sapUiTfCombo {
 	padding: 0 18px 0 0;
 	height: @sapUiComboBoxHeight;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiTfComboIcon{
@@ -278,14 +376,18 @@ html[data-sap-ui-browser="ie9"] .sapUiColorPicker-ColorPickerAlphaSlider.sapUiSl
 	border-left: 1px solid @sapUiFieldHoverBorderColor;
 	background-color: @sapUiFieldHoverHelpBackground;
 }
-/* END "ComboBox.css" */
+/* END "ComboBox.less" */
 
-/* START "DatePicker.css" */
+/* START "DatePicker.less" */
 /****************************************************************/
 /*                        HCB DATEPICKER                        */
 /****************************************************************/
 
 /********************* inputField *********************/
+.sapUiTfCombo {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiTfCombo .sapUiTfDateIcon {
 	background-image: url(img/datepicker/icon_cal.png);
 	background-position: 2px 2px;
@@ -303,10 +405,19 @@ html[data-sap-ui-browser="ie9"] .sapUiColorPicker-ColorPickerAlphaSlider.sapUiSl
 .sapUiTfFoc > .sapUiTfDateIcon:active {
 	border-color: @sapUiMediumBorder;
 }
-/* END "DatePicker.css" */
+/* END "DatePicker.less" */
 
-/* START "Dialog.css" */
+/* START "Dialog.less" */
+/* ============================================= */
+/* CSS for control sap.ui.commons/Dialog.control */
+/* SAP-HCB Theme                                 */
+/* ============================================= */
+
 /* header */
+
+.sapUiDlg {
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiDlgHdr {
 	background-color: @sapUiExtraLightBG;
@@ -387,18 +498,43 @@ html[data-sap-ui-browser="ie7"] .sapUiDlgGrip,
 html[data-sap-ui-browser="ie8"] .sapUiDlgGrip {
 	text-indent: -1px;
 }
-/* END "Dialog.css" */
+/* END "Dialog.less" */
 
-/* START "FormattedTextView.css" */
+/* START "DropdownBox.less" */
+/* ================================================== */
+/* CSS for control sap.ui.commons/DropdownBox.control */
+/* SAP-HCB Theme                                      */
+/* ================================================== */
+
+.sapUiTfCombo {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "DropdownBox.less" */
+
+/* START "FormattedTextView.less" */
+/* ==================================================== */
+/* CSS for control sap.ui.dev/FormattedTextView.control */
+/* SAP-HCB Theme                                        */
+/* ==================================================== */
+
+.sapUiFTV {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiInverted-CTX .sapUiFTV {
 	color: @sapUiBaseText;
 }
-/* END "FormattedTextView.css" */
+/* END "FormattedTextView.less" */
 
-/* START "HorizontalDivider.css" */
+/* START "HorizontalDivider.less" */
 /* ======================================================== */
 /* CSS for control sap.ui.commons/HorizontalDivider.control */
+/* SAP-HCB Theme                                            */
 /* ======================================================== */
+
+.sapUiCommonsHoriDiv{
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiCommonsHoriDivTypePage{
 	border-color: @sapUiBase;
@@ -407,9 +543,20 @@ html[data-sap-ui-browser="ie8"] .sapUiDlgGrip {
 .sapUiCommonsHoriDivTypeArea{
 	border-color: @sapUiBase;
 }
-/* END "HorizontalDivider.css" */
+/* END "HorizontalDivider.less" */
 
-/* START "InPlaceEdit.css" */
+/* START "Image.less" */
+/* ============================================ */
+/* CSS for control sap.ui.commons/Image.control */
+/* SAP-HCB Theme                                */
+/* ============================================ */
+
+.sapUiImg {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "Image.less" */
+
+/* START "InPlaceEdit.less" */
 /* ================================================== */
 /* CSS for control sap.ui.commons/InPlaceEdit.control */
 /* HCB                                               */
@@ -418,6 +565,7 @@ html[data-sap-ui-browser="ie8"] .sapUiDlgGrip {
 .sapUiIpe{
 	height: 18px;
 	margin: 1px; /* otherwise focus outline is cut in MatrixLayout */
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiIpeFocus,
@@ -473,15 +621,24 @@ html[data-sap-ui-browser="ie8"] .sapUiDlgGrip {
 }
 
 .sapUiIpeErr.sapUiIpeEdit > .sapUiBtnS.sapUiBtnLite{
-	background-color: @sapUiMediumBG;
+	background-color: @sapHCHighlightBG;
 }
 
 .sapUiIpeWarn.sapUiIpeEdit > .sapUiBtnS.sapUiBtnLite{
 	background-color: @sapUiFieldBackground;
 }
-/* END "InPlaceEdit.css" */
+/* END "InPlaceEdit.less" */
 
-/* START "Label.css" */
+/* START "Label.less" */
+/* ============================================ */
+/* CSS for control sap.ui.commons/Label.control */
+/* SAP-HCB Theme                                */
+/* ============================================ */
+
+.sapUiLbl {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiLblIco {
 	margin-top: 1px;
 }
@@ -493,12 +650,16 @@ html[data-sap-ui-browser="ie8"] .sapUiDlgGrip {
 .sapUiInverted-CTX .sapUiLbl {
 	color: @sapUiBaseText;
 }
-/* END "Label.css" */
+/* END "Label.less" */
 
-/* START "layout.css" */
+/* START "layout.less" */
 /*
  * in HCB no background colors
  */
+
+.sapUiMlt {
+	font-size: @sapUiDesktopFontSize;
+}
 
 /* BackGround design */
 .sapUiMltBgBorder,
@@ -509,27 +670,40 @@ html[data-sap-ui-browser="ie8"] .sapUiDlgGrip {
 .sapUiMltBgPlain {
 	background-color:@sapUiExtraLightBG;
 }
-/* END "layout.css" */
+/* END "layout.less" */
 
-/* START "Link.css" */
-/* ============ */
-/* Link control */
-/* ============ */
-.sapUiLink,
+/* START "Link.less" */
+/* =========================================== */
+/* CSS for control sap.ui.commons/Link.control */
+/* SAP-HCB Theme                               */
+/* =========================================== */
+
+.sapUiLnk,
 .sapUiLnkDsbl {
 	text-decoration: underline;
+	font-size: @sapUiDesktopFontSize;
 }
 .sapUiLnk:hover {
 	text-decoration: none;
 }
 
-/* END "Link.css" */
+/* END "Link.less" */
 
-/* START "ListBox.css" */
+/* START "ListBox.less" */
+/* ============================================== */
+/* CSS for control sap.ui.commons/ListBox.control */
+/* SAP-HCB Theme                                  */
+/* ============================================== */
+
 @sapUiListBoxBorderRadius: 2px;
 
 .sapUiLbx {
 	border-collapse: separate; /* to prevent inheriting "collapse" */
+	font-size: @sapUiDesktopFontSize;
+}
+
+.sapUiLbxITxt {
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiLbxI:focus {
@@ -578,12 +752,18 @@ html[data-sap-ui-browser="ie8"] .sapUiDlgGrip {
 	font-size: 14px;
 	line-height: 14px;
 }
-/* END "ListBox.css" */
+/* END "ListBox.less" */
 
-/* START "MenuBar.css" */
+/* START "MenuBar.less" */
+/* ============================================== */
+/* CSS for control sap.ui.commons/MenuBar.control */
+/* SAP-HCB Theme                                  */
+/* ============================================== */
+
 .sapUiMnuBar {
 	background-color: @sapUiExtraLightBG;
 	border-color: @sapUiBaseBorder;
+	font-size: @sapUiDesktopFontSize;
 	font-weight: bold;
 }
 
@@ -652,12 +832,16 @@ html[dir=rtl][data-sap-ui-browser*="ie"] .sapUiMnuBarItm.sapUiMnuBarOvrFlw > spa
 	top: 0px;
 	margin-right: 3px;
 }
-/* END "MenuBar.css" */
+/* END "MenuBar.less" */
 
-/* START "MenuButton.css" */
+/* START "MenuButton.less" */
 /* ===================================================== */
 /* HCB for sap.ui.commons/MenuButton.control             */
 /* ===================================================== */
+
+.sapUiMenuButton{
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiBtn.sapUiMenuButton{
 	padding-right: 0px;
@@ -688,9 +872,20 @@ html[data-sap-ui-browser^="ie"] .sapUiMenuButton.sapUiBtnIconOnly{
 html[data-sap-ui-browser^="ie"] .sapUiMenuButton.sapUiBtnIconOnly > .sapUiBtnIco{
 	margin-top: -3px;
 }
-/* END "MenuButton.css" */
+/* END "MenuButton.less" */
 
-/* START "MessageBar.css" */
+/* START "Message.less" */
+/* ============================================== */
+/* CSS for control sap.ui.commons/Message.control */
+/* SAP-HCB Theme                                  */
+/* ============================================== */
+
+.sapUiMsg {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "Message.less" */
+
+/* START "MessageBar.less" */
 /* ================================================= */
 /* CSS for control sap.ui.commons/MessageBar.control */
 /* ================================================= */
@@ -703,6 +898,7 @@ html[data-sap-ui-browser^="ie"] .sapUiMenuButton.sapUiBtnIconOnly > .sapUiBtnIco
 
 .sapUiMsgBar {
 	background-color: @sapUiWhiteBG;
+	font-size: @sapUiDesktopFontSize;
 	padding: 2px;
 }
 
@@ -740,48 +936,110 @@ html[data-sap-ui-browser^="ie"] .sapUiMenuButton.sapUiBtnIconOnly > .sapUiBtnIco
 	background-color: @sapUiHighlight;
 	border: 0px solid transparent;
 }
-/* END "MessageBar.css" */
+/* END "MessageBar.less" */
 
-/* START "MessageBox.css" */
+/* START "MessageBox.less" */
+/* ================================================= */
+/* CSS for control sap.ui.commons/MessageBox.control */
+/* SAP-HCB Theme                                     */
+/* ================================================= */
+
+.sapUiMboxCont {
+	font-size: @sapUiDesktopFontSize;
+}
+
+.sapUiMboxText {
+	font-size: @sapUiDesktopFontSize;
+}
+
+.sapUiMboxIcon {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiMboxInfo {
 	background-image: url(img/messagebox/32x32/information.png);
+	font-size: @sapUiDesktopFontSize;
 }
+
 .sapUiMboxQuestion {
 	background-image: url(img/messagebox/32x32/question.png);
+	font-size: @sapUiDesktopFontSize;
 }
+
 .sapUiMboxWarning {
 	background-image: url(img/messagebox/32x32/warning.png);
+	font-size: @sapUiDesktopFontSize;
 }
+
 .sapUiMboxCritical,
 .sapUiMboxError {
 	background-image: url(img/messagebox/32x32/error.png);
+	font-size: @sapUiDesktopFontSize;
 }
+
 .sapUiMboxSuccess {
 	background-image: url(img/messagebox/32x32/success.png);
+	font-size: @sapUiDesktopFontSize;
 }
-/* END "MessageBox.css" */
+/* END "MessageBox.less" */
 
-/* START "MessageList.css" */
+/* START "MessageList.less" */
+/* ================================================== */
+/* CSS for control sap.ui.commons/MessageList.control */
+/* SAP-HCB Theme                                      */
+/* ================================================== */
+
 /* Container: */
 .sapUiMsgList {
 	border: 1px solid @sapUiBaseBorder;
+	font-size: @sapUiDesktopFontSize;
 }
-/* END "MessageList.css" */
+/* END "MessageList.less" */
 
-/* START "MessageToast.css" */
+/* START "MessageToast.less" */
+/* =================================================== */
+/* CSS for control sap.ui.commons/MessageToast.control */
+/* SAP-HCB Theme                                       */
+/* =================================================== */
+
 /* The Specs say: "No semantic colors!" */
 .sapUiMsgToastMsg {
 	background-color: @sapUiBlackBG !important;
+	font-size: @sapUiDesktopFontSize;
 	border-color: @sapUiBaseBorder !important;
 }
 
 .sapUiMsgToastArrow {
 	background-image: url("img/messagebar/toastarrow.gif") !important;
 }
-/* END "MessageToast.css" */
+/* END "MessageToast.less" */
 
-/* START "Panel.css" */
+/* START "Pagniator.less" */
+/* ================================================ */
+/* CSS for control sap.ui.commons/Pagniator.control */
+/* SAP-HCB Theme                                    */
+/* ================================================ */
+
+.sapUiPag {
+	font-size: @sapUiDesktopFontSize;
+}
+
+.sapUiPagPage {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "Pagniator.less" */
+
+/* START "Panel.less" */
+/* ============================================ */
+/* CSS for control sap.ui.commons/Panel.control */
+/* SAP-HCB Theme                                */
+/* ============================================ */
+
 @sapUiPanelBorderRadius: 3px;
+
+.sapUiPanel {
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiPanelHdr {
 	min-height: 22px;
@@ -804,15 +1062,17 @@ html[data-sap-ui-browser^="ie"] .sapUiMenuButton.sapUiBtnIconOnly > .sapUiBtnIco
 .sapUiPanelTitle.sapUiTvH5{
 	font-size: 11px; /* to be compatible */
 }
-/* END "Panel.css" */
+/* END "Panel.less" */
 
-/* START "ProgressIndicator.css" */
+/* START "ProgressIndicator.less" */
 /* ======================================================== */
 /* CSS for control sap.ui.commons/ProgressIndicator.control */
+/* SAP-HCB Theme                                            */
 /* ======================================================== */
 
 .sapUiProgInd{
 	display: inline-block;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiProgIndBorder{
@@ -927,9 +1187,18 @@ html[data-sap-ui-browser^="ie"] .sapUiMenuButton.sapUiBtnIconOnly > .sapUiBtnIco
 	background-color: @sapUiContentForegroundBorderColor;
 }
 
-/* END "ProgressIndicator.css" */
+/* END "ProgressIndicator.less" */
 
-/* START "RadioButton.css" */
+/* START "RadioButton.less" */
+/* ================================================== */
+/* CSS for control sap.ui.commons/RadioButton.control */
+/* SAP-HCB Theme                                      */
+/* ================================================== */
+
+.sapUiRb {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiRb > label {
 	vertical-align: top;
 }
@@ -954,31 +1223,51 @@ html[data-sap-ui-browser^="ie"] .sapUiMenuButton.sapUiBtnIconOnly > .sapUiBtnIco
 	outline-offset: -2px;
 }
 
-html[data-sap-ui-browser^="ie"] .sapUiRb:focus{
-	position: relative; /* otherwise the Border is not displayed */
-}
-
 html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 	border-width: 2px;
 	border-style: solid;
 }
-/* END "RadioButton.css" */
+/* END "RadioButton.less" */
 
-/* START "RatingIndicator.css" */
+/* START "RadioButtonGroup.less" */
+/* ======================================================= */
+/* CSS for control sap.ui.commons/RadioButtonGroup.control */
+/* SAP-HCB Theme                                           */
+/* ======================================================= */
+
+.sapUiRbG{
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "RadioButtonGroup.less" */
+
+/* START "RatingIndicator.less" */
+/* ====================================================== */
+/* CSS for control sap.ui.commons/RatingIndicator.control */
+/* SAP-HCB Theme                                          */
+/* ====================================================== */
+
+.sapUiRating {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiRating:focus{
 	outline-width: 3px;
 	outline-style: solid;
 	outline-color: invert;
 }
 
-/* END "RatingIndicator.css" */
+/* END "RatingIndicator.less" */
 
-/* START "RichTooltip.css" */
-/* RichTooltip High Contrast Black */
+/* START "RichTooltip.less" */
+/* ================================================== */
+/* CSS for control sap.ui.commons/RichTooltip.control */
+/* SAP-HCB Theme                                      */
+/* ================================================== */
 
 .sapUiRtt {
 	border: 1px solid @sapUiMediumBorder;
 	border-radius: 6px;
+	font-size: @sapUiDesktopFontSize;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 }
@@ -995,12 +1284,17 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 	padding-top: 0;
 	margin: 0;
 }
-/* END "RichTooltip.css" */
+/* END "RichTooltip.less" */
 
-/* START "RoadMap.css" */
+/* START "RoadMap.less" */
 /* ============================================== */
 /* CSS for control sap.ui.commons/RoadMap.control */
+/* SAP-HCB Theme                                  */
 /* ============================================== */
+
+.sapUiRoadMap {
+	font-size: @sapUiDesktopFontSize;
+}
 
 /* Step Styles */
 .sapUiRoadMapDisabled {
@@ -1099,13 +1393,27 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 .sapUiRoadMapEndFixed:after {
 	content: "";
 }
-/* END "RoadMap.css" */
+/* END "RoadMap.less" */
 
-/* START "RowRepeater.css" */
+/* START "RowRepeater.less" */
+/* ================================================== */
+/* CSS for control sap.ui.commons/RowRepeater.control */
+/* SAP-HCB Theme                                      */
+/* ================================================== */
 
-/* ====================================================== */
-/* hcb CSS for control sap.ui.commons/RowRepeater.control */
-/* ====================================================== */
+/* Row Container */
+.sapUiRrBody {
+	font-size: @sapUiDesktopFontSize;
+}
+
+.sapUiRrDesignStandard > .sapUiRrStb {
+	background-color: @sapHCHighlightBG;
+}
+
+.sapUiRrDesignStandard > .sapUiRrFtr {
+	background-color: @sapHCHighlightBG;
+}
+
 
 /** Common Design **/
 
@@ -1115,15 +1423,16 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 
 /** BareShell Design **/
 
-/* END "RowRepeater.css" */
+/* END "RowRepeater.less" */
 
-/* START "SearchField.css" */
+/* START "SearchField.less" */
 /* ====================================================== */
 /* HCB CSS for control sap.ui.commons/SearchField.control */
 /* ====================================================== */
 
 .sapUiSearchField {
 	height: 18px; /*@sapUiTextFieldHeight;*/
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiSearchFieldTf {
@@ -1168,16 +1477,25 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 	width: 15px;
 	margin-top: 1px;
 }
-/* END "SearchField.css" */
+/* END "SearchField.less" */
 
-/* START "SegmentedButton.css" */
+/* START "SegmentedButton.less" */
+/* ====================================================== */
+/* CSS for control sap.ui.commons/SegmentedButton.control */
+/* SAP-HCB Theme                                          */
+/* ====================================================== */
+
+.sapUiSegmentedButton{
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiSegmentedButton > span > .sapUiBtnS.sapUiBtnStd:focus,
 .sapUiSegmentedButton > span > .sapUiBtnS.sapUiBtnStd.sapUiBtnStdFocus {
 	outline: 3px solid @sapUiBaseBorder;
 }
-/* END "SegmentedButton.css" */
+/* END "SegmentedButton.less" */
 
-/* START "Slider.css" */
+/* START "Slider.less" */
 /* ================================================= */
 /* CSS for control sap.ui.commons/Slider.control     */
 /* HCB Theme                                         */
@@ -1185,6 +1503,7 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 
 .sapUiSli{
 	border: none;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiSliHori.sapUiSli{
@@ -1226,12 +1545,12 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 }
 
 .sapUiSliHori .sapUiSliL {
-	border-width: 1px 0 1px 0px;
+	border-width: 1px 1px 1px 1px;
 	top: -1px;
 }
 
 .sapUiSliVert .sapUiSliL {
-	border-width: 0px 1px 0px 1px;
+	border-width: 1px 1px 1px 1px;
 	left: -1px;
 }
 
@@ -1255,7 +1574,7 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 	border-top-color: @sapUiMediumBorder;
 	border-bottom-color: @sapUiMediumBorder;
 	border-left-color: @sapUiMediumBorder;
-	background-color: @sapUiMediumBorder;
+	background-color: @sapHCStandardBG;
 }
 
 .sapUiSliHori.sapUiSliDsbl .sapUiSliBar {
@@ -1269,7 +1588,7 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 	border-left-color: @sapUiMediumBorder;
 	border-right-color: @sapUiMediumBorder;
 	border-bottom-color: @sapUiMediumBorder;
-	background-color: @sapUiMediumBorder;
+	background-color: @sapHCStandardBG;
 }
 
 .sapUiSliVert.sapUiSliDsbl .sapUiSliBar {
@@ -1289,21 +1608,21 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 
 .sapUiSliStd .sapUiSliHiLi,
 .sapUiSliRo .sapUiSliHiLi {
-	background-color: @sapUiHighlight;
+	background-color: @sapHCStandardFG;
 }
 
 .sapUiSliStd.sapUiSliHori  .sapUiSliHiLi,
 .sapUiSliHori.sapUiSliRo .sapUiSliHiLi {
-	border-top-color: @sapUiHighlight;
-	border-bottom-color: @sapUiHighlight;
-	border-left-color: @sapUiHighlight;
+	border-top-color: @sapHCStandardFG;
+	border-bottom-color: @sapHCStandardFG;
+	border-left-color: @sapHCStandardFG;
 }
 
 .sapUiSliStd.sapUiSliVert .sapUiSliHiLi,
 .sapUiSliVert.sapUiSliRo .sapUiSliHiLi {
-	border-left-color: @sapUiHighlight;
-	border-right-color: @sapUiHighlight;
-	border-bottom-color: @sapUiHighlight;
+	border-left-color: @sapHCStandardFG;
+	border-right-color: @sapHCStandardFG;
+	border-bottom-color: @sapHCStandardFG;
 }
 
 .sapUiSliHori.sapUiSliDsbl .sapUiSliHiLi {
@@ -1347,19 +1666,23 @@ html[data-sap-ui-browser^="ie"] .sapUiRb:focus:after {
 
 .sapUiSliStd .sapUiSliGrip,
 .sapUiSliRo .sapUiSliGrip {
-	background-color: @sapUiExtraLightBG;
-	border-color: @sapUiExtraLightText;
+	background-color: @sapHCStandardBG;
+	border-color: @sapHCStandardFG;
 }
 
 .sapUiSliStd .sapUiSliGrip:hover {
-	background-color: @sapUiDarkBG;
-	border-color: @sapUiDarkBG;
+	background-color: @sapHCHighlightBG;
+	border-color: @sapHCStandardFG;
+	border-width: 1px;
+	padding: 1px;
 }
 
 .sapUiSliStd .sapUiSliGrip:focus,
 .sapUiSliStd .sapUiSliGrip:active {
-	border-color: @sapUiHighlight;
-	background-color: @sapUiHighlight;
+	border-color: @sapHCStandardFG;
+	background-color: @sapHCHighlightBG;
+	border-width: 1px;
+	padding: 1px;
 	outline: none;
 }
 
@@ -1429,17 +1752,24 @@ html[data-sap-ui-browser="ie9"] .sapUiSliHori .sapUiSliText {
 .sapUiSliVert .sapUiSliTextRight {
 	top: -1px;
 }
-/* END "Slider.css" */
+/* END "Slider.less" */
 
-/* START "Splitter.css" */
+/* START "Splitter.less" */
+/* =============================================== */
+/* CSS for control sap.ui.commons/Splitter.control */
+/* SAP-HCB Theme                                   */
+/* =============================================== */
+
 .sapUiVerticalSplitterBar {
 	background-image: url(img/splitter/splitter_vert_grip.png);
 	background-color: @sapUiBase;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiHorizontalSplitterBar {
 	background-image: url(img/splitter/splitter_horiz_grip.png);
 	background-color: @sapUiBase;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiVerticalSplitterBar:hover {
@@ -1464,9 +1794,18 @@ html[data-sap-ui-browser="ie9"] .sapUiSliHori .sapUiSliText {
 .sapUiVerticalSplitterBar:focus {
 	outline: @sapUiBaseBorder solid 3px;
 }
-/* END "Splitter.css" */
+/* END "Splitter.less" */
 
-/* START "TabStrip.css" */
+/* START "TabStrip.less" */
+/* ======================================= */
+/* CSS for control sap.ui.commons/TabStrip */
+/* SAP-HCB Theme                           */
+/* ======================================= */
+
+.sapUiTabStrip {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiTabBar {
 	background-image: url(img/tabstrip/tab-bar.png);
 	background-repeat: repeat-x;
@@ -1577,22 +1916,26 @@ html[data-sap-ui-browser="ie8"] .sapUiTabDsbl:first-child{
 html[data-sap-ui-browser^="ff"] .sapUiTabDsbl:focus{
 	outline: 3px solid @sapUiContentDisabledTextColor;
 }
-/* END "TabStrip.css" */
+/* END "TabStrip.less" */
 
-/* START "TextArea.css" */
+/* START "TextArea.less" */
 /* =============================================== */
 /* CSS for control sap.ui.commons/TextArea.control */
 /* HCB theme                                       */
 /* =============================================== */
+
+.sapUiTxtA{
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiTf.sapUiTxtA{
 	padding-top: 3px;	
 }
 	
 
-/* END "TextArea.css" */
+/* END "TextArea.less" */
 
-/* START "TextField.css" */
+/* START "TextField.less" */
 /* ================================================ */
 /* CSS for control sap.ui.commons/TextField.control */
 /* HCB theme                                        */
@@ -1602,6 +1945,7 @@ html[data-sap-ui-browser^="ff"] .sapUiTabDsbl:focus{
 
 .sapUiTf {
 	outline: none; /* remove Safari glow effect */
+	font-size: @sapUiDesktopFontSize;
 	padding-left: 3px;
 	padding-top: 1px;
 }
@@ -1640,7 +1984,7 @@ html[data-sap-ui-browser="ie9"] .sapUiTfMono.sapUiTf { /* in IE with monospace i
 
 .sapUiTfErr.sapUiTfStd {
 	border-color: @sapUiMediumBorder;
-	background-color: @sapUiMediumBG;
+	background-color: @sapHCHighlightBG;
 }
 
 .sapUiTfErr.sapUiTfFoc {
@@ -1655,13 +1999,45 @@ html[data-sap-ui-browser="ie9"] .sapUiTfMono.sapUiTf { /* in IE with monospace i
 .sapUiTfWarn.sapUiTfStd {
 	background-color: @sapUiFieldBackground;
 }
-/* END "TextField.css" */
+/* END "TextField.less" */
 
-/* START "TextView.css" */
+/* START "TextView.less" */
 /* ================================================ */
 /* CSS for control sap.ui.commons/TextView.control  */
 /* SAP-HCB theme                                    */
 /* ================================================ */
+
+.sapUiTv {
+	font-size: @sapUiDesktopFontSize;
+}
+
+.sapUiTvH1 { /* be careful - used in other controls with title too */
+	font-size: @sapUiFontHeader1Size;
+}
+
+.sapUiTvH2 {
+	font-size: @sapUiFontHeader2Size;
+}
+
+.sapUiTvH3 {
+	font-size: @sapUiFontHeader3Size;
+}
+
+.sapUiTvH4 {
+	font-size: @sapUiFontHeader4Size;
+}
+
+.sapUiTvH5 {
+	font-size: @sapUiFontHeader5Size;
+}
+
+.sapUiTvH6 {
+	font-size: @sapUiFontHeader6Size;
+}
+
+.sapUiTvSmall {
+	font-size: @sapUiFontSmallSize;
+}
 
 /* as in HCB inverted popups are black too - no inverted text color */
 .sapUiInverted-CTX .sapUiTv {
@@ -1670,26 +2046,39 @@ html[data-sap-ui-browser="ie9"] .sapUiTfMono.sapUiTf { /* in IE with monospace i
 
 /* invalid state */
 .sapUiTvErr {
-	color: @sapUiBaseText;
+	color: @sapHCNegative;
+	border-color: transparent;
+	background-color: transparent;
 }
 
 /* warning state */
 .sapUiTvWarn,
 .sapUiInverted-CTX .sapUiTvWarn {
-	color: @sapUiTextInverted;
+	color: @sapHCCritical;
+	background-color: transparent;
+}
+
+/* success state */
+.sapUiTvSucc {
+	color: @sapHCPositive;
+	background-color: transparent;
 }
 
 /* Designs */
 .sapUiTvMono {
 	font-family: Lucida Console, monospace;
 }
-/* END "TextView.css" */
+/* END "TextView.less" */
 
-/* START "ToggleButton.css" */
+/* START "ToggleButton.less" */
 /* ======================================================= */
 /* CSS for control sap.ui.commons/ToggleButton.control     */
 /* SAP-HCB Theme                                           */
 /* ======================================================= */
+
+.sapUiBtnS{
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiBtnS.sapUiBtnNorm.sapUiToggleBtn,
 .sapUiBtnS.sapUiBtnLite.sapUiToggleBtn {
@@ -1950,11 +2339,17 @@ html[data-sap-ui-browser^="sf"] .sapUiBtnS.sapUiBtnLite.sapUiToggleBtn.sapUiTogg
 .sapUiBtnS.sapUiBtnReject.sapUiToggleBtn.sapUiToggleBtnPressed:active {
 	color: @sapUiFieldInvalidColor;
 }
-/* END "ToggleButton.css" */
+/* END "ToggleButton.less" */
 
-/* START "Toolbar.css" */
+/* START "Toolbar.less" */
+/* ============================================== */
+/* CSS for control sap.ui.commons/Toolbar.control */
+/* SAP-HCB Theme                                  */
+/* ============================================== */
+
 .sapUiTb {
 	height: 27px;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiTb.sapUiTbStandalone {
@@ -1990,13 +2385,17 @@ html[data-sap-ui-browser^="sf"] .sapUiBtnS.sapUiBtnLite.sapUiToggleBtn.sapUiTogg
 	padding: 5px 0px 3px 10px;
 	height: 22px;
 }
-/* END "Toolbar.css" */
+/* END "Toolbar.less" */
 
-/* START "Tree.css" */
+/* START "Tree.less" */
 /* ============================================= */
 /* CSS for control sap.ui.commons/Tree.control   */
 /* HCB Theme                                     */
 /* ============================================= */
+
+.sapUiTree{
+	font-size: @sapUiDesktopFontSize;
+}
 
 /* Since HCB is already inverted compared to GF it
 must be re-inverted */
@@ -2040,28 +2439,38 @@ must be re-inverted */
 	background-color: @sapUiHighlight;
 	font-weight: bold;
 }
-/* END "Tree.css" */
+/* END "Tree.less" */
 
-/* START "TriStateCheckBox.css" */
+/* START "TriStateCheckBox.less" */
 /* ======================================================= */
 /* CSS for control sap.ui.commons.TriStateCheckBox.control */
+/* SAP-HCB Theme                                           */
 /* ======================================================= */
+
+.sapUiTriCb {
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiInverted-CTX .sapUiTriCb {
 	color: @sapUiBaseText;
 }
-/* END "TriStateCheckBox.css" */
+/* END "TriStateCheckBox.less" */
 
-/* START "ValueHelpField.css" */
+/* START "ValueHelpField.less" */
 /* ===================================================== */
 /* CSS for control sap.ui.commons/ValueHelpField.control */
+/* SAP-HCB Theme                                         */
 /* ===================================================== */
 
 /* High Contrast Black */
 
-@sapUiValueHelpIconRegularUrl: ~"/img/valuehelpfield/F4-Help_icon_regular.png";
+@sapUiValueHelpIconRegularUrl: ~"/img/valuehelpfield/F4-Help_icon_hover.png";
 @sapUiValueHelpIconHoverUrl: ~"/img/valuehelpfield/F4-Help_icon_hover.png";
 @sapUiValueHelpIconDsblUrl: ~"/img/valuehelpfield/F4-Help_icon_dsbl.png";
+
+.sapUiTfCombo {
+	font-size: @sapUiDesktopFontSize;
+}
 
 /* textField icon */
 .sapUiTfCombo > .sapUiTfValueHelpIcon {
@@ -2071,7 +2480,7 @@ must be re-inverted */
 
 .sapUiTfCombo > span.sapUiTfValueHelpIcon {
 	font-size: 12px;
-	color: @sapUiTextDisabled; /* disabled text color fits  */
+	color: @sapUiText;
 	padding-top: 2px;
 	height: 14px;
 }
@@ -2081,6 +2490,7 @@ must be re-inverted */
 .sapUiTfCombo > span.sapUiTfValueHelpIcon:hover {
 	border-left: 1px solid @sapUiFieldHoverBorderColor;
 	color: @sapUiText;
+	background-color: @sapUiFieldHoverHelpBackground;
 }
 
 .sapUiTfCombo.sapUiTfDsbl > span.sapUiTfValueHelpIcon:hover,
@@ -2097,5 +2507,6 @@ must be re-inverted */
 .sapUiTfCombo.sapUiTfRo > span.sapUiTfValueHelpIcon:hover {
 	color: @sapUiLightText;
 }
-/* END "ValueHelpField.css" */
+
+/* END "ValueHelpField.less" */
 

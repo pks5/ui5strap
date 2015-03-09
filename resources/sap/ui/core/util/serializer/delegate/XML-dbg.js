@@ -1,6 +1,6 @@
 /*
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -22,8 +22,8 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @class XML serializer delegate class.
 	 * @extends sap.ui.core.util.serializer.delegate.Delegate
 	 * @author SAP SE
-	 * @version 1.24.3
-	 * @name sap.ui.core.util.serializer.delegate.XML
+	 * @version 1.26.7
+	 * @alias sap.ui.core.util.serializer.delegate.XML
 	 * @experimental Since 1.15.1. The XML serializer delegate is still under construction, so some implementation details can be changed in future.
 	 */
 	var XML = Delegate.extend("sap.ui.core.util.serializer.delegate.XML", /** @lends sap.ui.core.util.serializer.delegate.XML.prototype */
@@ -44,8 +44,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {sap.ui.core.Control} oControl The current control to process.
 	 * @param {string} sAggregationName The current aggregation name.
 	 * @return {string} the created string.
-	 * @name sap.ui.core.util.serializer.delegate.XML#startAggregation
-	 * @function
 	 */
 	XML.prototype.startAggregation = function (oControl, sAggregationName) {
 		return '<' + this._createAggregationName(oControl, sAggregationName) + '>';
@@ -58,8 +56,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {sap.ui.core.Control} oControl The current control to process.
 	 * @param {string} sAggregationName The current aggregation name.
 	 * @return {string} the created string.
-	 * @name sap.ui.core.util.serializer.delegate.XML#endAggregation
-	 * @function
 	 */
 	XML.prototype.endAggregation = function (oControl, sAggregationName) {
 		return '</' + this._createAggregationName(oControl, sAggregationName) + '>';
@@ -73,8 +69,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {string} sAggregationName The current aggregation name.
 	 * @param {boolean} isDefaultAggregation Whether the aggregation is the default aggregation.
 	 * @return {string} the created string.
-	 * @name sap.ui.core.util.serializer.delegate.XML#start
-	 * @function
 	 */
 	XML.prototype.start = function (oControl, sAggregationName, isDefaultAggregation) {
 		return "<" + this._createTagName(oControl);
@@ -88,8 +82,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {string} sAggregationName The current aggregation name.
 	 * @param {boolean} isDefaultAggregation Whether the aggregation is the default aggregation.
 	 * @return {string} the created string.
-	 * @name sap.ui.core.util.serializer.delegate.XML#end
-	 * @function
 	 */
 	XML.prototype.end = function (oControl, sAggregationName, isDefaultAggregation) {
 		return "</" + this._createTagName(oControl) + ">";
@@ -103,8 +95,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {string} sAggregationName The current aggregation name.
 	 * @param {boolean} isDefaultAggregation Whether the aggregation is the default aggregation.
 	 * @return {string} the created string.
-	 * @name sap.ui.core.util.serializer.delegate.XML#middle
-	 * @function
 	 */
 	XML.prototype.middle = function (oControl, sAggregationName, isDefaultAggregation) {
 	
@@ -123,7 +113,7 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 			for (var i = 0; i < aCustomClasses.length; i++) {
 				var sCssClass = aCustomClasses[i];
 				if (!jQuery.sap.startsWith(sCssClass, "sapM") && !jQuery.sap.startsWith(sCssClass, "sapUi")) {
-					aCssClasses.push(sCssClass)
+					aCssClasses.push(sCssClass);
 				}
 			}
 			if (aCssClasses.length > 0) {
@@ -191,8 +181,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {function} [fnGetValue] A delegate function to retrieve the value. 
 	 * @param {function} [fnValueCheck] A delegate function to check the value.
 	 * @private
-	 * @name sap.ui.core.util.serializer.delegate.XML#_createAttributes
-	 * @function
 	 */
 	XML.prototype._createAttributes = function (aXml, oControl, oObj, fnGetValue, fnValueCheck) {
 		for (var sName in oObj) {
@@ -223,8 +211,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {object} oValue The value of the property.
 	 * @return {string} The created data binding attribute.
 	 * @private
-	 * @name sap.ui.core.util.serializer.delegate.XML#_createDataBindingAttribute
-	 * @function
 	 */
 	XML.prototype._createDataBindingAttribute = function (oControl, sName, oValue) {
 			
@@ -265,8 +251,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {object} oValue The value of the attribute.
 	 * @return {string} The created attribute string.
 	 * @private
-	 * @name sap.ui.core.util.serializer.delegate.XML#_createAttribute
-	 * @function
 	 */
 	XML.prototype._createAttribute = function (sAttribute, oValue) {
 		return ' ' + sAttribute + '="' + oValue + '"';
@@ -279,8 +263,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {sap.ui.core.Control} oControl The current control to process.
 	 * @return {string} The tag name.
 	 * @private
-	 * @name sap.ui.core.util.serializer.delegate.XML#_createTagName
-	 * @function
 	 */
 	XML.prototype._createTagName = function (oControl) {
 		
@@ -307,8 +289,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {string} sAggregationName The current aggregation name.
 	 * @return {string} The aggregation name string.
 	 * @private
-	 * @name sap.ui.core.util.serializer.delegate.XML#_createAggregationName
-	 * @function
 	 */
 	XML.prototype._createAggregationName = function (oControl, sAggregationName) {
 		
@@ -329,8 +309,6 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @param {string} sName The name string to use
 	 * @return {string} The namespace string.
 	 * @private
-	 * @name sap.ui.core.util.serializer.delegate.XML#_createNamespace
-	 * @function
 	 */
 	XML.prototype._createNamespace = function (sNamespace, sName) {
 		if (this._sDefaultNamespace && this._sDefaultNamespace === sNamespace) {

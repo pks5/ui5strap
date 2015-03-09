@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -13,10 +13,10 @@ sap.ui.define(['jquery.sap.global'],
 	/**
 	 * @class Defines the different ready states for a WebSocket connection.
 	 *
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @static
 	 * @public
-	 * @name sap.ui.core.ws.ReadyState
+	 * @alias sap.ui.core.ws.ReadyState
 	 */
 	var ReadyState = {
 	

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -8,8 +8,6 @@
 sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 	function(jQuery/* , jQuerySap1 */) {
 	"use strict";
-
-	jQuery.sap._touchToMouseEvent = true;
 
 	var onTouchStart,
 		onTouchMove,
@@ -23,7 +21,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 
 		bIsSimulatingTouchToMouseEvent = true;
 
-		var simulateTouchToMouseEvent = (function() {
+		(function() {
 			var document = window.document,
 				bHandleEvent = false,
 				oTarget = null,
@@ -47,7 +45,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 				}
 
 				// we need mapping of the different event types to get the correct target
-				var oMappedEvent = oEvent.type == "touchend" ? oEvent.changedTouches[0] : oEvent.touches[0]; 
+				var oMappedEvent = oEvent.type == "touchend" ? oEvent.changedTouches[0] : oEvent.touches[0];
 
 				// create the synthetic event
 				var newEvent = document.createEvent('MouseEvent');  // trying to create an actual TouchEvent will create an error
@@ -605,6 +603,17 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 		}},
 
 		/**
+		 * Pseudo event for pressing the '-' (minus) sign.
+		 * @since 1.25.0
+		 * @experimental Since 1.25.0 Implementation details can be changed in future.
+		 * @public
+		 */
+		sapminus: {sName: "sapminus", aTypes: ["keypress"], fnCheck: function(oEvent) {
+			var sCharCode = String.fromCharCode(oEvent.which);
+			return sCharCode == '-';
+		}},
+
+		/**
 		 * Pseudo event for pseudo 'decrease' event with modifiers (Ctrl, Alt or Shift)
 		 * @public
 		 */
@@ -622,6 +631,17 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 			var bRtl = sap.ui.getCore().getConfiguration().getRTL();
 			var iNextKey = bRtl ? jQuery.sap.KeyCodes.ARROW_LEFT : jQuery.sap.KeyCodes.ARROW_RIGHT;
 			return (oEvent.keyCode == iNextKey || oEvent.keyCode == jQuery.sap.KeyCodes.ARROW_UP) && !hasModifierKeys(oEvent);
+		}},
+		
+		/**
+		 * Pseudo event for pressing the '+' (plus) sign.
+		 * @since 1.25.0
+		 * @experimental Since 1.25.0 Implementation details can be changed in future.
+		 * @public
+		 */
+		sapplus: {sName: "sapplus", aTypes: ["keypress"], fnCheck: function(oEvent) {
+			var sCharCode = String.fromCharCode(oEvent.which);
+			return sCharCode == '+';
 		}},
 
 		/**
@@ -727,7 +747,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 	 * The array is processed during event analysis (when classifying browser events as pseudo events).
 	 * @private
 	 */
-	var PSEUDO_EVENTS = ["sapdown", "sapdownmodifiers", "sapshow", "sapup", "sapupmodifiers", "saphide", "sapleft", "sapleftmodifiers", "sapright", "saprightmodifiers", "saphome", "saphomemodifiers", "saptop", "sapend", "sapendmodifiers", "sapbottom", "sappageup", "sappageupmodifiers", "sappagedown", "sappagedownmodifiers", "sapselect", "sapselectmodifiers", "sapspace", "sapspacemodifiers", "sapenter", "sapentermodifiers", "sapexpand", "sapbackspace", "sapbackspacemodifiers", "sapdelete", "sapdeletemodifiers", "sapexpandmodifiers", "sapcollapse", "sapcollapsemodifiers", "sapcollapseall", "sapescape", "saptabnext", "saptabprevious", "sapskipforward", "sapskipback", "sapprevious", "sappreviousmodifiers", "sapnext", "sapnextmodifiers", "sapdecrease", "sapdecreasemodifiers", "sapincrease", "sapincreasemodifiers", "sapdelayeddoubleclick"];
+	var PSEUDO_EVENTS = ["sapdown", "sapdownmodifiers", "sapshow", "sapup", "sapupmodifiers", "saphide", "sapleft", "sapleftmodifiers", "sapright", "saprightmodifiers", "saphome", "saphomemodifiers", "saptop", "sapend", "sapendmodifiers", "sapbottom", "sappageup", "sappageupmodifiers", "sappagedown", "sappagedownmodifiers", "sapselect", "sapselectmodifiers", "sapspace", "sapspacemodifiers", "sapenter", "sapentermodifiers", "sapexpand", "sapbackspace", "sapbackspacemodifiers", "sapdelete", "sapdeletemodifiers", "sapexpandmodifiers", "sapcollapse", "sapcollapsemodifiers", "sapcollapseall", "sapescape", "saptabnext", "saptabprevious", "sapskipforward", "sapskipback", "sapprevious", "sappreviousmodifiers", "sapnext", "sapnextmodifiers", "sapdecrease", "sapminus", "sapdecreasemodifiers", "sapincrease", "sapplus", "sapincreasemodifiers", "sapdelayeddoubleclick"];
 
 	//Add mobile touch events if touch is supported
 	(function initTouchEventSupport() {
@@ -736,7 +756,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 		var aAdditionalControlEvents = [];
 		var aAdditionalPseudoEvents = [];
 
-		if (sap.ui.Device.support.touch){ // touch events natively supported
+		if (sap.ui.Device.support.touch) { // touch events natively supported
 			jQuery.sap.touchEventMode = "ON";
 
 			// ensure that "oEvent.touches", ... works (and not only "oEvent.originalEvent.touches", ...)
@@ -763,10 +783,12 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 		 * @private
 		 */
 		var createSimulatedEvent = function(sSimEventName, aOrigEvents, fnHandler) {
-			var sHandlerKey = "__"+sSimEventName+"Handler";
-			var sSapSimEventName = "sap"+sSimEventName;
+			var sHandlerKey = "__" + sSimEventName + "Handler";
+			var sSapSimEventName = "sap" + sSimEventName;
 			aAdditionalControlEvents.push(sSapSimEventName);
-			aAdditionalPseudoEvents.push({sName: sSimEventName, aTypes: [sSapSimEventName], fnCheck: function (oEvent) { return true; }});
+			aAdditionalPseudoEvents.push({sName: sSimEventName, aTypes: [sSapSimEventName], fnCheck: function (oEvent) {
+				return true;
+			}});
 
 			jQuery.event.special[sSapSimEventName] = {
 				// When binding to the simulated event with prefix is done through jQuery, this function is called and redirect the registration
@@ -786,7 +808,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 					};
 
 					oHandle.__sapSimulatedEventHandler = fnHandlerWrapper;
-					for(var i=0; i<aOrigEvents.length; i++){
+					for (var i = 0; i < aOrigEvents.length; i++) {
 						$this.on(aOrigEvents[i], fnHandlerWrapper);
 					}
 				},
@@ -797,7 +819,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 					var $this = jQuery(this);
 					var fnHandler = oHandle.__sapSimulatedEventHandler;
 					$this.removeData(sHandlerKey + oHandle.guid);
-					for(var i=0; i<aOrigEvents.length; i++){
+					for (var i = 0; i < aOrigEvents.length; i++) {
 						jQuery.event.remove(this, aOrigEvents[i], fnHandler);
 					}
 				}
@@ -818,22 +840,22 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 			var $DomRef = jQuery(oConfig.domRef);
 			// Suppress the delayed mouse events simulated on touch enabled device
 			// the mark is done within jquery-mobile-custom.js
-			if(oEvent.isMarked("delayedMouseEvent")){
+			if (oEvent.isMarked("delayedMouseEvent")) {
 				return;
 			}
 
 			// Checks if the mouseout event should be handled, the mouseout of the inner dom shouldn't be handled when the mouse cursor
 			// is still inside the control's root dom node
-			if(!(oEvent.type != "mouseout" || (oEvent.type === "mouseout" && jQuery.sap.checkMouseEnterOrLeave(oEvent, oConfig.domRef)))){
+			if (!(oEvent.type != "mouseout" || (oEvent.type === "mouseout" && jQuery.sap.checkMouseEnterOrLeave(oEvent, oConfig.domRef)))) {
 				var bSkip = true;
 				var sControlId = $DomRef.data("__touchstart_control");
-				if(sControlId){
+				if (sControlId) {
 					var oCtrlDom = jQuery.sap.domById(sControlId);
-					if(oCtrlDom && jQuery.sap.checkMouseEnterOrLeave(oEvent, oCtrlDom)){
+					if (oCtrlDom && jQuery.sap.checkMouseEnterOrLeave(oEvent, oCtrlDom)) {
 						bSkip = false;
 					}
 				}
-				if(bSkip){
+				if (bSkip) {
 					return;
 				}
 			}
@@ -873,10 +895,10 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 				// no default
 			}
 
-			if(oConfig.eventName === "touchstart" || $DomRef.data("__touch_in_progress")){
+			if (oConfig.eventName === "touchstart" || $DomRef.data("__touch_in_progress")) {
 				$DomRef.data("__touch_in_progress", "X");
 				var oControl = jQuery.fn.control ? jQuery(oEvent.target).control(0) : null;
-				if(oControl){
+				if (oControl) {
 					$DomRef.data("__touchstart_control", oControl.getId());
 				}
 
@@ -889,20 +911,22 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 				//
 				// With this parameter, UIArea can check if the touchend is generated from mouseout event and check if the target is still
 				// inside the current target. Executing the corresponding logic only when the target is out of the current target.
-				if(oEvent.type === "mouseout"){
+				if (oEvent.type === "mouseout") {
 					oNewEvent.setMarked("fromMouseout");
 				}
 				oConfig.eventHandle.handler.call(oConfig.domRef, oNewEvent);
 				// here the fromMouseout flag is checked, terminate the touch progress only when touchend event is not marked with fromMouseout.
-				if(oConfig.eventName === "touchend" && !oNewEvent.isMarked("fromMouseout")){
+				if (oConfig.eventName === "touchend" && !oNewEvent.isMarked("fromMouseout")) {
 					$DomRef.removeData("__touch_in_progress");
 					$DomRef.removeData("__touchstart_control");
 				}
 			}
 		};
-		createSimulatedEvent("touchstart", ["mousedown"], fnMouseToTouchHandler);
-		createSimulatedEvent("touchend", ["mouseup", "mouseout"], fnMouseToTouchHandler);
-		createSimulatedEvent("touchmove", ["mousemove"], fnMouseToTouchHandler);
+		if (!(sap.ui.Device.support.pointer && sap.ui.Device.support.touch)) {
+			createSimulatedEvent("touchstart", ["mousedown"], fnMouseToTouchHandler);
+			createSimulatedEvent("touchend", ["mouseup", "mouseout"], fnMouseToTouchHandler);
+			createSimulatedEvent("touchmove", ["mousemove"], fnMouseToTouchHandler);
+		}
 
 		/**
 		 * This methods decides when extra events are needed. Extra events are: tap, swipe and the new touch to mouse event simulation.
@@ -922,24 +946,26 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 
 			// TODO: should be replaced by some function in jQuery.sap.global (e.g. jQuery.sap.config(sKey))
 			function hasConfig(sKey) {
-				return document.location.search.indexOf("sap-ui-"+sKey) > -1 || // URL 
+				return document.location.search.indexOf("sap-ui-" + sKey) > -1 || // URL 
 					!!oCfgData[sKey.toLowerCase()]; // currently, properties of oCfgData are converted to lower case (DOM attributes)
 			}
 
 			return sap.ui.Device.support.touch || // tap, swipe, etc. events are needed when touch is supported
 				hasConfig("xx-test-mobile") || // see sap.ui.core.Configuration -> M_SETTINGS
 				// also simulate touch events when sap-ui-xx-fakeOS is set (independently of the value and the current browser)
-				hasConfig("xx-fakeOS") || 
+				hasConfig("xx-fakeOS") ||
 				// always simulate touch events when the mobile lib is involved (FIXME: hack for Kelley, this does currently not work with dynamic library loading)
 				sLibs.match(/sap.m\b/);
 		}
 
 		// If extra event support is needed, jQuery mobile event plugin is loaded to support tap, swipe and scrollstart/stop events.
 		// The old touch to mouse event simulation ((see line 25 in this file)) will be deregistered and the new one will be active.
-		if(needsExtraEventSupport()){
+		if (needsExtraEventSupport()) {
 			jQuery.sap.require("sap.ui.thirdparty.jquery-mobile-custom");
 
-			if(sap.ui.Device.support.touch){
+			// Simulate mouse events on touch devices
+			// Except for Windows Phone with touch events support.
+			if (sap.ui.Device.support.touch && !sap.ui.Device.support.pointer) {
 				var bFingerIsMoved = false,
 					iMoveThreshold = jQuery.vmouse.moveDistanceThreshold,
 					iStartX, iStartY,
@@ -967,7 +993,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 					} else if (oEvent.type === "touchmove") {
 						bFingerIsMoved = bFingerIsMoved ||
 									(Math.abs(oTouch.pageX - iStartX) > iMoveThreshold ||
-											Math.abs(oTouch.pageY - iStartY) > iMoveThreshold) ;
+											Math.abs(oTouch.pageY - iStartY) > iMoveThreshold);
 					}
 
 					var oNewEvent = jQuery.event.fix(oEvent.originalEvent || oEvent);
@@ -999,7 +1025,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 					oConfig.eventHandle.handler.call(oConfig.domRef, oNewEvent);
 
 					// also call the onclick event handler when touchend event is received and the movement is within threshold
-					if(oEvent.type === "touchend" && !bEventHandledByUIArea && !bFingerIsMoved){
+					if (oEvent.type === "touchend" && !bEventHandledByUIArea && !bFingerIsMoved) {
 						oNewEvent.type = "click";
 						oNewEvent.setMark("handledByUIArea", false);
 						oNewEvent.offsetX = iOffsetX; // use offset from touchstart
@@ -1010,7 +1036,6 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 
 				// Deregister the previous touch to mouse event simulation (see line 25 in this file)
 				jQuery.sap.disableTouchToMouseHandling();
-				jQuery.sap._touchToMouseEvent = false;
 
 				createSimulatedEvent("mousedown", ["touchstart"], fnTouchToMouseHandler);
 				createSimulatedEvent("mousemove", ["touchmove"], fnTouchToMouseHandler);
@@ -1043,13 +1068,13 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 		// before the touchstart one, our flags don't work anymore.
 		//
 		// Therefore jQuery version needs to be checked in order to decide the event order in jQuery.sap.ControlEvents.
-		if(jQuery.sap.Version(jQuery.fn.jquery).compareTo("1.9.1") < 0){
+		if (jQuery.sap.Version(jQuery.fn.jquery).compareTo("1.9.1") < 0) {
 			jQuery.sap.ControlEvents = jQuery.sap.ControlEvents.concat(aAdditionalControlEvents);
-		}else{
+		} else {
 			jQuery.sap.ControlEvents = aAdditionalControlEvents.concat(jQuery.sap.ControlEvents);
 		}
 
-		for(var i=0; i<aAdditionalPseudoEvents.length; i++){
+		for (var i = 0; i < aAdditionalPseudoEvents.length; i++) {
 			jQuery.sap.PseudoEvents[aAdditionalPseudoEvents[i].sName] = aAdditionalPseudoEvents[i];
 			PSEUDO_EVENTS.push(aAdditionalPseudoEvents[i].sName);
 		}
@@ -1124,18 +1149,20 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 			var ilength = aPseudoEvents.length;
 			var oPseudo = null;
 
-			for(var i=0; i<ilength; i++){
+			for (var i = 0; i < ilength; i++) {
 				oPseudo = jQuery.sap.PseudoEvents[aPseudoEvents[i]];
-				if(oPseudo.aTypes
+				if (oPseudo.aTypes
 						&& jQuery.inArray(this.type, oPseudo.aTypes) > -1
 						&& oPseudo.fnCheck
-						&& oPseudo.fnCheck(this)){
+						&& oPseudo.fnCheck(this)) {
 					aPseudoTypes.push(oPseudo.sName);
 				}
 			}
 		}
 
-		this.getPseudoTypes = function(){return aPseudoTypes.slice();};
+		this.getPseudoTypes = function(){
+			return aPseudoTypes.slice();
+		};
 
 		return aPseudoTypes.slice();
 	};
@@ -1177,10 +1204,10 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 
 		if ( e.keyCode != 0 ) {
 			try { // Sometimes setting keycode results in "Access Denied"
-				if(!sap.ui.Device.browser.firefox) {
+				if (!sap.ui.Device.browser.firefox) {
 					e.keyCode = 0;
 				}
-			} catch(ex) {}
+			} catch (ex) {}
 		}
 
 	};
@@ -1218,7 +1245,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 	 * @public
 	 */
 	jQuery.sap.checkMouseEnterOrLeave = function checkMouseEnterOrLeave(oEvent, oDomRef) {
-		if(oEvent.type != "mouseover" && oEvent.type != "mouseout") {
+		if (oEvent.type != "mouseover" && oEvent.type != "mouseout") {
 			return false;
 		}
 
@@ -1234,7 +1261,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 			if ( parent !== element ) {
 				isMouseEnterLeave = true;
 			}
-		} catch(e) { }
+		} catch (e) { }
 
 		return isMouseEnterLeave;
 	};
@@ -1375,14 +1402,14 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 	 */
 	jQuery.Event.prototype.getOffsetX = function() {
 
-		if (this.type == 'click'){
-			if (this.offsetX){
+		if (this.type == 'click') {
+			if (this.offsetX) {
 				return this.offsetX;
 			}
-			if (this.layerX){
+			if (this.layerX) {
 				return this.layerX;
 			}
-			if (this.originalEvent.layerX){
+			if (this.originalEvent.layerX) {
 				return this.originalEvent.layerX;
 			}
 		}
@@ -1398,14 +1425,14 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 	 */
 	jQuery.Event.prototype.getOffsetY = function() {
 
-		if (this.type == 'click'){
-			if (this.offsetY){
+		if (this.type == 'click') {
+			if (this.offsetY) {
 				return this.offsetY;
 			}
-			if (this.layerY){
+			if (this.layerY) {
 				return this.layerY;
 			}
-			if (this.originalEvent.layerY){
+			if (this.originalEvent.layerY) {
 				return this.originalEvent.layerY;
 			}
 		}
@@ -1477,6 +1504,238 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.keycodes'],
 		sKey = sKey || "handledByControl";
 		return !!(this.originalEvent || this)["_sapui_" + sKey];
 	};
+
+	
+	/* ************** F6 Fast Navigation ************** */
+	
+	// CustomData attribute name for fast navigation groups (in DOM additional prefix "data-" is needed)
+	jQuery.sap._FASTNAVIGATIONKEY = "sap-ui-fastnavgroup";
+	
+	// Returns the nearest parent DomRef of the given DomRef with attribute data-sap-ui-customfastnavgroup="true". 
+	function findClosestCustomGroup(oRef) {
+		var $Group = jQuery(oRef).closest('[data-sap-ui-customfastnavgroup="true"]');
+		return $Group[0];
+	}
+	
+	// Returns the nearest parent DomRef of the given DomRef with attribute data-sap-ui-fastnavgroup="true" or
+	// (if available) the nearest parent with attribute data-sap-ui-customfastnavgroup="true". 
+	function findClosestGroup(oRef) {
+		var oGroup = findClosestCustomGroup(oRef);
+		if (oGroup) {
+			return oGroup;
+		}
+		
+		var $Group = jQuery(oRef).closest('[data-' + jQuery.sap._FASTNAVIGATIONKEY + '="true"]');
+		return $Group[0];
+	}
+	
+	// Returns a jQuery object which contains all next/previous (bNext) tabbable DOM elements of the given starting point (oRef) within the given scopes (DOMRefs)
+	function findTabbables(oRef, aScopes, bNext) {
+		var $Ref = jQuery(oRef),
+			$All, $Tabbables;
+		
+		if (bNext) {
+			$All = jQuery.merge($Ref.find("*"), jQuery.merge($Ref.nextAll(), $Ref.parents().nextAll()));
+			$Tabbables = $All.find(':sapTabbable').addBack(':sapTabbable');
+		} else {
+			$All = jQuery.merge($Ref.prevAll(), $Ref.parents().prevAll());
+			$Tabbables = jQuery.merge($Ref.parents(':sapTabbable'), $All.find(':sapTabbable').addBack(':sapTabbable'));
+		} 
+
+		var $Tabbables = jQuery.unique($Tabbables);
+		return $Tabbables.filter(function(){
+			return isContained(aScopes, this);
+		});
+	}
+	
+	// Filters all elements in the given jQuery object which are in the static UIArea and which are not in the given scopes.
+	function filterStaticAreaContent($Refs, aScopes){
+		var oStaticArea = jQuery.sap.domById("sap-ui-static");
+		if (!oStaticArea) {
+			return $Refs;
+		}
+		
+		var aScopesInStaticArea = [];
+		for (var i = 0; i < aScopes.length; i++) {
+			if (jQuery.contains(oStaticArea, aScopes[i])) {
+				aScopesInStaticArea.push(aScopes[i]);
+			}
+		}
+		
+		return $Refs.filter(function(){
+			if (aScopesInStaticArea.length && isContained(aScopesInStaticArea, this)) {
+				return true;
+			}
+			return !jQuery.contains(oStaticArea, this);
+		});
+	}
+	
+	// Checks whether the given DomRef is contained or equals (in) one of the given container
+	function isContained(aContainers, oRef) {
+		for (var i = 0; i < aContainers.length; i++) {
+			if (aContainers[i] === oRef || jQuery.contains(aContainers[i], oRef)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//see navigate() (bForward = false)
+	function findFirstTabbableOfPreviousGroup($FirstTabbableInScope, $Tabbables, oSouceGroup, bFindPreviousGroup) {
+		var oGroup, $Target;
+		
+		for (var i = $Tabbables.length - 1; i >= 0; i--) {
+			oGroup = findClosestGroup($Tabbables[i]);
+			if (oGroup != oSouceGroup) {
+				if (bFindPreviousGroup) {
+					//First find last tabbable of previous group and remember this new group (named "X" in the following comments)
+					oSouceGroup = oGroup;
+					bFindPreviousGroup = false;
+				} else {
+					//Then starting from group X and try to find again the last tabbable of previous group (named "Y")
+					//-> Jump one tabbable back to get the first tabbable of X
+					$Target = jQuery($Tabbables[i + 1]);
+					break;
+				}
+			}
+		}
+		
+		if (!$Target && !bFindPreviousGroup) {
+			//Group X found but not group Y -> X is the first group -> Focus the first tabbable scope (e.g. page) element
+			$Target = $FirstTabbableInScope;
+		}
+		
+		return $Target;
+	}
+	
+	// Finds the next/previous (bForward) element in the F6 chain starting from the given source element within the given scopes and focus it
+	function navigate(oSource, aScopes, bForward) {
+		if (!aScopes || aScopes.length == 0) {
+			aScopes = [document];
+		}
+		
+		if (!isContained(aScopes, oSource)) {
+			return;
+		}
+		
+		var oSouceGroup = findClosestGroup(oSource),
+			$AllTabbables = filterStaticAreaContent(jQuery(aScopes).find(':sapTabbable').addBack(':sapTabbable'), aScopes),
+			$FirstTabbableInScope = $AllTabbables.first(),
+			$Tabbables = filterStaticAreaContent(findTabbables(oSource, aScopes, bForward), aScopes),
+			oGroup, $Target;
+		
+		if (bForward) {
+			//Find the first next tabbable within another group
+			for (var i = 0; i < $Tabbables.length; i++) {
+				oGroup = findClosestGroup($Tabbables[i]);
+				if (oGroup != oSouceGroup) {
+					$Target = jQuery($Tabbables[i]);
+					break;
+				}
+			}
+
+			//If not found, end of scope (e.g. page) is reached -> Focus the first tabbable scope (e.g. page) element
+			if (!$Target || !$Target.length) {
+				$Target = $FirstTabbableInScope;
+			}
+		} else {
+			$Target = findFirstTabbableOfPreviousGroup($FirstTabbableInScope, $Tabbables, oSouceGroup, true);
+			
+			if (!$Target || !$Target.length) {
+				//No other group found before -> find first element of last group in the scope (e.g. page)
+				
+				if ($AllTabbables.length == 1) {
+					//Only one tabbable element -> use it
+					$Target = jQuery($AllTabbables[0]);
+				} else if ($AllTabbables.length > 1) {
+					oSouceGroup = findClosestGroup($AllTabbables.eq(-1));
+					oGroup = findClosestGroup($AllTabbables.eq(-2));
+					if (oSouceGroup != oGroup) {
+						//Last tabbable scope (e.g. page) element and the previous tabbable scope (e.g. page) element have different groups -> last tabbable scope (e.g. page) element is first tabbable element of its group
+						$Target = $AllTabbables.eq(-1);
+					} else {
+						//Take last tabbable scope (e.g. page) element as reference and start search for first tabbable of the same group
+						$Target = findFirstTabbableOfPreviousGroup($FirstTabbableInScope, $AllTabbables, oSouceGroup, false);
+					}
+				}
+			}
+		}
+		
+		if ($Target && $Target.length) {
+			var oTarget = $Target[0],
+				oEvent = null,
+				oCustomGroup = findClosestCustomGroup(oTarget);
+			
+			if (oCustomGroup && oCustomGroup.id) {
+				var oControl = sap.ui.getCore().byId(oCustomGroup.id);
+				if (oControl) {
+					oEvent = jQuery.Event("BeforeFastNavigationFocus");
+					oEvent.target = oTarget;
+					oEvent.source = oSource;
+					oEvent.forward = bForward;
+					oControl._handleEvent(oEvent);
+				}
+			}
+			
+			if (!oEvent || !oEvent.isDefaultPrevented()) {
+				jQuery.sap.focus(oTarget);
+			}
+		}
+	}
+	
+	/**
+	 * Central handler for F6 key event. Based on the current target and the given event the next element in the F6 chain is focused.
+	 * 
+	 * This handler might be also called manually. In this case the central handler is deactivated for the given event.
+	 * 
+	 * If the event is not a keydown event, it does not represent the F6 key, the default behavior is prevented,
+	 * the handling is explicitly skipped (<code>oSettings.skip</code>) or the target (<code>oSettings.target</code>) is not contained
+	 * in the used scopes (<code>oSettings.scope</code>), the event is skipped.
+	 *
+	 * @param {jQuery.Event} oEvent a <code>keydown</code> event object.
+	 * @param {object} [oSettings] further options in case the handler is called manually.
+	 * @param {boolean} [oSettings.skip=false] whether the event should be ignored by the central handler (see above)
+	 * @param {Element} [oSettings.target=document.activeElement] the DOMNode which should be used as starting point to find the next DOMNode in the F6 chain.
+	 * @param {[Element]} [oSettings.scope=[document]] the DOMNodes(s) which are used for the F6 chain search
+	 * @static
+	 * @private
+	 * @since 1.25.0
+	 */
+	jQuery.sap.handleF6GroupNavigation = function(oEvent, oSettings) {
+		if (oEvent.type != "keydown" 
+				|| oEvent.keyCode != jQuery.sap.KeyCodes.F6 
+				|| oEvent.isMarked("sapui5_handledF6GroupNavigation")
+				|| oEvent.isMarked()
+				|| oEvent.isDefaultPrevented()) {
+			return;
+		}
+		
+		oEvent.setMark("sapui5_handledF6GroupNavigation");
+		oEvent.setMarked();
+		oEvent.preventDefault();
+		
+		if (oSettings && oSettings.skip) {
+			return;
+		}
+		
+		var oTarget = oSettings && oSettings.target ? oSettings.target : document.activeElement,
+			aScopes = null;
+		
+		if (oSettings && oSettings.scope) {
+			aScopes = jQuery.isArray(oSettings.scope) ? oSettings.scope : [oSettings.scope];
+		}
+		
+		navigate(oTarget, aScopes, !oEvent.shiftKey);
+	};
+	
+	jQuery(function() {
+		jQuery(document).on("keydown", function(oEvent) {
+			jQuery.sap.handleF6GroupNavigation(oEvent, null);
+		});
+    });
+	
+	/* ************************************************ */
+
 
 	return jQuery;
 

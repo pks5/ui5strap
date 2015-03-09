@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -28,14 +28,14 @@ sap.ui.define(['jquery.sap.global', './Element'],
 	 * when writing the root tag of the Element. This makes sure the classes are written to the HTML.
 	 *
 	 * @public
-	 * @name sap.ui.core.CustomStyleClassSupport
+	 * @alias sap.ui.core.CustomStyleClassSupport
 	 * @function
 	 */
 	var CustomStyleClassSupport = function () {
 		// "this" is the prototype now when called with apply()
 	
 		// Ensure only Elements are enhanced
-		if(!(this instanceof Element)) {
+		if (!(this instanceof Element)) {
 			return;
 		}
 	
@@ -69,7 +69,7 @@ sap.ui.define(['jquery.sap.global', './Element'],
 				} // TODO: maybe check for quotes in different charsets or encodings
 	
 				// multiple calls should not add the class multiple times
-				for (var i = this.aCustomStyleClasses.length-1; i >= 0; i--) {
+				for (var i = this.aCustomStyleClasses.length - 1; i >= 0; i--) {
 					if (this.aCustomStyleClasses[i] == sStyleClass) {
 						return this;
 					}
@@ -92,7 +92,7 @@ sap.ui.define(['jquery.sap.global', './Element'],
 			jQuery.sap.assert(sStyleClass && typeof sStyleClass === "string", "sStyleClass must be a string");
 	
 			if (sStyleClass && this.aCustomStyleClasses) {
-				for (var i = this.aCustomStyleClasses.length-1; i >= 0; i--) {
+				for (var i = this.aCustomStyleClasses.length - 1; i >= 0; i--) {
 					if (this.aCustomStyleClasses[i] == sStyleClass) {
 						this.aCustomStyleClasses.splice(i, 1);
 						var oRoot = this.getDomRef();
@@ -132,7 +132,7 @@ sap.ui.define(['jquery.sap.global', './Element'],
 			jQuery.sap.assert(sStyleClass && typeof sStyleClass === "string", "sStyleClass must be a string");
 	
 			if (sStyleClass && this.aCustomStyleClasses) {
-				for (var i = this.aCustomStyleClasses.length-1; i >= 0; i--) {
+				for (var i = this.aCustomStyleClasses.length - 1; i >= 0; i--) {
 					if (this.aCustomStyleClasses[i] == sStyleClass) {
 						return true;
 					}

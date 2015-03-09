@@ -15,8 +15,8 @@
 
         "developers" : [
             {
-                "name" : "Jan Philipp Knöller",
-                "email" : "info@pksoftware.de",
+                "name" : "My Name",
+                "email" : "me@domain.tld",
                 "timezone" : -1,
                 "roles" : [
                     "Developer"

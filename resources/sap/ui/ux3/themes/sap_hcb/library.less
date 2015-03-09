@@ -1,21 +1,27 @@
 /* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
 
-
-/* SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- * 
- */@import "../base/library.less";
-@import (less) "../../../../../sap/ui/core/themes/sap_hcb/global.css";
-/* START "shared.css" */
+ */
+
+@import "../base/library.less";
+@import "../../../../../sap/ui/core/themes/sap_hcb/global.less";
+/* START "shared.less" */
 /* This CSS inherits rules from default/shared.css */
-/* END "shared.css" */
+/* END "shared.less" */
 
 
-/* START "ActionBar.css" */
+/* START "ActionBar.less" */
 /* =========================================== */
 /* CSS for controlsap.ui.ux3/ActionBar.control */
+/* SAP-HCB Theme                               */
 /* =========================================== */
+
+.sapUiUx3ActionBar {
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiUx3ActionBarMoreButton {
 	color: @sapUiBase;
@@ -82,6 +88,29 @@ button.sapUiUx3ActionBarLiteMoreButton:focus>span.sapUiBtnTxt  {
 .sapUiUx3ActionBarUpdateAction:focus,
 .sapUiUx3ActionBarUpdateAction:hover,
 .sapUiUx3ActionBarUpdateAction:active {
+	background-image: url("img/update_hover.png");
+	background-color: @sapUiHighlight;
+}
+
+.sapUiUx3ActionBarUpdateAction.Selected {
+	background-image: url("img/update_hover.png");
+	background-color: transparent;
+	border: 1px solid @sapUiBase;
+}
+
+.sapUiUx3ActionBarUpdateAction.Selected:hover {
+	background-image: url("img/update_hover.png");
+	background-color: @sapUiHighlight;
+}
+
+.sapUiUx3ActionBarUpdateAction.Selected:active {
+	background-image: url("img/update_hover.png");
+	background-color: @sapUiHighlight;
+}
+
+.sapUiUx3ActionBarUpdateAction.Selected:focus,
+.sapUiUx3ActionBarUpdateAction.Selected:hover,
+.sapUiUx3ActionBarUpdateAction.Selected:active {
 	background-image: url("img/update_hover.png");
 	background-color: @sapUiHighlight;
 }
@@ -316,38 +345,95 @@ button.sapUiUx3ActionBarLiteMoreButton:focus>span.sapUiBtnTxt  {
 	background-image: url("img/inspect_hover.png");
 	background-color: @sapUiHighlight;
 }
-/* END "ActionBar.css" */
+/* END "ActionBar.less" */
 
-/* START "CollectionInspector.css" */
+/* START "CollectionInspector.less" */
+/* ============================================= */
+/* CSS for control sap.ui.ux3/Collection.control */
+/* SAP-HCB Theme                                 */
+/* ============================================= */
 
-/* END "CollectionInspector.css" */
+.sapUiUx3CI {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "CollectionInspector.less" */
 
-/* START "Exact.css" */
+/* START "DataSet.less" */
+/* ========================================== */
+/* CSS for control sap.ui.ux3/DataSet.control */
+/* SAP-HCB Theme                              */
+/* ========================================== */
+
+.sapUiUx3DS {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "DataSet.less" */
+
+/* START "DataSetSimpleView.less" */
+/* ==================================================== */
+/* CSS for control sap.ui.ux3/DataSetSimpleView.control */
+/* SAP-HCB Theme                                        */
+/* ==================================================== */
+
+.sapUiUx3DSSV {
+	font-size: @sapUiDesktopFontSize;
+}
+
+/* change for matching */
+.sapUiUx3DSSVItem:hover {
+	background-color: @sapHCHighlightBG;
+}
+.sapUiUx3DSSVSelected {
+	background-color: @sapHCHighlightBG;
+}
+/* END "DataSetSimpleView.less" */
+
+/* START "Exact.less" */
 /* ======================================== */
 /* CSS for control sap.ui.ux3/Exact.control */
+/* SAP-HCB Theme                            */
 /* ======================================== */
-/* END "Exact.css" */
 
-/* START "ExactArea.css" */
+.sapUiUx3Exact {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "Exact.less" */
+
+/* START "ExactArea.less" */
 /* ============================================ */
 /* CSS for control sap.ui.ux3/ExactArea.control */
+/* SAP-HCB Theme                                */
 /* ============================================ */
+
+.sapUiUx3ExactArea {
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiUx3ExactAreaTbTitle {
 	line-height: 20px;
 }
-/* END "ExactArea.css" */
+/* END "ExactArea.less" */
 
-/* START "ExactBrowser.css" */
+/* START "ExactBrowser.less" */
 /* =============================================== */
 /* CSS for control sap.ui.ux3/ExactBrowser.control */
+/* SAP-HCB Theme                                   */
 /* =============================================== */
-/* END "ExactBrowser.css" */
 
-/* START "ExactList.css" */
+.sapUiUx3ExactBrwsr {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "ExactBrowser.less" */
+
+/* START "ExactList.less" */
 /* ================================================ */
 /* HCB CSS for control sap.ui.ux3/ExactList.control */
+/* SAP-HCB Theme                                    */
 /* ================================================ */
+
+.sapUiUx3ExactLst {
+	font-size: @sapUiDesktopFontSize;
+}
 
 /* List */
 html[data-sap-ui-browser^="ie"] .sapUiUx3ExactLstLb > ul > .sapUiLbxI {
@@ -437,13 +523,52 @@ html[dir=rtl] .sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLst
 .sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLstHead:focus {
 	outline: 3px solid white;
 }
-/* END "ExactList.css" */
+/* END "ExactList.less" */
 
-/* START "Feed.css" */
+/* START "FacetFilter.less" */
+/* ================================================== */
+/* CSS for control sap.ui.commons/FacetFilter.control */
+/* SAP-HCB Theme                                      */
+/* ================================================== */
+
+.sapUiUx3FacetFilter {
+	font-size: @sapUiDesktopFontSize;
+}
+
+/* END "FacetFilter.less" */
+
+/* START "FacetFilterList.less" */
+/* ====================================================== */
+/* CSS for control sap.ui.commons/FacetFilterList.control */
+/* SAP-HCB Theme                                          */
+/* ====================================================== */
+
+/* Header */
+.sapUiUx3FFLstHead {
+	font-size: @sapUiDesktopFontSize;
+}
+
+.sapUiUx3FFLstHeadTxt {
+	font-size: @sapUiDesktopFontSize;
+}
+
+/* Facet Filter List*/
+.sapUiUx3FFLst {
+	font-size: @sapUiDesktopFontSize;
+}
+
+
+/* END "FacetFilterList.less" */
+
+/* START "Feed.less" */
 /* ============================================= */
 /* CSS for control sap.ui.ux3/Feed.control       */
 /* HCB                                           */
 /* ============================================= */
+
+.sapUiFeed{
+	font-size: @sapUiDesktopFontSize;
+}
 
 .sapUiFeed > header {
 	margin-top: 20px;
@@ -463,9 +588,9 @@ html[dir=rtl] .sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLst
 .sapUiFeed > section {
 	margin-top: 2px;
 }
-/* END "Feed.css" */
+/* END "Feed.less" */
 
-/* START "FeedChunk.css" */
+/* START "FeedChunk.less" */
 /* ============================================= */
 /* CSS for control sap.ui.ux3/FeedChunk.control  */
 /* HCB                                           */
@@ -473,6 +598,7 @@ html[dir=rtl] .sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLst
 
 .sapUiFeedChunk {
 	padding: 15px 15px 10px 15px;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiFeedChunk a:hover {
@@ -616,9 +742,9 @@ html[dir=rtl] .sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLst
 	height: 25px; /* 1px more because header line is part of the height in this case*/
 	line-height: 24px;
 }
-/* END "FeedChunk.css" */
+/* END "FeedChunk.less" */
 
-/* START "Feeder.css" */
+/* START "Feeder.less" */
 /* ========================================= */
 /* CSS for control sap.ui.ux3/Feeder.control */
 /* HCB                                       */
@@ -626,6 +752,7 @@ html[dir=rtl] .sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLst
 
 .sapUiFeeder {
 	border: 2px solid @sapUiMediumBorder;
+	font-size: @sapUiDesktopFontSize;
 }
 
 .sapUiFeederLarge {
@@ -706,9 +833,18 @@ html[dir=rtl] .sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLst
 .sapUiFeederEmptyText {
 	font-style: italic;
 }
-/* END "Feeder.css" */
+/* END "Feeder.less" */
 
-/* START "NavigationBar.css" */
+/* START "NavigationBar.less" */
+/* ==================================================== */
+/* CSS for control sap.ui.commons/NavigationBar.control */
+/* SAP-HCB Theme                                        */
+/* ==================================================== */
+
+.sapUiUx3NavBar {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiUx3NavBarBack,
 .sapUiUx3NavBarForward {
 	width: 16px;
@@ -724,9 +860,9 @@ html[dir=rtl] .sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLst
 	color: @sapUiLink;
 	border: 1px solid @sapUiMediumBorder;
 }
-/* END "NavigationBar.css" */
+/* END "NavigationBar.less" */
 
-/* START "NotificationBar.css" */
+/* START "NotificationBar.less" */
 /* ================================================== */
 /* CSS for control sap.ui.ux3/NotificationBar.control */
 /* HCB                                                */
@@ -736,6 +872,15 @@ html[dir=rtl] .sapUiUx3ExactLstTopActive.sapUiUx3ExactLstTop > .sapUiUx3ExactLst
 	border-top: 1px solid @sapUiBase;
 	border-left: 1px solid @sapUiBase;
 	border-right: 1px solid @sapUiBase;
+	font-size: @sapUiDesktopFontSize;
+}
+
+.sapUiNotifierCallout {
+	font-size: @sapUiDesktopFontSize;
+}
+
+.sapUiNotifierTitle {
+	font-size: @sapUiDesktopFontSize;
 }
 
 HTML[data-sap-ui-browser='ie8'] .sapUiNotifierCallout .sapUiCltArr.sapUiCltBaseArr {
@@ -782,9 +927,51 @@ HTML[data-sap-ui-browser='ie8'] .sapUiNotifierCallout .sapUiCltArr.sapUiCltBaseA
 	color : @sapUiBase;
 	background-color: @sapUiMessageNotifierCountBG;
 }
-/* END "NotificationBar.css" */
+/* END "NotificationBar.less" */
 
-/* START "Shell.css" */
+/* START "Overlay.less" */
+/* ========================================== */
+/* CSS for control sap.ui.ux3/Overlay.control */
+/* SAP-HCB Theme                              */
+/* ========================================== */
+
+.sapUiUx3OverlayOverlay {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "Overlay.less" */
+
+/* START "OverlayContainer.less" */
+/* =================================================== */
+/* CSS for control sap.ui.ux3/OverlayContainer.control */
+/* SAP-HCB Theme                                       */
+/* =================================================== */
+
+.sapUiUx3OC {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "OverlayContainer.less" */
+
+/* START "QuickView.less" */
+/* ==================================== */
+/* CSS for sap.ui.ux3/QuickView.control */
+/* SAP-HCB Theme                        */
+/* ==================================== */
+
+.sapUiUx3QV {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "QuickView.less" */
+
+/* START "Shell.less" */
+/* ================================================ */
+/* CSS for control sap.ui.commons/Shell.control */
+/* SAP-HCB Theme                                    */
+/* ================================================ */
+
+.sapUiUx3Shell {
+	font-size: @sapUiDesktopFontSize;
+}
+
 .sapUiUx3ShellHeader {
 	border-bottom: 1px solid @sapUiMediumBorder;
 	background-color: @sapUiBaseBG;
@@ -870,7 +1057,7 @@ HTML[data-sap-ui-browser='ie8'] .sapUiNotifierCallout .sapUiCltArr.sapUiCltBaseA
 
 .sapUiUx3ShellHeader .sapUiMenuButtonIco {
 	width: 5px;
-	background-position: 0 50%;
+	background-position: 0% 50%;
 }
 
 .sapUiUx3ShellHeader-logout {
@@ -900,5 +1087,63 @@ HTML[data-sap-ui-browser='ie8'] .sapUiNotifierCallout .sapUiCltArr.sapUiCltBaseA
 .sapUiUx3ShellPaneBarRight > .sapUiUx3ShellPaneOverflowButton > span:hover {
 	background-color: @sapUiHighlight;
 }
-/* END "Shell.css" */
+/* END "Shell.less" */
+
+/* START "ShellColorPicker.less" */
+/* ======================================================= */
+/* CSS for control sap.ui.commons/ShellColorPicker.control */
+/* SAP-HCB Theme                                           */
+/* ======================================================= */
+
+.sapUiUx3ShellColorPicker {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "ShellColorPicker.less" */
+
+/* START "ShellPersonalization.less" */
+/* =========================================================== */
+/* CSS for control sap.ui.commons/ShellPersonalization.control */
+/* SAP-HCB Theme                                               */
+/* =========================================================== */
+
+.sapUiUx3ShellP13n {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "ShellPersonalization.less" */
+
+/* START "ThingInspector.less" */
+/* ================================================= */
+/* CSS for control sap.ui.ux3/ThingInspector.control */
+/* SAP-HCB Theme                                     */
+/* ================================================= */
+
+.sapUiUx3TI {
+	font-size: @sapUiDesktopFontSize;
+}
+.sapUiUx3TIContent {
+	background-color: @sapHCHighlightBG;
+}
+/* END "ThingInspector.less" */
+
+/* START "ThingViewer.less" */
+/* ================================================= */
+/* CSS for control sap.ui.ux3/ThingInspector.control */
+/* SAP-HCB Theme                                     */
+/* ================================================= */
+
+.sapUiUx3TV {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "ThingViewer.less" */
+
+/* START "ToolPopup.less" */
+/* ============================================ */
+/* CSS for control sap.ui.ux3/ToolPopup.control */
+/* SAP-HCB Theme                                */
+/* ============================================ */
+
+.sapUiUx3TP {
+	font-size: @sapUiDesktopFontSize;
+}
+/* END "ToolPopup.less" */
 

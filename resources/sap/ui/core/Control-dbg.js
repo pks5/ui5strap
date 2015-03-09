@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -37,8 +37,9 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 * @extends sap.ui.core.Element
 	 * @abstract
 	 * @author Martin Schaus, Daniel Brinkmann
-	 * @version 1.24.3
-	 * @name sap.ui.core.Control
+	 * @version 1.26.7
+	 * @alias sap.ui.core.Control
+	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
 	 */
 	var Control = Element.extend("sap.ui.core.Control", /* @lends sap.ui.core.Control */ {
 	
@@ -48,12 +49,22 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 			publicMethods: ["placeAt", "attachBrowserEvent", "detachBrowserEvent"],
 			library: "sap.ui.core",
 			properties : {
+				
+				/**
+				 * Whether the control is currently in busy state.
+				 */
 				"busy" : {type: "boolean", defaultValue: false},
-				"busyIndicatorDelay" : {type: "int", defaultValue: 1000}
-			},
-			aggregations : {},
-			associations : {},
-			events : {}
+
+				/**
+				 * The delay in milliseconds, after which the busy indicator will show up for this control.
+				 */
+				"busyIndicatorDelay" : {type: "int", defaultValue: 1000},
+
+				/**
+				 * Whether the control should be visible on the screen. If set to false, a placeholder is rendered instead of the real control
+				 */
+				"visible" : { type: "boolean", group : "Appearance", defaultValue: true }
+			}
 		},
 	
 		constructor : function(sId, mSettings) {
@@ -76,47 +87,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	
 	});
 	
-	/**
-	 * Creates a new subclass of class sap.ui.core.Control with name <code>sClassName</code> 
-	 * and enriches it with the information contained in <code>oClassInfo</code>.
-	 * 
-	 * <code>oClassInfo</code> might contain the same kind of informations as described in {@link sap.ui.core.Element.extend Element.extend}.
-	 *   
-	 * @param {string} sClassName name of the class to be created
-	 * @param {object} [oClassInfo] object literal with informations about the class  
-	 * @param {function} [FNMetaImpl] constructor function for the metadata object. If not given, it defaults to sap.ui.core.ElementMetadata.
-	 * @return {function} the created class / constructor function
-	 * @public
-	 * @static
-	 * @name sap.ui.core.Control.extend
-	 * @function
-	 */
-	
-	/**
-	 * Getter for property <code>busy</code>.
-	 * 
-	 * Whether the control is currently in busy state.
-	 * 
-	 * Default value is <code>false</code>
-	 *
-	 * @return {boolean} the value of property <code>busy</code>
-	 * @public
-	 * @name sap.ui.core.Control#getBusy
-	 * @function
-	 */
-
-	/**
-	 * Getter for property <code>busyIndicatorDelay</code>.
-	 * 
-	 * The time in milliseconds after which the control displays a busy indicator after becoming busy.
-	 * 
-	 * Default value is <code>1000</code> ms.
-	 *
-	 * @return {int} the value of property <code>busyIndicatorDelay</code>
-	 * @public
-	 * @name sap.ui.core.Control#getBusyIndicatorDelay
-	 * @function
-	 */
 
 	/**
 	 * Overrides {@link sap.ui.core.Element#clone Element.clone} to clone additional 
@@ -133,14 +103,12 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 * @param {string[]} [aLocalIds] an array of local IDs within the cloned hierarchy (internally used)
 	 * @return {sap.ui.core.Element} reference to the newly created clone
 	 * @protected
-	 * @name sap.ui.core.Control#clone
-	 * @function
 	 */
 	Control.prototype.clone = function() {
 		var oClone = Element.prototype.clone.apply(this, arguments);
 	
 		if ( this.aBindParameters ) {
-			for(var i=0, l=this.aBindParameters.length; i<l; i++) {
+			for (var i = 0, l = this.aBindParameters.length; i < l; i++) {
 				var aParams = this.aBindParameters[i];
 				oClone.attachBrowserEvent(aParams.sEventType, aParams.fnHandler, aParams.oListener !== this ? aParams.oListener : undefined);
 			}
@@ -158,8 +126,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 *
 	 * @return {boolean} whether the control is still in the active DOM
 	 * @private
-	 * @name sap.ui.core.Control#isActive
-	 * @function
 	 */
 	Control.prototype.isActive = function() {
 		return jQuery.sap.domById(this.sId) != null;
@@ -173,8 +139,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 *
 	 * @param {object} oOrigin
 	 * @protected
-	 * @name sap.ui.core.Control#invalidate
-	 * @function
 	 */
 	Control.prototype.invalidate = function(oOrigin) {
 		var oUIArea;
@@ -223,8 +187,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	/**
 	 * Tries to replace its DOM reference by re-rendering.
 	 * @protected
-	 * @name sap.ui.core.Control#rerender
-	 * @function
 	 */
 	Control.prototype.rerender = function() {
 		sap.ui.core.UIArea.rerenderControl(this);
@@ -244,8 +206,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 * @param {boolean} bAllow whether to allow text selection or not
 	 * @return {sap.ui.core.Control} Returns <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.Control#allowTextSelection
-	 * @function
 	 */
 	Control.prototype.allowTextSelection = function(bAllow) {
 		this.bAllowTextSelection = bAllow;
@@ -352,12 +312,10 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 * @param {object} [oListener] The object, that wants to be notified, when the event occurs
 	 * @return {sap.ui.core.Control} Returns <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.Control#attachBrowserEvent
-	 * @function
 	 */
 	Control.prototype.attachBrowserEvent = function(sEventType, fnHandler, oListener) {
-		if (sEventType && (typeof(sEventType) === "string")) { // do nothing if the first parameter is empty or not a string
-			if (fnHandler && typeof(fnHandler) === "function") {   // also do nothing if the second parameter is not a function
+		if (sEventType && (typeof (sEventType) === "string")) { // do nothing if the first parameter is empty or not a string
+			if (fnHandler && typeof (fnHandler) === "function") {   // also do nothing if the second parameter is not a function
 				// store the parameters for bind()
 				if (!this.aBindParameters) {
 					this.aBindParameters = [];
@@ -365,7 +323,9 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 				oListener = oListener || this;
 	
 				// FWE jQuery.proxy can't be used as it breaks our contract when used with same function but different listeners
-				var fnProxy=function() { fnHandler.apply(oListener, arguments); };
+				var fnProxy = function() {
+					fnHandler.apply(oListener, arguments);
+				};
 	
 				this.aBindParameters.push({
 					sEventType: sEventType,
@@ -374,8 +334,10 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 					fnProxy : fnProxy
 				});
 	
-				// if control is rendered, directly call bind()
-				this.$().bind(sEventType, fnProxy);
+				if (!this._sapui_bInAfterRenderingPhase) {
+					// if control is rendered, directly call bind()
+					this.$().bind(sEventType, fnProxy);
+				}
 			}
 		}
 	
@@ -393,14 +355,12 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 * @param {function} [fnHandler] The function that is to be no longer executed.
 	 * @param {object} [oListener] The context object that was given in the call to attachBrowserEvent.
 	 * @public
-	 * @name sap.ui.core.Control#detachBrowserEvent
-	 * @function
 	 */
 	Control.prototype.detachBrowserEvent = function(sEventType, fnHandler, oListener) {
-		if (sEventType && (typeof(sEventType) === "string")) { // do nothing if the first parameter is empty or not a string
-			if (fnHandler && typeof(fnHandler) === "function") {   // also do nothing if the second parameter is not a function
+		if (sEventType && (typeof (sEventType) === "string")) { // do nothing if the first parameter is empty or not a string
+			if (fnHandler && typeof (fnHandler) === "function") {   // also do nothing if the second parameter is not a function
 				var $ = this.$(),i,oParamSet;
-				oListener=oListener || this;
+				oListener = oListener || this;
 	
 				// remove the bind parameters from the stored array
 				if (this.aBindParameters) {
@@ -429,8 +389,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 *
 	 * @return {object} a Renderer suitable for this Control instance.
 	 * @protected
-	 * @name sap.ui.core.Control#getRenderer
-	 * @function
 	 */
 	Control.prototype.getRenderer = function () {
 		//TODO introduce caching?
@@ -460,54 +418,52 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 * @param {string|int} oPosition Describes the position where the control should be put into the container
 	 * @return {sap.ui.core.Control} Returns <code>this</code> to allow method chaining
 	 * @public
-	 * @name sap.ui.core.Control#placeAt
-	 * @function
 	 */
 	Control.prototype.placeAt = function(oRef, oPosition) {
 		var oCore = sap.ui.getCore();
-		if(oCore.isInitialized()){
+		if (oCore.isInitialized()) {
 			// core already initialized, do it now
 	
 			// 1st try to resolve the oRef as a Container control
 			var oContainer = oRef;
-			if(typeof oContainer === "string"){
+			if (typeof oContainer === "string") {
 				oContainer = oCore.byId(oRef);
 			}
 			// if no container control is found use the corresponding UIArea
 			var bIsUIArea = false;
-			if(!(oContainer instanceof Element)) {
+			if (!(oContainer instanceof Element)) {
 				oContainer = oCore.createUIArea(oRef);
 				bIsUIArea = true;
 			}
 	
-			if(!oContainer) {
+			if (!oContainer) {
 				return;
 			}
 	
-			if(!bIsUIArea){
+			if (!bIsUIArea) {
 				var oContentAggInfo = oContainer.getMetadata().getAllAggregations()["content"];
 				var bContainerSupportsPlaceAt = true;
-				if(oContentAggInfo){
-					if(!oContentAggInfo.multiple || oContentAggInfo.type != "sap.ui.core.Control"){
+				if (oContentAggInfo) {
+					if (!oContentAggInfo.multiple || oContentAggInfo.type != "sap.ui.core.Control") {
 						bContainerSupportsPlaceAt = false;
 					}
-				}else{
+				} else {
 					//Temporary workaround for sap.ui.commons.AbsoluteLayout to enable placeAt even when no content aggregation is available. TODO: Find a proper solution
-					if(!oContainer.addContent || !oContainer.insertContent || !oContainer.removeAllContent) {
+					if (!oContainer.addContent || !oContainer.insertContent || !oContainer.removeAllContent) {
 						bContainerSupportsPlaceAt = false;
 					}
 				}
-				if(!bContainerSupportsPlaceAt) {
-					jQuery.sap.log.warning("placeAt cannot be processed because container "+oContainer+" does not have an aggregation 'content'.");
+				if (!bContainerSupportsPlaceAt) {
+					jQuery.sap.log.warning("placeAt cannot be processed because container " + oContainer + " does not have an aggregation 'content'.");
 					return;
 				}
 			}
 	
-			if(typeof oPosition === "number"){
+			if (typeof oPosition === "number") {
 				oContainer.insertContent(this, oPosition);
-			}else{
+			} else {
 				oPosition = oPosition || "last"; //"last" is default
-				switch(oPosition){
+				switch (oPosition) {
 					case "last":
 						oContainer.addContent(this);
 						break;
@@ -519,10 +475,10 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 						oContainer.addContent(this);
 						break;
 					default:
-						jQuery.sap.log.warning("Position "+oPosition+" is not supported for function placeAt.");
+						jQuery.sap.log.warning("Position " + oPosition + " is not supported for function placeAt.");
 				}
 			}
-		}else{
+		} else {
 			// core not yet initialized, defer execution
 			var that = this;
 			oCore.attachInitEvent(function () {
@@ -540,11 +496,9 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 * Cancels user text selection if text selection is disabled for this control.
 	 * See the {@link #allowTextSelection} method.
 	 * @private
-	 * @name sap.ui.core.Control#onselectstart
-	 * @function
 	 */
 	Control.prototype.onselectstart = function (oBrowserEvent) {
-		if(!this.bAllowTextSelection) {
+		if (!this.bAllowTextSelection) {
 			oBrowserEvent.preventDefault();
 			oBrowserEvent.stopPropagation();
 		}
@@ -587,8 +541,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 * 
 	 * @return {string} Id to be used for the <code>labelFor</code> 
 	 * @public
-	 * @name sap.ui.core.Control#getIdForLabel
-	 * @function
 	 */
 	Control.prototype.getIdForLabel = function () {
 		return this.getId();
@@ -641,7 +593,7 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	
 				//Append busy indicator to control DOM
 				var $BusyIndicator = jQuery('<div class="sapUiLocalBusyIndicator"><div class="sapUiLocalBusyIndicatorAnimation"><div class="sapUiLocalBusyIndicatorBox"></div><div class="sapUiLocalBusyIndicatorBox"></div><div class="sapUiLocalBusyIndicatorBox"></div></div></div>');
-				$BusyIndicator.attr("id",this.getId() + "-busyIndicator")
+				$BusyIndicator.attr("id",this.getId() + "-busyIndicator");
 				$this.append($BusyIndicator);
 				$this.addClass('sapUiLocalBusy');
 				if (this._busyDelayedCallId) {
@@ -660,7 +612,9 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 						var $Ref = jQuery(oObject),
 							iTabIndex = $Ref.attr('tabindex');
 						
-						if (iTabIndex < 0) return true;
+						if (iTabIndex < 0) {
+							return true;
+						}
 						
 						that._busyTabIndices.push({
 							ref: $Ref,
@@ -697,7 +651,7 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 							$bubbles.children(":not(:eq(2))").removeClass('active');
 							that._busyAnimationTimer4 = setTimeout(function() {
 								$bubbles.children().removeClass('active');
-							}, 150)
+							}, 150);
 						}, 150);
 					}, 150);
 				}, 150);
@@ -710,8 +664,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 		 * @param {boolean} bBusy The new busy state to be set
 		 * @return {sap.ui.core.Control} <code>this</code> to allow method chaining
 		 * @public
-		 * @name sap.ui.core.Control#setBusy
-		 * @function
 		 */
 		Control.prototype.setBusy = function (bBusy, sBusySection /* this is an internal parameter to apply partial local busy indicator for a specific section of the control */) {
 			this._sBusySection = sBusySection;
@@ -771,8 +723,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 		 * @public
 		 * @deprecated Use getBusy instead
 		 * @return boolean
-		 * @name sap.ui.core.Control#isBusy
-		 * @function
 		 */
 		Control.prototype.isBusy = function() {
 			return this.getProperty("busy");
@@ -784,8 +734,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 		 * @public
 		 * @param {int} iDelay The delay in ms
 		 * @return {sap.ui.core.Control} <code>this</code> to allow method chaining
-		 * @name sap.ui.core.Control#setBusyIndicatorDelay
-		 * @function
 		 */
 		Control.prototype.setBusyIndicatorDelay = function(iDelay) {
 			this.setProperty("busyIndicatorDelay", iDelay, true);
@@ -796,8 +744,6 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 		 * Cleanup all timers which might have been created by the busy indicator
 		 * 
 		 * @private
-		 * @name sap.ui.core.Control#_cleanupBusyIndicator
-		 * @function
 		 */
 		Control.prototype._cleanupBusyIndicator = function() {
 			if (this._busyIndicatorDelayedCallId) {
@@ -824,7 +770,7 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 				clearTimeout(this._busyAnimationTimer4);
 				delete this._busyAnimationTimer4;
 			}
-		}
+		};
 	})();
 	
 

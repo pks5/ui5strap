@@ -1,232 +1,231 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-/* ----------------------------------------------------------------------------------
- * Hint: This is a derived (generated) file. Changes should be done in the underlying 
- * source files only (*.control, *.js) or they will be lost after the next generation.
- * ---------------------------------------------------------------------------------- */
-
 // Provides control sap.m.ActionSelect.
-jQuery.sap.declare("sap.m.ActionSelect");
-jQuery.sap.require("sap.m.library");
-jQuery.sap.require("sap.m.Select");
+sap.ui.define(['jquery.sap.global', './Select', './library'],
+	function(jQuery, Select, library) {
+		"use strict";
 
+		/**
+		 * Constructor for a new ActionSelect.
+		 *
+		 * @param {string} [sId] id for the new control, generated automatically if no id is given 
+		 * @param {object} [mSettings] initial settings for the new control
+		 *
+		 * @class
+		 * The ActionSelect control provides a list of predefined items that allows end users to choose options and additionally trigger some actions.
+		 * @extends sap.m.Select
+		 *
+		 * @author SAP SE
+		 * @version 1.26.7
+		 *
+		 * @constructor
+		 * @public
+		 * @since 1.16
+		 * @alias sap.m.ActionSelect
+		 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
+		 */
+		var ActionSelect = Select.extend("sap.m.ActionSelect", /** @lends sap.m.ActionSelect.prototype */ { metadata : {
 
-/**
- * Constructor for a new ActionSelect.
- * 
- * Accepts an object literal <code>mSettings</code> that defines initial 
- * property values, aggregated and associated objects as well as event handlers. 
- * 
- * If the name of a setting is ambiguous (e.g. a property has the same name as an event), 
- * then the framework assumes property, aggregation, association, event in that order. 
- * To override this automatic resolution, one of the prefixes "aggregation:", "association:" 
- * or "event:" can be added to the name of the setting (such a prefixed name must be
- * enclosed in single or double quotes).
- *
- * The supported settings are:
- * <ul>
- * <li>Properties
- * <ul></ul>
- * </li>
- * <li>Aggregations
- * <ul></ul>
- * </li>
- * <li>Associations
- * <ul>
- * <li>{@link #getButtons buttons} : string | sap.m.Button</li></ul>
- * </li>
- * <li>Events
- * <ul></ul>
- * </li>
- * </ul> 
- *
- * 
- * In addition, all settings applicable to the base type {@link sap.m.Select#constructor sap.m.Select}
- * can be used as well.
- *
- * @param {string} [sId] id for the new control, generated automatically if no id is given 
- * @param {object} [mSettings] initial settings for the new control
- *
- * @class
- * The ActionSelect control provides a list of predefined items that allows end users to choose options and additionally trigger some actions.
- * @extends sap.m.Select
- *
- * @author SAP SE
- * @version 1.24.3
- *
- * @constructor
- * @public
- * @since 1.16
- * @name sap.m.ActionSelect
- * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
- */
-sap.m.Select.extend("sap.m.ActionSelect", { metadata : {
+			library : "sap.m",
+			associations : {
+		
+				/**
+				 * Buttons to be added to the ActionSelect content.
+				 */
+				buttons : {type : "sap.m.Button", multiple : true, singularName : "button"}
+			}
+		}});
 
-	library : "sap.m",
-	associations : {
-		"buttons" : {type : "sap.m.Button", multiple : true, singularName : "button"}
-	}
-}});
+		ActionSelect.prototype.init = function() {
+			Select.prototype.init.call(this);
+			this.getList().addEventDelegate({
+				onfocusin: this.onfocusinList 	
+			}, this);
+		};
+		/* =========================================================== */
+		/* Internal methods and properties                             */
+		/* =========================================================== */
 
+		/* ----------------------------------------------------------- */
+		/* Private methods                                             */
+		/* ----------------------------------------------------------- */
 
-/**
- * Creates a new subclass of class sap.m.ActionSelect with name <code>sClassName</code> 
- * and enriches it with the information contained in <code>oClassInfo</code>.
- * 
- * <code>oClassInfo</code> might contain the same kind of informations as described in {@link sap.ui.core.Element.extend Element.extend}.
- *   
- * @param {string} sClassName name of the class to be created
- * @param {object} [oClassInfo] object literal with informations about the class  
- * @param {function} [FNMetaImpl] constructor function for the metadata object. If not given, it defaults to sap.ui.core.ElementMetadata.
- * @return {function} the created class / constructor function
- * @public
- * @static
- * @name sap.m.ActionSelect.extend
- * @function
- */
+		/**
+		 * Determines whether the ActionSelect has content or not.
+		 *
+		 * @return {boolean}
+		 * @override
+		 * @private
+		 */
+		ActionSelect.prototype.hasContent = function() {
+			return Select.prototype.hasContent.call(this) || !!this.getButtons().length;
+		};
 
+		/**
+		 * Add additional content.
+		 *
+		 * @override
+		 * @private
+		 */
+		ActionSelect.prototype.addContent = function() {
+			var oCore = sap.ui.getCore(),
+				oPicker = this.getPicker();
 
-/**
- * Buttons to be added to the ActionSelect content.
- * 
- * @return {string[]}
- * @public
- * @name sap.m.ActionSelect#getButtons
- * @function
- */
+			this.getButtons().forEach(function(sButtonId) {
+				oPicker.addContent(oCore.byId(sButtonId));
+			});
+		};
+		
+		
+		/* =========================================================== */
+		/* Lifecycle methods                                           */
+		/* =========================================================== */
 
-	
-/**
- *
- * @param {string | sap.m.Button} vButton
- *    Id of a button which becomes an additional target of this <code>buttons</code> association.
- *    Alternatively, a button instance may be given. 
- * @return {sap.m.ActionSelect} <code>this</code> to allow method chaining
- * @public
- * @name sap.m.ActionSelect#addButton
- * @function
- */
+		/**
+		 * Called after the ActionSelect picker pop-up is render.
+		 *
+		 * @override
+		 * @protected
+		 */
+		ActionSelect.prototype.onAfterRenderingPicker = function() {
+			Select.prototype.onAfterRenderingPicker.call(this);
+			this.getPicker().addStyleClass(sap.m.ActionSelectRenderer.CSS_CLASS + "Picker");
+		};
 
-/**
- * @param {int | string | sap.m.Button} vButton the button to remove or its index or id
- * @return {string} the id of the removed button or null
- * @public
- * @name sap.m.ActionSelect#removeButton
- * @function
- */
+		/* =========================================================== */
+		/* API methods                                                 */
+		/* =========================================================== */
 
-/**
- * @return {string[]} an array with the ids of the removed elements (might be empty)
- * @public
- * @name sap.m.ActionSelect#removeAllButtons
- * @function
- */
+		/* ----------------------------------------------------------- */
+		/* Public methods                                              */
+		/* ----------------------------------------------------------- */
 
-	
-// Start of sap\m\ActionSelect.js
-/* =========================================================== */
-/* Internal methods and properties                             */
-/* =========================================================== */
+		/**
+		 * Button to be removed from the ActionSelect content.
+		 *
+		 * @param {int | string | sap.m.Button} vButton The button to remove or its index or id.
+		 * @returns {string} The id of the removed button or null.
+		 * @public
+		 */
+		ActionSelect.prototype.removeButton = function(vButton) {
+			var oPicker = this.getPicker();
 
-/* ----------------------------------------------------------- */
-/* Private methods                                             */
-/* ----------------------------------------------------------- */
+			if (oPicker) {
 
-/**
- * Determines whether the ActionSelect has content or not.
- *
- * @return {boolean}
- * @override
- * @private
- */
-sap.m.ActionSelect.prototype.hasContent = function() {
-	return sap.m.Select.prototype.hasContent.call(this) || !!this.getButtons().length;
-};
+				if (typeof vButton === "number") {
+					vButton = this.getButtons()[vButton];
+				}
 
-/**
- * Add additional content.
- *
- * @override
- * @private
- * @name sap.m.ActionSelect#addContent
- */
-sap.m.ActionSelect.prototype.addContent = function() {
-	var oCore = sap.ui.getCore(),
-		oPicker = this.getPicker();
+				oPicker.removeContent(vButton);
+			}
 
-	this.getButtons().forEach(function(sButtonId) {
-		oPicker.addContent(oCore.byId(sButtonId));
-	});
-};
+			return this.removeAssociation("buttons", vButton);
+		};
 
-/* =========================================================== */
-/* Lifecycle methods                                           */
-/* =========================================================== */
+		/**
+		 * Remove all buttons from the ActionSelect.
+		 *
+		 * @returns {string[]} An array with the ids of the removed elements (might be empty).
+		 * @public
+		 */
+		ActionSelect.prototype.removeAllButtons = function() {
+			var oPicker = this.getPicker();
 
-/**
- * Called after the ActionSelect picker pop-up is render.
- *
- * @override
- * @protected
- * @name sap.m.ActionSelect#onAfterRenderingPicker
- */
-sap.m.ActionSelect.prototype.onAfterRenderingPicker = function() {
-	sap.m.Select.prototype.onAfterRenderingPicker.call(this);
-	this.getPicker().addStyleClass(sap.m.ActionSelectRenderer.CSS_CLASS + "Picker");
-};
+			if (oPicker) {
+				this.getButtons().forEach(function(sButtonId) {
+					oPicker.removeContent(sButtonId);
+				});
+			}
 
-/* =========================================================== */
-/* API methods                                                 */
-/* =========================================================== */
+			return this.removeAllAssociation("buttons");
+		};
 
-/* ----------------------------------------------------------- */
-/* Public methods                                              */
-/* ----------------------------------------------------------- */
+		
+		//Keyboard Navigation for Action buttons
+		
+		/**
+		 * Handler for SHIFT-TAB key  - 'tab previous' sap ui5 key event.
+		 * 
+		 * @param oEvent - key event
+		 * @private
+		 * 
+		 */
+		ActionSelect.prototype.onsaptabprevious = function(oEvent) {
+			// check whether event is marked or not
+			if ( oEvent.isMarked() || !this.getEnabled()) {
+				return;
+			}
+			// mark the event for components that needs to know if the event was handled
+			oEvent.setMarked();
+			var aButtons = this.getButtons();
+			var oPicker = this.getPicker();
 
-/**
- * Button to be removed from the ActionSelect content.
- *
- * @param {int | string | sap.m.Button} vButton The button to remove or its index or id.
- * @returns {string} The id of the removed button or null.
- * @public
- * @name sap.m.ActionSelect#removeButton
- * @function
- */
-sap.m.ActionSelect.prototype.removeButton = function(vButton) {
-	var oPicker = this.getPicker();
+			if (oPicker && oPicker.isOpen() && aButtons.length > 0) {
+				sap.ui.getCore().byId(aButtons[aButtons.length - 1]).focus(); 
+				oEvent.preventDefault();
+			} 
+		};		
+		
+		
+		/**
+		 * Handler for TAB key - sap 'tab next' key event.
+		 * 
+		 * @param oEvent - key event
+		 * @private
+		 * 
+		 */
+		ActionSelect.prototype.onsaptabnext = function(oEvent) {
+			// check whether event is marked or not
+			if ( oEvent.isMarked() || !this.getEnabled()) {
+				return;
+			}
+			// mark the event for components that needs to know if the event was handled
+			oEvent.setMarked();
+			
+			
+			var aButtons = this.getButtons();
+			var oPicker = this.getPicker();
 
-	if (oPicker) {
+			if (oPicker && oPicker.isOpen() && aButtons.length > 0) {
+				sap.ui.getCore().byId(aButtons[0]).focus(); 
+				oEvent.preventDefault();
+			} 
+		};		
+		
+		
+		/**
+		 * Handle the focus leave event.
+		 *
+		 * @param {jQuery.Event} oEvent The event object.
+		 * @private
+		 */
+		ActionSelect.prototype.onsapfocusleave = function(oEvent) {
+			// Keep focus on Action Select's input field if does not go to 
+			// the buttons in Action sheet part of the ActionSelect
+			var aButtons = this.getButtons();
+			var bKeepFocus = (aButtons.indexOf(oEvent.relatedControlId) == -1); 
+			if (bKeepFocus) {
+				Select.prototype.onsapfocusleave.apply(this, arguments);
+			}
+		};
+		
+		
+		/**
+		 * Handler for focus in event on The Selection List.
+		 * 
+		 * @param oEvent - key event
+		 * @private 
+		 */
+		ActionSelect.prototype.onfocusinList = function(oEvent) {
+			if (document.activeElement !== this.getList().getDomRef()) {
+				this.focus();
+			}
+		};
+		
+		return ActionSelect;
 
-		if (typeof vButton === "number") {
-			vButton = this.getButtons()[vButton];
-		}
-
-		oPicker.removeContent(vButton);
-	}
-
-	return this.removeAssociation("buttons", vButton);
-};
-
-/**
- * Remove all buttons from the ActionSelect.
- *
- * @returns {string[]} An array with the ids of the removed elements (might be empty).
- * @public
- * @name sap.m.ActionSelect#removeAllButtons
- * @function
- */
-sap.m.ActionSelect.prototype.removeAllButtons = function() {
-	var oPicker = this.getPicker();
-
-	if (oPicker) {
-		this.getButtons().forEach(function(sButtonId) {
-			oPicker.removeContent(sButtonId);
-		});
-	}
-
-	return this.removeAllAssociation("buttons");
-};
+	}, /* bExport= */ true);

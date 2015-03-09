@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -13,7 +13,7 @@ sap.ui.define(['jquery.sap.global'],
 	/**
 	 * @class ComponentContainer renderer.
 	 * @static
-	 * @name sap.ui.core.ComponentContainerRenderer
+	 * @alias sap.ui.core.ComponentContainerRenderer
 	 */
 	var ComponentContainerRenderer = {
 	};
@@ -24,14 +24,11 @@ sap.ui.define(['jquery.sap.global'],
 	 *
 	 * @param {sap.ui.core.RenderManager} oRenderManager RenderManager that can be used for writing to the Render-Output-Buffer
 	 * @param {sap.ui.core.Control} oControl Object representation of the control that should be rendered
-	 * @name sap.ui.core.ComponentContainerRenderer.render
-	 * @function
 	 */
 	ComponentContainerRenderer.render = function(oRenderManager, oComponentContainer){
 	
-	    // convenience variable
+		// convenience variable
 		var oRM = oRenderManager;
-		var bRTL = sap.ui.getCore().getConfiguration().getRTL();
 		var oComponent = oComponentContainer.getComponentInstance();
 		var sWidth = oComponentContainer.getWidth();
 		var sHeight = oComponentContainer.getHeight();

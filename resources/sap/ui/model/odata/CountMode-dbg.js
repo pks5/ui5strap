@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -16,7 +16,7 @@ sap.ui.define(['jquery.sap.global'],
 	*
 	* @static
 	* @public
-	* @name sap.ui.model.odata.CountMode
+	* @alias sap.ui.model.odata.CountMode
 	*/
 	var CountMode = {
 			/**
@@ -30,6 +30,12 @@ sap.ui.define(['jquery.sap.global'],
 			 * @public
 			 */
 			Inline: "Inline",
+	
+			/**
+			 * Count is retrieved by adding $inlinecount=allpages and is included in every data request
+			 * @public
+			 */
+			InlineRepeat: "InlineRepeat",
 	
 			/**
 			 * Count is retrieved by a separate request upfront and inline with each data request

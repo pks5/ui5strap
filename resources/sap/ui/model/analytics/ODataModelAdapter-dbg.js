@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './AnalyticalBinding', "./TreeBindingAdapter
 	/**
 	 * If called on an instance of an ODataModel it will enrich it with analytics capabilities.
 	 *
-	 * @name sap.ui.model.analytics.ODataModelAdapter
+	 * @alias sap.ui.model.analytics.ODataModelAdapter
 	 * @function
 	 * @experimental This module is only for experimental use!
 	 * @protected
@@ -30,7 +30,7 @@ sap.ui.define(['jquery.sap.global', './AnalyticalBinding', "./TreeBindingAdapter
 		// "this" is the prototype now when called with apply()
 	
 		// ensure only ODataModel are enhanced which have not been enhanced yet
-		if(!(this instanceof ODataModel && this.getAnalyticalExtensions === undefined)) {
+		if (!(this instanceof ODataModel && this.getAnalyticalExtensions === undefined)) {
 			return;
 		}
 	
@@ -51,8 +51,6 @@ sap.ui.define(['jquery.sap.global', './AnalyticalBinding', "./TreeBindingAdapter
 	
 	/**
 	 * @see sap.ui.model.odata.ODataModel#bindList
-	 * @name sap.ui.model.odata.ODataModelAdapter#bindList
-	 * @function
 	 */
 	ODataModelAdapter.prototype.bindList = function(sPath, oContext, aSorters, aFilters, mParameters) {
 		// detection for usage of AnalyticalBinding (aligned with AnalyticalTable#bindRows)
@@ -67,8 +65,6 @@ sap.ui.define(['jquery.sap.global', './AnalyticalBinding', "./TreeBindingAdapter
 	
 	/**
 	 * @see sap.ui.model.odata.ODataModel#bindTree
-	 * @name sap.ui.model.odata.ODataModelAdapter#bindTree
-	 * @function
 	 */
 	ODataModelAdapter.prototype.bindTree = function(sPath, oContext, aFilters, mParameters) {
 		// detection for usage of AnalyticalBinding (aligned with AnalyticalTable#bindRows)
@@ -81,8 +77,6 @@ sap.ui.define(['jquery.sap.global', './AnalyticalBinding', "./TreeBindingAdapter
 	};
 	
 	/**
-	 * @name sap.ui.model.odata.ODataModelAdapter#getAnalyticalExtensions
-	 * @function
 	 * @return {sap.ui.model.analytics.odata4analytics.Model} Model providing access to analytical
 	 *         extensions of the OData model or null if the services does not
 	 *         include analytical extensions
@@ -90,8 +84,9 @@ sap.ui.define(['jquery.sap.global', './AnalyticalBinding', "./TreeBindingAdapter
 	 */
 	ODataModelAdapter.prototype.getAnalyticalExtensions = function() {
 		// initialize API by loading the analytical OData model
-		if (this.oOData4SAPAnalyticsModel != undefined && this.oOData4SAPAnalyticsModel != null)
+		if (this.oOData4SAPAnalyticsModel != undefined && this.oOData4SAPAnalyticsModel != null) {
 			return this.oOData4SAPAnalyticsModel;
+		}
 	
 		var sAnnotationDoc = null;
 	
@@ -108,8 +103,7 @@ sap.ui.define(['jquery.sap.global', './AnalyticalBinding', "./TreeBindingAdapter
 	
 		// initialize API by loading the analytical OData model
 		try {
-			this.oOData4SAPAnalyticsModel = new odata4analytics.Model(new odata4analytics.Model.ReferenceByModel(
-					this), sAnnotationDoc);
+			this.oOData4SAPAnalyticsModel = new odata4analytics.Model(new odata4analytics.Model.ReferenceByModel(this), {sAnnotationJSONDoc: sAnnotationDoc});
 		} catch (exception) {
 			throw "Failed to instantiate analytical extensions for given OData model: " + exception.message;
 		}

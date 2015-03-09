@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -18,21 +18,20 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	 * these property bindings. Note: Only One Way binding is supported. So setValue and setExternalValue throw exceptions.
 	 *
 	 * @public
-	 * @name sap.ui.model.CompositeBinding
+	 * @alias sap.ui.model.CompositeBinding
 	 */
 	
 	var CompositeBinding = PropertyBinding.extend("sap.ui.model.CompositeBinding", /** @lends sap.ui.model.CompositeBinding.prototype */ {
 	
 		constructor : function (aBindings, bRawValues) {
 			PropertyBinding.apply(this, [null,""]);
-			var that = this;
 			this.aBindings = aBindings;
 			this.bRawValues = bRawValues;
 		},
 		metadata : {
 			
 		  publicMethods : [
-		          "getBindings", "attachChange", "detachChange"
+				  "getBindings", "attachChange", "detachChange"
 		  ]
 		}
 	
@@ -61,13 +60,11 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	/**
 	 * sets the context for each property binding in this composite binding
 	 * @param {object} oContext the new context for the bindings
-	 * @name sap.ui.model.CompositeBinding#setContext
-	 * @function
 	 */
 	CompositeBinding.prototype.setContext = function(oContext) {
 		jQuery.each(this.aBindings, function(i, oBinding){
 			// null context could also be set
-			if(!oContext || oBinding.updateRequired(oContext.getModel())) {
+			if (!oContext || oBinding.updateRequired(oContext.getModel())) {
 				oBinding.setContext(oContext);
 			}
 		});
@@ -82,8 +79,6 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	 * @throws sap.ui.base.Exception
 	 *
 	 * @public
-	 * @name sap.ui.model.CompositeBinding#setValue
-	 * @function
 	 */
 	CompositeBinding.prototype.setValue = function(oValue) {
 		throw new sap.ui.base.Exception("Composite Binding does not support setValue because it contains multiple property bindings!");
@@ -95,10 +90,8 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	 * @return {object} the values of the internal property bindings in an array
 	 *
 	 * @public
-	 * @name sap.ui.model.CompositeBinding#getValue
-	 * @function
 	 */
-	CompositeBinding.prototype.getValue = function() {	
+	CompositeBinding.prototype.getValue = function() {
 		var aValues = [],
 		oValue;
 	
@@ -118,10 +111,8 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	 *@throws sap.ui.model.FormatException
 	 *
 	 * @public
-	 * @name sap.ui.model.CompositeBinding#getExternalValue
-	 * @function
 	 */
-	CompositeBinding.prototype.getExternalValue = function() {	
+	CompositeBinding.prototype.getExternalValue = function() {
 		var aValues = [],
 			oValue;
 		if (this.bRawValues) {
@@ -159,8 +150,6 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	 * @throws sap.ui.base.Exception
 	 *
 	 * @public
-	 * @name sap.ui.model.CompositeBinding#setExternalValue
-	 * @function
 	 */
 	CompositeBinding.prototype.setExternalValue = function(oValue) {
 		throw new sap.ui.base.Exception("Composite Binding does not support setExternalValue because it contains multiple property bindings!");
@@ -172,8 +161,6 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	 * @return {array} the property bindings in this composite binding
 	 *
 	 * @public
-	 * @name sap.ui.model.CompositeBinding#getBindings
-	 * @function
 	 */
 	CompositeBinding.prototype.getBindings = function() {
 		return this.aBindings;
@@ -185,8 +172,6 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	* @param {function} fnFunction The function to call, when the event occurs.
 	* @param {object} [oListener] object on which to call the given function.
 	* @protected
-	* @name sap.ui.model.CompositeBinding#attachChange
-	* @function
 	*/
 	CompositeBinding.prototype.attachChange = function(fnFunction, oListener) {
 		this.attachEvent("change", fnFunction, oListener);
@@ -203,8 +188,6 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	* @param {function} fnFunction The function to call, when the event occurs.
 	* @param {object} [oListener] object on which to call the given function.
 	* @protected
-	* @name sap.ui.model.CompositeBinding#detachChange
-	* @function
 	*/
 	CompositeBinding.prototype.detachChange = function(fnFunction, oListener) {
 		this.detachEvent("change", fnFunction, oListener);
@@ -221,8 +204,6 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	 * @param {object} oModel The model instance to compare against
 	 * @returns {boolean} true if this binding should be updated
 	 * @protected
-	 * @name sap.ui.model.CompositeBinding#updateRequired
-	 * @function
 	 */
 	CompositeBinding.prototype.updateRequired = function(oModel) {
 		var bUpdateRequired = false;
@@ -237,12 +218,10 @@ sap.ui.define(['jquery.sap.global', './PropertyBinding', './SimpleType'],
 	 * 
 	 * @param {boolean} bForceupdate
 	 * 
-	 * @name sap.ui.model.CompositeBinding#checkUpdate
-	 * @function
 	 */
 	CompositeBinding.prototype.checkUpdate = function(bForceupdate){
 		var oValue = this.getExternalValue();
-		if(!jQuery.sap.equal(oValue, this.oValue) || bForceupdate) {// optimize for not firing the events when unneeded
+		if (!jQuery.sap.equal(oValue, this.oValue) || bForceupdate) {// optimize for not firing the events when unneeded
 			this.oValue = oValue;
 			this._fireChange({reason: sap.ui.model.ChangeReason.Change});
 		}

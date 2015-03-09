@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -18,10 +18,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 	 *
 	 * @extends sap.ui.base.Object
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @constructor
 	 * @public
-	 * @name sap.ui.core.LocaleData
+	 * @alias sap.ui.core.LocaleData
 	 */
 	var LocaleData = BaseObject.extend("sap.ui.core.LocaleData", /** @lends sap.ui.core.LocaleData.prototype */ {
 
@@ -135,6 +135,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 		},
 
 		/**
+		 * Get stand alone quarter names in width "narrow", "abbreviated" or "wide"
+		 *
+		 * @param {string} sWidth the required width for the quarter names
+		 * @returns {array} array of quarters
+		 * @public
+		 */
+		getQuartersStandAlone : function(sWidth) {
+			jQuery.sap.assert(sWidth == "narrow" || sWidth == "abbreviated" || sWidth == "wide", "sWidth must be narrow, abbreviated or wide");
+			return this._get("quarters-standAlone-" + sWidth);
+		},
+
+		/**
 		 * Get day periods in width "narrow", "abbreviated" or "wide"
 		 *
 		 * @param {string} sWidth the required width for the day period names
@@ -183,14 +195,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 		},
 
 		/**
-		 * Get number symbol "decimal", "group", "plusSign", "minusSign"
+		 * Get number symbol "decimal", "group", "plusSign", "minusSign", "percentSign"
 		 *
 		 * @param {string} sType the required type of symbol
 		 * @returns {string} the selected number symbol
 		 * @public
 		 */
 		getNumberSymbol : function(sType) {
-			jQuery.sap.assert(sType == "decimal" || sType == "group" || sType == "plusSign" || sType == "minusSign", "sType must be decimal, group, plusSign or minusSign");
+			jQuery.sap.assert(sType == "decimal" || sType == "group" || sType == "plusSign" || sType == "minusSign" || sType == "percentSign", "sType must be decimal, group, plusSign, minusSign or percentSign");
 			return this._get("symbols-latn-" + sType);
 		},
 		
@@ -288,7 +300,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 		 * @since 1.17.0 
 		 */
 		getIntervalPattern : function(sId) {
-			return (sId && this._get("intervalFormat-" + sId)) || this._get("intervalFormatFallback"); 
+			return (sId && this._get("intervalFormat-" + sId)) || this._get("intervalFormatFallback");
 		},
 		
 		/**
@@ -323,8 +335,92 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 		getCurrencySymbol : function(sCurrency) {
 			var oCurrencySymbols = this._get("currencySymbols");
 			return (oCurrencySymbols && oCurrencySymbols[sCurrency]) || sCurrency;
-		}
+		},
 		
+		_getRelative : function(sType, iDiff) {
+			if (Math.abs(iDiff) <= 1) {
+				return this._get("dateField-" + sType + "-relative-" + iDiff);
+			}
+			return this._get("dateField-" + sType + "-relative-" + (iDiff < 0 ? "past" : "future") + "-other");
+		},
+		
+		/**
+		 * Returns the relative day resource pattern (like "Today", "Yesterday", "{0} days ago") based on the given
+		 * difference of days (0 means today, 1 means tommorrow, -1 means yesterday, ...).
+		 *
+		 * @param {int} iDiff the difference in days
+		 * @returns {string} the relative day resource pattern
+		 * @public
+		 * @since 1.25.0
+		 */
+		getRelativeDay : function(iDiff) {
+			return this._getRelative("day", iDiff);
+		},
+		
+		/**
+		 * Returns the relative month resource pattern (like "This month", "Last month", "{0} months ago") based on the given
+		 * difference of months (0 means this month, 1 means next month, -1 means last month, ...).
+		 *
+		 * @param {int} iDiff the difference in months
+		 * @returns {string} the relative month resource pattern
+		 * @public
+		 * @since 1.25.0
+		 */
+		getRelativeMonth : function(iDiff) {
+			return this._getRelative("month", iDiff);
+		},
+		
+		/**
+		 * Returns the relative year resource pattern (like "This year", "Last year", "{0} year ago") based on the given
+		 * difference of years (0 means this year, 1 means next year, -1 means last year, ...).
+		 *
+		 * @param {int} iDiff the difference in years
+		 * @returns {string} the relative year resource pattern
+		 * @public
+		 * @since 1.25.0
+		 */
+		getRelativeYear : function(iDiff) {
+			return this._getRelative("year", iDiff);
+		},
+
+		/**
+		 * Returns the short decimal formats (like 1K, 1M....)
+		 *
+		 * @param {string} sStyle short or long
+		 * @param {string} sNumber 1000, 10000 ...
+		 * @param {string} sPlural one or other (if not exists other is used)
+		 * @returns {string} decimal format
+		 * @public
+		 * @since 1.25.0
+		 */
+		getDecimalFormat : function(sStyle, sNumber, sPlural) {
+
+			var sFormat;
+			var oFormats;
+
+			switch (sStyle) {
+			case "long":
+				oFormats = this._get("decimalFormat-long");
+				break;
+
+			default: //short
+				oFormats = this._get("decimalFormat-short");
+				break;
+			}
+
+			if (oFormats) {
+				var sName = sNumber + "-" + sPlural;
+				sFormat = oFormats[sName];
+				if (!sFormat) {
+					sName = sNumber + "-other";
+					sFormat = oFormats[sName];
+				}
+			}
+
+			return sFormat;
+
+		}
+
 	});
 
 	/**
@@ -368,10 +464,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 			"quarters-format-abbreviated":["Q1","Q2","Q3","Q4"],
 			"quarters-format-wide":["1st quarter","2nd quarter","3rd quarter","4th quarter"],
 			"quarters-standAlone-narrow":["1","2","3","4"],
+			"quarters-standAlone-abbreviated":["Q1","Q2","Q3","Q4"],
+			"quarters-standAlone-wide":["1st quarter","2nd quarter","3rd quarter","4th quarter"],
 			"symbols-latn-decimal":".",
 			"symbols-latn-group":",",
 			"symbols-latn-plusSign":"+",
 			"symbols-latn-minusSign":"-",
+			"symbols-latn-percentSign":"%",
 			"dayPeriods-format-narrow":["AM","PM"],
 			"dayPeriods-format-wide":["AM","PM"],
 			"dayPeriods-format-abbreviated":["AM","PM"],
@@ -385,7 +484,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 	var M_ISO639_OLD_TO_NEW = {
 			"iw" : "he",
 			"ji" : "yi",
-			"in" : "id", 
+			"in" : "id",
 			"sh" : "sr"
 	};
 
@@ -397,12 +496,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 	 * @private
 	 */
 	var M_SUPPORTED_LOCALES = (function() {
-		var LOCALES=Locale._cldrLocales,
-			result={},
+		var LOCALES = Locale._cldrLocales,
+			result = {},
 			i;
 		
 		if ( LOCALES ) {
-			for(i=0; i<LOCALES.length; i++) {
+			for (i = 0; i < LOCALES.length; i++) {
 				result[LOCALES[i]] = true;
 			}
 		}
@@ -428,7 +527,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 			mData;
 
 		function getOrLoad(sId) {
-			var oData;
 			if ( !mLocaleDatas[sId] && (!M_SUPPORTED_LOCALES || M_SUPPORTED_LOCALES[sId] === true) ) {
 				mLocaleDatas[sId] = jQuery.sap.loadResource("sap/ui/core/cldr/" + sId + ".json", {
 					dataType: "json",
@@ -449,7 +547,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 		// Special case 2: for Chinese, derive a default region from the script (this behavior is inherited from Java) 
 		if ( sLanguage === "zh" && !sRegion ) {
 			if ( sScript === "Hans" ) {
-				sRegion = "CN"; 
+				sRegion = "CN";
 			} else if ( sScript === "Hant" ) {
 				sRegion = "TW";
 			}
@@ -468,7 +566,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 		mLocaleDatas[sId] = mData || M_DEFAULT_DATA;
 		
 		return mLocaleDatas[sId];
-	};
+	}
 
 
 	/**
@@ -487,8 +585,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 
 	/**
 	 * 
-	 * @name sap.ui.core.LocaleData.getInstance
-	 * @function
 	 */
 	LocaleData.getInstance = function(oLocale) {
 		return oLocale.hasPrivateUseSubtag("sapufmt") ? new sap.ui.core.CustomLocaleData(oLocale) : new LocaleData(oLocale);

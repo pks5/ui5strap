@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -16,7 +16,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Exception'],
 	 * This exception is thrown, when an error occurs while trying to convert a value of the model to
 	 * a specific property value in the UI.
 	 *
-	 * @name sap.ui.model.FormatException
+	 * @alias sap.ui.model.FormatException
 	 */
 	var FormatException = function(message) {
 		this.name = "FormatException";

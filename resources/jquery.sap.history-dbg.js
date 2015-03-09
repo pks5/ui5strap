@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
@@ -30,7 +30,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 			skipIndex = 0,
 			
 			//the current hash of the history handling
-			currentHash = undefined,
+			currentHash,
 			
 			//the hash format separator
 			sIdSeperator = "|",
@@ -110,29 +110,29 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		 */
 		$.sap.history = function(mSettings){
 			//if mSetting is not a object map, return
-			if(!jQuery.isPlainObject(mSettings)){
+			if (!jQuery.isPlainObject(mSettings)) {
 				return;
 			}
 			
 			
-			if(!bInitialized){
+			if (!bInitialized) {
 				var jWindowDom = $(window),
 					//using href instead of hash to avoid the escape problem in firefox
 					sHash = (window.location.href.split("#")[1] || "");
 				
 				jWindowDom.bind('hashchange', detectHashChange);
 				
-				if($.isArray(mSettings.routes)){
+				if ($.isArray(mSettings.routes)) {
 					var i, route;
-					for(i = 0 ; i < mSettings.routes.length ; i++){
+					for (i = 0 ; i < mSettings.routes.length ; i++) {
 						route = mSettings.routes[i];
-						if(route.path && route.handler){
+						if (route.path && route.handler) {
 							$.sap.history.addRoute(route.path, route.handler);
 						}
 					}
 				}
 		
-				if(jQuery.isFunction(mSettings.defaultHandler)){
+				if (jQuery.isFunction(mSettings.defaultHandler)) {
 					defaultHandler = mSettings.defaultHandler;
 				}
 				
@@ -140,9 +140,9 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 				hashHistory.push(sHash);
 				
 				//goes in from bookmark
-				if(sHash.length > 1){
+				if (sHash.length > 1) {
 					jWindowDom.trigger("hashchange", [true]);
-				}else{
+				} else {
 					currentHash = sHash;
 				}
 				
@@ -155,7 +155,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		 * developer. Normally, a history record should be added when changes are done already. 
 		 * 
 		 * @param {string} sIdf The identifier defined in the routes which will be matched in order to call the corresponding handler
-	 	 * @param {object} oStateData The object passed to the corresponding handler when the identifier is matched with the url hash
+		 * @param {object} oStateData The object passed to the corresponding handler when the identifier is matched with the url hash
 		 * @param {boolean} bBookmarkable Default value is set to true. If this is set to false, the default handler will be called when this identifier and data are matched
 		 * @param {boolean} [bVirtual] This states if the history is a virtual history that should be skipped when going forward or backward in the history stack.
 		 * @returns {string} sHash The complete hash string which contains the identifier, stringified data, optional uid, and bookmarkable digit. This hash can be passed into 
@@ -167,19 +167,19 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		 */
 		$.sap.history.addHistory = function(sIdf, oStateData, bBookmarkable, bVirtual){
 			var uid, sHash;
-			if(bBookmarkable === undefined){
+			if (bBookmarkable === undefined) {
 				bBookmarkable = true;
 			}
 			
-			if(!bVirtual){
+			if (!bVirtual) {
 				sHash = preGenHash(sIdf, oStateData);
 				uid = getAppendId(sHash);
-				if(uid){
+				if (uid) {
 					sHash += (sIdSeperator + uid);
 				}
 				sHash += (sIdSeperator + (bBookmarkable ? "1" : "0"));
 				
-			}else{
+			} else {
 				sHash = getNextSuffix(currentHash);
 			}
 			aHashChangeBuffer.push(sHash);
@@ -220,7 +220,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		 * @name jQuery.sap.history#addRoute
 		 */
 		$.sap.history.addRoute = function(sIdf, fn, oThis){
-			if(oThis){
+			if (oThis) {
 				fn = jQuery.proxy(fn, oThis);
 			}
 			
@@ -266,15 +266,15 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 			var iSteps;
 			
 			//back is called directly after restoring the bookmark. Since there's no history stored, call the default handler.
-			if(hashHistory.length === 1){
-				if($.isFunction(defaultHandler)){
+			if (hashHistory.length === 1) {
+				if ($.isFunction(defaultHandler)) {
 					defaultHandler();
 				}
-			}else{
+			} else {
 				iSteps = calculateStepsToHash(currentHash, sHash);
-				if(iSteps < 0){
+				if (iSteps < 0) {
 					window.history.go(iSteps);
-				}else{
+				} else {
 					jQuery.sap.log.error("jQuery.sap.history.backToHash: " + sHash + "is not in the history stack or it's after the current hash");
 				}
 			}
@@ -296,15 +296,15 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 			var iSteps;
 			
 			//back is called directly after restoring the bookmark. Since there's no history stored, call the default handler.
-			if(hashHistory.length === 1){
-				if($.isFunction(defaultHandler)){
+			if (hashHistory.length === 1) {
+				if ($.isFunction(defaultHandler)) {
 					defaultHandler();
 				}
-			}else{
+			} else {
 				iSteps = calculateStepsToHash(currentHash, sPath, true);
-				if(iSteps < 0){
+				if (iSteps < 0) {
 					window.history.go(iSteps);
-				}else{
+				} else {
 					jQuery.sap.log.error("jQuery.sap.history.backThroughPath: there's no history state which has the " + sPath + " identifier in the history stack before the current hash");
 				}
 			}
@@ -323,15 +323,15 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		$.sap.history.back = function(iSteps){
 			
 			//back is called directly after restoring the bookmark. Since there's no history stored, call the default handler.
-			if(hashHistory.length === 1){
-				if($.isFunction(defaultHandler)){
+			if (hashHistory.length === 1) {
+				if ($.isFunction(defaultHandler)) {
 					defaultHandler($.sap.history.NavType.Back);
 				}
-			}else{
-				if(!iSteps){
+			} else {
+				if (!iSteps) {
 					iSteps = 1;
 				}
-				window.history.go(-1*iSteps);
+				window.history.go(-1 * iSteps);
 			}
 		};
 		
@@ -391,23 +391,23 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 				iToIndex,
 				i,
 				tempHash;
-			if(iCurrentIndex > 0){
-				if(bPrefix){
-					for(i = iCurrentIndex - 1; i >= 0 ; i--){
+			if (iCurrentIndex > 0) {
+				if (bPrefix) {
+					for (i = iCurrentIndex - 1; i >= 0 ; i--) {
 						tempHash = hashHistory[i];
-						if(tempHash.indexOf(sToHash) === 0 && !isVirtualHash(tempHash)){
+						if (tempHash.indexOf(sToHash) === 0 && !isVirtualHash(tempHash)) {
 							return i - iCurrentIndex;
 						}
 					}
-				}else{
+				} else {
 					iToIndex = $.inArray(sToHash, hashHistory);
 					
 					//When back to home is needed, and application is started with nonempty hash but it's nonbookmarkable
-					if((iToIndex === -1) && sToHash.length === 0){
+					if ((iToIndex === -1) && sToHash.length === 0) {
 						return -1 * iCurrentIndex;
 					}
 					
-					if((iToIndex > -1) && (iToIndex < iCurrentIndex)){
+					if ((iToIndex > -1) && (iToIndex < iCurrentIndex)) {
 						return iToIndex - iCurrentIndex;
 					}
 				}
@@ -432,19 +432,19 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 			var sHash = (window.location.href.split("#")[1] || "");
 			sHash = formatHash(sHash);
 			
-			if(bManual || !mSkipHandler[sHash]){
+			if (bManual || !mSkipHandler[sHash]) {
 				aHashChangeBuffer.push(sHash);
 			}
 			
-			if(!bInProcessing){
+			if (!bInProcessing) {
 				bInProcessing = true;
-				if(aHashChangeBuffer.length > 0){
+				if (aHashChangeBuffer.length > 0) {
 					var newHash = aHashChangeBuffer.shift();
 				
-					if(mSkipHandler[newHash]){
+					if (mSkipHandler[newHash]) {
 						reorganizeHistoryArray(newHash);
 						delete mSkipHandler[newHash];
-					}else{
+					} else {
 						onHashChange(newHash);
 					}
 					currentHash = newHash;
@@ -453,16 +453,6 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 			}
 		}
 		
-		
-		function parseHashFromUrl(sUrl){
-			var iSharpIndex = sUrl.indexOf("#");
-			if(iSharpIndex === -1){
-				return "";
-			}else if(iSharpIndex > 0 && iSharpIndex !== sUrl.length - 1){
-				return sUrl.slice(iSharpIndex + 1);
-			}
-		}
-	
 		/**
 		 * This function removes the leading # sign if there's any. If the bRemoveId is set to true, it will also remove the unique
 		 * id inside the hash.
@@ -470,14 +460,13 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		 * @private
 		 */
 		function formatHash(hash, bRemoveId){
-			var sRes = hash, iSharpIndex = hash ? hash.indexOf("#") : -1,
-				iSepIndex, iSuffixIndex;
+			var sRes = hash, iSharpIndex = hash ? hash.indexOf("#") : -1;
 			
-			if(iSharpIndex === 0){
-				sRes = sRes.slice(iSharpIndex+1);
+			if (iSharpIndex === 0) {
+				sRes = sRes.slice(iSharpIndex + 1);
 			}
 			
-			if(bRemoveId){
+			if (bRemoveId) {
 				sRes = sRes.replace(rIdRegex, "");
 			}
 			
@@ -493,7 +482,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		function getNextSuffix(sHash){
 			var sPath = sHash ? sHash : "";
 			
-			if(isVirtualHash(sPath)){
+			if (isVirtualHash(sPath)) {
 				var iIndex = sPath.lastIndexOf(skipSuffix);
 				sPath = sPath.slice(0, iIndex);
 			}
@@ -520,11 +509,11 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		 */
 		function getAppendId(sHash){
 			var iIndex = $.inArray(currentHash, hashHistory),
-				aTemp, i, sHistory;
-			if(iIndex > -1){
-				for(i = 0 ; i < iIndex + 1 ; i++){
+				i, sHistory;
+			if (iIndex > -1) {
+				for (i = 0 ; i < iIndex + 1 ; i++) {
 					sHistory = hashHistory[i];
-					if(sHistory.slice(0, sHistory.length-2) === sHash){
+					if (sHistory.slice(0, sHistory.length - 2) === sHash) {
 						return jQuery.sap.uid();
 					}
 				}
@@ -541,7 +530,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		function reorganizeHistoryArray(sHash){
 			var iIndex = $.inArray(currentHash, hashHistory);
 				
-			if( !(iIndex === -1 || iIndex === hashHistory.length - 1) ){
+			if ( !(iIndex === -1 || iIndex === hashHistory.length - 1) ) {
 				hashHistory.splice(iIndex + 1, hashHistory.length - 1 - iIndex);
 			}
 			hashHistory.push(sHash);
@@ -565,20 +554,20 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 			var iIndex = $.inArray(sCurrentHash, hashHistory),
 				i;
 			
-			if(iIndex !== -1){
-				if(bForward){
-					for(i = iIndex ; i < hashHistory.length ; i++){
-						if(!isVirtualHash(hashHistory[i])){
+			if (iIndex !== -1) {
+				if (bForward) {
+					for (i = iIndex ; i < hashHistory.length ; i++) {
+						if (!isVirtualHash(hashHistory[i])) {
 							return i - iIndex;
 						}
 					}
-				}else{
-					for(i = iIndex ; i >= 0 ; i--){
-						if(!isVirtualHash(hashHistory[i])){
+				} else {
+					for (i = iIndex ; i >= 0 ; i--) {
+						if (!isVirtualHash(hashHistory[i])) {
 							return i - iIndex;
 						}
 					}
-					return -1*(iIndex + 1);
+					return -1 * (iIndex + 1);
 				}
 			}
 		}
@@ -590,33 +579,33 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		 * @private
 		 */
 		function onHashChange(sHash){
-			var oRoute, iStep, i, sPath = sHash, sPureHash, oParsedHash, iNewHashIndex, sNavType;
+			var oRoute, iStep, oParsedHash, iNewHashIndex, sNavType;
 			
 			//handle the nonbookmarkable hash
-			if(currentHash === undefined){
+			if (currentHash === undefined) {
 				//url with hash opened from bookmark
 				oParsedHash = parseHashToObject(sHash);
 				
-				if(!oParsedHash || !oParsedHash.bBookmarkable){
-					if(jQuery.isFunction(defaultHandler)){
+				if (!oParsedHash || !oParsedHash.bBookmarkable) {
+					if (jQuery.isFunction(defaultHandler)) {
 						defaultHandler($.sap.history.NavType.Bookmark);
 					}
 					return;
 				}
 			}
 			
-			if(sHash.length === 0){
-				if(jQuery.isFunction(defaultHandler)){
+			if (sHash.length === 0) {
+				if (jQuery.isFunction(defaultHandler)) {
 					defaultHandler($.sap.history.NavType.Back);
 				}
-			}else{
+			} else {
 				//application restored from bookmark with non-empty hash, and later navigates back to the first hash token
 				//the defaultHandler should be triggered
 				iNewHashIndex = jQuery.inArray(sHash, hashHistory);
-				if(iNewHashIndex === 0){
+				if (iNewHashIndex === 0) {
 					oParsedHash = parseHashToObject(sHash);
-					if(!oParsedHash || !oParsedHash.bBookmarkable){
-						if(jQuery.isFunction(defaultHandler)){
+					if (!oParsedHash || !oParsedHash.bBookmarkable) {
+						if (jQuery.isFunction(defaultHandler)) {
 							defaultHandler($.sap.history.NavType.Back);
 						}
 						return;
@@ -628,54 +617,54 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 				//In this case, the hashHistory is an empty array.
 				
 				
-				if(isVirtualHash(sHash)){
+				if (isVirtualHash(sHash)) {
 					//this is a virtual history, should do the skipping calculation
-					if(isVirtualHash(currentHash)){
+					if (isVirtualHash(currentHash)) {
 						//go back to the first one that is not virtual
 						iStep = calcStepsToRealHistory(sHash, false);
 						window.history.go(iStep);
-					}else{
+					} else {
 						var sameFamilyRegex = new RegExp(jQuery.sap.escapeRegExp(currentHash + skipSuffix) + "[0-9]*$");
-						if(sameFamilyRegex.test(sHash)){
+						if (sameFamilyRegex.test(sHash)) {
 							//going forward
 							//search forward in history for the first non-virtual hash
 							//if there is, change to that one window.history.go
 							//if not, stay and return false
 							iStep = calcStepsToRealHistory(sHash, true);
-							if(iStep){
+							if (iStep) {
 								window.history.go(iStep);
-							}else{
+							} else {
 								window.history.back();
 							}
 							
-						}else{
+						} else {
 							//going backward
 							//search backward for the first non-virtual hash and there must be one
 							iStep = calcStepsToRealHistory(sHash, false);
 							window.history.go(iStep);
 						}
 					}
-				}else{
-					if(iNewHashIndex === -1){
+				} else {
+					if (iNewHashIndex === -1) {
 						sNavType = $.sap.history.NavType.Unknown;
 						hashHistory.push(sHash);
-					}else{
-						if(jQuery.inArray(currentHash, hashHistory, iNewHashIndex+1) === -1){
+					} else {
+						if (jQuery.inArray(currentHash, hashHistory, iNewHashIndex + 1) === -1) {
 							sNavType = $.sap.history.NavType.Forward;
-						}else{
+						} else {
 							sNavType = $.sap.history.NavType.Back;
 						}
 					}
 					
 					
 					oParsedHash = parseHashToObject(sHash);
-					if(oParsedHash){
+					if (oParsedHash) {
 						oRoute = findRouteByIdentifier(oParsedHash.sIdentifier);
 						
-						if(oRoute){
+						if (oRoute) {
 							oRoute.action.apply(null, [oParsedHash.oStateData, sNavType]);
 						}
-					}else{
+					} else {
 						jQuery.sap.log.error("hash format error! The current Hash: " + sHash);
 					}
 					
@@ -689,8 +678,8 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		 */
 		function findRouteByIdentifier(sIdf){
 			var i;
-			for(i = 0 ; i < routes.length ; i++){
-				if(routes[i].sIdentifier === sIdf){
+			for (i = 0 ; i < routes.length ; i++) {
+				if (routes[i].sIdentifier === sIdf) {
 					return routes[i];
 				}
 			}
@@ -708,24 +697,24 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.strings'],
 		 * @private
 		 */
 		function parseHashToObject(sHash){
-			if(isVirtualHash(sHash)){
+			if (isVirtualHash(sHash)) {
 				var i = sHash.lastIndexOf(skipSuffix);
 				sHash = sHash.slice(0, i);
 			}
 			
 			
 			var aParts = sHash.split(sIdSeperator), oReturn = {};
-			if(aParts.length === 4 || aParts.length === 3){
+			if (aParts.length === 4 || aParts.length === 3) {
 				oReturn.sIdentifier = window.decodeURIComponent(aParts[0]);
 				oReturn.oStateData = window.JSON.parse(window.decodeURIComponent(aParts[1]));
-				if(aParts.length === 4){
+				if (aParts.length === 4) {
 					oReturn.uid = aParts[2];
 				}
 				
-				oReturn.bBookmarkable = aParts[aParts.length-1] === "0" ? false : true;
+				oReturn.bBookmarkable = aParts[aParts.length - 1] === "0" ? false : true;
 				
 				return oReturn;
-			}else{
+			} else {
 				//here can be empty hash only with a skipable suffix
 				return null;
 			}

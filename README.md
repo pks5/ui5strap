@@ -1,11 +1,7 @@
-ui5strap
-========
+ui5strap 0.7.0
+==============
 
-Rapid JavaScript App Development Toolkit that focuses on simplicity and development speed. 
-
-Create scalable, modularized and customizable apps for all devices and platforms. 
-
-Ui5Strap is based on OpenUI5 and Bootstrap.
+The independent SAPUI5 / OpenUI5 App Development Toolkit based on Bootstrap.
 
 Get more information at http://ui5strap.com
 
@@ -24,3 +20,14 @@ LICENSE
 
 UI5Strap is released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
 
+THIRD PARTY COMPONENTS
+----------------------
+
+OpenUi5 1.26.7
+Apache 2 License
+
+Bootstrap 3.3.1
+MIT License
+
+Font Awesome 4.2.0
+SIL OFL 1.1 / MIT License

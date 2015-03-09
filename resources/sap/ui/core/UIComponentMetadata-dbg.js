@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -20,9 +20,9 @@ sap.ui.define(['jquery.sap.global', './ComponentMetadata'],
 	 * @experimental Since 1.15.1. The Component concept is still under construction, so some implementation details can be changed in future.
 	 * @class
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 1.15.1
-	 * @name sap.ui.core.UIComponentMetadata
+	 * @alias sap.ui.core.UIComponentMetadata
 	 */
 	var UIComponentMetadata = function(sClassName, oClassInfo) {
 		
@@ -81,8 +81,6 @@ sap.ui.define(['jquery.sap.global', './ComponentMetadata'],
 	 * @protected
 	 * @since 1.15.1
 	 * @experimental Since 1.15.1. Implementation might change. 
-	 * @name sap.ui.core.UIComponentMetadata#getRootView
-	 * @function
 	 */
 	UIComponentMetadata.prototype.getRootView = function() {
 		return this._mRootView;
@@ -94,8 +92,6 @@ sap.ui.define(['jquery.sap.global', './ComponentMetadata'],
 	 * @private
 	 * @since 1.16.1 
 	 * @experimental Since 1.16.1. Implementation might change. 
-	 * @name sap.ui.core.UIComponentMetadata#getRoutingConfig
-	 * @function
 	 */
 	UIComponentMetadata.prototype.getRoutingConfig = function() {
 		return this._mRouting && this._mRouting.config;
@@ -107,8 +103,6 @@ sap.ui.define(['jquery.sap.global', './ComponentMetadata'],
 	 * @private
 	 * @since 1.16.1 
 	 * @experimental Since 1.16.1. Implementation might change. 
-	 * @name sap.ui.core.UIComponentMetadata#getRoutes
-	 * @function
 	 */
 	UIComponentMetadata.prototype.getRoutes = function() {
 		return this._mRouting && this._mRouting.routes;

@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Core'],
 		 * @static
 		 *
 		 * @public
-		 * @name sap.ui.core.theming.Parameters
+		 * @alias sap.ui.core.theming.Parameters
 		 */
 		var Parameters = {};
 	
@@ -82,7 +82,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Core'],
 				oResult = (typeof oResponse.data == "string") ? jQuery.parseJSON(oResponse.data) : oResponse.data; // FIXME jQuery1.7.1 always parses JSON, so why is it checked here?
 				if ( jQuery.isArray(oResult) ) {
 					// in the sap-ui-merged use case, multiple JSON files are merged into and transfered as a single JSON array  
-					for(var j=0; j<oResult.length; j++) {
+					for (var j = 0; j < oResult.length; j++) {
 					  jQuery.extend(mParameters, oResult[j]);
 					}
 				} else {
@@ -111,8 +111,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Core'],
 		 * Must be called AFTER a link-tag (with id: "sap-ui-theme" + sLibName) for the theme has been created.
 		 * @param {string} sLibName name of the theme library.
 		 * @private
-		 * @name sap.ui.core.theming.Parameters._addLibraryTheme
-		 * @function
 		 */
 		Parameters._addLibraryTheme = function(sLibName) {
 			// only load parameters if someone had requested them before
@@ -131,8 +129,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Core'],
 		 * @returns {any} the CSS parameter value
 		 *
 		 * @public
-		 * @name sap.ui.core.theming.Parameters.get
-		 * @function
 		 */
 		Parameters.get = function(sName) {
 	
@@ -165,8 +161,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Core'],
 		 *
 		 * @param {Object} mLibraryParameters
 		 * @private
-		 * @name sap.ui.core.theming.Parameters._setOrLoadParameters
-		 * @function
 		 */
 		Parameters._setOrLoadParameters = function(mLibraryParameters) {
 			mParameters = {};
@@ -189,8 +183,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Core'],
 		 * the next time they are queried via the method <code>get</code>.
 		 * 
 		 * @public
-		 * @name sap.ui.core.theming.Parameters.reset
-		 * @function
 		 */
 		Parameters.reset = function() {
 			// hidden parameter {boolean} bOnlyWhenNecessary
@@ -204,24 +196,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Core'],
 		 * Helper function to get an image URL based on a given theme parameter.
 		 * 
 		 * @private
-		 * @name sap.ui.core.theming.Parameters._getThemeImage
 		 * @param {string} sParamName the theme parameter which contains the logo definition. If nothing is defined the parameter 'sapUiGlobalLogo' is used.
 		 * @param {boolean} bForce whether a valid URL should be returned even if there is no logo defined.
-		 * @function
 		 */
 		Parameters._getThemeImage = function(sParamName, bForce) {
 			sParamName = sParamName || "sapUiGlobalLogo";
 			var logo = sap.ui.core.theming.Parameters.get(sParamName);
-			if(logo){
+			if (logo) {
 				var match = /url[\s]*\('?"?([^\'")]*)'?"?\)/.exec(logo);
-				if(match){
+				if (match) {
 					logo = match[1];
-				}else if(logo === "''" || logo === "none"){
+				} else if (logo === "''" || logo === "none") {
 					logo = null;
 				}
 			}
 			
-			if(!!bForce && !logo){
+			if (!!bForce && !logo) {
 				return sap.ui.resource('sap.ui.core', 'themes/base/img/1x1.gif');
 			}
 			

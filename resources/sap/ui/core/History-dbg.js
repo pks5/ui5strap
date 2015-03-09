@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -22,16 +22,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 	 *
 	 * @extends sap.ui.base.Object
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @constructor
-	 * @name sap.ui.core.History
+	 * @alias sap.ui.core.History
 	 * @protected
 	 */
 	var History = BaseObject.extend("sap.ui.core.History", /** @lends sap.ui.core.History.prototype */ {
 	
 		constructor : function(sId, mSettings) {
 			BaseObject.apply(this);
-			if(!mSettings){
+			if (!mSettings) {
 				mSettings = {};
 			}
 	
@@ -57,12 +57,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		 * @private
 		 */
 		_initHistory : function() {
-			if(!this._aHistory){
+			if (!this._aHistory) {
 				var aHistory = this._oStorage.get(this._sHistoryId);
-				if(typeof(aHistory) === "string") {
+				if (typeof (aHistory) === "string") {
 					// in case it is a string, convert it to an array
 					aHistory = aHistory.split(",");
-				} else if(!aHistory){
+				} else if (!aHistory) {
 					// or create a new one in case of non existence
 					aHistory = [];
 				} // else assume that there is the means for serializing JSON used, returning an array directly
@@ -80,8 +80,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		get : function(sValue) {
 			var aHistory = this._initHistory();
 			var aResult = [];
-			for(var i=0; i<aHistory.length; i++){
-				if(this._fFilter(aHistory[i], sValue)){
+			for (var i = 0; i < aHistory.length; i++) {
+				if (this._fFilter(aHistory[i], sValue)) {
 					aResult.push(aHistory[i]);
 				}
 			}
@@ -95,8 +95,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		 */
 		remove : function(sValue) {
 			var aHistory = this._initHistory();
-			for(var i=0; i<aHistory.length; i++){
-				if(aHistory[i] == sValue) {
+			for (var i = 0; i < aHistory.length; i++) {
+				if (aHistory[i] == sValue) {
 					aHistory.splice(i, 1);
 					break;
 				}
@@ -111,8 +111,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		add : function(sValue) {
 			var aHistory = this._initHistory();
 			// ensure it is not contained twice -> remove
-			for(var i=0; i<aHistory.length; i++){
-				if(aHistory[i] === sValue){
+			for (var i = 0; i < aHistory.length; i++) {
+				if (aHistory[i] === sValue) {
 					aHistory.splice(i,1);
 					break;
 				}
@@ -120,7 +120,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 			// and put it to the 'very top'
 			aHistory.unshift(sValue);
 			// but do not store more than specified
-			if(aHistory.length > this._iMaxHistory) {
+			if (aHistory.length > this._iMaxHistory) {
 				aHistory.splice(this._iMaxHistory);
 			}
 	

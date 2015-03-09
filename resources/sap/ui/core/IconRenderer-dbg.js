@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 sap.ui.define(["jquery.sap.global"],
@@ -10,7 +10,7 @@ sap.ui.define(["jquery.sap.global"],
 	/**
 	 * @class FontIcon renderer.
 	 * @static
-	 * @name sap.ui.core.IconRenderer
+	 * @alias sap.ui.core.IconRenderer
 	 */
 	var IconRenderer = {};
 
@@ -19,16 +19,8 @@ sap.ui.define(["jquery.sap.global"],
 	 *
 	 * @param {sap.ui.core.RenderManager} oRm The RenderManager that can be used for writing to the render output buffer.
 	 * @param {sap.ui.core.Control} oControl An object representation of the control that should be rendered.
-	 * @name sap.ui.core.IconRenderer.render
-	 * @function
 	 */
 	IconRenderer.render = function(oRm, oControl) {
-
-		// An invisible icon is not rendered
-		if (!oControl.getVisible()) {
-			return;
-		}
-
 		// write the HTML into the render manager
 		var oIconInfo = sap.ui.core.IconPool.getIconInfo(oControl.getSrc()),
 			sWidth = oControl.getWidth(),
@@ -52,7 +44,7 @@ sap.ui.define(["jquery.sap.global"],
 			oRm.writeAttributeEscaped("title", tooltip);
 		}
 
-		if (oIconInfo){
+		if (oIconInfo) {
 
 			if (!bTextNeeded) {
 				oRm.writeAttribute("data-sap-ui-icon-content", oIconInfo.content);

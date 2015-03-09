@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -43,7 +43,7 @@ sap.ui.define(['jquery.sap.global'],
 			if (jQuery.type(method) == "string") {
 				method = oObject[method];
 			}
-			method.apply(oObject, aParameters ||[]);
+			method.apply(oObject, aParameters || []);
 		}, iDelay);
 	};
 
@@ -75,7 +75,7 @@ sap.ui.define(['jquery.sap.global'],
 			if (jQuery.type(method) == "string") {
 				method = oObject[method];
 			}
-			method.apply(oObject, aParameters ||[]);
+			method.apply(oObject, aParameters || []);
 		}, iInterval);
 	};
 
@@ -99,7 +99,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Use {@link jQuery.sap.getUriParameters} to create an instance of jQuery.sap.util.UriParameters.
 	 *
 	 * @author SAP SE
-	 * @version 1.24.3
+	 * @version 1.26.7
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.UriParameters
 	 * @public
@@ -133,19 +133,19 @@ sap.ui.define(['jquery.sap.global'],
 		if ( sQueryString.indexOf('#') >= 0 ) {
 			sQueryString = sQueryString.slice(0, sQueryString.indexOf('#'));
 		}
-		if(sQueryString.indexOf("?") >= 0){
+		if (sQueryString.indexOf("?") >= 0) {
 			sQueryString = sQueryString.slice(sQueryString.indexOf("?") + 1);
 			var aParameters = sQueryString.split("&"),
 				mParameters = {},
 				aParameter,
 				sName,
 				sValue;
-			for(var i=0; i<aParameters.length; i++){
+			for (var i = 0; i < aParameters.length; i++) {
 				aParameter = aParameters[i].split("=");
 				sName = decodeURIComponent(aParameter[0]);
 				sValue = aParameter.length > 1 ? decodeURIComponent(aParameter[1].replace(/\+/g,' ')) : "";
-				if(sName){
-					if(!Object.prototype.hasOwnProperty.call(mParameters, sName)){
+				if (sName) {
+					if (!Object.prototype.hasOwnProperty.call(mParameters, sName)) {
 						mParameters[sName] = [];
 					}
 					mParameters[sName].push(sValue);
@@ -202,10 +202,11 @@ sap.ui.define(['jquery.sap.global'],
 	 */
 	jQuery.sap.unique = function(a) {
 		jQuery.sap.assert(a instanceof Array, "unique: a must be an array");
-		var l=a.length;
+		var l = a.length;
 		if ( l > 1 ) {
 			a.sort();
-			for(var i=1,j=0; i<l; i++) {
+			var j = 0;
+			for (var i = 1; i < l; i++) {
 				// invariant: i is the entry to check, j is the last unique entry known so far
 				if ( a[i] !== a[j] ) {
 					a[++j] = a[i];
@@ -213,7 +214,7 @@ sap.ui.define(['jquery.sap.global'],
 			}
 			// cut off the rest - if any
 			if ( ++j < l ) {
-				a.splice(j, l-j);
+				a.splice(j, l - j);
 			}
 		}
 		return a;
@@ -238,18 +239,30 @@ sap.ui.define(['jquery.sap.global'],
 			contains = maxDepth;
 			maxDepth = undefined;
 		}
-		if (!depth) depth = 0;
-		if (!maxDepth) maxDepth = 10;
-		if (depth > maxDepth) return false;
-		if (a === b) return true;
+		if (!depth) {
+			depth = 0;
+		}
+		if (!maxDepth) {
+			maxDepth = 10;
+		}
+		if (depth > maxDepth) {
+			return false;
+		}
+		if (a === b) {
+			return true;
+		}
 		if (jQuery.isArray(a) && jQuery.isArray(b)) {
 			if (!contains) {
-				if (a.length != b.length) { return false; }
+				if (a.length != b.length) {
+					return false;
+				}
 			} else {
-				if (a.length > b.length) { return false; }
+				if (a.length > b.length) {
+					return false;
+				}
 			}
 			for (var i = 0; i < a.length; i++) {
-				if (!jQuery.sap.equal(a[i], b[i], maxDepth, contains, depth + 1)) { 
+				if (!jQuery.sap.equal(a[i], b[i], maxDepth, contains, depth + 1)) {
 						return false;
 				}
 			}
@@ -269,13 +282,13 @@ sap.ui.define(['jquery.sap.global'],
 				return a.valueOf() == b.valueOf();
 			}
 			for (var i in a) {
-				if (!jQuery.sap.equal(a[i], b[i], maxDepth, contains, depth + 1)) { 
+				if (!jQuery.sap.equal(a[i], b[i], maxDepth, contains, depth + 1)) {
 					return false;
 				}
 			}
 			if (!contains) {
 				for (var i in b) {
-					if (a[i] === undefined) { 
+					if (a[i] === undefined) {
 						return false;
 					}
 				}
@@ -305,7 +318,7 @@ sap.ui.define(['jquery.sap.global'],
 			length, i;
 
 		if ( isArray ) {
-			for (i=0,length=oObject.length; i < length; i++) {
+			for (i = 0, length = oObject.length; i < length; i++) {
 				if ( fnCallback.call(oObject[i], i, oObject[i]) === false ) {
 					break;
 				}
@@ -349,12 +362,12 @@ sap.ui.define(['jquery.sap.global'],
 	jQuery.sap.forIn = {toString:null}.propertyIsEnumerable("toString") ?
 		// for browsers without the bug we use the straight forward implementation of a for in loop
 		function(oObject, fnCallback) {
-			for(var n in oObject) {
+			for (var n in oObject) {
 				if ( fnCallback(n, oObject[n]) === false ) {
 					return;
 				}
 			}
-		} : 
+		} :
 		// use a special implementation for IE8 
 		(function() {
 			var DONT_ENUM_KEYS = ["toString","valueOf","toLocaleString", "hasOwnProperty","isPrototypeOf","propertyIsEnumerable","constructor"],
@@ -366,13 +379,13 @@ sap.ui.define(['jquery.sap.global'],
 				var n,i;
 				
 				// standard for(in) loop
-				for(n in oObject) {
+				for (n in oObject) {
 					if ( fnCallback(n, oObject[n]) === false ) {
 						return;
 					}
 				}
 				// additionally check the known 'don't enum' names
-				for(var i=0; i<DONT_ENUM_KEYS_LENGTH; i++) {
+				for (var i = 0; i < DONT_ENUM_KEYS_LENGTH; i++) {
 					n = DONT_ENUM_KEYS[i];
 					// assume an enumerable property if it is either an own property
 					// or if its value differes fro mthe value in the Object.prototype
@@ -388,8 +401,8 @@ sap.ui.define(['jquery.sap.global'],
 				//	 prototype chain with a value identical to the value in Object.prototype
 				// - the don't enum properties are handled out of order. This is okay with the ECMAScript
 				//	 spec but might be unexpected for some callers
-			}
-	 	}());
+			};
+		}());
 		
 
 	/**
@@ -682,12 +695,11 @@ sap.ui.define(['jquery.sap.global'],
 
 				// Parse a name value.
 				var name = '',
-					charcode,
 					allowed = function(ch) {
 						return ch === "_" ||
 							(ch >= "0" && ch <= "9") ||
 							(ch >= "a" && ch <= "z") ||
-							(ch >= "A" && ch <= "Z") 
+							(ch >= "A" && ch <= "Z");
 					};
 
 				if (allowed(ch)) {
@@ -790,7 +802,7 @@ sap.ui.define(['jquery.sap.global'],
 					while (ch) {
 						if (ch >= "0" && ch <= "9") {
 							key = number();
-						} else if (ch === '"' || ch === '\''){
+						} else if (ch === '"' || ch === '\'') {
 							key = string();
 						} else {
 							key = name();
@@ -850,11 +862,11 @@ sap.ui.define(['jquery.sap.global'],
 				}
 				return result;
 			} else {
-				return { result : result, at : at-1 };
+				return { result : result, at : at - 1 };
 			}
 
 		};
-	}())
+	}());
 
 	return jQuery;
 

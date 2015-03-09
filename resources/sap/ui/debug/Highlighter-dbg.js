@@ -1,11 +1,11 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 // Provides a helper that can highlight a given control
-sap.ui.define(['jquery.sap.global', 'jquery.sap.dom', 'jquery.sap.script'],
+sap.ui.define('sap/ui/debug/Highlighter', ['jquery.sap.global', 'jquery.sap.dom', 'jquery.sap.script'],
 	function(jQuery/* , jQuerySap, jQuerySap1 */) {
 	"use strict";
 
@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.dom', 'jquery.sap.script'],
 	 * @author Frank Weigel
 	 * @since 0.8.7
 	 * @public
-	 * @name sap.ui.debug.Highlighter
+	 * @alias sap.ui.debug.Highlighter
 	 */
 	var Highlighter = function(sId, bFilled, sColor, iBorderWidth) {
 		this.sId = sId || jQuery.sap.uid();
@@ -47,8 +47,6 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.dom', 'jquery.sap.script'],
 	 *
 	 * <b>Note:</b> As the DOM node is reused across multiple calls, the highlighter must only be used
 	 * within a single document.
-	 * @name sap.ui.debug.Highlighter#highlight
-	 * @function
 	 */
 	Highlighter.prototype.highlight = function(oDomRef) {
 		if (!oDomRef || !oDomRef.parentNode) {
@@ -70,8 +68,8 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.dom', 'jquery.sap.script'],
 			oDomRef.ownerDocument.body.appendChild(oHighlightRect);
 		}
 		var oRect = jQuery(oDomRef).rect();
-		oHighlightRect.style.top = (oRect.top-this.iBorderWidth) + "px";
-		oHighlightRect.style.left = (oRect.left-this.iBorderWidth) + "px";
+		oHighlightRect.style.top = (oRect.top - this.iBorderWidth) + "px";
+		oHighlightRect.style.left = (oRect.left - this.iBorderWidth) + "px";
 		oHighlightRect.style.width = (oRect.width) + "px";
 		oHighlightRect.style.height = (oRect.height) + "px";
 		oHighlightRect.style.display = "block";
@@ -79,8 +77,6 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.dom', 'jquery.sap.script'],
 	
 	/**
 	 * Hides the rectangle/box if it is currently shown.
-	 * @name sap.ui.debug.Highlighter#hide
-	 * @function
 	 */
 	Highlighter.prototype.hide = function() {
 		var oHighlightRect = jQuery.sap.domById(this.sId);

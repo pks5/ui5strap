@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company. 
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 	 * @param {object} [mParameters]
 	 * 
 	 * @public
-	 * @name sap.ui.model.PropertyBinding
+	 * @alias sap.ui.model.PropertyBinding
 	 */
 	
 	var PropertyBinding = Binding.extend("sap.ui.model.PropertyBinding", /** @lends sap.ui.model.PropertyBinding.prototype */ {
@@ -39,23 +39,6 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 		}
 	
 	});
-	
-	/**
-	 * Creates a new subclass of class sap.ui.model.PropertyBinding with name <code>sClassName</code> 
-	 * and enriches it with the information contained in <code>oClassInfo</code>.
-	 * 
-	 * For a detailed description of <code>oClassInfo</code> or <code>FNMetaImpl</code> 
-	 * see {@link sap.ui.base.Object.extend Object.extend}.
-	 *   
-	 * @param {string} sClassName name of the class to be created
-	 * @param {object} [oClassInfo] object literal with informations about the class  
-	 * @param {function} [FNMetaImpl] alternative constructor for a metadata object
-	 * @return {function} the created class / constructor function
-	 * @public
-	 * @static
-	 * @name sap.ui.model.PropertyBinding.extend
-	 * @function
-	 */
 	
 	// the 'abstract methods' to be implemented by child classes
 	/**
@@ -87,10 +70,8 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 	 * @return {object} the current value of the bound target
 	 *
 	 * @public
-	 * @name sap.ui.model.PropertyBinding#getExternalValue
-	 * @function
 	 */
-	PropertyBinding.prototype.getExternalValue = function() {	
+	PropertyBinding.prototype.getExternalValue = function() {
 		var oValue = this.getValue();
 		if (this.oType) {
 			oValue = this.oType.formatValue(oValue, this.sInternalType);
@@ -113,8 +94,6 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 	 * @throws sap.ui.model.ValidateException
 	 *
 	 * @public
-	 * @name sap.ui.model.PropertyBinding#setExternalValue
-	 * @function
 	 */
 	PropertyBinding.prototype.setExternalValue = function(oValue) {
 		// formatter doesn't support two way binding
@@ -137,8 +116,6 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 	 * @param {String} sInternalType the internal type of the element property which this binding is bound against.
 	 * 
 	 * @public
-	 * @name sap.ui.model.PropertyBinding#setType
-	 * @function
 	 */
 	PropertyBinding.prototype.setType = function(oType, sInternalType) {
 		this.oType = oType;
@@ -149,8 +126,6 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 	 *  Returns the type if any for the binding.
 	 *  @returns {sap.ui.model.Type} the binding type
 	 *  @public
-	 * @name sap.ui.model.PropertyBinding#getType
-	 * @function
 	 */
 	PropertyBinding.prototype.getType = function() {
 		return this.oType;
@@ -162,8 +137,6 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 	 * @param {function} fnFormatter the formatter function for the binding
 	 * 
 	 * @public
-	 * @name sap.ui.model.PropertyBinding#setFormatter
-	 * @function
 	 */
 	PropertyBinding.prototype.setFormatter = function(fnFormatter) {
 		this.fnFormatter = fnFormatter;
@@ -173,8 +146,6 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 	 *  Returns the formatter function
 	 *  @returns {Function} the formatter function
 	 *  @public
-	 * @name sap.ui.model.PropertyBinding#getFormatter
-	 * @function
 	 */
 	PropertyBinding.prototype.getFormatter = function() {
 		return this.fnFormatter;
@@ -184,8 +155,6 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 	 *  Returns the binding mode 
 	 *  @returns {sap.ui.model.BindingMode} the binding mode
 	 *  @public
-	 * @name sap.ui.model.PropertyBinding#getBindingMode
-	 * @function
 	 */
 	PropertyBinding.prototype.getBindingMode = function() {
 		return this.sMode;
@@ -195,8 +164,6 @@ sap.ui.define(['jquery.sap.global', './Binding', './SimpleType'],
 	 * Sets the binding mode 
 	 * @param {sap.ui.model.BindingMode} sBindingMode the binding mode
 	 * @protected
-	 * @name sap.ui.model.PropertyBinding#setBindingMode
-	 * @function
 	 */
 	PropertyBinding.prototype.setBindingMode = function(sBindingMode) {
 		this.sMode = sBindingMode;
