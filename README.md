@@ -23,11 +23,8 @@ UI5Strap is released under Apache2 license: http://www.apache.org/licenses/LICEN
 THIRD PARTY COMPONENTS
 ----------------------
 
-OpenUi5 1.26.7
-Apache 2 License
+OpenUi5 1.26.7 (Apache 2 License)
 
-Bootstrap 3.3.1
-MIT License
+Bootstrap 3.3.1 (MIT License)
 
-Font Awesome 4.2.0
-SIL OFL 1.1 / MIT License
+Font Awesome 4.2.0 (SIL OFL 1.1 / MIT License)
