@@ -1,0 +1,28 @@
+{
+  "name": "ui5strap",
+  "version": "0.4.0",
+  "description": "Rapid JavaScript App Development Toolkit",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pks5/ui5strap.git"
+  },
+  "keywords": [
+    "OpenUi5",
+    "Bootstrap"
+  ],
+  "author": "PKSoftware.de",
+  "license": "Apache2",
+  "bugs": {
+    "url": "https://github.com/pks5/ui5strap/issues"
+  },
+  "homepage": "https://github.com/pks5/ui5strap",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-uglify": "~0.6.0",
+    "grunt-contrib-concat": "~0.5.0"
+  }
+}

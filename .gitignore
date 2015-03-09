@@ -38,8 +38,6 @@ ehthumbs.db
 Icon?
 Thumbs.db
 
-# Grunt #
+# Node Modules #
 ##########
-package.json
-Gruntfile.js
 node_modules
