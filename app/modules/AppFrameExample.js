@@ -210,7 +210,6 @@
 			defaultHandler : function (navType) {
 
 				if(_this.initialized){
-					alert('t');
 					_this.showInitialContent();
 				}
 

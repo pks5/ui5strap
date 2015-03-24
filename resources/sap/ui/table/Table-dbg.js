@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 	 * @class
 	 * The Table control provides a set of sophisticated and comfort functions for table design. For example, you can make settings for the number of visible rows. The first visible row can be explicitly set. For the selection of rows, a Multi, a Single, and a None mode are available.
 	 * @extends sap.ui.core.Control
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -683,6 +683,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 				var $fixedRow = oRow.$("fixed");
 				var $rowHdr = that.$().find("div[data-sap-ui-rowindex='" + $row.attr("data-sap-ui-rowindex") + "']");
 
+				// update row header tooltip
+				if (oRow.getBindingContext()) {
+					$rowHdr.attr("title", that._oResBundle.getText("TBL_ROW_SELECT"));
+				} else {
+					$rowHdr.attr("title", "");
+				}
+
 				if (iFixedTopRows > 0) {
 					var bIsTopRow = iIndex < iFixedTopRows;
 					if (bIsTopRow) {
@@ -840,7 +847,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 
 		// initialization of item navigation for the Table control
 		if (!this._oItemNavigation) {
-			this._iLastSelectedDataRow = 1;
+			this._iLastSelectedDataRow = this._getHeaderRowCount();
 			this._oItemNavigation = new ItemNavigation();
 			this._oItemNavigation.setTableMode(true);
 			this._oItemNavigation.attachEvent(ItemNavigation.Events.BeforeFocus, function(oEvent) {
@@ -1425,30 +1432,39 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 		if (!!sap.ui.Device.browser.safari) {
 			iColsWidth = Math.max(iColsWidth, this._getColumnsWidth(this.getFixedColumnCount()));
 		}
+
 		// add the horizontal scrollbar
 		if (iColsWidth > $this.find(".sapUiTableCtrlScr").width()) {
 			// show the scrollbar
 			if (!$this.hasClass("sapUiTableHScr")) {
 				$this.addClass("sapUiTableHScr");
+
 				if (!!sap.ui.Device.browser.safari) {
+					var $sapUiTableColHdr = $this.find(".sapUiTableCtrlScroll, .sapUiTableColHdrScr > .sapUiTableColHdr");
 					// min-width on table elements does not work for safari
 					if (this._bjQueryLess18) {
-						$this.find(".sapUiTableCtrlScroll, .sapUiTableColHdrScr > .sapUiTableColHdr").width(iColsWidth);
+						$sapUiTableColHdr.width(iColsWidth);
 					} else {
-						$this.find(".sapUiTableCtrlScroll, .sapUiTableColHdrScr > .sapUiTableColHdr").outerWidth(iColsWidth);
+						$sapUiTableColHdr.outerWidth(iColsWidth);
 					}
 				}
 			}
+
 			var iScrollPadding = $this.find(".sapUiTableCtrlFixed").width();
+
 			if ($this.find(".sapUiTableRowHdrScr:visible").length > 0) {
 				iScrollPadding += $this.find(".sapUiTableRowHdrScr").width();
 			}
+
+			var $sapUiTableHSb = $this.find(".sapUiTableHSb");
 			if (this._bRtlMode) {
-				$this.find(".sapUiTableHSb").css('padding-right', iScrollPadding + 'px');
+				$sapUiTableHSb.css('padding-right', iScrollPadding + 'px');
 			} else {
-				$this.find(".sapUiTableHSb").css('padding-left', iScrollPadding + 'px');
+				$sapUiTableHSb.css('padding-left', iScrollPadding + 'px');
 			}
-			this._oHSb.setContentSize(iColsWidth + "px");
+
+			this._oHSb.setContentSize(iColsWidth - iScrollPadding + "px");
+
 			if (this._oHSb.getDomRef()) {
 				this._oHSb.rerender();
 			}
@@ -1914,7 +1930,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 	 * @private
 	 */
 	Table.prototype._getHeaderRowCount = function() {
-		if (!this._useMultiHeader()) {
+		if (!this.getColumnHeaderVisible()) {
+			return 0;
+		} else if (!this._useMultiHeader()) {
 			return 1;
 		}
 		var iHeaderRows = 0;
@@ -2702,6 +2720,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 	// ROW EVENT HANDLING
 	// =============================================================================
 
+	Table.prototype._isRowSelectable = function(iRowIndex) {
+		return true;
+	};
+
 	/**
 	 * handles the row selection (depending on the mode)
 	 * @private
@@ -2721,6 +2743,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 
 		//var iRowIndex = Math.min(Math.max(0, iRowIndex), this.getBinding("rows").getLength() - 1);
 		if (iRowIndex < 0 || iRowIndex >= (oBinding.getLength() || 0)) {
+			return;
+		}
+
+		// Make sure that group headers, which represents a tree node in AnalyticalTable, are not selectable.
+		if (!this._isRowSelectable(iRowIndex)) {
 			return;
 		}
 
@@ -3164,6 +3191,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 			if (this.getFixedColumnCount() > 0 && iColIndex >= this.getFixedColumnCount()) {
 				var iFixedColumnsWidth = $this.find(".sapUiTableColHdrFixed").width();
 				iColLeft = iColLeft + iFixedColumnsWidth;
+				
+				// Consider scroll offset of non fixed area.
+				iColLeft = iColLeft - $this.find(".sapUiTableCtrlScr").scrollLeft();
 			}
 
 			// find the total left offset from the document (required for pageX info)
@@ -4045,7 +4075,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 			oEvent.preventDefault();
 		} else {
 			var oIN = this._oItemNavigation;
-			if (jQuery.contains($this.find('.sapUiTableCCnt')[0], oEvent.target)) {
+			if (jQuery.contains($this.find('.sapUiTableCCnt')[0], oEvent.target) && this.getColumnHeaderVisible()) {
 				var iColumn = oIN.getFocusedIndex() % oIN.iColumns;
 				oIN.focusItem(iColumn, oEvent);
 				oEvent.preventDefault();
@@ -5209,6 +5239,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Interval
 		jQuery.each(aColumns, function(iIndex, oColumn){
 			oColumn._restoreAppDefaults();
 		});
+	};
+
+	Table.prototype.setColumnHeaderVisible = function(bColumnHeaderVisible) {
+		this.setProperty("columnHeaderVisible", bColumnHeaderVisible);
+		// Adapt the item navigation. Since the HeaderRowCount changed, also the lastSelectedDataRow changes.
+		this._iLastSelectedDataRow = this._getHeaderRowCount();
+
 	};
 
 	return Table;

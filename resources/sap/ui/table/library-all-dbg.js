@@ -55,7 +55,7 @@ sap.ui.define("sap/ui/table/TablePersoController",['jquery.sap.global', 'sap/ui/
 	 * @extends sap.ui.base.ManagedObject
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 1.21.1
 	 *
 	 * @constructor
@@ -1343,6 +1343,7 @@ sap.ui.define("sap/ui/table/TableRenderer",['jquery.sap.global'],
 			rm.write("<td");
 			var sId = oRow.getId() + "-col" + iCellIndex;
 			rm.writeAttribute("id", sId);
+			rm.writeAttribute("tabindex", "-1");
 			if (oTable._bAccMode) {
 				// correct would be aria-labelledby but doesn't work for JAWS
 				rm.writeAttribute("headers", oTable.getId() + "_col" + iColIndex);
@@ -1358,7 +1359,6 @@ sap.ui.define("sap/ui/table/TableRenderer",['jquery.sap.global'],
 				rm.writeAttribute("aria-labelledby", sLabelledBy);
 				rm.writeAttribute("aria-describedby", oTable.getId() + "-toggleedit");
 				rm.writeAttribute("aria-activedescendant", oCell.getId());
-				rm.writeAttribute("tabindex", "-1");
 				if (oTable.getSelectionMode() === sap.ui.table.SelectionMode.Multi) {
 					rm.writeAttribute("aria-selected", "false");
 				}
@@ -1383,7 +1383,6 @@ sap.ui.define("sap/ui/table/TableRenderer",['jquery.sap.global'],
 			rm.writeClasses();
 			
 			if (oTable.getRowHeight() && oTable.getVisibleRowCountMode() == sap.ui.table.VisibleRowCountMode.Auto) {
-				rm.addStyle("height", oTable.getRowHeight() + "px");
 				rm.addStyle("max-height", oTable.getRowHeight() + "px");
 			}
 			rm.writeStyles();
@@ -1516,14 +1515,14 @@ sap.ui.define("sap/ui/table/library",['jquery.sap.global',
 	 * @namespace
 	 * @name sap.ui.table
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @public
 	 */
 	
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.table",
-		version: "1.26.7",
+		version: "1.26.9",
 		dependencies : ["sap.ui.core","sap.ui.unified"],
 		types: [
 			"sap.ui.table.NavigationMode",
@@ -1552,7 +1551,7 @@ sap.ui.define("sap/ui/table/library",['jquery.sap.global',
 	/**
 	 * Navigation mode of the table
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @enum {string}
 	 * @public
 	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
@@ -1577,7 +1576,7 @@ sap.ui.define("sap/ui/table/library",['jquery.sap.global',
 	/**
 	 * Selection behavior of the table
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @enum {string}
 	 * @public
 	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
@@ -1608,7 +1607,7 @@ sap.ui.define("sap/ui/table/library",['jquery.sap.global',
 	/**
 	 * Selection mode of the table
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @enum {string}
 	 * @public
 	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
@@ -1645,7 +1644,7 @@ sap.ui.define("sap/ui/table/library",['jquery.sap.global',
 	/**
 	 * Sort order of a column
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @enum {string}
 	 * @public
 	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
@@ -1670,7 +1669,7 @@ sap.ui.define("sap/ui/table/library",['jquery.sap.global',
 	/**
 	 * VisibleRowCountMode of the table
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @enum {string}
 	 * @public
 	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
@@ -1800,7 +1799,7 @@ sap.ui.define("sap/ui/table/Column",['jquery.sap.global', 'sap/ui/core/Element',
 	 * @class
 	 * The column allows to define column specific properties that will be applied when rendering the table.
 	 * @extends sap.ui.core.Element
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -2623,7 +2622,7 @@ sap.ui.define("sap/ui/table/ColumnMenu",['jquery.sap.global', 'sap/ui/core/Rende
 	 * @class
 	 * The column menu provides all common actions that can be performed on a column.
 	 * @extends sap.ui.unified.Menu
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -3122,7 +3121,7 @@ sap.ui.define("sap/ui/table/Row",['jquery.sap.global', 'sap/ui/core/Element', '.
 	 * @class
 	 * The row.
 	 * @extends sap.ui.core.Element
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -3196,7 +3195,7 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 	 * @class
 	 * The Table control provides a set of sophisticated and comfort functions for table design. For example, you can make settings for the number of visible rows. The first visible row can be explicitly set. For the selection of rows, a Multi, a Single, and a None mode are available.
 	 * @extends sap.ui.core.Control
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -3859,6 +3858,13 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 				var $fixedRow = oRow.$("fixed");
 				var $rowHdr = that.$().find("div[data-sap-ui-rowindex='" + $row.attr("data-sap-ui-rowindex") + "']");
 
+				// update row header tooltip
+				if (oRow.getBindingContext()) {
+					$rowHdr.attr("title", that._oResBundle.getText("TBL_ROW_SELECT"));
+				} else {
+					$rowHdr.attr("title", "");
+				}
+
 				if (iFixedTopRows > 0) {
 					var bIsTopRow = iIndex < iFixedTopRows;
 					if (bIsTopRow) {
@@ -4016,7 +4022,7 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 
 		// initialization of item navigation for the Table control
 		if (!this._oItemNavigation) {
-			this._iLastSelectedDataRow = 1;
+			this._iLastSelectedDataRow = this._getHeaderRowCount();
 			this._oItemNavigation = new ItemNavigation();
 			this._oItemNavigation.setTableMode(true);
 			this._oItemNavigation.attachEvent(ItemNavigation.Events.BeforeFocus, function(oEvent) {
@@ -4601,30 +4607,39 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 		if (!!sap.ui.Device.browser.safari) {
 			iColsWidth = Math.max(iColsWidth, this._getColumnsWidth(this.getFixedColumnCount()));
 		}
+
 		// add the horizontal scrollbar
 		if (iColsWidth > $this.find(".sapUiTableCtrlScr").width()) {
 			// show the scrollbar
 			if (!$this.hasClass("sapUiTableHScr")) {
 				$this.addClass("sapUiTableHScr");
+
 				if (!!sap.ui.Device.browser.safari) {
+					var $sapUiTableColHdr = $this.find(".sapUiTableCtrlScroll, .sapUiTableColHdrScr > .sapUiTableColHdr");
 					// min-width on table elements does not work for safari
 					if (this._bjQueryLess18) {
-						$this.find(".sapUiTableCtrlScroll, .sapUiTableColHdrScr > .sapUiTableColHdr").width(iColsWidth);
+						$sapUiTableColHdr.width(iColsWidth);
 					} else {
-						$this.find(".sapUiTableCtrlScroll, .sapUiTableColHdrScr > .sapUiTableColHdr").outerWidth(iColsWidth);
+						$sapUiTableColHdr.outerWidth(iColsWidth);
 					}
 				}
 			}
+
 			var iScrollPadding = $this.find(".sapUiTableCtrlFixed").width();
+
 			if ($this.find(".sapUiTableRowHdrScr:visible").length > 0) {
 				iScrollPadding += $this.find(".sapUiTableRowHdrScr").width();
 			}
+
+			var $sapUiTableHSb = $this.find(".sapUiTableHSb");
 			if (this._bRtlMode) {
-				$this.find(".sapUiTableHSb").css('padding-right', iScrollPadding + 'px');
+				$sapUiTableHSb.css('padding-right', iScrollPadding + 'px');
 			} else {
-				$this.find(".sapUiTableHSb").css('padding-left', iScrollPadding + 'px');
+				$sapUiTableHSb.css('padding-left', iScrollPadding + 'px');
 			}
-			this._oHSb.setContentSize(iColsWidth + "px");
+
+			this._oHSb.setContentSize(iColsWidth - iScrollPadding + "px");
+
 			if (this._oHSb.getDomRef()) {
 				this._oHSb.rerender();
 			}
@@ -5090,7 +5105,9 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 	 * @private
 	 */
 	Table.prototype._getHeaderRowCount = function() {
-		if (!this._useMultiHeader()) {
+		if (!this.getColumnHeaderVisible()) {
+			return 0;
+		} else if (!this._useMultiHeader()) {
 			return 1;
 		}
 		var iHeaderRows = 0;
@@ -5878,6 +5895,10 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 	// ROW EVENT HANDLING
 	// =============================================================================
 
+	Table.prototype._isRowSelectable = function(iRowIndex) {
+		return true;
+	};
+
 	/**
 	 * handles the row selection (depending on the mode)
 	 * @private
@@ -5897,6 +5918,11 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 
 		//var iRowIndex = Math.min(Math.max(0, iRowIndex), this.getBinding("rows").getLength() - 1);
 		if (iRowIndex < 0 || iRowIndex >= (oBinding.getLength() || 0)) {
+			return;
+		}
+
+		// Make sure that group headers, which represents a tree node in AnalyticalTable, are not selectable.
+		if (!this._isRowSelectable(iRowIndex)) {
 			return;
 		}
 
@@ -6340,6 +6366,9 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 			if (this.getFixedColumnCount() > 0 && iColIndex >= this.getFixedColumnCount()) {
 				var iFixedColumnsWidth = $this.find(".sapUiTableColHdrFixed").width();
 				iColLeft = iColLeft + iFixedColumnsWidth;
+				
+				// Consider scroll offset of non fixed area.
+				iColLeft = iColLeft - $this.find(".sapUiTableCtrlScr").scrollLeft();
 			}
 
 			// find the total left offset from the document (required for pageX info)
@@ -7221,7 +7250,7 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 			oEvent.preventDefault();
 		} else {
 			var oIN = this._oItemNavigation;
-			if (jQuery.contains($this.find('.sapUiTableCCnt')[0], oEvent.target)) {
+			if (jQuery.contains($this.find('.sapUiTableCCnt')[0], oEvent.target) && this.getColumnHeaderVisible()) {
 				var iColumn = oIN.getFocusedIndex() % oIN.iColumns;
 				oIN.focusItem(iColumn, oEvent);
 				oEvent.preventDefault();
@@ -8387,6 +8416,13 @@ sap.ui.define("sap/ui/table/Table",['jquery.sap.global', 'sap/ui/core/Control', 
 		});
 	};
 
+	Table.prototype.setColumnHeaderVisible = function(bColumnHeaderVisible) {
+		this.setProperty("columnHeaderVisible", bColumnHeaderVisible);
+		// Adapt the item navigation. Since the HeaderRowCount changed, also the lastSelectedDataRow changes.
+		this._iLastSelectedDataRow = this._getHeaderRowCount();
+
+	};
+
 	return Table;
 
 }, /* bExport= */ true);
@@ -8417,7 +8453,7 @@ sap.ui.define("sap/ui/table/TreeTable",['jquery.sap.global', './Table', './libra
 	 * @class
 	 * The TreeTable Control.
 	 * @extends sap.ui.table.Table
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -8961,7 +8997,7 @@ sap.ui.define("sap/ui/table/AnalyticalColumn",['jquery.sap.global', './Column', 
 	 * @extends sap.ui.table.Column
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -9237,7 +9273,7 @@ sap.ui.define("sap/ui/table/AnalyticalColumnMenu",['jquery.sap.global', './Colum
 	 * @extends sap.ui.table.ColumnMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -9363,7 +9399,7 @@ sap.ui.define("sap/ui/table/AnalyticalTable",['jquery.sap.global', 'sap/ui/model
 	 * @class
 	 * Table which handles analytical OData backends
 	 * @extends sap.ui.table.Table
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -10361,6 +10397,9 @@ sap.ui.define("sap/ui/table/AnalyticalTable",['jquery.sap.global', 'sap/ui/model
 		}
 	};
 
+	AnalyticalTable.prototype._isRowSelectable = function(iRowIndex) {
+		return !this.getBinding("rows").indexHasChildren(iRowIndex);
+	};
 
 	return AnalyticalTable;
 
@@ -10392,7 +10431,7 @@ sap.ui.define("sap/ui/table/DataTable",['jquery.sap.global', './TreeTable', './l
 	 * @class
 	 * The DataTable control provides a set of sophisticated and comfort functions for table design. For example, you can make settings for the number of visible rows and a number for the displayed rows in the case the user expands the table. The first visible row can be explicitly set. For the selection of columns and rows, a Multi, a Single, a None, and an All mode are available. Setting the Editable property to true lets the user make changes on the table cell entries.
 	 * @extends sap.ui.table.TreeTable
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public

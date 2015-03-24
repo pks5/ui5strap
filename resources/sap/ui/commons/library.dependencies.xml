@@ -112,7 +112,7 @@
       <module name="sap/ui/core/Renderer.js"/>
     </requires>
   </module>
-  <module name="sap/ui/commons/Carousel.js" size="23945" compressedSize="11074">
+  <module name="sap/ui/commons/Carousel.js" size="23948" compressedSize="11077">
     <description>Provides control sap.ui.commons.Carousel.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -157,7 +157,7 @@
       <module name="jquery.sap.global.js"/>
     </requires>
   </module>
-  <module name="sap/ui/commons/ComboBox.js" size="55619" compressedSize="22862">
+  <module name="sap/ui/commons/ComboBox.js" size="55683" compressedSize="22913">
     <description>Provides control sap.ui.commons.ComboBox.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -175,7 +175,7 @@
       <module name="sap/ui/core/Renderer.js"/>
     </requires>
   </module>
-  <module name="sap/ui/commons/DatePicker.js" size="20499" compressedSize="9765">
+  <module name="sap/ui/commons/DatePicker.js" size="20986" compressedSize="9964">
     <description>Provides control sap.ui.commons.DatePicker.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -192,7 +192,7 @@
       <module name="sap/ui/commons/TextFieldRenderer.js"/>
     </requires>
   </module>
-  <module name="sap/ui/commons/Dialog.js" size="33655" compressedSize="11818">
+  <module name="sap/ui/commons/Dialog.js" size="35670" compressedSize="11062">
     <description>Provides control sap.ui.commons.Dialog.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -207,7 +207,7 @@
       <module name="jquery.sap.global.js"/>
     </requires>
   </module>
-  <module name="sap/ui/commons/DropdownBox.js" size="54657" compressedSize="22060">
+  <module name="sap/ui/commons/DropdownBox.js" size="54709" compressedSize="22093">
     <description>Provides control sap.ui.commons.DropdownBox.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -693,7 +693,7 @@
       <module name="sap/ui/core/Control.js"/>
     </requires>
   </module>
-  <module name="sap/ui/commons/RoadMapRenderer.js" size="30183" compressedSize="11861">
+  <module name="sap/ui/commons/RoadMapRenderer.js" size="30214" compressedSize="11875">
     <description>Provides default renderer for control sap.ui.commons.RoadMap</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -842,7 +842,7 @@
       <module name="jquery.sap.global.js"/>
     </requires>
   </module>
-  <module name="sap/ui/commons/TextArea.js" size="10133" compressedSize="3765">
+  <module name="sap/ui/commons/TextArea.js" size="10198" compressedSize="3816">
     <description>Provides control sap.ui.commons.TextArea.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -858,7 +858,7 @@
       <module name="sap/ui/core/Renderer.js"/>
     </requires>
   </module>
-  <module name="sap/ui/commons/TextField.js" size="23553" compressedSize="9687">
+  <module name="sap/ui/commons/TextField.js" size="24484" compressedSize="10078">
     <description>Provides control sap.ui.commons.TextField.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -940,7 +940,7 @@
       <module name="sap/ui/core/Element.js"/>
     </requires>
   </module>
-  <module name="sap/ui/commons/Tree.js" size="26016" compressedSize="11455">
+  <module name="sap/ui/commons/Tree.js" size="25848" compressedSize="11325">
     <description>Provides control sap.ui.commons.Tree.</description>
     <requires>
       <module name="jquery.sap.global.js"/>

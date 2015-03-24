@@ -271,6 +271,8 @@
     "sapUiMarginMedium": "2rem",
     "sapUiMarginLarge": "3rem",
     "sapUiButtonHeight": "18px",
+    "sapUiDlgHeaderHeight": "19px",
+    "sapUiDlgFooterHeight": "36px",
     "sapUiListBoxBorderRadius": "2px",
     "sapUiPanelBorderRadius": "3px",
     "sapUiRatingSymbolSelected": "img/rating/star_selected.png",

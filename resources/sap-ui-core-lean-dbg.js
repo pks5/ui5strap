@@ -10320,7 +10320,7 @@ return jQuery;
 /** 
  * Device and Feature Detection API of the SAP UI5 Library.
  *
- * @version 1.26.7
+ * @version 1.26.9
  * @namespace
  * @name sap.ui.Device
  * @public
@@ -10345,7 +10345,7 @@ if (typeof window.sap.ui !== "object") {
 
 	//Skip initialization if API is already available
 	if (typeof window.sap.ui.Device === "object" || typeof window.sap.ui.Device === "function" ) {
-		var apiVersion = "1.26.7";
+		var apiVersion = "1.26.9";
 		window.sap.ui.Device._checkAPIVersion(apiVersion);
 		return;
 	}
@@ -10403,7 +10403,7 @@ if (typeof window.sap.ui !== "object") {
 	
 	//Only used internal to make clear when Device API is loaded in wrong version
 	device._checkAPIVersion = function(sVersion){
-		var v = "1.26.7";
+		var v = "1.26.9";
 		if (v != sVersion) {
 			logger.log(WARNING, "Device API version differs: " + v + " <-> " + sVersion);
 		}
@@ -11566,7 +11566,9 @@ if (typeof window.sap.ui !== "object") {
 		var android_phone = (/(?=android)(?=.*mobile)/i.test(navigator.userAgent));
 		// According to google documentation: https://developer.chrome.com/multidevice/webview/overview, the WebView shipped with Android 4.4 (KitKat) is based on the same code as Chrome for Android.
 		// If you're attempting to differentiate between the WebView and Chrome for Android, you should look for the presence of the Version/_X.X_ string in the WebView user-agent string
-		var bChromeWebView = device.os.android && (device.os.version >= 4.4) && /Version\/\d.\d/.test(navigator.userAgent);
+		// The stock browser of Samsung device uses Chrome kernal from Android version 4.4. It behaves differently than the Chrome Webview, therefore it's excluded from this check by checking the 'SAMSUNG'
+		// string in the user agent.
+		var bChromeWebView = device.os.android && device.browser.chrome && (device.os.version >= 4.4) && /Version\/\d.\d/.test(navigator.userAgent) && !/SAMSUNG/.test(navigator.userAgent);
 		if (device.os.name === device.os.OS.IOS) {
 			return /ipad/i.test(navigator.userAgent);
 		} else {
@@ -11589,7 +11591,7 @@ if (typeof window.sap.ui !== "object") {
 				//this is how android distinguishes between tablet and phone
 				//http://android-developers.blogspot.de/2011/07/new-tools-for-managing-screen-sizes.html
 				var bTablet = (Math.min(window.screen.width / densityFactor, window.screen.height / densityFactor) >= 600);
-				
+
 				// special workaround for Nexus 7 where the window.screen.width is 600px or 601px in portrait mode (=> tablet) 
 				// but window.screen.height 552px in landscape mode (=> phone), because the browser UI takes some space on top.
 				// So the detected device type depends on the orientation :-(
@@ -11600,9 +11602,8 @@ if (typeof window.sap.ui !== "object") {
 						&& (/Nexus 7/i.test(navigator.userAgent))) {
 					bTablet = true;
 				}
-				
-				return bTablet;
 
+				return bTablet;
 			} else {
 				//in desktop browser
 				var android_tablet = (device.os.name === device.os.OS.ANDROID) && !android_phone;
@@ -14619,7 +14620,7 @@ $.ui.position = {
 	 * @class Represents a version consisting of major, minor, patch version and suffix, e.g. '1.2.7-SNAPSHOT'.
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @constructor
 	 * @public
 	 * @since 1.15.0
@@ -15037,7 +15038,7 @@ $.ui.position = {
 	/**
 	 * Root Namespace for the jQuery plug-in provided by SAP SE.
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @namespace
 	 * @public
 	 * @static
@@ -17036,6 +17037,9 @@ $.ui.position = {
 		appendHead(oScript);
 	};
 
+	var oIEStyleSheetNode;
+	var mIEStyleSheets = jQuery.sap._mIEStyleSheets = {};
+
 	/**
 	 * Includes the specified stylesheet via a &lt;link&gt;-tag in the head of the current document. If there is call to
 	 * <code>includeStylesheet</code> providing the sId of an already included stylesheet, the existing element will be
@@ -17123,28 +17127,46 @@ $.ui.position = {
 			if (sap.ui.Device.browser.internet_explorer && sap.ui.Device.browser.version <= 9 && document.styleSheets.length >= 28) {
 				// in IE9 only 30 links are alowed, so use stylesheet object insted
 				var sRootUrl = URI.parse(document.URL).path;
-				jQuery.sap.log.warning("StyleSheet " + sId + " not added as LINK because of IE limits", sUrl, "jQuery.sap.includeStyleSheet");
-				if (!this._oIEStyleSheet) {
+				var sAbsoluteUrl = new URI(sUrl).absoluteTo(sRootUrl).toString();
+
+				if (sId) {
+					var oIEStyleSheet = mIEStyleSheets[sId];
+					if (oIEStyleSheet && oIEStyleSheet.href === sAbsoluteUrl) {
+						// if stylesheet was already included and href is the same, do nothing
+						return;
+					}
+				}
+
+				jQuery.sap.log.warning("Stylesheet " + (sId ? sId + " " : "") + "not added as LINK because of IE limits", sUrl, "jQuery.sap.includeStyleSheet");
+
+				if (!oIEStyleSheetNode) {
 					// create a style sheet to add additional style sheet. But for this the Replace logic will not work any more
 					// the callback functions are not used in this case
 					// the sap-ui-ready attribute will not be set -> maybe problems with ThemeCheck
-					this._oIEStyleSheet = document.createStyleSheet();
-					this._oIEStyleSheet.addImport(URI(sUrl).absoluteTo(sRootUrl));
-				} else {
-					// add up to 30 style sheets to every of this style sheets. (result is a tree of style sheets)
-					var bAdded = false;
-					for ( var i = 0; i < this._oIEStyleSheet.imports.length; i++) {
-						var oStyleSheet = this._oIEStyleSheet.imports[i];
-						if (oStyleSheet.imports.length < 30) {
-							oStyleSheet.addImport(URI(sUrl).absoluteTo(sRootUrl));
-							bAdded = true;
-							break;
-						}
-					}
-					if (!bAdded) {
-						this._oIEStyleSheet.addImport(URI(sUrl).absoluteTo(sRootUrl));
+					oIEStyleSheetNode = document.createStyleSheet();
+				}
+
+				// add up to 30 style sheets to every of this style sheets. (result is a tree of style sheets)
+				var bAdded = false;
+				for ( var i = 0; i < oIEStyleSheetNode.imports.length; i++) {
+					var oStyleSheet = oIEStyleSheetNode.imports[i];
+					if (oStyleSheet.imports.length < 30) {
+						oStyleSheet.addImport(sAbsoluteUrl);
+						bAdded = true;
+						break;
 					}
 				}
+				if (!bAdded) {
+					oIEStyleSheetNode.addImport(sAbsoluteUrl);
+				}
+
+				if (sId) {
+					// remember id and href URL in internal map as there is no link tag that can be checked
+					mIEStyleSheets[sId] = {
+						href: sAbsoluteUrl
+					};
+				}
+
 				// always make sure to re-append the customcss in the end if it exists
 				var oCustomCss = document.getElementById('sap-ui-core-customcss');
 				if (!jQuery.isEmptyObject(oCustomCss)) {

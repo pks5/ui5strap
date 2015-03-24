@@ -438,7 +438,7 @@
       <module name="jquery.sap.global.js"/>
     </requires>
   </module>
-  <module name="sap/ui/ux3/ToolPopup.js" size="43369" compressedSize="14908">
+  <module name="sap/ui/ux3/ToolPopup.js" size="42517" compressedSize="14692">
     <description>Provides control sap.ui.ux3.ToolPopup.</description>
     <requires>
       <module name="jquery.sap.global.js"/>

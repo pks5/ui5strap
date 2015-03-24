@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './ComboBoxBase', './ComboBoxRenderer', './l
 		 * @extends sap.m.ComboBoxBase
 		 *
 		 * @author SAP SE
-		 * @version 1.26.7
+		 * @version 1.26.9
 		 *
 		 * @constructor
 		 * @public
@@ -228,6 +228,11 @@ sap.ui.define(['jquery.sap.global', './ComboBoxBase', './ComboBoxRenderer', './l
 		 */
 		ComboBox.prototype.oninput = function(oEvent) {
 			ComboBoxBase.prototype.oninput.apply(this, arguments);
+
+			// note: suppress input events of read-only fields (IE11)
+			if (!this.getEditable()) {
+				return;
+			}
 
 			var CSS_CLASS = sap.m.ComboBoxBaseRenderer.CSS_CLASS,
 				oSelectedItem = this.getSelectedItem(),

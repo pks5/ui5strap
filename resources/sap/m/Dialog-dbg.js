@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Toolbar', '
 	 * @implements sap.ui.core.PopupInterface
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -635,7 +635,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Toolbar', '
 		});
 		
 		$scrollArea.css({
-			"width": ""
+			"width": "",
+			"display": ""
 		});
 	
 		if (sap.ui.Device.system.tablet || sap.ui.Device.system.desktop) {

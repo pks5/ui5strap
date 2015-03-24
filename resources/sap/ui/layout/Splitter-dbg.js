@@ -29,13 +29,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
 	 * @since 1.22.0
-	 * @experimental Since version 1.22.0. 
-	 * API is not yet finished and might change completely
 	 * @alias sap.ui.layout.Splitter
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
 	 */
@@ -509,7 +507,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 		document.removeEventListener("touchmove", this._boundBarMove);
 
 		// Enable auto resize after bar move if it was enabled before
-		this.disableAutoResize(/* temporarily: */ true);
+		this.enableAutoResize(/* temporarily: */ true);
 
 		jQuery.sap.focus(this._move.bar);
 	};

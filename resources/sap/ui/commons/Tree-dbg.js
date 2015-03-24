@@ -19,8 +19,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 *
 	 * @class
 	 * Simple tree to display item in a hierarchical way
-	 * @extends sap.ui.core.Control
-	 * @version 1.26.7
+	 * @extends sap.ui.core.Control§
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -128,9 +128,9 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 		this.allowTextSelection(false);
 	
 		this.iOldScrollTop = null;
-	
-		this.oSelectedNodeMap = {};
-		this.oSelectedContextMap = {};
+
+		this.mSelectedNodes = {};
+		this.mSelectedContexts = {};
 		this.aLeadSelection = null;
 		this.bDelFlag = null;
 	
@@ -552,13 +552,15 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 * @private
 	 */
 	Tree.prototype.updateNodes = function(){
-		var oContext = this.oSelectedContext,
-			oNode;
+		var oNode,
+			that = this;
 		this.updateAggregation("nodes");
-		if (oContext) {
-			oNode = this.getNodeByContext(oContext);
-			this.setSelection(oNode, true);
-		}
+		jQuery.each(this.mSelectedContexts, function(sId, oContext) {
+			oNode = that.getNodeByContext(oContext);
+			if (oNode) {
+				oNode.setIsSelected(true);
+			}
+		});
 	};
 	
 	/**
@@ -612,8 +614,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 * @private
 	 */
 	Tree.prototype.getSelection = function(){
-		for (var sId in this.oSelectedNodeMap) {
-			return this.oSelectedNodeMap[sId];
+		for (var sId in this.mSelectedNodes) {
+			return this.mSelectedNodes[sId];
 		}
 		return null;
 	};
@@ -629,22 +631,21 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 
 		if (bDoSelect) {
 			switch (this.getSelectionMode()) {
-			case sap.ui.commons.TreeSelectionMode.Legacy:
-			case sap.ui.commons.TreeSelectionMode.Single:
-				this._setSelectedNode(oNode, bSuppressEvent);
-				break;
-			case sap.ui.commons.TreeSelectionMode.Multi:
-				if (sType == Tree.SelectionType.Range) {
-					this._setSelectedNodeMapRange(oNode, bSuppressEvent);
-				}
-				else if (sType == Tree.SelectionType.Toggle) {
-					this._setSelectedNodeMapToggle(oNode, bSuppressEvent);
-				} else {
+				case sap.ui.commons.TreeSelectionMode.Legacy:
+				case sap.ui.commons.TreeSelectionMode.Single:
 					this._setSelectedNode(oNode, bSuppressEvent);
-				}
-				break;
-			case sap.ui.commons.TreeSelectionMode.None:
-				break;
+					break;
+				case sap.ui.commons.TreeSelectionMode.Multi:
+					if (sType == Tree.SelectionType.Range) {
+						this._setSelectedNodeMapRange(oNode, bSuppressEvent);
+					} else if (sType == Tree.SelectionType.Toggle) {
+						this._setSelectedNodeMapToggle(oNode, bSuppressEvent);
+					} else {
+						this._setSelectedNode(oNode, bSuppressEvent);
+					}
+					break;
+				case sap.ui.commons.TreeSelectionMode.None:
+					break;
 			}
 		}
 	};
@@ -672,8 +673,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 			return;
 		}
 		this.iSelectionUpdateTimer = setTimeout(function() {
-			that.oSelectedNodeMap = {};
-			that.oSelectedContextMap = {};
+			that.mSelectedNodes = {};
+			that.mSelectedContexts = {};
 			that.updateSelection(that, true);
 			that.iSelectionUpdateTimer = null;
 		}, 0);
@@ -693,16 +694,16 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 						oNode.setIsSelected(false);
 						break;
 					case sap.ui.commons.TreeSelectionMode.Legacy:
-						if (jQuery.isEmptyObject(that.oSelectedNodeMap)) {
-							that.oSelectedNodeMap[oNode.getId()] = oNode;
+						if (jQuery.isEmptyObject(that.mSelectedNodes)) {
+							that.mSelectedNodes[oNode.getId()] = oNode;
 						}
 						break;
 					case sap.ui.commons.TreeSelectionMode.Single:
-						if (jQuery.isEmptyObject(that.oSelectedNodeMap) == false) {
+						if (jQuery.isEmptyObject(that.mSelectedNodes) == false) {
 							jQuery.sap.log.warning("Added multiple selected nodes in single select tree");
 							oNode.setIsSelected(false);
 						} else {
-							that.oSelectedNodeMap[oNode.getId()] = oNode;
+							that.mSelectedNodes[oNode.getId()] = oNode;
 						}
 						break;
 					case sap.ui.commons.TreeSelectionMode.Multi:
@@ -710,7 +711,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 							jQuery.sap.log.warning("Added selected node inside collapsed node in multi select tree");
 							oNode.setIsSelected(false);
 						} else {
-							that.oSelectedNodeMap[oNode.getId()] = oNode;
+							that.mSelectedNodes[oNode.getId()] = oNode;
 						}
 						break;
 				}
@@ -728,14 +729,14 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	
 	Tree.prototype._setSelectedNode = function(oNode, bSuppressEvent) {
 		var that = this;
-	
-		jQuery.each(this.oSelectedNodeMap, function(sId, oNode){
+
+		jQuery.each(this.mSelectedNodes, function(sId, oNode){
 			that._delMultiSelection(oNode, bSuppressEvent);
 		});
 
 		oNode._select(bSuppressEvent, true);
-		this.oSelectedNodeMap[oNode.getId()] = oNode;
-		this.oSelectedContextMap[oNode.getId()] = oNode && oNode.getBindingContext();
+		this.mSelectedNodes[oNode.getId()] = oNode;
+		this.mSelectedContexts[oNode.getId()] = oNode && oNode.getBindingContext();
 		this.oLeadSelection = oNode;
 		if (!bSuppressEvent) {
 			this.fireSelectionChange({nodes: [oNode], nodeContexts: [oNode && oNode.getBindingContext()]});
@@ -750,16 +751,9 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 		var aSelectableNodes,
 			aSelectedNodes = [], 
 			aSelectedNodeContexts = [],
-			iStartIndex, iEndIndex, iFrom, iTo,
-			that = this;
-	
-		if (this.bDelFlag == true) {
-			jQuery.each(this.oSelectedNodeMap, function(sId, oNode){
-				that._delMultiSelection(oNode, bSuppressEvent);
-			});
-		}
-	
-		if (this.oSelectedNodeMap[oNode.getId()] == oNode) {
+			iStartIndex, iEndIndex, iFrom, iTo;
+
+		if (this.mSelectedNodes[oNode.getId()] == oNode) {
 			return; //Nothing to do!
 		} else {
 			if (this._getNodes().length > 0) {
@@ -775,8 +769,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 		}
 	
 		if (!bSuppressEvent) {
-			jQuery.map(this.oSelectedNodeMap, function(oNode) {aSelectedNodes.push(oNode);});
-			jQuery.map(this.oSelectedContextMap, function(oContext) {aSelectedNodeContexts.push(oContext);});
+			jQuery.map(this.mSelectedNodes, function(oNode) {aSelectedNodes.push(oNode);});
+			jQuery.map(this.mSelectedContexts, function(oContext) {aSelectedNodeContexts.push(oContext);});
 			this.fireSelectionChange({nodes: aSelectedNodes, nodeContexts: aSelectedNodeContexts});
 		}
 	};
@@ -816,8 +810,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 			this.oLeadSelection = oNode;
 		}
 		if (!bSuppressEvent) {
-			jQuery.map(this.oSelectedNodeMap, function(oNode) {aSelectedNodes.push(oNode);});
-			jQuery.map(this.oSelectedContextMap, function(oContext) {aSelectedNodeContexts.push(oContext);});
+			jQuery.map(this.mSelectedNodes, function(oNode) {aSelectedNodes.push(oNode);});
+			jQuery.map(this.mSelectedContexts, function(oContext) {aSelectedNodeContexts.push(oContext);});
 			this.fireSelectionChange({nodes: aSelectedNodes, nodeContexts: aSelectedNodeContexts});
 		}
 	};
@@ -827,8 +821,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 			return;
 		}
 		oSelNode._select(bSuppressEvent);
-		this.oSelectedNodeMap[oSelNode.getId()] = oSelNode;
-		this.oSelectedContextMap[oSelNode.getId()] = oSelNode.getBindingContext();
+		this.mSelectedNodes[oSelNode.getId()] = oSelNode;
+		this.mSelectedContexts[oSelNode.getId()] = oSelNode.getBindingContext();
 	};
 	
 	Tree.prototype._delMultiSelection = function(oSelNode, bSuppressEvent) {
@@ -836,8 +830,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 			return;
 		}
 		oSelNode._deselect();
-		delete this.oSelectedNodeMap[oSelNode.getId()];
-		delete this.oSelectedContextMap[oSelNode.getId()];
+		delete this.mSelectedNodes[oSelNode.getId()];
+		delete this.mSelectedContexts[oSelNode.getId()];
 	};
 	
 	Tree.prototype._delSelection = function() {
@@ -845,8 +839,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 		if (this.oSelectedNode) {
 			this.oSelectedNode._deselect();
 		}
-		if (jQuery.isEmptyObject(this.oSelectedNodeMap) == false) {
-			jQuery.each(this.oSelectedNodeMap, function(sId, oNode){
+		if (jQuery.isEmptyObject(this.mSelectedNodes) == false) {
+			jQuery.each(this.mSelectedNodes, function(sId, oNode){
 				that._delMultiSelection(oNode);
 			});
 		}

@@ -51,7 +51,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 			 * @param {boolean} [oConfig.preventDefault=false] If set, the default of touchmove is prevented
 			 * @param {boolean} [oConfig.nonTouchScrolling=false] If true, the delegate will also be active to allow touch like scrolling with the mouse on non-touch platforms; if set to "scrollbar", there will be normal scrolling with scrollbars and no touch-like scrolling where the content is dragged
 			 *
-			 * @version 1.26.7
+			 * @version 1.26.9
 			 * @constructor
 			 * @protected
 			 */

@@ -5,8 +5,8 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
-	function(jQuery, Renderer) {
+sap.ui.define(['jquery.sap.global', './BarInPageEnabler'],
+	function(jQuery, BarInPageEnabler) {
 	"use strict";
 
 
@@ -15,23 +15,23 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
 	 * @namespace
 	 */
 	var BarRenderer = {};
-	
+
 	/////////////////
 	//Bar in page delegation
 	/////////////////
-	
+
 	/**
 	 * Renders the HTML for the given control, using the provided {@link sap.ui.core.RenderManager}.
 	 * @protected
 	 * @param {sap.ui.core.RenderManager} oRM the RenderManager that can be used for writing to the render output buffer.
 	 * @param {sap.ui.core.Control} oControl an object representation of the control that should be rendered.
 	 */
-	BarRenderer.render = sap.m.BarInPageEnabler.prototype.render;
-	
+	BarRenderer.render = BarInPageEnabler.prototype.render;
+
 	/////////////////
 	//Bar specific rendering + implementation of enabler hooks
 	/////////////////
-	
+
 	/**
 	 * Add classes attributes and styles to the root tag
 	 *
@@ -41,14 +41,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
 	BarRenderer.decorateRootElement = function (oRM, oControl) {
 		oRM.addClass("sapMBar");
 		oRM.addClass(this.getContext(oControl));
-	
+
 		if (oControl.getTranslucent() && (sap.ui.Device.support.touch  || jQuery.sap.simulateMobileOnDesktop)) {
 			oRM.addClass("sapMBarTranslucent");
 		}
-	
+
 		oRM.addClass("sapMBar-CTX");
 	};
-	
+
 	/**
 	 * Determines, if the IBarContext classes should be added to the control
 	 * @private
@@ -56,7 +56,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
 	BarRenderer.shouldAddIBarContext = function () {
 		return true;
 	};
-	
+
 	/**
 	 * Renders the HTML for the given control, using the provided {@link sap.ui.core.RenderManager}.
 	 *
@@ -65,18 +65,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
 	 */
 	BarRenderer.renderBarContent = function(oRM, oControl) {
 		var sClosingDiv = "</div>";
-	
+
 		//left content area
 		oRM.write("<div id='" + oControl.getId() + "-BarLeft' ");
 		oRM.addClass('sapMBarLeft');
 		oRM.addClass('sapMBarContainer');
 		oRM.writeClasses();
 		oRM.write(">");
-	
+
 		this.renderAllControls(oControl.getContentLeft(), oRM, oControl);
-	
+
 		oRM.write(sClosingDiv);
-	
+
 		//middle content area
 		oRM.write("<div id='" + oControl.getId() + "-BarMiddle' ");
 		oRM.addClass('sapMBarMiddle');
@@ -84,11 +84,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
 		oRM.write(">");
 		if (oControl.getEnableFlexBox()) {
 			oControl._oflexBox = oControl._oflexBox || new sap.m.HBox(oControl.getId() + "-BarPH", {alignItems: "Center"}).addStyleClass("sapMBarPH").setParent(oControl, null, true);
-	
+
 			oControl.getContentMiddle().forEach(function(oMidContent) {
 				oControl._oflexBox.addItem(oMidContent);
 			});
-	
+
 			oRM.renderControl(oControl._oflexBox);
 		} else {
 			oRM.write("<div id='" + oControl.getId() + "-BarPH' ");
@@ -96,14 +96,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
 			oRM.addClass('sapMBarContainer');
 			oRM.writeClasses();
 			oRM.write(">");
-	
+
 			this.renderAllControls(oControl.getContentMiddle(), oRM, oControl);
-	
+
 			oRM.write(sClosingDiv);
 		}
 		oRM.write(sClosingDiv);
-	
-	
+
+
 		//right content area
 		oRM.write("<div id='" + oControl.getId() + "-BarRight'");
 		oRM.addClass('sapMBarRight');
@@ -113,12 +113,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
 		}
 		oRM.writeClasses();
 		oRM.write(">");
-	
+
 		this.renderAllControls(oControl.getContentRight(), oRM, oControl);
-	
+
 		oRM.write(sClosingDiv);
 	};
-	
+
 	/**
 	 * Makes the render manager renderAllControls in an array
 	 * @param {sap.ui.core.Control} aControls the Controls to be rendered
@@ -128,18 +128,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
 	BarRenderer.renderAllControls = function (aControls, oRM, oBar) {
 		aControls.forEach(function (oControl) {
 			sap.m.BarInPageEnabler.addChildClassTo(oControl, oBar);
-	
+
 			oRM.renderControl(oControl);
 		});
 	};
-	
+
 	BarRenderer._mContexts = {
 			Header : "sapMHeader-CTX",
 			SubHeader : "sapMSubHeader-CTX",
 			Footer : "sapMFooter-CTX",
 			Default : "sapMContent-CTX"
 	};
-	
+
 	/**
 	 * Determines wich tag or context class the bar should have.
 	 * @protected
@@ -149,11 +149,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Renderer'],
 	BarRenderer.getContext = function(oControl) {
 		var sDesign = oControl.getDesign(),
 			mContexts = BarRenderer._mContexts;
-	
+
 		return mContexts[sDesign] || mContexts.Default;
 	};
-	
-	
+
+
 
 	return BarRenderer;
 

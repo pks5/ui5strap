@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider'],
 	 * @class Serializer class.
 	 * @extends sap.ui.base.EventProvider
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @alias sap.ui.core.util.serializer.Serializer
 	 * @experimental Since 1.15.1. The Serializer is still under construction, so some implementation details can be changed in future.
 	 */

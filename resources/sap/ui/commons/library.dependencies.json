@@ -115,8 +115,8 @@
     {
       "name" : "sap/ui/commons/Carousel.js",
       "description" : "Provides control sap.ui.commons.Carousel.",
-      "size" : 23945,
-      "compressedSize" : 11074,
+      "size" : 23948,
+      "compressedSize" : 11077,
       "required" : ["jquery.sap.global.js", "sap/ui/commons/library.js", "sap/ui/core/Control.js", "sap/ui/core/ResizeHandler.js", "sap/ui/core/delegate/ItemNavigation.js"],
       "includes" : []
     },
@@ -163,8 +163,8 @@
     {
       "name" : "sap/ui/commons/ComboBox.js",
       "description" : "Provides control sap.ui.commons.ComboBox.",
-      "size" : 55619,
-      "compressedSize" : 22862,
+      "size" : 55683,
+      "compressedSize" : 22913,
       "required" : ["jquery.sap.global.js", "sap/ui/commons/TextField.js", "sap/ui/commons/library.js", "sap/ui/core/Popup.js", "jquery.sap.strings.js"],
       "includes" : []
     },
@@ -179,8 +179,8 @@
     {
       "name" : "sap/ui/commons/DatePicker.js",
       "description" : "Provides control sap.ui.commons.DatePicker.",
-      "size" : 20499,
-      "compressedSize" : 9765,
+      "size" : 20986,
+      "compressedSize" : 9964,
       "required" : ["jquery.sap.global.js", "sap/ui/commons/TextField.js", "sap/ui/commons/library.js", "sap/ui/model/type/Date.js"],
       "includes" : []
     },
@@ -195,8 +195,8 @@
     {
       "name" : "sap/ui/commons/Dialog.js",
       "description" : "Provides control sap.ui.commons.Dialog.",
-      "size" : 33655,
-      "compressedSize" : 11818,
+      "size" : 35670,
+      "compressedSize" : 11062,
       "required" : ["jquery.sap.global.js", "sap/ui/commons/library.js", "sap/ui/core/Control.js", "sap/ui/core/Popup.js"],
       "includes" : []
     },
@@ -211,8 +211,8 @@
     {
       "name" : "sap/ui/commons/DropdownBox.js",
       "description" : "Provides control sap.ui.commons.DropdownBox.",
-      "size" : 54657,
-      "compressedSize" : 22060,
+      "size" : 54709,
+      "compressedSize" : 22093,
       "required" : ["jquery.sap.global.js", "sap/ui/commons/ComboBox.js", "sap/ui/commons/library.js", "sap/ui/core/History.js", "sap/ui/core/SeparatorItem.js"],
       "includes" : []
     },
@@ -699,8 +699,8 @@
     {
       "name" : "sap/ui/commons/RoadMapRenderer.js",
       "description" : "Provides default renderer for control sap.ui.commons.RoadMap",
-      "size" : 30183,
-      "compressedSize" : 11861,
+      "size" : 30214,
+      "compressedSize" : 11875,
       "required" : ["jquery.sap.global.js"],
       "includes" : []
     },
@@ -843,8 +843,8 @@
     {
       "name" : "sap/ui/commons/TextArea.js",
       "description" : "Provides control sap.ui.commons.TextArea.",
-      "size" : 10133,
-      "compressedSize" : 3765,
+      "size" : 10198,
+      "compressedSize" : 3816,
       "required" : ["jquery.sap.global.js", "sap/ui/commons/TextField.js", "sap/ui/commons/library.js"],
       "includes" : []
     },
@@ -859,8 +859,8 @@
     {
       "name" : "sap/ui/commons/TextField.js",
       "description" : "Provides control sap.ui.commons.TextField.",
-      "size" : 23553,
-      "compressedSize" : 9687,
+      "size" : 24484,
+      "compressedSize" : 10078,
       "required" : ["jquery.sap.global.js", "sap/ui/commons/library.js", "sap/ui/core/Control.js", "sap/ui/core/ValueStateSupport.js"],
       "includes" : []
     },
@@ -939,8 +939,8 @@
     {
       "name" : "sap/ui/commons/Tree.js",
       "description" : "Provides control sap.ui.commons.Tree.",
-      "size" : 26016,
-      "compressedSize" : 11455,
+      "size" : 25848,
+      "compressedSize" : 11325,
       "required" : ["jquery.sap.global.js", "sap/ui/commons/library.js", "sap/ui/core/Control.js"],
       "includes" : []
     },

@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 * The Shell control can be used as root element of applications, it can contain an App or SplitApp control.
 	 * The Shell provides some overarching functionality for the overall application and takes care of visual adaptation, like a frame around the App, on desktop browser platforms.
 	 * @extends sap.ui.core.Control
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public

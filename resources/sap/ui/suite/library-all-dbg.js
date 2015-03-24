@@ -420,14 +420,14 @@ sap.ui.define("sap/ui/suite/library",['jquery.sap.global',
 	 * @namespace
 	 * @name sap.ui.suite
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @public
 	 */
 	
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.suite",
-		version: "1.26.7",
+		version: "1.26.9",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.ui.suite.TaskCircleColor"
@@ -444,7 +444,7 @@ sap.ui.define("sap/ui/suite/library",['jquery.sap.global',
 	/**
 	 * Defined color values for the Task Circle Control
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @enum {string}
 	 * @public
 	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
@@ -511,7 +511,7 @@ sap.ui.define("sap/ui/suite/TaskCircle",['jquery.sap.global', 'sap/ui/core/Contr
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author Svetozar Buzdumovic
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -643,7 +643,7 @@ sap.ui.define("sap/ui/suite/VerticalProgressIndicator",['jquery.sap.global', 'sa
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author Svetozar Buzdumovic
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public

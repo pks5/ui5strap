@@ -50,7 +50,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 	 * @extends sap.ui.model.Model
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -654,7 +654,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 				_submit(oRequest);
 			} else {
 				// all data is read so merge all data
-				jQuery.extend(oResultData.results, aResults);
+				jQuery.sap.extend(oResultData.results, aResults);
 				// broken implementations need this
 				if (oResultData.results && !jQuery.isArray(oResultData.results)) {
 					oResultData = oResultData.results;
@@ -1314,7 +1314,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 		}
 
 		// do a value copy or the changes to that value will be modified in the model as well (reference)
-		oValue = jQuery.extend(true, {}, oValue);
+		oValue = jQuery.sap.extend(true, {}, oValue);
 
 		if (bIncludeExpandEntries == true) {
 			// include expand entries
@@ -2539,7 +2539,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 
 			if (jQuery.isPlainObject(oStoredEntry)) {
 				// do a copy of the payload or the changes will be deleted in the model as well (reference)
-				oPayload = jQuery.extend(true, {}, oStoredEntry);
+				oPayload = jQuery.sap.extend(true, {}, oStoredEntry);
 				// remove metadata, navigation properties to reduce payload
 				if (oPayload.__metadata) {
 					sType = oPayload.__metadata.type;
@@ -2601,7 +2601,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 			var aChangeRequests = [];
 			jQuery.each(this.oRequestQueue, function(sKey, oCurrentRequest){
 				delete oCurrentRequest._oRef;
-				var oReqClone = jQuery.extend(true, {}, oCurrentRequest);
+				var oReqClone = jQuery.sap.extend(true, {}, oCurrentRequest);
 				oCurrentRequest._oRef = oReqClone;
 
 				oReqClone.requestUri = oReqClone.requestUri.replace(that.sServiceUrl + '/','');
@@ -2618,7 +2618,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 				// We send the cloned request which will be modified by datajs but we want to keep the original request stored
 				// because it may fail and we need to send the request again.
 				delete oCurrentRequest._oRef;
-				var oReqClone = jQuery.extend(true, {}, oCurrentRequest);
+				var oReqClone = jQuery.sap.extend(true, {}, oCurrentRequest);
 				oCurrentRequest._oRef = oReqClone;
 				//remove create flag
 				 if (oReqClone.data && oReqClone.data._bCreate) {

@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/support/Plugin', 'sap/ui/core/u
 		 * @class This class represents the ControlTree plugin for the support tool functionality of UI5. This class is internal and all its functions must not be used by an application.
 		 * @abstract
 		 * @extends sap.ui.base.Object
-		 * @version 1.26.7
+		 * @version 1.26.9
 		 * @constructor
 		 * @private
 		 * @alias sap.ui.core.support.plugins.ControlTree

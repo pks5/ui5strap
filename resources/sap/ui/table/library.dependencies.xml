@@ -24,7 +24,7 @@
       <module name="sap/ui/table/ColumnMenuRenderer.js"/>
     </requires>
   </module>
-  <module name="sap/ui/table/AnalyticalTable.js" size="34372" compressedSize="18789">
+  <module name="sap/ui/table/AnalyticalTable.js" size="34507" compressedSize="18882">
     <description>Provides control sap.ui.table.AnalyticalTable.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -97,7 +97,7 @@
       <module name="sap/ui/table/library.js"/>
     </requires>
   </module>
-  <module name="sap/ui/table/Table.js" size="170804" compressedSize="78288">
+  <module name="sap/ui/table/Table.js" size="171828" compressedSize="78701">
     <description>Provides control sap.ui.table.Table.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -118,7 +118,7 @@
       <module name="sap/ui/base/ManagedObject.js"/>
     </requires>
   </module>
-  <module name="sap/ui/table/TableRenderer.js" size="30076" compressedSize="18332">
+  <module name="sap/ui/table/TableRenderer.js" size="30018" compressedSize="18289">
     <description>Provides default renderer for control sap.ui.table.Table</description>
     <requires>
       <module name="jquery.sap.global.js"/>

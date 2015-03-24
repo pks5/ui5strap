@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -208,16 +208,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		if (this._sResizeListenerNoFlexboxSupportId) {
 			sap.ui.core.ResizeHandler.deregister(this._sResizeListenerNoFlexboxSupportId);
 			this._sResizeListenerNoFlexboxSupportId = null;
-		}
-	};
-
-	IconTabHeader.prototype.invalidate = function() {
-		if (this.getParent() instanceof sap.m.IconTabBar && !this.getParent()._bHideHeader) {
-			// invalidate IconTabBar when the header is attached to it
-			this.getParent().invalidate();
-		} else {
-			// invalidate just the header when it is detached (IconTabFilter will do the magic for content invalidation)
-			Control.prototype.invalidate.apply(this, arguments);
 		}
 	};
 
@@ -980,11 +970,11 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @private
 	 */
 	IconTabHeader.prototype.ontouchend = function(oEvent) {
-		// suppress selection if there ware a drag (moved more than 20px)
-		if (this._iTouchDragX > 5 || oEvent.isMarked()) {
+		// suppress selection if there ware a drag (moved more than 5px on desktop or 20px on others)
+		if (this._scrollable && this._iTouchDragX > (sap.ui.Device.system.desktop ? 5 : 15)) {
 			return;
 		}
-		//
+
 		this._handleActivation(oEvent);
 	};
 

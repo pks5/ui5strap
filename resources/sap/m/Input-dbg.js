@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 	 * @extends sap.m.InputBase
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -270,8 +270,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 		this._inputProxy = jQuery.proxy(this._onInput, this);
 		this._fnFilter = Input._DEFAULTFILTER;
 
-		// Show suggestions in a dialog on tablets and phones:
-		this._bUseDialog = sap.ui.Device.system.tablet || sap.ui.Device.system.phone;
+		// Show suggestions in a dialog on phones:
+		this._bUseDialog = sap.ui.Device.system.phone;
 
 		// Show suggestions in a full screen dialog on phones:
 		this._bFullScreen = sap.ui.Device.system.phone;
@@ -1429,6 +1429,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 				showSeparators: "All",
 				width: "100%",
 				enableBusyIndicator: false,
+				rememberSelection : false,
 				selectionChange: function (oEvent) {
 					var oInput = that,
 						sOriginalValue = oInput.getValue(),
@@ -1546,8 +1547,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 	};
 
 	Input.prototype.removeAggregation = function(sAggregationName, oObject, bSuppressInvalidate) {
-		this._callMethodInManagedObject("removeAggregation", sAggregationName, oObject, bSuppressInvalidate);
-		return this;
+		return this._callMethodInManagedObject("removeAggregation", sAggregationName, oObject, bSuppressInvalidate);
 	};
 
 	Input.prototype.removeAllAggregation = function(sAggregationName, bSuppressInvalidate) {

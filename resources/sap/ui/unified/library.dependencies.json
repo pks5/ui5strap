@@ -91,8 +91,8 @@
     {
       "name" : "sap/ui/unified/FileUploader.js",
       "description" : "Provides control sap.ui.unified.FileUploader.",
-      "size" : 43280,
-      "compressedSize" : 17180,
+      "size" : 43340,
+      "compressedSize" : 17210,
       "required" : ["jquery.sap.global.js", "sap/ui/core/Control.js", "sap/ui/unified/library.js"],
       "includes" : []
     },

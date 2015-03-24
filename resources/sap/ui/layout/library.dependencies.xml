@@ -77,7 +77,7 @@
       <module name="jquery.sap.global.js"/>
     </requires>
   </module>
-  <module name="sap/ui/layout/Splitter.js" size="39488" compressedSize="13658">
+  <module name="sap/ui/layout/Splitter.js" size="39390" compressedSize="13657">
     <description>Provides control sap.ui.layout.Splitter.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -141,7 +141,7 @@
       <module name="sap/ui/layout/library.js"/>
     </requires>
   </module>
-  <module name="sap/ui/layout/form/FormLayout.js" size="26176" compressedSize="11783">
+  <module name="sap/ui/layout/form/FormLayout.js" size="26130" compressedSize="11829">
     <description>Provides control sap.ui.layout.form.FormLayout.</description>
     <requires>
       <module name="jquery.sap.global.js"/>
@@ -232,7 +232,7 @@
       <module name="sap/ui/layout/form/FormLayoutRenderer.js"/>
     </requires>
   </module>
-  <module name="sap/ui/layout/form/SimpleForm.js" size="45767" compressedSize="17726">
+  <module name="sap/ui/layout/form/SimpleForm.js" size="45778" compressedSize="17735">
     <description>Provides control sap.ui.layout.form.SimpleForm.</description>
     <requires>
       <module name="jquery.sap.global.js"/>

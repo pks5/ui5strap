@@ -427,8 +427,8 @@
     {
       "name" : "sap/ui/ux3/ToolPopup.js",
       "description" : "Provides control sap.ui.ux3.ToolPopup.",
-      "size" : 43369,
-      "compressedSize" : 14908,
+      "size" : 42517,
+      "compressedSize" : 14692,
       "required" : ["jquery.sap.global.js", "sap/ui/core/Control.js", "sap/ui/core/IconPool.js", "sap/ui/core/Popup.js", "sap/ui/core/theming/Parameters.js", "sap/ui/ux3/library.js"],
       "includes" : []
     },

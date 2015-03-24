@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './Tile', './library'],
 	 * Use the Custom Tile to show a application specific content in the tile.
 	 * The tile width is 8.5em and height is 10em
 	 * @extends sap.m.Tile
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public

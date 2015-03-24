@@ -849,6 +849,10 @@ div.sapMBtnInner.sapMBtnEmphasized {
 	vertical-align:   top;
 }
 
+.sapMIBar-CTX .sapMBtnContent {
+  line-height:      2.25rem;
+}
+
 /* ------------------------------------------------ */
 /* Buttons in an ActionSelect                       */
 /* ------------------------------------------------ */
@@ -974,10 +978,6 @@ div.sapMBtnInner.sapMBtnEmphasized {
 
 .sapUiSizeCompact.sapMActionSelectPicker.sapMSltPicker .sapMBtnInner {
  	height:           1.625rem;
-}
-
-.sapMIBar-CTX .sapMBtnContent {
-	line-height:      2.25rem;
 }
 
 .sapUiSizeCompact.sapMActionSelectPicker.sapMSltPicker .sapMBtnContent {
@@ -1315,9 +1315,8 @@ html[data-sap-ui-browser^=ie] .sapMCrslBulleted > span {
 	-webkit-focus-ring-color: none;
 }
 
-/*In forms, align to the left*/
-.sapUiForm .sapMCbBg {
-	left: 0;
+.sapUiForm .sapMCbBg { /* In forms, align left with '0.125rem' ( the focus width) */
+	left: 0.125rem;
 }
 
 .sapMCbBg.sapMCbMarkChecked:before {
@@ -1334,7 +1333,8 @@ html[data-sap-ui-browser^=ie] .sapMCrslBulleted > span {
 	visibility: hidden;
 }
 
-.sapMCbBg:focus {
+.sapMCb:not(.sapMCbBgDis):focus > .sapMCbBg,
+.sapMCb:not(.sapMCbBgDis)		> .sapMCbBg:focus { /* in IE clicking on checkbox input does not cause focus on checkbox wrapper div */
 	outline-color: @sapHCStandardFG;
 	outline-width: 0.125rem;
 	outline-style: dotted;
@@ -1417,6 +1417,7 @@ html[data-sap-ui-browser^=ie] .sapMCrslBulleted > span {
 		border-radius: 0;
 	}
 }
+
 /* END "CheckBox.less" */
 
 /* START "ColumnListItem.less" */
@@ -2817,18 +2818,10 @@ li.sapMLIB.sapMFeedListItemTitleDiv.sapMLIBNoFlex>.sapMLIBContent>.sapMLIBConten
 	overflow: hidden;
 }
 
-.sapMITBHead.sapMITBTextOnly {
-	margin-left: 1rem;
-}
-
 .sap-phone .sapMITBHead {
 	display: inline-block;
 	margin: 1rem 0 0;
 	vertical-align: top;
-}
-
-.sap-phone .sapMITBHead.sapMITBTextOnly .sapMITBFilter {
-	margin-left: -0.75rem;
 }
 
 .sap-tablet .sapMITBHead,
@@ -2838,12 +2831,11 @@ html[data-sap-ui-os=win8] .sapMITBHead {
 	vertical-align: top;
 }
 
-.sap-tablet .sapMITBHead.sapMITBTextOnly {
-	margin-left: -1rem;
-}
-
 .sapMITBScrollContainer {
 	display: block;
+	/* the same padding as on the sapMITBHead is needed
+	to correct the scrolling calculations*/
+	padding: 1px 1px 0 1px;
 	margin-right: 1rem;
 	margin-left: 1rem;
 }
@@ -2988,10 +2980,19 @@ html[dir=rtl] .sapMITBTextOnly .sapMITBTab {
 	margin: 0 0.25rem;
 }
 
-.sapMITBTextOnly .sapMITBFilter,
-.sapMITBTextOnly .sapMITBFilter:first-child {
+.sapMITBTextOnly .sapMITBFilter {
 	padding: 0;
 	margin: 0 1rem;
+}
+
+.sapMITBTextOnly .sapMITBFilter:first-child {
+	padding: 0 0 0 1px;
+	margin: 0 1rem 0 0.5rem;
+}
+
+.sapMITBTextOnly .sapMITBFilter:last-child {
+	padding: 0 1px 0 0;
+	margin: 0 0.5rem 0 1rem;
 }
 
 .sap-phone .sapMITBTextOnly .sapMITBFilter {
@@ -3357,7 +3358,7 @@ html[data-sap-ui-os=win8] .sapMITBArrowScroll {
 .sapMITBArrowScroll:focus,
 .sapMITBHead:focus,
 .sapMITBFilterIcon:focus,
-.sapMITBItem:focus, {
+.sapMITBItem:focus {
 	outline: none;
 }
 
@@ -3464,6 +3465,11 @@ html[data-sap-ui-browser^="ie"] .sapMInput .sapMInputBaseInner:not(.sapMInputBas
 	box-sizing: border-box;
 }
 
+.sapMInputDescription.sapMInputVH > span > .sapMInputValHelp{
+	left: -2.4375rem;
+	top: 0.0625rem;
+}
+
 .sapMInputValHelpInner,
 html[data-sap-ui-browser='ie9'] .sapMInputValHelpInner { /* override .sapMIcon display */
 	height: 2.375rem;
@@ -3473,12 +3479,6 @@ html[data-sap-ui-browser='ie9'] .sapMInputValHelpInner { /* override .sapMIcon d
 
 html[data-sap-ui-browser='ie9'] .sapMInputValHelp { /* IE9 ignores padding-right in input */
 	background-color:			@sapHCStandardBG;
-}
-
-/* valueHelpOnly overwrites text cursor for input */
-.sapMInputVHO,
-.sapMInput.sapMInputVHO > input {
-	cursor: pointer;
 }
 
 .sapMInputVHO:hover > .sapMInputValHelp > .sapMInputValHelpInner {
@@ -3497,19 +3497,19 @@ html[data-sap-ui-browser='ie9'] .sapMInputValHelp { /* IE9 ignores padding-right
 	color:						@sapHCStandardFG;
 }
 
-.sapMInput:not(.sapMInputBaseReadonly) > .sapMInputValHelp > .sapMInputValHelpInner:hover,
-.sapMInput:not(.sapMInputBaseReadonly) > .sapMInputValHelp > .sapMInputValHelpInner:focus {
+.sapMInput:not(.sapMInputBaseReadonly) .sapMInputValHelp > .sapMInputValHelpInner:hover,
+.sapMInput:not(.sapMInputBaseReadonly) .sapMInputValHelp > .sapMInputValHelpInner:focus {
 	background-color:			@sapHCHighlightBG;
 	border-left:				0.0625rem solid @sapHCStandardFG;
 	margin-left:				-0.0625rem;
 }
 
-.sapMInput:not(.sapMInputBaseReadonly) > .sapMInputValHelp > .sapMInputValHelpInner:focus {
+.sapMInput:not(.sapMInputBaseReadonly) .sapMInputValHelp > .sapMInputValHelpInner:focus {
 	outline:					1px solid @sapHCStandardFG;
 	outline-offset:				-1px;
 }
 
-.sapMInput:not(.sapMInputBaseReadonly) > .sapMInputValHelp > .sapMInputValHelpInner:active {
+.sapMInput:not(.sapMInputBaseReadonly) .sapMInputValHelp > .sapMInputValHelpInner:active {
 	/* works fine in desktop browsers, iOS6 and mobile Chrome; does not work well in older Android browser */
 	background-color:			@sapHCHighlightBG;
 	color:						@sapHCStandardFG;
@@ -3525,7 +3525,7 @@ html[data-sap-ui-browser='ie9'] .sapMInputValHelp { /* IE9 ignores padding-right
 	border-right: 0;
 }
 
-.sapMInputIE9 > .sapMInputValHelp {
+.sapMInputIE9 .sapMInputValHelp {
 	color: 				   @sapHCStandardFG;
 	background-color:	   @sapHCStandardBG;
 	border:		           0.0625rem solid @sapHCStandardFG;
@@ -3537,17 +3537,24 @@ html[data-sap-ui-browser='ie9'] .sapMInputValHelp { /* IE9 ignores padding-right
 	right:				   0;
 }
 
+.sapMInputIE9.sapMInputDescription.sapMInputVH > span > .sapMInputValHelp{
+	left: -2.375rem;
+	top: 0;
+}
+
 .sapMInputIE9 > .sapMInputBaseInner:not(.sapMInputBaseStateInner):focus  + .sapMInputValHelp,
-.sapMInputIE9 > .sapMInputBaseInner:not(.sapMInputBaseStateInner):hover  + .sapMInputValHelp {
+.sapMInputIE9 > .sapMInputBaseInner:not(.sapMInputBaseStateInner):hover  + .sapMInputValHelp,
+.sapMInputIE9 > .sapMInputBaseInner:not(.sapMInputBaseStateInner):focus  + span > .sapMInputValHelp,
+.sapMInputIE9 > .sapMInputBaseInner:not(.sapMInputBaseStateInner):hover  + span > .sapMInputValHelp{
 	border-color: @sapHCStandardFG;
 }
 
-.sapMInputIE9.sapMInputBaseState > .sapMInputValHelp {
+.sapMInputIE9.sapMInputBaseState .sapMInputValHelp {
 	border:				   0.0625rem dashed @sapHCStandardFG;
 	border-left:		   none;
 }
 
-.sapMInputIE9 > .sapMInputValHelp > .sapMInputValHelpInner {
+.sapMInputIE9 .sapMInputValHelp > .sapMInputValHelpInner {
 	width: 2.3125rem;
 }
 
@@ -3600,6 +3607,10 @@ div.sapMInputSuggestionPopup {
 		width: 1.5rem;
 	}
 
+	.sapMInputDescription.sapMInputVH > span > .sapMInputValHelp{
+		left: -1.5625rem;
+	}
+
 	.sapMInputValHelp > .sapMInputValHelpInner {
 		font-size: 0.75rem;
 		height: 1.5rem;
@@ -3607,13 +3618,25 @@ div.sapMInputSuggestionPopup {
 		line-height: 1.5rem;
 	}
 
+	.sapMInputDescription.sapMInputVH > span > .sapMInputValHelp > .sapMInputValHelpInner{
+		vertical-align: top;
+	}
+
 	.sapMInputIE9.sapMInput {
 		padding-right: 1.4rem;
 	}
 
-	.sapMInputIE9 > .sapMInputValHelp {
+	.sapMInputIE9 .sapMInputValHelp {
 		height: 1.625rem;
 		top: 0.1875rem;
+	}
+
+	.sapMInputIE9 .sapMInputValHelpInner {
+		width: 1.465rem;
+	}
+
+	.sapMInputIE9.sapMInputDescription.sapMInputVH > span > .sapMInputValHelp{
+		left: -1.5rem;
 	}
 
 	.sapMInputDescription > span {
@@ -6539,6 +6562,11 @@ html[dir=rtl][data-sap-ui-browser^=ie] .sapMOHR.sapMOH > .sapMOHStates > .sapMOH
 .sapMListTbl .sapMObjectIdentifierTitle .sapMText {
 	color: @sapHCStandardFG;
 }
+
+/* compact table cell context */
+.sapUiSizeCompact .sapMListTblCell > .sapMObjectIdentifier {
+	margin: .5rem 0;
+} 
 /* END "ObjectIdentifier.less" */
 
 /* START "ObjectListItem.less" */
@@ -10421,8 +10449,8 @@ html[data-sap-ui-browser^="ie"] .sapMListTbl{
 /* ************************************************************************************* */
 /* local fixes: should be done by used simple controls
 /* ************************************************************************************* */
-.sapMUCItemHL > .sapUiHLayoutChildWrapper > .sapMUCItemIcon:focus,
-.sapMUCItemHL > .sapUiHLayoutChildWrapper > .sapMUCItemImage:focus {
+.sapMUCItemIcon.sapMUCItemIcon:focus,
+.sapMUCItemImage:focus {
 	outline-style:			dotted;
 	outline-width:			0.125rem;
 }

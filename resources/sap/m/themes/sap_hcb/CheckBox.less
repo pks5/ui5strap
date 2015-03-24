@@ -44,9 +44,8 @@
 	-webkit-focus-ring-color: none;
 }
 
-/*In forms, align to the left*/
-.sapUiForm .sapMCbBg {
-	left: 0;
+.sapUiForm .sapMCbBg { /* In forms, align left with '0.125rem' ( the focus width) */
+	left: 0.125rem;
 }
 
 .sapMCbBg.sapMCbMarkChecked:before {
@@ -63,7 +62,8 @@
 	visibility: hidden;
 }
 
-.sapMCbBg:focus {
+.sapMCb:not(.sapMCbBgDis):focus > .sapMCbBg,
+.sapMCb:not(.sapMCbBgDis)		> .sapMCbBg:focus { /* in IE clicking on checkbox input does not cause focus on checkbox wrapper div */
 	outline-color: @sapHCStandardFG;
 	outline-width: 0.125rem;
 	outline-style: dotted;

@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/analytics/TreeBindingAdapter',
 	 * @class
 	 * Table which handles analytical OData backends
 	 * @extends sap.ui.table.Table
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -1018,6 +1018,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/analytics/TreeBindingAdapter',
 		}
 	};
 
+	AnalyticalTable.prototype._isRowSelectable = function(iRowIndex) {
+		return !this.getBinding("rows").indexHasChildren(iRowIndex);
+	};
 
 	return AnalyticalTable;
 

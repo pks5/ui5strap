@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', './ComboBox', './library', 'jquery.sap.strin
 	 * @implements sap.ui.commons.ToolbarItem
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public

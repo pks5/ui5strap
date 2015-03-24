@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/layout/Respon
 	 * @class
 	 * Use the SimpleForm to create a form based on title, label and fields that are stacked in the content aggregation. Add Title to start a new FormContainer(Group). Add Label to start a new row in the container. Add Input/Display controls as needed. Use LayoutData to influence the layout for special cases in the Input/Display controls.
 	 * @extends sap.ui.core.Control
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -607,7 +607,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/layout/Respon
 						aFormElements = oFormContainer.getFormElements();
 						var iContainerIndex = oForm.indexOfFormContainer(oFormContainer);
 						var oPrevFormContainer = oForm.getFormContainers()[iContainerIndex - 1];
-						if (aFormElements && !aFormElements[0].getLabel()) {
+						if (aFormElements.length > 0 && !aFormElements[0].getLabel()) {
 							// first Form Element has no label -> add its fields to last Form Element of previous container
 							var aPrevFormElements = oPrevFormContainer.getFormElements();
 							var oLastFormElement = aPrevFormElements[aPrevFormElements.length - 1];

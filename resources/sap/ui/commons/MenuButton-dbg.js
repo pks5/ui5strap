@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', './Button', './Menu', './MenuItemBase', './l
 	 * Common button control that opens a menu when clicked by the user. The control provides an API for configuring the docking position
 	 * of the menu.
 	 * @extends sap.ui.commons.Button
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public

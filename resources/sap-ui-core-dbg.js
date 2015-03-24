@@ -10320,7 +10320,7 @@ return jQuery;
 /** 
  * Device and Feature Detection API of the SAP UI5 Library.
  *
- * @version 1.26.7
+ * @version 1.26.9
  * @namespace
  * @name sap.ui.Device
  * @public
@@ -10345,7 +10345,7 @@ if (typeof window.sap.ui !== "object") {
 
 	//Skip initialization if API is already available
 	if (typeof window.sap.ui.Device === "object" || typeof window.sap.ui.Device === "function" ) {
-		var apiVersion = "1.26.7";
+		var apiVersion = "1.26.9";
 		window.sap.ui.Device._checkAPIVersion(apiVersion);
 		return;
 	}
@@ -10403,7 +10403,7 @@ if (typeof window.sap.ui !== "object") {
 	
 	//Only used internal to make clear when Device API is loaded in wrong version
 	device._checkAPIVersion = function(sVersion){
-		var v = "1.26.7";
+		var v = "1.26.9";
 		if (v != sVersion) {
 			logger.log(WARNING, "Device API version differs: " + v + " <-> " + sVersion);
 		}
@@ -11566,7 +11566,9 @@ if (typeof window.sap.ui !== "object") {
 		var android_phone = (/(?=android)(?=.*mobile)/i.test(navigator.userAgent));
 		// According to google documentation: https://developer.chrome.com/multidevice/webview/overview, the WebView shipped with Android 4.4 (KitKat) is based on the same code as Chrome for Android.
 		// If you're attempting to differentiate between the WebView and Chrome for Android, you should look for the presence of the Version/_X.X_ string in the WebView user-agent string
-		var bChromeWebView = device.os.android && (device.os.version >= 4.4) && /Version\/\d.\d/.test(navigator.userAgent);
+		// The stock browser of Samsung device uses Chrome kernal from Android version 4.4. It behaves differently than the Chrome Webview, therefore it's excluded from this check by checking the 'SAMSUNG'
+		// string in the user agent.
+		var bChromeWebView = device.os.android && device.browser.chrome && (device.os.version >= 4.4) && /Version\/\d.\d/.test(navigator.userAgent) && !/SAMSUNG/.test(navigator.userAgent);
 		if (device.os.name === device.os.OS.IOS) {
 			return /ipad/i.test(navigator.userAgent);
 		} else {
@@ -11589,7 +11591,7 @@ if (typeof window.sap.ui !== "object") {
 				//this is how android distinguishes between tablet and phone
 				//http://android-developers.blogspot.de/2011/07/new-tools-for-managing-screen-sizes.html
 				var bTablet = (Math.min(window.screen.width / densityFactor, window.screen.height / densityFactor) >= 600);
-				
+
 				// special workaround for Nexus 7 where the window.screen.width is 600px or 601px in portrait mode (=> tablet) 
 				// but window.screen.height 552px in landscape mode (=> phone), because the browser UI takes some space on top.
 				// So the detected device type depends on the orientation :-(
@@ -11600,9 +11602,8 @@ if (typeof window.sap.ui !== "object") {
 						&& (/Nexus 7/i.test(navigator.userAgent))) {
 					bTablet = true;
 				}
-				
-				return bTablet;
 
+				return bTablet;
 			} else {
 				//in desktop browser
 				var android_tablet = (device.os.name === device.os.OS.ANDROID) && !android_phone;
@@ -14619,7 +14620,7 @@ $.ui.position = {
 	 * @class Represents a version consisting of major, minor, patch version and suffix, e.g. '1.2.7-SNAPSHOT'.
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @constructor
 	 * @public
 	 * @since 1.15.0
@@ -15037,7 +15038,7 @@ $.ui.position = {
 	/**
 	 * Root Namespace for the jQuery plug-in provided by SAP SE.
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @namespace
 	 * @public
 	 * @static
@@ -17036,6 +17037,9 @@ $.ui.position = {
 		appendHead(oScript);
 	};
 
+	var oIEStyleSheetNode;
+	var mIEStyleSheets = jQuery.sap._mIEStyleSheets = {};
+
 	/**
 	 * Includes the specified stylesheet via a &lt;link&gt;-tag in the head of the current document. If there is call to
 	 * <code>includeStylesheet</code> providing the sId of an already included stylesheet, the existing element will be
@@ -17123,28 +17127,46 @@ $.ui.position = {
 			if (sap.ui.Device.browser.internet_explorer && sap.ui.Device.browser.version <= 9 && document.styleSheets.length >= 28) {
 				// in IE9 only 30 links are alowed, so use stylesheet object insted
 				var sRootUrl = URI.parse(document.URL).path;
-				jQuery.sap.log.warning("StyleSheet " + sId + " not added as LINK because of IE limits", sUrl, "jQuery.sap.includeStyleSheet");
-				if (!this._oIEStyleSheet) {
+				var sAbsoluteUrl = new URI(sUrl).absoluteTo(sRootUrl).toString();
+
+				if (sId) {
+					var oIEStyleSheet = mIEStyleSheets[sId];
+					if (oIEStyleSheet && oIEStyleSheet.href === sAbsoluteUrl) {
+						// if stylesheet was already included and href is the same, do nothing
+						return;
+					}
+				}
+
+				jQuery.sap.log.warning("Stylesheet " + (sId ? sId + " " : "") + "not added as LINK because of IE limits", sUrl, "jQuery.sap.includeStyleSheet");
+
+				if (!oIEStyleSheetNode) {
 					// create a style sheet to add additional style sheet. But for this the Replace logic will not work any more
 					// the callback functions are not used in this case
 					// the sap-ui-ready attribute will not be set -> maybe problems with ThemeCheck
-					this._oIEStyleSheet = document.createStyleSheet();
-					this._oIEStyleSheet.addImport(URI(sUrl).absoluteTo(sRootUrl));
-				} else {
-					// add up to 30 style sheets to every of this style sheets. (result is a tree of style sheets)
-					var bAdded = false;
-					for ( var i = 0; i < this._oIEStyleSheet.imports.length; i++) {
-						var oStyleSheet = this._oIEStyleSheet.imports[i];
-						if (oStyleSheet.imports.length < 30) {
-							oStyleSheet.addImport(URI(sUrl).absoluteTo(sRootUrl));
-							bAdded = true;
-							break;
-						}
-					}
-					if (!bAdded) {
-						this._oIEStyleSheet.addImport(URI(sUrl).absoluteTo(sRootUrl));
+					oIEStyleSheetNode = document.createStyleSheet();
+				}
+
+				// add up to 30 style sheets to every of this style sheets. (result is a tree of style sheets)
+				var bAdded = false;
+				for ( var i = 0; i < oIEStyleSheetNode.imports.length; i++) {
+					var oStyleSheet = oIEStyleSheetNode.imports[i];
+					if (oStyleSheet.imports.length < 30) {
+						oStyleSheet.addImport(sAbsoluteUrl);
+						bAdded = true;
+						break;
 					}
 				}
+				if (!bAdded) {
+					oIEStyleSheetNode.addImport(sAbsoluteUrl);
+				}
+
+				if (sId) {
+					// remember id and href URL in internal map as there is no link tag that can be checked
+					mIEStyleSheets[sId] = {
+						href: sAbsoluteUrl
+					};
+				}
+
 				// always make sure to re-append the customcss in the end if it exists
 				var oCustomCss = document.getElementById('sap-ui-core-customcss');
 				if (!jQuery.isEmptyObject(oCustomCss)) {
@@ -22443,7 +22465,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.sjax'],
 	 * currently in the list.
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.Properties
 	 * @public
@@ -22772,7 +22794,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.properties', 'jquery.sap.strings
 	 * Exception: Fallback for "zh_HK" is "zh_TW" before zh.
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.ResourceBundle
 	 * @public
@@ -23333,7 +23355,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Use {@link jQuery.sap.getUriParameters} to create an instance of jQuery.sap.util.UriParameters.
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.UriParameters
 	 * @public
@@ -24101,7 +24123,70 @@ sap.ui.define(['jquery.sap.global'],
 
 		};
 	}());
+	
+	/**
+	 * Merge the contents of two or more objects together into the first object.
+	 * Usage is the same as jQuery.extend, but Arguments that are null or undefined are NOT ignored.
+	 * 
+	 * @since 1.26
+	 */
+	jQuery.sap.extend = function() {
+		var src, copyIsArray, copy, name, options, clone,
+			target = arguments[0] || {},
+			i = 1,
+			length = arguments.length,
+			deep = false;
 
+		// Handle a deep copy situation
+		if ( typeof target === "boolean" ) {
+			deep = target;
+
+			// skip the boolean and the target
+			target = arguments[ i ] || {};
+			i++;
+		}
+
+		// Handle case when target is a string or something (possible in deep copy)
+		if ( typeof target !== "object" && !jQuery.isFunction(target) ) {
+			target = {};
+		}
+
+		for ( ; i < length; i++ ) {
+			
+			options = arguments[ i ];
+			
+			// Extend the base object
+			for ( name in options ) {
+				src = target[ name ];
+				copy = options[ name ];
+
+				// Prevent never-ending loop
+				if ( target === copy ) {
+					continue;
+				}
+
+				// Recurse if we're merging plain objects or arrays
+				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
+					if ( copyIsArray ) {
+						copyIsArray = false;
+						clone = src && jQuery.isArray(src) ? src : [];
+
+					} else {
+						clone = src && jQuery.isPlainObject(src) ? src : {};
+					}
+
+					// Never move original objects, clone them
+					target[ name ] = jQuery.sap.extend( deep, clone, copy );
+
+				} else {
+					target[ name ] = copy;
+				}
+			}
+		}
+		// Return the modified object 	984
+		return target;
+	};
+		
 	return jQuery;
 
 }, /* bExport= */ false);
@@ -24643,7 +24728,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Global'],
 //	/**
 //	 * Root Namespace for the jQuery UI-Layer plugin provided by SAP SE.
 //	 *
-//	 * @version 1.26.7
+//	 * @version 1.26.9
 //	 * @namespace
 //	 * @public
 //	 */
@@ -24811,7 +24896,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Global'],
  * sap.ui.lazyRequire("sap.ui.core.Control");
  * sap.ui.lazyRequire("sap.ui.commons.Button");
  *
- * @version 1.26.7
+ * @version 1.26.9
  * @author  Martin Schaus, Daniel Brinkmann
  * @public
  */
@@ -24833,7 +24918,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.dom'],
 	 * The <code>sap</code> namespace is automatically registered with the
 	 * OpenAjax hub if it exists.
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @namespace
 	 * @public
 	 * @name sap
@@ -24846,7 +24931,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.dom'],
 	 * The <code>sap.ui</code> namespace is the central OpenAjax compliant entry
 	 * point for UI related JavaScript functionality provided by SAP.
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @namespace
 	 * @name sap.ui
 	 * @public
@@ -24859,8 +24944,8 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.dom'],
 			 * The version of the SAP UI Library
 			 * @type string
 			 */
-			version: "1.26.7",
-			buildinfo : { lastchange : "", buildtime : "20150216-1433" }
+			version: "1.26.9",
+			buildinfo : { lastchange : "", buildtime : "20150323-1610" }
 		});
 
 	/**
@@ -25695,7 +25780,7 @@ sap.ui.define(['jquery.sap.global', './Object'],
 	 * @extends sap.ui.base.Object
 	 * @implements sap.ui.base.Poolable
 	 * @author Malte Wedel, Daniel Brinkmann
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @alias sap.ui.base.Event
 	 * @public
 	 */
@@ -25843,7 +25928,7 @@ sap.ui.define(['jquery.sap.global', './Event', './Object', './ObjectPool'],
 	 * @abstract
 	 * @extends sap.ui.base.Object
 	 * @author Malte Wedel, Daniel Brinkmann
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @constructor
 	 * @public
 	 * @alias sap.ui.base.EventProvider
@@ -26204,7 +26289,7 @@ sap.ui.define(['jquery.sap.global'],
 	 *        only the defined functions will be visible, no internals of the class can be accessed.
 	 *
 	 * @author Malte Wedel, Daniel Brinkmann
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @param {sap.ui.base.Object}
 	 *            oObject the instance that needs an interface created
 	 * @param {string[]}
@@ -26307,7 +26392,7 @@ sap.ui.define(['jquery.sap.global', './BindingParser', './DataType', './EventPro
 	 * @class Base Class for managed objects.
 	 * @extends sap.ui.base.EventProvider
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @public
 	 * @alias sap.ui.base.ManagedObject
 	 * @experimental Since 1.11.2. ManagedObject as such is public and usable. Only the support for the optional parameter
@@ -27955,6 +28040,12 @@ sap.ui.define(['jquery.sap.global', './BindingParser', './DataType', './EventPro
 			that = this;
 
 		var fChangeHandler = function(oEvent) {
+			/* as we reuse the context objects we need to ensure an update of relative bindings. 
+			 * Therefore we set the context to null so relative bindings will detect a context change 
+			 */
+			if (oBinding.getBoundContext() === that.getBindingContext(sModelName)) {
+				that.setBindingContext(null, sModelName);
+			}
 			that.setBindingContext(oBinding.getBoundContext(), sModelName);
 		};
 
@@ -29409,7 +29500,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 *
 	 * @class
 	 * @author Frank Weigel
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 0.8.6
 	 * @alias sap.ui.base.ManagedObjectMetadata
 	 */
@@ -30107,7 +30198,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.script'],
 	 *
 	 * @class Metadata for a class.
 	 * @author Frank Weigel
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 0.8.6
 	 * @public
 	 * @alias sap.ui.base.Metadata
@@ -30468,7 +30559,7 @@ sap.ui.define(['jquery.sap.global', './Interface', './Metadata'],
 	 * @class Base class for all SAPUI5 Objects
 	 * @abstract
 	 * @author Malte Wedel
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @public
 	 * @alias sap.ui.base.Object
 	 */
@@ -30664,7 +30755,7 @@ sap.ui.define(['jquery.sap.global', './Object'],
 	 *
 	 * @extends sap.ui.base.Object
 	 * @author Malte Wedel
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @constructor
 	 * @alias sap.ui.base.ObjectPool
 	 * @public
@@ -30796,7 +30887,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './ComponentMet
 	 * @extends sap.ui.base.ManagedObject
 	 * @abstract
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @alias sap.ui.core.Component
 	 * @since 1.9.2
 	 */
@@ -31441,7 +31532,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 * @experimental Since 1.9.2. The Component concept is still under construction, so some implementation details can be changed in future.
 	 * @class
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 1.9.2
 	 * @alias sap.ui.core.ComponentMetadata
 	 */
@@ -33144,7 +33235,7 @@ sap.ui.define(['jquery.sap.global', './CustomStyleClassSupport', './Element'],
 	 * @extends sap.ui.core.Element
 	 * @abstract
 	 * @author Martin Schaus, Daniel Brinkmann
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @alias sap.ui.core.Control
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
 	 */
@@ -33927,7 +34018,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/Global', 'sap/ui/ba
 	 * @extends sap.ui.base.EventProvider
 	 * @final
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @constructor
 	 * @alias sap.ui.core.Core 
 	 * @public
@@ -35163,7 +35254,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/Global', 'sap/ui/ba
 	
 			// if parameters have been used, update them with the new style sheet
 			if (sap.ui.core.theming && sap.ui.core.theming.Parameters) {
-				sap.ui.core.theming.Parameters._addLibraryTheme(sLibId);
+				sap.ui.core.theming.Parameters._addLibraryTheme(sLibId, cssPathAndName);
 			}
 		}
 	
@@ -36767,7 +36858,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Core', './El
 	 * @class Base Class for Elements.
 	 * @extends sap.ui.base.ManagedObject
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @public
 	 * @alias sap.ui.core.Element
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
@@ -37822,7 +37913,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 *
 	 * @class
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 0.8.6
 	 * @alias sap.ui.core.ElementMetadata
 	 */
@@ -38302,7 +38393,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 		 *
 		 * @extends sap.ui.base.Object
 		 * @author SAP SE
-		 * @version 1.26.7
+		 * @version 1.26.9
 		 * @constructor
 		 * @public
 		 * @alias sap.ui.core.Locale
@@ -38638,7 +38729,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Interface', 'sap/ui/base/Object
 	 *
 	 * @extends sap.ui.base.Object
 	 * @author Jens Pflueger
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @constructor
 	 * @alias sap.ui.core.RenderManager
 	 * @public
@@ -40580,7 +40671,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', '.
 	 *
 	 * @extends sap.ui.base.ManagedObject
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @param {sap.ui.core.Core} oCore internal API of the <core>Core</code> that manages this UIArea
 	 * @param {object} [oRootNode] reference to the Dom Node that should be 'hosting' the UI Area.
 	 * @public
@@ -41396,7 +41487,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject'],
 	 * @extends sap.ui.base.ManagedObject
 	 * @abstract
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @alias sap.ui.core.tmpl.Template
 	 * @experimental Since 1.15.0. The Template concept is still under construction, so some implementation details can be changed in future.
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
@@ -41873,14 +41964,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject'],
 				// retrieve the content 
 				sContent = $element.html();
 
-				var rBindingPattern = /path="(\w|\/|&gt;)+"/i;
-				if (rBindingPattern.test(sContent)) {
-					// Since jQuery.html() escapes such chars like '>' with '&gt;'
-					// check if a binding path is inside the content and replace
-					// the escaped '&gt;' with a '>'.
-					sContent = sContent.replace("&gt;", ">");
-				}
-	
 				// check the preconditions for rendering and set the render property
 				// if the DOM ref is part of the documents body
 				var sTagName = oElement.tagName.toLowerCase();
@@ -42886,7 +42969,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', './BindingMode'
 	 * @extends sap.ui.base.EventProvider
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -43849,7 +43932,7 @@ sap.ui.define(['jquery.sap.global', './FormatException', './ParseException', './
 	 * @extends sap.ui.model.Type
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @param {object} [oFormatOptions] options as provided by concrete subclasses
@@ -43959,7 +44042,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object'],
 	 * @extends sap.ui.base.Object
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public

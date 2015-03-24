@@ -83,8 +83,8 @@
     {
       "name" : "sap/ui/layout/Splitter.js",
       "description" : "Provides control sap.ui.layout.Splitter.",
-      "size" : 39488,
-      "compressedSize" : 13658,
+      "size" : 39390,
+      "compressedSize" : 13657,
       "required" : ["jquery.sap.global.js", "sap/ui/core/Control.js", "sap/ui/layout/library.js"],
       "includes" : []
     },
@@ -147,8 +147,8 @@
     {
       "name" : "sap/ui/layout/form/FormLayout.js",
       "description" : "Provides control sap.ui.layout.form.FormLayout.",
-      "size" : 26176,
-      "compressedSize" : 11783,
+      "size" : 26130,
+      "compressedSize" : 11829,
       "required" : ["jquery.sap.global.js", "sap/ui/core/Control.js", "sap/ui/layout/form/Form.js", "sap/ui/layout/library.js"],
       "includes" : []
     },
@@ -235,8 +235,8 @@
     {
       "name" : "sap/ui/layout/form/SimpleForm.js",
       "description" : "Provides control sap.ui.layout.form.SimpleForm.",
-      "size" : 45767,
-      "compressedSize" : 17726,
+      "size" : 45778,
+      "compressedSize" : 17735,
       "required" : ["jquery.sap.global.js", "sap/ui/core/Control.js", "sap/ui/layout/ResponsiveFlowLayoutData.js", "sap/ui/layout/form/Form.js", "sap/ui/layout/form/FormContainer.js", "sap/ui/layout/form/FormElement.js", "sap/ui/layout/form/FormLayout.js", "sap/ui/layout/library.js"],
       "includes" : []
     },

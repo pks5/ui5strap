@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './ComboBox', './library', 'sap/ui/core/Hist
 	 * The control provides a field that allows end users to an entry out of a list of pre-defined items. The choosable items can be provided in the form of complete list boxes or single list items.
 	 * Binding (see DataBinding) is also supported for list items.
 	 * @extends sap.ui.commons.ComboBox
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -534,6 +534,10 @@ sap.ui.define(['jquery.sap.global', './ComboBox', './library', 'sap/ui/core/Hist
 	DropdownBox.prototype.oncut = DropdownBox.prototype.onpaste;
 
 	DropdownBox.prototype.oninput = function(oEvent) {
+
+		if (!this._realOninput(oEvent)) {
+			return;
+		}
 
 		var $Ref = jQuery(this.getInputDomRef());
 		var sVal = $Ref.val();

@@ -1159,6 +1159,9 @@ html[data-sap-ui-os^="iOS6"] .sapUiTfDsbl > .sapUiTfInner.sapUiTf[type="date"]{
 /* Blue Crystal Desktop                          */
 /* ============================================= */
 
+@sapUiDlgHeaderHeight: 40px;
+@sapUiDlgFooterHeight: 44px;
+
 .sapUiDlg {
 	font-family: @sapUiDesktopFontFamily;
 	font-size: @sapUiDesktopFontSize;
@@ -1171,7 +1174,7 @@ html[data-sap-ui-os^="iOS6"] .sapUiTfDsbl > .sapUiTfInner.sapUiTf[type="date"]{
 }
 
 .sapUiDlgHdr {
-	height: 40px;
+	height: @sapUiDlgHeaderHeight;
 	color: @sapUiLightText;
 	border-bottom: 0;
 	margin-top: 0;
@@ -1267,6 +1270,7 @@ html[data-sap-ui-os^="iOS6"] .sapUiTfDsbl > .sapUiTfInner.sapUiTf[type="date"]{
 	height: 12px;
 	width: 12px;
 }
+
 /* END "Dialog.less" */
 
 /* START "DropdownBox.less" */

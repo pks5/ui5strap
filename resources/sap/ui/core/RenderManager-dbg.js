@@ -34,7 +34,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Interface', 'sap/ui/base/Object
 	 *
 	 * @extends sap.ui.base.Object
 	 * @author Jens Pflueger
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @constructor
 	 * @alias sap.ui.core.RenderManager
 	 * @public

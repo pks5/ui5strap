@@ -27,8 +27,8 @@
     {
       "name" : "sap/ui/table/AnalyticalTable.js",
       "description" : "Provides control sap.ui.table.AnalyticalTable.",
-      "size" : 34372,
-      "compressedSize" : 18789,
+      "size" : 34507,
+      "compressedSize" : 18882,
       "required" : ["jquery.sap.global.js", "sap/ui/model/analytics/TreeBindingAdapter.js", "sap/ui/table/AnalyticalColumn.js", "sap/ui/table/Table.js", "sap/ui/table/library.js"],
       "includes" : []
     },
@@ -91,8 +91,8 @@
     {
       "name" : "sap/ui/table/Table.js",
       "description" : "Provides control sap.ui.table.Table.",
-      "size" : 170804,
-      "compressedSize" : 78288,
+      "size" : 171828,
+      "compressedSize" : 78701,
       "required" : ["jquery.sap.global.js", "sap/ui/core/Control.js", "sap/ui/core/IntervalTrigger.js", "sap/ui/core/ScrollBar.js", "sap/ui/core/delegate/ItemNavigation.js", "sap/ui/core/theming/Parameters.js", "sap/ui/model/SelectionModel.js", "sap/ui/table/Row.js", "sap/ui/table/library.js"],
       "includes" : []
     },
@@ -107,8 +107,8 @@
     {
       "name" : "sap/ui/table/TableRenderer.js",
       "description" : "Provides default renderer for control sap.ui.table.Table",
-      "size" : 30076,
-      "compressedSize" : 18332,
+      "size" : 30018,
+      "compressedSize" : 18289,
       "required" : ["jquery.sap.global.js"],
       "includes" : []
     },

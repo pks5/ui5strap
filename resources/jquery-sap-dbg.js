@@ -7,7 +7,7 @@
 /** 
  * Device and Feature Detection API of the SAP UI5 Library.
  *
- * @version 1.26.7
+ * @version 1.26.9
  * @namespace
  * @name sap.ui.Device
  * @public
@@ -32,7 +32,7 @@ if (typeof window.sap.ui !== "object") {
 
 	//Skip initialization if API is already available
 	if (typeof window.sap.ui.Device === "object" || typeof window.sap.ui.Device === "function" ) {
-		var apiVersion = "1.26.7";
+		var apiVersion = "1.26.9";
 		window.sap.ui.Device._checkAPIVersion(apiVersion);
 		return;
 	}
@@ -90,7 +90,7 @@ if (typeof window.sap.ui !== "object") {
 	
 	//Only used internal to make clear when Device API is loaded in wrong version
 	device._checkAPIVersion = function(sVersion){
-		var v = "1.26.7";
+		var v = "1.26.9";
 		if (v != sVersion) {
 			logger.log(WARNING, "Device API version differs: " + v + " <-> " + sVersion);
 		}
@@ -1253,7 +1253,9 @@ if (typeof window.sap.ui !== "object") {
 		var android_phone = (/(?=android)(?=.*mobile)/i.test(navigator.userAgent));
 		// According to google documentation: https://developer.chrome.com/multidevice/webview/overview, the WebView shipped with Android 4.4 (KitKat) is based on the same code as Chrome for Android.
 		// If you're attempting to differentiate between the WebView and Chrome for Android, you should look for the presence of the Version/_X.X_ string in the WebView user-agent string
-		var bChromeWebView = device.os.android && (device.os.version >= 4.4) && /Version\/\d.\d/.test(navigator.userAgent);
+		// The stock browser of Samsung device uses Chrome kernal from Android version 4.4. It behaves differently than the Chrome Webview, therefore it's excluded from this check by checking the 'SAMSUNG'
+		// string in the user agent.
+		var bChromeWebView = device.os.android && device.browser.chrome && (device.os.version >= 4.4) && /Version\/\d.\d/.test(navigator.userAgent) && !/SAMSUNG/.test(navigator.userAgent);
 		if (device.os.name === device.os.OS.IOS) {
 			return /ipad/i.test(navigator.userAgent);
 		} else {
@@ -1276,7 +1278,7 @@ if (typeof window.sap.ui !== "object") {
 				//this is how android distinguishes between tablet and phone
 				//http://android-developers.blogspot.de/2011/07/new-tools-for-managing-screen-sizes.html
 				var bTablet = (Math.min(window.screen.width / densityFactor, window.screen.height / densityFactor) >= 600);
-				
+
 				// special workaround for Nexus 7 where the window.screen.width is 600px or 601px in portrait mode (=> tablet) 
 				// but window.screen.height 552px in landscape mode (=> phone), because the browser UI takes some space on top.
 				// So the detected device type depends on the orientation :-(
@@ -1287,9 +1289,8 @@ if (typeof window.sap.ui !== "object") {
 						&& (/Nexus 7/i.test(navigator.userAgent))) {
 					bTablet = true;
 				}
-				
-				return bTablet;
 
+				return bTablet;
 			} else {
 				//in desktop browser
 				var android_tablet = (device.os.name === device.os.OS.ANDROID) && !android_phone;
@@ -3804,7 +3805,7 @@ return URI;
 	 * @class Represents a version consisting of major, minor, patch version and suffix, e.g. '1.2.7-SNAPSHOT'.
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @constructor
 	 * @public
 	 * @since 1.15.0
@@ -4222,7 +4223,7 @@ return URI;
 	/**
 	 * Root Namespace for the jQuery plug-in provided by SAP SE.
 	 *
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @namespace
 	 * @public
 	 * @static
@@ -6221,6 +6222,9 @@ return URI;
 		appendHead(oScript);
 	};
 
+	var oIEStyleSheetNode;
+	var mIEStyleSheets = jQuery.sap._mIEStyleSheets = {};
+
 	/**
 	 * Includes the specified stylesheet via a &lt;link&gt;-tag in the head of the current document. If there is call to
 	 * <code>includeStylesheet</code> providing the sId of an already included stylesheet, the existing element will be
@@ -6308,28 +6312,46 @@ return URI;
 			if (sap.ui.Device.browser.internet_explorer && sap.ui.Device.browser.version <= 9 && document.styleSheets.length >= 28) {
 				// in IE9 only 30 links are alowed, so use stylesheet object insted
 				var sRootUrl = URI.parse(document.URL).path;
-				jQuery.sap.log.warning("StyleSheet " + sId + " not added as LINK because of IE limits", sUrl, "jQuery.sap.includeStyleSheet");
-				if (!this._oIEStyleSheet) {
+				var sAbsoluteUrl = new URI(sUrl).absoluteTo(sRootUrl).toString();
+
+				if (sId) {
+					var oIEStyleSheet = mIEStyleSheets[sId];
+					if (oIEStyleSheet && oIEStyleSheet.href === sAbsoluteUrl) {
+						// if stylesheet was already included and href is the same, do nothing
+						return;
+					}
+				}
+
+				jQuery.sap.log.warning("Stylesheet " + (sId ? sId + " " : "") + "not added as LINK because of IE limits", sUrl, "jQuery.sap.includeStyleSheet");
+
+				if (!oIEStyleSheetNode) {
 					// create a style sheet to add additional style sheet. But for this the Replace logic will not work any more
 					// the callback functions are not used in this case
 					// the sap-ui-ready attribute will not be set -> maybe problems with ThemeCheck
-					this._oIEStyleSheet = document.createStyleSheet();
-					this._oIEStyleSheet.addImport(URI(sUrl).absoluteTo(sRootUrl));
-				} else {
-					// add up to 30 style sheets to every of this style sheets. (result is a tree of style sheets)
-					var bAdded = false;
-					for ( var i = 0; i < this._oIEStyleSheet.imports.length; i++) {
-						var oStyleSheet = this._oIEStyleSheet.imports[i];
-						if (oStyleSheet.imports.length < 30) {
-							oStyleSheet.addImport(URI(sUrl).absoluteTo(sRootUrl));
-							bAdded = true;
-							break;
-						}
-					}
-					if (!bAdded) {
-						this._oIEStyleSheet.addImport(URI(sUrl).absoluteTo(sRootUrl));
+					oIEStyleSheetNode = document.createStyleSheet();
+				}
+
+				// add up to 30 style sheets to every of this style sheets. (result is a tree of style sheets)
+				var bAdded = false;
+				for ( var i = 0; i < oIEStyleSheetNode.imports.length; i++) {
+					var oStyleSheet = oIEStyleSheetNode.imports[i];
+					if (oStyleSheet.imports.length < 30) {
+						oStyleSheet.addImport(sAbsoluteUrl);
+						bAdded = true;
+						break;
 					}
 				}
+				if (!bAdded) {
+					oIEStyleSheetNode.addImport(sAbsoluteUrl);
+				}
+
+				if (sId) {
+					// remember id and href URL in internal map as there is no link tag that can be checked
+					mIEStyleSheets[sId] = {
+						href: sAbsoluteUrl
+					};
+				}
+
 				// always make sure to re-append the customcss in the end if it exists
 				var oCustomCss = document.getElementById('sap-ui-core-customcss');
 				if (!jQuery.isEmptyObject(oCustomCss)) {
@@ -11440,7 +11462,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.sjax'],
 	 * currently in the list.
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.Properties
 	 * @public
@@ -11769,7 +11791,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.properties', 'jquery.sap.strings
 	 * Exception: Fallback for "zh_HK" is "zh_TW" before zh.
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.ResourceBundle
 	 * @public
@@ -12330,7 +12352,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Use {@link jQuery.sap.getUriParameters} to create an instance of jQuery.sap.util.UriParameters.
 	 *
 	 * @author SAP SE
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.UriParameters
 	 * @public
@@ -13098,7 +13120,70 @@ sap.ui.define(['jquery.sap.global'],
 
 		};
 	}());
+	
+	/**
+	 * Merge the contents of two or more objects together into the first object.
+	 * Usage is the same as jQuery.extend, but Arguments that are null or undefined are NOT ignored.
+	 * 
+	 * @since 1.26
+	 */
+	jQuery.sap.extend = function() {
+		var src, copyIsArray, copy, name, options, clone,
+			target = arguments[0] || {},
+			i = 1,
+			length = arguments.length,
+			deep = false;
 
+		// Handle a deep copy situation
+		if ( typeof target === "boolean" ) {
+			deep = target;
+
+			// skip the boolean and the target
+			target = arguments[ i ] || {};
+			i++;
+		}
+
+		// Handle case when target is a string or something (possible in deep copy)
+		if ( typeof target !== "object" && !jQuery.isFunction(target) ) {
+			target = {};
+		}
+
+		for ( ; i < length; i++ ) {
+			
+			options = arguments[ i ];
+			
+			// Extend the base object
+			for ( name in options ) {
+				src = target[ name ];
+				copy = options[ name ];
+
+				// Prevent never-ending loop
+				if ( target === copy ) {
+					continue;
+				}
+
+				// Recurse if we're merging plain objects or arrays
+				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
+					if ( copyIsArray ) {
+						copyIsArray = false;
+						clone = src && jQuery.isArray(src) ? src : [];
+
+					} else {
+						clone = src && jQuery.isPlainObject(src) ? src : {};
+					}
+
+					// Never move original objects, clone them
+					target[ name ] = jQuery.sap.extend( deep, clone, copy );
+
+				} else {
+					target[ name ] = copy;
+				}
+			}
+		}
+		// Return the modified object 	984
+		return target;
+	};
+		
 	return jQuery;
 
 }, /* bExport= */ false);

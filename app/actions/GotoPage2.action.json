@@ -6,7 +6,7 @@
 
 	"gotoPage" : {
 		"viewName" : "tld__domain.product__app.views.Page2",
-		"transition" : "transition-slide",
+		"transition" : "transition-flip",
 		"writeHistory" : true,
 		"bookmarkable" : false
 	}

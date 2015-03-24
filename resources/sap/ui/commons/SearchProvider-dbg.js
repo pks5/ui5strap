@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/search/OpenSearchP
 	 * @class
 	 * A SearchProvider which can be attached to a Search Field.
 	 * @extends sap.ui.core.search.OpenSearchProvider
-	 * @version 1.26.7
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
