@@ -89,5 +89,17 @@
     "buildConfig": {
       "uglify": true
     }
+  },
+  "ui5strap" : {
+    "themeBaseDir" : "../../../lib/ui5strap/themes/base/",
+    "themeSapBluecrystalDir" : "../../../lib/ui5strap/themes/sap_bluecrystal/",
+    "themeSapUiCoreFolder" : "../../../theme/sap/ui/core/themes/",
+    "themeSapUiCommonsFolder" : "../../../theme/sap/ui/commons/themes/",
+    "themeSapUiLayoutFolder" : "../../../theme/sap/ui/layout/themes/",
+    "themeSapMFolder" : "../../../theme/sap/m/themes/",
+    "themeFolder" : "../../../theme/ui5strap/themes/",
+    "defaultTheme" : "ui5strap_default",
+    "myTheme" : "ui5strap_my_theme"
+    
   }
 }
