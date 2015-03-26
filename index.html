@@ -77,7 +77,11 @@
 			* Virtual Device Options
 			*/
 			var deviceOptions = {
-				"app" : "./app/app.json"
+				"app" : {
+					type : "URI",
+					uriParam : "app",
+					defaultValue : "./app/app.json"
+				}
 			};
 
 			/*
