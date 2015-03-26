@@ -1,6 +1,0 @@
-/*!
- * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
- * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
- */
-sap.ui.define(['jquery.sap.global','sap/ui/core/Renderer'],function(q,R){"use strict";var L={};L.render=function(a,l){var r=L;a.write("<label");a.writeControlData(l);a.addClass("sapMLabel");a.addClass("sapUiSelectable");if(l.getDesign()==sap.m.LabelDesign.Bold){a.addStyle("font-weight","bold")}if(l.getRequired()){a.addClass("sapMLabelRequired")}if(l.getLabelForRendering()){var f=sap.ui.getCore().byId(l.getLabelForRendering());a.write(" for=\"");if(f&&f.getIdForLabel){a.write(f.getIdForLabel())}else{a.write(l.getLabelForRendering())}a.write("\"")}else if(l.getParent()instanceof sap.m.Toolbar){a.addClass("sapMLabelTBHeader")}var t=l.getTextDirection();if(t){a.addStyle("direction",t.toLowerCase())}var w=l.getWidth();if(w){a.addStyle("width",w)}else{a.addClass("sapMLabelMaxWidth")}var T=l.getTextAlign();if(T){var T=r.getTextAlign(T,t);if(T){a.addStyle("text-align",T)}}var s=l.getText();if(s==""){a.addClass("sapMLabelNoText")}a.writeStyles();a.writeClasses();var b=l.getTooltip_AsString();if(b){a.writeAttributeEscaped("title",b)}a.write(">");if(s){a.writeEscaped(s)}a.write("</label>")};L.getTextAlign=R.getTextAlign;return L},true);
