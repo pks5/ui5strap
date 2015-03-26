@@ -1,0 +1,148 @@
+/*
+* carousel-advanced
+*/
+
+.carousel-advanced{
+	width:100%;
+	height:100%;
+	position:relative;
+	overflow:hidden;
+	
+	-moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+
+.carousel-advanced > .carousel-label{
+	position:absolute;
+	
+	width:50%;
+	height:30px;
+	
+	top:30px;
+	left:50%;
+	
+	margin-left:-25%;
+	
+	text-align: center;
+}
+
+.carousel-ends.carousel-current-first .carousel-control-prev{
+	display:none;
+}
+
+.carousel-ends.carousel-current-last .carousel-control-next{
+	display:none;
+}
+
+.carousel-advanced > .carousel-cover{
+	height:100%;
+	width:20%;
+	background-color:rgba(0,0,0,0.5);
+	position: absolute;
+	top:0;
+	
+}
+
+.carousel-advanced > .carousel-cover-prev{
+	left:0;
+}
+
+.carousel-advanced > .carousel-cover-next{
+	right:0;
+}
+
+
+.carousel-advanced > .carousel-inner{
+	height:100%;
+	
+}
+
+.carousel-overflow-hidden > .carousel-inner{
+	overflow:hidden;
+}
+
+.carousel-overflow-show > .carousel-inner{
+	overflow:visible;
+}
+
+.carousel-overflow-covered > .carousel-inner{
+	overflow:visible;
+}
+
+.carousel-align-pull-left > .carousel-inner{
+	float:left;
+}
+
+/*
+* Hide the Cover for previous. Cover for next should be twice as large.
+*/
+.carousel-align-pull-left > .carousel-cover-prev{
+	display:none;
+}
+
+.carousel-align-pull-right > .carousel-inner{
+	float:right;
+}
+
+/*
+* Hide the Cover for next. Cover for previous should be twice as large.
+*/
+.carousel-align-pull-right > .carousel-cover-next{
+	display:none;
+}
+
+.carousel-align-center-block > .carousel-inner{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+
+.carousel-advanced > .carousel-inner > .carousel-lane{
+	position: absolute;
+	height:100%;
+	width: 100%;
+}
+
+.carousel-advanced > .carousel-inner > .carousel-lane > .carousel-item{
+	position: absolute;
+	width:100%;
+	height:100%;
+}
+
+// mixin with a guard to create a series of bamboo tiles
+.makeCarouselColumn(@size, @i) when (@i > 0) {
+    .carousel-@{size}-@{i} > .carousel-inner{
+        width: percentage((1 / @i));
+    }
+
+    .carousel-@{size}-@{i} > .carousel-cover{
+        width: percentage(((1 - (1 / @i)) / 2));
+    }
+
+    .carousel-@{size}-@{i}.carousel-align-pull-right > .carousel-cover-prev{
+    	width: percentage((1 - (1 / @i)));
+    }
+
+    .carousel-@{size}-@{i}.carousel-align-pull-left > .carousel-cover-next{
+    	width: percentage((1 - (1 / @i)));
+    }
+ 
+     // next iteration
+    .makeCarouselColumn(@size, (@i - 1));
+}
+
+.makeCarouselColumn(xs, 12);
+
+@media (min-width: @screen-sm) {
+	.makeCarouselColumn(sm, 12);
+}
+
+@media (min-width: @screen-md) {
+	.makeCarouselColumn(md, 12);
+}
+
+@media (min-width: @screen-lg) {
+	.makeCarouselColumn(lg, 12);
+}

@@ -1,0 +1,103 @@
+/*!
+ * 
+ * UI5Strap
+ *
+ * Library stylesheet for theme bsdefault
+ * 
+ * Author: Jan Philipp Knoeller
+ * 
+ * Copyright (c) 2013 Jan Philipp Knoeller
+ * 
+ * http://pksoftware.de
+ *
+ * Get the latest version: https://github.com/pks5/ui5strap
+ * 
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+
+/*
+* Disable text selection
+*/
+.disable-text-select,
+.disable-text-select-recursive,
+.disable-text-select-recursive * {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*
+* Show Mouse Pointer on links
+*/
+a{
+  cursor:pointer;
+}
+
+.navbar-brand{
+  cursor:pointer;
+}
+
+.navbar-header{
+  float:left;
+}
+
+.navbar-collapse.collapsing,
+.navbar-collapse.in{
+  clear:both;
+}
+
+.navbar-content-left{
+  float:left;
+  margin-right:15px;
+}
+
+.navbar-content-right{
+  float:right;
+  margin-left:15px;
+}
+
+
+/*
+* Panel
+*/
+
+.panel-collapsible > .panel-heading{
+  cursor:pointer;
+}
+
+/*
+* Container
+*/
+
+.container-floating{
+  float:left;
+  margin-right:10px;
+  margin-bottom:10px;
+}
+
+.container-paragraph{
+  margin-bottom:10px;
+}
+
+
+/*
+* Full screen carousel
+*/
+.carousel-full,
+.carousel-full > .carousel-inner,
+.carousel-full > .carousel-inner > .item
+{
+  height:100%;
+}
+
+/*
+* Font awesome fix
+*/
+.fa.form-control-feedback{
+	line-height:34px;
+}

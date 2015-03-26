@@ -1,0 +1,213 @@
+/*
+* Transitions
+*/
+
+/*
+* Transiton Slide
+*/
+
+.transition-slide{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  
+  
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  
+  -o-transition: -o-transform 0.5s;
+  -ms-transition: -ms-transform 0.5s;
+  transition: transform 0.5s;
+
+/*
+  transform: translateX(0);
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+  -ms-transform: translateX(0);
+  -o-transform: translateX(0);
+  */
+  
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.transition-slide-current-out{
+
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -moz-transform: translate3d(-100%, 0, 0);
+  -ms-transform: translate3d(-100%, 0, 0);
+  -o-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+
+.transition-slide-next{
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%,0 ,0 );
+  -ms-transform: translate3d(100%, 0, 0);
+  -o-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+
+/*
+* Transition Fade
+*/
+.transition-fade{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+
+  
+
+  opacity:1;
+
+  transition: opacity 0.3s ease-in-out;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  
+
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.transition-fade-current{
+  z-index:1;
+}
+
+.transition-fade-next{
+  opacity: 0;
+}
+
+.transition-fade-current-out{
+  opacity: 0;
+}
+
+/*
+* Transition Flip
+*/
+.transition-flip{
+  transition: transform .8s;
+  -webkit-transition: -webkit-transform .8s;
+  -moz-transition: -moz-transform .8s;
+  -o-transition: -o-transform .8s;
+  -ms-transition: -ms-transform .8s;
+
+  transform: rotate3d(0,0,0,0);
+  -webkit-transform: rotate3d(0,0,0,0);
+  -moz-transform: rotate3d(0,0,0,0);
+  -o-transform: rotate3d(0,0,0,0);
+  -ms-transform: rotate3d(0,0,0,0);
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+
+  position:absolute;
+  
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  
+}
+
+.transition-flip-current{
+  z-index:1;
+}
+
+.transition-flip-next{
+  transform: rotate3d(0, 1, 0, -180deg);
+  -webkit-transform: rotate3d(0, 1, 0, -180deg);
+  -moz-transform: rotate3d(0, 1, 0, -180deg);
+  -o-transform: rotate3d(0, 1, 0, -180deg);
+  -ms-transform: rotate3d(0, 1, 0, -180deg);
+}
+
+.transition-flip-current-out{
+  transform: rotate3d(0, 1, 0, 180deg);
+  -webkit-transform: rotate3d(0, 1, 0, 180deg);
+  -moz-transform: rotate3d(0, 1, 0, 180deg);
+  -o-transform: rotate3d(0, 1, 0, 180deg);
+  -ms-transform: rotate3d(0, 1, 0, 180deg);
+}
+
+
+/*
+* Transition Zoom
+*/
+.transition-zoom{
+  transition: transform .7s, opacity 0.1s;
+  -webkit-transition: -webkit-transform .7s, opacity 0.1s;
+  -moz-transition: -moz-transform .7s, opacity 0.1s;
+  -o-transition: -o-transform .7s, opacity 0.1s;
+  -ms-transition: -ms-transform .7s, opacity 0.1s;
+/*
+  transform: scale(1, 1);
+  -webkit-transform: scale(1, 1);
+  opacity:1;
+  */
+
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+}
+
+.transition-zoom-next{
+  transform: scale3d(0, 0, 0);
+  -webkit-transform: scale3d(0, 0, 0);
+  -moz-transform: scale3d(0, 0, 0);
+  -o-transform: scale3d(0, 0, 0);
+  -ms-transform: scale3d(0, 0, 0);
+}
+
+.transition-zoom-current-out{
+  opacity: 0.99;
+}
+
+/*
+* Transition Zoom 2
+*/
+.transition-zoom2{
+  transition: transform .7s, opacity .7s;
+  -webkit-transition: -webkit-transform .7s, opacity .7s;
+  -moz-transition: -moz-transform .7s, opacity .7s;
+  -o-transition: -o-transform .7s, opacity .7s;
+  -ms-transition: -ms-transform .7s, opacity .7s;
+  
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+
+}
+
+.transition-zoom2-next{
+  opacity: 0.99;
+  z-index:auto;
+}
+
+.transition-zoom2-current{
+ z-index: 1;
+}
+
+.transition-zoom2-current-out{
+  transform: scale3d(0, 0,0);
+  -webkit-transform: scale3d(0, 0,0);
+  -moz-transform: scale3d(0, 0,0);
+  -o-transform: scale3d(0, 0,0);
+  -ms-transform: scale3d(0, 0,0);
+}

@@ -1,0 +1,54 @@
+/*
+* Bar
+*/
+.bar{
+  height: @bar-height;
+  
+  box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+
+.bar-default{
+    background-color: @bar-default-bg;
+    border-color: @bar-default-border;
+    color: @bar-default-color;
+}
+
+.bar-inverse{
+  background-color: @bar-inverse-bg;
+  border-color: @bar-inverse-border;
+  color: @bar-inverse-color;
+}
+
+.bar > .bar-inner{
+  height:100%;
+  position:relative;
+}
+
+.bar > .bar-inner > .bar-content{
+  height:100%; 
+  top:0px;
+}
+
+.bar > .bar-inner > .bar-content-left{
+  float:left; 
+  width:33.33%;
+
+  line-height : @bar-height;
+}
+
+.bar > .bar-inner > .bar-content-middle{
+  float:left; 
+  width:33.33%; 
+  text-align:center;
+  position:relative;
+  
+  line-height : @bar-height;
+}
+
+.bar > .bar-inner > .bar-content-right{
+  float:left; 
+  width:33.33%;
+
+  line-height : @bar-height;
+}
+

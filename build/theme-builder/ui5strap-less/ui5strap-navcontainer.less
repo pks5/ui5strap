@@ -1,0 +1,577 @@
+/*
+*
+* NavContainer
+*
+*/
+.navcontainer{
+  height:100%; 
+  position:relative; 
+  
+
+  perspective: 1000;
+  -webkit-perspective: 1000;
+}
+
+/*
+* Aggregation (target)
+*/
+.navcontainer-aggregation{
+  position:relative;
+  overflow:hidden;
+}
+
+
+/*
+* Container for pages
+*/
+.navcontainer-pages{
+  position:relative; 
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+/*
+* Page
+*/
+.navcontainer-page{
+  width:100%;
+  height:100%; 
+  position:relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow:hidden;
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+}
+
+/*
+* Hidden page
+*/
+.navcontainer-page-hidden{
+  display:none;
+}
+
+
+/*
+* View within page should have full height
+*/
+.navcontainer-page > .sapUiView{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+/*
+* CONTENT
+* Base style for target "content"
+*/
+.navcontainer-default > .navcontainer-aggregation-content{
+    width:100%;
+    height:100%; 
+}
+
+/*
+*
+* NavContainerStandard
+*
+* Variation of NavContainer with 3 targets: "navbar", "sidebar", "content" 
+*
+*/
+
+/*
+* CONTENT
+* Base style for target "content"
+*/
+.navcontainer-standard > .navcontainer-aggregation-content{
+   position:absolute;
+   left:0;
+   width:100%;
+   top:0;
+   bottom:0;
+
+   -webkit-transition:left 0.2s;
+   transition:left 0.2s;
+}
+
+/*
+* NAVBAR
+* Base style for target "navbar"
+*/
+.navcontainer-standard > .navcontainer-aggregation-navbar{
+   position:absolute; 
+   top: (-@navbar-height - 10); 
+   left: 0;
+   width: 100%; 
+   height: @navbar-height;
+
+   -webkit-transition:top 0.2s, left 0.2s;
+   transition:top 0.2s, left 0.2s;
+   overflow:visible;
+}
+
+/*
+* Must overflow to be able to show drop down menus
+*/
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages,
+.navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page{
+   overflow:visible;
+}
+
+/*
+* Button to show / hide the navbar
+* Visible by default
+*/
+.btn-toggle-navbar{
+   display:block!important;
+}
+
+/*
+* SIDEBAR
+* Base style for target "sidebar"
+*/
+.navcontainer-standard > .navcontainer-aggregation-sidebar{
+
+  position: fixed;
+
+  top:0;
+  bottom:0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+
+  -webkit-transition:left 0.2s, top 0.2s, bottom 0.2s, right 0.2s, width 0.2s, height 0.2s;
+  transition:left 0.2s, top 0.2s, bottom 0.2s, right 0.2s, width 0.2s, height 0.2s;
+
+  width:@sidebar-A-width;
+  left:-@sidebar-A-width;
+  right:auto;
+}
+
+/*
+* Button to show / hide the sidebar
+* Hidden by default
+*/
+.btn-toggle-sidenav{
+      display:none!important;
+}
+
+
+
+@media (max-width: ((@size-B)-1)){
+
+      /*
+      * SIDEBAR_SMALL / BOTTOM_BAR
+      */
+
+      /*
+      * Set bottom bar height
+      * (if option "sidebar-small" is enabled)
+      */
+      .navcontainer-standard.navcontainer-standard-sidebar-small > .navcontainer-aggregation-sidebar{
+        width:auto;
+        height: @sidebar-small-A-height;
+        
+        top:auto;
+        bottom: -@sidebar-small-A-height;
+        
+        left:0;
+        right:0;
+      }
+
+      /*
+      * Align target "sidebar" on bottom 
+      * (if options "sidebar" amd "sidebar-small" are enabled)
+      */
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-aggregation-sidebar{
+          bottom:0;
+      }
+
+      /*
+      * Move target "content" upwards to create space for bottom bar
+      * (if options "sidebar" and "sidebar-small" are enabled)
+      */
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-aggregation-content{
+        bottom: @sidebar-small-A-height;
+      }
+
+      
+      
+
+      /*
+      * SIDENAV
+      */
+
+      /*
+      * Set width of target "sidebar" and move it out of screen on left side
+      * (if option "sidenav" is enabled)
+      */ 
+      .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+        width:@sidenav-A-width;
+        left:-@sidenav-A-width;
+      }
+
+      /*
+      * Move targets "content" and "navbar" rightwards to create space for target "sidebar"
+      * (if option "sidenav" is enabled)
+      */
+      .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content,
+      .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+        left:@sidenav-A-width !important;
+      }
+
+      
+
+}
+
+
+/*
+* Size B
+*/
+@media (min-width: @size-B){
+
+    
+
+    /*
+    * Base style for target "sidebar"
+    */
+    .navcontainer-standard > .navcontainer-aggregation-sidebar{
+        width:@sidebar-B-width;
+        height:auto;
+
+        left:-@sidebar-B-width;
+        right:auto;
+
+        top:0;
+        bottom:0;
+    }
+
+    /*
+    * Move content rightwards to create space for target "sidebar"
+    * (if option "sidebar" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
+        left:@sidebar-B-width;
+        right:0;
+        
+        width:auto;
+    }
+
+    /*
+    * Base style for target "sidebar"
+    * (if option "sidebar-small" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar-small > .navcontainer-aggregation-sidebar{
+        width:@sidebar-small-B-width;
+        left:-@sidebar-small-B-width;
+    }
+
+    /*
+    * Move content rightwards to create space for target "sidebar"
+    * (if options "sidebar" and "sidebar-small" are enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-aggregation-content{
+        left:@sidebar-small-B-width;
+    }
+
+    
+    /*
+    * Align targets "navbar" and "sidebar" on left side 
+    * (if option "sidebar" is enabled)
+    */ 
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar,
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+        left:0;
+    }
+
+    /*
+    * Move target "sidebar" downwards
+    * (if options "navbar" and "sidebar" are enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+        top: @navbar-height;
+    }
+
+    /*
+    * SIDENAV
+    */
+
+    /*
+    * Set width of target "sidebar" and move it out of the screen on left side
+    * (if option "sidenav" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+        width:@sidenav-B-width !important;
+        left:-@sidenav-B-width !important;
+    }
+
+    /*
+    * Move targets "content" and "navbar" rightwards to create space for target "sidebar"
+    * (if option "sidenav" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content,
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+        left:@sidenav-B-width !important;
+    }
+    
+    /*
+    * Align target "sidebar" on top
+    * (if options "navbar" and "sidenav" are enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+        top:0px !important;
+    }
+
+    
+}
+
+/*
+* Size C
+*/
+@media (min-width: @size-C){
+
+    
+
+    /*
+    * Base style for target "sidebar"
+    */
+    .navcontainer-standard > .navcontainer-aggregation-sidebar{
+      width:@sidebar-C-width;
+      left:-@sidebar-C-width;
+    }
+
+    /*
+    * Set with of target "sidebar" and move it out of the screen on left side
+    * (if option "sidebar-small" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar-small > .navcontainer-aggregation-sidebar{
+     width:@sidebar-small-C-width;
+     left:-@sidebar-small-C-width;
+   }
+
+   /*
+   * Move target "content" rightwards to create space for target "sidebar"
+   * (if option "sidebar" is enabled)
+   */
+   .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
+    left:@sidebar-C-width;
+  }
+
+   /*
+   * Move target "content" rightwards to create space for target "sidebar"
+   * (if options "sidebar" and "sidebar-small" are enabled)
+   */
+  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-aggregation-content{
+    left:@sidebar-small-C-width;
+  }
+
+  /*
+  * Align targets "navbar" and "sidebar" on left side
+  * (if option "sidebar" is enabled)
+  */
+  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar,
+  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+    left:0;
+  }
+
+    /*
+    * Set width of target "sidebar" and move it out of the screen on left side
+    * (if option "sidenav" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+      width:@sidenav-C-width !important;
+      left:-@sidenav-C-width !important;
+    }
+
+    /*
+    * Move targets "content" and "navbar" to right
+    * (if option "sidenav" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content,
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+      left:@sidenav-C-width !important;
+    }
+
+    /*
+     * Hide btn-toggle-navbar
+     * TODO simplify
+     */
+    .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right > .btn-toggle-navbar,
+    .navcontainer-standard > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right > .btn-toggle-navbar{
+      display:none!important;
+    }
+  }
+
+/*
+* Size D
+*/
+@media (min-width: @size-D){
+    /*
+    * Base style for target "sidebar"
+    */
+    .navcontainer-standard > .navcontainer-aggregation-sidebar{
+      width: @sidebar-D-width;
+      left: -@sidebar-D-width;
+    }
+
+    /*
+    * Move target "content" rightwards to create space for target "sidebar"
+    * (if option "sidebar" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-content{
+      left:@sidebar-D-width;
+    }
+
+    /*
+    * Set width of target "sidebar" and move it out of the screen on left side
+    * (if option "sidebar-small" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar-small > .navcontainer-aggregation-sidebar{
+      width: @sidebar-small-D-width;
+      left: -@sidebar-small-D-width;
+    }
+
+    /*
+    * Move target "content" rightwards to create space for target "sidebar"
+    * (if options "sidebar" and "sidebar-small" are enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-aggregation-content{
+      left:@sidebar-small-D-width;
+    }
+
+    /*
+    * Align targets "sidebar" and "navbar" on left side
+    * (if option "sidebar" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-navbar,
+    .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-aggregation-sidebar{
+      left:0;
+    }
+
+    /*
+    * Set width of target "sidebar" and move it out of the screen on left side
+    * (if option "sidenav" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+      width: @sidenav-D-width !important;
+      left: -@sidenav-D-width !important;
+    }
+
+    /*
+    * Move target "content" rightwards to create space for target "sidebar"
+    * (if option "sidenav" is enabled)
+    */ 
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
+      left:@sidenav-D-width !important;
+    }
+
+    /*
+    * Move target "content" rightwards to create space for target "sidebar"
+    * (if option "sidenav" is enabled)
+    */
+    .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-navbar{
+      left:@sidenav-D-width !important;
+    }
+
+}
+
+@media (max-width: ((@sidebar-2nav-threshold)-1)){
+     /*
+      * SIDENAV
+      */
+
+      /*
+      * Set width of target "sidebar" and move it out of screen on left side
+      * (if options "sidebar" and "sidebar-2nav" are enabled)
+      */ 
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-aggregation-sidebar{
+        width:@sidenav-A-width;
+        left:-@sidenav-A-width;
+      }
+
+      /*
+      * Align target "content" on left side
+      * (if options "sidebar" and "sidebar-2nav" are enabled)
+      */ 
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-aggregation-content{
+         left: 0;
+      }
+
+      /*
+      * Show btn-toggle-sidenav
+      * (if options "sidebar" and "sidebar-2nav" are enabled)
+      * TODO simplify
+      */
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
+      .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav{
+        display:block!important;
+      }
+}
+
+@media (min-width: @sidebar-2nav-threshold){
+    /*
+     * Hide btn-toggle-sidenav
+     * (if options "sidebar" and "sidebar-2nav" are enabled)
+     * TODO simplify
+     */
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
+    .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav{
+        display:none!important;
+    }
+}
+
+/*
+* Align target "navbar" on top
+* (if option "navbar" is enabled)
+*/
+.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-navbar{
+  top:0;
+}
+
+/*
+* Move target "content" downwards to create space for target "navbar"
+* (if option "navbar" is enabled)
+*/
+.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-aggregation-content{
+  top: @navbar-height;
+}
+
+/*
+* Set width of target "content" to 100%
+* (if option "sidenav" is enabled)
+*/
+.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-content{
+  width:100%;
+  right: auto;
+}
+
+/*
+* Align target "sidebar" on left
+* (if option "sidenav" is enabled)
+*/
+.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-aggregation-sidebar{
+  left:0px !important;
+  right:auto;
+
+  top:0;
+  bottom:0;
+
+  height:auto;
+}
+
+/*
+* Show button btn-toggle-sidenav
+* (if option "sidenav-toggle" is enabled)
+*/
+.navcontainer-standard.navcontainer-standard-sidenav-toggle > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
+.navcontainer-standard.navcontainer-standard-sidenav-toggle > .navcontainer-aggregation-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav{
+  display:block!important;
+}
+
+

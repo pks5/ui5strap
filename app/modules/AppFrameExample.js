@@ -39,6 +39,21 @@
 		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
+
+	FrameControllerProto.onShown = function(oEvent){
+		if(!localStorage["ui5strap.app.started"]){
+			this.gotoPage({ 
+				"viewName" : "tld__domain.product__app.views.Intro"
+			});
+			localStorage["ui5strap.app.started"] = true;
+		}
+		else{
+			this.gotoPage({ 
+				"viewName" : "tld__domain.product__app.views.Page1"
+			});
+		}
+	};
+
 	/*
 	* Create the nav container control used by this frame.
 	*/
