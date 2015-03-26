@@ -3,7 +3,7 @@
             "name" : "App Console Test",
             "package" : "net.rozzo.primes",
             "module" : "ui5strap.AppConsole",
-            "logLevel" : 5
+            "logLevel" : 3
         },
 
         "icons" : {
@@ -13,10 +13,11 @@
         "events" : {
             "app" : {
                 "shown" : [{
-                            "a_modules" : "ui5strap.AMWorker",
-                            "worker" : {
-                            	"workerName" : "net.rozzo.primes.workers.GetPrimes"
-                            }
+                    "__format" : "AJ2.0",
+                    "__modules" : "ui5strap.AMWorker",
+                    "worker" : {
+                    	"workerName" : "net.rozzo.primes.workers.GetPrimes"
+                    }
                 }]
             }
         }
