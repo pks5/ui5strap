@@ -60,8 +60,8 @@ function compute(){
 				self.postMessage({ 
 					'type' : 'ACTION', 
 					'message' : { 
-						'a_modules' : 'ui5strap.AMConsole', 
-						'console' : {
+						'a_modules' : 'ui5strap.AMLog', 
+						'log' : {
 							'logType' : 'info', 
 							'message' : message
 						} 
@@ -81,8 +81,8 @@ function compute(){
 	self.postMessage({ 
 					'type' : 'ACTION', 
 					'message' : { 
-						'a_modules' : 'ui5strap.AMConsole', 
-						'console' : {
+						'a_modules' : 'ui5strap.AMLog', 
+						'log' : {
 							'logType' : 'info', 
 							'message' : message
 						} 
@@ -92,8 +92,8 @@ function compute(){
 	self.postMessage({ 
 					'type' : 'ACTION', 
 					'message' : { 
-						'a_modules' : 'ui5strap.AMConsole', 
-						'console' : {
+						'a_modules' : 'ui5strap.AMLog', 
+						'log' : {
 							'logType' : 'info', 
 							'message' : "WORKER FINISHED"
 						} 
