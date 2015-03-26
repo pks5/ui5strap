@@ -41,7 +41,7 @@
 
 
 	FrameControllerProto.onShown = function(oEvent){
-		if(!localStorage["ui5strap.app.started"]){
+		if(true || !localStorage["ui5strap.app.started"]){
 			this.gotoPage({ 
 				"viewName" : "tld__domain.product__app.views.Intro"
 			});

@@ -1,0 +1,23 @@
+{
+        "app" : {
+            "name" : "App Console Test",
+            "package" : "net.rozzo.primes",
+            "module" : "ui5strap.AppConsole",
+            "logLevel" : 5
+        },
+
+        "icons" : {
+            "default" : "img/primes-icon.jpg"
+        },
+
+        "events" : {
+            "app" : {
+                "shown" : [{
+                            "a_modules" : "ui5strap.AMWorker",
+                            "worker" : {
+                            	"workerName" : "net.rozzo.primes.workers.GetPrimes"
+                            }
+                }]
+            }
+        }
+}
