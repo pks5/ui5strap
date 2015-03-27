@@ -397,7 +397,7 @@ html, body{
 /*
 * Overlay
 */
-.coolui5-overlay{
+#ui5strap-overlay{
   position:absolute; 
   top:0; 
   left:0; 
@@ -406,7 +406,7 @@ html, body{
   z-index:10000;
 }
 
-.coolui5-overlay > .coolui5-overlay-inner{
+#ui5strap-overlay-content{
   position:absolute; 
   top:0; 
   left:0; 
@@ -415,9 +415,13 @@ html, body{
   
   z-index:10000;
 
+	top:20%;
+	bottom:20%;
+	left:0;
+	right:0;
 }
 
-.coolui5-overlay > .coolui5-overlay-close{
+#ui5strap-overlay-backdrop{
   position:absolute;
   width:100%;
   height:100%;
@@ -431,29 +435,7 @@ html, body{
   transform: translate3d(0,0,0);
 }
 
-.coolui5-overlay-type-STRIPE > .coolui5-overlay-inner{
-	position:absolute;
-	top:20%;
-	bottom:20%;
-	left:0;
-	right:0;
-}
 
-.coolui5-overlay-type-WINDOW > .coolui5-overlay-inner{
-   
-  position:relative;
- width:50%; height:50%; margin-left:auto; margin-right:auto;margin-top:100px;
- border-radius:25px;
-}
-
-.coolui5-overlay-type-BAR_BOTTOM > .coolui5-overlay-inner{
-  position:absolute;
-  height:124px; 
-  bottom:0;
-
-  box-shadow: 0px 0px 5px #090909;
-  background-color:black;
-}
 
 /*
 * Window (centered pane with close button, mostly placed in overlay)
