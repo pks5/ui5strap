@@ -36,7 +36,7 @@
 
 		<!-- Root Container. OpenUI5 will insert generated html here. -->
 		<div id="ui5strap-body">
-			<!--
+			
 			<div id="sapplication-root-container--initial" class="sapplication-root-container ui5os-loading-screen">
 				<div class="sappos-loading-screen">
 					<img id="sappos-loading-screen-logo" src="app/img/sappos-logo.png" />
@@ -44,7 +44,7 @@
 					<div id="sappos-loading-screen-message">Welcome</div>
 				</div>
 			</div>
-			-->
+			
 		</div>
 
 		<!--
@@ -70,20 +70,13 @@
 		
 
 		<!-- Splash Screen. Showing while the app is starting up. -->
-		
+		<!--
 		<div id="ui5strap-splash">
 			<img src="./app/img/splashscreen-image.png" id="ui5strap-splash-image" width="600" height="600" />
 			<img src="./app/img/splashscreen-loader.gif" id="ui5strap-splash-loader" width="32" height="32" />
 		</div>
-		
-		
-		<!-- Loader is shown while a new application is loading -->
-		<!--
-		<div id="sappos-loader" class="coolui5-loader ui5strap-hidden">
-			<div class="sappos-loader-spinner coolui5-loader-spinner"></div>
-		</div>
 		-->
-
+		
 		<!-- Fatal Error Screen. Shown when a fatal error occurs. -->
 		<div id="ui5strap-fatal">
 			<div id="ui5strap-fatal-message"></div>
@@ -127,9 +120,9 @@
 			/*
 			* Initialize Virtual Device
 			*/
-			jQuery.sap.require("ui5strap.Device");
+			jQuery.sap.require("ui5strap.MultiDevice");
 			
-			var device = new ui5strap.Device(deviceOptions);
+			var device = new ui5strap.MultiDevice(deviceOptions);
 			
 			device.start();
 
