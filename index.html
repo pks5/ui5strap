@@ -37,11 +37,13 @@
 		<!-- Root Container. OpenUI5 will insert generated html here. -->
 		<div id="ui5strap-body">
 			
-			<div id="ui5strap-app-initial" class="ui5strap-app ui5os-loading-screen">
-				<div class="sappos-loading-screen">
-					<img id="sappos-loading-screen-logo" src="app/img/sappos-logo.png" />
-					<div id="sappos-loading-screen-spinner"></div>
-					<div id="sappos-loading-screen-message">Welcome</div>
+			<div id="ui5strap-app-initial" class="ui5strap-app">
+				<div class="ui5strap-app-content ui5os-loading-screen">
+					<div class="sappos-loading-screen">
+						<img id="sappos-loading-screen-logo" src="app/img/sappos-logo.png" />
+						<div id="sappos-loading-screen-spinner"></div>
+						<div id="sappos-loading-screen-message">Welcome</div>
+					</div>
 				</div>
 			</div>
 			
@@ -54,33 +56,33 @@
 		</div>
 		
 		<!-- Overlay layer -->
-		<div id="ui5strap-overlay" class="ui5strap-hidden">
+		<div id="ui5strap-overlay" class="ui5strap-layer ui5strap-hidden">
 			<div id="ui5strap-overlay-backdrop"></div>
 			<div id="ui5strap-overlay-content"></div>
 		</div>
 
 		<!-- Loading Screen. Showing while the app is busy. -->
-		<div id="ui5strap-loader">
+		<div id="ui5strap-loader" class="ui5strap-layer">
 			<div class="loader-spinner"></div>
 		</div>
 		
 
 		<!-- Splash Screen. Showing while the app is starting up. -->
 		<!--
-		<div id="ui5strap-splash">
+		<div id="ui5strap-splash" class="ui5strap-layer">
 			<img src="./app/img/splashscreen-image.png" id="ui5strap-splash-image" width="600" height="600" />
 			<img src="./app/img/splashscreen-loader.gif" id="ui5strap-splash-loader" width="32" height="32" />
 		</div>
 		-->
 		
 		<!-- Fatal Error Screen. Shown when a fatal error occurs. -->
-		<div id="ui5strap-fatal">
+		<div id="ui5strap-fatal" class="ui5strap-layer">
 			<div id="ui5strap-fatal-message"></div>
 		</div>
 
 		<!-- No Script Screen. Only visible when JavaScript is deactivated. -->
 		<noscript>
-			<div id="ui5strap-noscript">
+			<div id="ui5strap-noscript" class="ui5strap-layer">
 				Ui5Strap requires JavaScript to be enabled.
 			</div>
 		</noscript>
