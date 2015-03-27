@@ -4,7 +4,7 @@
             "id" : "com.ui5strap.template.app.console",
             "package" : "com__ui5strap.template__app.console",
             "module" : "ui5strap.AppConsole",
-            "logLevel" : 3
+            "logLevel" : 5
         },
 
         "icons" : {

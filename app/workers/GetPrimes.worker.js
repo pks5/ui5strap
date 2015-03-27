@@ -6,6 +6,17 @@ onmessage = function(e){
 };
 
 function compute(){
+    self.postMessage({ 
+					'type' : 'ACTION', 
+					'message' : { 
+						'a_modules' : 'ui5strap.AMLog', 
+						'log' : {
+							'logType' : 'info', 
+							'message' : "WORKER START"
+						} 
+					}
+				});
+
     //Die Funktion wurde nach Hinweisen von Holger Suhr gegenüber der Original-Funktion (s.u.) verbessert.
 	//Summenverfahren
 	var k;
