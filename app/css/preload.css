@@ -12,6 +12,54 @@
  * 
  */
 
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+@-moz-keyframes shake {
+    0% { -moz-transform: rotate(-5deg); }
+    50% { -moz-transform: rotate(5deg); }
+    100% { -moz-transform: rotate(-5deg); }
+}
+@-webkit-keyframes shake {
+    0% { -webkit-transform: rotate(-5deg); }
+    50% { -webkit-transform: rotate(5deg); }
+    100% { -webkit-transform: rotate(-5deg); }
+}
+@keyframes shake {
+    0%{transform:rotate(-5deg);}
+    50% {transform:rotate(5deg);}
+    100%{transform:rotate(-5deg);}
+}
+
+@keyframes shake-wide{ 
+    0% { transform: translate(12px, 0); }
+    50% { transform: translate(-12px, 0); }
+    100% { transform: translate(0, 0); }
+}
+ 
+@-moz-keyframes shake-wide{ 
+    0% { -moz-transform: translate(12px, 0); }
+    50% { -moz-transform: translate(-12px, 0); }
+    100% { -moz-transform: translate(0, 0); }
+}
+ 
+@-webkit-keyframes shake-wide {
+    0% { -webkit-transform: translate(12px, 0); }
+    50% { -webkit-transform: translate(-12px, 0); }
+    100% { -webkit-transform: translate(0, 0); }
+}
+
+
 /*
 * HTML Skeleton
 */
@@ -47,31 +95,56 @@ html, body{
 * Loading Screen
 */
 #ui5strap-loader{
-	position:fixed;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background-color: rgba(0,0,0,0.9);
+	width:100%; 
+	height:100%; 
+	position:absolute; 
+	top:0; 
+	left:0; 
+
 	z-index:10000;
+
+	background-color:rgba(0,0,0,0.8); 
+
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
 	
 	transition: opacity 0.25s ease;
 	-webkit-transition: opacity 0.25s ease;
 	-moz-transition: opacity 0.25s ease;
-
 }
 
-/*
-* Loading Screen Spinner Image
-*/
-#ui5strap-loader > img{
-	width:16px;
-	height:16px;
+#ui5strap-loader > .loader-spinner{
 	position:absolute;
+	background-image:url('../img/spinner-white.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size:cover;
+	width:24px;
+	height:24px;
+
 	left:50%;
 	top:50%;
-	margin-left:-8px;
-	margin-top:-8px;
+
+	margin-left:-12px;
+	margin-top:-12px;
+
+	color:white;
+
+
+
+	-webkit-animation: spin 2s infinite linear;
+	-moz-animation: spin 2s infinite linear;
+	-o-animation: spin 2s infinite linear;
+	animation: spin 2s infinite linear;
+
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
 }
 
 /*
@@ -288,28 +361,30 @@ html, body{
 	color:#f0f0f0;
 }
 
-.sapplication-root-container{
+.ui5strap-app{
+  position:absolute;
+  
   left:0;
   top:0;
   right:0;
   bottom:0;
   
-  position:absolute;
+  /*
+  * TODO
+  */
   background-color:white;
   overflow:hidden;
 }
 
 
-.sapplication-root-container-prepared{
+.ui5strap-app-prepared{
+  position:absolute;
   
   left:0;
   top:0;
 
   width:100%;
   height:100%;
-
-  position:absolute;
-  
 }
 
 /*
@@ -387,99 +462,3 @@ html, body{
 	opacity: 1;
 }
 
-/*
-* loader old
-*/
-.coolui5-loader{
-	width:100%; 
-	height:100%; 
-	position:absolute; 
-	top:0; 
-	left:0; 
-
-	z-index:10000;
-
-	background-color:rgba(0,0,0,0.8); 
-
-	-webkit-transform: translate3d(0,0,0);
-	-moz-transform: translate3d(0,0,0);
-	-ms-transform: translate3d(0,0,0);
-	-o-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
-}
-
-.coolui5-loader > .coolui5-loader-spinner{
-	position:absolute;
-	background-image:url('../img/spinner-white.png');
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size:cover;
-	width:32px;
-	height:32px;
-
-	left:50%;
-	top:50%;
-
-	margin-left:-16px;
-	margin-top:-16px;
-
-	color:white;
-
-	-webkit-animation: spin 2s infinite linear;
-	-moz-animation: spin 2s infinite linear;
-	-o-animation: spin 2s infinite linear;
-	animation: spin 2s infinite linear;
-
-	-webkit-transform: translate3d(0,0,0);
-	-moz-transform: translate3d(0,0,0);
-	-ms-transform: translate3d(0,0,0);
-	-o-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
-}
-
-
-
-/*
-* Window (centered pane with close button, mostly placed in overlay)
-*/
-
-.coolui5-window{
-  position:relative;
-  height:100%;
-  width:100%;
-
- -webkit-box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
-    -moz-box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
-    box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
-
-    -webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-   box-sizing: border-box;
-
-}
-
-.coolui5-window > .coolui5-window-content{
-  width:100%; height:100%; overflow: hidden;
-  border-radius:25px;
-}
-
-.coolui5-window > .coolui5-window-close{
-  display:block;
-  position: absolute;
-  width:128px;
-  height:36px;
-  left:50%;
-  bottom:10%;
-  margin-left:-64px;
-  border-radius: 18px;
-  text-align: center;
-  line-height:24px;
-  font-size: 16px;
-  border:solid 1px #e0e0e0;
-  vertical-align: middle;
-  cursor: pointer;
-  outline:none;
-  -webkit-box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
-    -moz-box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
-    box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
-}
