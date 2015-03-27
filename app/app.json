@@ -7,7 +7,7 @@
             "history" : true,
             "logLevel" : 5,
             "theme" : "ui5strap_default",
-            "transition" : "transition-slide"
+            "transition" : null
         },
 
         "icons" : {

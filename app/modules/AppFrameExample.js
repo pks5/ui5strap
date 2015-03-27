@@ -40,7 +40,7 @@
 		configuration = sap.ui.getCore().getConfiguration();
 
 
-	FrameControllerProto.onShown = function(oEvent){
+	FrameControllerProto.showInitialContent = function(callback){
 		jQuery.sap.log.debug('[APP FRAME EXAMPLE] SHOWN');
 		if(true || !localStorage["ui5strap.app.started"]){
 			this.gotoPage({ 
@@ -53,6 +53,7 @@
 				"viewName" : "tld__domain.product__app.views.Page1"
 			});
 		}
+		callback && callback();
 	};
 
 	/*
