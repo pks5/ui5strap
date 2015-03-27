@@ -115,11 +115,11 @@ html, body{
 */
 #ui5strap-loader{
 	z-index:10000;
-
 	background-color:rgba(0,0,0,0.8); 
 }
 
-#ui5strap-loader > .loader-spinner{
+.ui5strap-loader:after{
+	content:'';
 	position:absolute;
 	background-image:url('../img/spinner-white.png');
 	background-position: center center;
@@ -135,8 +135,6 @@ html, body{
 	margin-top:-12px;
 
 	color:white;
-
-
 
 	-webkit-animation: spin 2s infinite linear;
 	-moz-animation: spin 2s infinite linear;
