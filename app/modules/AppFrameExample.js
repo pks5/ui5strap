@@ -41,6 +41,7 @@
 
 
 	FrameControllerProto.onShown = function(oEvent){
+		jQuery.sap.log.debug('[APP FRAME EXAMPLE] SHOWN');
 		if(true || !localStorage["ui5strap.app.started"]){
 			this.gotoPage({ 
 				"viewName" : "tld__domain.product__app.views.Intro"

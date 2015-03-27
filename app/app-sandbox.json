@@ -1,8 +1,8 @@
 {
         "app" : {
             "name" : "Sandbox Test",
-            "id" : "com.ui5strap.sbtest",
-            "package" : "com__ui5strap.sbtest",
+            "id" : "com.ui5strap.template.app.sandbox",
+            "package" : "com__ui5strap.template__app.sandbox",
             "module" : "ui5strap.AppSandbox",
             "appURL" : "http://ui5strap.com"
         },
