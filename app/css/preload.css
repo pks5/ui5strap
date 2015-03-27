@@ -29,9 +29,18 @@ html, body{
 * Root Container
 */
 #ui5strap-body{
-	height:100%;
-	position:relative;
-	overflow:hidden;
+	position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+
+  min-width:320px;
+  overflow: hidden;
+
+  transition: top .4s ease-in, bottom .4s ease-in;
+	-webkit-transition: top .4s ease-in, bottom .4s ease-in;
+	-moz-transition: top .4s ease-in, bottom .4s ease-in;
 }
 
 /*
@@ -152,4 +161,332 @@ html, body{
 	padding:20px;
 	color:white;
 	background-color: rgba(0,0,0,0.9);
+}
+
+
+
+
+
+
+
+.ui5os-with-bar-home #ui5strap-body{
+	bottom:30px; 
+}
+
+.ui5os-with-bar-status #ui5strap-body{
+	top:30px; 
+}
+
+#ui5os-bar-status{
+	display:none;
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	height:30px;
+	background-color:black;
+}
+
+.ui5os-with-bar-status #ui5os-bar-status{
+	display:block;
+}
+
+#ui5os-bar-home{
+	display:none;
+	position: absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	height:30px;
+	background-color:black;
+}
+
+.ui5os-with-bar-home #ui5os-bar-home{
+	display:block;
+}
+
+#ui5os-button-home{
+	position: absolute;
+	display:block;
+	width:90px;
+	height:30px;
+	line-height: 30px;
+	text-align: center;
+	left:50%;
+	top: 0;
+	margin-left: -45px;
+	font-size: 18px;
+	cursor:pointer;
+	background-color:#202020;
+	color:#f0f0f0;
+}
+
+#ui5os-button-taskmanager{
+	position: absolute;
+	display:block;
+	width:90px;
+	height:30px;
+	line-height: 30px;
+	text-align: center;
+	right:0;
+	top: 0;
+	font-size: 18px;
+	cursor:pointer;
+	background-color:#202020;
+	color:#f0f0f0;
+}
+
+.sapplication-root-container{
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  
+  position:absolute;
+  background-color:white;
+  overflow:hidden;
+}
+
+
+.sapplication-root-container-prepared{
+  
+  left:0;
+  top:0;
+
+  width:100%;
+  height:100%;
+
+  position:absolute;
+  
+}
+
+/*
+* Loading screen
+*/
+.sappos-loading-screen{
+	position:absolute;
+
+	width:192px; 
+	height:256px;
+	
+	left:50%;
+	top:50%;
+	
+	margin-top:-128px;
+	margin-left:-96px;
+
+	text-align:center;
+}
+
+.ui5os-loading-screen{
+	background: #dedede; /* Old browsers */
+	background: -moz-linear-gradient(top, #dedede 0%, #afafaf 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #dedede 0%,#afafaf 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #dedede 0%,#afafaf 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#afafaf',GradientType=0 ); /* IE6-9 */
+}
+
+.sappos-loading-screen > #sappos-loading-screen-logo{
+	width:192px;
+	height:192px;
+}
+
+
+.sappos-loading-screen > #sappos-loading-screen-spinner{
+	background-image:url('../img/spinner-black.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size:cover;
+	width:32px;
+	height:32px;
+
+	margin: 24px auto;
+
+	-webkit-animation: spin 2s infinite linear;
+	-moz-animation: spin 2s infinite linear;
+	-o-animation: spin 2s infinite linear;
+	animation: spin 2s infinite linear;
+
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+.sappos-loading-screen > #sappos-loading-screen-message{
+	height:32px;
+	line-height:32px;
+	margin-top:24px;
+	color:#888888;
+	font-size:24px;
+
+	opacity: 0;
+
+	transition: opacity .4s ease-in;
+	-webkit-transition: opacity .4s ease-in;
+	-moz-transition: opacity .4s ease-in;
+}
+
+.sappos-loading-screen > #sappos-loading-screen-message.sappos-loading-screen-message-visible{
+	opacity: 1;
+}
+
+/*
+* Overlay layer
+*/
+.coolui5-loader{
+	width:100%; 
+	height:100%; 
+	position:absolute; 
+	top:0; 
+	left:0; 
+
+	z-index:10000;
+
+	background-color:rgba(0,0,0,0.8); 
+
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+.coolui5-loader > .coolui5-loader-spinner{
+	position:absolute;
+	background-image:url('../img/spinner-white.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size:cover;
+	width:32px;
+	height:32px;
+
+	left:50%;
+	top:50%;
+
+	margin-left:-16px;
+	margin-top:-16px;
+
+	color:white;
+
+	-webkit-animation: spin 2s infinite linear;
+	-moz-animation: spin 2s infinite linear;
+	-o-animation: spin 2s infinite linear;
+	animation: spin 2s infinite linear;
+
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+/*
+* Overlay layer
+*/
+.coolui5-overlay{
+  position:absolute; 
+  top:0; 
+  left:0; 
+  bottom:0;
+  right:0;
+  z-index:10000;
+}
+
+.coolui5-overlay > .coolui5-overlay-inner{
+  position:absolute; 
+  top:0; 
+  left:0; 
+  bottom:0;
+  right:0;
+  
+  z-index:10000;
+
+}
+
+.coolui5-overlay > .coolui5-overlay-close{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-color:rgba(0,0,0,0.8); 
+  cursor:pointer;
+
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+.coolui5-overlay-type-STRIPE > .coolui5-overlay-inner{
+	position:absolute;
+	top:20%;
+	bottom:20%;
+	left:0;
+	right:0;
+}
+
+.coolui5-overlay-type-WINDOW > .coolui5-overlay-inner{
+   
+  position:relative;
+ width:50%; height:50%; margin-left:auto; margin-right:auto;margin-top:100px;
+ border-radius:25px;
+}
+
+.coolui5-overlay-type-BAR_BOTTOM > .coolui5-overlay-inner{
+  position:absolute;
+  height:124px; 
+  bottom:0;
+
+  box-shadow: 0px 0px 5px #090909;
+  background-color:black;
+}
+
+/*
+* Window (centered pane with close button, mostly placed in overlay)
+*/
+
+.coolui5-window{
+  position:relative;
+  height:100%;
+  width:100%;
+
+ -webkit-box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
+    box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
+
+    -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+
+}
+
+.coolui5-window > .coolui5-window-content{
+  width:100%; height:100%; overflow: hidden;
+  border-radius:25px;
+}
+
+.coolui5-window > .coolui5-window-close{
+  display:block;
+  position: absolute;
+  width:128px;
+  height:36px;
+  left:50%;
+  bottom:10%;
+  margin-left:-64px;
+  border-radius: 18px;
+  text-align: center;
+  line-height:24px;
+  font-size: 16px;
+  border:solid 1px #e0e0e0;
+  vertical-align: middle;
+  cursor: pointer;
+  outline:none;
+  -webkit-box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
+    box-shadow:0 0 2px 1px rgba(0,0,0,0.8);
 }

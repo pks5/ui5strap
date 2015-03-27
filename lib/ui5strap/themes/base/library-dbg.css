@@ -8429,6 +8429,9 @@ button.close {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
+.ui5strap-hidden {
+  display: none;
+}
 /*
 * Disable text selection
 */
