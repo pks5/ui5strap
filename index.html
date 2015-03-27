@@ -105,7 +105,7 @@
 			/*
 			* Virtual Device Options
 			*/
-			var deviceOptions = {
+			var viewerOptions = {
 				"app" : {
 					type : "URI",
 					uriParam : "app",
@@ -116,11 +116,11 @@
 			/*
 			* Initialize Virtual Device
 			*/
-			jQuery.sap.require("ui5strap.MultiDevice");
+			jQuery.sap.require("ui5strap.ViewerMulti");
 			
-			var device = new ui5strap.MultiDevice(deviceOptions);
+			var viewer = new ui5strap.ViewerMulti(viewerOptions);
 			
-			device.start();
+			viewer.start();
 
 		</script>
 
