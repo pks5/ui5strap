@@ -336,7 +336,7 @@ html, body{
 }
 
 /*
-* Overlay layer
+* loader old
 */
 .coolui5-loader{
 	width:100%; 
@@ -386,7 +386,7 @@ html, body{
 }
 
 /*
-* Overlay layer
+* Overlay
 */
 .coolui5-overlay{
   position:absolute; 

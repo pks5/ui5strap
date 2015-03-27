@@ -36,7 +36,7 @@
 
 		<!-- Root Container. OpenUI5 will insert generated html here. -->
 		<div id="ui5strap-body">
-			<!-- initial screen before sapui5 has loaded (optional) -->
+			<!--
 			<div id="sapplication-root-container--initial" class="sapplication-root-container ui5os-loading-screen">
 				<div class="sappos-loading-screen">
 					<img id="sappos-loading-screen-logo" src="app/img/sappos-logo.png" />
@@ -44,15 +44,18 @@
 					<div id="sappos-loading-screen-message">Welcome</div>
 				</div>
 			</div>
+			-->
 		</div>
 
+		<!--
 		<div id="ui5os-bar-home">
 			<a id="ui5os-button-home"><span class="fa fa-home"></span></a>
 			<a id="ui5os-button-taskmanager"><span class="fa fa-exchange"></span></a>
 		</div>
+		-->
 
 		<!-- Overlay layer -->
-		<div id="sappos-overlay" class="coolui5-overlay coolui5-layer ui5strap-hidden">
+		<div id="sappos-overlay" class="coolui5-overlay ui5strap-hidden">
 			<div id="sappos-overlay-close" class="coolui5-overlay-close"></div>
 			<div id="sappos-overlay-inner" class="coolui5-overlay-inner">
 
@@ -60,24 +63,26 @@
 		</div>
 
 		<!-- Loading Screen. Showing while the app is busy. -->
-		<!--
-		<div id="ui5strap-loader">
+		
+		<div id="ui5strap-loader-deactivated" class="ui5strap-hidden">
 			<img src="./app/img/loader.gif" width="16" height="16" />
 		</div>
-		-->
+		
 
 		<!-- Splash Screen. Showing while the app is starting up. -->
-		<!--
+		
 		<div id="ui5strap-splash">
 			<img src="./app/img/splashscreen-image.png" id="ui5strap-splash-image" width="600" height="600" />
 			<img src="./app/img/splashscreen-loader.gif" id="ui5strap-splash-loader" width="32" height="32" />
 		</div>
-		-->
+		
 		
 		<!-- Loader is shown while a new application is loading -->
-		<div id="sappos-loader" class="coolui5-loader coolui5-layer coolui5-hidden">
+		<!--
+		<div id="sappos-loader" class="coolui5-loader ui5strap-hidden">
 			<div class="sappos-loader-spinner coolui5-loader-spinner"></div>
 		</div>
+		-->
 
 		<!-- Fatal Error Screen. Shown when a fatal error occurs. -->
 		<div id="ui5strap-fatal">
@@ -122,9 +127,9 @@
 			/*
 			* Initialize Virtual Device
 			*/
-			jQuery.sap.require("ui5strap.MultiDevice");
+			jQuery.sap.require("ui5strap.Device");
 			
-			var device = new ui5strap.MultiDevice(deviceOptions);
+			var device = new ui5strap.Device(deviceOptions);
 			
 			device.start();
 
