@@ -49,6 +49,10 @@ ui5strap.controller("tld__domain.product__app.controllers.Page3", {
 		this.nc.setOptionsEnabled({
 			"navbar" : srcButton.getSelected()
 		});
+	},
+
+	showOverlay : function(oEvent){
+		this.getApp().showOverlay({ "viewName" : "tld__domain.product__app.views.Intro" });
 	}
 	
 });
