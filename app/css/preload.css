@@ -73,6 +73,9 @@ html, body{
 	overflow:hidden;
 }
 
+.ui5strap-hidden{
+	opacity:0;
+}
 /*
 * Root Container
 */
@@ -115,6 +118,9 @@ html, body{
 */
 #ui5strap-loader{
 	z-index:10000;
+}
+
+.ui5strap-loader{
 	background-color:rgba(0,0,0,0.8); 
 }
 
