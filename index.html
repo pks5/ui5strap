@@ -138,17 +138,15 @@
 		</div>
 
 		<!-- Loading Screen. Showing while the app is busy. -->
-		<div id="ui5strap-loader" class="ui5strap-layer ui5strap-loader"></div>
+		<div id="ui5strap-loader" class="ui5strap-layer ui5strap-loader ui5strap-hidden"></div>
 		
 
 		<!-- Splash Screen. Showing while the app is starting up. -->
-		<!--
-		<div id="ui5strap-splash" class="ui5strap-layer">
+		<div id="ui5strap-splash" class="ui5strap-layer ui5strap-hidden">
 			<img src="./app/img/splashscreen-image.png" id="ui5strap-splash-image" width="600" height="600" />
 			<img src="./app/img/splashscreen-loader.gif" id="ui5strap-splash-loader" width="32" height="32" />
 		</div>
-		-->
-		
+	
 		<!-- Fatal Error Screen. Shown when a fatal error occurs. -->
 		<div id="ui5strap-fatal" class="ui5strap-layer">
 			<div id="ui5strap-fatal-message"></div>
@@ -192,9 +190,9 @@
 			/*
 			* Initialize Virtual Device
 			*/
-			jQuery.sap.require("ui5strap.ViewerMulti");
+			jQuery.sap.require("ui5strap.Viewer");
 			
-			var viewer = new ui5strap.ViewerMulti(viewerOptions);
+			var viewer = new ui5strap.Viewer(viewerOptions);
 			
 			viewer.start();
 
