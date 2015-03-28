@@ -7,7 +7,7 @@
 		<title>Ui5Strap</title>
 
 		<!-- Preload Stylesheet -->
-		<link rel="stylesheet" type="text/css" href="./app/css/preload.css" />
+		<link rel="stylesheet" type="text/css" href="lib/ui5strap/preload.css" />
 
 		<!-- Content Type -->
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
@@ -25,6 +25,83 @@
 
 		<!-- Fav Icon -->
 		<link rel="shortcut icon" href="./app/img/my-app-icon-144x144.png" />
+
+		<style>
+			/*
+			* Loading screen
+			*/
+			.sappos-loading-screen{
+				position:absolute;
+
+				width:192px; 
+				height:256px;
+				
+				left:50%;
+				top:50%;
+				
+				margin-top:-128px;
+				margin-left:-96px;
+
+				text-align:center;
+			}
+
+			.ui5os-loading-screen{
+				background: #dedede; /* Old browsers */
+				background: -moz-linear-gradient(top, #dedede 0%, #afafaf 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(top, #dedede 0%,#afafaf 100%); /* IE10+ */
+				background: linear-gradient(to bottom, #dedede 0%,#afafaf 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#afafaf',GradientType=0 ); /* IE6-9 */
+			}
+
+			.sappos-loading-screen > #sappos-loading-screen-logo{
+				width:192px;
+				height:192px;
+			}
+
+
+			.sappos-loading-screen > #sappos-loading-screen-spinner{
+				background-image:url('../img/spinner-black.png');
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size:cover;
+				width:32px;
+				height:32px;
+
+				margin: 24px auto;
+
+				-webkit-animation: spin 2s infinite linear;
+				-moz-animation: spin 2s infinite linear;
+				-o-animation: spin 2s infinite linear;
+				animation: spin 2s infinite linear;
+
+				-webkit-transform: translate3d(0,0,0);
+				-moz-transform: translate3d(0,0,0);
+				-ms-transform: translate3d(0,0,0);
+				-o-transform: translate3d(0,0,0);
+				transform: translate3d(0,0,0);
+			}
+
+			.sappos-loading-screen > #sappos-loading-screen-message{
+				height:32px;
+				line-height:32px;
+				margin-top:24px;
+				color:#888888;
+				font-size:24px;
+
+				opacity: 0;
+
+				transition: opacity .4s ease-in;
+				-webkit-transition: opacity .4s ease-in;
+				-moz-transition: opacity .4s ease-in;
+			}
+
+			.sappos-loading-screen > #sappos-loading-screen-message.sappos-loading-screen-message-visible{
+				opacity: 1;
+			}
+		</style>
 	
 	</head>
 	
@@ -41,7 +118,6 @@
 				<div class="ui5strap-app-content ui5os-loading-screen">
 					<div class="sappos-loading-screen">
 						<img id="sappos-loading-screen-logo" src="app/img/sappos-logo.png" />
-						<div id="sappos-loading-screen-spinner"></div>
 						<div id="sappos-loading-screen-message">Welcome</div>
 					</div>
 				</div>
