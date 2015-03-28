@@ -41,7 +41,7 @@
 
 
 	FrameControllerProto.showInitialContent = function(callback){
-		jQuery.sap.log.debug('[APP FRAME EXAMPLE] SHOWN');
+		jQuery.sap.log.debug('[APP FRAME EXAMPLE] SHOW INITIAL');
 		if(true || !localStorage["ui5strap.app.started"]){
 			this.gotoPage({ 
 				"viewName" : "tld__domain.product__app.views.Intro"
