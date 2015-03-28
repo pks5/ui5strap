@@ -27,10 +27,21 @@
 		<link rel="shortcut icon" href="./app/img/my-app-icon-144x144.png" />
 
 		<style>
+			.ui5os-loading-screen{
+				background: #dedede; /* Old browsers */
+				background: -moz-linear-gradient(top, #dedede 0%, #afafaf 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(top, #dedede 0%,#afafaf 100%); /* IE10+ */
+				background: linear-gradient(to bottom, #dedede 0%,#afafaf 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#afafaf',GradientType=0 ); /* IE6-9 */
+			}
+
 			/*
-			* Loading screen
+			* Loading Screen Window
 			*/
-			.sappos-loading-screen{
+			#ui5os-loading-screen-window{
 				position:absolute;
 
 				width:192px; 
@@ -45,18 +56,10 @@
 				text-align:center;
 			}
 
-			.ui5os-loading-screen{
-				background: #dedede; /* Old browsers */
-				background: -moz-linear-gradient(top, #dedede 0%, #afafaf 100%); /* FF3.6+ */
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
-				background: -webkit-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
-				background: -o-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Opera 11.10+ */
-				background: -ms-linear-gradient(top, #dedede 0%,#afafaf 100%); /* IE10+ */
-				background: linear-gradient(to bottom, #dedede 0%,#afafaf 100%); /* W3C */
-				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#afafaf',GradientType=0 ); /* IE6-9 */
-			}
-
-			.sappos-loading-screen > #sappos-loading-screen-logo{
+			/*
+			* Loading Screen Logo
+			*/
+			#ui5os-loading-screen-logo{
 				width:192px;
 				height:192px;
 			}
@@ -84,7 +87,10 @@
 				transform: translate3d(0,0,0);
 			}
 
-			.sappos-loading-screen > #sappos-loading-screen-message{
+			/*
+			* Loading Screen Message
+			*/
+			#ui5os-loading-screen-message{
 				height:32px;
 				line-height:32px;
 				margin-top:24px;
@@ -116,9 +122,9 @@
 			
 			<div id="ui5strap-app-initial" class="ui5strap-app">
 				<div class="ui5strap-app-content ui5os-loading-screen">
-					<div class="sappos-loading-screen">
-						<img id="sappos-loading-screen-logo" src="app/img/sappos-logo.png" />
-						<div id="sappos-loading-screen-message">Welcome</div>
+					<div id="ui5os-loading-screen-window">
+						<img id="ui5os-loading-screen-logo" src="app/img/sappos-logo.png" />
+						<div id="ui5os-loading-screen-message">Welcome</div>
 					</div>
 				</div>
 			</div>
