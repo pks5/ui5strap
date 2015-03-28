@@ -27,7 +27,10 @@
 		<link rel="shortcut icon" href="./app/img/my-app-icon-144x144.png" />
 
 		<style>
-			.ui5os-loading-screen{
+			/*
+			* Loading Screen
+			*/
+			#ui5os-loading-screen{
 				background: #dedede; /* Old browsers */
 				background: -moz-linear-gradient(top, #dedede 0%, #afafaf 100%); /* FF3.6+ */
 				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
@@ -63,7 +66,6 @@
 				width:192px;
 				height:192px;
 			}
-
 
 			.sappos-loading-screen > #sappos-loading-screen-spinner{
 				background-image:url('../img/spinner-black.png');
@@ -121,7 +123,7 @@
 		<div id="ui5strap-body">
 			
 			<div id="ui5strap-app-initial" class="ui5strap-app">
-				<div class="ui5strap-app-content ui5os-loading-screen">
+				<div id="ui5os-loading-screen" class="ui5strap-app-content">
 					<div id="ui5os-loading-screen-window">
 						<img id="ui5os-loading-screen-logo" src="app/img/sappos-logo.png" />
 						<div id="ui5os-loading-screen-message">Welcome</div>
