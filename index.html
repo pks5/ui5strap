@@ -3,7 +3,7 @@
 	
 	<head>
 		
-		<!-- Preload Title -->
+		<!-- Preload title -->
 		<title>Ui5Strap</title>
 
 		<!-- Preload Stylesheet -->
@@ -15,15 +15,15 @@
 		<!-- Internet Explorer -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		
-		<!-- Viewport -->
+		<!-- Viewport settings -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		
-		<!-- IOS Webapp -->
+		<!-- IOS Webapp settings -->
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<link rel="apple-touch-icon" sizes="144x144" href="./app/img/my-app-icon-144x144.png" />
 
-		<!-- Fav Icon -->
+		<!-- Fav icon -->
 		<link rel="shortcut icon" href="./app/img/my-app-icon-144x144.png" />
 
 		<style>
@@ -119,9 +119,10 @@
 		<div id="ui5os-bar-status"></div>
 		-->
 
-		<!-- Root Container. OpenUI5 will insert generated html here. -->
+		<!-- Root Container -->
 		<div id="ui5strap-body">
 			
+			<!-- The initial screen that shows until the App is loaded. -->
 			<div id="ui5strap-app-initial" class="ui5strap-app">
 				<div id="ui5os-loading-screen" class="ui5strap-app-content">
 					<div id="ui5os-loading-screen-window">
@@ -133,34 +134,27 @@
 			
 		</div>
 
-		
+		<!-- Ui5OS home bar -->
 		<div id="ui5os-bar-home">
 			<a id="ui5os-button-home"><span class="fa fa-home"></span></a>
 			<a id="ui5os-button-taskmanager"><span class="fa fa-exchange"></span></a>
 		</div>
 		
-		<!-- Overlay layer -->
+		<!-- Overlay is used to show modals etc. -->
 		<div id="ui5strap-overlay" class="ui5strap-overlay ui5strap-layer ui5strap-hidden">
 			<div id="ui5strap-overlay-backdrop" class="ui5strap-overlay-backdrop"></div>
 			<div id="ui5strap-overlay-content" class="ui5strap-overlay-content"></div>
 		</div>
 
-		<!-- Loading Screen. Showing while the app is busy. -->
+		<!-- Loading screen. Showing while the app is busy. -->
 		<div id="ui5strap-loader" class="ui5strap-layer ui5strap-loader ui5strap-hidden"></div>
 		
-
-		<!-- Splash Screen. Showing while the app is starting up. -->
-		<div id="ui5strap-splash" class="ui5strap-layer ui5strap-hidden">
-			<img src="./app/img/splashscreen-image.png" id="ui5strap-splash-image" width="600" height="600" />
-			<img src="./app/img/splashscreen-loader.gif" id="ui5strap-splash-loader" width="32" height="32" />
-		</div>
-	
-		<!-- Fatal Error Screen. Shown when a fatal error occurs. -->
+		<!-- Fatal Error screen. Shown when a fatal error occurs. -->
 		<div id="ui5strap-fatal" class="ui5strap-layer">
 			<div id="ui5strap-fatal-message"></div>
 		</div>
 
-		<!-- No Script Screen. Only visible when JavaScript is deactivated. -->
+		<!-- No Script screen. Only visible when JavaScript is deactivated. -->
 		<noscript>
 			<div id="ui5strap-noscript" class="ui5strap-layer">
 				Ui5Strap requires JavaScript to be enabled.
@@ -170,7 +164,10 @@
 		<!-- Cordova Library (optional). Only needed when building native apps with Cordova. -->
 		<!-- <script type="text/javascript" src="cordova.js"></script> -->
 		
-		<!-- OpenUI5 Library. Contains latest JQuery version. -->
+		<!-- 
+			Minimized OpenUI5 library without sap.m and sap.ui.core.commons Controls. 
+			If you need the full OpenUI5 library, please download it from http://openui5.org/ and include it here instead. 
+		-->
 		<script id="sap-ui-bootstrap" src="lib/openui5/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
 		
 		<!-- Set Ui5Strap Library location. -->
@@ -178,14 +175,14 @@
 			jQuery.sap.registerModulePath("ui5strap", "lib/ui5strap/");
 		</script>
 
-		<!-- Include complete, minified library at startup (optional) -->
+		<!-- Include complete, minified Ui5Strap library at startup (optional) -->
 		<!-- <script id="ui5strap-bootstrap" src="lib/ui5strap/ui5strap-all.js"></script> -->
 
 		<!-- App Start -->
 		<script>
 
 			/*
-			* Virtual Device Options
+			* Viewer options
 			*/
 			var viewerOptions = {
 				"app" : {
@@ -196,7 +193,7 @@
 			};
 
 			/*
-			* Initialize Virtual Device
+			* Initialize Viewer
 			*/
 			jQuery.sap.require("ui5strap.Viewer");
 			
