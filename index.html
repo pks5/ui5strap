@@ -6,7 +6,10 @@
 		<!-- Preload title -->
 		<title>Ui5Strap</title>
 
-		<!-- Preload Stylesheet -->
+		<!-- 
+			Preload Stylesheet 
+			Changed in 0.8! Please remove your preload stylesheet or include it into the app's css file.
+		-->
 		<link rel="stylesheet" type="text/css" href="lib/ui5strap/preload.css" />
 
 		<!-- Content Type -->
@@ -26,11 +29,15 @@
 		<!-- Fav icon -->
 		<link rel="shortcut icon" href="./app/img/my-app-icon-256x256.jpg" />
 
+		<!--
+			Splash Screen Style 
+			Changed in 0.8: the Splash Screen style is now inline! 
+		-->
 		<style>
 			/*
-			* Loading Screen
+			* Splash Screen
 			*/
-			#ui5strap-loading-screen{
+			#ui5strap-splash-screen{
 				background: #dedede; /* Old browsers */
 				background: -moz-linear-gradient(top, #dedede 0%, #afafaf 100%); /* FF3.6+ */
 				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
@@ -42,9 +49,9 @@
 			}
 
 			/*
-			* Loading Screen Window
+			* Splash Screen Window
 			*/
-			#ui5strap-loading-screen-window{
+			#ui5strap-splash-screen-window{
 				position:absolute;
 
 				width:192px; 
@@ -58,9 +65,9 @@
 			}
 
 			/*
-			* Loading Screen Logo
+			* Splash Screen Logo
 			*/
-			#ui5strap-loading-screen-logo{
+			#ui5strap-splash-screen-logo{
 				position:absolute;
 				
 				width:128px;
@@ -70,7 +77,10 @@
 				margin-left:-64px;
 			}
 
-			#ui5strap-loading-screen-spinner{
+			/*
+			* Splash Screen Spinner
+			*/
+			#ui5strap-splash-screen-spinner{
 				position:absolute;
 				
 				width:24px;
@@ -97,9 +107,9 @@
 			}
 
 			/*
-			* Loading Screen Message
+			* Splash Screen Message
 			*/
-			#ui5strap-loading-screen-message{
+			#ui5strap-splash-screen-message{
 				position:absolute;
 
 				width:100%;
@@ -119,7 +129,7 @@
 				-moz-transition: opacity .3s ease-in;
 			}
 
-			#ui5strap-loading-screen-message.ui5strap-loading-screen-message-visible{
+			#ui5strap-splash-screen-message.ui5strap-splash-screen-message-visible{
 				opacity: 1;
 			}
 		</style>
@@ -128,16 +138,22 @@
 	
 	<body role="application">
 		
-		<!-- Root Container -->
+		<!-- 
+			Root Container
+			Changed in 0.8: the Root Container has now a different id.
+		-->
 		<div id="ui5strap-container">
 			
-			<!-- The initial screen that shows until the App is loaded. -->
+			<!-- 
+				Splash Screen
+				Changed in 0.8: the Splash Screen is now defined inside the Root Container.
+			-->
 			<div id="ui5strap-app-initial" class="ui5strap-app">
-				<div id="ui5strap-loading-screen" class="ui5strap-app-content">
-					<div id="ui5strap-loading-screen-window">
-						<img id="ui5strap-loading-screen-logo" src="./app/img/my-app-icon-256x256.jpg" />
-						<div id="ui5strap-loading-screen-spinner"></div>
-						<div id="ui5strap-loading-screen-message">Welcome</div>
+				<div id="ui5strap-splash-screen" class="ui5strap-app-content">
+					<div id="ui5strap-splash-screen-window">
+						<img id="ui5strap-splash-screen-logo" src="./app/img/splashscreen-image.png" />
+						<div id="ui5strap-splash-screen-spinner"></div>
+						<div id="ui5strap-splash-screen-message">Welcome</div>
 					</div>
 				</div>
 			</div>
@@ -151,7 +167,10 @@
 		</div>
 		-->
 
-		<!-- Overlay is used to show modals etc. -->
+		<!-- 
+			Global Overlay
+			Required for 0.8!
+		-->
 		<div id="ui5strap-overlay" class="ui5strap-overlay ui5strap-layer ui5strap-hidden">
 			<div id="ui5strap-overlay-backdrop" class="ui5strap-overlay-backdrop"></div>
 			<div id="ui5strap-overlay-content" class="ui5strap-overlay-content"></div>
@@ -177,7 +196,7 @@
 		
 		<!-- 
 			Minimized OpenUI5 library without sap.m and sap.ui.core.commons Controls. 
-			If you need the full OpenUI5 library, please download it from http://openui5.org/ and include it here instead. 
+			Changed in 0.8: If you need the full OpenUI5 library, please download it from http://openui5.org/ and include it here instead. 
 		-->
 		<script id="sap-ui-bootstrap" src="lib/openui5/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
 		
@@ -205,14 +224,15 @@
 
 			/*
 			* Initialize Viewer
+			* Changed in 0.8: Use instead of ui5strap.Device
 			*/
 			jQuery.sap.require("ui5strap.Viewer");
 			
 			var viewer = new ui5strap.Viewer(viewerOptions);
 			
 			viewer.start(null, function(){
-				document.getElementById('ui5strap-loading-screen-spinner').className = 'ui5strap-hidden';
-				document.getElementById('ui5strap-loading-screen-message').className = 'ui5strap-loading-screen-message-visible';
+				document.getElementById('ui5strap-splash-screen-spinner').className = 'ui5strap-hidden';
+				document.getElementById('ui5strap-splash-screen-message').className = 'ui5strap-splash-screen-message-visible';
 			});
 			
 		</script>
