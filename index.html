@@ -24,13 +24,13 @@
 		<link rel="apple-touch-icon" sizes="144x144" href="./app/img/my-app-icon-144x144.png" />
 
 		<!-- Fav icon -->
-		<link rel="shortcut icon" href="./app/img/my-app-icon-144x144.png" />
+		<link rel="shortcut icon" href="./app/img/my-app-icon-256x256.jpg" />
 
 		<style>
 			/*
 			* Loading Screen
 			*/
-			#ui5os-loading-screen{
+			#ui5strap-loading-screen{
 				background: #dedede; /* Old browsers */
 				background: -moz-linear-gradient(top, #dedede 0%, #afafaf 100%); /* FF3.6+ */
 				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
@@ -44,7 +44,7 @@
 			/*
 			* Loading Screen Window
 			*/
-			#ui5os-loading-screen-window{
+			#ui5strap-loading-screen-window{
 				position:absolute;
 
 				width:192px; 
@@ -55,28 +55,35 @@
 				
 				margin-top:-128px;
 				margin-left:-96px;
-
-				text-align:center;
 			}
 
 			/*
 			* Loading Screen Logo
 			*/
-			#ui5os-loading-screen-logo{
-				width:192px;
-				height:192px;
+			#ui5strap-loading-screen-logo{
+				position:absolute;
+				
+				width:128px;
+				height:128px;
+				left:50%;
+				top:0;
+				margin-left:-64px;
 			}
 
-			.sappos-loading-screen > #sappos-loading-screen-spinner{
-				background-image:url('../img/spinner-black.png');
+			#ui5strap-loading-screen-spinner{
+				position:absolute;
+				
+				width:24px;
+				height:24px;
+				left:50%;
+				top:152px;
+				margin-left:-12px;
+
+				background-image:url('app/img/spinner-black.png');
 				background-position: center center;
 				background-repeat: no-repeat;
 				background-size:cover;
-				width:32px;
-				height:32px;
-
-				margin: 24px auto;
-
+				
 				-webkit-animation: spin 2s infinite linear;
 				-moz-animation: spin 2s infinite linear;
 				-o-animation: spin 2s infinite linear;
@@ -92,21 +99,27 @@
 			/*
 			* Loading Screen Message
 			*/
-			#ui5os-loading-screen-message{
+			#ui5strap-loading-screen-message{
+				position:absolute;
+
+				width:100%;
 				height:32px;
+				left:0;
+				top:152px;
+				
 				line-height:32px;
-				margin-top:24px;
+				text-align: center;
 				color:#888888;
 				font-size:24px;
 
 				opacity: 0;
 
-				transition: opacity .4s ease-in;
-				-webkit-transition: opacity .4s ease-in;
-				-moz-transition: opacity .4s ease-in;
+				transition: opacity .3s ease-in;
+				-webkit-transition: opacity .3s ease-in;
+				-moz-transition: opacity .3s ease-in;
 			}
 
-			.sappos-loading-screen > #sappos-loading-screen-message.sappos-loading-screen-message-visible{
+			#ui5strap-loading-screen-message.ui5strap-loading-screen-message-visible{
 				opacity: 1;
 			}
 		</style>
@@ -115,31 +128,29 @@
 	
 	<body role="application">
 		
-		<!--
-		<div id="ui5os-bar-status"></div>
-		-->
-
 		<!-- Root Container -->
-		<div id="ui5strap-body">
+		<div id="ui5strap-container">
 			
 			<!-- The initial screen that shows until the App is loaded. -->
 			<div id="ui5strap-app-initial" class="ui5strap-app">
-				<div id="ui5os-loading-screen" class="ui5strap-app-content">
-					<div id="ui5os-loading-screen-window">
-						<img id="ui5os-loading-screen-logo" src="app/img/sappos-logo.png" />
-						<div id="ui5os-loading-screen-message">Welcome</div>
+				<div id="ui5strap-loading-screen" class="ui5strap-app-content">
+					<div id="ui5strap-loading-screen-window">
+						<img id="ui5strap-loading-screen-logo" src="./app/img/my-app-icon-256x256.jpg" />
+						<div id="ui5strap-loading-screen-spinner"></div>
+						<div id="ui5strap-loading-screen-message">Welcome</div>
 					</div>
 				</div>
 			</div>
 			
 		</div>
 
-		<!-- Ui5OS home bar -->
+		<!--Ui5OS Home Bar. Will be used in future.
 		<div id="ui5os-bar-home">
 			<a id="ui5os-button-home"><span class="fa fa-home"></span></a>
 			<a id="ui5os-button-taskmanager"><span class="fa fa-exchange"></span></a>
 		</div>
-		
+		-->
+
 		<!-- Overlay is used to show modals etc. -->
 		<div id="ui5strap-overlay" class="ui5strap-overlay ui5strap-layer ui5strap-hidden">
 			<div id="ui5strap-overlay-backdrop" class="ui5strap-overlay-backdrop"></div>
@@ -199,8 +210,11 @@
 			
 			var viewer = new ui5strap.Viewer(viewerOptions);
 			
-			viewer.start();
-
+			viewer.start(null, function(){
+				document.getElementById('ui5strap-loading-screen-spinner').className = 'ui5strap-hidden';
+				document.getElementById('ui5strap-loading-screen-message').className = 'ui5strap-loading-screen-message-visible';
+			});
+			
 		</script>
 
 	</body>

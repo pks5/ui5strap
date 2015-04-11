@@ -320,8 +320,8 @@
 		}
 
 		jQuery.sap.log.debug(' + [MFR] SET "sidebar" AND "navbar"');
-		this.control.toPage(this.sidebar, 'sidebar');
-		this.control.toPage(this.navbar, 'navbar');
+		this.control.toPage(this.sidebar, 'sidebar', "transition-none");
+		this.control.toPage(this.navbar, 'navbar', "transition-none");
 
 		var currentPage = this.getCurrentPage(target);
 		if(

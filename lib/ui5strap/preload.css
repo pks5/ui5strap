@@ -317,10 +317,6 @@ html, body{
 	transform: translate3d(0,0,0);
 }
 
-.ui5strap-app-loader{
-	background-color:rgba(255,0,0,0.8)!important; 
-}
-
 
 /*
 * Overlay sub elements
