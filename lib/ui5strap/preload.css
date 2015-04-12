@@ -274,7 +274,7 @@ html, body{
 * Hidden Class
 */
 .ui5strap-hidden{
-	opacity:0;
+	display:none;
 }
 
 
