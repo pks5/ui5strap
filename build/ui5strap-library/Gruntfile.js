@@ -12,10 +12,12 @@ module.exports = function(grunt) {
           'lib/ui5strap/ActionContext.js',
           'lib/ui5strap/ActionModule.js',
           'lib/ui5strap/Action.js',
-          'lib/ui5strap/Device.js',
+          'lib/ui5strap/ViewerBase.js',
+          'lib/ui5strap/Viewer.js',
           'lib/ui5strap/AppConfig.js',
           'lib/ui5strap/AppComponent.js',
           'lib/ui5strap/AppFrame.js',
+          'lib/ui5strap/AppBase.js',
           'lib/ui5strap/App.js',
           'lib/ui5strap/Button.js',
           'lib/ui5strap/ButtonRenderer.js',
@@ -47,7 +49,7 @@ module.exports = function(grunt) {
           'lib/ui5strap/*.js',
           '!lib/ui5strap/ui5strap-all.js',
           '!lib/ui5strap/ui5strap-all-dbg.js'],
-        dest: 'lib/ui5strap/ui5strap-all-dbg.js'
+        dest: '../../lib/ui5strap/ui5strap-all-dbg.js'
       }
     },
     uglify: {
@@ -56,7 +58,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'lib/ui5strap/ui5strap-all.js': ['<%= concat.dist.dest %>']
+          '../../lib/ui5strap/ui5strap-all.js': ['<%= concat.dist.dest %>']
         }
       }
     }
