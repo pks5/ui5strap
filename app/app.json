@@ -115,6 +115,11 @@
                 
                 "target" : "content",
                 "preload" : true
+            },
+            
+            "tld__domain.product__app.views.Overlay" : {
+                "type" : "HTML",
+                "id" : "my-app-overlay"
             }
         },
 

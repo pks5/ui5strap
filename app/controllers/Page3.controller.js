@@ -52,7 +52,7 @@ ui5strap.controller("tld__domain.product__app.controllers.Page3", {
 	},
 
 	showOverlay : function(oEvent){
-		this.getApp().showOverlay({ "viewName" : "tld__domain.product__app.views.Intro" }, null, 'transition-slide-btt');
+		this.getApp().showOverlay({ "viewName" : "tld__domain.product__app.views.Overlay" }, null, 'transition-slide-ttb');
 	}
 	
 });
