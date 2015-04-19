@@ -42,17 +42,32 @@
 
 	FrameControllerProto.showInitialContent = function(callback){
 		jQuery.sap.log.debug('[APP FRAME EXAMPLE] SHOW INITIAL');
-		if(!localStorage["ui5strap.app.started"]){
+		
+		try{
+			/*
+			 * We want to show the intro only for the first time
+			 */
+			if(!this.app.getLocalStorageItem("skipIntro")){
+				this.gotoPage({ 
+					"viewName" : "tld__domain.product__app.views.Intro"
+				});
+				//Now we set the skipIntro flag in local storage to true.
+				//Next time, we won't see the Intro
+				this.app.setLocalStorageItem("skipIntro", true);
+			}
+			else{
+				this.gotoPage({ 
+					"viewName" : "tld__domain.product__app.views.Page1"
+				});
+			}
+		}
+		catch(e){
+			//If localStorage is not supported, always show the Intro (IE9)
 			this.gotoPage({ 
 				"viewName" : "tld__domain.product__app.views.Intro"
 			});
-			localStorage["ui5strap.app.started"] = true;
 		}
-		else{
-			this.gotoPage({ 
-				"viewName" : "tld__domain.product__app.views.Page1"
-			});
-		}
+		
 		callback && callback();
 	};
 
