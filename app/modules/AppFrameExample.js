@@ -41,34 +41,43 @@
 
 
 	FrameControllerProto.showInitialContent = function(callback){
-		jQuery.sap.log.debug('[APP FRAME EXAMPLE] SHOW INITIAL');
+		this.app.log.debug('[APP_FRAME_EXAMPLE] Show initial content...');
+		var _this = this;
+		var complete = function(){
+			_this.initialized = true;
+			callback && callback();
+		};
 		
 		try{
 			/*
 			 * We want to show the intro only for the first time
 			 */
 			if(!this.app.getLocalStorageItem("skipIntro")){
-				this.gotoPage({ 
-					"viewName" : "tld__domain.product__app.views.Intro"
-				});
 				//Now we set the skipIntro flag in local storage to true.
 				//Next time, we won't see the Intro
 				this.app.setLocalStorageItem("skipIntro", true);
+				
+				this.gotoPage({ 
+					"viewName" : "tld__domain.product__app.views.Intro",
+					"transition" : "transition-none"
+				}, complete);
 			}
 			else{
 				this.gotoPage({ 
-					"viewName" : "tld__domain.product__app.views.Page1"
-				});
+					"viewName" : "tld__domain.product__app.views.Page1",
+					"transition" : "transition-none"
+				}, complete);
 			}
 		}
 		catch(e){
 			//If localStorage is not supported, always show the Intro (IE9)
 			this.gotoPage({ 
-				"viewName" : "tld__domain.product__app.views.Intro"
-			});
+				"viewName" : "tld__domain.product__app.views.Intro",
+				"transition" : "transition-none"
+			}, complete);
 		}
 		
-		callback && callback();
+		
 	};
 
 	/*
@@ -231,7 +240,7 @@
 						}
 						else{
 							params.writeHistory = true;
-							params.transition = 'no-transition';
+							params.transition = 'transition-none';
 
 							//The next navigation within target "content" will be replaced
 							_this.oTargets["content"] = params;
@@ -279,12 +288,12 @@
 			target = viewConfig.target;
 
 		if(this.isBusy(target)){
-			jQuery.sap.log.debug('[MFR] IS BUSY {' + target + '}');
+			this.app.log.debug('[APP_FRAME_EXAMPLE] Target is busy: "' + target + '"');
 
 			return false;
 		}
 		else{
-			jQuery.sap.log.debug('+++ [MFR] NAVIGATE {' + target + '} "' + viewConfig.viewName + '"');
+			this.app.log.debug('[APP_FRAME_EXAMPLE] Navigate Target "' + target + '" to View "' + viewConfig.viewName + '"');
 		}
 
 		var navbarEnabled = frameOptions.navbar;
@@ -334,7 +343,6 @@
 			this.setSidebarMenu(frameOptions.sidebarMenu);
 		}
 
-		jQuery.sap.log.debug(' + [MFR] SET "sidebar" AND "navbar"');
 		this.control.toPage(this.sidebar, 'sidebar', "transition-none");
 		this.control.toPage(this.navbar, 'navbar', "transition-none");
 
@@ -347,7 +355,8 @@
 		){
 			this.updatePage(currentPage, viewConfig.parameters);
 
-			jQuery.sap.log.debug('[MFR] is current page: ' + viewConfig.id);
+			this.app.log.debug('[APP_FRAME_EXAMPLE] Page is current: "' + viewConfig.id + '"');
+			
 			return false;
 		}
 
@@ -385,7 +394,7 @@
 	* @Public
 	*/
 	FrameControllerProto.updateMenu = function(viewName){
-		jQuery.sap.log.debug(' + [MFR] UPDATE MENU "' + viewName + '"');
+		this.app.log.debug('[APP_FRAME_EXAMPLE] updateMenu "' + viewName + '"');
 
 		var navSidebar = this.navSidebar;
 
@@ -437,10 +446,7 @@
 					this.navNavbar.setSelectedControl(null);
 				}
 			}
-			else{
-				jQuery.sap.log.debug("No navbar menu is set.");
-				//throw new Error('Invalid navbar menu: ' + frameOptions.navbarMenu);
-			}
+			
 		}
 	};
 
