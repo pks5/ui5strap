@@ -192,7 +192,7 @@ module.exports = function (grunt) {
           sourceMapURL: '<%= pkg.name %>.css.map',
           sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
         },
-        src: '../templates/ui5strap_my_theme/ui5strap_my_theme.less',
+        src: '../templates/<%= pkg.ui5strap.myTheme %>/<%= pkg.ui5strap.myTheme %>.less',
         dest: 'dist/css/<%= pkg.name %>.css'
       },
       compileTheme: {
