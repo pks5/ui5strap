@@ -22,33 +22,33 @@
 .bar > .bar-inner{
   height:100%;
   position:relative;
+  padding:0 @bar-padding-horizontal;
 }
 
 .bar > .bar-inner > .bar-content{
   height:100%; 
   top:0px;
+  overflow:hidden;
+  line-height : @bar-height;
 }
 
 .bar > .bar-inner > .bar-content-left{
   float:left; 
-  width:33.33%;
-
-  line-height : @bar-height;
 }
 
 .bar > .bar-inner > .bar-content-middle{
-  float:left; 
-  width:33.33%; 
   text-align:center;
-  position:relative;
-  
-  line-height : @bar-height;
+}
+
+.bar > .bar-inner > .bar-content-middle{
+    width:50%;
+	position:absolute;
+    margin-left: -25%;
+	left:50%;
 }
 
 .bar > .bar-inner > .bar-content-right{
-  float:left; 
-  width:33.33%;
-
-  line-height : @bar-height;
+    float:right; 
+    text-align:right;
 }
 

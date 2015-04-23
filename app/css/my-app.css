@@ -162,33 +162,3 @@
 
 	color:#090909;
 }
-
-/*
-* Home page
-*/
-.dl-carousel-page1{
-	text-align:center;
-	padding:20px;
-}
-
-/*
-* Clock on home page
-*/
-.dl-clock{
-	margin:40px auto;
-}
-
-/*
-* Pictures for get started page
-*/
-.get-started-screenshot{
-	margin-top:10px;
-	margin-bottom:10px;
-}
-
-/*
-* Panel on page 4
-*/
-.res-panel{
-	height:180px;
-}

@@ -8487,6 +8487,10 @@ a {
 .container-paragraph {
   margin-bottom: 10px;
 }
+.container-inset {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 /*
 * Full screen carousel
 */
@@ -8508,6 +8512,7 @@ a {
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 400px;
   overflow: hidden;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -9353,7 +9358,7 @@ a {
 * Bar
 */
 .bar {
-  height: 40px;
+  height: 43px;
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .5);
           box-shadow: 0 0 3px rgba(0, 0, 0, .5);
 }
@@ -9370,27 +9375,29 @@ a {
 .bar > .bar-inner {
   position: relative;
   height: 100%;
+  padding: 0 15px;
 }
 .bar > .bar-inner > .bar-content {
   top: 0;
   height: 100%;
+  overflow: hidden;
+  line-height: 43px;
 }
 .bar > .bar-inner > .bar-content-left {
   float: left;
-  width: 33.33%;
-  line-height: 40px;
 }
 .bar > .bar-inner > .bar-content-middle {
-  position: relative;
-  float: left;
-  width: 33.33%;
-  line-height: 40px;
   text-align: center;
 }
+.bar > .bar-inner > .bar-content-middle {
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  margin-left: -25%;
+}
 .bar > .bar-inner > .bar-content-right {
-  float: left;
-  width: 33.33%;
-  line-height: 40px;
+  float: right;
+  text-align: right;
 }
 /*
 * Page
@@ -9401,13 +9408,24 @@ a {
 }
 .page-head {
   position: absolute;
+  top: 0;
   width: 100%;
 }
 .page-body {
   position: relative;
   width: 100%;
   height: 100%;
-  padding-top: 50px;
+}
+.page.page-with-head {
+  padding-top: 43px;
+}
+.page.page-with-footer {
+  padding-bottom: 43px;
+}
+.page-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 /*
 *
@@ -9931,7 +9949,9 @@ a {
 * Transitions
 */
 /*
+*
 * Transiton Slide
+* @deprecated Use transition-slide-rtl instead
 */
 .transition-slide {
   position: absolute;
@@ -9942,13 +9962,6 @@ a {
   -webkit-transition: -webkit-transform .5s;
        -o-transition:      -o-transform .5s;
           transition:         transform .5s;
-  /*
-  transform: translateX(0);
-  -webkit-transform: translateX(0);
-  -moz-transform: translateX(0);
-  -ms-transform: translateX(0);
-  -o-transform: translateX(0);
-  */
   -webkit-transform: translate3d(0, 0, 0);
       -ms-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
@@ -9968,7 +9981,133 @@ a {
           transform: translate3d(100%, 0, 0);
 }
 /*
+* Transiton Slide Right to Left
+*/
+.transition-slide-rtl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform .5s;
+       -o-transition:      -o-transform .5s;
+          transition:         transform .5s;
+  -webkit-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+.transition-slide-rtl-current-out {
+  -webkit-transform: translate3d(-100%, 0, 0);
+      -ms-transform: translate3d(-100%, 0, 0);
+       -o-transform: translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0);
+}
+.transition-slide-rtl-next {
+  -webkit-transform: translate3d(100%, 0, 0);
+      -ms-transform: translate3d(100%, 0, 0);
+       -o-transform: translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0);
+}
+/*
+* Transiton Slide Left to Right
+*/
+.transition-slide-ltr {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform .5s;
+       -o-transition:      -o-transform .5s;
+          transition:         transform .5s;
+  -webkit-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+.transition-slide-ltr-current-out {
+  -webkit-transform: translate3d(100%, 0, 0);
+      -ms-transform: translate3d(100%, 0, 0);
+       -o-transform: translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0);
+}
+.transition-slide-ltr-next {
+  -webkit-transform: translate3d(-100%, 0, 0);
+      -ms-transform: translate3d(-100%, 0, 0);
+       -o-transform: translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0);
+}
+/*
+*
+* Transition Slide Top to Bottom
+*
+*/
+.transition-slide-ttb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform .5s;
+       -o-transition:      -o-transform .5s;
+          transition:         transform .5s;
+  -webkit-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+.transition-slide-ttb-current-out {
+  -webkit-transform: translate3d(0, 100%, 0);
+      -ms-transform: translate3d(0, 100%, 0);
+       -o-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
+}
+.transition-slide-ttb-next {
+  -webkit-transform: translate3d(0, -100%, 0);
+      -ms-transform: translate3d(0, -100%, 0);
+       -o-transform: translate3d(0, -100%, 0);
+          transform: translate3d(0, -100%, 0);
+}
+/*
+*
+* Transition Slide Bottom to Top
+*
+*/
+.transition-slide-btt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform .5s;
+       -o-transition:      -o-transform .5s;
+          transition:         transform .5s;
+  -webkit-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+.transition-slide-btt-current-out {
+  -webkit-transform: translate3d(0, -100%, 0);
+      -ms-transform: translate3d(0, -100%, 0);
+       -o-transform: translate3d(0, -100%, 0);
+          transform: translate3d(0, -100%, 0);
+}
+.transition-slide-btt-next {
+  -webkit-transform: translate3d(0, 100%, 0);
+      -ms-transform: translate3d(0, 100%, 0);
+       -o-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
+}
+/*
+*
 * Transition Fade
+*
 */
 .transition-fade {
   position: absolute;
@@ -9995,7 +10134,10 @@ a {
   opacity: 0;
 }
 /*
+*
 * Transition Flip
+* Does not work in Chrome currently
+*
 */
 .transition-flip {
   position: absolute;
@@ -10037,7 +10179,9 @@ a {
           transform: rotate3d(0, 1, 0, 180deg);
 }
 /*
+*
 * Transition Zoom
+*
 */
 .transition-zoom {
   /*
@@ -10066,7 +10210,9 @@ a {
   opacity: .99;
 }
 /*
+*
 * Transition Zoom 2
+*
 */
 .transition-zoom2 {
   position: absolute;

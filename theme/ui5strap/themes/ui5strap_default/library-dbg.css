@@ -8487,6 +8487,10 @@ a {
 .container-paragraph {
   margin-bottom: 10px;
 }
+.container-inset {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 /*
 * Full screen carousel
 */
@@ -8508,6 +8512,7 @@ a {
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 400px;
   overflow: hidden;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -9353,7 +9358,7 @@ a {
 * Bar
 */
 .bar {
-  height: 40px;
+  height: 43px;
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .5);
           box-shadow: 0 0 3px rgba(0, 0, 0, .5);
 }
@@ -9370,27 +9375,29 @@ a {
 .bar > .bar-inner {
   position: relative;
   height: 100%;
+  padding: 0 15px;
 }
 .bar > .bar-inner > .bar-content {
   top: 0;
   height: 100%;
+  overflow: hidden;
+  line-height: 43px;
 }
 .bar > .bar-inner > .bar-content-left {
   float: left;
-  width: 33.33%;
-  line-height: 40px;
 }
 .bar > .bar-inner > .bar-content-middle {
-  position: relative;
-  float: left;
-  width: 33.33%;
-  line-height: 40px;
   text-align: center;
 }
+.bar > .bar-inner > .bar-content-middle {
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  margin-left: -25%;
+}
 .bar > .bar-inner > .bar-content-right {
-  float: left;
-  width: 33.33%;
-  line-height: 40px;
+  float: right;
+  text-align: right;
 }
 /*
 * Page
@@ -9401,13 +9408,24 @@ a {
 }
 .page-head {
   position: absolute;
+  top: 0;
   width: 100%;
 }
 .page-body {
   position: relative;
   width: 100%;
   height: 100%;
-  padding-top: 50px;
+}
+.page.page-with-head {
+  padding-top: 43px;
+}
+.page.page-with-footer {
+  padding-bottom: 43px;
+}
+.page-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 /*
 *
