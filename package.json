@@ -1,5 +1,5 @@
 {
-  "name": "My App",
+  "name": "myapp",
   "version": "0.0.1",
   "main": "index.html",
   "chromium-args": "--touch-events=enabled",
