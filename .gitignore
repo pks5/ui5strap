@@ -39,7 +39,13 @@ Icon?
 Thumbs.db
 
 # Node Modules #
-##########
+################
 node_modules
 
 *.dev
+
+# Cordova #
+###########
+hooks
+platforms
+plugins
