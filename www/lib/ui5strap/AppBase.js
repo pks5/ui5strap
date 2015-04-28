@@ -180,7 +180,7 @@
 				oModel = null,
 				modelType = model['type'],
 				modelName = model['modelName'],
-				modelSrc = ("package" in model ? jQuery.sap.getModulePath(model["package"]) : appBase) + "/" + model['src'];
+				modelSrc = _this.config.resolvePath(model);
 
 			
 			if(modelType === 'RESOURCE'){
