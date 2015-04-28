@@ -3794,7 +3794,7 @@
 				oModel = null,
 				modelType = model['type'],
 				modelName = model['modelName'],
-				modelSrc = ("package" in model ? jQuery.sap.getModulePath(model["package"]) : appBase) + "/" + model['src'];
+				modelSrc = _this.config.resolvePath(model);
 
 			
 			if(modelType === 'RESOURCE'){
@@ -6897,7 +6897,7 @@
 			this._dom.$barHome = jQuery('#ui5os-bar-home');
 			
 			$homeButton.on('click', function(){
-				_this.executeApp(this.options.home.url, false);
+				_this.executeApp(_this.options.home.url, false);
 			});
 			
 			$taskmanagerButton.on('click', function(){

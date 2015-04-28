@@ -1,70 +1,73 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
+	  
+	  ui5strapLib : "../../www/lib/ui5strap/",
+	  
     concat: {
       options: {
         separator: ';'
       },
       dist: {
         src: [
-          '../../lib/ui5strap/library.js',
-          '../../lib/ui5strap/ActionFunctions.js',
-          '../../lib/ui5strap/ActionContext.js',
-          '../../lib/ui5strap/ActionModule.js',
-          '../../lib/ui5strap/Action.js',
-          '../../lib/ui5strap/AppConfig.js',
-          '../../lib/ui5strap/AppComponent.js',
-          '../../lib/ui5strap/AppFrame.js',
-          '../../lib/ui5strap/AppBase.js',
-          '../../lib/ui5strap/App.js',
+          '<%= ui5strapLib %>library.js',
+          '<%= ui5strapLib %>ActionFunctions.js',
+          '<%= ui5strapLib %>ActionContext.js',
+          '<%= ui5strapLib %>ActionModule.js',
+          '<%= ui5strapLib %>Action.js',
+          '<%= ui5strapLib %>AppConfig.js',
+          '<%= ui5strapLib %>AppComponent.js',
+          '<%= ui5strapLib %>AppFrame.js',
+          '<%= ui5strapLib %>AppBase.js',
+          '<%= ui5strapLib %>App.js',
           
-          '../../lib/ui5strap/NavContainer.js',
+          '<%= ui5strapLib %>NavContainer.js',
           
-          '../../lib/ui5strap/ViewerBase.js',
-          '../../lib/ui5strap/Viewer.js',
+          '<%= ui5strapLib %>ViewerBase.js',
+          '<%= ui5strapLib %>Viewer.js',
           
-          '../../lib/ui5strap/RestService.js',
+          '<%= ui5strapLib %>RestService.js',
           
-          '../../lib/ui5strap/Button.js',
-          '../../lib/ui5strap/ButtonRenderer.js',
-          '../../lib/ui5strap/Console.js',
-          '../../lib/ui5strap/ConsoleRenderer.js',
-          '../../lib/ui5strap/Sandbox.js',
-          '../../lib/ui5strap/SandboxRenderer.js',
-          '../../lib/ui5strap/Icon.js',
-          '../../lib/ui5strap/IconRenderer.js', 
-          '../../lib/ui5strap/Link.js',
-          '../../lib/ui5strap/LinkRenderer.js',
-          '../../lib/ui5strap/Text.js',
-          '../../lib/ui5strap/TextRenderer.js',
-          '../../lib/ui5strap/TextInput.js',
-          '../../lib/ui5strap/TextInputRenderer.js',
-          '../../lib/ui5strap/RadioButton.js',
-          '../../lib/ui5strap/RadioButtonRenderer.js',
-          '../../lib/ui5strap/SelectBox.js',
-          '../../lib/ui5strap/SelectBoxRenderer.js',
-          '../../lib/ui5strap/ListItem.js',
-          '../../lib/ui5strap/ListItemRenderer.js',
-          '../../lib/ui5strap/ListBase.js',
-          '../../lib/ui5strap/ListBaseRenderer.js',
-          '../../lib/ui5strap/ListLinkItem.js',
-          '../../lib/ui5strap/ListLinkItemRenderer.js',
-          '../../lib/ui5strap/ListGroupItem.js',
-          '../../lib/ui5strap/ListGroupItemRenderer.js',
-          '../../lib/ui5strap/ListMediaItem.js',
-          '../../lib/ui5strap/ListMediaItemRenderer.js',
-          '../../lib/ui5strap/RowContent.js',
-          '../../lib/ui5strap/Tooltip.js',
-          '../../lib/ui5strap/TooltipRenderer.js',
+          '<%= ui5strapLib %>Button.js',
+          '<%= ui5strapLib %>ButtonRenderer.js',
+          '<%= ui5strapLib %>Console.js',
+          '<%= ui5strapLib %>ConsoleRenderer.js',
+          '<%= ui5strapLib %>Sandbox.js',
+          '<%= ui5strapLib %>SandboxRenderer.js',
+          '<%= ui5strapLib %>Icon.js',
+          '<%= ui5strapLib %>IconRenderer.js', 
+          '<%= ui5strapLib %>Link.js',
+          '<%= ui5strapLib %>LinkRenderer.js',
+          '<%= ui5strapLib %>Text.js',
+          '<%= ui5strapLib %>TextRenderer.js',
+          '<%= ui5strapLib %>TextInput.js',
+          '<%= ui5strapLib %>TextInputRenderer.js',
+          '<%= ui5strapLib %>RadioButton.js',
+          '<%= ui5strapLib %>RadioButtonRenderer.js',
+          '<%= ui5strapLib %>SelectBox.js',
+          '<%= ui5strapLib %>SelectBoxRenderer.js',
+          '<%= ui5strapLib %>ListItem.js',
+          '<%= ui5strapLib %>ListItemRenderer.js',
+          '<%= ui5strapLib %>ListBase.js',
+          '<%= ui5strapLib %>ListBaseRenderer.js',
+          '<%= ui5strapLib %>ListLinkItem.js',
+          '<%= ui5strapLib %>ListLinkItemRenderer.js',
+          '<%= ui5strapLib %>ListGroupItem.js',
+          '<%= ui5strapLib %>ListGroupItemRenderer.js',
+          '<%= ui5strapLib %>ListMediaItem.js',
+          '<%= ui5strapLib %>ListMediaItemRenderer.js',
+          '<%= ui5strapLib %>RowContent.js',
+          '<%= ui5strapLib %>Tooltip.js',
+          '<%= ui5strapLib %>TooltipRenderer.js',
           
-          '../../lib/ui5strap/*.js',
+          '<%= ui5strapLib %>*.js',
           
-          '!../../lib/ui5strap/ui5strap-all.js',
-          '!../../lib/ui5strap/ui5strap-all-dbg.js'
+          '!<%= ui5strapLib %>ui5strap-all.js',
+          '!<%= ui5strapLib %>ui5strap-all-dbg.js'
           
           ],
           
-          dest: '../../lib/ui5strap/ui5strap-all-dbg.js'
+          dest: '<%= ui5strapLib %>ui5strap-all-dbg.js'
       }
     },
     uglify: {
@@ -73,7 +76,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          '../../lib/ui5strap/ui5strap-all.js': ['<%= concat.dist.dest %>']
+          '<%= ui5strapLib %>ui5strap-all.js': ['<%= concat.dist.dest %>']
         }
       }
     }
