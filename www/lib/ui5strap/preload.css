@@ -358,15 +358,23 @@ html, body{
 *
 */
 
-
-.ui5os-with-bar-home #ui5strap-body{
+/*
+* Shrink the main container for home bar
+*/
+.ui5os-with-bar-home #ui5strap-container{
 	bottom:30px; 
 }
 
-.ui5os-with-bar-status #ui5strap-body{
+/*
+* Shrink the main container for status bar
+*/
+.ui5os-with-bar-status #ui5strap-container{
 	top:30px; 
 }
 
+/*
+* Status bar
+*/
 #ui5os-bar-status{
 	display:none;
 	position: absolute;
@@ -377,10 +385,16 @@ html, body{
 	background-color:black;
 }
 
+/*
+* Status bar show trigger
+*/
 .ui5os-with-bar-status #ui5os-bar-status{
 	display:block;
 }
 
+/*
+* Home bar
+*/
 #ui5os-bar-home{
 	display:none;
 	position: absolute;
@@ -391,10 +405,16 @@ html, body{
 	background-color:black;
 }
 
+/*
+* Home bar show trigger
+*/
 .ui5os-with-bar-home #ui5os-bar-home{
 	display:block;
 }
 
+/*
+* Home Button (middle)
+*/
 #ui5os-button-home{
 	position: absolute;
 	display:block;
@@ -411,6 +431,9 @@ html, body{
 	color:#f0f0f0;
 }
 
+/*
+* TaskManager Button (right)
+*/
 #ui5os-button-taskmanager{
 	position: absolute;
 	display:block;
@@ -425,4 +448,3 @@ html, body{
 	background-color:#202020;
 	color:#f0f0f0;
 }
-
