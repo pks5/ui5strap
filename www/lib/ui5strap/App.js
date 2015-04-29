@@ -152,7 +152,7 @@
 	* Triggered when a view of the app is shown in the global overlay
 	* @public
 	*/
-	AppProto.onShowOverlay = function(oEvent){ 
+	AppProto.onShowInOverlay = function(oEvent){ 
 		this.fireEventAction({ 
 			"scope" : "app",
 			"eventName" : "showOverlay",
@@ -165,7 +165,7 @@
 	* Triggered when a view of the app is hidden from the global overlay
 	* @public
 	*/
-	AppProto.onHideOverlay = function(oEvent){
+	AppProto.onHideInOverlay = function(oEvent){
 		this.fireEventAction({ 
 			"scope" : "app",
 			"eventName" : "hideOverlay",

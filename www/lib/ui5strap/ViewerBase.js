@@ -139,15 +139,16 @@
 					}
 					//View from a app
 					viewApp.includeStyle(function includeStyle_complete(){
-						viewConfig = viewApp.config.getViewConfig(viewDataOrControl); 
+						var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
+							view = viewApp.createView(viewConfig);
 
-						overlayControl.toPage(viewApp.createView(viewConfig), 'content', transitionName, function(){
+						overlayControl.toPage(view, 'content', transitionName, function(){
 							viewApp.isVisibleInOverlay = true;
 
-							viewApp.onShowOverlay({ 
-								view : viewDataOrControl, 
+							viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
+								view : view, 
 								viewConfig : viewConfig
-							});
+							}));
 							
 							callback && callback();	
 						});
@@ -179,10 +180,11 @@
 			ui5strap.Layer.setVisible(_this.options.overlay, false, function(){
 				if(page instanceof sap.ui.core.mvc.View){
 					var pageViewData = page.getViewData();
-					if("app" in pageViewData){
-						pageViewData.app.isVisibleInOverlay = false;
-						pageViewData.app.onHideOverlay(); 
-						_this.removeStyle(pageViewData.app);
+					if(pageViewData.app){
+						var viewApp = pageViewData.app;
+						viewApp.isVisibleInOverlay = false;
+						viewApp.onHideInOverlay(new sap.ui.base.Event("ui5strap.app.hideInOverlay", viewApp, {})); 
+						_this.removeStyle(viewApp);
 					}
 				}
 
