@@ -54,6 +54,7 @@
 	SandboxProto.init = function(){
 		var iframe = document.createElement('iframe');
 		iframe.className = 'sandbox-iframe';
+		iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-pointer-lock'; //allow-popups
 		iframe.id = this.getId() + '----iframe';
 		this.$iframe = jQuery(iframe);
 	};
@@ -62,6 +63,18 @@
 	SandboxProto.setSrc = function(src){
 		this.$iframe.attr('src', src);
 		this.setProperty('src', src, this.getDomRef());
+	};
+	
+	SandboxProto.goHistoryBack = function(){
+		this.$iframe[0].contentWindow.history.go(-1);
+	};
+	
+	SandboxProto.goHistoryForward = function(){
+		this.$iframe[0].contentWindow.history.go(1);
+	};
+	
+	SandboxProto.refreshContent = function(){
+		this.$iframe[0].contentWindow.location.reload();
 	};
 
 	SandboxProto.setFrameName = function(frameName){
