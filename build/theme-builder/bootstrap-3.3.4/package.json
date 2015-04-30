@@ -91,13 +91,13 @@
     }
   },
   "ui5strap" : {
-    "themeBaseDir" : "../../../lib/ui5strap/themes/base/",
-    "themeSapBluecrystalDir" : "../../../lib/ui5strap/themes/sap_bluecrystal/",
-    "themeSapUiCoreFolder" : "../../../theme/sap/ui/core/themes/",
-    "themeSapUiCommonsFolder" : "../../../theme/sap/ui/commons/themes/",
-    "themeSapUiLayoutFolder" : "../../../theme/sap/ui/layout/themes/",
-    "themeSapMFolder" : "../../../theme/sap/m/themes/",
-    "themeFolder" : "../../../theme/ui5strap/themes/",
+    "themeBaseDir" : "../../../www/lib/ui5strap/themes/base/",
+    "themeSapBluecrystalDir" : "../../../www/lib/ui5strap/themes/sap_bluecrystal/",
+    "themeSapUiCoreFolder" : "../../../www/theme/sap/ui/core/themes/",
+    "themeSapUiCommonsFolder" : "../../../www/theme/sap/ui/commons/themes/",
+    "themeSapUiLayoutFolder" : "../../../www/theme/sap/ui/layout/themes/",
+    "themeSapMFolder" : "../../../www/theme/sap/m/themes/",
+    "themeFolder" : "../../../www/theme/ui5strap/themes/",
     "defaultTheme" : "ui5strap_default",
     "myTheme" : "ui5strap_my_theme"
     

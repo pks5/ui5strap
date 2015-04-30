@@ -162,6 +162,8 @@ module.exports = function (grunt) {
         src: '../templates/base.less',
         dest: 'dist/css/<%= pkg.name %>.css'
       },
+      
+      
       compileThemeBase: {
         options: {
           strictMath: true,
@@ -195,6 +197,8 @@ module.exports = function (grunt) {
         src: '../templates/<%= pkg.ui5strap.myTheme %>/<%= pkg.ui5strap.myTheme %>.less',
         dest: 'dist/css/<%= pkg.name %>.css'
       },
+      
+      
       compileTheme: {
         options: {
           strictMath: true,
