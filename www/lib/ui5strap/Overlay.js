@@ -56,10 +56,17 @@
 		}
 	});
 	
+	ui5strap.Overlay.prototype.onBeforeRendering = function(oEvent){
+		if(this.getBackdrop()){
+			this._$backdrop && this._$backdrop.off('click');
+			delete(this._$backdrop);
+		}
+	};
+	
 	ui5strap.Overlay.prototype.onAfterRendering = function(oEvent){
 		if(this.getBackdrop()){
 			var _this = this;
-			this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
+			this._$backdrop = this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
 				_this.fireClose({});
 			});
 		}
