@@ -330,6 +330,7 @@
 		}	
 		
 		//Without a dot in the key, use "parameters"
+		//TODO Is this ever happen somewhere?
 		return this.parameters[parameterKey] || null;
 	};
 
@@ -359,6 +360,7 @@
 			}	
 			
 			//Without a dot in the key, use "parameters"
+			//TODO Is this ever happen somewhere?
 			this.parameters[parameterKey] = parameterValue;
 
 			return this;

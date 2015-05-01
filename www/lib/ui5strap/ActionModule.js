@@ -55,7 +55,7 @@
 	*/
 	ActionModuleProto.parameters = {};
 
-	/*
+	/**
 	* Initializes the action module
 	*/
 	ActionModuleProto.init = function(context, instanceDef){
@@ -67,7 +67,8 @@
 		if(instanceDef.namespace){
 			this.namespace = instanceDef.namespace;
 		}
-
+		
+		//Test if Namespace is valid
 		var paramPrefix = context.parameterKey("");
 		if(jQuery.sap.startsWith(this.namespace, paramPrefix)){
 			throw new Error("Action namespace must not start with '" + paramPrefix + "'!");
@@ -76,38 +77,36 @@
 		return this;
 	};
 
+	/**
+	 * String representation of the Module
+	 */
 	ActionModuleProto.toString = function(){
 		return this._instanceDef.module + ' ' + this.context;
 	};
 
-	/*
-	* Gets an action module specific parameter key definition
+	/**
+	* Returns the Definition for a Parameter
 	* @public
+	* @return The Definition or null
 	*/
 	ActionModuleProto.getParameterDefinition = function(parameterKey){
-		if(!(parameterKey in this.parameters)){
-			return null;
-		}
-
-		return this.parameters[parameterKey];
+		return this.parameters[parameterKey] || null;
 	};	
 
-	/*
-	* Gets a property of an action module specific parameter key definition
+	/**
+	* Returns a Field (type, defaultValue, etc) of a Parameter Definition
 	* @public
+	* @return The Field intormation or null
 	*/
 	ActionModuleProto.getParameterDefinitionField = function(parameterKey, fieldKey){
 		var paramDef = this.getParameterDefinition(parameterKey);
 
-		if(null === paramDef){
+		if(!paramDef){
+			//Parameter is not defined in module
 			return null;
 		}
 
-		if(!(fieldKey in paramDef)){
-			return null;
-		}
-
-		return paramDef[fieldKey];
+		return paramDef[fieldKey] || null;
 	};	
 
 	/*
@@ -118,6 +117,8 @@
 		if(-1 !== parameterKey.indexOf('.')){
 			return parameterKey;
 		}
+		
+		//By default, use the Module's Namespace
 		return 'parameters.' + this.namespace + '.' + parameterKey;
 	};	
 
@@ -129,15 +130,18 @@
 		return this.context._getParameter(this._createParameterKey(parameterKey));
 	};
 
-	/*
-	* Gets the parameter type of an action module specific parameter
+	/**
+	* Returns the type of an Parameter
 	* @public
 	*/
 	ActionModuleProto.getParameterType = function(parameterKey){
 		var paramValue = this.getParameter(parameterKey);
-		if(null === paramValue){
+		if(!paramValue){
+			//Parameter does not exist
 			return false;
 		}
+		
+		//Return the Type
 		return typeof paramValue;
 	};	
 
