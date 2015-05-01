@@ -6,7 +6,7 @@
 
 	"gotoPage" : {
 		"viewName" : "com__ui5strap__examples.50buttons__app.views.Page2",
-		"transition" : "transition-slide-rtl",
+		"transition" : "transition-flip",
 		"writeHistory" : true,
 		"bookmarkable" : false
 	}
