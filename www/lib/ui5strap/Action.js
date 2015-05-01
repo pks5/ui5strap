@@ -92,8 +92,7 @@
 			
 			var instanceDefsLength = instanceDefs.length;
 			for ( var i = 0; i < instanceDefsLength; i++ ) { 
-				var instanceDef = instanceDefs[i];
-				context._run(instanceDef);
+				context._run(instanceDefs[i]);
 			}
 		
 		});
@@ -105,17 +104,14 @@
 	* @static
 	*/
 	var _execute = function(context){
-		var actionModuleNameParameter = context.parameterKey(ActionContext.PARAM_MODULES);
-		var actionModuleName = context._getParameter(actionModuleNameParameter);
+		var actionModuleNameParameter = context.parameterKey(ActionContext.PARAM_MODULES),
+			actionModuleName = context._getParameter(actionModuleNameParameter);
+		
 		if(actionModuleName){ //Expected string
 			context._deleteParameter(actionModuleNameParameter);
-			
-			context._log.debug("START ACTION '" + context + "' ...");
-
 			_executeModules(context, ui5strap.Utils.parseIContent(actionModuleName));
 		}
 		else{   
-			console.log(context);
 			throw new Error("Invalid action '" + context + "': '" + actionModuleNameParameter + "' attribute is missing!");
 		}
 	};
@@ -135,8 +131,6 @@
 				}
 				actionName = actionNamesList[eventId];
 			}
-			
-			context._log.debug("Loading action from '" + actionName + "'...");
 			
 			Action.loadFromFile(actionName, function _loadActionFromFile_complete(actionJSON){
 
@@ -173,23 +167,20 @@
 	* @static
 	*/
 	Action.loadFromFile = function(actionName, callback){
-		jQuerySap.log.debug("Populating from file '" + actionName + "'...");
-					
 		var actionCache = Action.cache;
-		if(actionName in actionCache){
+		if(actionCache[actionName]){
 			callback && callback(actionCache[actionName]);
 			
 			return;
 		}
 		
 		var actionUrl = jQuerySap.getModulePath(actionName) + '.action.json';
+		jQuerySap.log.debug("[ACTION] Loading '" + actionName + "' from '" + actionUrl + "'" );
 		
 		ui5strap.readTextFile(
 				actionUrl, 
 				'json', 
 				function(data){
-					jQuerySap.log.debug("Loaded Action '" + actionName + "' from '" + actionUrl + "'" );
-
 					actionCache[actionName] = data;
 				
 					callback && callback(data);
@@ -221,7 +212,7 @@
 	* @static
 	*/
 	Action.run = function(action){
-		jQuerySap.log.debug("F Action::run");
+		jQuerySap.log.debug("[ACTION] RUN");
 
 		var actionName = null;
 		if(action.parameters && typeof action.parameters === 'string'){
