@@ -1536,6 +1536,15 @@
     } 
     
   };
+  
+  ui5strap.readTextFile = function(url, dataType, success, error){
+	  jQuery.ajax({
+			"dataType": "json",
+			"url": url,
+			"success": success,
+			"error" : error
+	  });
+  };
 
   //End of library
 
@@ -2747,37 +2756,6 @@
 	};
 
 	/*
-	* Load an action from a json file
-	* @private
-	* @static
-	*/
-	var _loadActionFromFile = function(context, actionName, callback){
-		context._log.debug("Populating from file '" + actionName + "'...");
-					
-		var actionCache = Action.cache;
-		if(actionName in actionCache){
-			callback && callback(actionCache[actionName]);
-			
-			return;
-		}
-
-		jQuery.ajax({
-			"dataType": "json",
-			"url": jQuery.sap.getModulePath(actionName) + '.action.json',
-			"success": function(data){
-				context._log.debug("Loaded Action Group '" + actionName + "' from '" + context.url + "'" );
-
-				actionCache[actionName] = data;
-				
-				callback && callback(data);
-			},
-			"error" : function(data){
-				throw new Error('Invalid action group: "' + actionName + '"');
-			}
-		});
-	};
-
-	/*
 	* Executes a list of AM Modules
 	* @private
 	* @static
@@ -2848,7 +2826,7 @@
 			
 			context._log.debug("Loading action from '" + actionName + "'...");
 			
-			_loadActionFromFile(context, actionName, function _loadActionFromFile_complete(actionJSON){
+			Action.loadFromFile(actionName, function _loadActionFromFile_complete(actionJSON){
 
 				//Action JSON files cannot be loaded if they differ in format
 				//TODO: Make this better
@@ -2875,6 +2853,39 @@
 
 			callback && callback();
 		}
+	};
+	
+	/*
+	* Load an action from a json file
+	* @private
+	* @static
+	*/
+	Action.loadFromFile = function(actionName, callback){
+		jQuerySap.log.debug("Populating from file '" + actionName + "'...");
+					
+		var actionCache = Action.cache;
+		if(actionName in actionCache){
+			callback && callback(actionCache[actionName]);
+			
+			return;
+		}
+		
+		var actionUrl = jQuerySap.getModulePath(actionName) + '.action.json';
+		
+		ui5strap.readTextFile(
+				actionUrl, 
+				'json', 
+				function(data){
+					jQuerySap.log.debug("Loaded Action '" + actionName + "' from '" + actionUrl + "'" );
+
+					actionCache[actionName] = data;
+				
+					callback && callback(data);
+				},
+				function(data){
+					throw new Error('Invalid Action: "' + actionUrl + '"');
+				}
+		);
 	};
 
 	/*
@@ -3152,6 +3163,8 @@
 		var location = this.data.app.location;
 
 		if(typeof path === 'string'){
+			//If path is a string, treat is as relative or absolute path depending on first char
+			
 			if(jQuery.sap.startsWith(path, '/')){
 				//Return path relative to servlet root (context)
 				return this.options.pathToServletRoot + path;
@@ -3167,6 +3180,7 @@
 
 		}	
 		else if(typeof path === 'object'){
+			//If path is an object, it should contain a "src" attribute and can contain a "package" attribute
 			
 			if("package" in path){
 				location = jQuery.sap.getModulePath(path["package"]) + "/";
@@ -3219,60 +3233,80 @@
 		if(!('type' in configDataJSON.app)){
 			configDataJSON.app.type = 'STANDARD';
 		}
-
+		
+		//App Icons
 		if(!('icons' in configDataJSON)){
 			configDataJSON.icons = {};
 		}
-
+		
+		//App Options
 		if(!('options' in configDataJSON)){
 			configDataJSON.options = {};
 		}
-
+		
+		//Default App Transition
 		if(!('transition' in configDataJSON.app)){
 			configDataJSON.app.transition = 'transition-zoom';
 		}
 		
+		//Libraries
 		if(!("libraries" in configDataJSON)){
 			configDataJSON.libraries = {};
 		}
-
+		
+		//Views directory
 		if(!("views" in configDataJSON)){
 			configDataJSON.views = {};
 		}
-
+		
+		//Frames
+		//@deprecated
 		if(!("frames" in configDataJSON)){
 			configDataJSON.frames = {};
 		}
 
+		//App Components
 		if(!("components" in configDataJSON)){
 			configDataJSON.components = [];
 		}
 
+		//UI5 Modules to be preloaded
 		if(!("modules" in configDataJSON)){
 			configDataJSON.modules = [];
 		}
-
+		
+		//Actions to be preloaded
+		if(!("actions" in configDataJSON)){
+			configDataJSON.actions = [];
+		}
+		
+		//Models
 		if(!("models" in configDataJSON)){
 			configDataJSON.models = [];
 		}
-
+		
+		//Custom css files
 		if(!("css" in configDataJSON)){
 			configDataJSON.css = [];
 		}
 
+		//Custom JavaScript libraries
 		if(!("js" in configDataJSON)){
 			configDataJSON.js = [];
 		}
-
+		
+		//Any kind of file to be preloaded
 		if(!("resources" in configDataJSON)){
 			configDataJSON.resources = [];
 		}
-
+		
+		//App Events
 		if(!("events" in configDataJSON)){
 			configDataJSON.events = {};
 		}
 
 		//Add the location of the sapp if its not specified
+		//Location always should end with a slash
 		if(!("location" in configDataJSON.app)){
 			var sappUrlParts = configDataJSON.app.url.split('/');
 			sappUrlParts[sappUrlParts.length - 1] = '';
@@ -3766,11 +3800,12 @@
 		});
 	};
 
-	var _preloadModels = function(_this, models, appBase, callback){
+	var _preloadModels = function(_this, callback){
 		_this.log.debug('PRELOADING MODELS');
 
 		//Models
-		var callI = models.length, 
+		var models = _this.config.data.models,
+			callI = models.length, 
 			successCallback = function(oEvent, oData){
 				callI --;
 				_this.log.debug('LOAD MODEL ' + oData.modelName + ' ...');
@@ -3883,16 +3918,41 @@
 			}
 		}
 	};
+	
+	/*
+	* Preload Actions for faster execution
+	*/
+	var _preloadActions = function(_this, callback){
+		var actions = _this.config.data.actions,
+			callI = actions.length;
+		if(callI === 0){
+			callback && callback.call(_this);
+
+			return;
+		}
+		
+		var successCallback = function(){
+			callI--;
+			if(callI === 0){
+				callback && callback.call(_this);
+			}
+		};
+		
+		for(var i = 0; i < actions.length; i++){
+			ui5strap.Action.loadFromFile(actions[i], successCallback);
+		}
+	};
 
 	AppBaseProto.preload = function(callback){
 		this.config.resolve();
 
-		var _this = this,
-			_configData = this.config.data;
-
+		var _this = this;
+		
 		_preloadJavaScript(_this, function preloadJavaScriptComplete(){
 			_preloadComponents(_this, function _preloadComponentsComplete(){
-				_preloadModels(_this, _configData.models, _configData.app['location'], callback);
+				_preloadModels(_this, function _preloadModelsComplete(){
+					_preloadActions(_this, callback);
+				});
 			});
 		});
 	};
@@ -4282,6 +4342,7 @@
 		ui5strap.Layer.register(this.overlayId);
 
 		this.overlayControl = new ui5strap.NavContainer();
+		//this.overlayControl.placeAt(this.overlayId);
 		this.overlayControl.placeAt(this.overlayId + '-content');
 
 		var oModels = this.getRootControl().oModels;
@@ -4291,9 +4352,9 @@
 			this.overlayControl.setModel(oModels[sName], sName);
 		};
 
-		jQuery('#' + this.overlayId + '-backdrop').on('tap', function onTap(event){
-			_this.hideOverlay();
-		});
+		//jQuery('#' + this.overlayId + '-backdrop').on('tap', function onTap(event){
+		//	_this.hideOverlay();
+		//});
 	};
 
 	/*
@@ -4689,15 +4750,15 @@
 		appOverlay.className = 'ui5strap-app-overlay ui5strap-overlay ui5strap-layer ui5strap-hidden';
 		appOverlay.id = this.getDomId('overlay');
 
-		var appOverlayBackdrop = document.createElement('div');
-		appOverlayBackdrop.className = 'ui5strap-overlay-backdrop';
-		appOverlayBackdrop.id = this.getDomId('overlay-backdrop');
+		//var appOverlayBackdrop = document.createElement('div');
+		//appOverlayBackdrop.className = 'ui5strap-overlay-backdrop';
+		//appOverlayBackdrop.id = this.getDomId('overlay-backdrop');
 		/*
 		appOverlayBackdrop.onclick = function(){
 			_this.hideOverlay();
 		};
 		*/
-		appOverlay.appendChild(appOverlayBackdrop);
+		//appOverlay.appendChild(appOverlayBackdrop);
 
 		var appOverlayContent = document.createElement('div');
 		appOverlayContent.className = 'ui5strap-overlay-content';
@@ -5026,7 +5087,7 @@
 	* Triggered when a view of the app is shown in the global overlay
 	* @public
 	*/
-	AppProto.onShowOverlay = function(oEvent){ 
+	AppProto.onShowInOverlay = function(oEvent){ 
 		this.fireEventAction({ 
 			"scope" : "app",
 			"eventName" : "showOverlay",
@@ -5039,7 +5100,7 @@
 	* Triggered when a view of the app is hidden from the global overlay
 	* @public
 	*/
-	AppProto.onHideOverlay = function(oEvent){
+	AppProto.onHideInOverlay = function(oEvent){
 		this.fireEventAction({ 
 			"scope" : "app",
 			"eventName" : "hideOverlay",
@@ -6149,15 +6210,16 @@
 					}
 					//View from a app
 					viewApp.includeStyle(function includeStyle_complete(){
-						viewConfig = viewApp.config.getViewConfig(viewDataOrControl); 
+						var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
+							view = viewApp.createView(viewConfig);
 
-						overlayControl.toPage(viewApp.createView(viewConfig), 'content', transitionName, function(){
+						overlayControl.toPage(view, 'content', transitionName, function(){
 							viewApp.isVisibleInOverlay = true;
 
-							viewApp.onShowOverlay({ 
-								view : viewDataOrControl, 
+							viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
+								view : view, 
 								viewConfig : viewConfig
-							});
+							}));
 							
 							callback && callback();	
 						});
@@ -6189,10 +6251,11 @@
 			ui5strap.Layer.setVisible(_this.options.overlay, false, function(){
 				if(page instanceof sap.ui.core.mvc.View){
 					var pageViewData = page.getViewData();
-					if("app" in pageViewData){
-						pageViewData.app.isVisibleInOverlay = false;
-						pageViewData.app.onHideOverlay(); 
-						_this.removeStyle(pageViewData.app);
+					if(pageViewData.app){
+						var viewApp = pageViewData.app;
+						viewApp.isVisibleInOverlay = false;
+						viewApp.onHideInOverlay(new sap.ui.base.Event("ui5strap.app.hideInOverlay", viewApp, {})); 
+						_this.removeStyle(viewApp);
 					}
 				}
 
@@ -7822,6 +7885,7 @@
 	SandboxProto.init = function(){
 		var iframe = document.createElement('iframe');
 		iframe.className = 'sandbox-iframe';
+		iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-pointer-lock'; //allow-popups
 		iframe.id = this.getId() + '----iframe';
 		this.$iframe = jQuery(iframe);
 	};
@@ -7830,6 +7894,18 @@
 	SandboxProto.setSrc = function(src){
 		this.$iframe.attr('src', src);
 		this.setProperty('src', src, this.getDomRef());
+	};
+	
+	SandboxProto.goHistoryBack = function(){
+		this.$iframe[0].contentWindow.history.go(-1);
+	};
+	
+	SandboxProto.goHistoryForward = function(){
+		this.$iframe[0].contentWindow.history.go(1);
+	};
+	
+	SandboxProto.refreshContent = function(){
+		this.$iframe[0].contentWindow.location.reload();
 	};
 
 	SandboxProto.setFrameName = function(frameName){
@@ -10796,7 +10872,7 @@
 	*/
 	AMCloseOverlayProto.parameters = {
 			
-			"overlayTransition" : {
+			"transition" : {
 				"required" : false, 
 				"defaultValue" : "transition-slide-btt", 
 				"type" : "string"
@@ -10825,7 +10901,7 @@
 		
 		overlayParent.hideOverlay(function CloseOverlayActionComplete(){
 			_this.fireEvents(ui5strap.ActionModule.EVENT_COMPLETED);
-		}, this.getParameter('overlayTransition'));
+		}, this.getParameter('transition'));
 	};
 
 	/*
@@ -11839,12 +11915,12 @@
 	* @Override
 	*/
 	AMShowOverlayProto.parameters = {
-		"viewId" : {
+		"id" : {
 			"required" : false, 
 			"defaultValue" : null, 
 			"type" : "string"
 		},
-		"viewType" : {
+		"type" : {
 			"required" : false, 
 			"defaultValue" : "HTML", 
 			"type" : "string"
@@ -11862,7 +11938,7 @@
 			"defaultValue" : null, 
 			"type" : "object"
 		},
-		"overlayTransition" : {
+		"transition" : {
 			"required" : false, 
 			"defaultValue" : "transition-slide-ttb", 
 			"type" : "string"
@@ -11880,8 +11956,8 @@
 	AMShowOverlayProto.run = function(){
 
 		var _this = this,
-			viewId = this.getParameter("viewId"),
-			viewType = this.getParameter("viewType"),
+			viewId = this.getParameter("id"),
+			viewType = this.getParameter("type"),
 			viewName = this.getParameter("viewName"),
 			target = this.getParameter("target"),
 			parameters = this.getParameter("parameters"),
@@ -11906,7 +11982,7 @@
 		
 		overlayParent.showOverlay(viewOptions, function AMShowOverlayRunComplete(){
 			_this.fireEvents(ui5strap.ActionModule.EVENT_COMPLETED);
-		}, this.getParameter('overlayTransition'));
+		}, this.getParameter('transition'));
 	};
 
 	/*
@@ -17867,6 +17943,136 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
             "error" : options.error
         });
     };
+
+}());;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.Overlay
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	jQuery.sap.declare("ui5strap.Overlay");
+	
+	sap.ui.core.Control.extend("ui5strap.Overlay", {
+		metadata : {
+
+			library : "ui5strap",
+			defaultAggregation : "content",
+			
+			properties : { 
+				backdrop : {
+					type:"boolean", 
+					defaultValue:false
+				}
+			},
+			
+			aggregations : {
+				content : {
+					multiple : true
+				}
+			},
+			
+			events : {
+				close : {
+					
+				}
+			}
+		}
+	});
+	
+	ui5strap.Overlay.prototype.onBeforeRendering = function(oEvent){
+		if(this.getBackdrop()){
+			this._$backdrop && this._$backdrop.off('click');
+			delete(this._$backdrop);
+		}
+	};
+	
+	ui5strap.Overlay.prototype.onAfterRendering = function(oEvent){
+		if(this.getBackdrop()){
+			var _this = this;
+			this._$backdrop = this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
+				_this.fireClose({});
+			});
+		}
+	};
+
+}());;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.OverlayRenderer
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	jQuery.sap.declare("ui5strap.OverlayRenderer");
+
+	ui5strap.OverlayRenderer = {};
+
+	ui5strap.OverlayRenderer.render = function(rm, oControl) {
+		var content = oControl.getContent();
+		
+		rm.write("<div");
+		rm.writeControlData(oControl);
+		rm.addClass("ui5strap-overlay-control");
+		rm.writeClasses();
+		rm.write(">");
+		
+		if(oControl.getBackdrop()){
+			rm.write('<div class="ui5strap-overlay-control-backdrop" id="' + oControl.getId() + '--backdrop"></div>');
+		}
+		
+		rm.write('<div class="ui5strap-overlay-control-content">');
+		
+		for(var i = 0; i < content.length; i++){ 
+			rm.renderControl(content[i]);
+		}
+		
+		rm.write("</div></div>");
+
+	};
 
 }());;/*
  * 
