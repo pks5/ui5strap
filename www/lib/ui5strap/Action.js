@@ -68,37 +68,6 @@
 	};
 
 	/*
-	* Load an action from a json file
-	* @private
-	* @static
-	*/
-	var _loadActionFromFile = function(context, actionName, callback){
-		context._log.debug("Populating from file '" + actionName + "'...");
-					
-		var actionCache = Action.cache;
-		if(actionName in actionCache){
-			callback && callback(actionCache[actionName]);
-			
-			return;
-		}
-
-		jQuery.ajax({
-			"dataType": "json",
-			"url": jQuery.sap.getModulePath(actionName) + '.action.json',
-			"success": function(data){
-				context._log.debug("Loaded Action Group '" + actionName + "' from '" + context.url + "'" );
-
-				actionCache[actionName] = data;
-				
-				callback && callback(data);
-			},
-			"error" : function(data){
-				throw new Error('Invalid action group: "' + actionName + '"');
-			}
-		});
-	};
-
-	/*
 	* Executes a list of AM Modules
 	* @private
 	* @static
@@ -169,7 +138,7 @@
 			
 			context._log.debug("Loading action from '" + actionName + "'...");
 			
-			_loadActionFromFile(context, actionName, function _loadActionFromFile_complete(actionJSON){
+			Action.loadFromFile(actionName, function _loadActionFromFile_complete(actionJSON){
 
 				//Action JSON files cannot be loaded if they differ in format
 				//TODO: Make this better
@@ -196,6 +165,39 @@
 
 			callback && callback();
 		}
+	};
+	
+	/*
+	* Load an action from a json file
+	* @private
+	* @static
+	*/
+	Action.loadFromFile = function(actionName, callback){
+		jQuerySap.log.debug("Populating from file '" + actionName + "'...");
+					
+		var actionCache = Action.cache;
+		if(actionName in actionCache){
+			callback && callback(actionCache[actionName]);
+			
+			return;
+		}
+		
+		var actionUrl = jQuerySap.getModulePath(actionName) + '.action.json';
+		
+		ui5strap.readTextFile(
+				actionUrl, 
+				'json', 
+				function(data){
+					jQuerySap.log.debug("Loaded Action '" + actionName + "' from '" + actionUrl + "'" );
+
+					actionCache[actionName] = data;
+				
+					callback && callback(data);
+				},
+				function(data){
+					throw new Error('Invalid Action: "' + actionUrl + '"');
+				}
+		);
 	};
 
 	/*

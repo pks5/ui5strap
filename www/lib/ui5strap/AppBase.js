@@ -152,11 +152,12 @@
 		});
 	};
 
-	var _preloadModels = function(_this, models, appBase, callback){
+	var _preloadModels = function(_this, callback){
 		_this.log.debug('PRELOADING MODELS');
 
 		//Models
-		var callI = models.length, 
+		var models = _this.config.data.models,
+			callI = models.length, 
 			successCallback = function(oEvent, oData){
 				callI --;
 				_this.log.debug('LOAD MODEL ' + oData.modelName + ' ...');
@@ -269,16 +270,41 @@
 			}
 		}
 	};
+	
+	/*
+	* Preload Actions for faster execution
+	*/
+	var _preloadActions = function(_this, callback){
+		var actions = _this.config.data.actions,
+			callI = actions.length;
+		if(callI === 0){
+			callback && callback.call(_this);
+
+			return;
+		}
+		
+		var successCallback = function(){
+			callI--;
+			if(callI === 0){
+				callback && callback.call(_this);
+			}
+		};
+		
+		for(var i = 0; i < actions.length; i++){
+			ui5strap.Action.loadFromFile(actions[i], successCallback);
+		}
+	};
 
 	AppBaseProto.preload = function(callback){
 		this.config.resolve();
 
-		var _this = this,
-			_configData = this.config.data;
-
+		var _this = this;
+		
 		_preloadJavaScript(_this, function preloadJavaScriptComplete(){
 			_preloadComponents(_this, function _preloadComponentsComplete(){
-				_preloadModels(_this, _configData.models, _configData.app['location'], callback);
+				_preloadModels(_this, function _preloadModelsComplete(){
+					_preloadActions(_this, callback);
+				});
 			});
 		});
 	};

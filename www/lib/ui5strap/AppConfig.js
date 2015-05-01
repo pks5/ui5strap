@@ -233,6 +233,8 @@
 		var location = this.data.app.location;
 
 		if(typeof path === 'string'){
+			//If path is a string, treat is as relative or absolute path depending on first char
+			
 			if(jQuery.sap.startsWith(path, '/')){
 				//Return path relative to servlet root (context)
 				return this.options.pathToServletRoot + path;
@@ -248,6 +250,7 @@
 
 		}	
 		else if(typeof path === 'object'){
+			//If path is an object, it should contain a "src" attribute and can contain a "package" attribute
 			
 			if("package" in path){
 				location = jQuery.sap.getModulePath(path["package"]) + "/";
@@ -300,60 +303,80 @@
 		if(!('type' in configDataJSON.app)){
 			configDataJSON.app.type = 'STANDARD';
 		}
-
+		
+		//App Icons
 		if(!('icons' in configDataJSON)){
 			configDataJSON.icons = {};
 		}
-
+		
+		//App Options
 		if(!('options' in configDataJSON)){
 			configDataJSON.options = {};
 		}
-
+		
+		//Default App Transition
 		if(!('transition' in configDataJSON.app)){
 			configDataJSON.app.transition = 'transition-zoom';
 		}
 		
+		//Libraries
 		if(!("libraries" in configDataJSON)){
 			configDataJSON.libraries = {};
 		}
-
+		
+		//Views directory
 		if(!("views" in configDataJSON)){
 			configDataJSON.views = {};
 		}
-
+		
+		//Frames
+		//@deprecated
 		if(!("frames" in configDataJSON)){
 			configDataJSON.frames = {};
 		}
 
+		//App Components
 		if(!("components" in configDataJSON)){
 			configDataJSON.components = [];
 		}
 
+		//UI5 Modules to be preloaded
 		if(!("modules" in configDataJSON)){
 			configDataJSON.modules = [];
 		}
-
+		
+		//Actions to be preloaded
+		if(!("actions" in configDataJSON)){
+			configDataJSON.actions = [];
+		}
+		
+		//Models
 		if(!("models" in configDataJSON)){
 			configDataJSON.models = [];
 		}
-
+		
+		//Custom css files
 		if(!("css" in configDataJSON)){
 			configDataJSON.css = [];
 		}
 
+		//Custom JavaScript libraries
 		if(!("js" in configDataJSON)){
 			configDataJSON.js = [];
 		}
-
+		
+		//Any kind of file to be preloaded
 		if(!("resources" in configDataJSON)){
 			configDataJSON.resources = [];
 		}
-
+		
+		//App Events
 		if(!("events" in configDataJSON)){
 			configDataJSON.events = {};
 		}
 
 		//Add the location of the sapp if its not specified
+		//Location always should end with a slash
 		if(!("location" in configDataJSON.app)){
 			var sappUrlParts = configDataJSON.app.url.split('/');
 			sappUrlParts[sappUrlParts.length - 1] = '';

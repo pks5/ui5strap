@@ -1536,6 +1536,15 @@
     } 
     
   };
+  
+  ui5strap.readTextFile = function(url, dataType, success, error){
+	  jQuery.ajax({
+			"dataType": "json",
+			"url": url,
+			"success": success,
+			"error" : error
+	  });
+  };
 
   //End of library
 
