@@ -46,8 +46,23 @@
 				content : {
 					multiple : true
 				}
+			},
+			
+			events : {
+				close : {
+					
+				}
 			}
 		}
 	});
+	
+	ui5strap.Overlay.prototype.onAfterRendering = function(oEvent){
+		if(this.getBackdrop()){
+			var _this = this;
+			this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
+				_this.fireClose({});
+			});
+		}
+	};
 
 }());

@@ -668,8 +668,8 @@
 		ui5strap.Layer.register(this.overlayId);
 
 		this.overlayControl = new ui5strap.NavContainer();
-		this.overlayControl.placeAt(this.overlayId);
-		//this.overlayControl.placeAt(this.overlayId + '-content');
+		//this.overlayControl.placeAt(this.overlayId);
+		this.overlayControl.placeAt(this.overlayId + '-content');
 
 		var oModels = this.getRootControl().oModels;
 		//var uiArea = sap.ui.getCore().createUIArea(newPage, _this);
@@ -1086,10 +1086,10 @@
 		*/
 		//appOverlay.appendChild(appOverlayBackdrop);
 
-		//var appOverlayContent = document.createElement('div');
-		//appOverlayContent.className = 'ui5strap-overlay-content';
-		//appOverlayContent.id = this.getDomId('overlay-content');
-		//appOverlay.appendChild(appOverlayContent);
+		var appOverlayContent = document.createElement('div');
+		appOverlayContent.className = 'ui5strap-overlay-content';
+		appOverlayContent.id = this.getDomId('overlay-content');
+		appOverlay.appendChild(appOverlayContent);
 
 		appContainer.appendChild(appOverlay);
 

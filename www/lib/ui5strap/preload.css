@@ -321,13 +321,20 @@ html, body{
 /*
 * Overlay sub elements
 */
-.ui5strap-overlay-backdrop,
-.ui5strap-overlay-content{
+.ui5strap-overlay-backdrop{
    position:absolute; 
-  top:0; 
-  left:0; 
-  bottom:0;
-  right:0;
+   top:0; 
+   left:0; 
+   bottom:0;
+   right:0;
+}
+
+.ui5strap-overlay-content{
+	position:absolute; 
+   top:0; 
+   left:0; 
+   bottom:0;
+   right:0;
 }
 
 .ui5strap-overlay-default #ui5strap-overlay-content{

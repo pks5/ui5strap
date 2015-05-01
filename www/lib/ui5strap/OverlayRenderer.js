@@ -36,15 +36,15 @@
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("ui5strap-overlay");
+		rm.addClass("ui5strap-overlay-control");
 		rm.writeClasses();
 		rm.write(">");
 		
 		if(oControl.getBackdrop()){
-			rm.write('<div class="ui5strap-overlay-backdrop"></div>');
+			rm.write('<div class="ui5strap-overlay-control-backdrop" id="' + oControl.getId() + '--backdrop"></div>');
 		}
 		
-		rm.write('<div class="ui5strap-overlay-inner">');
+		rm.write('<div class="ui5strap-overlay-control-content">');
 		
 		for(var i = 0; i < content.length; i++){ 
 			rm.renderControl(content[i]);
