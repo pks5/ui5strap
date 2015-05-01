@@ -1,0 +1,10 @@
+{
+  "__format" : "AJ2.0",
+  "__modules" : "ui5strap.AMJsAlert",
+
+  "alert" : {
+    
+    "message" : "Hello, World!"
+  
+  }
+}

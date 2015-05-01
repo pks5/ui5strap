@@ -1,0 +1,81 @@
+<template data-controller-name="com__ui5strap__bs.basic__app.controllers.Controls">
+
+	<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
+
+			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Indicators"></div>
+
+			<!-- Alerts -->
+			<div data-sap-ui-type="ui5strap.Paragraph">
+				<div data-sap-ui-type="ui5strap.Button" data-text="New Alert" data-tap="newAlert" data-severity="Danger">
+					<div data-sap-ui-type="ui5strap.Icon" data-icon="bell"></div>
+				</div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Container" id="alerts"> 
+			
+				
+				<div data-sap-ui-type="ui5strap.Alert" data-severity="Warning"  data-closed="alertClosed" data-closable="true" data-text="Best check yo self, you're not looking too good.">
+						<div data-sap-ui-type="ui5strap.Text" data-type="Strong" data-text="Warning!"></div>
+					</div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Row">
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Alert" id="otherAlertId" data-text="This alert needs your attention, but it's not super important."></div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Alert" data-severity="Success" data-text="You successfully read this important alert message.">
+						<div data-sap-ui-type="ui5strap.Text" data-type="Strong" data-text="Well done!"></div>
+					</div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Alert" data-severity="Danger" data-closable="true" data-closed="alertClosed">
+						<div data-sap-ui-aggregation="closeButton">
+							<div data-sap-ui-type="ui5strap.Button" data-type="Close">
+								<div data-sap-ui-type="ui5strap.Icon" data-icon="paw"></div>
+							</div>
+						</div>
+						<div data-sap-ui-aggregation="content">
+						
+							<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-text="Oh snap!"></div>
+							<div data-sap-ui-type="ui5strap.Paragraph" data-text="Change a few things up and try submitting again."></div>
+							<div data-sap-ui-type="ui5strap.Paragraph">
+								<div data-sap-ui-type="ui5strap.Button" data-tap="closeOtherAlert" data-severity="Danger" data-text="Retry"></div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Labels & Badges -->
+			<div data-sap-ui-type="ui5strap.Row">
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Heading" data-text="Labels"></div>
+
+					<div data-sap-ui-type="ui5strap.Label" data-text="Default"></div>
+					<div data-sap-ui-type="ui5strap.Label" data-text="Primary" data-severity="Primary"></div>
+					<div data-sap-ui-type="ui5strap.Label" data-text="Success" data-severity="Success"></div>
+					<div data-sap-ui-type="ui5strap.Label" data-text="Warning" data-severity="Warning"></div>
+					<div data-sap-ui-type="ui5strap.Label" data-text="Danger" data-severity="Danger"></div>
+					<div data-sap-ui-type="ui5strap.Label" data-text="Info" data-severity="Info"></div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Heading" data-text="Badges"></div>
+
+					<div data-sap-ui-type="ui5strap.Nav" data-type="Pills" data-selection-mode="Single">
+						<div data-sap-ui-type="ui5strap.ListNavItem" data-text="Home" data-badge="12" data-selected="true">
+						</div>
+						<div data-sap-ui-type="ui5strap.ListNavItem" data-text="Profile">
+						</div>
+						<div data-sap-ui-type="ui5strap.ListNavItem" data-text="Messages" data-badge="3" >
+						</div>
+					</div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					
+				</div>
+			</div>
+
+	</div>
+</template>

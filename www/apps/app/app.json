@@ -1,0 +1,87 @@
+{
+        "app" : {
+            "name" : "50 Buttons",
+            "id" : "com.ui5strap.examples.50buttons.app",
+            "package" : "com__ui5strap__examples.50buttons__app",
+            "history" : true,
+            "logLevel" : 0
+        },
+
+        "icons" : {
+            "default" : "img/my-app-icon-256x256.png"
+        },
+
+        "developers" : [
+            {
+                "name" : "Jan Philipp Knöller",
+                "email" : "info@pksoftware.de",
+                "timezone" : -1,
+                "roles" : [
+                    "Developer"
+                ]
+            }
+        ],
+
+        "licenses" : [
+            {
+                "name" : "Apache2 License",
+                "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        ],
+
+        "css" : [
+            "css/my-app.css"
+        ],
+
+        "models" : [
+            {
+                "src" : "i18n/i18n.properties",
+                "type" : "RESOURCE",
+                "modelName" : "i18n" 
+            },
+            {
+                "src" : "data/buttons.json",
+                "type" : "JSON",
+                "modelName" : "buttons" 
+            }
+        ],
+
+
+        "events" : {
+
+            "app" : {},
+
+            "controller" : {}
+
+        },
+
+        "views" : {
+            "com__ui5strap__examples.50buttons__app.views.Page1" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page1",
+                "styleClass" : "page-white page-1",
+
+                "documentTitle" : "i18n>PAGE1_HEADING",
+                
+                "target" : "content",
+                "preload" : true
+            }
+        },
+
+        "components" : [
+            {
+                
+                "id" : "frame",
+                "module" : "ui5strap.AppFrame",
+                "navContainer" : "ui5strap.NavContainer",
+                
+                "initialViews" : [
+                    { 
+                        "viewName" : "com__ui5strap__examples.50buttons__app.views.Page1"
+                    }
+                ]
+
+            }
+        ]
+}

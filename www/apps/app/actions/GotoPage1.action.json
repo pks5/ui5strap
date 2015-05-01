@@ -1,0 +1,13 @@
+{
+	
+	"__format" : "AJ2.0",
+	"__modules" : "ui5strap.AMGotoPage",
+	"__description" : "Goto Page 1",
+
+	"gotoPage" : {
+		"viewName" : "com__ui5strap__examples.50buttons__app.views.Page1",
+		"transition" : "transition-slide-ltr",
+		"writeHistory" : true
+	}
+
+}

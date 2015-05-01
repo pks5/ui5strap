@@ -1,0 +1,102 @@
+<template>
+
+	<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
+<!-- Panels -->
+			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Containers"></div>
+
+			<div data-sap-ui-type="ui5strap.Jumbotron">
+				<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="Jumbotron"></div>
+				<div data-sap-ui-type="ui5strap.Paragraph" data-text="This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."></div>
+				<div data-sap-ui-type="ui5strap.Paragraph">
+					<div data-sap-ui-type="ui5strap.Button" data-size="Large" data-text="Learn more" data-severity="Primary"></div>
+					
+				</div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Panels"></div>
+			<div data-sap-ui-type="ui5strap.Row">
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Panel" data-title="Panel title" data-text="Panel content">
+						<div data-sap-ui-aggregation="titleContent">
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="info-circle" data-fixed-width="true"></div>
+						</div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Panel" data-severity="Success" data-title="Panel title" data-text="Panel content">
+						<div data-sap-ui-type="ui5strap.Icon" data-icon="info-circle" data-fixed-width="true"></div>
+					</div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Panel" data-severity="Warning" data-title="Panel title" data-text="Panel content"></div>
+					<div data-sap-ui-type="ui5strap.Panel" data-severity="Primary" data-title="Panel title" data-text="Panel content"></div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.Panel" data-collapse="true" data-severity="Info" data-title="Collapsible Panel" data-text="Panel content"></div>
+					<div data-sap-ui-type="ui5strap.Panel" data-collapse="true" data-collapsed="false" data-severity="Danger" data-title="Another collapsible Panel" data-text="Panel content"></div>
+				</div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Panel Groups"></div>
+			<div data-sap-ui-type="ui5strap.PanelGroup">
+				<div data-sap-ui-type="ui5strap.Panel" data-collapse="true" data-collapsed="false" data-severity="Warning" data-title="Panel title" data-text="Panel content"></div>
+				<div data-sap-ui-type="ui5strap.Panel" data-collapse="true" data-severity="Primary" data-title="Panel title" data-text="Panel content"></div>
+				<div data-sap-ui-type="ui5strap.Panel" data-collapse="true" data-severity="Info" data-title="Panel title" data-text="Panel content"></div>
+				<div data-sap-ui-type="ui5strap.Panel" data-collapse="true" data-severity="Danger" data-title="Panel title" data-text="Panel content"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="List groups"></div>
+			<div data-sap-ui-type="ui5strap.Row">
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.ListGroup" data-selection-mode="Single">
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="Cras justo odio" data-badge="3">
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="home" data-fixed-width="true" data-trail="DoubleSpace"></div>
+						</div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="Dapibus ac facilisis in" data-badge="9">
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="book" data-fixed-width="true" data-trail="DoubleSpace"></div>
+						</div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="Morbi leo risus" data-badge="8">
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="pencil" data-fixed-width="true" data-trail="DoubleSpace"></div>
+						</div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="Porta ac consectetur ac" data-badge="2">
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="cog" data-fixed-width="true" data-trail="DoubleSpace"></div>
+						</div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="Vestibulum at eros" data-badge="1">
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="institution" data-fixed-width="true" data-trail="DoubleSpace"></div>
+						</div>
+					</div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.ListGroup" data-container="true" data-selection-mode="Single">
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-selected="true" data-text="Cras justo odio"></div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="Dapibus ac facilisis in"></div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="Morbi leo risus"></div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="Porta ac consectetur ac"></div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="Vestibulum at eros"></div>
+					</div>
+				</div>
+				<div data-sap-ui-type="ui5strap.Col" data-columns-small="4">
+					<div data-sap-ui-type="ui5strap.ListGroup" data-container="true" data-selection-mode="Single">
+						<div data-sap-ui-type="ui5strap.ListGroupItem" data-selected="true">
+							<div data-sap-ui-type="ui5strap.Heading" data-type="ListGroupItemHeading" data-level="4" data-text="List group item heading"></div>
+							<div data-sap-ui-type="ui5strap.Paragraph" data-text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit."></div>
+						</div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem">
+							<div data-sap-ui-type="ui5strap.Heading" data-type="ListGroupItemHeading" data-level="4" data-text="List group item heading"></div>
+							<div data-sap-ui-type="ui5strap.Paragraph" data-text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit."></div>
+						</div>
+						<div data-sap-ui-type="ui5strap.ListGroupItem">
+							<div data-sap-ui-type="ui5strap.Heading" data-type="ListGroupItemHeading" data-level="4" data-text="List group item heading"></div>
+							<div data-sap-ui-type="ui5strap.Paragraph" data-text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit."></div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+
+<!-- Wells -->
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Wells"></div>
+			<div data-sap-ui-type="ui5strap.Well" data-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur."></div>
+
+			<div data-sap-ui-type="ui5strap.Well" data-size="Large" data-text="Look, I'm in a large well!"></div>
+			<div data-sap-ui-type="ui5strap.Well" data-size="Small" data-text="Look, I'm in a small well!"></div>
+</div>
+</template>

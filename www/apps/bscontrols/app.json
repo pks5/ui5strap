@@ -1,0 +1,79 @@
+{
+        "app" : {
+            "name" : "Ui5Strap All Controls",
+            "package" : "com__ui5strap__bs.basic__app",
+            "title" : "All Controls",
+            "id" : "com.ui5strap.bs.basic.app",
+            "logLevel" : 5
+        },
+
+        "icons" : {
+            "default" : "img/my-app-icon-144x144.png"
+        },
+
+        "developers" : [
+            {
+                "name" : "Jan Philipp Knöller",
+                "email" : "info@pksoftware.de",
+                "timezone" : -1,
+                "roles" : [
+                    "Developer"
+                ]
+            }
+        ],
+
+        "licenses" : [
+            {
+                "name" : "Apache2 License",
+                "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        ],
+
+        "libraries" : [ 
+            
+        ],
+
+        "css" : [
+            "css/my-app.css"
+        ],
+
+        "models" : [
+            {
+                "src" : "i18n/i18n.properties",
+                "type" : "RESOURCE",
+                "modelName" : "i18n" 
+            }
+        ],
+
+        "views" : {
+            "com__ui5strap__bs.basic__app.views.Controls" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-intro",
+                "styleClass" : "page-intro",
+                
+                "target" : "content",
+                "preload" : true
+            }
+        },
+
+        "menus" : {
+            
+        },
+
+        "frames" : {
+            "default" : {
+                
+                "module" : "ui5strap.AppFrame",
+                
+                "navContainer" : "ui5strap.NavContainer",
+                
+                "initialViews" : [
+                    { 
+                        "viewName" : "com__ui5strap__bs.basic__app.views.Controls"
+                    }
+                ]
+
+            }
+        }
+}

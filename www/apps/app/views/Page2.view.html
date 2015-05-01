@@ -1,0 +1,23 @@
+<template data-controller-name="ui5strap.ActionController">
+	<div data-sap-ui-type="ui5strap.Page">
+			<div data-sap-ui-aggregation="head">
+				<div data-sap-ui-type="ui5strap.Bar" data-inverse="true">
+					<div data-sap-ui-aggregation="middle">
+						<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE2_TITLE}"></div>
+					</div>
+				</div>
+			</div>
+			<div data-sap-ui-aggregation="body">
+
+				<div data-sap-ui-type="ui5strap.Nav" data-selection-mode="Single" class="nav-round-btns" data-items="{buttons>/page2}">
+					<div data-sap-ui-type="ui5strap.ListItem">
+						<div data-sap-ui-type="ui5strap.Link" data-tap="__execute" data-custom-data:__action="{buttons>action}">
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="{buttons>icon}"></div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+	</div>
+
+</template>

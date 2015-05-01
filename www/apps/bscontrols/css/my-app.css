@@ -1,0 +1,69 @@
+/*
+ *
+ * My App Stylesheet
+ * 
+ * Author: [Your name]
+ * 
+ * Copyright (c) 2014 [Your Company]
+ * 
+ * [Your website]
+ *
+ * [Your license information]
+ * 
+ */
+
+/*
+* Bootstrap Grid Demo
+*/
+.show-grid [class^=col-]{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #eee;
+	background-color: rgba(86,61,124,.15);
+	border: 1px solid #ddd;
+	border: 1px solid rgba(86,61,124,.2);
+}
+
+/*
+* The carousel for the controls page
+*/
+.boilerplateCarousel{
+	margin-bottom:10px;
+}
+
+.boilerplateCarousel .sapUiView{
+	width:100%;
+	height:100%;
+}
+
+.boilerplateCarousel .carousel-item{
+	overflow-x:hidden;
+	overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+.sapUiMedia-Std-Desktop .boilerplateCarousel .carousel-item{
+	overflow-y:auto;
+}
+
+.boilerplateCarousel  .sapUiView > .container-fluid{
+	padding-bottom:80px;
+}
+
+.boilerplateCarousel .carousel-indicators li{
+	margin:3px;
+	-moz-box-shadow: 0 0 5px 0px #090909;
+	-webkit-box-shadow: 0 0 5px 0px#090090;
+	box-shadow: 0 0 5px 0px #090909;
+	background-color:white;
+	border-color: #888;
+}
+
+.boilerplateCarousel .carousel-indicators li.active{
+	background-color: #888;
+}
+
+.boilerplateCarousel .carousel-control{
+	width:5%;
+}
+

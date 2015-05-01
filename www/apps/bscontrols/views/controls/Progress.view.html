@@ -1,0 +1,85 @@
+<template data-controller-name="com__ui5strap__bs.basic__app.controllers.Controls">
+
+	<div data-sap-ui-type="ui5strap.Container" data-type="Fluid">
+
+<!-- Progress -->
+			<div data-sap-ui-type="ui5strap.PageHeader" data-text="Progress bars"></div>
+
+			<div data-sap-ui-type="ui5strap.Button" id="progressButton" data-text="Start Progress" data-tap="startProgress" data-severity="Success">
+				<div data-sap-ui-type="ui5strap.Icon" data-icon="play"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Basic"></div>
+
+			<div data-sap-ui-type="ui5strap.Progress" id="progress1">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="30"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Contextual alternatives"></div>
+
+			<div data-sap-ui-type="ui5strap.Progress" id="progress2">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="20" data-severity="Info"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress" id="progress3">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="40" data-severity="Success"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress" id="progress4">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="60" data-severity="Warning"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress" id="progress5">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="80" data-severity="Danger"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Striped"></div>
+
+			<div data-sap-ui-type="ui5strap.Progress" data-striped="true">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="20" data-severity="Info"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress" data-striped="true">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="40" data-severity="Success"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress" data-striped="true">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="60" data-severity="Warning"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress" data-striped="true">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="80" data-severity="Danger"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Animated"></div>
+
+			<div data-sap-ui-type="ui5strap.Progress" data-striped="true" data-animate="true">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-value="50"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="With labels"></div>
+
+			<div data-sap-ui-type="ui5strap.Progress">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-label-format="[progress]%" data-severity="Info" data-value="20"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-label-format="[val]/[max]" data-severity="Success" data-value="400" data-max-value="1000"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-label-format="[left] items left" data-severity="Warning" data-value="60000" data-max-value="100000"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Progress" data-striped="true">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Danger" data-min-value="100" data-max-value="200" data-label-format="[val]/[max] (Min value: [min], Progress: [progress]%)" data-severity="Danger" data-value="180"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Heading" data-text="Stacked"></div>
+			<div data-sap-ui-type="ui5strap.Progress">
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Success" data-value="20"></div>
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Warning" data-value="40"></div>
+				<div data-sap-ui-type="ui5strap.ProgressBar" data-severity="Danger" data-value="10"></div>
+			</div>
+	</div>
+</template>
