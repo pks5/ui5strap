@@ -1,0 +1,12 @@
+{
+  "__format" : "AJ2.0",
+  "__modules" : "ui5strap.AMShowOverlay",
+
+  "showOverlay" : {
+    
+    "viewName" : "com__ui5strap__examples.50buttons__app.views.AlertOverlay",
+    "target" : "content",
+    "transition" : "transition-zoom"
+  
+  }
+}

@@ -13,14 +13,15 @@
 			"icon" : "remove"
 		},
 		{
-			"icon" : "rocket"
+			"icon" : "rocket",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.Button1"
 		},
 		{
 			"icon" : "phone"
 		},
 		{
 			"icon" : "exclamation-circle",
-			"action" : "com__ui5strap__examples.50buttons__app.actions.Button1"
+			"action" : "com__ui5strap__examples.50buttons__app.actions.ShowAlertOverlay"
 		},
 		{
 			"icon" : "pencil"

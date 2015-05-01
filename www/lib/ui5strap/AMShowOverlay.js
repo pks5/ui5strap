@@ -42,12 +42,12 @@
 	* @Override
 	*/
 	AMShowOverlayProto.parameters = {
-		"viewId" : {
+		"id" : {
 			"required" : false, 
 			"defaultValue" : null, 
 			"type" : "string"
 		},
-		"viewType" : {
+		"type" : {
 			"required" : false, 
 			"defaultValue" : "HTML", 
 			"type" : "string"
@@ -65,7 +65,7 @@
 			"defaultValue" : null, 
 			"type" : "object"
 		},
-		"overlayTransition" : {
+		"transition" : {
 			"required" : false, 
 			"defaultValue" : "transition-slide-ttb", 
 			"type" : "string"
@@ -83,8 +83,8 @@
 	AMShowOverlayProto.run = function(){
 
 		var _this = this,
-			viewId = this.getParameter("viewId"),
-			viewType = this.getParameter("viewType"),
+			viewId = this.getParameter("id"),
+			viewType = this.getParameter("type"),
 			viewName = this.getParameter("viewName"),
 			target = this.getParameter("target"),
 			parameters = this.getParameter("parameters"),
@@ -109,7 +109,7 @@
 		
 		overlayParent.showOverlay(viewOptions, function AMShowOverlayRunComplete(){
 			_this.fireEvents(ui5strap.ActionModule.EVENT_COMPLETED);
-		}, this.getParameter('overlayTransition'));
+		}, this.getParameter('transition'));
 	};
 
 	/*

@@ -43,7 +43,7 @@
 	*/
 	AMCloseOverlayProto.parameters = {
 			
-			"overlayTransition" : {
+			"transition" : {
 				"required" : false, 
 				"defaultValue" : "transition-slide-btt", 
 				"type" : "string"
@@ -72,7 +72,7 @@
 		
 		overlayParent.hideOverlay(function CloseOverlayActionComplete(){
 			_this.fireEvents(ui5strap.ActionModule.EVENT_COMPLETED);
-		}, this.getParameter('overlayTransition'));
+		}, this.getParameter('transition'));
 	};
 
 	/*
