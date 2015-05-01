@@ -668,7 +668,8 @@
 		ui5strap.Layer.register(this.overlayId);
 
 		this.overlayControl = new ui5strap.NavContainer();
-		this.overlayControl.placeAt(this.overlayId + '-content');
+		this.overlayControl.placeAt(this.overlayId);
+		//this.overlayControl.placeAt(this.overlayId + '-content');
 
 		var oModels = this.getRootControl().oModels;
 		//var uiArea = sap.ui.getCore().createUIArea(newPage, _this);
@@ -677,9 +678,9 @@
 			this.overlayControl.setModel(oModels[sName], sName);
 		};
 
-		jQuery('#' + this.overlayId + '-backdrop').on('tap', function onTap(event){
-			_this.hideOverlay();
-		});
+		//jQuery('#' + this.overlayId + '-backdrop').on('tap', function onTap(event){
+		//	_this.hideOverlay();
+		//});
 	};
 
 	/*
@@ -1075,20 +1076,20 @@
 		appOverlay.className = 'ui5strap-app-overlay ui5strap-overlay ui5strap-layer ui5strap-hidden';
 		appOverlay.id = this.getDomId('overlay');
 
-		var appOverlayBackdrop = document.createElement('div');
-		appOverlayBackdrop.className = 'ui5strap-overlay-backdrop';
-		appOverlayBackdrop.id = this.getDomId('overlay-backdrop');
+		//var appOverlayBackdrop = document.createElement('div');
+		//appOverlayBackdrop.className = 'ui5strap-overlay-backdrop';
+		//appOverlayBackdrop.id = this.getDomId('overlay-backdrop');
 		/*
 		appOverlayBackdrop.onclick = function(){
 			_this.hideOverlay();
 		};
 		*/
-		appOverlay.appendChild(appOverlayBackdrop);
+		//appOverlay.appendChild(appOverlayBackdrop);
 
-		var appOverlayContent = document.createElement('div');
-		appOverlayContent.className = 'ui5strap-overlay-content';
-		appOverlayContent.id = this.getDomId('overlay-content');
-		appOverlay.appendChild(appOverlayContent);
+		//var appOverlayContent = document.createElement('div');
+		//appOverlayContent.className = 'ui5strap-overlay-content';
+		//appOverlayContent.id = this.getDomId('overlay-content');
+		//appOverlay.appendChild(appOverlayContent);
 
 		appContainer.appendChild(appOverlay);
 

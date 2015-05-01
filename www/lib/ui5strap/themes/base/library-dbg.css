@@ -9447,6 +9447,33 @@ a {
   bottom: 0;
   width: 100%;
 }
+.ui5strap-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.ui5strap-overlay-backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, .8);
+  -webkit-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+       -o-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.ui5strap-overlay-inner {
+  position: absolute;
+  top: 200px;
+  right: 200px;
+  bottom: 200px;
+  left: 200px;
+}
 /*
 *
 * NavContainer
