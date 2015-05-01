@@ -261,19 +261,18 @@
 	* @private
 	*/
 	var _applyFunctions = function(_this, parameterKey){
-		jQuery.sap.log.debug("F ActionContext::_functions ('" + parameterKey + "')");
-		var paramFunctions = _this._getParameter(parameterKey),
-			availableFunctions = ui5strap.ActionFunctions;
+		var paramFunctions = _this._getParameter(parameterKey);
 
-		if(null !== paramFunctions){
-			var paramFunctionsLength = paramFunctions.length;
-			jQuery.sap.log.debug("Found " + paramFunctionsLength + " parameter functions.");
+		if(paramFunctions){ //Expected array
+			var paramFunctionsLength = paramFunctions.length,
+				availableFunctions = ui5strap.ActionFunctions;
+			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
 				
 			for( var i = 0; i < paramFunctionsLength; i++ ){
 				var functionDef = paramFunctions[i],
 					functionName = functionDef['function'];
 
-				if(functionName in availableFunctions){
+				if(availableFunctions[functionName]){
 					_this._log.debug("Calling parameter function '" + functionName + "'");
 					var funcResult = availableFunctions[functionName].call(_this, functionDef.args);
 					if(false === funcResult){
@@ -312,27 +311,26 @@
 	* @Protected
 	*/
 	ActionContextProto._getParameter = function(parameterKey){
-			if(-1 !== parameterKey.indexOf('.')){
-				var keyParts = parameterKey.split('.');
-				var pointer = this;
-				var i=0;
-				while(i < keyParts.length){
-					if(keyParts[i] in pointer){ // && null !== pointer[keyParts[i]]
-						pointer = pointer[keyParts[i]];
-						i++;
-					}
-					else{
-						return null;
-					}
+		if(-1 !== parameterKey.indexOf('.')){
+			var keyParts = parameterKey.split('.'),
+				pointer = this,
+				i=0;
+			
+			while(i < keyParts.length){
+				pointer = pointer[keyParts[i]];
+				
+				if(!pointer){
+					return null;
 				}
-				return pointer;
-			}	
-
-			if(!(parameterKey in this.parameters)){
-				return null;
+				
+				i++;
 			}
-
-			return this.parameters[parameterKey];
+			
+			return pointer;
+		}	
+		
+		//Without a dot in the key, use "parameters"
+		return this.parameters[parameterKey] || null;
 	};
 
 	/*
@@ -340,25 +338,27 @@
 	*/
 	ActionContextProto._setParameter = function(parameterKey, parameterValue){
 			if(-1 !== parameterKey.indexOf('.')){
-				var keyParts = parameterKey.split('.');
-				var pointer = this;
-				var i=0;
+				var keyParts = parameterKey.split('.'),
+					pointer = this,
+					i=0;
 				while(i < keyParts.length){
-					if(!(keyParts[i] in pointer) && (i < keyParts.length - 1)){
-						pointer[keyParts[i]] = {};
-					}	
-
+					var keyPart = keyParts[i];
+					
 					if(i === keyParts.length - 1){
-						 pointer[keyParts[i]] = parameterValue;
+						 pointer[keyPart] = parameterValue;
+					}
+					else if(!pointer[keyPart]){
+						pointer[keyPart] = {};
 					}
 					
-					pointer = pointer[keyParts[i]];
-						i++;
+					pointer = pointer[keyPart];
+					i++;
 					
 				}
 				return this;
 			}	
-
+			
+			//Without a dot in the key, use "parameters"
 			this.parameters[parameterKey] = parameterValue;
 
 			return this;
@@ -400,7 +400,7 @@
 	* @protected
 	*/
 	ActionContextProto._merge = function(){
-			this._log.debug("Merging action parameters ...");
+			this._log.debug("MERGING PARAMETERS");
 			
 			//Reinitialize parameters with default values
 			this.parameters = {};

@@ -59,11 +59,11 @@
 	* Initializes the action module
 	*/
 	ActionModuleProto.init = function(context, instanceDef){
-		jQuery.sap.log.debug("F ActionModuleProto::init");
-
 		this.context = context;
 		this._instanceDef = instanceDef;
-
+		
+		context._log.debug("INIT " + this);
+		
 		if(instanceDef.namespace){
 			this.namespace = instanceDef.namespace;
 		}
@@ -73,13 +73,11 @@
 			throw new Error("Action namespace must not start with '" + paramPrefix + "'!");
 		}
 
-		this._actionName = this._instanceDef.module + "(" + (this._instanceDef.index + 1) + ")";
-		
 		return this;
 	};
 
 	ActionModuleProto.toString = function(){
-		return this._instanceDef.module + ' (' + this.context + ')';
+		return this._instanceDef.module + ' ' + this.context;
 	};
 
 	/*
@@ -167,9 +165,7 @@
 	* @public
 	*/
 	ActionModuleProto.execute = function(){
-		jQuery.sap.log.debug("F ActionModuleProto::execute");
-
-		this.context._log.debug("EXECUTING: " + this._actionName);
+		this.context._log.debug("EXECUTE " + this);
 
 		//Apply local parameter functions
 		this.context._process("parameters." + this.namespace);
@@ -179,7 +175,7 @@
 
 		//test if parameters match conditions
 		if(!this.testConditions()){
-			this.context._log.debug("Action '" + this._actionName + "' has not been executed cause conditions have not been met.");
+			this.context._log.debug("CONDITIONS DONT MATCH " + this);
 		}
 		else{
 			this.validateParameters();
@@ -190,7 +186,7 @@
 		//Exceution complete
 		this.completed();
 
-		this.context._log.debug("EXECUTION COMPLETE: " + this._actionName);
+		this.context._log.debug("EXECUTION COMPLETE " + this);
 	};
 
 	/*
@@ -206,7 +202,10 @@
 	* @protected
 	*/
 	ActionModuleProto.testConditions = function(){
-		this.context._log.debug("Testing conditions: '" + this.context.action_conditions + "'");
+		this.context._log.debug("TEST CONDITIONS " + this.context.action_conditions);
+		
+		//TODO Implement Action Conditions
+		
 		return true;
 	};	
 
@@ -215,7 +214,7 @@
 	* @protected
 	*/
 	ActionModuleProto.validateParameters = function(){
-		jQuery.sap.log.debug("F ActionModuleProto::validateParameters");
+		this.context._log.debug("VALIDATE PARAMETERS " + this);
 
 		for(paramKey in this.parameters){
 			var paramDef = this.getParameterDefinition(paramKey);
@@ -252,7 +251,7 @@
 			//Check if the parameter type is correct
 			if( ( null !== parameterValue ) && ( -1 === jQuery.inArray(parameterType, paramDef.type) ) )
 			{
-				throw new Error(this._actionName + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDef.type) + ") for parameter '" + publicParamKey + "'.");
+				throw new Error(this + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDef.type) + ") for parameter '" + publicParamKey + "'.");
 			}
 
 		}
