@@ -1392,7 +1392,6 @@
 
   var _callbackStack = [],
     _callbackTimer = null,
-    _callbackPending = 0,
     _requiredModules = {},
     _checkModules = function(_this){
 	    jQuerySap.log.debug('[LIBRARY] _checkModules');
@@ -1404,14 +1403,7 @@
 		      
 		      for(var j = 0; j < request.modules.length; j++){
 			        if(!jQuerySap.getObject(request.modules[j])){
-			        	/*
-			        	var scriptUrl = jQuerySap.getModulePath(request.modules[j]) + '.js';
-				        if(!_requiredModules[scriptUrl]){
-				            throw new Error('[LIBRARY] _checkModules: Can not execute "' + request.modules[j] + '": Module never has been laoded.' );
-				        }
-				        */
-				
-				        modulesExecuted = false;
+			        	modulesExecuted = false;
 				        request.attempts ++ ;
 				        if(request.attempts === 10){
 				            throw new Error("Could not find module '" + request.modules[j] + "'");
@@ -1419,10 +1411,6 @@
 				        
 				        break;
 			        }
-		      }
-		
-		      if(0 === request.modules.length){
-		          jQuerySap.log.debug('[LIBRARY] _checkModules: Modules list empty.');
 		      }
 		
 		      //Run the callback
@@ -1445,7 +1433,7 @@
 	    else{
 	    	_callbackTimer = window.setTimeout(function(){ 
 	             _checkModules(_this);
-	        }, 100);
+	        }, 200);
 	    }
 	};
 
@@ -1456,47 +1444,44 @@
 	    var _this = this;
 	
 	    if(typeof modules === 'string'){
-	      modules = [modules];
+	    	modules = [modules];
 	    }
 	
 	    jQuerySap.log.debug('[LIBRARY] require ' + modules.join(', '));
 	    
-	    var loadModules = [];
+	    var loadModules = [],
+	    	loadModuleNames = [];
 	    for(var i = 0; i < modules.length; i++){
-		      var scriptUrl = jQuerySap.getModulePath(modules[i]) + '.js';
+	    	  var moduleName = modules[i],
+		      	  scriptUrl = jQuerySap.getModulePath(moduleName) + '.js';
 		      
 		      if( !_requiredModules[scriptUrl] ){
-		          if( !jQuerySap.getObject(modules[i]) ){
+		          if( !jQuerySap.getObject(moduleName) ){
 		              loadModules.push(scriptUrl);
+		              loadModuleNames.push(moduleName);
 		          }
 		
 		          _requiredModules[scriptUrl] = true;
 		      }
 	    }
 	    
-	    _callbackPending += modules.length;
-		
-	    _callbackStack.unshift({
-	      "attempts" : 0,
-	      "modules" : modules,
-	      "callback" : callback
-	    });
-	    
-	    var loadScriptsSuccess = function(){
-	    	if(null === _callbackTimer){
-		    	//Create Check Timer
-	    		_checkModules(_this);
-		    }
-	    };
-	    
 	    if(loadModules.length === 0){
-	    	loadScriptsSuccess();
+	    	callback && callback();
 	    }
 	    else{ 
+	    	_callbackStack.unshift({
+		      "attempts" : 0,
+		      "modules" : loadModuleNames,
+		      "callback" : callback
+		    });
+		    
 		    var scriptBlock = new ui5strap.ScriptBlock();
 		    scriptBlock.load(loadModules, function(){
 		        scriptBlock.execute();
-		        loadScriptsSuccess();
+		        
+		        if(null === _callbackTimer){
+			    	_checkModules(_this);
+			    }
 		    });
 	    } 
     
