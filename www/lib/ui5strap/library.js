@@ -1393,150 +1393,118 @@
   var _callbackStack = [],
     _callbackTimer = null,
     _callbackPending = 0,
-    _requiredModules = {};
-
-  var _clearTimer = function(_this){
-    if(null !== _callbackTimer){
-      window.clearInterval(_callbackTimer);
-      _callbackTimer = null;
-      //jQuerySap.log.debug('[LIBRARY] require: Timer removed.');
-    }
-  };
-
-  var _checkModules = function(_this){
-    jQuerySap.log.debug('[LIBRARY] _checkModules');
-    var i = 0;
-    while(i < _callbackStack.length){
-      var request = _callbackStack[i];
-      //Check whether all modules are defined
-      var modulesExecuted = true;
-      for(var j = 0; j < request.modules.length; j++){
-        var object = ui5strap.Utils.getObject(request.modules[j]);
-        if(typeof object === 'undefined'){
-          var scriptUrl = jQuerySap.getModulePath(request.modules[j]) + '.js';
-          if(!(scriptUrl in _requiredModules)){
-            throw new Error('[LIBRARY] _checkModules: Can not execute "' + request.modules[j] + '": Module never has been laoded.' );
-          }
-
-          modulesExecuted = false;
-          request.attempts ++ ;
-          if(request.attempts === 10){
-            throw new Error("Could not find module '" + request.modules[j] + "'");
-          }
-          break;
-          
-        }
-        else{
-          //Module is defined now
-          jQuerySap.log.debug('[LIBRARY] _checkModules: Module found: "'+ request.modules[j] + '"');
-          
-          
-        }
-      }
-
-      if(0 === request.modules.length){
-        jQuerySap.log.debug('No dependencies');
-      }
-
-      //Run the callback
-      if(true === modulesExecuted){
-        jQuerySap.log.debug('[LIBRARY] _checkModules: Modules loaded.');
-
-        var callee = _callbackStack.shift();
-        callee.callback();
-      }
-      else{
-        jQuerySap.log.debug('[LIBRARY] _checkModules: Some modules are still loading.');
-        break;
-      }
-    }
-    
-    //Callback stack empty, remove the timer
-    if(0 === _callbackStack.length){
-      _clearTimer(_this);
-    }
-  };
+    _requiredModules = {},
+    _checkModules = function(_this){
+	    jQuerySap.log.debug('[LIBRARY] _checkModules');
+	    
+	    if(null === _callbackTimer){
+	    	_callbackTimer = window.setInterval(function(){ 
+	             _checkModules(_this);
+	        }, 50);
+	    }
+	    
+	    var i = 0;
+	    while(i < _callbackStack.length){
+		      var request = _callbackStack[i];
+		      //Check whether all modules are defined
+		      var modulesExecuted = true;
+		      for(var j = 0; j < request.modules.length; j++){
+			        if(!ui5strap.Utils.getObject(request.modules[j])){
+			        	var scriptUrl = jQuerySap.getModulePath(request.modules[j]) + '.js';
+				        if(!requiredModules[scriptUrl]){
+				            throw new Error('[LIBRARY] _checkModules: Can not execute "' + request.modules[j] + '": Module never has been laoded.' );
+				        }
+				
+				        modulesExecuted = false;
+				        request.attempts ++ ;
+				        if(request.attempts === 10){
+				            throw new Error("Could not find module '" + request.modules[j] + "'");
+				        }
+				        
+				        break;
+			        }
+		      }
+		
+		      if(0 === request.modules.length){
+		          jQuerySap.log.debug('No dependencies');
+		      }
+		
+		      //Run the callback
+		      if(modulesExecuted){
+		          jQuerySap.log.debug('[LIBRARY] _checkModules: Modules loaded.');
+		
+		          var callee = _callbackStack.shift();
+		          callee.callback();
+		      }
+		      else{
+		          jQuerySap.log.debug('[LIBRARY] _checkModules: Some modules are still loading.');
+		          break;
+		      }
+	    }
+	    
+	    //Callback stack empty, remove the timer
+	    if(0 === _callbackStack.length && null !== _callbackTimer){
+	    	window.clearInterval(_callbackTimer);
+	        _callbackTimer = null;
+	    }
+	};
 
   /*
   * Require one or more JavaScript Module, evaluated as one large script block.
   */
   ui5strap.require = function(modules, callback){
-    var _this = this;
-
-    if(typeof modules === 'string'){
-      modules = [modules];
-    }
-
-    jQuerySap.log.debug('[LIBRARY] require ' + modules.join(', '));
-    
-    _callbackPending += modules.length;
-
-    _callbackStack.unshift({
-      "attempts" : 0,
-      "modules" : modules,
-      "callback" : callback
-    });
-
-    var success = function anon_requireSuccess(){
-      _callbackPending -- ;
-
-      if(0 === _callbackPending){
-        //There are some callbacks pending
-        if(null === _callbackTimer){
-          jQuerySap.log.debug('[LIBRARY] require: Timer created.');
-          _callbackTimer = window.setInterval(function(){ 
-            _checkModules(_this);
-          }, 250);
-        }
-      }
-      else{
-        //No callbacks are pending, stop the timer
-        _clearTimer(_this);
-      }
-    };
-
-    var error = function anon_requireError(e, status){
-      _clearTimer(_this);
-
-      console.log(e);
-      throw new Error('Could not load module: ' + status);
-    };
-    
-    var loadScriptsSuccess = function(){
-      if(null === _callbackTimer){
-    	  jQuerySap.log.debug('[LIBRARY] require: Timer created.');
-          _callbackTimer = window.setInterval(function(){ 
-            _checkModules(_this);
-          }, 250);
-        }
-    }
-
-    var loadModules = [];
-    for(var i = 0; i < modules.length; i++){
-      var scriptUrl = jQuerySap.getModulePath(modules[i]) + '.js';
-      
-      if( !(scriptUrl in _requiredModules) ){
-        if( !jQuerySap.getObject(modules[i]) ){
-            loadModules.push(scriptUrl);
-        }
-
-        _requiredModules[scriptUrl] = true;
-      }
-    }
-
-    if(loadModules.length === 0){
-      loadScriptsSuccess();
-    }
-    else{ 
-      var scriptBlock = new ui5strap.ScriptBlock();
-      scriptBlock.load(loadModules, function(){
-        scriptBlock.execute();
-        loadScriptsSuccess();
-      });
-    } 
+	    var _this = this;
+	
+	    if(typeof modules === 'string'){
+	      modules = [modules];
+	    }
+	
+	    jQuerySap.log.debug('[LIBRARY] require ' + modules.join(', '));
+	    
+	    _callbackPending += modules.length;
+	
+	    _callbackStack.unshift({
+	      "attempts" : 0,
+	      "modules" : modules,
+	      "callback" : callback
+	    });
+	    
+	    var loadScriptsSuccess = function(){
+	    	if(null === _callbackTimer){
+		    	//Create Check Timer
+	    		_checkModules(_this);
+		    }
+	    };
+	    
+	    var loadModules = [];
+	    for(var i = 0; i < modules.length; i++){
+		      var scriptUrl = jQuerySap.getModulePath(modules[i]) + '.js';
+		      
+		      if( !_requiredModules[scriptUrl] ){
+		          if( !jQuerySap.getObject(modules[i]) ){
+		              loadModules.push(scriptUrl);
+		          }
+		
+		          _requiredModules[scriptUrl] = true;
+		      }
+	    }
+	
+	    if(loadModules.length === 0){
+	    	loadScriptsSuccess();
+	    }
+	    else{ 
+		    var scriptBlock = new ui5strap.ScriptBlock();
+		    scriptBlock.load(loadModules, function(){
+		        scriptBlock.execute();
+		        loadScriptsSuccess();
+		    });
+	    } 
     
   };
   
+  /**
+   * Read a text file via GET
+   */
   ui5strap.readTextFile = function(url, dataType, success, error){
 	  jQuery.ajax({
 			"dataType": "json",
