@@ -1403,7 +1403,7 @@
 		      	  modulesExecuted = true;
 		      
 		      for(var j = 0; j < request.modules.length; j++){
-			        if(!ui5strap.Utils.getObject(request.modules[j])){
+			        if(!jQuerySap.getObject(request.modules[j])){
 			        	/*
 			        	var scriptUrl = jQuerySap.getModulePath(request.modules[j]) + '.js';
 				        if(!_requiredModules[scriptUrl]){
@@ -1422,7 +1422,7 @@
 		      }
 		
 		      if(0 === request.modules.length){
-		          jQuerySap.log.debug('No dependencies');
+		          jQuerySap.log.debug('[LIBRARY] _checkModules: Modules list empty.');
 		      }
 		
 		      //Run the callback
