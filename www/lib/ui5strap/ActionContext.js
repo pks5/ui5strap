@@ -317,13 +317,13 @@
 				i=0;
 			
 			while(i < keyParts.length){
-				pointer = pointer[keyParts[i]];
-				
-				if(!pointer){
+				if(keyParts[i] in pointer){ // && null !== pointer[keyParts[i]]
+					pointer = pointer[keyParts[i]];
+					i++;
+				}
+				else{
 					return null;
 				}
-				
-				i++;
 			}
 			
 			return pointer;
@@ -331,7 +331,11 @@
 		
 		//Without a dot in the key, use "parameters"
 		//TODO Is this ever happen somewhere?
-		return this.parameters[parameterKey] || null;
+		if(!(parameterKey in this.parameters)){
+			return null;
+		}
+
+		return this.parameters[parameterKey];
 	};
 
 	/*
@@ -348,7 +352,7 @@
 					if(i === keyParts.length - 1){
 						 pointer[keyPart] = parameterValue;
 					}
-					else if(!pointer[keyPart]){
+					else if(!(keyPart in pointer)){
 						pointer[keyPart] = {};
 					}
 					
