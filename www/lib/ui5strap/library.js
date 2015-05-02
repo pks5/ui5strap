@@ -1397,23 +1397,19 @@
     _checkModules = function(_this){
 	    jQuerySap.log.debug('[LIBRARY] _checkModules');
 	    
-	    if(null === _callbackTimer){
-	    	_callbackTimer = window.setInterval(function(){ 
-	             _checkModules(_this);
-	        }, 50);
-	    }
-	    
 	    var i = 0;
 	    while(i < _callbackStack.length){
-		      var request = _callbackStack[i];
-		      //Check whether all modules are defined
-		      var modulesExecuted = true;
+		      var request = _callbackStack[i],
+		      	  modulesExecuted = true;
+		      
 		      for(var j = 0; j < request.modules.length; j++){
 			        if(!ui5strap.Utils.getObject(request.modules[j])){
+			        	/*
 			        	var scriptUrl = jQuerySap.getModulePath(request.modules[j]) + '.js';
-				        if(!requiredModules[scriptUrl]){
+				        if(!_requiredModules[scriptUrl]){
 				            throw new Error('[LIBRARY] _checkModules: Can not execute "' + request.modules[j] + '": Module never has been laoded.' );
 				        }
+				        */
 				
 				        modulesExecuted = false;
 				        request.attempts ++ ;
@@ -1443,9 +1439,13 @@
 	    }
 	    
 	    //Callback stack empty, remove the timer
-	    if(0 === _callbackStack.length && null !== _callbackTimer){
-	    	window.clearInterval(_callbackTimer);
-	        _callbackTimer = null;
+	    if(0 === _callbackStack.length){
+	    	_callbackTimer = null;
+	    }
+	    else{
+	    	_callbackTimer = window.setTimeout(function(){ 
+	             _checkModules(_this);
+	        }, 100);
 	    }
 	};
 
@@ -1461,8 +1461,21 @@
 	
 	    jQuerySap.log.debug('[LIBRARY] require ' + modules.join(', '));
 	    
+	    var loadModules = [];
+	    for(var i = 0; i < modules.length; i++){
+		      var scriptUrl = jQuerySap.getModulePath(modules[i]) + '.js';
+		      
+		      if( !_requiredModules[scriptUrl] ){
+		          if( !jQuerySap.getObject(modules[i]) ){
+		              loadModules.push(scriptUrl);
+		          }
+		
+		          _requiredModules[scriptUrl] = true;
+		      }
+	    }
+	    
 	    _callbackPending += modules.length;
-	
+		
 	    _callbackStack.unshift({
 	      "attempts" : 0,
 	      "modules" : modules,
@@ -1476,19 +1489,6 @@
 		    }
 	    };
 	    
-	    var loadModules = [];
-	    for(var i = 0; i < modules.length; i++){
-		      var scriptUrl = jQuerySap.getModulePath(modules[i]) + '.js';
-		      
-		      if( !_requiredModules[scriptUrl] ){
-		          if( !jQuerySap.getObject(modules[i]) ){
-		              loadModules.push(scriptUrl);
-		          }
-		
-		          _requiredModules[scriptUrl] = true;
-		      }
-	    }
-	
 	    if(loadModules.length === 0){
 	    	loadScriptsSuccess();
 	    }
