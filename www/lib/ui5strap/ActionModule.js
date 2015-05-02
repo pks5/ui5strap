@@ -136,7 +136,7 @@
 	*/
 	ActionModuleProto.getParameterType = function(parameterKey){
 		var paramValue = this.getParameter(parameterKey);
-		if(!paramValue){
+		if(null === paramValue){
 			//Parameter does not exist
 			return false;
 		}
@@ -236,7 +236,7 @@
 				paramDef.type = [paramDef.type];
 			}
 
-			var parameterType = this.getParameterType(paramKey);
+			
 			var parameterValue = this.getParameter(paramKey);
 			
 			//Test if required param exists
@@ -253,6 +253,7 @@
 			}
 
 			//Check if the parameter type is correct
+			var parameterType = this.getParameterType(paramKey);
 			if( ( null !== parameterValue ) && ( -1 === jQuery.inArray(parameterType, paramDef.type) ) )
 			{
 				throw new Error(this + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDef.type) + ") for parameter '" + publicParamKey + "'.");
