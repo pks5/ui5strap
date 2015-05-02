@@ -1390,6 +1390,7 @@
   * -------
   */
 
+  /*
   var _callbackStack = [],
     _callbackTimer = null,
     _requiredModules = {},
@@ -1436,6 +1437,7 @@
 	        }, 200);
 	    }
 	};
+  */
 
   /*
   * Require one or more JavaScript Module, evaluated as one large script block.
@@ -1449,18 +1451,18 @@
 	
 	    jQuerySap.log.debug('[LIBRARY] require ' + modules.join(', '));
 	    
-	    var loadModules = [],
-	    	loadModuleNames = [];
+	    var loadModules = [];
+	    	//loadModuleNames = [];
 	    for(var i = 0; i < modules.length; i++){
 	    	  var moduleName = modules[i],
 		      	  scriptUrl = jQuerySap.getModulePath(moduleName) + '.js';
 		      
-	    	  if( !jQuerySap.getObject(moduleName) && !_requiredModules[scriptUrl] ){
+	    	  if( !jQuerySap.getObject(moduleName) ){ //&& !_requiredModules[scriptUrl] 
 		          loadModules.push(scriptUrl);
-		          loadModuleNames.push(moduleName);
+		          //loadModuleNames.push(moduleName);
 		      }
 		      
-	    	  _requiredModules[scriptUrl] = true;
+	    	  //_requiredModules[scriptUrl] = true;
 	    }
 	    
 	    if(loadModules.length === 0){
