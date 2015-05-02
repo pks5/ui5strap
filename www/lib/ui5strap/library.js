@@ -1455,33 +1455,36 @@
 	    	  var moduleName = modules[i],
 		      	  scriptUrl = jQuerySap.getModulePath(moduleName) + '.js';
 		      
-		      if( !_requiredModules[scriptUrl] ){
-		          if( !jQuerySap.getObject(moduleName) ){
-		              loadModules.push(scriptUrl);
-		              loadModuleNames.push(moduleName);
-		          }
-		
-		          _requiredModules[scriptUrl] = true;
+	    	  if( !jQuerySap.getObject(moduleName) && !_requiredModules[scriptUrl] ){
+		          loadModules.push(scriptUrl);
+		          loadModuleNames.push(moduleName);
 		      }
+		      
+	    	  _requiredModules[scriptUrl] = true;
 	    }
 	    
 	    if(loadModules.length === 0){
 	    	callback && callback();
 	    }
 	    else{ 
+	    	/*
 	    	_callbackStack.unshift({
 		      "attempts" : 0,
 		      "modules" : loadModuleNames,
 		      "callback" : callback
 		    });
-		    
+		    */
+	    	
 		    var scriptBlock = new ui5strap.ScriptBlock();
 		    scriptBlock.load(loadModules, function(){
 		        scriptBlock.execute();
 		        
+		        /*
 		        if(null === _callbackTimer){
 			    	_checkModules(_this);
 			    }
+			    */
+		        callback && callback();
 		    });
 	    } 
     
