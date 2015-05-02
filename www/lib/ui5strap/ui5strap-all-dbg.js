@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.8.8"
+        	version: "0.9.0"
       }
   );
   
@@ -1393,150 +1393,118 @@
   var _callbackStack = [],
     _callbackTimer = null,
     _callbackPending = 0,
-    _requiredModules = {};
-
-  var _clearTimer = function(_this){
-    if(null !== _callbackTimer){
-      window.clearInterval(_callbackTimer);
-      _callbackTimer = null;
-      //jQuerySap.log.debug('[LIBRARY] require: Timer removed.');
-    }
-  };
-
-  var _checkModules = function(_this){
-    jQuerySap.log.debug('[LIBRARY] _checkModules');
-    var i = 0;
-    while(i < _callbackStack.length){
-      var request = _callbackStack[i];
-      //Check whether all modules are defined
-      var modulesExecuted = true;
-      for(var j = 0; j < request.modules.length; j++){
-        var object = ui5strap.Utils.getObject(request.modules[j]);
-        if(typeof object === 'undefined'){
-          var scriptUrl = jQuerySap.getModulePath(request.modules[j]) + '.js';
-          if(!(scriptUrl in _requiredModules)){
-            throw new Error('[LIBRARY] _checkModules: Can not execute "' + request.modules[j] + '": Module never has been laoded.' );
-          }
-
-          modulesExecuted = false;
-          request.attempts ++ ;
-          if(request.attempts === 10){
-            throw new Error("Could not find module '" + request.modules[j] + "'");
-          }
-          break;
-          
-        }
-        else{
-          //Module is defined now
-          jQuerySap.log.debug('[LIBRARY] _checkModules: Module found: "'+ request.modules[j] + '"');
-          
-          
-        }
-      }
-
-      if(0 === request.modules.length){
-        jQuerySap.log.debug('No dependencies');
-      }
-
-      //Run the callback
-      if(true === modulesExecuted){
-        jQuerySap.log.debug('[LIBRARY] _checkModules: Modules loaded.');
-
-        var callee = _callbackStack.shift();
-        callee.callback();
-      }
-      else{
-        jQuerySap.log.debug('[LIBRARY] _checkModules: Some modules are still loading.');
-        break;
-      }
-    }
-    
-    //Callback stack empty, remove the timer
-    if(0 === _callbackStack.length){
-      _clearTimer(_this);
-    }
-  };
+    _requiredModules = {},
+    _checkModules = function(_this){
+	    jQuerySap.log.debug('[LIBRARY] _checkModules');
+	    
+	    var i = 0;
+	    while(i < _callbackStack.length){
+		      var request = _callbackStack[i],
+		      	  modulesExecuted = true;
+		      
+		      for(var j = 0; j < request.modules.length; j++){
+			        if(!ui5strap.Utils.getObject(request.modules[j])){
+			        	/*
+			        	var scriptUrl = jQuerySap.getModulePath(request.modules[j]) + '.js';
+				        if(!_requiredModules[scriptUrl]){
+				            throw new Error('[LIBRARY] _checkModules: Can not execute "' + request.modules[j] + '": Module never has been laoded.' );
+				        }
+				        */
+				
+				        modulesExecuted = false;
+				        request.attempts ++ ;
+				        if(request.attempts === 10){
+				            throw new Error("Could not find module '" + request.modules[j] + "'");
+				        }
+				        
+				        break;
+			        }
+		      }
+		
+		      if(0 === request.modules.length){
+		          jQuerySap.log.debug('No dependencies');
+		      }
+		
+		      //Run the callback
+		      if(modulesExecuted){
+		          jQuerySap.log.debug('[LIBRARY] _checkModules: Modules loaded.');
+		
+		          var callee = _callbackStack.shift();
+		          callee.callback();
+		      }
+		      else{
+		          jQuerySap.log.debug('[LIBRARY] _checkModules: Some modules are still loading.');
+		          break;
+		      }
+	    }
+	    
+	    //Callback stack empty, remove the timer
+	    if(0 === _callbackStack.length){
+	    	_callbackTimer = null;
+	    }
+	    else{
+	    	_callbackTimer = window.setTimeout(function(){ 
+	             _checkModules(_this);
+	        }, 100);
+	    }
+	};
 
   /*
   * Require one or more JavaScript Module, evaluated as one large script block.
   */
   ui5strap.require = function(modules, callback){
-    var _this = this;
-
-    if(typeof modules === 'string'){
-      modules = [modules];
-    }
-
-    jQuerySap.log.debug('[LIBRARY] require ' + modules.join(', '));
-    
-    _callbackPending += modules.length;
-
-    _callbackStack.unshift({
-      "attempts" : 0,
-      "modules" : modules,
-      "callback" : callback
-    });
-
-    var success = function anon_requireSuccess(){
-      _callbackPending -- ;
-
-      if(0 === _callbackPending){
-        //There are some callbacks pending
-        if(null === _callbackTimer){
-          jQuerySap.log.debug('[LIBRARY] require: Timer created.');
-          _callbackTimer = window.setInterval(function(){ 
-            _checkModules(_this);
-          }, 250);
-        }
-      }
-      else{
-        //No callbacks are pending, stop the timer
-        _clearTimer(_this);
-      }
-    };
-
-    var error = function anon_requireError(e, status){
-      _clearTimer(_this);
-
-      console.log(e);
-      throw new Error('Could not load module: ' + status);
-    };
-    
-    var loadScriptsSuccess = function(){
-      if(null === _callbackTimer){
-    	  jQuerySap.log.debug('[LIBRARY] require: Timer created.');
-          _callbackTimer = window.setInterval(function(){ 
-            _checkModules(_this);
-          }, 250);
-        }
-    }
-
-    var loadModules = [];
-    for(var i = 0; i < modules.length; i++){
-      var scriptUrl = jQuerySap.getModulePath(modules[i]) + '.js';
-      
-      if( !(scriptUrl in _requiredModules) ){
-        if( !jQuerySap.getObject(modules[i]) ){
-            loadModules.push(scriptUrl);
-        }
-
-        _requiredModules[scriptUrl] = true;
-      }
-    }
-
-    if(loadModules.length === 0){
-      loadScriptsSuccess();
-    }
-    else{ 
-      var scriptBlock = new ui5strap.ScriptBlock();
-      scriptBlock.load(loadModules, function(){
-        scriptBlock.execute();
-        loadScriptsSuccess();
-      });
-    } 
+	    var _this = this;
+	
+	    if(typeof modules === 'string'){
+	      modules = [modules];
+	    }
+	
+	    jQuerySap.log.debug('[LIBRARY] require ' + modules.join(', '));
+	    
+	    var loadModules = [];
+	    for(var i = 0; i < modules.length; i++){
+		      var scriptUrl = jQuerySap.getModulePath(modules[i]) + '.js';
+		      
+		      if( !_requiredModules[scriptUrl] ){
+		          if( !jQuerySap.getObject(modules[i]) ){
+		              loadModules.push(scriptUrl);
+		          }
+		
+		          _requiredModules[scriptUrl] = true;
+		      }
+	    }
+	    
+	    _callbackPending += modules.length;
+		
+	    _callbackStack.unshift({
+	      "attempts" : 0,
+	      "modules" : modules,
+	      "callback" : callback
+	    });
+	    
+	    var loadScriptsSuccess = function(){
+	    	if(null === _callbackTimer){
+		    	//Create Check Timer
+	    		_checkModules(_this);
+		    }
+	    };
+	    
+	    if(loadModules.length === 0){
+	    	loadScriptsSuccess();
+	    }
+	    else{ 
+		    var scriptBlock = new ui5strap.ScriptBlock();
+		    scriptBlock.load(loadModules, function(){
+		        scriptBlock.execute();
+		        loadScriptsSuccess();
+		    });
+	    } 
     
   };
   
+  /**
+   * Read a text file via GET
+   */
   ui5strap.readTextFile = function(url, dataType, success, error){
 	  jQuery.ajax({
 			"dataType": "json",
@@ -2068,19 +2036,18 @@
 	* @private
 	*/
 	var _applyFunctions = function(_this, parameterKey){
-		jQuery.sap.log.debug("F ActionContext::_functions ('" + parameterKey + "')");
-		var paramFunctions = _this._getParameter(parameterKey),
-			availableFunctions = ui5strap.ActionFunctions;
+		var paramFunctions = _this._getParameter(parameterKey);
 
-		if(null !== paramFunctions){
-			var paramFunctionsLength = paramFunctions.length;
-			jQuery.sap.log.debug("Found " + paramFunctionsLength + " parameter functions.");
+		if(paramFunctions){ //Expected array
+			var paramFunctionsLength = paramFunctions.length,
+				availableFunctions = ui5strap.ActionFunctions;
+			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
 				
 			for( var i = 0; i < paramFunctionsLength; i++ ){
 				var functionDef = paramFunctions[i],
 					functionName = functionDef['function'];
 
-				if(functionName in availableFunctions){
+				if(availableFunctions[functionName]){
 					_this._log.debug("Calling parameter function '" + functionName + "'");
 					var funcResult = availableFunctions[functionName].call(_this, functionDef.args);
 					if(false === funcResult){
@@ -2119,27 +2086,27 @@
 	* @Protected
 	*/
 	ActionContextProto._getParameter = function(parameterKey){
-			if(-1 !== parameterKey.indexOf('.')){
-				var keyParts = parameterKey.split('.');
-				var pointer = this;
-				var i=0;
-				while(i < keyParts.length){
-					if(keyParts[i] in pointer){ // && null !== pointer[keyParts[i]]
-						pointer = pointer[keyParts[i]];
-						i++;
-					}
-					else{
-						return null;
-					}
+		if(-1 !== parameterKey.indexOf('.')){
+			var keyParts = parameterKey.split('.'),
+				pointer = this,
+				i=0;
+			
+			while(i < keyParts.length){
+				pointer = pointer[keyParts[i]];
+				
+				if(!pointer){
+					return null;
 				}
-				return pointer;
-			}	
-
-			if(!(parameterKey in this.parameters)){
-				return null;
+				
+				i++;
 			}
-
-			return this.parameters[parameterKey];
+			
+			return pointer;
+		}	
+		
+		//Without a dot in the key, use "parameters"
+		//TODO Is this ever happen somewhere?
+		return this.parameters[parameterKey] || null;
 	};
 
 	/*
@@ -2147,25 +2114,28 @@
 	*/
 	ActionContextProto._setParameter = function(parameterKey, parameterValue){
 			if(-1 !== parameterKey.indexOf('.')){
-				var keyParts = parameterKey.split('.');
-				var pointer = this;
-				var i=0;
+				var keyParts = parameterKey.split('.'),
+					pointer = this,
+					i=0;
 				while(i < keyParts.length){
-					if(!(keyParts[i] in pointer) && (i < keyParts.length - 1)){
-						pointer[keyParts[i]] = {};
-					}	
-
+					var keyPart = keyParts[i];
+					
 					if(i === keyParts.length - 1){
-						 pointer[keyParts[i]] = parameterValue;
+						 pointer[keyPart] = parameterValue;
+					}
+					else if(!pointer[keyPart]){
+						pointer[keyPart] = {};
 					}
 					
-					pointer = pointer[keyParts[i]];
-						i++;
+					pointer = pointer[keyPart];
+					i++;
 					
 				}
 				return this;
 			}	
-
+			
+			//Without a dot in the key, use "parameters"
+			//TODO Is this ever happen somewhere?
 			this.parameters[parameterKey] = parameterValue;
 
 			return this;
@@ -2207,7 +2177,7 @@
 	* @protected
 	*/
 	ActionContextProto._merge = function(){
-			this._log.debug("Merging action parameters ...");
+			this._log.debug("MERGING PARAMETERS");
 			
 			//Reinitialize parameters with default values
 			this.parameters = {};
@@ -2408,61 +2378,58 @@
 	*/
 	ActionModuleProto.parameters = {};
 
-	/*
+	/**
 	* Initializes the action module
 	*/
 	ActionModuleProto.init = function(context, instanceDef){
-		jQuery.sap.log.debug("F ActionModuleProto::init");
-
 		this.context = context;
 		this._instanceDef = instanceDef;
-
+		
+		context._log.debug("INIT " + this);
+		
 		if(instanceDef.namespace){
 			this.namespace = instanceDef.namespace;
 		}
-
+		
+		//Test if Namespace is valid
 		var paramPrefix = context.parameterKey("");
 		if(jQuery.sap.startsWith(this.namespace, paramPrefix)){
 			throw new Error("Action namespace must not start with '" + paramPrefix + "'!");
 		}
 
-		this._actionName = this._instanceDef.module + "(" + (this._instanceDef.index + 1) + ")";
-		
 		return this;
 	};
 
+	/**
+	 * String representation of the Module
+	 */
 	ActionModuleProto.toString = function(){
-		return this._instanceDef.module + ' (' + this.context + ')';
+		return this._instanceDef.module + ' ' + this.context;
 	};
 
-	/*
-	* Gets an action module specific parameter key definition
+	/**
+	* Returns the Definition for a Parameter
 	* @public
+	* @return The Definition or null
 	*/
 	ActionModuleProto.getParameterDefinition = function(parameterKey){
-		if(!(parameterKey in this.parameters)){
-			return null;
-		}
-
-		return this.parameters[parameterKey];
+		return this.parameters[parameterKey] || null;
 	};	
 
-	/*
-	* Gets a property of an action module specific parameter key definition
+	/**
+	* Returns a Field (type, defaultValue, etc) of a Parameter Definition
 	* @public
+	* @return The Field intormation or null
 	*/
 	ActionModuleProto.getParameterDefinitionField = function(parameterKey, fieldKey){
 		var paramDef = this.getParameterDefinition(parameterKey);
 
-		if(null === paramDef){
+		if(!paramDef){
+			//Parameter is not defined in module
 			return null;
 		}
 
-		if(!(fieldKey in paramDef)){
-			return null;
-		}
-
-		return paramDef[fieldKey];
+		return paramDef[fieldKey] || null;
 	};	
 
 	/*
@@ -2473,6 +2440,8 @@
 		if(-1 !== parameterKey.indexOf('.')){
 			return parameterKey;
 		}
+		
+		//By default, use the Module's Namespace
 		return 'parameters.' + this.namespace + '.' + parameterKey;
 	};	
 
@@ -2484,15 +2453,18 @@
 		return this.context._getParameter(this._createParameterKey(parameterKey));
 	};
 
-	/*
-	* Gets the parameter type of an action module specific parameter
+	/**
+	* Returns the type of an Parameter
 	* @public
 	*/
 	ActionModuleProto.getParameterType = function(parameterKey){
 		var paramValue = this.getParameter(parameterKey);
-		if(null === paramValue){
+		if(!paramValue){
+			//Parameter does not exist
 			return false;
 		}
+		
+		//Return the Type
 		return typeof paramValue;
 	};	
 
@@ -2520,9 +2492,7 @@
 	* @public
 	*/
 	ActionModuleProto.execute = function(){
-		jQuery.sap.log.debug("F ActionModuleProto::execute");
-
-		this.context._log.debug("EXECUTING: " + this._actionName);
+		this.context._log.debug("EXECUTE " + this);
 
 		//Apply local parameter functions
 		this.context._process("parameters." + this.namespace);
@@ -2532,7 +2502,7 @@
 
 		//test if parameters match conditions
 		if(!this.testConditions()){
-			this.context._log.debug("Action '" + this._actionName + "' has not been executed cause conditions have not been met.");
+			this.context._log.debug("CONDITIONS DONT MATCH " + this);
 		}
 		else{
 			this.validateParameters();
@@ -2543,7 +2513,7 @@
 		//Exceution complete
 		this.completed();
 
-		this.context._log.debug("EXECUTION COMPLETE: " + this._actionName);
+		this.context._log.debug("EXECUTION COMPLETE " + this);
 	};
 
 	/*
@@ -2559,7 +2529,10 @@
 	* @protected
 	*/
 	ActionModuleProto.testConditions = function(){
-		this.context._log.debug("Testing conditions: '" + this.context.action_conditions + "'");
+		this.context._log.debug("TEST CONDITIONS " + this.context.action_conditions);
+		
+		//TODO Implement Action Conditions
+		
 		return true;
 	};	
 
@@ -2568,7 +2541,7 @@
 	* @protected
 	*/
 	ActionModuleProto.validateParameters = function(){
-		jQuery.sap.log.debug("F ActionModuleProto::validateParameters");
+		this.context._log.debug("VALIDATE PARAMETERS " + this);
 
 		for(paramKey in this.parameters){
 			var paramDef = this.getParameterDefinition(paramKey);
@@ -2605,7 +2578,7 @@
 			//Check if the parameter type is correct
 			if( ( null !== parameterValue ) && ( -1 === jQuery.inArray(parameterType, paramDef.type) ) )
 			{
-				throw new Error(this._actionName + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDef.type) + ") for parameter '" + publicParamKey + "'.");
+				throw new Error(this + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDef.type) + ") for parameter '" + publicParamKey + "'.");
 			}
 
 		}
@@ -2780,8 +2753,7 @@
 			
 			var instanceDefsLength = instanceDefs.length;
 			for ( var i = 0; i < instanceDefsLength; i++ ) { 
-				var instanceDef = instanceDefs[i];
-				context._run(instanceDef);
+				context._run(instanceDefs[i]);
 			}
 		
 		});
@@ -2793,17 +2765,14 @@
 	* @static
 	*/
 	var _execute = function(context){
-		var actionModuleNameParameter = context.parameterKey(ActionContext.PARAM_MODULES);
-		var actionModuleName = context._getParameter(actionModuleNameParameter);
+		var actionModuleNameParameter = context.parameterKey(ActionContext.PARAM_MODULES),
+			actionModuleName = context._getParameter(actionModuleNameParameter);
+		
 		if(actionModuleName){ //Expected string
 			context._deleteParameter(actionModuleNameParameter);
-			
-			context._log.debug("START ACTION '" + context + "' ...");
-
 			_executeModules(context, ui5strap.Utils.parseIContent(actionModuleName));
 		}
 		else{   
-			console.log(context);
 			throw new Error("Invalid action '" + context + "': '" + actionModuleNameParameter + "' attribute is missing!");
 		}
 	};
@@ -2823,8 +2792,6 @@
 				}
 				actionName = actionNamesList[eventId];
 			}
-			
-			context._log.debug("Loading action from '" + actionName + "'...");
 			
 			Action.loadFromFile(actionName, function _loadActionFromFile_complete(actionJSON){
 
@@ -2861,23 +2828,20 @@
 	* @static
 	*/
 	Action.loadFromFile = function(actionName, callback){
-		jQuerySap.log.debug("Populating from file '" + actionName + "'...");
-					
 		var actionCache = Action.cache;
-		if(actionName in actionCache){
+		if(actionCache[actionName]){
 			callback && callback(actionCache[actionName]);
 			
 			return;
 		}
 		
 		var actionUrl = jQuerySap.getModulePath(actionName) + '.action.json';
+		jQuerySap.log.debug("[ACTION] Loading '" + actionName + "' from '" + actionUrl + "'" );
 		
 		ui5strap.readTextFile(
 				actionUrl, 
 				'json', 
 				function(data){
-					jQuerySap.log.debug("Loaded Action '" + actionName + "' from '" + actionUrl + "'" );
-
 					actionCache[actionName] = data;
 				
 					callback && callback(data);
@@ -2909,7 +2873,7 @@
 	* @static
 	*/
 	Action.run = function(action){
-		jQuerySap.log.debug("F Action::run");
+		jQuerySap.log.debug("[ACTION] RUN");
 
 		var actionName = null;
 		if(action.parameters && typeof action.parameters === 'string'){

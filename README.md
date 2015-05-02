@@ -1,4 +1,4 @@
-ui5strap 0.8.8
+ui5strap 0.9.0
 ==============
 
 The independent SAPUI5 / OpenUI5 App Development Toolkit based on Bootstrap.
