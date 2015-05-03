@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.2"
+        	version: "0.9.3"
       }
   );
   
@@ -3712,6 +3712,13 @@
 
 		};
 	};
+	
+	var _createAppClass = function(_this, appClasses){
+		if(_this.config.data.app.styleClass){
+			appClasses += " " + _this.config.data.app.styleClass;
+		}
+		return appClasses;
+	};
 
 	/*
 	* ----------------------------------------------------------
@@ -3978,7 +3985,7 @@
 		var _this = this;
 
 		ui5strap.polyfill.requestAnimationFrame(function(){
-			_this.domRef.className = 'ui5strap-app ui5strap-app-current';
+			_this.domRef.className = _createAppClass(_this, 'ui5strap-app ui5strap-app-current');
 			
 			_this.onShown(new sap.ui.base.Event("ui5strap.app.shown", _this, {}));
 
@@ -4007,7 +4014,7 @@
 
 		var _this = this;
 		ui5strap.polyfill.requestAnimationFrame(function(){
-			_this.domRef.className = 'ui5strap-app ui5strap-app-inactive ui5strap-hidden';
+			_this.domRef.className = _createAppClass(_this, 'ui5strap-app ui5strap-app-inactive ui5strap-hidden');
 				
 			_this.onHidden(new sap.ui.base.Event("ui5strap.app.hidden", _this, {}));
 
@@ -4693,9 +4700,10 @@
 
 	AppBaseProto.createDomRef = function(){
 		var _this = this;
+		
 		//App Container
 		var appContainer = document.createElement('div');
-		appContainer.className = 'ui5strap-app ui5strap-app-prepared ui5strap-hidden';
+		appContainer.className = _createAppClass(this, 'ui5strap-app ui5strap-app-prepared ui5strap-hidden');
 		appContainer.id = this.getDomId();
 		
 		//App Content
@@ -4743,6 +4751,10 @@
 		//Cache DOM Ref
 		this.domRef = appContainer;
 		this.contentDomRef = appContent;
+	};
+	
+	AppBaseProto.updateDomRef = function(){
+		this.domRef.className = _createAppClass(this, 'ui5strap-app ui5strap-app-next ui5strap-hidden');
 	};
 
 	/*
@@ -6716,7 +6728,7 @@
 			needAttach = true;
 		}
 		else{
-			appInstance.domRef.className = 'ui5strap-app ui5strap-app-next ui5strap-hidden';
+			appInstance.updateDomRef();
 		}
 
 		var viewer = this;

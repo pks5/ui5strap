@@ -457,7 +457,7 @@
 			needAttach = true;
 		}
 		else{
-			appInstance.domRef.className = 'ui5strap-app ui5strap-app-next ui5strap-hidden';
+			appInstance.updateDomRef();
 		}
 
 		var viewer = this;

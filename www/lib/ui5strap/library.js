@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.2"
+        	version: "0.9.3"
       }
   );
   

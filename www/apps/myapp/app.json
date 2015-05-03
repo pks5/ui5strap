@@ -7,7 +7,8 @@
             "history" : true,
             "logLevel" : 5,
             "theme" : "ui5strap_default",
-            "transition" : "transition-slide"
+            "transition" : "transition-slide",
+            "styleClass" : "my-app-body"
         },
 
         "icons" : {
