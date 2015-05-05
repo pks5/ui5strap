@@ -32,7 +32,7 @@
 		//Container
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("clock-control clock-control-" + oControl.getDesign());
+		rm.addClass("ui5strap-gpu clock-control clock-control-" + oControl.getDesign());
 		rm.writeClasses();
 		rm.write(">");
 

@@ -957,11 +957,25 @@
       
       var layer = this.layers[layerId];
 
-      if(!layer || visible && layer.visible){
+      if(!layer || visible == layer.visible){
+    	  //If the layer is not defined or its already visible/invisible, just call the callback
         callback && callback();
         return;
       }
-
+      
+      if(layer.busy){
+    	  //Apply Css immediately if the layer is busy but a new request comes in
+    	  $layer.css({
+              display : visible ? 'block' : 'hidden',
+              opacity : visible ? 1 : 0
+          });
+    	  layer.updated = true;
+    	  
+    	  callback && callback();
+          
+    	  return;
+      }
+      
       layer.visible = visible;
       var $layer = layer.$domElement;
       
@@ -974,34 +988,37 @@
 
       var triggered = false,
           transCallback = function(){
-              if(!visible){
+    	      if(triggered){
+                 return;
+              }
+            
+    	  	  triggered = true;
+    	  
+              if(!visible && !layer.updated){
                   $layer.css('display', 'none');
               }
+              
+              layer.busy = false;
+              layer.updated = false;
               
               callback && callback();
           },
           timeout = window.setTimeout(function(){
-              if(triggered){
-                return;
-              }
-              triggered = true;
-              jQuery.sap.log.warning("Layer '" + layerId + "' transition-end event failed - timeout triggered.");
               transCallback();
+              
+              jQuery.sap.log.warning("Layer '" + layerId + "' transition-end event failed - timeout triggered.");
           }, ui5strap.options.transitionTimeout);
 
       ui5strap.polyfill.requestAnimationFrame(function(){
         $layer.one(ui5strap.support.transitionEndEvent, function(){
-            if(triggered){
-              return;
-            }
-            triggered = true;
-            window.clearTimeout(timeout);
             transCallback();
+            window.clearTimeout(timeout);
         });
 
         //TODO: RAF here neccessary?
         ui5strap.polyfill.requestAnimationFrame(function(){
-          $layer.css('opacity', visible ? 1 : 0);
+        	layer.busy = true;
+            $layer.css('opacity', visible ? 1 : 0);
         });
       });
   };

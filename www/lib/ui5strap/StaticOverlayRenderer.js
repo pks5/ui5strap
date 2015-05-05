@@ -27,30 +27,28 @@
 
 (function(){
 
-	jQuery.sap.declare("ui5strap.OverlayRenderer");
+	jQuery.sap.declare("ui5strap.StaticOverlayRenderer");
 
-	ui5strap.OverlayRenderer = {};
+	ui5strap.StaticOverlayRenderer = {};
 
-	ui5strap.OverlayRenderer.render = function(rm, oControl) {
+	ui5strap.StaticOverlayRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent();
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("ui5strap-overlay-control");
+		rm.addClass("ui5strap-sttic-overlay");
 		rm.writeClasses();
 		rm.write(">");
 		
 		if(oControl.getBackdrop()){
-			rm.write('<div class="ui5strap-overlay-control-backdrop" id="' + oControl.getId() + '--backdrop"></div>');
+			rm.write('<div class="ui5strap-static-overlay-backdrop" id="' + oControl.getId() + '--backdrop"></div>');
 		}
 		
-		rm.write('<div class="ui5strap-overlay-control-content">');
-		
-		for(var i = 0; i < content.length; i++){ 
+		for(var i = 0; i < content.length; i++){
 			rm.renderControl(content[i]);
 		}
 		
-		rm.write("</div></div>");
+		rm.write("</div>");
 
 	};
 

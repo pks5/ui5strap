@@ -258,7 +258,21 @@
 	* @Public
 	*/
 	AppFrameProto.gotoPage = function (viewDef, callback) {
-		return this.toPage(this.getViewConfig(viewDef), callback);
+		//Get final view configuration
+		var viewConfig = this.getViewConfig(viewDef),
+			target = viewConfig.target;
+
+		//Get final view configuration
+		var viewConfig = this.getViewConfig(viewDef),
+			target = viewConfig.target;
+
+		if(this.isBusy(target)){
+			this.app.log.debug('[APP_FRAME] Target is busy: "' + target + '"');
+
+			return false;
+		}
+		
+		return this.toPage(viewConfig, callback);
 	};
 
 }());

@@ -291,10 +291,9 @@
 
 			return false;
 		}
-		else{
-			this.app.log.debug('[APP_FRAME_EXAMPLE] Navigate Target "' + target + '" to View "' + viewConfig.viewName + '"');
-		}
-
+		
+		this.app.log.debug('[APP_FRAME_EXAMPLE] Navigate Target "' + target + '" to View "' + viewConfig.viewName + '"');
+		
 		var navbarEnabled = frameOptions.navbar;
 		if("navbar" in viewConfig){
 			navbarEnabled = viewConfig.navbar;

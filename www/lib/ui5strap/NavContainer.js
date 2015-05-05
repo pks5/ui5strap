@@ -511,6 +511,9 @@
 		this._targetTransitions = {};
 
 		this._targetPagesCount = {};
+		
+		//TODO Do we need a busy flag here?
+		//this._targetStatus = {};
 
 		//Transition timeout
 		this.transitionNextTimeout = 2000;

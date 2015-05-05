@@ -9447,14 +9447,14 @@ a {
   bottom: 0;
   width: 100%;
 }
-.ui5strap-overlay-control {
+.ui5strap-static-overlay {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
-.ui5strap-overlay-control-backdrop {
+.ui5strap-static-overlay-backdrop {
   position: absolute;
   top: 0;
   right: 0;
@@ -9466,14 +9466,6 @@ a {
       -ms-transform: translate3d(0, 0, 0);
        -o-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
-}
-.ui5strap-overlay-control-content {
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  width: 400px;
-  height: 200px;
-  margin-left: -200px;
 }
 /*
 *
@@ -10225,6 +10217,9 @@ a {
       -ms-transform: rotate3d(0, 1, 0, 180deg);
        -o-transform: rotate3d(0, 1, 0, 180deg);
           transform: rotate3d(0, 1, 0, 180deg);
+}
+.transition-flip .ui5strap-gpu {
+  visibility: hidden;
 }
 /*
 *

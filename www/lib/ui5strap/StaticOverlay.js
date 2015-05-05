@@ -27,9 +27,9 @@
 
 (function(){
 
-	jQuery.sap.declare("ui5strap.Overlay");
+	jQuery.sap.declare("ui5strap.StaticOverlay");
 	
-	sap.ui.core.Control.extend("ui5strap.Overlay", {
+	sap.ui.core.Control.extend("ui5strap.StaticOverlay", {
 		metadata : {
 
 			library : "ui5strap",
@@ -56,20 +56,25 @@
 		}
 	});
 	
-	ui5strap.Overlay.prototype.onBeforeRendering = function(oEvent){
+	ui5strap.StaticOverlay.prototype.onBeforeRendering = function(oEvent){
 		if(this.getBackdrop()){
 			this._$backdrop && this._$backdrop.off('click');
 			delete(this._$backdrop);
 		}
 	};
 	
-	ui5strap.Overlay.prototype.onAfterRendering = function(oEvent){
+	ui5strap.StaticOverlay.prototype.onAfterRendering = function(oEvent){
 		if(this.getBackdrop()){
 			var _this = this;
 			this._$backdrop = this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
 				_this.fireClose({});
 			});
 		}
+	};
+	
+	ui5strap.StaticOverlay.prototype.addContent = function(oObject, bSuppressInvalidate){
+		this.addAggregation("content", oObject, bSuppressInvalidate);
+		oObject.addStyleClass('modal-dialog');
 	};
 
 }());
