@@ -964,20 +964,20 @@
         return;
       }
       
+      layer.visible = visible;
+      
       if(layer.busy){
     	  //Apply Css immediately if the layer is busy but a new request comes in
     	  $layer.css({
-              display : visible ? 'block' : 'hidden',
+              display : visible ? 'block' : 'none',
               opacity : visible ? 1 : 0
           });
-    	  layer.updated = true;
+    	  layer.canceled = true;
     	  
     	  callback && callback();
           
     	  return;
       }
-      
-      layer.visible = visible;
       
       if(visible){
         $layer.css({
@@ -987,32 +987,37 @@
       }
 
       var triggered = false,
-          transCallback = function(){
+          transCallback = function(timeoutOccurred){
     	      if(triggered){
                  return;
               }
             
     	  	  triggered = true;
-    	  
-              if(!visible && !layer.updated){
-                  $layer.css('display', 'none');
-              }
+    	  	  
+    	  	  layer.busy = false;
+    	  	  
+    	  	  if(!layer.canceled){
+	    	  	  if(!visible){
+	                  $layer.css('display', 'none');
+	              }
+	    	  	  
+	    	  	  if(timeoutOccurred){
+	    	  		  jQuery.sap.log.warning("Layer '" + layerId + "' transition-end event failed - timeout triggered.");
+	    	  	  }
+    	  	  }
               
-              layer.busy = false;
-              layer.updated = false;
-              
+    	  	  delete layer.canceled;
+    	  	
               callback && callback();
           },
           timeout = window.setTimeout(function(){
-              transCallback();
-              
-              jQuery.sap.log.warning("Layer '" + layerId + "' transition-end event failed - timeout triggered.");
+              transCallback(true);
           }, ui5strap.options.transitionTimeout);
 
       ui5strap.polyfill.requestAnimationFrame(function(){
         $layer.one(ui5strap.support.transitionEndEvent, function(){
-            transCallback();
-            window.clearTimeout(timeout);
+        	window.clearTimeout(timeout);
+            transCallback(false);
         });
 
         //TODO: RAF here neccessary?
