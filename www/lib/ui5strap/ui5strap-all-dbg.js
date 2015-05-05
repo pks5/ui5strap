@@ -957,11 +957,25 @@
       
       var layer = this.layers[layerId];
 
-      if(!layer || visible && layer.visible){
+      if(!layer || visible == layer.visible){
+    	  //If the layer is not defined or its already visible/invisible, just call the callback
         callback && callback();
         return;
       }
-
+      
+      if(layer.busy){
+    	  //Apply Css immediately if the layer is busy but a new request comes in
+    	  $layer.css({
+              display : visible ? 'block' : 'hidden',
+              opacity : visible ? 1 : 0
+          });
+    	  layer.updated = true;
+    	  
+    	  callback && callback();
+          
+    	  return;
+      }
+      
       layer.visible = visible;
       var $layer = layer.$domElement;
       
@@ -974,34 +988,37 @@
 
       var triggered = false,
           transCallback = function(){
-              if(!visible){
+    	      if(triggered){
+                 return;
+              }
+            
+    	  	  triggered = true;
+    	  
+              if(!visible && !layer.updated){
                   $layer.css('display', 'none');
               }
+              
+              layer.busy = false;
+              layer.updated = false;
               
               callback && callback();
           },
           timeout = window.setTimeout(function(){
-              if(triggered){
-                return;
-              }
-              triggered = true;
-              jQuery.sap.log.warning("Layer '" + layerId + "' transition-end event failed - timeout triggered.");
               transCallback();
+              
+              jQuery.sap.log.warning("Layer '" + layerId + "' transition-end event failed - timeout triggered.");
           }, ui5strap.options.transitionTimeout);
 
       ui5strap.polyfill.requestAnimationFrame(function(){
         $layer.one(ui5strap.support.transitionEndEvent, function(){
-            if(triggered){
-              return;
-            }
-            triggered = true;
-            window.clearTimeout(timeout);
             transCallback();
+            window.clearTimeout(timeout);
         });
 
         //TODO: RAF here neccessary?
         ui5strap.polyfill.requestAnimationFrame(function(){
-          $layer.css('opacity', visible ? 1 : 0);
+        	layer.busy = true;
+            $layer.css('opacity', visible ? 1 : 0);
         });
       });
   };
@@ -3602,7 +3619,21 @@
 	* @Public
 	*/
 	AppFrameProto.gotoPage = function (viewDef, callback) {
-		return this.toPage(this.getViewConfig(viewDef), callback);
+		//Get final view configuration
+		var viewConfig = this.getViewConfig(viewDef),
+			target = viewConfig.target;
+
+		//Get final view configuration
+		var viewConfig = this.getViewConfig(viewDef),
+			target = viewConfig.target;
+
+		if(this.isBusy(target)){
+			this.app.log.debug('[APP_FRAME] Target is busy: "' + target + '"');
+
+			return false;
+		}
+		
+		return this.toPage(viewConfig, callback);
 	};
 
 }());;/*
@@ -5704,6 +5735,9 @@
 		this._targetTransitions = {};
 
 		this._targetPagesCount = {};
+		
+		//TODO Do we need a busy flag here?
+		//this._targetStatus = {};
 
 		//Transition timeout
 		this.transitionNextTimeout = 2000;
@@ -17919,136 +17953,6 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
  * 
  * UI5Strap
  *
- * ui5strap.Overlay
- * 
- * @author Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Homepage: http://ui5strap.com
- *
- * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
- * 
- */
-
-(function(){
-
-	jQuery.sap.declare("ui5strap.Overlay");
-	
-	sap.ui.core.Control.extend("ui5strap.Overlay", {
-		metadata : {
-
-			library : "ui5strap",
-			defaultAggregation : "content",
-			
-			properties : { 
-				backdrop : {
-					type:"boolean", 
-					defaultValue:false
-				}
-			},
-			
-			aggregations : {
-				content : {
-					multiple : true
-				}
-			},
-			
-			events : {
-				close : {
-					
-				}
-			}
-		}
-	});
-	
-	ui5strap.Overlay.prototype.onBeforeRendering = function(oEvent){
-		if(this.getBackdrop()){
-			this._$backdrop && this._$backdrop.off('click');
-			delete(this._$backdrop);
-		}
-	};
-	
-	ui5strap.Overlay.prototype.onAfterRendering = function(oEvent){
-		if(this.getBackdrop()){
-			var _this = this;
-			this._$backdrop = this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
-				_this.fireClose({});
-			});
-		}
-	};
-
-}());;/*
- * 
- * UI5Strap
- *
- * ui5strap.OverlayRenderer
- * 
- * @author Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Homepage: http://ui5strap.com
- *
- * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
- * 
- */
-
-(function(){
-
-	jQuery.sap.declare("ui5strap.OverlayRenderer");
-
-	ui5strap.OverlayRenderer = {};
-
-	ui5strap.OverlayRenderer.render = function(rm, oControl) {
-		var content = oControl.getContent();
-		
-		rm.write("<div");
-		rm.writeControlData(oControl);
-		rm.addClass("ui5strap-overlay-control");
-		rm.writeClasses();
-		rm.write(">");
-		
-		if(oControl.getBackdrop()){
-			rm.write('<div class="ui5strap-overlay-control-backdrop" id="' + oControl.getId() + '--backdrop"></div>');
-		}
-		
-		rm.write('<div class="ui5strap-overlay-control-content">');
-		
-		for(var i = 0; i < content.length; i++){ 
-			rm.renderControl(content[i]);
-		}
-		
-		rm.write("</div></div>");
-
-	};
-
-}());;/*
- * 
- * UI5Strap
- *
  * ui5strap.Page
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
@@ -19986,6 +19890,139 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		rm.write("</div>");
 
 		rm.write("</div>");
+	};
+
+}());;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.Overlay
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	jQuery.sap.declare("ui5strap.StaticOverlay");
+	
+	sap.ui.core.Control.extend("ui5strap.StaticOverlay", {
+		metadata : {
+
+			library : "ui5strap",
+			defaultAggregation : "content",
+			
+			properties : { 
+				backdrop : {
+					type:"boolean", 
+					defaultValue:false
+				}
+			},
+			
+			aggregations : {
+				content : {
+					multiple : true
+				}
+			},
+			
+			events : {
+				close : {
+					
+				}
+			}
+		}
+	});
+	
+	ui5strap.StaticOverlay.prototype.onBeforeRendering = function(oEvent){
+		if(this.getBackdrop()){
+			this._$backdrop && this._$backdrop.off('click');
+			delete(this._$backdrop);
+		}
+	};
+	
+	ui5strap.StaticOverlay.prototype.onAfterRendering = function(oEvent){
+		if(this.getBackdrop()){
+			var _this = this;
+			this._$backdrop = this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
+				_this.fireClose({});
+			});
+		}
+	};
+	
+	ui5strap.StaticOverlay.prototype.addContent = function(oObject, bSuppressInvalidate){
+		this.addAggregation("content", oObject, bSuppressInvalidate);
+		oObject.addStyleClass('modal-dialog');
+	};
+
+}());;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.OverlayRenderer
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	jQuery.sap.declare("ui5strap.StaticOverlayRenderer");
+
+	ui5strap.StaticOverlayRenderer = {};
+
+	ui5strap.StaticOverlayRenderer.render = function(rm, oControl) {
+		var content = oControl.getContent();
+		
+		rm.write("<div");
+		rm.writeControlData(oControl);
+		rm.addClass("ui5strap-sttic-overlay");
+		rm.writeClasses();
+		rm.write(">");
+		
+		if(oControl.getBackdrop()){
+			rm.write('<div class="ui5strap-static-overlay-backdrop" id="' + oControl.getId() + '--backdrop"></div>');
+		}
+		
+		for(var i = 0; i < content.length; i++){
+			rm.renderControl(content[i]);
+		}
+		
+		rm.write("</div>");
+
 	};
 
 }());;/*
