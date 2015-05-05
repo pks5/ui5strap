@@ -731,7 +731,7 @@
 	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this,
 			overlayControl = this.overlayControl,
-			transitionName = transitionName || 'transition-slide';
+			transitionName = transitionName || 'transition-slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.overlayId, true, function(){
 			if(!(viewDataOrControl instanceof sap.ui.core.Control)){
@@ -752,7 +752,7 @@
 
 		var _this = this,
 			overlayControl = this.overlayControl,
-			transitionName = transitionName || 'transition-slide';
+			transitionName = transitionName || 'transition-slide-btt';
 		
 		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
 			ui5strap.Layer.setVisible(_this.overlayId, false, callback);

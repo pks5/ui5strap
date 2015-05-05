@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.3"
+        	version: "0.9.3.2"
       }
   );
   
@@ -955,7 +955,8 @@
   */
   ui5strap.Layer.setVisible = function(layerId, visible, callback){
       
-      var layer = this.layers[layerId];
+      var layer = this.layers[layerId],
+      	  $layer = layer.$domElement;
 
       if(!layer || visible == layer.visible){
     	  //If the layer is not defined or its already visible/invisible, just call the callback
@@ -977,7 +978,6 @@
       }
       
       layer.visible = visible;
-      var $layer = layer.$domElement;
       
       if(visible){
         $layer.css({
@@ -4369,7 +4369,7 @@
 	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this,
 			overlayControl = this.overlayControl,
-			transitionName = transitionName || 'transition-slide';
+			transitionName = transitionName || 'transition-slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.overlayId, true, function(){
 			if(!(viewDataOrControl instanceof sap.ui.core.Control)){
@@ -4390,7 +4390,7 @@
 
 		var _this = this,
 			overlayControl = this.overlayControl,
-			transitionName = transitionName || 'transition-slide';
+			transitionName = transitionName || 'transition-slide-btt';
 		
 		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
 			ui5strap.Layer.setVisible(_this.overlayId, false, callback);
