@@ -240,7 +240,7 @@
 		_this.log.debug('PRELOADING COMPONENTS');
 
 		//Components
-		var comps = _this.config.data.components;
+		var components = _this.config.data.components;
 
 		var frameConfig = _this.config.data.frames['default'];
 
@@ -249,33 +249,65 @@
 				frameConfig.module = 'ui5strap.AppFrame';
 			}
 			frameConfig.id = "frame";
-			comps.unshift(frameConfig);
+			components.unshift(frameConfig);
 		}
-
-		var callI = comps.length, 
-			successCallback = function(){
-				callI --;
-				_this.log.debug('LOAD COMPONENT ...');
+		
+		var loadModules = [],
+			compConfigs = [];
+		
+		for(var i = 0; i < components.length; i++){
+			var compConfig = components[i];
+			
+			if(!compConfig.module || !compConfig.id){
+				throw new Error("'Cannot load component #' + compConfig.id + ': invalid config!");
+			}
+			else if(false !== compConfig.enabled){
+				compConfigs.push(compConfig);
+				loadModules.push(compConfig.module);
+			}
+		}
+		
+		ui5strap.require(loadModules, function require_complete(){
+			for(var i = 0; i < loadModules.length; i++){
+				var ComponentConstructor = jQuery.sap.getObject(loadModules[i]),
+					compConfig = compConfigs[i],
+					componentId = compConfig.id,
+					oComp = new ComponentConstructor(_this, compConfig),
+					methodName = 'get' + jQuery.sap.charToUpperCase(componentId);
 				
-				if(callI === 0){
-					callback && callback();
+				if(_this[methodName]){
+					throw new Error("Name conflict: " + componentId);
 				}
-			};
-
-		if(callI === 0){
+				
+				oComp.init();
+				
+				_this[methodName] = function(){
+					return oComp;
+				};
+				
+				if(compConfig.events){
+					//Array of strings of format "scope.event"
+					for(var i = 0; i < compConfig.events.length; i++){
+						var stringParts = compConfig.events[i].split('.');
+						if(stringParts.length === 2){
+							(function(){
+								var eventName = stringParts[1];
+								//Register app event
+								_this.registerEventAction(stringParts[0], eventName, function on_event(oEvent){
+									var eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName);
+									oComp[eventHandlerName] && oComp[eventHandlerName](oEvent);
+								});
+							}());
+						}
+						else{
+							_this.log.error("Cannot register Component event: " + compConfig.events[i]);
+						}
+					}
+				}
+			}
+	
 			callback && callback();
-		}
-
-		for(var i = 0; i < comps.length; i++){
-			_this.registerComponent(comps[i]);
-
-			if(!comps[i].lazyLoad){
-				_this.loadComponent(comps[i].id, successCallback);
-			}
-			else{
-				successCallback();
-			}
-		}
+		});
 	};
 	
 	/*
@@ -757,97 +789,6 @@
 		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
 			ui5strap.Layer.setVisible(_this.overlayId, false, callback);
 		});	
-	};
-
-	/*
-	* ----------------------------------------------------------------------
-	* --------------------- Components -------------------------------------
-	* ----------------------------------------------------------------------
-	*/
-
-	AppBaseProto.loadComponent = function(componentId, callback){
-		if(!this.components[componentId]){
-			throw new Error('Cannot load component #' + componentId + ': not registered before.');
-		}
-
-		var component = this.components[componentId];
-
-		if(component instanceof ui5strap.AppComponent){
-			callback && callback(component);
-		}
-
-		if(!("module" in component) || !("id" in component)){
-			throw new Error("'Cannot load component #' + componentId + ': invalid component declaration!");
-		}
-
-		var compModule = component.module,
-			_this = this;
-
-		ui5strap.require(compModule, function require_complete(){
-			var ComponentConstructor = jQuery.sap.getObject(compModule);
-			oComp = new ComponentConstructor(_this, component);
-		
-			_this.components[componentId] = oComp;
-		
-			oComp.init();
-
-			callback && callback(oComp);
-		});
-	};
-
-	AppBaseProto.registerComponent = function(compConfig){
-		if(false === compConfig.enabled){
-			return;
-		}
-		if(!("module" in compConfig) || !("id" in compConfig)){
-			throw new Error("Invalid component declaration!");
-		}
-		var _this = this,
-			compId = compConfig.id,
-			methodName = 'get' + jQuery.sap.charToUpperCase(compId);
-
-		if(this[methodName]){
-			throw new Error("Name conflict: " + compId);
-		}
-		
-		this.components[compId] = compConfig;
-				
-		this[methodName] = function(){
-			var oComp = _this.components[compId];
-
-			if(!oComp){ 
-				throw new Error('Invalid component: ' + compId);
-			}
-			else if(!(oComp instanceof ui5strap.AppComponent)){ 
-				throw new Error('Component not loaded yet: ' + compId);
-			}
-
-			return _this.components[compId];
-		}
-
-		if(compConfig.events){
-			//Array of strings of format "scope.event"
-			for(var i = 0; i < compConfig.events.length; i++){
-				var stringParts = compConfig.events[i].split('.');
-				if(stringParts.length === 2){
-					(function(){
-						var eventName = stringParts[1];
-						//Register app event
-						_this.registerEventAction(stringParts[0], eventName, function on_event(oEvent){
-							//Executing component's event handler
-							var comp = _this[methodName](),
-								eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName);
-							
-							comp[eventHandlerName] && comp[eventHandlerName](oEvent);
-							
-						});
-					}());
-				}
-				else{
-					_this.log.error("Cannot register Component event: " + compConfig.events[i]);
-				}
-			}
-		}
 	};
 
 	/*
