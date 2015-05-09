@@ -34,7 +34,7 @@
         ],
 
         "css" : [
-            "css/my-app.css"
+            "css/bscontrols.css"
         ],
 
         "models" : [
