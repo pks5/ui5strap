@@ -50,7 +50,7 @@
 		rm.writeClasses();
 		rm.write(">");
 		
-		if(oControl.getTitle() || oControl.getTitleContent()){
+		if(oControl.getTitle() || oControl.getTitleContent().length){
 			rm.write("<div");
 			rm.addClass("panel-heading");
 			rm.writeClasses();

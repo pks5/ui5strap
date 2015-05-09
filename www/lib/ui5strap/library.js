@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.3.3"
+        	version: "0.9.3.4"
       }
   );
   
@@ -931,6 +931,7 @@
       }
 
       this.layers[layerId] = {
+    	  id : layerId,
           visible : !$layer.hasClass('ui5strap-hidden'),
           $domElement : $layer
       }
@@ -972,7 +973,9 @@
               display : visible ? 'block' : 'none',
               opacity : visible ? 1 : 0
           });
-    	  layer.canceled = true;
+    	  
+    	  //Call the existing callback
+    	  layer.busy(null);
     	  
     	  callback && callback();
           
@@ -987,44 +990,50 @@
       }
 
       var triggered = false,
-          transCallback = function(timeoutOccurred){
+      	  transTimeout = null,
+          transCallback = function(ev){
     	      if(triggered){
                  return;
               }
-            
+              
+    	      window.clearTimeout(transTimeout);
+              
     	  	  triggered = true;
     	  	  
-    	  	  layer.busy = false;
-    	  	  
-    	  	  if(!layer.canceled){
-	    	  	  if(!visible){
+    	  	  if(null === ev){
+    	  		  //Callack executed by another instance
+    	  		  jQuery.sap.log.warning("Transition of layer " + layer.id + " has been canceled by another instance.");
+    	  	  }
+    	  	  else{
+	    	  	  //Callback executed either by transition end event or timout
+    	  		  
+    	  		  if(!visible){
 	                  $layer.css('display', 'none');
 	              }
 	    	  	  
-	    	  	  if(timeoutOccurred){
+	    	  	  if(!ev){
 	    	  		  jQuery.sap.log.warning("Layer '" + layerId + "' transition-end event failed - timeout triggered.");
 	    	  	  }
     	  	  }
               
-    	  	  delete layer.canceled;
-    	  	
+    	  	  delete layer.busy;
+    	  	  
               callback && callback();
-          },
-          timeout = window.setTimeout(function(){
-              transCallback(true);
-          }, ui5strap.options.transitionTimeout);
-
+          };
+      
+      layer.busy = transCallback;
+          
+      //Transition timeout
+      transTimeout = window.setTimeout(transCallback, ui5strap.options.transitionTimeout);
+      
       ui5strap.polyfill.requestAnimationFrame(function(){
-        $layer.one(ui5strap.support.transitionEndEvent, function(){
-        	window.clearTimeout(timeout);
-            transCallback(false);
-        });
-
-        //TODO: RAF here neccessary?
-        ui5strap.polyfill.requestAnimationFrame(function(){
-        	layer.busy = true;
-            $layer.css('opacity', visible ? 1 : 0);
-        });
+	      //Transition end event
+	      $layer.one(ui5strap.support.transitionEndEvent, transCallback);
+	  	
+	      //Start transition
+	      ui5strap.polyfill.requestAnimationFrame(function(){
+	    	  $layer.css('opacity', visible ? 1 : 0);
+	      });
       });
   };
 
