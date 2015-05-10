@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.RestService
+ * ui5strap.RestClient
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,35 +27,35 @@
 
 (function(){
 
-    jQuery.sap.declare("ui5strap.RestService");
+    jQuery.sap.declare("ui5strap.RestClient");
 
     jQuery.sap.require("ui5strap.AppComponent");
 
-    ui5strap.AppComponent.extend("ui5strap.RestService");
+    ui5strap.AppComponent.extend("ui5strap.RestClient");
 
-    var RestService = ui5strap.RestService,
-        RestServiceProto = RestService.prototype;
+    var RestClient = ui5strap.RestClient,
+        RestClientProto = RestClient.prototype;
 
-    RestService.CONTENT_TYPE_TEXT = 'text/plain';
-    RestService.CONTENT_TYPE_XML = 'application/xml';
-    RestService.CONTENT_TYPE_JSON = 'application/json';
-    RestService.CONTENT_TYPE_FORM_URL_ENCODED = 'application/x-www-form-urlencoded';
-    RestService.CONTENT_TYPE_FORM_MULTIPART = 'multipart/form-data';
+    RestClient.CONTENT_TYPE_TEXT = 'text/plain';
+    RestClient.CONTENT_TYPE_XML = 'application/xml';
+    RestClient.CONTENT_TYPE_JSON = 'application/json';
+    RestClient.CONTENT_TYPE_FORM_URL_ENCODED = 'application/x-www-form-urlencoded';
+    RestClient.CONTENT_TYPE_FORM_MULTIPART = 'multipart/form-data';
 
-    RestService.CHARSET_UTF8 = 'UTF-8';
+    RestClient.CHARSET_UTF8 = 'UTF-8';
 
-    RestService.RESPONSE_DATA_TYPE_TEXT = 'text';
-    RestService.RESPONSE_DATA_TYPE_HTML = 'html';
-    RestService.RESPONSE_DATA_TYPE_SCRIPT = 'script';
-    RestService.RESPONSE_DATA_TYPE_JSON = 'json';
-    RestService.RESPONSE_DATA_TYPE_JSONP = 'jsonp';
-    RestService.RESPONSE_DATA_TYPE_XML = 'xml';
+    RestClient.RESPONSE_DATA_TYPE_TEXT = 'text';
+    RestClient.RESPONSE_DATA_TYPE_HTML = 'html';
+    RestClient.RESPONSE_DATA_TYPE_SCRIPT = 'script';
+    RestClient.RESPONSE_DATA_TYPE_JSON = 'json';
+    RestClient.RESPONSE_DATA_TYPE_JSONP = 'jsonp';
+    RestClient.RESPONSE_DATA_TYPE_XML = 'xml';
     
     /*
     * Parses a path and replaces {placeholder} with values of pathParam directory, if present.
     * @protected
     */
-    RestServiceProto._parsePath = function(path, pathParam){
+    RestClientProto._parsePath = function(path, pathParam){
         pathParam = pathParam || {};
         return path.replace(/\{([a-zA-Z0-9]+)\}/g, function(m0, m1){
             return pathParam[m1];
@@ -65,7 +65,7 @@
     /*
     * Determine the final request URL based on given options
     */
-    RestServiceProto._determineRequestURL = function(options){
+    RestClientProto._determineRequestURL = function(options){
         var urlBase = this.options.url;
         return (jQuery.sap.endsWith(urlBase, "/") ? urlBase : urlBase + '/') + this._parsePath(options.path, options.pathParameters);
     };
@@ -74,9 +74,9 @@
     * GET Request with Query Parameters
     * @protected 
     */
-    RestServiceProto._get = function(options){
+    RestClientProto._get = function(options){
         if(!options.responseDataType){
-            options.responseDataType = RestService.RESPONSE_DATA_TYPE_JSON;
+            options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
 
         jQuery.ajax({
@@ -95,9 +95,9 @@
     * @protected
     * @deprecated Use _postUrlEncoded instead
     */
-    RestServiceProto._postQuery = function(options){
+    RestClientProto._postQuery = function(options){
         if(!options.responseDataType){
-            options.responseDataType = RestService.RESPONSE_DATA_TYPE_JSON;
+            options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
 
         jQuery.ajax({
@@ -115,9 +115,9 @@
     * POST Query Parameters to a host
     * @protected
     */
-    RestServiceProto._postUrlEncoded = function(options){
+    RestClientProto._postUrlEncoded = function(options){
         if(!options.responseDataType){
-            options.responseDataType = RestService.RESPONSE_DATA_TYPE_JSON;
+            options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
 
         var postUrl = this._determineRequestURL(options);
@@ -141,13 +141,13 @@
     * POST Object
     * @protected
     */
-    RestServiceProto._postWithPayload = function(options){
+    RestClientProto._postWithPayload = function(options){
         if(!options.requestContentType){
-            options.requestContentType = RestService.CONTENT_TYPE_JSON + '; charset=' + RestService.CHARSET_UTF8;
+            options.requestContentType = RestClient.CONTENT_TYPE_JSON + '; charset=' + RestClient.CHARSET_UTF8;
         }
 
         if(!options.responseDataType){
-            options.responseDataType = RestService.RESPONSE_DATA_TYPE_JSON;
+            options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
 
         jQuery.ajax({
@@ -167,8 +167,8 @@
     * @protected
     * @deprecated
     */
-    RestServiceProto._postPayload = function(options){
-        jQuery.sap.log.warning('RestService.prototype._postPayload is deprecated. Please use _postObject instead.');
+    RestClientProto._postPayload = function(options){
+        jQuery.sap.log.warning('RestClient.prototype._postPayload is deprecated. Please use _postObject instead.');
         return this._postObject(options);
     };
 

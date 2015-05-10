@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.RestService
+ * ui5strap.ODataClient
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,22 +27,22 @@
 
 (function(){
 
-    jQuery.sap.declare("ui5strap.ODataService");
+    jQuery.sap.declare("ui5strap.ODataClient");
 
-    jQuery.sap.require("ui5strap.RestService");
+    jQuery.sap.require("ui5strap.RestClient");
 
-    ui5strap.RestService.extend("ui5strap.ODataService");
+    ui5strap.RestClient.extend("ui5strap.ODataClient");
 
-    var ODataService = ui5strap.ODataService,
-        ODataServiceProto = ODataService.prototype;
+    var ODataClient = ui5strap.ODataClient,
+        ODataClientProto = ODataClient.prototype;
     
-    ODataServiceProto.init = function(){
-        ui5strap.RestService.prototype.init.call(this);
+    ODataClientProto.init = function(){
+        ui5strap.RestClient.prototype.init.call(this);
 
         this._initModel();
     };
 
-    ODataServiceProto._initModel = function(){
+    ODataClientProto._initModel = function(){
         var oModel = new sap.ui.model.odata.ODataModel(this.options.url + "eventdata.xsodata", true);
 
         oModel.attachRequestFailed(null, function(){
@@ -56,11 +56,11 @@
         this._oModel = oModel;
     };
 
-    ODataServiceProto.getModel = function(){
+    ODataClientProto.getModel = function(){
         return this._oModel;
     };
 
-    ODataServiceProto.navigate = function(path, callback){
+    ODataClientProto.navigate = function(path, callback){
         //jQuery.sap.log.debug('Navigate binding context...');
 
         var _this = this;
@@ -70,11 +70,11 @@
         });
     };
 
-    ODataServiceProto.getNavigationContext = function(){
+    ODataClientProto.getNavigationContext = function(){
         return this._navigationContext;
     };
 
-    ODataServiceProto._read = function(options){
+    ODataClientProto._read = function(options){
         this._oModel.read(this._parsePath(options.path, options.pathParameters), {
             "urlParameters" : options.queryParameters,
             "context" : options.context,

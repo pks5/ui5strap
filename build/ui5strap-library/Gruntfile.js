@@ -11,13 +11,18 @@ module.exports = function(grunt) {
       dist: {
         src: [
           '<%= ui5strapLib %>library.js',
+          
           '<%= ui5strapLib %>ActionFunctions.js',
           '<%= ui5strapLib %>ActionContext.js',
           '<%= ui5strapLib %>ActionModule.js',
           '<%= ui5strapLib %>Action.js',
+          
           '<%= ui5strapLib %>AppConfig.js',
+          
           '<%= ui5strapLib %>AppComponent.js',
+          
           '<%= ui5strapLib %>AppFrame.js',
+          
           '<%= ui5strapLib %>AppBase.js',
           '<%= ui5strapLib %>App.js',
           
@@ -26,7 +31,7 @@ module.exports = function(grunt) {
           '<%= ui5strapLib %>ViewerBase.js',
           '<%= ui5strapLib %>Viewer.js',
           
-          '<%= ui5strapLib %>RestService.js',
+          '<%= ui5strapLib %>RestClient.js',
           
           '<%= ui5strapLib %>Button.js',
           '<%= ui5strapLib %>ButtonRenderer.js',

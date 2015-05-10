@@ -56,9 +56,12 @@
 			}
 		}
 	});
-
-	ui5strap.ListMediaItem.prototype.setText = function(newText){
-		this.setProperty('text', newText);
+	
+	/**
+	 * TODO More efficient rerendering
+	 */
+	ui5strap.ListMediaItem.prototype.setText = function(newText, suppressInvalidate){
+		this.setProperty('text', newText, suppressInvalidate);
 	};
 
 }());
