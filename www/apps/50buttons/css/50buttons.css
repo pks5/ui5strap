@@ -1,6 +1,6 @@
 /*
  *
- * My App Stylesheet
+ * 50 Buttons Stylesheet
  * 
  * Author: [Your name]
  * 
@@ -12,16 +12,13 @@
  * 
  */
 
- body{
- 	background-color:#f0f0f0;
- 	-webkit-transform: translate3d(0,0,0);
-	-moz-transform: translate3d(0,0,0);
-	-ms-transform: translate3d(0,0,0);
-	-o-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+ .fiftybuttons-bg{
+ 	background-image:url('../img/50buttons-bg.jpg');
+ 	background-size:cover;
+ 	background-position:center center;
  }
 
- .nav-round-btns {
+.nav-round-btns {
   list-style: none;
   text-align: center;
 }
@@ -45,8 +42,6 @@
 }
 
 .nav-round-btns a {
-	
-	
   display: block;
   background-color: #f7f7f7;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));

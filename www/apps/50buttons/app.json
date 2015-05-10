@@ -4,7 +4,8 @@
             "id" : "com.ui5strap.examples.50buttons.app",
             "package" : "com__ui5strap__examples.50buttons__app",
             "history" : true,
-            "logLevel" : 5
+            "logLevel" : 5,
+            "styleClass" : "fiftybuttons-bg"
         },
 
         "icons" : {

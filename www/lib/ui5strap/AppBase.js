@@ -281,6 +281,8 @@
 				
 				oComp.init();
 				
+				_this.components[componentId] = oComp;
+				
 				_this[methodName] = function(){
 					return oComp;
 				};
