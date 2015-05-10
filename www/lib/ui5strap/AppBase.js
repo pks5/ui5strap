@@ -291,11 +291,12 @@
 						var stringParts = compConfig.events[i].split('.');
 						if(stringParts.length === 2){
 							(function(){
-								var eventName = stringParts[1];
-								//Register app event
+								var eventName = stringParts[1],
+									eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName),
+									comp = oComp;
+								
 								_this.registerEventAction(stringParts[0], eventName, function on_event(oEvent){
-									var eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName);
-									oComp[eventHandlerName] && oComp[eventHandlerName](oEvent);
+									comp[eventHandlerName] && comp[eventHandlerName](oEvent);
 								});
 							}());
 						}
