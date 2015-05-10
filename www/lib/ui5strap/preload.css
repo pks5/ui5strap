@@ -214,6 +214,10 @@ html, body{
   overflow:hidden;
 }
 
+.ui5strap-app-standard{
+	background-color:white;
+}
+
 /*
 * Container for App Content
 */

@@ -304,6 +304,10 @@
 			configDataJSON.app.type = 'STANDARD';
 		}
 		
+		if(!('styleClass' in configDataJSON.app)){
+			configDataJSON.app.styleClass = 'ui5strap-app-standard';
+		}
+		
 		//App Icons
 		if(!('icons' in configDataJSON)){
 			configDataJSON.icons = {};

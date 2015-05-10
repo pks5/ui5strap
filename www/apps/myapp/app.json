@@ -6,9 +6,7 @@
             "title" : "Ui5Strap",
             "history" : true,
             "logLevel" : 5,
-            "theme" : "ui5strap_default",
-            "transition" : "transition-slide",
-            "styleClass" : "my-app-body"
+            "theme" : "ui5strap_default"
         },
 
         "icons" : {
