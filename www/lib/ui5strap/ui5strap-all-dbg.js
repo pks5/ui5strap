@@ -60,10 +60,10 @@
   }
 
   jQuerySap.declare("ui5strap.library");
-	jQuerySap.require("sap.ui.core.Core");
+  jQuerySap.require("sap.ui.core.Core");
 	
   //Register Ui5Strap as library
-	sap.ui.getCore().initLibrary(
+  sap.ui.getCore().initLibrary(
       {
       	  name : "ui5strap",
       	  dependencies : [],
@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.3.2"
+        	version: "0.9.4"
       }
   );
   
@@ -185,11 +185,13 @@
   * -------
   */
 
-	var tapSupport = jQuery.sap.touchEventMode != "OFF";
+  var tapSupport = jQuery.sap.touchEventMode != "OFF";
+  
   ui5strap.options = {
   	enableTapEvents : tapSupport,
   	enableClickEvents : !tapSupport,
-    transitionTimeout : 2000
+    transitionTimeout : 2000,
+    layerTimeout : 1000
   };
 
   /*
@@ -931,6 +933,7 @@
       }
 
       this.layers[layerId] = {
+    	  id : layerId,
           visible : !$layer.hasClass('ui5strap-hidden'),
           $domElement : $layer
       }
@@ -972,7 +975,9 @@
               display : visible ? 'block' : 'none',
               opacity : visible ? 1 : 0
           });
-    	  layer.canceled = true;
+    	  
+    	  //Call the existing callback
+    	  layer.busy(null);
     	  
     	  callback && callback();
           
@@ -987,44 +992,50 @@
       }
 
       var triggered = false,
-          transCallback = function(timeoutOccurred){
+      	  transTimeout = null,
+          transCallback = function(ev){
     	      if(triggered){
                  return;
               }
-            
+              
+    	      window.clearTimeout(transTimeout);
+              
     	  	  triggered = true;
     	  	  
-    	  	  layer.busy = false;
-    	  	  
-    	  	  if(!layer.canceled){
-	    	  	  if(!visible){
+    	  	  if(null === ev){
+    	  		  //Callack executed by another instance
+    	  		  jQuery.sap.log.warning("Transition of layer " + layer.id + " has been canceled by another instance.");
+    	  	  }
+    	  	  else{
+	    	  	  //Callback executed either by transition end event or timout
+    	  		  
+    	  		  if(!visible){
 	                  $layer.css('display', 'none');
 	              }
 	    	  	  
-	    	  	  if(timeoutOccurred){
+	    	  	  if(!ev){
 	    	  		  jQuery.sap.log.warning("Layer '" + layerId + "' transition-end event failed - timeout triggered.");
 	    	  	  }
     	  	  }
               
-    	  	  delete layer.canceled;
-    	  	
+    	  	  delete layer.busy;
+    	  	  
               callback && callback();
-          },
-          timeout = window.setTimeout(function(){
-              transCallback(true);
-          }, ui5strap.options.transitionTimeout);
-
+          };
+      
+      layer.busy = transCallback;
+          
+      //Transition timeout
+      transTimeout = window.setTimeout(transCallback, ui5strap.options.layerTimeout);
+      
       ui5strap.polyfill.requestAnimationFrame(function(){
-        $layer.one(ui5strap.support.transitionEndEvent, function(){
-        	window.clearTimeout(timeout);
-            transCallback(false);
-        });
-
-        //TODO: RAF here neccessary?
-        ui5strap.polyfill.requestAnimationFrame(function(){
-        	layer.busy = true;
-            $layer.css('opacity', visible ? 1 : 0);
-        });
+	      //Transition end event
+	      $layer.one(ui5strap.support.transitionEndEvent, transCallback);
+	  	
+	      //Start transition
+	      ui5strap.polyfill.requestAnimationFrame(function(){
+	    	  $layer.css('opacity', visible ? 1 : 0);
+	      });
       });
   };
 
@@ -3215,6 +3226,10 @@
 			configDataJSON.app.type = 'STANDARD';
 		}
 		
+		if(!('styleClass' in configDataJSON.app)){
+			configDataJSON.app.styleClass = 'ui5strap-app-standard';
+		}
+		
 		//App Icons
 		if(!('icons' in configDataJSON)){
 			configDataJSON.icons = {};
@@ -3883,7 +3898,7 @@
 		_this.log.debug('PRELOADING COMPONENTS');
 
 		//Components
-		var comps = _this.config.data.components;
+		var components = _this.config.data.components;
 
 		var frameConfig = _this.config.data.frames['default'];
 
@@ -3892,33 +3907,68 @@
 				frameConfig.module = 'ui5strap.AppFrame';
 			}
 			frameConfig.id = "frame";
-			comps.unshift(frameConfig);
+			components.unshift(frameConfig);
 		}
-
-		var callI = comps.length, 
-			successCallback = function(){
-				callI --;
-				_this.log.debug('LOAD COMPONENT ...');
+		
+		var loadModules = [],
+			compConfigs = [];
+		
+		for(var i = 0; i < components.length; i++){
+			var compConfig = components[i];
+			
+			if(!compConfig.module || !compConfig.id){
+				throw new Error("'Cannot load component #' + compConfig.id + ': invalid config!");
+			}
+			else if(false !== compConfig.enabled){
+				compConfigs.push(compConfig);
+				loadModules.push(compConfig.module);
+			}
+		}
+		
+		ui5strap.require(loadModules, function require_complete(){
+			for(var i = 0; i < loadModules.length; i++){
+				var ComponentConstructor = jQuery.sap.getObject(loadModules[i]),
+					compConfig = compConfigs[i],
+					componentId = compConfig.id,
+					oComp = new ComponentConstructor(_this, compConfig),
+					methodName = 'get' + jQuery.sap.charToUpperCase(componentId);
 				
-				if(callI === 0){
-					callback && callback();
+				if(_this[methodName]){
+					throw new Error("Name conflict: " + componentId);
 				}
-			};
-
-		if(callI === 0){
+				
+				oComp.init();
+				
+				_this.components[componentId] = oComp;
+				
+				_this[methodName] = function(){
+					return oComp;
+				};
+				
+				if(compConfig.events){
+					//Array of strings of format "scope.event"
+					for(var i = 0; i < compConfig.events.length; i++){
+						var stringParts = compConfig.events[i].split('.');
+						if(stringParts.length === 2){
+							(function(){
+								var eventName = stringParts[1],
+									eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName),
+									comp = oComp;
+								
+								_this.registerEventAction(stringParts[0], eventName, function on_event(oEvent){
+									comp[eventHandlerName] && comp[eventHandlerName](oEvent);
+								});
+							}());
+						}
+						else{
+							_this.log.error("Cannot register Component event: " + compConfig.events[i]);
+						}
+					}
+				}
+			}
+	
 			callback && callback();
-		}
-
-		for(var i = 0; i < comps.length; i++){
-			_this.registerComponent(comps[i]);
-
-			if(!comps[i].lazyLoad){
-				_this.loadComponent(comps[i].id, successCallback);
-			}
-			else{
-				successCallback();
-			}
-		}
+		});
 	};
 	
 	/*
@@ -4400,97 +4450,6 @@
 		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
 			ui5strap.Layer.setVisible(_this.overlayId, false, callback);
 		});	
-	};
-
-	/*
-	* ----------------------------------------------------------------------
-	* --------------------- Components -------------------------------------
-	* ----------------------------------------------------------------------
-	*/
-
-	AppBaseProto.loadComponent = function(componentId, callback){
-		if(!this.components[componentId]){
-			throw new Error('Cannot load component #' + componentId + ': not registered before.');
-		}
-
-		var component = this.components[componentId];
-
-		if(component instanceof ui5strap.AppComponent){
-			callback && callback(component);
-		}
-
-		if(!("module" in component) || !("id" in component)){
-			throw new Error("'Cannot load component #' + componentId + ': invalid component declaration!");
-		}
-
-		var compModule = component.module,
-			_this = this;
-
-		ui5strap.require(compModule, function require_complete(){
-			var ComponentConstructor = jQuery.sap.getObject(compModule);
-			oComp = new ComponentConstructor(_this, component);
-		
-			_this.components[componentId] = oComp;
-		
-			oComp.init();
-
-			callback && callback(oComp);
-		});
-	};
-
-	AppBaseProto.registerComponent = function(compConfig){
-		if(false === compConfig.enabled){
-			return;
-		}
-		if(!("module" in compConfig) || !("id" in compConfig)){
-			throw new Error("Invalid component declaration!");
-		}
-		var _this = this,
-			compId = compConfig.id,
-			methodName = 'get' + jQuery.sap.charToUpperCase(compId);
-
-		if(this[methodName]){
-			throw new Error("Name conflict: " + compId);
-		}
-		
-		this.components[compId] = compConfig;
-				
-		this[methodName] = function(){
-			var oComp = _this.components[compId];
-
-			if(!oComp){ 
-				throw new Error('Invalid component: ' + compId);
-			}
-			else if(!(oComp instanceof ui5strap.AppComponent)){ 
-				throw new Error('Component not loaded yet: ' + compId);
-			}
-
-			return _this.components[compId];
-		}
-
-		if(compConfig.events){
-			//Array of strings of format "scope.event"
-			for(var i = 0; i < compConfig.events.length; i++){
-				var stringParts = compConfig.events[i].split('.');
-				if(stringParts.length === 2){
-					(function(){
-						var eventName = stringParts[1];
-						//Register app event
-						_this.registerEventAction(stringParts[0], eventName, function on_event(oEvent){
-							//Executing component's event handler
-							var comp = _this[methodName](),
-								eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName);
-							
-							comp[eventHandlerName] && comp[eventHandlerName](oEvent);
-							
-						});
-					}());
-				}
-				else{
-					_this.log.error("Cannot register Component event: " + compConfig.events[i]);
-				}
-			}
-		}
 	};
 
 	/*
@@ -7072,7 +7031,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.RestService
+ * ui5strap.RestClient
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -7097,35 +7056,35 @@
 
 (function(){
 
-    jQuery.sap.declare("ui5strap.RestService");
+    jQuery.sap.declare("ui5strap.RestClient");
 
     jQuery.sap.require("ui5strap.AppComponent");
 
-    ui5strap.AppComponent.extend("ui5strap.RestService");
+    ui5strap.AppComponent.extend("ui5strap.RestClient");
 
-    var RestService = ui5strap.RestService,
-        RestServiceProto = RestService.prototype;
+    var RestClient = ui5strap.RestClient,
+        RestClientProto = RestClient.prototype;
 
-    RestService.CONTENT_TYPE_TEXT = 'text/plain';
-    RestService.CONTENT_TYPE_XML = 'application/xml';
-    RestService.CONTENT_TYPE_JSON = 'application/json';
-    RestService.CONTENT_TYPE_FORM_URL_ENCODED = 'application/x-www-form-urlencoded';
-    RestService.CONTENT_TYPE_FORM_MULTIPART = 'multipart/form-data';
+    RestClient.CONTENT_TYPE_TEXT = 'text/plain';
+    RestClient.CONTENT_TYPE_XML = 'application/xml';
+    RestClient.CONTENT_TYPE_JSON = 'application/json';
+    RestClient.CONTENT_TYPE_FORM_URL_ENCODED = 'application/x-www-form-urlencoded';
+    RestClient.CONTENT_TYPE_FORM_MULTIPART = 'multipart/form-data';
 
-    RestService.CHARSET_UTF8 = 'UTF-8';
+    RestClient.CHARSET_UTF8 = 'UTF-8';
 
-    RestService.RESPONSE_DATA_TYPE_TEXT = 'text';
-    RestService.RESPONSE_DATA_TYPE_HTML = 'html';
-    RestService.RESPONSE_DATA_TYPE_SCRIPT = 'script';
-    RestService.RESPONSE_DATA_TYPE_JSON = 'json';
-    RestService.RESPONSE_DATA_TYPE_JSONP = 'jsonp';
-    RestService.RESPONSE_DATA_TYPE_XML = 'xml';
+    RestClient.RESPONSE_DATA_TYPE_TEXT = 'text';
+    RestClient.RESPONSE_DATA_TYPE_HTML = 'html';
+    RestClient.RESPONSE_DATA_TYPE_SCRIPT = 'script';
+    RestClient.RESPONSE_DATA_TYPE_JSON = 'json';
+    RestClient.RESPONSE_DATA_TYPE_JSONP = 'jsonp';
+    RestClient.RESPONSE_DATA_TYPE_XML = 'xml';
     
     /*
     * Parses a path and replaces {placeholder} with values of pathParam directory, if present.
     * @protected
     */
-    RestServiceProto._parsePath = function(path, pathParam){
+    RestClientProto._parsePath = function(path, pathParam){
         pathParam = pathParam || {};
         return path.replace(/\{([a-zA-Z0-9]+)\}/g, function(m0, m1){
             return pathParam[m1];
@@ -7135,7 +7094,7 @@
     /*
     * Determine the final request URL based on given options
     */
-    RestServiceProto._determineRequestURL = function(options){
+    RestClientProto._determineRequestURL = function(options){
         var urlBase = this.options.url;
         return (jQuery.sap.endsWith(urlBase, "/") ? urlBase : urlBase + '/') + this._parsePath(options.path, options.pathParameters);
     };
@@ -7144,9 +7103,9 @@
     * GET Request with Query Parameters
     * @protected 
     */
-    RestServiceProto._get = function(options){
+    RestClientProto._get = function(options){
         if(!options.responseDataType){
-            options.responseDataType = RestService.RESPONSE_DATA_TYPE_JSON;
+            options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
 
         jQuery.ajax({
@@ -7165,9 +7124,9 @@
     * @protected
     * @deprecated Use _postUrlEncoded instead
     */
-    RestServiceProto._postQuery = function(options){
+    RestClientProto._postQuery = function(options){
         if(!options.responseDataType){
-            options.responseDataType = RestService.RESPONSE_DATA_TYPE_JSON;
+            options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
 
         jQuery.ajax({
@@ -7185,9 +7144,9 @@
     * POST Query Parameters to a host
     * @protected
     */
-    RestServiceProto._postUrlEncoded = function(options){
+    RestClientProto._postUrlEncoded = function(options){
         if(!options.responseDataType){
-            options.responseDataType = RestService.RESPONSE_DATA_TYPE_JSON;
+            options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
 
         var postUrl = this._determineRequestURL(options);
@@ -7211,13 +7170,13 @@
     * POST Object
     * @protected
     */
-    RestServiceProto._postWithPayload = function(options){
+    RestClientProto._postWithPayload = function(options){
         if(!options.requestContentType){
-            options.requestContentType = RestService.CONTENT_TYPE_JSON + '; charset=' + RestService.CHARSET_UTF8;
+            options.requestContentType = RestClient.CONTENT_TYPE_JSON + '; charset=' + RestClient.CHARSET_UTF8;
         }
 
         if(!options.responseDataType){
-            options.responseDataType = RestService.RESPONSE_DATA_TYPE_JSON;
+            options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
 
         jQuery.ajax({
@@ -7237,8 +7196,8 @@
     * @protected
     * @deprecated
     */
-    RestServiceProto._postPayload = function(options){
-        jQuery.sap.log.warning('RestService.prototype._postPayload is deprecated. Please use _postObject instead.');
+    RestClientProto._postPayload = function(options){
+        jQuery.sap.log.warning('RestClient.prototype._postPayload is deprecated. Please use _postObject instead.');
         return this._postObject(options);
     };
 
@@ -9828,9 +9787,12 @@
 			}
 		}
 	});
-
-	ui5strap.ListMediaItem.prototype.setText = function(newText){
-		this.setProperty('text', newText);
+	
+	/**
+	 * TODO More efficient rerendering
+	 */
+	ui5strap.ListMediaItem.prototype.setText = function(newText, suppressInvalidate){
+		this.setProperty('text', newText, suppressInvalidate);
 	};
 
 }());;/*
@@ -17873,7 +17835,7 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
  * 
  * UI5Strap
  *
- * ui5strap.RestService
+ * ui5strap.ODataClient
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -17898,22 +17860,22 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
 
 (function(){
 
-    jQuery.sap.declare("ui5strap.ODataService");
+    jQuery.sap.declare("ui5strap.ODataClient");
 
-    jQuery.sap.require("ui5strap.RestService");
+    jQuery.sap.require("ui5strap.RestClient");
 
-    ui5strap.RestService.extend("ui5strap.ODataService");
+    ui5strap.RestClient.extend("ui5strap.ODataClient");
 
-    var ODataService = ui5strap.ODataService,
-        ODataServiceProto = ODataService.prototype;
+    var ODataClient = ui5strap.ODataClient,
+        ODataClientProto = ODataClient.prototype;
     
-    ODataServiceProto.init = function(){
-        ui5strap.RestService.prototype.init.call(this);
+    ODataClientProto.init = function(){
+        ui5strap.RestClient.prototype.init.call(this);
 
         this._initModel();
     };
 
-    ODataServiceProto._initModel = function(){
+    ODataClientProto._initModel = function(){
         var oModel = new sap.ui.model.odata.ODataModel(this.options.url + "eventdata.xsodata", true);
 
         oModel.attachRequestFailed(null, function(){
@@ -17927,11 +17889,11 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
         this._oModel = oModel;
     };
 
-    ODataServiceProto.getModel = function(){
+    ODataClientProto.getModel = function(){
         return this._oModel;
     };
 
-    ODataServiceProto.navigate = function(path, callback){
+    ODataClientProto.navigate = function(path, callback){
         //jQuery.sap.log.debug('Navigate binding context...');
 
         var _this = this;
@@ -17941,11 +17903,11 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
         });
     };
 
-    ODataServiceProto.getNavigationContext = function(){
+    ODataClientProto.getNavigationContext = function(){
         return this._navigationContext;
     };
 
-    ODataServiceProto._read = function(options){
+    ODataClientProto._read = function(options){
         this._oModel.read(this._parsePath(options.path, options.pathParameters), {
             "urlParameters" : options.queryParameters,
             "context" : options.context,
@@ -18793,7 +18755,7 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		rm.writeClasses();
 		rm.write(">");
 		
-		if(oControl.getTitle() || oControl.getTitleContent()){
+		if(oControl.getTitle() || oControl.getTitleContent().length){
 			rm.write("<div");
 			rm.addClass("panel-heading");
 			rm.writeClasses();

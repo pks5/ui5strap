@@ -60,10 +60,10 @@
   }
 
   jQuerySap.declare("ui5strap.library");
-	jQuerySap.require("sap.ui.core.Core");
+  jQuerySap.require("sap.ui.core.Core");
 	
   //Register Ui5Strap as library
-	sap.ui.getCore().initLibrary(
+  sap.ui.getCore().initLibrary(
       {
       	  name : "ui5strap",
       	  dependencies : [],
@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.3.4"
+        	version: "0.9.4"
       }
   );
   
@@ -185,11 +185,13 @@
   * -------
   */
 
-	var tapSupport = jQuery.sap.touchEventMode != "OFF";
+  var tapSupport = jQuery.sap.touchEventMode != "OFF";
+  
   ui5strap.options = {
   	enableTapEvents : tapSupport,
   	enableClickEvents : !tapSupport,
-    transitionTimeout : 2000
+    transitionTimeout : 2000,
+    layerTimeout : 1000
   };
 
   /*
@@ -1024,7 +1026,7 @@
       layer.busy = transCallback;
           
       //Transition timeout
-      transTimeout = window.setTimeout(transCallback, ui5strap.options.transitionTimeout);
+      transTimeout = window.setTimeout(transCallback, ui5strap.options.layerTimeout);
       
       ui5strap.polyfill.requestAnimationFrame(function(){
 	      //Transition end event
