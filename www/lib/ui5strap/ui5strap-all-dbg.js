@@ -3917,7 +3917,7 @@
 			var compConfig = components[i];
 			
 			if(!compConfig.module || !compConfig.id){
-				throw new Error("'Cannot load component #' + compConfig.id + ': invalid config!");
+				throw new Error("Cannot load component #" + i + ": module or id attribute missing!");
 			}
 			else if(false !== compConfig.enabled){
 				compConfigs.push(compConfig);
@@ -3951,11 +3951,12 @@
 						var stringParts = compConfig.events[i].split('.');
 						if(stringParts.length === 2){
 							(function(){
-								var eventName = stringParts[1],
+								var eventScope = stringParts[0],
+									eventName = stringParts[1],
 									eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName),
 									comp = oComp;
 								
-								_this.registerEventAction(stringParts[0], eventName, function on_event(oEvent){
+								_this.registerEventAction(eventScope, eventName, function on_event(oEvent){
 									comp[eventHandlerName] && comp[eventHandlerName](oEvent);
 								});
 							}());
