@@ -3941,9 +3941,12 @@
 				
 				_this.components[componentId] = oComp;
 				
-				_this[methodName] = function(){
-					return oComp;
-				};
+				(function(){
+					var comp = oComp;
+					_this[methodName] = function(){
+						return comp;
+					};
+				}());
 				
 				if(compConfig.events){
 					//Array of strings of format "scope.event"
