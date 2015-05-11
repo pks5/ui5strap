@@ -289,8 +289,8 @@
 				
 				if(compConfig.events){
 					//Array of strings of format "scope.event"
-					for(var i = 0; i < compConfig.events.length; i++){
-						var stringParts = compConfig.events[i].split('.');
+					for(var j = 0; j < compConfig.events.length; j++){
+						var stringParts = compConfig.events[j].split('.');
 						if(stringParts.length === 2){
 							(function(){
 								var eventScope = stringParts[0],
@@ -304,7 +304,7 @@
 							}());
 						}
 						else{
-							_this.log.error("Cannot register Component event: " + compConfig.events[i]);
+							_this.log.error("Cannot register Component event: " + compConfig.events[j]);
 						}
 					}
 				}
