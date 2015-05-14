@@ -7108,19 +7108,7 @@
      * Global beforeSend
      */
     RestClientProto._beforeSend = function(xhr, options){
-    	if(this.options.requestHeaders){
-    		for(var i = 0; i < this.options.requestHeaders; i++){
-    			var header = this.options.requestHeaders[i];
-    			xhr.setRequestHeader (header.name, header.value);
-    		}
-    	}
     	
-    	if(options.requestHeaders){
-    		for(var i = 0; i < options.requestHeaders; i++){
-    			var header = options.requestHeaders[i];
-    			xhr.setRequestHeader (header.name, header.value);
-    		}
-    	}
     };
     
     /**
@@ -7133,6 +7121,12 @@
         if(!options.responseDataType){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
+        
+        var requestHeaders = {};
+        
+        if(options.requestHeaders){
+        	jQuery.extend(requestHeaders, options.requestHeaders);
+        }
 
         jQuery.ajax({
             data: options.queryParameters,
@@ -7140,6 +7134,7 @@
             processData: true,
             type: 'GET',
             url: this._determineRequestURL(options),
+            headers : requestHeaders,
             beforeSend: function (xhr) {
             	_this._beforeSend(xhr, options);
             },
@@ -7158,6 +7153,12 @@
         if(!options.responseDataType){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
+        
+        var requestHeaders = {};
+        
+        if(options.requestHeaders){
+        	jQuery.extend(requestHeaders, options.requestHeaders);
+        }
 
         var postUrl = this._determineRequestURL(options);
 
@@ -7171,6 +7172,7 @@
             processData: true,
             type: 'POST',
             url: postUrl,
+            headers : requestHeaders,
             beforeSend: function (xhr) {
             	_this._beforeSend(xhr, options);
             },
@@ -7193,6 +7195,12 @@
         if(!options.responseDataType){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
+        
+        var requestHeaders = {};
+        
+        if(options.requestHeaders){
+        	jQuery.extend(requestHeaders, options.requestHeaders);
+        }
 
         jQuery.ajax({
             contentType: options.requestContentType,
@@ -7201,6 +7209,7 @@
             processData: false,
             type: 'POST',
             url: this._determineRequestURL(options),
+            headers : requestHeaders,
             beforeSend: function (xhr) {
             	_this._beforeSend(xhr, options);
             },
@@ -7208,7 +7217,7 @@
             error : options.error
         });
     };
-
+    
 }());;/*
  * 
  * UI5Strap
