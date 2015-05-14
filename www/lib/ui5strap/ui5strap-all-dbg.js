@@ -7084,7 +7084,7 @@
     RestClient.RESPONSE_DATA_TYPE_JSONP = 'jsonp';
     RestClient.RESPONSE_DATA_TYPE_XML = 'xml';
     
-    /*
+    /**
     * Parses a path and replaces {placeholder} with values of pathParam directory, if present.
     * @protected
     */
@@ -7095,19 +7095,41 @@
         });
     };
 
-    /*
+    /**
     * Determine the final request URL based on given options
+    * @protected
     */
     RestClientProto._determineRequestURL = function(options){
         var urlBase = this.options.url;
         return (jQuery.sap.endsWith(urlBase, "/") ? urlBase : urlBase + '/') + this._parsePath(options.path, options.pathParameters);
     };
-
-    /*
+    
+    /**
+     * Global beforeSend
+     */
+    RestClientProto._beforeSend = function(xhr, options){
+    	if(this.options.requestHeaders){
+    		for(var i = 0; i < this.options.requestHeaders; i++){
+    			var header = this.options.requestHeaders[i];
+    			xhr.setRequestHeader (header.name, header.value);
+    		}
+    	}
+    	
+    	if(options.requestHeaders){
+    		for(var i = 0; i < options.requestHeaders; i++){
+    			var header = options.requestHeaders[i];
+    			xhr.setRequestHeader (header.name, header.value);
+    		}
+    	}
+    };
+    
+    /**
     * GET Request with Query Parameters
     * @protected 
     */
     RestClientProto._get = function(options){
+    	var _this = this;
+    	
         if(!options.responseDataType){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
@@ -7118,37 +7140,21 @@
             processData: true,
             type: 'GET',
             url: this._determineRequestURL(options),
+            beforeSend: function (xhr) {
+            	_this.beforeSend(xhr, options);
+            },
             success : options.success,
             error : options.error
         });
     };
 
-    /*
-    * POST Url Encoded Parameters
-    * @protected
-    * @deprecated Use _postUrlEncoded instead
-    */
-    RestClientProto._postQuery = function(options){
-        if(!options.responseDataType){
-            options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
-        }
-
-        jQuery.ajax({
-            data: options.queryParameters,
-            dataType: options.responseDataType,
-            processData: true,
-            type: 'POST',
-            url: this._determineRequestURL(options),
-            success : options.success,
-            error : options.error
-        });
-    };
-
-    /*
-    * POST Query Parameters to a host
+    /**
+    * POST Form URL encoded
     * @protected
     */
     RestClientProto._postUrlEncoded = function(options){
+    	var _this = this;
+    	
         if(!options.responseDataType){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
@@ -7165,17 +7171,22 @@
             processData: true,
             type: 'POST',
             url: postUrl,
+            beforeSend: function (xhr) {
+            	_this.beforeSend(xhr, options);
+            },
             success : options.success,
             error : options.error
         });
     };
 
     /**
-    * POST Object
+    * POST Object as JSON
     * @protected
     */
     RestClientProto._postWithPayload = function(options){
-        if(!options.requestContentType){
+    	var _this = this;
+    	
+    	if(!options.requestContentType){
             options.requestContentType = RestClient.CONTENT_TYPE_JSON + '; charset=' + RestClient.CHARSET_UTF8;
         }
 
@@ -7190,19 +7201,12 @@
             processData: false,
             type: 'POST',
             url: this._determineRequestURL(options),
+            beforeSend: function (xhr) {
+            	_this.beforeSend(xhr, options);
+            },
             success : options.success,
             error : options.error
         });
-    };
-
-    /*
-    * POST Object / Payload to a host
-    * @protected
-    * @deprecated
-    */
-    RestClientProto._postPayload = function(options){
-        jQuery.sap.log.warning('RestClient.prototype._postPayload is deprecated. Please use _postObject instead.');
-        return this._postObject(options);
     };
 
 }());;/*
