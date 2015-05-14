@@ -108,7 +108,7 @@
             type: 'GET',
             url: this._determineRequestURL(options),
             beforeSend: function (xhr) {
-            	_this.beforeSend(xhr, options);
+            	_this._beforeSend(xhr, options);
             },
             success : options.success,
             error : options.error
@@ -139,7 +139,7 @@
             type: 'POST',
             url: postUrl,
             beforeSend: function (xhr) {
-            	_this.beforeSend(xhr, options);
+            	_this._beforeSend(xhr, options);
             },
             success : options.success,
             error : options.error
@@ -169,7 +169,7 @@
             type: 'POST',
             url: this._determineRequestURL(options),
             beforeSend: function (xhr) {
-            	_this.beforeSend(xhr, options);
+            	_this._beforeSend(xhr, options);
             },
             success : options.success,
             error : options.error
