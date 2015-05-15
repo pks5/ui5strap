@@ -582,17 +582,18 @@
 		if(typeof receivers === 'string'){
 			receivers = [receivers];
 		}
+		
 		for(var i = 0; i < receivers.length; i++){
 			var receiverAppId = receivers[i];
 			var app = this.getApp(receiverAppId);
 
 			if(app){
-				app.onMessage(new sap.ui.base.Event("message", null, appMessage));
+				app.onMessage(new sap.ui.base.Event("ui5strap.app.message", null, appMessage));
 			}
 			
 	    }
 
-	    if(appMessage.toParent && self !== top){
+	    if(appMessage.public && self !== top){
 	    	parent.postMessage(appMessage, '*');
 	    }
 	};

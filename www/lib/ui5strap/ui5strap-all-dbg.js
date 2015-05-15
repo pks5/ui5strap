@@ -3712,20 +3712,10 @@
 
 			this._initLog();
 
-			/*
-			* Loader
-			*/
-			this.setLoaderVisible = function(visible, callback){
-				//ui5strap.Layer.setVisible('ui5strap-loader', visible, callback, option);
-				ui5strap.Layer.setVisible(this.getDomId('loader'), visible, callback);
-			};
+			this.sendMessage = function(appMessage){
+				appMessage.sender = this.getId();
 
-			/*
-			* Splash Screen
-			*/
-			this.setSplashVisible = function(visible, callback){
-				callback && callback();
-				//ui5strap.Layer.setVisible('ui5strap-splash', visible, callback);
+				viewer.sendMessage(appMessage);
 			};
 		}
 	});
@@ -4381,6 +4371,25 @@
 	* --------------------- App Overlay ------------------------------------
 	* ----------------------------------------------------------------------
 	*/
+	
+	/*
+	* Loader
+	*/
+	AppBaseProto.setLoaderVisible = function(visible, callback){
+		//ui5strap.Layer.setVisible('ui5strap-loader', visible, callback, option);
+		ui5strap.Layer.setVisible(this.getDomId('loader'), visible, callback);
+	};
+
+	/*
+	* Splash Screen
+	* @notimplemented
+	*/
+	AppBaseProto.setSplashVisible = function(visible, callback){
+		callback && callback();
+		//ui5strap.Layer.setVisible('ui5strap-splash', visible, callback);
+	};
+	
+	
 
 	/*
 	* Inititalzes the overlay
@@ -4541,23 +4550,6 @@
 		ui5strap.Action.run(action);
 	};
 
-	/*
-	* --------------------------------------------------
-	* --------------------- MESSAGES -------------------
-	* --------------------------------------------------
-	*/
-
-	/*
-	* App messages from a Ui5Strap app is directly passed to the current window's parent, if available.
-	*/
-	AppBaseProto.sendMessage = function(appMessage){
-		appMessage.sender = this.getId();
-
-		if(appMessage.toParent && self !== top){
-	    	parent.postMessage(appMessage, '*');
-	    }
-	};
-	
 	/*
 	* --------------------------------------------------
 	* --------------------- STORAGE --------------------
@@ -6855,17 +6847,18 @@
 		if(typeof receivers === 'string'){
 			receivers = [receivers];
 		}
+		
 		for(var i = 0; i < receivers.length; i++){
 			var receiverAppId = receivers[i];
 			var app = this.getApp(receiverAppId);
 
 			if(app){
-				app.onMessage(new sap.ui.base.Event("message", null, appMessage));
+				app.onMessage(new sap.ui.base.Event("ui5strap.app.message", null, appMessage));
 			}
 			
 	    }
 
-	    if(appMessage.toParent && self !== top){
+	    if(appMessage.public && self !== top){
 	    	parent.postMessage(appMessage, '*');
 	    }
 	};
