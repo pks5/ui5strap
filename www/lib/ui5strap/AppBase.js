@@ -269,8 +269,6 @@
 					throw new Error("Name conflict: " + componentId);
 				}
 				
-				oComp.init();
-				
 				_this.components[componentId] = oComp;
 				
 				(function(){
@@ -301,6 +299,8 @@
 						}
 					}
 				}
+				
+				oComp.init();
 			}
 	
 			callback && callback();
