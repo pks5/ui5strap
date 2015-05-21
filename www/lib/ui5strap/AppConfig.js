@@ -224,7 +224,7 @@
 			}
 		}
 	};
-
+	
 	/*
 	* Resolves a path relative to app location
 	*/
@@ -232,24 +232,7 @@
 		//Folder that contains app.json - must end with /
 		var location = this.data.app.location;
 
-		if(typeof path === 'string'){
-			//If path is a string, treat is as relative or absolute path depending on first char
-			
-			if(jQuery.sap.startsWith(path, '/')){
-				//Return path relative to servlet root (context)
-				return this.options.pathToServletRoot + path;
-			}
-			else if(jQuery.sap.startsWith(path, './')){
-				//Return relative (to html file) path unchanged
-				return path;
-			}
-			else if(jQuery.sap.startsWith(path, 'http')){
-				//Return absolute path unchanged
-				return path;
-			}
-
-		}	
-		else if(typeof path === 'object'){
+		if(typeof path === 'object'){
 			//If path is an object, it should contain a "src" attribute and can contain a "package" attribute
 			
 			if("package" in path){
@@ -259,6 +242,19 @@
 			path = path["src"];
 		}
 
+		if(jQuery.sap.startsWith(path, '/')){
+			//Return path relative to servlet root (context)
+			return this.options.pathToServletRoot + path;
+		}
+		else if(jQuery.sap.startsWith(path, './')){
+			//Return relative (to html file) path unchanged
+			return path;
+		}
+		else if(jQuery.sap.startsWith(path, 'http')){
+			//Return absolute path unchanged
+			return path;
+		}
+		
 		return location + path;
 	};
 
