@@ -68,46 +68,53 @@
 					type:"ui5strap.TrailHtml", 
 					defaultValue:ui5strap.TrailHtml.Space
 				}
+			},
+			
+			events : {
+				change : {}
 			}
 
 		}
 	});
 	
-	var _getInputValue = function(_this){
-		return _this.$().val();
-	};
+	var TextInputProto = ui5strap.TextInput.prototype;
 	
-	var _onChange = function(_this){
-		return function(ev){
-			var inputValue = _getInputValue(_this);
-			if(inputValue !== _this.getValue()){ 
-				_this.setProperty("value", inputValue, true);
+	TextInputProto.onAfterRendering = function(){
+		var _this = this;
+		this.$().on('change', function(){
+			var newValue = _this.$().val(),
+				oldValue = _this.getValue();
+			
+			if(newValue !== oldValue){ 
+				_this.setProperty("value", newValue, true);
 			}
-		}
+			
+			_this.fireChange({
+				"oldValue" : oldValue
+			});
+		});
 	};
 
-	ui5strap.TextInput.prototype.onAfterRendering = function(){
-		this.$().on('change', _onChange(this));
-	};
-
-	ui5strap.TextInput.prototype.onBeforeRendering = function() {
+	TextInputProto.onBeforeRendering = function() {
 		if (this.getDomRef()) {
 			this.$().off();
 			//this._curpos = this._$input.cursorPos();
 		}
 	};
 
-	ui5strap.TextInput.prototype.setValue = function(sValue) {
-		sValue = this.validateProperty("value", sValue);
-		
-		if (sValue != this.getValue()) {
+	TextInputProto.setValue = function(sValue, bSuppressInvalidate) {
+		if(this.getDomRef()){
 			this.setProperty("value", sValue, true);
-			if (this.getDomRef() && this.$().val() != sValue) {
+			
+			if (this.$().val() != sValue) {
 				this.$().val(sValue);
 				//this._curpos = this._$input.cursorPos();
 			}
 		}
-		return this;
+		else{
+			this.setProperty("value", sValue, bSuppressInvalidate);
+		}
+		
 	};
 
 
