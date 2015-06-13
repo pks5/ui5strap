@@ -36,7 +36,13 @@
 	
 	jQuerySap.require("ui5strap.Sandbox");
 
-	ui5strap.AppBase.extend("ui5strap.AppSandbox");
+	ui5strap.AppBase.extend("ui5strap.AppSandbox", {
+		"constructor" : function(config, viewer){
+			ui5strap.AppBase.call(this, config, viewer);
+			
+			this._sandboxControl = new ui5strap.Sandbox();
+		}
+	});
 
 	var AppSandbox = ui5strap.AppSandbox, 
 		AppSandboxProto = AppSandbox.prototype;
@@ -48,9 +54,6 @@
 	*/
 	
 	AppSandboxProto.getRootControl = function(){
-		if(!this._sandboxControl){
-			this._sandboxControl = new ui5strap.Sandbox();
-		}
 		return this._sandboxControl;
 	}; 
 
@@ -65,9 +68,14 @@
 	* @public
 	*/
 	AppSandboxProto.onMessage = function(oEvent){
+		ui5strap.AppBase.onMessage.call(this, oEvent);
+		
 		var appMessage = oEvent.getParameters();
-		appMessage.toParent = false;
-		this._sandboxControl.sendMessage(appMessage, '*');
+		
+		if(this.config.data.app.propagateMessages){
+			//Pass Message to IFrame Content
+			this._sandboxControl.sendMessage(appMessage, '*');
+		}
 	};
 
 	AppSandboxProto.onFirstShow = function(){

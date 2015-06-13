@@ -568,7 +568,10 @@
 	*
 	* ------------
 	*/
-
+	
+	/**
+	 * Sends a message to one or multiple Apps that run within this Viewer instance
+	 */
 	ViewerMultiProto.sendMessage = function(appMessage){
 		if(!appMessage 
 			|| !appMessage.receiver 
@@ -593,7 +596,10 @@
 			
 	    }
 
-	    if(appMessage.public && self !== top){
+	    if(appMessage.export && self !== top){
+	    	//Send the Message as Html Frame Message to the Frame parent.
+	    	//TODO more precise origin control
+	    	delete appMessage.export;
 	    	parent.postMessage(appMessage, '*');
 	    }
 	};
@@ -750,10 +756,18 @@
 		});
 		*/
 		
+		//Listen to Html Frame Messages
 		window.addEventListener(
 			"message", 
 			function(event){
-				_this.sendMessage(event.data);
+				var appMessage = event.data;
+				if(appMessage 
+					&& appMessage.receiver 
+					&& appMessage.sender
+					&& appMessage.message){
+					
+					_this.sendMessage(appMessage);
+				}
 			}, 
 			false
 		);

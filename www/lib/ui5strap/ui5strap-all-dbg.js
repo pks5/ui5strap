@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.4"
+        	version: "0.9.5"
       }
   );
   
@@ -6829,7 +6829,10 @@
 	*
 	* ------------
 	*/
-
+	
+	/**
+	 * Sends a message to one or multiple Apps that run within this Viewer instance
+	 */
 	ViewerMultiProto.sendMessage = function(appMessage){
 		if(!appMessage 
 			|| !appMessage.receiver 
@@ -6854,7 +6857,10 @@
 			
 	    }
 
-	    if(appMessage.public && self !== top){
+	    if(appMessage.export && self !== top){
+	    	//Send the Message as Html Frame Message to the Frame parent.
+	    	//TODO more precise origin control
+	    	delete appMessage.export;
 	    	parent.postMessage(appMessage, '*');
 	    }
 	};
@@ -7011,10 +7017,18 @@
 		});
 		*/
 		
+		//Listen to Html Frame Messages
 		window.addEventListener(
 			"message", 
 			function(event){
-				_this.sendMessage(event.data);
+				var appMessage = event.data;
+				if(appMessage 
+					&& appMessage.receiver 
+					&& appMessage.sender
+					&& appMessage.message){
+					
+					_this.sendMessage(appMessage);
+				}
 			}, 
 			false
 		);
@@ -12537,7 +12551,13 @@
 	
 	jQuerySap.require("ui5strap.Sandbox");
 
-	ui5strap.AppBase.extend("ui5strap.AppSandbox");
+	ui5strap.AppBase.extend("ui5strap.AppSandbox", {
+		"constructor" : function(config, viewer){
+			ui5strap.AppBase.call(this, config, viewer);
+			
+			this._sandboxControl = new ui5strap.Sandbox();
+		}
+	});
 
 	var AppSandbox = ui5strap.AppSandbox, 
 		AppSandboxProto = AppSandbox.prototype;
@@ -12549,9 +12569,6 @@
 	*/
 	
 	AppSandboxProto.getRootControl = function(){
-		if(!this._sandboxControl){
-			this._sandboxControl = new ui5strap.Sandbox();
-		}
 		return this._sandboxControl;
 	}; 
 
@@ -12566,9 +12583,14 @@
 	* @public
 	*/
 	AppSandboxProto.onMessage = function(oEvent){
+		ui5strap.AppBase.onMessage.call(this, oEvent);
+		
 		var appMessage = oEvent.getParameters();
-		appMessage.toParent = false;
-		this._sandboxControl.sendMessage(appMessage, '*');
+		
+		if(this.config.data.app.propagateMessages){
+			//Pass Message to IFrame Content
+			this._sandboxControl.sendMessage(appMessage, '*');
+		}
 	};
 
 	AppSandboxProto.onFirstShow = function(){
