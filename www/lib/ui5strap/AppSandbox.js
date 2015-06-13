@@ -68,7 +68,7 @@
 	* @public
 	*/
 	AppSandboxProto.onMessage = function(oEvent){
-		ui5strap.AppBase.onMessage.call(this, oEvent);
+		ui5strap.AppBase.prototype.onMessage.call(this, oEvent);
 		
 		var appMessage = oEvent.getParameters();
 		
