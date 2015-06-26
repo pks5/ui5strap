@@ -11650,7 +11650,7 @@
 		},
 		"sandbox" : {
 			"required" : false, 
-			"type" : "string",
+			"type" : "boolean",
 			"defaultValue" : false
 		},
 		"target" : {
