@@ -2999,7 +2999,8 @@
 	  			            "id" : configDataJSON.app.id,
 	  			            "package" : configDataJSON.app["package"],
 	  			            "module" : "ui5strap.AppSandbox",
-	  			            "appURL" : "./index.html?app=" + encodeURIComponent(configUrl)
+	  			            "appURL" : "./index.html?app=" + encodeURIComponent(configUrl),
+	  			            "propagateMessages" : true
 	  			        }
 	  				};
 	  			}
