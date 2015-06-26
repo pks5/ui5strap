@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.5"
+        	version: "0.9.6"
       }
   );
   
@@ -1161,6 +1161,19 @@
       }
       
       return iContent;
+  };
+  
+  ui5strap.Utils.qualifyURL = function(url) {
+	  var a = document.createElement('a');
+	  a.href = url;
+	  return a.href;
+  };
+  
+  ui5strap.Utils.urlOrigin = function(url) {
+	  var a = document.createElement('a');
+	  a.href = url;
+	  
+	  var origin = a.protocol + "//" + a.host;
   };
 
   /*
@@ -6871,6 +6884,9 @@
 			if(app){
 				app.onMessage(new sap.ui.base.Event("ui5strap.app.message", null, appMessage));
 			}
+			else{
+				jQuery.sap.log.error("Cannot send message to app " + receiverAppId);
+			}
 			
 	    }
 
@@ -7043,6 +7059,8 @@
 					&& appMessage.receiver 
 					&& appMessage.sender
 					&& appMessage.message){
+					
+					appMessage.origin = event.origin;
 					
 					_this.sendMessage(appMessage);
 				}
