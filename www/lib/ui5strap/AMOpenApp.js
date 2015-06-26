@@ -50,6 +50,11 @@
 			"required" : true, 
 			"type" : "string"
 		},
+		"sandbox" : {
+			"required" : false, 
+			"type" : "string",
+			"defaultValue" : false
+		},
 		"target" : {
 			"required" : false, 
 			"defaultValue" : "BROWSER", 
@@ -87,10 +92,18 @@
 		}
 		else if("VIEWER" === target){
 			var _this = this;
-			sappViewer.executeApp(appUrl, false, function(){
-				//Notify the action module that the action is completed.
-				_this.fireEvents(ActionModule.EVENT_COMPLETED);
-			});	
+			sappViewer.executeApp(
+				appUrl, 
+				false, 
+				function(){
+					//Notify the action module that the action is completed.
+					_this.fireEvents(ActionModule.EVENT_COMPLETED);
+				},
+				null,
+				{
+					"sandbox" : _this.getParameter("sandbox")
+				}
+			);	
 		}
 		
 	};

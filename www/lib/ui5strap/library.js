@@ -173,7 +173,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.5"
+        	version: "0.9.6"
       }
   );
   
@@ -1161,6 +1161,19 @@
       }
       
       return iContent;
+  };
+  
+  ui5strap.Utils.qualifyURL = function(url) {
+	  var a = document.createElement('a');
+	  a.href = url;
+	  return a.href;
+  };
+  
+  ui5strap.Utils.urlOrigin = function(url) {
+	  var a = document.createElement('a');
+	  a.href = url;
+	  
+	  var origin = a.protocol + "//" + a.host;
   };
 
   /*

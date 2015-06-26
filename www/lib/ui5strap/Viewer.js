@@ -101,7 +101,7 @@
 	/*
 	* Executes a app by given sapp-url from a get parameter
 	*/
-	ViewerMultiProto.start = function(callback, loadCallback){
+	ViewerMultiProto.start = function(callback, loadCallback, parameters){
 		jQuery.sap.log.debug("[VIEWER] start");
 
 		this.init();
@@ -112,7 +112,7 @@
 			throw new Error('Cannot start viewer: no app url specified.');
 		}
 
-		this.executeApp(appUrl, false, callback, loadCallback);	
+		this.executeApp(appUrl, false, callback, loadCallback, parameters);	
 	};
 
 	/*
@@ -149,12 +149,14 @@
 	/*
 	* Load, start and show an App. The appUrl must point to a valid app.json file.
 	*/
-	ViewerMultiProto.executeApp = function(appUrl, doNotShow, callback, loadCallback){
+	ViewerMultiProto.executeApp = function(appUrl, doNotShow, callback, loadCallback, parameters){
 		jQuery.sap.log.debug("[VIEWER] executeApp '" + appUrl + "'");
 		var _this = this;
 			
 		
-		_this.loadApp(appUrl, function loadAppComplete(appInstance){
+		_this.loadApp(
+			appUrl, 
+			function loadAppComplete(appInstance){
 			    loadCallback && loadCallback();
 
 			    var startedCallback = function(){
@@ -176,7 +178,9 @@
 				}
 			//});
 
-		});
+			},
+			parameters
+		);
 	};
 
 	/**
@@ -296,24 +300,19 @@
 	/*
 	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
 	*/
-	ViewerMultiProto.loadApp = function(appUrl, callback){
+	ViewerMultiProto.loadApp = function(appUrl, callback, parameters){
 		jQuery.sap.log.debug("[VIEWER] loadApp '" + appUrl + "'");
 
 		if(appUrl in _m_loadedSapplicationsByUrl){
 			return callback(_m_loadedSapplicationsByUrl[appUrl]);
 		}
 		var viewer = this,
-			appConfig = new ui5strap.AppConfig(this.options);
+			appConfig = new ui5strap.AppConfig(this.options, parameters);
 
 		appConfig.load(appUrl, function loadAppConfigComplete(configDataJSON){
 			//TODO log level should only affect on app level
 			if("logLevel" in configDataJSON.app){
 				jQuerySap.log.setLevel(configDataJSON.app.logLevel);
-			}
-
-			if(!("module" in configDataJSON.app)){
-				var defaultAppModule = "ui5strap.App";
-				configDataJSON.app.module = defaultAppModule;
 			}
 
 			//Create App Instance
@@ -593,6 +592,9 @@
 			if(app){
 				app.onMessage(new sap.ui.base.Event("ui5strap.app.message", null, appMessage));
 			}
+			else{
+				jQuery.sap.log.error("Cannot send message to app " + receiverAppId);
+			}
 			
 	    }
 
@@ -765,6 +767,8 @@
 					&& appMessage.receiver 
 					&& appMessage.sender
 					&& appMessage.message){
+					
+					appMessage.origin = event.origin;
 					
 					_this.sendMessage(appMessage);
 				}

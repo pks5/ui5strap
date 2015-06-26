@@ -52,7 +52,15 @@ ui5strap.controller("tld__domain.product__app.controllers.Page3", {
 	},
 
 	showOverlay : function(oEvent){
+		
 		this.getApp().showOverlay({ "viewName" : "tld__domain.product__app.views.Overlay" }, null, 'transition-slide-ttb');
-	}
+	},
 	
+	comTest  : function(oEvent){
+		var rootElm = document.documentElement;
+		var newFrameElm = document.createElement("iframe");
+		newFrameElm.src = "eque://test";
+		rootElm.appendChild(newFrameElm);
+		newFrameElm.parantNode.removeChild(newFrameElm);
+	}
 });

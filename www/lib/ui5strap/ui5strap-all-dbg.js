@@ -2953,9 +2953,10 @@
 
 	jQuerySap.declare("ui5strap.AppConfig");
 	sap.ui.base.Object.extend("ui5strap.AppConfig", {
-		"constructor" : function(options){
+		"constructor" : function(options, parameters){
 			this.options = options || {};
-
+			this.parameters = parameters || {};
+			
 			this.data = {};
 		}
 	});
@@ -2968,7 +2969,7 @@
 	*/
 	AppConfigProto.load = function(configUrl, callback){
 		var _this = this;
-
+		
 		jQuery.ajax({
 	  		"dataType": "json",
 	  		"url": configUrl,
@@ -2977,8 +2978,21 @@
 	  			if(!configDataJSON.app){
 					throw new Error("Invalid app configuration: attribute 'app' is missing.");
 				}
+	  			
+	  			if(_this.parameters.sandbox){
+	  				configDataJSON = {
+	  			        "app" : {
+	  			            "name" : configDataJSON.app.name,
+	  			            "id" : configDataJSON.app.id,
+	  			            "package" : configDataJSON.app["package"],
+	  			            "module" : "ui5strap.AppSandbox",
+	  			            "appURL" : "./index.html?app=" + encodeURIComponent(configUrl)
+	  			        }
+	  				};
+	  			}
+	  			
 	  			configDataJSON.app.url = configUrl;
-
+	  			
 	  			_this.setData(configDataJSON);
 
 	  			callback && callback.call(_this, configDataJSON);
@@ -3168,12 +3182,12 @@
 			//Return path relative to servlet root (context)
 			return this.options.pathToServletRoot + path;
 		}
-		else if(jQuery.sap.startsWith(path, './')){
+		else if(
+			jQuery.sap.startsWith(path, './')
+			|| jQuery.sap.startsWith(path, '../')
+			|| jQuery.sap.startsWith(path, 'http')
+		){
 			//Return relative (to html file) path unchanged
-			return path;
-		}
-		else if(jQuery.sap.startsWith(path, 'http')){
-			//Return absolute path unchanged
 			return path;
 		}
 		
@@ -3220,6 +3234,10 @@
 
 		if(!('type' in configDataJSON.app)){
 			configDataJSON.app.type = 'STANDARD';
+		}
+		
+		if(!("module" in configDataJSON.app)){
+			configDataJSON.app.module = "ui5strap.App";
 		}
 		
 		if(!('styleClass' in configDataJSON.app)){
@@ -6362,7 +6380,7 @@
 	/*
 	* Executes a app by given sapp-url from a get parameter
 	*/
-	ViewerMultiProto.start = function(callback, loadCallback){
+	ViewerMultiProto.start = function(callback, loadCallback, parameters){
 		jQuery.sap.log.debug("[VIEWER] start");
 
 		this.init();
@@ -6373,7 +6391,7 @@
 			throw new Error('Cannot start viewer: no app url specified.');
 		}
 
-		this.executeApp(appUrl, false, callback, loadCallback);	
+		this.executeApp(appUrl, false, callback, loadCallback, parameters);	
 	};
 
 	/*
@@ -6410,12 +6428,14 @@
 	/*
 	* Load, start and show an App. The appUrl must point to a valid app.json file.
 	*/
-	ViewerMultiProto.executeApp = function(appUrl, doNotShow, callback, loadCallback){
+	ViewerMultiProto.executeApp = function(appUrl, doNotShow, callback, loadCallback, parameters){
 		jQuery.sap.log.debug("[VIEWER] executeApp '" + appUrl + "'");
 		var _this = this;
 			
 		
-		_this.loadApp(appUrl, function loadAppComplete(appInstance){
+		_this.loadApp(
+			appUrl, 
+			function loadAppComplete(appInstance){
 			    loadCallback && loadCallback();
 
 			    var startedCallback = function(){
@@ -6437,7 +6457,9 @@
 				}
 			//});
 
-		});
+			},
+			parameters
+		);
 	};
 
 	/**
@@ -6557,24 +6579,19 @@
 	/*
 	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
 	*/
-	ViewerMultiProto.loadApp = function(appUrl, callback){
+	ViewerMultiProto.loadApp = function(appUrl, callback, parameters){
 		jQuery.sap.log.debug("[VIEWER] loadApp '" + appUrl + "'");
 
 		if(appUrl in _m_loadedSapplicationsByUrl){
 			return callback(_m_loadedSapplicationsByUrl[appUrl]);
 		}
 		var viewer = this,
-			appConfig = new ui5strap.AppConfig(this.options);
+			appConfig = new ui5strap.AppConfig(this.options, parameters);
 
 		appConfig.load(appUrl, function loadAppConfigComplete(configDataJSON){
 			//TODO log level should only affect on app level
 			if("logLevel" in configDataJSON.app){
 				jQuerySap.log.setLevel(configDataJSON.app.logLevel);
-			}
-
-			if(!("module" in configDataJSON.app)){
-				var defaultAppModule = "ui5strap.App";
-				configDataJSON.app.module = defaultAppModule;
 			}
 
 			//Create App Instance
@@ -11613,6 +11630,11 @@
 			"required" : true, 
 			"type" : "string"
 		},
+		"sandbox" : {
+			"required" : false, 
+			"type" : "string",
+			"defaultValue" : false
+		},
 		"target" : {
 			"required" : false, 
 			"defaultValue" : "BROWSER", 
@@ -11650,10 +11672,18 @@
 		}
 		else if("VIEWER" === target){
 			var _this = this;
-			sappViewer.executeApp(appUrl, false, function(){
-				//Notify the action module that the action is completed.
-				_this.fireEvents(ActionModule.EVENT_COMPLETED);
-			});	
+			sappViewer.executeApp(
+				appUrl, 
+				false, 
+				function(){
+					//Notify the action module that the action is completed.
+					_this.fireEvents(ActionModule.EVENT_COMPLETED);
+				},
+				null,
+				{
+					"sandbox" : _this.getParameter("sandbox")
+				}
+			);	
 		}
 		
 	};
@@ -18676,12 +18706,13 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 	ui5strap.PanelGroup.prototype.setSelectedControl = function(panel){
 		var panels = this.getPanels();
 		for(var i = 0; i < panels.length; i++){
-			if(panels[i].getCollapse()){
-				if(panels[i] !== panel){
-					panels[i].setCollapsed(true);
+			var panelI = panels[i];
+			if(panelI.getCollapse()){
+				if(panelI !== panel){
+					panelI.setCollapsed(true);
 				}
 				else{
-					panel.setCollapsed(false);
+					panelI.setCollapsed(!panelI.getCollapsed());
 				}
 			}
 		}

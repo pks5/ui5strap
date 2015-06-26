@@ -55,12 +55,13 @@
 	ui5strap.PanelGroup.prototype.setSelectedControl = function(panel){
 		var panels = this.getPanels();
 		for(var i = 0; i < panels.length; i++){
-			if(panels[i].getCollapse()){
-				if(panels[i] !== panel){
-					panels[i].setCollapsed(true);
+			var panelI = panels[i];
+			if(panelI.getCollapse()){
+				if(panelI !== panel){
+					panelI.setCollapsed(true);
 				}
 				else{
-					panel.setCollapsed(false);
+					panelI.setCollapsed(!panelI.getCollapsed());
 				}
 			}
 		}

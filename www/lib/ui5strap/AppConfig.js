@@ -31,9 +31,10 @@
 
 	jQuerySap.declare("ui5strap.AppConfig");
 	sap.ui.base.Object.extend("ui5strap.AppConfig", {
-		"constructor" : function(options){
+		"constructor" : function(options, parameters){
 			this.options = options || {};
-
+			this.parameters = parameters || {};
+			
 			this.data = {};
 		}
 	});
@@ -46,7 +47,7 @@
 	*/
 	AppConfigProto.load = function(configUrl, callback){
 		var _this = this;
-
+		
 		jQuery.ajax({
 	  		"dataType": "json",
 	  		"url": configUrl,
@@ -55,8 +56,21 @@
 	  			if(!configDataJSON.app){
 					throw new Error("Invalid app configuration: attribute 'app' is missing.");
 				}
+	  			
+	  			if(_this.parameters.sandbox){
+	  				configDataJSON = {
+	  			        "app" : {
+	  			            "name" : configDataJSON.app.name,
+	  			            "id" : configDataJSON.app.id,
+	  			            "package" : configDataJSON.app["package"],
+	  			            "module" : "ui5strap.AppSandbox",
+	  			            "appURL" : "./index.html?app=" + encodeURIComponent(configUrl)
+	  			        }
+	  				};
+	  			}
+	  			
 	  			configDataJSON.app.url = configUrl;
-
+	  			
 	  			_this.setData(configDataJSON);
 
 	  			callback && callback.call(_this, configDataJSON);
@@ -246,12 +260,12 @@
 			//Return path relative to servlet root (context)
 			return this.options.pathToServletRoot + path;
 		}
-		else if(jQuery.sap.startsWith(path, './')){
+		else if(
+			jQuery.sap.startsWith(path, './')
+			|| jQuery.sap.startsWith(path, '../')
+			|| jQuery.sap.startsWith(path, 'http')
+		){
 			//Return relative (to html file) path unchanged
-			return path;
-		}
-		else if(jQuery.sap.startsWith(path, 'http')){
-			//Return absolute path unchanged
 			return path;
 		}
 		
@@ -298,6 +312,10 @@
 
 		if(!('type' in configDataJSON.app)){
 			configDataJSON.app.type = 'STANDARD';
+		}
+		
+		if(!("module" in configDataJSON.app)){
+			configDataJSON.app.module = "ui5strap.App";
 		}
 		
 		if(!('styleClass' in configDataJSON.app)){
