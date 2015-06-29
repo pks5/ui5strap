@@ -43,46 +43,6 @@
 		AppConfigProto = AppConfig.prototype;
 
 	/*
-	* Loads the configuration from an URL. URL must point to a JSON file.
-	*/
-	AppConfigProto.load = function(configUrl, callback){
-		var _this = this;
-		
-		jQuery.ajax({
-	  		"dataType": "json",
-	  		"url": configUrl,
-	  		"data": {},
-	  		"success": function ajax_complete(configDataJSON){
-	  			if(!configDataJSON.app){
-					throw new Error("Invalid app configuration: attribute 'app' is missing.");
-				}
-	  			
-	  			if(_this.parameters.sandbox){
-	  				configDataJSON = {
-	  			        "app" : {
-	  			            "name" : configDataJSON.app.name,
-	  			            "id" : configDataJSON.app.id,
-	  			            "package" : configDataJSON.app["package"],
-	  			            "module" : "ui5strap.AppSandbox",
-	  			            "appURL" : "./index.html?app=" + encodeURIComponent(configUrl),
-	  			            "propagateMessages" : true
-	  			        }
-	  				};
-	  			}
-	  			
-	  			configDataJSON.app.url = configUrl;
-	  			
-	  			_this.setData(configDataJSON);
-
-	  			callback && callback.call(_this, configDataJSON);
-	  		},
-	  		"error" : function ajax_error(){
-	  			throw new Error('Could not load app config from url: ' + configUrl);
-	  		}
-		});
-	};
-
-	/*
 	* @deprecated
 	*/
 	AppConfigProto.getFrame = function(){

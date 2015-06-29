@@ -1019,6 +1019,7 @@
 	/*
 	* Get the id of the app defined in the config
 	* @public
+	* @deprecated
 	*/
 	AppBaseProto.getUrl = function(){
 		return this.config.data.app.url;

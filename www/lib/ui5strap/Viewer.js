@@ -75,7 +75,6 @@
 	//@static
 	var _m_currentSapplication = null;
 	var _m_loadedSapplicationsById = null;
-	var _m_loadedSapplicationsByUrl = null;
 	
 
 
@@ -88,8 +87,7 @@
 		
 		//Object vars
 		_m_loadedSapplicationsById = {};
-		_m_loadedSapplicationsByUrl = {};
-
+		
 		ui5strap.ViewerBase.prototype.init.call(this);
 		
 		//Init methods
@@ -112,7 +110,17 @@
 			throw new Error('Cannot start viewer: no app url specified.');
 		}
 
-		this.executeApp(appUrl, false, callback, loadCallback, parameters);	
+		this.executeApp(
+			{
+				"internal" : true,
+				"type" : "UI5STRAP",
+				"url" : appUrl,
+				"parameters" : parameters
+			}, 
+			false, 
+			callback, 
+			loadCallback
+		);	
 	};
 
 	/*
@@ -145,42 +153,125 @@
 
 		this.exitViewer(appUrl);
 	};
+	
+	/*
+	* Loads the configuration from an URL. URL must point to a JSON file.
+	*/
+	var _loadAppConfig = function(_this, configUrl, callback){
+		jQuery.ajax({
+	  		"dataType": "json",
+	  		"url": configUrl,
+	  		"data": {},
+	  		"success": function ajax_complete(configDataJSON){
+	  			if(!configDataJSON.app){
+					throw new Error("Invalid app configuration: attribute 'app' is missing.");
+				}
+	  			
+	  			
+	  			
+	  			callback && callback(configDataJSON);
+	  		},
+	  		"error" : function ajax_error(){
+	  			throw new Error('Could not load app config from url: ' + configUrl);
+	  		}
+		});
+	};
 
 	/*
 	* Load, start and show an App. The appUrl must point to a valid app.json file.
 	*/
-	ViewerMultiProto.executeApp = function(appUrl, doNotShow, callback, loadCallback, parameters){
-		jQuery.sap.log.debug("[VIEWER] executeApp '" + appUrl + "'");
-		var _this = this;
-			
+	ViewerMultiProto.executeApp = function(appDefinition, doNotShow, callback, loadCallback){
 		
-		_this.loadApp(
-			appUrl, 
-			function loadAppComplete(appInstance){
-			    loadCallback && loadCallback();
-
-			    var startedCallback = function(){
-					if(!doNotShow){
-						_this.showApp(appInstance.getId(), null, callback);
+		jQuery.sap.log.debug("[VIEWER] execute App '" + appDefinition.url + "'");
+		
+		var _this = this,
+			appType = appDefinition.type;
+		
+		if(!appType){
+			appType = "HTML5";
+		}
+		
+		var ls = function loadAppConfigComplete(configDataJSON){
+			configDataJSON.app.url = appDefinition.url;
+			
+			_this.loadApp(
+				configDataJSON, 
+				appDefinition.parameters,
+				function loadAppComplete(appInstance){
+				    loadCallback && loadCallback();
+	
+				    var startedCallback = function(){
+						if(!doNotShow){
+							_this.showApp(appInstance.getId(), null, callback);
+						}
+						else{
+							//_this.hideLoader(callback);
+							callback && callback();
+						}
+					};
+				
+				//_this.showLoader(function(){
+					if(!appInstance.isRunning){
+						_this.startApp(appInstance.getId(), startedCallback);
 					}
 					else{
-						//_this.hideLoader(callback);
-						callback && callback();
+						startedCallback();
 					}
-				};
+				//});
+	
+				}
+			);
+		};
+		
+		
+		if("HTML5" === appType){
+			if(!appDefinition.name || !appDefinition.id || !appDefinition.package || !appDefinition.url){
+				throw new Error("Cannot execute HTML5 App: at least one of required attributes missing in definition.");
+			}
 			
-			//_this.showLoader(function(){
-				if(!appInstance.isRunning){
-					_this.startApp(appInstance.getId(), startedCallback);
+			ls({
+		        "app" : {
+		        	"name" : appDefinition.name,
+		            "id" : appDefinition.id,
+		            "package" : appDefinition.package,
+		            "module" : "ui5strap.AppSandbox",
+		            "appURL" : appDefinition.url,
+		            "propagateMessages" : true
+		        }
+			});
+		}
+		else if("UI5STRAP" === appType){
+			if(appDefinition.internal){
+				
+				//Config URL provided, so load config data from there
+				_loadAppConfig(this, appDefinition.url, ls);
+			}
+			else{
+				if(!appDefinition.name || !appDefinition.id || !appDefinition.package || !appDefinition.url){
+					throw new Error("Cannot execute external UI5STRAP App: at least one of required attributes missing in definition.");
 				}
-				else{
-					startedCallback();
+				
+				var page = appDefinition.page;
+				
+				if(!page){
+					page = "index.html";
 				}
-			//});
-
-			},
-			parameters
-		);
+				
+				ls({
+			        "app" : {
+			            "name" : appDefinition.name,
+			            "id" : appDefinition.id,
+			            "package" : appDefinition.package,
+			            "module" : "ui5strap.AppSandbox",
+			            "appURL" : page + "?app=" + encodeURIComponent(appDefinition.url),
+			            "propagateMessages" : true
+			        }
+				});
+			}
+		}
+		else{
+			throw new Error("Cannot execute App: Invalid Type!");
+		}
 	};
 
 	var _preloadLibraries = function(_this, libs, callback){
@@ -269,39 +360,37 @@
 			});
 		});
 	};
-
+	
 	/*
 	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
 	*/
-	ViewerMultiProto.loadApp = function(appUrl, callback, parameters){
-		jQuery.sap.log.debug("[VIEWER] loadApp '" + appUrl + "'");
+	ViewerMultiProto.loadApp = function(configDataJSON, parameters, callback){
+		jQuery.sap.log.debug("[VIEWER] loadApp '" + configDataJSON.app.name + "'");
 
-		if(appUrl in _m_loadedSapplicationsByUrl){
-			return callback(_m_loadedSapplicationsByUrl[appUrl]);
-		}
-		var viewer = this,
+		var _this = this,
 			appConfig = new ui5strap.AppConfig(this.options, parameters);
+		
+		appConfig.setData(configDataJSON);
 
-		appConfig.load(appUrl, function loadAppConfigComplete(configDataJSON){
-			//TODO log level should only affect on app level
-			if("logLevel" in configDataJSON.app){
-				jQuerySap.log.setLevel(configDataJSON.app.logLevel);
-			}
+		//TODO log level should only affect on app level
+		if("logLevel" in configDataJSON.app){
+			jQuerySap.log.setLevel(configDataJSON.app.logLevel);
+		}
+		
+		if(_m_loadedSapplicationsById[configDataJSON.app.id]){
+			return callback(_m_loadedSapplicationsById[configDataJSON.app.id]);
+		}
 
-			//Create App Instance
-			viewer.createApp(appConfig, function createAppComplete(appInstance){
-				appInstance.init();
+		//Create App Instance
+		_this.createApp(appConfig, function createAppComplete(appInstance){
+			appInstance.init();
 
-				_m_loadedSapplicationsByUrl[appUrl] = appInstance;
-				_m_loadedSapplicationsById[appInstance.getId()] = appInstance;
+			_m_loadedSapplicationsById[appInstance.getId()] = appInstance;
 
-				appInstance.load(function loadAppComplete(){
-					callback && callback.call(viewer, appInstance);
-				});
+			appInstance.load(function loadAppComplete(){
+				callback && callback.call(_this, appInstance);
 			});
 		});
-
-		
 	};
 
 	/*
@@ -322,7 +411,6 @@
 		
 		appInstance.unload();
 		
-		delete _m_loadedSapplicationsByUrl[appInstance.getUrl()];
 		delete _m_loadedSapplicationsById[sappId];
 
 		return appInstance;

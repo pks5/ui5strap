@@ -46,11 +46,31 @@
 	* @Override
 	*/
 	OpenAppProto.parameters = {
-		"appUrl" : {
+		"url" : {
 			"required" : true, 
 			"type" : "string"
 		},
-		"sandbox" : {
+		"id" : {
+			"required" : false, 
+			"type" : "string",
+			"defaultValue" : ""
+		},
+		"package" : {
+			"required" : false, 
+			"type" : "string",
+			"defaultValue" : ""
+		},
+		"name" : {
+			"required" : false, 
+			"type" : "string",
+			"defaultValue" : ""
+		},
+		"type" : {
+			"required" : false, 
+			"type" : "string",
+			"defaultValue" : "HTML5"
+		},
+		"internal" : {
 			"required" : false, 
 			"type" : "boolean",
 			"defaultValue" : false
@@ -66,43 +86,45 @@
 	* @Override
 	*/
 	OpenAppProto.run = function(){
-		
-		var currentUrl = [location.protocol, '//', location.host, location.pathname].join('');
-
-		var appUrl = this.getParameter("appUrl");
+		var appUrl = this.getParameter("url");
 
 		if(!appUrl){
 			throw new Error('Invalid sapplication url: ' + appUrl);
 		}
 
-		var sapplicationUrl = currentUrl + '?sapp=' + encodeURIComponent(appUrl) + '&rand=' + Math.random();
-
-		this.setParameter("frameUrl", sapplicationUrl);
-
 		if(!(this.context.app instanceof ui5strap.AppSystem)){
-			console.log(this.context.app);
 			throw new Error('Only system apps can run ui5strap.AMOpenApp');
 		}
 
-		var sappViewer = this.context.app.getViewer();
+		//TODO
+		var currentUrl = [location.protocol, '//', location.host, location.pathname].join('');
+		var sapplicationUrl = currentUrl + '?sapp=' + encodeURIComponent(appUrl) + '&rand=' + Math.random();
+		this.setParameter("frameUrl", sapplicationUrl);
+		//
+		
+		var viewer = this.context.app.getViewer();
 		var target = this.getParameter("target");
 		if("BROWSER" === target){
 			//Means to redirect
-			sappViewer.openSapplication(appUrl);
+			viewer.openSapplication(appUrl);
 		}
 		else if("VIEWER" === target){
 			var _this = this;
-			sappViewer.executeApp(
-				appUrl, 
+			viewer.executeApp(
+				{
+					"id" : this.getParameter("id"),
+					"package" : this.getParameter("package"),
+					"type" : this.getParameter("type"),
+					"url" : appUrl,
+					"internal" : this.getParameter("internal"),
+					"name" : this.getParameter("name"),
+				}, 
 				false, 
 				function(){
 					//Notify the action module that the action is completed.
 					_this.fireEvents(ActionModule.EVENT_COMPLETED);
 				},
-				null,
-				{
-					"sandbox" : _this.getParameter("sandbox")
-				}
+				null
 			);	
 		}
 		
