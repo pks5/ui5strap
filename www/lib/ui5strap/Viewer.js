@@ -183,33 +183,6 @@
 		);
 	};
 
-	/**
-	* Hide, stop and unload an App.
-	*/
-	ViewerMultiProto.closeApp = function(sappId, callback){
-		var viewer = this;
-
-		var appInstance = this.getApp(sappId);
-
-		if(null === appInstance){
-			throw new Error('Cannot close app "' + sappId + '" - app not loaded.');
-		}
-
-		if ( this.getApp() === appInstance ) {
-			this.hideApp('transition-zoom2', function hideAppComplete(){
-				viewer.stopApp(sappId);
-				viewer.unloadApp(sappId);
-				callback && callback();
-			});
-		}	
-		else{ 
-			this.stopApp(sappId);
-			this.unloadApp(sappId);
-
-			callback && callback();
-		}
-	};
-
 	var _preloadLibraries = function(_this, libs, callback){
 		var callI = libs.length,
 			successCallback = function(){
@@ -532,16 +505,6 @@
 			//</DOM_ATTACH_TIMEOUT>
 
 		});	
-	};
-
-	ViewerMultiProto.hideApp = function(transitionName, callback){
-		if(!this.options.home){
-			throw new Error('options.home must be set to hide an App!');
-		}
-		this.showApp(this.options.home.id, transitionName, function showAppComplete(appInstance){
-			callback && callback();
-			//appInstance.hidden();
-		});
 	};
 
 	/*
