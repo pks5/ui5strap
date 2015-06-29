@@ -65,6 +65,11 @@
 			"type" : "string",
 			"defaultValue" : ""
 		},
+		"launcher" : {
+			"required" : false, 
+			"type" : "string",
+			"defaultValue" : "index.html"
+		},
 		"type" : {
 			"required" : false, 
 			"type" : "string",
@@ -118,6 +123,7 @@
 					"url" : appUrl,
 					"internal" : this.getParameter("internal"),
 					"name" : this.getParameter("name"),
+					"launcher" : this.getParameter("launcher")
 				}, 
 				false, 
 				function(){

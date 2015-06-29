@@ -6505,10 +6505,10 @@
 					throw new Error("Cannot execute external UI5STRAP App: at least one of required attributes missing in definition.");
 				}
 				
-				var page = appDefinition.page;
+				var launcher = appDefinition.launcher;
 				
-				if(!page){
-					page = "index.html";
+				if(!launcher){
+					launcher = "index.html";
 				}
 				
 				ls({
@@ -6517,7 +6517,7 @@
 			            "id" : appDefinition.id,
 			            "package" : appDefinition.package,
 			            "module" : "ui5strap.AppSandbox",
-			            "appURL" : page + "?app=" + encodeURIComponent(appDefinition.url),
+			            "appURL" : launcher + "?app=" + encodeURIComponent(appDefinition.url),
 			            "propagateMessages" : true
 			        }
 				});
@@ -11572,6 +11572,11 @@
 			"type" : "string",
 			"defaultValue" : ""
 		},
+		"launcher" : {
+			"required" : false, 
+			"type" : "string",
+			"defaultValue" : "index.html"
+		},
 		"type" : {
 			"required" : false, 
 			"type" : "string",
@@ -11625,6 +11630,7 @@
 					"url" : appUrl,
 					"internal" : this.getParameter("internal"),
 					"name" : this.getParameter("name"),
+					"launcher" : this.getParameter("launcher")
 				}, 
 				false, 
 				function(){
