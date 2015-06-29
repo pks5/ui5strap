@@ -6490,7 +6490,10 @@
 		            "package" : appDefinition.package,
 		            "module" : "ui5strap.AppSandbox",
 		            "appURL" : appDefinition.url,
-		            "propagateMessages" : true
+		            "propagateMessages" : true,
+		            "icons" : {
+		            	"default" : appDefinition.icon
+		            }
 		        }
 			});
 		}
@@ -6518,7 +6521,10 @@
 			            "package" : appDefinition.package,
 			            "module" : "ui5strap.AppSandbox",
 			            "appURL" : launcher + "?app=" + encodeURIComponent(appDefinition.url),
-			            "propagateMessages" : true
+			            "propagateMessages" : true,
+			            "icons" : {
+			            	"default" : appDefinition.icon
+			            }
 			        }
 				});
 			}
