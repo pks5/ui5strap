@@ -440,10 +440,6 @@
 		//Set Browser Title
 		document.title = appInstance.config.data.app.name;
 
-		if(appInstance.hasNature('UI5OS_HOME')){
-			this._dom.$body.addClass('ui5os-with-bar-home');
-		}
-
 		var previousSapplication = this.getApp();
 		var needAttach = false;
 		
@@ -660,26 +656,6 @@
 
 		if(this._dom.$root.length === 0){
 			throw new Error('Root Container not found in HTML: ' + this.options.container);
-		}
-		
-		var $homeButton = jQuery('#ui5os-button-home'),
-			$taskmanagerButton = jQuery('#ui5os-button-taskmanager');
-		
-		if(this.options.home){
-			this._dom.$barHome = jQuery('#ui5os-bar-home');
-			
-			$homeButton.on('click', function(){
-				_this.executeApp(_this.options.home.url, false);
-			});
-			
-			$taskmanagerButton.on('click', function(){
-				_this.showOverlay({
-					"appId" : _this.options.home.id,
-					"target" : "content",
-	                "viewName" : _this.options.home.package + ".views.TaskManager",
-	                "id" : "taskManager"
-				});
-			});
 		}
 	};
 
