@@ -236,11 +236,11 @@
 		            "package" : appDefinition.package,
 		            "module" : "ui5strap.AppSandbox",
 		            "appURL" : appDefinition.url,
-		            "propagateMessages" : true,
-		            "icons" : {
-		            	"default" : appDefinition.icon
-		            }
-		        }
+		            "propagateMessages" : true
+		        },
+	            "icons" : {
+	            	"default" : appDefinition.icon
+	            }
 			});
 		}
 		else if("UI5STRAP" === appType){
@@ -267,11 +267,11 @@
 			            "package" : appDefinition.package,
 			            "module" : "ui5strap.AppSandbox",
 			            "appURL" : launcher + "?app=" + encodeURIComponent(appDefinition.url),
-			            "propagateMessages" : true,
-			            "icons" : {
-			            	"default" : appDefinition.icon
-			            }
-			        }
+			            "propagateMessages" : true
+			        },
+		            "icons" : {
+		            	"default" : appDefinition.icon
+		            }
 				});
 			}
 		}
