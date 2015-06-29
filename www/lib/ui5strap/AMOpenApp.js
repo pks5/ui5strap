@@ -60,6 +60,11 @@
 			"type" : "string",
 			"defaultValue" : ""
 		},
+		"icon" : {
+			"required" : false, 
+			"type" : "string",
+			"defaultValue" : ""
+		},
 		"name" : {
 			"required" : false, 
 			"type" : "string",
@@ -122,6 +127,7 @@
 					"type" : this.getParameter("type"),
 					"url" : appUrl,
 					"internal" : this.getParameter("internal"),
+					"icon" : this.getParameter("icon"),
 					"name" : this.getParameter("name"),
 					"launcher" : this.getParameter("launcher")
 				}, 
