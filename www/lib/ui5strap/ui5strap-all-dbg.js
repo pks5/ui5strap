@@ -2980,13 +2980,6 @@
 	/*
 	* @deprecated
 	*/
-	AppConfigProto.getFrame = function(){
-		return this.data.frames['default'];
-	};
-
-	/*
-	* @deprecated
-	*/
 	AppConfigProto.getMenuData = function(menuId){
 		if(!(menuId in this.data.menus)){
 			return null;
@@ -3076,9 +3069,11 @@
 			return option;
 		}
 		
+		/*
 		if(!option.type){
 			throw new Error("Invalid option: " + optionKey);
 		}
+		*/
 
 		if("URI" === option.type){
 			if(!("uriParam" in option)){
@@ -3099,7 +3094,8 @@
 			return uriParamValue;
 		}
 
-		throw new Error('Invalid option type: ' + option.type);
+		//throw new Error('Invalid option type: ' + option.type);
+		return option;
 	};
 
 	/*
@@ -3422,6 +3418,7 @@
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
+		var _this = this;
 		
 		this.control = this._createControl();
 		this._initHistory();
@@ -3430,7 +3427,23 @@
 		if(this.getNavContainer || this._initControl){
 			throw new Error("The method 'ui5strap.AppFram.prototype.getNavContainer' has been removed. Please override the method 'ui5strap.AppFram.prototype._createControl', and return your new NavContainer instance there.");
 		}
-
+		
+		var oldAppShow = this.app.show;
+		this.app.show = function(callback){
+			oldAppShow.call(_this.app, function(firstTime){
+				if(firstTime){
+					_this.showInitialContent(callback);
+				}
+				else{
+					callback && callback(firstTime);
+				}
+			});
+			
+		};
+		
+		this.app.getRootControl = function(){
+			return _this.control;
+		};
 	};
 
 	AppFrameProto.getControl = function(){
@@ -5022,18 +5035,6 @@
 		});
 	};
 
-	AppProto.show = function(callback){
-		var _this = this;
-		ui5strap.AppBase.prototype.show.call(this, function(firstTime){
-			if(firstTime && _this.getFrame && _this.getFrame()){
-				_this.getFrame().showInitialContent(callback);
-			}
-			else{
-				callback && callback();
-			}
-		});
-	};
-
 	/*
 	* Triggered when a view of the app is shown in the global overlay
 	* @public
@@ -5157,18 +5158,11 @@
 	* -------------------------------------------------------------
 	*/
 	
+	/**
+	 * @abstract
+	 */
 	AppProto.getRootControl = function(){
-		
-		if(!this.getFrame || !this.getFrame()){
-			throw new Error('Cannot determine root Control of the App: no Frame is set. Please set a AppFrame or override ui5strap.App.prototype.getRootControl in your own App instance.')
-		}
-
-		var control = this.getFrame().getControl();
-		if(!control){
-			throw new Error('Cannot determine root Control of the App: No frame control is set in the Frame.');
-		}
-
-		return control;
+		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');
 	};
 
 }());;/*
@@ -11170,6 +11164,11 @@
 			"required" : false, 
 			"type" : "boolean",
 			"defaultValue" : false
+		},
+		"frameId" : {
+			"required" : false,
+			"type" : "string",
+			"defaultValue" : "frame"
 		}
 		
 	};
@@ -11200,8 +11199,14 @@
 				virtual : virtual,
 				parameters : parameters
 			};
+			
+			var frameGetter = 'get' + jQuery.sap.charToUpperCase(this.getParameter("frameId"), 0);
+			
+			if(!this.context.app[frameGetter]){
+				throw new Error("Cannot Goto Page: invalid frame id!");
+			}
 
-			this.context.app.getFrame().gotoPage(this.context.parameters[this.namespace]);
+			this.context.app[frameGetter]().gotoPage(this.context.parameters[this.namespace]);
 	}
 
 }());;/*

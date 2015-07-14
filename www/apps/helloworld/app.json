@@ -1,0 +1,24 @@
+{
+	"app" : {
+	        "id" : "tld.mydomain.mysubdomain.myproduct.app",
+	        "package" : "tld__mydomain__mysubdomain.myproduct__app",
+	        "name" : "My Product"
+	},
+	
+	"components" : [
+	         {
+	             
+	             "id" : "myframe",
+	             "module" : "ui5strap.AppFrame",
+	             "navContainer" : "ui5strap.NavContainer",
+	             
+	             "initialViews" : [
+	                 { 
+	                     "viewName" : "tld__mydomain__mysubdomain.myproduct__app.views.HelloWorld",
+	                     "type" : "HTML"
+	                 }
+	             ]
+	
+	         }
+    ]
+}

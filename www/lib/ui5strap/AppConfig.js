@@ -45,13 +45,6 @@
 	/*
 	* @deprecated
 	*/
-	AppConfigProto.getFrame = function(){
-		return this.data.frames['default'];
-	};
-
-	/*
-	* @deprecated
-	*/
 	AppConfigProto.getMenuData = function(menuId){
 		if(!(menuId in this.data.menus)){
 			return null;
@@ -141,9 +134,11 @@
 			return option;
 		}
 		
+		/*
 		if(!option.type){
 			throw new Error("Invalid option: " + optionKey);
 		}
+		*/
 
 		if("URI" === option.type){
 			if(!("uriParam" in option)){
@@ -164,7 +159,8 @@
 			return uriParamValue;
 		}
 
-		throw new Error('Invalid option type: ' + option.type);
+		//throw new Error('Invalid option type: ' + option.type);
+		return option;
 	};
 
 	/*

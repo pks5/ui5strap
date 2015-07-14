@@ -59,7 +59,7 @@ ui5strap.controller("tld__domain.product__app.controllers.Page3", {
 	comTest  : function(oEvent){
 		var rootElm = document.documentElement;
 		var newFrameElm = document.createElement("iframe");
-		newFrameElm.src = "eque://test";
+		newFrameElm.src = "ui5strap://test";
 		rootElm.appendChild(newFrameElm);
 		newFrameElm.parantNode.removeChild(newFrameElm);
 	}

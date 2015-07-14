@@ -85,6 +85,11 @@
 			"required" : false, 
 			"type" : "boolean",
 			"defaultValue" : false
+		},
+		"frameId" : {
+			"required" : false,
+			"type" : "string",
+			"defaultValue" : "frame"
 		}
 		
 	};
@@ -115,8 +120,14 @@
 				virtual : virtual,
 				parameters : parameters
 			};
+			
+			var frameGetter = 'get' + jQuery.sap.charToUpperCase(this.getParameter("frameId"), 0);
+			
+			if(!this.context.app[frameGetter]){
+				throw new Error("Cannot Goto Page: invalid frame id!");
+			}
 
-			this.context.app.getFrame().gotoPage(this.context.parameters[this.namespace]);
+			this.context.app[frameGetter]().gotoPage(this.context.parameters[this.namespace]);
 	}
 
 }());

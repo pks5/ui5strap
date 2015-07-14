@@ -53,6 +53,7 @@
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
+		var _this = this;
 		
 		this.control = this._createControl();
 		this._initHistory();
@@ -61,7 +62,23 @@
 		if(this.getNavContainer || this._initControl){
 			throw new Error("The method 'ui5strap.AppFram.prototype.getNavContainer' has been removed. Please override the method 'ui5strap.AppFram.prototype._createControl', and return your new NavContainer instance there.");
 		}
-
+		
+		var oldAppShow = this.app.show;
+		this.app.show = function(callback){
+			oldAppShow.call(_this.app, function(firstTime){
+				if(firstTime){
+					_this.showInitialContent(callback);
+				}
+				else{
+					callback && callback(firstTime);
+				}
+			});
+			
+		};
+		
+		this.app.getRootControl = function(){
+			return _this.control;
+		};
 	};
 
 	AppFrameProto.getControl = function(){

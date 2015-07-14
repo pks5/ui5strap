@@ -136,18 +136,6 @@
 		});
 	};
 
-	AppProto.show = function(callback){
-		var _this = this;
-		ui5strap.AppBase.prototype.show.call(this, function(firstTime){
-			if(firstTime && _this.getFrame && _this.getFrame()){
-				_this.getFrame().showInitialContent(callback);
-			}
-			else{
-				callback && callback();
-			}
-		});
-	};
-
 	/*
 	* Triggered when a view of the app is shown in the global overlay
 	* @public
@@ -271,18 +259,11 @@
 	* -------------------------------------------------------------
 	*/
 	
+	/**
+	 * @abstract
+	 */
 	AppProto.getRootControl = function(){
-		
-		if(!this.getFrame || !this.getFrame()){
-			throw new Error('Cannot determine root Control of the App: no Frame is set. Please set a AppFrame or override ui5strap.App.prototype.getRootControl in your own App instance.')
-		}
-
-		var control = this.getFrame().getControl();
-		if(!control){
-			throw new Error('Cannot determine root Control of the App: No frame control is set in the Frame.');
-		}
-
-		return control;
+		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');
 	};
 
 }());
