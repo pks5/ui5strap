@@ -488,6 +488,19 @@
 			"orgEvent" : oEvent
 		});
 	};
+	
+	/**
+	* Triggered when the window is resized
+	* @public
+	*/
+	AppBaseProto.onResize = function(oEvent){
+		//Fire the resize event
+		this.fireEventAction({ 
+			"scope" : "app",
+			"eventName" : "resize",
+			"orgEvent" : oEvent
+		});
+	};
 
 	/*
 	* Triggered when the app has been initialized

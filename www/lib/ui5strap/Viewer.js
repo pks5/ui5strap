@@ -808,6 +808,18 @@
 			}, 
 			false
 		);
+		
+		//Listen to Html Frame Messages
+		window.addEventListener(
+			"resize", 
+			function(event){
+				var appIds = Object.keys(_m_loadedSapplicationsById);
+				for(var i = 0; i < appIds.length; i++){
+					_m_loadedSapplicationsById[appIds[i]].onResize(new sap.ui.base.Event("ui5strap.app.resize", null, {}));
+				}
+			},
+			false
+		);
 	};
 
 }());

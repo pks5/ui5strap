@@ -4147,6 +4147,19 @@
 			"orgEvent" : oEvent
 		});
 	};
+	
+	/**
+	* Triggered when the window is resized
+	* @public
+	*/
+	AppBaseProto.onResize = function(oEvent){
+		//Fire the resize event
+		this.fireEventAction({ 
+			"scope" : "app",
+			"eventName" : "resize",
+			"orgEvent" : oEvent
+		});
+	};
 
 	/*
 	* Triggered when the app has been initialized
@@ -7054,6 +7067,18 @@
 					_this.sendMessage(appMessage);
 				}
 			}, 
+			false
+		);
+		
+		//Listen to Html Frame Messages
+		window.addEventListener(
+			"resize", 
+			function(event){
+				var appIds = Object.keys(_m_loadedSapplicationsById);
+				for(var i = 0; i < appIds.length; i++){
+					_m_loadedSapplicationsById[appIds[i]].onResize(new sap.ui.base.Event("ui5strap.app.resize", null, {}));
+				}
+			},
 			false
 		);
 	};
