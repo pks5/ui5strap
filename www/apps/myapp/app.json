@@ -5,7 +5,7 @@
             "package" : "tld__domain.product__app",
             "title" : "Ui5Strap",
             "history" : true,
-            "logLevel" : 5,
+            "logLevel" : 3,
             "theme" : "ui5strap_default"
         },
 

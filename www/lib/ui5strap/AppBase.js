@@ -39,7 +39,9 @@
 	sap.ui.base.Object.extend('ui5strap.AppBase', {
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
-
+			
+			ui5strap.tm("APP", "APP", "CONSTRUCT");
+			
 			this.config = config;
 
 			this.components = {};
@@ -113,6 +115,7 @@
 	* Initializes the App
 	*/
 	AppBaseProto.init = function(){
+		ui5strap.tm("APP", "APP", "INIT");
 		this.onInit(new sap.ui.base.Event("ui5strap.app.init", this, {}));
 	};
 
@@ -120,6 +123,8 @@
 	* Preload JavaScript libraries
 	*/
 	var _preloadJavaScript = function(_this, callback){
+		ui5strap.tm("APP", "APP", "PRELOAD_JS");
+		
 		var scripts = _this.config.data.js;
 		if(scripts.length === 0){
 			callback && callback.call(_this);
@@ -150,7 +155,7 @@
 	};
 
 	var _preloadModels = function(_this, callback){
-		_this.log.debug('PRELOADING MODELS');
+		ui5strap.tm("APP", "APP", "PRELOAD_MODELS");
 
 		//Models
 		var models = _this.config.data.models,
@@ -225,25 +230,85 @@
 			}
 		}
 	};
-
-	var _preloadComponents = function(_this, callback){
-		_this.log.debug('PRELOADING COMPONENTS');
-
-		//Components
-		var components = _this.config.data.components;
-
-		var frameConfig = _this.config.data.frames['default'];
-
-		if(frameConfig){
-			if(!frameConfig.module){
-				frameConfig.module = 'ui5strap.AppFrame';
-			}
-			frameConfig.id = "frame";
-			components.unshift(frameConfig);
+	
+	/**
+	 * @Private
+	 */
+	var _initComponent = function(_this, compConfig){
+		var ComponentConstructor = jQuery.sap.getObject(compConfig.module),
+			componentId = compConfig.id,
+			compEvents = compConfig.events,
+			methodName = 'get' + jQuery.sap.charToUpperCase(componentId),
+			oComp = new ComponentConstructor(_this, compConfig);
+		
+		//Check if magic getter conflicts with existing method
+		if(_this[methodName]){
+			throw new Error("Method already exists: " + methodName);
 		}
 		
-		var loadModules = [],
+		//Register Component in App
+		_this.components[componentId] = oComp;
+		
+		//Create magic getter
+		_this[methodName] = function(){
+			return oComp;
+		};
+	
+		//Register Component Events
+		if(compEvents){
+			//Array of strings of format "scope.event"
+			for(var j = 0; j < compEvents.length; j++){
+				var stringParts = compEvents[j].split('.');
+				if(stringParts.length === 2){
+					(function(){
+						var eventScope = stringParts[0],
+							eventName = stringParts[1],
+							eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName);
+						
+						_this.registerEventAction(eventScope, eventName, function on_event(oEvent){
+							oComp[eventHandlerName] && oComp[eventHandlerName](oEvent);
+						});
+					}());
+				}
+				else{
+					throw new Error("Invalid Component event: " + compEvents[j]);
+				}
+			}
+		}
+		
+		//Init Component
+		oComp.init();
+	};
+	
+	/**
+	 * @Private
+	 * 
+	 */
+	var _preloadComponents = function(_this, callback){
+		ui5strap.tm("APP", "APP", "PRELOAD_COMPONENTS");
+
+		//Components
+		var components = _this.config.data.components,
+			loadModules = [],
 			compConfigs = [];
+		
+		for(var i = 0; i < components.length; i++){
+			var compConfig = components[i];
+			
+			if(!compConfig.module || !compConfig.id){
+				throw new Error("Cannot load component #" + i + ": module or id attribute missing!");
+			}
+			else if(false !== compConfig.enabled){
+				jQuery.sap.require(compConfig.module);
+				_initComponent(_this, compConfig);
+			}
+		}
+
+		//Trigger Callback
+		callback && callback();
+		
+		/*
+		return;
 		
 		for(var i = 0; i < components.length; i++){
 			var compConfig = components[i];
@@ -257,60 +322,26 @@
 			}
 		}
 		
+		//Require the Modules
 		ui5strap.require(loadModules, function require_complete(){
 			for(var i = 0; i < loadModules.length; i++){
-				var ComponentConstructor = jQuery.sap.getObject(loadModules[i]),
-					compConfig = compConfigs[i],
-					componentId = compConfig.id,
-					oComp = new ComponentConstructor(_this, compConfig),
-					methodName = 'get' + jQuery.sap.charToUpperCase(componentId);
-				
-				if(_this[methodName]){
-					throw new Error("Name conflict: " + componentId);
-				}
-				
-				_this.components[componentId] = oComp;
-				
-				(function(){
-					var comp = oComp;
-					_this[methodName] = function(){
-						return comp;
-					};
-				}());
-				
-				if(compConfig.events){
-					//Array of strings of format "scope.event"
-					for(var j = 0; j < compConfig.events.length; j++){
-						var stringParts = compConfig.events[j].split('.');
-						if(stringParts.length === 2){
-							(function(){
-								var eventScope = stringParts[0],
-									eventName = stringParts[1],
-									eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName),
-									comp = oComp;
-								
-								_this.registerEventAction(eventScope, eventName, function on_event(oEvent){
-									comp[eventHandlerName] && comp[eventHandlerName](oEvent);
-								});
-							}());
-						}
-						else{
-							_this.log.error("Cannot register Component event: " + compConfig.events[j]);
-						}
-					}
-				}
-				
-				oComp.init();
+				_initComponent(_this, compConfigs[i]);
 			}
 	
+			//Trigger Callback
 			callback && callback();
-		});
+		}); 
+		//End require
+		*/
 	};
 	
-	/*
+	/**
 	* Preload Actions for faster execution
+	* @Private
 	*/
 	var _preloadActions = function(_this, callback){
+		ui5strap.tm("APP", "APP", "PRELOAD_ACTIONS");
+		
 		var actions = _this.config.data.actions,
 			callI = actions.length;
 		if(callI === 0){
@@ -331,7 +362,11 @@
 		}
 	};
 
+	/**
+	 * @Public
+	 */
 	AppBaseProto.preload = function(callback){
+		ui5strap.tm("APP", "APP", "PRELOAD");
 		this.config.resolve();
 
 		var _this = this;
@@ -345,8 +380,11 @@
 		});
 	};
 
+	/**
+	 * @Public
+	 */
 	AppBaseProto.load = function(callback){
-		this.log.debug('LOAD');
+		ui5strap.tm("APP", "APP", "LOAD");
 
 		var _this = this;
 		this.preload(function(){
@@ -362,7 +400,7 @@
 	* Start the app
 	*/
 	AppBaseProto.start = function(callback){
-		this.log.debug('START');
+		ui5strap.tm("APP", "APP", "START");
 
 		var _this = this;
 		if(this.isRunning){
@@ -385,7 +423,7 @@
 	};
 
 	AppBaseProto.show = function(callback){
-		this.log.debug('SHOW');
+		ui5strap.tm("APP", "APP", "SHOW");
 
 		this.isVisible = true;
 		this.onShow(new sap.ui.base.Event("ui5strap.app.show", this, {}));
@@ -402,7 +440,7 @@
 	};
 
 	AppBaseProto.shown = function(callback){
-		this.log.debug('SHOWN');
+		ui5strap.tm("APP", "APP", "SHOWN");
 
 		var _this = this;
 
@@ -423,7 +461,7 @@
 	};
 
 	AppBaseProto.hide = function(callback){
-		this.log.debug('HIDE');
+		ui5strap.tm("APP", "APP", "HIDE");
 		this.isVisible = false;
 		
 		this.onHide(new sap.ui.base.Event("ui5strap.app.hide", this, {}));
@@ -432,7 +470,7 @@
 	};
 
 	AppBaseProto.hidden = function(callback){
-		this.log.debug('HIDDEN');
+		ui5strap.tm("APP", "APP", "HIDDEN");
 
 		var _this = this;
 		ui5strap.polyfill.requestAnimationFrame(function(){
@@ -448,7 +486,7 @@
 	* Stop the app
 	*/
 	AppBaseProto.stop = function(callback){
-		this.log.debug('STOP');
+		ui5strap.tm("APP", "APP", "STOP");
 
 		if(!this.isRunning){
 			throw new Error(this + " is not running.");
@@ -464,7 +502,7 @@
 	};
 
 	AppBaseProto.unload = function(callback){
-		this.log.debug('UNLOAD');
+		ui5strap.tm("APP", "APP", "UNLOAD");
 
 		ui5strap.Layer.unregister(this.overlayId);
 		ui5strap.Layer.unregister(this.getDomId('loader'));

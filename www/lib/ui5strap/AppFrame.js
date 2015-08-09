@@ -33,6 +33,8 @@
 	ui5strap.AppComponent.extend("ui5strap.AppFrame", {
 		"constructor" : function(app, options){
 			ui5strap.AppComponent.call(this, app, options);
+			
+			ui5strap.tm("APP", "APP_FRAME", "CONSTRUCT");
 
 			this._targetStatus = {};
 
@@ -53,6 +55,7 @@
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
+		ui5strap.tm("APP", "APP_FRAME", "INIT");
 		var _this = this;
 		
 		this.control = this._createControl();
@@ -98,6 +101,8 @@
 	 * @Protected
 	 */
 	AppFrameProto._createControl = function(){
+		ui5strap.tm("APP", "APP_FRAME", "CREATE_CONTROL");
+		
 		//Init default NavContainer
 		var frameConfig = this.options,
 			navContainerOptions = {},
@@ -132,7 +137,7 @@
 	* @Public
 	*/
 	AppFrameProto.showInitialContent = function(callback){
-		this.app.log.debug('[APP_FRAME] SHOW INITIAL CONTENT');
+		ui5strap.tm("APP", "APP_FRAME", "SHOW_INITIAL_CONTENT");
 
 		var _this = this,
 			initialViews = this.options.initialViews,
@@ -200,6 +205,8 @@
 	 * @Public
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
+		ui5strap.tm("APP", "APP_FRAME", "TO_PAGE");
+		
 		//TODO use default target of navcontainer?
 		if(!viewConfig.target){
 			throw new Error('Cannot navigate to page: no "target" specified!');

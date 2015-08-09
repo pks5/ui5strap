@@ -74,7 +74,7 @@
 	//@TODO these properties must be NON-STATIC! Currently they are STATIC.
 	//@static
 	var _m_currentSapplication = null;
-	var _m_loadedSapplicationsById = null;
+	var _m_loadedSapplicationsById = {};
 	
 
 
@@ -83,14 +83,10 @@
 	 * @param viewerConfigUrl Url to viewer configuration file
 	 */
 	ViewerMultiProto.init = function(){
-		jQuery.sap.log.debug("[VIEWER] init");
-		
-		//Object vars
-		_m_loadedSapplicationsById = {};
-		
 		ui5strap.ViewerBase.prototype.init.call(this);
 		
 		//Init methods
+		//TOOO Move to Viewer base
 		this._initDom();
 		this._initConsole();
 		this._initEvents();
@@ -100,8 +96,8 @@
 	* Executes a app by given sapp-url from a get parameter
 	*/
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
-		jQuery.sap.log.debug("[VIEWER] start");
-
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_START");
+		
 		this.init();
 
 		var appUrl = ui5strap.AppConfig.processOption("app", this.options.app);
@@ -181,8 +177,7 @@
 	* Load, start and show an App. The appUrl must point to a valid app.json file.
 	*/
 	ViewerMultiProto.executeApp = function(appDefinition, doNotShow, callback, loadCallback){
-		
-		jQuery.sap.log.debug("[VIEWER] execute App '" + appDefinition.url + "'");
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_EXEC", appDefinition.url);
 		
 		var _this = this,
 			appType = appDefinition.type;
@@ -334,7 +329,7 @@
 	* @param appConfig SappConfig instance
 	*/
 	ViewerMultiProto.createApp = function(appConfig, callback){
-		jQuery.sap.log.debug("[VIEWER] createApp");
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_CREATE");
 		
 		var configDataJSON = appConfig.data,
 			appModuleName = configDataJSON.app.module,
@@ -371,7 +366,7 @@
 	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
 	*/
 	ViewerMultiProto.loadApp = function(configDataJSON, parameters, callback){
-		jQuery.sap.log.debug("[VIEWER] loadApp '" + configDataJSON.app.name + "'");
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_LOAD", configDataJSON.app.name);
 
 		var _this = this,
 			appConfig = new ui5strap.AppConfig(this.options, parameters);
@@ -403,8 +398,8 @@
 	* Unloads an app
 	*/
 	ViewerMultiProto.unloadApp = function(sappId){
-		jQuery.sap.log.debug("[VIEWER] unloadApp '" + sappId + "'");
-
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_UNLOAD", sappId);
+		
 		var appInstance = this.getApp(sappId);
 
 		if(null === appInstance){
@@ -426,8 +421,8 @@
 	* Starts a previously loaded app.
 	*/
 	ViewerMultiProto.startApp = function(sappId, callback){
-		jQuery.sap.log.debug("[VIEWER] startApp '" + sappId + "'");
-
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_START", sappId);
+		
 		var appInstance = this.getApp(sappId);
 		
 		if(null === appInstance){
@@ -447,6 +442,7 @@
 	* Stops a previously started app.
 	*/
 	ViewerMultiProto.stopApp = function(sappId){
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_STOP", sappId);
 		var appInstance = this.getApp(sappId);
 
 		if(null === appInstance){
@@ -465,9 +461,9 @@
 	/*
 	* Shows a previously started app, means bringing the app to foreground.
 	*/
-	ViewerMultiProto.showApp = function(sappId, transitionName, callback){ 
-		jQuery.sap.log.debug("[VIEWER] showApp '" + sappId + "'"); 
-
+	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_SHOW", sappId);
+		
 		if(null !== this._loadingSapplication){
 			jQuery.sap.log.warning("App '" + this._loadingSapplication + "' is currently loading."); 
 			

@@ -56,27 +56,9 @@
 	*
 	*/
 
-/*
-	var _transitionEndEvent = null,
-		_transitionEndEvents = {
-		    'transition': 'transitionend',
-		    'WebkitTransition': 'webkitTransitionEnd',
-		    'MozTransition': 'transitionend',
-		    'OTransition': 'otransitionend'
-	  	},
-	  	elem = document.createElement('div');
-	 
-	for(var t in _transitionEndEvents){
-	    if(typeof elem.style[t] !== 'undefined'){
-	      _transitionEndEvent = _transitionEndEvents[t];
-	      break;
-	    }
-	}
-	
-	*/
-	
-	/*
+	/**
 	* Triggers a controller event: Update, PageShow, PageShown, PageHide, PageHidden
+	* @Private
 	*/
 	var _triggerControllerEvent = function(_this, target, oControl, eventId, eventParameters){
 		if(oControl){
@@ -96,128 +78,12 @@
 		}
 	};
 
-	/*
-	* Constructs a Transition
-	* @Constructor
-	* @Private
-	*/
-	/*
-	var _Transition = function(transitionName, $currentRoot, $nextRoot, transitionId){
-		this.$current = $currentRoot;
-		this.$next = $nextRoot;
-		
-		this._transitionId = transitionId;
-		
-		this._prepared = false;
-		this._executed = false;
-		
-		var transitionClass = transitionName;
-		var transitionTimeout = 2000;
-		var _transitionEndEvent = ui5strap.support.transitionEndEvent;
-
-		this.prepare = function (){
-			if(this._prepared || this._executed){
-				throw new Error('Cannot prepare transition: already prepared or executed!');
-			}
-			this._prepared = true;
-
-			if(!transitionName){
-				return;
-			}
-
-			if(null !== this.$current){
-					this.$current.addClass(transitionClass + ' ' + transitionClass+'-current');
-			}
-
-		 	if(null !== this.$next){
-					this.$next.addClass(transitionClass + ' ' + transitionClass+'-next').removeClass('ui5strap-hidden');
-			}
-		};
-
-		this.execute = function (currentRootCallback, nextRootCallback){
-			var _this = this;
-
-			if(!this._prepared){
-				throw new Error('Cannot execute transition: not prepared!');
-			}
-
-			if(this._executed){
-				throw new Error('Cannot execute transition: already executed!');
-			}
-
-			this._executed = true;
-			this._neca = false;
-			this._cuca = false;
-
-			if(transitionName && _transitionEndEvent){
-				//jQuery.sap.log.debug('[TRANSITION] ' + _this._transitionId + ' : ' + transitionName);
-
-	 			if(currentRootCallback && this.$current){ 
-	 				var _currentTimout = window.setTimeout(function(){
-	 					if(_this._cuca){
-	 						return;
-	 					}
-	 					_this._cuca = true;
-						//jQuery.sap.log.debug('[NC] TIMEOUT CUCA');
-			 			currentRootCallback.call(_this);
-					}, transitionTimeout);
-
-	 				this.$current
-					//	.off(transitionEndEvent)
-					.one(_transitionEndEvent, function(){
-						if(_this._cuca){
-	 						return;
-	 					}
-	 					_this._cuca = true;
-						window.clearTimeout(_currentTimout);
-						currentRootCallback.call(_this);
-					});
-
-				}
-				if(nextRootCallback && this.$next){
-					var _nextTimout = window.setTimeout(function(){
-						if(_this._neca){
-	 						return;
-	 					}
-	 					_this._neca = true;
-						//jQuery.sap.log.debug('[NC] TIMEOUT NECA');
-			 			nextRootCallback.call(_this);
-			 		}, transitionTimeout);
-
-					this.$next
-					//.off(transitionEndEvent)
-					.one(_transitionEndEvent, function(){
-						if(_this._neca){
-	 						return;
-	 					}
-	 					_this._neca = true;
-						window.clearTimeout(_nextTimout);
-						nextRootCallback.call(_this);
-					});
-				}
-
-				this.$current && this.$current.addClass(transitionClass+'-current-out');
-				this.$next && this.$next.removeClass(transitionClass + '-next');
-			}
-			else{ 
-				//jQuery.sap.log.debug('[TRANSITION] ' + _this._transitionId + ' : no transition');
-				this.$next && this.$next.removeClass('ui5strap-hidden');
-
-				ui5strap.polyfill.requestAnimationFrame(function(){
-					currentRootCallback && currentRootCallback.call(_this);
-					nextRootCallback && nextRootCallback.call(_this);
-				});
-			}
-
-		 };
-
-	};
-	*/
-
-	/*
+	/**
 	* @Private
 	*/
 	var _prepareTransition = function(_this, pageChange){
+		ui5strap.tm("APP", "NC", "PREP_TRANS");
+		
 		if(pageChange.transition){
 			//There is already a Transition defined
 			return false;
@@ -250,13 +116,15 @@
 	};
 
 
-	/*
+	/**
 	*
 	* PRIVATE FIELDS & METHODS
 	*
 	*/
 
 	var _transitionCallback = function(_this, pageChange, transList){
+		ui5strap.tm("APP", "NC", "TRANS_CB");
+		
 		transList.callI --;
 		
 		var callbacksLength = transList.callbacks.length;
@@ -280,10 +148,11 @@
 		}
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _executeTransition = function(_this, pageChange, transList){
+		ui5strap.tm("APP", "NC", "EXEC_TRANS");
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
 		pageChange.transition.execute(
@@ -318,10 +187,12 @@
 
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _executePendingTransitions = function(_this){
+		ui5strap.tm("APP", "NC", "EXEC_PEND_TRANS");
+		
 		var pendingTransitionsLength = _this._pendingTransitions.length;
 
 		//jQuery.sap.log.debug(" + [NC] EXECUTE " + pendingTransitionsLength + " PENDING TRANSITIONS");
@@ -346,10 +217,12 @@
 		
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _preparePendingTransitions = function(_this){
+		ui5strap.tm("APP", "NC", "PREP_PEND_TRANS");
+		
 		var pendingTransitionsLength = _this._pendingTransitions.length,
 			successAll = true;
 		//jQuery.sap.log.debug(' + [NC] PREPARE ' + pendingTransitionsLength + ' PENDING TRANSITIONS'); 
@@ -362,10 +235,12 @@
 		return successAll;
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _handlePendingTransitions = function(_this){
+		ui5strap.tm("APP", "NC", "HANDLE_PEND_TRANS");
+		
 		if(0 === _this._pendingTransitions.length){
 			//jQuery.sap.log.debug(" - [NC] NO PENDING TRANSITIONS");
 
@@ -392,10 +267,12 @@
 		});
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _pageChange = function(_this, pageChange){
+		ui5strap.tm("APP", "NC", "PAGE_CHANGE");
+		
 		//jQuery.sap.log.debug(' + [NC] T1 {' + pageChange.target + '}');
 		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 
@@ -416,8 +293,13 @@
 		
 		});
 	};
-
+	
+	/**
+	 * @Private
+	 */
 	var _pageChangeLater = function(_this, pageChange, override){
+		ui5strap.tm("APP", "NC", "PAGE_CHANGE_LATER");
+		
 		var target = pageChange.target;
 		if(-1 === jQuery.inArray(target, _this._pendingTransitions)){ 
 			_this._pendingTransitions.push(target);
@@ -452,10 +334,12 @@
 	};
 	*/
 
-	/*
+	/**
 	* @Private
 	*/
 	var _placePage = function(_this, target, page, isPrepared){
+			ui5strap.tm("APP", "NC", "PLACE_PAGE");
+		
 			if(page && page.getDomRef()){
 				return page.$().parent();
 			}
@@ -501,11 +385,13 @@
 	*
 	*/
 
-	/*
+	/**
 	* @Public
 	* @PostConstruct
 	*/
 	NavContainerBaseProto.init = function(){
+		ui5strap.tm("APP", "NC", "INIT");
+		
 		this._pendingTransitions = [];
 		
 		this._targetTransitions = {};
@@ -522,11 +408,13 @@
 		this._initNavContainer();
 	};
 
-	/*
+	/**
 	* @Override
 	* @Protected
 	*/
 	NavContainerBaseProto._initNavContainer = function(){
+		ui5strap.tm("APP", "NC", "INIT_NC");
+		
 		//NavContainer type string
 		//Resulting css class is "navcontainer navcontainer-default"
 		this.ncType = "default";
@@ -540,7 +428,7 @@
 		};
 	};
 
-	/*
+	/**
 	* Creates a dom id for a given target and page
 	* @Public
 	*/
@@ -552,7 +440,7 @@
 		return 'navcontainer-page---' + page.getId();
 	};
 
-	/*
+	/**
 	* Registers a new dom id for a given target and page
 	* @Public
 	*/
@@ -566,7 +454,7 @@
 		return this.createPageDomId(target, page);
 	};
 
-	/*
+	/**
 	* @Override
 	*/
 	NavContainerBaseProto.setModel = function(oModel, sName){
@@ -581,7 +469,7 @@
 		sap.ui.core.Control.prototype.setModel.call(this, oModel, sName);
 	};
 
-	/*
+	/**
 	* @Override
 	*/
 	NavContainerBaseProto.destroy = function(){
@@ -593,7 +481,7 @@
 		sap.ui.core.Control.prototype.destroy.call(this);
 	};
 
-	/*
+	/**
 	*
 	* @Public
 	*/
@@ -601,14 +489,14 @@
 		return 'navcontainer-pages-' + target + '---' + this.getId();
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.targetLayersDomId = function(target){
 		return 'navcontainer-layers-' + target + '---' + this.getId();
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.getClassString = function(){
@@ -626,7 +514,7 @@
 	    return classes;
 	};
 
-	/*
+	/**
 	* @Public
 	* @Override
 	*/
@@ -640,7 +528,7 @@
 		}
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.setOptionsEnabled = function(options){
@@ -669,14 +557,14 @@
 		this.setOptions(currentOptions.join(' '));
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.isOptionEnabled = function(optionName){
 		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.toggleOption = function(optionName){
@@ -686,7 +574,7 @@
 		this.setOptionsEnabled(options);
 	};
 
-	/*
+	/**
 	* @Public
 	* @Deprecated
 	*/
@@ -703,7 +591,7 @@
 
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.updateTarget = function(target, oPage, eventParameters){
@@ -714,18 +602,26 @@
 		_triggerControllerEvent(this, target, oPage, 'update', eventParameters);
 	};
 	
+	/**
+	 * @Public
+	 */
 	NavContainerBaseProto.hasTarget = function(target){
 		return target in this.targets;
 	};
 	
+	/**
+	 * @Public
+	 */
 	NavContainerBaseProto.getTarget = function(target){
 		return this.targets[target];
 	};
 	
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
+		ui5strap.tm("APP", "NC", "TO_PAGE");
+		
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
@@ -795,12 +691,12 @@
 		return true;
 	};
 
-	/*
+	/**
 	* @Override
 	* @Public
 	*/
 	NavContainerBaseProto.onBeforeRendering = function(){
-		//jQuery.sap.log.debug('[NC] ON BEFORE RENDERING');
+		ui5strap.tm("APP", "NC", "BEFORE_RENDERING");
 
 		for(var target in this.targets){
 			var currentPage = this.targets[target];
@@ -820,12 +716,12 @@
 	 	}
 	};
 
-	/*
+	/**
 	* @Override
 	* @Public
 	*/
 	NavContainerBaseProto.onAfterRendering = function(){ 
-		//jQuery.sap.log.debug('[NC] ON AFTER RENDERING');
+		ui5strap.tm("APP", "NC", "AFTER_RENDERING");
 		
 		var _pendingTransitions = this._pendingTransitions,
 			pendingTransitionsLength = _pendingTransitions.length,
@@ -847,7 +743,7 @@
 		
 		window.setTimeout(function anon_afterDomTimeout(){
 			_handlePendingTransitions(_this);	
-		}, 250);
+		}, 100);
 	};
 
 }());

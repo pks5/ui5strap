@@ -27,8 +27,33 @@
 
 (function(){
 
-  var jQuerySap = jQuery.sap;
-
+  var jQuerySap = jQuery.sap,
+  	  _timeMarks = {},
+      _addTimeMark = function(scope, group, markName){
+    	  var label = scope + "--" + group,
+		  	tm = _timeMarks[label];
+    	  
+		  if(!tm){
+			  tm = [];
+			  _timeMarks[label] = tm;
+		  }
+		  
+		  tm.push([markName, (new Date()).getTime()]);
+		  
+		  if(tm.length > 1){
+			  var l1 = tm[tm.length-2],
+			  	l2 = tm[tm.length-1];
+			  jQuerySap.log.info(
+					  label 
+					  + " [" + l1[0] + "] -> [" + l2[0] + "] : " 
+					  + (l2[1] - l1[1]) + " millies."
+			  );
+		  }
+      };
+  
+   jQuery.sap.log.setLevel(3); //INFO
+  _addTimeMark("LIBRARY", "ui5strap", "LOAD_START");
+      
   /*
   *
   * Test system requirements
@@ -60,6 +85,9 @@
   }
 
   jQuerySap.declare("ui5strap.library");
+  
+  ui5strap.tm = _addTimeMark;
+  
   jQuerySap.require("sap.ui.core.Core");
 	
   //Register Ui5Strap as library
@@ -1351,32 +1379,33 @@
       this._buffer = '';
 
       var _this = this;
-
-      var successCallback = function(response, callback){
+      
+      /**
+       * @Private
+       */
+      var _successCallback = function(response, callback){
         _this._pending[this.url]["script"] = response;
         
         _this._pendingRequests--;
-        if(0 == _this._pendingRequests){
-          _this._addToBuffer();
+        
+        if(0 === _this._pendingRequests){
+        	for(var i = 0; i < _this._order.length; i++){
+                if(!_this._order[i].script){
+              	  throw new Error('Could not append script to buffer: ' + _this._order[i].url);
+                }
+                _this._buffer = _this._buffer.concat("\n;\n", _this._order[i].script);
+              }
 
-          callback();
+              _this._pending = {};
+              _this._order = [];
+              
+              callback && callback();
         }
       };
 
-      this._addToBuffer = function(){
-        for(var i = 0; i<this._order.length; i++){
-          if(null === this._order[i].script){
-            throw new Error('Could not continue script loading: unexspected error.');
-          }
-          //this._buffer += "\n;\n" + this._order[i].script + "\n;\n";
-          this._buffer = this._buffer.concat("\n;\n" + this._order[i].script + "\n;\n");
-        }
-
-        this._pending = {};
-        this._order = [];
-
-      };
-
+      /**
+       * @Public
+       */
       this.load = function(scripts, callback){
         if(0 < this._pendingRequests || this._order.length > 0){
           throw new Error('Could not load scripts: requests still pending.');
@@ -1385,15 +1414,12 @@
         this._pendingRequests = scripts.length;
 
         for(var i = 0; i < this._pendingRequests; i++){
-          var scriptUrl = scripts[i];
-          //if(scriptUrl in this._pending){
-          //  continue;
-          //}
-
-          var scriptData = {
-            "index" : i,
-            "script" : null
-          };
+          var scriptUrl = scripts[i],
+          	scriptData = {
+	            "index" : i,
+	            "url" : scriptUrl,
+	            "script" : null
+	        };
 
           this._pending[scriptUrl] = scriptData;
           this._order.push(scriptData);
@@ -1402,7 +1428,7 @@
                 url: scriptUrl,
                 dataType: "text",
                 success: function(response){
-                  successCallback.call(this, response, callback);
+                  _successCallback.call(this, response, callback);
                 },
                 error : function(){
                   throw new Error('Could not load script: ' + scriptUrl);
@@ -1410,21 +1436,24 @@
           });
         }
       };
-
+      
+      /**
+       * @Public
+       */
       this.execute = function(useEval){
-        if('' === this._buffer){
-          return false;
-        }
-        var returnValue = null;
-        if( true === useEval ){
-          returnValue = eval.call(window, this._buffer);
-        }
-        else{
-          returnValue = (new Function(this._buffer))(); //.call(window);
-        }
-        this._buffer = '';
-
-        return returnValue;
+	        if('' === this._buffer){
+	          return false;
+	        }
+	        var returnValue = null;
+	        if( true === useEval ){
+	          returnValue = eval.call(window, this._buffer);
+	        }
+	        else{
+	          returnValue = (new Function(this._buffer))(); //.call(window);
+	        }
+	        this._buffer = '';
+	
+	        return returnValue;
       };
   };
 
@@ -1549,7 +1578,9 @@
 			"error" : error
 	  });
   };
-
+  
+  _addTimeMark("LIBRARY", "ui5strap", "LOAD_END");
+  
   //End of library
 
 }());

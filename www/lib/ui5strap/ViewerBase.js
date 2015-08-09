@@ -36,7 +36,9 @@
 	sap.ui.base.Object.extend('ui5strap.ViewerBase', {
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);
-
+			
+			ui5strap.tm("VIEWER", "VIEWER", "VIEWER_CONSTRUCT");
+			
 			this.options = options || {};
 
 			//Device Log Level
@@ -77,6 +79,8 @@
 	var ViewerBaseProto = ui5strap.ViewerBase.prototype;
 
 	ViewerBaseProto.init = function(){
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_INIT");
+		
 		ui5strap.Layer.register('ui5strap-loader');
   		
 		this._initOverlay();

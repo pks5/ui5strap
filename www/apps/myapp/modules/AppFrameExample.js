@@ -39,9 +39,11 @@
 		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
-
+	/**
+	 * @Public
+	 */
 	FrameControllerProto.showInitialContent = function(callback){
-		this.app.log.debug('[APP_FRAME_EXAMPLE] Show initial content...');
+		ui5strap.tm("APP", "APP_FRAME", "SHOW_INITIAL_CONTENT");
 		var _this = this;
 		var complete = function(){
 			_this.initialized = true;
@@ -84,6 +86,8 @@
 	* Create the nav container control used by this frame.
 	*/
 	FrameControllerProto._createControl = function(){
+		ui5strap.tm("APP", "APP_FRAME", "CREATE_CONTROL");
+		
 		var _this = this,
 			navContainer = ui5strap.AppFrame.prototype._createControl.call(this);
 
@@ -218,8 +222,9 @@
 		return navContainer;
 	};
 
-	/*
+	/**
 	* Init navigation history
+	* @Public
 	*/
 	FrameControllerProto._initHistory = function(){
 		var _this = this;
@@ -264,6 +269,8 @@
 	* @Override
 	*/
 	FrameControllerProto.gotoPage = function (viewDef, callback) {
+		ui5strap.tm("APP", "APP_FRAME", "GOTO_PAGE");
+		
 		var _this = this,
 			frameOptions = this.options;
 		

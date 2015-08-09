@@ -48,7 +48,7 @@
 		renderer : "ui5strap.NavContainerRenderer"
 	});
 
-	/*
+	/**
 	* @Override
 	* @Protected
 	*/
