@@ -48,7 +48,8 @@
 	});
 
 	var NavContainerBase = ui5strap.NavContainer,
-		NavContainerBaseProto = NavContainerBase.prototype;
+		NavContainerBaseProto = NavContainerBase.prototype,
+		domTimeout = 100;
 
 	/*
 	*
@@ -158,7 +159,7 @@
 		pageChange.transition.execute(
 			function anon_transitionCurrentComplete(){
 				var $current = this.$current;
-				if(null !== $current){
+				if($current){
 					$current.remove();
 				}
 
@@ -193,14 +194,11 @@
 	var _executePendingTransitions = function(_this){
 		ui5strap.tm("APP", "NC", "EXEC_PEND_TRANS");
 		
-		var pendingTransitionsLength = _this._pendingTransitions.length;
-
-		//jQuery.sap.log.debug(" + [NC] EXECUTE " + pendingTransitionsLength + " PENDING TRANSITIONS");
-		
-		var transList = {
-			callI : pendingTransitionsLength,
-			callbacks : []
-		};
+		var pendingTransitionsLength = _this._pendingTransitions.length,
+			transList = {
+				callI : pendingTransitionsLength,
+				callbacks : []
+			};
 
 		for(var i = 0; i < pendingTransitionsLength; i++){
 			var pageChanges = _this._targetTransitions[_this._pendingTransitions[i]];
@@ -304,7 +302,7 @@
 		if(-1 === jQuery.inArray(target, _this._pendingTransitions)){ 
 			_this._pendingTransitions.push(target);
 
-			if(!(target in _this._targetTransitions)){
+			if(!_this._targetTransitions[target]){
 				_this._targetTransitions[target] = [];
 			}
 		}
@@ -313,9 +311,9 @@
 			//jQuery.sap.log.debug(' + [NC] T1L {' + pageChange.target + '}');
 			_this._targetTransitions[target].push(pageChange);
 		}
-		else{
+		//else{
 			//jQuery.sap.log.debug(' + [NC] T1S {' + pageChange.target + '}');
-		}
+		//}
 	};
 
 	/*
@@ -350,19 +348,20 @@
 
 			//Add new page to DOM
 			var newPage = document.createElement('div'),
+				$nextContent = jQuery(newPage),
 				orgClassName = 'navcontainer-page navcontainer-' + _this.ncType + '-page navcontainer-' + _this.ncType + '-page-' + target,
-				newClassName = orgClassName;
+				newClassName = orgClassName,
+				oModels = _this.oModels;
+			
 			if(true === isPrepared){
 				 newClassName += ' navcontainer-page-next ui5strap-hidden';
 			}
 			newPage.className = newClassName;
 			newPage.id = _this.pageDomId(target, page);
-				
-			var $nextContent = jQuery(newPage);
 			$nextContent.attr('data-org-class', orgClassName);
+			
 			jQuery('#' + _this.targetPagesDomId(target)).append($nextContent);
 			
-			var oModels = _this.oModels;
 			//var uiArea = sap.ui.getCore().createUIArea(newPage, _this);
 			for(var sName in oModels){
 				//page.setModel(oModel, sName);
@@ -400,10 +399,6 @@
 		
 		//TODO Do we need a busy flag here?
 		//this._targetStatus = {};
-
-		//Transition timeout
-		this.transitionNextTimeout = 2000;
-		this.transitionCurrentTimeout = 2000;
 
 		this._initNavContainer();
 	};
@@ -680,7 +675,7 @@
 			
 			window.setTimeout(function anon_afterDomTimeout(){
 				_pageChange(_this, targetTransition);	
-			}, 250);
+			}, domTimeout);
 		
 		}
 		else{
@@ -743,7 +738,7 @@
 		
 		window.setTimeout(function anon_afterDomTimeout(){
 			_handlePendingTransitions(_this);	
-		}, 100);
+		}, domTimeout);
 	};
 
 }());

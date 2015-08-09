@@ -276,6 +276,8 @@
 	};
 
 	var _preloadLibraries = function(_this, libs, callback){
+		ui5strap.tm("VIEWER", "VIEWER", "PRELOAD_LIBS");
+		
 		var callI = libs.length,
 			successCallback = function(){
 				callI--;
@@ -315,12 +317,11 @@
 				for(var j = 0; j < libData.controls.length; j++){
 					preloadLibs.push(libData.controls[j]);
 				}
-
-				ui5strap.require(preloadLibs, successCallback());
+				
+				jQuery.sap.require(preloadLibs);
 			}
-			else{
-				successCallback();
-			}
+			
+			successCallback();
 		}
 	};
 
@@ -353,12 +354,9 @@
 		});
 
 		_preloadLibraries(this, libraries, function(){
-			//Load the App Module
-			ui5strap.require(appModuleName, function requireComplete(){
-				var AppConstructor = jQuery.sap.getObject(appModuleName);
-
-				callback && callback(new AppConstructor(appConfig, _this));
-			});
+			jQuery.sap.require(appModuleName);
+			var AppConstructor = jQuery.sap.getObject(appModuleName);
+			callback && callback(new AppConstructor(appConfig, _this));
 		});
 	};
 	

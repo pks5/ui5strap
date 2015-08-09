@@ -77,25 +77,19 @@
 			actionModulesList = [actionModulesList];
 		}
 
-		var jsModules = [],
-			instanceDefs = [],
+		var instanceDefs = [],
 			actionModulesListLength = actionModulesList.length;
 				
 		for ( var i = 0; i < actionModulesListLength; i++ ) { 
 			var actionInstanceDef = _getActionInstanceDef(actionModulesList[i]);
 			instanceDefs.push(actionInstanceDef);
-			jsModules.push(actionInstanceDef.module);
+			jQuery.sap.require(actionInstanceDef.module);
 		}
 
-		//Load Action Modules
-		ui5strap.require(jsModules, function require_complete(){
-			
-			var instanceDefsLength = instanceDefs.length;
-			for ( var i = 0; i < instanceDefsLength; i++ ) { 
-				context._run(instanceDefs[i]);
-			}
-		
-		});
+		var instanceDefsLength = instanceDefs.length;
+		for ( var i = 0; i < instanceDefsLength; i++ ) { 
+			context._run(instanceDefs[i]);
+		}
 	};
 
 	/*

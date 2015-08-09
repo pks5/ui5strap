@@ -306,33 +306,6 @@
 
 		//Trigger Callback
 		callback && callback();
-		
-		/*
-		return;
-		
-		for(var i = 0; i < components.length; i++){
-			var compConfig = components[i];
-			
-			if(!compConfig.module || !compConfig.id){
-				throw new Error("Cannot load component #" + i + ": module or id attribute missing!");
-			}
-			else if(false !== compConfig.enabled){
-				compConfigs.push(compConfig);
-				loadModules.push(compConfig.module);
-			}
-		}
-		
-		//Require the Modules
-		ui5strap.require(loadModules, function require_complete(){
-			for(var i = 0; i < loadModules.length; i++){
-				_initComponent(_this, compConfigs[i]);
-			}
-	
-			//Trigger Callback
-			callback && callback();
-		}); 
-		//End require
-		*/
 	};
 	
 	/**
@@ -350,7 +323,7 @@
 			return;
 		}
 		
-		var successCallback = function(){
+		var successCallback = function(data){
 			callI--;
 			if(callI === 0){
 				callback && callback.call(_this);

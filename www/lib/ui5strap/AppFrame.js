@@ -291,7 +291,7 @@
 			target = viewConfig.target;
 
 		if(this.isBusy(target)){
-			this.app.log.debug('[APP_FRAME] Target is busy: "' + target + '"');
+			jQuery.sap.log.debug('[APP_FRAME] Target is busy: "' + target + '"');
 
 			return false;
 		}
