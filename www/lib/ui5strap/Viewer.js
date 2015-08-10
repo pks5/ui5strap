@@ -473,11 +473,13 @@
 		if(null === appInstance){
 			throw new Error('Cannot show app "' + sappId + '" - app not loaded.');
 		}
-
+		
+		//Check if App is running
 		if(!appInstance.isRunning){
 			throw new Error('Cannot show a app which is not running.');
 		}
 
+		//If App has no Root Control, return immeadiately
 		if(!appInstance.getRootControl()){
 			//this.hideLoader(function(){
 				callback && callback(appInstance);
@@ -485,7 +487,8 @@
 
 			return;
 		}
-
+		
+		//If App is visible, return immeadiately
 		if(appInstance.isVisible){
 			//this.hideLoader(function(){
 				callback && callback(appInstance);
@@ -499,15 +502,18 @@
 		}
 
 		//Set Browser Title
+		//TODO Is this good here?
 		document.title = appInstance.config.data.app.name;
-
+		
+		//Store Previous App
 		var previousSapplication = this.getApp();
-		var needAttach = false;
 		
 		//Set the app as current foreground app				
 		_m_currentSapplication = appInstance;
 		this._loadingSapplication = appInstance;	
 
+		var needAttach = false;
+		
 		if(!appInstance.domRef){
 			appInstance.createDomRef();
 			needAttach = true;
@@ -561,7 +567,11 @@
 			
 			//<DOM_ATTACH_TIMEOUT>
 			window.setTimeout(function setTimeout_complete(){
+				
+				//Hide previous App if any
 				previousSapplication && previousSapplication.hide();
+				
+				//Show the App
 				appInstance.show(function(){
 					
 					//RAF

@@ -201,7 +201,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.6"
+        	version: "0.9.7"
       }
   );
   
@@ -1050,18 +1050,18 @@
     	  	  
               callback && callback();
           };
-      
+          
       layer.busy = transCallback;
           
-      //Transition timeout
-      transTimeout = window.setTimeout(transCallback, ui5strap.options.layerTimeout);
-      
+      //Start Transition
       ui5strap.polyfill.requestAnimationFrame(function(){
 	      //Transition end event
 	      $layer.one(ui5strap.support.transitionEndEvent, transCallback);
 	  	
 	      //Start transition
 	      ui5strap.polyfill.requestAnimationFrame(function(){
+	    	  //Transition timeout
+	          transTimeout = window.setTimeout(transCallback, ui5strap.options.layerTimeout);
 	    	  $layer.css('opacity', visible ? 1 : 0);
 	      });
       });

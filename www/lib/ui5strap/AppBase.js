@@ -317,6 +317,7 @@
 		
 		var actions = _this.config.data.actions,
 			callI = actions.length;
+		
 		if(callI === 0){
 			callback && callback.call(_this);
 

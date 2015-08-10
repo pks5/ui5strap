@@ -27,8 +27,33 @@
 
 (function(){
 
-  var jQuerySap = jQuery.sap;
-
+  var jQuerySap = jQuery.sap,
+  	  _timeMarks = {},
+      _addTimeMark = function(scope, group, markName){
+    	  var label = scope + "--" + group,
+		  	tm = _timeMarks[label];
+    	  
+		  if(!tm){
+			  tm = [];
+			  _timeMarks[label] = tm;
+		  }
+		  
+		  tm.push([markName, (new Date()).getTime()]);
+		  
+		  if(tm.length > 1){
+			  var l1 = tm[tm.length-2],
+			  	l2 = tm[tm.length-1];
+			  jQuerySap.log.info(
+					  label 
+					  + " [" + l1[0] + "] -> [" + l2[0] + "] : " 
+					  + (l2[1] - l1[1]) + " millies."
+			  );
+		  }
+      };
+  
+   jQuery.sap.log.setLevel(3); //INFO
+  _addTimeMark("LIBRARY", "ui5strap", "LOAD_START");
+      
   /*
   *
   * Test system requirements
@@ -60,6 +85,9 @@
   }
 
   jQuerySap.declare("ui5strap.library");
+  
+  ui5strap.tm = _addTimeMark;
+  
   jQuerySap.require("sap.ui.core.Core");
 	
   //Register Ui5Strap as library
@@ -173,7 +201,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.6"
+        	version: "0.9.7"
       }
   );
   
@@ -1022,18 +1050,18 @@
     	  	  
               callback && callback();
           };
-      
+          
       layer.busy = transCallback;
           
-      //Transition timeout
-      transTimeout = window.setTimeout(transCallback, ui5strap.options.layerTimeout);
-      
+      //Start Transition
       ui5strap.polyfill.requestAnimationFrame(function(){
 	      //Transition end event
 	      $layer.one(ui5strap.support.transitionEndEvent, transCallback);
 	  	
 	      //Start transition
 	      ui5strap.polyfill.requestAnimationFrame(function(){
+	    	  //Transition timeout
+	          transTimeout = window.setTimeout(transCallback, ui5strap.options.layerTimeout);
 	    	  $layer.css('opacity', visible ? 1 : 0);
 	      });
       });
@@ -1351,32 +1379,33 @@
       this._buffer = '';
 
       var _this = this;
-
-      var successCallback = function(response, callback){
+      
+      /**
+       * @Private
+       */
+      var _successCallback = function(response, callback){
         _this._pending[this.url]["script"] = response;
         
         _this._pendingRequests--;
-        if(0 == _this._pendingRequests){
-          _this._addToBuffer();
+        
+        if(0 === _this._pendingRequests){
+        	for(var i = 0; i < _this._order.length; i++){
+                if(!_this._order[i].script){
+              	  throw new Error('Could not append script to buffer: ' + _this._order[i].url);
+                }
+                _this._buffer = _this._buffer.concat("\n;\n", _this._order[i].script);
+              }
 
-          callback();
+              _this._pending = {};
+              _this._order = [];
+              
+              callback && callback();
         }
       };
 
-      this._addToBuffer = function(){
-        for(var i = 0; i<this._order.length; i++){
-          if(null === this._order[i].script){
-            throw new Error('Could not continue script loading: unexspected error.');
-          }
-          //this._buffer += "\n;\n" + this._order[i].script + "\n;\n";
-          this._buffer = this._buffer.concat("\n;\n" + this._order[i].script + "\n;\n");
-        }
-
-        this._pending = {};
-        this._order = [];
-
-      };
-
+      /**
+       * @Public
+       */
       this.load = function(scripts, callback){
         if(0 < this._pendingRequests || this._order.length > 0){
           throw new Error('Could not load scripts: requests still pending.');
@@ -1385,15 +1414,12 @@
         this._pendingRequests = scripts.length;
 
         for(var i = 0; i < this._pendingRequests; i++){
-          var scriptUrl = scripts[i];
-          //if(scriptUrl in this._pending){
-          //  continue;
-          //}
-
-          var scriptData = {
-            "index" : i,
-            "script" : null
-          };
+          var scriptUrl = scripts[i],
+          	scriptData = {
+	            "index" : i,
+	            "url" : scriptUrl,
+	            "script" : null
+	        };
 
           this._pending[scriptUrl] = scriptData;
           this._order.push(scriptData);
@@ -1402,7 +1428,7 @@
                 url: scriptUrl,
                 dataType: "text",
                 success: function(response){
-                  successCallback.call(this, response, callback);
+                  _successCallback.call(this, response, callback);
                 },
                 error : function(){
                   throw new Error('Could not load script: ' + scriptUrl);
@@ -1410,21 +1436,24 @@
           });
         }
       };
-
+      
+      /**
+       * @Public
+       */
       this.execute = function(useEval){
-        if('' === this._buffer){
-          return false;
-        }
-        var returnValue = null;
-        if( true === useEval ){
-          returnValue = eval.call(window, this._buffer);
-        }
-        else{
-          returnValue = (new Function(this._buffer))(); //.call(window);
-        }
-        this._buffer = '';
-
-        return returnValue;
+	        if('' === this._buffer){
+	          return false;
+	        }
+	        var returnValue = null;
+	        if( true === useEval ){
+	          returnValue = eval.call(window, this._buffer);
+	        }
+	        else{
+	          returnValue = (new Function(this._buffer))(); //.call(window);
+	        }
+	        this._buffer = '';
+	
+	        return returnValue;
       };
   };
 
@@ -1549,7 +1578,9 @@
 			"error" : error
 	  });
   };
-
+  
+  _addTimeMark("LIBRARY", "ui5strap", "LOAD_END");
+  
   //End of library
 
 }());
@@ -2779,25 +2810,19 @@
 			actionModulesList = [actionModulesList];
 		}
 
-		var jsModules = [],
-			instanceDefs = [],
+		var instanceDefs = [],
 			actionModulesListLength = actionModulesList.length;
 				
 		for ( var i = 0; i < actionModulesListLength; i++ ) { 
 			var actionInstanceDef = _getActionInstanceDef(actionModulesList[i]);
 			instanceDefs.push(actionInstanceDef);
-			jsModules.push(actionInstanceDef.module);
+			jQuery.sap.require(actionInstanceDef.module);
 		}
 
-		//Load Action Modules
-		ui5strap.require(jsModules, function require_complete(){
-			
-			var instanceDefsLength = instanceDefs.length;
-			for ( var i = 0; i < instanceDefsLength; i++ ) { 
-				context._run(instanceDefs[i]);
-			}
-		
-		});
+		var instanceDefsLength = instanceDefs.length;
+		for ( var i = 0; i < instanceDefsLength; i++ ) { 
+			context._run(instanceDefs[i]);
+		}
 	};
 
 	/*
@@ -3398,6 +3423,8 @@
 	ui5strap.AppComponent.extend("ui5strap.AppFrame", {
 		"constructor" : function(app, options){
 			ui5strap.AppComponent.call(this, app, options);
+			
+			ui5strap.tm("APP", "APP_FRAME", "CONSTRUCT");
 
 			this._targetStatus = {};
 
@@ -3418,6 +3445,7 @@
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
+		ui5strap.tm("APP", "APP_FRAME", "INIT");
 		var _this = this;
 		
 		this.control = this._createControl();
@@ -3463,6 +3491,8 @@
 	 * @Protected
 	 */
 	AppFrameProto._createControl = function(){
+		ui5strap.tm("APP", "APP_FRAME", "CREATE_CONTROL");
+		
 		//Init default NavContainer
 		var frameConfig = this.options,
 			navContainerOptions = {},
@@ -3497,7 +3527,7 @@
 	* @Public
 	*/
 	AppFrameProto.showInitialContent = function(callback){
-		this.app.log.debug('[APP_FRAME] SHOW INITIAL CONTENT');
+		ui5strap.tm("APP", "APP_FRAME", "SHOW_INITIAL_CONTENT");
 
 		var _this = this,
 			initialViews = this.options.initialViews,
@@ -3565,6 +3595,8 @@
 	 * @Public
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
+		ui5strap.tm("APP", "APP_FRAME", "TO_PAGE");
+		
 		//TODO use default target of navcontainer?
 		if(!viewConfig.target){
 			throw new Error('Cannot navigate to page: no "target" specified!');
@@ -3649,7 +3681,7 @@
 			target = viewConfig.target;
 
 		if(this.isBusy(target)){
-			this.app.log.debug('[APP_FRAME] Target is busy: "' + target + '"');
+			jQuery.sap.log.debug('[APP_FRAME] Target is busy: "' + target + '"');
 
 			return false;
 		}
@@ -3698,7 +3730,9 @@
 	sap.ui.base.Object.extend('ui5strap.AppBase', {
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
-
+			
+			ui5strap.tm("APP", "APP", "CONSTRUCT");
+			
 			this.config = config;
 
 			this.components = {};
@@ -3772,6 +3806,7 @@
 	* Initializes the App
 	*/
 	AppBaseProto.init = function(){
+		ui5strap.tm("APP", "APP", "INIT");
 		this.onInit(new sap.ui.base.Event("ui5strap.app.init", this, {}));
 	};
 
@@ -3779,6 +3814,8 @@
 	* Preload JavaScript libraries
 	*/
 	var _preloadJavaScript = function(_this, callback){
+		ui5strap.tm("APP", "APP", "PRELOAD_JS");
+		
 		var scripts = _this.config.data.js;
 		if(scripts.length === 0){
 			callback && callback.call(_this);
@@ -3809,7 +3846,7 @@
 	};
 
 	var _preloadModels = function(_this, callback){
-		_this.log.debug('PRELOADING MODELS');
+		ui5strap.tm("APP", "APP", "PRELOAD_MODELS");
 
 		//Models
 		var models = _this.config.data.models,
@@ -3884,24 +3921,66 @@
 			}
 		}
 	};
-
-	var _preloadComponents = function(_this, callback){
-		_this.log.debug('PRELOADING COMPONENTS');
-
-		//Components
-		var components = _this.config.data.components;
-
-		var frameConfig = _this.config.data.frames['default'];
-
-		if(frameConfig){
-			if(!frameConfig.module){
-				frameConfig.module = 'ui5strap.AppFrame';
-			}
-			frameConfig.id = "frame";
-			components.unshift(frameConfig);
+	
+	/**
+	 * @Private
+	 */
+	var _initComponent = function(_this, compConfig){
+		var ComponentConstructor = jQuery.sap.getObject(compConfig.module),
+			componentId = compConfig.id,
+			compEvents = compConfig.events,
+			methodName = 'get' + jQuery.sap.charToUpperCase(componentId),
+			oComp = new ComponentConstructor(_this, compConfig);
+		
+		//Check if magic getter conflicts with existing method
+		if(_this[methodName]){
+			throw new Error("Method already exists: " + methodName);
 		}
 		
-		var loadModules = [],
+		//Register Component in App
+		_this.components[componentId] = oComp;
+		
+		//Create magic getter
+		_this[methodName] = function(){
+			return oComp;
+		};
+	
+		//Register Component Events
+		if(compEvents){
+			//Array of strings of format "scope.event"
+			for(var j = 0; j < compEvents.length; j++){
+				var stringParts = compEvents[j].split('.');
+				if(stringParts.length === 2){
+					(function(){
+						var eventScope = stringParts[0],
+							eventName = stringParts[1],
+							eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName);
+						
+						_this.registerEventAction(eventScope, eventName, function on_event(oEvent){
+							oComp[eventHandlerName] && oComp[eventHandlerName](oEvent);
+						});
+					}());
+				}
+				else{
+					throw new Error("Invalid Component event: " + compEvents[j]);
+				}
+			}
+		}
+		
+		//Init Component
+		oComp.init();
+	};
+	
+	/**
+	 * @Private
+	 * 
+	 */
+	var _preloadComponents = function(_this, callback){
+		ui5strap.tm("APP", "APP", "PRELOAD_COMPONENTS");
+
+		//Components
+		var components = _this.config.data.components,
+			loadModules = [],
 			compConfigs = [];
 		
 		for(var i = 0; i < components.length; i++){
@@ -3911,74 +3990,32 @@
 				throw new Error("Cannot load component #" + i + ": module or id attribute missing!");
 			}
 			else if(false !== compConfig.enabled){
-				compConfigs.push(compConfig);
-				loadModules.push(compConfig.module);
+				jQuery.sap.require(compConfig.module);
+				_initComponent(_this, compConfig);
 			}
 		}
-		
-		ui5strap.require(loadModules, function require_complete(){
-			for(var i = 0; i < loadModules.length; i++){
-				var ComponentConstructor = jQuery.sap.getObject(loadModules[i]),
-					compConfig = compConfigs[i],
-					componentId = compConfig.id,
-					oComp = new ComponentConstructor(_this, compConfig),
-					methodName = 'get' + jQuery.sap.charToUpperCase(componentId);
-				
-				if(_this[methodName]){
-					throw new Error("Name conflict: " + componentId);
-				}
-				
-				_this.components[componentId] = oComp;
-				
-				(function(){
-					var comp = oComp;
-					_this[methodName] = function(){
-						return comp;
-					};
-				}());
-				
-				if(compConfig.events){
-					//Array of strings of format "scope.event"
-					for(var j = 0; j < compConfig.events.length; j++){
-						var stringParts = compConfig.events[j].split('.');
-						if(stringParts.length === 2){
-							(function(){
-								var eventScope = stringParts[0],
-									eventName = stringParts[1],
-									eventHandlerName = 'on' + jQuery.sap.charToUpperCase(eventName),
-									comp = oComp;
-								
-								_this.registerEventAction(eventScope, eventName, function on_event(oEvent){
-									comp[eventHandlerName] && comp[eventHandlerName](oEvent);
-								});
-							}());
-						}
-						else{
-							_this.log.error("Cannot register Component event: " + compConfig.events[j]);
-						}
-					}
-				}
-				
-				oComp.init();
-			}
-	
-			callback && callback();
-		});
+
+		//Trigger Callback
+		callback && callback();
 	};
 	
-	/*
+	/**
 	* Preload Actions for faster execution
+	* @Private
 	*/
 	var _preloadActions = function(_this, callback){
+		ui5strap.tm("APP", "APP", "PRELOAD_ACTIONS");
+		
 		var actions = _this.config.data.actions,
 			callI = actions.length;
+		
 		if(callI === 0){
 			callback && callback.call(_this);
 
 			return;
 		}
 		
-		var successCallback = function(){
+		var successCallback = function(data){
 			callI--;
 			if(callI === 0){
 				callback && callback.call(_this);
@@ -3990,7 +4027,11 @@
 		}
 	};
 
+	/**
+	 * @Public
+	 */
 	AppBaseProto.preload = function(callback){
+		ui5strap.tm("APP", "APP", "PRELOAD");
 		this.config.resolve();
 
 		var _this = this;
@@ -4004,8 +4045,11 @@
 		});
 	};
 
+	/**
+	 * @Public
+	 */
 	AppBaseProto.load = function(callback){
-		this.log.debug('LOAD');
+		ui5strap.tm("APP", "APP", "LOAD");
 
 		var _this = this;
 		this.preload(function(){
@@ -4021,7 +4065,7 @@
 	* Start the app
 	*/
 	AppBaseProto.start = function(callback){
-		this.log.debug('START');
+		ui5strap.tm("APP", "APP", "START");
 
 		var _this = this;
 		if(this.isRunning){
@@ -4044,7 +4088,7 @@
 	};
 
 	AppBaseProto.show = function(callback){
-		this.log.debug('SHOW');
+		ui5strap.tm("APP", "APP", "SHOW");
 
 		this.isVisible = true;
 		this.onShow(new sap.ui.base.Event("ui5strap.app.show", this, {}));
@@ -4061,7 +4105,7 @@
 	};
 
 	AppBaseProto.shown = function(callback){
-		this.log.debug('SHOWN');
+		ui5strap.tm("APP", "APP", "SHOWN");
 
 		var _this = this;
 
@@ -4082,7 +4126,7 @@
 	};
 
 	AppBaseProto.hide = function(callback){
-		this.log.debug('HIDE');
+		ui5strap.tm("APP", "APP", "HIDE");
 		this.isVisible = false;
 		
 		this.onHide(new sap.ui.base.Event("ui5strap.app.hide", this, {}));
@@ -4091,7 +4135,7 @@
 	};
 
 	AppBaseProto.hidden = function(callback){
-		this.log.debug('HIDDEN');
+		ui5strap.tm("APP", "APP", "HIDDEN");
 
 		var _this = this;
 		ui5strap.polyfill.requestAnimationFrame(function(){
@@ -4107,7 +4151,7 @@
 	* Stop the app
 	*/
 	AppBaseProto.stop = function(callback){
-		this.log.debug('STOP');
+		ui5strap.tm("APP", "APP", "STOP");
 
 		if(!this.isRunning){
 			throw new Error(this + " is not running.");
@@ -4123,7 +4167,7 @@
 	};
 
 	AppBaseProto.unload = function(callback){
-		this.log.debug('UNLOAD');
+		ui5strap.tm("APP", "APP", "UNLOAD");
 
 		ui5strap.Layer.unregister(this.overlayId);
 		ui5strap.Layer.unregister(this.getDomId('loader'));
@@ -5228,7 +5272,8 @@
 	});
 
 	var NavContainerBase = ui5strap.NavContainer,
-		NavContainerBaseProto = NavContainerBase.prototype;
+		NavContainerBaseProto = NavContainerBase.prototype,
+		domTimeout = 100;
 
 	/*
 	*
@@ -5236,27 +5281,9 @@
 	*
 	*/
 
-/*
-	var _transitionEndEvent = null,
-		_transitionEndEvents = {
-		    'transition': 'transitionend',
-		    'WebkitTransition': 'webkitTransitionEnd',
-		    'MozTransition': 'transitionend',
-		    'OTransition': 'otransitionend'
-	  	},
-	  	elem = document.createElement('div');
-	 
-	for(var t in _transitionEndEvents){
-	    if(typeof elem.style[t] !== 'undefined'){
-	      _transitionEndEvent = _transitionEndEvents[t];
-	      break;
-	    }
-	}
-	
-	*/
-	
-	/*
+	/**
 	* Triggers a controller event: Update, PageShow, PageShown, PageHide, PageHidden
+	* @Private
 	*/
 	var _triggerControllerEvent = function(_this, target, oControl, eventId, eventParameters){
 		if(oControl){
@@ -5276,128 +5303,12 @@
 		}
 	};
 
-	/*
-	* Constructs a Transition
-	* @Constructor
-	* @Private
-	*/
-	/*
-	var _Transition = function(transitionName, $currentRoot, $nextRoot, transitionId){
-		this.$current = $currentRoot;
-		this.$next = $nextRoot;
-		
-		this._transitionId = transitionId;
-		
-		this._prepared = false;
-		this._executed = false;
-		
-		var transitionClass = transitionName;
-		var transitionTimeout = 2000;
-		var _transitionEndEvent = ui5strap.support.transitionEndEvent;
-
-		this.prepare = function (){
-			if(this._prepared || this._executed){
-				throw new Error('Cannot prepare transition: already prepared or executed!');
-			}
-			this._prepared = true;
-
-			if(!transitionName){
-				return;
-			}
-
-			if(null !== this.$current){
-					this.$current.addClass(transitionClass + ' ' + transitionClass+'-current');
-			}
-
-		 	if(null !== this.$next){
-					this.$next.addClass(transitionClass + ' ' + transitionClass+'-next').removeClass('ui5strap-hidden');
-			}
-		};
-
-		this.execute = function (currentRootCallback, nextRootCallback){
-			var _this = this;
-
-			if(!this._prepared){
-				throw new Error('Cannot execute transition: not prepared!');
-			}
-
-			if(this._executed){
-				throw new Error('Cannot execute transition: already executed!');
-			}
-
-			this._executed = true;
-			this._neca = false;
-			this._cuca = false;
-
-			if(transitionName && _transitionEndEvent){
-				//jQuery.sap.log.debug('[TRANSITION] ' + _this._transitionId + ' : ' + transitionName);
-
-	 			if(currentRootCallback && this.$current){ 
-	 				var _currentTimout = window.setTimeout(function(){
-	 					if(_this._cuca){
-	 						return;
-	 					}
-	 					_this._cuca = true;
-						//jQuery.sap.log.debug('[NC] TIMEOUT CUCA');
-			 			currentRootCallback.call(_this);
-					}, transitionTimeout);
-
-	 				this.$current
-					//	.off(transitionEndEvent)
-					.one(_transitionEndEvent, function(){
-						if(_this._cuca){
-	 						return;
-	 					}
-	 					_this._cuca = true;
-						window.clearTimeout(_currentTimout);
-						currentRootCallback.call(_this);
-					});
-
-				}
-				if(nextRootCallback && this.$next){
-					var _nextTimout = window.setTimeout(function(){
-						if(_this._neca){
-	 						return;
-	 					}
-	 					_this._neca = true;
-						//jQuery.sap.log.debug('[NC] TIMEOUT NECA');
-			 			nextRootCallback.call(_this);
-			 		}, transitionTimeout);
-
-					this.$next
-					//.off(transitionEndEvent)
-					.one(_transitionEndEvent, function(){
-						if(_this._neca){
-	 						return;
-	 					}
-	 					_this._neca = true;
-						window.clearTimeout(_nextTimout);
-						nextRootCallback.call(_this);
-					});
-				}
-
-				this.$current && this.$current.addClass(transitionClass+'-current-out');
-				this.$next && this.$next.removeClass(transitionClass + '-next');
-			}
-			else{ 
-				//jQuery.sap.log.debug('[TRANSITION] ' + _this._transitionId + ' : no transition');
-				this.$next && this.$next.removeClass('ui5strap-hidden');
-
-				ui5strap.polyfill.requestAnimationFrame(function(){
-					currentRootCallback && currentRootCallback.call(_this);
-					nextRootCallback && nextRootCallback.call(_this);
-				});
-			}
-
-		 };
-
-	};
-	*/
-
-	/*
+	/**
 	* @Private
 	*/
 	var _prepareTransition = function(_this, pageChange){
+		ui5strap.tm("APP", "NC", "PREP_TRANS");
+		
 		if(pageChange.transition){
 			//There is already a Transition defined
 			return false;
@@ -5430,13 +5341,15 @@
 	};
 
 
-	/*
+	/**
 	*
 	* PRIVATE FIELDS & METHODS
 	*
 	*/
 
 	var _transitionCallback = function(_this, pageChange, transList){
+		ui5strap.tm("APP", "NC", "TRANS_CB");
+		
 		transList.callI --;
 		
 		var callbacksLength = transList.callbacks.length;
@@ -5460,16 +5373,17 @@
 		}
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _executeTransition = function(_this, pageChange, transList){
+		ui5strap.tm("APP", "NC", "EXEC_TRANS");
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
 		pageChange.transition.execute(
 			function anon_transitionCurrentComplete(){
 				var $current = this.$current;
-				if(null !== $current){
+				if($current){
 					$current.remove();
 				}
 
@@ -5498,18 +5412,17 @@
 
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _executePendingTransitions = function(_this){
-		var pendingTransitionsLength = _this._pendingTransitions.length;
-
-		//jQuery.sap.log.debug(" + [NC] EXECUTE " + pendingTransitionsLength + " PENDING TRANSITIONS");
+		ui5strap.tm("APP", "NC", "EXEC_PEND_TRANS");
 		
-		var transList = {
-			callI : pendingTransitionsLength,
-			callbacks : []
-		};
+		var pendingTransitionsLength = _this._pendingTransitions.length,
+			transList = {
+				callI : pendingTransitionsLength,
+				callbacks : []
+			};
 
 		for(var i = 0; i < pendingTransitionsLength; i++){
 			var pageChanges = _this._targetTransitions[_this._pendingTransitions[i]];
@@ -5526,10 +5439,12 @@
 		
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _preparePendingTransitions = function(_this){
+		ui5strap.tm("APP", "NC", "PREP_PEND_TRANS");
+		
 		var pendingTransitionsLength = _this._pendingTransitions.length,
 			successAll = true;
 		//jQuery.sap.log.debug(' + [NC] PREPARE ' + pendingTransitionsLength + ' PENDING TRANSITIONS'); 
@@ -5542,10 +5457,12 @@
 		return successAll;
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _handlePendingTransitions = function(_this){
+		ui5strap.tm("APP", "NC", "HANDLE_PEND_TRANS");
+		
 		if(0 === _this._pendingTransitions.length){
 			//jQuery.sap.log.debug(" - [NC] NO PENDING TRANSITIONS");
 
@@ -5572,10 +5489,12 @@
 		});
 	};
 
-	/*
+	/**
 	* @Private
 	*/
 	var _pageChange = function(_this, pageChange){
+		ui5strap.tm("APP", "NC", "PAGE_CHANGE");
+		
 		//jQuery.sap.log.debug(' + [NC] T1 {' + pageChange.target + '}');
 		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 
@@ -5596,13 +5515,18 @@
 		
 		});
 	};
-
+	
+	/**
+	 * @Private
+	 */
 	var _pageChangeLater = function(_this, pageChange, override){
+		ui5strap.tm("APP", "NC", "PAGE_CHANGE_LATER");
+		
 		var target = pageChange.target;
 		if(-1 === jQuery.inArray(target, _this._pendingTransitions)){ 
 			_this._pendingTransitions.push(target);
 
-			if(!(target in _this._targetTransitions)){
+			if(!_this._targetTransitions[target]){
 				_this._targetTransitions[target] = [];
 			}
 		}
@@ -5611,9 +5535,9 @@
 			//jQuery.sap.log.debug(' + [NC] T1L {' + pageChange.target + '}');
 			_this._targetTransitions[target].push(pageChange);
 		}
-		else{
+		//else{
 			//jQuery.sap.log.debug(' + [NC] T1S {' + pageChange.target + '}');
-		}
+		//}
 	};
 
 	/*
@@ -5632,10 +5556,12 @@
 	};
 	*/
 
-	/*
+	/**
 	* @Private
 	*/
 	var _placePage = function(_this, target, page, isPrepared){
+			ui5strap.tm("APP", "NC", "PLACE_PAGE");
+		
 			if(page && page.getDomRef()){
 				return page.$().parent();
 			}
@@ -5646,19 +5572,20 @@
 
 			//Add new page to DOM
 			var newPage = document.createElement('div'),
+				$nextContent = jQuery(newPage),
 				orgClassName = 'navcontainer-page navcontainer-' + _this.ncType + '-page navcontainer-' + _this.ncType + '-page-' + target,
-				newClassName = orgClassName;
+				newClassName = orgClassName,
+				oModels = _this.oModels;
+			
 			if(true === isPrepared){
 				 newClassName += ' navcontainer-page-next ui5strap-hidden';
 			}
 			newPage.className = newClassName;
 			newPage.id = _this.pageDomId(target, page);
-				
-			var $nextContent = jQuery(newPage);
 			$nextContent.attr('data-org-class', orgClassName);
+			
 			jQuery('#' + _this.targetPagesDomId(target)).append($nextContent);
 			
-			var oModels = _this.oModels;
 			//var uiArea = sap.ui.getCore().createUIArea(newPage, _this);
 			for(var sName in oModels){
 				//page.setModel(oModel, sName);
@@ -5681,11 +5608,13 @@
 	*
 	*/
 
-	/*
+	/**
 	* @Public
 	* @PostConstruct
 	*/
 	NavContainerBaseProto.init = function(){
+		ui5strap.tm("APP", "NC", "INIT");
+		
 		this._pendingTransitions = [];
 		
 		this._targetTransitions = {};
@@ -5695,18 +5624,16 @@
 		//TODO Do we need a busy flag here?
 		//this._targetStatus = {};
 
-		//Transition timeout
-		this.transitionNextTimeout = 2000;
-		this.transitionCurrentTimeout = 2000;
-
 		this._initNavContainer();
 	};
 
-	/*
+	/**
 	* @Override
 	* @Protected
 	*/
 	NavContainerBaseProto._initNavContainer = function(){
+		ui5strap.tm("APP", "NC", "INIT_NC");
+		
 		//NavContainer type string
 		//Resulting css class is "navcontainer navcontainer-default"
 		this.ncType = "default";
@@ -5720,7 +5647,7 @@
 		};
 	};
 
-	/*
+	/**
 	* Creates a dom id for a given target and page
 	* @Public
 	*/
@@ -5732,7 +5659,7 @@
 		return 'navcontainer-page---' + page.getId();
 	};
 
-	/*
+	/**
 	* Registers a new dom id for a given target and page
 	* @Public
 	*/
@@ -5746,7 +5673,7 @@
 		return this.createPageDomId(target, page);
 	};
 
-	/*
+	/**
 	* @Override
 	*/
 	NavContainerBaseProto.setModel = function(oModel, sName){
@@ -5761,7 +5688,7 @@
 		sap.ui.core.Control.prototype.setModel.call(this, oModel, sName);
 	};
 
-	/*
+	/**
 	* @Override
 	*/
 	NavContainerBaseProto.destroy = function(){
@@ -5773,7 +5700,7 @@
 		sap.ui.core.Control.prototype.destroy.call(this);
 	};
 
-	/*
+	/**
 	*
 	* @Public
 	*/
@@ -5781,14 +5708,14 @@
 		return 'navcontainer-pages-' + target + '---' + this.getId();
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.targetLayersDomId = function(target){
 		return 'navcontainer-layers-' + target + '---' + this.getId();
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.getClassString = function(){
@@ -5806,7 +5733,7 @@
 	    return classes;
 	};
 
-	/*
+	/**
 	* @Public
 	* @Override
 	*/
@@ -5820,7 +5747,7 @@
 		}
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.setOptionsEnabled = function(options){
@@ -5849,14 +5776,14 @@
 		this.setOptions(currentOptions.join(' '));
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.isOptionEnabled = function(optionName){
 		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.toggleOption = function(optionName){
@@ -5866,7 +5793,7 @@
 		this.setOptionsEnabled(options);
 	};
 
-	/*
+	/**
 	* @Public
 	* @Deprecated
 	*/
@@ -5883,7 +5810,7 @@
 
 	};
 
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.updateTarget = function(target, oPage, eventParameters){
@@ -5894,18 +5821,26 @@
 		_triggerControllerEvent(this, target, oPage, 'update', eventParameters);
 	};
 	
+	/**
+	 * @Public
+	 */
 	NavContainerBaseProto.hasTarget = function(target){
 		return target in this.targets;
 	};
 	
+	/**
+	 * @Public
+	 */
 	NavContainerBaseProto.getTarget = function(target){
 		return this.targets[target];
 	};
 	
-	/*
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
+		ui5strap.tm("APP", "NC", "TO_PAGE");
+		
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
@@ -5964,7 +5899,7 @@
 			
 			window.setTimeout(function anon_afterDomTimeout(){
 				_pageChange(_this, targetTransition);	
-			}, 250);
+			}, domTimeout);
 		
 		}
 		else{
@@ -5975,12 +5910,12 @@
 		return true;
 	};
 
-	/*
+	/**
 	* @Override
 	* @Public
 	*/
 	NavContainerBaseProto.onBeforeRendering = function(){
-		//jQuery.sap.log.debug('[NC] ON BEFORE RENDERING');
+		ui5strap.tm("APP", "NC", "BEFORE_RENDERING");
 
 		for(var target in this.targets){
 			var currentPage = this.targets[target];
@@ -6000,12 +5935,12 @@
 	 	}
 	};
 
-	/*
+	/**
 	* @Override
 	* @Public
 	*/
 	NavContainerBaseProto.onAfterRendering = function(){ 
-		//jQuery.sap.log.debug('[NC] ON AFTER RENDERING');
+		ui5strap.tm("APP", "NC", "AFTER_RENDERING");
 		
 		var _pendingTransitions = this._pendingTransitions,
 			pendingTransitionsLength = _pendingTransitions.length,
@@ -6027,7 +5962,7 @@
 		
 		window.setTimeout(function anon_afterDomTimeout(){
 			_handlePendingTransitions(_this);	
-		}, 250);
+		}, domTimeout);
 	};
 
 }());;/*
@@ -6068,7 +6003,9 @@
 	sap.ui.base.Object.extend('ui5strap.ViewerBase', {
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);
-
+			
+			ui5strap.tm("VIEWER", "VIEWER", "VIEWER_CONSTRUCT");
+			
 			this.options = options || {};
 
 			//Device Log Level
@@ -6109,6 +6046,8 @@
 	var ViewerBaseProto = ui5strap.ViewerBase.prototype;
 
 	ViewerBaseProto.init = function(){
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_INIT");
+		
 		ui5strap.Layer.register('ui5strap-loader');
   		
 		this._initOverlay();
@@ -6335,7 +6274,7 @@
 	//@TODO these properties must be NON-STATIC! Currently they are STATIC.
 	//@static
 	var _m_currentSapplication = null;
-	var _m_loadedSapplicationsById = null;
+	var _m_loadedSapplicationsById = {};
 	
 
 
@@ -6344,14 +6283,10 @@
 	 * @param viewerConfigUrl Url to viewer configuration file
 	 */
 	ViewerMultiProto.init = function(){
-		jQuery.sap.log.debug("[VIEWER] init");
-		
-		//Object vars
-		_m_loadedSapplicationsById = {};
-		
 		ui5strap.ViewerBase.prototype.init.call(this);
 		
 		//Init methods
+		//TOOO Move to Viewer base
 		this._initDom();
 		this._initConsole();
 		this._initEvents();
@@ -6361,8 +6296,8 @@
 	* Executes a app by given sapp-url from a get parameter
 	*/
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
-		jQuery.sap.log.debug("[VIEWER] start");
-
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_START");
+		
 		this.init();
 
 		var appUrl = ui5strap.AppConfig.processOption("app", this.options.app);
@@ -6442,8 +6377,7 @@
 	* Load, start and show an App. The appUrl must point to a valid app.json file.
 	*/
 	ViewerMultiProto.executeApp = function(appDefinition, doNotShow, callback, loadCallback){
-		
-		jQuery.sap.log.debug("[VIEWER] execute App '" + appDefinition.url + "'");
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_EXEC", appDefinition.url);
 		
 		var _this = this,
 			appType = appDefinition.type;
@@ -6542,6 +6476,8 @@
 	};
 
 	var _preloadLibraries = function(_this, libs, callback){
+		ui5strap.tm("VIEWER", "VIEWER", "PRELOAD_LIBS");
+		
 		var callI = libs.length,
 			successCallback = function(){
 				callI--;
@@ -6581,12 +6517,11 @@
 				for(var j = 0; j < libData.controls.length; j++){
 					preloadLibs.push(libData.controls[j]);
 				}
-
-				ui5strap.require(preloadLibs, successCallback());
+				
+				jQuery.sap.require(preloadLibs);
 			}
-			else{
-				successCallback();
-			}
+			
+			successCallback();
 		}
 	};
 
@@ -6595,7 +6530,7 @@
 	* @param appConfig SappConfig instance
 	*/
 	ViewerMultiProto.createApp = function(appConfig, callback){
-		jQuery.sap.log.debug("[VIEWER] createApp");
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_CREATE");
 		
 		var configDataJSON = appConfig.data,
 			appModuleName = configDataJSON.app.module,
@@ -6619,12 +6554,9 @@
 		});
 
 		_preloadLibraries(this, libraries, function(){
-			//Load the App Module
-			ui5strap.require(appModuleName, function requireComplete(){
-				var AppConstructor = jQuery.sap.getObject(appModuleName);
-
-				callback && callback(new AppConstructor(appConfig, _this));
-			});
+			jQuery.sap.require(appModuleName);
+			var AppConstructor = jQuery.sap.getObject(appModuleName);
+			callback && callback(new AppConstructor(appConfig, _this));
 		});
 	};
 	
@@ -6632,7 +6564,7 @@
 	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
 	*/
 	ViewerMultiProto.loadApp = function(configDataJSON, parameters, callback){
-		jQuery.sap.log.debug("[VIEWER] loadApp '" + configDataJSON.app.name + "'");
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_LOAD", configDataJSON.app.name);
 
 		var _this = this,
 			appConfig = new ui5strap.AppConfig(this.options, parameters);
@@ -6664,8 +6596,8 @@
 	* Unloads an app
 	*/
 	ViewerMultiProto.unloadApp = function(sappId){
-		jQuery.sap.log.debug("[VIEWER] unloadApp '" + sappId + "'");
-
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_UNLOAD", sappId);
+		
 		var appInstance = this.getApp(sappId);
 
 		if(null === appInstance){
@@ -6687,8 +6619,8 @@
 	* Starts a previously loaded app.
 	*/
 	ViewerMultiProto.startApp = function(sappId, callback){
-		jQuery.sap.log.debug("[VIEWER] startApp '" + sappId + "'");
-
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_START", sappId);
+		
 		var appInstance = this.getApp(sappId);
 		
 		if(null === appInstance){
@@ -6708,6 +6640,7 @@
 	* Stops a previously started app.
 	*/
 	ViewerMultiProto.stopApp = function(sappId){
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_STOP", sappId);
 		var appInstance = this.getApp(sappId);
 
 		if(null === appInstance){
@@ -6726,9 +6659,9 @@
 	/*
 	* Shows a previously started app, means bringing the app to foreground.
 	*/
-	ViewerMultiProto.showApp = function(sappId, transitionName, callback){ 
-		jQuery.sap.log.debug("[VIEWER] showApp '" + sappId + "'"); 
-
+	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
+		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_SHOW", sappId);
+		
 		if(null !== this._loadingSapplication){
 			jQuery.sap.log.warning("App '" + this._loadingSapplication + "' is currently loading."); 
 			
@@ -6740,11 +6673,13 @@
 		if(null === appInstance){
 			throw new Error('Cannot show app "' + sappId + '" - app not loaded.');
 		}
-
+		
+		//Check if App is running
 		if(!appInstance.isRunning){
 			throw new Error('Cannot show a app which is not running.');
 		}
 
+		//If App has no Root Control, return immeadiately
 		if(!appInstance.getRootControl()){
 			//this.hideLoader(function(){
 				callback && callback(appInstance);
@@ -6752,7 +6687,8 @@
 
 			return;
 		}
-
+		
+		//If App is visible, return immeadiately
 		if(appInstance.isVisible){
 			//this.hideLoader(function(){
 				callback && callback(appInstance);
@@ -6766,15 +6702,18 @@
 		}
 
 		//Set Browser Title
+		//TODO Is this good here?
 		document.title = appInstance.config.data.app.name;
-
+		
+		//Store Previous App
 		var previousSapplication = this.getApp();
-		var needAttach = false;
 		
 		//Set the app as current foreground app				
 		_m_currentSapplication = appInstance;
 		this._loadingSapplication = appInstance;	
 
+		var needAttach = false;
+		
 		if(!appInstance.domRef){
 			appInstance.createDomRef();
 			needAttach = true;
@@ -6828,7 +6767,11 @@
 			
 			//<DOM_ATTACH_TIMEOUT>
 			window.setTimeout(function setTimeout_complete(){
+				
+				//Hide previous App if any
 				previousSapplication && previousSapplication.hide();
+				
+				//Show the App
 				appInstance.show(function(){
 					
 					//RAF
@@ -17887,7 +17830,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 		renderer : "ui5strap.NavContainerRenderer"
 	});
 
-	/*
+	/**
 	* @Override
 	* @Protected
 	*/

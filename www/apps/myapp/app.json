@@ -117,8 +117,13 @@
             },
             
             "tld__domain.product__app.views.Overlay" : {
-                "type" : "HTML",
+            	"type" : "HTML",
                 "id" : "my-app-overlay"
+            },
+            
+            "tld__domain.product__app.views.Overlay2" : {
+            	"type" : "HTML",
+                "id" : "my-app-overlay2"
             }
         },
 
