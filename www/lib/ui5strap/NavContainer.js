@@ -49,7 +49,7 @@
 
 	var NavContainerBase = ui5strap.NavContainer,
 		NavContainerBaseProto = NavContainerBase.prototype,
-		domTimeout = 100;
+		domTimeout = 50;
 
 	/*
 	*
@@ -273,11 +273,9 @@
 		
 		//jQuery.sap.log.debug(' + [NC] T1 {' + pageChange.target + '}');
 		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
-
 			_prepareTransition(_this, pageChange);
 			
 			ui5strap.polyfill.requestAnimationFrame(function RAF2(){
-				
 				var transList = {
 					callI : 1,
 					callbacks : []
@@ -671,12 +669,13 @@
 		
 
 		if(this.getDomRef()){
-			targetTransition.$next = _placePage(this, target, page, true);
+			//ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+			targetTransition.$next = _placePage(_this, target, page, true);
 			
 			window.setTimeout(function anon_afterDomTimeout(){
 				_pageChange(_this, targetTransition);	
 			}, domTimeout);
-		
+			//});
 		}
 		else{
 			_pageChangeLater(_this, targetTransition, true);
@@ -721,24 +720,26 @@
 		var _pendingTransitions = this._pendingTransitions,
 			pendingTransitionsLength = _pendingTransitions.length,
 			_this = this;
-
+		
+		//ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 		for(var i = 0; i < pendingTransitionsLength; i++){
-			var targetTransitions = this._targetTransitions[_pendingTransitions[i]],
+			var targetTransitions = _this._targetTransitions[_pendingTransitions[i]],
 				targetTransition = targetTransitions[targetTransitions.length - 1];
 
 			if(!targetTransition.$next){
 				//There is no page reference available, so we have to create it
-				targetTransition.$next = _placePage(this, targetTransition.target, targetTransition.page, true); 
+				targetTransition.$next = _placePage(_this, targetTransition.target, targetTransition.page, true); 
 			}
 			else{
 				//Reappend existing reference
-				jQuery('#' + this.targetPagesDomId(targetTransition.target)).append(targetTransition.$next);
+				jQuery('#' + _this.targetPagesDomId(targetTransition.target)).append(targetTransition.$next);
 			}
 		}
 		
 		window.setTimeout(function anon_afterDomTimeout(){
 			_handlePendingTransitions(_this);	
 		}, domTimeout);
+		//});
 	};
 
 }());
