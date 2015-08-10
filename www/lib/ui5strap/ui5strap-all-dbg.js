@@ -201,7 +201,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.7"
+        	version: "0.9.8"
       }
   );
   
@@ -3739,7 +3739,8 @@
 
 			this._pageCache = {};
 			this._events = {};
-
+			
+			this.isAttached = false;
 			this.isRunning = false;
 			this.isVisible = false;
 			this.hasFirstShow = false;
@@ -4748,7 +4749,15 @@
 		return this.config.data.app.id.replace(/\./g, '__') + (subElement ? '---' + subElement : '');
 	};
 
-	AppBaseProto.createDomRef = function(){
+	/**
+	 * @Public
+	 */
+	AppBaseProto.updateContainer = function(){
+		if(this.domRef){
+			this.domRef.className = _createAppClass(this, 'ui5strap-app ui5strap-app-next ui5strap-hidden');
+			return;
+		}
+		
 		var _this = this;
 		
 		//App Container
@@ -4803,8 +4812,16 @@
 		this.contentDomRef = appContent;
 	};
 	
-	AppBaseProto.updateDomRef = function(){
-		this.domRef.className = _createAppClass(this, 'ui5strap-app ui5strap-app-next ui5strap-hidden');
+	/**
+	 * Appends the App to the DOM
+	 */
+	AppBaseProto.attach = function(containerEl){
+		if(!this.isAttached){
+			this.isAttached = true;
+			containerEl.appendChild(this.domRef);
+			this.registerOverlay();
+			this.getRootControl().placeAt(this.contentDomRef);
+		}
 	};
 
 	/*
@@ -5021,9 +5038,10 @@
 	* ------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Preload resources e.g. images and json files
-	* @protected
+	* @Private
+	* @Static
 	*/
 	var _preloadViews = function(views, callback){
 		//TODO use Object.keys
@@ -5081,6 +5099,9 @@
 		} 
 	};
 
+	/**
+	 * @Public
+	 */
 	AppProto.preload = function(callback){
 		var _this = this;
 		ui5strap.AppBase.prototype.preload.call(this, function(){
@@ -5092,9 +5113,9 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when a view of the app is shown in the global overlay
-	* @public
+	* @Public
 	*/
 	AppProto.onShowInOverlay = function(oEvent){ 
 		this.fireEventAction({ 
@@ -5105,9 +5126,9 @@
 
 	};
 
-	/*
+	/**
 	* Triggered when a view of the app is hidden from the global overlay
-	* @public
+	* @Public
 	*/
 	AppProto.onHideInOverlay = function(oEvent){
 		this.fireEventAction({ 
@@ -5123,9 +5144,9 @@
 	* -------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Include the style that is neccessary for this app
-	* @public
+	* @Public
 	*/
 	AppProto.includeStyle = function(callback){
 		var _this = this;
@@ -5180,6 +5201,9 @@
 		}
 	};
 
+	/**
+	 * @Public
+	 */
 	AppProto.removeStyle = function(){
 		for(var cssKey in this._runtimeData.css){
 			jQuery('link#' + cssKey).remove();
@@ -5188,8 +5212,9 @@
 		}
 	};
 
-	/*
+	/**
 	* Sets the theme of the app
+	* @Public
 	*/
 	AppProto.setTheme = function(themeName){
 		this._runtimeData.theme = themeName;
@@ -5216,7 +5241,8 @@
 	*/
 	
 	/**
-	 * @abstract
+	 * @Abstract
+	 * @Public
 	 */
 	AppProto.getRootControl = function(){
 		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');
@@ -6044,7 +6070,11 @@
 	});
 
 	var ViewerBaseProto = ui5strap.ViewerBase.prototype;
-
+	
+	/**
+	 * Initialzer
+	 * @Public
+	 */
 	ViewerBaseProto.init = function(){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_INIT");
 		
@@ -6053,6 +6083,9 @@
 		this._initOverlay();
 	};
 
+	/**
+	 * @Public
+	 */
 	ViewerBaseProto.start = function(callback, loadCallback){
 		throw new Error("Please inherit ui5strap.ViewerBase.prototype.start in your Viewer instance.");
 	};
@@ -6063,8 +6096,9 @@
 	* ----------------------------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Inititalzes the overlay
+	* @Protected
 	*/
 	ViewerBaseProto._initOverlay = function(){
 		var _this = this;
@@ -6079,17 +6113,17 @@
 		});
 	};
 
-	/*
+	/**
 	* Returns whether the overlay layer is visible
-	* @public
+	* @Public
 	*/
 	ViewerBaseProto.isOverlayVisible = function(){
 		return ui5strap.Layer.isVisible(this.options.overlay);
 	};
 
-	/*
+	/**
 	* Shows the overlay layer
-	* @public
+	* @Public
 	*/
 	ViewerBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this,
@@ -6097,47 +6131,45 @@
 			transitionName = transitionName || 'transition-slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.options.overlay, true, function(){
-			ui5strap.polyfill.requestAnimationFrame(function RAF1(){
-				if(viewDataOrControl instanceof sap.ui.core.Control){
-					//Control is directly injected into the frame
-					overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
-				}
-				else{ 
-					//viewDataOrControl is a data object
-					if("appId" in viewDataOrControl){
-						var viewApp = _this.getApp(viewDataOrControl.appId);
-						if(null === viewApp){
-							throw new Error('Invalid app: ' + viewDataOrControl.appId);
-						}
-						//View from a app
-						viewApp.includeStyle(function includeStyle_complete(){
-							var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
-								view = viewApp.createView(viewConfig);
-	
-							overlayControl.toPage(view, 'content', transitionName, function(){
-								viewApp.isVisibleInOverlay = true;
-	
-								viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
-									view : view, 
-									viewConfig : viewConfig
-								}));
-								
-								callback && callback();	
-							});
+			if(viewDataOrControl instanceof sap.ui.core.Control){
+				//Control is directly injected into the frame
+				overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
+			}
+			else{ 
+				//viewDataOrControl is a data object
+				if("appId" in viewDataOrControl){
+					var viewApp = _this.getApp(viewDataOrControl.appId);
+					if(null === viewApp){
+						throw new Error('Invalid app: ' + viewDataOrControl.appId);
+					}
+					//View from a app
+					viewApp.includeStyle(function includeStyle_complete(){
+						var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
+							view = viewApp.createView(viewConfig);
+
+						overlayControl.toPage(view, 'content', transitionName, function(){
+							viewApp.isVisibleInOverlay = true;
+
+							viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
+								view : view, 
+								viewConfig : viewConfig
+							}));
+							
+							callback && callback();	
 						});
-					}
-					else{
-						//TODO How should this work here?
-						overlayControl.toPage(viewDataOrControl, 'content', transitionName, callback);
-					}
+					});
 				}
-			});
+				else{
+					//TODO How should this work here?
+					overlayControl.toPage(viewDataOrControl, 'content', transitionName, callback);
+				}
+			}
 		});
 	};
 
-	/*
+	/**
 	* Hides the overlay layer
-	* @public
+	* @Public
 	*/
 	ViewerBaseProto.hideOverlay = function(callback, transitionName){
 		if(!this.isOverlayVisible()){
@@ -6172,16 +6204,18 @@
 	* ----------------------------------------------------------------------
 	*/
 
-	/*
-	*	Changes the browser URL to an (external) url
+	/**
+	* Changes the browser URL to an (external) url
 	* @param url The URL to browse to
+	* @Public
 	*/
 	ViewerBaseProto.exitViewer =  function(url){
 		window.location.href = url; 
 	};
 
-	/*
+	/**
 	* Request the client's browser to switch to full screen mode
+	* @Public
 	*/  
 	ViewerBaseProto.requestFullscreen =  function(element){
 		if(typeof element === 'undefined'){
@@ -6198,9 +6232,9 @@
 	  	}
 	};
 
+	//End ViewerBase
 	
-}());
-;/*
+}());;/*
  * 
  * UI5Strap
  *
@@ -6260,29 +6294,19 @@
 	var ViewerMulti = ui5strap.Viewer,
 		ViewerMultiProto = ViewerMulti.prototype;
 
-	//----------------- STATIC methods -------------------
-	var _KnownLibraryIssues = {
-		"sap.m" : function(){
-			//This fixes problems with JSON views, when displaying in editor
-			//Since we need Page in any mobile app anyway, this does not harm
-			jQuerySap.require("sap.m.Page");
-		}
-	};
-
-	//----------------- NON-STATIC methods -------------------
-
 	//Private properties that are linked to the scope of the anonymous self executing function around this module
 	//This prevents other apps from accessing data easily
 	//@TODO these properties must be NON-STATIC! Currently they are STATIC.
-	//@static
+	//@Static
 	var _m_currentSapplication = null;
 	var _m_loadedSapplicationsById = {};
 	
 
 
-	/*
+	/**
 	 * Initializes the ViewerMulti instance
 	 * @param viewerConfigUrl Url to viewer configuration file
+	 * @Public
 	 */
 	ViewerMultiProto.init = function(){
 		ui5strap.ViewerBase.prototype.init.call(this);
@@ -6294,8 +6318,9 @@
 		this._initEvents();
 	};
 
-	/*
+	/**
 	* Executes a app by given sapp-url from a get parameter
+	* @Public
 	*/
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_START");
@@ -6332,18 +6357,23 @@
 	/**
 	* Get the current (in foreground) running app
 	* TODO make static?
+	* @Public
 	*/
 	ViewerMultiProto.getApp = function(appId){
 		return appId ? _m_loadedSapplicationsById[appId] : _m_currentSapplication;
 	};
 
+	/**
+	 * @Public
+	 */
 	ViewerMultiProto.getLoadedApps = function(){
 		return _m_loadedSapplicationsById;
 	};
 
-	/*
+	/**
 	*	Replaces the current browser content and opens a app defined in viewer config
 	* @param sappId Sapplication ID
+	* TODO Remove?
 	*/
 	ViewerMultiProto.openSapplication = function(appUrl){
 		var currentUrl = [location.protocol, '//', location.host, location.pathname].join('');
@@ -6352,8 +6382,9 @@
 		this.exitViewer(appUrl);
 	};
 	
-	/*
+	/**
 	* Loads the configuration from an URL. URL must point to a JSON file.
+	* @Private
 	*/
 	var _loadAppConfig = function(_this, configUrl, callback){
 		jQuery.ajax({
@@ -6375,8 +6406,9 @@
 		});
 	};
 
-	/*
+	/**
 	* Load, start and show an App. The appUrl must point to a valid app.json file.
+	* @Public
 	*/
 	ViewerMultiProto.executeApp = function(appDefinition, doNotShow, callback, loadCallback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_EXEC", appDefinition.url);
@@ -6476,7 +6508,10 @@
 			throw new Error("Cannot execute App: Invalid Type!");
 		}
 	};
-
+	
+	/**
+	 * @Private
+	 */
 	var _preloadLibraries = function(_this, libs, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "PRELOAD_LIBS");
 		
@@ -6501,12 +6536,6 @@
 			jQuerySap.registerModulePath(libPackage, libLocation);
 			_this._loadedLibraries[libPackage] = libLocation;
 
-			if(libPackage in _KnownLibraryIssues){
-				//Fix function for library
-				_KnownLibraryIssues[libPackage].call(this);
-				jQuery.sap.log.debug("[VIEWER] Fix for library '" + libPackage + "' loaded.");
-			}
-
 			if(lib.preload){
 				//Preload Controls an Elements
 				var preloadLibs = [libPackage + '.library'],
@@ -6527,9 +6556,10 @@
 		}
 	};
 
-	/*
+	/**
 	* Creates a app instance
 	* @param appConfig SappConfig instance
+	* @Public
 	*/
 	ViewerMultiProto.createApp = function(appConfig, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_CREATE");
@@ -6562,8 +6592,9 @@
 		});
 	};
 	
-	/*
+	/**
 	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
+	* @Public
 	*/
 	ViewerMultiProto.loadApp = function(configDataJSON, parameters, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_LOAD", configDataJSON.app.name);
@@ -6594,8 +6625,9 @@
 		});
 	};
 
-	/*
+	/**
 	* Unloads an app
+	* @Public
 	*/
 	ViewerMultiProto.unloadApp = function(sappId){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_UNLOAD", sappId);
@@ -6617,8 +6649,9 @@
 		return appInstance;
 	};
 
-	/*
+	/**
 	* Starts a previously loaded app.
+	* @Public
 	*/
 	ViewerMultiProto.startApp = function(sappId, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_START", sappId);
@@ -6638,8 +6671,9 @@
 		return appInstance;
 	};
 
-	/*
+	/**
 	* Stops a previously started app.
+	* @Public
 	*/
 	ViewerMultiProto.stopApp = function(sappId){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_STOP", sappId);
@@ -6658,13 +6692,14 @@
 		return appInstance;
 	};
 
-	/*
+	/**
 	* Shows a previously started app, means bringing the app to foreground.
+	* @Public
 	*/
 	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_SHOW", sappId);
 		
-		if(null !== this._loadingSapplication){
+		if(this._loadingSapplication){
 			jQuery.sap.log.warning("App '" + this._loadingSapplication + "' is currently loading."); 
 			
 			return;
@@ -6672,7 +6707,7 @@
 
 		var appInstance = this.getApp(sappId);
 
-		if(null === appInstance){
+		if(!appInstance){
 			throw new Error('Cannot show app "' + sappId + '" - app not loaded.');
 		}
 		
@@ -6681,8 +6716,8 @@
 			throw new Error('Cannot show a app which is not running.');
 		}
 
-		//If App has no Root Control, return immeadiately
-		if(!appInstance.getRootControl()){
+		//If App has no Root Control, or is already visible, return immeadiately
+		if(!appInstance.getRootControl() || appInstance.isVisible){
 			//this.hideLoader(function(){
 				callback && callback(appInstance);
 			//});
@@ -6690,19 +6725,6 @@
 			return;
 		}
 		
-		//If App is visible, return immeadiately
-		if(appInstance.isVisible){
-			//this.hideLoader(function(){
-				callback && callback(appInstance);
-			//});
-			
-			return;
-		}
-
-		if(typeof transitionName !== 'string'){
-			transitionName = appInstance.config.data.app.transition;
-		}
-
 		//Set Browser Title
 		//TODO Is this good here?
 		document.title = appInstance.config.data.app.name;
@@ -6714,73 +6736,70 @@
 		_m_currentSapplication = appInstance;
 		this._loadingSapplication = appInstance;	
 
-		var needAttach = false;
-		
-		if(!appInstance.domRef){
-			appInstance.createDomRef();
-			needAttach = true;
-		}
-		else{
-			appInstance.updateDomRef();
-		}
+		//Create or Update App Container
+		appInstance.updateContainer();
 
-		var viewer = this;
-		var $currentRoot = jQuery(previousSapplication ? previousSapplication.domRef : '#ui5strap-app-initial');
-		var $preparedRoot = jQuery(appInstance.domRef);
-		
-		//Remove current app dom after transition
-		var currentRootCallbackI = 0;
-		var currentRootCallback = function(){
-			currentRootCallbackI++
-			if(currentRootCallbackI < 2){
-				return;
-			}
-
-			if(previousSapplication){
-				previousSapplication.hidden(function(){
-					viewer.removeStyle(previousSapplication);
-				});
-			}
-			else{
-				$currentRoot.remove();
-			}
-		};
-
-		//Introduce new app dom
-		var preparedRootCallback = function(){
-			currentRootCallback();
+		var viewer = this,
+			$currentRoot = previousSapplication ? previousSapplication.$() : jQuery('#ui5strap-app-initial'),
 			
-			//Finally trigger the shown process
-			appInstance.shown(function(){
-				callback && callback.call(appInstance);
-			});
-		};
+			//Remove current app dom after transition
+			currentRootCallbackI = 0,
+			currentRootCallback = function(){
+				currentRootCallbackI++
+				if(currentRootCallbackI < 2){
+					return;
+				}
+	
+				if(previousSapplication){
+					//Previous App onHidden
+					previousSapplication.hidden(function(){
+						viewer.removeStyle(previousSapplication);
+					});
+				}
+				else{
+					//Remove Initial View
+					$currentRoot.remove();
+				}
+			},
+	
+			//Introduce new app dom
+			preparedRootCallback = function(){
+				currentRootCallback();
+				
+				//Current App onShown
+				appInstance.shown(function(){
+					//Show App Completed, trigger the Callback
+					callback && callback.call(appInstance);
+				});
+			};
 
 		//Load app css
 		appInstance.includeStyle(function includeStyle_complete(){
 			
-			if(needAttach){
-				viewer._dom.$root[0].appendChild(appInstance.domRef);
-
-				appInstance.registerOverlay();
-
-				appInstance.getRootControl().placeAt(appInstance.contentDomRef);
-			}
+			//Append App to DOM is not yet
+			appInstance.attach(viewer._dom.$root[0]);
 			
 			//<DOM_ATTACH_TIMEOUT>
 			window.setTimeout(function setTimeout_complete(){
 				
-				//Hide previous App if any
+				//Previous App onHide
 				previousSapplication && previousSapplication.hide();
 				
-				//Show the App
+				//Current App onShow
 				appInstance.show(function(){
 					
 					//RAF
 					ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 						
-						//Create new transition
-						var transition = new ui5strap.Transition(transitionName, $currentRoot, $preparedRoot, appInstance.getId());
+						//Create new Transition
+						var transition = new ui5strap.Transition(
+								transitionName || appInstance.config.data.app.transition, 
+								$currentRoot, 
+								appInstance.$(), 
+								appInstance.getId()
+						);
+						
+						//Prepare Transition
 						transition.prepare();
 						
 						//RAF
@@ -6788,7 +6807,7 @@
 							
 							//Hide the loader
 							//viewer.hideLoader(function(){
-								//Execure transition
+								//Execure Transition
 								transition.execute(currentRootCallback, preparedRootCallback);
 							
 								//Set viewer to available
@@ -6807,9 +6826,9 @@
 		});	
 	};
 
-	/*
+	/**
 	* Removes app specific style from the head.
-	* @public
+	* @Public
 	*/
 	ViewerMultiProto.removeStyle = function(appInstance){
 		if(!appInstance.isVisible && 
@@ -6829,6 +6848,7 @@
 	
 	/**
 	 * Sends a message to one or multiple Apps that run within this Viewer instance
+	 * @Public
 	 */
 	ViewerMultiProto.sendMessage = function(appMessage){
 		if(!appMessage 
@@ -6873,17 +6893,17 @@
 	* -------------
 	*/
 
-	/*
+	/**
 	* Shows the overlay layer
-	* @public
+	* @Public
 	*/
 	ViewerMultiProto.showLoader = function(callback){
 		ui5strap.Layer.setVisible('ui5strap-loader', true, callback);
 	};
 
-	/*
+	/**
 	* Shows the overlay layer
-	* @public
+	* @Public
 	*/
 	ViewerMultiProto.hideLoader = function(callback){
 		ui5strap.Layer.setVisible('ui5strap-loader', false, callback);
@@ -6898,16 +6918,16 @@
 	*/
 
 	/**
-	*	Get the console control reference
+	* Get the console control reference
 	* @public
 	*/
 	ViewerMultiProto.getConsole = function(){
 		return this._console;
 	};
 
-	/*
+	/**
 	* Inititalizes the dom cache
-	* @protected
+	* @Protected
 	*/
 	ViewerMultiProto._initDom = function(){
 		var _this = this;
@@ -6924,9 +6944,9 @@
 
 	
 
-	/*
+	/**
 	+ Initializes the console
-	* @protected
+	* @Protected
 	*/
 	ViewerMultiProto._initConsole = function(){
 		if(this.options.enableConsole){
@@ -6935,9 +6955,9 @@
 		}
 	};	
 
-	/*
+	/**
 	* Inititalizes the events
-	* @protected
+	* @Protected
 	*/
 	ViewerMultiProto._initEvents = function(){
 		var _this = this;
