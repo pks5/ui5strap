@@ -48,7 +48,8 @@
 
 			this._pageCache = {};
 			this._events = {};
-
+			
+			this.isAttached = false;
 			this.isRunning = false;
 			this.isVisible = false;
 			this.hasFirstShow = false;
@@ -1057,7 +1058,15 @@
 		return this.config.data.app.id.replace(/\./g, '__') + (subElement ? '---' + subElement : '');
 	};
 
-	AppBaseProto.createDomRef = function(){
+	/**
+	 * @Public
+	 */
+	AppBaseProto.updateContainer = function(){
+		if(this.domRef){
+			this.domRef.className = _createAppClass(this, 'ui5strap-app ui5strap-app-next ui5strap-hidden');
+			return;
+		}
+		
 		var _this = this;
 		
 		//App Container
@@ -1112,8 +1121,16 @@
 		this.contentDomRef = appContent;
 	};
 	
-	AppBaseProto.updateDomRef = function(){
-		this.domRef.className = _createAppClass(this, 'ui5strap-app ui5strap-app-next ui5strap-hidden');
+	/**
+	 * Appends the App to the DOM
+	 */
+	AppBaseProto.attach = function(containerEl){
+		if(!this.isAttached){
+			this.isAttached = true;
+			containerEl.appendChild(this.domRef);
+			this.registerOverlay();
+			this.getRootControl().placeAt(this.contentDomRef);
+		}
 	};
 
 	/*

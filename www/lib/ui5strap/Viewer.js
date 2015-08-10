@@ -462,7 +462,7 @@
 	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_SHOW", sappId);
 		
-		if(null !== this._loadingSapplication){
+		if(this._loadingSapplication){
 			jQuery.sap.log.warning("App '" + this._loadingSapplication + "' is currently loading."); 
 			
 			return;
@@ -470,7 +470,7 @@
 
 		var appInstance = this.getApp(sappId);
 
-		if(null === appInstance){
+		if(!appInstance){
 			throw new Error('Cannot show app "' + sappId + '" - app not loaded.');
 		}
 		
@@ -479,8 +479,8 @@
 			throw new Error('Cannot show a app which is not running.');
 		}
 
-		//If App has no Root Control, return immeadiately
-		if(!appInstance.getRootControl()){
+		//If App has no Root Control, or is already visible, return immeadiately
+		if(!appInstance.getRootControl() || appInstance.isVisible){
 			//this.hideLoader(function(){
 				callback && callback(appInstance);
 			//});
@@ -488,19 +488,6 @@
 			return;
 		}
 		
-		//If App is visible, return immeadiately
-		if(appInstance.isVisible){
-			//this.hideLoader(function(){
-				callback && callback(appInstance);
-			//});
-			
-			return;
-		}
-
-		if(typeof transitionName !== 'string'){
-			transitionName = appInstance.config.data.app.transition;
-		}
-
 		//Set Browser Title
 		//TODO Is this good here?
 		document.title = appInstance.config.data.app.name;
@@ -512,58 +499,46 @@
 		_m_currentSapplication = appInstance;
 		this._loadingSapplication = appInstance;	
 
-		var needAttach = false;
-		
-		if(!appInstance.domRef){
-			appInstance.createDomRef();
-			needAttach = true;
-		}
-		else{
-			appInstance.updateDomRef();
-		}
+		//Create or Update App Container
+		appInstance.updateContainer();
 
-		var viewer = this;
-		var $currentRoot = jQuery(previousSapplication ? previousSapplication.domRef : '#ui5strap-app-initial');
-		var $preparedRoot = jQuery(appInstance.domRef);
-		
-		//Remove current app dom after transition
-		var currentRootCallbackI = 0;
-		var currentRootCallback = function(){
-			currentRootCallbackI++
-			if(currentRootCallbackI < 2){
-				return;
-			}
-
-			if(previousSapplication){
-				previousSapplication.hidden(function(){
-					viewer.removeStyle(previousSapplication);
-				});
-			}
-			else{
-				$currentRoot.remove();
-			}
-		};
-
-		//Introduce new app dom
-		var preparedRootCallback = function(){
-			currentRootCallback();
+		var viewer = this,
+			$currentRoot = jQuery(previousSapplication ? previousSapplication.domRef : '#ui5strap-app-initial'),
+			$preparedRoot = jQuery(appInstance.domRef),
 			
-			//Finally trigger the shown process
-			appInstance.shown(function(){
-				callback && callback.call(appInstance);
-			});
-		};
+			//Remove current app dom after transition
+			currentRootCallbackI = 0,
+			currentRootCallback = function(){
+				currentRootCallbackI++
+				if(currentRootCallbackI < 2){
+					return;
+				}
+	
+				if(previousSapplication){
+					previousSapplication.hidden(function(){
+						viewer.removeStyle(previousSapplication);
+					});
+				}
+				else{
+					$currentRoot.remove();
+				}
+			},
+	
+			//Introduce new app dom
+			preparedRootCallback = function(){
+				currentRootCallback();
+				
+				//Finally trigger the shown process
+				appInstance.shown(function(){
+					callback && callback.call(appInstance);
+				});
+			};
 
 		//Load app css
 		appInstance.includeStyle(function includeStyle_complete(){
 			
-			if(needAttach){
-				viewer._dom.$root[0].appendChild(appInstance.domRef);
-
-				appInstance.registerOverlay();
-
-				appInstance.getRootControl().placeAt(appInstance.contentDomRef);
-			}
+			//Append App to DOM is not yet
+			appInstance.attach(viewer._dom.$root[0]);
 			
 			//<DOM_ATTACH_TIMEOUT>
 			window.setTimeout(function setTimeout_complete(){
@@ -577,8 +552,15 @@
 					//RAF
 					ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 						
-						//Create new transition
-						var transition = new ui5strap.Transition(transitionName, $currentRoot, $preparedRoot, appInstance.getId());
+						//Create new Transition
+						var transition = new ui5strap.Transition(
+								transitionName || appInstance.config.data.app.transition, 
+								$currentRoot, 
+								$preparedRoot, 
+								appInstance.getId()
+						);
+						
+						//Prepare Transition
 						transition.prepare();
 						
 						//RAF
@@ -586,7 +568,7 @@
 							
 							//Hide the loader
 							//viewer.hideLoader(function(){
-								//Execure transition
+								//Execure Transition
 								transition.execute(currentRootCallback, preparedRootCallback);
 							
 								//Set viewer to available

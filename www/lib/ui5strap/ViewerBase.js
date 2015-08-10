@@ -130,41 +130,39 @@
 			transitionName = transitionName || 'transition-slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.options.overlay, true, function(){
-			ui5strap.polyfill.requestAnimationFrame(function RAF1(){
-				if(viewDataOrControl instanceof sap.ui.core.Control){
-					//Control is directly injected into the frame
-					overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
-				}
-				else{ 
-					//viewDataOrControl is a data object
-					if("appId" in viewDataOrControl){
-						var viewApp = _this.getApp(viewDataOrControl.appId);
-						if(null === viewApp){
-							throw new Error('Invalid app: ' + viewDataOrControl.appId);
-						}
-						//View from a app
-						viewApp.includeStyle(function includeStyle_complete(){
-							var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
-								view = viewApp.createView(viewConfig);
-	
-							overlayControl.toPage(view, 'content', transitionName, function(){
-								viewApp.isVisibleInOverlay = true;
-	
-								viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
-									view : view, 
-									viewConfig : viewConfig
-								}));
-								
-								callback && callback();	
-							});
+			if(viewDataOrControl instanceof sap.ui.core.Control){
+				//Control is directly injected into the frame
+				overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
+			}
+			else{ 
+				//viewDataOrControl is a data object
+				if("appId" in viewDataOrControl){
+					var viewApp = _this.getApp(viewDataOrControl.appId);
+					if(null === viewApp){
+						throw new Error('Invalid app: ' + viewDataOrControl.appId);
+					}
+					//View from a app
+					viewApp.includeStyle(function includeStyle_complete(){
+						var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
+							view = viewApp.createView(viewConfig);
+
+						overlayControl.toPage(view, 'content', transitionName, function(){
+							viewApp.isVisibleInOverlay = true;
+
+							viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
+								view : view, 
+								viewConfig : viewConfig
+							}));
+							
+							callback && callback();	
 						});
-					}
-					else{
-						//TODO How should this work here?
-						overlayControl.toPage(viewDataOrControl, 'content', transitionName, callback);
-					}
+					});
 				}
-			});
+				else{
+					//TODO How should this work here?
+					overlayControl.toPage(viewDataOrControl, 'content', transitionName, callback);
+				}
+			}
 		});
 	};
 
