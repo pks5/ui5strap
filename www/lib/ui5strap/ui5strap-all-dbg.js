@@ -38,7 +38,7 @@
 			  _timeMarks[label] = tm;
 		  }
 		  
-		  tm.push([markName, (new Date()).getTime()]);
+		  tm.push([markName, performance ? performance.now() : (new Date()).getTime()]);
 		  
 		  if(tm.length > 1){
 			  var l1 = tm[tm.length-2],
@@ -256,15 +256,14 @@
   *
   * -------
   */
-  ui5strap.polyfill = {
-
-  };
+  ui5strap.polyfill = {};
 
   var _requestAnimFrame = (function(){
       return  window.requestAnimationFrame       ||
               window.webkitRequestAnimationFrame ||
               window.mozRequestAnimationFrame    ||
               function( callback ){
+    	  		//For Browsers that do not support requestAnimationFrame
                 window.setTimeout(callback, 1000 / 30);
               };
   })();
@@ -813,14 +812,9 @@
 			  return;
 		  }
 		
-		  if(null !== this.$current){
-		      this.$current.addClass(transitionClass + ' ' + transitionClass+'-current');
-		  }
-		
-		  if(null !== this.$next){
-		      this.$next.addClass(transitionClass + ' ' + transitionClass+'-next').removeClass('ui5strap-hidden');
-		  }
-    };
+		  this.$current && this.$current.addClass(transitionClass + ' ' + transitionClass+'-current');
+		  this.$next && this.$next.addClass(transitionClass + ' ' + transitionClass+'-next').removeClass('ui5strap-hidden');
+	};
 
     this.execute = function (currentRootCallback, nextRootCallback){
 	      var _this = this;
@@ -5919,17 +5913,16 @@
 		
 
 		if(this.getDomRef()){
-			//ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+			//NavContainer is already attached to DOM
 			targetTransition.$next = _placePage(_this, target, page, true);
 			
 			window.setTimeout(function anon_afterDomTimeout(){
 				_pageChange(_this, targetTransition);	
 			}, domTimeout);
-			//});
 		}
 		else{
+			//NavContainer not attached to DOM yet
 			_pageChangeLater(_this, targetTransition, true);
-			
 		}
 
 		return true;
@@ -5971,7 +5964,6 @@
 			pendingTransitionsLength = _pendingTransitions.length,
 			_this = this;
 		
-		//ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 		for(var i = 0; i < pendingTransitionsLength; i++){
 			var targetTransitions = _this._targetTransitions[_pendingTransitions[i]],
 				targetTransition = targetTransitions[targetTransitions.length - 1];
@@ -5986,10 +5978,11 @@
 			}
 		}
 		
+		//Dom Attach Timeout
 		window.setTimeout(function anon_afterDomTimeout(){
 			_handlePendingTransitions(_this);	
 		}, domTimeout);
-		//});
+		
 	};
 
 }());;/*
@@ -6293,7 +6286,8 @@
 	});
 
 	var ViewerMulti = ui5strap.Viewer,
-		ViewerMultiProto = ViewerMulti.prototype;
+		ViewerMultiProto = ViewerMulti.prototype,
+		domAttachTimeout = 50;
 
 	//Private properties that are linked to the scope of the anonymous self executing function around this module
 	//This prevents other apps from accessing data easily
@@ -6821,7 +6815,7 @@
 					});
 				});
 				
-			}, 50);
+			}, domAttachTimeout);
 			//</DOM_ATTACH_TIMEOUT>
 
 		});	
