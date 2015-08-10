@@ -56,7 +56,8 @@
 	});
 
 	var ViewerMulti = ui5strap.Viewer,
-		ViewerMultiProto = ViewerMulti.prototype;
+		ViewerMultiProto = ViewerMulti.prototype,
+		domAttachTimeout = 50;
 
 	//Private properties that are linked to the scope of the anonymous self executing function around this module
 	//This prevents other apps from accessing data easily
@@ -584,7 +585,7 @@
 					});
 				});
 				
-			}, 50);
+			}, domAttachTimeout);
 			//</DOM_ATTACH_TIMEOUT>
 
 		});	

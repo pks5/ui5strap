@@ -38,7 +38,7 @@
 			  _timeMarks[label] = tm;
 		  }
 		  
-		  tm.push([markName, (new Date()).getTime()]);
+		  tm.push([markName, performance ? performance.now() : (new Date()).getTime()]);
 		  
 		  if(tm.length > 1){
 			  var l1 = tm[tm.length-2],
@@ -256,15 +256,14 @@
   *
   * -------
   */
-  ui5strap.polyfill = {
-
-  };
+  ui5strap.polyfill = {};
 
   var _requestAnimFrame = (function(){
       return  window.requestAnimationFrame       ||
               window.webkitRequestAnimationFrame ||
               window.mozRequestAnimationFrame    ||
               function( callback ){
+    	  		//For Browsers that do not support requestAnimationFrame
                 window.setTimeout(callback, 1000 / 30);
               };
   })();
@@ -813,14 +812,9 @@
 			  return;
 		  }
 		
-		  if(null !== this.$current){
-		      this.$current.addClass(transitionClass + ' ' + transitionClass+'-current');
-		  }
-		
-		  if(null !== this.$next){
-		      this.$next.addClass(transitionClass + ' ' + transitionClass+'-next').removeClass('ui5strap-hidden');
-		  }
-    };
+		  this.$current && this.$current.addClass(transitionClass + ' ' + transitionClass+'-current');
+		  this.$next && this.$next.addClass(transitionClass + ' ' + transitionClass+'-next').removeClass('ui5strap-hidden');
+	};
 
     this.execute = function (currentRootCallback, nextRootCallback){
 	      var _this = this;

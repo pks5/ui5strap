@@ -669,17 +669,16 @@
 		
 
 		if(this.getDomRef()){
-			//ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+			//NavContainer is already attached to DOM
 			targetTransition.$next = _placePage(_this, target, page, true);
 			
 			window.setTimeout(function anon_afterDomTimeout(){
 				_pageChange(_this, targetTransition);	
 			}, domTimeout);
-			//});
 		}
 		else{
+			//NavContainer not attached to DOM yet
 			_pageChangeLater(_this, targetTransition, true);
-			
 		}
 
 		return true;
@@ -721,7 +720,6 @@
 			pendingTransitionsLength = _pendingTransitions.length,
 			_this = this;
 		
-		//ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 		for(var i = 0; i < pendingTransitionsLength; i++){
 			var targetTransitions = _this._targetTransitions[_pendingTransitions[i]],
 				targetTransition = targetTransitions[targetTransitions.length - 1];
@@ -736,10 +734,11 @@
 			}
 		}
 		
+		//Dom Attach Timeout
 		window.setTimeout(function anon_afterDomTimeout(){
 			_handlePendingTransitions(_this);	
 		}, domTimeout);
-		//});
+		
 	};
 
 }());
