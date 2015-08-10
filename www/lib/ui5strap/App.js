@@ -65,9 +65,10 @@
 	* ------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Preload resources e.g. images and json files
-	* @protected
+	* @Private
+	* @Static
 	*/
 	var _preloadViews = function(views, callback){
 		//TODO use Object.keys
@@ -125,6 +126,9 @@
 		} 
 	};
 
+	/**
+	 * @Public
+	 */
 	AppProto.preload = function(callback){
 		var _this = this;
 		ui5strap.AppBase.prototype.preload.call(this, function(){
@@ -136,9 +140,9 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when a view of the app is shown in the global overlay
-	* @public
+	* @Public
 	*/
 	AppProto.onShowInOverlay = function(oEvent){ 
 		this.fireEventAction({ 
@@ -149,9 +153,9 @@
 
 	};
 
-	/*
+	/**
 	* Triggered when a view of the app is hidden from the global overlay
-	* @public
+	* @Public
 	*/
 	AppProto.onHideInOverlay = function(oEvent){
 		this.fireEventAction({ 
@@ -167,9 +171,9 @@
 	* -------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Include the style that is neccessary for this app
-	* @public
+	* @Public
 	*/
 	AppProto.includeStyle = function(callback){
 		var _this = this;
@@ -224,6 +228,9 @@
 		}
 	};
 
+	/**
+	 * @Public
+	 */
 	AppProto.removeStyle = function(){
 		for(var cssKey in this._runtimeData.css){
 			jQuery('link#' + cssKey).remove();
@@ -232,8 +239,9 @@
 		}
 	};
 
-	/*
+	/**
 	* Sets the theme of the app
+	* @Public
 	*/
 	AppProto.setTheme = function(themeName){
 		this._runtimeData.theme = themeName;
@@ -260,7 +268,8 @@
 	*/
 	
 	/**
-	 * @abstract
+	 * @Abstract
+	 * @Public
 	 */
 	AppProto.getRootControl = function(){
 		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');

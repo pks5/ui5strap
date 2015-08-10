@@ -612,6 +612,7 @@
 	
 	/**
 	 * Sends a message to one or multiple Apps that run within this Viewer instance
+	 * @Public
 	 */
 	ViewerMultiProto.sendMessage = function(appMessage){
 		if(!appMessage 
@@ -656,17 +657,17 @@
 	* -------------
 	*/
 
-	/*
+	/**
 	* Shows the overlay layer
-	* @public
+	* @Public
 	*/
 	ViewerMultiProto.showLoader = function(callback){
 		ui5strap.Layer.setVisible('ui5strap-loader', true, callback);
 	};
 
-	/*
+	/**
 	* Shows the overlay layer
-	* @public
+	* @Public
 	*/
 	ViewerMultiProto.hideLoader = function(callback){
 		ui5strap.Layer.setVisible('ui5strap-loader', false, callback);
@@ -681,16 +682,16 @@
 	*/
 
 	/**
-	*	Get the console control reference
+	* Get the console control reference
 	* @public
 	*/
 	ViewerMultiProto.getConsole = function(){
 		return this._console;
 	};
 
-	/*
+	/**
 	* Inititalizes the dom cache
-	* @protected
+	* @Protected
 	*/
 	ViewerMultiProto._initDom = function(){
 		var _this = this;
@@ -707,9 +708,9 @@
 
 	
 
-	/*
+	/**
 	+ Initializes the console
-	* @protected
+	* @Protected
 	*/
 	ViewerMultiProto._initConsole = function(){
 		if(this.options.enableConsole){
@@ -718,9 +719,9 @@
 		}
 	};	
 
-	/*
+	/**
 	* Inititalizes the events
-	* @protected
+	* @Protected
 	*/
 	ViewerMultiProto._initEvents = function(){
 		var _this = this;

@@ -77,7 +77,11 @@
 	});
 
 	var ViewerBaseProto = ui5strap.ViewerBase.prototype;
-
+	
+	/**
+	 * Initialzer
+	 * @Public
+	 */
 	ViewerBaseProto.init = function(){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_INIT");
 		
@@ -86,6 +90,9 @@
 		this._initOverlay();
 	};
 
+	/**
+	 * @Public
+	 */
 	ViewerBaseProto.start = function(callback, loadCallback){
 		throw new Error("Please inherit ui5strap.ViewerBase.prototype.start in your Viewer instance.");
 	};
@@ -96,8 +103,9 @@
 	* ----------------------------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Inititalzes the overlay
+	* @Protected
 	*/
 	ViewerBaseProto._initOverlay = function(){
 		var _this = this;
@@ -112,17 +120,17 @@
 		});
 	};
 
-	/*
+	/**
 	* Returns whether the overlay layer is visible
-	* @public
+	* @Public
 	*/
 	ViewerBaseProto.isOverlayVisible = function(){
 		return ui5strap.Layer.isVisible(this.options.overlay);
 	};
 
-	/*
+	/**
 	* Shows the overlay layer
-	* @public
+	* @Public
 	*/
 	ViewerBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this,
@@ -166,9 +174,9 @@
 		});
 	};
 
-	/*
+	/**
 	* Hides the overlay layer
-	* @public
+	* @Public
 	*/
 	ViewerBaseProto.hideOverlay = function(callback, transitionName){
 		if(!this.isOverlayVisible()){
@@ -203,16 +211,18 @@
 	* ----------------------------------------------------------------------
 	*/
 
-	/*
-	*	Changes the browser URL to an (external) url
+	/**
+	* Changes the browser URL to an (external) url
 	* @param url The URL to browse to
+	* @Public
 	*/
 	ViewerBaseProto.exitViewer =  function(url){
 		window.location.href = url; 
 	};
 
-	/*
+	/**
 	* Request the client's browser to switch to full screen mode
+	* @Public
 	*/  
 	ViewerBaseProto.requestFullscreen =  function(element){
 		if(typeof element === 'undefined'){
@@ -229,5 +239,6 @@
 	  	}
 	};
 
+	//End ViewerBase
 	
 }());
