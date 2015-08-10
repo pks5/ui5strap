@@ -58,29 +58,19 @@
 	var ViewerMulti = ui5strap.Viewer,
 		ViewerMultiProto = ViewerMulti.prototype;
 
-	//----------------- STATIC methods -------------------
-	var _KnownLibraryIssues = {
-		"sap.m" : function(){
-			//This fixes problems with JSON views, when displaying in editor
-			//Since we need Page in any mobile app anyway, this does not harm
-			jQuerySap.require("sap.m.Page");
-		}
-	};
-
-	//----------------- NON-STATIC methods -------------------
-
 	//Private properties that are linked to the scope of the anonymous self executing function around this module
 	//This prevents other apps from accessing data easily
 	//@TODO these properties must be NON-STATIC! Currently they are STATIC.
-	//@static
+	//@Static
 	var _m_currentSapplication = null;
 	var _m_loadedSapplicationsById = {};
 	
 
 
-	/*
+	/**
 	 * Initializes the ViewerMulti instance
 	 * @param viewerConfigUrl Url to viewer configuration file
+	 * @Public
 	 */
 	ViewerMultiProto.init = function(){
 		ui5strap.ViewerBase.prototype.init.call(this);
@@ -92,8 +82,9 @@
 		this._initEvents();
 	};
 
-	/*
+	/**
 	* Executes a app by given sapp-url from a get parameter
+	* @Public
 	*/
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_START");
@@ -130,18 +121,23 @@
 	/**
 	* Get the current (in foreground) running app
 	* TODO make static?
+	* @Public
 	*/
 	ViewerMultiProto.getApp = function(appId){
 		return appId ? _m_loadedSapplicationsById[appId] : _m_currentSapplication;
 	};
 
+	/**
+	 * @Public
+	 */
 	ViewerMultiProto.getLoadedApps = function(){
 		return _m_loadedSapplicationsById;
 	};
 
-	/*
+	/**
 	*	Replaces the current browser content and opens a app defined in viewer config
 	* @param sappId Sapplication ID
+	* TODO Remove?
 	*/
 	ViewerMultiProto.openSapplication = function(appUrl){
 		var currentUrl = [location.protocol, '//', location.host, location.pathname].join('');
@@ -150,8 +146,9 @@
 		this.exitViewer(appUrl);
 	};
 	
-	/*
+	/**
 	* Loads the configuration from an URL. URL must point to a JSON file.
+	* @Private
 	*/
 	var _loadAppConfig = function(_this, configUrl, callback){
 		jQuery.ajax({
@@ -173,8 +170,9 @@
 		});
 	};
 
-	/*
+	/**
 	* Load, start and show an App. The appUrl must point to a valid app.json file.
+	* @Public
 	*/
 	ViewerMultiProto.executeApp = function(appDefinition, doNotShow, callback, loadCallback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_EXEC", appDefinition.url);
@@ -274,7 +272,10 @@
 			throw new Error("Cannot execute App: Invalid Type!");
 		}
 	};
-
+	
+	/**
+	 * @Private
+	 */
 	var _preloadLibraries = function(_this, libs, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "PRELOAD_LIBS");
 		
@@ -299,12 +300,6 @@
 			jQuerySap.registerModulePath(libPackage, libLocation);
 			_this._loadedLibraries[libPackage] = libLocation;
 
-			if(libPackage in _KnownLibraryIssues){
-				//Fix function for library
-				_KnownLibraryIssues[libPackage].call(this);
-				jQuery.sap.log.debug("[VIEWER] Fix for library '" + libPackage + "' loaded.");
-			}
-
 			if(lib.preload){
 				//Preload Controls an Elements
 				var preloadLibs = [libPackage + '.library'],
@@ -325,9 +320,10 @@
 		}
 	};
 
-	/*
+	/**
 	* Creates a app instance
 	* @param appConfig SappConfig instance
+	* @Public
 	*/
 	ViewerMultiProto.createApp = function(appConfig, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_CREATE");
@@ -360,8 +356,9 @@
 		});
 	};
 	
-	/*
+	/**
 	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
+	* @Public
 	*/
 	ViewerMultiProto.loadApp = function(configDataJSON, parameters, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_LOAD", configDataJSON.app.name);
@@ -392,8 +389,9 @@
 		});
 	};
 
-	/*
+	/**
 	* Unloads an app
+	* @Public
 	*/
 	ViewerMultiProto.unloadApp = function(sappId){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_UNLOAD", sappId);
@@ -415,8 +413,9 @@
 		return appInstance;
 	};
 
-	/*
+	/**
 	* Starts a previously loaded app.
+	* @Public
 	*/
 	ViewerMultiProto.startApp = function(sappId, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_START", sappId);
@@ -436,8 +435,9 @@
 		return appInstance;
 	};
 
-	/*
+	/**
 	* Stops a previously started app.
+	* @Public
 	*/
 	ViewerMultiProto.stopApp = function(sappId){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_STOP", sappId);
@@ -456,8 +456,9 @@
 		return appInstance;
 	};
 
-	/*
+	/**
 	* Shows a previously started app, means bringing the app to foreground.
+	* @Public
 	*/
 	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
 		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_SHOW", sappId);
@@ -503,8 +504,7 @@
 		appInstance.updateContainer();
 
 		var viewer = this,
-			$currentRoot = jQuery(previousSapplication ? previousSapplication.domRef : '#ui5strap-app-initial'),
-			$preparedRoot = jQuery(appInstance.domRef),
+			$currentRoot = previousSapplication ? previousSapplication.$() : jQuery('#ui5strap-app-initial'),
 			
 			//Remove current app dom after transition
 			currentRootCallbackI = 0,
@@ -515,11 +515,13 @@
 				}
 	
 				if(previousSapplication){
+					//Previous App onHidden
 					previousSapplication.hidden(function(){
 						viewer.removeStyle(previousSapplication);
 					});
 				}
 				else{
+					//Remove Initial View
 					$currentRoot.remove();
 				}
 			},
@@ -528,8 +530,9 @@
 			preparedRootCallback = function(){
 				currentRootCallback();
 				
-				//Finally trigger the shown process
+				//Current App onShown
 				appInstance.shown(function(){
+					//Show App Completed, trigger the Callback
 					callback && callback.call(appInstance);
 				});
 			};
@@ -543,10 +546,10 @@
 			//<DOM_ATTACH_TIMEOUT>
 			window.setTimeout(function setTimeout_complete(){
 				
-				//Hide previous App if any
+				//Previous App onHide
 				previousSapplication && previousSapplication.hide();
 				
-				//Show the App
+				//Current App onShow
 				appInstance.show(function(){
 					
 					//RAF
@@ -556,7 +559,7 @@
 						var transition = new ui5strap.Transition(
 								transitionName || appInstance.config.data.app.transition, 
 								$currentRoot, 
-								$preparedRoot, 
+								appInstance.$(), 
 								appInstance.getId()
 						);
 						
@@ -587,9 +590,9 @@
 		});	
 	};
 
-	/*
+	/**
 	* Removes app specific style from the head.
-	* @public
+	* @Public
 	*/
 	ViewerMultiProto.removeStyle = function(appInstance){
 		if(!appInstance.isVisible && 
