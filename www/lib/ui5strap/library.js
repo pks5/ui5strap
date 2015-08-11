@@ -38,7 +38,12 @@
 			  _timeMarks[label] = tm;
 		  }
 		  
-		  tm.push([markName, performance ? performance.now() : (new Date()).getTime()]);
+		  if(performance){
+			  tm.push([markName, performance.now()]);
+		  }
+		  else{
+			  tm.push([markName, (new Date()).getTime()]);
+		  }
 		  
 		  if(tm.length > 1){
 			  var l1 = tm[tm.length-2],
