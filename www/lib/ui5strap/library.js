@@ -38,7 +38,7 @@
 			  _timeMarks[label] = tm;
 		  }
 		  
-		  if(performance){
+		  if(window.performance){
 			  tm.push([markName, performance.now()]);
 		  }
 		  else{
