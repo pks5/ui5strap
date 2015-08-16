@@ -5306,7 +5306,7 @@
 
 	var NavContainerBase = ui5strap.NavContainer,
 		NavContainerBaseProto = NavContainerBase.prototype,
-		domTimeout = 50;
+		domAttachTimeout = 50;
 
 	/*
 	*
@@ -5359,29 +5359,16 @@
 				changeTransitionName = null;
 			}
 			
-			var target = pageChange.target,
-				transition = new ui5strap.Transition(
+			var transition = new ui5strap.Transition(
 					changeTransitionName, 
 					pageChange.$current, 
 					pageChange.$next, 
-					'nc-' + _this.ncType + '-' + target
+					'nc-' + _this.ncType + '-' + pageChange.target
 				);
 				
 			pageChange.transition = transition;
 
 			transition.prepare();
-			
-			if(pageChange.currentPage){
-				_triggerControllerEvent(_this, target, pageChange.currentPage, 'pageHide', {
-					newPage : pageChange.page
-				});
-			}
-
-			if(pageChange.page){
-				_triggerControllerEvent(_this, target, pageChange.page, 'pageShow', {
-					oldPage : pageChange.currentPage
-				});
-			}
 			
 			return true;
 		}
@@ -5427,6 +5414,18 @@
 	var _executeTransition = function(_this, pageChange, transList){
 		//ui5strap.tm("APP", "NC", "EXEC_TRANS");
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
+		
+		if(pageChange.currentPage){
+			_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHide', {
+				newPage : pageChange.page
+			});
+		}
+
+		if(pageChange.page){
+			_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShow', {
+				oldPage : pageChange.currentPage
+			});
+		}
 		
 		pageChange.transition.execute(
 			function anon_transitionCurrentComplete(){
@@ -5944,7 +5943,7 @@
 			
 			window.setTimeout(function anon_afterDomTimeout(){
 				_pageChange(_this, targetTransition);	
-			}, domTimeout);
+			}, domAttachTimeout);
 		}
 		else{
 			//NavContainer not attached to DOM yet
@@ -6007,7 +6006,7 @@
 		//Dom Attach Timeout
 		window.setTimeout(function anon_afterDomTimeout(){
 			_handlePendingTransitions(_this);	
-		}, domTimeout);
+		}, domAttachTimeout);
 		
 	};
 
