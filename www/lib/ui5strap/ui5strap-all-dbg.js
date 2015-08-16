@@ -206,7 +206,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.8"
+        	version: "0.9.9"
       }
   );
   
@@ -807,6 +807,9 @@
         transitionTimeout = ui5strap.options.transitionTimeout,
         transitionEndEvent = ui5strap.support.transitionEndEvent;
     
+    /**
+     * Should always be surrounded by a RAF.
+     */
     this.prepare = function (){
 		  if(this._prepared || this._executed){
 			  throw new Error('Cannot prepare transition: already prepared or executed!');
@@ -820,7 +823,10 @@
 		  this.$current && this.$current.addClass(transitionClass + ' ' + transitionClass+'-current');
 		  this.$next && this.$next.addClass(transitionClass + ' ' + transitionClass+'-next').removeClass('ui5strap-hidden');
 	};
-
+	
+	/**
+	 * Should always be surrounded by a RAF.
+	 */
     this.execute = function (currentRootCallback, nextRootCallback){
 	      var _this = this;
 	
@@ -884,6 +890,8 @@
 	      }
 	      else{ 
 		        jQuery.sap.log.debug('[TRANSITION#' + transitionId + '] No Transition.');
+		        
+		        //TODO is it needed to remove ui5strap-hidden class here and make a RAF?
 		        this.$next && this.$next.removeClass('ui5strap-hidden');
 		
 		        ui5strap.polyfill.requestAnimationFrame(function(){
@@ -5329,10 +5337,11 @@
 	};
 
 	/**
+	 * Should always be surrounded by a RAF.
 	* @Private
 	*/
 	var _prepareTransition = function(_this, pageChange){
-		ui5strap.tm("APP", "NC", "PREP_TRANS");
+		//ui5strap.tm("APP", "NC", "PREP_TRANS");
 		
 		if(pageChange.transition){
 			//There is already a Transition defined
@@ -5350,17 +5359,30 @@
 				changeTransitionName = null;
 			}
 			
-			var transition = new ui5strap.Transition(
+			var target = pageChange.target,
+				transition = new ui5strap.Transition(
 					changeTransitionName, 
 					pageChange.$current, 
 					pageChange.$next, 
-					'nc-' + _this.ncType + '-' + pageChange.target
+					'nc-' + _this.ncType + '-' + target
 				);
 				
 			pageChange.transition = transition;
 
 			transition.prepare();
+			
+			if(pageChange.currentPage){
+				_triggerControllerEvent(_this, target, pageChange.currentPage, 'pageHide', {
+					newPage : pageChange.page
+				});
+			}
 
+			if(pageChange.page){
+				_triggerControllerEvent(_this, target, pageChange.page, 'pageShow', {
+					oldPage : pageChange.currentPage
+				});
+			}
+			
 			return true;
 		}
 	};
@@ -5373,7 +5395,7 @@
 	*/
 
 	var _transitionCallback = function(_this, pageChange, transList){
-		ui5strap.tm("APP", "NC", "TRANS_CB");
+		//ui5strap.tm("APP", "NC", "TRANS_CB");
 		
 		transList.callI --;
 		
@@ -5399,10 +5421,11 @@
 	};
 
 	/**
+	 * Should always be surrounded by a RAF.
 	* @Private
 	*/
 	var _executeTransition = function(_this, pageChange, transList){
-		ui5strap.tm("APP", "NC", "EXEC_TRANS");
+		//ui5strap.tm("APP", "NC", "EXEC_TRANS");
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
 		pageChange.transition.execute(
@@ -5438,10 +5461,11 @@
 	};
 
 	/**
+	* Should always be surrounded by a RAF 
 	* @Private
 	*/
 	var _executePendingTransitions = function(_this){
-		ui5strap.tm("APP", "NC", "EXEC_PEND_TRANS");
+		//ui5strap.tm("APP", "NC", "EXEC_PEND_TRANS");
 		
 		var pendingTransitionsLength = _this._pendingTransitions.length,
 			transList = {
@@ -5461,14 +5485,16 @@
 			_executeTransition(_this, pageChanges[pageChanges.length-1], transList);
 		}
 		
-		
+		_this._pendingTransitions = [];
+		_this._targetTransitions = {};
 	};
 
 	/**
+	 * Should always be surrounded by a RAF.
 	* @Private
 	*/
 	var _preparePendingTransitions = function(_this){
-		ui5strap.tm("APP", "NC", "PREP_PEND_TRANS");
+		//ui5strap.tm("APP", "NC", "PREP_PEND_TRANS");
 		
 		var pendingTransitionsLength = _this._pendingTransitions.length,
 			successAll = true;
@@ -5486,16 +5512,16 @@
 	* @Private
 	*/
 	var _handlePendingTransitions = function(_this){
-		ui5strap.tm("APP", "NC", "HANDLE_PEND_TRANS");
+		//ui5strap.tm("APP", "NC", "HANDLE_PEND_TRANS");
 		
 		if(0 === _this._pendingTransitions.length){
-			//jQuery.sap.log.debug(" - [NC] NO PENDING TRANSITIONS");
-
+			
+			//No pending transitions, so return.
 			return;
+		
 		}
 		
-		//jQuery.sap.log.debug(" + [NC] HANDLE PENDING TRANSITIONS");
-
+		//RAF start
 		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 
 			if(!_preparePendingTransitions(_this)){
@@ -5506,44 +5532,49 @@
 			
 			ui5strap.polyfill.requestAnimationFrame(function RAF2(){
 				_executePendingTransitions(_this);
-
-				_this._pendingTransitions = [];
-				_this._targetTransitions = {};
 			});
 		
 		});
+		//RAF end
 	};
 
 	/**
 	* @Private
 	*/
 	var _pageChange = function(_this, pageChange){
-		ui5strap.tm("APP", "NC", "PAGE_CHANGE");
+		//ui5strap.tm("APP", "NC", "PAGE_CHANGE");
 		
-		//jQuery.sap.log.debug(' + [NC] T1 {' + pageChange.target + '}');
+		var transList = {
+			callI : 1,
+			callbacks : []
+		};
+		
+		if(pageChange.callback){
+			transList.callbacks.push(pageChange.callback);
+		}
+		
+		//RAF start
 		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+			
+			//Prepare Transition before next repaint
 			_prepareTransition(_this, pageChange);
 			
 			ui5strap.polyfill.requestAnimationFrame(function RAF2(){
-				var transList = {
-					callI : 1,
-					callbacks : []
-				};
-				if(pageChange.callback){
-					transList.callbacks.push(pageChange.callback);
-				}
+				
+				//Execute Transition before next repaint
 				_executeTransition(_this, pageChange, transList);
 			
 			});
 		
 		});
+		//RAF end
 	};
 	
 	/**
 	 * @Private
 	 */
 	var _pageChangeLater = function(_this, pageChange, override){
-		ui5strap.tm("APP", "NC", "PAGE_CHANGE_LATER");
+		//ui5strap.tm("APP", "NC", "PAGE_CHANGE_LATER");
 		
 		var target = pageChange.target;
 		if(-1 === jQuery.inArray(target, _this._pendingTransitions)){ 
@@ -5583,7 +5614,7 @@
 	* @Private
 	*/
 	var _placePage = function(_this, target, page, isPrepared){
-			ui5strap.tm("APP", "NC", "PLACE_PAGE");
+			//ui5strap.tm("APP", "NC", "PLACE_PAGE");
 		
 			if(page && page.getDomRef()){
 				return page.$().parent();
@@ -5636,7 +5667,7 @@
 	* @PostConstruct
 	*/
 	NavContainerBaseProto.init = function(){
-		ui5strap.tm("APP", "NC", "INIT");
+		//ui5strap.tm("APP", "NC", "INIT");
 		
 		this._pendingTransitions = [];
 		
@@ -5655,7 +5686,7 @@
 	* @Protected
 	*/
 	NavContainerBaseProto._initNavContainer = function(){
-		ui5strap.tm("APP", "NC", "INIT_NC");
+		//ui5strap.tm("APP", "NC", "INIT_NC");
 		
 		//NavContainer type string
 		//Resulting css class is "navcontainer navcontainer-default"
@@ -5862,7 +5893,7 @@
 	* @Public
 	*/
 	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
-		ui5strap.tm("APP", "NC", "TO_PAGE");
+		//ui5strap.tm("APP", "NC", "TO_PAGE");
 		
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
@@ -5881,19 +5912,9 @@
 			return false;
 		}
 
-		if(currentPage){
-			_triggerControllerEvent(this, target, currentPage, 'pageHide', {
-				newPage : page
-			});
-		}
-
 		this.targets[target] = page;
-			
-		if(page){
-			_triggerControllerEvent(this, target, page, 'pageShow', {
-				oldPage : currentPage
-			});
-		}
+		
+		
 
 		var changeName = '{' + target + '} '
 							+ (null === currentPage ? 'None' : '#' + currentPage.getId()) 
@@ -5938,7 +5959,7 @@
 	* @Public
 	*/
 	NavContainerBaseProto.onBeforeRendering = function(){
-		ui5strap.tm("APP", "NC", "BEFORE_RENDERING");
+		//ui5strap.tm("APP", "NC", "BEFORE_RENDERING");
 
 		for(var target in this.targets){
 			var currentPage = this.targets[target];
@@ -5963,7 +5984,7 @@
 	* @Public
 	*/
 	NavContainerBaseProto.onAfterRendering = function(){ 
-		ui5strap.tm("APP", "NC", "AFTER_RENDERING");
+		//ui5strap.tm("APP", "NC", "AFTER_RENDERING");
 		
 		var _pendingTransitions = this._pendingTransitions,
 			pendingTransitionsLength = _pendingTransitions.length,
@@ -6779,6 +6800,14 @@
 			//Append App to DOM is not yet
 			appInstance.attach(viewer._dom.$root[0]);
 			
+			//Create new Transition
+			var transition = new ui5strap.Transition(
+					transitionName || appInstance.config.data.app.transition, 
+					$currentRoot, 
+					appInstance.$(), 
+					appInstance.getId()
+			);
+			
 			//<DOM_ATTACH_TIMEOUT>
 			window.setTimeout(function setTimeout_complete(){
 				
@@ -6788,16 +6817,8 @@
 				//Current App onShow
 				appInstance.show(function(){
 					
-					//RAF
+					//RAF start
 					ui5strap.polyfill.requestAnimationFrame(function RAF1(){
-						
-						//Create new Transition
-						var transition = new ui5strap.Transition(
-								transitionName || appInstance.config.data.app.transition, 
-								$currentRoot, 
-								appInstance.$(), 
-								appInstance.getId()
-						);
 						
 						//Prepare Transition
 						transition.prepare();
@@ -6814,10 +6835,10 @@
 								viewer._loadingSapplication = null;
 							//});
 							
-							
 						});
 
 					});
+					//RAF end
 				});
 				
 			}, domAttachTimeout);

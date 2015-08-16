@@ -206,7 +206,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.8"
+        	version: "0.9.9"
       }
   );
   
@@ -807,6 +807,9 @@
         transitionTimeout = ui5strap.options.transitionTimeout,
         transitionEndEvent = ui5strap.support.transitionEndEvent;
     
+    /**
+     * Should always be surrounded by a RAF.
+     */
     this.prepare = function (){
 		  if(this._prepared || this._executed){
 			  throw new Error('Cannot prepare transition: already prepared or executed!');
@@ -820,7 +823,10 @@
 		  this.$current && this.$current.addClass(transitionClass + ' ' + transitionClass+'-current');
 		  this.$next && this.$next.addClass(transitionClass + ' ' + transitionClass+'-next').removeClass('ui5strap-hidden');
 	};
-
+	
+	/**
+	 * Should always be surrounded by a RAF.
+	 */
     this.execute = function (currentRootCallback, nextRootCallback){
 	      var _this = this;
 	
@@ -884,6 +890,8 @@
 	      }
 	      else{ 
 		        jQuery.sap.log.debug('[TRANSITION#' + transitionId + '] No Transition.');
+		        
+		        //TODO is it needed to remove ui5strap-hidden class here and make a RAF?
 		        this.$next && this.$next.removeClass('ui5strap-hidden');
 		
 		        ui5strap.polyfill.requestAnimationFrame(function(){

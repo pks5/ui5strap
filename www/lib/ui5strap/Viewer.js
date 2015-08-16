@@ -544,6 +544,14 @@
 			//Append App to DOM is not yet
 			appInstance.attach(viewer._dom.$root[0]);
 			
+			//Create new Transition
+			var transition = new ui5strap.Transition(
+					transitionName || appInstance.config.data.app.transition, 
+					$currentRoot, 
+					appInstance.$(), 
+					appInstance.getId()
+			);
+			
 			//<DOM_ATTACH_TIMEOUT>
 			window.setTimeout(function setTimeout_complete(){
 				
@@ -553,16 +561,8 @@
 				//Current App onShow
 				appInstance.show(function(){
 					
-					//RAF
+					//RAF start
 					ui5strap.polyfill.requestAnimationFrame(function RAF1(){
-						
-						//Create new Transition
-						var transition = new ui5strap.Transition(
-								transitionName || appInstance.config.data.app.transition, 
-								$currentRoot, 
-								appInstance.$(), 
-								appInstance.getId()
-						);
 						
 						//Prepare Transition
 						transition.prepare();
@@ -579,10 +579,10 @@
 								viewer._loadingSapplication = null;
 							//});
 							
-							
 						});
 
 					});
+					//RAF end
 				});
 				
 			}, domAttachTimeout);
