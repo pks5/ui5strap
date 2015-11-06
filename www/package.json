@@ -11,8 +11,6 @@
     "height": 768,
     "min_width": 320,
     "min_height": 640
-  },
-  "devDependencies": {
-    "node-webkit-builder": "~1.0.11"
   }
+  
 }

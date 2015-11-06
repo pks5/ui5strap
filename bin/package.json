@@ -1,0 +1,13 @@
+{
+  "name": "ui5strapcp",
+  "version": "0.0.1",
+  "scripts": {
+    "runweb": "http-server -a localhost -p 8282 ../www",
+    "rundesktop": "nwbuild -r ../www",
+    "runandroid": "cordova emulate android"
+  },
+  "devDependencies": {
+    "nw-builder": "~2.0.2",
+    "http-server": "~0.8.5"
+  }
+}

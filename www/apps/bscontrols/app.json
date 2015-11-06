@@ -61,10 +61,10 @@
             
         },
 
-        "frames" : {
-            "default" : {
-                
-                "module" : "ui5strap.AppFrame",
+        "components" : [
+        	{
+            	"id" : "myframe",
+            	"module" : "ui5strap.AppFrame",
                 
                 "navContainer" : "ui5strap.NavContainer",
                 
@@ -75,5 +75,5 @@
                 ]
 
             }
-        }
+        ]
 }
