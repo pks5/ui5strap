@@ -338,7 +338,7 @@ module.exports = function (grunt) {
       },
       ui5ThemeBaseCssLibraryFontsFA: {
         expand : true,
-        cwd : '../font-awesome-4.4.0/fonts/',
+        cwd : '<%= pkg.ui5strap.fontAwesomeFontDir %>',
         src : ['*'],
         dest : '<%= pkg.ui5strap.themeBaseDir %>fonts/'
       },
@@ -360,7 +360,7 @@ module.exports = function (grunt) {
       },
       ui5ThemeUi5strapDefaultCssLibraryFontsFA: {
         expand : true,
-        cwd : '../font-awesome-4.3.0/fonts/',
+        cwd : '<%= pkg.ui5strap.fontAwesomeFontDir %>',
         src : ['*'],
         dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.defaultTheme %>/fonts/'
       },
@@ -379,7 +379,7 @@ module.exports = function (grunt) {
       },
       ui5ThemeUi5strapDefaultCssLibrarySAPFontsFA: {
         expand : true,
-        cwd : '../font-awesome-4.3.0/fonts/',
+        cwd : '<%= pkg.ui5strap.fontAwesomeFontDir %>',
         src : ['*'],
         dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>fonts/'
       },
@@ -425,7 +425,7 @@ module.exports = function (grunt) {
       },
       ui5ThemeUi5strapMyThemeCssLibraryFontsFA: {
         expand : true,
-        cwd : '../font-awesome-4.3.0/fonts/',
+        cwd : '<%= pkg.ui5strap.fontAwesomeFontDir %>',
         src : ['*'],
         dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.myTheme %>/fonts/'
       },
