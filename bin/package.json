@@ -4,7 +4,7 @@
   "scripts": {
     "run-web": "http-server -a localhost -p 8282 ../www",
     "run-desktop": "nwbuild -r ../www -v0.12.3",
-    "run-android": "cordova emulate android"
+    "run-android": "cd .. && cordova emulate android"
   },
   "devDependencies": {
     "cordova": "^5.4.0",

@@ -38,7 +38,7 @@
 			  _timeMarks[label] = tm;
 		  }
 		  
-		  if(window.performance){
+		  if(window.performance && performance.now){
 			  tm.push([markName, performance.now()]);
 		  }
 		  else{
@@ -206,7 +206,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.10"
+        	version: "0.9.11"
       }
   );
   

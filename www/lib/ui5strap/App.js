@@ -176,37 +176,33 @@
 	* @Public
 	*/
 	AppProto.includeStyle = function(callback){
-		var _this = this;
-		var configData = this.config.data;
+		var _this = this,
+			configData = this.config.data,
+			cssKeys = Object.keys(configData.css),
+			callbackCount = cssKeys.length;
+
 		if(configData.app.theme){ 
 			this.setTheme(configData.app.theme);
 		}
 		
-		var cssKeys = Object.keys(configData.css);
-		var callbackCount = cssKeys.length;
-
 		if(callbackCount === 0){
 			callback && callback.call(this);
 
 			return;
 		}
 
-		
-		var error = function(e){
-			alert('Could not load style!');
-			throw e;
-		};
+		var callbackI = 0,
+			success = function(){
+				callbackI++;
+				if(callbackI === callbackCount){
+					callback && callback.call(_this);
+				}
+			},
+			error = function(e){
+				alert('Could not load style!');
+				throw e;
+			};
 
-		var callbackI = 0;
-
-		var success = function(){
-			callbackI++;
-			if(callbackI === callbackCount){
-				callback && callback.call(_this);
-			}
-		};
-
-		var loadStyles = [];
 		for(var i = 0; i < callbackCount; i++){
 			var cssKey = cssKeys[i],
 				cssPath = this.config.resolvePath(configData.css[cssKey]);
@@ -217,8 +213,13 @@
 				this.log.debug('LOADING CSS "' + cssPath + '"');
 					
 				this._runtimeData.css[cssKey] = cssPath;
-			//	loadStyles.push(cssPath);
-				jQuery.sap.includeStyleSheet(cssPath, cssKey, success, error);
+				
+				jQuery.sap.includeStyleSheet(
+						cssPath, 
+						cssKey, 
+						success, 
+						error
+				);
 			}
 			
 			else{

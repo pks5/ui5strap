@@ -541,6 +541,8 @@
 		//Load app css
 		appInstance.includeStyle(function includeStyle_complete(){
 			
+			jQuery.sap.log.debug("Attaching root to DOM...");
+			
 			//Append App to DOM is not yet
 			appInstance.attach(viewer._dom.$root[0]);
 			
