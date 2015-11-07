@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "scripts": {
     "runweb": "http-server -a localhost -p 8282 ../www",
-    "rundesktop": "nwbuild -r ../www",
+    "rundesktop": "nwbuild -r ../www -v0.12.3",
     "runandroid": "cordova emulate android"
   },
   "devDependencies": {
-    "nw-builder": "~2.0.2",
-    "http-server": "~0.8.5"
+    "http-server": "~0.8.5",
+    "nw-builder": "^2.0.2"
   }
 }

@@ -25,6 +25,6 @@ THIRD PARTY COMPONENTS
 
 OpenUi5 1.32.5 (Apache 2 License)
 
-Bootstrap 3.3.4 (MIT License)
+Bootstrap 3.3.5 (MIT License)
 
-Font Awesome 4.3.0 (SIL OFL 1.1 / MIT License)
+Font Awesome 4.4.0 (SIL OFL 1.1 / MIT License)

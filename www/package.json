@@ -5,12 +5,11 @@
   "chromium-args": "--touch-events=enabled",
   "window": {
     "frame": true,
-    "toolbar": false,
-    "icon": "app/img/my-app-icon-256x256.jpg",
+    "toolbar": true,
+    "icon": "apps/myapp/img/my-app-icon-256x256.jpg",
     "width": 1024,
     "height": 768,
     "min_width": 320,
     "min_height": 640
   }
-  
 }
