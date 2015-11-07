@@ -17,9 +17,7 @@
     "test": "grunt test",
     "build-theme-base" : "grunt build-theme-base",
     "build-theme-custom" : "grunt build-theme-custom",
-    "build-theme-custom-sap" : "grunt build-theme-custom-sap",
-    
-    "build-theme-custom-my" : "grunt build-theme-custom --ui5strap-theme=ui5strap_theme_my"
+    "build-theme-custom-sap" : "grunt build-theme-custom-sap"
   },
   "style": "dist/css/bootstrap.css",
   "less": "less/bootstrap.less",
