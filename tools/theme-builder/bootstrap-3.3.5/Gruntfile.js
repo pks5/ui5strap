@@ -391,9 +391,8 @@ module.exports = function (grunt) {
       //Copy custom images
       ui5ThemeCustomCssLibraryImagesCustom: {
         expand: true,
-        cwd : '<%= pkg.ui5strap.templatesFolder %><%= themeName %>/img/',
-        src : ['*'],
-        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/img/'
+        src : '<%= pkg.ui5strap.templatesFolder %><%= themeName %>/img/*',
+        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/'
       },
       
       //SAP
