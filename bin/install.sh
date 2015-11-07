@@ -1,5 +1,9 @@
 #!/bin/bash
 
+curDir=$(pwd)
+
+echo Welcome to Ui5Strap installation.
+
 echo Installing node modules for bin...
 
 cd "$(dirname "$0")"
@@ -12,6 +16,8 @@ cd ../tools/theme-builder/bootstrap-3.3.5
 
 npm install
 
-cd $PWD
+cd $curDir
 
-echo Ui5Strap installation finished.
+echo Installation finished.
+
+read -p "Press any key to continue ..."
