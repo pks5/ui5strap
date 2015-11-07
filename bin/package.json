@@ -2,11 +2,12 @@
   "name": "ui5strapcp",
   "version": "0.0.1",
   "scripts": {
-    "runweb": "http-server -a localhost -p 8282 ../www",
-    "rundesktop": "nwbuild -r ../www -v0.12.3",
-    "runandroid": "cordova emulate android"
+    "run-web": "http-server -a localhost -p 8282 ../www",
+    "run-desktop": "nwbuild -r ../www -v0.12.3",
+    "run-android": "cordova emulate android"
   },
   "devDependencies": {
+    "cordova": "^5.4.0",
     "http-server": "~0.8.5",
     "nw-builder": "^2.0.2"
   }
