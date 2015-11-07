@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 	  
-	  ui5strapLib : "../../www/lib/ui5strap/",
+	  ui5strapLib : "../www/lib/ui5strap/",
 	  
     concat: {
       options: {
