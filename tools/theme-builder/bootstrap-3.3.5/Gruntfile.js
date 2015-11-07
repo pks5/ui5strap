@@ -35,6 +35,8 @@ module.exports = function (grunt) {
       arr[i] = path.join('./docs/assets', val);
     });
   });
+  
+  var themeName = grunt.option('ui5strap-theme') || 'ui5strap_default';
 
   // Project configuration.
   grunt.initConfig({
@@ -46,6 +48,7 @@ module.exports = function (grunt) {
             ' * Copyright 2011-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
             ' * Licensed under the <%= pkg.license %> license\n' +
             ' */\n',
+    themeName : themeName,
     jqueryCheck: configBridge.config.jqueryCheck.join('\n'),
     jqueryVersionCheck: configBridge.config.jqueryVersionCheck.join('\n'),
 
@@ -166,7 +169,11 @@ module.exports = function (grunt) {
         dest: 'dist/css/<%= pkg.name %>.css'
       },
       
-      
+      /* 
+      *-----------------------------
+      * START Ui5strap Theme Compile
+      *-----------------------------
+      */
       compileThemeBase: {
         options: {
           strictMath: true,
@@ -178,7 +185,7 @@ module.exports = function (grunt) {
         src: '../templates/base/base.less',
         dest: 'dist/css/<%= pkg.name %>.css'
       },
-      compileThemeUi5strapDefault: {
+      compileThemeCustom: {
         options: {
           strictMath: true,
           sourceMap: true,
@@ -186,21 +193,14 @@ module.exports = function (grunt) {
           sourceMapURL: '<%= pkg.name %>.css.map',
           sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
         },
-        src: '../templates/ui5strap_default/ui5strap_default.less',
+        src: '../templates/<%= themeName %>/<%= themeName %>.less',
         dest: 'dist/css/<%= pkg.name %>.css'
       },
-      compileThemeUi5strapMyTheme: {
-        options: {
-          strictMath: true,
-          sourceMap: true,
-          outputSourceFiles: true,
-          sourceMapURL: '<%= pkg.name %>.css.map',
-          sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
-        },
-        src: '../templates/<%= pkg.ui5strap.myTheme %>/<%= pkg.ui5strap.myTheme %>.less',
-        dest: 'dist/css/<%= pkg.name %>.css'
-      },
-      
+      /* 
+       *-----------------------------
+       * END Ui5strap Theme Compile
+       *-----------------------------
+       */
       
       compileTheme: {
         options: {
@@ -325,116 +325,121 @@ module.exports = function (grunt) {
       },
       
            
-
-
+      /*
+      * ------------------------- 
+      * START Ui5strap Theme Copy
+      * -------------------------
+      */
+      
+      //Base Theme
+      //Copy minified bootstrap css nach base library.css
       ui5ThemeBaseCssLibrary: {
         src : 'dist/css/<%= pkg.name %>.min.css',
         dest : '<%= pkg.ui5strap.themeBaseDir %>library.css'
       },
+      //Copy unminified bootstrap css nacch base library-dbg.css
+      ui5ThemeBaseCssLibraryDebug: {
+        src : 'dist/css/<%= pkg.name %>.css',
+        dest : '<%= pkg.ui5strap.themeBaseDir %>library-dbg.css'
+      },
+      //Copy bootstrap fonts
       ui5ThemeBaseCssLibraryFonts: {
         expand: true,
         src : 'fonts/*',
         dest : '<%= pkg.ui5strap.themeBaseDir %>'
       },
+      //Copy font awesome fonts
       ui5ThemeBaseCssLibraryFontsFA: {
         expand : true,
         cwd : '<%= pkg.ui5strap.fontAwesomeFontDir %>',
         src : ['*'],
         dest : '<%= pkg.ui5strap.themeBaseDir %>fonts/'
       },
-      ui5ThemeBaseCssLibraryDebug: {
-        src : 'dist/css/<%= pkg.name %>.css',
-        dest : '<%= pkg.ui5strap.themeBaseDir %>library-dbg.css'
-      },
       
 
-
-      ui5ThemeUi5strapDefaultCssLibrary: {
+      //Custom Theme
+      //Minified library
+      ui5ThemeCustomCssLibrary: {
         src : 'dist/css/<%= pkg.name %>.min.css',
-        dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.defaultTheme %>/library.css'
+        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/library.css'
       },
-      ui5ThemeUi5strapDefaultCssLibraryFonts: {
+      //Unminified library
+      ui5ThemeCustomCssLibraryDebug: {
+        src : 'dist/css/<%= pkg.name %>.css',
+        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/library-dbg.css'
+      },
+      //Copy bootstrap fonts
+      ui5ThemeCustomCssLibraryFonts: {
         expand: true,
         src : 'fonts/*',
-        dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.defaultTheme %>/'
+        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/'
       },
-      ui5ThemeUi5strapDefaultCssLibraryFontsFA: {
+      //Copy font awesome fonts
+      ui5ThemeCustomCssLibraryFontsFA: {
         expand : true,
         cwd : '<%= pkg.ui5strap.fontAwesomeFontDir %>',
         src : ['*'],
-        dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.defaultTheme %>/fonts/'
+        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/fonts/'
       },
-      ui5ThemeUi5strapDefaultCssLibraryDebug: {
-        src : 'dist/css/<%= pkg.name %>.css',
-        dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.defaultTheme %>/library-dbg.css'
+      //Copy custom fonts
+      ui5ThemeCustomCssLibraryFontsCustom: {
+        expand: true,
+        cwd : '<%= pkg.ui5strap.templatesFolder %><%= themeName %>/fonts/',
+        src : ['*'],
+        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/fonts/'
       },
-      ui5ThemeUi5strapDefaultCssLibrarySAP: {
+      //Copy custom images
+      ui5ThemeCustomCssLibraryImagesCustom: {
+        expand: true,
+        cwd : '<%= pkg.ui5strap.templatesFolder %><%= themeName %>/img/',
+        src : ['*'],
+        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/img/'
+      },
+      
+      //SAP
+      //Provide also style for sap theme "blue_crystal"
+      //Minified library
+      ui5ThemeCustomCssLibrarySAP: {
         src : 'dist/css/<%= pkg.name %>.min.css',
         dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>library.css'
       },
-      ui5ThemeUi5strapDefaultCssLibrarySAPFonts: {
+      //Unminified library
+      ui5ThemeCustomCssLibrarySAPDebug: {
+        src : 'dist/css/<%= pkg.name %>.css',
+        dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>library-dbg.css'
+      },
+      //Copy bootstrap fonts
+      ui5ThemeCustomCssLibrarySAPFonts: {
         expand: true,
         src : 'fonts/*',
         dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>'
       },
-      ui5ThemeUi5strapDefaultCssLibrarySAPFontsFA: {
+      //Copy font awesome fonts
+      ui5ThemeCustomCssLibrarySAPFontsFA: {
         expand : true,
         cwd : '<%= pkg.ui5strap.fontAwesomeFontDir %>',
         src : ['*'],
         dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>fonts/'
       },
-      ui5ThemeUi5strapDefaultCssLibrarySAPDebug: {
-        src : 'dist/css/<%= pkg.name %>.css',
-        dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>library-dbg.css'
-      },
-      
-
-
-      ui5ThemeUi5strapMyThemeCssLibrary: {
-        src : 'dist/css/<%= pkg.name %>.min.css',
-        dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.myTheme %>/library.css'
-      },
-      ui5ThemeUi5strapMyThemeCssLibrarySapUiCore: {
-        expand : true,
-        cwd : '<%= pkg.ui5strap.themeSapUiCoreFolder %>ui5strap_default/',
-        src : ['**'],
-        dest : '<%= pkg.ui5strap.themeSapUiCoreFolder %><%= pkg.ui5strap.myTheme %>/'
-      },
-      ui5ThemeUi5strapMyThemeCssLibrarySapUiCommons: {
-        expand : true,
-        cwd : '<%= pkg.ui5strap.themeSapUiCommonsFolder %>ui5strap_default/',
-        src : ['**'],
-        dest : '<%= pkg.ui5strap.themeSapUiCommonsFolder %><%= pkg.ui5strap.myTheme %>/'
-      },
-      ui5ThemeUi5strapMyThemeCssLibrarySapUiLayout: {
-        expand : true,
-        cwd : '<%= pkg.ui5strap.themeSapUiLayoutFolder %>ui5strap_default/',
-        src : ['**'],
-        dest : '<%= pkg.ui5strap.themeSapUiLayoutFolder %><%= pkg.ui5strap.myTheme %>/'
-      },
-      ui5ThemeUi5strapMyThemeCssLibrarySapM: {
-        expand : true,
-        cwd : '<%= pkg.ui5strap.themeSapMFolder %>ui5strap_default/',
-        src : ['**'],
-        dest : '<%= pkg.ui5strap.themeSapMFolder %><%= pkg.ui5strap.myTheme %>/'
-      },
-      ui5ThemeUi5strapMyThemeCssLibraryFonts: {
+      //Copy custom fonts
+      ui5ThemeCustomCssLibrarySAPFontsCustom: {
         expand: true,
-        src : 'fonts/*',
-        dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.myTheme %>/'
-      },
-      ui5ThemeUi5strapMyThemeCssLibraryFontsFA: {
-        expand : true,
-        cwd : '<%= pkg.ui5strap.fontAwesomeFontDir %>',
+        cwd : '<%= pkg.ui5strap.templatesFolder %><%= themeName %>/fonts/',
         src : ['*'],
-        dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.myTheme %>/fonts/'
+        dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>fonts/'
       },
-      ui5ThemeUi5strapMyThemeCssLibraryDebug: {
-        src : 'dist/css/<%= pkg.name %>.css',
-        dest : '<%= pkg.ui5strap.themeFolder %><%= pkg.ui5strap.myTheme %>/library-dbg.css'
+      //Copy custom images
+      ui5ThemeCustomCssLibrarySAPImagesCustom: {
+        expand: true,
+        cwd : '<%= pkg.ui5strap.templatesFolder %><%= themeName %>/img/',
+        src : ['*'],
+        dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>img/'
       }
-
-
+      /*
+      * -----------------------
+      * END Ui5strap Theme Copy
+      * -----------------------
+      */
       
     },
 
@@ -631,22 +636,28 @@ module.exports = function (grunt) {
   grunt.registerTask('dist', ['clean:dist', 'dist-css', 'copy:fonts', 'dist-js']);
 
   /*
-  * Ui5Strap Theme Builder
+  * ----------------------------
+  * START Ui5Strap Theme Builder
+  * ----------------------------
   */
 
-  //
+  //Task used in all build-theme-* tasks
   grunt.registerTask('dist-css-theme', ['autoprefixer:core', 'csscomb:dist', 'cssmin:minifyCore', 'cssmin:minifyTheme']);
 
-  //base
-  grunt.registerTask('make-theme-base', ['clean:dist', 'less:compileThemeBase', 'dist-css-theme', 'copy:fonts', 'copy:ui5ThemeBaseCssLibraryFonts', 'copy:ui5ThemeBaseCssLibraryFontsFA','copy:ui5ThemeBaseCssLibrary', 'copy:ui5ThemeBaseCssLibraryDebug']);
-  //ui5strap_default
-  //This theme is used as theme for the Ui5Strap library when using theme sap_bluecrystal
-  grunt.registerTask('make-theme-default', ['clean:dist', 'less:compileThemeUi5strapDefault', 'dist-css-theme', 'copy:fonts', 'copy:ui5ThemeUi5strapDefaultCssLibraryFonts', 'copy:ui5ThemeUi5strapDefaultCssLibraryFontsFA','copy:ui5ThemeUi5strapDefaultCssLibrary', 'copy:ui5ThemeUi5strapDefaultCssLibraryDebug', 'copy:ui5ThemeUi5strapDefaultCssLibrarySAPFonts', 'copy:ui5ThemeUi5strapDefaultCssLibrarySAPFontsFA','copy:ui5ThemeUi5strapDefaultCssLibrarySAP', 'copy:ui5ThemeUi5strapDefaultCssLibrarySAPDebug']);
-  //My Theme
-  grunt.registerTask('make-theme-my', ['clean:dist', 'less:compileThemeUi5strapMyTheme', 'dist-css-theme', 'copy:fonts', 'copy:ui5ThemeUi5strapMyThemeCssLibraryFonts', 'copy:ui5ThemeUi5strapMyThemeCssLibraryFontsFA', 'copy:ui5ThemeUi5strapMyThemeCssLibrary', 'copy:ui5ThemeUi5strapMyThemeCssLibraryDebug', 'copy:ui5ThemeUi5strapMyThemeCssLibrarySapUiCore', 'copy:ui5ThemeUi5strapMyThemeCssLibrarySapUiCommons', 'copy:ui5ThemeUi5strapMyThemeCssLibrarySapUiLayout', 'copy:ui5ThemeUi5strapMyThemeCssLibrarySapM']);
+  //Build Base Theme
+  //The Base Theme should look like the default bootstrap theme
+  grunt.registerTask('build-theme-base', ['clean:dist', 'less:compileThemeBase', 'dist-css-theme', 'copy:fonts', 'copy:ui5ThemeBaseCssLibraryFonts', 'copy:ui5ThemeBaseCssLibraryFontsFA','copy:ui5ThemeBaseCssLibrary', 'copy:ui5ThemeBaseCssLibraryDebug']);
+  
+  //Build Custom Theme
+  grunt.registerTask('build-theme-custom', ['clean:dist', 'less:compileThemeCustom', 'dist-css-theme', 'copy:fonts', 'copy:ui5ThemeCustomCssLibraryFonts', 'copy:ui5ThemeCustomCssLibraryFontsFA','copy:ui5ThemeCustomCssLibrary', 'copy:ui5ThemeCustomCssLibraryDebug']);
+  
+  //Build Custom Theme with sap "blue_crystal" support
+  grunt.registerTask('build-theme-custom-sap', ['clean:dist', 'less:compileThemeCustom', 'dist-css-theme', 'copy:fonts', 'copy:ui5ThemeCustomCssLibraryFonts', 'copy:ui5ThemeCustomCssLibraryFontsFA','copy:ui5ThemeCustomCssLibrary', 'copy:ui5ThemeCustomCssLibraryDebug', 'copy:ui5ThemeCustomCssLibrarySAPFonts', 'copy:ui5ThemeCustomCssLibrarySAPFontsFA','copy:ui5ThemeCustomCssLibrarySAP', 'copy:ui5ThemeCustomCssLibrarySAPDebug']);
   
   /*
+  * ---------------------------- 
   * END Ui5Strap Theme Builder
+  * ----------------------------
   */
   
   // Default task.

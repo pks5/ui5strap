@@ -14,7 +14,12 @@
   "homepage": "http://getbootstrap.com",
   "author": "Twitter, Inc.",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "build-theme-base" : "grunt build-theme-base",
+    "build-theme-custom" : "grunt build-theme-custom",
+    "build-theme-custom-sap" : "grunt build-theme-custom-sap",
+    
+    "build-theme-custom-my" : "grunt build-theme-custom --ui5strap-theme=ui5strap_theme_my"
   },
   "style": "dist/css/bootstrap.css",
   "less": "less/bootstrap.less",
@@ -31,6 +36,7 @@
     "btoa": "~1.1.2",
     "glob": "~5.0.5",
     "grunt": "~0.4.5",
+    "grunt-cli": "^0.1.13",
     "grunt-autoprefixer": "~3.0.0",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-compress": "~0.13.0",
@@ -84,17 +90,21 @@
       "js"
     ]
   },
+  
   "ui5strap" : {
   	"fontAwesomeFontDir" : "../font-awesome-4.4.0/fonts/",
+  	
+  	"themeFolder" : "../../../www/theme/ui5strap/themes/",
+  	"templatesFolder" : "../templates/",
+  	
     "themeBaseDir" : "../../../www/lib/ui5strap/themes/base/",
+    
     "themeSapBluecrystalDir" : "../../../www/lib/ui5strap/themes/sap_bluecrystal/",
+    
     "themeSapUiCoreFolder" : "../../../www/theme/sap/ui/core/themes/",
     "themeSapUiCommonsFolder" : "../../../www/theme/sap/ui/commons/themes/",
     "themeSapUiLayoutFolder" : "../../../www/theme/sap/ui/layout/themes/",
-    "themeSapMFolder" : "../../../www/theme/sap/m/themes/",
-    "themeFolder" : "../../../www/theme/ui5strap/themes/",
-    "defaultTheme" : "ui5strap_default",
-    "myTheme" : "ui5strap_my_theme"
-    
+    "themeSapMFolder" : "../../../www/theme/sap/m/themes/"
   }
+  
 }
