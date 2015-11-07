@@ -165,42 +165,9 @@ module.exports = function (grunt) {
           sourceMapURL: '<%= pkg.name %>.css.map',
           sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
         },
-        src: '../templates/base.less',
+        src: 'less/bootstrap.less',
         dest: 'dist/css/<%= pkg.name %>.css'
       },
-      
-      /* 
-      *-----------------------------
-      * START Ui5strap Theme Compile
-      *-----------------------------
-      */
-      compileThemeBase: {
-        options: {
-          strictMath: true,
-          sourceMap: true,
-          outputSourceFiles: true,
-          sourceMapURL: '<%= pkg.name %>.css.map',
-          sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
-        },
-        src: '../templates/base/base.less',
-        dest: 'dist/css/<%= pkg.name %>.css'
-      },
-      compileThemeCustom: {
-        options: {
-          strictMath: true,
-          sourceMap: true,
-          outputSourceFiles: true,
-          sourceMapURL: '<%= pkg.name %>.css.map',
-          sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
-        },
-        src: '../templates/<%= themeName %>/<%= themeName %>.less',
-        dest: 'dist/css/<%= pkg.name %>.css'
-      },
-      /* 
-       *-----------------------------
-       * END Ui5strap Theme Compile
-       *-----------------------------
-       */
       
       compileTheme: {
         options: {
@@ -212,7 +179,45 @@ module.exports = function (grunt) {
         },
         src: 'less/theme.less',
         dest: 'dist/css/<%= pkg.name %>-theme.css'
+      },
+      
+      /* 
+      *-----------------------------
+      * START Ui5strap Theme Compile
+      *-----------------------------
+      */
+      
+      compileThemeBase: {
+        options: {
+          strictMath: true,
+          sourceMap: true,
+          outputSourceFiles: true,
+          sourceMapURL: '<%= pkg.name %>.css.map',
+          sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
+        },
+        src: '../templates/base/base.less',
+        dest: 'dist/css/<%= pkg.name %>.css'
+      },
+      
+      compileThemeCustom: {
+        options: {
+          strictMath: true,
+          sourceMap: true,
+          outputSourceFiles: true,
+          sourceMapURL: '<%= pkg.name %>.css.map',
+          sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
+        },
+        src: '../templates/<%= themeName %>/<%= themeName %>.less',
+        dest: 'dist/css/<%= pkg.name %>.css'
       }
+      
+      /* 
+       *-----------------------------
+       * END Ui5strap Theme Compile
+       *-----------------------------
+       */
+      
+      
     },
 
     autoprefixer: {
@@ -345,8 +350,9 @@ module.exports = function (grunt) {
       //Copy bootstrap fonts
       ui5ThemeBaseCssLibraryFonts: {
         expand: true,
-        src : 'fonts/*',
-        dest : '<%= pkg.ui5strap.themeBaseDir %>'
+        cwd : 'fonts/',
+        src : ['*'],
+        dest : '<%= pkg.ui5strap.themeBaseDir %>fonts/'
       },
       //Copy font awesome fonts
       ui5ThemeBaseCssLibraryFontsFA: {
@@ -371,8 +377,9 @@ module.exports = function (grunt) {
       //Copy bootstrap fonts
       ui5ThemeCustomCssLibraryFonts: {
         expand: true,
-        src : 'fonts/*',
-        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/'
+        cwd : 'fonts/',
+        src : ['*'],
+        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/fonts/'
       },
       //Copy font awesome fonts
       ui5ThemeCustomCssLibraryFontsFA: {
@@ -391,8 +398,9 @@ module.exports = function (grunt) {
       //Copy custom images
       ui5ThemeCustomCssLibraryImagesCustom: {
         expand: true,
-        src : '<%= pkg.ui5strap.templatesFolder %><%= themeName %>/img/*',
-        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/'
+        cwd : '<%= pkg.ui5strap.templatesFolder %><%= themeName %>/img/',
+        src : ['*'],
+        dest : '<%= pkg.ui5strap.themeFolder %><%= themeName %>/img/'
       },
       
       //SAP
@@ -410,8 +418,9 @@ module.exports = function (grunt) {
       //Copy bootstrap fonts
       ui5ThemeCustomCssLibrarySAPFonts: {
         expand: true,
-        src : 'fonts/*',
-        dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>'
+        cwd : 'fonts/',
+        src : ['*'],
+        dest : '<%= pkg.ui5strap.themeSapBluecrystalDir %>fonts/'
       },
       //Copy font awesome fonts
       ui5ThemeCustomCssLibrarySAPFontsFA: {
@@ -641,17 +650,17 @@ module.exports = function (grunt) {
   */
 
   //Task used in all build-theme-* tasks
-  grunt.registerTask('dist-css-theme', ['autoprefixer:core', 'csscomb:dist', 'cssmin:minifyCore', 'cssmin:minifyTheme']);
+  grunt.registerTask('build-theme-bs', ['autoprefixer:core', 'csscomb:dist', 'cssmin:minifyCore', 'cssmin:minifyTheme', 'copy:fonts']);
 
   //Build Base Theme
   //The Base Theme should look like the default bootstrap theme
-  grunt.registerTask('build-theme-base', ['clean:dist', 'less:compileThemeBase', 'dist-css-theme', 'copy:fonts', 'copy:ui5ThemeBaseCssLibraryFonts', 'copy:ui5ThemeBaseCssLibraryFontsFA','copy:ui5ThemeBaseCssLibrary', 'copy:ui5ThemeBaseCssLibraryDebug']);
+  grunt.registerTask('build-theme-base', ['clean:dist', 'less:compileThemeBase', 'build-theme-bs', 'copy:ui5ThemeBaseCssLibraryFonts', 'copy:ui5ThemeBaseCssLibraryFontsFA','copy:ui5ThemeBaseCssLibrary', 'copy:ui5ThemeBaseCssLibraryDebug']);
   
   //Build Custom Theme
-  grunt.registerTask('build-theme-custom', ['clean:dist', 'less:compileThemeCustom', 'dist-css-theme', 'copy:fonts', 'copy:ui5ThemeCustomCssLibraryFonts', 'copy:ui5ThemeCustomCssLibraryFontsFA','copy:ui5ThemeCustomCssLibrary', 'copy:ui5ThemeCustomCssLibraryDebug']);
+  grunt.registerTask('build-theme-custom', ['clean:dist', 'less:compileThemeCustom', 'build-theme-bs', 'copy:ui5ThemeCustomCssLibraryFonts', 'copy:ui5ThemeCustomCssLibraryFontsFA', 'copy:ui5ThemeCustomCssLibraryFontsCustom', 'copy:ui5ThemeCustomCssLibraryImagesCustom', 'copy:ui5ThemeCustomCssLibrary', 'copy:ui5ThemeCustomCssLibraryDebug']);
   
   //Build Custom Theme with sap "blue_crystal" support
-  grunt.registerTask('build-theme-custom-sap', ['clean:dist', 'less:compileThemeCustom', 'dist-css-theme', 'copy:fonts', 'copy:ui5ThemeCustomCssLibraryFonts', 'copy:ui5ThemeCustomCssLibraryFontsFA','copy:ui5ThemeCustomCssLibrary', 'copy:ui5ThemeCustomCssLibraryDebug', 'copy:ui5ThemeCustomCssLibrarySAPFonts', 'copy:ui5ThemeCustomCssLibrarySAPFontsFA','copy:ui5ThemeCustomCssLibrarySAP', 'copy:ui5ThemeCustomCssLibrarySAPDebug']);
+  grunt.registerTask('build-theme-custom-sap', ['build-theme-custom', 'copy:ui5ThemeCustomCssLibrarySAPFonts', 'copy:ui5ThemeCustomCssLibrarySAPFontsFA','copy:ui5ThemeCustomCssLibrarySAP', 'copy:ui5ThemeCustomCssLibrarySAPDebug']);
   
   /*
   * ---------------------------- 
