@@ -1,11 +1,11 @@
 {
-  "name": "myapp",
+  "name": "ui5strap-app",
   "version": "0.0.1",
   "main": "index.html",
   "chromium-args": "--touch-events=enabled",
   "window": {
     "frame": true,
-    "toolbar": true,
+    "toolbar": false,
     "icon": "apps/myapp/img/my-app-icon-256x256.jpg",
     "width": 1024,
     "height": 768,
