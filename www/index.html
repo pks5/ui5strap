@@ -207,11 +207,12 @@
 			* It is used if no "app" GET parameter is present.
 			* For example, you can load the App "50 Buttons" also via http://localhost:8282/?app=apps/50buttons/app.json
 			*/
-			var viewerOptions = {
+			var defaultApp = "myfirstapp",
+				viewerOptions = {
 				"app" : {
 					type : "URI",
 					uriParam : "app",
-					defaultValue : "./apps/myfirstapp/app.json" //Default App
+					defaultValue : "./apps/" + defaultApp + "/app.json"
 				}
 			};
 
