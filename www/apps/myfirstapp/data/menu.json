@@ -3,12 +3,13 @@
 	"items" : [
 	
 		{
-			"label" : "My Page 2",
-			"viewName" : "mycompany.myfirstapp.views.MyPage2"
+			"label" : "News Feed",
+			"viewName" : "mycompany.myfirstapp.views.MyPage2",
+			"badge" : "1"
 		},
 		
 		{
-			"label" : "My Page 3",
+			"label" : "Statistics",
 			"viewName" : "mycompany.myfirstapp.views.MyPage3"
 		}	
 	

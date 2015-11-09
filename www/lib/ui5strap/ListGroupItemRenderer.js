@@ -34,6 +34,7 @@
 
 	ui5strap.ListGroupItemRenderer.render = function(rm, oControl) {
 		var badge = oControl.getBadge(),
+			icon = oControl.getIcon(),
 			parent = oControl.getParent(),
 			tag = parent.getContainer() ? 'a' : 'li',
 			text = oControl.getText(),
@@ -52,11 +53,17 @@
 		rm.writeClasses();
 		rm.write(">");
 
+		if('' !== icon){
+			rm.write('<span class="list-group-item-icon fa fa-' + icon + '"></span>');
+		}
+		
 		if('' !== badge){
 			rm.write('<span class="badge">');
 			rm.writeEscaped(badge);
 			rm.write('</span>');
 		}
+		
+		
 		
 		ui5strap.RenderUtils.renderContent(rm, oControl);
 		    

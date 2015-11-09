@@ -42,6 +42,10 @@
 				badge : {
 					type:"string",
 					defaultValue : ""
+				},
+				icon : {
+					type:"string",
+					defaultValue : ""
 				}
 			}
 		}
