@@ -40,8 +40,6 @@
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
 			
-			ui5strap.tm("APP", "APP", "CONSTRUCT");
-			
 			this.config = config;
 
 			this.components = {};
@@ -116,7 +114,6 @@
 	* Initializes the App
 	*/
 	AppBaseProto.init = function(){
-		ui5strap.tm("APP", "APP", "INIT");
 		this.onInit(new sap.ui.base.Event("ui5strap.app.init", this, {}));
 	};
 
@@ -124,7 +121,7 @@
 	* Preload JavaScript libraries
 	*/
 	var _preloadJavaScript = function(_this, callback){
-		ui5strap.tm("APP", "APP", "PRELOAD_JS");
+		jQuery.sap.log.debug("AppBase::_preloadJavaScript");
 		
 		var scripts = _this.config.data.js;
 		if(scripts.length === 0){
@@ -156,7 +153,7 @@
 	};
 
 	var _preloadModels = function(_this, callback){
-		ui5strap.tm("APP", "APP", "PRELOAD_MODELS");
+		jQuery.sap.log.debug("AppBase::_preloadModels");
 
 		//Models
 		var models = _this.config.data.models,
@@ -286,7 +283,7 @@
 	 * 
 	 */
 	var _preloadComponents = function(_this, callback){
-		ui5strap.tm("APP", "APP", "PRELOAD_COMPONENTS");
+		jQuery.sap.log.debug("AppBase::_preloadComponents");
 
 		//Components
 		var components = _this.config.data.components,
@@ -314,7 +311,7 @@
 	* @Private
 	*/
 	var _preloadActions = function(_this, callback){
-		ui5strap.tm("APP", "APP", "PRELOAD_ACTIONS");
+		jQuery.sap.log.debug("AppBase::_preloadActions");
 		
 		var actions = _this.config.data.actions,
 			callI = actions.length;
@@ -341,7 +338,8 @@
 	 * @Public
 	 */
 	AppBaseProto.preload = function(callback){
-		ui5strap.tm("APP", "APP", "PRELOAD");
+		jQuery.sap.log.debug("AppBaseProto.preload");
+		
 		this.config.resolve();
 
 		var _this = this;
@@ -359,7 +357,7 @@
 	 * @Public
 	 */
 	AppBaseProto.load = function(callback){
-		ui5strap.tm("APP", "APP", "LOAD");
+		jQuery.sap.log.debug("AppBaseProto.load");
 
 		var _this = this;
 		this.preload(function(){
@@ -375,7 +373,7 @@
 	* Start the app
 	*/
 	AppBaseProto.start = function(callback){
-		ui5strap.tm("APP", "APP", "START");
+		jQuery.sap.log.debug("AppBaseProto.start");
 
 		var _this = this;
 		if(this.isRunning){
@@ -398,7 +396,7 @@
 	};
 
 	AppBaseProto.show = function(callback){
-		ui5strap.tm("APP", "APP", "SHOW");
+		jQuery.sap.log.debug("AppBaseProto.show");
 
 		this.isVisible = true;
 		this.onShow(new sap.ui.base.Event("ui5strap.app.show", this, {}));
@@ -415,7 +413,7 @@
 	};
 
 	AppBaseProto.shown = function(callback){
-		ui5strap.tm("APP", "APP", "SHOWN");
+		jQuery.sap.log.debug("AppBaseProto.shown");
 
 		var _this = this;
 
@@ -436,7 +434,8 @@
 	};
 
 	AppBaseProto.hide = function(callback){
-		ui5strap.tm("APP", "APP", "HIDE");
+		jQuery.sap.log.debug("AppBaseProto.hide");
+		
 		this.isVisible = false;
 		
 		this.onHide(new sap.ui.base.Event("ui5strap.app.hide", this, {}));
@@ -445,7 +444,7 @@
 	};
 
 	AppBaseProto.hidden = function(callback){
-		ui5strap.tm("APP", "APP", "HIDDEN");
+		jQuery.sap.log.debug("AppBaseProto.hidden");
 
 		var _this = this;
 		ui5strap.polyfill.requestAnimationFrame(function(){
@@ -461,7 +460,7 @@
 	* Stop the app
 	*/
 	AppBaseProto.stop = function(callback){
-		ui5strap.tm("APP", "APP", "STOP");
+		jQuery.sap.log.debug("AppBaseProto.stop");
 
 		if(!this.isRunning){
 			throw new Error(this + " is not running.");
@@ -477,8 +476,8 @@
 	};
 
 	AppBaseProto.unload = function(callback){
-		ui5strap.tm("APP", "APP", "UNLOAD");
-
+		jQuery.sap.log.debug("AppBaseProto.unload");
+		
 		ui5strap.Layer.unregister(this.overlayId);
 		ui5strap.Layer.unregister(this.getDomId('loader'));
 
