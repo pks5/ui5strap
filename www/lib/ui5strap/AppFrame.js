@@ -34,8 +34,6 @@
 		"constructor" : function(app, options){
 			ui5strap.AppComponent.call(this, app, options);
 			
-			ui5strap.tm("APP", "APP_FRAME", "CONSTRUCT");
-
 			this._targetStatus = {};
 
 			this.vTargets = {};
@@ -55,7 +53,6 @@
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
-		ui5strap.tm("APP", "APP_FRAME", "INIT");
 		var _this = this;
 		
 		this.control = this._createControl();
@@ -101,7 +98,7 @@
 	 * @Protected
 	 */
 	AppFrameProto._createControl = function(){
-		ui5strap.tm("APP", "APP_FRAME", "CREATE_CONTROL");
+		jQuery.sap.log.debug("AppFrameProto._createControl");
 		
 		//Init default NavContainer
 		var frameConfig = this.options,
@@ -137,7 +134,7 @@
 	* @Public
 	*/
 	AppFrameProto.showInitialContent = function(callback){
-		ui5strap.tm("APP", "APP_FRAME", "SHOW_INITIAL_CONTENT");
+		jQuery.sap.log.debug("AppFrameProto.showInitialContent");
 
 		var _this = this,
 			initialViews = this.options.initialViews,
@@ -205,7 +202,7 @@
 	 * @Public
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
-		ui5strap.tm("APP", "APP_FRAME", "TO_PAGE");
+		jQuery.sap.log.debug("AppFrameProto.toPage");
 		
 		//TODO use default target of navcontainer?
 		if(!viewConfig.target){
@@ -280,12 +277,9 @@
 
 	/*
 	* @Public
+	* @deprecated
 	*/
 	AppFrameProto.gotoPage = function (viewDef, callback) {
-		//Get final view configuration
-		var viewConfig = this.getViewConfig(viewDef),
-			target = viewConfig.target;
-
 		//Get final view configuration
 		var viewConfig = this.getViewConfig(viewDef),
 			target = viewConfig.target;
