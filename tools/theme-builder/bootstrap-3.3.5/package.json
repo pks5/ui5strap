@@ -96,7 +96,7 @@
   	"tgtDirCustomThemes" : "../../../www/theme/ui5strap/themes/",
   	"tgtDirLibraryThemes" : "../../../www/lib/ui5strap/themes/",
   	
-    "srcDirSapThemes" : "../../../lib/openui5/sap/",
+    "srcDirSapThemes" : "../../../www/lib/openui5/sap/",
     "tgtDirCustomSapThemes" : "../../../www/theme/sap/"
   }
   

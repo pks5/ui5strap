@@ -51,3 +51,7 @@ server
 hooks
 platforms
 plugins
+
+# Tools   #
+###########
+/tools/theme-builder/*/dist

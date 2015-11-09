@@ -411,27 +411,27 @@ module.exports = function (grunt) {
       //Copy custom images
       copyThemeCustomSapUiCoreSupport: {
         expand: true,
-        cwd : '<%= pkg.ui5strap.srcDirSapThemes %>sap/ui/core/themes/<%= themeNameSapRef %>/',
+        cwd : '<%= pkg.ui5strap.srcDirSapThemes %>ui/core/themes/<%= themeNameSapRef %>/',
         src : ['*'],
-        dest : '<%= pkg.ui5strap.tgtDirCustomSapThemes %>sap/ui/core/themes/<%= themeName %>/'
+        dest : '<%= pkg.ui5strap.tgtDirCustomSapThemes %>ui/core/themes/<%= themeName %>/'
       },
       copyThemeCustomSapUiCommonsSupport: {
           expand: true,
-          cwd : '<%= pkg.ui5strap.srcDirSapThemes %>sap/ui/commons/themes/<%= themeNameSapRef %>/',
+          cwd : '<%= pkg.ui5strap.srcDirSapThemes %>ui/commons/themes/<%= themeNameSapRef %>/',
           src : ['*'],
-          dest : '<%= pkg.ui5strap.tgtDirCustomSapThemes %>sap/ui/commons/themes/<%= themeName %>/'
+          dest : '<%= pkg.ui5strap.tgtDirCustomSapThemes %>ui/commons/themes/<%= themeName %>/'
       },
       copyThemeCustomSapUiLayoutSupport: {
           expand: true,
-          cwd : '<%= pkg.ui5strap.srcDirSapThemes %>sap/ui/layout/themes/<%= themeNameSapRef %>/',
+          cwd : '<%= pkg.ui5strap.srcDirSapThemes %>ui/layout/themes/<%= themeNameSapRef %>/',
           src : ['*'],
-          dest : '<%= pkg.ui5strap.tgtDirCustomSapThemes %>sap/ui/layout/themes/<%= themeName %>/'
+          dest : '<%= pkg.ui5strap.tgtDirCustomSapThemes %>ui/layout/themes/<%= themeName %>/'
       },
       copyThemeCustomSapMSupport: {
           expand: true,
-          cwd : '<%= pkg.ui5strap.srcDirSapThemes %>sap/m/themes/<%= themeNameSapRef %>/',
+          cwd : '<%= pkg.ui5strap.srcDirSapThemes %>m/themes/<%= themeNameSapRef %>/',
           src : ['*'],
-          dest : '<%= pkg.ui5strap.tgtDirCustomSapThemes %>sap/m/themes/<%= themeName %>/'
+          dest : '<%= pkg.ui5strap.tgtDirCustomSapThemes %>m/themes/<%= themeName %>/'
       },
       
       //---------------------------------
