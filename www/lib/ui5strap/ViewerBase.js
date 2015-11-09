@@ -37,8 +37,6 @@
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);
 			
-			ui5strap.tm("VIEWER", "VIEWER", "VIEWER_CONSTRUCT");
-			
 			this.options = options || {};
 
 			//Device Log Level
@@ -83,8 +81,7 @@
 	 * @Public
 	 */
 	ViewerBaseProto.init = function(){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_INIT");
-		
+		//Register Loader Layer
 		ui5strap.Layer.register('ui5strap-loader');
   		
 		this._initOverlay();
