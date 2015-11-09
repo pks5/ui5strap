@@ -88,7 +88,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_START");
+		jQuery.sap.log.debug("ViewerProto.start");
 		
 		this.init();
 
@@ -176,7 +176,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.executeApp = function(appDefinition, doNotShow, callback, loadCallback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_EXEC", appDefinition.url);
+		jQuery.sap.log.debug("ViewerProto.executeApp");
 		
 		var _this = this,
 			appType = appDefinition.type;
@@ -278,7 +278,7 @@
 	 * @Private
 	 */
 	var _preloadLibraries = function(_this, libs, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "PRELOAD_LIBS");
+		jQuery.sap.log.debug("ViewerProto._preloadLibraries");
 		
 		var callI = libs.length,
 			successCallback = function(){
@@ -327,7 +327,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.createApp = function(appConfig, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_CREATE");
+		jQuery.sap.log.debug("ViewerProto.createApp");
 		
 		var configDataJSON = appConfig.data,
 			appModuleName = configDataJSON.app.module,
@@ -362,7 +362,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.loadApp = function(configDataJSON, parameters, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_LOAD", configDataJSON.app.name);
+		jQuery.sap.log.debug("ViewerProto.loadApp");
 
 		var _this = this,
 			appConfig = new ui5strap.AppConfig(this.options, parameters);
@@ -395,7 +395,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.unloadApp = function(sappId){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_UNLOAD", sappId);
+		jQuery.sap.log.debug("ViewerProto.unloadApp");
 		
 		var appInstance = this.getApp(sappId);
 
@@ -419,7 +419,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.startApp = function(sappId, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_START", sappId);
+		jQuery.sap.log.debug("ViewerProto.startApp");
 		
 		var appInstance = this.getApp(sappId);
 		
@@ -441,7 +441,8 @@
 	* @Public
 	*/
 	ViewerMultiProto.stopApp = function(sappId){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_STOP", sappId);
+		jQuery.sap.log.debug("ViewerProto.stopApp");
+		
 		var appInstance = this.getApp(sappId);
 
 		if(null === appInstance){
@@ -462,7 +463,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_SHOW", sappId);
+		jQuery.sap.log.debug("ViewerProto.showApp");
 		
 		if(this._loadingSapplication){
 			jQuery.sap.log.warning("App '" + this._loadingSapplication + "' is currently loading."); 
