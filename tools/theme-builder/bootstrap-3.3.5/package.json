@@ -90,19 +90,14 @@
   },
   
   "ui5strap" : {
-  	"fontAwesomeFontDir" : "../font-awesome-4.4.0/fonts/",
+  	"srcDirFontAwesomeFonts" : "../font-awesome-4.4.0/fonts/",
+  	"srcDirTemplates" : "../templates/",
   	
-  	"themeFolder" : "../../../www/theme/ui5strap/themes/",
-  	"templatesFolder" : "../templates/",
+  	"tgtDirCustomThemes" : "../../../www/theme/ui5strap/themes/",
+  	"tgtDirLibraryThemes" : "../../../www/lib/ui5strap/themes/",
   	
-    "themeBaseDir" : "../../../www/lib/ui5strap/themes/base/",
-    
-    "themeSapBluecrystalDir" : "../../../www/lib/ui5strap/themes/sap_bluecrystal/",
-    
-    "themeSapUiCoreFolder" : "../../../www/theme/sap/ui/core/themes/",
-    "themeSapUiCommonsFolder" : "../../../www/theme/sap/ui/commons/themes/",
-    "themeSapUiLayoutFolder" : "../../../www/theme/sap/ui/layout/themes/",
-    "themeSapMFolder" : "../../../www/theme/sap/m/themes/"
+    "srcDirSapThemes" : "../../../lib/openui5/sap/",
+    "tgtDirCustomSapThemes" : "../../../www/theme/sap/"
   }
   
 }
