@@ -4,13 +4,13 @@
 	
 		{
 			"label" : "News Feed",
-			"viewName" : "mycompany.myfirstapp.views.MyPage2",
+			"viewName" : "ui5strap.demoapp.views.MyPage2",
 			"badge" : "1"
 		},
 		
 		{
 			"label" : "Statistics",
-			"viewName" : "mycompany.myfirstapp.views.MyPage3"
+			"viewName" : "ui5strap.demoapp.views.MyPage3"
 		}	
 	
 	]

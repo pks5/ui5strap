@@ -5,7 +5,7 @@
 	"__description" : "Goto Page 2",
 
 	"gotoPage" : {
-		"viewName" : "mycompany.myfirstapp.views.MyPage2",
+		"viewName" : "ui5strap.demoapp.views.MyPage2",
 		"transition" : "transition-flip",
 		"writeHistory" : true,
 		"bookmarkable" : false

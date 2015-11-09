@@ -1,7 +1,7 @@
 {
 	"app" : {
-	        "id" : "mycompany.myfirstapp",
-	        "package" : "mycompany.myfirstapp",
+	        "id" : "ui5strap.demoapp",
+	        "package" : "ui5strap.demoapp",
 	        "name" : "My First App",
 	        "logLevel" : 5
 	},
@@ -20,7 +20,7 @@
     ],
     
     "views" : {
-            "mycompany.myfirstapp.views.MyPage1" : {
+            "ui5strap.demoapp.views.MyPage1" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-page1",
@@ -30,7 +30,7 @@
                 "preload" : true
             },
 
-            "mycompany.myfirstapp.views.MyPage2" : {
+            "ui5strap.demoapp.views.MyPage2" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-page2",
@@ -40,7 +40,7 @@
                 "preload" : true
             },
 
-            "mycompany.myfirstapp.views.MyPage3" : {
+            "ui5strap.demoapp.views.MyPage3" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-page3",
@@ -60,7 +60,7 @@
 	             
 	             "initialViews" : [
 	                 { 
-	                     "viewName" : "mycompany.myfirstapp.views.MyPage1",
+	                     "viewName" : "ui5strap.demoapp.views.MyPage1",
 	                     "type" : "HTML"
 	                 }
 	             ]
