@@ -109,6 +109,7 @@
             "ui5strap.ContentPlacement",
             "ui5strap.Placement",
             "ui5strap.Alignment",
+            "ui5strap.TextAlignment",
             "ui5strap.TextType",
             "ui5strap.ListType",
             "ui5strap.LinkType",
@@ -206,7 +207,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.12"
+        	version: "0.9.13"
       }
   );
   
@@ -447,6 +448,20 @@
     PullRight : "PullRight",
     CenterBlock : "CenterBlock"
   };
+  
+  /*
+   * TextAlignment
+   */
+   jQuery.sap.declare("ui5strap.TextAlignment");
+
+   ui5strap.TextAlignment = {
+     Default : "Default",
+     
+     Left : "Left",
+     Right : "Right",
+     Center : "Center",
+     Justify : "Justify"
+   };
 
   //Bootstrap CSS mapping
   ui5strap.BSAlignment = {
@@ -9728,6 +9743,10 @@
 				badge : {
 					type:"string",
 					defaultValue : ""
+				},
+				icon : {
+					type:"string",
+					defaultValue : ""
 				}
 			}
 		}
@@ -9769,6 +9788,7 @@
 
 	ui5strap.ListGroupItemRenderer.render = function(rm, oControl) {
 		var badge = oControl.getBadge(),
+			icon = oControl.getIcon(),
 			parent = oControl.getParent(),
 			tag = parent.getContainer() ? 'a' : 'li',
 			text = oControl.getText(),
@@ -9787,11 +9807,17 @@
 		rm.writeClasses();
 		rm.write(">");
 
+		if('' !== icon){
+			rm.write('<span class="list-group-item-icon fa fa-' + icon + '"></span>');
+		}
+		
 		if('' !== badge){
 			rm.write('<span class="badge">');
 			rm.writeEscaped(badge);
 			rm.write('</span>');
 		}
+		
+		
 		
 		ui5strap.RenderUtils.renderContent(rm, oControl);
 		    
@@ -19024,6 +19050,10 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 					type: "ui5strap.Severity", 
 					defaultValue: ui5strap.Severity.None
 				},
+				textAlign : {
+					type : "ui5strap.TextAlignment",
+					defaultValue : ui5strap.TextAlignment.Default
+				},
 				formStatic : {
 					type : "boolean",
 					defaultValue:false
@@ -19077,7 +19107,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			severity = oControl.getSeverity(),
 			text = oControl.getText(),
-			parse = oControl.getParse();
+			parse = oControl.getParse(),
+			textAlign = oControl.getTextAlign();
 
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
@@ -19091,6 +19122,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		}
 		if(ui5strap.Severity.None !== severity){
 			rm.addClass("text-" + ui5strap.BSSeverity[severity]);
+		}
+		if(ui5strap.TextAlignment.Default !== textAlign){
+			rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
 		}
 		rm.writeClasses();
 		rm.write(">");
