@@ -206,7 +206,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.11"
+        	version: "0.9.12"
       }
   );
   

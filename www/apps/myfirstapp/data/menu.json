@@ -1,0 +1,17 @@
+{
+
+	"items" : [
+	
+		{
+			"label" : "My Page 2",
+			"viewName" : "mycompany.myfirstapp.views.MyPage2"
+		},
+		
+		{
+			"label" : "My Page 3",
+			"viewName" : "mycompany.myfirstapp.views.MyPage3"
+		}	
+	
+	]
+
+}

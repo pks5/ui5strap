@@ -106,6 +106,7 @@
 				writeHistory = this.getParameter("writeHistory"),
 				bookmarkable = this.getParameter("bookmarkable"),
 				virtual = this.getParameter("virtual"),
+				frameId = this.getParameter("frameId"),
 				parameters = this.getParameter("parameters");
 
 			this.context._log.debug("Goto page '" + viewId + "' on target '" + target + "' ...");
@@ -121,10 +122,10 @@
 				parameters : parameters
 			};
 			
-			var frameGetter = 'get' + jQuery.sap.charToUpperCase(this.getParameter("frameId"), 0);
+			var frameGetter = 'get' + jQuery.sap.charToUpperCase(frameId, 0);
 			
 			if(!this.context.app[frameGetter]){
-				throw new Error("Cannot Goto Page: invalid frame id!");
+				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
 			}
 
 			this.context.app[frameGetter]().gotoPage(this.context.parameters[this.namespace]);

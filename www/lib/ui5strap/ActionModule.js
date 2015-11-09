@@ -264,6 +264,9 @@
 		return true;
 	};
 
+	/**
+	 * Tries to find a control by a given scope and additional paramters
+	 */
 	ActionModuleProto.findControl = function(){
 		var theControl = null,
 			controlId = this.getParameter("controlId"),
@@ -289,6 +292,7 @@
 			}
 		}
 		else if("SOURCE" === scope){
+			//We try to find the control from a event source
 			if(!this.context.eventSource){
 				throw new Error("Cannot use scope 'SOURCE': no 'eventSource' in context!");
 			}
@@ -296,11 +300,22 @@
 			theControl = this.context.eventSource;
 		}
 		else if("SELECTION" === scope){
+			//We try to find the control from a list selection
 			if(!this.context.eventSource || !this.context.eventSource.getSelectedControl){
 				throw new Error("Cannot use scope 'SELECTION': no 'eventSource' in context or no selection support!");
 			}
 
 			theControl = this.context.eventSource.getSelectedControl();
+		}
+		else if("PARAMETER" === scope){
+			var parameterKey = this.getParameter("parameterKey");
+			
+			//We try to find the control from a event parameter
+			if(!this.context.eventParameters || !this.context.eventParameters[parameterKey]){
+				throw new Error("Cannot use scope 'PARAMETER': no 'eventParameters' in context or parameter not present!");
+			}
+			
+			theControl = this.context.eventParameters[parameterKey];
 		}
 		
 		if(!theControl){

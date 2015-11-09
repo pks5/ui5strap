@@ -1,0 +1,53 @@
+<template data-controller-name="ui5strap.ActionController">
+	<!-- The page control -->
+	<div data-sap-ui-type="ui5strap.Page">
+			<!-- Head area with horizontal bar -->
+			<div data-sap-ui-aggregation="head">
+				<!-- Bar on top of page -->
+				<div data-sap-ui-type="ui5strap.Bar" data-inverse="true">
+					<!-- Left area of bar -->
+					<div data-sap-ui-aggregation="left">
+						<!-- Back Button -->
+						<div 
+							data-sap-ui-type="ui5strap.Button" 
+							data-tap="__execute" 
+							data-custom-data:__action="mycompany.myfirstapp.actions.GotoPage1"
+						>
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="chevron-left"></div>
+						</div>
+					</div>
+					
+					<!-- Middle area of bar -->
+					<div data-sap-ui-aggregation="middle">
+						<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE3_TITLE}"></div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Body area with page content -->
+			<div data-sap-ui-aggregation="body">
+				<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
+				<div data-sap-ui-type="ui5strap.Container" data-type="FluidInset">
+					
+						<div data-sap-ui-type="ui5strap.Row">
+							<!-- Left Column -->
+							<div data-sap-ui-type="ui5strap.Col" data-columns-extra-small="12" data-columns-small="6">
+							
+								
+								
+							</div>
+							
+							<!-- Right Column -->
+							<div data-sap-ui-type="ui5strap.Col" data-columns-extra-small="12" data-columns-small="6">
+							
+								
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+	</div>
+
+</template>

@@ -206,7 +206,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.11"
+        	version: "0.9.12"
       }
   );
   
@@ -2665,6 +2665,9 @@
 		return true;
 	};
 
+	/**
+	 * Tries to find a control by a given scope and additional paramters
+	 */
 	ActionModuleProto.findControl = function(){
 		var theControl = null,
 			controlId = this.getParameter("controlId"),
@@ -2690,6 +2693,7 @@
 			}
 		}
 		else if("SOURCE" === scope){
+			//We try to find the control from a event source
 			if(!this.context.eventSource){
 				throw new Error("Cannot use scope 'SOURCE': no 'eventSource' in context!");
 			}
@@ -2697,11 +2701,22 @@
 			theControl = this.context.eventSource;
 		}
 		else if("SELECTION" === scope){
+			//We try to find the control from a list selection
 			if(!this.context.eventSource || !this.context.eventSource.getSelectedControl){
 				throw new Error("Cannot use scope 'SELECTION': no 'eventSource' in context or no selection support!");
 			}
 
 			theControl = this.context.eventSource.getSelectedControl();
+		}
+		else if("PARAMETER" === scope){
+			var parameterKey = this.getParameter("parameterKey");
+			
+			//We try to find the control from a event parameter
+			if(!this.context.eventParameters || !this.context.eventParameters[parameterKey]){
+				throw new Error("Cannot use scope 'PARAMETER': no 'eventParameters' in context or parameter not present!");
+			}
+			
+			theControl = this.context.eventParameters[parameterKey];
 		}
 		
 		if(!theControl){
@@ -3431,8 +3446,6 @@
 		"constructor" : function(app, options){
 			ui5strap.AppComponent.call(this, app, options);
 			
-			ui5strap.tm("APP", "APP_FRAME", "CONSTRUCT");
-
 			this._targetStatus = {};
 
 			this.vTargets = {};
@@ -3452,7 +3465,6 @@
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
-		ui5strap.tm("APP", "APP_FRAME", "INIT");
 		var _this = this;
 		
 		this.control = this._createControl();
@@ -3498,7 +3510,7 @@
 	 * @Protected
 	 */
 	AppFrameProto._createControl = function(){
-		ui5strap.tm("APP", "APP_FRAME", "CREATE_CONTROL");
+		jQuery.sap.log.debug("AppFrameProto._createControl");
 		
 		//Init default NavContainer
 		var frameConfig = this.options,
@@ -3534,7 +3546,7 @@
 	* @Public
 	*/
 	AppFrameProto.showInitialContent = function(callback){
-		ui5strap.tm("APP", "APP_FRAME", "SHOW_INITIAL_CONTENT");
+		jQuery.sap.log.debug("AppFrameProto.showInitialContent");
 
 		var _this = this,
 			initialViews = this.options.initialViews,
@@ -3602,7 +3614,7 @@
 	 * @Public
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
-		ui5strap.tm("APP", "APP_FRAME", "TO_PAGE");
+		jQuery.sap.log.debug("AppFrameProto.toPage");
 		
 		//TODO use default target of navcontainer?
 		if(!viewConfig.target){
@@ -3677,12 +3689,9 @@
 
 	/*
 	* @Public
+	* @deprecated
 	*/
 	AppFrameProto.gotoPage = function (viewDef, callback) {
-		//Get final view configuration
-		var viewConfig = this.getViewConfig(viewDef),
-			target = viewConfig.target;
-
 		//Get final view configuration
 		var viewConfig = this.getViewConfig(viewDef),
 			target = viewConfig.target;
@@ -3737,8 +3746,6 @@
 	sap.ui.base.Object.extend('ui5strap.AppBase', {
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
-			
-			ui5strap.tm("APP", "APP", "CONSTRUCT");
 			
 			this.config = config;
 
@@ -3814,7 +3821,6 @@
 	* Initializes the App
 	*/
 	AppBaseProto.init = function(){
-		ui5strap.tm("APP", "APP", "INIT");
 		this.onInit(new sap.ui.base.Event("ui5strap.app.init", this, {}));
 	};
 
@@ -3822,7 +3828,7 @@
 	* Preload JavaScript libraries
 	*/
 	var _preloadJavaScript = function(_this, callback){
-		ui5strap.tm("APP", "APP", "PRELOAD_JS");
+		jQuery.sap.log.debug("AppBase::_preloadJavaScript");
 		
 		var scripts = _this.config.data.js;
 		if(scripts.length === 0){
@@ -3854,7 +3860,7 @@
 	};
 
 	var _preloadModels = function(_this, callback){
-		ui5strap.tm("APP", "APP", "PRELOAD_MODELS");
+		jQuery.sap.log.debug("AppBase::_preloadModels");
 
 		//Models
 		var models = _this.config.data.models,
@@ -3984,7 +3990,7 @@
 	 * 
 	 */
 	var _preloadComponents = function(_this, callback){
-		ui5strap.tm("APP", "APP", "PRELOAD_COMPONENTS");
+		jQuery.sap.log.debug("AppBase::_preloadComponents");
 
 		//Components
 		var components = _this.config.data.components,
@@ -4012,7 +4018,7 @@
 	* @Private
 	*/
 	var _preloadActions = function(_this, callback){
-		ui5strap.tm("APP", "APP", "PRELOAD_ACTIONS");
+		jQuery.sap.log.debug("AppBase::_preloadActions");
 		
 		var actions = _this.config.data.actions,
 			callI = actions.length;
@@ -4039,7 +4045,8 @@
 	 * @Public
 	 */
 	AppBaseProto.preload = function(callback){
-		ui5strap.tm("APP", "APP", "PRELOAD");
+		jQuery.sap.log.debug("AppBaseProto.preload");
+		
 		this.config.resolve();
 
 		var _this = this;
@@ -4057,7 +4064,7 @@
 	 * @Public
 	 */
 	AppBaseProto.load = function(callback){
-		ui5strap.tm("APP", "APP", "LOAD");
+		jQuery.sap.log.debug("AppBaseProto.load");
 
 		var _this = this;
 		this.preload(function(){
@@ -4073,7 +4080,7 @@
 	* Start the app
 	*/
 	AppBaseProto.start = function(callback){
-		ui5strap.tm("APP", "APP", "START");
+		jQuery.sap.log.debug("AppBaseProto.start");
 
 		var _this = this;
 		if(this.isRunning){
@@ -4096,7 +4103,7 @@
 	};
 
 	AppBaseProto.show = function(callback){
-		ui5strap.tm("APP", "APP", "SHOW");
+		jQuery.sap.log.debug("AppBaseProto.show");
 
 		this.isVisible = true;
 		this.onShow(new sap.ui.base.Event("ui5strap.app.show", this, {}));
@@ -4113,7 +4120,7 @@
 	};
 
 	AppBaseProto.shown = function(callback){
-		ui5strap.tm("APP", "APP", "SHOWN");
+		jQuery.sap.log.debug("AppBaseProto.shown");
 
 		var _this = this;
 
@@ -4134,7 +4141,8 @@
 	};
 
 	AppBaseProto.hide = function(callback){
-		ui5strap.tm("APP", "APP", "HIDE");
+		jQuery.sap.log.debug("AppBaseProto.hide");
+		
 		this.isVisible = false;
 		
 		this.onHide(new sap.ui.base.Event("ui5strap.app.hide", this, {}));
@@ -4143,7 +4151,7 @@
 	};
 
 	AppBaseProto.hidden = function(callback){
-		ui5strap.tm("APP", "APP", "HIDDEN");
+		jQuery.sap.log.debug("AppBaseProto.hidden");
 
 		var _this = this;
 		ui5strap.polyfill.requestAnimationFrame(function(){
@@ -4159,7 +4167,7 @@
 	* Stop the app
 	*/
 	AppBaseProto.stop = function(callback){
-		ui5strap.tm("APP", "APP", "STOP");
+		jQuery.sap.log.debug("AppBaseProto.stop");
 
 		if(!this.isRunning){
 			throw new Error(this + " is not running.");
@@ -4175,8 +4183,8 @@
 	};
 
 	AppBaseProto.unload = function(callback){
-		ui5strap.tm("APP", "APP", "UNLOAD");
-
+		jQuery.sap.log.debug("AppBaseProto.unload");
+		
 		ui5strap.Layer.unregister(this.overlayId);
 		ui5strap.Layer.unregister(this.getDomId('loader'));
 
@@ -6050,8 +6058,6 @@
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);
 			
-			ui5strap.tm("VIEWER", "VIEWER", "VIEWER_CONSTRUCT");
-			
 			this.options = options || {};
 
 			//Device Log Level
@@ -6096,8 +6102,7 @@
 	 * @Public
 	 */
 	ViewerBaseProto.init = function(){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_INIT");
-		
+		//Register Loader Layer
 		ui5strap.Layer.register('ui5strap-loader');
   		
 		this._initOverlay();
@@ -6344,7 +6349,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_START");
+		jQuery.sap.log.debug("ViewerProto.start");
 		
 		this.init();
 
@@ -6432,7 +6437,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.executeApp = function(appDefinition, doNotShow, callback, loadCallback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_EXEC", appDefinition.url);
+		jQuery.sap.log.debug("ViewerProto.executeApp");
 		
 		var _this = this,
 			appType = appDefinition.type;
@@ -6534,7 +6539,7 @@
 	 * @Private
 	 */
 	var _preloadLibraries = function(_this, libs, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "PRELOAD_LIBS");
+		jQuery.sap.log.debug("ViewerProto._preloadLibraries");
 		
 		var callI = libs.length,
 			successCallback = function(){
@@ -6583,7 +6588,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.createApp = function(appConfig, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_CREATE");
+		jQuery.sap.log.debug("ViewerProto.createApp");
 		
 		var configDataJSON = appConfig.data,
 			appModuleName = configDataJSON.app.module,
@@ -6618,7 +6623,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.loadApp = function(configDataJSON, parameters, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_LOAD", configDataJSON.app.name);
+		jQuery.sap.log.debug("ViewerProto.loadApp");
 
 		var _this = this,
 			appConfig = new ui5strap.AppConfig(this.options, parameters);
@@ -6651,7 +6656,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.unloadApp = function(sappId){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_UNLOAD", sappId);
+		jQuery.sap.log.debug("ViewerProto.unloadApp");
 		
 		var appInstance = this.getApp(sappId);
 
@@ -6675,7 +6680,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.startApp = function(sappId, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_START", sappId);
+		jQuery.sap.log.debug("ViewerProto.startApp");
 		
 		var appInstance = this.getApp(sappId);
 		
@@ -6697,7 +6702,8 @@
 	* @Public
 	*/
 	ViewerMultiProto.stopApp = function(sappId){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_STOP", sappId);
+		jQuery.sap.log.debug("ViewerProto.stopApp");
+		
 		var appInstance = this.getApp(sappId);
 
 		if(null === appInstance){
@@ -6718,7 +6724,7 @@
 	* @Public
 	*/
 	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
-		ui5strap.tm("VIEWER", "VIEWER", "VIEWER_APP_SHOW", sappId);
+		jQuery.sap.log.debug("ViewerProto.showApp");
 		
 		if(this._loadingSapplication){
 			jQuery.sap.log.warning("App '" + this._loadingSapplication + "' is currently loading."); 
@@ -10679,6 +10685,11 @@
 			"defaultValue" : null, 
 			"type" : "string"
 		},
+		"parameterKey" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
 		"scope" : {
 			"required" : false, 
 			"defaultValue" : "APP", 
@@ -10977,6 +10988,11 @@
 			"defaultValue" : null,
 			"type" : "string"
 		},
+		"parameterKey" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
 		"scope" : {
 			"required" : false, 
 			"defaultValue" : "APP", 
@@ -11064,6 +11080,11 @@
 			"type" : "string"
 		},
 		"viewId" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
+		"parameterKey" : {
 			"required" : false,
 			"defaultValue" : null,
 			"type" : "string"
@@ -11198,6 +11219,7 @@
 				writeHistory = this.getParameter("writeHistory"),
 				bookmarkable = this.getParameter("bookmarkable"),
 				virtual = this.getParameter("virtual"),
+				frameId = this.getParameter("frameId"),
 				parameters = this.getParameter("parameters");
 
 			this.context._log.debug("Goto page '" + viewId + "' on target '" + target + "' ...");
@@ -11213,10 +11235,10 @@
 				parameters : parameters
 			};
 			
-			var frameGetter = 'get' + jQuery.sap.charToUpperCase(this.getParameter("frameId"), 0);
+			var frameGetter = 'get' + jQuery.sap.charToUpperCase(frameId, 0);
 			
 			if(!this.context.app[frameGetter]){
-				throw new Error("Cannot Goto Page: invalid frame id!");
+				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
 			}
 
 			this.context.app[frameGetter]().gotoPage(this.context.parameters[this.namespace]);
@@ -11368,6 +11390,11 @@
 			"type" : "string"
 		},
 		"viewId" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
+		"parameterKey" : {
 			"required" : false,
 			"defaultValue" : null,
 			"type" : "string"
@@ -11744,6 +11771,11 @@
 			"defaultValue" : null, 
 			"type" : "string"
 		},
+		"parameterKey" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
 		"scope" : {
 			"required" : false, 
 			"defaultValue" : "VIEW", 
@@ -11847,6 +11879,11 @@
 			"type" : "string"
 		},
 		"viewId" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
+		"parameterKey" : {
 			"required" : false,
 			"defaultValue" : null,
 			"type" : "string"
@@ -12148,6 +12185,11 @@
 			"type" : "string"
 		},
 		"viewId" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
+		"parameterKey" : {
 			"required" : false,
 			"defaultValue" : null,
 			"type" : "string"

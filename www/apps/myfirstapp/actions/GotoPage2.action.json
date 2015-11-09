@@ -1,0 +1,14 @@
+{
+	
+	"__format" : "AJ2.0",
+	"__modules" : "ui5strap.AMGotoPage",
+	"__description" : "Goto Page 2",
+
+	"gotoPage" : {
+		"viewName" : "mycompany.myfirstapp.views.MyPage2",
+		"transition" : "transition-flip",
+		"writeHistory" : true,
+		"bookmarkable" : false
+	}
+
+}

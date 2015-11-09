@@ -62,6 +62,11 @@
 			"defaultValue" : null, 
 			"type" : "string"
 		},
+		"parameterKey" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
 		"scope" : {
 			"required" : false, 
 			"defaultValue" : "VIEW", 

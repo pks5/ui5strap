@@ -180,9 +180,15 @@
 		
 		<!-- 
 			Minimized OpenUI5 library without sap.m and sap.ui.core.commons Controls. 
-			If you need the full OpenUI5 library, please download it from http://openui5.org/ and include it here instead. 
-		-->
+		-->	
 		<script id="sap-ui-bootstrap" src="lib/openui5/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
+		
+		
+		<!-- 
+			Full OpenUI5 library from CDN, you can download it from http://openui5.org/ 
+		
+			<script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/1.26.10/resources/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
+		-->
 		
 		<!-- Set Ui5Strap Library location. -->
 		<script>
@@ -205,7 +211,7 @@
 				"app" : {
 					type : "URI",
 					uriParam : "app",
-					defaultValue : "./apps/myapp/app.json" //Default App
+					defaultValue : "./apps/myfirstapp/app.json" //Default App
 				}
 			};
 

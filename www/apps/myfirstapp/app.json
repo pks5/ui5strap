@@ -1,0 +1,70 @@
+{
+	"app" : {
+	        "id" : "mycompany.myfirstapp",
+	        "package" : "mycompany.myfirstapp",
+	        "name" : "My First App",
+	        "logLevel" : 5
+	},
+	
+	"models" : [
+            {
+                "src" : "i18n/i18n.properties",
+                "type" : "RESOURCE",
+                "modelName" : "i18n" 
+            },
+            {
+                "src" : "data/menu.json",
+                "type" : "JSON",
+                "modelName" : "menu" 
+            }
+    ],
+    
+    "views" : {
+            "mycompany.myfirstapp.views.MyPage1" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page1",
+                "styleClass" : "page-1",
+
+                "target" : "content",
+                "preload" : true
+            },
+
+            "mycompany.myfirstapp.views.MyPage2" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page2",
+                "styleClass" : "page-2",
+
+                "target" : "content",
+                "preload" : true
+            },
+
+            "mycompany.myfirstapp.views.MyPage3" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page3",
+                "styleClass" : "page-3",
+
+                "target" : "content",
+                "preload" : true
+            }
+      },
+	
+	"components" : [
+	         {
+	             
+	             "id" : "frame",
+	             "module" : "ui5strap.AppFrame",
+	             "navContainer" : "ui5strap.NavContainer",
+	             
+	             "initialViews" : [
+	                 { 
+	                     "viewName" : "mycompany.myfirstapp.views.MyPage1",
+	                     "type" : "HTML"
+	                 }
+	             ]
+	
+	         }
+    ]
+}

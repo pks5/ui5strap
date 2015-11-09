@@ -1,0 +1,34 @@
+<template data-controller-name="ui5strap.ActionController">
+	<!-- The page control -->
+	<div data-sap-ui-type="ui5strap.Page">
+			
+			<!-- Head area with horizontal bar -->
+			<div data-sap-ui-aggregation="head">
+				<div data-sap-ui-type="ui5strap.Bar" data-inverse="true">
+					<div data-sap-ui-aggregation="middle">
+						<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE1_TITLE}"></div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Body area with page content -->
+			<div data-sap-ui-aggregation="body">
+				<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
+					<div data-sap-ui-type="ui5strap.Container" data-type="FluidInset">
+						
+						<div 
+							data-sap-ui-type="ui5strap.ListGroup" 
+							data-tap="__execute" 
+							data-custom-data:__action="mycompany.myfirstapp.actions.MenuSelect" 
+							data-items="{menu>/items}"
+						>
+							<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="{menu>label}" data-badge="{menu>badge}"></div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			
+	</div>
+
+</template>
