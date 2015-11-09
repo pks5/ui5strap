@@ -8870,6 +8870,18 @@ button.close {
 .ui5strap-hidden {
   display: none;
 }
+.ui5strap-text-align-left {
+  text-align: left;
+}
+.ui5strap-text-align-center {
+  text-align: center;
+}
+.ui5strap-text-align-right {
+  text-align: right;
+}
+.ui5strap-text-align-justify {
+  text-align: justify;
+}
 /*
 * Disable text selection
 */

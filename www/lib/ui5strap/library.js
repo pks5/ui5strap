@@ -109,6 +109,7 @@
             "ui5strap.ContentPlacement",
             "ui5strap.Placement",
             "ui5strap.Alignment",
+            "ui5strap.TextAlignment",
             "ui5strap.TextType",
             "ui5strap.ListType",
             "ui5strap.LinkType",
@@ -447,6 +448,20 @@
     PullRight : "PullRight",
     CenterBlock : "CenterBlock"
   };
+  
+  /*
+   * TextAlignment
+   */
+   jQuery.sap.declare("ui5strap.TextAlignment");
+
+   ui5strap.TextAlignment = {
+     Default : "Default",
+     
+     Left : "Left",
+     Right : "Right",
+     Center : "Center",
+     Justify : "Justify"
+   };
 
   //Bootstrap CSS mapping
   ui5strap.BSAlignment = {

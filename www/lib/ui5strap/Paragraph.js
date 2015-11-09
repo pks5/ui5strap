@@ -54,6 +54,10 @@
 					type: "ui5strap.Severity", 
 					defaultValue: ui5strap.Severity.None
 				},
+				textAlign : {
+					type : "ui5strap.TextAlignment",
+					defaultValue : ui5strap.TextAlignment.Default
+				},
 				formStatic : {
 					type : "boolean",
 					defaultValue:false

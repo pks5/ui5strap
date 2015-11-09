@@ -35,7 +35,8 @@
 		var content = oControl.getContent(),
 			severity = oControl.getSeverity(),
 			text = oControl.getText(),
-			parse = oControl.getParse();
+			parse = oControl.getParse(),
+			textAlign = oControl.getTextAlign();
 
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
@@ -49,6 +50,9 @@
 		}
 		if(ui5strap.Severity.None !== severity){
 			rm.addClass("text-" + ui5strap.BSSeverity[severity]);
+		}
+		if(ui5strap.TextAlignment.Default !== textAlign){
+			rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
 		}
 		rm.writeClasses();
 		rm.write(">");
