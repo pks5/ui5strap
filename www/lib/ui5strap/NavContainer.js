@@ -550,6 +550,8 @@
 				else{
 					currentOptions.splice(optionIndex, 1);
 				}
+				
+				this.onOptionChanged(optionName, optionEnabled);
 			}
 		}
 		this.setOptions(currentOptions.join(' '));
@@ -561,17 +563,26 @@
 	NavContainerBaseProto.isOptionEnabled = function(optionName){
 		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
 	};
-
+	
+	NavContainerBaseProto.setOptionEnabled = function(optionName, optionEnabled){
+		var options = {};
+		
+		options[optionName] = optionEnabled;
+		
+		this.setOptionsEnabled(options);
+	};
+	
 	/**
 	* @Public
 	*/
 	NavContainerBaseProto.toggleOption = function(optionName){
-		var isOptionEnabled = this.isOptionEnabled(optionName);
-		var options = {};
-		options[optionName] = !isOptionEnabled;
-		this.setOptionsEnabled(options);
+		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
 	};
 
+	NavContainerBaseProto.onOptionChanged = function(optionName, optionEnabled){
+		jQuery.sap.log.info("Option '" + optionName + "' changed to " + (optionEnabled ? 'enabled' : 'disabled'));
+	};
+	
 	/**
 	* @Public
 	*/

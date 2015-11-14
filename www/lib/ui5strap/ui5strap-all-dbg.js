@@ -5831,6 +5831,8 @@
 				else{
 					currentOptions.splice(optionIndex, 1);
 				}
+				
+				this.onOptionChanged(optionName, optionEnabled);
 			}
 		}
 		this.setOptions(currentOptions.join(' '));
@@ -5842,17 +5844,26 @@
 	NavContainerBaseProto.isOptionEnabled = function(optionName){
 		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
 	};
-
+	
+	NavContainerBaseProto.setOptionEnabled = function(optionName, optionEnabled){
+		var options = {};
+		
+		options[optionName] = optionEnabled;
+		
+		this.setOptionsEnabled(options);
+	};
+	
 	/**
 	* @Public
 	*/
 	NavContainerBaseProto.toggleOption = function(optionName){
-		var isOptionEnabled = this.isOptionEnabled(optionName);
-		var options = {};
-		options[optionName] = !isOptionEnabled;
-		this.setOptionsEnabled(options);
+		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
 	};
 
+	NavContainerBaseProto.onOptionChanged = function(optionName, optionEnabled){
+		jQuery.sap.log.info("Option '" + optionName + "' changed to " + (optionEnabled ? 'enabled' : 'disabled'));
+	};
+	
 	/**
 	* @Public
 	*/
@@ -17817,10 +17828,13 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	*/
 	NavContainerRenderer.startRender = function(rm, oControl) {
 			rm.write("<!-- NavContainer START -->");
-			rm.write("<div");
+			rm.write('<div class="' + oControl.getClassString() + '"');
 		    rm.writeControlData(oControl);
-		    rm.addClass(oControl.getClassString());
-		    rm.writeClasses();
+		    
+		    //This Control does not support custom css class
+		    //rm.addClass(oControl.getClassString());
+		    //rm.writeClasses();
+		    
 		    rm.write(">");
 	};
 

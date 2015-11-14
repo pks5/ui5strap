@@ -48,10 +48,13 @@
 	*/
 	NavContainerRenderer.startRender = function(rm, oControl) {
 			rm.write("<!-- NavContainer START -->");
-			rm.write("<div");
+			rm.write('<div class="' + oControl.getClassString() + '"');
 		    rm.writeControlData(oControl);
-		    rm.addClass(oControl.getClassString());
-		    rm.writeClasses();
+		    
+		    //This Control does not support custom css class
+		    //rm.addClass(oControl.getClassString());
+		    //rm.writeClasses();
+		    
 		    rm.write(">");
 	};
 
