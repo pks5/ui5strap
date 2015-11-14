@@ -47,6 +47,7 @@
 	* @Public
 	*/
 	NavContainerRenderer.startRender = function(rm, oControl) {
+			rm.write("<!-- NavContainer START -->");
 			rm.write("<div");
 		    rm.writeControlData(oControl);
 		    rm.addClass(oControl.getClassString());
@@ -58,27 +59,37 @@
 	* @Public
 	*/
 	NavContainerRenderer.renderTarget = function (rm, oControl, target) {
+			rm.write("<!-- NavContainer target '" + target + "' START -->");
 			rm.write('<div');
-			rm.addClass('navcontainer-target navcontainer-' + oControl.ncType + '-target navcontainer-' + oControl.ncType + '-target-' + target);
-			//Legacy support
-			rm.addClass('navcontainer-aggregation navcontainer-aggregation-' + target);
-			rm.writeClasses();
-			rm.write(">");
-
-			//Pages container
-			rm.write('<div id="' + oControl.targetPagesDomId(target) + '"');
-			rm.addClass('navcontainer-pages');
-			rm.writeClasses();
-			rm.write("></div>");
 			
-			//Layers container
-			rm.write('<div id="' + oControl.targetLayersDomId(target) + '"');
-			rm.addClass('navcontainer-layers');
+			/*
+			 * Adds 3 css classes:
+			 * 
+			 * navcontainer-target
+			 * navcontainer-TYPE-target-TARGET
+			 * 
+			 * while TYPE and TARGET are replaced by the provided values
+			 */
+			rm.addClass('navcontainer-target navcontainer-' + oControl.ncType + '-target-' + target);
+			
 			rm.writeClasses();
 			rm.write(">");
-			rm.write("</div>");
+	
+				//Pages container
+				rm.write('<div id="' + oControl.targetPagesDomId(target) + '"');
+					rm.addClass('navcontainer-pages');
+					rm.writeClasses();
+				rm.write("></div>");
+				
+				//Layers container
+				rm.write('<div id="' + oControl.targetLayersDomId(target) + '"');
+					rm.addClass('navcontainer-layers');
+					rm.writeClasses();
+					rm.write(">");
+				rm.write("</div>");
 
 			rm.write("</div>");
+			rm.write("<!-- NavContainer target '" + target + "' END -->");
 	};
 
 	/*
@@ -86,6 +97,7 @@
 	*/
 	NavContainerRenderer.endRender = function(rm) {
 		 	rm.write("</div>");
+		 	rm.write("<!-- NavContainer END -->");
 	};
 
 

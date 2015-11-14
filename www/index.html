@@ -132,16 +132,10 @@
 	
 	<body role="application">
 		
-		<!-- 
-			Root Container
-			Changed in 0.8: the Root Container has now a different id.
-		-->
+		<!-- Ui5Strap Root Container Layer -->
 		<div id="ui5strap-container">
 			
-			<!-- 
-				Splash Screen
-				Changed in 0.8: the Splash Screen is now defined inside the Root Container.
-			-->
+			<!-- App Container, contains splash screen as first "app" -->
 			<div id="ui5strap-app-initial" class="ui5strap-app">
 				<div id="ui5strap-splash-screen" class="ui5strap-app-content">
 					<div id="ui5strap-splash-screen-window">
@@ -154,21 +148,21 @@
 			
 		</div>
 
-		<!-- Global Overlay -->
+		<!-- Global Overlay Layer -->
 		<div id="ui5strap-overlay" class="ui5strap-overlay ui5strap-layer ui5strap-hidden">
 			<div id="ui5strap-overlay-backdrop" class="ui5strap-overlay-backdrop"></div>
 			<div id="ui5strap-overlay-content" class="ui5strap-overlay-content"></div>
 		</div>
 
-		<!-- Loading screen. Showing while the app is busy. -->
+		<!-- Global Loading Layer -->
 		<div id="ui5strap-loader" class="ui5strap-layer ui5strap-loader ui5strap-hidden"></div>
 		
-		<!-- Fatal Error screen. Shown when a fatal error occurs. -->
+		<!-- Fatal Error Layer -->
 		<div id="ui5strap-fatal" class="ui5strap-layer">
 			<div id="ui5strap-fatal-message"></div>
 		</div>
 
-		<!-- No Script screen. Only visible when JavaScript is deactivated. -->
+		<!-- No Script Layer. Only visible when JavaScript is deactivated. -->
 		<noscript>
 			<div id="ui5strap-noscript" class="ui5strap-layer">
 				Ui5Strap requires JavaScript to be enabled.
@@ -185,7 +179,7 @@
 		
 		
 		<!-- 
-			Full OpenUI5 library from CDN, you can download it from http://openui5.org/ 
+			Full OpenUI5 library from CDN. You can download the library from http://openui5.org/ if needed. 
 		
 			<script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/1.26.10/resources/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
 		-->

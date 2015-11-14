@@ -188,7 +188,7 @@
 				});
 			}, 
 			function anon_transitionPreparedComplete(){
-				this.$next.attr('class', this.$next.attr('data-org-class') + ' navcontainer-page-current');
+				this.$next.attr('class', 'navcontainer-page navcontainer-page-current');
 				
 				//Transition callback
 				_transitionCallback(_this, pageChange, transList);
@@ -336,66 +336,50 @@
 		//}
 	};
 
-	/*
-	var ou = sap.ui.core.Core.prototype.createUIArea;
-
-	sap.ui.core.Core.prototype.createUIArea = function(domRef, nc){
-		var uiArea = ou.call(this, domRef);
-		
-		if(nc){
-			jQuery.each(nc.oModels, function (sName, oModel){
-				uiArea.oPropagatedProperties.oModels[sName] = oModel;
-			});
-			uiArea.propagateProperties(true);
-		}
-		return uiArea;
-	};
-	*/
-
 	/**
 	* @Private
 	*/
 	var _placePage = function(_this, target, page, isPrepared){
 			//ui5strap.tm("APP", "NC", "PLACE_PAGE");
+			
+			//Page is null, return null
+			if(!page){
+				return null;
+			}
 		
-			if(page && page.getDomRef()){
+			//Page is already present in DOM, return parent jQuery reference
+			if(page.getDomRef()){
 				return page.$().parent();
 			}
 			
-			if(null === page){
-				return null;
-			}
-
-			//Add new page to DOM
-			var newPage = document.createElement('div'),
-				$nextContent = jQuery(newPage),
-				orgClassName = 'navcontainer-page navcontainer-' + _this.ncType + '-page navcontainer-' + _this.ncType + '-page-' + target,
-				newClassName = orgClassName,
+			//Create dom element and jQuery wrapper
+			var newPageContainer = document.createElement('div'),
+				$newPageContainer = jQuery(newPageContainer),
 				oModels = _this.oModels;
 			
-			if(true === isPrepared){
-				 newClassName += ' navcontainer-page-next ui5strap-hidden';
-			}
-			newPage.className = newClassName;
-			newPage.id = _this.pageDomId(target, page);
-			$nextContent.attr('data-org-class', orgClassName);
+			//Set css class name for new page container
+			newPageContainer.className = true === isPrepared
+					? 'navcontainer-page navcontainer-page-next ui5strap-hidden'
+					: 'navcontainer-page';
 			
-			jQuery('#' + _this.targetPagesDomId(target)).append($nextContent);
+			//Create and set id for new page container
+			newPageContainer.id = _this.pageDomId(target, page);
 			
-			//var uiArea = sap.ui.getCore().createUIArea(newPage, _this);
+			//Append page container to the dom
+			jQuery('#' + _this.targetPagesDomId(target)).append($newPageContainer);
+			
 			for(var sName in oModels){
 				//page.setModel(oModel, sName);
 				page.oPropagatedProperties.oModels[sName] = oModels[sName];
 				page.propagateProperties(sName);
 			};
 			
-			//uiArea.addContent(page);
-
-			page.placeAt(newPage);
+			//Add page to new page container
+			page.placeAt(newPageContainer);
 
 			//jQuery.sap.log.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
 
-			return $nextContent;
+			return $newPageContainer;
 	};
 
 	/*
@@ -587,23 +571,6 @@
 		var options = {};
 		options[optionName] = !isOptionEnabled;
 		this.setOptionsEnabled(options);
-	};
-
-	/**
-	* @Public
-	* @Deprecated
-	*/
-	NavContainerBaseProto.setTargetOption = function(target, optionName, optionEnabled){
-		var $aggregation = jQuery('#' + this.targetPagesDomId(target)),
-			optionClassName = 'navcontainer-aggregation-' + target+ '-' + optionName;
-
-		if(optionEnabled){
-			$aggregation.addClass(optionClassName);
-		}
-		else{
-			$aggregation.removeClass(optionClassName);
-		}
-
 	};
 
 	/**
