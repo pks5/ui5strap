@@ -5617,64 +5617,50 @@
 		//}
 	};
 
-	/*
-	var ou = sap.ui.core.Core.prototype.createUIArea;
-
-	sap.ui.core.Core.prototype.createUIArea = function(domRef, nc){
-		var uiArea = ou.call(this, domRef);
-		
-		if(nc){
-			jQuery.each(nc.oModels, function (sName, oModel){
-				uiArea.oPropagatedProperties.oModels[sName] = oModel;
-			});
-			uiArea.propagateProperties(true);
-		}
-		return uiArea;
-	};
-	*/
-
 	/**
 	* @Private
 	*/
 	var _placePage = function(_this, target, page, isPrepared){
 			//ui5strap.tm("APP", "NC", "PLACE_PAGE");
+			
+			//Page is null, return null
+			if(!page){
+				return null;
+			}
 		
-			if(page && page.getDomRef()){
+			//Page is already present in DOM, return parent jQuery reference
+			if(page.getDomRef()){
 				return page.$().parent();
 			}
 			
-			if(null === page){
-				return null;
-			}
-
-			//Add new page to DOM
-			var newPage = document.createElement('div'),
-				$nextContent = jQuery(newPage),
-				newClassName = 'navcontainer-page',
+			//Create dom element and jQuery wrapper
+			var newPageContainer = document.createElement('div'),
+				$newPageContainer = jQuery(newPageContainer),
 				oModels = _this.oModels;
 			
-			if(true === isPrepared){
-				 newClassName += ' navcontainer-page-next ui5strap-hidden';
-			}
-			newPage.className = newClassName;
-			newPage.id = _this.pageDomId(target, page);
+			//Set css class name for new page container
+			newPageContainer.className = true === isPrepared
+					? 'navcontainer-page navcontainer-page-next ui5strap-hidden'
+					: 'navcontainer-page';
 			
-			jQuery('#' + _this.targetPagesDomId(target)).append($nextContent);
+			//Create and set id for new page container
+			newPageContainer.id = _this.pageDomId(target, page);
 			
-			//var uiArea = sap.ui.getCore().createUIArea(newPage, _this);
+			//Append page container to the dom
+			jQuery('#' + _this.targetPagesDomId(target)).append($newPageContainer);
+			
 			for(var sName in oModels){
 				//page.setModel(oModel, sName);
 				page.oPropagatedProperties.oModels[sName] = oModels[sName];
 				page.propagateProperties(sName);
 			};
 			
-			//uiArea.addContent(page);
-
-			page.placeAt(newPage);
+			//Add page to new page container
+			page.placeAt(newPageContainer);
 
 			//jQuery.sap.log.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
 
-			return $nextContent;
+			return $newPageContainer;
 	};
 
 	/*
@@ -5794,14 +5780,13 @@
 	* @Public
 	*/
 	NavContainerBaseProto.getClassString = function(){
-		var navContainerClassName = "navcontainer-" + this.ncType,
-				options = this.getOptions();
-
-		var classes = "navcontainer " + navContainerClassName;
-	    if('' !== options){
+		var options = this.getOptions(),
+			classes = "navcontainer navcontainer-type-" + this.ncType;
+	    
+		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + navContainerClassName + '-' + options[i] + ' ' + 'navcontainer-option-' + options[i];
+	    		classes += ' ' + 'navcontainer-option-' + options[i];
 	    	}
 	    }
 
@@ -17831,6 +17816,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	* @Public
 	*/
 	NavContainerRenderer.startRender = function(rm, oControl) {
+			rm.write("<!-- NavContainer START -->");
 			rm.write("<div");
 		    rm.writeControlData(oControl);
 		    rm.addClass(oControl.getClassString());
@@ -17842,18 +17828,18 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	* @Public
 	*/
 	NavContainerRenderer.renderTarget = function (rm, oControl, target) {
+			rm.write("<!-- NavContainer target '" + target + "' START -->");
 			rm.write('<div');
 			
 			/*
 			 * Adds 3 css classes:
 			 * 
 			 * navcontainer-target
-			 * navcontainer-TYPE-target
 			 * navcontainer-TYPE-target-TARGET
 			 * 
 			 * while TYPE and TARGET are replaced by the provided values
 			 */
-			rm.addClass('navcontainer-target navcontainer-' + oControl.ncType + '-target navcontainer-' + oControl.ncType + '-target-' + target);
+			rm.addClass('navcontainer-target navcontainer-target-' + target);
 			
 			rm.writeClasses();
 			rm.write(">");
@@ -17872,6 +17858,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 				rm.write("</div>");
 
 			rm.write("</div>");
+			rm.write("<!-- NavContainer target '" + target + "' END -->");
 	};
 
 	/*
@@ -17879,6 +17866,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	*/
 	NavContainerRenderer.endRender = function(rm) {
 		 	rm.write("</div>");
+		 	rm.write("<!-- NavContainer END -->");
 	};
 
 

@@ -70,7 +70,7 @@
 			 * 
 			 * while TYPE and TARGET are replaced by the provided values
 			 */
-			rm.addClass('navcontainer-target navcontainer-' + oControl.ncType + '-target-' + target);
+			rm.addClass('navcontainer-target navcontainer-target-' + target);
 			
 			rm.writeClasses();
 			rm.write(">");

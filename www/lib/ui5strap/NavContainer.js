@@ -499,14 +499,13 @@
 	* @Public
 	*/
 	NavContainerBaseProto.getClassString = function(){
-		var navContainerClassName = "navcontainer-" + this.ncType,
-				options = this.getOptions();
-
-		var classes = "navcontainer " + navContainerClassName;
-	    if('' !== options){
+		var options = this.getOptions(),
+			classes = "navcontainer navcontainer-type-" + this.ncType;
+	    
+		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + navContainerClassName + '-' + options[i] + ' ' + 'navcontainer-option-' + options[i];
+	    		classes += ' ' + 'navcontainer-option-' + options[i];
 	    	}
 	    }
 

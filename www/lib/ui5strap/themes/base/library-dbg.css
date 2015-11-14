@@ -8953,39 +8953,15 @@ a {
   font-size: 19px;
 }
 /*
-* Scroll Container
-*/
-.ui5strap-scroll-container {
-  width: 100%;
-  height: 100%;
-  -webkit-overflow-scrolling: touch;
-}
-.ui5strap-scroll-container-horizontal {
-  overflow-x: scroll;
-}
-.ui5strap-scroll-container-vertical {
-  overflow-y: scroll;
-}
-.sapUiMedia-Std-Desktop .ui5strap-scroll-container-horizontal {
-  overflow-x: auto;
-}
-.sapUiMedia-Std-Desktop .ui5strap-scroll-container-vertical {
-  overflow-y: auto;
-}
-/*
-* Full screen carousel
-*/
-.carousel-full,
-.carousel-full > .carousel-inner,
-.carousel-full > .carousel-inner > .item {
-  height: 100%;
-}
-/*
 * Font awesome fix
 */
 .fa.form-control-feedback {
   line-height: 34px;
 }
+/*
+* TODO: add library prefix "u5sl-"
+* TODO: Check if independant of Bootstrap Carousel
+*/
 /*
 * carousel-advanced
 */
@@ -9654,6 +9630,10 @@ a {
     width: 0;
   }
 }
+/*
+* TODO: add library prefix "u5sl-"
+* TODO: change "navcontainer" to "navcon"
+*/
 .sandbox {
   position: relative;
   width: 100%;
@@ -9664,6 +9644,9 @@ a {
   height: 100%;
   border: none;
 }
+/*
+* TODO: add library prefix "u5sl-"
+*/
 /*
 * Sidebar
 */
@@ -9740,101 +9723,8 @@ a {
   background-color: transparent;
 }
 /*
-* SIDEBAR_SMALL / BOTTOM_BAR
+* TODO: add library prefix "u5sl-"
 */
-@media (max-width: 575px) {
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar {
-    padding: 0;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar > .sidebar-content {
-    height: 100%;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar .sidebar-nav {
-    height: 100%;
-    margin: 0;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar .sidebar-nav > li {
-    float: left;
-    width: 16.6666666667%;
-    height: 100%;
-    margin: 0;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar .sidebar-nav > li > a {
-    height: 100%;
-    padding: 6px 0;
-    font-size: 11px;
-    line-height: 14px;
-    text-align: center;
-    border-radius: 0;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar .sidebar-nav > li > a > .fa {
-    display: block;
-    width: auto;
-    margin-top: 3px;
-    margin-bottom: 4px;
-    font-size: 20px;
-    line-height: 22px;
-  }
-}
-/*
-* SIDEBAR_SMALL (left)
-*/
-@media (min-width: 576px) {
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar {
-    padding: 0;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar > .sidebar-content {
-    height: 100%;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar .sidebar-nav {
-    height: 100%;
-    margin: 0;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar .sidebar-nav > li {
-    margin-top: 0;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar .sidebar-nav > li > a {
-    padding: 10px 0;
-    font-size: 11px;
-    text-align: center;
-  }
-  .navcontainer-standard.navcontainer-standard-sidebar-small .sidebar .sidebar-nav > li > a > .fa {
-    display: block;
-    width: auto;
-    margin-bottom: 2px;
-    font-size: 20px;
-  }
-}
-/*
-* If sidenav is enabled, show big menu again
-*/
-.navcontainer-standard.navcontainer-standard-sidenav .sidebar {
-  padding: 20px;
-}
-.navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav {
-  height: auto;
-  margin: 0;
-}
-.navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li {
-  float: none;
-  width: auto;
-  height: auto;
-  margin-top: 2px;
-}
-.navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li > a {
-  height: auto;
-  padding: 10px 15px;
-  font-size: inherit;
-  line-height: normal;
-  text-align: left;
-}
-.navcontainer-standard.navcontainer-standard-sidenav .sidebar .sidebar-nav > li > a > .fa {
-  display: inline;
-  width: auto;
-  margin-bottom: 0;
-  font-size: inherit;
-  line-height: normal;
-}
 /*
 * Bar
 */
@@ -9881,6 +9771,9 @@ a {
   text-align: right;
 }
 /*
+* TODO: add library prefix "u5sl-"
+*/
+/*
 * Page
 */
 .page {
@@ -9908,6 +9801,9 @@ a {
   bottom: 0;
   width: 100%;
 }
+/*
+* TODO: change library prefix to "u5sl-"
+*/
 .ui5strap-static-overlay {
   position: absolute;
   top: 0;
@@ -9928,6 +9824,34 @@ a {
        -o-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
+/*
+* TODO: change library prefix to "u5sl-"
+* TODO: integrate into container???
+*/
+/*
+* Scroll Container
+*/
+.ui5strap-scroll-container {
+  width: 100%;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+.ui5strap-scroll-container-horizontal {
+  overflow-x: scroll;
+}
+.ui5strap-scroll-container-vertical {
+  overflow-y: scroll;
+}
+.sapUiMedia-Std-Desktop .ui5strap-scroll-container-horizontal {
+  overflow-x: auto;
+}
+.sapUiMedia-Std-Desktop .ui5strap-scroll-container-vertical {
+  overflow-y: auto;
+}
+/*
+* TODO: add library prefix "u5sl-"
+* TODO: change "navcontainer" to "navcon"
+*/
 /*
 *
 * NavContainer
@@ -9989,13 +9913,21 @@ a {
   overflow: hidden;
 }
 /*
+* TODO: add library prefix "u5sl-"
+* TODO: change "navcontainer" to "navcon"
+*/
+/*
 * CONTENT
 * Base style for target "content"
 */
-.navcontainer-default > .navcontainer-default-target-content {
+.navcontainer-type-default > .navcontainer-target-content {
   width: 100%;
   height: 100%;
 }
+/*
+* TODO: add library prefix "u5sl-"
+* TODO: change "navcontainer" to "navcon"
+*/
 /*
 *
 * NavContainerStandard
@@ -10007,7 +9939,7 @@ a {
 * CONTENT
 * Base style for target "content"
 */
-.navcontainer-standard > .navcontainer-standard-target-content {
+.navcontainer-type-standard > .navcontainer-target-content {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -10021,7 +9953,7 @@ a {
 * NAVBAR
 * Base style for target "navbar"
 */
-.navcontainer-standard > .navcontainer-standard-target-navbar {
+.navcontainer-type-standard > .navcontainer-target-navbar {
   position: absolute;
   top: -60px;
   left: 0;
@@ -10035,8 +9967,8 @@ a {
 /*
 * Must overflow to be able to show drop down menus
 */
-.navcontainer-standard > .navcontainer-standard-target-navbar > .navcontainer-pages,
-.navcontainer-standard > .navcontainer-standard-target-navbar > .navcontainer-pages > .navcontainer-page {
+.navcontainer-type-standard > .navcontainer-target-navbar > .navcontainer-pages,
+.navcontainer-type-standard > .navcontainer-target-navbar > .navcontainer-pages > .navcontainer-page {
   overflow: visible;
 }
 /*
@@ -10050,7 +9982,7 @@ a {
 * SIDEBAR
 * Base style for target "sidebar"
 */
-.navcontainer-standard > .navcontainer-standard-target-sidebar {
+.navcontainer-type-standard > .navcontainer-target-sidebar {
   position: fixed;
   top: 0;
   right: auto;
@@ -10078,7 +10010,7 @@ a {
       * Set bottom bar height
       * (if option "sidebar-small" is enabled)
       */
-  .navcontainer-standard.navcontainer-standard-sidebar-small > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidebar-small > .navcontainer-target-sidebar {
     top: auto;
     right: 0;
     bottom: -60px;
@@ -10090,14 +10022,14 @@ a {
       * Align target "sidebar" on bottom 
       * (if options "sidebar" amd "sidebar-small" are enabled)
       */
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-small > .navcontainer-target-sidebar {
     bottom: 0;
   }
   /*
       * Move target "content" upwards to create space for bottom bar
       * (if options "sidebar" and "sidebar-small" are enabled)
       */
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-standard-target-content {
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-small > .navcontainer-target-content {
     bottom: 60px;
   }
   /*
@@ -10107,7 +10039,7 @@ a {
       * Set width of target "sidebar" and move it out of screen on left side
       * (if option "sidenav" is enabled)
       */
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-sidebar {
     left: -75%;
     width: 75%;
   }
@@ -10115,8 +10047,8 @@ a {
       * Move targets "content" and "navbar" rightwards to create space for target "sidebar"
       * (if option "sidenav" is enabled)
       */
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-content,
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-navbar {
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-content,
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-navbar {
     left: 75% !important;
   }
 }
@@ -10127,7 +10059,7 @@ a {
   /*
     * Base style for target "sidebar"
     */
-  .navcontainer-standard > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard > .navcontainer-target-sidebar {
     top: 0;
     right: auto;
     bottom: 0;
@@ -10139,7 +10071,7 @@ a {
     * Move content rightwards to create space for target "sidebar"
     * (if option "sidebar" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-standard-target-content {
+  .navcontainer-type-standard.navcontainer-option-sidebar > .navcontainer-target-content {
     right: 0;
     left: 235px;
     width: auto;
@@ -10148,7 +10080,7 @@ a {
     * Base style for target "sidebar"
     * (if option "sidebar-small" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidebar-small > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidebar-small > .navcontainer-target-sidebar {
     left: -70px;
     width: 70px;
   }
@@ -10156,22 +10088,22 @@ a {
     * Move content rightwards to create space for target "sidebar"
     * (if options "sidebar" and "sidebar-small" are enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-standard-target-content {
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-small > .navcontainer-target-content {
     left: 70px;
   }
   /*
     * Align targets "navbar" and "sidebar" on left side 
     * (if option "sidebar" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-standard-target-navbar,
-  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidebar > .navcontainer-target-navbar,
+  .navcontainer-type-standard.navcontainer-option-sidebar > .navcontainer-target-sidebar {
     left: 0;
   }
   /*
     * Move target "sidebar" downwards
     * (if options "navbar" and "sidebar" are enabled)
     */
-  .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidebar > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-navbar.navcontainer-option-sidebar > .navcontainer-target-sidebar {
     top: 50px;
   }
   /*
@@ -10181,7 +10113,7 @@ a {
     * Set width of target "sidebar" and move it out of the screen on left side
     * (if option "sidenav" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-sidebar {
     left: -430px !important;
     width: 430px !important;
   }
@@ -10189,15 +10121,15 @@ a {
     * Move targets "content" and "navbar" rightwards to create space for target "sidebar"
     * (if option "sidenav" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-content,
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-navbar {
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-content,
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-navbar {
     left: 430px !important;
   }
   /*
     * Align target "sidebar" on top
     * (if options "navbar" and "sidenav" are enabled)
     */
-  .navcontainer-standard.navcontainer-standard-navbar.navcontainer-standard-sidenav > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-navbar.navcontainer-option-sidenav > .navcontainer-target-sidebar {
     top: 0 !important;
   }
 }
@@ -10208,7 +10140,7 @@ a {
   /*
     * Base style for target "sidebar"
     */
-  .navcontainer-standard > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard > .navcontainer-target-sidebar {
     left: -245px;
     width: 245px;
   }
@@ -10216,7 +10148,7 @@ a {
     * Set with of target "sidebar" and move it out of the screen on left side
     * (if option "sidebar-small" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidebar-small > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidebar-small > .navcontainer-target-sidebar {
     left: -75px;
     width: 75px;
   }
@@ -10224,29 +10156,29 @@ a {
    * Move target "content" rightwards to create space for target "sidebar"
    * (if option "sidebar" is enabled)
    */
-  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-standard-target-content {
+  .navcontainer-type-standard.navcontainer-option-sidebar > .navcontainer-target-content {
     left: 245px;
   }
   /*
    * Move target "content" rightwards to create space for target "sidebar"
    * (if options "sidebar" and "sidebar-small" are enabled)
    */
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-standard-target-content {
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-small > .navcontainer-target-content {
     left: 75px;
   }
   /*
   * Align targets "navbar" and "sidebar" on left side
   * (if option "sidebar" is enabled)
   */
-  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-standard-target-navbar,
-  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidebar > .navcontainer-target-navbar,
+  .navcontainer-type-standard.navcontainer-option-sidebar > .navcontainer-target-sidebar {
     left: 0;
   }
   /*
     * Set width of target "sidebar" and move it out of the screen on left side
     * (if option "sidenav" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-sidebar {
     left: -440px !important;
     width: 440px !important;
   }
@@ -10254,16 +10186,16 @@ a {
     * Move targets "content" and "navbar" to right
     * (if option "sidenav" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-content,
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-navbar {
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-content,
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-navbar {
     left: 440px !important;
   }
   /*
      * Hide btn-toggle-navbar
      * TODO simplify
      */
-  .navcontainer-standard > .navcontainer-standard-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right > .btn-toggle-navbar,
-  .navcontainer-standard > .navcontainer-standard-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right > .btn-toggle-navbar {
+  .navcontainer-type-standard > .navcontainer-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-right > .btn-toggle-navbar,
+  .navcontainer-type-standard > .navcontainer-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-right > .btn-toggle-navbar {
     display: none!important;
   }
 }
@@ -10274,7 +10206,7 @@ a {
   /*
     * Base style for target "sidebar"
     */
-  .navcontainer-standard > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard > .navcontainer-target-sidebar {
     left: -255px;
     width: 255px;
   }
@@ -10282,14 +10214,14 @@ a {
     * Move target "content" rightwards to create space for target "sidebar"
     * (if option "sidebar" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-standard-target-content {
+  .navcontainer-type-standard.navcontainer-option-sidebar > .navcontainer-target-content {
     left: 255px;
   }
   /*
     * Set width of target "sidebar" and move it out of the screen on left side
     * (if option "sidebar-small" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidebar-small > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidebar-small > .navcontainer-target-sidebar {
     left: -80px;
     width: 80px;
   }
@@ -10297,22 +10229,22 @@ a {
     * Move target "content" rightwards to create space for target "sidebar"
     * (if options "sidebar" and "sidebar-small" are enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-small > .navcontainer-standard-target-content {
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-small > .navcontainer-target-content {
     left: 80px;
   }
   /*
     * Align targets "sidebar" and "navbar" on left side
     * (if option "sidebar" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-standard-target-navbar,
-  .navcontainer-standard.navcontainer-standard-sidebar > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidebar > .navcontainer-target-navbar,
+  .navcontainer-type-standard.navcontainer-option-sidebar > .navcontainer-target-sidebar {
     left: 0;
   }
   /*
     * Set width of target "sidebar" and move it out of the screen on left side
     * (if option "sidenav" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-sidebar {
     left: -450px !important;
     width: 450px !important;
   }
@@ -10320,14 +10252,14 @@ a {
     * Move target "content" rightwards to create space for target "sidebar"
     * (if option "sidenav" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-content {
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-content {
     left: 450px !important;
   }
   /*
     * Move target "content" rightwards to create space for target "sidebar"
     * (if option "sidenav" is enabled)
     */
-  .navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-navbar {
+  .navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-navbar {
     left: 450px !important;
   }
 }
@@ -10339,7 +10271,7 @@ a {
       * Set width of target "sidebar" and move it out of screen on left side
       * (if options "sidebar" and "sidebar-2nav" are enabled)
       */
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-standard-target-sidebar {
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-2nav > .navcontainer-target-sidebar {
     left: -75%;
     width: 75%;
   }
@@ -10347,7 +10279,7 @@ a {
       * Align target "content" on left side
       * (if options "sidebar" and "sidebar-2nav" are enabled)
       */
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-standard-target-content {
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-2nav > .navcontainer-target-content {
     left: 0;
   }
   /*
@@ -10355,8 +10287,8 @@ a {
       * (if options "sidebar" and "sidebar-2nav" are enabled)
       * TODO simplify
       */
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-standard-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-standard-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav {
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-2nav > .navcontainer-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-2nav > .navcontainer-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav {
     display: block!important;
   }
 }
@@ -10366,8 +10298,8 @@ a {
      * (if options "sidebar" and "sidebar-2nav" are enabled)
      * TODO simplify
      */
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-standard-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
-  .navcontainer-standard.navcontainer-standard-sidebar.navcontainer-standard-sidebar-2nav > .navcontainer-standard-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav {
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-2nav > .navcontainer-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
+  .navcontainer-type-standard.navcontainer-option-sidebar.navcontainer-option-sidebar-2nav > .navcontainer-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav {
     display: none!important;
   }
 }
@@ -10375,21 +10307,21 @@ a {
 * Align target "navbar" on top
 * (if option "navbar" is enabled)
 */
-.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-standard-target-navbar {
+.navcontainer-type-standard.navcontainer-option-navbar > .navcontainer-target-navbar {
   top: 0;
 }
 /*
 * Move target "content" downwards to create space for target "navbar"
 * (if option "navbar" is enabled)
 */
-.navcontainer-standard.navcontainer-standard-navbar > .navcontainer-standard-target-content {
+.navcontainer-type-standard.navcontainer-option-navbar > .navcontainer-target-content {
   top: 50px;
 }
 /*
 * Set width of target "content" to 100%
 * (if option "sidenav" is enabled)
 */
-.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-content {
+.navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-content {
   right: auto;
   width: 100%;
 }
@@ -10397,7 +10329,7 @@ a {
 * Align target "sidebar" on left
 * (if option "sidenav" is enabled)
 */
-.navcontainer-standard.navcontainer-standard-sidenav > .navcontainer-standard-target-sidebar {
+.navcontainer-type-standard.navcontainer-option-sidenav > .navcontainer-target-sidebar {
   top: 0;
   right: auto;
   bottom: 0;
@@ -10408,10 +10340,109 @@ a {
 * Show button btn-toggle-sidenav
 * (if option "sidenav-toggle" is enabled)
 */
-.navcontainer-standard.navcontainer-standard-sidenav-toggle > .navcontainer-standard-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
-.navcontainer-standard.navcontainer-standard-sidenav-toggle > .navcontainer-standard-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav {
+.navcontainer-type-standard.navcontainer-option-sidenav-toggle > .navcontainer-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container > .navbar-content-left > .btn-toggle-sidenav,
+.navcontainer-type-standard.navcontainer-option-sidenav-toggle > .navcontainer-target-navbar > .navcontainer-pages > .navcontainer-page > .navbar > .container-fluid > .navbar-content-left > .btn-toggle-sidenav {
   display: block!important;
 }
+/*
+* SIDEBAR_SMALL / BOTTOM_BAR
+*/
+@media (max-width: 575px) {
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar {
+    padding: 0;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar > .sidebar-content {
+    height: 100%;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar .sidebar-nav {
+    height: 100%;
+    margin: 0;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar .sidebar-nav > li {
+    float: left;
+    width: 16.6666666667%;
+    height: 100%;
+    margin: 0;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar .sidebar-nav > li > a {
+    height: 100%;
+    padding: 6px 0;
+    font-size: 11px;
+    line-height: 14px;
+    text-align: center;
+    border-radius: 0;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar .sidebar-nav > li > a > .fa {
+    display: block;
+    width: auto;
+    margin-top: 3px;
+    margin-bottom: 4px;
+    font-size: 20px;
+    line-height: 22px;
+  }
+}
+/*
+* SIDEBAR_SMALL (left)
+*/
+@media (min-width: 576px) {
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar {
+    padding: 0;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar > .sidebar-content {
+    height: 100%;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar .sidebar-nav {
+    height: 100%;
+    margin: 0;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar .sidebar-nav > li {
+    margin-top: 0;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar .sidebar-nav > li > a {
+    padding: 10px 0;
+    font-size: 11px;
+    text-align: center;
+  }
+  .navcontainer-type-standard.navcontainer-option-sidebar-small .sidebar .sidebar-nav > li > a > .fa {
+    display: block;
+    width: auto;
+    margin-bottom: 2px;
+    font-size: 20px;
+  }
+}
+/*
+* If sidenav is enabled, show big menu again
+*/
+.navcontainer-type-standard.navcontainer-option-sidenav .sidebar {
+  padding: 20px;
+}
+.navcontainer-type-standard.navcontainer-option-sidenav .sidebar .sidebar-nav {
+  height: auto;
+  margin: 0;
+}
+.navcontainer-type-standard.navcontainer-option-sidenav .sidebar .sidebar-nav > li {
+  float: none;
+  width: auto;
+  height: auto;
+  margin-top: 2px;
+}
+.navcontainer-type-standard.navcontainer-option-sidenav .sidebar .sidebar-nav > li > a {
+  height: auto;
+  padding: 10px 15px;
+  font-size: inherit;
+  line-height: normal;
+  text-align: left;
+}
+.navcontainer-type-standard.navcontainer-option-sidenav .sidebar .sidebar-nav > li > a > .fa {
+  display: inline;
+  width: auto;
+  margin-bottom: 0;
+  font-size: inherit;
+  line-height: normal;
+}
+/*
+* TODO: change library prefix to "u5sl-"
+*/
 /*
 * Console
 */
@@ -10446,6 +10477,9 @@ a {
 .ui5strap-console .ui5strap-console-line.ui5strap-console-line-fatal {
   color: red;
 }
+/*
+* TODO: add library prefix "u5sl-"
+*/
 /*
 * Transitions
 */
