@@ -34,10 +34,11 @@
 	ui5strap.NavContainerRenderer = NavContainerRenderer;
 
 	NavContainerRenderer.render = function(rm, oControl) {
+		jQuery.sap.log.debug("------------------------RENDERING NAVCONTAINER '" + oControl.getId() + "'...");
 		this.startRender(rm, oControl);
 
-		for(var aggregationId in oControl.targets){
-			this.renderTarget(rm, oControl, aggregationId);
+		for(var target in oControl.targets){
+			this.renderTarget(rm, oControl, target);
 		}
 
 		this.endRender(rm, oControl);
@@ -48,12 +49,12 @@
 	*/
 	NavContainerRenderer.startRender = function(rm, oControl) {
 			rm.write("<!-- NavContainer START -->");
-			rm.write('<div class="' + oControl.getClassString() + '"');
+			rm.write('<div');
 		    rm.writeControlData(oControl);
 		    
-		    //This Control does not support custom css class
-		    //rm.addClass(oControl.getClassString());
-		    //rm.writeClasses();
+		    rm.addClass(oControl._getBaseClassString());
+		    rm.addClass(oControl._getOptionsClassString());
+		    rm.writeClasses();
 		    
 		    rm.write(">");
 	};

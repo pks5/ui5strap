@@ -90,6 +90,25 @@
 			"required" : false,
 			"type" : "string",
 			"defaultValue" : "frame"
+		},
+		"controlId" : {
+			"required" : false, 
+			"type" : "string"
+		},
+		"viewId" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
+		"parameterKey" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
+		"scope" : {
+			"required" : false, 
+			"defaultValue" : "APP", 
+			"type" : "string"
 		}
 		
 	};
@@ -107,7 +126,8 @@
 				bookmarkable = this.getParameter("bookmarkable"),
 				virtual = this.getParameter("virtual"),
 				frameId = this.getParameter("frameId"),
-				parameters = this.getParameter("parameters");
+				parameters = this.getParameter("parameters"),
+				control = this.findControl();
 
 			this.context._log.debug("Goto page '" + viewId + "' on target '" + target + "' ...");
 			
@@ -128,7 +148,7 @@
 				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
 			}
 
-			this.context.app[frameGetter]().gotoPage(this.context.parameters[this.namespace]);
+			this.context.app[frameGetter]().navigateTo(control, this.context.parameters[this.namespace]);
 	}
 
 }());

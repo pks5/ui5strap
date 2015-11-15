@@ -269,26 +269,35 @@
 	 */
 	ActionModuleProto.findControl = function(){
 		var theControl = null,
-			controlId = this.getParameter("controlId"),
 			scope = this.getParameter("scope");
 
 		if("APP" === scope){
-			theControl = this.context.app.getRootControl();
-			
-			if(null !== controlId){
+			var controlId = this.getParameter("controlId");
+			if(controlId){
+				//If controlId specified, get the control from the optional view or globally
 				theControl = this.context.app.getControl(controlId, this.getParameter("viewId"));
+			}
+			else{
+				//By default, use the root control of the app as target control in APP scope
+				theControl = this.context.app.getRootControl();
 			}
 		}
 		else if("VIEW" === scope){ 
 			if(!this.context.controller){
 				throw new Error("Cannot use scope 'VIEW': no 'controller' in context!");
 			}
-
-			//By default, use current view as control
-			theControl = this.context.controller.getView();
 			
-			if(controlId){ //Expected string
-				theControl = this.context.app.getControl(controlId, theControl.getId());
+			var controlId = this.getParameter("controlId"),
+				currentView = this.context.controller.getView();
+			
+			if(controlId){
+				//Find control on the current view by id
+				theControl = this.context.app.getControl(controlId, currentView.getId());
+			}
+			else{
+				//Otherwise use the root control of the view as target control in VIEW scope
+				theControl = currentView.getContent()[0];
+				console.log(theControl);
 			}
 		}
 		else if("SOURCE" === scope){
@@ -320,7 +329,7 @@
 		
 		if(!theControl){
 			//Either scope or controlId is invalid
-			throw new Error('Could not find Control (SCOPE: ' + scope + ', ID: ' + controlId + ')');
+			throw new Error('Could not find Control (SCOPE: ' + scope + ', PARAMETERS: ' + JSON.stringify(this.context.parameters) + ')');
 		}
 
 		return theControl;

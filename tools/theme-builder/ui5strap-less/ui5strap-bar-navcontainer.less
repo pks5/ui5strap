@@ -1,0 +1,101 @@
+/*
+* TODO: add library prefix "u5sl-"
+* TODO: change "navcontainer" to "navcon"
+*/
+
+.navcontainer-type-bar > .navcontainer-target-content{
+	position:absolute;
+	
+	-webkit-transition:left 0.2s, top 0.2s, bottom 0.2s, right 0.2s, width 0.2s, height 0.2s;
+    transition:left 0.2s, top 0.2s, bottom 0.2s, right 0.2s, width 0.2s, height 0.2s;
+	
+	background-color:green;
+}
+
+.navcontainer-type-bar.navcontainer-flag-placement-left{
+	& > .navcontainer-target-bar{
+		position:absolute;
+		background-color:red;
+		left:0;
+		top:0;
+		bottom:0;
+		right:auto;
+		width:70px;
+		height:auto;
+	}
+
+	& > .navcontainer-target-content{
+		left:70px;
+		top:0;
+		bottom:0;
+		right:0;
+		width:auto;
+		height:auto;
+	}
+}
+
+.navcontainer-type-bar.navcontainer-flag-placement-top{
+	& > .navcontainer-target-bar{
+		position:absolute;
+		background-color:red;
+		left:0;
+		top:0;
+		right:0;
+		bottom:auto;
+		width:auto;
+		height:70px;
+	}
+
+	& > .navcontainer-target-content{
+		left:0;
+		top:70px;
+		right:0;
+		bottom:0;
+		width:auto;
+		height:auto;
+	}
+}
+
+.navcontainer-type-bar.navcontainer-flag-placement-right{
+	& > .navcontainer-target-bar{
+		position:absolute;
+		background-color:red;
+		left:auto;
+		top:0;
+		right:0;
+		bottom:0;
+		width:70px;
+		height:auto;
+	}
+
+	& > .navcontainer-target-content{
+		left:0;
+		top:0;
+		right:70px;
+		bottom:0;
+		width:auto;
+		height:auto;
+	}
+}
+
+.navcontainer-type-bar.navcontainer-flag-placement-bottom{
+	& > .navcontainer-target-bar{
+		position:absolute;
+		background-color:red;
+		left:0;
+		top:auto;
+		right:0;
+		bottom:0;
+		width:auto;
+		height:70px;
+	}
+
+	& > .navcontainer-target-content{
+		left:0;
+		top:0;
+		right:0;
+		bottom:70px;
+		width:auto;
+		height:auto;
+	}
+}

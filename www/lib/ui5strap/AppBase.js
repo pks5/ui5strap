@@ -1125,6 +1125,7 @@
 	 */
 	AppBaseProto.attach = function(containerEl){
 		if(!this.isAttached){
+			jQuery.sap.log.debug("Attaching app '" + this.getId() + "' to DOM...");
 			this.isAttached = true;
 			containerEl.appendChild(this.domRef);
 			this.registerOverlay();

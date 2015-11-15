@@ -56,13 +56,9 @@
 		var _this = this;
 		
 		this.control = this._createControl();
+		
 		this._initHistory();
 
-		//Check if old version
-		if(this.getNavContainer || this._initControl){
-			throw new Error("The method 'ui5strap.AppFram.prototype.getNavContainer' has been removed. Please override the method 'ui5strap.AppFram.prototype._createControl', and return your new NavContainer instance there.");
-		}
-		
 		var oldAppShow = this.app.show;
 		this.app.show = function(callback){
 			oldAppShow.call(_this.app, function(firstTime){
@@ -81,7 +77,11 @@
 		};
 	};
 
+	/*
+	 * @deprecated
+	 */
 	AppFrameProto.getControl = function(){
+		jQuery.sap.log.warning("AppFrameProto.getControl is deprecated");
 		return this.control;
 	};
 
@@ -172,16 +172,20 @@
 	/*
 	* Returns the currently shown page within the NavContainer's target
 	* @Public
+	* @deprecated
 	*/
 	AppFrameProto.getCurrentPage = function (target) {
+		jQuery.sap.log.warning("AppFrameProto.getTarget is deprecated!");
 		return this.control.getTarget(target);
 	};
 
 	/*
 	* Returns whether the frame supports the specified target
 	* @Public
+	* @deprecated
 	*/
 	AppFrameProto.hasTarget = function(target) {
+		jQuery.sap.log.warning("AppFrameProto.hasTarget is deprecated!");
 		return this.control.hasTarget(target);
 	}
 	
@@ -200,52 +204,10 @@
 	/*
 	 * Shows a page defined by given data
 	 * @Public
+	 * @deprecated
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
-		jQuery.sap.log.debug("AppFrameProto.toPage");
-		
-		//TODO use default target of navcontainer?
-		if(!viewConfig.target){
-			throw new Error('Cannot navigate to page: no "target" specified!');
-		}
-
-		var _this = this,
-			target = viewConfig.target,
-			oPage = this.app.createView(viewConfig);
-
-		//Only add this page to a vTarget. Pages in vTargets are not seen by the user.
-		if(viewConfig.vTarget){
-			this.app.log.debug('[APP_FRAME] VIRTUALLY NAVIGATE {' + target + '}');
-			this.vTargets[target] = oPage;
-		
-			return;
-		}
-
-		//Set target busy
-		this.app.log.debug('[APP_FRAME] Target busy: "' + target + '"');
-		this._targetStatus[target] = true;
-
-		//Trigger onUpdate events
-		this.control.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
-
-		//Change NavContainer to page
-		this.control.toPage(
-			oPage, 
-			target, 
-			viewConfig.transition,
-			function toPage_complete(){
-				
-				//Set target available
-				delete _this._targetStatus[target];
-				_this.app.log.debug('[APP_FRAME] Target available: "' + target + '"');
-				
-				//Trigger callback
-				callback && callback();
-			
-			}
-		);
-		
-		return oPage;
+		return this.navigateTo(this.control, viewConfig, callback, true);
 	};
 
 	/*
@@ -270,6 +232,9 @@
 		return viewConfig;
 	};
 
+	/*
+	 * @deprecated
+	 */
 	AppFrameProto.validatePage = function(viewDef){
 		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.validatePage is deprecated and will be removed soon! Use getViewConfig instead.");
 		return this.getViewConfig(viewDef);
@@ -280,17 +245,64 @@
 	* @deprecated
 	*/
 	AppFrameProto.gotoPage = function (viewDef, callback) {
-		//Get final view configuration
-		var viewConfig = this.getViewConfig(viewDef),
-			target = viewConfig.target;
-
-		if(this.isBusy(target)){
-			jQuery.sap.log.debug('[APP_FRAME] Target is busy: "' + target + '"');
+		return this.navigateTo(this.control, viewDef, callback);
+	};
+	
+	AppFrameProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
+		jQuery.sap.log.debug("AppFrameProto.toPage");
+		
+		if(!suppressResolve){
+			viewConfig = this.getViewConfig(viewConfig);
+		}
+		
+		if(!viewConfig.target){
+			throw new Error('Cannot navigate to page: no "target" specified!');
+		}
+		
+		if(this.isBusy(viewConfig.target)){
+			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
 			return false;
 		}
+
+		var _this = this,
+			target = viewConfig.target,
+			oPage = this.app.createView(viewConfig);
+
+		//Only add this page to a vTarget. Pages in vTargets are not seen by the user.
+		if(viewConfig.vTarget){
+			this.app.log.debug('[APP_FRAME] VIRTUALLY NAVIGATE {' + target + '}');
+			this.vTargets[target] = oPage;
 		
-		return this.toPage(viewConfig, callback);
+			return;
+		}
+
+		//Set target busy
+		this.app.log.debug('[APP_FRAME] Target busy: "' + target + '"');
+		this._targetStatus[target] = true;
+
+		//Trigger onUpdate events
+		navControl.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
+
+		//Change NavContainer to page
+		navControl.toPage(
+			oPage, 
+			target, 
+			viewConfig.transition,
+			function toPage_complete(){
+				
+				//Set target available
+				delete _this._targetStatus[target];
+				_this.app.log.debug('[APP_FRAME] Target available: "' + target + '"');
+				
+				//Trigger callback
+				callback && callback();
+			
+			}
+		);
+		
+		return oPage;
 	};
+	
 
 }());

@@ -56,7 +56,7 @@
 	             
 	             "id" : "frame",
 	             "module" : "ui5strap.AppFrame",
-	             "navContainer" : "ui5strap.NavContainer",
+	             "navContainer" : "ui5strap.BarNavContainer",
 	             
 	             "initialViews" : [
 	                 { 

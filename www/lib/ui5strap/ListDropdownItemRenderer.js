@@ -29,7 +29,7 @@
 
 	jQuery.sap.declare("ui5strap.ListDropdownItemRenderer");
 	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListLinkItemRenderer");
+	jQuery.sap.require("ui5strap.LinkRenderer");
 
 	ui5strap.ListDropdownItemRenderer = {
 	};

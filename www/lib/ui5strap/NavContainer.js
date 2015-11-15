@@ -72,7 +72,7 @@
 			
 			var funcName = 'on' + jQuery.sap.charToUpperCase(eventId, 0);
 			if(controller && controller[funcName]){
-				//jQuery.sap.log.debug(' + [NC] EVENT ' + eventName + '() {' + target + '}');
+				jQuery.sap.log.debug(' + [NC] EVENT ' + eventId + '() {' + target + '}');
 			
 				controller[funcName](new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}));
 			}
@@ -87,6 +87,7 @@
 		//ui5strap.tm("APP", "NC", "PREP_TRANS");
 		
 		if(pageChange.transition){
+			jQuery.sap.log.warning("NavContainer::_prepareTransition: Transition already prepared!");
 			//There is already a Transition defined
 			return false;
 		}
@@ -368,15 +369,24 @@
 			//Append page container to the dom
 			jQuery('#' + _this.targetPagesDomId(target)).append($newPageContainer);
 			
-			for(var sName in oModels){
-				//page.setModel(oModel, sName);
-				page.oPropagatedProperties.oModels[sName] = oModels[sName];
-				page.propagateProperties(sName);
-			};
+			/*
+			 * START OpenUi5 MOD
+			 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
+			 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
+			 */
+			page.oPropagatedProperties = _this._getPropertiesToPropagate();
+			
+			if (page.hasModel()) {
+				page.updateBindingContext(false, true, undefined, true);
+				page.updateBindings(true,null); // TODO could be restricted to models that changed
+				page.propagateProperties(true);
+			}
+			/*
+			 * END OpenUi5 MOD
+			 */
 			
 			//Add page to new page container
 			page.placeAt(newPageContainer);
-
 			//jQuery.sap.log.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
 
 			return $newPageContainer;
@@ -414,8 +424,7 @@
 	NavContainerBaseProto._initNavContainer = function(){
 		//ui5strap.tm("APP", "NC", "INIT_NC");
 		
-		//NavContainer type string
-		//Resulting css class is "navcontainer navcontainer-default"
+		//NavContainer type string. Should only contain letters, numbers and hyphens.
 		this.ncType = "default";
 
 		//Default target
@@ -453,32 +462,49 @@
 		return this.createPageDomId(target, page);
 	};
 
+	/*
+	 * START OpenUi5 MOD
+	 * Since we do not use aggregations in NavContainer, we have to care about propagation and destroying ourselves.
+	 * Usually, this happens in ManagedObject.prototype.propagateProperties and ManagedObject.prototype.destroy.
+	 */
+	
 	/**
 	* @Override
 	*/
-	NavContainerBaseProto.setModel = function(oModel, sName){
-		for(var target in this.targets){
-			var page = this.targets[target];
-			if(page){
-				//page.setModel(oModel, sName);
-				page.oPropagatedProperties.oModels[sName] = oModel;
-				page.propagateProperties(sName);
+	NavContainerBaseProto.propagateProperties = function(vName){
+		var oProperties = this._getPropertiesToPropagate(),
+			bUpdateAll = vName === true, // update all bindings when no model name parameter has been specified
+			sName = bUpdateAll ? undefined : vName,
+			sTarget, oTarget, i;
+	
+		for (sTarget in this.targets) {
+			oTarget = this.targets[sTarget];
+			if (oTarget instanceof sap.ui.base.ManagedObject) {
+				this._propagateProperties(vName, oTarget, oProperties, bUpdateAll, sName);
 			}
 		}
-		sap.ui.core.Control.prototype.setModel.call(this, oModel, sName);
+		
 	};
-
+	
 	/**
 	* @Override
 	*/
-	NavContainerBaseProto.destroy = function(){
+	NavContainerBaseProto.destroy = function(bSuppressInvalidate){
 		for(var target in this.targets){
 			if(this.targets[target]){
-				this.targets[target].destroy();
+				var oldTarget = this.targets[target];
+				this.targets[target] = null;
+				
+				oldTarget.destroy(bSuppressInvalidate);
+				delete oldTarget;
 			}
 		}
-		sap.ui.core.Control.prototype.destroy.call(this);
+		sap.ui.core.Control.prototype.destroy.call(this, bSuppressInvalidate);
 	};
+	
+	/*
+	 * END OpenUi5 MOD
+	 */
 
 	/**
 	*
@@ -494,13 +520,20 @@
 	NavContainerBaseProto.targetLayersDomId = function(target){
 		return 'navcontainer-layers-' + target + '---' + this.getId();
 	};
-
+	
 	/**
-	* @Public
+	 * @Protected
+	 */
+	NavContainerBaseProto._getBaseClassString = function(){
+		return "navcontainer navcontainer-type-" + this.ncType;
+	};
+	
+	/**
+	* @Protected
 	*/
-	NavContainerBaseProto.getClassString = function(){
+	NavContainerBaseProto._getOptionsClassString = function(){
 		var options = this.getOptions(),
-			classes = "navcontainer navcontainer-type-" + this.ncType;
+			classes = '';
 	    
 		if(options){
 	    	options = options.split(' ');
@@ -508,18 +541,45 @@
 	    		classes += ' ' + 'navcontainer-option-' + options[i];
 	    	}
 	    }
-
-	    return classes;
+		
+		return classes;
 	};
-
+	
+	/**
+	* @Protected
+	*/
+	NavContainerBaseProto._updateStyleClass = function(){
+		var currentClassesString = '',
+			options = this.getOptions();
+		
+		var classes = this.$().attr('class').split(' ');
+		for(var i = 0; i < classes.length; i++){
+			var cClass = classes[i];
+			if(cClass && cClass.indexOf('navcontainer-option-') !== 0){
+				currentClassesString += ' ' + cClass;
+			}
+			
+		}
+		
+		if(options){
+	    	options = options.split(' ');
+	    	for(var i = 0; i < options.length; i++){
+	    		currentClassesString += ' navcontainer-option-' + options[i];
+	    	}
+	    }
+	
+		this.$().attr('class', currentClassesString.trim());
+	};
+	
 	/**
 	* @Public
 	* @Override
+	* TODO avoid overriding of user provided css classes
 	*/
 	NavContainerBaseProto.setOptions = function(newOptions){
 		if(this.getDomRef()){
 			this.setProperty('options', newOptions, true);
-			this.$().attr('class', this.getClassString());
+			this._updateStyleClass();
 		}
 		else{
 			this.setProperty('options', newOptions);
@@ -579,8 +639,12 @@
 		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
 	};
 
+	/**
+	 * @Public
+	 */
 	NavContainerBaseProto.onOptionChanged = function(optionName, optionEnabled){
 		jQuery.sap.log.info("Option '" + optionName + "' changed to " + (optionEnabled ? 'enabled' : 'disabled'));
+		//console.log(this.aCustomStyleClasses);
 	};
 	
 	/**
@@ -613,18 +677,17 @@
 	*/
 	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
 		//ui5strap.tm("APP", "NC", "TO_PAGE");
+		jQuery.sap.log.debug("NavContainerBaseProto.toPage");
 		
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
 
-		//jQuery.sap.log.debug(' + [NC] NAVIGATE {' + target + '} ' + (page ? '#' + page.getId() : 'CLEAR'));
-
 		var _this = this,
 			currentPage = this.targets[target];
 
 		if(this.getDomRef() && currentPage === page){
-			//jQuery.sap.log.debug(' + [NC] PAGE IS CURRENT {' + target + '}');
+			jQuery.sap.log.debug(' + [NC] PAGE IS CURRENT {' + target + '}');
 
 			callback && callback();
 			
@@ -658,6 +721,7 @@
 		
 
 		if(this.getDomRef()){
+			jQuery.sap.log.debug("NavContainerBaseProto.toPage: NavContainer already attached. Navigating now...");
 			//NavContainer is already attached to DOM
 			targetTransition.$next = _placePage(_this, target, page, true);
 			
@@ -666,6 +730,8 @@
 			}, domAttachTimeout);
 		}
 		else{
+			jQuery.sap.log.debug(' + [NC] NAVIGATE {' + target + '}: NavContainer not attached to DOM yet.');
+
 			//NavContainer not attached to DOM yet
 			_pageChangeLater(_this, targetTransition, true);
 		}
@@ -684,9 +750,9 @@
 			var currentPage = this.targets[target];
 			if(currentPage){
 				_pageChangeLater(this, {
-					changeName : "test",
+					changeName : "rerender",
 					target : target,
-					transitionName : null,
+					transitionName : "transition-none",
 					transition : null,
 					"$current" : null,
 					"$next" : null,

@@ -35,13 +35,6 @@
 
 			library : "ui5strap",
 			
-			properties : { 
-				options : {
-					type : "string",
-					defaultValue : ""
-				}
-			}
-
 		},
 
 		//Use default NavContainerRenderer

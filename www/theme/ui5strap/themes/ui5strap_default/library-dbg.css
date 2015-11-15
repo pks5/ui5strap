@@ -9884,7 +9884,9 @@ a {
 * Page
 */
 .navcontainer-page {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   -webkit-box-sizing: border-box;
@@ -9923,6 +9925,90 @@ a {
 .navcontainer-type-default > .navcontainer-target-content {
   width: 100%;
   height: 100%;
+}
+/*
+* TODO: add library prefix "u5sl-"
+* TODO: change "navcontainer" to "navcon"
+*/
+.navcontainer-type-bar.navcontainer-flag-placement-left > .navcontainer-target-bar {
+  position: absolute;
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 70px;
+  height: auto;
+  background-color: red;
+}
+.navcontainer-type-bar.navcontainer-flag-placement-left > .navcontainer-target-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 70px;
+  width: auto;
+  height: auto;
+  background-color: green;
+}
+.navcontainer-type-bar.navcontainer-flag-placement-top > .navcontainer-target-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: auto;
+  height: 70px;
+  background-color: red;
+}
+.navcontainer-type-bar.navcontainer-flag-placement-top > .navcontainer-target-content {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  background-color: green;
+}
+.navcontainer-type-bar.navcontainer-flag-placement-right > .navcontainer-target-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 70px;
+  height: auto;
+  background-color: red;
+}
+.navcontainer-type-bar.navcontainer-flag-placement-right > .navcontainer-target-content {
+  position: absolute;
+  top: 0;
+  right: 70px;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  background-color: green;
+}
+.navcontainer-type-bar.navcontainer-flag-placement-bottom > .navcontainer-target-bar {
+  position: absolute;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: 70px;
+  background-color: red;
+}
+.navcontainer-type-bar.navcontainer-flag-placement-bottom > .navcontainer-target-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 70px;
+  left: 0;
+  width: auto;
+  height: auto;
+  background-color: green;
 }
 /*
 * TODO: add library prefix "u5sl-"
@@ -10489,11 +10575,6 @@ a {
 * @deprecated Use transition-slide-rtl instead
 */
 .transition-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   -webkit-transition: -webkit-transform .5s;
        -o-transition:      -o-transform .5s;
           transition:         transform .5s;
@@ -10519,11 +10600,6 @@ a {
 * Transiton Slide Right to Left
 */
 .transition-slide-rtl {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   -webkit-transition: -webkit-transform .5s;
        -o-transition:      -o-transform .5s;
           transition:         transform .5s;
@@ -10549,11 +10625,6 @@ a {
 * Transiton Slide Left to Right
 */
 .transition-slide-ltr {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   -webkit-transition: -webkit-transform .5s;
        -o-transition:      -o-transform .5s;
           transition:         transform .5s;
@@ -10581,11 +10652,6 @@ a {
 *
 */
 .transition-slide-ttb {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   -webkit-transition: -webkit-transform .5s;
        -o-transition:      -o-transform .5s;
           transition:         transform .5s;
@@ -10613,11 +10679,6 @@ a {
 *
 */
 .transition-slide-btt {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   -webkit-transition: -webkit-transform .5s;
        -o-transition:      -o-transform .5s;
           transition:         transform .5s;
@@ -10645,11 +10706,6 @@ a {
 *
 */
 .transition-fade {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   opacity: 1;
   -webkit-transition: opacity .3s ease-in-out;
      -moz-transition: opacity .3s ease-in-out;
@@ -10675,11 +10731,6 @@ a {
 *
 */
 .transition-flip {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   -webkit-transition: -webkit-transform .8s;
       -ms-transition:     -ms-transform .8s;
        -o-transition:      -o-transform .8s;
@@ -10722,20 +10773,15 @@ a {
 *
 */
 .transition-zoom {
+  -webkit-transition: -webkit-transform .7s, opacity .1s;
+      -ms-transition:     -ms-transform .7s, opacity .1s;
+       -o-transition:      -o-transform .7s, opacity .1s;
+          transition:         transform .7s, opacity .1s;
   /*
   transform: scale(1, 1);
   -webkit-transform: scale(1, 1);
   opacity:1;
   */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transition: -webkit-transform .7s, opacity .1s;
-      -ms-transition:     -ms-transform .7s, opacity .1s;
-       -o-transition:      -o-transform .7s, opacity .1s;
-          transition:         transform .7s, opacity .1s;
 }
 .transition-zoom-next {
   -webkit-transform: scale3d(0, 0, 0);
@@ -10753,11 +10799,6 @@ a {
 *
 */
 .transition-zoom2 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   -webkit-transition: -webkit-transform .7s, opacity .7s;
       -ms-transition:     -ms-transform .7s, opacity .7s;
        -o-transition:      -o-transform .7s, opacity .7s;

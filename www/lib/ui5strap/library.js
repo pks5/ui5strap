@@ -829,6 +829,7 @@
 		  if(this._prepared || this._executed){
 			  throw new Error('Cannot prepare transition: already prepared or executed!');
 		  }
+		  
 		  this._prepared = true;
 		
 		  if(!transitionName){
@@ -904,7 +905,7 @@
 		        this.$next && this.$next.removeClass(transitionClass + '-next');
 	      }
 	      else{ 
-		        jQuery.sap.log.debug('[TRANSITION#' + transitionId + '] No Transition.');
+		        jQuery.sap.log.debug('[TRANSITION#' + transitionId + '] No Transition (' + transitionName + ') or transition end event not supported.');
 		        
 		        //TODO is it needed to remove ui5strap-hidden class here and make a RAF?
 		        this.$next && this.$next.removeClass('ui5strap-hidden');

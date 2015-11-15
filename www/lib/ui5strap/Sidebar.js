@@ -32,7 +32,7 @@
 
 	sap.ui.core.Control.extend("ui5strap.Sidebar", {
 		metadata : {
-
+			deprecated : true,
 			// ---- object ----
 			defaultAggregation : "content",
 			
