@@ -733,6 +733,7 @@
 			jQuery.sap.log.debug(' + [NC] NAVIGATE {' + target + '}: NavContainer not attached to DOM yet.');
 
 			//NavContainer not attached to DOM yet
+			//It will override all pending transitions on this target!
 			_pageChangeLater(_this, targetTransition, true);
 		}
 
@@ -749,6 +750,7 @@
 		for(var target in this.targets){
 			var currentPage = this.targets[target];
 			if(currentPage){
+				//Make sure the exising page is reattached after rerendering. If another transition is pending on this target, the new transition is overriding this.
 				_pageChangeLater(this, {
 					changeName : "rerender",
 					target : target,
