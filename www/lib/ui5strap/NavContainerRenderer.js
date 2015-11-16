@@ -64,7 +64,7 @@
 	*/
 	NavContainerRenderer.renderTarget = function (rm, oControl, target) {
 			rm.write("<!-- NavContainer target '" + target + "' START -->");
-			rm.write('<div');
+			rm.write('<div id="' + oControl.targetDomId(target) + '"');
 			
 			/*
 			 * Adds 3 css classes:

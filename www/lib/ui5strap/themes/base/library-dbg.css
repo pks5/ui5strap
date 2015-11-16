@@ -9870,6 +9870,12 @@ a {
 .navcontainer-target {
   position: relative;
   overflow: hidden;
+
+          backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
 }
 /*
 * Container for pages
@@ -9955,6 +9961,9 @@ a {
   width: auto;
   height: auto;
 }
+.navcontainer-type-bar.navcontainer-flag-placement-left.navcontainer-flag-no-bar > .navcontainer-target-content {
+  left: 0;
+}
 .navcontainer-type-bar.navcontainer-flag-placement-top > .navcontainer-target-bar {
   position: absolute;
   top: 0;
@@ -9972,6 +9981,9 @@ a {
   left: 0;
   width: auto;
   height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-placement-top.navcontainer-flag-no-bar > .navcontainer-target-content {
+  top: 0;
 }
 .navcontainer-type-bar.navcontainer-flag-placement-right > .navcontainer-target-bar {
   position: absolute;
@@ -9991,6 +10003,9 @@ a {
   width: auto;
   height: auto;
 }
+.navcontainer-type-bar.navcontainer-flag-placement-right.navcontainer-flag-no-bar > .navcontainer-target-content {
+  right: 0;
+}
 .navcontainer-type-bar.navcontainer-flag-placement-bottom > .navcontainer-target-bar {
   position: absolute;
   top: auto;
@@ -10008,6 +10023,9 @@ a {
   left: 0;
   width: auto;
   height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-placement-bottom.navcontainer-flag-no-bar > .navcontainer-target-content {
+  bottom: 0;
 }
 /*
 * TODO: add library prefix "u5sl-"

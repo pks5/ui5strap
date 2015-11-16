@@ -505,7 +505,11 @@
 	/*
 	 * END OpenUi5 MOD
 	 */
-
+	
+	NavContainerBaseProto.targetDomId = function(target){
+		return 'navcontainer-target-' + target + '---' + this.getId();
+	};
+	
 	/**
 	*
 	* @Public

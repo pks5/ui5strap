@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AMSetProperty
+ * ui5strap.AMToggleProperty
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,31 +27,27 @@
 
 (function(){
 
-	jQuery.sap.declare("ui5strap.AMSetProperty");
+	jQuery.sap.declare("ui5strap.AMToggleProperty");
 	jQuery.sap.require("ui5strap.ActionModule");
 
-	ui5strap.ActionModule.extend("ui5strap.AMSetProperty");
+	ui5strap.ActionModule.extend("ui5strap.AMToggleProperty");
 
-	var AMSetPropertyProto = ui5strap.AMSetProperty.prototype;
-
-	/*
-	* @Override
-	*/
-	AMSetPropertyProto.namespace = 'setProperty';
+	var AMTogglePropertyProto = ui5strap.AMToggleProperty.prototype;
 
 	/*
 	* @Override
 	*/
-	AMSetPropertyProto.parameters = {
+	AMTogglePropertyProto.namespace = 'toggleProperty';
+
+	/*
+	* @Override
+	*/
+	AMTogglePropertyProto.parameters = {
 		
 		//Required
 		"propertyName" : {
 			"required" : true, 
 			"type" : "string"
-		},
-		"value" : {
-			"required" : true, 
-			"type" : ["int", "boolean", "string", "object"]
 		},
 
 		//Optional
@@ -73,12 +69,6 @@
 			"required" : false, 
 			"defaultValue" : "APP", 
 			"type" : "string"
-		},
-
-		"srcParam" : {
-			"required" : false,
-			"defaultValue" : null,
-			"type" : "string"
 		}
 
 	};
@@ -87,25 +77,20 @@
 	* Run the ActionModule
 	* @override
 	*/
-	AMSetPropertyProto.run = function(){
-			var srcParam = this.getParameter("srcParam"),
-				propertyName = this.getParameter("propertyName"),
-				propertyValue = this.getParameter("value"),
+	AMTogglePropertyProto.run = function(){
+			var propertyName = this.getParameter("propertyName"),
 				control = this.findControl(),
-				setter = "set" + jQuery.sap.charToUpperCase(propertyName);
-			
-			//Read value from another parameter
-			if(null !== srcParam){
-				propertyValue = this.context._getParameter(srcParam);
-			}
+				setter = "set" + jQuery.sap.charToUpperCase(propertyName),
+				getter = "get" + jQuery.sap.charToUpperCase(propertyName);
 			
 			if(!control[setter]){
-				throw new Exception("Cannot set property: missing property '" + propertyName + "'");
+				throw new Exception("Cannot toggle property: missing property '" + propertyName + "'");
 			}
 			
+			var propertyValue = !control[getter]();
 			control[setter](propertyValue);
 
-			this.context._log.debug("[AMSetProperty]: '" + propertyName + "' = '" + propertyValue + "'");
+			this.context._log.debug("[AMToggleProperty]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
 
 }());

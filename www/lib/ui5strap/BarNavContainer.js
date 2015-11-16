@@ -42,7 +42,7 @@
 				},
 				barVisible : {
 					type : "boolean",
-					defaultValue : false
+					defaultValue : true
 				}
 			}
 
@@ -65,39 +65,67 @@
 
 		//Available targets
 		this.targets = {
-			"content" : null,
-			"bar" : null
+				"bar" : null,
+				"content" : null
+			
 		};
 	};
 	
 	ui5strap.BarNavContainer.prototype.setBarVisible = function(newBarVisible, suppressInvalidate){
 		if(this.getDomRef()){
-			this.setProperty('barVisible', newOptions, true);
+			jQuery.sap.log.debug("Setting barVisible to " + newBarVisible);
 			
-			var transition = new ui5strap.Transition(
-					"transition-slide", 
-					this.$(), 
-					null, 
-					'x'
-			);
+			var isBarVisible = this.getBarVisible();
 			
-			//RAF start
-			ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+			if(!this._barTransitionBusy && isBarVisible !== newBarVisible){
+				this.setProperty('barVisible', newBarVisible, true);
 				
-				//Prepare Transition
-				transition.prepare();
+				this._barTransitionBusy = true;
 				
-				//RAF
-				ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+				var _this = this,
+					$target = jQuery('#' + this.targetDomId('bar')),
+					transition = newBarVisible 
+					? new ui5strap.Transition(
+							"transition-slide-ttb", 
+							null, 
+							$target, 
+							'x'
+					)
+					: new ui5strap.Transition(
+						"transition-slide-ttb", 
+						$target, 
+						null, 
+						'x'
+					);
+				
+				//RAF start
+				ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 					
-					//Execure Transition
-					transition.execute(function transitionComplete(){
-						alert('test');
-					}, null);
+					//Prepare Transition
+					transition.prepare();
 					
+					//RAF
+					ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+						if(newBarVisible){
+							_this.$().removeClass("navcontainer-flag-no-bar");
+						}
+						else{
+							_this.$().addClass("navcontainer-flag-no-bar");
+						}
+						
+						//Execure Transition
+						transition.execute(function transitionCurrentComplete(){
+							_this._barTransitionBusy = false;
+							$target.attr('class', 'navcontainer-target navcontainer-target-bar ui5strap-hidden');
+						}, function transitionNextComplete(){
+							_this._barTransitionBusy = false;
+							$target.attr('class', 'navcontainer-target navcontainer-target-bar');
+						});
+						
+					});
+	
 				});
-
-			});
+			}
 			//RAF end
 		}
 		else{
@@ -115,6 +143,10 @@
 		if(placement !== ui5strap.Placement.Default){
             classes += " navcontainer-flag-placement-" + ui5strap.BSPlacement[placement];
         }
+		
+		if(!this.getBarVisible()){
+			classes += " navcontainer-flag-no-bar";
+		}
 		
 		return classes;
 	};
