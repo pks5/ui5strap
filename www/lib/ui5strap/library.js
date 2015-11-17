@@ -737,12 +737,23 @@
 	ui5strap.NavType = {
 		Tabs : "Tabs",
 		Pills : "Pills",
-    PillsStacked : "PillsStacked",
-    PillsJustified : "PillsJustified",
-    TabsJustified : "TabsJustified",
+		PillsStacked : "PillsStacked",
+		PillsJustified : "PillsJustified",
+		TabsJustified : "TabsJustified",
 		Default : "Default"
 	};
+	
+  /*
+   * BarNavContainerMode
+   */
+	jQuery.sap.declare("ui5strap.BarNavContainerMode");
 
+	ui5strap.BarNavContainerMode = {
+		Intrude : "Intrude",
+		Extrude : "Extrude",
+		Overlay : "Overlay"
+	};
+	
   /*
   * SelectionMode
   * Used by ui5strap.ListBase

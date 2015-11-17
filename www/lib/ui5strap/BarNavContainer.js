@@ -43,7 +43,28 @@
 				barVisible : {
 					type : "boolean",
 					defaultValue : true
+				},
+				barMode : {
+					type : "ui5strap.BarNavContainerMode",
+					defaultValue : ui5strap.BarNavContainerMode.Intrude
+				},
+				barSizeExtraSmall : {
+					type : "integer",
+					defaultValue : 1
+				},
+				barSizeSmall : {
+					type : "integer",
+					defaultValue : -1
+				},
+				barSizeMedium : {
+					type : "integer",
+					defaultValue : -1
+				},
+				barSizeLarge : {
+					type : "integer",
+					defaultValue : -1
 				}
+				
 			},
 			
 			events : {
@@ -69,9 +90,9 @@
 
 		//Available targets
 		this.targets = {
-				"bar" : null,
-				"content" : null
-			
+				
+				"content" : null,
+				"bar" : null
 		};
 	};
 	
@@ -140,8 +161,12 @@
 	 * @Protected
 	 */
 	ui5strap.BarNavContainer.prototype._getBaseClassString = function(){
-		var classes = "navcontainer navcontainer-type-" + this.ncType,
-			placement = this.getPlacement();
+		var classes = "navcontainer navcontainer-type-" + this.ncType + " navcontainer-flag-bar-mode-" + this.getBarMode().toLowerCase(),
+			placement = this.getPlacement(),
+			columnsExtraSmall = this.getBarSizeExtraSmall(),
+			columnsSmall = this.getBarSizeSmall(),
+			columnsMedium = this.getBarSizeMedium(),
+			columnsLarge = this.getBarSizeLarge();
 		
 		if(placement !== ui5strap.Placement.Default){
             classes += " navcontainer-flag-placement-" + ui5strap.BSPlacement[placement];
@@ -151,6 +176,18 @@
 			classes += " navcontainer-flag-no-bar";
 		}
 		
+		if(0 < columnsMedium){
+	      classes += " navcontainer-flag-col-md-" + columnsMedium;
+	    }
+	    if(0 < columnsLarge){
+	      classes += " navcontainer-flag-col-lg-" + columnsLarge;
+	    }
+	    if(0 < columnsSmall){
+	      classes += " navcontainer-flag-col-sm-" + columnsSmall;
+	    }
+	    if(0 < columnsExtraSmall){
+	      classes += " navcontainer-flag-col-xs-" + columnsExtraSmall;
+	    }
 		return classes;
 	};
 	
