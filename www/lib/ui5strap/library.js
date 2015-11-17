@@ -946,13 +946,14 @@
      }
      else{
     	 transString += data.transitionExtraSmall ? "ui5strap-trans-xs-type-" + data.transitionExtraSmall : "ui5strap-trans-xs-type-none";
-    	 transString += data.transitionSmall ? " ui5strap-trans-sm-type-" + data.transitionExtraSmall : " ui5strap-trans-sm-type-none";
+    	 transString += data.transitionSmall ? " ui5strap-trans-sm-type-" + data.transitionSmall : " ui5strap-trans-sm-type-none";
     	 transString += data.transitionMedium ? " ui5strap-trans-md-type-" + data.transitionMedium : " ui5strap-trans-md-type-none";
     	 transString += data.transitionLarge ? " ui5strap-trans-lg-type-" + data.transitionLarge : " ui5strap-trans-lg-type-none";
      }
      
      this._transitions = transString;
      
+     this._skip = transString === "ui5strap-trans-all-type-none";
      this._prepared = false;
      this._executed = false;
      
@@ -966,7 +967,7 @@
  		  
  		  this._prepared = true;
  		
- 		  if(!ui5strap.support.transitionEndEvent){
+ 		  if(!ui5strap.support.transitionEndEvent || this._skip){
  			  this._data.$next && this._data.$next.removeClass('ui5strap-hidden');
  			 
  			  return;
@@ -994,8 +995,8 @@
  	      this._neca = false;
  	      this._cuca = false;
  	
- 	      if(ui5strap.support.transitionEndEvent){
- 		        jQuery.sap.log.debug('[RESP_TRANS#' + this._data.id + '] ' + this._transitions);
+ 	      if(ui5strap.support.transitionEndEvent && !this._skip){
+ 		        jQuery.sap.log.debug('[RESP_TRANS#' + this._data.id + ' (' + _this._transitions +')] Executing...');
  		
  		        if(callbackCurrent && this._data.$current){ 
  			          var _currentTimout = window.setTimeout(function(){
@@ -1003,7 +1004,7 @@
  				            	return;
  				            }
  				            _this._cuca = true;
- 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + '] Responsive transition "' + _this._transitions + '" of hiding page caused a timeout.');
+ 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + ' (' + _this._transitions +')] Hiding page caused a timeout.');
  				            callbackCurrent.call(_this);
  			          }, ui5strap.options.transitionTimeout);
  			
@@ -1023,7 +1024,7 @@
  				            	return;
  				            }
  				            _this._neca = true;
- 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + '] Responsive transition "' + _this._transitions + '" of showing page caused a timeout.');
+ 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + ' (' + _this._transitions +')] Showing page caused a timeout.');
  				            callbackNext.call(_this);
  			          }, ui5strap.options.transitionTimeout);
  			
@@ -1041,7 +1042,7 @@
  		        this._data.$next && this._data.$next.removeClass('ui5strap-transition-next');
  	      }
  	      else{ 
- 		        jQuery.sap.log.debug('[TRANSITION#' + _this._data.id + '] Transition end event not supported.');
+ 		        jQuery.sap.log.debug('[TRANSITION#' + _this._data.id + ' (' + _this._transitions +')] Transition end event not supported or transition skipped.');
  		        
  		        callbackCurrent && callbackCurrent.call(_this);
  			    callbackNext && callbackNext.call(_this);

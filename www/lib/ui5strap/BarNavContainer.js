@@ -135,7 +135,9 @@
 					$target = jQuery('#' + this.targetDomId('bar')),
 					transition = new ui5strap.ResponsiveTransition(
 						{
-							"transitionAll" : "noneg", 
+							"transitionExtraSmall" : "slide-ttb",
+							"transitionSmall" : "slide-btt",
+							"transitionMedium" : "slide-rtl",
 							"$current" : newBarVisible ? null : $target, 
 							"$next" : newBarVisible ? $target : null , 
 							"id" : 'x'
