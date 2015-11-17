@@ -931,6 +931,125 @@
      };
 
   };
+  
+  /*
+   * Constructs a responsive Transition (experimental)
+   * @constructor
+   */
+   ui5strap.ResponsiveTransition = function(data){
+     this._data = data;
+     
+     var transString = "";
+     
+     if(data.transitionAll){
+    	 transString = "ui5strap-trans-all-type-" + data.transitionAll;
+     }
+     else{
+    	 transString += data.transitionExtraSmall ? "ui5strap-trans-xs-type-" + data.transitionExtraSmall : "ui5strap-trans-xs-type-none";
+    	 transString += data.transitionSmall ? " ui5strap-trans-sm-type-" + data.transitionExtraSmall : " ui5strap-trans-sm-type-none";
+    	 transString += data.transitionMedium ? " ui5strap-trans-md-type-" + data.transitionMedium : " ui5strap-trans-md-type-none";
+    	 transString += data.transitionLarge ? " ui5strap-trans-lg-type-" + data.transitionLarge : " ui5strap-trans-lg-type-none";
+     }
+     
+     this._transitions = transString;
+     
+     this._prepared = false;
+     this._executed = false;
+     
+     /**
+      * Should always be surrounded by a RAF.
+      */
+     this.prepare = function (){
+ 		  if(this._prepared || this._executed){
+ 			  throw new Error('Cannot prepare transition: already prepared or executed!');
+ 		  }
+ 		  
+ 		  this._prepared = true;
+ 		
+ 		  if(!ui5strap.support.transitionEndEvent){
+ 			  this._data.$next && this._data.$next.removeClass('ui5strap-hidden');
+ 			 
+ 			  return;
+ 		  }
+ 		
+ 		  this._data.$current && this._data.$current.addClass(this._transitions + ' ' + 'ui5strap-transition-current');
+ 		  this._data.$next && this._data.$next.addClass(this._transitions + ' ' + 'ui5strap-transition-next').removeClass('ui5strap-hidden');
+ 	};
+ 	
+ 	/**
+ 	 * Should always be surrounded by a RAF.
+ 	 */
+     this.execute = function (callbackCurrent, callbackNext){
+ 	      var _this = this;
+ 	
+ 	      if(!this._prepared){
+ 	    	  throw new Error('Cannot execute responsive transition: not prepared!');
+ 	      }
+ 	
+ 	      if(this._executed){
+ 	    	  throw new Error('Cannot execute responsive transition: already executed!');
+ 	      }
+ 	
+ 	      this._executed = true;
+ 	      this._neca = false;
+ 	      this._cuca = false;
+ 	
+ 	      if(ui5strap.support.transitionEndEvent){
+ 		        jQuery.sap.log.debug('[RESP_TRANS#' + this._data.id + '] ' + this._transitions);
+ 		
+ 		        if(callbackCurrent && this._data.$current){ 
+ 			          var _currentTimout = window.setTimeout(function(){
+ 				            if(_this._cuca){
+ 				            	return;
+ 				            }
+ 				            _this._cuca = true;
+ 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + '] Responsive transition "' + _this._transitions + '" of hiding page caused a timeout.');
+ 				            callbackCurrent.call(_this);
+ 			          }, ui5strap.options.transitionTimeout);
+ 			
+ 			          this._data.$current.one(ui5strap.support.transitionEndEvent, function(){
+ 				            if(_this._cuca){
+ 				            	return;
+ 				            }
+ 				            _this._cuca = true;
+ 				            window.clearTimeout(_currentTimout);
+ 				            callbackCurrent.call(_this);
+ 			          });
+ 		        }
+ 		        
+ 		        if(callbackNext && this._data.$next){
+ 			          var _nextTimout = window.setTimeout(function(){
+ 				            if(_this._neca){
+ 				            	return;
+ 				            }
+ 				            _this._neca = true;
+ 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + '] Responsive transition "' + _this._transitions + '" of showing page caused a timeout.');
+ 				            callbackNext.call(_this);
+ 			          }, ui5strap.options.transitionTimeout);
+ 			
+ 			          this._data.$next.one(ui5strap.support.transitionEndEvent, function(){
+ 				            if(_this._neca){
+ 				            	return;
+ 				            }
+ 				            _this._neca = true;
+ 				            window.clearTimeout(_nextTimout);
+ 				            callbackNext.call(_this);
+ 			          });
+ 		        }
+ 		
+ 		        this._data.$current && this._data.$current.addClass('ui5strap-transition-current-out');
+ 		        this._data.$next && this._data.$next.removeClass('ui5strap-transition-next');
+ 	      }
+ 	      else{ 
+ 		        jQuery.sap.log.debug('[TRANSITION#' + _this._data.id + '] Transition end event not supported.');
+ 		        
+ 		        callbackCurrent && callbackCurrent.call(_this);
+ 			    callbackNext && callbackNext.call(_this);
+ 		  }
+
+      };
+
+   };
 
   /*
   * -------

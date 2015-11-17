@@ -133,18 +133,13 @@
 				
 				var _this = this,
 					$target = jQuery('#' + this.targetDomId('bar')),
-					transition = newBarVisible 
-					? new ui5strap.Transition(
-							"transition-slide-ttb", 
-							null, 
-							$target, 
-							'x'
-					)
-					: new ui5strap.Transition(
-						"transition-slide-ttb", 
-						$target, 
-						null, 
-						'x'
+					transition = new ui5strap.ResponsiveTransition(
+						{
+							"transitionAll" : "noneg", 
+							"$current" : newBarVisible ? null : $target, 
+							"$next" : newBarVisible ? $target : null , 
+							"id" : 'x'
+						}
 					),
 					transitionComplete = function (){
 						_this._barTransitionBusy = false;
