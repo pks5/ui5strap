@@ -751,7 +751,10 @@
 	ui5strap.BarNavContainerMode = {
 		Intrude : "Intrude",
 		Extrude : "Extrude",
-		Overlay : "Overlay"
+		Overlay : "Overlay",
+		IntrudeFixed : "IntrudeFixed",
+		ExtrudeFixed : "ExtrudeFixed",
+		OverlayFixed : "OverlayFixed"
 	};
 	
 	/*

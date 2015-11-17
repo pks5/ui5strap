@@ -39,8 +39,10 @@
 /*
 * RESPONSIVE
 */
-.makeBarNavContainerSize(@size, @i) when (@i > 0) {
+.makeBarNavContainerSize(@size, @fullWidth, @i) when (@i > 0) {
+	//Placement Left
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-left{
+		//Bar
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
@@ -53,8 +55,31 @@
 			height:auto;
 		}
 		
+		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
+			left:0;
+			top:0;
+			right:auto;
+			bottom:0;
+			
+			width:((@i / @grid-columns) * @fullWidth);
+			height:auto;
+		}
+		
+		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
 			left:percentage((@i / @grid-columns));
+			top:0;
+			right:0;
+			bottom:0;
+			
+			width:auto;
+			height:auto;
+		}
+		
+		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
+			left:((@i / @grid-columns) * @fullWidth);
 			top:0;
 			right:0;
 			bottom:0;
@@ -73,7 +98,18 @@
 			height:auto;
 		}
 		
+		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
+			left:((@i / @grid-columns) * @fullWidth);
+			top:0;
+			right:auto;
+			bottom:0;
+			
+			width:100%;
+			height:auto;
+		}
+		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
+		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
 			left:0;
 			top:0;
@@ -84,7 +120,9 @@
 		}
 	}
 	
+	//Placement Top
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-top{
+		//Bar
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
@@ -96,9 +134,30 @@
 			height:percentage((@i / @grid-columns));
 		}
 		
+		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
+			left:0;
+			top:0;
+			right:0;
+			bottom:auto;
+			width:auto;
+			height:((@i / @grid-columns) * @fullWidth);
+		}
+		
+		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
 			left:0;
 			top:percentage((@i / @grid-columns));
+			right:0;
+			bottom:0;
+			width:auto;
+			height:auto;
+		}
+		
+		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
+			left:0;
+			top:((@i / @grid-columns) * @fullWidth);
 			right:0;
 			bottom:0;
 			width:auto;
@@ -114,7 +173,17 @@
 			height:100%;
 		}
 		
+		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
+			left:0;
+			top:((@i / @grid-columns) * @fullWidth);
+			right:0;
+			bottom:auto;
+			width:auto;
+			height:100%;
+		}
+		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
+		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
 			left:0;
 			top:0;
@@ -125,7 +194,9 @@
 		}
 	}
 	
+	//Placement Right
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-right{
+		//Bar
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
@@ -138,10 +209,33 @@
 			height:auto;
 		}
 		
+		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
+			left:auto;
+			top:0;
+			right:0;
+			bottom:0;
+			
+			width:((@i / @grid-columns) * @fullWidth);
+			height:auto;
+		}
+		
+		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
 			left: 0;
 			top: 0;
 			right:percentage((@i / @grid-columns));
+			bottom: 0;
+			
+			width:auto;
+			height:auto;
+		}
+		
+		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
+			left: 0;
+			top: 0;
+			right:((@i / @grid-columns) * @fullWidth);
 			bottom: 0;
 			
 			width:auto;
@@ -158,7 +252,18 @@
 			height:auto;
 		}
 		
+		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
+			left: auto;
+			right:((@i / @grid-columns) * @fullWidth);
+			top: 0;
+			bottom:0;
+			
+			width:100%;
+			height:auto;
+		}
+		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
+		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
 			left:0;
 			top:0;
@@ -169,7 +274,9 @@
 		}
 	}
 	
+	//Placement Bottom
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-bottom{
+		//Bar
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
@@ -182,11 +289,33 @@
 			height:percentage((@i / @grid-columns));
 		}
 		
+		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
+			left:0;
+			top:auto;
+			right:0;
+			bottom:0;
+			
+			width:auto;
+			height:((@i / @grid-columns) * @fullWidth);
+		}
+		
+		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
 			left: 0;
 			top:0;
 			right:0;
 			bottom:percentage((@i / @grid-columns));
+			width:auto;
+			height:auto;
+		}
+		
+		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
+			left: 0;
+			top:0;
+			right:0;
+			bottom:((@i / @grid-columns) * @fullWidth);
 			width:auto;
 			height:auto;
 		}
@@ -200,7 +329,17 @@
 			height:100%;
 		}
 		
+		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
+			left:0;
+			top:auto;
+			right:0;
+			bottom:((@i / @grid-columns) * @fullWidth);
+			width:auto;
+			height:100%;
+		}
+		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
+		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
 			left:0;
 			top:0;
@@ -211,19 +350,19 @@
 		}
 	}
 	
-	.makeBarNavContainerSize(@size, (@i - 1));
+	.makeBarNavContainerSize(@size, @fullWidth, (@i - 1));
 }
 
-.makeBarNavContainerSize(xs, 12);
+.makeBarNavContainerSize(xs, @screen-sm, 12);
 
 @media (min-width: @screen-sm) {
-	.makeBarNavContainerSize(sm, 12);
+	.makeBarNavContainerSize(sm, @screen-sm, 12);
 }
 
 @media (min-width: @screen-md) {
-	.makeBarNavContainerSize(md, 12);
+	.makeBarNavContainerSize(md, @screen-md, 12);
 }
 
 @media (min-width: @screen-lg) {
-	.makeBarNavContainerSize(lg, 12);
+	.makeBarNavContainerSize(lg, @screen-lg, 12);
 }
