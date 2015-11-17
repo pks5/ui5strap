@@ -949,6 +949,14 @@
     	 transString += data.transitionSmall ? " ui5strap-trans-sm-type-" + data.transitionSmall : " ui5strap-trans-sm-type-none";
     	 transString += data.transitionMedium ? " ui5strap-trans-md-type-" + data.transitionMedium : " ui5strap-trans-md-type-none";
     	 transString += data.transitionLarge ? " ui5strap-trans-lg-type-" + data.transitionLarge : " ui5strap-trans-lg-type-none";
+     
+    	 if(data.transitionExtraSmall === "ui5strap-trans-xs-type-none"
+        	&& data.transitionSmall === "ui5strap-trans-sm-type-none"
+        	&& data.transitionMedium === "ui5strap-trans-md-type-none"
+        	&& data.transitionSmall === "ui5strap-trans-lg-type-none"
+        		 ){
+        	 transString = "ui5strap-trans-all-type-none";
+         }
      }
      
      this._transitions = transString;
