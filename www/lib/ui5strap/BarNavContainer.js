@@ -40,9 +40,21 @@
 					type : "boolean",
 					defaultValue : true
 				},
-				barMode : {
+				barModeExtraSmall : {
 					type : "ui5strap.BarNavContainerMode",
 					defaultValue : ui5strap.BarNavContainerMode.Intrude
+				},
+				barModeSmall : {
+					type : "ui5strap.BarNavContainerMode",
+					defaultValue : ui5strap.BarNavContainerMode.Default
+				},
+				barModeMedium : {
+					type : "ui5strap.BarNavContainerMode",
+					defaultValue : ui5strap.BarNavContainerMode.Default
+				},
+				barModeLarge : {
+					type : "ui5strap.BarNavContainerMode",
+					defaultValue : ui5strap.BarNavContainerMode.Default
 				},
 				barSizeExtraSmall : {
 					type : "integer",
@@ -173,7 +185,11 @@
 	 * @Protected
 	 */
 	ui5strap.BarNavContainer.prototype._getBaseClassString = function(){
-		var classes = "navcontainer navcontainer-type-" + this.ncType + " navcontainer-flag-bar-mode-" + this.getBarMode().toLowerCase(),
+		var classes = "navcontainer navcontainer-type-" + this.ncType,
+			modeExtraSmall = this.getBarModeExtraSmall(),
+			modeSmall = this.getBarModeSmall(),
+			modeMedium = this.getBarModeMedium(),
+			modeLarge = this.getBarModeLarge();
 			placementExtraSmall = this.getBarPlacementExtraSmall(),
 			placementSmall = this.getBarPlacementSmall(),
 			placementMedium = this.getBarPlacementMedium(),
@@ -194,6 +210,19 @@
         }
 		if(placementLarge !== ui5strap.Placement.Default){
             classes += " navcontainer-flag-placement-lg-" + ui5strap.BSPlacement[placementLarge];
+        }
+		
+		if(modeExtraSmall !== ui5strap.BarNavContainerMode.Default){
+            classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
+        }
+		if(modeSmall !== ui5strap.BarNavContainerMode.Default){
+            classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
+        }
+		if(modeMedium !== ui5strap.BarNavContainerMode.Default){
+            classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
+        }
+		if(modeLarge !== ui5strap.BarNavContainerMode.Default){
+            classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
         }
 		
 		if(!this.getBarVisible()){

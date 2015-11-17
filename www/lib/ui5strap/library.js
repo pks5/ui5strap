@@ -749,6 +749,7 @@
 	jQuery.sap.declare("ui5strap.BarNavContainerMode");
 
 	ui5strap.BarNavContainerMode = {
+		Default : "Default",
 		Intrude : "Intrude",
 		Extrude : "Extrude",
 		Overlay : "Overlay"

@@ -41,8 +41,8 @@
 */
 .makeBarNavContainerSize(@size, @i) when (@i > 0) {
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-left{
-		&.navcontainer-flag-bar-mode-intrude > .navcontainer-target-bar,
-		&.navcontainer-flag-bar-mode-extrude > .navcontainer-target-bar{
+		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar{
 			left:0;
 			top:0;
 			right:auto;
@@ -52,7 +52,7 @@
 			height:auto;
 		}
 		
-		&.navcontainer-flag-bar-mode-intrude > .navcontainer-target-content{
+		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
 			left:percentage((@i / @grid-columns));
 			top:0;
 			right:0;
@@ -62,7 +62,7 @@
 			height:auto;
 		}
 		
-		&.navcontainer-flag-bar-mode-extrude > .navcontainer-target-content{
+		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
 			left:percentage((@i / @grid-columns));
 			top:0;
 			right:auto;
@@ -83,8 +83,8 @@
 	}
 	
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-top{
-		&.navcontainer-flag-bar-mode-intrude > .navcontainer-target-bar,
-		&.navcontainer-flag-bar-mode-extrude > .navcontainer-target-bar{
+		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar{
 			left:0;
 			top:0;
 			right:0;
@@ -93,7 +93,7 @@
 			height:percentage((@i / @grid-columns));
 		}
 		
-		&.navcontainer-flag-bar-mode-intrude > .navcontainer-target-content{
+		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
 			left:0;
 			top:percentage((@i / @grid-columns));
 			right:0;
@@ -102,7 +102,7 @@
 			height:auto;
 		}
 		
-		&.navcontainer-flag-bar-mode-extrude > .navcontainer-target-content{
+		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
 			left:0;
 			top:percentage((@i / @grid-columns));
 			right:0;
@@ -122,8 +122,8 @@
 	}
 	
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-right{
-		&.navcontainer-flag-bar-mode-intrude > .navcontainer-target-bar,
-		&.navcontainer-flag-bar-mode-extrude > .navcontainer-target-bar{
+		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar{
 			left:auto;
 			top:0;
 			right:0;
@@ -133,7 +133,7 @@
 			height:auto;
 		}
 		
-		&.navcontainer-flag-bar-mode-intrude > .navcontainer-target-content{
+		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
 			left: 0;
 			top: 0;
 			right:percentage((@i / @grid-columns));
@@ -143,7 +143,7 @@
 			height:auto;
 		}
 		
-		&.navcontainer-flag-bar-mode-extrude > .navcontainer-target-content{
+		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
 			left: auto;
 			right:percentage((@i / @grid-columns));
 			top: 0;
@@ -164,8 +164,8 @@
 	}
 	
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-bottom{
-		&.navcontainer-flag-bar-mode-intrude > .navcontainer-target-bar,
-		&.navcontainer-flag-bar-mode-extrude > .navcontainer-target-bar{
+		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
+		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar{
 			left:0;
 			top:auto;
 			right:0;
@@ -175,7 +175,7 @@
 			height:percentage((@i / @grid-columns));
 		}
 		
-		&.navcontainer-flag-bar-mode-intrude > .navcontainer-target-content{
+		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
 			left: 0;
 			top:0;
 			right:0;
@@ -184,7 +184,7 @@
 			height:auto;
 		}
 		
-		&.navcontainer-flag-bar-mode-extrude > .navcontainer-target-content{
+		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
 			left:0;
 			top:auto;
 			right:0;
