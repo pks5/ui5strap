@@ -36,10 +36,6 @@
 			library : "ui5strap",
 			
 			properties : { 
-				placement : {
-					type : "ui5strap.Placement",
-					defaultValue : ui5strap.Placement.Left
-				},
 				barVisible : {
 					type : "boolean",
 					defaultValue : true
@@ -63,6 +59,22 @@
 				barSizeLarge : {
 					type : "integer",
 					defaultValue : -1
+				},
+				barPlacementExtraSmall : {
+					type : "ui5strap.Placement",
+					defaultValue : ui5strap.Placement.Left
+				},
+				barPlacementSmall : {
+					type : "ui5strap.Placement",
+					defaultValue : ui5strap.Placement.Default
+				},
+				barPlacementMedium : {
+					type : "ui5strap.Placement",
+					defaultValue : ui5strap.Placement.Default
+				},
+				barPlacementLarge : {
+					type : "ui5strap.Placement",
+					defaultValue : ui5strap.Placement.Default
 				}
 				
 			},
@@ -162,14 +174,26 @@
 	 */
 	ui5strap.BarNavContainer.prototype._getBaseClassString = function(){
 		var classes = "navcontainer navcontainer-type-" + this.ncType + " navcontainer-flag-bar-mode-" + this.getBarMode().toLowerCase(),
-			placement = this.getPlacement(),
+			placementExtraSmall = this.getBarPlacementExtraSmall(),
+			placementSmall = this.getBarPlacementSmall(),
+			placementMedium = this.getBarPlacementMedium(),
+			placementLarge = this.getBarPlacementLarge();
 			columnsExtraSmall = this.getBarSizeExtraSmall(),
 			columnsSmall = this.getBarSizeSmall(),
 			columnsMedium = this.getBarSizeMedium(),
 			columnsLarge = this.getBarSizeLarge();
 		
-		if(placement !== ui5strap.Placement.Default){
-            classes += " navcontainer-flag-placement-" + ui5strap.BSPlacement[placement];
+		if(placementExtraSmall !== ui5strap.Placement.Default){
+            classes += " navcontainer-flag-placement-xs-" + ui5strap.BSPlacement[placementExtraSmall];
+        }
+		if(placementSmall !== ui5strap.Placement.Default){
+            classes += " navcontainer-flag-placement-sm-" + ui5strap.BSPlacement[placementSmall];
+        }
+		if(placementMedium !== ui5strap.Placement.Default){
+            classes += " navcontainer-flag-placement-md-" + ui5strap.BSPlacement[placementMedium];
+        }
+		if(placementLarge !== ui5strap.Placement.Default){
+            classes += " navcontainer-flag-placement-lg-" + ui5strap.BSPlacement[placementLarge];
         }
 		
 		if(!this.getBarVisible()){
