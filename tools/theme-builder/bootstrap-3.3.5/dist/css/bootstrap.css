@@ -9936,22 +9936,24 @@ a {
 * TODO: add library prefix "u5sl-"
 * TODO: change "navcontainer" to "navcon"
 */
+.navcontainer-type-bar > .navcontainer-target-bar {
+  position: absolute;
+  background-color: red;
+}
 .navcontainer-type-bar > .navcontainer-target-content {
   position: absolute;
   background-color: green;
-  -webkit-transition: left .2s, top .2s, bottom .2s, right .2s, width .2s, height .2s;
-       -o-transition: left .2s, top .2s, bottom .2s, right .2s, width .2s, height .2s;
-          transition: left .2s, top .2s, bottom .2s, right .2s, width .2s, height .2s;
+  -webkit-transition: left .5s, top .5s, bottom .5s, right .5s, width .5s, height .5s;
+       -o-transition: left .5s, top .5s, bottom .5s, right .5s, width .5s, height .5s;
+          transition: left .5s, top .5s, bottom .5s, right .5s, width .5s, height .5s;
 }
 .navcontainer-type-bar.navcontainer-flag-placement-left > .navcontainer-target-bar {
-  position: absolute;
   top: 0;
   right: auto;
   bottom: 0;
   left: 0;
   width: 70px;
   height: auto;
-  background-color: red;
 }
 .navcontainer-type-bar.navcontainer-flag-placement-left > .navcontainer-target-content {
   top: 0;
@@ -9965,14 +9967,12 @@ a {
   left: 0;
 }
 .navcontainer-type-bar.navcontainer-flag-placement-top > .navcontainer-target-bar {
-  position: absolute;
   top: 0;
   right: 0;
   bottom: auto;
   left: 0;
   width: auto;
   height: 70px;
-  background-color: red;
 }
 .navcontainer-type-bar.navcontainer-flag-placement-top > .navcontainer-target-content {
   top: 70px;
@@ -9986,14 +9986,12 @@ a {
   top: 0;
 }
 .navcontainer-type-bar.navcontainer-flag-placement-right > .navcontainer-target-bar {
-  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: auto;
   width: 70px;
   height: auto;
-  background-color: red;
 }
 .navcontainer-type-bar.navcontainer-flag-placement-right > .navcontainer-target-content {
   top: 0;
@@ -10007,14 +10005,12 @@ a {
   right: 0;
 }
 .navcontainer-type-bar.navcontainer-flag-placement-bottom > .navcontainer-target-bar {
-  position: absolute;
   top: auto;
   right: 0;
   bottom: 0;
   left: 0;
   width: auto;
   height: 70px;
-  background-color: red;
 }
 .navcontainer-type-bar.navcontainer-flag-placement-bottom > .navcontainer-target-content {
   top: 0;
@@ -10724,11 +10720,11 @@ a {
 */
 .transition-fade {
   opacity: 1;
-  -webkit-transition: opacity .3s ease-in-out;
-     -moz-transition: opacity .3s ease-in-out;
-      -ms-transition: opacity .3s ease-in-out;
-       -o-transition: opacity .3s ease-in-out;
-          transition: opacity .3s ease-in-out;
+  -webkit-transition: opacity .5s ease-in-out;
+     -moz-transition: opacity .5s ease-in-out;
+      -ms-transition: opacity .5s ease-in-out;
+       -o-transition: opacity .5s ease-in-out;
+          transition: opacity .5s ease-in-out;
 
   -webkit-font-smoothing: subpixel-antialiased;
 }
@@ -10748,10 +10744,10 @@ a {
 *
 */
 .transition-flip {
-  -webkit-transition: -webkit-transform .8s;
-      -ms-transition:     -ms-transform .8s;
-       -o-transition:      -o-transform .8s;
-          transition:         transform .8s;
+  -webkit-transition: -webkit-transform .5s;
+      -ms-transition:     -ms-transform .5s;
+       -o-transition:      -o-transform .5s;
+          transition:         transform .5s;
   -webkit-transform: rotate3d(0, 0, 0, 0);
      -moz-transform: rotate3d(0, 0, 0, 0);
       -ms-transform: rotate3d(0, 0, 0, 0);
@@ -10790,10 +10786,10 @@ a {
 *
 */
 .transition-zoom {
-  -webkit-transition: -webkit-transform .7s, opacity .1s;
-      -ms-transition:     -ms-transform .7s, opacity .1s;
-       -o-transition:      -o-transform .7s, opacity .1s;
-          transition:         transform .7s, opacity .1s;
+  -webkit-transition: -webkit-transform .5s, opacity .1s;
+      -ms-transition:     -ms-transform .5s, opacity .1s;
+       -o-transition:      -o-transform .5s, opacity .1s;
+          transition:         transform .5s, opacity .1s;
   /*
   transform: scale(1, 1);
   -webkit-transform: scale(1, 1);
@@ -10816,10 +10812,10 @@ a {
 *
 */
 .transition-zoom2 {
-  -webkit-transition: -webkit-transform .7s, opacity .7s;
-      -ms-transition:     -ms-transform .7s, opacity .7s;
-       -o-transition:      -o-transform .7s, opacity .7s;
-          transition:         transform .7s, opacity .7s;
+  -webkit-transition: -webkit-transform .5s, opacity .1s;
+      -ms-transition:     -ms-transform .5s, opacity .1s;
+       -o-transition:      -o-transform .5s, opacity .1s;
+          transition:         transform .5s, opacity .1s;
 }
 .transition-zoom2-next {
   z-index: auto;

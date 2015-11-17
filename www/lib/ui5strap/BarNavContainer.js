@@ -44,6 +44,10 @@
 					type : "boolean",
 					defaultValue : true
 				}
+			},
+			
+			events : {
+				barChanged : {}
 			}
 
 		},
@@ -96,7 +100,12 @@
 						$target, 
 						null, 
 						'x'
-					);
+					),
+					transitionComplete = function (){
+						_this._barTransitionBusy = false;
+						$target.attr('class', _this._getTargetClassString('bar'));
+						_this.fireBarChanged();
+					};
 				
 				//RAF start
 				ui5strap.polyfill.requestAnimationFrame(function RAF1(){
@@ -114,13 +123,7 @@
 						}
 						
 						//Execure Transition
-						transition.execute(function transitionCurrentComplete(){
-							_this._barTransitionBusy = false;
-							$target.attr('class', 'navcontainer-target navcontainer-target-bar ui5strap-hidden');
-						}, function transitionNextComplete(){
-							_this._barTransitionBusy = false;
-							$target.attr('class', 'navcontainer-target navcontainer-target-bar');
-						});
+						transition.execute(transitionComplete, transitionComplete);
 						
 					});
 	
@@ -150,5 +153,18 @@
 		
 		return classes;
 	};
+	
+	ui5strap.BarNavContainer.prototype._getTargetClassString = function(target){
+		if(target === "bar"){
+			return this.getBarVisible() 
+				? 'navcontainer-target navcontainer-target-bar' 
+				: 'navcontainer-target navcontainer-target-bar ui5strap-hidden';
+		}
+		else if(target === "content"){
+			
+		}
+		
+		return ui5strap.NavContainer.prototype._getTargetClassString.call(this, target);
+	}
 
 }());

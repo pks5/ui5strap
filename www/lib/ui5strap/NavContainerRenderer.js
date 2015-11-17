@@ -74,7 +74,7 @@
 			 * 
 			 * while TYPE and TARGET are replaced by the provided values
 			 */
-			rm.addClass('navcontainer-target navcontainer-target-' + target);
+			rm.addClass(oControl._getTargetClassString(target));
 			
 			rm.writeClasses();
 			rm.write(">");

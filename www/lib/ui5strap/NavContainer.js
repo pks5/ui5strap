@@ -533,6 +533,14 @@
 	};
 	
 	/**
+	 * @Protected
+	 */
+	NavContainerBaseProto._getTargetClassString = function(target){
+		return "navcontainer-target navcontainer-target-" + target;
+	};
+	
+	
+	/**
 	* @Protected
 	*/
 	NavContainerBaseProto._getOptionsClassString = function(){

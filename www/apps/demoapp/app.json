@@ -58,7 +58,8 @@
 	             "module" : "ui5strap.AppFrame",
 	             "navContainer" : "ui5strap.BarNavContainer",
 	             "navContainerOptions" : {
-	             	"placement" : "Top"
+	             	"placement" : "Top",
+	             	"barVisible" : false
 	             },
 	             
 	             "initialViews" : [
