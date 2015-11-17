@@ -749,11 +749,22 @@
 	jQuery.sap.declare("ui5strap.BarNavContainerMode");
 
 	ui5strap.BarNavContainerMode = {
-		Default : "Default",
 		Intrude : "Intrude",
 		Extrude : "Extrude",
 		Overlay : "Overlay"
 	};
+	
+	/*
+	   * BarNavContainerPlacement
+	   */
+		jQuery.sap.declare("ui5strap.BarNavContainerPlacement");
+
+		ui5strap.BarNavContainerPlacement = {
+			Left : "Left",
+			Top : "Top",
+			Right : "Right",
+			Bottom : "Bottom"
+		};	
 	
   /*
   * SelectionMode

@@ -47,15 +47,15 @@
 				},
 				barModeSmall : {
 					type : "ui5strap.BarNavContainerMode",
-					defaultValue : ui5strap.BarNavContainerMode.Default
+					defaultValue : ui5strap.BarNavContainerMode.Intrude
 				},
 				barModeMedium : {
 					type : "ui5strap.BarNavContainerMode",
-					defaultValue : ui5strap.BarNavContainerMode.Default
+					defaultValue : ui5strap.BarNavContainerMode.Intrude
 				},
 				barModeLarge : {
 					type : "ui5strap.BarNavContainerMode",
-					defaultValue : ui5strap.BarNavContainerMode.Default
+					defaultValue : ui5strap.BarNavContainerMode.Intrude
 				},
 				
 				barSizeExtraSmall : {
@@ -76,20 +76,20 @@
 				},
 				
 				barPlacementExtraSmall : {
-					type : "ui5strap.Placement",
-					defaultValue : ui5strap.Placement.Default
+					type : "ui5strap.BarNavContainerPlacement",
+					defaultValue : ui5strap.BarNavContainerPlacement.Left
 				},
 				barPlacementSmall : {
-					type : "ui5strap.Placement",
-					defaultValue : ui5strap.Placement.Default
+					type : "ui5strap.BarNavContainerPlacement",
+					defaultValue : ui5strap.BarNavContainerPlacement.Left
 				},
 				barPlacementMedium : {
-					type : "ui5strap.Placement",
-					defaultValue : ui5strap.Placement.Default
+					type : "ui5strap.BarNavContainerPlacement",
+					defaultValue : ui5strap.BarNavContainerPlacement.Left
 				},
 				barPlacementLarge : {
-					type : "ui5strap.Placement",
-					defaultValue : ui5strap.Placement.Default
+					type : "ui5strap.BarNavContainerPlacement",
+					defaultValue : ui5strap.BarNavContainerPlacement.Left
 				},
 				
 				barTransitionExtraSmall : {
@@ -140,20 +140,95 @@
 		};
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransitionExtraSmall = function(newBarVisible){
-		return "slide-rtl";
+	ui5strap.BarNavContainer.prototype._getBarTransitionByPlacement = function(placement){
+		var transition = "none none";
+		if(placement === ui5strap.BarNavContainerPlacement.Left){
+			transition = "slide-ltr slide-rtl";
+		}
+		else if(placement === ui5strap.BarNavContainerPlacement.Top){
+			transition = "slide-ttb slide-btt";
+		}
+		else if(placement === ui5strap.BarNavContainerPlacement.Right){
+			transition = "slide-rtl slide-ltr";
+		}
+		else if(placement === ui5strap.BarNavContainerPlacement.Bottom){
+			transition = "slide-btt slide-ttb";
+		}
+		return transition;
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransitionSmall = function(newBarVisible){
-		return "slide-ltr";
+	ui5strap.BarNavContainer.prototype._getBarTransitionExtraSmall = function(){
+		var transition = this.getBarTransitionExtraSmall();
+		
+		if(!transition){
+			//Get transition by placement
+			transition = this._getBarTransitionByPlacement(this.getBarPlacementExtraSmall());
+		}
+		
+		return transition;
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransitionMedium = function(newBarVisible){
-		return "slide-btt";
+	ui5strap.BarNavContainer.prototype._getBarTransitionSmall = function(){
+		var transition = this.getBarTransitionSmall();
+		
+		if(!transition){
+			if(0 < this.getBarSizeSmall()){
+				//Get transition by placement
+				transition = this._getBarTransitionByPlacement(this.getBarPlacementSmall());
+			}
+			else{
+				//Get Transition from extra small
+				transition = this._getBarTransitionExtraSmall();
+			}
+		}
+		
+		return transition;
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransitionLarge = function(newBarVisible){
-		return "slide-ttb";
+	ui5strap.BarNavContainer.prototype._getBarTransitionMedium = function(){
+		var transition = this.getBarTransitionMedium();
+		
+		if(!transition){
+			if(0 < this.getBarSizeMedium()){
+				//Get transition by placement
+				transition = this._getBarTransitionByPlacement(this.getBarPlacementMedium());
+			}
+			else{
+				//Get Transition from small
+				transition = this._getBarTransitionSmall();
+			}
+		}
+		
+		return transition;
+	};
+	
+	ui5strap.BarNavContainer.prototype._getBarTransitionLarge = function(){
+		var transition = this.getBarTransitionLarge();
+		
+		if(!transition){
+			if(0 < this.getBarSizeLarge()){
+				//Get transition by placement
+				transition = this._getBarTransitionByPlacement(this.getBarPlacementLarge());
+			}
+			else{
+				//Get Transition from medium
+				transition = this._getBarTransitionMedium();
+			}
+		}
+		
+		return transition;
+	};
+	
+	ui5strap.BarNavContainer.prototype._getBarTransition = function(transition, newBarVisible){
+		transition = transition.split(/ /);
+		if(transition.length > 2){
+			throw new Error("Transition string cannot contain more than 2 transitions!");
+		}
+		if(transition.length === 1){
+			transition.push(transition[0]);
+		}
+		
+		return newBarVisible ? transition[0] : transition[1];
 	};
 	
 	ui5strap.BarNavContainer.prototype.setBarVisible = function(newBarVisible, suppressInvalidate){
@@ -171,10 +246,10 @@
 					$target = jQuery('#' + this.targetDomId('bar')),
 					transition = new ui5strap.ResponsiveTransition(
 						{
-							"transitionExtraSmall" : this._getBarTransitionExtraSmall(),
-							"transitionSmall" : this._getBarTransitionSmall(),
-							"transitionMedium" : this._getBarTransitionMedium(),
-							"transitionLarge" : this._getBarTransitionLarge(),
+							"transitionExtraSmall" : this._getBarTransition(this._getBarTransitionExtraSmall(), newBarVisible),
+							"transitionSmall" : this._getBarTransition(this._getBarTransitionSmall(), newBarVisible),
+							"transitionMedium" : this._getBarTransition(this._getBarTransitionMedium(), newBarVisible),
+							"transitionLarge" : this._getBarTransition(this._getBarTransitionLarge(), newBarVisible),
 							"$current" : newBarVisible ? null : $target, 
 							"$next" : newBarVisible ? $target : null , 
 							"id" : 'x'
@@ -233,48 +308,8 @@
 			columnsMedium = this.getBarSizeMedium(),
 			columnsLarge = this.getBarSizeLarge();
 		
-		//Ensure that at least placement xs is set
-		if(placementExtraSmall === ui5strap.Placement.Default){
-            classes += " navcontainer-flag-placement-xs-left";
-        }
-		else{
-            classes += " navcontainer-flag-placement-xs-" + ui5strap.BSPlacement[placementExtraSmall];
-        }
-		
-		if(placementSmall !== ui5strap.Placement.Default){
-            classes += " navcontainer-flag-placement-sm-" + ui5strap.BSPlacement[placementSmall];
-        }
-		if(placementMedium !== ui5strap.Placement.Default){
-            classes += " navcontainer-flag-placement-md-" + ui5strap.BSPlacement[placementMedium];
-        }
-		if(placementLarge !== ui5strap.Placement.Default){
-            classes += " navcontainer-flag-placement-lg-" + ui5strap.BSPlacement[placementLarge];
-        }
-		
-		//Ensure that at least mode xs is set
-		if(modeExtraSmall === ui5strap.BarNavContainerMode.Default){
-            classes += " navcontainer-flag-mode-xs-intrude";
-        }
-		else{
-			classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
-        }
-		
-		if(modeSmall !== ui5strap.BarNavContainerMode.Default){
-            classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
-        }
-		if(modeMedium !== ui5strap.BarNavContainerMode.Default){
-            classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
-        }
-		if(modeLarge !== ui5strap.BarNavContainerMode.Default){
-            classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
-        }
-		
-		if(!this.getBarVisible()){
-			classes += " navcontainer-flag-no-bar";
-		}
-		
 		//Ensure that at least size xs is set
-		if(1 < columnsExtraSmall){
+		if(1 > columnsExtraSmall){
 			classes += " navcontainer-flag-col-xs-1";
 		}
 		else{
@@ -290,7 +325,23 @@
 	    if(0 < columnsLarge){
 	      classes += " navcontainer-flag-col-lg-" + columnsLarge;
 	    }
-				
+		    
+		//Placement
+		classes += " navcontainer-flag-placement-xs-" + placementExtraSmall.toLowerCase();
+        classes += " navcontainer-flag-placement-sm-" + placementSmall.toLowerCase();
+        classes += " navcontainer-flag-placement-md-" + placementMedium.toLowerCase();
+        classes += " navcontainer-flag-placement-lg-" + placementLarge.toLowerCase();
+        
+        //Mode
+		classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
+        classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
+        classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
+        classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
+        
+		if(!this.getBarVisible()){
+			classes += " navcontainer-flag-no-bar";
+		}
+		
 		return classes;
 	};
 	
