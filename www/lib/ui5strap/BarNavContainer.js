@@ -270,10 +270,10 @@
 					//RAF
 					ui5strap.polyfill.requestAnimationFrame(function RAF2(){
 						if(newBarVisible){
-							_this.$().removeClass("navcontainer-flag-no-bar");
+							_this.$().removeClass("navcontainer-flag-bar-hidden");
 						}
 						else{
-							_this.$().addClass("navcontainer-flag-no-bar");
+							_this.$().addClass("navcontainer-flag-bar-hidden");
 						}
 						
 						//Execure Transition
@@ -339,7 +339,7 @@
         classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
         
 		if(!this.getBarVisible()){
-			classes += " navcontainer-flag-no-bar";
+			classes += " navcontainer-flag-bar-hidden";
 		}
 		
 		return classes;
