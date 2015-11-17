@@ -61,6 +61,7 @@
 	             	"barSizeSmall" : 2,
 	             	"barPlacementSmall" : "Bottom",
 	             	"barModeSmall" : "Extrude",
+	             	
 	             	"barSizeMedium" : 6,
 	             	"barPlacementMedium" : "Right",
 	             	"barModeMedium" : "Intrude",
