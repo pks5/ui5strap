@@ -9966,24 +9966,24 @@ a {
           transition: left .51s, top .51s, bottom .51s, right .51s, width .51s, height .51s;
 }
 .navcontainer-type-bar.ui5strap-transition-speed-slow > .navcontainer-target-content {
-  -webkit-transition: left .74s, top .74s, bottom .74s, right .74s, width .74s, height .74s;
-       -o-transition: left .74s, top .74s, bottom .74s, right .74s, width .74s, height .74s;
-          transition: left .74s, top .74s, bottom .74s, right .74s, width .74s, height .74s;
+  -webkit-transition: left .735s, top .735s, bottom .735s, right .735s, width .735s, height .735s;
+       -o-transition: left .735s, top .735s, bottom .735s, right .735s, width .735s, height .735s;
+          transition: left .735s, top .735s, bottom .735s, right .735s, width .735s, height .735s;
 }
 .navcontainer-type-bar.navcontainer-flag-bar-hidden.ui5strap-transition-speed-slow > .navcontainer-target-content {
-  -webkit-transition: left .76s, top .76s, bottom .76s, right .76s, width .76s, height .76s;
-       -o-transition: left .76s, top .76s, bottom .76s, right .76s, width .76s, height .76s;
-          transition: left .76s, top .76s, bottom .76s, right .76s, width .76s, height .76s;
+  -webkit-transition: left .765s, top .765s, bottom .765s, right .765s, width .765s, height .765s;
+       -o-transition: left .765s, top .765s, bottom .765s, right .765s, width .765s, height .765s;
+          transition: left .765s, top .765s, bottom .765s, right .765s, width .765s, height .765s;
 }
 .navcontainer-type-bar.ui5strap-transition-speed-fast > .navcontainer-target-content {
-  -webkit-transition: left .24s, top .24s, bottom .24s, right .24s, width .24s, height .24s;
-       -o-transition: left .24s, top .24s, bottom .24s, right .24s, width .24s, height .24s;
-          transition: left .24s, top .24s, bottom .24s, right .24s, width .24s, height .24s;
+  -webkit-transition: left .245s, top .245s, bottom .245s, right .245s, width .245s, height .245s;
+       -o-transition: left .245s, top .245s, bottom .245s, right .245s, width .245s, height .245s;
+          transition: left .245s, top .245s, bottom .245s, right .245s, width .245s, height .245s;
 }
 .navcontainer-type-bar.navcontainer-flag-bar-hidden.ui5strap-transition-speed-fast > .navcontainer-target-content {
-  -webkit-transition: left .26s, top .26s, bottom .26s, right .26s, width .26s, height .26s;
-       -o-transition: left .26s, top .26s, bottom .26s, right .26s, width .26s, height .26s;
-          transition: left .26s, top .26s, bottom .26s, right .26s, width .26s, height .26s;
+  -webkit-transition: left .255s, top .255s, bottom .255s, right .255s, width .255s, height .255s;
+       -o-transition: left .255s, top .255s, bottom .255s, right .255s, width .255s, height .255s;
+          transition: left .255s, top .255s, bottom .255s, right .255s, width .255s, height .255s;
 }
 /*
 * RESPONSIVE Style

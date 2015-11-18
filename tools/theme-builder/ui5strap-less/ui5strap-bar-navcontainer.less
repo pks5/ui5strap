@@ -79,29 +79,29 @@
 		
 		.ui5strapSnapFullSize();
 		
-		.ui5strapTransitionAllSides((@transition-speed-normal - 0.01s));
+		.ui5strapTransitionAllSides((@transition-speed-normal * @transition-speed-fix-faster));
 	}
 	
 	&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
-		.ui5strapTransitionAllSides((@transition-speed-normal + 0.01s));
+		.ui5strapTransitionAllSides((@transition-speed-normal * @transition-speed-fix-slower));
 	}
 	
 	//Slow
 	&.ui5strap-transition-speed-slow > .navcontainer-target-content{
-		.ui5strapTransitionAllSides((@transition-speed-slow - 0.01s));
+		.ui5strapTransitionAllSides((@transition-speed-slow * @transition-speed-fix-faster));
 	}
 	
 	&.navcontainer-flag-bar-hidden.ui5strap-transition-speed-slow > .navcontainer-target-content{
-		.ui5strapTransitionAllSides((@transition-speed-slow + 0.01s));
+		.ui5strapTransitionAllSides((@transition-speed-slow * @transition-speed-fix-slower));
 	}
 	
 	//Fast
 	&.ui5strap-transition-speed-fast > .navcontainer-target-content{
-		.ui5strapTransitionAllSides((@transition-speed-fast - 0.01s));
+		.ui5strapTransitionAllSides((@transition-speed-fast * @transition-speed-fix-faster));
 	}
 	
 	&.navcontainer-flag-bar-hidden.ui5strap-transition-speed-fast > .navcontainer-target-content{
-		.ui5strapTransitionAllSides((@transition-speed-fast + 0.01s));
+		.ui5strapTransitionAllSides((@transition-speed-fast * @transition-speed-fix-slower));
 	}
 }
 
