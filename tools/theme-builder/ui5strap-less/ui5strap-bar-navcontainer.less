@@ -57,15 +57,29 @@
 		
 		.ui5strapSnapFullSize();
 		
-		.ui5strapTransitionAllSides(0.5s);
+		.ui5strapTransitionAllSides((@transition-speed-normal - 0.01s));
 	}
 	
+	&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
+		.ui5strapTransitionAllSides((@transition-speed-normal + 0.01s));
+	}
+	
+	//Slow
 	&.ui5strap-transition-speed-slow > .navcontainer-target-content{
-		.ui5strapTransitionAllSides(0.75s);
+		.ui5strapTransitionAllSides((@transition-speed-slow - 0.01s));
 	}
 	
+	&.navcontainer-flag-bar-hidden.ui5strap-transition-speed-slow > .navcontainer-target-content{
+		.ui5strapTransitionAllSides((@transition-speed-slow + 0.01s));
+	}
+	
+	//Fast
 	&.ui5strap-transition-speed-fast > .navcontainer-target-content{
-		.ui5strapTransitionAllSides(0.25s);
+		.ui5strapTransitionAllSides((@transition-speed-fast - 0.01s));
+	}
+	
+	&.navcontainer-flag-bar-hidden.ui5strap-transition-speed-fast > .navcontainer-target-content{
+		.ui5strapTransitionAllSides((@transition-speed-fast + 0.01s));
 	}
 }
 
@@ -109,7 +123,7 @@
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
 		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
-		&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
+		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
 	}
@@ -178,7 +192,7 @@
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
 		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
-		&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
+		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
 	}
@@ -253,7 +267,7 @@
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
 		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
-		&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
+		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
 	}
@@ -324,7 +338,7 @@
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
 		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
-		&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
+		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
 	}

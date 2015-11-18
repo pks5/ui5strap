@@ -9956,19 +9956,34 @@ a {
   left: 0;
   width: auto;
   height: auto;
-  -webkit-transition: left .5s, top .5s, bottom .5s, right .5s, width .5s, height .5s;
-       -o-transition: left .5s, top .5s, bottom .5s, right .5s, width .5s, height .5s;
-          transition: left .5s, top .5s, bottom .5s, right .5s, width .5s, height .5s;
+  -webkit-transition: left .49s, top .49s, bottom .49s, right .49s, width .49s, height .49s;
+       -o-transition: left .49s, top .49s, bottom .49s, right .49s, width .49s, height .49s;
+          transition: left .49s, top .49s, bottom .49s, right .49s, width .49s, height .49s;
+}
+.navcontainer-type-bar.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  -webkit-transition: left .51s, top .51s, bottom .51s, right .51s, width .51s, height .51s;
+       -o-transition: left .51s, top .51s, bottom .51s, right .51s, width .51s, height .51s;
+          transition: left .51s, top .51s, bottom .51s, right .51s, width .51s, height .51s;
 }
 .navcontainer-type-bar.ui5strap-transition-speed-slow > .navcontainer-target-content {
-  -webkit-transition: left .75s, top .75s, bottom .75s, right .75s, width .75s, height .75s;
-       -o-transition: left .75s, top .75s, bottom .75s, right .75s, width .75s, height .75s;
-          transition: left .75s, top .75s, bottom .75s, right .75s, width .75s, height .75s;
+  -webkit-transition: left .74s, top .74s, bottom .74s, right .74s, width .74s, height .74s;
+       -o-transition: left .74s, top .74s, bottom .74s, right .74s, width .74s, height .74s;
+          transition: left .74s, top .74s, bottom .74s, right .74s, width .74s, height .74s;
+}
+.navcontainer-type-bar.navcontainer-flag-bar-hidden.ui5strap-transition-speed-slow > .navcontainer-target-content {
+  -webkit-transition: left .76s, top .76s, bottom .76s, right .76s, width .76s, height .76s;
+       -o-transition: left .76s, top .76s, bottom .76s, right .76s, width .76s, height .76s;
+          transition: left .76s, top .76s, bottom .76s, right .76s, width .76s, height .76s;
 }
 .navcontainer-type-bar.ui5strap-transition-speed-fast > .navcontainer-target-content {
-  -webkit-transition: left .25s, top .25s, bottom .25s, right .25s, width .25s, height .25s;
-       -o-transition: left .25s, top .25s, bottom .25s, right .25s, width .25s, height .25s;
-          transition: left .25s, top .25s, bottom .25s, right .25s, width .25s, height .25s;
+  -webkit-transition: left .24s, top .24s, bottom .24s, right .24s, width .24s, height .24s;
+       -o-transition: left .24s, top .24s, bottom .24s, right .24s, width .24s, height .24s;
+          transition: left .24s, top .24s, bottom .24s, right .24s, width .24s, height .24s;
+}
+.navcontainer-type-bar.navcontainer-flag-bar-hidden.ui5strap-transition-speed-fast > .navcontainer-target-content {
+  -webkit-transition: left .26s, top .26s, bottom .26s, right .26s, width .26s, height .26s;
+       -o-transition: left .26s, top .26s, bottom .26s, right .26s, width .26s, height .26s;
+          transition: left .26s, top .26s, bottom .26s, right .26s, width .26s, height .26s;
 }
 /*
 * RESPONSIVE Style
@@ -10027,7 +10042,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10089,7 +10104,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10151,7 +10166,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10213,7 +10228,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-12.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10275,7 +10290,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10337,7 +10352,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10399,7 +10414,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10461,7 +10476,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-11.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10523,7 +10538,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10585,7 +10600,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10647,7 +10662,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10709,7 +10724,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-10.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10771,7 +10786,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10833,7 +10848,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10895,7 +10910,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -10957,7 +10972,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-9.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11019,7 +11034,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11081,7 +11096,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11143,7 +11158,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11205,7 +11220,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-8.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11267,7 +11282,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11329,7 +11344,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11391,7 +11406,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11453,7 +11468,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-7.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11515,7 +11530,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11577,7 +11592,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11639,7 +11654,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11701,7 +11716,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-6.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11763,7 +11778,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11825,7 +11840,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11887,7 +11902,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -11949,7 +11964,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-5.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12011,7 +12026,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12073,7 +12088,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12135,7 +12150,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12197,7 +12212,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-4.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12259,7 +12274,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12321,7 +12336,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12383,7 +12398,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12445,7 +12460,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-3.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12507,7 +12522,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12569,7 +12584,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12631,7 +12646,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12693,7 +12708,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-2.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12755,7 +12770,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12817,7 +12832,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12879,7 +12894,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -12941,7 +12956,7 @@ a {
 }
 .navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
 .navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
-.navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+.navcontainer-type-bar.navcontainer-flag-col-xs-1.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
   top: 0;
   right: 0;
   bottom: 0;
@@ -13004,7 +13019,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13066,7 +13081,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13128,7 +13143,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13190,7 +13205,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13252,7 +13267,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13314,7 +13329,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13376,7 +13391,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13438,7 +13453,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-11.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13500,7 +13515,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13562,7 +13577,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13624,7 +13639,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13686,7 +13701,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-10.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13748,7 +13763,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13810,7 +13825,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13872,7 +13887,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13934,7 +13949,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-9.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -13996,7 +14011,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14058,7 +14073,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14120,7 +14135,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14182,7 +14197,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-8.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14244,7 +14259,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14306,7 +14321,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14368,7 +14383,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14430,7 +14445,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-7.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14492,7 +14507,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14554,7 +14569,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14616,7 +14631,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14678,7 +14693,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-6.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14740,7 +14755,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14802,7 +14817,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14864,7 +14879,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14926,7 +14941,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-5.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -14988,7 +15003,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15050,7 +15065,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15112,7 +15127,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15174,7 +15189,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-4.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15236,7 +15251,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15298,7 +15313,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15360,7 +15375,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15422,7 +15437,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-3.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15484,7 +15499,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15546,7 +15561,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15608,7 +15623,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15670,7 +15685,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-2.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15732,7 +15747,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15794,7 +15809,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15856,7 +15871,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15918,7 +15933,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -15982,7 +15997,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16044,7 +16059,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16106,7 +16121,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16168,7 +16183,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-12.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16230,7 +16245,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16292,7 +16307,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16354,7 +16369,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16416,7 +16431,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-11.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16478,7 +16493,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16540,7 +16555,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16602,7 +16617,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16664,7 +16679,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-10.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16726,7 +16741,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16788,7 +16803,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16850,7 +16865,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16912,7 +16927,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-9.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -16974,7 +16989,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17036,7 +17051,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17098,7 +17113,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17160,7 +17175,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-8.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17222,7 +17237,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17284,7 +17299,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17346,7 +17361,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17408,7 +17423,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-7.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17470,7 +17485,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17532,7 +17547,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17594,7 +17609,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17656,7 +17671,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-6.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17718,7 +17733,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17780,7 +17795,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17842,7 +17857,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17904,7 +17919,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-5.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -17966,7 +17981,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18028,7 +18043,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18090,7 +18105,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18152,7 +18167,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-4.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18214,7 +18229,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18276,7 +18291,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18338,7 +18353,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18400,7 +18415,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-3.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18462,7 +18477,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18524,7 +18539,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18586,7 +18601,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18648,7 +18663,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-2.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18710,7 +18725,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18772,7 +18787,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18834,7 +18849,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18896,7 +18911,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-md-1.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18960,7 +18975,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19022,7 +19037,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19084,7 +19099,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19146,7 +19161,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19208,7 +19223,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19270,7 +19285,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19332,7 +19347,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19394,7 +19409,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-11.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19456,7 +19471,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19518,7 +19533,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19580,7 +19595,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19642,7 +19657,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-10.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19704,7 +19719,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19766,7 +19781,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19828,7 +19843,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19890,7 +19905,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-9.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19952,7 +19967,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20014,7 +20029,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20076,7 +20091,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20138,7 +20153,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-8.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20200,7 +20215,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20262,7 +20277,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20324,7 +20339,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20386,7 +20401,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-7.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20448,7 +20463,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20510,7 +20525,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20572,7 +20587,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20634,7 +20649,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-6.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20696,7 +20711,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20758,7 +20773,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20820,7 +20835,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20882,7 +20897,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-5.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -20944,7 +20959,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21006,7 +21021,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21068,7 +21083,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21130,7 +21145,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-4.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21192,7 +21207,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21254,7 +21269,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21316,7 +21331,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21378,7 +21393,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-3.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21440,7 +21455,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21502,7 +21517,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21564,7 +21579,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21626,7 +21641,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-2.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21688,7 +21703,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21750,7 +21765,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21812,7 +21827,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -21874,7 +21889,7 @@ a {
   }
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
-  .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hidden > .navcontainer-target-content {
+  .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;

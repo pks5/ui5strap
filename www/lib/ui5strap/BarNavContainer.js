@@ -259,6 +259,12 @@
 					transitionComplete = function (){
 						_this._barTransitionBusy = false;
 						$target.attr('class', _this._getTargetClassString('bar'));
+						if(_this.getBarVisible()){
+							_this.$().removeClass("navcontainer-flag-bar-hidden");
+						}
+						else{
+							_this.$().addClass("navcontainer-flag-bar-hidden");
+						}
 						_this.fireBarChanged();
 					};
 				
@@ -274,10 +280,10 @@
 						transition.execute(transitionComplete, transitionComplete);
 						
 						if(newBarVisible){
-							_this.$().removeClass("navcontainer-flag-bar-hidden");
+							_this.$().removeClass("navcontainer-flag-bar-hide");
 						}
 						else{
-							_this.$().addClass("navcontainer-flag-bar-hidden");
+							_this.$().addClass("navcontainer-flag-bar-hide");
 						}
 					});
 	
@@ -294,7 +300,7 @@
 	 * @Protected
 	 */
 	BarNavContainerProto._getBaseClassString = function(){
-		var classes = "navcontainer navcontainer-type-" + this.ncType + " ui5strap-transition-speed-slow",
+		var classes = "navcontainer navcontainer-type-" + this.ncType + " ui5strap-transition-speed-fast",
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
 			modeMedium = this.getBarModeMedium(),
@@ -339,7 +345,7 @@
         classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
         
 		if(!this.getBarVisible()){
-			classes += " navcontainer-flag-bar-hidden";
+			classes += " navcontainer-flag-bar-hide navcontainer-flag-bar-hidden";
 		}
 		
 		return classes;
