@@ -973,9 +973,10 @@
          }
      }
      
-     this._transitions = transString;
-     
      this._skip = transString === "ui5strap-trans-all-type-none";
+     
+     this._transitions = transString + " ui5strap-transition-speed-fast";
+     
      this._prepared = false;
      this._executed = false;
      

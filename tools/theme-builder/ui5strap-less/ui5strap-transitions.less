@@ -374,35 +374,27 @@
 	.ui5strap-trans-@{size}-type-slide-rtl{
 	
 		&{
-			  -webkit-transition: -webkit-transform 0.5s;
-			  -moz-transition: -moz-transform 0.5s;
-			  -o-transition: -o-transform 0.5s;
-			  -ms-transition: -ms-transform 0.5s;
-			  transition: transform 0.5s;
-			
-			  -webkit-transform: translate3d(0, 0, 0);
-			  -moz-transform: translate3d(0, 0, 0);
-			  -ms-transform: translate3d(0, 0, 0);
-			  -o-transform: translate3d(0, 0, 0);
-			  transform: translate3d(0, 0, 0);
+			  .ui5strapTransitionTransform(0.5s);
+			  
+			  .ui5strapTransformTranslate3d(0, 0, 0);
 			
 			  -webkit-font-smoothing: subpixel-antialiased;
 		}
 		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(0.75s);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(0.25s);
+		}
+		
 		&.ui5strap-transition-current-out{
-			  -webkit-transform: translate3d(-100%, 0, 0);
-			  -moz-transform: translate3d(-100%, 0, 0);
-			  -ms-transform: translate3d(-100%, 0, 0);
-			  -o-transform: translate3d(-100%, 0, 0);
-			  transform: translate3d(-100%, 0, 0);
+			 .ui5strapTransformTranslate3d(-100%, 0, 0);
 		}
 		
 		&.ui5strap-transition-next{
-			  -webkit-transform: translate3d(100%, 0, 0);
-			  -moz-transform: translate3d(100%, 0, 0 );
-			  -ms-transform: translate3d(100%, 0, 0);
-			  -o-transform: translate3d(100%, 0, 0);
-			  transform: translate3d(100%, 0, 0);
+			.ui5strapTransformTranslate3d(100%, 0, 0);
 		}
 	
 	}
@@ -412,35 +404,27 @@
 	*/
 	.ui5strap-trans-@{size}-type-slide-ltr{
 		&{
-		  -webkit-transition: -webkit-transform 0.5s;
-		  -moz-transition: -moz-transform 0.5s;
-		  -o-transition: -o-transform 0.5s;
-		  -ms-transition: -ms-transform 0.5s;
-		  transition: transform 0.5s;
+		  .ui5strapTransitionTransform(0.5s);
 		
-		  -webkit-transform: translate3d(0, 0, 0);
-		  -moz-transform: translate3d(0, 0, 0);
-		  -ms-transform: translate3d(0, 0, 0);
-		  -o-transform: translate3d(0, 0, 0);
-		  transform: translate3d(0, 0, 0);
+		  .ui5strapTransformTranslate3d(0, 0, 0);
 		
 		  -webkit-font-smoothing: subpixel-antialiased;
 		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(0.75s);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(0.25s);
+		}
 	
 		&.ui5strap-transition-current-out{
-		  -webkit-transform: translate3d(100%, 0, 0);
-		  -moz-transform: translate3d(100%, 0, 0);
-		  -ms-transform: translate3d(100%, 0, 0);
-		  -o-transform: translate3d(100%, 0, 0);
-		  transform: translate3d(100%, 0, 0);
+		  .ui5strapTransformTranslate3d(100%, 0, 0);
 		}
 	
 		&.ui5strap-transition-next{
-		  -webkit-transform: translate3d(-100%, 0, 0);
-		  -moz-transform: translate3d(-100%,0, 0);
-		  -ms-transform: translate3d(-100%, 0, 0);
-		  -o-transform: translate3d(-100%, 0, 0);
-		  transform: translate3d(-100%, 0, 0);
+		  .ui5strapTransformTranslate3d(-100%, 0, 0);
 		}
 		
 	}
@@ -452,35 +436,27 @@
 	*/
 	.ui5strap-trans-@{size}-type-slide-ttb{
 		&{
-		  -webkit-transition: -webkit-transform 0.5s;
-		  -moz-transition: -moz-transform 0.5s;
-		  -o-transition: -o-transform 0.5s;
-		  -ms-transition: -ms-transform 0.5s;
-		  transition: transform 0.5s;
+		  .ui5strapTransitionTransform(0.5s);
 		
-		  -webkit-transform: translate3d(0, 0, 0);
-		  -moz-transform: translate3d(0, 0, 0);
-		  -ms-transform: translate3d(0, 0, 0);
-		  -o-transform: translate3d(0, 0, 0);
-		  transform: translate3d(0, 0, 0);
+		  .ui5strapTransformTranslate3d(0, 0, 0);
 		
 		  -webkit-font-smoothing: subpixel-antialiased;
 		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(0.75s);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(0.25s);
+		}
 	
 		&.ui5strap-transition-current-out{
-		  -webkit-transform: translate3d(0, 100%,  0);
-		  -moz-transform: translate3d(0, 100%, 0);
-		  -ms-transform: translate3d(0, 100%, 0);
-		  -o-transform: translate3d(0, 100%, 0);
-		  transform: translate3d(0, 100%, 0);
+		  .ui5strapTransformTranslate3d(0, 100%, 0);
 		}
 	
 		&.ui5strap-transition-next{
-		  -webkit-transform: translate3d(0, -100%, 0);
-		  -moz-transform: translate3d(0, -100%, 0);
-		  -ms-transform: translate3d(0, -100%, 0);
-		  -o-transform: translate3d(0, -100%, 0);
-		  transform: translate3d(0, -100%, 0);
+			.ui5strapTransformTranslate3d(0, -100%, 0);
 		}
 	
 	}
@@ -492,35 +468,27 @@
 	*/
 	.ui5strap-trans-@{size}-type-slide-btt{
 		&{
-		  -webkit-transition: -webkit-transform 0.5s;
-		  -moz-transition: -moz-transform 0.5s;
-		  -o-transition: -o-transform 0.5s;
-		  -ms-transition: -ms-transform 0.5s;
-		  transition: transform 0.5s;
+		  .ui5strapTransitionTransform(0.5s);
 		
-		  -webkit-transform: translate3d(0, 0, 0);
-		  -moz-transform: translate3d(0, 0, 0);
-		  -ms-transform: translate3d(0, 0, 0);
-		  -o-transform: translate3d(0, 0, 0);
-		  transform: translate3d(0, 0, 0);
+		  .ui5strapTransformTranslate3d(0, 0, 0);
 		
 		  -webkit-font-smoothing: subpixel-antialiased;
 		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(0.75s);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(0.25s);
+		}
 	
 		&.ui5strap-transition-current-out{
-		  -webkit-transform: translate3d(0, -100%,  0);
-		  -moz-transform: translate3d(0, -100%, 0);
-		  -ms-transform: translate3d(0, -100%, 0);
-		  -o-transform: translate3d(0, -100%, 0);
-		  transform: translate3d(0, -100%, 0);
+		  .ui5strapTransformTranslate3d(0, -100%, 0);
 		}
 	
 		&.ui5strap-transition-next{
-		  -webkit-transform: translate3d(0, 100%, 0);
-		  -moz-transform: translate3d(0, 100%, 0);
-		  -ms-transform: translate3d(0, 100%, 0);
-		  -o-transform: translate3d(0, 100%, 0);
-		  transform: translate3d(0, 100%, 0);
+		  .ui5strapTransformTranslate3d(0, 100%, 0);
 		}
 		
 	}
@@ -532,17 +500,9 @@
 		&{
 		  opacity: 1;
 		
-		  transition: opacity .1s;
-		  -webkit-transition: opacity .1s;
-		  -moz-transition: opacity .1s;
-		  -o-transition: opacity .1s;
-		  -ms-transition: opacity .1s;
+		  .ui5strapTransitionOpacity(.1s);
   
-		  -webkit-transform: translate3d(0, 0, 0);
-		  -moz-transform: translate3d(0, 0, 0);
-		  -ms-transform: translate3d(0, 0, 0);
-		  -o-transform: translate3d(0, 0, 0);
-		  transform: translate3d(0, 0, 0);
+		  .ui5strapTransformTranslate3d(0, 0, 0);
 		
 		  -webkit-font-smoothing: subpixel-antialiased;
 		}
