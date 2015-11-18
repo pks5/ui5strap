@@ -294,7 +294,7 @@
 	 * @Protected
 	 */
 	BarNavContainerProto._getBaseClassString = function(){
-		var classes = "navcontainer navcontainer-type-" + this.ncType,
+		var classes = "navcontainer navcontainer-type-" + this.ncType + " ui5strap-transition-speed-slow",
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
 			modeMedium = this.getBarModeMedium(),
