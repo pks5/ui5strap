@@ -21,10 +21,10 @@
 
 //Placement Left
 //Bar
-.ui5strapBarNavContainerPlacementLeftBar(@w){
-	left:0;
+.ui5strapBarNavContainerBarPlacementHor(@l, @r, @w){
+	left:@l;
 	top:0;
-	right:auto;
+	right:@r;
 	bottom:0;
 	
 	width:@w;
@@ -32,7 +32,7 @@
 }
 
 //Content
-.ui5strapBarNavContainerPlacementLeftContent(@l, @r, @w){
+.ui5strapBarNavContainerContentPlacementHor(@l, @r, @w){
 	left:@l;
 	top:0;
 	right:@r;
@@ -44,17 +44,17 @@
 
 //Placement Top
 //Bar
-.ui5strapBarNavContainerPlacementTopBar(@h){
+.ui5strapBarNavContainerBarPlacementVer(@t, @b, @h){
 	left:0;
-	top:0;
+	top:@t;
 	right:0;
-	bottom:auto;
+	bottom:@b;
 	width:auto;
 	height:@h;
 }
 
 //Content
-.ui5strapBarNavContainerPlacementTopContent(@t, @b, @h){
+.ui5strapBarNavContainerContentPlacementVer(@t, @b, @h){
 	left:0;
 	top:@t;
 	right:0;
@@ -117,30 +117,30 @@
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
-			.ui5strapBarNavContainerPlacementLeftBar(percentage((@i / @grid-columns)));
+			.ui5strapBarNavContainerBarPlacementHor(0, auto, percentage((@i / @grid-columns)));
 		}
 		
 		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
-			.ui5strapBarNavContainerPlacementLeftBar(((@i / @grid-columns) * @fullWidth));
+			.ui5strapBarNavContainerBarPlacementHor(0, auto, ((@i / @grid-columns) * @fullWidth));
 		}
 		
 		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerPlacementLeftContent(percentage((@i / @grid-columns)), 0, auto);
+			.ui5strapBarNavContainerContentPlacementHor(percentage((@i / @grid-columns)), 0, auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerPlacementLeftContent(((@i / @grid-columns) * @fullWidth), 0, auto);
+			.ui5strapBarNavContainerContentPlacementHor(((@i / @grid-columns) * @fullWidth), 0, auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerPlacementLeftContent(percentage((@i / @grid-columns)), auto, 100%);
+			.ui5strapBarNavContainerContentPlacementHor(percentage((@i / @grid-columns)), auto, 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerPlacementLeftContent(((@i / @grid-columns) * @fullWidth), auto, 100%);
+			.ui5strapBarNavContainerContentPlacementHor(((@i / @grid-columns) * @fullWidth), auto, 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
@@ -156,30 +156,30 @@
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
-			.ui5strapBarNavContainerPlacementTopBar(percentage((@i / @grid-columns)));
+			.ui5strapBarNavContainerBarPlacementVer(0, auto, percentage((@i / @grid-columns)));
 		}
 		
 		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
-			.ui5strapBarNavContainerPlacementTopBar(((@i / @grid-columns) * @fullWidth));
+			.ui5strapBarNavContainerBarPlacementVer(0, auto, ((@i / @grid-columns) * @fullWidth));
 		}
 		
 		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerPlacementTopContent(percentage((@i / @grid-columns)), 0, auto);
+			.ui5strapBarNavContainerContentPlacementVer(percentage((@i / @grid-columns)), 0, auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerPlacementTopContent(((@i / @grid-columns) * @fullWidth), 0, auto);
+			.ui5strapBarNavContainerContentPlacementVer(((@i / @grid-columns) * @fullWidth), 0, auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerPlacementTopContent(percentage((@i / @grid-columns)), auto, 100%);
+			.ui5strapBarNavContainerContentPlacementVer(percentage((@i / @grid-columns)), auto, 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerPlacementTopContent(((@i / @grid-columns) * @fullWidth), auto, 100%);
+			.ui5strapBarNavContainerContentPlacementVer(((@i / @grid-columns) * @fullWidth), auto, 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
@@ -195,66 +195,30 @@
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
-			left:auto;
-			top:0;
-			right:0;
-			bottom:0;
-			
-			width:percentage((@i / @grid-columns));
-			height:auto;
+			.ui5strapBarNavContainerBarPlacementHor(auto, 0, percentage((@i / @grid-columns)));
 		}
 		
 		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
-			left:auto;
-			top:0;
-			right:0;
-			bottom:0;
-			
-			width:((@i / @grid-columns) * @fullWidth);
-			height:auto;
+			.ui5strapBarNavContainerBarPlacementHor(auto, 0, ((@i / @grid-columns) * @fullWidth));
 		}
 		
 		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
-			left: 0;
-			top: 0;
-			right:percentage((@i / @grid-columns));
-			bottom: 0;
-			
-			width:auto;
-			height:auto;
+			.ui5strapBarNavContainerContentPlacementHor(0, percentage((@i / @grid-columns)), auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
-			left: 0;
-			top: 0;
-			right:((@i / @grid-columns) * @fullWidth);
-			bottom: 0;
-			
-			width:auto;
-			height:auto;
+			.ui5strapBarNavContainerContentPlacementHor(0, ((@i / @grid-columns) * @fullWidth), auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
-			left: auto;
-			right:percentage((@i / @grid-columns));
-			top: 0;
-			bottom:0;
-			
-			width:100%;
-			height:auto;
+			.ui5strapBarNavContainerContentPlacementHor(auto, percentage((@i / @grid-columns)), 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
-			left: auto;
-			right:((@i / @grid-columns) * @fullWidth);
-			top: 0;
-			bottom:0;
-			
-			width:100%;
-			height:auto;
+			.ui5strapBarNavContainerContentPlacementHor(auto, ((@i / @grid-columns) * @fullWidth), 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
@@ -270,62 +234,30 @@
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
-			left:0;
-			top:auto;
-			right:0;
-			bottom:0;
-			
-			width:auto;
-			height:percentage((@i / @grid-columns));
+			.ui5strapBarNavContainerBarPlacementVer(auto, 0, percentage((@i / @grid-columns)));
 		}
 		
 		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
-			left:0;
-			top:auto;
-			right:0;
-			bottom:0;
-			
-			width:auto;
-			height:((@i / @grid-columns) * @fullWidth);
+			.ui5strapBarNavContainerBarPlacementVer(auto, 0, ((@i / @grid-columns) * @fullWidth));
 		}
 		
 		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
-			left: 0;
-			top:0;
-			right:0;
-			bottom:percentage((@i / @grid-columns));
-			width:auto;
-			height:auto;
+			.ui5strapBarNavContainerContentPlacementVer(0, percentage((@i / @grid-columns)), auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
-			left: 0;
-			top:0;
-			right:0;
-			bottom:((@i / @grid-columns) * @fullWidth);
-			width:auto;
-			height:auto;
+			.ui5strapBarNavContainerContentPlacementVer(0, ((@i / @grid-columns) * @fullWidth), auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
-			left:0;
-			top:auto;
-			right:0;
-			bottom:percentage((@i / @grid-columns));
-			width:auto;
-			height:100%;
+			.ui5strapBarNavContainerContentPlacementVer(auto, percentage((@i / @grid-columns)), 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
-			left:0;
-			top:auto;
-			right:0;
-			bottom:((@i / @grid-columns) * @fullWidth);
-			width:auto;
-			height:100%;
+			.ui5strapBarNavContainerContentPlacementVer(auto, ((@i / @grid-columns) * @fullWidth), 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
