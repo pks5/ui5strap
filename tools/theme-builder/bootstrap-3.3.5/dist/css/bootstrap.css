@@ -22863,9 +22863,9 @@ a {
 	*/
 .ui5strap-trans-all-type-none {
   opacity: 1;
-  -webkit-transition: opacity .05s;
-       -o-transition: opacity .05s;
-          transition: opacity .05s;
+  -webkit-transition: opacity .1s;
+       -o-transition: opacity .1s;
+          transition: opacity .1s;
   -webkit-transform: translate3d(0, 0, 0);
       -ms-transform: translate3d(0, 0, 0);
        -o-transform: translate3d(0, 0, 0);
@@ -23033,9 +23033,9 @@ a {
 	*/
   .ui5strap-trans-xs-type-none {
     opacity: 1;
-    -webkit-transition: opacity .05s;
-         -o-transition: opacity .05s;
-            transition: opacity .05s;
+    -webkit-transition: opacity .1s;
+         -o-transition: opacity .1s;
+            transition: opacity .1s;
     -webkit-transform: translate3d(0, 0, 0);
         -ms-transform: translate3d(0, 0, 0);
          -o-transform: translate3d(0, 0, 0);
@@ -23204,9 +23204,9 @@ a {
 	*/
   .ui5strap-trans-sm-type-none {
     opacity: 1;
-    -webkit-transition: opacity .05s;
-         -o-transition: opacity .05s;
-            transition: opacity .05s;
+    -webkit-transition: opacity .1s;
+         -o-transition: opacity .1s;
+            transition: opacity .1s;
     -webkit-transform: translate3d(0, 0, 0);
         -ms-transform: translate3d(0, 0, 0);
          -o-transform: translate3d(0, 0, 0);
@@ -23375,9 +23375,9 @@ a {
 	*/
   .ui5strap-trans-md-type-none {
     opacity: 1;
-    -webkit-transition: opacity .05s;
-         -o-transition: opacity .05s;
-            transition: opacity .05s;
+    -webkit-transition: opacity .1s;
+         -o-transition: opacity .1s;
+            transition: opacity .1s;
     -webkit-transform: translate3d(0, 0, 0);
         -ms-transform: translate3d(0, 0, 0);
          -o-transform: translate3d(0, 0, 0);
@@ -23546,9 +23546,9 @@ a {
 	*/
   .ui5strap-trans-lg-type-none {
     opacity: 1;
-    -webkit-transition: opacity .05s;
-         -o-transition: opacity .05s;
-            transition: opacity .05s;
+    -webkit-transition: opacity .1s;
+         -o-transition: opacity .1s;
+            transition: opacity .1s;
     -webkit-transform: translate3d(0, 0, 0);
         -ms-transform: translate3d(0, 0, 0);
          -o-transform: translate3d(0, 0, 0);

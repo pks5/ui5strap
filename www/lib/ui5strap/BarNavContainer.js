@@ -258,13 +258,16 @@
 					),
 					transitionComplete = function (){
 						_this._barTransitionBusy = false;
-						$target.attr('class', _this._getTargetClassString('bar'));
+						
 						if(_this.getBarVisible()){
 							_this.$().removeClass("navcontainer-flag-bar-hidden");
 						}
 						else{
 							_this.$().addClass("navcontainer-flag-bar-hidden");
 						}
+							
+						$target.attr('class', _this._getTargetClassString('bar'));
+							
 						_this.fireBarChanged();
 					};
 				
