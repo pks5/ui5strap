@@ -20,6 +20,14 @@
     ],
     
     "views" : {
+    		"ui5strap.demoapp.views.BarMenu" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-bar-menu",
+                
+                "target" : "bar",
+                "preload" : true
+            },
             "ui5strap.demoapp.views.MyPage1" : {
                 "type" : "HTML",
                 
@@ -78,6 +86,10 @@
 	             "initialViews" : [
 	                 { 
 	                     "viewName" : "ui5strap.demoapp.views.MyPage1",
+	                     "type" : "HTML"
+	                 },
+	                 { 
+	                     "viewName" : "ui5strap.demoapp.views.BarMenu",
 	                     "type" : "HTML"
 	                 }
 	             ]

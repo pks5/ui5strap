@@ -37,7 +37,7 @@
 
 .transition-slide-next{
   -webkit-transform: translate3d(100%, 0, 0);
-  -moz-transform: translate3d(100%,0 ,0 );
+  -moz-transform: translate3d(100%,0, 0);
   -ms-transform: translate3d(100%, 0, 0);
   -o-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
@@ -71,7 +71,7 @@
 
 .transition-slide-rtl-next{
   -webkit-transform: translate3d(100%, 0, 0);
-  -moz-transform: translate3d(100%,0 ,0 );
+  -moz-transform: translate3d(100%,0, 0);
   -ms-transform: translate3d(100%, 0, 0);
   -o-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
@@ -105,7 +105,7 @@
 
 .transition-slide-ltr-next{
   -webkit-transform: translate3d(-100%, 0, 0);
-  -moz-transform: translate3d(-100%,0 ,0 );
+  -moz-transform: translate3d(-100%,0, 0);
   -ms-transform: translate3d(-100%, 0, 0);
   -o-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
@@ -301,12 +301,11 @@
 *
 */
 .transition-zoom2{
-  transition: transform .5s, opacity .1s;
   -webkit-transition: -webkit-transform .5s, opacity .1s;
   -moz-transition: -moz-transform .5s, opacity .1s;
   -o-transition: -o-transform .5s, opacity .1s;
   -ms-transition: -ms-transform .5s, opacity .1s;
-  
+  transition: transform .5s, opacity .1s;
 }
 
 .transition-zoom2-next{
@@ -327,9 +326,46 @@
 }
 
 /*
-* ------------------------------------
-* ------------------------------------
+* --------------------------------------------------------------------------
+* --------------------------------------------------------------------------
+* --------------------------------------------------------------------------
 */
+
+//Transition tranform
+.ui5strapTransitionTransform(@t){
+	-webkit-transition: -webkit-transform @t;
+	-moz-transition: -moz-transform @t;
+	-o-transition: -o-transform @t;
+	-ms-transition: -ms-transform @t;
+	transition: transform @t;
+}
+
+//Transition opacity
+.ui5strapTransitionOpacity(@t){
+	-webkit-transition: opacity @t;
+	-moz-transition: opacity @t;
+	-o-transition: opacity @t;
+	-ms-transition: opacity @t;
+	transition: opacity @t;
+}
+
+//Transition transform and opacity
+.ui5strapTransitionTransformOpacity(@t1, @t2){
+	-webkit-transition: -webkit-transform @t1, opacity @t2;
+  	-moz-transition: -moz-transform @t1, opacity @t2;
+  	-o-transition: -o-transform @t1, opacity @t2;
+  	-ms-transition: -ms-transform @t1, opacity @t2;
+  	transition: transform @t1, opacity @t2;
+}
+
+//Transform 3d
+.ui5strapTransformTranslate3d(@x, @y, @z){
+	-webkit-transform: translate3d(@x, @y, @z);
+	-moz-transform: translate3d(@x, @y, @z);
+	-ms-transform: translate3d(@x, @y, @z);
+	-o-transform: translate3d(@x, @y, @z);
+	transform: translate3d(@x, @y, @z);
+}
 
 .makeTransitionSize(@size){
 	/*
@@ -347,6 +383,7 @@
 			  -webkit-transform: translate3d(0, 0, 0);
 			  -moz-transform: translate3d(0, 0, 0);
 			  -ms-transform: translate3d(0, 0, 0);
+			  -o-transform: translate3d(0, 0, 0);
 			  transform: translate3d(0, 0, 0);
 			
 			  -webkit-font-smoothing: subpixel-antialiased;
@@ -384,6 +421,7 @@
 		  -webkit-transform: translate3d(0, 0, 0);
 		  -moz-transform: translate3d(0, 0, 0);
 		  -ms-transform: translate3d(0, 0, 0);
+		  -o-transform: translate3d(0, 0, 0);
 		  transform: translate3d(0, 0, 0);
 		
 		  -webkit-font-smoothing: subpixel-antialiased;
@@ -423,6 +461,7 @@
 		  -webkit-transform: translate3d(0, 0, 0);
 		  -moz-transform: translate3d(0, 0, 0);
 		  -ms-transform: translate3d(0, 0, 0);
+		  -o-transform: translate3d(0, 0, 0);
 		  transform: translate3d(0, 0, 0);
 		
 		  -webkit-font-smoothing: subpixel-antialiased;
@@ -462,6 +501,7 @@
 		  -webkit-transform: translate3d(0, 0, 0);
 		  -moz-transform: translate3d(0, 0, 0);
 		  -ms-transform: translate3d(0, 0, 0);
+		  -o-transform: translate3d(0, 0, 0);
 		  transform: translate3d(0, 0, 0);
 		
 		  -webkit-font-smoothing: subpixel-antialiased;
@@ -501,6 +541,7 @@
 		  -webkit-transform: translate3d(0, 0, 0);
 		  -moz-transform: translate3d(0, 0, 0);
 		  -ms-transform: translate3d(0, 0, 0);
+		  -o-transform: translate3d(0, 0, 0);
 		  transform: translate3d(0, 0, 0);
 		
 		  -webkit-font-smoothing: subpixel-antialiased;

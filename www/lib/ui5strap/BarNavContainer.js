@@ -121,11 +121,12 @@
 		renderer : "ui5strap.NavContainerRenderer"
 	});
 
+	var BarNavContainerProto = ui5strap.BarNavContainer.prototype;
 	/**
 	* @Override
 	* @Protected
 	*/
-	ui5strap.BarNavContainer.prototype._initNavContainer = function(){
+	BarNavContainerProto._initNavContainer = function(){
 		//NavContainer type string
 		this.ncType = "bar";
 
@@ -140,7 +141,7 @@
 		};
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransitionByPlacement = function(placement){
+	BarNavContainerProto._getBarTransitionByPlacement = function(placement){
 		var transition = "none none";
 		if(placement === ui5strap.BarNavContainerPlacement.Left){
 			transition = "slide-ltr slide-rtl";
@@ -157,7 +158,7 @@
 		return transition;
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransitionExtraSmall = function(){
+	BarNavContainerProto._getBarTransitionExtraSmall = function(){
 		var transition = this.getBarTransitionExtraSmall();
 		
 		if(!transition){
@@ -168,7 +169,7 @@
 		return transition;
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransitionSmall = function(){
+	BarNavContainerProto._getBarTransitionSmall = function(){
 		var transition = this.getBarTransitionSmall();
 		
 		if(!transition){
@@ -185,7 +186,7 @@
 		return transition;
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransitionMedium = function(){
+	BarNavContainerProto._getBarTransitionMedium = function(){
 		var transition = this.getBarTransitionMedium();
 		
 		if(!transition){
@@ -202,7 +203,7 @@
 		return transition;
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransitionLarge = function(){
+	BarNavContainerProto._getBarTransitionLarge = function(){
 		var transition = this.getBarTransitionLarge();
 		
 		if(!transition){
@@ -219,7 +220,7 @@
 		return transition;
 	};
 	
-	ui5strap.BarNavContainer.prototype._getBarTransition = function(transition, newBarVisible){
+	BarNavContainerProto._getBarTransition = function(transition, newBarVisible){
 		transition = transition.split(/ /);
 		if(transition.length > 2){
 			throw new Error("Transition string cannot contain more than 2 transitions!");
@@ -231,7 +232,7 @@
 		return newBarVisible ? transition[0] : transition[1];
 	};
 	
-	ui5strap.BarNavContainer.prototype.setBarVisible = function(newBarVisible, suppressInvalidate){
+	BarNavContainerProto.setBarVisible = function(newBarVisible, suppressInvalidate){
 		if(this.getDomRef()){
 			jQuery.sap.log.debug("Setting barVisible to " + newBarVisible);
 			
@@ -269,16 +270,15 @@
 					
 					//RAF
 					ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+						//Execure Transition
+						transition.execute(transitionComplete, transitionComplete);
+						
 						if(newBarVisible){
 							_this.$().removeClass("navcontainer-flag-bar-hidden");
 						}
 						else{
 							_this.$().addClass("navcontainer-flag-bar-hidden");
 						}
-						
-						//Execure Transition
-						transition.execute(transitionComplete, transitionComplete);
-						
 					});
 	
 				});
@@ -293,7 +293,7 @@
 	/**
 	 * @Protected
 	 */
-	ui5strap.BarNavContainer.prototype._getBaseClassString = function(){
+	BarNavContainerProto._getBaseClassString = function(){
 		var classes = "navcontainer navcontainer-type-" + this.ncType,
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
@@ -345,7 +345,7 @@
 		return classes;
 	};
 	
-	ui5strap.BarNavContainer.prototype._getTargetClassString = function(target){
+	BarNavContainerProto._getTargetClassString = function(target){
 		if(target === "bar"){
 			return this.getBarVisible() 
 				? 'navcontainer-target navcontainer-target-bar' 
