@@ -3,7 +3,8 @@
 	        "id" : "ui5strap.demoapp",
 	        "package" : "ui5strap.demoapp",
 	        "name" : "My First App",
-	        "logLevel" : 5
+	        "logLevel" : 5,
+	        "theme" : "ui5strap_default"
 	},
 	
 	"models" : [
