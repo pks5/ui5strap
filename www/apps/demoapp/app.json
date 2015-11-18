@@ -2,7 +2,7 @@
 	"app" : {
 	        "id" : "ui5strap.demoapp",
 	        "package" : "ui5strap.demoapp",
-	        "name" : "My First App",
+	        "name" : "Ui5Strap Demo",
 	        "logLevel" : 5,
 	        "theme" : "ui5strap_default"
 	},
