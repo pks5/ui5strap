@@ -270,16 +270,16 @@
 	.makeBarNavContainerSize(@size, @fullWidth, (@i - 1));
 }
 
-.makeBarNavContainerSize(xs, @screen-sm, 12);
+.makeBarNavContainerSize(xs, @screen-sm, @grid-columns);
 
 @media (min-width: @screen-sm) {
-	.makeBarNavContainerSize(sm, @screen-sm, 12);
+	.makeBarNavContainerSize(sm, @screen-sm, @grid-columns);
 }
 
 @media (min-width: @screen-md) {
-	.makeBarNavContainerSize(md, @screen-md, 12);
+	.makeBarNavContainerSize(md, @screen-md, @grid-columns);
 }
 
 @media (min-width: @screen-lg) {
-	.makeBarNavContainerSize(lg, @screen-lg, 12);
+	.makeBarNavContainerSize(lg, @screen-lg, @grid-columns);
 }

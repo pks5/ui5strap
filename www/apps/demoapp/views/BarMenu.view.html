@@ -2,9 +2,26 @@
 <div data-sap-ui-type="ui5strap.Sidebar" data-inverse="true">
 <div 
 						data-sap-ui-type="ui5strap.Button" 
+						data-align="PullRight"
 						data-text="Toggle Bar" 
 						data-tap="__execute" 
 						data-custom-data:__action="ui5strap.demoapp.actions.ToggleBar"
 					></div>
+					
+					<div 
+									data-sap-ui-type="ui5strap.BarMenu" 
+									data-type-extra-small="ButtonsHorizontal"
+									data-type-medium="ListVertical"
+									data-selection-mode="Single"
+									data-tap="__execute" 
+									data-custom-data:__action="ui5strap.demoapp.actions.MenuSelect" 
+									data-items="{menu>/items}"
+								>
+									<div 
+										data-sap-ui-type="ui5strap.BarMenuItem" 
+										data-text="{menu>label}" 
+										data-icon="{menu>icon}"
+									></div>
+								</div>
 </div>
 </template>

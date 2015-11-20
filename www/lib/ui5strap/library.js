@@ -758,17 +758,30 @@
 	};
 	
 	/*
-	   * BarNavContainerPlacement
-	   */
-		jQuery.sap.declare("ui5strap.BarNavContainerPlacement");
+   * BarNavContainerPlacement
+   */
+	jQuery.sap.declare("ui5strap.BarNavContainerPlacement");
 
-		ui5strap.BarNavContainerPlacement = {
-			Left : "Left",
-			Top : "Top",
-			Right : "Right",
-			Bottom : "Bottom"
-		};	
-	
+	ui5strap.BarNavContainerPlacement = {
+		Left : "Left",
+		Top : "Top",
+		Right : "Right",
+		Bottom : "Bottom"
+	};	
+  
+   /*
+   * BarMenuType
+   */
+	jQuery.sap.declare("ui5strap.BarMenuType");
+
+	ui5strap.BarMenuType = {
+		Default : "Default",
+		ListHorizontal : "ListHorizontal",
+		ListVertical : "ListVertical",
+		ButtonsHorizontal : "ButtonsHorizontal",
+		ButtonsVertical : "ButtonsVertical"
+	}
+		
   /*
   * SelectionMode
   * Used by ui5strap.ListBase

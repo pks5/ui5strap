@@ -22414,6 +22414,129 @@ a {
   font-size: inherit;
   line-height: normal;
 }
+.u5sl-barmenu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.u5sl-barmenu > li {
+  cursor: pointer;
+}
+.u5sl-barmenu > li.disabled {
+  cursor: default;
+}
+.u5sl-barmenu > li.active {
+  background-color: red;
+}
+.u5sl-barmenu > li > .u5sl-barmenu-item-icon {
+  line-height: inherit;
+}
+.u5sl-barmenu-flag-type-xs-buttonshorizontal {
+  height: 60%;
+}
+.u5sl-barmenu-flag-type-xs-buttonshorizontal > li {
+  float: left;
+  width: 90px;
+  height: 50px;
+  line-height: 25px;
+  text-align: center;
+}
+.u5sl-barmenu-flag-type-xs-buttonshorizontal > li > .u5sl-barmenu-item-icon {
+  display: block;
+}
+.u5sl-barmenu-flag-type-xs-buttonsvertical {
+  width: 100%;
+}
+.u5sl-barmenu-flag-type-xs-buttonsvertical > li {
+  width: 100%;
+  height: 50px;
+  line-height: 25px;
+  text-align: center;
+}
+.u5sl-barmenu-flag-type-xs-buttonsvertical > li > .u5sl-barmenu-item-icon {
+  display: block;
+}
+@media (min-width: 768px) {
+  .u5sl-barmenu-flag-type-sm-buttonshorizontal {
+    height: 60%;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonshorizontal > li {
+    float: left;
+    width: 90px;
+    height: 50px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonshorizontal > li > .u5sl-barmenu-item-icon {
+    display: block;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonsvertical {
+    width: 100%;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonsvertical > li {
+    width: 100%;
+    height: 50px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonsvertical > li > .u5sl-barmenu-item-icon {
+    display: block;
+  }
+}
+@media (min-width: 992px) {
+  .u5sl-barmenu-flag-type-md-buttonshorizontal {
+    height: 60%;
+  }
+  .u5sl-barmenu-flag-type-md-buttonshorizontal > li {
+    float: left;
+    width: 90px;
+    height: 50px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-md-buttonshorizontal > li > .u5sl-barmenu-item-icon {
+    display: block;
+  }
+  .u5sl-barmenu-flag-type-md-buttonsvertical {
+    width: 100%;
+  }
+  .u5sl-barmenu-flag-type-md-buttonsvertical > li {
+    width: 100%;
+    height: 50px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-md-buttonsvertical > li > .u5sl-barmenu-item-icon {
+    display: block;
+  }
+}
+@media (min-width: 1200px) {
+  .u5sl-barmenu-flag-type-lg-buttonshorizontal {
+    height: 60%;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonshorizontal > li {
+    float: left;
+    width: 90px;
+    height: 50px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonshorizontal > li > .u5sl-barmenu-item-icon {
+    display: block;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonsvertical {
+    width: 100%;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonsvertical > li {
+    width: 100%;
+    height: 50px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonsvertical > li > .u5sl-barmenu-item-icon {
+    display: block;
+  }
+}
 /*
 * TODO: change library prefix to "u5sl-"
 */
