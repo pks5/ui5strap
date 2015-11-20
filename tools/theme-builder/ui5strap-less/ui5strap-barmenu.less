@@ -1,57 +1,179 @@
 .u5sl-barmenu{
-	list-style:none;
-	padding:0;
-	margin:0;
-}
+	&{
+		list-style:none;
+		padding:0;
+		margin:0;
+	}
 
-.u5sl-barmenu > li{
-	cursor: pointer;
-}
+	& > li{
+		cursor: pointer;
+		border:solid 1px rgba(255, 255, 255, 0.2);
+	}
 
-.u5sl-barmenu > li.disabled{
-	cursor: default;
-}
+	& > li.disabled{
+		cursor: default;
+	}
 
-.u5sl-barmenu > li.active{
-	background-color: red;
-}
+	& > li.active{
+		background-color: red;
+	}
 
-.u5sl-barmenu > li > .u5sl-barmenu-item-icon{
-	line-height: inherit;
+	& > li > .u5sl-barmenu-item-icon,
+	& > li > .u5sl-barmenu-item-text{
+		line-height: 1;
+	}
 }
 
 .ui5strapMakeBarMenuSize(@size, @i){
 	//Buttons Horizontal
 	.u5sl-barmenu-flag-type-@{size}-buttonshorizontal{
-		height:60%;	
-	}
+		&{
+			width:auto;
+			height:auto;	
+		}
 	
-	.u5sl-barmenu-flag-type-@{size}-buttonshorizontal > li{
-		text-align:center;
-		height:50px;
-		width:90px;
-		line-height:25px;
-		float: left;
-	}
+		& > li{
+			display:block;
+			text-align:center;
+			
+			width:90px;
+			height:50px;
+			
+			float: left;
+			
+			padding:0;
+			margin:0;
+		}
 	
-	.u5sl-barmenu-flag-type-@{size}-buttonshorizontal > li > .u5sl-barmenu-item-icon{
-		display:block;
+		& > li > .u5sl-barmenu-item-icon{
+			display:block;
+			text-align:inherit;
+			width:auto;
+			
+			font-size: 160%;
+			
+			margin:0;
+			padding: 6px 0;
+		}
+		
+		& > li > .u5sl-barmenu-item-text{
+			display:block;
+			font-size: 80%;
+		}
 	}
 	
 	//Buttons Vertical
 	.u5sl-barmenu-flag-type-@{size}-buttonsvertical{
-		width:100%;	
+		&{
+			width:100%;
+			height:auto;
+		}
+	
+		& > li{
+			display:block;
+			text-align:center;
+			
+			width: 100%;
+			height:50px;
+			
+			float:none;
+			padding:0;
+			margin:0;
+		}
+	
+		& > li > .u5sl-barmenu-item-icon{
+			display:block;
+			text-align:inherit;
+			width:auto;
+			
+			font-size: 160%;
+			
+			margin: 0;
+			padding: 6px 0;
+		}
+		
+		& > li > .u5sl-barmenu-item-text{
+			display:block;
+			font-size: 80%;
+		}
 	}
 	
-	.u5sl-barmenu-flag-type-@{size}-buttonsvertical > li{
-		text-align:center;
-		width: 100%;
-		height:50px;
-		line-height:25px;
+	//List Horizontal
+	.u5sl-barmenu-flag-type-@{size}-listhorizontal{
+		&{
+			width:auto;
+			height: auto;	
+		}
+	
+		& > li{
+			display:block;
+			text-align:left;
+			
+			width:auto;
+			height: auto;
+			
+			float:left;
+			
+			padding:10px;
+			margin:0 15px 0 0;
+		}
+	
+		& > li > .u5sl-barmenu-item-icon{
+			display:inline-block;
+			text-align:left;
+			
+			width:auto;
+			
+			font-size: 100%;
+			
+			margin: 0 0.6em 0 0;
+			
+			padding:0;
+		}
+		
+		& > li > .u5sl-barmenu-item-text{
+			display:inline-block;
+			font-size: 100%;
+		}
+		
 	}
 	
-	.u5sl-barmenu-flag-type-@{size}-buttonsvertical > li > .u5sl-barmenu-item-icon{
-		display:block;
+	//List Vertical
+	.u5sl-barmenu-flag-type-@{size}-listvertical{
+		&{	
+			width:auto;
+			height: auto;
+		}
+	
+		& > li{
+			display:block;
+			text-align:left;
+			
+			width:auto;
+			height: auto;
+			
+			float:none;
+			
+			padding:10px;
+			margin:0;
+		}
+	
+		& > li > .u5sl-barmenu-item-icon{
+			display:inline-block;
+			text-align:center;
+			width:28px;
+			
+			font-size: 100%;
+			
+			margin:0;
+			padding:0;
+		}
+		
+		& > li > .u5sl-barmenu-item-text{
+			display:inline-block;
+			font-size: 100%;
+			
+		}
 	}
 	
 	//.ui5strapMakeBarMenuSize(@size, (@i - 1));

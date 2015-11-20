@@ -158,6 +158,9 @@
 				_this.setMasterSelected(eventOptions.listItem);
 			}
 		}
+		else{
+			jQuery.sap.log.debug("Click ommitted.");
+		}
 
 		return eventOptions;
 	};

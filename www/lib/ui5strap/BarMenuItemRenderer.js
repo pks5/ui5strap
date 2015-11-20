@@ -35,7 +35,9 @@
 	ui5strap.BarMenuItemRenderer.render = function(rm, oControl) {
 		var icon = oControl.getIcon(),
 			text = oControl.getText(),
-			parse = oControl.getParse();
+			parse = oControl.getParse(),
+			content = oControl.getContent(),
+	        contentPlacement = oControl.getContentPlacement();
 
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
@@ -49,14 +51,30 @@
 		}
 		rm.writeClasses();
 		rm.write(">");
+		
+		if(contentPlacement === ui5strap.ContentPlacement.Start){
+	    	for(var i = 0; i < content.length; i++){ 
+				rm.renderControl(content[i]);
+			}
+	    }
 
-		if('' !== icon){
+		if(icon){
 			rm.write('<span class="u5sl-barmenu-item-icon fa fa-' + icon + '"></span>');
 		}
 		
-		ui5strap.RenderUtils.renderContent(rm, oControl);
-		    
+		if(text){
+			rm.write('<span class="u5sl-barmenu-item-text">');
+			rm.writeEscaped(text);
+			rm.write('</span>');
+		}
+		
+		if(contentPlacement === ui5strap.ContentPlacement.End){
+			for(var i = 0; i < content.length; i++){ 
+				rm.renderControl(content[i]);
+			}
+        }
+
 		rm.write("</li>");
 	};
-
+	
 }());

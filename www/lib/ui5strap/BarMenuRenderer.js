@@ -46,7 +46,7 @@
 		else{
 			classes += ' u5sl-barmenu-flag-type-xs-' + typeExtraSmall.toLowerCase();
 		}
-		classes += ' u5sl-barmenu-flag-type-sm-' + typeExtraSmall.toLowerCase();
+		classes += ' u5sl-barmenu-flag-type-sm-' + typeSmall.toLowerCase();
 		classes += ' u5sl-barmenu-flag-type-md-' + typeMedium.toLowerCase();
 		classes += ' u5sl-barmenu-flag-type-lg-' + typeLarge.toLowerCase();
 		
