@@ -22414,6 +22414,431 @@ a {
   font-size: inherit;
   line-height: normal;
 }
+.u5sl-barmenu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.u5sl-barmenu > li {
+  cursor: pointer;
+  border: solid 1px rgba(255, 255, 255, .2);
+}
+.u5sl-barmenu > li.disabled {
+  cursor: default;
+}
+.u5sl-barmenu > li.active {
+  background-color: red;
+}
+.u5sl-barmenu > li > .u5sl-barmenu-item-icon,
+.u5sl-barmenu > li > .u5sl-barmenu-item-text {
+  line-height: 1;
+}
+.u5sl-barmenu-flag-type-xs-buttonshorizontal {
+  width: auto;
+  height: auto;
+}
+.u5sl-barmenu-flag-type-xs-buttonshorizontal > li {
+  display: block;
+  float: left;
+  width: 90px;
+  height: 50px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.u5sl-barmenu-flag-type-xs-buttonshorizontal > li > .u5sl-barmenu-item-icon {
+  display: block;
+  width: auto;
+  padding: 6px 0;
+  margin: 0;
+  font-size: 160%;
+  text-align: inherit;
+}
+.u5sl-barmenu-flag-type-xs-buttonshorizontal > li > .u5sl-barmenu-item-text {
+  display: block;
+  font-size: 80%;
+}
+.u5sl-barmenu-flag-type-xs-buttonsvertical {
+  width: 100%;
+  height: auto;
+}
+.u5sl-barmenu-flag-type-xs-buttonsvertical > li {
+  display: block;
+  float: none;
+  width: 100%;
+  height: 50px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.u5sl-barmenu-flag-type-xs-buttonsvertical > li > .u5sl-barmenu-item-icon {
+  display: block;
+  width: auto;
+  padding: 6px 0;
+  margin: 0;
+  font-size: 160%;
+  text-align: inherit;
+}
+.u5sl-barmenu-flag-type-xs-buttonsvertical > li > .u5sl-barmenu-item-text {
+  display: block;
+  font-size: 80%;
+}
+.u5sl-barmenu-flag-type-xs-listhorizontal {
+  width: auto;
+  height: auto;
+}
+.u5sl-barmenu-flag-type-xs-listhorizontal > li {
+  display: block;
+  float: left;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  margin: 0 1em 0 0;
+  text-align: left;
+}
+.u5sl-barmenu-flag-type-xs-listhorizontal > li > .u5sl-barmenu-item-icon {
+  display: inline-block;
+  width: auto;
+  padding: 0;
+  margin: 0 .6em 0 0;
+  font-size: 100%;
+  text-align: left;
+}
+.u5sl-barmenu-flag-type-xs-listhorizontal > li > .u5sl-barmenu-item-text {
+  display: inline-block;
+  font-size: 100%;
+}
+.u5sl-barmenu-flag-type-xs-listvertical {
+  width: auto;
+  height: auto;
+}
+.u5sl-barmenu-flag-type-xs-listvertical > li {
+  display: block;
+  float: none;
+  width: auto;
+  height: auto;
+  padding: .8em;
+  margin: 0;
+  text-align: left;
+}
+.u5sl-barmenu-flag-type-xs-listvertical > li > .u5sl-barmenu-item-icon {
+  display: inline-block;
+  width: 2em;
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  text-align: center;
+}
+.u5sl-barmenu-flag-type-xs-listvertical > li > .u5sl-barmenu-item-text {
+  display: inline-block;
+  font-size: 100%;
+}
+@media (min-width: 768px) {
+  .u5sl-barmenu-flag-type-sm-buttonshorizontal {
+    width: auto;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonshorizontal > li {
+    display: block;
+    float: left;
+    width: 90px;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonshorizontal > li > .u5sl-barmenu-item-icon {
+    display: block;
+    width: auto;
+    padding: 6px 0;
+    margin: 0;
+    font-size: 160%;
+    text-align: inherit;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonshorizontal > li > .u5sl-barmenu-item-text {
+    display: block;
+    font-size: 80%;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonsvertical {
+    width: 100%;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonsvertical > li {
+    display: block;
+    float: none;
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonsvertical > li > .u5sl-barmenu-item-icon {
+    display: block;
+    width: auto;
+    padding: 6px 0;
+    margin: 0;
+    font-size: 160%;
+    text-align: inherit;
+  }
+  .u5sl-barmenu-flag-type-sm-buttonsvertical > li > .u5sl-barmenu-item-text {
+    display: block;
+    font-size: 80%;
+  }
+  .u5sl-barmenu-flag-type-sm-listhorizontal {
+    width: auto;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-sm-listhorizontal > li {
+    display: block;
+    float: left;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin: 0 1em 0 0;
+    text-align: left;
+  }
+  .u5sl-barmenu-flag-type-sm-listhorizontal > li > .u5sl-barmenu-item-icon {
+    display: inline-block;
+    width: auto;
+    padding: 0;
+    margin: 0 .6em 0 0;
+    font-size: 100%;
+    text-align: left;
+  }
+  .u5sl-barmenu-flag-type-sm-listhorizontal > li > .u5sl-barmenu-item-text {
+    display: inline-block;
+    font-size: 100%;
+  }
+  .u5sl-barmenu-flag-type-sm-listvertical {
+    width: auto;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-sm-listvertical > li {
+    display: block;
+    float: none;
+    width: auto;
+    height: auto;
+    padding: .8em;
+    margin: 0;
+    text-align: left;
+  }
+  .u5sl-barmenu-flag-type-sm-listvertical > li > .u5sl-barmenu-item-icon {
+    display: inline-block;
+    width: 2em;
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-sm-listvertical > li > .u5sl-barmenu-item-text {
+    display: inline-block;
+    font-size: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .u5sl-barmenu-flag-type-md-buttonshorizontal {
+    width: auto;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-md-buttonshorizontal > li {
+    display: block;
+    float: left;
+    width: 90px;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-md-buttonshorizontal > li > .u5sl-barmenu-item-icon {
+    display: block;
+    width: auto;
+    padding: 6px 0;
+    margin: 0;
+    font-size: 160%;
+    text-align: inherit;
+  }
+  .u5sl-barmenu-flag-type-md-buttonshorizontal > li > .u5sl-barmenu-item-text {
+    display: block;
+    font-size: 80%;
+  }
+  .u5sl-barmenu-flag-type-md-buttonsvertical {
+    width: 100%;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-md-buttonsvertical > li {
+    display: block;
+    float: none;
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-md-buttonsvertical > li > .u5sl-barmenu-item-icon {
+    display: block;
+    width: auto;
+    padding: 6px 0;
+    margin: 0;
+    font-size: 160%;
+    text-align: inherit;
+  }
+  .u5sl-barmenu-flag-type-md-buttonsvertical > li > .u5sl-barmenu-item-text {
+    display: block;
+    font-size: 80%;
+  }
+  .u5sl-barmenu-flag-type-md-listhorizontal {
+    width: auto;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-md-listhorizontal > li {
+    display: block;
+    float: left;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin: 0 1em 0 0;
+    text-align: left;
+  }
+  .u5sl-barmenu-flag-type-md-listhorizontal > li > .u5sl-barmenu-item-icon {
+    display: inline-block;
+    width: auto;
+    padding: 0;
+    margin: 0 .6em 0 0;
+    font-size: 100%;
+    text-align: left;
+  }
+  .u5sl-barmenu-flag-type-md-listhorizontal > li > .u5sl-barmenu-item-text {
+    display: inline-block;
+    font-size: 100%;
+  }
+  .u5sl-barmenu-flag-type-md-listvertical {
+    width: auto;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-md-listvertical > li {
+    display: block;
+    float: none;
+    width: auto;
+    height: auto;
+    padding: .8em;
+    margin: 0;
+    text-align: left;
+  }
+  .u5sl-barmenu-flag-type-md-listvertical > li > .u5sl-barmenu-item-icon {
+    display: inline-block;
+    width: 2em;
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-md-listvertical > li > .u5sl-barmenu-item-text {
+    display: inline-block;
+    font-size: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .u5sl-barmenu-flag-type-lg-buttonshorizontal {
+    width: auto;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonshorizontal > li {
+    display: block;
+    float: left;
+    width: 90px;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonshorizontal > li > .u5sl-barmenu-item-icon {
+    display: block;
+    width: auto;
+    padding: 6px 0;
+    margin: 0;
+    font-size: 160%;
+    text-align: inherit;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonshorizontal > li > .u5sl-barmenu-item-text {
+    display: block;
+    font-size: 80%;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonsvertical {
+    width: 100%;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonsvertical > li {
+    display: block;
+    float: none;
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonsvertical > li > .u5sl-barmenu-item-icon {
+    display: block;
+    width: auto;
+    padding: 6px 0;
+    margin: 0;
+    font-size: 160%;
+    text-align: inherit;
+  }
+  .u5sl-barmenu-flag-type-lg-buttonsvertical > li > .u5sl-barmenu-item-text {
+    display: block;
+    font-size: 80%;
+  }
+  .u5sl-barmenu-flag-type-lg-listhorizontal {
+    width: auto;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-lg-listhorizontal > li {
+    display: block;
+    float: left;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin: 0 1em 0 0;
+    text-align: left;
+  }
+  .u5sl-barmenu-flag-type-lg-listhorizontal > li > .u5sl-barmenu-item-icon {
+    display: inline-block;
+    width: auto;
+    padding: 0;
+    margin: 0 .6em 0 0;
+    font-size: 100%;
+    text-align: left;
+  }
+  .u5sl-barmenu-flag-type-lg-listhorizontal > li > .u5sl-barmenu-item-text {
+    display: inline-block;
+    font-size: 100%;
+  }
+  .u5sl-barmenu-flag-type-lg-listvertical {
+    width: auto;
+    height: auto;
+  }
+  .u5sl-barmenu-flag-type-lg-listvertical > li {
+    display: block;
+    float: none;
+    width: auto;
+    height: auto;
+    padding: .8em;
+    margin: 0;
+    text-align: left;
+  }
+  .u5sl-barmenu-flag-type-lg-listvertical > li > .u5sl-barmenu-item-icon {
+    display: inline-block;
+    width: 2em;
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    text-align: center;
+  }
+  .u5sl-barmenu-flag-type-lg-listvertical > li > .u5sl-barmenu-item-text {
+    display: inline-block;
+    font-size: 100%;
+  }
+}
 /*
 * TODO: change library prefix to "u5sl-"
 */

@@ -758,17 +758,30 @@
 	};
 	
 	/*
-	   * BarNavContainerPlacement
-	   */
-		jQuery.sap.declare("ui5strap.BarNavContainerPlacement");
+   * BarNavContainerPlacement
+   */
+	jQuery.sap.declare("ui5strap.BarNavContainerPlacement");
 
-		ui5strap.BarNavContainerPlacement = {
-			Left : "Left",
-			Top : "Top",
-			Right : "Right",
-			Bottom : "Bottom"
-		};	
-	
+	ui5strap.BarNavContainerPlacement = {
+		Left : "Left",
+		Top : "Top",
+		Right : "Right",
+		Bottom : "Bottom"
+	};	
+  
+   /*
+   * BarMenuType
+   */
+	jQuery.sap.declare("ui5strap.BarMenuType");
+
+	ui5strap.BarMenuType = {
+		Default : "Default",
+		ListHorizontal : "ListHorizontal",
+		ListVertical : "ListVertical",
+		ButtonsHorizontal : "ButtonsHorizontal",
+		ButtonsVertical : "ButtonsVertical"
+	}
+		
   /*
   * SelectionMode
   * Used by ui5strap.ListBase
@@ -9780,6 +9793,9 @@
 				_this.setMasterSelected(eventOptions.listItem);
 			}
 		}
+		else{
+			jQuery.sap.log.debug("Click ommitted.");
+		}
 
 		return eventOptions;
 	};
@@ -13323,6 +13339,271 @@
 	});
 
 }());;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.ListGroup
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	jQuery.sap.declare("ui5strap.BarMenu");
+	jQuery.sap.require("ui5strap.ListBase");
+	jQuery.sap.require("ui5strap.BarMenuItem");
+
+	ui5strap.ListBase.extend("ui5strap.BarMenu", {
+		metadata : {
+
+			library : "ui5strap",
+			
+			properties : { 
+				typeExtraSmall : {
+					type : "ui5strap.BarMenuType",
+					defaultValue : ui5strap.BarMenuType.ListVertical
+				},
+				
+				typeSmall : {
+					type : "ui5strap.BarMenuType",
+					defaultValue : ui5strap.BarMenuType.Default
+				},
+				
+				typeMedium : {
+					type : "ui5strap.BarMenuType",
+					defaultValue : ui5strap.BarMenuType.Default
+				},
+				
+				typeLarge : {
+					type : "ui5strap.BarMenuType",
+					defaultValue : ui5strap.BarMenuType.Default
+				}
+			},
+			
+			aggregations : { 
+				items : {
+					type : "ui5strap.BarMenuItem",
+					singularName: "item"
+				} 
+			}
+
+		}
+	});
+
+}());;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.BarMenuItem
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	jQuery.sap.declare("ui5strap.BarMenuItem");
+	jQuery.sap.require("ui5strap.ListItem");
+
+	ui5strap.ListItem.extend("ui5strap.BarMenuItem", {
+		metadata : {
+
+			// ---- object ----
+			defaultAggregation : "content",
+			
+			// ---- control specific ----
+			library : "ui5strap",
+			properties : { 
+				icon : {
+					type:"string",
+					defaultValue : ""
+				}
+			}
+		}
+	});
+
+}());;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.BarMenuItemRenderer
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	jQuery.sap.declare("ui5strap.BarMenuItemRenderer");
+
+	ui5strap.BarMenuItemRenderer = {
+	};
+
+	ui5strap.BarMenuItemRenderer.render = function(rm, oControl) {
+		var icon = oControl.getIcon(),
+			text = oControl.getText(),
+			parse = oControl.getParse(),
+			content = oControl.getContent(),
+	        contentPlacement = oControl.getContentPlacement();
+
+		if(parse){
+			text = ui5strap.RenderUtils.parseText(text);
+		}
+		
+		rm.write("<li");
+		rm.writeControlData(oControl);
+		rm.addClass('u5sl-barmenu-item');
+		if(oControl.getSelected()){
+			rm.addClass('active');
+		}
+		rm.writeClasses();
+		rm.write(">");
+		
+		if(contentPlacement === ui5strap.ContentPlacement.Start){
+	    	for(var i = 0; i < content.length; i++){ 
+				rm.renderControl(content[i]);
+			}
+	    }
+
+		if(icon){
+			rm.write('<span class="u5sl-barmenu-item-icon fa fa-' + icon + '"></span>');
+		}
+		
+		if(text){
+			rm.write('<span class="u5sl-barmenu-item-text">');
+			rm.writeEscaped(text);
+			rm.write('</span>');
+		}
+		
+		if(contentPlacement === ui5strap.ContentPlacement.End){
+			for(var i = 0; i < content.length; i++){ 
+				rm.renderControl(content[i]);
+			}
+        }
+
+		rm.write("</li>");
+	};
+	
+}());
+;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.BarMenuRenderer
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	jQuery.sap.declare("ui5strap.BarMenuRenderer");
+
+	ui5strap.BarMenuRenderer = {
+	};
+
+	ui5strap.BarMenuRenderer.render = function(rm, oControl) {
+		var items = oControl.getItems(),
+			typeExtraSmall = oControl.getTypeExtraSmall(),
+			typeSmall = oControl.getTypeSmall(),
+			typeMedium = oControl.getTypeMedium(),
+			typeLarge = oControl.getTypeLarge();
+		
+		var classes = "u5sl-barmenu";
+		if(typeExtraSmall === ui5strap.BarMenuType.Default){
+			classes += ' u5sl-barmenu-flag-type-xs-listvertical';
+		}
+		else{
+			classes += ' u5sl-barmenu-flag-type-xs-' + typeExtraSmall.toLowerCase();
+		}
+		classes += ' u5sl-barmenu-flag-type-sm-' + typeSmall.toLowerCase();
+		classes += ' u5sl-barmenu-flag-type-md-' + typeMedium.toLowerCase();
+		classes += ' u5sl-barmenu-flag-type-lg-' + typeLarge.toLowerCase();
+		
+		rm.write("<ul");
+		rm.writeControlData(oControl);
+		rm.addClass(classes);
+		rm.writeClasses();
+		rm.write(">");
+		    
+		for(var i = 0; i < items.length; i++){ 
+			rm.renderControl(items[i]);
+		}
+		    
+		rm.write("</ul>");
+	};
+
+}());
+;/*
  * 
  * UI5Strap
  *
