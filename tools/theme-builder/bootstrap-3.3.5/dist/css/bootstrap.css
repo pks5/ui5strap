@@ -22493,7 +22493,7 @@ a {
   width: auto;
   height: auto;
   padding: 10px;
-  margin: 0 15px 0 0;
+  margin: 0 1em 0 0;
   text-align: left;
 }
 .u5sl-barmenu-flag-type-xs-listhorizontal > li > .u5sl-barmenu-item-icon {
@@ -22517,13 +22517,13 @@ a {
   float: none;
   width: auto;
   height: auto;
-  padding: 10px;
+  padding: .8em;
   margin: 0;
   text-align: left;
 }
 .u5sl-barmenu-flag-type-xs-listvertical > li > .u5sl-barmenu-item-icon {
   display: inline-block;
-  width: 28px;
+  width: 2em;
   padding: 0;
   margin: 0;
   font-size: 100%;
@@ -22594,7 +22594,7 @@ a {
     width: auto;
     height: auto;
     padding: 10px;
-    margin: 0 15px 0 0;
+    margin: 0 1em 0 0;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-sm-listhorizontal > li > .u5sl-barmenu-item-icon {
@@ -22618,13 +22618,13 @@ a {
     float: none;
     width: auto;
     height: auto;
-    padding: 10px;
+    padding: .8em;
     margin: 0;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-sm-listvertical > li > .u5sl-barmenu-item-icon {
     display: inline-block;
-    width: 28px;
+    width: 2em;
     padding: 0;
     margin: 0;
     font-size: 100%;
@@ -22696,7 +22696,7 @@ a {
     width: auto;
     height: auto;
     padding: 10px;
-    margin: 0 15px 0 0;
+    margin: 0 1em 0 0;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-md-listhorizontal > li > .u5sl-barmenu-item-icon {
@@ -22720,13 +22720,13 @@ a {
     float: none;
     width: auto;
     height: auto;
-    padding: 10px;
+    padding: .8em;
     margin: 0;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-md-listvertical > li > .u5sl-barmenu-item-icon {
     display: inline-block;
-    width: 28px;
+    width: 2em;
     padding: 0;
     margin: 0;
     font-size: 100%;
@@ -22798,7 +22798,7 @@ a {
     width: auto;
     height: auto;
     padding: 10px;
-    margin: 0 15px 0 0;
+    margin: 0 1em 0 0;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-lg-listhorizontal > li > .u5sl-barmenu-item-icon {
@@ -22822,13 +22822,13 @@ a {
     float: none;
     width: auto;
     height: auto;
-    padding: 10px;
+    padding: .8em;
     margin: 0;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-lg-listvertical > li > .u5sl-barmenu-item-icon {
     display: inline-block;
-    width: 28px;
+    width: 2em;
     padding: 0;
     margin: 0;
     font-size: 100%;
