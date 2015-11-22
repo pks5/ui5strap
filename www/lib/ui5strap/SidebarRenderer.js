@@ -38,7 +38,10 @@
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('sidebar ' + (inverse ? 'sidebar-inverse' : 'sidebar-default'))
+		rm.addClass('sidebar ' + (inverse ? 'sidebar-inverse' : 'sidebar-default'));
+		if(oControl.getPadding()){
+			rm.addClass('sidebar-with-padding');
+		}
 		rm.writeClasses();
 		rm.write(">");
 		

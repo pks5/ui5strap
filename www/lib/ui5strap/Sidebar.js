@@ -43,6 +43,10 @@
 				"inverse" : {
 					type:"boolean", 
 					defaultValue:false
+				},
+				"padding" : {
+					type:"boolean", 
+					defaultValue:true
 				}
 			},
 			
