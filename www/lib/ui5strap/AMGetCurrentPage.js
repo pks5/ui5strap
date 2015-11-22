@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AMUpdateMenu
+ * ui5strap.AMGetCurrentPage
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -28,30 +28,34 @@
 (function(){
 
 	//Declare Module
-	jQuery.sap.declare("ui5strap.AMUpdateMenu");
+	jQuery.sap.declare("ui5strap.AMGetCurrentPage");
 
 	//Require ui5strap.ActionModule
 	jQuery.sap.require("ui5strap.ActionModule");
 
 	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.AMUpdateMenu");
+	ui5strap.ActionModule.extend("ui5strap.AMGetCurrentPage");
 
-	var AMUpdateMenuProto = ui5strap.AMUpdateMenu.prototype;
+	var AMGetCurrentPageProto = ui5strap.AMGetCurrentPage.prototype;
 	
 	/*
 	* @Override
 	*/
-	AMUpdateMenuProto.namespace = "updateMenu";
+	AMGetCurrentPageProto.namespace = "getCurrentPage";
 	
 	/*
 	* @Override
 	*/
-	AMUpdateMenuProto.parameters = {
+	AMGetCurrentPageProto.parameters = {
 		
 		//Required
 		"target" : {
 			"required" : true, 
 			"defaultValue" : null, 
+			"type" : "string"
+		},
+		"tgtParam" : {
+			"required" : true, 
 			"type" : "string"
 		},
 		
@@ -81,26 +85,19 @@
 	* Run the ActionModule
 	* @override
 	*/
-	AMUpdateMenuProto.run = function(){
-		var target = this.getParameter("target");
-		if(target !== this.context.eventParameters["target"]){
+	AMGetCurrentPageProto.run = function(){
+		var target = this.getParameter("target"),
+			scope = this.getParameter("scope")
+		
+		//TODO better with action conditions
+		if(scope === "SOURCE" && target !== this.context.eventParameters["target"]){
 			return;
 		}
 		
-		var menu = this.findControl(),
-			newPage = this.context.event.getSource().getTarget(target),
-			viewData = newPage.getViewData(),
-			items = menu.getItems(),
-			selectedItem = null;
-		
-		for(var i = 0; i < items.length; i++){
-			if(newPage.getId() === this.context.app.createControlId(items[i].getItemId())){
-				selectedItem = items[i];
-				break;
-			}
-		}
-		
-		menu.setSelectedControl(selectedItem);
+		var nc = this.findControl(),
+			currentPage = nc.getTarget(target);
+			
+		this.context._setParameter(this.getParameter("tgtParam"), currentPage.getId());
 	};
 
 }());
