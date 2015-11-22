@@ -22435,14 +22435,14 @@ a {
 }
 .u5sl-barmenu-flag-type-xs-buttonshorizontal {
   width: auto;
-  height: auto;
+  height: 100%;
 }
 .u5sl-barmenu-flag-type-xs-buttonshorizontal > li {
   display: block;
   float: left;
   width: 7em;
-  height: auto;
-  padding: 0;
+  height: 100%;
+  padding: 0 .1em;
   margin: 0;
   text-align: center;
 }
@@ -22468,7 +22468,7 @@ a {
   float: none;
   width: 100%;
   height: auto;
-  padding: 0;
+  padding: 0 .1em;
   margin: 0;
   text-align: center;
 }
@@ -22512,7 +22512,7 @@ a {
   font-size: 1em;
 }
 .u5sl-barmenu-flag-type-xs-listvertical {
-  width: auto;
+  width: 100%;
   height: auto;
 }
 .u5sl-barmenu-flag-type-xs-listvertical > li {
@@ -22540,14 +22540,14 @@ a {
 @media (min-width: 768px) {
   .u5sl-barmenu-flag-type-sm-buttonshorizontal {
     width: auto;
-    height: auto;
+    height: 100%;
   }
   .u5sl-barmenu-flag-type-sm-buttonshorizontal > li {
     display: block;
     float: left;
     width: 7em;
-    height: auto;
-    padding: 0;
+    height: 100%;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
@@ -22573,7 +22573,7 @@ a {
     float: none;
     width: 100%;
     height: auto;
-    padding: 0;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
@@ -22617,7 +22617,7 @@ a {
     font-size: 1em;
   }
   .u5sl-barmenu-flag-type-sm-listvertical {
-    width: auto;
+    width: 100%;
     height: auto;
   }
   .u5sl-barmenu-flag-type-sm-listvertical > li {
@@ -22646,14 +22646,14 @@ a {
 @media (min-width: 992px) {
   .u5sl-barmenu-flag-type-md-buttonshorizontal {
     width: auto;
-    height: auto;
+    height: 100%;
   }
   .u5sl-barmenu-flag-type-md-buttonshorizontal > li {
     display: block;
     float: left;
     width: 7em;
-    height: auto;
-    padding: 0;
+    height: 100%;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
@@ -22679,7 +22679,7 @@ a {
     float: none;
     width: 100%;
     height: auto;
-    padding: 0;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
@@ -22723,7 +22723,7 @@ a {
     font-size: 1em;
   }
   .u5sl-barmenu-flag-type-md-listvertical {
-    width: auto;
+    width: 100%;
     height: auto;
   }
   .u5sl-barmenu-flag-type-md-listvertical > li {
@@ -22752,14 +22752,14 @@ a {
 @media (min-width: 1200px) {
   .u5sl-barmenu-flag-type-lg-buttonshorizontal {
     width: auto;
-    height: auto;
+    height: 100%;
   }
   .u5sl-barmenu-flag-type-lg-buttonshorizontal > li {
     display: block;
     float: left;
     width: 7em;
-    height: auto;
-    padding: 0;
+    height: 100%;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
@@ -22785,7 +22785,7 @@ a {
     float: none;
     width: 100%;
     height: auto;
-    padding: 0;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
@@ -22829,7 +22829,7 @@ a {
     font-size: 1em;
   }
   .u5sl-barmenu-flag-type-lg-listvertical {
-    width: auto;
+    width: 100%;
     height: auto;
   }
   .u5sl-barmenu-flag-type-lg-listvertical > li {
