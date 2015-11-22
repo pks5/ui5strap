@@ -34,8 +34,6 @@
 		"constructor" : function(app, options){
 			ui5strap.AppComponent.call(this, app, options);
 			
-			this._targetStatus = {};
-
 			this.vTargets = {};
 
 			this.oTargets = {};
@@ -187,7 +185,7 @@
 			if(!_this.initialized){
 				initialViewData.transition = 'transition-none';
 			}
-			this.gotoPage(initialViewData, complete);
+			this.navigateTo(this.getRootControl(), initialViewData, complete);
 		}
 
 	};
@@ -198,7 +196,7 @@
 	* @deprecated
 	*/
 	AppFrameProto.getCurrentPage = function (target) {
-		jQuery.sap.log.warning("AppFrameProto.getTarget is deprecated!");
+		jQuery.sap.log.warning("AppFrameProto.getCurrentPage is deprecated!");
 		return this.getRootControl().getTarget(target);
 	};
 
@@ -215,13 +213,12 @@
 	/*
 	* Returns whether a target is busy
 	* @Public
+	* @deprecated
 	*/
 	AppFrameProto.isBusy = function(target){
-		if(this._targetStatus[target]){
-			return true;
-		}
-
-		return false;
+		jQuery.sap.log.warning("AppFrameProto.isBusy is deprecated!");
+		
+		return this.getRootControl().isTargetBusy(target);
 	};
 
 	/*
@@ -236,13 +233,37 @@
 
 	/*
 	* Get the viewConfig based on a definition object. Def object must contain "viewName" attribute!
+	* @deprecated
 	*/
 	AppFrameProto.getViewConfig = function(viewDef){
+		jQuery.sap.log.warning("AppFrameProto.getViewConfig is deprecated! Use resolveViewConfig instead!");
 		var viewConfig = this.app.config.getViewConfig(viewDef);
 
 		//TODO use default target here...
 		if(!viewConfig.target){
 			viewConfig.target = this.getRootControl().defaultTarget;
+		}
+
+		//Override targets
+		var target = viewConfig.target;
+		if(target in this.oTargets){
+			var overrideTarget = this.oTargets[target];
+			delete this.oTargets[target];
+			viewConfig = this.app.config.getViewConfig(overrideTarget);
+		}
+
+		return viewConfig;
+	};
+	
+	/*
+	* Resolve the viewConfig based on a definition object. Def object must contain "viewName" attribute!
+	*/
+	AppFrameProto.resolveViewConfig = function(navControl, viewDef){
+		var viewConfig = this.app.config.getViewConfig(viewDef);
+
+		//TODO use default target here...
+		if(!viewConfig.target){
+			viewConfig.target = navControl.defaultTarget;
 		}
 
 		//Override targets
@@ -278,14 +299,14 @@
 		jQuery.sap.log.debug("AppFrameProto.toPage");
 		
 		if(!suppressResolve){
-			viewConfig = this.getViewConfig(viewConfig);
+			viewConfig = this.resolveViewConfig(navControl, viewConfig);
 		}
 		
 		if(!viewConfig.target){
 			throw new Error('Cannot navigate to page: no "target" specified!');
 		}
 		
-		if(this.isBusy(viewConfig.target)){
+		if(navControl.isBusy(viewConfig.target)){
 			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
 			return false;
@@ -296,16 +317,16 @@
 			oPage = this.app.createView(viewConfig);
 
 		//Only add this page to a vTarget. Pages in vTargets are not seen by the user.
+		//TODO Why???
 		if(viewConfig.vTarget){
-			this.app.log.debug('[APP_FRAME] VIRTUALLY NAVIGATE {' + target + '}');
+			jQuery.sap.log.debug('[APP_FRAME] VIRTUALLY NAVIGATE {' + target + '}');
 			this.vTargets[target] = oPage;
 		
 			return;
 		}
 
 		//Set target busy
-		this.app.log.debug('[APP_FRAME] Target busy: "' + target + '"');
-		this._targetStatus[target] = true;
+		navControl.setTargetBusy(target, true);
 
 		//Trigger onUpdate events
 		navControl.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
@@ -318,12 +339,10 @@
 			function toPage_complete(){
 				
 				//Set target available
-				delete _this._targetStatus[target];
-				_this.app.log.debug('[APP_FRAME] Target available: "' + target + '"');
+				navControl.setTargetBusy(target, false);
 				
 				//Trigger callback
 				callback && callback();
-			
 			}
 		);
 		

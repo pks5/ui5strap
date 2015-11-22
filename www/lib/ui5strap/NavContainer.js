@@ -427,7 +427,7 @@
 		this._targetPagesCount = {};
 		
 		//TODO Do we need a busy flag here?
-		//this._targetStatus = {};
+		this._targetStatus = {};
 
 		this._initNavContainer();
 	};
@@ -700,11 +700,26 @@
 	};
 	
 	/**
+	 * @Public
+	 */
+	NavContainerBaseProto.isTargetBusy = function(target){
+		return this._targetStatus[target];
+	};
+	
+	/**
+	 * @Public
+	 */
+	NavContainerBaseProto.setTargetBusy = function(target, targetBusy){
+		jQuery.sap.log.debug('[NC] Target "' + target + '" is ' + (targetBusy ? 'busy' : 'available'));
+		this._targetStatus[target] = targetBusy;
+	};
+	
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
 		//ui5strap.tm("APP", "NC", "TO_PAGE");
-		jQuery.sap.log.debug("NavContainerBaseProto.toPage");
+		jQuery.sap.log.debug("[NC] NavContainerBaseProto.toPage");
 		
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
