@@ -66,6 +66,7 @@
 	             "module" : "ui5strap.AppFrame",
 	             "navContainer" : "ui5strap.BarNavContainer",
 	             "navContainerOptions" : {
+	             	"id" : "mainNavContainer",
 	             	"barPlacementExtraSmall" : "Top",
 	             
 	             	"barSizeSmall" : 2,

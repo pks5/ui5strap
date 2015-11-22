@@ -43,6 +43,14 @@
 					type : "string",
 					defaultValue : "transition-slide"
 				}
+			},
+			
+			events : {
+				pageHide : {},
+				pageShow : {},
+				pageHidden : {},
+				pageShown : {},
+				update : {}
 			}
 		}
 	});
@@ -62,6 +70,7 @@
 	* @Private
 	*/
 	var _triggerControllerEvent = function(_this, target, oControl, eventId, eventParameters){
+		var eventNameCC = jQuery.sap.charToUpperCase(eventId, 0);
 		if(oControl){
 			var controller = oControl;
 			
@@ -70,13 +79,15 @@
 				controller = oControl.getController();
 			}
 			
-			var funcName = 'on' + jQuery.sap.charToUpperCase(eventId, 0);
+			var funcName = 'on' + eventNameCC;
 			if(controller && controller[funcName]){
 				jQuery.sap.log.debug(' + [NC] EVENT ' + eventId + '() {' + target + '}');
 			
 				controller[funcName](new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}));
 			}
 		}
+		
+		_this["fire" + eventNameCC](eventParameters);
 	};
 
 	/**
@@ -161,12 +172,14 @@
 		
 		if(pageChange.currentPage){
 			_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHide', {
+				target : pageChange.target,
 				newPage : pageChange.page
 			});
 		}
 
 		if(pageChange.page){
 			_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShow', {
+				target : pageChange.target,
 				oldPage : pageChange.currentPage
 			});
 		}
@@ -185,6 +198,7 @@
 
 				//onPageHidden event
 				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
+					target : pageChange.target,
 					newPage : pageChange.page
 				});
 			}, 
@@ -196,6 +210,7 @@
 
 				//onPageShown event
 				_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShown', {
+					target : pageChange.target,
 					oldPage : pageChange.currentPage
 				});
 			}

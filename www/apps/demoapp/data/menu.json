@@ -5,6 +5,7 @@
 		{
 			"label" : "News Feed",
 			"viewName" : "ui5strap.demoapp.views.MyPage2",
+			"pageId" : "my-app-page2",
 			"badge" : "1",
 			"icon" : "feed"
 		},
@@ -12,6 +13,7 @@
 		{
 			"label" : "Statistics",
 			"viewName" : "ui5strap.demoapp.views.MyPage3",
+			"pageId" : "my-app-page3",
 			"icon" : "bar-chart"
 		}	
 	
