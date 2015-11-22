@@ -7,20 +7,50 @@
 
 	& > li{
 		cursor: pointer;
-		border:solid 1px rgba(255, 255, 255, 0.2);
+		bordhher:solid 1px rgba(255, 255, 255, 0.1);
+		color: @barmenu-default-color;
 	}
-
-	& > li.disabled{
-		cursor: default;
+	
+	& > li:hover{
+		color: @barmenu-default-hover-color;
+		background-color: @barmenu-default-hover-bg;
 	}
 
 	& > li.active{
-		background-color: red;
+		color: @barmenu-default-active-color;
+		background-color: @barmenu-default-active-bg;
+	}
+	
+	& > li.disabled{
+		cursor: default;
+		color: @barmenu-default-disabled-color;
+		background-color: @barmenu-default-disabled-bg;
 	}
 
 	& > li > .u5sl-barmenu-item-icon,
 	& > li > .u5sl-barmenu-item-text{
 		line-height: 1;
+	}
+}
+
+.u5sl-barmenu.ui5sl-barmenu-flag-inverse{
+	& > li{
+		color: @barmenu-inverse-color;
+	}
+	
+	& > li:hover{
+		color: @barmenu-inverse-hover-color;
+		background-color: @barmenu-inverse-hover-bg;
+	}
+
+	& > li.active{
+		color: @barmenu-inverse-active-color;
+		background-color: @barmenu-inverse-active-bg;
+	}
+	
+	& > li.disabled{
+		color: @barmenu-inverse-disabled-color;
+		background-color: @barmenu-inverse-disabled-bg;
 	}
 }
 
@@ -53,13 +83,13 @@
 			font-size: 1.5em;
 			
 			margin:0;
-			padding: 0.4em 0 0.2em 0;
+			padding: 0.5em 0 0.2em 0;
 		}
 		
 		& > li > .u5sl-barmenu-item-text{
 			display:block;
 			font-size: 0.8em;
-			padding: 0 0 0.6em 0;
+			padding: 0 0 0.8em 0;
 		}
 	}
 	
@@ -90,13 +120,13 @@
 			font-size: 1.5em;
 			
 			margin: 0;
-			padding: 0.4em 0 0.2em 0;
+			padding: 0.5em 0 0.2em 0;
 		}
 		
 		& > li > .u5sl-barmenu-item-text{
 			display:block;
 			font-size: 0.8em;
-			padding: 0 0 0.6em 0;
+			padding: 0 0 0.8em 0;
 		}
 	}
 	

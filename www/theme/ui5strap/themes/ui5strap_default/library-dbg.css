@@ -9667,7 +9667,7 @@ a {
 .sidebar > .sidebar-content {
   height: 100%;
 }
-.sidebar {
+.sidebar.sidebar-with-padding {
   padding: 20px;
 }
 /*
@@ -22420,43 +22420,68 @@ a {
   list-style: none;
 }
 .u5sl-barmenu > li {
+  color: #777;
   cursor: pointer;
-  border: solid 1px rgba(255, 255, 255, .2);
+
+  bordhher: solid 1px rgba(255, 255, 255, .1);
 }
-.u5sl-barmenu > li.disabled {
-  cursor: default;
+.u5sl-barmenu > li:hover {
+  color: #333;
+  background-color: transparent;
 }
 .u5sl-barmenu > li.active {
-  background-color: red;
+  color: #555;
+  background-color: #e7e7e7;
+}
+.u5sl-barmenu > li.disabled {
+  color: #ccc;
+  cursor: default;
+  background-color: transparent;
 }
 .u5sl-barmenu > li > .u5sl-barmenu-item-icon,
 .u5sl-barmenu > li > .u5sl-barmenu-item-text {
   line-height: 1;
 }
+.u5sl-barmenu.ui5sl-barmenu-flag-inverse > li {
+  color: #eee;
+}
+.u5sl-barmenu.ui5sl-barmenu-flag-inverse > li:hover {
+  color: #fff;
+  background-color: transparent;
+}
+.u5sl-barmenu.ui5sl-barmenu-flag-inverse > li.active {
+  color: #fff;
+  background-color: #013c5a;
+}
+.u5sl-barmenu.ui5sl-barmenu-flag-inverse > li.disabled {
+  color: #444;
+  background-color: transparent;
+}
 .u5sl-barmenu-flag-type-xs-buttonshorizontal {
   width: auto;
-  height: auto;
+  height: 100%;
 }
 .u5sl-barmenu-flag-type-xs-buttonshorizontal > li {
   display: block;
   float: left;
-  width: 90px;
-  height: 50px;
-  padding: 0;
+  width: 7em;
+  height: 100%;
+  padding: 0 .1em;
   margin: 0;
   text-align: center;
 }
 .u5sl-barmenu-flag-type-xs-buttonshorizontal > li > .u5sl-barmenu-item-icon {
   display: block;
   width: auto;
-  padding: 6px 0;
+  padding: .5em 0 .2em 0;
   margin: 0;
-  font-size: 160%;
+  font-size: 1.5em;
   text-align: inherit;
 }
 .u5sl-barmenu-flag-type-xs-buttonshorizontal > li > .u5sl-barmenu-item-text {
   display: block;
-  font-size: 80%;
+  padding: 0 0 .8em 0;
+  font-size: .8em;
 }
 .u5sl-barmenu-flag-type-xs-buttonsvertical {
   width: 100%;
@@ -22466,22 +22491,23 @@ a {
   display: block;
   float: none;
   width: 100%;
-  height: 50px;
-  padding: 0;
+  height: auto;
+  padding: 0 .1em;
   margin: 0;
   text-align: center;
 }
 .u5sl-barmenu-flag-type-xs-buttonsvertical > li > .u5sl-barmenu-item-icon {
   display: block;
   width: auto;
-  padding: 6px 0;
+  padding: .5em 0 .2em 0;
   margin: 0;
-  font-size: 160%;
+  font-size: 1.5em;
   text-align: inherit;
 }
 .u5sl-barmenu-flag-type-xs-buttonsvertical > li > .u5sl-barmenu-item-text {
   display: block;
-  font-size: 80%;
+  padding: 0 0 .8em 0;
+  font-size: .8em;
 }
 .u5sl-barmenu-flag-type-xs-listhorizontal {
   width: auto;
@@ -22492,8 +22518,8 @@ a {
   float: left;
   width: auto;
   height: auto;
-  padding: 10px;
-  margin: 0 1em 0 0;
+  padding: .8em;
+  margin: 0;
   text-align: left;
 }
 .u5sl-barmenu-flag-type-xs-listhorizontal > li > .u5sl-barmenu-item-icon {
@@ -22501,15 +22527,16 @@ a {
   width: auto;
   padding: 0;
   margin: 0 .6em 0 0;
-  font-size: 100%;
+  font-size: 1em;
   text-align: left;
 }
 .u5sl-barmenu-flag-type-xs-listhorizontal > li > .u5sl-barmenu-item-text {
   display: inline-block;
-  font-size: 100%;
+  padding: 0;
+  font-size: 1em;
 }
 .u5sl-barmenu-flag-type-xs-listvertical {
-  width: auto;
+  width: 100%;
   height: auto;
 }
 .u5sl-barmenu-flag-type-xs-listvertical > li {
@@ -22526,38 +22553,40 @@ a {
   width: 2em;
   padding: 0;
   margin: 0;
-  font-size: 100%;
+  font-size: 1em;
   text-align: center;
 }
 .u5sl-barmenu-flag-type-xs-listvertical > li > .u5sl-barmenu-item-text {
   display: inline-block;
-  font-size: 100%;
+  padding: 0;
+  font-size: 1em;
 }
 @media (min-width: 768px) {
   .u5sl-barmenu-flag-type-sm-buttonshorizontal {
     width: auto;
-    height: auto;
+    height: 100%;
   }
   .u5sl-barmenu-flag-type-sm-buttonshorizontal > li {
     display: block;
     float: left;
-    width: 90px;
-    height: 50px;
-    padding: 0;
+    width: 7em;
+    height: 100%;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
   .u5sl-barmenu-flag-type-sm-buttonshorizontal > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: 6px 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
-    font-size: 160%;
+    font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-sm-buttonshorizontal > li > .u5sl-barmenu-item-text {
     display: block;
-    font-size: 80%;
+    padding: 0 0 .8em 0;
+    font-size: .8em;
   }
   .u5sl-barmenu-flag-type-sm-buttonsvertical {
     width: 100%;
@@ -22567,22 +22596,23 @@ a {
     display: block;
     float: none;
     width: 100%;
-    height: 50px;
-    padding: 0;
+    height: auto;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
   .u5sl-barmenu-flag-type-sm-buttonsvertical > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: 6px 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
-    font-size: 160%;
+    font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-sm-buttonsvertical > li > .u5sl-barmenu-item-text {
     display: block;
-    font-size: 80%;
+    padding: 0 0 .8em 0;
+    font-size: .8em;
   }
   .u5sl-barmenu-flag-type-sm-listhorizontal {
     width: auto;
@@ -22593,8 +22623,8 @@ a {
     float: left;
     width: auto;
     height: auto;
-    padding: 10px;
-    margin: 0 1em 0 0;
+    padding: .8em;
+    margin: 0;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-sm-listhorizontal > li > .u5sl-barmenu-item-icon {
@@ -22602,15 +22632,16 @@ a {
     width: auto;
     padding: 0;
     margin: 0 .6em 0 0;
-    font-size: 100%;
+    font-size: 1em;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-sm-listhorizontal > li > .u5sl-barmenu-item-text {
     display: inline-block;
-    font-size: 100%;
+    padding: 0;
+    font-size: 1em;
   }
   .u5sl-barmenu-flag-type-sm-listvertical {
-    width: auto;
+    width: 100%;
     height: auto;
   }
   .u5sl-barmenu-flag-type-sm-listvertical > li {
@@ -22627,39 +22658,41 @@ a {
     width: 2em;
     padding: 0;
     margin: 0;
-    font-size: 100%;
+    font-size: 1em;
     text-align: center;
   }
   .u5sl-barmenu-flag-type-sm-listvertical > li > .u5sl-barmenu-item-text {
     display: inline-block;
-    font-size: 100%;
+    padding: 0;
+    font-size: 1em;
   }
 }
 @media (min-width: 992px) {
   .u5sl-barmenu-flag-type-md-buttonshorizontal {
     width: auto;
-    height: auto;
+    height: 100%;
   }
   .u5sl-barmenu-flag-type-md-buttonshorizontal > li {
     display: block;
     float: left;
-    width: 90px;
-    height: 50px;
-    padding: 0;
+    width: 7em;
+    height: 100%;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
   .u5sl-barmenu-flag-type-md-buttonshorizontal > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: 6px 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
-    font-size: 160%;
+    font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-md-buttonshorizontal > li > .u5sl-barmenu-item-text {
     display: block;
-    font-size: 80%;
+    padding: 0 0 .8em 0;
+    font-size: .8em;
   }
   .u5sl-barmenu-flag-type-md-buttonsvertical {
     width: 100%;
@@ -22669,22 +22702,23 @@ a {
     display: block;
     float: none;
     width: 100%;
-    height: 50px;
-    padding: 0;
+    height: auto;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
   .u5sl-barmenu-flag-type-md-buttonsvertical > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: 6px 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
-    font-size: 160%;
+    font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-md-buttonsvertical > li > .u5sl-barmenu-item-text {
     display: block;
-    font-size: 80%;
+    padding: 0 0 .8em 0;
+    font-size: .8em;
   }
   .u5sl-barmenu-flag-type-md-listhorizontal {
     width: auto;
@@ -22695,8 +22729,8 @@ a {
     float: left;
     width: auto;
     height: auto;
-    padding: 10px;
-    margin: 0 1em 0 0;
+    padding: .8em;
+    margin: 0;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-md-listhorizontal > li > .u5sl-barmenu-item-icon {
@@ -22704,15 +22738,16 @@ a {
     width: auto;
     padding: 0;
     margin: 0 .6em 0 0;
-    font-size: 100%;
+    font-size: 1em;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-md-listhorizontal > li > .u5sl-barmenu-item-text {
     display: inline-block;
-    font-size: 100%;
+    padding: 0;
+    font-size: 1em;
   }
   .u5sl-barmenu-flag-type-md-listvertical {
-    width: auto;
+    width: 100%;
     height: auto;
   }
   .u5sl-barmenu-flag-type-md-listvertical > li {
@@ -22729,39 +22764,41 @@ a {
     width: 2em;
     padding: 0;
     margin: 0;
-    font-size: 100%;
+    font-size: 1em;
     text-align: center;
   }
   .u5sl-barmenu-flag-type-md-listvertical > li > .u5sl-barmenu-item-text {
     display: inline-block;
-    font-size: 100%;
+    padding: 0;
+    font-size: 1em;
   }
 }
 @media (min-width: 1200px) {
   .u5sl-barmenu-flag-type-lg-buttonshorizontal {
     width: auto;
-    height: auto;
+    height: 100%;
   }
   .u5sl-barmenu-flag-type-lg-buttonshorizontal > li {
     display: block;
     float: left;
-    width: 90px;
-    height: 50px;
-    padding: 0;
+    width: 7em;
+    height: 100%;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
   .u5sl-barmenu-flag-type-lg-buttonshorizontal > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: 6px 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
-    font-size: 160%;
+    font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-lg-buttonshorizontal > li > .u5sl-barmenu-item-text {
     display: block;
-    font-size: 80%;
+    padding: 0 0 .8em 0;
+    font-size: .8em;
   }
   .u5sl-barmenu-flag-type-lg-buttonsvertical {
     width: 100%;
@@ -22771,22 +22808,23 @@ a {
     display: block;
     float: none;
     width: 100%;
-    height: 50px;
-    padding: 0;
+    height: auto;
+    padding: 0 .1em;
     margin: 0;
     text-align: center;
   }
   .u5sl-barmenu-flag-type-lg-buttonsvertical > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: 6px 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
-    font-size: 160%;
+    font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-lg-buttonsvertical > li > .u5sl-barmenu-item-text {
     display: block;
-    font-size: 80%;
+    padding: 0 0 .8em 0;
+    font-size: .8em;
   }
   .u5sl-barmenu-flag-type-lg-listhorizontal {
     width: auto;
@@ -22797,8 +22835,8 @@ a {
     float: left;
     width: auto;
     height: auto;
-    padding: 10px;
-    margin: 0 1em 0 0;
+    padding: .8em;
+    margin: 0;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-lg-listhorizontal > li > .u5sl-barmenu-item-icon {
@@ -22806,15 +22844,16 @@ a {
     width: auto;
     padding: 0;
     margin: 0 .6em 0 0;
-    font-size: 100%;
+    font-size: 1em;
     text-align: left;
   }
   .u5sl-barmenu-flag-type-lg-listhorizontal > li > .u5sl-barmenu-item-text {
     display: inline-block;
-    font-size: 100%;
+    padding: 0;
+    font-size: 1em;
   }
   .u5sl-barmenu-flag-type-lg-listvertical {
-    width: auto;
+    width: 100%;
     height: auto;
   }
   .u5sl-barmenu-flag-type-lg-listvertical > li {
@@ -22831,12 +22870,13 @@ a {
     width: 2em;
     padding: 0;
     margin: 0;
-    font-size: 100%;
+    font-size: 1em;
     text-align: center;
   }
   .u5sl-barmenu-flag-type-lg-listvertical > li > .u5sl-barmenu-item-text {
     display: inline-block;
-    font-size: 100%;
+    padding: 0;
+    font-size: 1em;
   }
 }
 /*

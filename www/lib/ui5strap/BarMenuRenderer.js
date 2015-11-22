@@ -40,6 +40,9 @@
 			typeLarge = oControl.getTypeLarge();
 		
 		var classes = "u5sl-barmenu";
+		if(oControl.getInverse()){
+			classes += " ui5sl-barmenu-flag-inverse";
+		}
 		if(typeExtraSmall === ui5strap.BarMenuType.Default){
 			classes += ' u5sl-barmenu-flag-type-xs-listvertical';
 		}

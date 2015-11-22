@@ -37,6 +37,11 @@
 			library : "ui5strap",
 			
 			properties : { 
+				"inverse" : {
+					type:"boolean", 
+					defaultValue:false
+				},
+				
 				typeExtraSmall : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.ListVertical

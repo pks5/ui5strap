@@ -22420,18 +22420,42 @@ a {
   list-style: none;
 }
 .u5sl-barmenu > li {
+  color: #777;
   cursor: pointer;
-  border: solid 1px rgba(255, 255, 255, .2);
+
+  bordhher: solid 1px rgba(255, 255, 255, .1);
 }
-.u5sl-barmenu > li.disabled {
-  cursor: default;
+.u5sl-barmenu > li:hover {
+  color: #333;
+  background-color: transparent;
 }
 .u5sl-barmenu > li.active {
-  background-color: red;
+  color: #555;
+  background-color: #e7e7e7;
+}
+.u5sl-barmenu > li.disabled {
+  color: #ccc;
+  cursor: default;
+  background-color: transparent;
 }
 .u5sl-barmenu > li > .u5sl-barmenu-item-icon,
 .u5sl-barmenu > li > .u5sl-barmenu-item-text {
   line-height: 1;
+}
+.u5sl-barmenu.ui5sl-barmenu-flag-inverse > li {
+  color: #9d9d9d;
+}
+.u5sl-barmenu.ui5sl-barmenu-flag-inverse > li:hover {
+  color: #fff;
+  background-color: transparent;
+}
+.u5sl-barmenu.ui5sl-barmenu-flag-inverse > li.active {
+  color: #fff;
+  background-color: #080808;
+}
+.u5sl-barmenu.ui5sl-barmenu-flag-inverse > li.disabled {
+  color: #444;
+  background-color: transparent;
 }
 .u5sl-barmenu-flag-type-xs-buttonshorizontal {
   width: auto;
@@ -22449,14 +22473,14 @@ a {
 .u5sl-barmenu-flag-type-xs-buttonshorizontal > li > .u5sl-barmenu-item-icon {
   display: block;
   width: auto;
-  padding: .4em 0 .2em 0;
+  padding: .5em 0 .2em 0;
   margin: 0;
   font-size: 1.5em;
   text-align: inherit;
 }
 .u5sl-barmenu-flag-type-xs-buttonshorizontal > li > .u5sl-barmenu-item-text {
   display: block;
-  padding: 0 0 .6em 0;
+  padding: 0 0 .8em 0;
   font-size: .8em;
 }
 .u5sl-barmenu-flag-type-xs-buttonsvertical {
@@ -22475,14 +22499,14 @@ a {
 .u5sl-barmenu-flag-type-xs-buttonsvertical > li > .u5sl-barmenu-item-icon {
   display: block;
   width: auto;
-  padding: .4em 0 .2em 0;
+  padding: .5em 0 .2em 0;
   margin: 0;
   font-size: 1.5em;
   text-align: inherit;
 }
 .u5sl-barmenu-flag-type-xs-buttonsvertical > li > .u5sl-barmenu-item-text {
   display: block;
-  padding: 0 0 .6em 0;
+  padding: 0 0 .8em 0;
   font-size: .8em;
 }
 .u5sl-barmenu-flag-type-xs-listhorizontal {
@@ -22554,14 +22578,14 @@ a {
   .u5sl-barmenu-flag-type-sm-buttonshorizontal > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: .4em 0 .2em 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
     font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-sm-buttonshorizontal > li > .u5sl-barmenu-item-text {
     display: block;
-    padding: 0 0 .6em 0;
+    padding: 0 0 .8em 0;
     font-size: .8em;
   }
   .u5sl-barmenu-flag-type-sm-buttonsvertical {
@@ -22580,14 +22604,14 @@ a {
   .u5sl-barmenu-flag-type-sm-buttonsvertical > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: .4em 0 .2em 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
     font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-sm-buttonsvertical > li > .u5sl-barmenu-item-text {
     display: block;
-    padding: 0 0 .6em 0;
+    padding: 0 0 .8em 0;
     font-size: .8em;
   }
   .u5sl-barmenu-flag-type-sm-listhorizontal {
@@ -22660,14 +22684,14 @@ a {
   .u5sl-barmenu-flag-type-md-buttonshorizontal > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: .4em 0 .2em 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
     font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-md-buttonshorizontal > li > .u5sl-barmenu-item-text {
     display: block;
-    padding: 0 0 .6em 0;
+    padding: 0 0 .8em 0;
     font-size: .8em;
   }
   .u5sl-barmenu-flag-type-md-buttonsvertical {
@@ -22686,14 +22710,14 @@ a {
   .u5sl-barmenu-flag-type-md-buttonsvertical > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: .4em 0 .2em 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
     font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-md-buttonsvertical > li > .u5sl-barmenu-item-text {
     display: block;
-    padding: 0 0 .6em 0;
+    padding: 0 0 .8em 0;
     font-size: .8em;
   }
   .u5sl-barmenu-flag-type-md-listhorizontal {
@@ -22766,14 +22790,14 @@ a {
   .u5sl-barmenu-flag-type-lg-buttonshorizontal > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: .4em 0 .2em 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
     font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-lg-buttonshorizontal > li > .u5sl-barmenu-item-text {
     display: block;
-    padding: 0 0 .6em 0;
+    padding: 0 0 .8em 0;
     font-size: .8em;
   }
   .u5sl-barmenu-flag-type-lg-buttonsvertical {
@@ -22792,14 +22816,14 @@ a {
   .u5sl-barmenu-flag-type-lg-buttonsvertical > li > .u5sl-barmenu-item-icon {
     display: block;
     width: auto;
-    padding: .4em 0 .2em 0;
+    padding: .5em 0 .2em 0;
     margin: 0;
     font-size: 1.5em;
     text-align: inherit;
   }
   .u5sl-barmenu-flag-type-lg-buttonsvertical > li > .u5sl-barmenu-item-text {
     display: block;
-    padding: 0 0 .6em 0;
+    padding: 0 0 .8em 0;
     font-size: .8em;
   }
   .u5sl-barmenu-flag-type-lg-listhorizontal {
