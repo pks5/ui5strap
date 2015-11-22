@@ -207,7 +207,7 @@
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
           ],
-        	version: "0.9.14RC1"
+        	version: "0.9.14RC2"
       }
   );
   
@@ -1268,19 +1268,22 @@
   jQuery.sap.declare("ui5strap.Utils");
 
   ui5strap.Utils = {
-
+		  
+		//@deprecated
       dynamicAttributes : function(controlProto, attributeNames){
           for(var i = 0; i < attributeNames.length; i++){
               ui5strap.Utils.dynamicAttribute(controlProto, attributeNames[i]);
           }
       },
 
+      //@deprecated
       dynamicAttribute : function(controlProto, attributeName){
           controlProto['set' + jQuery.sap.charToUpperCase(attributeName, 0)] = function(newValue){
               ui5strap.Utils.updateAttribute(this, attributeName, newValue);
           };
       },
 
+      //@deprecated
       updateAttribute : function(oControl, attributeName, newValue){
           if(oControl.getDomRef()){
             oControl.$().attr(attributeName, newValue);
@@ -1291,13 +1294,15 @@
           }
       },
 
+    //@deprecated
       dynamicClass : function(controlProto, propertyName, valueMapping){
-          controlProto['set' + jQuery.sap.charToUpperCase(propertyName, 0)] = function(newValue){ 
-              ui5strap.Utils.updateClass(this, this.$(), propertyName, newValue, valueMapping);
+          controlProto['set' + jQuery.sap.charToUpperCase(propertyName, 0)] = function(newValue, suppressInvalidate){ 
+              ui5strap.Utils.updateClass(this, this.$(), propertyName, newValue, valueMapping, suppressInvalidate);
           };
       },
 
-      updateClass : function(oControl, $target, propertyName, newValue, valueMapping){
+    //@deprecated
+      updateClass : function(oControl, $target, propertyName, newValue, valueMapping, suppressInvalidate){
           if(oControl.getDomRef()){
               var oldValue = oControl['get' + jQuery.sap.charToUpperCase(propertyName, 0)]();
               if(oldValue in valueMapping){
@@ -1310,16 +1315,18 @@
               oControl.setProperty(propertyName, newValue, true);
           }
           else{
-              oControl.setProperty(propertyName, newValue);
+              oControl.setProperty(propertyName, newValue, suppressInvalidate);
           }
       },
 
+      //@deprecated
       dynamicText : function(controlProto){
           controlProto.setText = function(newText){
               ui5strap.Utils.updateText(this, this.$(), newText);
           };
       },
 
+      //@deprecated
       updateText : function(oControl, $target, newText){
           if(oControl.getDomRef() && oControl.getContent().length === 0){
               $target.text(newText);
@@ -3639,8 +3646,6 @@
 		"constructor" : function(app, options){
 			ui5strap.AppComponent.call(this, app, options);
 			
-			this._targetStatus = {};
-
 			this.vTargets = {};
 
 			this.oTargets = {};
@@ -3660,7 +3665,7 @@
 	AppFrameProto.init = function(){
 		var _this = this;
 		
-		this.control = this._createControl();
+		var rootControl = this._createControl();
 		
 		this._initHistory();
 
@@ -3677,8 +3682,12 @@
 			
 		};
 		
+		this.getRootControl = function(){
+			return rootControl;
+		};
+		
 		this.app.getRootControl = function(){
-			return _this.control;
+			return rootControl;
 		};
 	};
 
@@ -3686,8 +3695,8 @@
 	 * @deprecated
 	 */
 	AppFrameProto.getControl = function(){
-		jQuery.sap.log.warning("AppFrameProto.getControl is deprecated");
-		return this.control;
+		jQuery.sap.log.warning("AppFrameProto.getControl is deprecated. Use getRootControl instead.");
+		return this.getRootControl();
 	};
 
 	/*
@@ -3707,24 +3716,43 @@
 		
 		//Init default NavContainer
 		var frameConfig = this.options,
-			navContainerOptions = {},
-			navContainerModule = "ui5strap.NavContainerStandard";
+			app = this.app,
+			navContainerModule = frameConfig.navContainer || "ui5strap.NavContainerStandard";
 		
-
-		if('navContainerOptions' in frameConfig){
-			navContainerOptions = frameConfig.navContainerOptions;
-		}
-
-		if('navContainer' in frameConfig){
-			navContainerModule = frameConfig.navContainer;
-		}
-
 		jQuery.sap.require(navContainerModule);
 		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
 		if(!NavContainerConstructor){
 			throw new Error('Invalid NavContainer: ' + navContainerModule);
 		}
-		return new NavContainerConstructor(navContainerOptions);
+		
+		var navContainerOptions = frameConfig.navContainerOptions || {};
+		if(navContainerOptions.id){
+			navContainerOptions.id = this.app.createControlId(navContainerOptions.id);
+		}
+		
+		var rootControl = new NavContainerConstructor(navContainerOptions);
+		
+		if(frameConfig.events && frameConfig.events.control){
+			var eKeys = Object.keys(frameConfig.events.control),
+				eKeysLength = eKeys.length;
+			for(var i = 0; i < eKeysLength; i++){
+				var evs = frameConfig.events.control[eKeys[i]];
+				
+				rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
+					
+					for(var j = 0; j < data.actions.length; j ++){
+						app.runAction({
+							"parameters" : data.actions[j], 
+							"event" : oEvent
+						});
+					}
+					
+					//console.log(data);
+				});
+			}
+		}
+		
+		return rootControl;
 	};
 
 	/*
@@ -3769,7 +3797,7 @@
 			if(!_this.initialized){
 				initialViewData.transition = 'transition-none';
 			}
-			this.gotoPage(initialViewData, complete);
+			this.navigateTo(this.getRootControl(), initialViewData, complete);
 		}
 
 	};
@@ -3780,8 +3808,8 @@
 	* @deprecated
 	*/
 	AppFrameProto.getCurrentPage = function (target) {
-		jQuery.sap.log.warning("AppFrameProto.getTarget is deprecated!");
-		return this.control.getTarget(target);
+		jQuery.sap.log.warning("AppFrameProto.getCurrentPage is deprecated!");
+		return this.getRootControl().getTarget(target);
 	};
 
 	/*
@@ -3791,19 +3819,18 @@
 	*/
 	AppFrameProto.hasTarget = function(target) {
 		jQuery.sap.log.warning("AppFrameProto.hasTarget is deprecated!");
-		return this.control.hasTarget(target);
+		return this.getRootControl().hasTarget(target);
 	}
 	
 	/*
 	* Returns whether a target is busy
 	* @Public
+	* @deprecated
 	*/
 	AppFrameProto.isBusy = function(target){
-		if(this._targetStatus[target]){
-			return true;
-		}
-
-		return false;
+		jQuery.sap.log.warning("AppFrameProto.isBusy is deprecated!");
+		
+		return this.getRootControl().isTargetBusy(target);
 	};
 
 	/*
@@ -3812,18 +3839,43 @@
 	 * @deprecated
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
-		return this.navigateTo(this.control, viewConfig, callback, true);
+		jQuery.sap.log.warning("AppFrameProto.toPage is deprecated! Use navigateTo instead!");
+		return this.navigateTo(this.getRootControl(), viewConfig, callback, true);
 	};
 
 	/*
 	* Get the viewConfig based on a definition object. Def object must contain "viewName" attribute!
+	* @deprecated
 	*/
 	AppFrameProto.getViewConfig = function(viewDef){
+		jQuery.sap.log.warning("AppFrameProto.getViewConfig is deprecated! Use resolveViewConfig instead!");
 		var viewConfig = this.app.config.getViewConfig(viewDef);
 
 		//TODO use default target here...
 		if(!viewConfig.target){
-			viewConfig.target = this.control.defaultTarget;
+			viewConfig.target = this.getRootControl().defaultTarget;
+		}
+
+		//Override targets
+		var target = viewConfig.target;
+		if(target in this.oTargets){
+			var overrideTarget = this.oTargets[target];
+			delete this.oTargets[target];
+			viewConfig = this.app.config.getViewConfig(overrideTarget);
+		}
+
+		return viewConfig;
+	};
+	
+	/*
+	* Resolve the viewConfig based on a definition object. Def object must contain "viewName" attribute!
+	*/
+	AppFrameProto.resolveViewConfig = function(navControl, viewDef){
+		var viewConfig = this.app.config.getViewConfig(viewDef);
+
+		//TODO use default target here...
+		if(!viewConfig.target){
+			viewConfig.target = navControl.defaultTarget;
 		}
 
 		//Override targets
@@ -3850,21 +3902,23 @@
 	* @deprecated
 	*/
 	AppFrameProto.gotoPage = function (viewDef, callback) {
-		return this.navigateTo(this.control, viewDef, callback);
+		jQuery.sap.log.warning("AppFrameProto.gotoPage is deprecated! Use navigateTo instead!");
+		
+		return this.navigateTo(this.getRootControl(), viewDef, callback);
 	};
 	
 	AppFrameProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
 		jQuery.sap.log.debug("AppFrameProto.toPage");
 		
 		if(!suppressResolve){
-			viewConfig = this.getViewConfig(viewConfig);
+			viewConfig = this.resolveViewConfig(navControl, viewConfig);
 		}
 		
 		if(!viewConfig.target){
 			throw new Error('Cannot navigate to page: no "target" specified!');
 		}
 		
-		if(this.isBusy(viewConfig.target)){
+		if(navControl.isBusy(viewConfig.target)){
 			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
 			return false;
@@ -3875,16 +3929,16 @@
 			oPage = this.app.createView(viewConfig);
 
 		//Only add this page to a vTarget. Pages in vTargets are not seen by the user.
+		//TODO Why???
 		if(viewConfig.vTarget){
-			this.app.log.debug('[APP_FRAME] VIRTUALLY NAVIGATE {' + target + '}');
+			jQuery.sap.log.debug('[APP_FRAME] VIRTUALLY NAVIGATE {' + target + '}');
 			this.vTargets[target] = oPage;
 		
 			return;
 		}
 
 		//Set target busy
-		this.app.log.debug('[APP_FRAME] Target busy: "' + target + '"');
-		this._targetStatus[target] = true;
+		navControl.setTargetBusy(target, true);
 
 		//Trigger onUpdate events
 		navControl.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
@@ -3897,12 +3951,10 @@
 			function toPage_complete(){
 				
 				//Set target available
-				delete _this._targetStatus[target];
-				_this.app.log.debug('[APP_FRAME] Target available: "' + target + '"');
+				navControl.setTargetBusy(target, false);
 				
 				//Trigger callback
 				callback && callback();
-			
 			}
 		);
 		
@@ -5515,6 +5567,14 @@
 					type : "string",
 					defaultValue : "transition-slide"
 				}
+			},
+			
+			events : {
+				pageHide : {},
+				pageShow : {},
+				pageHidden : {},
+				pageShown : {},
+				update : {}
 			}
 		}
 	});
@@ -5534,6 +5594,7 @@
 	* @Private
 	*/
 	var _triggerControllerEvent = function(_this, target, oControl, eventId, eventParameters){
+		var eventNameCC = jQuery.sap.charToUpperCase(eventId, 0);
 		if(oControl){
 			var controller = oControl;
 			
@@ -5542,13 +5603,15 @@
 				controller = oControl.getController();
 			}
 			
-			var funcName = 'on' + jQuery.sap.charToUpperCase(eventId, 0);
+			var funcName = 'on' + eventNameCC;
 			if(controller && controller[funcName]){
 				jQuery.sap.log.debug(' + [NC] EVENT ' + eventId + '() {' + target + '}');
 			
 				controller[funcName](new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}));
 			}
 		}
+		
+		_this["fire" + eventNameCC](eventParameters);
 	};
 
 	/**
@@ -5631,18 +5694,6 @@
 		//ui5strap.tm("APP", "NC", "EXEC_TRANS");
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
-		if(pageChange.currentPage){
-			_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHide', {
-				newPage : pageChange.page
-			});
-		}
-
-		if(pageChange.page){
-			_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShow', {
-				oldPage : pageChange.currentPage
-			});
-		}
-		
 		pageChange.transition.execute(
 			function anon_transitionCurrentComplete(){
 				var $current = this.$current;
@@ -5657,6 +5708,7 @@
 
 				//onPageHidden event
 				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
+					target : pageChange.target,
 					newPage : pageChange.page
 				});
 			}, 
@@ -5668,6 +5720,7 @@
 
 				//onPageShown event
 				_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShown', {
+					target : pageChange.target,
 					oldPage : pageChange.currentPage
 				});
 			}
@@ -5884,7 +5937,7 @@
 		this._targetPagesCount = {};
 		
 		//TODO Do we need a busy flag here?
-		//this._targetStatus = {};
+		this._targetStatus = {};
 
 		this._initNavContainer();
 	};
@@ -6138,6 +6191,14 @@
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
+		
+		eventParameters = eventParameters || {};
+		
+		if(eventParameters.target){
+			throw new Error('Parameters must not contain a target attribute!');
+		}
+		
+		eventParameters.target = target;
 
 		_triggerControllerEvent(this, target, oPage, 'update', eventParameters);
 	};
@@ -6157,11 +6218,26 @@
 	};
 	
 	/**
+	 * @Public
+	 */
+	NavContainerBaseProto.isTargetBusy = function(target){
+		return this._targetStatus[target];
+	};
+	
+	/**
+	 * @Public
+	 */
+	NavContainerBaseProto.setTargetBusy = function(target, targetBusy){
+		jQuery.sap.log.debug('[NC] Target "' + target + '" is ' + (targetBusy ? 'busy' : 'available'));
+		this._targetStatus[target] = targetBusy;
+	};
+	
+	/**
 	* @Public
 	*/
 	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
 		//ui5strap.tm("APP", "NC", "TO_PAGE");
-		jQuery.sap.log.debug("NavContainerBaseProto.toPage");
+		jQuery.sap.log.debug("[NC] NavContainerBaseProto.toPage");
 		
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
@@ -6202,7 +6278,19 @@
 				"currentPage" : currentPage
 			};
 
-		
+		if(currentPage){
+			_triggerControllerEvent(_this, target, currentPage, 'pageHide', {
+				target : target,
+				newPage : page
+			});
+		}
+
+		if(page){
+			_triggerControllerEvent(_this, target, page, 'pageShow', {
+				target : target,
+				oldPage : currentPage
+			});
+		}
 
 		if(this.getDomRef()){
 			jQuery.sap.log.debug("NavContainerBaseProto.toPage: NavContainer already attached. Navigating now...");
@@ -9553,6 +9641,10 @@
 				contentPlacement : {
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
+				},
+				itemId : {
+					type:"string",
+					defaultValue : ""
 				}
 			},
 			
@@ -9569,8 +9661,24 @@
 
 	ui5strap.Utils.dynamicText(ListItemPrototype);
 
-	ui5strap.Utils.dynamicClass(ListItemPrototype, 'selected', { 'true' : 'active' });
+	//ui5strap.Utils.dynamicClass(ListItemPrototype, 'selected', { 'true' : 'active' });
+	
+	ListItemPrototype.setSelected = function(newSelected, suppressInvalidate){
+		if(this.getDomRef()){//alert(this.getId() + "::" + newSelected);
+              if(newSelected){
+                  this.$().addClass("active");
+              }
+              else{
+                  this.$().removeClass("active");
+              }
+              
 
+              this.setProperty("selected", newSelected, true);
+          }
+          else{
+              this.setProperty("selected", newSelected, suppressInvalidate);
+          }
+	};
 }());;/*
  * 
  * UI5Strap
@@ -11299,6 +11407,108 @@
  * 
  * UI5Strap
  *
+ * ui5strap.AMGetCurrentPage
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	//Declare Module
+	jQuery.sap.declare("ui5strap.AMGetCurrentPage");
+
+	//Require ui5strap.ActionModule
+	jQuery.sap.require("ui5strap.ActionModule");
+
+	//Define Constructor
+	ui5strap.ActionModule.extend("ui5strap.AMGetCurrentPage");
+
+	var AMGetCurrentPageProto = ui5strap.AMGetCurrentPage.prototype;
+	
+	/*
+	* @Override
+	*/
+	AMGetCurrentPageProto.namespace = "getCurrentPage";
+	
+	/*
+	* @Override
+	*/
+	AMGetCurrentPageProto.parameters = {
+		
+		//Required
+		"target" : {
+			"required" : true, 
+			"defaultValue" : null, 
+			"type" : "string"
+		},
+		"tgtParam" : {
+			"required" : true, 
+			"type" : "string"
+		},
+		
+		"controlId" : {
+			"required" : false, 
+			"defaultValue" : null, 
+			"type" : "string"
+		},
+		"viewId" : {
+			"required" : false, 
+			"defaultValue" : null, 
+			"type" : "string"
+		},
+		"parameterKey" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
+		"scope" : {
+			"required" : false, 
+			"defaultValue" : "VIEW", 
+			"type" : "string"
+		}
+	};
+	
+	/*
+	* Run the ActionModule
+	* @override
+	*/
+	AMGetCurrentPageProto.run = function(){
+		var target = this.getParameter("target"),
+			scope = this.getParameter("scope")
+		
+		//TODO better with action conditions
+		if(scope === "SOURCE" && target !== this.context.eventParameters["target"]){
+			return;
+		}
+		
+		var nc = this.findControl(),
+			currentPage = nc.getTarget(target);
+			
+		this.context._setParameter(this.getParameter("tgtParam"), currentPage.getId());
+	};
+
+}());;/*
+ * 
+ * UI5Strap
+ *
  * ui5strap.AMGetProperty
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
@@ -12002,6 +12212,106 @@
 	*/
 	OpenAppProto.completed = function(){
 		//Originally, the EVENT_COMPLETED is fired here. We have to override this method to disable this default behaviour.
+	};
+
+}());;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.AMSetListItemSelected
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	//Declare Module
+	jQuery.sap.declare("ui5strap.AMSetListItemSelected");
+
+	//Require ui5strap.ActionModule
+	jQuery.sap.require("ui5strap.ActionModule");
+
+	//Define Constructor
+	ui5strap.ActionModule.extend("ui5strap.AMSetListItemSelected");
+
+	var AMSetListItemSelectedProto = ui5strap.AMSetListItemSelected.prototype;
+	
+	/*
+	* @Override
+	*/
+	AMSetListItemSelectedProto.namespace = "setListItemSelected";
+	
+	/*
+	* @Override
+	*/
+	AMSetListItemSelectedProto.parameters = {
+		
+		//Required
+		"itemId" : {
+			"required" : true, 
+			"defaultValue" : null, 
+			"type" : "string"
+		},
+		
+		"controlId" : {
+			"required" : false, 
+			"defaultValue" : null, 
+			"type" : "string"
+		},
+		"viewId" : {
+			"required" : false, 
+			"defaultValue" : null, 
+			"type" : "string"
+		},
+		"parameterKey" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
+		},
+		"scope" : {
+			"required" : false, 
+			"defaultValue" : "VIEW", 
+			"type" : "string"
+		}
+	};
+	
+	/*
+	* Run the ActionModule
+	* @override
+	*/
+	AMSetListItemSelectedProto.run = function(){
+		var itemId = this.getParameter("itemId");
+		
+		var menu = this.findControl(),
+			items = menu.getItems(),
+			selectedItem = null;
+		
+		for(var i = 0; i < items.length; i++){
+			if(this.context.app.createControlId(itemId) === this.context.app.createControlId(items[i].getItemId())){
+				selectedItem = items[i];
+				break;
+			}
+		}
+		
+		menu.setSelectedControl(selectedItem);
 	};
 
 }());;/*
@@ -13377,6 +13687,31 @@
 			library : "ui5strap",
 			
 			properties : { 
+				"inverse" : {
+					type:"boolean", 
+					defaultValue:false
+				},
+				
+				"zoomExtraSmall" : {
+					type:"int",
+					defaultValue : 0
+				},
+				
+				zoomSmall : {
+					type : "int",
+					defaultValue : 0
+				},
+				
+				zoomMedium : {
+					type : "int",
+					defaultValue : 0
+				},
+				
+				zoomLarge : {
+					type : "int",
+					defaultValue : 0
+				},
+				
 				typeExtraSmall : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.ListVertical
@@ -13407,7 +13742,7 @@
 
 		}
 	});
-
+	
 }());;/*
  * 
  * UI5Strap
@@ -13573,12 +13908,19 @@
 
 	ui5strap.BarMenuRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
+			zoomExtraSmall = oControl.getZoomExtraSmall(),
+			zoomSmall = oControl.getZoomSmall(),
+			zoomMedium = oControl.getZoomMedium(),
+			zoomLarge = oControl.getZoomLarge(),
 			typeExtraSmall = oControl.getTypeExtraSmall(),
 			typeSmall = oControl.getTypeSmall(),
 			typeMedium = oControl.getTypeMedium(),
 			typeLarge = oControl.getTypeLarge();
 		
 		var classes = "u5sl-barmenu";
+		if(oControl.getInverse()){
+			classes += " ui5sl-barmenu-flag-inverse";
+		}
 		if(typeExtraSmall === ui5strap.BarMenuType.Default){
 			classes += ' u5sl-barmenu-flag-type-xs-listvertical';
 		}
@@ -13588,6 +13930,20 @@
 		classes += ' u5sl-barmenu-flag-type-sm-' + typeSmall.toLowerCase();
 		classes += ' u5sl-barmenu-flag-type-md-' + typeMedium.toLowerCase();
 		classes += ' u5sl-barmenu-flag-type-lg-' + typeLarge.toLowerCase();
+		
+		//Zoom
+		if(zoomExtraSmall !== 0){
+			classes += ' u5sl-barmenu-flag-zoom-xs-' + (zoomExtraSmall < 0 ? 'm' : 'p') + Math.abs(zoomExtraSmall);
+		}
+		if(zoomSmall !== 0){
+			classes += ' u5sl-barmenu-flag-zoom-sm-' + (zoomSmall < 0 ? 'm' : 'p') + Math.abs(zoomSmall);
+		}
+		if(zoomMedium !== 0){
+			classes += ' u5sl-barmenu-flag-zoom-md-' + (zoomMedium < 0 ? 'm' : 'p') + Math.abs(zoomMedium);
+		}
+		if(zoomLarge !== 0){
+			classes += ' u5sl-barmenu-flag-zoom-lg-' + (zoomLarge < 0 ? 'm' : 'p') + Math.abs(zoomLarge);
+		}
 		
 		rm.write("<ul");
 		rm.writeControlData(oControl);
@@ -13664,19 +14020,19 @@
 				},
 				
 				barSizeExtraSmall : {
-					type : "integer",
+					type : "int",
 					defaultValue : -1
 				},
 				barSizeSmall : {
-					type : "integer",
+					type : "int",
 					defaultValue : -1
 				},
 				barSizeMedium : {
-					type : "integer",
+					type : "int",
 					defaultValue : -1
 				},
 				barSizeLarge : {
-					type : "integer",
+					type : "int",
 					defaultValue : -1
 				},
 				
@@ -21012,6 +21368,10 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 				"inverse" : {
 					type:"boolean", 
 					defaultValue:false
+				},
+				"padding" : {
+					type:"boolean", 
+					defaultValue:true
 				}
 			},
 			
@@ -21064,7 +21424,10 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('sidebar ' + (inverse ? 'sidebar-inverse' : 'sidebar-default'))
+		rm.addClass('sidebar ' + (inverse ? 'sidebar-inverse' : 'sidebar-default'));
+		if(oControl.getPadding()){
+			rm.addClass('sidebar-with-padding');
+		}
 		rm.writeClasses();
 		rm.write(">");
 		

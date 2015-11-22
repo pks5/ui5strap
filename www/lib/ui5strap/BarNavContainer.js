@@ -59,19 +59,19 @@
 				},
 				
 				barSizeExtraSmall : {
-					type : "integer",
+					type : "int",
 					defaultValue : -1
 				},
 				barSizeSmall : {
-					type : "integer",
+					type : "int",
 					defaultValue : -1
 				},
 				barSizeMedium : {
-					type : "integer",
+					type : "int",
 					defaultValue : -1
 				},
 				barSizeLarge : {
-					type : "integer",
+					type : "int",
 					defaultValue : -1
 				},
 				

@@ -22561,6 +22561,78 @@ a {
   padding: 0;
   font-size: 1em;
 }
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p12 {
+  font-size: 2em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m12 {
+  font-size: 0;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p11 {
+  font-size: 1.91666667em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m11 {
+  font-size: .08333333em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p10 {
+  font-size: 1.83333333em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m10 {
+  font-size: .16666667em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p9 {
+  font-size: 1.75em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m9 {
+  font-size: .25em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p8 {
+  font-size: 1.66666667em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m8 {
+  font-size: .33333333em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p7 {
+  font-size: 1.58333333em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m7 {
+  font-size: .41666667em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p6 {
+  font-size: 1.5em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m6 {
+  font-size: .5em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p5 {
+  font-size: 1.41666667em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m5 {
+  font-size: .58333333em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p4 {
+  font-size: 1.33333333em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m4 {
+  font-size: .66666667em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p3 {
+  font-size: 1.25em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m3 {
+  font-size: .75em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p2 {
+  font-size: 1.16666667em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m2 {
+  font-size: .83333333em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p1 {
+  font-size: 1.08333333em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m1 {
+  font-size: .91666667em;
+}
 @media (min-width: 768px) {
   .u5sl-barmenu-flag-type-sm-buttonshorizontal {
     width: auto;
@@ -22665,6 +22737,78 @@ a {
     display: inline-block;
     padding: 0;
     font-size: 1em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p12 {
+    font-size: 2em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m12 {
+    font-size: 0;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p11 {
+    font-size: 1.91666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m11 {
+    font-size: .08333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p10 {
+    font-size: 1.83333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m10 {
+    font-size: .16666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p9 {
+    font-size: 1.75em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m9 {
+    font-size: .25em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p8 {
+    font-size: 1.66666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m8 {
+    font-size: .33333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p7 {
+    font-size: 1.58333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m7 {
+    font-size: .41666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p6 {
+    font-size: 1.5em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m6 {
+    font-size: .5em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p5 {
+    font-size: 1.41666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m5 {
+    font-size: .58333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p4 {
+    font-size: 1.33333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m4 {
+    font-size: .66666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p3 {
+    font-size: 1.25em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m3 {
+    font-size: .75em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p2 {
+    font-size: 1.16666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m2 {
+    font-size: .83333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p1 {
+    font-size: 1.08333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m1 {
+    font-size: .91666667em;
   }
 }
 @media (min-width: 992px) {
@@ -22772,6 +22916,78 @@ a {
     padding: 0;
     font-size: 1em;
   }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p12 {
+    font-size: 2em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m12 {
+    font-size: 0;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p11 {
+    font-size: 1.91666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m11 {
+    font-size: .08333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p10 {
+    font-size: 1.83333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m10 {
+    font-size: .16666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p9 {
+    font-size: 1.75em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m9 {
+    font-size: .25em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p8 {
+    font-size: 1.66666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m8 {
+    font-size: .33333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p7 {
+    font-size: 1.58333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m7 {
+    font-size: .41666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p6 {
+    font-size: 1.5em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m6 {
+    font-size: .5em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p5 {
+    font-size: 1.41666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m5 {
+    font-size: .58333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p4 {
+    font-size: 1.33333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m4 {
+    font-size: .66666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p3 {
+    font-size: 1.25em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m3 {
+    font-size: .75em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p2 {
+    font-size: 1.16666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m2 {
+    font-size: .83333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p1 {
+    font-size: 1.08333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m1 {
+    font-size: .91666667em;
+  }
 }
 @media (min-width: 1200px) {
   .u5sl-barmenu-flag-type-lg-buttonshorizontal {
@@ -22877,6 +23093,78 @@ a {
     display: inline-block;
     padding: 0;
     font-size: 1em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p12 {
+    font-size: 2em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m12 {
+    font-size: 0;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p11 {
+    font-size: 1.91666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m11 {
+    font-size: .08333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p10 {
+    font-size: 1.83333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m10 {
+    font-size: .16666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p9 {
+    font-size: 1.75em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m9 {
+    font-size: .25em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p8 {
+    font-size: 1.66666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m8 {
+    font-size: .33333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p7 {
+    font-size: 1.58333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m7 {
+    font-size: .41666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p6 {
+    font-size: 1.5em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m6 {
+    font-size: .5em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p5 {
+    font-size: 1.41666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m5 {
+    font-size: .58333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p4 {
+    font-size: 1.33333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m4 {
+    font-size: .66666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p3 {
+    font-size: 1.25em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m3 {
+    font-size: .75em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p2 {
+    font-size: 1.16666667em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m2 {
+    font-size: .83333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p1 {
+    font-size: 1.08333333em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m1 {
+    font-size: .91666667em;
   }
 }
 /*

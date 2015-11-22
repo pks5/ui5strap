@@ -54,7 +54,20 @@
 	}
 }
 
-.ui5strapMakeBarMenuSize(@size, @i){
+.ui5strapMakeBarMenuZoom(@size, @i) when (@i > 0){
+	
+	.u5sl-barmenu.u5sl-barmenu-flag-zoom-@{size}-p@{i}{
+		font-size: (1em + (@i / @grid-columns));
+	}
+	
+	.u5sl-barmenu.u5sl-barmenu-flag-zoom-@{size}-m@{i}{
+		font-size: (1em - (@i / @grid-columns));
+	}
+	
+	.ui5strapMakeBarMenuZoom(@size, (@i - 1));
+}
+
+.ui5strapMakeBarMenuSize(@size){
 	//Buttons Horizontal
 	.u5sl-barmenu-flag-type-@{size}-buttonshorizontal{
 		&{
@@ -208,20 +221,22 @@
 			padding:0;
 		}
 	}
-	
-	//.ui5strapMakeBarMenuSize(@size, (@i - 1));
 }
 
-.ui5strapMakeBarMenuSize(xs, @grid-columns);
+.ui5strapMakeBarMenuSize(xs);
+.ui5strapMakeBarMenuZoom(xs, @grid-columns); 
 
 @media (min-width: @screen-sm) {
-	.ui5strapMakeBarMenuSize(sm, @grid-columns);
+	.ui5strapMakeBarMenuSize(sm);
+	.ui5strapMakeBarMenuZoom(sm, @grid-columns);
 }
 
 @media (min-width: @screen-md) {
-	.ui5strapMakeBarMenuSize(md, @grid-columns);
+	.ui5strapMakeBarMenuSize(md);
+	.ui5strapMakeBarMenuZoom(md, @grid-columns);
 }
 
 @media (min-width: @screen-lg) {
-	.ui5strapMakeBarMenuSize(lg, @grid-columns);
+	.ui5strapMakeBarMenuSize(lg);
+	.ui5strapMakeBarMenuZoom(lg, @grid-columns);
 }

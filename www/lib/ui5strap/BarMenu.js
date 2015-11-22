@@ -42,6 +42,26 @@
 					defaultValue:false
 				},
 				
+				"zoomExtraSmall" : {
+					type:"int",
+					defaultValue : 0
+				},
+				
+				zoomSmall : {
+					type : "int",
+					defaultValue : 0
+				},
+				
+				zoomMedium : {
+					type : "int",
+					defaultValue : 0
+				},
+				
+				zoomLarge : {
+					type : "int",
+					defaultValue : 0
+				},
+				
 				typeExtraSmall : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.ListVertical

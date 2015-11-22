@@ -34,6 +34,10 @@
 
 	ui5strap.BarMenuRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
+			zoomExtraSmall = oControl.getZoomExtraSmall(),
+			zoomSmall = oControl.getZoomSmall(),
+			zoomMedium = oControl.getZoomMedium(),
+			zoomLarge = oControl.getZoomLarge(),
 			typeExtraSmall = oControl.getTypeExtraSmall(),
 			typeSmall = oControl.getTypeSmall(),
 			typeMedium = oControl.getTypeMedium(),
@@ -52,6 +56,20 @@
 		classes += ' u5sl-barmenu-flag-type-sm-' + typeSmall.toLowerCase();
 		classes += ' u5sl-barmenu-flag-type-md-' + typeMedium.toLowerCase();
 		classes += ' u5sl-barmenu-flag-type-lg-' + typeLarge.toLowerCase();
+		
+		//Zoom
+		if(zoomExtraSmall !== 0){
+			classes += ' u5sl-barmenu-flag-zoom-xs-' + (zoomExtraSmall < 0 ? 'm' : 'p') + Math.abs(zoomExtraSmall);
+		}
+		if(zoomSmall !== 0){
+			classes += ' u5sl-barmenu-flag-zoom-sm-' + (zoomSmall < 0 ? 'm' : 'p') + Math.abs(zoomSmall);
+		}
+		if(zoomMedium !== 0){
+			classes += ' u5sl-barmenu-flag-zoom-md-' + (zoomMedium < 0 ? 'm' : 'p') + Math.abs(zoomMedium);
+		}
+		if(zoomLarge !== 0){
+			classes += ' u5sl-barmenu-flag-zoom-lg-' + (zoomLarge < 0 ? 'm' : 'p') + Math.abs(zoomLarge);
+		}
 		
 		rm.write("<ul");
 		rm.writeControlData(oControl);
