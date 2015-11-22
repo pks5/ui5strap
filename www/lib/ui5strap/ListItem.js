@@ -63,6 +63,10 @@
 				contentPlacement : {
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
+				},
+				itemId : {
+					type:"string",
+					defaultValue : ""
 				}
 			},
 			

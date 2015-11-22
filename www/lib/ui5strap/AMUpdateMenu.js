@@ -94,7 +94,7 @@
 			selectedItem = null;
 		
 		for(var i = 0; i < items.length; i++){
-			if(newPage.getId() === this.context.app.createControlId(items[i].getPageId())){
+			if(newPage.getId() === this.context.app.createControlId(items[i].getItemId())){
 				selectedItem = items[i];
 				break;
 			}

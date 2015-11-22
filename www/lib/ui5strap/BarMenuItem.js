@@ -42,10 +42,6 @@
 				icon : {
 					type:"string",
 					defaultValue : ""
-				},
-				pageId : {
-					type:"string",
-					defaultValue : ""
 				}
 			}
 		}
