@@ -56,6 +56,35 @@
 
                 "target" : "content",
                 "preload" : true
+            },
+
+            "ui5strap.demoapp.views.MyPage4" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page4",
+                "styleClass" : "page-4",
+
+                "target" : "content",
+                "preload" : true,
+                
+                "events" : {
+                	"controller" : {
+                		"update" : [
+                			"ui5strap.demoapp.actions.CreateSubMenu",
+                			"ui5strap.demoapp.actions.GotoPage5"
+                		]
+                	}
+                }
+            },
+
+            "ui5strap.demoapp.views.MyPage5" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page5",
+                "styleClass" : "page-5",
+
+                "target" : "content",
+                "preload" : true
             }
       },
 	

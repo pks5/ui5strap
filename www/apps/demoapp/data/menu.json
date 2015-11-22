@@ -15,7 +15,13 @@
 			"viewName" : "ui5strap.demoapp.views.MyPage3",
 			"pageId" : "my-app-page3",
 			"icon" : "bar-chart"
-		}	
+		},
+		{
+			"label" : "More",
+			"viewName" : "ui5strap.demoapp.views.MyPage4",
+			"pageId" : "my-app-page4",
+			"icon" : "bar-chart"
+		}		
 	
 	]
 

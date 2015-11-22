@@ -681,6 +681,14 @@
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
+		
+		eventParameters = eventParameters || {};
+		
+		if(eventParameters.target){
+			throw new Error('Parameters must not contain a target attribute!');
+		}
+		
+		eventParameters.target = target;
 
 		_triggerControllerEvent(this, target, oPage, 'update', eventParameters);
 	};

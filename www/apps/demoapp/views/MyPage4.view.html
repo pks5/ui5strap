@@ -1,0 +1,34 @@
+<template data-controller-name="ui5strap.ActionController">
+	<!-- The page control -->
+	<div data-sap-ui-type="ui5strap.Page">
+			<!-- Head area with horizontal bar -->
+			<div data-sap-ui-aggregation="head">
+				<!-- Bar on top of page -->
+				<div data-sap-ui-type="ui5strap.Bar" data-inverse="true">
+					<!-- Left area of bar -->
+					<div data-sap-ui-aggregation="left">
+						<!-- Back Button -->
+						<div 
+							data-sap-ui-type="ui5strap.Button" 
+							data-tap="__execute" 
+							data-custom-data:__action="ui5strap.demoapp.actions.GotoPage1"
+						>
+							<div data-sap-ui-type="ui5strap.Icon" data-icon="chevron-left"></div>
+						</div>
+					</div>
+					
+					<!-- Middle area of bar -->
+					<div data-sap-ui-aggregation="middle">
+						<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE3_TITLE}"></div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Body area with page content -->
+			<div data-sap-ui-aggregation="body">
+				<div id="subNav" data-sap-ui-type="ui5strap.BarNavContainer" data-bar-visible="true"></div>
+			</div>
+			
+	</div>
+
+</template>
