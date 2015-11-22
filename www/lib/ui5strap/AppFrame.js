@@ -55,7 +55,7 @@
 	AppFrameProto.init = function(){
 		var _this = this;
 		
-		this.control = this._createControl();
+		var rootControl = this._createControl();
 		
 		this._initHistory();
 
@@ -72,8 +72,12 @@
 			
 		};
 		
+		this.getRootControl = function(){
+			return rootControl;
+		};
+		
 		this.app.getRootControl = function(){
-			return _this.control;
+			return rootControl;
 		};
 	};
 
@@ -81,8 +85,8 @@
 	 * @deprecated
 	 */
 	AppFrameProto.getControl = function(){
-		jQuery.sap.log.warning("AppFrameProto.getControl is deprecated");
-		return this.control;
+		jQuery.sap.log.warning("AppFrameProto.getControl is deprecated. Use getRootControl instead.");
+		return this.getRootControl();
 	};
 
 	/*
@@ -195,7 +199,7 @@
 	*/
 	AppFrameProto.getCurrentPage = function (target) {
 		jQuery.sap.log.warning("AppFrameProto.getTarget is deprecated!");
-		return this.control.getTarget(target);
+		return this.getRootControl().getTarget(target);
 	};
 
 	/*
@@ -205,7 +209,7 @@
 	*/
 	AppFrameProto.hasTarget = function(target) {
 		jQuery.sap.log.warning("AppFrameProto.hasTarget is deprecated!");
-		return this.control.hasTarget(target);
+		return this.getRootControl().hasTarget(target);
 	}
 	
 	/*
@@ -226,7 +230,8 @@
 	 * @deprecated
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
-		return this.navigateTo(this.control, viewConfig, callback, true);
+		jQuery.sap.log.warning("AppFrameProto.toPage is deprecated! Use navigateTo instead!");
+		return this.navigateTo(this.getRootControl(), viewConfig, callback, true);
 	};
 
 	/*
@@ -237,7 +242,7 @@
 
 		//TODO use default target here...
 		if(!viewConfig.target){
-			viewConfig.target = this.control.defaultTarget;
+			viewConfig.target = this.getRootControl().defaultTarget;
 		}
 
 		//Override targets
@@ -264,7 +269,9 @@
 	* @deprecated
 	*/
 	AppFrameProto.gotoPage = function (viewDef, callback) {
-		return this.navigateTo(this.control, viewDef, callback);
+		jQuery.sap.log.warning("AppFrameProto.gotoPage is deprecated! Use navigateTo instead!");
+		
+		return this.navigateTo(this.getRootControl(), viewDef, callback);
 	};
 	
 	AppFrameProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
