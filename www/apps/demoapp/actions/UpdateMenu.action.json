@@ -1,0 +1,11 @@
+{
+	"__format" : "AJ2.0",
+	"__modules" : ["ui5strap.AMUpdateMenu"],
+	
+	"updateMenu" : {
+		"controlId" : "myMenu",
+		"viewId" : "my-app-bar-menu",
+		"scope" : "APP",
+		"target" : "content"
+	}
+}

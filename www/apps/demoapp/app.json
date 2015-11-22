@@ -84,6 +84,14 @@
 	             	
 	             },
 	             
+	             "events" : {
+	             	"control" : {
+	             		"pageShow" : [
+	             			"ui5strap.demoapp.actions.UpdateMenu"
+	             		]
+	             	}
+	             },
+	             
 	             "initialViews" : [
 	                 { 
 	                     "viewName" : "ui5strap.demoapp.views.MyPage1",

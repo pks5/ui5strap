@@ -68,15 +68,4 @@
 		}
 	});
 	
-	ui5strap.BarMenu.prototype.init = function(oEvent){
-		var nc = sap.ui.getCore().byId('mainNavContainer');
-		
-		nc.attachEvent("pageShow", {}, function(oEvent){
-			if(oEvent.getParameter("target") !== "content") return;
-			//var param = oEvent.getParameters();
-			var newPage = nc.getTarget("content");
-			console.log(newPage.getId());
-		});
-	};
-
 }());

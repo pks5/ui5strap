@@ -102,24 +102,43 @@
 		
 		//Init default NavContainer
 		var frameConfig = this.options,
-			navContainerOptions = {},
-			navContainerModule = "ui5strap.NavContainerStandard";
+			app = this.app,
+			navContainerModule = frameConfig.navContainer || "ui5strap.NavContainerStandard";
 		
-
-		if('navContainerOptions' in frameConfig){
-			navContainerOptions = frameConfig.navContainerOptions;
-		}
-
-		if('navContainer' in frameConfig){
-			navContainerModule = frameConfig.navContainer;
-		}
-
 		jQuery.sap.require(navContainerModule);
 		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
 		if(!NavContainerConstructor){
 			throw new Error('Invalid NavContainer: ' + navContainerModule);
 		}
-		return new NavContainerConstructor(navContainerOptions);
+		
+		var navContainerOptions = frameConfig.navContainerOptions || {};
+		if(navContainerOptions.id){
+			navContainerOptions.id = this.app.createControlId(navContainerOptions.id);
+		}
+		
+		var rootControl = new NavContainerConstructor(navContainerOptions);
+		
+		if(frameConfig.events && frameConfig.events.control){
+			var eKeys = Object.keys(frameConfig.events.control),
+				eKeysLength = eKeys.length;
+			for(var i = 0; i < eKeysLength; i++){
+				var evs = frameConfig.events.control[eKeys[i]];
+				
+				rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
+					
+					for(var j = 0; j < data.actions.length; j ++){
+						app.runAction({
+							"parameters" : data.actions[j], 
+							"event" : oEvent
+						});
+					}
+					
+					//console.log(data);
+				});
+			}
+		}
+		
+		return rootControl;
 	};
 
 	/*
