@@ -26,7 +26,12 @@
 			
 			<!-- Body area with page content -->
 			<div data-sap-ui-aggregation="body">
-				<div id="subNav" data-sap-ui-type="ui5strap.BarNavContainer" data-bar-visible="true"></div>
+				<div id="subNav" 
+					data-sap-ui-type="ui5strap.BarNavContainer" 
+					data-bar-visible="true" 
+					data-page-show="__execute" 
+					data-custom-data:__action="ui5strap.demoapp.actions.UpdateSubMenu"
+					></div>
 			</div>
 			
 	</div>

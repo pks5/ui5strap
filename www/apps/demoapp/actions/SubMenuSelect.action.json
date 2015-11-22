@@ -1,0 +1,32 @@
+{
+	
+	"__format" : "AJ2.0",
+	"__modules" : ["ui5strap.AMGetContextData", "ui5strap.AMGotoPage"],
+	"__description" : "Goto Page 1",
+
+	"getContextData" : {
+		"scope" : "PARAMETER",
+		"tgtParam" : "parameters.menuItem",
+		"modelName" : "submenu",
+		"parameterKey" : "listItem"
+	},
+	
+	"gotoPage" : {
+		"__functions" : [
+			{
+				"function" : "copy",
+				"args" : {
+					"parameters.menuItem.viewName" : "parameters.gotoPage.viewName"
+				}
+			}
+		],
+		
+		"transition" : "transition-flip",
+		"writeHistory" : true,
+		"controlId" : "subNav",
+		"viewId" : "my-app-page4",
+		"scope" : "APP",
+		"target" : "content"
+	}
+
+}

@@ -1268,19 +1268,22 @@
   jQuery.sap.declare("ui5strap.Utils");
 
   ui5strap.Utils = {
-
+		  
+		//@deprecated
       dynamicAttributes : function(controlProto, attributeNames){
           for(var i = 0; i < attributeNames.length; i++){
               ui5strap.Utils.dynamicAttribute(controlProto, attributeNames[i]);
           }
       },
 
+      //@deprecated
       dynamicAttribute : function(controlProto, attributeName){
           controlProto['set' + jQuery.sap.charToUpperCase(attributeName, 0)] = function(newValue){
               ui5strap.Utils.updateAttribute(this, attributeName, newValue);
           };
       },
 
+      //@deprecated
       updateAttribute : function(oControl, attributeName, newValue){
           if(oControl.getDomRef()){
             oControl.$().attr(attributeName, newValue);
@@ -1291,13 +1294,15 @@
           }
       },
 
+    //@deprecated
       dynamicClass : function(controlProto, propertyName, valueMapping){
-          controlProto['set' + jQuery.sap.charToUpperCase(propertyName, 0)] = function(newValue){ 
-              ui5strap.Utils.updateClass(this, this.$(), propertyName, newValue, valueMapping);
+          controlProto['set' + jQuery.sap.charToUpperCase(propertyName, 0)] = function(newValue, suppressInvalidate){ 
+              ui5strap.Utils.updateClass(this, this.$(), propertyName, newValue, valueMapping, suppressInvalidate);
           };
       },
 
-      updateClass : function(oControl, $target, propertyName, newValue, valueMapping){
+    //@deprecated
+      updateClass : function(oControl, $target, propertyName, newValue, valueMapping, suppressInvalidate){
           if(oControl.getDomRef()){
               var oldValue = oControl['get' + jQuery.sap.charToUpperCase(propertyName, 0)]();
               if(oldValue in valueMapping){
@@ -1310,16 +1315,18 @@
               oControl.setProperty(propertyName, newValue, true);
           }
           else{
-              oControl.setProperty(propertyName, newValue);
+              oControl.setProperty(propertyName, newValue, suppressInvalidate);
           }
       },
 
+      //@deprecated
       dynamicText : function(controlProto){
           controlProto.setText = function(newText){
               ui5strap.Utils.updateText(this, this.$(), newText);
           };
       },
 
+      //@deprecated
       updateText : function(oControl, $target, newText){
           if(oControl.getDomRef() && oControl.getContent().length === 0){
               $target.text(newText);

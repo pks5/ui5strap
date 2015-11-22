@@ -170,20 +170,6 @@
 		//ui5strap.tm("APP", "NC", "EXEC_TRANS");
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
-		if(pageChange.currentPage){
-			_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHide', {
-				target : pageChange.target,
-				newPage : pageChange.page
-			});
-		}
-
-		if(pageChange.page){
-			_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShow', {
-				target : pageChange.target,
-				oldPage : pageChange.currentPage
-			});
-		}
-		
 		pageChange.transition.execute(
 			function anon_transitionCurrentComplete(){
 				var $current = this.$current;
@@ -768,7 +754,19 @@
 				"currentPage" : currentPage
 			};
 
-		
+		if(currentPage){
+			_triggerControllerEvent(_this, target, currentPage, 'pageHide', {
+				target : target,
+				newPage : page
+			});
+		}
+
+		if(page){
+			_triggerControllerEvent(_this, target, page, 'pageShow', {
+				target : target,
+				oldPage : currentPage
+			});
+		}
 
 		if(this.getDomRef()){
 			jQuery.sap.log.debug("NavContainerBaseProto.toPage: NavContainer already attached. Navigating now...");

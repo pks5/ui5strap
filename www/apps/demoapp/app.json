@@ -16,6 +16,11 @@
                 "src" : "data/menu.json",
                 "type" : "JSON",
                 "modelName" : "menu" 
+            },
+            {
+                "src" : "data/submenu.json",
+                "type" : "JSON",
+                "modelName" : "submenu" 
             }
     ],
     
@@ -76,12 +81,31 @@
                 	}
                 }
             },
-
+			
+			"ui5strap.demoapp.views.BarSubMenu" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-bar-sub-menu",
+                
+                "target" : "bar",
+                "preload" : true
+            },
+            
             "ui5strap.demoapp.views.MyPage5" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-page5",
                 "styleClass" : "page-5",
+
+                "target" : "content",
+                "preload" : true
+            },
+            
+            "ui5strap.demoapp.views.MyPage6" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-page6",
+                "styleClass" : "page-6",
 
                 "target" : "content",
                 "preload" : true

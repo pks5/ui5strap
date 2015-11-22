@@ -83,6 +83,22 @@
 
 	ui5strap.Utils.dynamicText(ListItemPrototype);
 
-	ui5strap.Utils.dynamicClass(ListItemPrototype, 'selected', { 'true' : 'active' });
+	//ui5strap.Utils.dynamicClass(ListItemPrototype, 'selected', { 'true' : 'active' });
+	
+	ListItemPrototype.setSelected = function(newSelected, suppressInvalidate){
+		if(this.getDomRef()){//alert(this.getId() + "::" + newSelected);
+              if(newSelected){
+                  this.$().addClass("active");
+              }
+              else{
+                  this.$().removeClass("active");
+              }
+              
 
+              this.setProperty("selected", newSelected, true);
+          }
+          else{
+              this.setProperty("selected", newSelected, suppressInvalidate);
+          }
+	};
 }());
