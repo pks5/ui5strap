@@ -121,6 +121,7 @@
 	             	"barSizeLarge" : 2,
 	             	"barPlacementLarge" : "Left",
 	             	"barModeLarge" : "IntrudeFixed",
+	             	"barTransitionLarge" : "zoom-in zoom-out",
 	             	
 	             	"barVisible" : false
 	             	

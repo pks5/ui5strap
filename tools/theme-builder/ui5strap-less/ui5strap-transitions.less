@@ -226,12 +226,13 @@
   -o-transition: -o-transform .5s;
   -ms-transition: -ms-transform .5s;
 
-  transform: rotate3d(0,0,0,0);
+  
   -webkit-transform: rotate3d(0,0,0,0);
   -moz-transform: rotate3d(0,0,0,0);
   -o-transform: rotate3d(0,0,0,0);
   -ms-transform: rotate3d(0,0,0,0);
-
+  transform: rotate3d(0,0,0,0);
+  
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
      -moz-backface-visibility: hidden;
@@ -367,6 +368,24 @@
 	transform: translate3d(@x, @y, @z);
 }
 
+//Rotate 3d
+.ui5strapTransformRotate3d(@x, @y, @z, @angle){
+	-webkit-transform: rotate3d(@x, @y, @z, @angle);
+	-moz-transform: rotate3d(@x, @y, @z, @angle);
+	-ms-transform: rotate3d(@x, @y, @z, @angle);
+	-o-transform: rotate3d(@x, @y, @z, @angle);
+	transform: rotate3d(@x, @y, @z, @angle);
+}
+
+//Transform 3d
+.ui5strapTransformScale3d(@x, @y, @z){
+	-webkit-transform: scale3d(@x, @y, @z);
+	-moz-transform: scale3d(@x, @y, @z);
+	-ms-transform: scale3d(@x, @y, @z);
+	-o-transform: scale3d(@x, @y, @z);
+	transform: scale3d(@x, @y, @z);
+}
+
 .makeTransitionSize(@size){
 	/*
 	* Transiton Slide Right to Left
@@ -492,7 +511,233 @@
 		}
 		
 	}
+	
+	/*
+	*
+	* Transition Flip Horizontal Clockwise
+	*
+	*/
+	.ui5strap-trans-@{size}-type-flip-horizontal-cw{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformRotate3d(0, 0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		  
+				  backface-visibility: hidden;
+		  -webkit-backface-visibility: hidden;
+		     -moz-backface-visibility: hidden;
+		       -o-backface-visibility: hidden;
+		      -ms-backface-visibility: hidden;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformRotate3d(0, 1, 0, -180deg);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformRotate3d(0, 1, 0, 180deg);
+		}
+	}
+	
+	/*
+	*
+	* Transition Flip Horizontal Counter Clockwise
+	*
+	*/
+	.ui5strap-trans-@{size}-type-flip-horizontal-ccw{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformRotate3d(0, 0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		  
+				  backface-visibility: hidden;
+		  -webkit-backface-visibility: hidden;
+		     -moz-backface-visibility: hidden;
+		       -o-backface-visibility: hidden;
+		      -ms-backface-visibility: hidden;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformRotate3d(0, 1, 0, 180deg);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformRotate3d(0, 1, 0, -180deg);
+		}
+	}
 
+	/*
+	*
+	* Transition Flip Vertical Clockwise
+	*
+	*/
+	.ui5strap-trans-@{size}-type-flip-vertical-cw{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformRotate3d(0, 0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		  
+				  backface-visibility: hidden;
+		  -webkit-backface-visibility: hidden;
+		     -moz-backface-visibility: hidden;
+		       -o-backface-visibility: hidden;
+		      -ms-backface-visibility: hidden;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformRotate3d(1, 0, 0, -180deg);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformRotate3d(1, 0, 0, 180deg);
+		}
+	}
+	
+	/*
+	*
+	* Transition Flip Vertical Counter Clockwise
+	*
+	*/
+	.ui5strap-trans-@{size}-type-flip-vertical-ccw{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformRotate3d(0, 0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		  
+				  backface-visibility: hidden;
+		  -webkit-backface-visibility: hidden;
+		     -moz-backface-visibility: hidden;
+		       -o-backface-visibility: hidden;
+		      -ms-backface-visibility: hidden;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformRotate3d(1, 0, 0, 180deg);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformRotate3d(1, 0, 0, -180deg);
+		}
+	}
+	
+	/*
+	*
+	* Transition Zoom In
+	*
+	*/
+	.ui5strap-trans-@{size}-type-zoom-in{
+		&{
+		  .ui5strapTransitionTransformOpacity(@transition-speed-normal, @transition-speed-dummy);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransformOpacity(@transition-speed-slow, @transition-speed-dummy);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransformOpacity(@transition-speed-fast, @transition-speed-dummy);
+		}
+		
+		&.ui5strap-transition-current-out{
+			opacity: 0.99; 
+		}
+	
+		&.ui5strap-transition-next{
+			 .ui5strapTransformScale3d(0, 0, 0);
+		}
+	}
+	
+	/*
+	*
+	* Transition Zoom Out
+	*
+	*/
+	.ui5strap-trans-@{size}-type-zoom-out{
+		&{
+		  .ui5strapTransitionTransformOpacity(@transition-speed-normal, @transition-speed-dummy);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransformOpacity(@transition-speed-slow, @transition-speed-dummy);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransformOpacity(@transition-speed-fast, @transition-speed-dummy);
+		}
+		
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+			.ui5strapTransformScale3d(0, 0, 0);
+		}
+	
+		&.ui5strap-transition-next{
+			opacity: 0.99;  
+		}
+	}
+	
 	/*
 	* Transiton NONE
 	*/
