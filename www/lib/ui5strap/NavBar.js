@@ -32,7 +32,8 @@
 	
 	sap.ui.core.Control.extend("ui5strap.NavBar", {
 		metadata : {
-
+			deprecated : true,
+			
 			// ---- object ----
 			defaultAggregation : "collapse",
 			

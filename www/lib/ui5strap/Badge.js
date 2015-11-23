@@ -31,7 +31,7 @@
 	
 	sap.ui.core.Control.extend("ui5strap.Badge", {
 		metadata : {
-
+			deprecated : true,
 			library : "ui5strap",
 			
 			properties : { 

@@ -107,6 +107,11 @@
 				barTransitionLarge : {
 					type : "string",
 					defaultValue : ""
+				},
+				
+				barTransitionSpeed : {
+					type : "ui5strap.TransitionSpeed",
+					defaultValue : ui5strap.TransitionSpeed.Normal
 				}
 				
 			},
@@ -251,6 +256,7 @@
 							"transitionSmall" : this._getBarTransition(this._getBarTransitionSmall(), newBarVisible),
 							"transitionMedium" : this._getBarTransition(this._getBarTransitionMedium(), newBarVisible),
 							"transitionLarge" : this._getBarTransition(this._getBarTransitionLarge(), newBarVisible),
+							"transitionSpeed" : this.getBarTransitionSpeed().toLowerCase(),
 							"$current" : newBarVisible ? null : $target, 
 							"$next" : newBarVisible ? $target : null , 
 							"id" : 'x'
@@ -303,7 +309,7 @@
 	 * @Protected
 	 */
 	BarNavContainerProto._getBaseClassString = function(){
-		var classes = "navcontainer navcontainer-type-" + this.ncType + " ui5strap-transition-speed-fast",
+		var classes = "navcontainer navcontainer-type-" + this.ncType,
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
 			modeMedium = this.getBarModeMedium(),
@@ -315,8 +321,13 @@
 			columnsExtraSmall = this.getBarSizeExtraSmall(),
 			columnsSmall = this.getBarSizeSmall(),
 			columnsMedium = this.getBarSizeMedium(),
-			columnsLarge = this.getBarSizeLarge();
+			columnsLarge = this.getBarSizeLarge(),
+			transitionSpeed = this.getBarTransitionSpeed();
 		
+			if(transitionSpeed !== ui5strap.TransitionSpeed.Normal){
+				classes += " ui5strap-transition-speed-" + transitionSpeed.toLowerCase();
+			}
+			
 		//Ensure that at least size xs is set
 		if(1 > columnsExtraSmall){
 			classes += " navcontainer-flag-col-xs-1";

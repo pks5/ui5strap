@@ -306,6 +306,17 @@
 		Medium : "md",
 		Large : "lg"
 	};
+	
+	/*
+	  * TransitionSpeed
+	  */
+	  jQuery.sap.declare("ui5strap.TransitionSpeed");
+
+		ui5strap.TransitionSpeed = {
+			Slow : "Slow",
+			Normal : "Normal",
+			Fast : "Fast"
+		};
 
   /*
   * Severity
@@ -966,7 +977,8 @@
    ui5strap.ResponsiveTransition = function(data){
      this._data = data;
      
-     var transString = "";
+     var transString = "",
+     	transSpeed = data.transitionSpeed;
      
      if(data.transitionAll){
     	 transString = "ui5strap-trans-all-type-" + data.transitionAll;
@@ -988,7 +1000,11 @@
      
      this._skip = transString === "ui5strap-trans-all-type-none";
      
-     this._transitions = transString + " ui5strap-transition-speed-fast";
+     this._transitions = transString;
+     
+     if(transSpeed && transitionSpeed !== "normal"){
+    	 this._transitions += " ui5strap-transition-speed-" + transSpeed;
+     }
      
      this._prepared = false;
      this._executed = false;
