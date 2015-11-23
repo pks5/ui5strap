@@ -2,7 +2,7 @@
 	
 	"__format" : "AJ2.0",
 	"__modules" : "ui5strap.AMToggleProperty",
-	"__description" : "Toggle Navigation Bar",
+	"__description" : "Toggles the visibility of the menu bar of the root NavContainer.",
 
 	"toggleProperty" : {
 		"propertyName" : "barVisible"

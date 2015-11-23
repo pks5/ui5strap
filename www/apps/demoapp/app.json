@@ -16,16 +16,11 @@
                 "src" : "data/menu.json",
                 "type" : "JSON",
                 "modelName" : "menu" 
-            },
-            {
-                "src" : "data/submenu.json",
-                "type" : "JSON",
-                "modelName" : "submenu" 
             }
     ],
     
     "views" : {
-    		"ui5strap.demoapp.views.BarMenu" : {
+    		"ui5strap.demoapp.views.MenuRoot" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-bar-menu",
@@ -33,12 +28,12 @@
                 "target" : "bar",
                 "preload" : true
             },
-            "ui5strap.demoapp.views.MyPage1" : {
+            
+            "ui5strap.demoapp.views.Home" : {
                 "type" : "HTML",
                 
-                "id" : "my-app-page1",
-                "styleClass" : "page-1",
-
+                "id" : "home",
+                
                 "target" : "content",
                 "preload" : true
             },
@@ -47,8 +42,7 @@
                 "type" : "HTML",
                 
                 "id" : "my-app-page2",
-                "styleClass" : "page-2",
-
+                
                 "target" : "content",
                 "preload" : true
             },
@@ -57,8 +51,7 @@
                 "type" : "HTML",
                 
                 "id" : "my-app-page3",
-                "styleClass" : "page-3",
-
+                
                 "target" : "content",
                 "preload" : true
             },
@@ -67,22 +60,21 @@
                 "type" : "HTML",
                 
                 "id" : "my-app-page4",
-                "styleClass" : "page-4",
-
+                
                 "target" : "content",
                 "preload" : true,
                 
                 "events" : {
                 	"controller" : {
                 		"update" : [
-                			"ui5strap.demoapp.actions.CreateSubMenu",
-                			"ui5strap.demoapp.actions.GotoPage5"
+                			"ui5strap.demoapp.actions.LoadMenuSub1",
+                			"ui5strap.demoapp.actions.NavigateToPage5"
                 		]
                 	}
                 }
             },
 			
-			"ui5strap.demoapp.views.BarSubMenu" : {
+			"ui5strap.demoapp.views.MenuSub1" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-bar-sub-menu",
@@ -95,8 +87,7 @@
                 "type" : "HTML",
                 
                 "id" : "my-app-page5",
-                "styleClass" : "page-5",
-
+                
                 "target" : "content",
                 "preload" : true
             },
@@ -105,8 +96,7 @@
                 "type" : "HTML",
                 
                 "id" : "my-app-page6",
-                "styleClass" : "page-6",
-
+                
                 "target" : "content",
                 "preload" : true
             }
@@ -139,18 +129,18 @@
 	             "events" : {
 	             	"control" : {
 	             		"pageShow" : [
-	             			"ui5strap.demoapp.actions.UpdateMenu"
+	             			"ui5strap.demoapp.actions.SetSelectedMenuRoot"
 	             		]
 	             	}
 	             },
 	             
 	             "initialViews" : [
 	                 { 
-	                     "viewName" : "ui5strap.demoapp.views.MyPage1",
+	                     "viewName" : "ui5strap.demoapp.views.Home",
 	                     "type" : "HTML"
 	                 },
 	                 { 
-	                     "viewName" : "ui5strap.demoapp.views.BarMenu",
+	                     "viewName" : "ui5strap.demoapp.views.MenuRoot",
 	                     "type" : "HTML"
 	                 }
 	             ]

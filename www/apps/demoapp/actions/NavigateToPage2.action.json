@@ -2,7 +2,7 @@
 	
 	"__format" : "AJ2.0",
 	"__modules" : "ui5strap.AMGotoPage",
-	"__description" : "Goto Page 2",
+	"__description" : "Makes the root NavContainer navigate to the specified view.",
 
 	"gotoPage" : {
 		"viewName" : "ui5strap.demoapp.views.MyPage2",

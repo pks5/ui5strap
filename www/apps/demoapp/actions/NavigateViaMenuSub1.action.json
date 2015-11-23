@@ -2,7 +2,7 @@
 	
 	"__format" : "AJ2.0",
 	"__modules" : ["ui5strap.AMGetContextData", "ui5strap.AMGotoPage"],
-	"__description" : "Goto Page 1",
+	"__description" : "Makes the specified NavContainer navigate to the view that is specified in the list item context of the specified model.",
 
 	"getContextData" : {
 		"scope" : "PARAMETER",
@@ -22,7 +22,11 @@
 		],
 		
 		"transition" : "transition-flip",
-		"writeHistory" : true
+		"writeHistory" : true,
+		"controlId" : "subNav",
+		"viewId" : "my-app-page4",
+		"scope" : "APP",
+		"target" : "content"
 	}
 
 }

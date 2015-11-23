@@ -9870,12 +9870,6 @@ a {
 .navcontainer-target {
   position: relative;
   overflow: hidden;
-
-          backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-     -moz-backface-visibility: hidden;
-       -o-backface-visibility: hidden;
-      -ms-backface-visibility: hidden;
 }
 /*
 * Container for pages
@@ -9899,12 +9893,13 @@ a {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
-
-          backface-visibility: hidden;
+  /*
+  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
      -moz-backface-visibility: hidden;
        -o-backface-visibility: hidden;
       -ms-backface-visibility: hidden;
+*/
 }
 /*
 * Hidden page

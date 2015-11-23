@@ -19,7 +19,7 @@
 						data-sap-ui-type="ui5strap.Button" 
 						data-text="Toggle Bar" 
 						data-tap="__execute" 
-						data-custom-data:__action="ui5strap.demoapp.actions.ToggleBar"
+						data-custom-data:__action="ui5strap.demoapp.actions.ToggleBarMenuRoot"
 					></div>
 						<div data-sap-ui-type="ui5strap.Paragraph" data-text-align="Center">
 							<div data-sap-ui-type="ui5strap.Image" data-responsive="false" data-mpath="ui5strap.demoapp.img.awesome" data-ext="png" data-alt="Image" data-width="256" data-height="256"></div>
@@ -29,8 +29,8 @@
 								<div 
 									data-sap-ui-type="ui5strap.ListGroup" 
 									data-tap="__execute" 
-									data-custom-data:__action="ui5strap.demoapp.actions.MenuSelect" 
-									data-items="{menu>/items}"
+									data-custom-data:__action="ui5strap.demoapp.actions.NavigateViaMenuRoot" 
+									data-items="{menu>/root}"
 								>
 									<div 
 										data-sap-ui-type="ui5strap.ListGroupItem" 

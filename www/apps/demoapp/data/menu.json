@@ -1,6 +1,6 @@
 {
 
-	"items" : [
+	"root" : [
 	
 		{
 			"label" : "News Feed",
@@ -21,6 +21,23 @@
 			"viewName" : "ui5strap.demoapp.views.MyPage4",
 			"pageId" : "my-app-page4",
 			"icon" : "bar-chart"
+		}		
+	
+	],
+	
+	"sub1" : [
+	
+		{
+			"label" : "More",
+			"viewName" : "ui5strap.demoapp.views.MyPage5",
+			"pageId" : "my-app-page5",
+			"icon" : "hand-peace-o"
+		},
+		{
+			"label" : "Some More",
+			"viewName" : "ui5strap.demoapp.views.MyPage6",
+			"pageId" : "my-app-page6",
+			"icon" : "optin-monster"
 		}		
 	
 	]

@@ -2,10 +2,10 @@
 	
 	"__format" : "AJ2.0",
 	"__modules" : "ui5strap.AMGotoPage",
-	"__description" : "Goto Page 1",
-
+	"__description" : "Loads the view for the sub-menu layout into the NavContainer target 'bar'.",
+	
 	"gotoPage" : {
-		"viewName" : "ui5strap.demoapp.views.BarSubMenu",
+		"viewName" : "ui5strap.demoapp.views.MenuSub1",
 		"transition" : "transition-none",
 		"writeHistory" : true,
 		"controlId" : "subNav",
