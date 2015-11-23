@@ -548,11 +548,13 @@
 			appInstance.attach(viewer._dom.$root[0]);
 			
 			//Create new Transition
-			var transition = new ui5strap.Transition(
-					transitionName || appInstance.config.data.app.transition, 
-					$currentRoot, 
-					appInstance.$(), 
-					appInstance.getId()
+			var transition = new ui5strap.ResponsiveTransition(
+					{
+					"transitionAll" : transitionName || appInstance.config.data.app.transition, 
+					"$current" : $currentRoot, 
+					"$next" : appInstance.$(), 
+					id : appInstance.getId()
+					}
 			);
 			
 			//<DOM_ATTACH_TIMEOUT>

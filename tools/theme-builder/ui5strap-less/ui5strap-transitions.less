@@ -739,6 +739,39 @@
 	}
 	
 	/*
+	*
+	* Transition Fade
+	*
+	*/
+	.ui5strap-trans-@{size}-type-fade{
+		&{
+		  .ui5strapTransitionOpacity(@transition-speed-normal);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionOpacity(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionOpacity(@transition-speed-fast);
+		}
+		
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+			opacity: 0;
+		}
+	
+		&.ui5strap-transition-next{
+			opacity: 0;  
+		}
+	}
+	
+	/*
 	* Transiton NONE
 	*/
 	.ui5strap-trans-@{size}-type-none{

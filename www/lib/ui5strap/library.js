@@ -970,6 +970,24 @@
 
   };
   
+  var _deprecatedTransitionsConvert = function($trans){
+	  var $newTrans = "";
+	  if($trans === 'transition-zoom')
+		  $newTrans = 'zoom-in';
+	  if($trans === 'transition-zoom2')
+		  $newTrans = 'zoom-out';
+	  
+	  else if($trans === 'transition-flip')
+		  $newTrans = 'flip-horizontal-ccw';
+	  else if($trans === 'transition-slide')
+		  $newTrans = 'slide-ltr';
+	  else
+		  $newTrans = $trans.substring(11);
+	  
+	  jQuery.sap.log.warning("Transition deprecated: '" + $trans + "'. Please use instead: " + $newTrans);
+	  return $newTrans;
+  };
+  
   /*
    * Constructs a responsive Transition (experimental)
    * @constructor
@@ -981,6 +999,10 @@
      	transSpeed = data.transitionSpeed;
      
      if(data.transitionAll){
+    	 if(data.transitionAll.indexOf("transition-") === 0){
+    		 
+    		 data.transitionAll = _deprecatedTransitionsConvert(data.transitionAll);
+    	 }
     	 transString = "ui5strap-trans-all-type-" + data.transitionAll;
      }
      else{
@@ -989,11 +1011,7 @@
     	 transString += data.transitionMedium ? " ui5strap-trans-md-type-" + data.transitionMedium : " ui5strap-trans-md-type-none";
     	 transString += data.transitionLarge ? " ui5strap-trans-lg-type-" + data.transitionLarge : " ui5strap-trans-lg-type-none";
      
-    	 if(data.transitionExtraSmall === "ui5strap-trans-xs-type-none"
-        	&& data.transitionSmall === "ui5strap-trans-sm-type-none"
-        	&& data.transitionMedium === "ui5strap-trans-md-type-none"
-        	&& data.transitionSmall === "ui5strap-trans-lg-type-none"
-        		 ){
+    	 if(transString === "ui5strap-trans-xs-type-none ui5strap-trans-sm-type-none ui5strap-trans-md-type-none ui5strap-trans-lg-type-none"){
         	 transString = "ui5strap-trans-all-type-none";
          }
      }

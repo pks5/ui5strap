@@ -114,12 +114,12 @@
 				changeTransitionName = null;
 			}
 			
-			var transition = new ui5strap.Transition(
-					changeTransitionName, 
-					pageChange.$current, 
-					pageChange.$next, 
-					'nc-' + _this.ncType + '-' + pageChange.target
-				);
+			var transition = new ui5strap.ResponsiveTransition({
+					"transitionAll" : changeTransitionName, 
+					"$current" : pageChange.$current, 
+					"$next" : pageChange.$next, 
+					id : 'nc-' + _this.ncType + '-' + pageChange.target
+			});
 				
 			pageChange.transition = transition;
 
@@ -172,7 +172,7 @@
 		
 		pageChange.transition.execute(
 			function anon_transitionCurrentComplete(){
-				var $current = this.$current;
+				var $current = this._data.$current;
 				if($current){
 					$current.remove();
 				}
@@ -189,7 +189,7 @@
 				});
 			}, 
 			function anon_transitionPreparedComplete(){
-				this.$next.attr('class', 'navcontainer-page navcontainer-page-current');
+				this._data.$next.attr('class', 'navcontainer-page navcontainer-page-current');
 				
 				//Transition callback
 				_transitionCallback(_this, pageChange, transList);

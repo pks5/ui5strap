@@ -291,7 +291,7 @@
 		
 		//Default App Transition
 		if(!('transition' in configDataJSON.app)){
-			configDataJSON.app.transition = 'transition-zoom';
+			configDataJSON.app.transition = 'zoom-in';
 		}
 		
 		//Libraries

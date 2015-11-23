@@ -23858,6 +23858,37 @@ a {
   opacity: .99;
 }
 /*
+	*
+	* Transition Fade
+	*
+	*/
+.ui5strap-trans-all-type-fade {
+  -webkit-transition: opacity .5s;
+       -o-transition: opacity .5s;
+          transition: opacity .5s;
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-speed-slow {
+  -webkit-transition: opacity .75s;
+       -o-transition: opacity .75s;
+          transition: opacity .75s;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-speed-fast {
+  -webkit-transition: opacity .25s;
+       -o-transition: opacity .25s;
+          transition: opacity .25s;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-current {
+  z-index: 1;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-current-out {
+  opacity: 0;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-next {
+  opacity: 0;
+}
+/*
 	* Transiton NONE
 	*/
 .ui5strap-trans-all-type-none {
@@ -24275,6 +24306,37 @@ a {
   }
   .ui5strap-trans-xs-type-zoom-out.ui5strap-transition-next {
     opacity: .99;
+  }
+  /*
+	*
+	* Transition Fade
+	*
+	*/
+  .ui5strap-trans-xs-type-fade {
+    -webkit-transition: opacity .5s;
+         -o-transition: opacity .5s;
+            transition: opacity .5s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-speed-slow {
+    -webkit-transition: opacity .75s;
+         -o-transition: opacity .75s;
+            transition: opacity .75s;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-speed-fast {
+    -webkit-transition: opacity .25s;
+         -o-transition: opacity .25s;
+            transition: opacity .25s;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-current-out {
+    opacity: 0;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-next {
+    opacity: 0;
   }
   /*
 	* Transiton NONE
@@ -24697,6 +24759,37 @@ a {
     opacity: .99;
   }
   /*
+	*
+	* Transition Fade
+	*
+	*/
+  .ui5strap-trans-sm-type-fade {
+    -webkit-transition: opacity .5s;
+         -o-transition: opacity .5s;
+            transition: opacity .5s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-speed-slow {
+    -webkit-transition: opacity .75s;
+         -o-transition: opacity .75s;
+            transition: opacity .75s;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-speed-fast {
+    -webkit-transition: opacity .25s;
+         -o-transition: opacity .25s;
+            transition: opacity .25s;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-current-out {
+    opacity: 0;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-next {
+    opacity: 0;
+  }
+  /*
 	* Transiton NONE
 	*/
   .ui5strap-trans-sm-type-none {
@@ -25117,6 +25210,37 @@ a {
     opacity: .99;
   }
   /*
+	*
+	* Transition Fade
+	*
+	*/
+  .ui5strap-trans-md-type-fade {
+    -webkit-transition: opacity .5s;
+         -o-transition: opacity .5s;
+            transition: opacity .5s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-speed-slow {
+    -webkit-transition: opacity .75s;
+         -o-transition: opacity .75s;
+            transition: opacity .75s;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-speed-fast {
+    -webkit-transition: opacity .25s;
+         -o-transition: opacity .25s;
+            transition: opacity .25s;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-current-out {
+    opacity: 0;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-next {
+    opacity: 0;
+  }
+  /*
 	* Transiton NONE
 	*/
   .ui5strap-trans-md-type-none {
@@ -25535,6 +25659,37 @@ a {
   }
   .ui5strap-trans-lg-type-zoom-out.ui5strap-transition-next {
     opacity: .99;
+  }
+  /*
+	*
+	* Transition Fade
+	*
+	*/
+  .ui5strap-trans-lg-type-fade {
+    -webkit-transition: opacity .5s;
+         -o-transition: opacity .5s;
+            transition: opacity .5s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-speed-slow {
+    -webkit-transition: opacity .75s;
+         -o-transition: opacity .75s;
+            transition: opacity .75s;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-speed-fast {
+    -webkit-transition: opacity .25s;
+         -o-transition: opacity .25s;
+            transition: opacity .25s;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-current-out {
+    opacity: 0;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-next {
+    opacity: 0;
   }
   /*
 	* Transiton NONE
