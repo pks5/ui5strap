@@ -126,7 +126,12 @@
 			rm.writeControlData(oControl);
 			
 			//CSS Classes
-			if(ui5strap.Severity.None !== severity){
+			if(ui5strap.TextType.Label === type){
+				//Severity for labels
+				rm.addClass("label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity]);
+			}
+			else if(ui5strap.Severity.None !== severity){
+				//Severity for general text
 				rm.addClass("text-" + ui5strap.BSSeverity[severity]);
 			}
 			
