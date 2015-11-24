@@ -1113,7 +1113,7 @@
  		        this._data.$next && this._data.$next.removeClass('ui5strap-transition-next');
  	      }
  	      else{ 
- 		        jQuery.sap.log.debug('[TRANS#' + _this._data.id + '] Transition skipped: ' + _this._transitions);
+ 		        jQuery.sap.log.debug("[TRANS#" + _this._data.id + "] Transition skipped: '" + _this._transitions + "'");
  		        
  		        callbackCurrent && callbackCurrent.call(_this);
  			    callbackNext && callbackNext.call(_this);

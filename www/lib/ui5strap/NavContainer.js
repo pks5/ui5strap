@@ -713,12 +713,12 @@
 	*/
 	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
 		//ui5strap.tm("APP", "NC", "TO_PAGE");
-		jQuery.sap.log.debug("[NC] NavContainerBaseProto.toPage");
-		
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
-
+		
+		jQuery.sap.log.debug("[NC#" + this.getId() + "] Navigating on target '" + target + "'");
+		
 		var _this = this,
 			currentPage = this.targets[target];
 
@@ -769,7 +769,7 @@
 		}
 
 		if(this.getDomRef()){
-			jQuery.sap.log.debug("NavContainerBaseProto.toPage: NavContainer already attached. Navigating now...");
+			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
 			//NavContainer is already attached to DOM
 			targetTransition.$next = _placePage(_this, target, page, true);
 			
