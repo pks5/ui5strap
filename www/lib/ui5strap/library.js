@@ -981,13 +981,13 @@
 	  var $newTrans = "";
 	  if($trans === 'transition-zoom')
 		  $newTrans = 'zoom-in';
-	  if($trans === 'transition-zoom2')
+	  else if($trans === 'transition-zoom2')
 		  $newTrans = 'zoom-out';
 	  
 	  else if($trans === 'transition-flip')
 		  $newTrans = 'flip-horizontal-ccw';
 	  else if($trans === 'transition-slide')
-		  $newTrans = 'slide-ltr';
+		  $newTrans = 'slide-rtl';
 	  else
 		  $newTrans = $trans.substring(11);
 	  
