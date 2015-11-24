@@ -99,7 +99,11 @@
   sap.ui.getCore().initLibrary(
       {
       	  name : "ui5strap",
+      	  
+      	  version: "0.9.15",
+      	  
       	  dependencies : [],
+      	  
       	  types: [
       	  	"ui5strap.Size",
       	  	"ui5strap.Severity",
@@ -135,10 +139,12 @@
             "ui5strap.ContainerType",
             "ui5strap.ImageShape"
       	  ],
+      	  
       	  interfaces: [
             "ui5strap.IColumn",
             "ui5strap.IBar"
           ],
+          
       	  controls: [
             "ui5strap.Alert",
             "ui5strap.Badge",
@@ -202,12 +208,12 @@
             "ui5strap.Tooltip",
             "ui5strap.Well"
           ],
-      	  elements: [
+          
+          elements: [
             "ui5strap.Item",
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
-          ],
-        	version: "0.9.14RC2"
+          ]
       }
   );
   

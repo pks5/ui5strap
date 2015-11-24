@@ -9860,9 +9860,11 @@ a {
 .navcontainer {
   position: relative;
   height: 100%;
-
-          perspective: 1000;
+  /*
+  perspective: 1000;
   -webkit-perspective: 1000;
+  
+  */
 }
 /*
 * Aggregation (target)
@@ -9870,12 +9872,6 @@ a {
 .navcontainer-target {
   position: relative;
   overflow: hidden;
-
-          backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-     -moz-backface-visibility: hidden;
-       -o-backface-visibility: hidden;
-      -ms-backface-visibility: hidden;
 }
 /*
 * Container for pages
@@ -9899,15 +9895,17 @@ a {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
-
-          backface-visibility: hidden;
+  /*
+  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
      -moz-backface-visibility: hidden;
        -o-backface-visibility: hidden;
       -ms-backface-visibility: hidden;
+*/
 }
 /*
 * Hidden page
+* TODO: still needed?
 */
 .navcontainer-page-hidden {
   display: none;
@@ -23377,7 +23375,6 @@ a {
        -o-transition:      -o-transform .5s;
           transition:         transform .5s;
   -webkit-transform: rotate3d(0, 0, 0, 0);
-     -moz-transform: rotate3d(0, 0, 0, 0);
       -ms-transform: rotate3d(0, 0, 0, 0);
        -o-transform: rotate3d(0, 0, 0, 0);
           transform: rotate3d(0, 0, 0, 0);
@@ -23612,6 +23609,286 @@ a {
           transform: translate3d(0, 100%, 0);
 }
 /*
+	*
+	* Transition Flip Horizontal Clockwise
+	*
+	*/
+.ui5strap-trans-all-type-flip-horizontal-cw {
+  -webkit-transition: -webkit-transform .5s;
+       -o-transition:      -o-transform .5s;
+          transition:         transform .5s;
+  -webkit-transform: rotate3d(0, 0, 0, 0);
+      -ms-transform: rotate3d(0, 0, 0, 0);
+       -o-transform: rotate3d(0, 0, 0, 0);
+          transform: rotate3d(0, 0, 0, 0);
+
+  -webkit-font-smoothing: subpixel-antialiased;
+          backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+}
+.ui5strap-trans-all-type-flip-horizontal-cw.ui5strap-transition-speed-slow {
+  -webkit-transition: -webkit-transform .75s;
+       -o-transition:      -o-transform .75s;
+          transition:         transform .75s;
+}
+.ui5strap-trans-all-type-flip-horizontal-cw.ui5strap-transition-speed-fast {
+  -webkit-transition: -webkit-transform .25s;
+       -o-transition:      -o-transform .25s;
+          transition:         transform .25s;
+}
+.ui5strap-trans-all-type-flip-horizontal-cw.ui5strap-transition-current {
+  z-index: 1;
+}
+.ui5strap-trans-all-type-flip-horizontal-cw.ui5strap-transition-current-out {
+  -webkit-transform: rotate3d(0, 1, 0, -180deg);
+      -ms-transform: rotate3d(0, 1, 0, -180deg);
+       -o-transform: rotate3d(0, 1, 0, -180deg);
+          transform: rotate3d(0, 1, 0, -180deg);
+}
+.ui5strap-trans-all-type-flip-horizontal-cw.ui5strap-transition-next {
+  -webkit-transform: rotate3d(0, 1, 0, 180deg);
+      -ms-transform: rotate3d(0, 1, 0, 180deg);
+       -o-transform: rotate3d(0, 1, 0, 180deg);
+          transform: rotate3d(0, 1, 0, 180deg);
+}
+/*
+	*
+	* Transition Flip Horizontal Counter Clockwise
+	*
+	*/
+.ui5strap-trans-all-type-flip-horizontal-ccw {
+  -webkit-transition: -webkit-transform .5s;
+       -o-transition:      -o-transform .5s;
+          transition:         transform .5s;
+  -webkit-transform: rotate3d(0, 0, 0, 0);
+      -ms-transform: rotate3d(0, 0, 0, 0);
+       -o-transform: rotate3d(0, 0, 0, 0);
+          transform: rotate3d(0, 0, 0, 0);
+
+  -webkit-font-smoothing: subpixel-antialiased;
+          backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+}
+.ui5strap-trans-all-type-flip-horizontal-ccw.ui5strap-transition-speed-slow {
+  -webkit-transition: -webkit-transform .75s;
+       -o-transition:      -o-transform .75s;
+          transition:         transform .75s;
+}
+.ui5strap-trans-all-type-flip-horizontal-ccw.ui5strap-transition-speed-fast {
+  -webkit-transition: -webkit-transform .25s;
+       -o-transition:      -o-transform .25s;
+          transition:         transform .25s;
+}
+.ui5strap-trans-all-type-flip-horizontal-ccw.ui5strap-transition-current {
+  z-index: 1;
+}
+.ui5strap-trans-all-type-flip-horizontal-ccw.ui5strap-transition-current-out {
+  -webkit-transform: rotate3d(0, 1, 0, 180deg);
+      -ms-transform: rotate3d(0, 1, 0, 180deg);
+       -o-transform: rotate3d(0, 1, 0, 180deg);
+          transform: rotate3d(0, 1, 0, 180deg);
+}
+.ui5strap-trans-all-type-flip-horizontal-ccw.ui5strap-transition-next {
+  -webkit-transform: rotate3d(0, 1, 0, -180deg);
+      -ms-transform: rotate3d(0, 1, 0, -180deg);
+       -o-transform: rotate3d(0, 1, 0, -180deg);
+          transform: rotate3d(0, 1, 0, -180deg);
+}
+/*
+	*
+	* Transition Flip Vertical Clockwise
+	*
+	*/
+.ui5strap-trans-all-type-flip-vertical-cw {
+  -webkit-transition: -webkit-transform .5s;
+       -o-transition:      -o-transform .5s;
+          transition:         transform .5s;
+  -webkit-transform: rotate3d(0, 0, 0, 0);
+      -ms-transform: rotate3d(0, 0, 0, 0);
+       -o-transform: rotate3d(0, 0, 0, 0);
+          transform: rotate3d(0, 0, 0, 0);
+
+  -webkit-font-smoothing: subpixel-antialiased;
+          backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+}
+.ui5strap-trans-all-type-flip-vertical-cw.ui5strap-transition-speed-slow {
+  -webkit-transition: -webkit-transform .75s;
+       -o-transition:      -o-transform .75s;
+          transition:         transform .75s;
+}
+.ui5strap-trans-all-type-flip-vertical-cw.ui5strap-transition-speed-fast {
+  -webkit-transition: -webkit-transform .25s;
+       -o-transition:      -o-transform .25s;
+          transition:         transform .25s;
+}
+.ui5strap-trans-all-type-flip-vertical-cw.ui5strap-transition-current {
+  z-index: 1;
+}
+.ui5strap-trans-all-type-flip-vertical-cw.ui5strap-transition-current-out {
+  -webkit-transform: rotate3d(1, 0, 0, -180deg);
+      -ms-transform: rotate3d(1, 0, 0, -180deg);
+       -o-transform: rotate3d(1, 0, 0, -180deg);
+          transform: rotate3d(1, 0, 0, -180deg);
+}
+.ui5strap-trans-all-type-flip-vertical-cw.ui5strap-transition-next {
+  -webkit-transform: rotate3d(1, 0, 0, 180deg);
+      -ms-transform: rotate3d(1, 0, 0, 180deg);
+       -o-transform: rotate3d(1, 0, 0, 180deg);
+          transform: rotate3d(1, 0, 0, 180deg);
+}
+/*
+	*
+	* Transition Flip Vertical Counter Clockwise
+	*
+	*/
+.ui5strap-trans-all-type-flip-vertical-ccw {
+  -webkit-transition: -webkit-transform .5s;
+       -o-transition:      -o-transform .5s;
+          transition:         transform .5s;
+  -webkit-transform: rotate3d(0, 0, 0, 0);
+      -ms-transform: rotate3d(0, 0, 0, 0);
+       -o-transform: rotate3d(0, 0, 0, 0);
+          transform: rotate3d(0, 0, 0, 0);
+
+  -webkit-font-smoothing: subpixel-antialiased;
+          backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+}
+.ui5strap-trans-all-type-flip-vertical-ccw.ui5strap-transition-speed-slow {
+  -webkit-transition: -webkit-transform .75s;
+       -o-transition:      -o-transform .75s;
+          transition:         transform .75s;
+}
+.ui5strap-trans-all-type-flip-vertical-ccw.ui5strap-transition-speed-fast {
+  -webkit-transition: -webkit-transform .25s;
+       -o-transition:      -o-transform .25s;
+          transition:         transform .25s;
+}
+.ui5strap-trans-all-type-flip-vertical-ccw.ui5strap-transition-current {
+  z-index: 1;
+}
+.ui5strap-trans-all-type-flip-vertical-ccw.ui5strap-transition-current-out {
+  -webkit-transform: rotate3d(1, 0, 0, 180deg);
+      -ms-transform: rotate3d(1, 0, 0, 180deg);
+       -o-transform: rotate3d(1, 0, 0, 180deg);
+          transform: rotate3d(1, 0, 0, 180deg);
+}
+.ui5strap-trans-all-type-flip-vertical-ccw.ui5strap-transition-next {
+  -webkit-transform: rotate3d(1, 0, 0, -180deg);
+      -ms-transform: rotate3d(1, 0, 0, -180deg);
+       -o-transform: rotate3d(1, 0, 0, -180deg);
+          transform: rotate3d(1, 0, 0, -180deg);
+}
+/*
+	*
+	* Transition Zoom In
+	*
+	*/
+.ui5strap-trans-all-type-zoom-in {
+  -webkit-transition: -webkit-transform .5s, opacity .1s;
+       -o-transition:      -o-transform .5s, opacity .1s;
+          transition:         transform .5s, opacity .1s;
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+.ui5strap-trans-all-type-zoom-in.ui5strap-transition-speed-slow {
+  -webkit-transition: -webkit-transform .75s, opacity .1s;
+       -o-transition:      -o-transform .75s, opacity .1s;
+          transition:         transform .75s, opacity .1s;
+}
+.ui5strap-trans-all-type-zoom-in.ui5strap-transition-speed-fast {
+  -webkit-transition: -webkit-transform .25s, opacity .1s;
+       -o-transition:      -o-transform .25s, opacity .1s;
+          transition:         transform .25s, opacity .1s;
+}
+.ui5strap-trans-all-type-zoom-in.ui5strap-transition-current-out {
+  opacity: .99;
+}
+.ui5strap-trans-all-type-zoom-in.ui5strap-transition-next {
+  -webkit-transform: scale3d(0, 0, 0);
+      -ms-transform: scale3d(0, 0, 0);
+       -o-transform: scale3d(0, 0, 0);
+          transform: scale3d(0, 0, 0);
+}
+/*
+	*
+	* Transition Zoom Out
+	*
+	*/
+.ui5strap-trans-all-type-zoom-out {
+  -webkit-transition: -webkit-transform .5s, opacity .1s;
+       -o-transition:      -o-transform .5s, opacity .1s;
+          transition:         transform .5s, opacity .1s;
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+.ui5strap-trans-all-type-zoom-out.ui5strap-transition-speed-slow {
+  -webkit-transition: -webkit-transform .75s, opacity .1s;
+       -o-transition:      -o-transform .75s, opacity .1s;
+          transition:         transform .75s, opacity .1s;
+}
+.ui5strap-trans-all-type-zoom-out.ui5strap-transition-speed-fast {
+  -webkit-transition: -webkit-transform .25s, opacity .1s;
+       -o-transition:      -o-transform .25s, opacity .1s;
+          transition:         transform .25s, opacity .1s;
+}
+.ui5strap-trans-all-type-zoom-out.ui5strap-transition-current {
+  z-index: 1;
+}
+.ui5strap-trans-all-type-zoom-out.ui5strap-transition-current-out {
+  -webkit-transform: scale3d(0, 0, 0);
+      -ms-transform: scale3d(0, 0, 0);
+       -o-transform: scale3d(0, 0, 0);
+          transform: scale3d(0, 0, 0);
+}
+.ui5strap-trans-all-type-zoom-out.ui5strap-transition-next {
+  opacity: .99;
+}
+/*
+	*
+	* Transition Fade
+	*
+	*/
+.ui5strap-trans-all-type-fade {
+  -webkit-transition: opacity .5s;
+       -o-transition: opacity .5s;
+          transition: opacity .5s;
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-speed-slow {
+  -webkit-transition: opacity .75s;
+       -o-transition: opacity .75s;
+          transition: opacity .75s;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-speed-fast {
+  -webkit-transition: opacity .25s;
+       -o-transition: opacity .25s;
+          transition: opacity .25s;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-current {
+  z-index: 1;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-current-out {
+  opacity: 0;
+}
+.ui5strap-trans-all-type-fade.ui5strap-transition-next {
+  opacity: 0;
+}
+/*
 	* Transiton NONE
 	*/
 .ui5strap-trans-all-type-none {
@@ -23780,6 +24057,286 @@ a {
         -ms-transform: translate3d(0, 100%, 0);
          -o-transform: translate3d(0, 100%, 0);
             transform: translate3d(0, 100%, 0);
+  }
+  /*
+	*
+	* Transition Flip Horizontal Clockwise
+	*
+	*/
+  .ui5strap-trans-xs-type-flip-horizontal-cw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-cw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-cw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-cw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-cw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+        -ms-transform: rotate3d(0, 1, 0, -180deg);
+         -o-transform: rotate3d(0, 1, 0, -180deg);
+            transform: rotate3d(0, 1, 0, -180deg);
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-cw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+        -ms-transform: rotate3d(0, 1, 0, 180deg);
+         -o-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
+  }
+  /*
+	*
+	* Transition Flip Horizontal Counter Clockwise
+	*
+	*/
+  .ui5strap-trans-xs-type-flip-horizontal-ccw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-ccw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-ccw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-ccw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-ccw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+        -ms-transform: rotate3d(0, 1, 0, 180deg);
+         -o-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
+  }
+  .ui5strap-trans-xs-type-flip-horizontal-ccw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+        -ms-transform: rotate3d(0, 1, 0, -180deg);
+         -o-transform: rotate3d(0, 1, 0, -180deg);
+            transform: rotate3d(0, 1, 0, -180deg);
+  }
+  /*
+	*
+	* Transition Flip Vertical Clockwise
+	*
+	*/
+  .ui5strap-trans-xs-type-flip-vertical-cw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-xs-type-flip-vertical-cw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-xs-type-flip-vertical-cw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-xs-type-flip-vertical-cw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-xs-type-flip-vertical-cw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(1, 0, 0, -180deg);
+        -ms-transform: rotate3d(1, 0, 0, -180deg);
+         -o-transform: rotate3d(1, 0, 0, -180deg);
+            transform: rotate3d(1, 0, 0, -180deg);
+  }
+  .ui5strap-trans-xs-type-flip-vertical-cw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+        -ms-transform: rotate3d(1, 0, 0, 180deg);
+         -o-transform: rotate3d(1, 0, 0, 180deg);
+            transform: rotate3d(1, 0, 0, 180deg);
+  }
+  /*
+	*
+	* Transition Flip Vertical Counter Clockwise
+	*
+	*/
+  .ui5strap-trans-xs-type-flip-vertical-ccw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-xs-type-flip-vertical-ccw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-xs-type-flip-vertical-ccw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-xs-type-flip-vertical-ccw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-xs-type-flip-vertical-ccw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+        -ms-transform: rotate3d(1, 0, 0, 180deg);
+         -o-transform: rotate3d(1, 0, 0, 180deg);
+            transform: rotate3d(1, 0, 0, 180deg);
+  }
+  .ui5strap-trans-xs-type-flip-vertical-ccw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(1, 0, 0, -180deg);
+        -ms-transform: rotate3d(1, 0, 0, -180deg);
+         -o-transform: rotate3d(1, 0, 0, -180deg);
+            transform: rotate3d(1, 0, 0, -180deg);
+  }
+  /*
+	*
+	* Transition Zoom In
+	*
+	*/
+  .ui5strap-trans-xs-type-zoom-in {
+    -webkit-transition: -webkit-transform .5s, opacity .1s;
+         -o-transition:      -o-transform .5s, opacity .1s;
+            transition:         transform .5s, opacity .1s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-xs-type-zoom-in.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s, opacity .1s;
+         -o-transition:      -o-transform .75s, opacity .1s;
+            transition:         transform .75s, opacity .1s;
+  }
+  .ui5strap-trans-xs-type-zoom-in.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s, opacity .1s;
+         -o-transition:      -o-transform .25s, opacity .1s;
+            transition:         transform .25s, opacity .1s;
+  }
+  .ui5strap-trans-xs-type-zoom-in.ui5strap-transition-current-out {
+    opacity: .99;
+  }
+  .ui5strap-trans-xs-type-zoom-in.ui5strap-transition-next {
+    -webkit-transform: scale3d(0, 0, 0);
+        -ms-transform: scale3d(0, 0, 0);
+         -o-transform: scale3d(0, 0, 0);
+            transform: scale3d(0, 0, 0);
+  }
+  /*
+	*
+	* Transition Zoom Out
+	*
+	*/
+  .ui5strap-trans-xs-type-zoom-out {
+    -webkit-transition: -webkit-transform .5s, opacity .1s;
+         -o-transition:      -o-transform .5s, opacity .1s;
+            transition:         transform .5s, opacity .1s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-xs-type-zoom-out.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s, opacity .1s;
+         -o-transition:      -o-transform .75s, opacity .1s;
+            transition:         transform .75s, opacity .1s;
+  }
+  .ui5strap-trans-xs-type-zoom-out.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s, opacity .1s;
+         -o-transition:      -o-transform .25s, opacity .1s;
+            transition:         transform .25s, opacity .1s;
+  }
+  .ui5strap-trans-xs-type-zoom-out.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-xs-type-zoom-out.ui5strap-transition-current-out {
+    -webkit-transform: scale3d(0, 0, 0);
+        -ms-transform: scale3d(0, 0, 0);
+         -o-transform: scale3d(0, 0, 0);
+            transform: scale3d(0, 0, 0);
+  }
+  .ui5strap-trans-xs-type-zoom-out.ui5strap-transition-next {
+    opacity: .99;
+  }
+  /*
+	*
+	* Transition Fade
+	*
+	*/
+  .ui5strap-trans-xs-type-fade {
+    -webkit-transition: opacity .5s;
+         -o-transition: opacity .5s;
+            transition: opacity .5s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-speed-slow {
+    -webkit-transition: opacity .75s;
+         -o-transition: opacity .75s;
+            transition: opacity .75s;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-speed-fast {
+    -webkit-transition: opacity .25s;
+         -o-transition: opacity .25s;
+            transition: opacity .25s;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-current-out {
+    opacity: 0;
+  }
+  .ui5strap-trans-xs-type-fade.ui5strap-transition-next {
+    opacity: 0;
   }
   /*
 	* Transiton NONE
@@ -23953,6 +24510,286 @@ a {
             transform: translate3d(0, 100%, 0);
   }
   /*
+	*
+	* Transition Flip Horizontal Clockwise
+	*
+	*/
+  .ui5strap-trans-sm-type-flip-horizontal-cw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-cw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-cw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-cw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-cw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+        -ms-transform: rotate3d(0, 1, 0, -180deg);
+         -o-transform: rotate3d(0, 1, 0, -180deg);
+            transform: rotate3d(0, 1, 0, -180deg);
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-cw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+        -ms-transform: rotate3d(0, 1, 0, 180deg);
+         -o-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
+  }
+  /*
+	*
+	* Transition Flip Horizontal Counter Clockwise
+	*
+	*/
+  .ui5strap-trans-sm-type-flip-horizontal-ccw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-ccw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-ccw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-ccw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-ccw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+        -ms-transform: rotate3d(0, 1, 0, 180deg);
+         -o-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
+  }
+  .ui5strap-trans-sm-type-flip-horizontal-ccw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+        -ms-transform: rotate3d(0, 1, 0, -180deg);
+         -o-transform: rotate3d(0, 1, 0, -180deg);
+            transform: rotate3d(0, 1, 0, -180deg);
+  }
+  /*
+	*
+	* Transition Flip Vertical Clockwise
+	*
+	*/
+  .ui5strap-trans-sm-type-flip-vertical-cw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-sm-type-flip-vertical-cw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-sm-type-flip-vertical-cw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-sm-type-flip-vertical-cw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-sm-type-flip-vertical-cw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(1, 0, 0, -180deg);
+        -ms-transform: rotate3d(1, 0, 0, -180deg);
+         -o-transform: rotate3d(1, 0, 0, -180deg);
+            transform: rotate3d(1, 0, 0, -180deg);
+  }
+  .ui5strap-trans-sm-type-flip-vertical-cw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+        -ms-transform: rotate3d(1, 0, 0, 180deg);
+         -o-transform: rotate3d(1, 0, 0, 180deg);
+            transform: rotate3d(1, 0, 0, 180deg);
+  }
+  /*
+	*
+	* Transition Flip Vertical Counter Clockwise
+	*
+	*/
+  .ui5strap-trans-sm-type-flip-vertical-ccw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-sm-type-flip-vertical-ccw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-sm-type-flip-vertical-ccw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-sm-type-flip-vertical-ccw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-sm-type-flip-vertical-ccw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+        -ms-transform: rotate3d(1, 0, 0, 180deg);
+         -o-transform: rotate3d(1, 0, 0, 180deg);
+            transform: rotate3d(1, 0, 0, 180deg);
+  }
+  .ui5strap-trans-sm-type-flip-vertical-ccw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(1, 0, 0, -180deg);
+        -ms-transform: rotate3d(1, 0, 0, -180deg);
+         -o-transform: rotate3d(1, 0, 0, -180deg);
+            transform: rotate3d(1, 0, 0, -180deg);
+  }
+  /*
+	*
+	* Transition Zoom In
+	*
+	*/
+  .ui5strap-trans-sm-type-zoom-in {
+    -webkit-transition: -webkit-transform .5s, opacity .1s;
+         -o-transition:      -o-transform .5s, opacity .1s;
+            transition:         transform .5s, opacity .1s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-sm-type-zoom-in.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s, opacity .1s;
+         -o-transition:      -o-transform .75s, opacity .1s;
+            transition:         transform .75s, opacity .1s;
+  }
+  .ui5strap-trans-sm-type-zoom-in.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s, opacity .1s;
+         -o-transition:      -o-transform .25s, opacity .1s;
+            transition:         transform .25s, opacity .1s;
+  }
+  .ui5strap-trans-sm-type-zoom-in.ui5strap-transition-current-out {
+    opacity: .99;
+  }
+  .ui5strap-trans-sm-type-zoom-in.ui5strap-transition-next {
+    -webkit-transform: scale3d(0, 0, 0);
+        -ms-transform: scale3d(0, 0, 0);
+         -o-transform: scale3d(0, 0, 0);
+            transform: scale3d(0, 0, 0);
+  }
+  /*
+	*
+	* Transition Zoom Out
+	*
+	*/
+  .ui5strap-trans-sm-type-zoom-out {
+    -webkit-transition: -webkit-transform .5s, opacity .1s;
+         -o-transition:      -o-transform .5s, opacity .1s;
+            transition:         transform .5s, opacity .1s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-sm-type-zoom-out.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s, opacity .1s;
+         -o-transition:      -o-transform .75s, opacity .1s;
+            transition:         transform .75s, opacity .1s;
+  }
+  .ui5strap-trans-sm-type-zoom-out.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s, opacity .1s;
+         -o-transition:      -o-transform .25s, opacity .1s;
+            transition:         transform .25s, opacity .1s;
+  }
+  .ui5strap-trans-sm-type-zoom-out.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-sm-type-zoom-out.ui5strap-transition-current-out {
+    -webkit-transform: scale3d(0, 0, 0);
+        -ms-transform: scale3d(0, 0, 0);
+         -o-transform: scale3d(0, 0, 0);
+            transform: scale3d(0, 0, 0);
+  }
+  .ui5strap-trans-sm-type-zoom-out.ui5strap-transition-next {
+    opacity: .99;
+  }
+  /*
+	*
+	* Transition Fade
+	*
+	*/
+  .ui5strap-trans-sm-type-fade {
+    -webkit-transition: opacity .5s;
+         -o-transition: opacity .5s;
+            transition: opacity .5s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-speed-slow {
+    -webkit-transition: opacity .75s;
+         -o-transition: opacity .75s;
+            transition: opacity .75s;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-speed-fast {
+    -webkit-transition: opacity .25s;
+         -o-transition: opacity .25s;
+            transition: opacity .25s;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-current-out {
+    opacity: 0;
+  }
+  .ui5strap-trans-sm-type-fade.ui5strap-transition-next {
+    opacity: 0;
+  }
+  /*
 	* Transiton NONE
 	*/
   .ui5strap-trans-sm-type-none {
@@ -24124,6 +24961,286 @@ a {
             transform: translate3d(0, 100%, 0);
   }
   /*
+	*
+	* Transition Flip Horizontal Clockwise
+	*
+	*/
+  .ui5strap-trans-md-type-flip-horizontal-cw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-md-type-flip-horizontal-cw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-md-type-flip-horizontal-cw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-md-type-flip-horizontal-cw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-md-type-flip-horizontal-cw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+        -ms-transform: rotate3d(0, 1, 0, -180deg);
+         -o-transform: rotate3d(0, 1, 0, -180deg);
+            transform: rotate3d(0, 1, 0, -180deg);
+  }
+  .ui5strap-trans-md-type-flip-horizontal-cw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+        -ms-transform: rotate3d(0, 1, 0, 180deg);
+         -o-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
+  }
+  /*
+	*
+	* Transition Flip Horizontal Counter Clockwise
+	*
+	*/
+  .ui5strap-trans-md-type-flip-horizontal-ccw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-md-type-flip-horizontal-ccw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-md-type-flip-horizontal-ccw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-md-type-flip-horizontal-ccw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-md-type-flip-horizontal-ccw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+        -ms-transform: rotate3d(0, 1, 0, 180deg);
+         -o-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
+  }
+  .ui5strap-trans-md-type-flip-horizontal-ccw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+        -ms-transform: rotate3d(0, 1, 0, -180deg);
+         -o-transform: rotate3d(0, 1, 0, -180deg);
+            transform: rotate3d(0, 1, 0, -180deg);
+  }
+  /*
+	*
+	* Transition Flip Vertical Clockwise
+	*
+	*/
+  .ui5strap-trans-md-type-flip-vertical-cw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-md-type-flip-vertical-cw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-md-type-flip-vertical-cw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-md-type-flip-vertical-cw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-md-type-flip-vertical-cw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(1, 0, 0, -180deg);
+        -ms-transform: rotate3d(1, 0, 0, -180deg);
+         -o-transform: rotate3d(1, 0, 0, -180deg);
+            transform: rotate3d(1, 0, 0, -180deg);
+  }
+  .ui5strap-trans-md-type-flip-vertical-cw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+        -ms-transform: rotate3d(1, 0, 0, 180deg);
+         -o-transform: rotate3d(1, 0, 0, 180deg);
+            transform: rotate3d(1, 0, 0, 180deg);
+  }
+  /*
+	*
+	* Transition Flip Vertical Counter Clockwise
+	*
+	*/
+  .ui5strap-trans-md-type-flip-vertical-ccw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-md-type-flip-vertical-ccw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-md-type-flip-vertical-ccw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-md-type-flip-vertical-ccw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-md-type-flip-vertical-ccw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+        -ms-transform: rotate3d(1, 0, 0, 180deg);
+         -o-transform: rotate3d(1, 0, 0, 180deg);
+            transform: rotate3d(1, 0, 0, 180deg);
+  }
+  .ui5strap-trans-md-type-flip-vertical-ccw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(1, 0, 0, -180deg);
+        -ms-transform: rotate3d(1, 0, 0, -180deg);
+         -o-transform: rotate3d(1, 0, 0, -180deg);
+            transform: rotate3d(1, 0, 0, -180deg);
+  }
+  /*
+	*
+	* Transition Zoom In
+	*
+	*/
+  .ui5strap-trans-md-type-zoom-in {
+    -webkit-transition: -webkit-transform .5s, opacity .1s;
+         -o-transition:      -o-transform .5s, opacity .1s;
+            transition:         transform .5s, opacity .1s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-md-type-zoom-in.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s, opacity .1s;
+         -o-transition:      -o-transform .75s, opacity .1s;
+            transition:         transform .75s, opacity .1s;
+  }
+  .ui5strap-trans-md-type-zoom-in.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s, opacity .1s;
+         -o-transition:      -o-transform .25s, opacity .1s;
+            transition:         transform .25s, opacity .1s;
+  }
+  .ui5strap-trans-md-type-zoom-in.ui5strap-transition-current-out {
+    opacity: .99;
+  }
+  .ui5strap-trans-md-type-zoom-in.ui5strap-transition-next {
+    -webkit-transform: scale3d(0, 0, 0);
+        -ms-transform: scale3d(0, 0, 0);
+         -o-transform: scale3d(0, 0, 0);
+            transform: scale3d(0, 0, 0);
+  }
+  /*
+	*
+	* Transition Zoom Out
+	*
+	*/
+  .ui5strap-trans-md-type-zoom-out {
+    -webkit-transition: -webkit-transform .5s, opacity .1s;
+         -o-transition:      -o-transform .5s, opacity .1s;
+            transition:         transform .5s, opacity .1s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-md-type-zoom-out.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s, opacity .1s;
+         -o-transition:      -o-transform .75s, opacity .1s;
+            transition:         transform .75s, opacity .1s;
+  }
+  .ui5strap-trans-md-type-zoom-out.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s, opacity .1s;
+         -o-transition:      -o-transform .25s, opacity .1s;
+            transition:         transform .25s, opacity .1s;
+  }
+  .ui5strap-trans-md-type-zoom-out.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-md-type-zoom-out.ui5strap-transition-current-out {
+    -webkit-transform: scale3d(0, 0, 0);
+        -ms-transform: scale3d(0, 0, 0);
+         -o-transform: scale3d(0, 0, 0);
+            transform: scale3d(0, 0, 0);
+  }
+  .ui5strap-trans-md-type-zoom-out.ui5strap-transition-next {
+    opacity: .99;
+  }
+  /*
+	*
+	* Transition Fade
+	*
+	*/
+  .ui5strap-trans-md-type-fade {
+    -webkit-transition: opacity .5s;
+         -o-transition: opacity .5s;
+            transition: opacity .5s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-speed-slow {
+    -webkit-transition: opacity .75s;
+         -o-transition: opacity .75s;
+            transition: opacity .75s;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-speed-fast {
+    -webkit-transition: opacity .25s;
+         -o-transition: opacity .25s;
+            transition: opacity .25s;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-current-out {
+    opacity: 0;
+  }
+  .ui5strap-trans-md-type-fade.ui5strap-transition-next {
+    opacity: 0;
+  }
+  /*
 	* Transiton NONE
 	*/
   .ui5strap-trans-md-type-none {
@@ -24293,6 +25410,286 @@ a {
         -ms-transform: translate3d(0, 100%, 0);
          -o-transform: translate3d(0, 100%, 0);
             transform: translate3d(0, 100%, 0);
+  }
+  /*
+	*
+	* Transition Flip Horizontal Clockwise
+	*
+	*/
+  .ui5strap-trans-lg-type-flip-horizontal-cw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-cw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-cw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-cw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-cw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+        -ms-transform: rotate3d(0, 1, 0, -180deg);
+         -o-transform: rotate3d(0, 1, 0, -180deg);
+            transform: rotate3d(0, 1, 0, -180deg);
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-cw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+        -ms-transform: rotate3d(0, 1, 0, 180deg);
+         -o-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
+  }
+  /*
+	*
+	* Transition Flip Horizontal Counter Clockwise
+	*
+	*/
+  .ui5strap-trans-lg-type-flip-horizontal-ccw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-ccw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-ccw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-ccw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-ccw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+        -ms-transform: rotate3d(0, 1, 0, 180deg);
+         -o-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
+  }
+  .ui5strap-trans-lg-type-flip-horizontal-ccw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+        -ms-transform: rotate3d(0, 1, 0, -180deg);
+         -o-transform: rotate3d(0, 1, 0, -180deg);
+            transform: rotate3d(0, 1, 0, -180deg);
+  }
+  /*
+	*
+	* Transition Flip Vertical Clockwise
+	*
+	*/
+  .ui5strap-trans-lg-type-flip-vertical-cw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-lg-type-flip-vertical-cw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-lg-type-flip-vertical-cw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-lg-type-flip-vertical-cw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-lg-type-flip-vertical-cw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(1, 0, 0, -180deg);
+        -ms-transform: rotate3d(1, 0, 0, -180deg);
+         -o-transform: rotate3d(1, 0, 0, -180deg);
+            transform: rotate3d(1, 0, 0, -180deg);
+  }
+  .ui5strap-trans-lg-type-flip-vertical-cw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+        -ms-transform: rotate3d(1, 0, 0, 180deg);
+         -o-transform: rotate3d(1, 0, 0, 180deg);
+            transform: rotate3d(1, 0, 0, 180deg);
+  }
+  /*
+	*
+	* Transition Flip Vertical Counter Clockwise
+	*
+	*/
+  .ui5strap-trans-lg-type-flip-vertical-ccw {
+    -webkit-transition: -webkit-transform .5s;
+         -o-transition:      -o-transform .5s;
+            transition:         transform .5s;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+        -ms-transform: rotate3d(0, 0, 0, 0);
+         -o-transform: rotate3d(0, 0, 0, 0);
+            transform: rotate3d(0, 0, 0, 0);
+
+    -webkit-font-smoothing: subpixel-antialiased;
+            backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+  }
+  .ui5strap-trans-lg-type-flip-vertical-ccw.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s;
+         -o-transition:      -o-transform .75s;
+            transition:         transform .75s;
+  }
+  .ui5strap-trans-lg-type-flip-vertical-ccw.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s;
+         -o-transition:      -o-transform .25s;
+            transition:         transform .25s;
+  }
+  .ui5strap-trans-lg-type-flip-vertical-ccw.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-lg-type-flip-vertical-ccw.ui5strap-transition-current-out {
+    -webkit-transform: rotate3d(1, 0, 0, 180deg);
+        -ms-transform: rotate3d(1, 0, 0, 180deg);
+         -o-transform: rotate3d(1, 0, 0, 180deg);
+            transform: rotate3d(1, 0, 0, 180deg);
+  }
+  .ui5strap-trans-lg-type-flip-vertical-ccw.ui5strap-transition-next {
+    -webkit-transform: rotate3d(1, 0, 0, -180deg);
+        -ms-transform: rotate3d(1, 0, 0, -180deg);
+         -o-transform: rotate3d(1, 0, 0, -180deg);
+            transform: rotate3d(1, 0, 0, -180deg);
+  }
+  /*
+	*
+	* Transition Zoom In
+	*
+	*/
+  .ui5strap-trans-lg-type-zoom-in {
+    -webkit-transition: -webkit-transform .5s, opacity .1s;
+         -o-transition:      -o-transform .5s, opacity .1s;
+            transition:         transform .5s, opacity .1s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-lg-type-zoom-in.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s, opacity .1s;
+         -o-transition:      -o-transform .75s, opacity .1s;
+            transition:         transform .75s, opacity .1s;
+  }
+  .ui5strap-trans-lg-type-zoom-in.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s, opacity .1s;
+         -o-transition:      -o-transform .25s, opacity .1s;
+            transition:         transform .25s, opacity .1s;
+  }
+  .ui5strap-trans-lg-type-zoom-in.ui5strap-transition-current-out {
+    opacity: .99;
+  }
+  .ui5strap-trans-lg-type-zoom-in.ui5strap-transition-next {
+    -webkit-transform: scale3d(0, 0, 0);
+        -ms-transform: scale3d(0, 0, 0);
+         -o-transform: scale3d(0, 0, 0);
+            transform: scale3d(0, 0, 0);
+  }
+  /*
+	*
+	* Transition Zoom Out
+	*
+	*/
+  .ui5strap-trans-lg-type-zoom-out {
+    -webkit-transition: -webkit-transform .5s, opacity .1s;
+         -o-transition:      -o-transform .5s, opacity .1s;
+            transition:         transform .5s, opacity .1s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-lg-type-zoom-out.ui5strap-transition-speed-slow {
+    -webkit-transition: -webkit-transform .75s, opacity .1s;
+         -o-transition:      -o-transform .75s, opacity .1s;
+            transition:         transform .75s, opacity .1s;
+  }
+  .ui5strap-trans-lg-type-zoom-out.ui5strap-transition-speed-fast {
+    -webkit-transition: -webkit-transform .25s, opacity .1s;
+         -o-transition:      -o-transform .25s, opacity .1s;
+            transition:         transform .25s, opacity .1s;
+  }
+  .ui5strap-trans-lg-type-zoom-out.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-lg-type-zoom-out.ui5strap-transition-current-out {
+    -webkit-transform: scale3d(0, 0, 0);
+        -ms-transform: scale3d(0, 0, 0);
+         -o-transform: scale3d(0, 0, 0);
+            transform: scale3d(0, 0, 0);
+  }
+  .ui5strap-trans-lg-type-zoom-out.ui5strap-transition-next {
+    opacity: .99;
+  }
+  /*
+	*
+	* Transition Fade
+	*
+	*/
+  .ui5strap-trans-lg-type-fade {
+    -webkit-transition: opacity .5s;
+         -o-transition: opacity .5s;
+            transition: opacity .5s;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-speed-slow {
+    -webkit-transition: opacity .75s;
+         -o-transition: opacity .75s;
+            transition: opacity .75s;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-speed-fast {
+    -webkit-transition: opacity .25s;
+         -o-transition: opacity .25s;
+            transition: opacity .25s;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-current {
+    z-index: 1;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-current-out {
+    opacity: 0;
+  }
+  .ui5strap-trans-lg-type-fade.ui5strap-transition-next {
+    opacity: 0;
   }
   /*
 	* Transiton NONE

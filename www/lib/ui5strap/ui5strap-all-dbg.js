@@ -99,7 +99,11 @@
   sap.ui.getCore().initLibrary(
       {
       	  name : "ui5strap",
+      	  
+      	  version: "0.9.15",
+      	  
       	  dependencies : [],
+      	  
       	  types: [
       	  	"ui5strap.Size",
       	  	"ui5strap.Severity",
@@ -135,10 +139,12 @@
             "ui5strap.ContainerType",
             "ui5strap.ImageShape"
       	  ],
+      	  
       	  interfaces: [
             "ui5strap.IColumn",
             "ui5strap.IBar"
           ],
+          
       	  controls: [
             "ui5strap.Alert",
             "ui5strap.Badge",
@@ -202,12 +208,12 @@
             "ui5strap.Tooltip",
             "ui5strap.Well"
           ],
-      	  elements: [
+          
+          elements: [
             "ui5strap.Item",
             "ui5strap.TableColumn",
             "ui5strap.TableRow"
-          ],
-        	version: "0.9.14RC2"
+          ]
       }
   );
   
@@ -306,6 +312,17 @@
 		Medium : "md",
 		Large : "lg"
 	};
+	
+	/*
+	  * TransitionSpeed
+	  */
+	  jQuery.sap.declare("ui5strap.TransitionSpeed");
+
+		ui5strap.TransitionSpeed = {
+			Slow : "Slow",
+			Normal : "Normal",
+			Fast : "Fast"
+		};
 
   /*
   * Severity
@@ -851,6 +868,7 @@
   * @constructor
   */
   ui5strap.Transition = function(transitionName, $currentRoot, $nextRoot, transitionId){
+	  jQuery.sap.log.warning("ui5strap.Transition is deprecated. Please use ui5strap.ResponsiveTransition instead.");
     this.$current = $currentRoot;
     this.$next = $nextRoot;
     
@@ -959,6 +977,24 @@
 
   };
   
+  var _deprecatedTransitionsConvert = function($trans){
+	  var $newTrans = "";
+	  if($trans === 'transition-zoom')
+		  $newTrans = 'zoom-in';
+	  if($trans === 'transition-zoom2')
+		  $newTrans = 'zoom-out';
+	  
+	  else if($trans === 'transition-flip')
+		  $newTrans = 'flip-horizontal-ccw';
+	  else if($trans === 'transition-slide')
+		  $newTrans = 'slide-ltr';
+	  else
+		  $newTrans = $trans.substring(11);
+	  
+	  jQuery.sap.log.warning("Transition deprecated: '" + $trans + "'. Please use instead: " + $newTrans);
+	  return $newTrans;
+  };
+  
   /*
    * Constructs a responsive Transition (experimental)
    * @constructor
@@ -966,9 +1002,14 @@
    ui5strap.ResponsiveTransition = function(data){
      this._data = data;
      
-     var transString = "";
+     var transString = "",
+     	transSpeed = data.transitionSpeed;
      
      if(data.transitionAll){
+    	 if(data.transitionAll.indexOf("transition-") === 0){
+    		 
+    		 data.transitionAll = _deprecatedTransitionsConvert(data.transitionAll);
+    	 }
     	 transString = "ui5strap-trans-all-type-" + data.transitionAll;
      }
      else{
@@ -977,18 +1018,18 @@
     	 transString += data.transitionMedium ? " ui5strap-trans-md-type-" + data.transitionMedium : " ui5strap-trans-md-type-none";
     	 transString += data.transitionLarge ? " ui5strap-trans-lg-type-" + data.transitionLarge : " ui5strap-trans-lg-type-none";
      
-    	 if(data.transitionExtraSmall === "ui5strap-trans-xs-type-none"
-        	&& data.transitionSmall === "ui5strap-trans-sm-type-none"
-        	&& data.transitionMedium === "ui5strap-trans-md-type-none"
-        	&& data.transitionSmall === "ui5strap-trans-lg-type-none"
-        		 ){
+    	 if(transString === "ui5strap-trans-xs-type-none ui5strap-trans-sm-type-none ui5strap-trans-md-type-none ui5strap-trans-lg-type-none"){
         	 transString = "ui5strap-trans-all-type-none";
          }
      }
      
      this._skip = transString === "ui5strap-trans-all-type-none";
      
-     this._transitions = transString + " ui5strap-transition-speed-fast";
+     this._transitions = transString;
+     
+     if(transSpeed && transitionSpeed !== "normal"){
+    	 this._transitions += " ui5strap-transition-speed-" + transSpeed;
+     }
      
      this._prepared = false;
      this._executed = false;
@@ -1032,7 +1073,7 @@
  	      this._cuca = false;
  	
  	      if(ui5strap.support.transitionEndEvent && !this._skip){
- 		        jQuery.sap.log.debug('[RESP_TRANS#' + this._data.id + ' (' + _this._transitions +')] Executing...');
+ 		        jQuery.sap.log.debug("[TRANS#" + this._data.id +"] Executing '" + _this._transitions + "'");
  		
  		        if(callbackCurrent && this._data.$current){ 
  			          var _currentTimout = window.setTimeout(function(){
@@ -1040,7 +1081,7 @@
  				            	return;
  				            }
  				            _this._cuca = true;
- 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + ' (' + _this._transitions +')] Hiding page caused a timeout.');
+ 				            jQuery.sap.log.warning('[TRANS#' + _this._data.id + ' (' + _this._transitions +')] Hiding page caused a timeout.');
  				            callbackCurrent.call(_this);
  			          }, ui5strap.options.transitionTimeout);
  			
@@ -1060,7 +1101,7 @@
  				            	return;
  				            }
  				            _this._neca = true;
- 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + ' (' + _this._transitions +')] Showing page caused a timeout.');
+ 				            jQuery.sap.log.warning('[TRANS#' + _this._data.id + ' (' + _this._transitions +')] Showing page caused a timeout.');
  				            callbackNext.call(_this);
  			          }, ui5strap.options.transitionTimeout);
  			
@@ -1078,7 +1119,7 @@
  		        this._data.$next && this._data.$next.removeClass('ui5strap-transition-next');
  	      }
  	      else{ 
- 		        jQuery.sap.log.debug('[TRANSITION#' + _this._data.id + ' (' + _this._transitions +')] Transition end event not supported or transition skipped.');
+ 		        jQuery.sap.log.debug("[TRANS#" + _this._data.id + "] Transition skipped: '" + _this._transitions + "'");
  		        
  		        callbackCurrent && callbackCurrent.call(_this);
  			    callbackNext && callbackNext.call(_this);
@@ -3161,7 +3202,7 @@
 	* @static
 	*/
 	Action.run = function(action){
-		jQuerySap.log.debug("[ACTION] RUN");
+		jQuerySap.log.debug("[ACTION] Action.run");
 
 		var actionName = null;
 		if(action.parameters && typeof action.parameters === 'string'){
@@ -3473,7 +3514,7 @@
 		
 		//Default App Transition
 		if(!('transition' in configDataJSON.app)){
-			configDataJSON.app.transition = 'transition-zoom';
+			configDataJSON.app.transition = 'zoom-in';
 		}
 		
 		//Libraries
@@ -4124,7 +4165,7 @@
 			callI = models.length, 
 			successCallback = function(oEvent, oData){
 				callI --;
-				_this.log.debug('LOAD MODEL ' + oData.modelName + ' ...');
+				_this.log.debug("Loaded model '" + oData.modelName + "'");
 				_this.getRootControl().setModel(oData.oModel, oData.modelName);
 
 				if(callI === 0){
@@ -5172,6 +5213,14 @@
 	              return viewData.__ui5strap.app;
 	          }
       	}
+		
+		if(!controllerImpl.format){
+			controllerImpl.format = {};
+		}
+		
+		controllerImpl.format.localeString = function(localeString){
+			return this.getApp().getLocaleString(localeString);
+		};
 
         //Controller event handler
         var _controllerEventHandler = function(oEvent){
@@ -5605,7 +5654,7 @@
 			
 			var funcName = 'on' + eventNameCC;
 			if(controller && controller[funcName]){
-				jQuery.sap.log.debug(' + [NC] EVENT ' + eventId + '() {' + target + '}');
+				jQuery.sap.log.debug("[NC#" + _this.getId() + "] Triggering event '" + eventId + "' on target '" + target + "'");
 			
 				controller[funcName](new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}));
 			}
@@ -5638,12 +5687,12 @@
 				changeTransitionName = null;
 			}
 			
-			var transition = new ui5strap.Transition(
-					changeTransitionName, 
-					pageChange.$current, 
-					pageChange.$next, 
-					'nc-' + _this.ncType + '-' + pageChange.target
-				);
+			var transition = new ui5strap.ResponsiveTransition({
+					"transitionAll" : changeTransitionName, 
+					"$current" : pageChange.$current, 
+					"$next" : pageChange.$next, 
+					id : 'nc-' + _this.ncType + '-' + pageChange.target
+			});
 				
 			pageChange.transition = transition;
 
@@ -5696,7 +5745,7 @@
 		
 		pageChange.transition.execute(
 			function anon_transitionCurrentComplete(){
-				var $current = this.$current;
+				var $current = this._data.$current;
 				if($current){
 					$current.remove();
 				}
@@ -5713,7 +5762,7 @@
 				});
 			}, 
 			function anon_transitionPreparedComplete(){
-				this.$next.attr('class', 'navcontainer-page navcontainer-page-current');
+				this._data.$next.attr('class', 'navcontainer-page navcontainer-page-current');
 				
 				//Transition callback
 				_transitionCallback(_this, pageChange, transList);
@@ -6228,7 +6277,7 @@
 	 * @Public
 	 */
 	NavContainerBaseProto.setTargetBusy = function(target, targetBusy){
-		jQuery.sap.log.debug('[NC] Target "' + target + '" is ' + (targetBusy ? 'busy' : 'available'));
+		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
 		this._targetStatus[target] = targetBusy;
 	};
 	
@@ -6237,12 +6286,12 @@
 	*/
 	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
 		//ui5strap.tm("APP", "NC", "TO_PAGE");
-		jQuery.sap.log.debug("[NC] NavContainerBaseProto.toPage");
-		
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
-
+		
+		jQuery.sap.log.debug("[NC#" + this.getId() + "] Navigating on target '" + target + "'");
+		
 		var _this = this,
 			currentPage = this.targets[target];
 
@@ -6293,7 +6342,7 @@
 		}
 
 		if(this.getDomRef()){
-			jQuery.sap.log.debug("NavContainerBaseProto.toPage: NavContainer already attached. Navigating now...");
+			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
 			//NavContainer is already attached to DOM
 			targetTransition.$next = _placePage(_this, target, page, true);
 			
@@ -7160,11 +7209,13 @@
 			appInstance.attach(viewer._dom.$root[0]);
 			
 			//Create new Transition
-			var transition = new ui5strap.Transition(
-					transitionName || appInstance.config.data.app.transition, 
-					$currentRoot, 
-					appInstance.$(), 
-					appInstance.getId()
+			var transition = new ui5strap.ResponsiveTransition(
+					{
+					"transitionAll" : transitionName || appInstance.config.data.app.transition, 
+					"$current" : $currentRoot, 
+					"$next" : appInstance.$(), 
+					id : appInstance.getId()
+					}
 			);
 			
 			//<DOM_ATTACH_TIMEOUT>
@@ -13527,7 +13578,7 @@
 	
 	sap.ui.core.Control.extend("ui5strap.Badge", {
 		metadata : {
-
+			deprecated : true,
 			library : "ui5strap",
 			
 			properties : { 
@@ -14068,6 +14119,11 @@
 				barTransitionLarge : {
 					type : "string",
 					defaultValue : ""
+				},
+				
+				barTransitionSpeed : {
+					type : "ui5strap.TransitionSpeed",
+					defaultValue : ui5strap.TransitionSpeed.Normal
 				}
 				
 			},
@@ -14212,6 +14268,7 @@
 							"transitionSmall" : this._getBarTransition(this._getBarTransitionSmall(), newBarVisible),
 							"transitionMedium" : this._getBarTransition(this._getBarTransitionMedium(), newBarVisible),
 							"transitionLarge" : this._getBarTransition(this._getBarTransitionLarge(), newBarVisible),
+							"transitionSpeed" : this.getBarTransitionSpeed().toLowerCase(),
 							"$current" : newBarVisible ? null : $target, 
 							"$next" : newBarVisible ? $target : null , 
 							"id" : 'x'
@@ -14264,7 +14321,7 @@
 	 * @Protected
 	 */
 	BarNavContainerProto._getBaseClassString = function(){
-		var classes = "navcontainer navcontainer-type-" + this.ncType + " ui5strap-transition-speed-fast",
+		var classes = "navcontainer navcontainer-type-" + this.ncType,
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
 			modeMedium = this.getBarModeMedium(),
@@ -14276,8 +14333,13 @@
 			columnsExtraSmall = this.getBarSizeExtraSmall(),
 			columnsSmall = this.getBarSizeSmall(),
 			columnsMedium = this.getBarSizeMedium(),
-			columnsLarge = this.getBarSizeLarge();
+			columnsLarge = this.getBarSizeLarge(),
+			transitionSpeed = this.getBarTransitionSpeed();
 		
+			if(transitionSpeed !== ui5strap.TransitionSpeed.Normal){
+				classes += " ui5strap-transition-speed-" + transitionSpeed.toLowerCase();
+			}
+			
 		//Ensure that at least size xs is set
 		if(1 > columnsExtraSmall){
 			classes += " navcontainer-flag-col-xs-1";
@@ -18861,7 +18923,8 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	
 	sap.ui.core.Control.extend("ui5strap.NavBar", {
 		metadata : {
-
+			deprecated : true,
+			
 			// ---- object ----
 			defaultAggregation : "collapse",
 			
@@ -19198,7 +19261,6 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	ui5strap.NavContainerRenderer = NavContainerRenderer;
 
 	NavContainerRenderer.render = function(rm, oControl) {
-		jQuery.sap.log.debug("------------------------RENDERING NAVCONTAINER '" + oControl.getId() + "'...");
 		this.startRender(rm, oControl);
 
 		for(var target in oControl.targets){
@@ -19206,6 +19268,8 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 		}
 
 		this.endRender(rm, oControl);
+		
+		jQuery.sap.log.debug("[NC#" + oControl.getId() + "] RENDERED");
 	};
 
 	/*
