@@ -6,7 +6,7 @@
 
 	"gotoPage" : {
 		"viewName" : "ui5strap.demoapp.views.Home",
-		"transition" : "transition-flip",
+		"transition" : "slide-ltr",
 		"writeHistory" : true
 	}
 

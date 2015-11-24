@@ -5,7 +5,7 @@
 
 	"gotoPage" : {
 		"viewName" : "ui5strap.demoapp.views.MyPage5",
-		"transition" : "transition-flip",
+		"transition" : "zoom-in",
 		"writeHistory" : true,
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",

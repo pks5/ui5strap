@@ -5,7 +5,7 @@
 
 	"gotoPage" : {
 		"viewName" : "ui5strap.demoapp.views.MyPage3",
-		"transition" : "transition-flip",
+		"transition" : "fade",
 		"writeHistory" : true
 	}
 	
