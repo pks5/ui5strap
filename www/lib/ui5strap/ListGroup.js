@@ -37,9 +37,9 @@
 			library : "ui5strap",
 			
 			properties : { 
-				container : {
-					type:"boolean", 
-					defaultValue:false
+				listMode : {
+					type:"ui5strap.ListGroupMode", 
+					defaultValue : ui5strap.ListGroupMode.List
 				}
 			},
 			

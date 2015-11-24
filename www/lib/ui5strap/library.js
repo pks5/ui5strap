@@ -100,7 +100,7 @@
       {
       	  name : "ui5strap",
       	  
-      	  version: "0.9.15",
+      	  version: "0.9.16",
       	  
       	  dependencies : [],
       	  
@@ -521,6 +521,13 @@
 	ui5strap.ListType = {
 		Unordered : "Unordered",
 		Ordered : "Ordered"
+	};
+	
+	jQuery.sap.declare("ui5strap.ListGroupMode");
+
+	ui5strap.ListGroupMode = {
+		Default : "Default",
+		Navigation : "Navigation"
 	};
 
   /*

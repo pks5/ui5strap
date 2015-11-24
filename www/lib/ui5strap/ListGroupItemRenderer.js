@@ -36,9 +36,10 @@
 		var badge = oControl.getBadge(),
 			icon = oControl.getIcon(),
 			parent = oControl.getParent(),
-			tag = parent.getContainer() ? 'a' : 'li',
+			tag = parent.getListMode() === ui5strap.ListGroupMode.Default ? 'li' : 'a',
 			text = oControl.getText(),
-			parse = oControl.getParse();
+			parse = oControl.getParse(),
+			severity = oControl.getSeverity();
 
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
@@ -49,6 +50,10 @@
 		rm.addClass('list-group-item');
 		if(oControl.getSelected()){
 			rm.addClass('active');
+		}
+		if(ui5strap.Severity.None !== severity){
+			//Severity for general text
+			rm.addClass("list-group-item-" + ui5strap.BSSeverity[severity]);
 		}
 		rm.writeClasses();
 		rm.write(">");

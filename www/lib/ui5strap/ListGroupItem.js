@@ -46,6 +46,10 @@
 				icon : {
 					type:"string",
 					defaultValue : ""
+				},
+				severity : {
+					type: "ui5strap.Severity", 
+					defaultValue: ui5strap.Severity.None
 				}
 			}
 		}

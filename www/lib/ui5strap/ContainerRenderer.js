@@ -67,6 +67,8 @@
 				tagName : "section",
 				className : "container-section"
 			},
+			
+			
 			//Deprecated
 			Paragraph : {
 				tagName : "div",

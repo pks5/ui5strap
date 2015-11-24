@@ -34,7 +34,7 @@
 
 	ui5strap.ListGroupRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
-			tag = oControl.getContainer() ? 'div' : 'ul';
+			tag = oControl.getListMode() === ui5strap.ListGroupMode.Default ? 'ul' : 'div';
 		
 
 		rm.write("<" + tag);
