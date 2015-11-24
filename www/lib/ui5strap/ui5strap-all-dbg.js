@@ -100,7 +100,7 @@
       {
       	  name : "ui5strap",
       	  
-      	  version: "0.9.15",
+      	  version: "0.9.16",
       	  
       	  dependencies : [],
       	  
@@ -505,10 +505,12 @@
 		Emphasized : "Emphasized",
 		Code : "Code",
 		Paragraph : "Paragraph",
-    HelpBlock : "HelpBlock",
-    Small : "Small",
-    Lead : "Lead",
-    Abbreviation : "Abbreviation"
+		HelpBlock : "HelpBlock",
+		Small : "Small",
+		Lead : "Lead",
+		Abbreviation : "Abbreviation",
+		Label : "Label",
+		Badge : "Badge"
 	};
 
   /*
@@ -519,6 +521,13 @@
 	ui5strap.ListType = {
 		Unordered : "Unordered",
 		Ordered : "Ordered"
+	};
+	
+	jQuery.sap.declare("ui5strap.ListGroupMode");
+
+	ui5strap.ListGroupMode = {
+		Default : "Default",
+		Navigation : "Navigation"
 	};
 
   /*
@@ -824,6 +833,10 @@
 		Page : "Page",
 		Fluid : "Fluid",
 		FluidInset : "FluidInset",
+		Jumbotron : "Jumbotron",
+		Well : "Well",
+		WellLarge : "WellLarge",
+		PageHeader : "PageHeader",
 		Paragraph : "Paragraph",
 		Floating : "Floating",
 		Section : "Section",
@@ -5214,11 +5227,11 @@
 	          }
       	}
 		
-		if(!controllerImpl.format){
-			controllerImpl.format = {};
+		if(!controllerImpl.formatters){
+			controllerImpl.formatters = {};
 		}
 		
-		controllerImpl.format.localeString = function(localeString){
+		controllerImpl.formatters.localeString = function(localeString){
 			return this.getApp().getLocaleString(localeString);
 		};
 
@@ -8882,6 +8895,10 @@
 					type:"ui5strap.TrailHtml", 
 					defaultValue:ui5strap.TrailHtml.Space
 				},
+				textAlign : {
+					type : "ui5strap.TextAlignment",
+					defaultValue : ui5strap.TextAlignment.Default
+				},
 				contentPlacement : {
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
@@ -8955,19 +8972,66 @@
 
 	ui5strap.TextRenderer = {
 		typeToTag : {
-			Default : "",
-			Phrasing : "span",
-			Strong : "strong",
-			Emphasized : "em",
-			Paragraph : "p",
-			Blockquote : "blockquote",
-			Quote : "q",
-			Preformatted : "pre",
-			Code : "code",
-			Small : "small",
-			Lead : "p",
-			Abbreviation : "abbr",
-			HelpBlock : "p"
+			Default : { 
+				tagName : null,
+				className : null
+			},
+			Phrasing : {
+				tagName : "span",
+				className : null
+			},
+			Strong : {
+				tagName : "strong",
+				className : null
+			},
+			Emphasized : {
+				tagName : "em",
+				className : null
+			},
+			Paragraph : {
+				tagName : "p",
+				className : null
+			},
+			Blockquote : {
+				tagName : "blockquote",
+				className : null
+			},
+			Quote : {
+				tagName : "q",
+				className : null
+			},
+			Preformatted : {
+				tagName : "pre",
+				className : null
+			},
+			Code : {
+				tagName : "code",
+				className : null
+			},
+			Small : {
+				tagName : "small",
+				className : null
+			},
+			Lead : {
+				tagName : "p",
+				className : "lead"
+			},
+			Abbreviation : {
+				tagName : "abbr",
+				className : null
+			},
+			HelpBlock : {
+				tagName : "p",
+				className : "help-block"
+			},
+			Label : {
+				tagName : "span",
+				className : "label"
+			},
+			Badge : {
+				tagName : "span",
+				className : "badge"
+			}
  		}
 
 	};
@@ -8977,13 +9041,16 @@
 			type = oControl.getType(),
 			text = oControl.getText(),
 			parse = oControl.getParse(),
-			title = oControl.getTitle();
+			title = oControl.getTitle(),
+			textAlign = oControl.getTextAlign();
 
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 
 		if(ui5strap.TextType.Default === type){
+			//Text only
+			//TODO still needed?
 			if(parse){
 				rm.write(text);
 			}
@@ -8992,38 +9059,47 @@
 			}
 		}
 		else{
-			var tagName = this.typeToTag[type];
+			//Text with tag
+			var tagData = this.typeToTag[type];
 
-			rm.write("<" + tagName);
+			rm.write("<" + tagData.tagName);
 			rm.writeControlData(oControl);
 			
 			//CSS Classes
-			if(ui5strap.Severity.None !== severity){
+			if(ui5strap.TextType.Label === type){
+				//Severity for labels
+				rm.addClass("label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity]);
+			}
+			else if(ui5strap.Severity.None !== severity){
+				//Severity for general text
 				rm.addClass("text-" + ui5strap.BSSeverity[severity]);
 			}
 			
-			if(ui5strap.TextType.Lead === type){
-				rm.addClass("lead");
+			if(ui5strap.TextAlignment.Default !== textAlign){
+				rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
 			}
-			else if(ui5strap.TextType.HelpBlock === type){
-				rm.addClass("help-block");
+			
+			if(tagData.className){
+				rm.addClass(tagData.className);
 			}
 			
 			rm.writeClasses();
 			
-			//Attributes
+			//Title
 			if('' !== title){
 	    		rm.writeAttribute('title', title);
 	    	}
 			
 			rm.write(">");
+				
+				//Content
+				ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
 			
-			ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
-			
-			rm.write("</" + tagName + ">");
+			rm.write("</" + tagData.tagName + ">");
 
 		}
 		
+		//Trail
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
@@ -10157,6 +10233,10 @@
 				icon : {
 					type:"string",
 					defaultValue : ""
+				},
+				severity : {
+					type: "ui5strap.Severity", 
+					defaultValue: ui5strap.Severity.None
 				}
 			}
 		}
@@ -10200,9 +10280,10 @@
 		var badge = oControl.getBadge(),
 			icon = oControl.getIcon(),
 			parent = oControl.getParent(),
-			tag = parent.getContainer() ? 'a' : 'li',
+			tag = parent.getListMode() === ui5strap.ListGroupMode.Default ? 'li' : 'a',
 			text = oControl.getText(),
-			parse = oControl.getParse();
+			parse = oControl.getParse(),
+			severity = oControl.getSeverity();
 
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
@@ -10213,6 +10294,10 @@
 		rm.addClass('list-group-item');
 		if(oControl.getSelected()){
 			rm.addClass('active');
+		}
+		if(ui5strap.Severity.None !== severity){
+			//Severity for general text
+			rm.addClass("list-group-item-" + ui5strap.BSSeverity[severity]);
 		}
 		rm.writeClasses();
 		rm.write(">");
@@ -16342,21 +16427,42 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 				tagName : "div",
 				className : "container-fluid container-inset"
 			},
+			Jumbotron : {
+				tagName : "div",
+				className : "container-jumbotron jumbotron"
+			},
+			Well : {
+				tagName : "div",
+				className : "container-well well"
+			},
+			WellLarge : {
+				tagName : "div",
+				className : "container-well well well-lg"
+			},
+			PageHeader : {
+				tagName : "div",
+				className : "container-page-header page-header"
+			},
 			Section : {
 				tagName : "section",
-				className : null
+				className : "container-section"
 			},
+			
+			
+			//Deprecated
 			Paragraph : {
 				tagName : "div",
 				className : "container-paragraph"
 			},
+			//Deprecated
+			Phrasing : {
+				tagName : "div",
+				className : "container-phrasing"
+			},
+			//Deprecated
 			Floating : {
 				tagName : "div",
 				className : "container-floating"
-			},
-			Phrasing : {
-				tagName : "span",
-				className : "container-phrasing"
 			}
 		}
 	};
@@ -18063,9 +18169,9 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 			library : "ui5strap",
 			
 			properties : { 
-				container : {
-					type:"boolean", 
-					defaultValue:false
+				listMode : {
+					type:"ui5strap.ListGroupMode", 
+					defaultValue : ui5strap.ListGroupMode.List
 				}
 			},
 			
@@ -18115,7 +18221,7 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 
 	ui5strap.ListGroupRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
-			tag = oControl.getContainer() ? 'div' : 'ul';
+			tag = oControl.getListMode() === ui5strap.ListGroupMode.Default ? 'ul' : 'div';
 		
 
 		rm.write("<" + tag);

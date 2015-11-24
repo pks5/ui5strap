@@ -90,7 +90,7 @@
   },
   
   "ui5strap" : {
-  	"srcDirFontAwesomeFonts" : "../font-awesome-4.4.0/fonts/",
+  	"srcDirFontAwesomeFonts" : "../font-awesome-4.5.0/fonts/",
   	"srcDirTemplates" : "../templates/",
   	
   	"tgtDirCustomThemes" : "../../../www/theme/ui5strap/themes/",
