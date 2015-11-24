@@ -81,7 +81,7 @@
 			
 			var funcName = 'on' + eventNameCC;
 			if(controller && controller[funcName]){
-				jQuery.sap.log.debug(' + [NC] EVENT ' + eventId + '() {' + target + '}');
+				jQuery.sap.log.debug("[NC#" + _this.getId() + "] Triggering event '" + eventId + "' on target '" + target + "'");
 			
 				controller[funcName](new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}));
 			}
@@ -704,7 +704,7 @@
 	 * @Public
 	 */
 	NavContainerBaseProto.setTargetBusy = function(target, targetBusy){
-		jQuery.sap.log.debug('[NC] Target "' + target + '" is ' + (targetBusy ? 'busy' : 'available'));
+		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
 		this._targetStatus[target] = targetBusy;
 	};
 	

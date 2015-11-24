@@ -206,7 +206,7 @@
 	* @static
 	*/
 	Action.run = function(action){
-		jQuerySap.log.debug("[ACTION] RUN");
+		jQuerySap.log.debug("[ACTION] Action.run");
 
 		var actionName = null;
 		if(action.parameters && typeof action.parameters === 'string'){

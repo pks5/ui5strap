@@ -160,7 +160,7 @@
 			callI = models.length, 
 			successCallback = function(oEvent, oData){
 				callI --;
-				_this.log.debug('LOAD MODEL ' + oData.modelName + ' ...');
+				_this.log.debug("Loaded model '" + oData.modelName + "'");
 				_this.getRootControl().setModel(oData.oModel, oData.modelName);
 
 				if(callI === 0){

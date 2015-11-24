@@ -862,6 +862,7 @@
   * @constructor
   */
   ui5strap.Transition = function(transitionName, $currentRoot, $nextRoot, transitionId){
+	  jQuery.sap.log.warning("ui5strap.Transition is deprecated. Please use ui5strap.ResponsiveTransition instead.");
     this.$current = $currentRoot;
     this.$next = $nextRoot;
     
@@ -1066,7 +1067,7 @@
  	      this._cuca = false;
  	
  	      if(ui5strap.support.transitionEndEvent && !this._skip){
- 		        jQuery.sap.log.debug('[RESP_TRANS#' + this._data.id + ' (' + _this._transitions +')] Executing...');
+ 		        jQuery.sap.log.debug('[TRANS#' + this._data.id + ' (' + _this._transitions +')] Executing...');
  		
  		        if(callbackCurrent && this._data.$current){ 
  			          var _currentTimout = window.setTimeout(function(){
@@ -1074,7 +1075,7 @@
  				            	return;
  				            }
  				            _this._cuca = true;
- 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + ' (' + _this._transitions +')] Hiding page caused a timeout.');
+ 				            jQuery.sap.log.warning('[TRANS#' + _this._data.id + ' (' + _this._transitions +')] Hiding page caused a timeout.');
  				            callbackCurrent.call(_this);
  			          }, ui5strap.options.transitionTimeout);
  			
@@ -1094,7 +1095,7 @@
  				            	return;
  				            }
  				            _this._neca = true;
- 				            jQuery.sap.log.warning('[RESP_TRANS#' + _this._data.id + ' (' + _this._transitions +')] Showing page caused a timeout.');
+ 				            jQuery.sap.log.warning('[TRANS#' + _this._data.id + ' (' + _this._transitions +')] Showing page caused a timeout.');
  				            callbackNext.call(_this);
  			          }, ui5strap.options.transitionTimeout);
  			
@@ -1112,7 +1113,7 @@
  		        this._data.$next && this._data.$next.removeClass('ui5strap-transition-next');
  	      }
  	      else{ 
- 		        jQuery.sap.log.debug('[TRANSITION#' + _this._data.id + ' (' + _this._transitions +')] Transition end event not supported or transition skipped.');
+ 		        jQuery.sap.log.debug('[TRANS#' + _this._data.id + '] Transition skipped: ' + _this._transitions);
  		        
  		        callbackCurrent && callbackCurrent.call(_this);
  			    callbackNext && callbackNext.call(_this);
