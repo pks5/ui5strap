@@ -32,19 +32,66 @@
 
 	ui5strap.TextRenderer = {
 		typeToTag : {
-			Default : "",
-			Phrasing : "span",
-			Strong : "strong",
-			Emphasized : "em",
-			Paragraph : "p",
-			Blockquote : "blockquote",
-			Quote : "q",
-			Preformatted : "pre",
-			Code : "code",
-			Small : "small",
-			Lead : "p",
-			Abbreviation : "abbr",
-			HelpBlock : "p"
+			Default : { 
+				tagName : null,
+				className : null
+			},
+			Phrasing : {
+				tagName : "span",
+				className : null
+			},
+			Strong : {
+				tagName : "strong",
+				className : null
+			},
+			Emphasized : {
+				tagName : "em",
+				className : null
+			},
+			Paragraph : {
+				tagName : "p",
+				className : null
+			},
+			Blockquote : {
+				tagName : "blockquote",
+				className : null
+			},
+			Quote : {
+				tagName : "q",
+				className : null
+			},
+			Preformatted : {
+				tagName : "pre",
+				className : null
+			},
+			Code : {
+				tagName : "code",
+				className : null
+			},
+			Small : {
+				tagName : "small",
+				className : null
+			},
+			Lead : {
+				tagName : "p",
+				className : "lead"
+			},
+			Abbreviation : {
+				tagName : "abbr",
+				className : null
+			},
+			HelpBlock : {
+				tagName : "p",
+				className : "help-block"
+			},
+			Label : {
+				tagName : "span",
+				className : "label"
+			},
+			Badge : {
+				tagName : "span",
+				className : "badge"
+			}
  		}
 
 	};
@@ -62,6 +109,8 @@
 		}
 
 		if(ui5strap.TextType.Default === type){
+			//Text only
+			//TODO still needed?
 			if(parse){
 				rm.write(text);
 			}
@@ -70,9 +119,10 @@
 			}
 		}
 		else{
-			var tagName = this.typeToTag[type];
+			//Text with tag
+			var tagData = this.typeToTag[type];
 
-			rm.write("<" + tagName);
+			rm.write("<" + tagData.tagName);
 			rm.writeControlData(oControl);
 			
 			//CSS Classes
@@ -80,30 +130,31 @@
 				rm.addClass("text-" + ui5strap.BSSeverity[severity]);
 			}
 			
-			if(ui5strap.TextType.Lead === type){
-				rm.addClass("lead");
-			}
-			else if(ui5strap.TextType.HelpBlock === type){
-				rm.addClass("help-block");
-			}
 			if(ui5strap.TextAlignment.Default !== textAlign){
 				rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
 			}
+			
+			if(tagData.className){
+				rm.addClass(tagData.className);
+			}
+			
 			rm.writeClasses();
 			
-			//Attributes
+			//Title
 			if('' !== title){
 	    		rm.writeAttribute('title', title);
 	    	}
 			
 			rm.write(">");
+				
+				//Content
+				ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
 			
-			ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
-			
-			rm.write("</" + tagName + ">");
+			rm.write("</" + tagData.tagName + ">");
 
 		}
 		
+		//Trail
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 

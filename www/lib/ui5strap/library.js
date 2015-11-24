@@ -505,10 +505,12 @@
 		Emphasized : "Emphasized",
 		Code : "Code",
 		Paragraph : "Paragraph",
-    HelpBlock : "HelpBlock",
-    Small : "Small",
-    Lead : "Lead",
-    Abbreviation : "Abbreviation"
+		HelpBlock : "HelpBlock",
+		Small : "Small",
+		Lead : "Lead",
+		Abbreviation : "Abbreviation",
+		Label : "Label",
+		Badge : "Badge"
 	};
 
   /*
@@ -824,6 +826,10 @@
 		Page : "Page",
 		Fluid : "Fluid",
 		FluidInset : "FluidInset",
+		Jumbotron : "Jumbotron",
+		Well : "Well",
+		WellLarge : "WellLarge",
+		PageHeader : "PageHeader",
 		Paragraph : "Paragraph",
 		Floating : "Floating",
 		Section : "Section",

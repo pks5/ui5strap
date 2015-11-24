@@ -47,21 +47,40 @@
 				tagName : "div",
 				className : "container-fluid container-inset"
 			},
+			Jumbotron : {
+				tagName : "div",
+				className : "container-jumbotron jumbotron"
+			},
+			Well : {
+				tagName : "div",
+				className : "container-well well"
+			},
+			WellLarge : {
+				tagName : "div",
+				className : "container-well well well-lg"
+			},
+			PageHeader : {
+				tagName : "div",
+				className : "container-page-header page-header"
+			},
 			Section : {
 				tagName : "section",
-				className : null
+				className : "container-section"
 			},
+			//Deprecated
 			Paragraph : {
 				tagName : "div",
 				className : "container-paragraph"
 			},
+			//Deprecated
+			Phrasing : {
+				tagName : "div",
+				className : "container-phrasing"
+			},
+			//Deprecated
 			Floating : {
 				tagName : "div",
 				className : "container-floating"
-			},
-			Phrasing : {
-				tagName : "span",
-				className : "container-phrasing"
 			}
 		}
 	};
