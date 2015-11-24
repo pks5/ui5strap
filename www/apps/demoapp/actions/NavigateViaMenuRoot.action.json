@@ -21,7 +21,7 @@
 			}
 		],
 		
-		"transition" : "transition-flip",
+		"transition" : "flip-horizontal-ccw",
 		"writeHistory" : true
 	}
 

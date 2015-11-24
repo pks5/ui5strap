@@ -21,7 +21,7 @@
 			}
 		],
 		
-		"transition" : "transition-flip",
+		"transition" : "zoom-out",
 		"writeHistory" : true,
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",
