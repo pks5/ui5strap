@@ -54,7 +54,8 @@
 			type = oControl.getType(),
 			text = oControl.getText(),
 			parse = oControl.getParse(),
-			title = oControl.getTitle();
+			title = oControl.getTitle(),
+			textAlign = oControl.getTextAlign();
 
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
@@ -85,7 +86,9 @@
 			else if(ui5strap.TextType.HelpBlock === type){
 				rm.addClass("help-block");
 			}
-			
+			if(ui5strap.TextAlignment.Default !== textAlign){
+				rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
+			}
 			rm.writeClasses();
 			
 			//Attributes

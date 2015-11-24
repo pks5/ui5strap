@@ -1,0 +1,18 @@
+{
+	
+	"__format" : "AJ2.0",
+	"__modules" : ["ui5strap.AMCallControlMethod", "ui5strap.AMChangeTheme"],
+	"__description" : "Change Theme",
+
+	"callControlMethod" : {
+		"scope" : "SELECTION",
+		"funcName" : "data",
+		"funcArgs" : ["theme"],
+		"tgtParam" : "parameters.changeTheme.theme"
+	},
+
+	"changeTheme" : {
+	
+	}
+	
+}

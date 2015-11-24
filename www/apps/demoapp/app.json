@@ -114,7 +114,7 @@
 	             	"barSizeSmall" : 2,
 	             	"barPlacementSmall" : "Right",
 	             	
-	             	"barSizeMedium" : 6,
+	             	"barSizeMedium" : 2,
 	             	"barPlacementMedium" : "Bottom",
 	             	"barTransitionMedigum" : "none",
 	             	

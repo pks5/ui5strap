@@ -58,6 +58,10 @@
 					type:"ui5strap.TrailHtml", 
 					defaultValue:ui5strap.TrailHtml.Space
 				},
+				textAlign : {
+					type : "ui5strap.TextAlignment",
+					defaultValue : ui5strap.TextAlignment.Default
+				},
 				contentPlacement : {
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
