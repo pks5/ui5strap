@@ -1208,6 +1208,14 @@
 	              return viewData.__ui5strap.app;
 	          }
       	}
+		
+		if(!controllerImpl.format){
+			controllerImpl.format = {};
+		}
+		
+		controllerImpl.format.localeString = function(localeString){
+			return this.getApp().getLocaleString(localeString);
+		};
 
         //Controller event handler
         var _controllerEventHandler = function(oEvent){
