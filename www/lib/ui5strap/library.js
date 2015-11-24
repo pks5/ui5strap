@@ -1067,7 +1067,7 @@
  	      this._cuca = false;
  	
  	      if(ui5strap.support.transitionEndEvent && !this._skip){
- 		        jQuery.sap.log.debug('[TRANS#' + this._data.id + ' (' + _this._transitions +')] Executing...');
+ 		        jQuery.sap.log.debug("[TRANS#" + this._data.id +"] Executing '" + _this._transitions + "'");
  		
  		        if(callbackCurrent && this._data.$current){ 
  			          var _currentTimout = window.setTimeout(function(){

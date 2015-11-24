@@ -34,7 +34,6 @@
 	ui5strap.NavContainerRenderer = NavContainerRenderer;
 
 	NavContainerRenderer.render = function(rm, oControl) {
-		jQuery.sap.log.debug("------------------------RENDERING NAVCONTAINER '" + oControl.getId() + "'...");
 		this.startRender(rm, oControl);
 
 		for(var target in oControl.targets){
@@ -42,6 +41,8 @@
 		}
 
 		this.endRender(rm, oControl);
+		
+		jQuery.sap.log.debug("[NC#" + oControl.getId() + "] RENDERED");
 	};
 
 	/*
