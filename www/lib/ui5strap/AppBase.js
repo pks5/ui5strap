@@ -1209,11 +1209,11 @@
 	          }
       	}
 		
-		if(!controllerImpl.format){
-			controllerImpl.format = {};
+		if(!controllerImpl.formatters){
+			controllerImpl.formatters = {};
 		}
 		
-		controllerImpl.format.localeString = function(localeString){
+		controllerImpl.formatters.localeString = function(localeString){
 			return this.getApp().getLocaleString(localeString);
 		};
 
