@@ -39,7 +39,7 @@
 			properties : { 
 				listMode : {
 					type:"ui5strap.ListGroupMode", 
-					defaultValue : ui5strap.ListGroupMode.List
+					defaultValue : ui5strap.ListGroupMode.Default
 				}
 			},
 			
