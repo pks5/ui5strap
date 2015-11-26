@@ -44,16 +44,13 @@
 	*/
 	CallProto.parameters = {
 		"subject" : {
-			"required" : false,
 			"defaultValue" : {},
 			"type" : "object"
 		},
 		"method" : {
-			"required" : true,
 			"type" : "string"
 		},
 		"tgtParam" : {
-			"required" : false, 
 			"type" : "string"
 		}
 	};

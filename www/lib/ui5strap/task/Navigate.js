@@ -76,7 +76,7 @@
 				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
 			}
 			
-			this.setParameter("page.viewName", this.getParameter("page.viewName"));
+			this.setParameter("page", view);
 			
 			this.context.app.components[frameId].navigateTo(subject, view);
 	}

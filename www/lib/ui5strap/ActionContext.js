@@ -369,7 +369,7 @@
 		}
 		
 		
-		console.log(kPart, fPart);
+		//console.log(kPart, fPart);
 			
 		var keyParts = kPart.split('.'),
 				pointer = this,

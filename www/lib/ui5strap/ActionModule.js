@@ -89,42 +89,59 @@
 	* @protected
 	*/
 	ActionModuleProto._createParameterKey = function(parameterKey){
-		/*
-		if(-1 !== parameterKey.indexOf('.')){
-			return parameterKey;
-		}
-		*/
-		
-		//By default, use the Module's Namespace
 		return  this.getScope() + '.' + parameterKey;
 	};	
 	
 	ActionModuleProto.getScope = function(){
-		return 'parameters.' + this.namespace;
+		return ActionContext.WORKPOOL + "." + this.namespace;
 	};
 
 	/*
 	* Gets the value of an action module specific parameter
 	* @public
 	*/
-	ActionModuleProto.getParameter = function(parameterKey){
-		return this.context._getParameter("." + parameterKey, this.getScope());
-	};
+	ActionModuleProto.getParameter = function(paramKey){
+		var paramDef = this.parameters[paramKey];
+		
+		if(!paramDef){
+			throw new Error("Invalid definition for parameter '" + paramKey + "'.");
+		}
 
-	/**
-	* Returns the type of an Parameter
-	* @public
-	*/
-	ActionModuleProto.getParameterType = function(parameterKey){
-		var paramValue = this.getParameter(parameterKey);
-		if(null === paramValue){
-			//Parameter does not exist
-			return false;
+		var value = this.context._getParameter("." + paramKey, this.getScope());
+		
+		//Set default value
+		var defaultValueDef = paramDef.defaultValue;
+		if(!value && defaultValueDef){
+			value = defaultValueDef;
 		}
 		
-		//Return the Type
-		return typeof paramValue;
-	};	
+		var paramDefType = paramDef.type;
+		
+		if(value && paramDefType){
+			var parameterType = typeof value,
+				defIsString = typeof paramDefType === 'string';
+			
+			if( (defIsString && parameterType !== paramDefType) || 
+				(!defIsString && -1 === jQuery.inArray(parameterType, paramDefType) )
+			){
+				throw new Error(this + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDefType) + ") for parameter '" + paramKey + "'.");
+			}
+		
+			if("object" === paramDefType){
+				var objectKeys = Object.keys(value),
+					objectKeysLength = objectKeys.length,
+					resolved = {};
+				
+				for(var i=0; i < objectKeysLength; i++){
+					resolved[objectKeys[i]] = this.context._getParameter("." + paramKey + "." + objectKeys[i], this.getScope());
+				}
+				
+				value = resolved;
+			}
+		}
+		
+		return value;
+	};
 
 	/*
 	* Sets an action module specific parameter to the action context
@@ -153,7 +170,7 @@
 		this.context._log.debug("EXECUTE " + this);
 
 		//Apply local parameter functions
-		this.context._process("parameters." + this.namespace);
+		this.context._process(this.getScope());
 
 		//Prepare parameters
 		this.prepareParameters();
@@ -163,8 +180,6 @@
 			this.context._log.debug("CONDITIONS DONT MATCH " + this);
 		}
 		else{
-			this.validateParameters();
-
 			this.run();
 		}
 
@@ -193,57 +208,6 @@
 		
 		return true;
 	};	
-
-	/*
-	* Validate the parameters of this action module
-	* @protected
-	*/
-	ActionModuleProto.validateParameters = function(){
-		this.context._log.debug("VALIDATE PARAMETERS " + this);
-
-		for(paramKey in this.parameters){
-			var paramDef = this.parameters[paramKey];
-			
-			if(!paramDef){
-				throw new Error("missing definition for parameter '" + paramKey + "'.");
-			}
-
-			if(!paramDef.type){
-				throw new Error("missing type definition for parameter '" + paramKey + "'.");
-			}
-
-			if(typeof paramDef.type === 'string'){
-				paramDef.type = [paramDef.type];
-			}
-
-			
-			var parameterValue = this.getParameter(paramKey),
-				publicParamKey = this._createParameterKey(paramKey);
-			
-			//Test if required param exists
-			if(false &&  paramDef.required ){
-				if(null === parameterValue){
-					throw new Error("missing required action parameter: " + publicParamKey);
-				}
-			}
-
-			//Set default value
-			var defaultValueDef = paramDef.defaultValue;
-			if(defaultValueDef && null === parameterValue){
-				this.setParameter(paramKey, defaultValueDef);
-			}
-
-			//Check if the parameter type is correct
-			var parameterType = this.getParameterType(paramKey);
-			if( parameterValue && ( -1 === jQuery.inArray(parameterType, paramDef.type) ) )
-			{
-				throw new Error(this + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDef.type) + ") for parameter '" + publicParamKey + "'.");
-			}
-
-		}
-
-		return true;
-	};
 
 	/**
 	 * Tries to find a control by a given scope and additional paramters
@@ -412,13 +376,7 @@
 	};
 
 	ActionModuleProto.fireEvents = function(eventName){
-		ui5strap.Action.executeEventModules(
-			this.context,
-			ActionContext.WORKPOOL 
-				+ "." 
-				+ this.namespace,
-			eventName
-		);
+		ui5strap.Action.executeEventModules(this.context, this.getScope(), eventName);
 	};
 
 	/*
