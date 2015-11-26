@@ -147,7 +147,9 @@
 			if(!this.context.app[frameGetter]){
 				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
 			}
-
+			
+			this.setParameter("viewName", this.getParameter("viewName"));
+			
 			this.context.app[frameGetter]().navigateTo(control, this.context.parameters[this.namespace]);
 	}
 

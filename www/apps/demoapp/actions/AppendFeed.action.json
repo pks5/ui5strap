@@ -27,27 +27,26 @@
 			"namespace" : "addItemToList"
 		}
 	],
-	"__description" : "Appends a new Feed item.",
+	"__description" : "Appends a new media list item to an existing media list.",
 	
 	"getTitle" : {
 		"scope" : "VIEW",
 		"controlId" : "titleInput",
-		"tgtParam" : "parameters.createMediaListItem.settings.heading",
-		"propertyName" : "value"
+		
+		"propertyName" : "value",
+		"tgtParam" : "parameters.createMediaListItem.settings.heading"
 	},
+	
 	"getMessage" : {
 		"scope" : "VIEW",
 		"controlId" : "messageInput",
-		"tgtParam" : "parameters.createMediaListItem.settings.text",
-		"propertyName" : "value"
+		
+		"propertyName" : "value",
+		"tgtParam" : "parameters.createMediaListItem.settings.text"
 	},
+	
 	"createMediaListItem" : {
-		"moduleName" : "ui5strap.ListMediaItem",
-		"settings" : {
-			"text" : "This is just a test.",
-			"heading" : "Latest News"
-		},
-		"tgtParam" : "parameters.addItemToList.instance"
+		"moduleName" : "ui5strap.ListMediaItem"
 	},
 	
 	"createMediaListImage" : {
@@ -57,20 +56,23 @@
 			"mpath" : "ui5strap.demoapp.img.awesome",
 			"ext" : "png",
 			"width":64
-		},
-		"tgtParam" : "parameters.addImageToItem.instance"
+		}
 	},
 	
 	"addImageToItem" : {
-		"parameterKey" : "parameters.addItemToList.instance",
+		"parameterKey" : "parameters.createMediaListItem.result",
 		"scope" : "CONTEXT",
-		"aggregation" : "media"
+		
+		"aggregation" : "media",
+		"instance" : "=parameters.createMediaListImage.result"
 	},
 	
 	"addItemToList" : {
 		"controlId" : "feeds",
 		"scope" : "VIEW",
-		"aggregation" : "items"
+		
+		"aggregation" : "items",
+		"instance" : "=parameters.createMediaListItem.result"
 	}
 
 }

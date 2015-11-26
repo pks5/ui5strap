@@ -5,12 +5,11 @@
 	
 	"getCurrentPage" : {
 		"scope" : "SOURCE",
-		"target" : "content",
-		"tgtParam" : "parameters.setListItemSelected.itemId"
+		"target" : "content"
 	},
 	
 	"setListItemSelected" : {
-		"itemId" : "dummyValue",
+		"itemId" : "=parameters.getCurrentPage.result",
 		"controlId" : "mySubMenu",
 		"viewId" : "my-app-bar-sub-menu",
 		"scope" : "APP"

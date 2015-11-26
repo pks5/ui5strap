@@ -50,7 +50,7 @@
 			"type" : "string"
 		},
 		"tgtParam" : {
-			"required" : true, 
+			"required" : false, 
 			"type" : "string"
 		},
 		
@@ -86,8 +86,13 @@
 				tgtParam = this.getParameter("tgtParam"),
 				control = this.findControl(false),
 				propertyValue = control["get" + jQuery.sap.charToUpperCase(propertyKey, 0)]();
-
-			this.context._setParameter(tgtParam, propertyValue);
+			if(tgtParam){
+				this.context._setParameter(tgtParam, propertyValue);
+			}
+			
+			this.setParameter("result", propertyValue);
+			
+				
 			this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
 	};
 

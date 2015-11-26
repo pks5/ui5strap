@@ -47,6 +47,7 @@
 	* @Override
 	*/
 	AMRemoveAggregationProto.parameters = {
+			//Subject
 			"controlId" : {
 				"required" : false, 
 				"defaultValue" : null, 
@@ -67,14 +68,10 @@
 				"defaultValue" : "VIEW", 
 				"type" : "string"
 			},
+			
+			//Arguments
 			"aggregation" : {
 				"required" : true,
-				"defaultValue" : null,
-				"type" : "string"
-			},
-
-			"srcParam" : {
-				"required" : false,
 				"defaultValue" : null,
 				"type" : "string"
 			},
@@ -94,10 +91,6 @@
 			instance = this.getParameter("instance"),
 			targetControl = this.findControl(),
 			aggregation = this.getParameter("aggregation");
-		
-		if(srcParam){
-			instance = this.context._getParameter(srcParam);
-		}
 		
 		if(!instance){
 			throw new Error("Cannot remove instance from aggregation!");

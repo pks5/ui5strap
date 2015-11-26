@@ -49,7 +49,6 @@
 	AMCreateControlProto.parameters = {
 			"moduleName" : {
 				"required" : true, 
-				"defaultValue" : null, 
 				"type" : "string"
 			},
 			"settings" : {
@@ -58,7 +57,8 @@
 				"type" : "object"
 			},
 			"tgtParam" : {
-				"required" : true, 
+				"required" : false,
+				"defaultValue" : null,
 				"type" : "string"
 			}
 	};
@@ -76,7 +76,14 @@
 		if(!Constructor){
 			throw new Error("Cannot create instance of '" + moduleName + "'");
 		}
-		this.context._setParameter(tgtParam, new Constructor(moduleSettings));
+		var instance = new Constructor(moduleSettings);
+		
+		if(tgtParam){
+			this.context._setParameter(tgtParam, instance);
+		}
+		
+		this.setParameter("result", instance);
+		
 	};
 
 }());

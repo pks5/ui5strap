@@ -55,7 +55,7 @@
 			"type" : "string"
 		},
 		"tgtParam" : {
-			"required" : true, 
+			"required" : false, 
 			"type" : "string"
 		},
 		
@@ -87,7 +87,8 @@
 	*/
 	AMGetCurrentPageProto.run = function(){
 		var target = this.getParameter("target"),
-			scope = this.getParameter("scope")
+			scope = this.getParameter("scope"),
+			tgtParam = this.getParameter("tgtParam");
 		
 		//TODO better with action conditions
 		if(scope === "SOURCE" && target !== this.context.eventParameters["target"]){
@@ -96,8 +97,11 @@
 		
 		var nc = this.findControl(),
 			currentPage = nc.getTarget(target);
-			
-		this.context._setParameter(this.getParameter("tgtParam"), currentPage.getId());
+		
+		if(tgtParam){
+			this.context._setParameter(tgtParam, currentPage.getId());
+		}
+		this.setParameter("result", currentPage.getId());
 	};
 
 }());

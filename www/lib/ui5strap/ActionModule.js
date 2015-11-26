@@ -69,7 +69,7 @@
 		}
 		
 		//Test if Namespace is valid
-		var paramPrefix = context.parameterKey("");
+		var paramPrefix = context.addFormatPrefix("");
 		if(jQuery.sap.startsWith(this.namespace, paramPrefix)){
 			throw new Error("Action namespace must not start with '" + paramPrefix + "'!");
 		}
@@ -84,50 +84,31 @@
 		return this._instanceDef.module + ' ' + this.context;
 	};
 
-	/**
-	* Returns the Definition for a Parameter
-	* @public
-	* @return The Definition or null
-	*/
-	ActionModuleProto.getParameterDefinition = function(parameterKey){
-		return this.parameters[parameterKey] || null;
-	};	
-
-	/**
-	* Returns a Field (type, defaultValue, etc) of a Parameter Definition
-	* @public
-	* @return The Field intormation or null
-	*/
-	ActionModuleProto.getParameterDefinitionField = function(parameterKey, fieldKey){
-		var paramDef = this.getParameterDefinition(parameterKey);
-
-		if(!paramDef){
-			//Parameter is not defined in module
-			return null;
-		}
-
-		return paramDef[fieldKey] || null;
-	};	
-
 	/*
 	* Creates a action module specific parameter key
 	* @protected
 	*/
 	ActionModuleProto._createParameterKey = function(parameterKey){
+		/*
 		if(-1 !== parameterKey.indexOf('.')){
 			return parameterKey;
 		}
+		*/
 		
 		//By default, use the Module's Namespace
-		return 'parameters.' + this.namespace + '.' + parameterKey;
+		return  this.getScope() + '.' + parameterKey;
 	};	
+	
+	ActionModuleProto.getScope = function(){
+		return 'parameters.' + this.namespace;
+	};
 
 	/*
 	* Gets the value of an action module specific parameter
 	* @public
 	*/
 	ActionModuleProto.getParameter = function(parameterKey){
-		return this.context._getParameter(this._createParameterKey(parameterKey));
+		return this.context._getParameter("." + parameterKey, this.getScope());
 	};
 
 	/**
@@ -221,14 +202,13 @@
 		this.context._log.debug("VALIDATE PARAMETERS " + this);
 
 		for(paramKey in this.parameters){
-			var paramDef = this.getParameterDefinition(paramKey);
-			var publicParamKey = this._createParameterKey(paramKey);
-			if(null === paramDef){
+			var paramDef = this.parameters[paramKey];
+			
+			if(!paramDef){
 				throw new Error("missing definition for parameter '" + paramKey + "'.");
 			}
 
-			var typeDef = this.getParameterDefinitionField(paramKey, "type"); 
-			if( null === typeDef ){
+			if(!paramDef.type){
 				throw new Error("missing type definition for parameter '" + paramKey + "'.");
 			}
 
@@ -237,18 +217,19 @@
 			}
 
 			
-			var parameterValue = this.getParameter(paramKey);
+			var parameterValue = this.getParameter(paramKey),
+				publicParamKey = this._createParameterKey(paramKey);
 			
 			//Test if required param exists
-			if( paramDef.required ){
+			if(false &&  paramDef.required ){
 				if(null === parameterValue){
 					throw new Error("missing required action parameter: " + publicParamKey);
 				}
 			}
 
 			//Set default value
-			var defaultValueDef = this.getParameterDefinitionField(paramKey, "defaultValue");
-			if( null !== defaultValueDef && null === parameterValue){
+			var defaultValueDef = paramDef.defaultValue;
+			if(defaultValueDef && null === parameterValue){
 				this.setParameter(paramKey, defaultValueDef);
 			}
 
@@ -338,7 +319,90 @@
 
 		return theControl;
 	};
+	
+	/**
+	 * Tries to find a control by a given scope and additional paramters
+	 */
+	ActionModuleProto.findSubject = function(){
+		var theControl = null,
+			subjectQuery = this.getParameter("subject");
+			scope = subjectQuery.scope || "APP";
 
+		if("APP" === scope){
+			var controlId = subjectQuery.controlId;
+			if(controlId){
+				//If controlId specified, get the control from the optional view or globally
+				theControl = this.context.app.getControl(controlId, subjectQuery.viewId);
+			}
+			else{
+				//By default, use the root control of the app as target control in APP scope
+				theControl = this.context.app.getRootControl();
+			}
+		}
+		else if("VIEW" === scope){ 
+			if(!this.context.controller){
+				throw new Error("Cannot use scope 'VIEW': no 'controller' in context!");
+			}
+			
+			var controlId = subjectQuery.controlId,
+				currentView = this.context.controller.getView();
+			
+			if(controlId){
+				//Find control on the current view by id
+				theControl = this.context.app.getControl(controlId, currentView.getId());
+			}
+			else{
+				//Otherwise use the root control of the view as target control in VIEW scope
+				theControl = currentView.getContent()[0];
+				console.log(theControl);
+			}
+		}
+		else if("SOURCE" === scope){
+			//We try to find the control from a event source
+			if(!this.context.eventSource){
+				throw new Error("Cannot use scope 'SOURCE': no 'eventSource' in context!");
+			}
+			
+			theControl = this.context.eventSource;
+		}
+		else if("SELECTION" === scope){
+			//We try to find the control from a list selection
+			if(!this.context.eventSource || !this.context.eventSource.getSelectedControl){
+				throw new Error("Cannot use scope 'SELECTION': no 'eventSource' in context or no selection support!");
+			}
+
+			theControl = this.context.eventSource.getSelectedControl();
+		}
+		else if("PARAMETER" === scope){
+			var parameterKey = subjectQuery.parameterKey;
+			if(!parameterKey){
+				throw new Error("Please provide a parameterKey inside subject query");
+			}
+			
+			//We try to find the control from a event parameter
+			if(!this.context.eventParameters || !this.context.eventParameters[parameterKey]){
+				throw new Error("Cannot use scope 'PARAMETER': no 'eventParameters' in context or parameter not present!");
+			}
+			
+			theControl = this.context.eventParameters[parameterKey];
+		}
+		else if("CONTEXT" === scope){
+			var parameterKey = subjectQuery.parameterKey;
+			if(!parameterKey){
+				throw new Error("Please provide a parameterKey inside subject query");
+			}
+			
+			theControl = this.context._getParameter(parameterKey);
+		}
+		
+		if(!theControl){
+			//Either scope or controlId is invalid
+			throw new Error('Could not find Subject (SCOPE: ' + scope + ', PARAMETERS: ' + JSON.stringify(subjectQuery) + ')');
+		}
+
+		return theControl;
+	};
+	
 	/*
 	* Run the action module
 	* @protected
@@ -350,7 +414,7 @@
 	ActionModuleProto.fireEvents = function(eventName){
 		ui5strap.Action.executeEventModules(
 			this.context,
-			"parameters" 
+			ActionContext.WORKPOOL 
 				+ "." 
 				+ this.namespace,
 			eventName

@@ -12,15 +12,7 @@
 	},
 	
 	"gotoPage" : {
-		"__functions" : [
-			{
-				"function" : "copy",
-				"args" : {
-					"parameters.menuItem.viewName" : "parameters.gotoPage.viewName"
-				}
-			}
-		],
-		
+		"viewName" : "=parameters.menuItem.viewName",
 		"transition" : "flip-horizontal-ccw",
 		"writeHistory" : true
 	}

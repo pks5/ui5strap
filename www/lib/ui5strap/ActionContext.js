@@ -53,8 +53,6 @@
 			"PREFIX" : "a_",
 			"PARAM_ACTION" : "id",
 			"PARAM_MODULES" : "modules",
-			"PARAM_BINDING_CONTEXT" : "context",
-			"PARAM_DOM_SELECTOR" : "selector",
 			"PARAM_EVENTS" : "events",
 			"PARAM_FUNCTIONS" : "functions"
 		},
@@ -62,8 +60,6 @@
 			"PREFIX" : "__",
 			"PARAM_ACTION" : "action",
 			"PARAM_MODULES" : "modules",
-			"PARAM_BINDING_CONTEXT" : "context",
-			"PARAM_DOM_SELECTOR" : "selector",
 			"PARAM_EVENTS" : "events",
 			"PARAM_FUNCTIONS" : "functions"
 		}
@@ -72,28 +68,19 @@
 	//Default Format
 	ActionContext.DEFAULT_FORMAT = "AJ1.0";
 
-	//Prefix
-	ActionContext.PREFIX = 'PREFIX';
-
 	//Action Name
 	ActionContext.PARAM_ACTION = 'PARAM_ACTION';
 	
 	//AM Modules
 	ActionContext.PARAM_MODULES = 'PARAM_MODULES';
 	
-	//Binding Context
-	ActionContext.PARAM_BINDING_CONTEXT = 'PARAM_BINDING_CONTEXT';
-	
-	//DOM Selector
-	//@deprecated
-	ActionContext.PARAM_DOM_SELECTOR = 'PARAM_DOM_SELECTOR';
-	
 	//Action Events
 	ActionContext.PARAM_EVENTS = 'PARAM_EVENTS';
 	
 	//Action Functions
 	ActionContext.PARAM_FUNCTIONS = 'PARAM_FUNCTIONS';
-
+	
+	ActionContext.WORKPOOL = "parameters";
 	/*
 	* Init log
 	* @private
@@ -219,6 +206,8 @@
 
 		//Call stack
 		_this._callStack = [];
+		
+		_this._loopDir = {};
 
 		//Init Log
 		_initLog(_this);
@@ -292,54 +281,141 @@
 	* @Static
 	*/
 	ActionContextProto.parameterKey = function (parameterKey, prefix){
+		if(!prefix){
+			throw new Error("please provide a prefix for '" + parameterKey + "'");
+		}
+
+		var paramData = _paramNames[this.parameters.__format],
+			actionParam = paramData.PREFIX + paramData[parameterKey];
+		
+		
+		return prefix + "." + this.addFormatPrefix(parameterKey);
+	};
+	
+	/*
+	* Creates an action parameter based on the prefix for actions
+	* @Static
+	*/
+	ActionContextProto.addFormatPrefix = function (parameterKey){
 		if(!this.parameters.__format || !_paramNames[this.parameters.__format]){
 			throw new Error('Cannot read parameter "' + parameterKey + '": Invalid action format: ' + this.parameters.__format);
 		}
 
 		var paramData = _paramNames[this.parameters.__format],
-			actionParam = paramData[ActionContext.PREFIX] + paramData[parameterKey];
-		
-		if(prefix){
-			actionParam = prefix + '.' + actionParam;
-		}
+			actionParam = paramData.PREFIX + paramData[parameterKey];
 		
 		return actionParam;
 	};
 
+	var _callParamFunction = function(_this, scope, func, paramString, parameterScope){
+		var args = null;
+		if('' !== paramString){
+			args = paramString.split(/,/);
+		}
+		else{
+			args = [];
+		}
+		if(null === args){
+			throw new Error("Cannot execute function: no parameters provided!");
+		}
+		
+		for(var i = 0; i < args.length; i++){
+			args[i] = _this._getParameter(args[i].trim(), parameterScope);
+		}
+		
+		return func.apply(scope, args);
+	};
+	
 	/*
 	* Gets a parameter by key
 	* @Protected
 	*/
-	ActionContextProto._getParameter = function(parameterKey){
-		if(-1 !== parameterKey.indexOf('.')){
-			var keyParts = parameterKey.split('.'),
+	ActionContextProto._getParameter = function(parameterKey, parameterScope){
+		var fPart = null;
+		var kPart = parameterKey;
+		var c1Pos = parameterKey.indexOf('(');
+		if(-1 !== c1Pos){
+			var c2Pos = parameterKey.length - 1;
+			if(parameterKey.charAt(c2Pos) !== ')'){
+				throw new Error("Invalid function part in " + parameterKey);
+			}
+			
+			kPart = parameterKey.substring(0, c1Pos);
+			
+			if(c1Pos === c2Pos - 1){
+				fPart = "";
+			}
+			fPart = parameterKey.substring(c1Pos + 1, c2Pos);
+		}
+		
+		if(kPart.charAt(0) === "."){
+			if(!parameterScope){
+				throw new Error("Cannot resolve relative paramter without scope!");
+			}
+			kPart = parameterScope + kPart;
+		}
+		
+		if(!kPart.match(/([a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+/)){
+			throw new Error("Invalid key part in " + parameterKey);
+		}
+		
+		
+		console.log(kPart, fPart);
+			
+		var keyParts = kPart.split('.'),
 				pointer = this,
 				i=0;
 			
 			while(i < keyParts.length){
-				if(keyParts[i] in pointer){
-					pointer = pointer[keyParts[i]];
+				var keyPart = keyParts[i];
+				if("object" !== typeof pointer){
+					throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": not an object.");
+				}
+				
+				if(keyPart in pointer){
+					var prevPointer = pointer;
+					pointer = pointer[keyPart];
+					if("function" === typeof pointer){
+						if(i === keyParts.length - 1){
+							jQuery.sap.log.info("Executing " + kPart + " with arguments " + fPart);
+							pointer = _callParamFunction(this, prevPointer, pointer, fPart, parameterScope);
+							break;
+						}
+						else{
+							throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": is a function.");
+						}
+					}
 					i++;
 				}
 				else{
-					return null;
+					pointer = null;
+					break;
 				}
 			}
 			
+			if(("string" === typeof pointer) && pointer.charAt(0) === "="){
+				pointer = this._getParameter(pointer.substring(1), parameterScope);
+			}
+			
 			return pointer;
-		}	
 		
+	/*
+		}	
+		console.log(parameterKey);
 		//Without a dot in the key, use "parameters"
 		return parameterKey in this.parameters 
 			? this.parameters[parameterKey]
 			: null;
+			*/
 	};
 
 	/*
 	* @Protected
 	*/
 	ActionContextProto._setParameter = function(parameterKey, parameterValue){
-			if(-1 !== parameterKey.indexOf('.')){
+		if(-1 === parameterKey.indexOf('.')){
+			throw new Error("Cannot get parameter: no root node provided.");
+		}
 				var keyParts = parameterKey.split('.'),
 					pointer = this,
 					i=0;
@@ -367,12 +443,15 @@
 				}
 				
 				return this;
+			
+			/*
 			}	
 			
 			//Without a dot in the key, use "parameters"
 			this.parameters[parameterKey] = parameterValue;
 
 			return this;
+			*/
 	};
 
 	/*
@@ -431,15 +510,10 @@
 				_parseAndMerge(this, this.PARSE[i]);
 			}
 
-			//Load additional data from DOM nodes and Control Context
-			//@deprecated
-			//this._fetch("parameters");
-
 			//If a format is present, we can process the parameters
 			if(this.parameters.__format){
-				this._process("parameters");
+				this._process(ActionContext.WORKPOOL);
 			}
-			
 	};
 
 	/*
@@ -449,80 +523,7 @@
 		_applyFunctions(this, this.parameterKey(ActionContext.PARAM_FUNCTIONS, parameterKey));
 	};
 
-	/*
-	* Fetch additional data from a dom node and from a binding context inside the event
-	* @deprecated
-	* @Protected
-	*
-	ActionContextProto._fetch = function(parameterKey){
-		jQuery.sap.log.debug("F ActionContext::_fetch ('" + parameterKey + "')");
-
-		//DOM Selector
-		//@deprecated
-		var domsel = this._getParameter(this.parameterKey(ActionContext.PARAM_DOM_SELECTOR, parameterKey));
-		if(domsel){ //Expected string
-			
-			var domsels = ui5strap.Utils.parseIContent(domsel);
-			if(typeof domsels === 'string'){
-				domsels = [domsels];
-			}
-			var domselsLength = domsels.length;
-			
-			if(!("DOM" in this)){
-				this.DOM = {};
-			}
-			
-			//Copy all attributes of the nodes covered by domselKey
-			for ( var i = 0; i < domselsLength; i++ ){
-
-				var domselKey = domsels[i];
-				this.DOM[domselKey] = jQuery(domselKey).attr();
-			
-			}
-		
-		}
-
-		//Binding Context
-		var bindingContextPath = this._getParameter(this.parameterKey(ActionContext.PARAM_BINDING_CONTEXT, parameterKey));
-		if(this.eventParameters && bindingContextPath){ //string expected
-			var eventParameters = this.eventParameters,
-				eventParametersKeys = Object.keys(eventParameters),
-				eventParametersKeysLength = eventParametersKeys.length;
-			
-			for( var i = 0; i < eventParametersKeysLength; i++ ){
-				
-				var eventParameterValue = eventParameters[ eventParametersKeys[i] ];
-				if(eventParameterValue instanceof sap.ui.core.Control){
-					var oBindingContext = eventParameterValue.getBindingContext(bindingContextPath);
-					if(oBindingContext){ //object expected
-						var bModel = oBindingContext.getModel();
-						if(bModel){ //sap.ui.core.model.Model expected
-							var bPath = oBindingContext.getPath(); 
-							
-							if(!("CONTEXT" in this)){
-								this.CONTEXT = {};
-							}
-
-							this.CONTEXT[bindingContextPath] = {
-									"model" : bModel,
-									"path" : bPath,
-									"data" : bModel.getProperty(bPath)
-							};
-
-						}
-						else{
-							this._log.error('Invalid model in binding context: ' + bindingContextPath);
-						}
-					}
-					else{
-						this._log.error('Invalid binding context: ' + bindingContextPath);
-					}
-				}
-
-			}
-		}
-	};
-	*/
+	
 
 	/*
 	* 

@@ -5,17 +5,8 @@
 	"__description" : "Change Theme",
 
 	"alert" : {
-		"__functions" : [
-			{
-				"function" : "data",
-				"args" : {
-					"srcControl" : "eventParameters.srcControl",
-					"tgtParam" : "parameters.alert.message",
-					"dataKey" : "command"	
-				}
-			}
-		],
-		"message" : "test"
+		"customDataKey" : "command",
+		"message" : "=eventParameters.srcControl.data(.customDataKey)"
 	}
 	
 }

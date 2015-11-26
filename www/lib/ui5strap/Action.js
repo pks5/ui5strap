@@ -98,7 +98,7 @@
 	* @static
 	*/
 	var _execute = function(context){
-		var actionModuleNameParameter = context.parameterKey(ActionContext.PARAM_MODULES),
+		var actionModuleNameParameter = context.parameterKey(ActionContext.PARAM_MODULES, ActionContext.WORKPOOL),
 			actionModuleName = context._getParameter(actionModuleNameParameter);
 		
 		if(actionModuleName){ //Expected string
@@ -143,7 +143,7 @@
 				context.FILES.push(actionJSON);
 
 				//Recursive call
-				_extendContextFromFileOrMerge(context, actionJSON[context.parameterKey(ActionContext.PARAM_ACTION)], callback);
+				_extendContextFromFileOrMerge(context, actionJSON[context.addFormatPrefix(ActionContext.PARAM_ACTION)], callback);
 
 			});
 			
@@ -218,7 +218,7 @@
 
 		if(null === actionName){
 			//Take the action name from the custom data
-			actionName = context._getParameter(context.parameterKey(ActionContext.PARAM_ACTION));
+			actionName = context._getParameter(context.parameterKey(ActionContext.PARAM_ACTION, ActionContext.WORKPOOL));
 		}
 
 		_extendContextFromFileOrMerge(context, actionName, function _extendContextFromFileOrMerge_complete(){

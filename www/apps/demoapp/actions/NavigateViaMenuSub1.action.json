@@ -12,19 +12,11 @@
 	},
 	
 	"gotoPage" : {
-		"__functions" : [
-			{
-				"function" : "copy",
-				"args" : {
-					"parameters.menuItem.viewName" : "parameters.gotoPage.viewName"
-				}
-			}
-		],
-		
 		"transition" : "zoom-out",
 		"writeHistory" : true,
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",
+		"viewName" : "=parameters.menuItem.viewName",
 		"scope" : "APP",
 		"target" : "content"
 	}
