@@ -3,15 +3,15 @@
 	"__format" : "AJ2.0",
 	
 	"__modules" : [
-		"ui5strap.AMDo"
+		"ui5strap.task.Call"
 	],
 	
-	"//" : "The do task calls the control's method removeItems.",
-	"do" : {
+	"//" : "The 'call' task calls the control's method removeItems.",
+	"call" : {
 		"subject" : {
 			"scope" : "SOURCE"
 		},	
-		"query" : "=.subject.control.removeItems(eventParameters.listItem)"
+		"method" : "=.subject.control.removeItems(eventParameters.listItem)"
 	}
 	
 }

@@ -2,12 +2,12 @@
 	"//" : "Toggles the visibility of the menu bar of the root NavContainer.",
 	"__format" : "AJ2.0",
 	
-	"__modules" : "ui5strap.AMDo",
+	"__modules" : "ui5strap.task.Call",
 	
-	"do" : {
+	"call" : {
 		"currentValue" : "= .subject.control.getBarVisible()",
 		"oppositeValue" : "= tools.not(.currentValue)",
-		"query" : "= .subject.control.setBarVisible(.oppositeValue)"
+		"method" : "= .subject.control.setBarVisible(.oppositeValue)"
 	}
 
 }

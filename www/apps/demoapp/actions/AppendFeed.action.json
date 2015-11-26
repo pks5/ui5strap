@@ -2,12 +2,12 @@
 	"//" : "Appends a new media list item to an existing media list.",
 	"__format" : "AJ2.0",
 	"__modules" : [
-		"ui5strap.AMDo #getTitle",
-		"ui5strap.AMDo #getMessage",
+		"ui5strap.task.Call #getTitle",
+		"ui5strap.task.Call #getMessage",
 		"ui5strap.AMCreateControl #createMediaListItem",
 		"ui5strap.AMCreateControl #createMediaListImage",
-		"ui5strap.AMDo #addImageToItem",
-		"ui5strap.AMDo #addItemToList"
+		"ui5strap.task.Call #addImageToItem",
+		"ui5strap.task.Call #addItemToList"
 	],
 	
 	"getTitle" : {
@@ -16,7 +16,7 @@
 			"controlId" : "titleInput"
 		},
 		
-		"query" : "= .subject.control.getValue()",
+		"method" : "= .subject.control.getValue()",
 		"tgtParam" : "pool.createMediaListItem.settings.heading"
 	},
 	
@@ -26,7 +26,7 @@
 			"controlId" : "messageInput"
 		},
 		
-		"query" : "= .subject.control.getValue()",
+		"method" : "= .subject.control.getValue()",
 		"tgtParam" : "pool.createMediaListItem.settings.text"
 	},
 	
@@ -50,7 +50,7 @@
 			"scope" : "CONTEXT"
 		},
 		
-		"query" : "= .subject.control.setMedia( pool.createMediaListImage.result )"
+		"method" : "= .subject.control.setMedia( pool.createMediaListImage.result )"
 	},
 	
 	"addItemToList" : {
@@ -59,7 +59,7 @@
 			"scope" : "VIEW"
 		},
 		
-		"query" : "= .subject.control.addItems( pool.createMediaListItem.result )"
+		"method" : "= .subject.control.addItems( pool.createMediaListItem.result )"
 		
 	}
 

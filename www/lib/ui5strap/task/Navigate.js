@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AMDo
+ * ui5strap.task.Navigate
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,52 +27,58 @@
 
 (function(){
 
-	jQuery.sap.declare("ui5strap.AMDo");
+	jQuery.sap.declare("ui5strap.task.Navigate");
 	jQuery.sap.require("ui5strap.ActionModule");
 
-	ui5strap.ActionModule.extend("ui5strap.AMDo");
+	ui5strap.ActionModule.extend("ui5strap.task.Navigate");
 
-	var AMDoProto = ui5strap.AMDo.prototype;
-
-	/*
-	* @Override
-	*/
-	AMDoProto.namespace = 'do';
+	var NavigateProto = ui5strap.task.Navigate.prototype;
 
 	/*
 	* @Override
 	*/
-	AMDoProto.parameters = {
+	NavigateProto.namespace = "navigate";
+
+	/*
+	* @Override
+	*/
+	NavigateProto.parameters = {
 		"subject" : {
 			"required" : false,
 			"defaultValue" : {},
 			"type" : "object"
 		},
-		"query" : {
-			"required" : true,
-			"type" : "string"
+			
+		//Required
+		"page" : {
+			"required" : true, 
+			"type" : "object"
 		},
-		"tgtParam" : {
-			"required" : false, 
-			"type" : "string"
+		
+		"frameId" : {
+			"required" : false,
+			"type" : "string",
+			"defaultValue" : "frame"
 		}
+
 	};
 
 	/*
-	* @Override
+	* Run the ActionModule
+	* @override
 	*/
-	AMDoProto.run = function(){
-		var subject = this.findSubject(),
-			tgtParam = this.getParameter("tgtParam");
-		
-		this.setParameter("subject.control", subject);
-		
-		var result = this.getParameter("query");
-		if(tgtParam){
-			this.context._setParameter(tgtParam, result);
-		}
-		
-		this.setParameter("result", result);
-	};
+	NavigateProto.run = function(){
+			var subject = this.findSubject(),
+				view = this.getParameter("page"),
+				frameId = this.getParameter("frameId");
+
+			if(!this.context.app.components[frameId]){
+				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
+			}
+			
+			this.setParameter("page.viewName", this.getParameter("page.viewName"));
+			
+			this.context.app.components[frameId].navigateTo(subject, view);
+	}
 
 }());

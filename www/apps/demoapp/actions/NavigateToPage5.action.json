@@ -1,16 +1,21 @@
 {
+	"//" : "Goto Page 5",
 	"__format" : "AJ2.0",
-	"__modules" : "ui5strap.AMGotoPage",
-	"__description" : "Goto Page 5",
-
-	"gotoPage" : {
-		"viewName" : "ui5strap.demoapp.views.MyPage5",
-		"transition" : "zoom-in",
-		"writeHistory" : true,
-		"controlId" : "subNav",
-		"viewId" : "my-app-page4",
-		"scope" : "APP",
-		"target" : "content"
+	
+	"__modules" : "ui5strap.task.Navigate",
+	
+	"navigate" : {
+		"subject" : {
+			"scope" : "APP",
+			"controlId" : "subNav",
+			"viewId" : "my-app-page4"
+		},
+		"page" : {
+			"viewName" : "ui5strap.demoapp.views.MyPage5",
+			"transition" : "zoom-in",
+			"writeHistory" : true,
+			"target" : "content"
+		}
 	}
 	
 }
