@@ -225,7 +225,7 @@
   * -------
   */
 
-  var tapSupport = jQuery.sap.touchEventMode != "OFF";
+  var tapSupport = sap.ui.Device.support.touch;
   
   ui5strap.options = {
   	enableTapEvents : tapSupport,
@@ -850,10 +850,18 @@
   jQuery.sap.declare("ui5strap.ImageShape");
 
   ui5strap.ImageShape = {
-    Default : "Default",
-    Rounded : "Rounded",
-    Circle : "Circle",
-    Thumbnail : "Thumbnail"
+		  Default : "Default",
+		  Rounded : "Rounded",
+		  Circle : "Circle",
+		  Thumbnail : "Thumbnail"
+  };
+  
+  jQuery.sap.declare("ui5strap.ImageType");
+
+  ui5strap.ImageType = {
+		  Default : "Default",
+		  MediaObject : "MediaObject",
+		  Responsive : "Responsive"
   };
 
   /*

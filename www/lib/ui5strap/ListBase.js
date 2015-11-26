@@ -70,7 +70,21 @@
 	});
 
 	var ListBaseProto = ui5strap.ListBase.prototype;
-
+	
+	var _findClosestControl = function(_this, control, Constructor){
+		var parentControl = control,
+			maxDepth = 20,
+			i = 0;
+		while(!(parentControl instanceof Constructor)){
+			parentControl = parentControl.getParent()
+			i++;
+			if(i >= maxDepth){
+				throw new Error("Cannot find parent control: max depth reached.");
+			}
+		}
+		return parentControl;
+	};
+	
 	ListBaseProto.setSelectedIndex = function(itemIndex){
 
 		var items = this.getItems();
@@ -95,7 +109,8 @@
 		
 			var parent = this.getParent(),
 				grandParent = parent.getParent();
-
+			
+			//TODO
 			if(grandParent instanceof ui5strap.ListBase){
 				grandParent.setSelectedControl(parent, this);
 			}
@@ -135,31 +150,24 @@
 
 	var _processSelection = function(_this, oEvent){
 		var srcControl = oEvent.srcControl,
+			listItem = _findClosestControl(_this, srcControl, ui5strap.ListItem),
 			eventOptions = {
-				srcControl : srcControl
+				srcControl : srcControl,
+				listItem : listItem,
+				listItemIndex : _this.indexOfAggregation("items", listItem)
 			},
 			selectionMode = _this.getSelectionMode();
 
-		if(srcControl instanceof ui5strap.ListItem){
-			eventOptions.listItem = srcControl;
-		}
-		else{
-			var parentControl = srcControl.getParent();
-			if(parentControl instanceof ui5strap.ListItem){
-				eventOptions.listItem = parentControl;
-			}
-		}
-
-		if(eventOptions.listItem && eventOptions.listItem.getSelectable()){
+		if(listItem && listItem.getSelectable()){
 			if(selectionMode === ui5strap.SelectionMode.Single || selectionMode === ui5strap.SelectionMode.SingleMaster){
-				_this.setSelectedControl(eventOptions.listItem);
+				_this.setSelectedControl(listItem);
 			}
 			else if(selectionMode === ui5strap.SelectionMode.Master){
-				_this.setMasterSelected(eventOptions.listItem);
+				_this.setMasterSelected(listItem);
 			}
 		}
 		else{
-			jQuery.sap.log.debug("Click ommitted.");
+			jQuery.sap.log.debug("Event ommitted.");
 		}
 
 		return eventOptions;
@@ -175,7 +183,7 @@
 	if(ui5strap.options.enableClickEvents){
 		ListBaseProto.onclick = function(oEvent){
 			oEvent.stopPropagation();
-			this.fireClick(_processSelection(this, oEvent));
+			this.fireTap(_processSelection(this, oEvent));
 		};
 	}
 

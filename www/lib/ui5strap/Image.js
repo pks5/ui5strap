@@ -53,7 +53,7 @@
 				},
 				responsive : {
 					type : "boolean",
-					defaultValue : true
+					defaultValue : false
 				},
 				alt : {
 					type:"string", 
@@ -74,6 +74,10 @@
 				shape: {
 					type:"ui5strap.ImageShape",
 					defaultValue:ui5strap.ImageShape.Default
+				},
+				type: {
+					type:"ui5strap.ImageType",
+					defaultValue:ui5strap.ImageType.Default
 				}
 			}
 

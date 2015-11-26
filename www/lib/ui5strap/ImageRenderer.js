@@ -34,6 +34,10 @@
 			Rounded : 'img-rounded',
 			Circle : 'img-circle',
 			Thumbnail : 'img-thumbnail'
+		},
+		typeToClass : {
+			MediaObject : "media-object",
+			Responsive : "img-responsive"
 		}
 	};
 
@@ -45,6 +49,7 @@
 			width = oControl.getWidth(),
 			height = oControl.getHeight(),
 			shape = oControl.getShape(),
+			type = oControl.getType(),
 			title = oControl.getTitle();
 
 		if(mpath){
@@ -54,10 +59,14 @@
 		rm.write("<img");
 		rm.writeControlData(oControl);
 		if(oControl.getResponsive()){
+			jQuery.sap.log.debug("The property 'reponsive' is deprecated. Please use 'type' with 'Responsive' instead.");
 			rm.addClass('img-responsive');
 		}
-		if(shape in this.shapeToClass){
+		if(this.shapeToClass[shape]){
 			rm.addClass(this.shapeToClass[shape]);
+		}
+		if(this.typeToClass[type]){
+			rm.addClass(this.typeToClass[type]);
 		}
 		rm.writeClasses();
 		

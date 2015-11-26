@@ -89,7 +89,6 @@
 				} 
 			},
 			events:{
-		        "click":{},
 		        "tap":{}
 		    }
 
@@ -108,17 +107,19 @@
 	ui5strap.Utils.dynamicText(ButtonPrototype);
 
 	ui5strap.Utils.dynamicClass(ButtonPrototype, 'selected', { 'true' : 'active' });
-
+	var _handlePress = function(oEvent) {
+		if (this.getEnabled()) {
+			oEvent.setMarked();
+			this.fireTap({});
+		}
+	}		
+			
 	if(ui5strap.options.enableTapEvents){
-		ButtonPrototype.ontap = function(){
-			this.fireTap();
-		};
+		ButtonPrototype.ontap = _handlePress;
 	}
 
 	if(ui5strap.options.enableClickEvents){
-		ButtonPrototype.onclick = function(){
-			this.fireClick();
-		};
+		ButtonPrototype.onclick = _handlePress;
 	}
 
 

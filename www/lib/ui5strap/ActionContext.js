@@ -161,7 +161,7 @@
 			var oEvent = action.event;
 
 			//Add sap.ui.base.Event object to context
-			_this.event = oEvent;
+			//_this.event = oEvent;
 
 			//Event Source
 			var eventSource = oEvent.getSource();
@@ -183,7 +183,7 @@
 			//Event parameters (e.g. from a list selection)
 			var eventParameters = oEvent.getParameters();
 			if(eventParameters){
-				_this.eventParameters = eventParameters;
+				_this.eventParameters = eventParameters;console.log(eventSource, eventParameters);
 			}
 		
 		}
@@ -317,7 +317,7 @@
 				i=0;
 			
 			while(i < keyParts.length){
-				if(keyParts[i] in pointer){ // && null !== pointer[keyParts[i]]
+				if(keyParts[i] in pointer){
 					pointer = pointer[keyParts[i]];
 					i++;
 				}
@@ -330,12 +330,9 @@
 		}	
 		
 		//Without a dot in the key, use "parameters"
-		//TODO Is this ever happen somewhere?
-		if(!(parameterKey in this.parameters)){
-			return null;
-		}
-
-		return this.parameters[parameterKey];
+		return parameterKey in this.parameters 
+			? this.parameters[parameterKey]
+			: null;
 	};
 
 	/*
@@ -346,13 +343,21 @@
 				var keyParts = parameterKey.split('.'),
 					pointer = this,
 					i=0;
+				
 				while(i < keyParts.length){
 					var keyPart = keyParts[i];
 					
 					if(i === keyParts.length - 1){
-						 pointer[keyPart] = parameterValue;
+						if(pointer[keyPart] && ("function" === typeof pointer[keyPart])){
+							//Value already exists, but its a function
+							throw new Error("Cannot override parameter: '" + parameterKey + "' is a function.");
+						}
+						//Set (or override) value
+						pointer[keyPart] = parameterValue;
 					}
 					else if(!(keyPart in pointer)){
+						//Create new empty object
+						//TODO if pointer[keypart] is a string we will land here too and override it!
 						pointer[keyPart] = {};
 					}
 					
@@ -360,11 +365,11 @@
 					i++;
 					
 				}
+				
 				return this;
 			}	
 			
 			//Without a dot in the key, use "parameters"
-			//TODO Is this ever happen somewhere?
 			this.parameters[parameterKey] = parameterValue;
 
 			return this;

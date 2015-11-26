@@ -60,6 +60,10 @@
 					type: "string", 
 					defaultValue: ""
 				},
+				bubbleUp : {
+					type : "boolean",
+					defaultValue : false
+				},
 				href : {
 					type:"string", 
 					defaultValue:""
@@ -84,8 +88,7 @@
 				}
 			},
 			events:{
-		        click: {},
-		        tap : {}
+		        tap : {allowPreventDefault : true}
 		    }
 
 		}
@@ -101,17 +104,25 @@
 	);
 
 	ui5strap.Utils.dynamicText(ui5strap.Link.prototype);
+	
+	var _handlePress = function(oEvent) {
+		//if (this.getEnabled()) {
+			oEvent.setMarked();
 
+			if (!this.fireTap() || !this.getHref()) {
+				oEvent.preventDefault();
+			}
+		//} else {
+		//	oEvent.preventDefault();
+		//}
+	};
+	
 	if(ui5strap.options.enableTapEvents){
-		ui5strap.Link.prototype.ontap = function(){
-			this.fireTap();
-		};
+		ui5strap.Link.prototype.ontap = _handlePress;
 	}
 
 	if(ui5strap.options.enableClickEvents){
-		ui5strap.Link.prototype.onclick = function(){
-			this.fireClick();
-		};
+		ui5strap.Link.prototype.onclick = _handlePress;
 	}
 
 }());

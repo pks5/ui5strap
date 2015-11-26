@@ -326,6 +326,10 @@
 			
 			theControl = this.context.eventParameters[parameterKey];
 		}
+		else if("CONTEXT" === scope){
+			var parameterKey = this.getParameter("parameterKey"),
+				theControl = this.context._getParameter(parameterKey);
+		}
 		
 		if(!theControl){
 			//Either scope or controlId is invalid

@@ -54,8 +54,9 @@
 		rm.write(">");
 
 		if(null !== media){
-			media.addStyleClass('pull-left');
-			rm.renderControl(media);
+			rm.write('<div class="media-left">');
+				rm.renderControl(media);
+			rm.write('</div>');
 		}
 
 		rm.write('<div class="media-body">');

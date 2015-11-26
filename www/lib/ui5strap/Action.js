@@ -217,6 +217,7 @@
 		var context = new ActionContext(action);
 
 		if(null === actionName){
+			//Take the action name from the custom data
 			actionName = context._getParameter(context.parameterKey(ActionContext.PARAM_ACTION));
 		}
 

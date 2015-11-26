@@ -1,0 +1,21 @@
+{
+	
+	"__format" : "AJ2.0",
+	"__modules" : ["ui5strap.AMJsAlert"],
+	"__description" : "Change Theme",
+
+	"alert" : {
+		"__functions" : [
+			{
+				"function" : "data",
+				"args" : {
+					"srcControl" : "eventParameters.srcControl",
+					"tgtParam" : "parameters.alert.message",
+					"dataKey" : "command"	
+				}
+			}
+		],
+		"message" : "test"
+	}
+	
+}

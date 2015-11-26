@@ -62,6 +62,23 @@
 			this._log.debug("{move} '" + paramKey + "' => '" + arguments[paramKey] + "'");
 		}
 	};
+	
+	ActionFunctions.data = function(args){
+		if(!args.tgtParam){
+			this._log.error("{func} missing argument 'tgtParam'");
+		}
+		var srcControl = args.srcControl;
+		if(!args.srcControl){
+			this._log.error("{func} missing argument 'srcControl'");
+		}
+		srcControl = this._getParameter(args.srcControl);
+		if(!(srcControl instanceof sap.ui.core.Control)){
+			this._log.error("{func} not an Control");
+		}
+		var data = args.dataKey ? srcControl.data(args.dataKey) : srcControl.data(); 
+		
+		this._setParameter(args.tgtParam, data);
+	}; 
 
 	ActionFunctions.not = function(arguments){
 		if(!("srcParam" in arguments)){

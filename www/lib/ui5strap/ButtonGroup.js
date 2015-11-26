@@ -63,7 +63,6 @@
 			},
 
 			events:{
-		        click : {},
 		        tap : {},
 		        select : {}
 		    }
@@ -118,23 +117,36 @@
 		}
 		return null;
 	};
+	
+	var _findClosestControl = function(_this, control, Constructor){
+		var parentControl = control,
+			maxDepth = 20,
+			i = 0;
+		while(!(parentControl instanceof Constructor)){
+			parentControl = parentControl.getParent()
+			i++;
+			if(i >= maxDepth){
+				throw new Error("Cannot find parent control: max depth reached.");
+			}
+		}
+		return parentControl;
+	};
 
 	var _processSelection = function(_this, oEvent){
 		var srcControl = oEvent.srcControl,
 			selectionMode = _this.getSelectionMode(),
 			eventOptions = {
-				button : srcControl
+				srcControl : srcControl,
+				button : _findClosestControl(_this, srcControl, ui5strap.Button)
 			};
-
-		if(!(srcControl instanceof ui5strap.Button)){
-			var parentControl = srcControl.getParent();
-			if(parentControl instanceof ui5strap.Button){
-				eventOptions.button = parentControl;
+		
+		if(eventOptions.button){
+			if(selectionMode === ui5strap.SelectionMode.Single){
+				_this.setSelectedControl(eventOptions.button);
 			}
 		}
-
-		if(selectionMode === ui5strap.SelectionMode.Single){
-			_this.setSelectedControl(eventOptions.button);
+		else{
+			jQuery.sap.log.debug("Event ommitted.");
 		}
 
 		return eventOptions;
@@ -148,7 +160,7 @@
 
 	if(ui5strap.options.enableClickEvents){
 		ButtonGroupProto.onclick = function(oEvent){
-			this.fireClick(_processSelection(this, oEvent));
+			this.fireTap(_processSelection(this, oEvent));
 		};
 	}
 

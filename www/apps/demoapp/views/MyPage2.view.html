@@ -44,25 +44,20 @@
 							<div data-sap-ui-type="ui5strap.Col" data-columns-extra-small="12" data-columns-small="6">
 							
 								<div data-sap-ui-type="ui5strap.Panel" data-title="{i18n>PAGE2_PANEL_LEFT_TITLE}">
-										<div data-sap-ui-type="ui5strap.Form" data-type="Horizontal">
-												<div data-sap-ui-type="ui5strap.FormGroup" data-label="Name" data-label-small="2">
-													<div data-sap-ui-type="ui5strap.Col" data-columns-small="10">
-														<div data-sap-ui-type="ui5strap.InputGroup">
-															<div data-sap-ui-type="ui5strap.Icon" data-icon="pencil"></div>
-															<div data-sap-ui-type="ui5strap.TextInput" data-placeholder="Your Name"></div>
-															<div data-sap-ui-type="ui5strap.Button" data-text="Check" data-severity="Success"></div>
-														</div>
-													</div>
+										<div data-sap-ui-type="ui5strap.Form">
+												<div data-sap-ui-type="ui5strap.FormGroup" data-label="Title">
+													<div id="titleInput"  data-sap-ui-type="ui5strap.TextInput" data-placeholder="Subject"></div>
 												</div>
-												<div data-sap-ui-type="ui5strap.FormGroup" data-label="Message" data-label-small="2">
-													<div data-sap-ui-type="ui5strap.Col" data-columns-small="10">
-														<div data-sap-ui-type="ui5strap.TextInput" data-rows="3" data-placeholder="Write something ..."></div>
-													</div>
+												<div data-sap-ui-type="ui5strap.FormGroup" data-label="Message">
+													<div id="messageInput" data-sap-ui-type="ui5strap.TextInput" data-rows="3" data-placeholder="Write something ..."></div>
 												</div>
 												
-												<div data-sap-ui-type="ui5strap.Col" data-offset-small="2" data-colums-small="10">
-													<div data-sap-ui-type="ui5strap.Button" data-text="Submit" data-severity="Success"></div>
-												</div>
+												<div data-sap-ui-type="ui5strap.Button" 
+														data-text="Submit" 
+														data-severity="Success"
+														data-tap="__execute" 
+														data-custom-data:__action="ui5strap.demoapp.actions.AppendFeed"></div>
+												
 											</div>
 								</div>
 								
@@ -73,40 +68,43 @@
 							
 								<div data-sap-ui-type="ui5strap.Panel" data-title="{i18n>PAGE2_PANEL_RIGHT_TITLE}">
 								
-									<div data-sap-ui-type="ui5strap.ListMedia">
+									<div data-sap-ui-type="ui5strap.ListMedia" id="feeds" data-tap="__execute" 
+														data-custom-data:__action="ui5strap.demoapp.actions.Debug">
 						
+										<!-- Media Item 1 -->
 										<div data-sap-ui-type="ui5strap.ListMediaItem">
 											<div data-sap-ui-aggregation="media">
-												
-												<div data-sap-ui-type="ui5strap.Link">
-													<div data-sap-ui-type="ui5strap.Image" data-mpath="ui5strap.demoapp.img.awesome" data-ext="png" data-alt="Image" data-width="64" data-height="64"></div>
-												</div>
-											
+												<div data-sap-ui-type="ui5strap.Image" data-type="MediaObject" data-mpath="ui5strap.demoapp.img.awesome" data-ext="png" data-alt="Image" data-width="64"></div>
 											</div>
 											<div data-sap-ui-aggregation="content">
-												
+												<div data-sap-ui-type="ui5strap.Icon" data-icon="times" data-align="PullRight" data-custom-data:command="DELETE" ></div> 
 												<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-type="MediaHeading" data-text="Media Heading"></div>
 												<div data-sap-ui-type="ui5strap.Text" data-text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus."></div>
-				
-				
-												<div data-sap-ui-type="ui5strap.ListMediaItem">
-													<div data-sap-ui-aggregation="media">
-														<div data-sap-ui-type="ui5strap.Link">
-															<div data-sap-ui-type="ui5strap.Image" data-mpath="ui5strap.demoapp.img.awesome" data-ext="png" data-alt="Image" data-width="64" data-height="64"></div>
+												<div data-sap-ui-type="ui5strap.Button" 
+												data-custom-data:command="MORE"
+														data-text="Submit" 
+														data-severity="Success"><div data-sap-ui-type="ui5strap.Icon" data-custom-data:command="MOREI" data-icon="arrow-right"></div> </div>
+											
+												<div data-sap-ui-type="ui5strap.ListMedia" id="feedsA" data-tap="__execute" 
+														data-custom-data:__action="ui5strap.demoapp.actions.RemovePost">
+													<!-- Media Item 2 (nested) -->
+													<div data-sap-ui-type="ui5strap.ListMediaItem">
+														<div data-sap-ui-aggregation="media">
+															<div data-sap-ui-type="ui5strap.Image" data-type="MediaObject" data-mpath="ui5strap.demoapp.img.awesome" data-ext="png" data-alt="Image" data-width="64"></div>
+														</div>
+														<div data-sap-ui-aggregation="content">
+															<div data-sap-ui-type="ui5strap.Icon" data-icon="times" data-align="PullRight" data-custom-data:command="DELETE" ></div> 
+															<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-type="MediaHeading" data-text="Media Heading"></div>
+															<div data-sap-ui-type="ui5strap.Text" data-text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus."></div>
 														</div>
 													</div>
-													<div data-sap-ui-aggregation="content">
-														<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-type="MediaHeading" data-text="Media Heading"></div>
-														<div data-sap-ui-type="ui5strap.Text" data-text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus."></div>
-													</div>
 												</div>
-												
 											</div>
 										</div>
+										
+										<!-- Media Item 3 -->
 										<div data-sap-ui-type="ui5strap.ListMediaItem" data-text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." data-heading="Quick Media Heading">
-											<div data-sap-ui-type="ui5strap.Link">
-												<div data-sap-ui-type="ui5strap.Image" data-mpath="ui5strap.demoapp.img.awesome" data-ext="png" data-alt="Image" data-width="64" data-height="64"></div>
-											</div>
+											<div data-sap-ui-type="ui5strap.Image" data-type="MediaObject" data-mpath="ui5strap.demoapp.img.awesome" data-ext="png" data-alt="Image" data-width="64"></div>
 										</div>
 										
 										

@@ -13,7 +13,6 @@
 		"itemId" : "dummyValue",
 		"controlId" : "mySubMenu",
 		"viewId" : "my-app-bar-sub-menu",
-		"scope" : "APP",
-		"target" : "content"
+		"scope" : "APP"
 	}
 }

@@ -1,0 +1,76 @@
+{
+	
+	"__format" : "AJ2.0",
+	"__modules" : [
+		{
+			"module" : "ui5strap.AMGetProperty",
+			"namespace" : "getTitle"
+		},
+		{
+			"module" : "ui5strap.AMGetProperty",
+			"namespace" : "getMessage"
+		},
+		{
+			"module" : "ui5strap.AMCreateControl",
+			"namespace" : "createMediaListItem"
+		},
+		{
+			"module" : "ui5strap.AMCreateControl",
+			"namespace" : "createMediaListImage"
+		},
+		{ 
+			"module" : "ui5strap.AMSetAggregation",
+			"namespace" : "addImageToItem"
+		}, 
+		{ 
+			"module" : "ui5strap.AMAddAggregation",
+			"namespace" : "addItemToList"
+		}
+	],
+	"__description" : "Appends a new Feed item.",
+	
+	"getTitle" : {
+		"scope" : "VIEW",
+		"controlId" : "titleInput",
+		"tgtParam" : "parameters.createMediaListItem.settings.heading",
+		"propertyName" : "value"
+	},
+	"getMessage" : {
+		"scope" : "VIEW",
+		"controlId" : "messageInput",
+		"tgtParam" : "parameters.createMediaListItem.settings.text",
+		"propertyName" : "value"
+	},
+	"createMediaListItem" : {
+		"moduleName" : "ui5strap.ListMediaItem",
+		"settings" : {
+			"text" : "This is just a test.",
+			"heading" : "Latest News"
+		},
+		"tgtParam" : "parameters.addItemToList.instance"
+	},
+	
+	"createMediaListImage" : {
+		"moduleName" : "ui5strap.Image",
+		"settings" : {
+			"type" : "MediaObject",
+			"mpath" : "ui5strap.demoapp.img.awesome",
+			"ext" : "png",
+			"width":64
+		},
+		"tgtParam" : "parameters.addImageToItem.instance"
+	},
+	
+	"addImageToItem" : {
+		"parameterKey" : "parameters.addItemToList.instance",
+		"scope" : "CONTEXT",
+		"aggregation" : "media"
+	},
+	
+	"addItemToList" : {
+		"controlId" : "feeds",
+		"scope" : "VIEW",
+		"aggregation" : "items"
+	}
+
+}

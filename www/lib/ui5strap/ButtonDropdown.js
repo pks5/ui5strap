@@ -118,7 +118,7 @@
 				this.$().toggleClass('open'); 
 			}
 			else{
-				this.fireClick();
+				this.fireTap();
 			}
 		};
 	}
