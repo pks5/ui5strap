@@ -1,12 +1,12 @@
 {
-	
+	"//" : "Shows a alert window with the content of the specified custom data field.",
 	"__format" : "AJ2.0",
-	"__modules" : ["ui5strap.AMJsAlert"],
-	"__description" : "Change Theme",
-
-	"alert" : {
+	"__modules" : "ui5strap.AMDo",
+	
+	"do" : {
 		"customDataKey" : "command",
-		"message" : "=eventParameters.srcControl.data(.customDataKey)"
+		"message" : "= eventParameters.srcControl.data(.customDataKey)",
+		"query" : "= window.alert(.message)"
 	}
 	
 }

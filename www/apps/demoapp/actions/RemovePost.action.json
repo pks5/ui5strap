@@ -1,14 +1,17 @@
 {
-	
+	"//" : "Removes a post from the list.",
 	"__format" : "AJ2.0",
-	"__modules" : ["ui5strap.AMDo"],
-	"__description" : "Change Theme",
-
+	
+	"__modules" : [
+		"ui5strap.AMDo"
+	],
+	
+	"//" : "The do task calls the control's method removeItems.",
 	"do" : {
 		"subject" : {
 			"scope" : "SOURCE"
 		},	
-		"query" : "=.subject.instance.removeItems(eventParameters.listItem)"
+		"query" : "=.subject.control.removeItems(eventParameters.listItem)"
 	}
 	
 }

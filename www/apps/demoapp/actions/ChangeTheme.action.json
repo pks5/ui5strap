@@ -1,7 +1,7 @@
 {
 	
 	"__format" : "AJ2.0",
-	"__modules" : ["ui5strap.AMChangeTheme"],
+	"__modules" : "ui5strap.AMChangeTheme",
 	"__description" : "Change Theme",
 
 	"changeTheme" : {

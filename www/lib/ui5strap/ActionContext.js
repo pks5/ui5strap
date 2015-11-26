@@ -81,6 +81,13 @@
 	ActionContext.PARAM_FUNCTIONS = 'PARAM_FUNCTIONS';
 	
 	ActionContext.WORKPOOL = "parameters";
+	
+	var _tools = {
+		not : function(value){
+			return !value;
+		}	
+	};
+	
 	/*
 	* Init log
 	* @private
@@ -119,7 +126,9 @@
 			throw new Error('App reference required!')
 		}
 		_this.app = action.app;
-
+		
+		_this.tools = _tools;
+		
 		//Files
 		_this.FILES = [];
 
@@ -197,8 +206,8 @@
 		_this.localStorage = localStorage ? localStorage : {};
 		_this.sessionStorage = sessionStorage ? sessionStorage : {};
 		
-		//_this.window = window;
-		//_this.document = document;
+		_this.window = window;
+		_this.document = document;
 		
 		//Number
 		ActionContext.NUMBER ++;
@@ -394,7 +403,7 @@
 			}
 			
 			if(("string" === typeof pointer) && pointer.charAt(0) === "="){
-				pointer = this._getParameter(pointer.substring(1), parameterScope);
+				pointer = this._getParameter(pointer.substring(1).trim(), parameterScope);
 			}
 			
 			return pointer;
@@ -509,7 +518,9 @@
 			for (var i = 0; i < this.PARSE.length; i++){
 				_parseAndMerge(this, this.PARSE[i]);
 			}
-
+			
+			this.pool = this.parameters;
+			
 			//If a format is present, we can process the parameters
 			if(this.parameters.__format){
 				this._process(ActionContext.WORKPOOL);

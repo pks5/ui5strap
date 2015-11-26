@@ -1,48 +1,33 @@
 {
-	
+	"//" : "Appends a new media list item to an existing media list.",
 	"__format" : "AJ2.0",
 	"__modules" : [
-		{
-			"module" : "ui5strap.AMGetProperty",
-			"namespace" : "getTitle"
-		},
-		{
-			"module" : "ui5strap.AMGetProperty",
-			"namespace" : "getMessage"
-		},
-		{
-			"module" : "ui5strap.AMCreateControl",
-			"namespace" : "createMediaListItem"
-		},
-		{
-			"module" : "ui5strap.AMCreateControl",
-			"namespace" : "createMediaListImage"
-		},
-		{ 
-			"module" : "ui5strap.AMSetAggregation",
-			"namespace" : "addImageToItem"
-		}, 
-		{ 
-			"module" : "ui5strap.AMAddAggregation",
-			"namespace" : "addItemToList"
-		}
+		"ui5strap.AMDo #getTitle",
+		"ui5strap.AMDo #getMessage",
+		"ui5strap.AMCreateControl #createMediaListItem",
+		"ui5strap.AMCreateControl #createMediaListImage",
+		"ui5strap.AMDo #addImageToItem",
+		"ui5strap.AMDo #addItemToList"
 	],
-	"__description" : "Appends a new media list item to an existing media list.",
 	
 	"getTitle" : {
-		"scope" : "VIEW",
-		"controlId" : "titleInput",
+		"subject" : {
+			"scope" : "VIEW",
+			"controlId" : "titleInput"
+		},
 		
-		"propertyName" : "value",
-		"tgtParam" : "parameters.createMediaListItem.settings.heading"
+		"query" : "= .subject.control.getValue()",
+		"tgtParam" : "pool.createMediaListItem.settings.heading"
 	},
 	
 	"getMessage" : {
-		"scope" : "VIEW",
-		"controlId" : "messageInput",
+		"subject" : {
+			"scope" : "VIEW",
+			"controlId" : "messageInput"
+		},
 		
-		"propertyName" : "value",
-		"tgtParam" : "parameters.createMediaListItem.settings.text"
+		"query" : "= .subject.control.getValue()",
+		"tgtParam" : "pool.createMediaListItem.settings.text"
 	},
 	
 	"createMediaListItem" : {
@@ -60,19 +45,22 @@
 	},
 	
 	"addImageToItem" : {
-		"parameterKey" : "parameters.createMediaListItem.result",
-		"scope" : "CONTEXT",
+		"subject" : {
+			"parameterKey" : "pool.createMediaListItem.result",
+			"scope" : "CONTEXT"
+		},
 		
-		"aggregation" : "media",
-		"instance" : "=parameters.createMediaListImage.result"
+		"query" : "= .subject.control.setMedia( pool.createMediaListImage.result )"
 	},
 	
 	"addItemToList" : {
-		"controlId" : "feeds",
-		"scope" : "VIEW",
+		"subject" : {
+			"controlId" : "feeds",
+			"scope" : "VIEW"
+		},
 		
-		"aggregation" : "items",
-		"instance" : "=parameters.createMediaListItem.result"
+		"query" : "= .subject.control.addItems( pool.createMediaListItem.result )"
+		
 	}
 
 }

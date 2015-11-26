@@ -44,11 +44,16 @@
 	*/
 	AMDoProto.parameters = {
 		"subject" : {
-			"required" : true,
+			"required" : false,
+			"defaultValue" : {},
 			"type" : "object"
 		},
 		"query" : {
 			"required" : true,
+			"type" : "string"
+		},
+		"tgtParam" : {
+			"required" : false, 
 			"type" : "string"
 		}
 	};
@@ -57,10 +62,17 @@
 	* @Override
 	*/
 	AMDoProto.run = function(){
-		var subject = this.findSubject();
-		this.setParameter("subject.instance", subject);
+		var subject = this.findSubject(),
+			tgtParam = this.getParameter("tgtParam");
 		
-		this.setParameter("result", this.getParameter("query"));
+		this.setParameter("subject.control", subject);
+		
+		var result = this.getParameter("query");
+		if(tgtParam){
+			this.context._setParameter(tgtParam, result);
+		}
+		
+		this.setParameter("result", result);
 	};
 
 }());

@@ -235,7 +235,7 @@
 
 			//Check if the parameter type is correct
 			var parameterType = this.getParameterType(paramKey);
-			if( ( null !== parameterValue ) && ( -1 === jQuery.inArray(parameterType, paramDef.type) ) )
+			if( parameterValue && ( -1 === jQuery.inArray(parameterType, paramDef.type) ) )
 			{
 				throw new Error(this + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDef.type) + ") for parameter '" + publicParamKey + "'.");
 			}

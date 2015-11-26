@@ -51,7 +51,6 @@
 		//Required
 		"itemId" : {
 			"required" : true, 
-			"defaultValue" : null, 
 			"type" : "string"
 		},
 		
@@ -83,6 +82,10 @@
 	*/
 	AMSetListItemSelectedProto.run = function(){
 		var itemId = this.getParameter("itemId");
+		
+		if(!itemId){
+			return;
+		}
 		
 		var menu = this.findControl(),
 			items = menu.getItems(),

@@ -53,7 +53,14 @@
 
 		if(typeof actionModuleName === 'string'){
 			//If string, the namespace is taken from the protoype
-			instanceDef.module = actionModuleName;
+			var parts = actionModuleName.split(/#/);
+			if(parts.length > 1){
+				instanceDef.module = parts[0].trim();
+				instanceDef.namespace = parts[1];
+			}
+			else{
+				instanceDef.module = actionModuleName;
+			}
 		}	
 		else if(typeof actionModuleName === 'object'){
 			//Action Module def is an object, it can contain a custom namespace 
