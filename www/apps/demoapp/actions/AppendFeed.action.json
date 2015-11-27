@@ -2,18 +2,18 @@
 	"//" : "Appends a new media list item to an existing media list.",
 	"__format" : "AJ2.0",
 	"__modules" : [
-		"ui5strap.task.Call #getTitle",
-		"ui5strap.task.Call #getMessage",
+		"ui5strap.task.Exec #getTitle",
+		"ui5strap.task.Exec #getMessage",
 		"ui5strap.AMCreateControl #createMediaListItem",
 		"ui5strap.AMCreateControl #createMediaListImage",
-		"ui5strap.task.Call #addImageToItem",
-		"ui5strap.task.Call #addItemToList"
+		"ui5strap.task.Exec #addImageToItem",
+		"ui5strap.task.Exec #addItemToList"
 	],
 	
 	"getTitle" : {
 		"viewId" : "&=> view.getId()",
 		"controlId" : "titleInput",
-		"inputField" : "&=> app.getControl(.controlId, .viewId)",
+		"inputField" : "&=> app.getControl( .controlId, .viewId )",
 		"RESULT" : "&=> .inputField.getValue()",
 		"COPYTO" : "action.createMediaListItem.settings.heading"
 	},
@@ -21,7 +21,7 @@
 	"getMessage" : {
 		"viewId" : "&=> view.getId()",
 		"controlId" : "messageInput",
-		"inputField" : "&=> app.getControl(.controlId, .viewId)",
+		"inputField" : "&=> app.getControl( .controlId, .viewId )",
 		"RESULT" : "&=> .inputField.getValue()",
 		"COPYTO" : "action.createMediaListItem.settings.text"
 	},
@@ -36,7 +36,7 @@
 			"type" : "MediaObject",
 			"mpath" : "ui5strap.demoapp.img.awesome",
 			"ext" : "png",
-			"width":64
+			"width" : 64
 		}
 	},
 	
@@ -47,9 +47,8 @@
 	"addItemToList" : {
 		"viewId" : "&=> view.getId()",
 		"controlId" : "feeds",
-		"mediaList" : "&=> app.getControl(.controlId, .viewId)",
+		"mediaList" : "&=> app.getControl( .controlId, .viewId )",
 		"RESULT" : "&=> .mediaList.addItems( action.createMediaListItem.result )"
-		
 	}
 
 }

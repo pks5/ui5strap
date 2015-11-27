@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.task.Call
+ * ui5strap.task.Exec
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,22 +27,22 @@
 
 (function(){
 
-	jQuery.sap.declare("ui5strap.task.Call");
+	jQuery.sap.declare("ui5strap.task.Exec");
 	jQuery.sap.require("ui5strap.ActionModule");
 
-	ui5strap.ActionModule.extend("ui5strap.task.Call");
+	ui5strap.ActionModule.extend("ui5strap.task.Exec");
 
-	var CallProto = ui5strap.task.Call.prototype;
-
-	/*
-	* @Override
-	*/
-	CallProto.namespace = 'call';
+	var ExecProto = ui5strap.task.Exec.prototype;
 
 	/*
 	* @Override
 	*/
-	CallProto.parameters = {
+	ExecProto.namespace = 'exec';
+
+	/*
+	* @Override
+	*/
+	ExecProto.parameters = {
 		"RESULT" : {
 			
 		},
@@ -54,7 +54,7 @@
 	/*
 	* @Override
 	*/
-	CallProto.run = function(){
+	ExecProto.run = function(){
 		var result = this.getParameter("RESULT"),
 			copyTo = this.getParameter("COPYTO");
 		if(copyTo){

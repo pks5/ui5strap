@@ -3,11 +3,11 @@
 	"__format" : "AJ2.0",
 	
 	"__modules" : [
-		"ui5strap.task.Call"
+		"ui5strap.task.Exec"
 	],
 	
 	"//" : "The 'call' task calls the control's method removeItems.",
-	"call" : {
+	"exec" : {
 		"RESULT" : "&=> eventSource.removeItems(eventParameters.listItem)"
 	}
 	
