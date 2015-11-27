@@ -132,9 +132,6 @@
 		//Files
 		_this.FILES = [];
 
-		//Data to parse
-		_this.PARSE = [];
-
 		//Default parameters
 		if(action.parameters){
 			var actionParametersType = typeof action.parameters;
@@ -166,20 +163,20 @@
 
 				var customData = eventSource.data();
 				if(customData && Object.keys(customData).length){ //Expected object
-					_this.PARSE.push(customData);
-					
 					//Format check
 					//TODO: Make this better
 					if((!_this.defaultParameters || !_this.defaultParameters.__format) && !customData.__format){
 						customData.__format = ActionContext.DEFAULT_FORMAT;
 					}
+					_this.customData = customData;
 				}
 			}
 
 			//Event parameters (e.g. from a list selection)
 			var eventParameters = oEvent.getParameters();
 			if(eventParameters){
-				_this.eventParameters = eventParameters;console.log(eventSource, eventParameters);
+				_this.eventParameters = eventParameters;
+				//console.log(eventSource, eventParameters);
 			}
 		
 		}
@@ -222,7 +219,7 @@
 		_initLog(_this);
 		
 		//Merge the context
-		_this._merge();
+		_this._buildPool();
 	};
 
 	/*
@@ -498,8 +495,8 @@
 	* Merge the parameters from custom data into the existing computed parameters
 	* @protected
 	*/
-	ActionContextProto._merge = function(){
-			this._log.debug("MERGING PARAMETERS");
+	ActionContextProto._buildPool = function(){
+			this._log.debug("Building Pool...");
 			
 			//Reinitialize parameters with default values
 			this.parameters = {};
@@ -515,8 +512,8 @@
 			}
 
 			//Parse and add Custom Data 
-			for (var i = 0; i < this.PARSE.length; i++){
-				_parseAndMerge(this, this.PARSE[i]);
+			if(this.customData){
+				_parseAndMerge(this, this.customData);
 			}
 			
 			this.pool = this.parameters;

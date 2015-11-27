@@ -48,7 +48,7 @@
 			"type" : "object"
 		},
 		"method" : {
-			"type" : "string"
+			
 		},
 		"tgtParam" : {
 			"type" : "string"

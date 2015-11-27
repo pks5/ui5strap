@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AMDecide
+ * ui5strap.task.Switch
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -28,28 +28,32 @@
 (function(){
 
 	//Declare Module
-	jQuery.sap.declare("ui5strap.AMDecide");
+	jQuery.sap.declare("ui5strap.task.Switch");
 
 	//Require ui5strap.ActionModule
 	jQuery.sap.require("ui5strap.ActionModule");
 
 	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.AMDecide");
+	ui5strap.ActionModule.extend("ui5strap.task.Switch");
 	
-	var AMDecideProto = ui5strap.AMDecide.prototype;
+	var SwitchProto = ui5strap.task.Switch.prototype;
 	
 	/*
 	* @Override
 	*/
-	AMDecideProto.namespace = 'decide';
+	SwitchProto.namespace = 'switch';
 
 	/*
 	* @Override
 	*/
-	AMDecideProto.parameters = {
-			"conditions" : {
+	SwitchProto.parameters = {
+			"expression" : {
 				"required" : true, 
-				"type" : "array"
+				"type" : "string"
+			},
+			"actions" : {
+				"required" : true, 
+				"type" : "object"
 			},
 			"defaultAction" : {
 				"required" : false,
@@ -62,11 +66,22 @@
 	* Run the ActionModule
 	* @override
 	*/
-	AMDecideProto.run = function(){
-		var conditions = this.getParameter("conditions"),
-			defaultAction = this.getParameter("defaultAction");
+	SwitchProto.run = function(){
+		var expression = this.getParameter("expression"),
+			actions = this.getParameter("actions"),
+			theAction = this.getParameter("defaultAction");
 		
+		if(actions[expression]){
+			theAction = actions[expression];
+		}
 		
+		if(theAction){
+			ui5strap.Action.run({
+				app : this.context.app,
+				controller : this.context.controller,
+				parameters: theAction
+			});
+		}
 	};
 
 }());

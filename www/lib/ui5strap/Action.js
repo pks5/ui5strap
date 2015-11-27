@@ -156,7 +156,7 @@
 			
 		}
 		else{
-			context._merge();
+			context._buildPool();
 
 			callback && callback();
 		}
@@ -231,6 +231,8 @@
 		_extendContextFromFileOrMerge(context, actionName, function _extendContextFromFileOrMerge_complete(){
 			_execute(context);
 		});
+		
+		return context;
 	};
 
 }());

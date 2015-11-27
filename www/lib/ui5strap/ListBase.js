@@ -147,6 +147,22 @@
 		}
 		return null;
 	};
+	
+	/*
+	ListBaseProto.setSelectedCustom = function(dataKey, value){
+		items = this.getItems(),
+			selectedItem = null;
+		
+		for(var i = 0; i < items.length; i++){
+			if(this.context.app.createControlId(itemId) === this.context.app.createControlId(items[i].getItemId())){
+				selectedItem = items[i];
+				break;
+			}
+		}
+		
+		menu.setSelectedControl(selectedItem);
+	};
+	*/
 
 	var _processSelection = function(_this, oEvent){
 		var srcControl = oEvent.srcControl,
