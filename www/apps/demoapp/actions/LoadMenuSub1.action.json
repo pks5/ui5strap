@@ -5,12 +5,10 @@
 	"__modules" : "ui5strap.task.Navigate",
 	
 	"navigate" : {
-		"subject" : {
-			"scope" : "APP",
-			"controlId" : "subNav",
-			"viewId" : "my-app-page4"
-		},
-		"page" : {
+		"controlId" : "subNav",
+		"viewId" : "my-app-page4",
+		"CONTROL" : "= app.getControl(.controlId, .viewId)",
+		"PAGE" : {
 			"viewName" : "ui5strap.demoapp.views.MenuSub1",
 			"transition" : "transition-none",
 			"writeHistory" : true,

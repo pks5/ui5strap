@@ -43,14 +43,10 @@
 	* @Override
 	*/
 	CallProto.parameters = {
-		"subject" : {
-			"defaultValue" : {},
-			"type" : "object"
+		"RESULT" : {
+			"type" : "string"
 		},
-		"method" : {
-			
-		},
-		"tgtParam" : {
+		"COPYTO" : {
 			"type" : "string"
 		}
 	};
@@ -59,17 +55,9 @@
 	* @Override
 	*/
 	CallProto.run = function(){
-		var subject = this.findSubject(),
-			tgtParam = this.getParameter("tgtParam");
-		
-		this.setParameter("subject.control", subject);
-		
-		var result = this.getParameter("method");
-		if(tgtParam){
-			this.context._setParameter(tgtParam, result);
-		}
-		
-		this.setParameter("result", result);
+		var result = this.getParameter("RESULT"),
+			copyTo = this.getParameter("COPYTO");
+		this.context._setParameter(copyTo, result, this.getScope());
 	};
 
 }());

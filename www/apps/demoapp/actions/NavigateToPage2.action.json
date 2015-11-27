@@ -6,7 +6,7 @@
 	"__modules" : "ui5strap.task.Navigate",
 	
 	"navigate" : {
-		"page" : {
+		"PAGE" : {
 			"viewName" : "ui5strap.demoapp.views.MyPage2",
 			"transition" : "slide-rtl",
 			"writeHistory" : true,

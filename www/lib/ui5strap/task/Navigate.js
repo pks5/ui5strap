@@ -43,22 +43,22 @@
 	* @Override
 	*/
 	NavigateProto.parameters = {
-		"subject" : {
+		"CONTROL" : {
 			"required" : false,
-			"defaultValue" : {},
-			"type" : "object"
+			"defaultValue" : "= app.getRootControl()",
+			"type" : ["string", "object"]
 		},
 			
 		//Required
-		"page" : {
+		"PAGE" : {
 			"required" : true, 
 			"type" : "object"
 		},
 		
-		"frameId" : {
+		"COMPONENT" : {
 			"required" : false,
-			"type" : "string",
-			"defaultValue" : "frame"
+			"type" : ["string", "object"],
+			"defaultValue" : "= app.components.frame"
 		}
 
 	};
@@ -68,17 +68,16 @@
 	* @override
 	*/
 	NavigateProto.run = function(){
-			var subject = this.findSubject(),
-				view = this.getParameter("page"),
-				frameId = this.getParameter("frameId");
+			var control = this.getParameter("CONTROL");
+		
+			var page = this.getParameter("PAGE"),
+				component = this.getParameter("COMPONENT");
 
-			if(!this.context.app.components[frameId]){
-				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
+			if(!component){
+				throw new Error("Cannot goto page: No such component.");
 			}
 			
-			this.setParameter("page", view);
-			
-			this.context.app.components[frameId].navigateTo(subject, view);
+			component.navigateTo(control, page);
 	}
 
 }());

@@ -11,22 +11,22 @@
 	],
 	
 	"getTitle" : {
-		"subject" : {
+		"control" : {
 			"scope" : "VIEW",
 			"controlId" : "titleInput"
 		},
 		
-		"method" : "= .subject.control.getValue()",
-		"tgtParam" : "pool.createMediaListItem.settings.heading"
+		"method" : "= .control.instance.getValue()",
+		"result" : "pool.createMediaListItem.settings.heading"
 	},
 	
 	"getMessage" : {
-		"subject" : {
+		"control" : {
 			"scope" : "VIEW",
 			"controlId" : "messageInput"
 		},
 		
-		"method" : "= .subject.control.getValue()",
+		"method" : "= .control.instance.getValue()",
 		"tgtParam" : "pool.createMediaListItem.settings.text"
 	},
 	
@@ -45,21 +45,21 @@
 	},
 	
 	"addImageToItem" : {
-		"subject" : {
+		"control" : {
 			"parameterKey" : "pool.createMediaListItem.result",
 			"scope" : "CONTEXT"
 		},
 		
-		"method" : "= .subject.control.setMedia( pool.createMediaListImage.result )"
+		"method" : "= .control.instance.setMedia( pool.createMediaListImage.result )"
 	},
 	
 	"addItemToList" : {
-		"subject" : {
+		"control" : {
 			"controlId" : "feeds",
 			"scope" : "VIEW"
 		},
 		
-		"method" : "= .subject.control.addItems( pool.createMediaListItem.result )"
+		"method" : "= .control.instance.addItems( pool.createMediaListItem.result )"
 		
 	}
 

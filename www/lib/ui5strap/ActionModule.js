@@ -107,13 +107,7 @@
 			throw new Error("Invalid definition for parameter '" + paramKey + "'.");
 		}
 
-		var value = this.context._getParameter("." + paramKey, this.getScope());
-		
-		//Set default value
-		var defaultValueDef = paramDef.defaultValue;
-		if(!value && defaultValueDef){
-			value = defaultValueDef;
-		}
+		var value = this.context._getParameter("." + paramKey, this.getScope(), paramDef.defaultValue);
 		
 		var paramDefType = paramDef.type;
 		
@@ -129,14 +123,11 @@
 		
 			if("object" === paramDefType){
 				var objectKeys = Object.keys(value),
-					objectKeysLength = objectKeys.length,
-					resolved = {};
+					objectKeysLength = objectKeys.length;
 				
 				for(var i=0; i < objectKeysLength; i++){
-					resolved[objectKeys[i]] = this.context._getParameter("." + paramKey + "." + objectKeys[i], this.getScope());
+					this.context._getParameter("." + paramKey + "." + objectKeys[i], this.getScope());
 				}
-				
-				value = resolved;
 			}
 		}
 		
@@ -287,9 +278,9 @@
 	/**
 	 * Tries to find a control by a given scope and additional paramters
 	 */
-	ActionModuleProto.findSubject = function(){
+	ActionModuleProto.findTargetControl = function(){
 		var theControl = null,
-			subjectQuery = this.getParameter("subject");
+			subjectQuery = this.getParameter("control");
 			scope = subjectQuery.scope || "APP";
 
 		if("APP" === scope){

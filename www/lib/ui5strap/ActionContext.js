@@ -349,7 +349,7 @@
 	* Gets a parameter by key
 	* @Protected
 	*/
-	ActionContextProto._getParameter = function(parameterKey, parameterScope){
+	ActionContextProto._getParameter = function(parameterKey, parameterScope, defaultValue){
 		var fPart = null;
 		var kPart = parameterKey;
 		var c1Pos = parameterKey.indexOf('(');
@@ -385,56 +385,61 @@
 				pointer = this,
 				i=0;
 			
-			while(i < keyParts.length){
-				var keyPart = keyParts[i];
-				if("object" !== typeof pointer){
-					throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": not an object.");
-				}
-				
-				if(keyPart in pointer){
-					var prevPointer = pointer;
-					pointer = pointer[keyPart];
-					if("function" === typeof pointer){
-						if(i === keyParts.length - 1){
-							jQuery.sap.log.info("Executing " + kPart + " with arguments " + fPart);
-							pointer = _callParamFunction(this, prevPointer, pointer, fPart, parameterScope);
-							break;
-						}
-						else{
-							throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": is a function.");
-						}
-					}
-					i++;
-				}
-				else{
-					pointer = null;
-					break;
-				}
+		while(i < keyParts.length){
+			var keyPart = keyParts[i];
+			if("object" !== typeof pointer){
+				console.log(pointer);
+				throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": not an object.");
 			}
-			
+			var prevPointer = pointer;
+			pointer = pointer[keyPart];
+			if(pointer){
+				var pointerType = typeof pointer;
+				if("function" === pointerType){
+					if(i === keyParts.length - 1){
+						jQuery.sap.log.info("Executing " + kPart + " with arguments " + fPart);
+						pointer = _callParamFunction(this, prevPointer, pointer, fPart, parameterScope);
+						break;
+					}
+					else{
+						throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": is a function.");
+					}
+				}
+				else if(("string" === pointerType) && pointer.charAt(0) === "="){
+					prevPointer[keyPart] = this._getParameter(pointer.substring(1).trim(), parameterScope);
+				    pointer = prevPointer[keyPart];
+				}
+				i++;
+			}
+			else{
+				break;
+			}
+		}
+		
+		if(!pointer && defaultValue){
+			pointer = defaultValue;
 			if(("string" === typeof pointer) && pointer.charAt(0) === "="){
 				pointer = this._getParameter(pointer.substring(1).trim(), parameterScope);
 			}
-			
-			return pointer;
+		}
 		
-	/*
-		}	
-		console.log(parameterKey);
-		//Without a dot in the key, use "parameters"
-		return parameterKey in this.parameters 
-			? this.parameters[parameterKey]
-			: null;
-			*/
+		return pointer;
 	};
 
 	/*
 	* @Protected
 	*/
-	ActionContextProto._setParameter = function(parameterKey, parameterValue){
+	ActionContextProto._setParameter = function(parameterKey, parameterValue, parameterScope){
 		if(-1 === parameterKey.indexOf('.')){
 			throw new Error("Cannot get parameter: no root node provided.");
 		}
+		if(parameterKey.charAt(0) === "."){
+			if(!parameterScope){
+				throw new Error("Cannot resolve relative paramter without scope!");
+			}
+			parameterKey = parameterScope + parameterKey;
+		}
+		
 				var keyParts = parameterKey.split('.'),
 					pointer = this,
 					i=0;

@@ -69,7 +69,7 @@
 								<div data-sap-ui-type="ui5strap.Panel" data-title="{i18n>PAGE2_PANEL_RIGHT_TITLE}">
 								
 									<div data-sap-ui-type="ui5strap.ListMedia" id="feeds" data-tap="__execute" 
-														data-custom-data:__action="ui5strap.demoapp.actions.PostActions">
+														data-custom-data:__action="ui5strap.demoapp.actions.Debug">
 						
 										<!-- Media Item 1 -->
 										<div data-sap-ui-type="ui5strap.ListMediaItem">
@@ -88,6 +88,16 @@
 												<div data-sap-ui-type="ui5strap.ListMedia" id="feedsA" data-tap="__execute" 
 														data-custom-data:__action="ui5strap.demoapp.actions.RemovePost">
 													<!-- Media Item 2 (nested) -->
+													<div data-sap-ui-type="ui5strap.ListMediaItem">
+														<div data-sap-ui-aggregation="media">
+															<div data-sap-ui-type="ui5strap.Image" data-type="MediaObject" data-mpath="ui5strap.demoapp.img.awesome" data-ext="png" data-alt="Image" data-width="64"></div>
+														</div>
+														<div data-sap-ui-aggregation="content">
+															<div data-sap-ui-type="ui5strap.Icon" data-icon="times" data-align="PullRight" data-custom-data:command="DELETE" ></div> 
+															<div data-sap-ui-type="ui5strap.Heading" data-level="4" data-type="MediaHeading" data-text="Media Heading"></div>
+															<div data-sap-ui-type="ui5strap.Text" data-text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus."></div>
+														</div>
+													</div>
 													<div data-sap-ui-type="ui5strap.ListMediaItem">
 														<div data-sap-ui-aggregation="media">
 															<div data-sap-ui-type="ui5strap.Image" data-type="MediaObject" data-mpath="ui5strap.demoapp.img.awesome" data-ext="png" data-alt="Image" data-width="64"></div>
