@@ -144,7 +144,7 @@
 			
 			
 			_this.parameters = jQuery.extend(true, {}, _this.defaultParameters);
-			_this.pool = _this.parameters;
+			_this.action = _this.parameters;
 
 			
 		}

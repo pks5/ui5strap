@@ -15,7 +15,7 @@
 		"controlId" : "titleInput",
 		"inputField" : "&=> app.getControl(.controlId, .viewId)",
 		"RESULT" : "&=> .inputField.getValue()",
-		"COPYTO" : "pool.createMediaListItem.settings.heading"
+		"COPYTO" : "action.createMediaListItem.settings.heading"
 	},
 	
 	"getMessage" : {
@@ -23,7 +23,7 @@
 		"controlId" : "messageInput",
 		"inputField" : "&=> app.getControl(.controlId, .viewId)",
 		"RESULT" : "&=> .inputField.getValue()",
-		"COPYTO" : "pool.createMediaListItem.settings.text"
+		"COPYTO" : "action.createMediaListItem.settings.text"
 	},
 	
 	"createMediaListItem" : {
@@ -41,14 +41,14 @@
 	},
 	
 	"addImageToItem" : {
-		"RESULT" : "&=> pool.createMediaListItem.result.setMedia( pool.createMediaListImage.result )"
+		"RESULT" : "&=> action.createMediaListItem.result.setMedia( action.createMediaListImage.result )"
 	},
 	
 	"addItemToList" : {
 		"viewId" : "&=> view.getId()",
 		"controlId" : "feeds",
 		"mediaList" : "&=> app.getControl(.controlId, .viewId)",
-		"RESULT" : "&=> .mediaList.addItems( pool.createMediaListItem.result )"
+		"RESULT" : "&=> .mediaList.addItems( action.createMediaListItem.result )"
 		
 	}
 

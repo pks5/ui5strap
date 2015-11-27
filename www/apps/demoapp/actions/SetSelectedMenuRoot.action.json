@@ -14,6 +14,6 @@
 		"viewId" : "my-app-bar-menu",
 		"controlId" : "myMenu",
 		
-		"itemId" : "&=> pool.getCurrentPage.result"
+		"itemId" : "&=> action.getCurrentPage.result"
 	}
 }

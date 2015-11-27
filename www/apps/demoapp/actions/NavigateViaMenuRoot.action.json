@@ -6,14 +6,14 @@
 
 	"getContextData" : {
 		"scope" : "PARAMETER",
-		"tgtParam" : "pool.menuItem",
+		"tgtParam" : "action.menuItem",
 		"modelName" : "menu",
 		"parameterKey" : "listItem"
 	},
 	
 	"navigate" : {
 		"PAGE" : {
-			"viewName" : "&=> pool.menuItem.viewName",
+			"viewName" : "&=> action.menuItem.viewName",
 			"transition" : "flip-horizontal-ccw",
 			"writeHistory" : true
 		}
