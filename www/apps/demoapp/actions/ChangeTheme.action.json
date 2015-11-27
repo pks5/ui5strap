@@ -6,7 +6,7 @@
 
 	"changeTheme" : {
 		"customDataKey" : "theme",
-		"theme" : "=eventParameters.srcControl.data(.customDataKey)"
+		"theme" : "&=> eventParameters.srcControl.data(.customDataKey)"
 	}
 	
 }

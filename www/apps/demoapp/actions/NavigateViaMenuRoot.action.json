@@ -13,7 +13,7 @@
 	
 	"navigate" : {
 		"PAGE" : {
-			"viewName" : "= pool.menuItem.viewName",
+			"viewName" : "&=> pool.menuItem.viewName",
 			"transition" : "flip-horizontal-ccw",
 			"writeHistory" : true
 		}

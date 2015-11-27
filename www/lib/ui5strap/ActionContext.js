@@ -378,7 +378,10 @@
 			throw new Error("Invalid key part in " + parameterKey);
 		}
 		
-		
+		if(this._loopDir[kPart]){
+			throw new Error("Cannot access " + kPart + ": is locked by another process.");
+		}
+		this._loopDir[kPart] = true;
 		//console.log(kPart, fPart);
 			
 		var keyParts = kPart.split('.'),
@@ -405,8 +408,8 @@
 						throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": is a function.");
 					}
 				}
-				else if(("string" === pointerType) && pointer.charAt(0) === "="){
-					prevPointer[keyPart] = this._getParameter(pointer.substring(1).trim(), parameterScope);
+				else if(("string" === pointerType) && pointer.substr(0, 3) === "&=>"){
+					prevPointer[keyPart] = this._getParameter(pointer.substring(3).trim(), parameterScope);
 				    pointer = prevPointer[keyPart];
 				}
 				i++;
@@ -418,10 +421,12 @@
 		
 		if(!pointer && defaultValue){
 			pointer = defaultValue;
-			if(("string" === typeof pointer) && pointer.charAt(0) === "="){
-				pointer = this._getParameter(pointer.substring(1).trim(), parameterScope);
+			if(("string" === typeof pointer) && pointer.substr(0, 3) === "&=>"){
+				pointer = this._getParameter(pointer.substring(3).trim(), parameterScope);
 			}
 		}
+		
+		this._loopDir[kPart] = false;
 		
 		return pointer;
 	};

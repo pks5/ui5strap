@@ -45,7 +45,7 @@
 	NavigateProto.parameters = {
 		"CONTROL" : {
 			"required" : false,
-			"defaultValue" : "= app.getRootControl()",
+			"defaultValue" : "&=> app.getRootControl()",
 			"type" : ["string", "object"]
 		},
 			
@@ -58,7 +58,7 @@
 		"COMPONENT" : {
 			"required" : false,
 			"type" : ["string", "object"],
-			"defaultValue" : "= app.components.frame"
+			"defaultValue" : "&=> app.components.frame"
 		}
 
 	};

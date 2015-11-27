@@ -11,23 +11,19 @@
 	],
 	
 	"getTitle" : {
-		"control" : {
-			"scope" : "VIEW",
-			"controlId" : "titleInput"
-		},
-		
-		"method" : "= .control.instance.getValue()",
-		"result" : "pool.createMediaListItem.settings.heading"
+		"viewId" : "&=> view.getId()",
+		"controlId" : "titleInput",
+		"inputField" : "&=> app.getControl(.controlId, .viewId)",
+		"RESULT" : "&=> .inputField.getValue()",
+		"COPYTO" : "pool.createMediaListItem.settings.heading"
 	},
 	
 	"getMessage" : {
-		"control" : {
-			"scope" : "VIEW",
-			"controlId" : "messageInput"
-		},
-		
-		"method" : "= .control.instance.getValue()",
-		"tgtParam" : "pool.createMediaListItem.settings.text"
+		"viewId" : "&=> view.getId()",
+		"controlId" : "messageInput",
+		"inputField" : "&=> app.getControl(.controlId, .viewId)",
+		"RESULT" : "&=> .inputField.getValue()",
+		"COPYTO" : "pool.createMediaListItem.settings.text"
 	},
 	
 	"createMediaListItem" : {
@@ -45,21 +41,14 @@
 	},
 	
 	"addImageToItem" : {
-		"control" : {
-			"parameterKey" : "pool.createMediaListItem.result",
-			"scope" : "CONTEXT"
-		},
-		
-		"method" : "= .control.instance.setMedia( pool.createMediaListImage.result )"
+		"RESULT" : "&=> pool.createMediaListItem.result.setMedia( pool.createMediaListImage.result )"
 	},
 	
 	"addItemToList" : {
-		"control" : {
-			"controlId" : "feeds",
-			"scope" : "VIEW"
-		},
-		
-		"method" : "= .control.instance.addItems( pool.createMediaListItem.result )"
+		"viewId" : "&=> view.getId()",
+		"controlId" : "feeds",
+		"mediaList" : "&=> app.getControl(.controlId, .viewId)",
+		"RESULT" : "&=> .mediaList.addItems( pool.createMediaListItem.result )"
 		
 	}
 

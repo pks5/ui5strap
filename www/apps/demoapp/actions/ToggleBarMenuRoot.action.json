@@ -5,10 +5,10 @@
 	"__modules" : "ui5strap.task.Call",
 	
 	"call" : {
-		"navContainer" : "= app.getRootControl()",
-		"currentValue" : "= .navContainer.getBarVisible()",
-		"oppositeValue" : "= tools.not(.currentValue)",
-		"RESULT" : "= .navContainer.setBarVisible(.oppositeValue)"
+		"navContainer" : "&=> app.getRootControl()",
+		"currentValue" : "&=> .navContainer.getBarVisible()",
+		"oppositeValue" : "&=> tools.not(.currentValue)",
+		"RESULT" : "&=> .navContainer.setBarVisible(.oppositeValue)"
 	}
 
 }

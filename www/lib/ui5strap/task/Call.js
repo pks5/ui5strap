@@ -44,7 +44,7 @@
 	*/
 	CallProto.parameters = {
 		"RESULT" : {
-			"type" : "string"
+			
 		},
 		"COPYTO" : {
 			"type" : "string"
@@ -57,7 +57,9 @@
 	CallProto.run = function(){
 		var result = this.getParameter("RESULT"),
 			copyTo = this.getParameter("COPYTO");
-		this.context._setParameter(copyTo, result, this.getScope());
+		if(copyTo){
+			this.context._setParameter(copyTo, result, this.getScope());
+		}
 	};
 
 }());

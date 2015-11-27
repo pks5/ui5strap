@@ -7,10 +7,10 @@
 	"call" : {
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",
-		"navContainer" : "= app.getControl(.controlId, .viewId)",
-		"currentValue" : "= .navContainer.getBarVisible()",
-		"oppositeValue" : "= tools.not(.currentValue)",
-		"RESULT" : "= .navContainer.setBarVisible(.oppositeValue)"
+		"navContainer" : "&=> app.getControl(.controlId, .viewId)",
+		"currentValue" : "&=> .navContainer.getBarVisible()",
+		"oppositeValue" : "&=> tools.not(.currentValue)",
+		"RESULT" : "&=> .navContainer.setBarVisible(.oppositeValue)"
 	}
 
 }

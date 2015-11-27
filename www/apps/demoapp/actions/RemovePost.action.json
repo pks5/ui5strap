@@ -8,10 +8,7 @@
 	
 	"//" : "The 'call' task calls the control's method removeItems.",
 	"call" : {
-		"subject" : {
-			"scope" : "SOURCE"
-		},	
-		"method" : "=.subject.control.removeItems(eventParameters.listItem)"
+		"RESULT" : "&=> eventSource.removeItems(eventParameters.listItem)"
 	}
 	
 }
