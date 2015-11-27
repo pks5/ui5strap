@@ -129,27 +129,39 @@
 		
 		_this.tools = _tools;
 		
-		//Files
-		_this.FILES = [];
-
 		//Default parameters
-		if(action.parameters){
-			var actionParametersType = typeof action.parameters;
-			if(actionParametersType === 'object'){
-				_this.defaultParameters = jQuery.extend({}, action.parameters);
-
-				//Set parameters to default format
-				if(!_this.defaultParameters.__format){
-					_this.defaultParameters.__format = ActionContext.DEFAULT_FORMAT;
-				}
-			}
-			else{
-				//parameters is a string
-				throw new Error('Context Parameters must be an object!');
-			}
+		if(!action.parameters){
+			throw new Error('Parameters required!')
 		}
+		var actionParametersType = typeof action.parameters;
+		if(actionParametersType === 'object'){
+			_this.defaultParameters = jQuery.extend(true, {}, action.parameters);
+			
+			//Set parameters to default format
+			if(!_this.defaultParameters.__format){
+				_this.defaultParameters.__format = ActionContext.DEFAULT_FORMAT;
+			}
+			
+			
+			_this.parameters = jQuery.extend(true, {}, _this.defaultParameters);
+			_this.pool = _this.parameters;
+
+			
+		}
+		else{
+			//parameters is a string
+			throw new Error('Context Parameters must be an object!');
+		}
+		console.log(action);
 		
+		if(action.eventSource){
+			_this.eventSource = action.eventSource;
+		}
+		if(action.eventParameters){
+			_this.eventParameters = action.eventParameters;
+		}
 		//Event
+		/*
 		if(action.event){ //Expected sap.ui.base.Event instance 
 			var oEvent = action.event;
 
@@ -160,7 +172,8 @@
 			var eventSource = oEvent.getSource();
 			if(eventSource instanceof sap.ui.base.EventProvider){ //Expected sap.ui.base.EventProvider
 				_this.eventSource = eventSource;
-
+				
+				
 				var customData = eventSource.data();
 				if(customData && Object.keys(customData).length){ //Expected object
 					//Format check
@@ -170,6 +183,7 @@
 					}
 					_this.customData = customData;
 				}
+				
 			}
 
 			//Event parameters (e.g. from a list selection)
@@ -180,7 +194,7 @@
 			}
 		
 		}
-
+		*/
 		//OpenUI5 Standard Controller
 		if(action.controller){
 			//Add Controller reference to context
@@ -217,15 +231,13 @@
 
 		//Init Log
 		_initLog(_this);
-		
-		//Merge the context
-		_this._buildPool();
 	};
 
 	/*
 	* Parse data and merge it into the context
 	* @private
 	*/
+	/*
 	var _parseAndMerge = function(_this, customData){
 		var customDataKeys = Object.keys(customData),
 			customDataKeysLength = customDataKeys.length;
@@ -250,7 +262,8 @@
 			} 
 		}
 	};
-
+	*/
+	
 	/*
 	* Apply functions
 	* @private
@@ -495,6 +508,7 @@
 	* Merge the parameters from custom data into the existing computed parameters
 	* @protected
 	*/
+	/*
 	ActionContextProto._buildPool = function(){
 			this._log.debug("Building Pool...");
 			
@@ -523,6 +537,7 @@
 				this._process(ActionContext.WORKPOOL);
 			}
 	};
+	*/
 
 	/*
 	* @protected

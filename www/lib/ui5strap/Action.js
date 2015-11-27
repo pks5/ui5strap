@@ -105,6 +105,8 @@
 	* @static
 	*/
 	var _execute = function(context){
+		context._process(ActionContext.WORKPOOL);
+		
 		var actionModuleNameParameter = context.parameterKey(ActionContext.PARAM_MODULES, ActionContext.WORKPOOL),
 			actionModuleName = context._getParameter(actionModuleNameParameter);
 		
@@ -117,51 +119,6 @@
 		}
 	};
 
-	/*
-	* @private
-	* @static
-	*/
-	var _extendContextFromFileOrMerge = function(context, actionName, callback){
-		if(actionName){ //Expected string or object
-			var actionNamesList = ui5strap.Utils.parseIContent(actionName); 
-			if(typeof actionNamesList === 'object'){
-				var eventId = context.event.getId();
-				//Different actions for each event
-				if(!eventId || !actionNamesList[eventId]){
-					throw new Error('Cannot execute action: no action for eventId ' + eventId);
-				}
-				actionName = actionNamesList[eventId];
-			}
-			
-			Action.loadFromFile(actionName, function _loadActionFromFile_complete(actionJSON){
-
-				//Action JSON files cannot be loaded if they differ in format
-				//TODO: Make this better
-				actionJSON.__format = actionJSON.__format || ActionContext.DEFAULT_FORMAT;
-				if(context.parameters.__format && context.parameters.__format !== actionJSON.__format){
-					throw new Error('Cannot load action "' + actionName + '": Bad format: ' + actionJSON.__format + " (expected: " + context.parameters.__format + ")");
-				}
-				else{
-					//If no format string prensent in context, set it to the format of the JSON
-					context.parameters.__format = actionJSON.__format;
-				}
-
-				//Add to context
-				context.FILES.push(actionJSON);
-
-				//Recursive call
-				_extendContextFromFileOrMerge(context, actionJSON[context.addFormatPrefix(ActionContext.PARAM_ACTION)], callback);
-
-			});
-			
-		}
-		else{
-			context._buildPool();
-
-			callback && callback();
-		}
-	};
-	
 	/*
 	* Load an action from a json file
 	* @private
@@ -215,24 +172,18 @@
 	Action.run = function(action){
 		jQuerySap.log.debug("[ACTION] Action.run");
 
-		var actionName = null;
-		if(action.parameters && typeof action.parameters === 'string'){
-			actionName = action.parameters;
-			delete action.parameters;
+		var actionName = action.parameters;
+		if(typeof actionName === 'string'){
+			Action.loadFromFile(actionName, function loadFromFileSuccess(actionJSON){
+				action.parameters = actionJSON;
+				var context = new ActionContext(action);
+				_execute(context);
+			});
 		}
-
-		var context = new ActionContext(action);
-
-		if(null === actionName){
-			//Take the action name from the custom data
-			actionName = context._getParameter(context.parameterKey(ActionContext.PARAM_ACTION, ActionContext.WORKPOOL));
-		}
-
-		_extendContextFromFileOrMerge(context, actionName, function _extendContextFromFileOrMerge_complete(){
+		else{
+			var context = new ActionContext(action);
 			_execute(context);
-		});
-		
-		return context;
+		}
 	};
 
 }());

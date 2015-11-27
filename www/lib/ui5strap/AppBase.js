@@ -663,7 +663,9 @@
 
 		//Original Event
 		if("orgEvent" in eventParameters){
-			actionParameters.event = eventParameters.orgEvent;
+			actionParameters.eventSource = eventParameters.orgEvent.getSource();
+			actionParameters.eventParameters = eventParameters.orgEvent.getParameters();
+			
 		}
 
 		this.runAction(actionParameters);
@@ -1180,7 +1182,8 @@
 					app.runAction({
 						"parameters" : actionName, 
 						"controller" : this,
-						"event" : oEvent
+						"eventSource" : oEvent.getSource(),
+						"eventParameters" : oEvent.getParameters()
 					});
 				}
 			}
@@ -1216,12 +1219,28 @@
 		controllerImpl.formatters.localeString = function(localeString){
 			return this.getApp().getLocaleString(localeString);
 		};
+		
+		var _getActionFromEvent = function(oEvent, customDataKey){
+			var actionName = oEvent.getSource().data(customDataKey),
+				actionNamesList = ui5strap.Utils.parseIContent(actionName); 
+			if(typeof actionNamesList === 'object'){
+				var eventId = oEvent.getId();
+				//Different actions for each event
+				if(!eventId || !actionNamesList[eventId]){
+					throw new Error('Cannot execute action: no action for eventId ' + eventId);
+				}
+				actionName = actionNamesList[eventId];
+			}
+			return actionName;
+		};
 
         //Controller event handler
         var _controllerEventHandler = function(oEvent){
 			this.getApp().runAction({
-				"event" : oEvent, 
-				"controller" : this
+				"eventSource" : oEvent.getSource(),
+				"eventParameters" : oEvent.getParameters(),
+				"controller" : this,
+				"parameters" : _getActionFromEvent(oEvent, "a_id")
 			});
 		};
 
@@ -1230,11 +1249,10 @@
 		
 		var _controllerEventHandler2 = function(oEvent){
 			this.getApp().runAction({
-				"event" : oEvent, 
+				"eventSource" : oEvent.getSource(),
+				"eventParameters" : oEvent.getParameters(),
 				"controller" : this,
-				"parameters" : {
-					"__format" : "AJ2.0"
-				}
+				"parameters" : _getActionFromEvent(oEvent, "__action")
 			});
 		};
 
@@ -1259,7 +1277,8 @@
 					
 					app.runAction({
 						"parameters" : actionName, 
-						"event" : oEvent,
+						"eventSource" : oEvent.getSource(),
+						"eventParameters" : oEvent.getParameters(),
 						"controller" : this
 					});
 				} 

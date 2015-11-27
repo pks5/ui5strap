@@ -131,7 +131,8 @@
 					for(var j = 0; j < data.actions.length; j ++){
 						app.runAction({
 							"parameters" : data.actions[j], 
-							"event" : oEvent
+							"eventSource" : oEvent.getSource(),
+							"eventParameters" : oEvent.getParameters()
 						});
 					}
 					
