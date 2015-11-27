@@ -445,42 +445,33 @@
 			parameterKey = parameterScope + parameterKey;
 		}
 		
-				var keyParts = parameterKey.split('.'),
-					pointer = this,
-					i=0;
-				
-				while(i < keyParts.length){
-					var keyPart = keyParts[i];
-					
-					if(i === keyParts.length - 1){
-						if(pointer[keyPart] && ("function" === typeof pointer[keyPart])){
-							//Value already exists, but its a function
-							throw new Error("Cannot override parameter: '" + parameterKey + "' is a function.");
-						}
-						//Set (or override) value
-						pointer[keyPart] = parameterValue;
-					}
-					else if(!(keyPart in pointer)){
-						//Create new empty object
-						//TODO if pointer[keypart] is a string we will land here too and override it!
-						pointer[keyPart] = {};
-					}
-					
-					pointer = pointer[keyPart];
-					i++;
-					
+		var keyParts = parameterKey.split('.'),
+			pointer = this,
+			i=0;
+		
+		while(i < keyParts.length){
+			var keyPart = keyParts[i];
+			
+			if(i === keyParts.length - 1){
+				if(pointer[keyPart] && ("function" === typeof pointer[keyPart])){
+					//Value already exists, but its a function
+					throw new Error("Cannot override parameter: '" + parameterKey + "' is a function.");
 				}
-				
-				return this;
+				//Set (or override) value
+				pointer[keyPart] = parameterValue;
+			}
+			else if(!(keyPart in pointer)){
+				//Create new empty object
+				//TODO if pointer[keypart] is a string we will land here too and override it!
+				pointer[keyPart] = {};
+			}
 			
-			/*
-			}	
+			pointer = pointer[keyPart];
+			i++;
 			
-			//Without a dot in the key, use "parameters"
-			this.parameters[parameterKey] = parameterValue;
-
-			return this;
-			*/
+		}
+		
+		return this;
 	};
 
 	/*
