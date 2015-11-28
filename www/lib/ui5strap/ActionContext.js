@@ -142,15 +142,15 @@
 		}
 		var actionParametersType = typeof action.parameters;
 		if(actionParametersType === 'object'){
-			_this.defaultParameters = jQuery.extend(true, {}, action.parameters);
-			
-			//Set parameters to default format
-			if(!_this.defaultParameters.__format){
-				_this.defaultParameters.__format = ActionContext.DEFAULT_FORMAT;
-			}
-			
+			_this.defaultParameters = action.parameters;
 			
 			_this.parameters = jQuery.extend(true, {}, _this.defaultParameters);
+			
+			//Set parameters to default format
+			if(!_this.parameters.__format){
+				_this.parameters.__format = ActionContext.DEFAULT_FORMAT;
+			}
+			
 			_this.action = _this.parameters;
 
 			
@@ -161,47 +161,16 @@
 		}
 		console.log(action);
 		
+		//Event Source
 		if(action.eventSource){
 			_this.eventSource = action.eventSource;
 		}
+		
+		//Event Parameters
 		if(action.eventParameters){
 			_this.eventParameters = action.eventParameters;
 		}
-		//Event
-		/*
-		if(action.event){ //Expected sap.ui.base.Event instance 
-			var oEvent = action.event;
-
-			//Add sap.ui.base.Event object to context
-			//_this.event = oEvent;
-
-			//Event Source
-			var eventSource = oEvent.getSource();
-			if(eventSource instanceof sap.ui.base.EventProvider){ //Expected sap.ui.base.EventProvider
-				_this.eventSource = eventSource;
-				
-				
-				var customData = eventSource.data();
-				if(customData && Object.keys(customData).length){ //Expected object
-					//Format check
-					//TODO: Make this better
-					if((!_this.defaultParameters || !_this.defaultParameters.__format) && !customData.__format){
-						customData.__format = ActionContext.DEFAULT_FORMAT;
-					}
-					_this.customData = customData;
-				}
-				
-			}
-
-			//Event parameters (e.g. from a list selection)
-			var eventParameters = oEvent.getParameters();
-			if(eventParameters){
-				_this.eventParameters = eventParameters;
-				//console.log(eventSource, eventParameters);
-			}
 		
-		}
-		*/
 		//OpenUI5 Standard Controller
 		if(action.controller){
 			//Add Controller reference to context
@@ -240,37 +209,6 @@
 		_initLog(_this);
 	};
 
-	/*
-	* Parse data and merge it into the context
-	* @private
-	*/
-	/*
-	var _parseAndMerge = function(_this, customData){
-		var customDataKeys = Object.keys(customData),
-			customDataKeysLength = customDataKeys.length;
-		
-		for ( var i = 0; i < customDataKeysLength; i++ ){
-			var customDataKey = customDataKeys[i],
-				iContent = ui5strap.Utils.parseIContent(customData[customDataKey]),
-				iContentType = typeof iContent;
-			if(iContentType === 'string'){
-				//iContent is a string, just set or replace the value in the parameter pool
-				_this.parameters[customDataKey] = iContent;
-			}
-			else if(iContentType === 'object'){ 
-				//iContent is an object, if parameter already exists in pool, deep copy, otherwise just set
-				if(_this.parameters[customDataKey]){
-					jQuery.extend(true, _this.parameters[customDataKey], iContent);
-				}
-				else{
-					_this.parameters[customDataKey] = iContent;
-				}
-
-			} 
-		}
-	};
-	*/
-	
 	/*
 	* Apply functions
 	* @private
@@ -311,10 +249,6 @@
 			throw new Error("please provide a prefix for '" + parameterKey + "'");
 		}
 
-		var paramData = _paramNames[this.parameters.__format],
-			actionParam = paramData.PREFIX + paramData[parameterKey];
-		
-		
 		return prefix + "." + this.addFormatPrefix(parameterKey);
 	};
 	
@@ -511,41 +445,6 @@
 
 		return this;
 	};
-
-	/*
-	* Merge the parameters from custom data into the existing computed parameters
-	* @protected
-	*/
-	/*
-	ActionContextProto._buildPool = function(){
-			this._log.debug("Building Pool...");
-			
-			//Reinitialize parameters with default values
-			this.parameters = {};
-			
-			//Add JSON Files in opposite order
-			for (var i = this.FILES.length-1; i >= 0; i--){
-				jQuery.extend(true, this.parameters, this.FILES[i]);
-			}
-
-			if(this.defaultParameters){
-				//Add Default Values
-				jQuery.extend(true, this.parameters, this.defaultParameters);
-			}
-
-			//Parse and add Custom Data 
-			if(this.customData){
-				_parseAndMerge(this, this.customData);
-			}
-			
-			this.pool = this.parameters;
-			
-			//If a format is present, we can process the parameters
-			if(this.parameters.__format){
-				this._process(ActionContext.WORKPOOL);
-			}
-	};
-	*/
 
 	/*
 	* @protected
