@@ -68,6 +68,10 @@
 	
 	ActionContext.WORKPOOL = "action";
 	
+	/*
+	 * Tools functions
+	 * CLEANUP
+	 */
 	var _tools = {
 		"bool" : {
 	 		"not" : function(value){
@@ -122,6 +126,7 @@
 	};
 
 	/**
+	 * @PostConstruct
 	* @Private
 	*/
 	var _init = function(_this, action){
@@ -199,46 +204,18 @@
 	};
 
 	/**
-	* Apply functions
-	* @deprecated
-	* @private
+	* Returns String representation of this context.
+	* 
+	* @Public
 	*/
-	var _applyFunctions = function(_this, parameterKey){
-		var paramFunctions = _this._getParameter(parameterKey);
-
-		if(paramFunctions){ //Expected array
-			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
-			var paramFunctionsLength = paramFunctions.length,
-				availableFunctions = ui5strap.ActionFunctions;
-			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
-				
-			for( var i = 0; i < paramFunctionsLength; i++ ){
-				var functionDef = paramFunctions[i],
-					functionName = functionDef['function'];
-
-				if(availableFunctions[functionName]){
-					_this._log.debug("Calling parameter function '" + functionName + "'");
-					var funcResult = availableFunctions[functionName].call(_this, functionDef.args);
-					if(false === funcResult){
-						throw new Error("Parameter function '" + functionName + "' failed.");
-					}
-				}
-				else{
-					throw new Error('Invalid function: ' + functionName);
-				}
-			}
-		}	
-
+	ActionContextProto.toString = function(){
+		return '[ACTION#' + this._actionNumber + ']';
 	};
-	
+
 	/**
-	* @Protected
-	* @deprecated
-	*/
-	ActionContextProto._process = function(taskScope){
-		_applyFunctions(this, taskScope + "." + ActionContext.PREFIX + ActionContext.PARAM_FUNCTIONS);
-	};
-
+	 * @Public
+	 * FIXME
+	 */
 	ActionContextProto.resolve = function(taskScope, pointer, onlyString){
 		if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
 			pointer = this.get(taskScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
@@ -280,11 +257,6 @@
 		return func.apply(scope, args);
 	};
 	
-	ActionContextProto._getParameter = function(parameterKey, parameterScope, defaultValue){
-		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._getParameter is deprecated. Use .get instead.");
-		
-		return this.get(parameterScope, parameterKey, defaultValue);
-	}
 	
 	/**
 	* Gets and evaluates a context parameter.
@@ -388,12 +360,8 @@
 		return pointer;
 	};
 	
-	ActionContextProto._setParameter = function(parameterKey, parameterValue, parameterScope){
-		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._setParameter is deprecated. Use .set instead.");
-		this.set(parameterScope, parameterKey, parameterValue);
-	};
-	
 	/**
+	 * Sets a value.
 	* @Protected
 	*/
 	ActionContextProto.set = function(parameterScope, parameterKey, parameterValue){
@@ -432,16 +400,16 @@
 			
 			var prevPointer = pointer;
 			pointer = pointer[keyPart];
-			var pointerType = typeof pointer;
 			
 			if(null === pointer){
 				throw new Error("Cannot write parameter: '" + keyPart + "' is null.");
 			}
-			else if("string" === pointerType && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
+			else if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
 				prevPointer[keyPart] = this.get(parameterScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
 				pointer = prevPointer[keyPart];
 			}
-			else if("object" !== pointerType){
+			
+			if("object" !== typeof pointer){
 				throw new Error("Cannot write parameter: '" + keyPart + "' is not an object.");
 			}
 			
@@ -451,7 +419,72 @@
 		
 		return false;
 	};
+	
+	/*
+	 * 
+	 * ------------------------------------------------
+	 * ------------------------------------------------
+	 * 
+	 */
+	
+	/**
+	* Apply functions
+	* @deprecated
+	* @private
+	*/
+	var _applyFunctions = function(_this, parameterKey){
+		var paramFunctions = _this._getParameter(parameterKey);
 
+		if(paramFunctions){ //Expected array
+			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
+			var paramFunctionsLength = paramFunctions.length,
+				availableFunctions = ui5strap.ActionFunctions;
+			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
+				
+			for( var i = 0; i < paramFunctionsLength; i++ ){
+				var functionDef = paramFunctions[i],
+					functionName = functionDef['function'];
+
+				if(availableFunctions[functionName]){
+					_this._log.debug("Calling parameter function '" + functionName + "'");
+					var funcResult = availableFunctions[functionName].call(_this, functionDef.args);
+					if(false === funcResult){
+						throw new Error("Parameter function '" + functionName + "' failed.");
+					}
+				}
+				else{
+					throw new Error('Invalid function: ' + functionName);
+				}
+			}
+		}	
+
+	};
+	
+	/**
+	* @Protected
+	* @deprecated
+	*/
+	ActionContextProto._process = function(taskScope){
+		_applyFunctions(this, taskScope + "." + ActionContext.PREFIX + ActionContext.PARAM_FUNCTIONS);
+	};
+	
+	/**
+	 * @deprecated
+	 */
+	ActionContextProto._getParameter = function(parameterKey, parameterScope, defaultValue){
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._getParameter is deprecated. Use .get instead.");
+		
+		return this.get(parameterScope, parameterKey, defaultValue);
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	ActionContextProto._setParameter = function(parameterKey, parameterValue, parameterScope){
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._setParameter is deprecated. Use .set instead.");
+		this.set(parameterScope, parameterKey, parameterValue);
+	};
+	
 	/**
 	* @Protected
 	* FIXME
@@ -489,15 +522,6 @@
 		this._deleteParameter(parameterKeySrc);
 
 		return this;
-	};
-
-	/**
-	* Returns String representation of this context.
-	* 
-	* @Public
-	*/
-	ActionContextProto.toString = function(){
-		return '[ACTION#' + this._actionNumber + ']';
 	};
 
 }());

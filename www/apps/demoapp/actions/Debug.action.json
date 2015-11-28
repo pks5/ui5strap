@@ -16,7 +16,7 @@
 	},
 	
 	"error" : {
-		"abc" : "&=> action.error.poo",
+		"abc" : "&=> action.error.poo2",
 		"poo" : {},
 		"srcParam" : "action.error.abc.q",
 		"set" : "&=> set(.srcParam, action.testTask.compareValue)",

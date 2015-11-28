@@ -1245,7 +1245,7 @@
 		 */
 		var _getActionFromEvent = function(oEvent, customDataKey){
 			var actionName = oEvent.getSource().data(customDataKey),
-				actionNamesList = ui5strap.Utils.parseIContent(actionName); console.log(oEvent.getSource().data());
+				actionNamesList = ui5strap.Utils.parseIContent(actionName);
 			
 			if(typeof actionNamesList === 'object'){
 				var eventId = oEvent.getId();
