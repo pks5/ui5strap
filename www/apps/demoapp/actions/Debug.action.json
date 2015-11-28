@@ -3,8 +3,6 @@
 	"TASKS" : "testTask",
 	
 	"testTask" : {
-		"TASK" : "ui5strap.task.Exec",
-		
 		"compareValue" : "DELETE",
 		"customDataKey" : "command",
 		"customDataValue" : "&=> eventParameters.srcControl.data(.customDataKey)",
@@ -12,17 +10,15 @@
 		"IF" : "&=> tools.lang.eq(.compareValue, .customDataValue)",
 		
 		"message" : "&=> .customDataValue",
-		"RESULT" : "&=> window.alert(.message)",
+		"DO" : "&=> global.alert(.message)",
 		
 		"ELSE" : "error"
 	},
 	
 	"error" : {
-		"TASK" : "ui5strap.task.Exec",
-		
 		"message" : "Error occurred.",
 		
-		"RESULT" : "&=> window.alert(.message)"
+		"DO" : "&=> global.alert(.message)"
 	}
 	
 }

@@ -79,6 +79,8 @@
 			ui5strap.Action.run({
 				app : this.context.app,
 				controller : this.context.controller,
+				eventSource : this.context.eventSource,
+				eventParameters : this.context.eventParameters,
 				parameters: theAction
 			});
 		}

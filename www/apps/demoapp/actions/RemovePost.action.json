@@ -1,12 +1,10 @@
 {
 	"//" : "Removes a post from the list.",
-	"__modules" : [
-		"ui5strap.task.Exec"
-	],
+	"TASKS" : "exec",
 	
 	"//" : "The 'call' task calls the control's method removeItems.",
 	"exec" : {
-		"RESULT" : "&=> eventSource.removeItems(eventParameters.listItem)"
+		"DO" : "&=> eventSource.removeItems(eventParameters.listItem)"
 	}
 	
 }

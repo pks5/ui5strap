@@ -8,7 +8,7 @@
 		"currentValue" : "&=> .navContainer.getBarVisible()",
 		"oppositeValue" : "&=> tools.bool.not(.currentValue)",
 		
-		"RESULT" : "&=> .navContainer.setBarVisible(.oppositeValue)"
+		"DO" : "&=> .navContainer.setBarVisible(.oppositeValue)"
 	}
 
 }

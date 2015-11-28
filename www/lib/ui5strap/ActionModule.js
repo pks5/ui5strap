@@ -288,7 +288,7 @@
 	* @Protected
 	*/
 	ActionModuleProto.run = function(){
-		this.context._getParameter(".RESULT", this.getScope());
+		this.context._getParameter(".DO", this.getScope());
 	};
 	
 	/**

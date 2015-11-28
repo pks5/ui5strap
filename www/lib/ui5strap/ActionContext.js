@@ -183,6 +183,7 @@
 		
 		_this.window = window;
 		_this.document = document;
+		_this.global = window;
 		
 		//Number
 		ActionContext.NUMBER ++;
