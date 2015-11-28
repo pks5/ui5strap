@@ -49,6 +49,8 @@
 	ActionContext.NUMBER = 0;
 
 	ActionContext.PREFIX = "__";
+	ActionContext.RESOLVE = "&=>";
+	ActionContext.RESOLVE_LENGTH = ActionContext.RESOLVE.length;
 	
 	//Action Name
 	ActionContext.PARAM_ACTION = 'action';
@@ -295,19 +297,23 @@
 			var prevPointer = pointer;
 			pointer = pointer[keyPart];
 			if(pointer){
-				var pointerType = typeof pointer;
-				if("function" === pointerType){
+				var functionApplied = false;
+				if("function" === typeof pointer){
 					if(i === keyParts.length - 1){
-						jQuery.sap.log.info("Executing " + kPart + " with arguments " + fPart);
+						jQuery.sap.log.info("Executing function '" + kPart + "' with arguments (" + fPart + ")");
 						pointer = _callParamFunction(this, prevPointer, pointer, fPart, parameterScope);
-						break;
+						functionApplied = true;
 					}
 					else{
 						throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": is a function.");
 					}
 				}
-				else if(("string" === pointerType) && pointer.substr(0, 3) === "&=>"){
-					prevPointer[keyPart] = this._getParameter(pointer.substring(3).trim(), parameterScope);
+				
+				if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
+					if(functionApplied){
+						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
+					}
+					prevPointer[keyPart] = this._getParameter(pointer.substring(ActionContext.RESOLVE_LENGTH).trim(), parameterScope);
 				    pointer = prevPointer[keyPart];
 				}
 				i++;
@@ -319,8 +325,8 @@
 		
 		if(!pointer && defaultValue){
 			pointer = defaultValue;
-			if(("string" === typeof pointer) && pointer.substr(0, 3) === "&=>"){
-				pointer = this._getParameter(pointer.substring(3).trim(), parameterScope);
+			if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
+				pointer = this._getParameter(pointer.substring(ActionContext.RESOLVE_LENGTH).trim(), parameterScope);
 			}
 		}
 		

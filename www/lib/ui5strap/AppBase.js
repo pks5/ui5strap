@@ -1163,6 +1163,10 @@
 	* --------------------------------------------------
 	*/
 
+	/**
+	 * Creates an action event handler for the given event.
+	 * @Private
+	 */
 	var _createActionEventHandler = function(controllerImpl, eventName){
 		var eventFunctionName = 'on' + jQuery.sap.charToUpperCase(eventName, 0),
 			oldOnPageShow = controllerImpl[eventFunctionName];
@@ -1194,11 +1198,19 @@
 		};
 	};
 
-	/*
+	/**
+	 * Adds action functionality to the controller.
 	* @Static
 	*/
 	AppBase.blessController = function(controllerImpl){
-
+		
+		if(!controllerImpl.actionEventHandler){
+			controllerImpl.actionEventHandler = "execute";
+		}
+		if(!controllerImpl.actionAttribute){
+			controllerImpl.actionAttribute = "action";
+		}
+		
 		//Add getApp method if not already exists
 		if(!controllerImpl.getApp){
 	          controllerImpl.getApp = function(){
@@ -1212,17 +1224,29 @@
 	          }
       	}
 		
+		/*
+		 * All available formatters
+		 */
 		if(!controllerImpl.formatters){
 			controllerImpl.formatters = {};
 		}
 		
+		/**
+		 * Formatter that resolves a i18n string.
+		 * @Public
+		 */
 		controllerImpl.formatters.localeString = function(localeString){
 			return this.getApp().getLocaleString(localeString);
 		};
 		
+		/**
+		 * Extracts the action names for the given event.
+		 * @Private
+		 */
 		var _getActionFromEvent = function(oEvent, customDataKey){
 			var actionName = oEvent.getSource().data(customDataKey),
 				actionNamesList = ui5strap.Utils.parseIContent(actionName); console.log(oEvent.getSource().data());
+			
 			if(typeof actionNamesList === 'object'){
 				var eventId = oEvent.getId();
 				//Different actions for each event
@@ -1231,9 +1255,14 @@
 				}
 				actionName = actionNamesList[eventId];
 			}
+			
 			return actionName;
 		};
 
+		/*
+		 * Old action event handler
+		 * @deprecated
+		 */
 		controllerImpl["__execute"] = function(oEvent){
 			this.getApp().runAction({
 				"eventSource" : oEvent.getSource(),
@@ -1243,12 +1272,15 @@
 			});
 		};
 		
-		controllerImpl["execute"] = function(oEvent){
+		/*
+		 * New action event handler
+		 */
+		controllerImpl[controllerImpl.actionEventHandler] = function(oEvent){
 			this.getApp().runAction({
 				"eventSource" : oEvent.getSource(),
 				"eventParameters" : oEvent.getParameters(),
 				"controller" : this,
-				"parameters" : _getActionFromEvent(oEvent, "action")
+				"parameters" : _getActionFromEvent(oEvent, this.actionAttribute)
 			});
 		};
 
