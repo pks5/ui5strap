@@ -66,7 +66,7 @@
 	//Action Functions
 	ActionContext.PARAM_FUNCTIONS = 'functions';
 	
-	ActionContext.WORKPOOL = "parameters";
+	ActionContext.WORKPOOL = "action";
 	
 	var _tools = {
 		"bool" : {
@@ -77,6 +77,18 @@
 		"lang" : {
 			"do" : function(){
 				return;
+			},
+			"eq" : function(){
+				if(arguments.length === 0){
+					return true;
+				}
+				var cmp = arguments[0];
+				for(var i = 1; i < arguments.length; i++){
+					if(arguments[i] != cmp){
+						return false;
+					}
+				}
+				return true;
 			}
 		}
 	};
@@ -129,10 +141,11 @@
 		_this.defaultParameters = action.parameters;
 			
 		//Pool
-		_this.parameters = jQuery.extend(true, {}, _this.defaultParameters);
-			
-		//Pool Alias
-		_this.action = _this.parameters;
+		_this.action = jQuery.extend(true, {}, _this.defaultParameters);
+		
+		//Old Pool
+		//@deprecated
+		_this.parameters = _this.action;
 		
 		console.log(action);
 		
@@ -323,7 +336,8 @@
 			}
 		}
 		
-		if(!pointer && defaultValue){
+		//Set value to default if null or undefined
+		if(("undefined" === typeof pointer) && ("undefined" !== typeof defaultValue)){
 			pointer = defaultValue;
 			if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
 				pointer = this._getParameter(pointer.substring(ActionContext.RESOLVE_LENGTH).trim(), parameterScope);

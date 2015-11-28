@@ -166,7 +166,7 @@
 		this.prepareParameters();
 
 		//test if parameters match conditions
-		if(!this.testConditions()){
+		if(!this.context._getParameter(".CONDITIONS", this.getScope(), true)){
 			this.context._log.debug("CONDITIONS DONT MATCH " + this);
 		}
 		else{
@@ -187,20 +187,9 @@
 		//throw new Error('Please override the prepareParameters method in action module ' + this);
 	};
 
-	/*
-	* Check if the conditions for this action module are met
-	* @protected
-	*/
-	ActionModuleProto.testConditions = function(){
-		this.context._log.debug("TEST CONDITIONS " + this.context.action_conditions);
-		
-		//TODO Implement Action Conditions
-		
-		return true;
-	};	
-
 	/**
 	 * Tries to find a control by a given scope and additional paramters
+	 * @deprecated
 	 */
 	ActionModuleProto.findControl = function(){
 		var theControl = null,

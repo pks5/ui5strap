@@ -3,8 +3,13 @@
 	"__modules" : "ui5strap.task.Exec",
 	
 	"exec" : {
+		"compareValue" : "DELETE",
 		"customDataKey" : "command",
-		"message" : "&=> eventParameters.srcControl.data(.customDataKey)",
+		"customDataValue" : "&=> eventParameters.srcControl.data(.customDataKey)",
+		
+		"CONDITIONS" : "&=> tools.lang.eq(.compareValue, .customDataValue)",
+		
+		"message" : "&=> .customDataValue",
 		"RESULT" : "&=> window.alert(.message)"
 	}
 	
