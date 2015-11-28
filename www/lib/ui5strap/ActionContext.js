@@ -200,12 +200,14 @@
 
 	/**
 	* Apply functions
+	* @deprecated
 	* @private
 	*/
 	var _applyFunctions = function(_this, parameterKey){
 		var paramFunctions = _this._getParameter(parameterKey);
 
 		if(paramFunctions){ //Expected array
+			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
 			var paramFunctionsLength = paramFunctions.length,
 				availableFunctions = ui5strap.ActionFunctions;
 			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
@@ -231,15 +233,31 @@
 	
 	/**
 	* @Protected
+	* @deprecated
 	*/
 	ActionContextProto._process = function(taskScope){
 		_applyFunctions(this, taskScope + "." + ActionContext.PREFIX + ActionContext.PARAM_FUNCTIONS);
 	};
 
+	ActionContextProto.resolve = function(taskScope, pointer, onlyString){
+		if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
+			pointer = this._getParameter(pointer.substring(ActionContext.RESOLVE_LENGTH).trim(), taskScope);
+		}
+		else if(!onlyString && ("object" === typeof pointer)){
+			var objectKeys = Object.keys(pointer),
+				objectKeysLength = objectKeys.length;
+		
+			for(var i=0; i < objectKeysLength; i++){
+				pointer[objectKeys[i]] = this._getParameter(pointer[objectKeys[i]], taskScope);
+			}
+		}
+		return pointer;
+	};
+	
 	/**
 	 * @Private
 	 */
-	var _callParamFunction = function(_this, scope, func, paramString, parameterScope){
+	var _callParamFunction = function(_this, scope, func, paramString, parameterScope, isRoot){
 		var args = null;
 		if('' !== paramString){
 			args = paramString.split(/,/);
@@ -255,15 +273,25 @@
 			args[i] = _this._getParameter(args[i].trim(), parameterScope);
 		}
 		
+		if(isRoot){
+			args.unshift(parameterScope);
+		}
+		
 		return func.apply(scope, args);
 	};
+	
+	ActionContextProto._getParameter = function(parameterKey, parameterScope, defaultValue){
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._getParameter is deprecated. Use .get instead.");
+		
+		return this.get(parameterScope, parameterKey, defaultValue);
+	}
 	
 	/**
 	* Gets and evaluates a context parameter.
 	* 
 	* @Protected
 	*/
-	ActionContextProto._getParameter = function(parameterKey, parameterScope, defaultValue){
+	ActionContextProto.get = function(parameterScope, parameterKey, defaultValue){
 		var fPart = null;
 		var kPart = parameterKey;
 		var c1Pos = parameterKey.indexOf('(');
@@ -275,10 +303,10 @@
 			
 			kPart = parameterKey.substring(0, c1Pos);
 			
-			if(c1Pos === c2Pos - 1){
+			if(c1Pos >= c2Pos - 1){
 				fPart = "";
 			}
-			fPart = parameterKey.substring(c1Pos + 1, c2Pos);
+			fPart = parameterKey.substring(c1Pos + 1, c2Pos).trim();
 		}
 		
 		if(kPart.charAt(0) === "."){
@@ -289,13 +317,13 @@
 		}
 		
 		if(!kPart.match(/([a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+/)){
-			throw new Error("Invalid key part in " + parameterKey);
+			throw new Error("Invalid key part in " + kPart);
 		}
 		
-		if(this._loopDir[kPart]){
+		if(this._loopDir["t_" + kPart]){
 			throw new Error("Cannot access " + kPart + ": is locked by another process.");
 		}
-		this._loopDir[kPart] = true;
+		this._loopDir["t_" + kPart] = true;
 		//console.log(kPart, fPart);
 			
 		var keyParts = kPart.split('.'),
@@ -314,8 +342,18 @@
 				var functionApplied = false;
 				if("function" === typeof pointer){
 					if(i === keyParts.length - 1){
+						if(keyPart.charAt(0) === '_'){
+							throw new Error("Cannot execute protected function '" + keyPart + "'.");
+						}
 						jQuery.sap.log.info("Executing function '" + kPart + "' with arguments (" + fPart + ")");
-						pointer = _callParamFunction(this, prevPointer, pointer, fPart, parameterScope);
+						pointer = _callParamFunction(
+								this, 
+								prevPointer, 
+								pointer, 
+								fPart, 
+								parameterScope, 
+								keyParts.length === 1
+						);
 						functionApplied = true;
 					}
 					else{
@@ -345,15 +383,20 @@
 			}
 		}
 		
-		this._loopDir[kPart] = false;
+		this._loopDir["t_" + kPart] = false;
 		
 		return pointer;
 	};
-
+	
+	ActionContextProto._setParameter = function(parameterKey, parameterValue, parameterScope){
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._setParameter is deprecated. Use .set instead.");
+		this.set(parameterKey, parameterValue, parameterScope);
+	};
+	
 	/**
 	* @Protected
 	*/
-	ActionContextProto._setParameter = function(parameterKey, parameterValue, parameterScope){
+	ActionContextProto.set = function(parameterKey, parameterValue, parameterScope){
 		if(-1 === parameterKey.indexOf('.')){
 			throw new Error("Cannot get parameter: no root node provided.");
 		}
@@ -405,6 +448,7 @@
 
 	/**
 	* @Protected
+	* @deprecated
 	*/
 	ActionContextProto._copyParameter = function(parameterKeySrc, parameterKeyTgt){
 		var paramSrcValue = this._getParameter(parameterKeySrc);
@@ -417,6 +461,7 @@
 
 	/**
 	* @Protected
+	* @deprecated
 	* FIXME
 	*/
 	ActionContextProto._moveParameter = function(parameterKeySrc, parameterKeyTgt){

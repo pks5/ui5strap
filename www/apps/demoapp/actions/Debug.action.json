@@ -9,14 +9,15 @@
 		
 		"IF" : "&=> tools.lang.eq(.compareValue, .customDataValue)",
 		
-		"message" : "&=> .customDataValue",
+		"message" : "&=> toString()",
 		"DO" : "&=> global.alert(.message)",
 		
 		"ELSE" : "error"
 	},
 	
 	"error" : {
-		"message" : "Error occurred.",
+		"srcParam" : "action.testTask.compareValue",
+		"message" : "&=> get(action.error.srcParam)",
 		
 		"DO" : "&=> global.alert(.message)"
 	}
