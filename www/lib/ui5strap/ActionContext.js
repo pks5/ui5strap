@@ -55,7 +55,7 @@
 	
 	//AM Modules
 	ActionContext.PARAM_MODULES = 'modules';
-	ActionContext.PARAM_TASKS = 'modules';
+	ActionContext.PARAM_TASKS = 'tasks';
 	ActionContext.PARAM_MODULE = 'module';
 	
 	//Action Events

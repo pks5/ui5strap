@@ -1,12 +1,15 @@
 {
 	"//" : "Toggles the visibility of the menu bar of the root NavContainer.",
 	
-	"__modules" : "ui5strap.task.Exec",
+	"__tasks" : "toggleBarMenuRoot",
 	
-	"exec" : {
+	"toggleBarMenuRoot" : {
+		"__module" : "ui5strap.task.Exec",
+		
 		"navContainer" : "&=> app.getRootControl()",
 		"currentValue" : "&=> .navContainer.getBarVisible()",
 		"oppositeValue" : "&=> tools.bool.not(.currentValue)",
+		
 		"RESULT" : "&=> .navContainer.setBarVisible(.oppositeValue)"
 	}
 

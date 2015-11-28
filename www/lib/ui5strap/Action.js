@@ -103,7 +103,7 @@
 	* @private
 	* @static
 	*/
-	var _executeModules = function(context, actionModulesList){
+	var _executeModules = function(context, actionModulesList, newFormat){
 		if(typeof actionModulesList === 'string'){
 			actionModulesList = [actionModulesList];
 		}
@@ -112,7 +112,16 @@
 			actionModulesListLength = actionModulesList.length;
 				
 		for ( var i = 0; i < actionModulesListLength; i++ ) { 
-			var actionInstanceDef = _getActionInstanceDef(actionModulesList[i]);
+			var actionInstanceDef = null;
+			if(newFormat){
+				actionInstanceDef = {
+					namespace : actionModulesList[i],
+					module : context.parameters[actionModulesList[i]][ActionContext.PREFIX + ActionContext.PARAM_MODULE]
+				};
+			}	
+			else{
+				actionInstanceDef = _getActionInstanceDef(actionModulesList[i]);
+			}
 			instanceDefs.push(actionInstanceDef);
 			jQuery.sap.require(actionInstanceDef.module);
 		}
@@ -136,10 +145,21 @@
 		
 		if(actionModuleName){ //Expected string
 			delete context.parameters[actionModuleNameParameter];
-			_executeModules(context, ui5strap.Utils.parseIContent(actionModuleName));
+			//Old format
+			_executeModules(context, actionModuleName, false);
 		}
-		else{   
-			throw new Error("Invalid action '" + context + "': '" + actionModuleNameParameter + "' attribute is missing!");
+		else{  
+			actionModuleNameParameter = ActionContext.PREFIX + ActionContext.PARAM_TASKS,
+			actionModuleName = context.parameters[actionModuleNameParameter];
+		
+			if(actionModuleName){ //Expected string
+				delete context.parameters[actionModuleNameParameter];
+				//New Format
+				_executeModules(context, actionModuleName, true);
+			}
+			else{  
+				throw new Error("Invalid action '" + context + "': '" + actionModuleNameParameter + "' attribute is missing!");
+			}
 		}
 	};
 
