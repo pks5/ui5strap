@@ -48,37 +48,21 @@
 
 	ActionContext.NUMBER = 0;
 
-	var _paramNames = {
-		"AJ1.0" : {
-			"PREFIX" : "a_",
-			"PARAM_ACTION" : "id",
-			"PARAM_MODULES" : "modules",
-			"PARAM_EVENTS" : "events",
-			"PARAM_FUNCTIONS" : "functions"
-		},
-		"AJ2.0" : {
-			"PREFIX" : "__",
-			"PARAM_ACTION" : "action",
-			"PARAM_MODULES" : "modules",
-			"PARAM_EVENTS" : "events",
-			"PARAM_FUNCTIONS" : "functions"
-		}
-	};
-
-	//Default Format
-	ActionContext.DEFAULT_FORMAT = "AJ1.0";
-
+	ActionContext.PREFIX = "__";
+	
 	//Action Name
-	ActionContext.PARAM_ACTION = 'PARAM_ACTION';
+	ActionContext.PARAM_ACTION = 'action';
 	
 	//AM Modules
-	ActionContext.PARAM_MODULES = 'PARAM_MODULES';
+	ActionContext.PARAM_MODULES = 'modules';
+	ActionContext.PARAM_TASKS = 'modules';
+	ActionContext.PARAM_MODULE = 'module';
 	
 	//Action Events
-	ActionContext.PARAM_EVENTS = 'PARAM_EVENTS';
+	ActionContext.PARAM_EVENTS = 'events';
 	
 	//Action Functions
-	ActionContext.PARAM_FUNCTIONS = 'PARAM_FUNCTIONS';
+	ActionContext.PARAM_FUNCTIONS = 'functions';
 	
 	ActionContext.WORKPOOL = "parameters";
 	
@@ -95,9 +79,9 @@
 		}
 	};
 	
-	/*
+	/**
 	* Init log
-	* @private
+	* @Private
 	*/
 	var _initLog = function(_this){
 		_this._log = {
@@ -123,42 +107,31 @@
 		};
 	};
 
-	/*
-	* @private
+	/**
+	* @Private
 	*/
 	var _init = function(_this, action){
 		
-		//App Reference
-		if(!action.app){
-			throw new Error('App reference required!')
+		//Validate
+		if(!action.app || !action.parameters || ('object' !== typeof action.parameters)){
+			throw new Error("Constructor argument must contain 'app' reference and 'parameters' object.");
 		}
+		
+		//App Reference
 		_this.app = action.app;
 		
+		//Tools Reference
 		_this.tools = _tools;
 		
 		//Default parameters
-		if(!action.parameters){
-			throw new Error('Parameters required!')
-		}
-		var actionParametersType = typeof action.parameters;
-		if(actionParametersType === 'object'){
-			_this.defaultParameters = action.parameters;
+		_this.defaultParameters = action.parameters;
 			
-			_this.parameters = jQuery.extend(true, {}, _this.defaultParameters);
+		//Pool
+		_this.parameters = jQuery.extend(true, {}, _this.defaultParameters);
 			
-			//Set parameters to default format
-			if(!_this.parameters.__format){
-				_this.parameters.__format = ActionContext.DEFAULT_FORMAT;
-			}
-			
-			_this.action = _this.parameters;
-
-			
-		}
-		else{
-			//parameters is a string
-			throw new Error('Context Parameters must be an object!');
-		}
+		//Pool Alias
+		_this.action = _this.parameters;
+		
 		console.log(action);
 		
 		//Event Source
@@ -209,7 +182,7 @@
 		_initLog(_this);
 	};
 
-	/*
+	/**
 	* Apply functions
 	* @private
 	*/
@@ -239,34 +212,17 @@
 		}	
 
 	};
-
-	/*
-	* Creates an action parameter based on the prefix for actions
-	* @Static
-	*/
-	ActionContextProto.parameterKey = function (parameterKey, prefix){
-		if(!prefix){
-			throw new Error("please provide a prefix for '" + parameterKey + "'");
-		}
-
-		return prefix + "." + this.addFormatPrefix(parameterKey);
-	};
 	
-	/*
-	* Creates an action parameter based on the prefix for actions
-	* @Static
+	/**
+	* @Protected
 	*/
-	ActionContextProto.addFormatPrefix = function (parameterKey){
-		if(!this.parameters.__format || !_paramNames[this.parameters.__format]){
-			throw new Error('Cannot read parameter "' + parameterKey + '": Invalid action format: ' + this.parameters.__format);
-		}
-
-		var paramData = _paramNames[this.parameters.__format],
-			actionParam = paramData.PREFIX + paramData[parameterKey];
-		
-		return actionParam;
+	ActionContextProto._process = function(taskScope){
+		_applyFunctions(this, taskScope + "." + ActionContext.PREFIX + ActionContext.PARAM_FUNCTIONS);
 	};
 
+	/**
+	 * @Private
+	 */
 	var _callParamFunction = function(_this, scope, func, paramString, parameterScope){
 		var args = null;
 		if('' !== paramString){
@@ -286,8 +242,9 @@
 		return func.apply(scope, args);
 	};
 	
-	/*
-	* Gets a parameter by key
+	/**
+	* Gets and evaluates a context parameter.
+	* 
 	* @Protected
 	*/
 	ActionContextProto._getParameter = function(parameterKey, parameterScope, defaultValue){
@@ -372,7 +329,7 @@
 		return pointer;
 	};
 
-	/*
+	/**
 	* @Protected
 	*/
 	ActionContextProto._setParameter = function(parameterKey, parameterValue, parameterScope){
@@ -415,8 +372,9 @@
 		return this;
 	};
 
-	/*
+	/**
 	* @Protected
+	* FIXME
 	*/
 	ActionContextProto._deleteParameter = function(parameterKey){
 			delete this.parameters[parameterKey];
@@ -424,7 +382,7 @@
 			return this;
 	};
 
-	/*
+	/**
 	* @Protected
 	*/
 	ActionContextProto._copyParameter = function(parameterKeySrc, parameterKeyTgt){
@@ -436,8 +394,9 @@
 		return this;
 	};
 
-	/*
+	/**
 	* @Protected
+	* FIXME
 	*/
 	ActionContextProto._moveParameter = function(parameterKeySrc, parameterKeyTgt){
 		this._copyParameter(parameterKeySrc, parameterKeyTgt);
@@ -446,41 +405,10 @@
 		return this;
 	};
 
-	/*
-	* @protected
-	*/
-	ActionContextProto._process = function(parameterKey){
-		_applyFunctions(this, this.parameterKey(ActionContext.PARAM_FUNCTIONS, parameterKey));
-	};
-
-	
-
-	/*
+	/**
+	* Returns String representation of this context.
 	* 
-	* Executes an AM Module (ui5strap.ActionModule)
-	* @protected
-	*/
-	ActionContextProto._run = function(instanceDef){
-		//Set index
-		instanceDef.index = this._callStack.length;
-		
-		//Push to callstack
-		this._callStack.push(instanceDef);
-
-		var actionModuleName = instanceDef.module,
-			ActionModuleConstructor = ui5strap.Utils.getObject(actionModuleName),
-			oActionModule = new ActionModuleConstructor();
-					
-		if(!(oActionModule instanceof ui5strap.ActionModule)){
-			throw new Error("Error in action '" + this + "':  '" + actionModuleName +  "' must be an instance of ui5strap.ActionModule!");
-		}
-
-		oActionModule.init(this, instanceDef).execute();
-	};
-
-	/*
-	* String representation of the context
-	* @public
+	* @Public
 	*/
 	ActionContextProto.toString = function(){
 		return '[ACTION#' + this._actionNumber + ']';

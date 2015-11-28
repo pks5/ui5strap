@@ -1,7 +1,5 @@
 {
 	"//" : "Removes a post from the list.",
-	"__format" : "AJ2.0",
-	
 	"__modules" : [
 		"ui5strap.task.Exec"
 	],

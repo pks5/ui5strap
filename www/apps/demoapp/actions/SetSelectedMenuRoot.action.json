@@ -1,7 +1,7 @@
 {
-	"__format" : "AJ2.0",
+	"//" : "Set the main-menu item selected that has the same id as specified NavContainer's current page.",
+	
 	"__modules" : ["ui5strap.AMGetCurrentPage", "ui5strap.AMSetListItemSelected"],
-	"__description" : "Set the main-menu item selected that has the same id as specified NavContainer's current page.",
 	
 	"getCurrentPage" : {
 		"scope" : "SOURCE",

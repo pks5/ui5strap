@@ -69,9 +69,8 @@
 		}
 		
 		//Test if Namespace is valid
-		var paramPrefix = context.addFormatPrefix("");
-		if(jQuery.sap.startsWith(this.namespace, paramPrefix)){
-			throw new Error("Action namespace must not start with '" + paramPrefix + "'!");
+		if(jQuery.sap.startsWith(this.namespace, ActionContext.PREFIX)){
+			throw new Error("Action namespace must not start with '" + ActionContext.PREFIX + "'!");
 		}
 
 		return this;

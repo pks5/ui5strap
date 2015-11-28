@@ -1,9 +1,8 @@
 {
+	"//" : "Makes the root NavContainer navigate to the view that is specified in the list item context of the specified model.",
 	
-	"__format" : "AJ2.0",
 	"__modules" : ["ui5strap.AMGetContextData", "ui5strap.task.Navigate"],
-	"__description" : "Makes the root NavContainer navigate to the view that is specified in the list item context of the specified model.",
-
+	
 	"getContextData" : {
 		"scope" : "PARAMETER",
 		"tgtParam" : "action.menuItem",

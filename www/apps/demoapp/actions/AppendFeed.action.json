@@ -1,6 +1,5 @@
 {
 	"//" : "Appends a new media list item to an existing media list.",
-	"__format" : "AJ2.0",
 	"__modules" : [
 		"ui5strap.AMCreateControl #createMediaListItem",
 		"ui5strap.AMCreateControl #createMediaListImage",

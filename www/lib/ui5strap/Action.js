@@ -73,6 +73,30 @@
 
 		return instanceDef;
 	};
+	
+	/**
+	* 
+	* Executes an AM Module (ui5strap.ActionModule)
+	* 
+	* @Protected
+	*/
+	var _runInContext = function(context, instanceDef){
+		//Set index
+		instanceDef.index = context._callStack.length;
+		
+		//Push to callstack
+		context._callStack.push(instanceDef);
+
+		var actionModuleName = instanceDef.module,
+			ActionModuleConstructor = ui5strap.Utils.getObject(actionModuleName),
+			oActionModule = new ActionModuleConstructor();
+					
+		if(!(oActionModule instanceof ui5strap.ActionModule)){
+			throw new Error("Error in action '" + context + "':  '" + actionModuleName +  "' must be an instance of ui5strap.ActionModule!");
+		}
+
+		oActionModule.init(context, instanceDef).execute();
+	};
 
 	/*
 	* Executes a list of AM Modules
@@ -95,7 +119,7 @@
 
 		var instanceDefsLength = instanceDefs.length;
 		for ( var i = 0; i < instanceDefsLength; i++ ) { 
-			context._run(instanceDefs[i]);
+			_runInContext(context, instanceDefs[i]);
 		}
 	};
 
@@ -107,11 +131,11 @@
 	var _execute = function(context){
 		context._process(ActionContext.WORKPOOL);
 		
-		var actionModuleNameParameter = context.parameterKey(ActionContext.PARAM_MODULES, ActionContext.WORKPOOL),
-			actionModuleName = context._getParameter(actionModuleNameParameter);
+		var actionModuleNameParameter = ActionContext.PREFIX + ActionContext.PARAM_MODULES,
+			actionModuleName = context.parameters[actionModuleNameParameter];
 		
 		if(actionModuleName){ //Expected string
-			context._deleteParameter(actionModuleNameParameter);
+			delete context.parameters[actionModuleNameParameter];
 			_executeModules(context, ui5strap.Utils.parseIContent(actionModuleName));
 		}
 		else{   
@@ -155,7 +179,12 @@
 	* @static
 	*/
 	Action.executeEventModules = function(context, parameterKey, eventName){
-		var paramEvents = context._getParameter(context.parameterKey(ActionContext.PARAM_EVENTS, parameterKey));
+		var paramEvents = context._getParameter(
+				parameterKey
+				+ "." 
+				+ ActionContext.PREFIX 
+				+ ActionContext.PARAM_EVENTS
+		);
 
 		if(paramEvents && paramEvents[eventName]){
 			context._log.debug("Triggering event actions '" + eventName + "'...");

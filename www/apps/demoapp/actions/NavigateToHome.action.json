@@ -1,8 +1,6 @@
 {
 	"//" : "Makes the root NavContainer navigate to the home page.",
 	
-	"__format" : "AJ2.0",
-	
 	"__modules" : "ui5strap.task.Navigate",
 	
 	"navigate" : {

@@ -1234,20 +1234,7 @@
 			return actionName;
 		};
 
-        //Controller event handler
-        var _controllerEventHandler = function(oEvent){
-			this.getApp().runAction({
-				"eventSource" : oEvent.getSource(),
-				"eventParameters" : oEvent.getParameters(),
-				"controller" : this,
-				"parameters" : _getActionFromEvent(oEvent, "a_id")
-			});
-		};
-
-		//New action event handler
-		controllerImpl["a_run"] = _controllerEventHandler;
-		
-		var _controllerEventHandler2 = function(oEvent){
+		controllerImpl["__execute"] = function(oEvent){
 			this.getApp().runAction({
 				"eventSource" : oEvent.getSource(),
 				"eventParameters" : oEvent.getParameters(),
@@ -1255,8 +1242,6 @@
 				"parameters" : _getActionFromEvent(oEvent, "__action")
 			});
 		};
-
-		controllerImpl["__execute"] = _controllerEventHandler2;
 
 		var oldOnInit = controllerImpl.onInit;
 
