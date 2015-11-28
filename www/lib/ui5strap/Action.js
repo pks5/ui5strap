@@ -44,9 +44,10 @@
 
 	Action.cache = {};
 
-	/*
-	* @private
-	* @static
+	/**
+	* @Private
+	* @Static
+	* @deprecated
 	*/
 	var _getActionInstanceDef = function (actionModuleName){
 		var instanceDef = {};
@@ -77,10 +78,10 @@
 	/**
 	* 
 	* Executes an AM Module (ui5strap.ActionModule)
-	* 
-	* @Protected
+	* @Static
+	* @Private
 	*/
-	var _runInContext = function(context, instanceDef){
+	var _runTaskInContext = function(context, instanceDef){
 		//Set index
 		instanceDef.index = context._callStack.length;
 		
@@ -98,44 +99,13 @@
 		oActionModule.init(context, instanceDef).execute();
 	};
 
-	/*
-	* Executes a list of AM Modules
-	* @private
-	* @static
-	*/
-	var _executeModules = function(context, actionModulesList, newFormat){
-		if(typeof actionModulesList === 'string'){
-			actionModulesList = [actionModulesList];
-		}
+	
 
-		var instanceDefs = [],
-			actionModulesListLength = actionModulesList.length;
-				
-		for ( var i = 0; i < actionModulesListLength; i++ ) { 
-			var actionInstanceDef = null;
-			if(newFormat){
-				actionInstanceDef = {
-					namespace : actionModulesList[i],
-					module : context.parameters[actionModulesList[i]][ActionContext.PARAM_MODULE]
-				};
-			}	
-			else{
-				actionInstanceDef = _getActionInstanceDef(actionModulesList[i]);
-			}
-			instanceDefs.push(actionInstanceDef);
-			jQuery.sap.require(actionInstanceDef.module);
-		}
-
-		var instanceDefsLength = instanceDefs.length;
-		for ( var i = 0; i < instanceDefsLength; i++ ) { 
-			_runInContext(context, instanceDefs[i]);
-		}
-	};
-
-	/*
+	/**
 	* Executes the action modules that are defined in the class parameter of the current context
-	* @private
-	* @static
+	* @Private
+	* @Static
+	* FIXME
 	*/
 	var _execute = function(context){
 		context._process(ActionContext.WORKPOOL);
@@ -143,30 +113,32 @@
 		var actionModuleNameParameter = ActionContext.PREFIX + ActionContext.PARAM_MODULES,
 			actionModuleName = context.parameters[actionModuleNameParameter];
 		
-		if(actionModuleName){ //Expected string
+		if(actionModuleName){ 
+			//Expected string
 			delete context.parameters[actionModuleNameParameter];
 			//Old format
-			_executeModules(context, actionModuleName, false);
+			Action.runTasks(context, actionModuleName, false);
 		}
 		else{  
-			actionModuleNameParameter = ActionContext.PARAM_TASKS,
-			actionModuleName = context.parameters[actionModuleNameParameter];
+			//New format
+			actionModuleName = context.parameters[ActionContext.PARAM_TASKS];
 		
 			if(actionModuleName){ //Expected string
-				delete context.parameters[actionModuleNameParameter];
+				delete context.parameters[ActionContext.PARAM_TASKS];
 				//New Format
-				_executeModules(context, actionModuleName, true);
+				Action.runTasks(context, actionModuleName, true);
 			}
 			else{  
-				throw new Error("Invalid action '" + context + "': '" + actionModuleNameParameter + "' attribute is missing!");
+				throw new Error("Invalid action '" + context + "': '" + ActionContext.PARAM_TASKS + "' attribute is missing!");
 			}
+			//New format end
 		}
 	};
 
-	/*
+	/**
 	* Load an action from a json file
-	* @private
-	* @static
+	* @Private
+	* @Static
 	*/
 	Action.loadFromFile = function(actionName, callback){
 		var actionCache = Action.cache;
@@ -193,10 +165,11 @@
 		);
 	};
 
-	/*
+	/**
 	* Run events
-	* @public
-	* @static
+	* @Public
+	* @Static
+	* @deprecated
 	*/
 	Action.executeEventModules = function(context, parameterKey, eventName){
 		var paramEvents = context._getParameter(
@@ -210,13 +183,53 @@
 			context._log.debug("Triggering event actions '" + eventName + "'...");
 
 			//Execute one or multiple AM modules that are defined in the event
-			_executeModules(context, paramEvents[eventName]);
+			Action.runTasks(context, paramEvents[eventName]);
+		}
+	};
+	
+	/**
+	* Executes a list of AM Modules
+	* @Public
+	* @Static
+	*/
+	Action.runTasks = function(context, actionModulesList, newFormat){
+		if(!actionModulesList){
+			jQuery.sap.log.warning("Cannot run Tasks: empty list.");
+			return;
+		}
+		
+		if(typeof actionModulesList === 'string'){
+			actionModulesList = [actionModulesList];
+		}
+
+		var instanceDefs = [],
+			actionModulesListLength = actionModulesList.length;
+				
+		for ( var i = 0; i < actionModulesListLength; i++ ) { 
+			var actionInstanceDef = null;
+			if(newFormat){
+				actionInstanceDef = {
+					namespace : actionModulesList[i],
+					module : context.action[actionModulesList[i]][ActionContext.PARAM_MODULE]
+				};
+			}	
+			else{
+				actionInstanceDef = _getActionInstanceDef(actionModulesList[i]);
+			}
+			instanceDefs.push(actionInstanceDef);
+			jQuery.sap.require(actionInstanceDef.module);
+		}
+
+		var instanceDefsLength = instanceDefs.length;
+		for ( var i = 0; i < instanceDefsLength; i++ ) { 
+			_runTaskInContext(context, instanceDefs[i]);
 		}
 	};
 
-	/*
+	/**
 	* Runs an action
-	* @static
+	* @Static
+	* @Public
 	*/
 	Action.run = function(action){
 		jQuerySap.log.debug("[ACTION] Action.run");

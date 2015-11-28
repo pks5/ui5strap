@@ -1,15 +1,22 @@
 {
 	"//" : "Shows a alert window with the content of the specified custom data field.",
-	"__modules" : "ui5strap.task.Exec",
+	"TASKS" : "testTask",
 	
-	"exec" : {
+	"testTask" : {
+		"TASK" : "ui5strap.task.Exec",
 		"compareValue" : "DELETE",
 		"customDataKey" : "command",
 		"customDataValue" : "&=> eventParameters.srcControl.data(.customDataKey)",
 		
-		"CONDITIONS" : "&=> tools.lang.eq(.compareValue, .customDataValue)",
-		
+		"IF" : "&=> tools.lang.eq(.compareValue, .customDataValue)",
+		"ELSE" : "error", 
 		"message" : "&=> .customDataValue",
+		"RESULT" : "&=> window.alert(.message)"
+	},
+	
+	"error" : {
+		"TASK" : "ui5strap.task.Exec",
+		"message" : "Error occurred.",
 		"RESULT" : "&=> window.alert(.message)"
 	}
 	

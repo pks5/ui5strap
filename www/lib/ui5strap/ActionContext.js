@@ -76,7 +76,7 @@
 		},
 		"lang" : {
 			"do" : function(){
-				return;
+				return arguments;
 			},
 			"eq" : function(){
 				if(arguments.length === 0){

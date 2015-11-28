@@ -78,26 +78,31 @@
 
 	/**
 	 * String representation of the Module
+	 * @Public
 	 */
 	ActionModuleProto.toString = function(){
 		return this._instanceDef.module + ' ' + this.context;
 	};
 
-	/*
+	/**
 	* Creates a action module specific parameter key
-	* @protected
+	* @Protected
+	* @deprecated
 	*/
 	ActionModuleProto._createParameterKey = function(parameterKey){
 		return  this.getScope() + '.' + parameterKey;
 	};	
 	
+	/**
+	 * @Public
+	 */
 	ActionModuleProto.getScope = function(){
 		return ActionContext.WORKPOOL + "." + this.namespace;
 	};
 
-	/*
+	/**
 	* Gets the value of an action module specific parameter
-	* @public
+	* @Public
 	*/
 	ActionModuleProto.getParameter = function(paramKey){
 		var paramDef = this.parameters[paramKey];
@@ -133,17 +138,19 @@
 		return value;
 	};
 
-	/*
+	/**
 	* Sets an action module specific parameter to the action context
-	* @public
+	* @Public
+	* FIXME
 	*/
 	ActionModuleProto.setParameter = function(parameterKey, parameterValue){
 		return this.context._setParameter(this._createParameterKey(parameterKey), parameterValue);
 	};
 
-	/*
+	/**
 	* Deletes an action module specific parameter from the action context
-	* @public
+	* @Public
+	* FIXME
 	*/
 	ActionModuleProto.deleteParameter = function(parameterKey){
 		return this.context._deleteParameter(this._createParameterKey(parameterKey));
@@ -152,36 +159,40 @@
 
 	//--------------------------
 
-	/*
+	/**
 	* Execute the action module
-	* @public
+	* @Public
 	*/
 	ActionModuleProto.execute = function(){
 		this.context._log.debug("EXECUTE " + this);
 
 		//Apply local parameter functions
+		//@deprecated
 		this.context._process(this.getScope());
 
 		//Prepare parameters
 		this.prepareParameters();
 
 		//test if parameters match conditions
-		if(!this.context._getParameter(".CONDITIONS", this.getScope(), true)){
-			this.context._log.debug("CONDITIONS DONT MATCH " + this);
+		if(!this.context._getParameter(".IF", this.getScope(), true)){
+			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
+			ui5strap.Action.runTasks(this.context, this.context._getParameter(".ELSE", this.getScope(), true), true);
 		}
 		else{
 			this.run();
 		}
 
 		//Exceution complete
+		//@deprecated
 		this.completed();
 
 		this.context._log.debug("EXECUTION COMPLETE " + this);
 	};
 
-	/*
+	/**
 	* Prepare the action module and parameters
-	* @protected
+	* @Protected
+	* @deprecated
 	*/
 	ActionModuleProto.prepareParameters = function(){
 		//throw new Error('Please override the prepareParameters method in action module ' + this);
@@ -263,21 +274,25 @@
 		return theControl;
 	};
 	
-	/*
-	* Run the action module
-	* @protected
+	/**
+	* Run the action module. Inheritants should override this method.
+	* @Protected
 	*/
 	ActionModuleProto.run = function(){
 		throw new Error('Please override the run method in action module ' + this);
 	};
-
+	
+	/**
+	 * @deprecated
+	 */
 	ActionModuleProto.fireEvents = function(eventName){
 		ui5strap.Action.executeEventModules(this.context, this.getScope(), eventName);
 	};
 
-	/*
+	/**
 	* Called when the action module has been completed
-	* @protected
+	* @deprecated
+	* @Protected
 	*/
 	ActionModuleProto.completed = function(){
 		this.fireEvents(ActionModule.EVENT_COMPLETED);
