@@ -141,7 +141,6 @@
 	/**
 	* Sets an action module specific parameter to the action context
 	* @Public
-	* FIXME
 	*/
 	ActionModuleProto.setParameter = function(parameterKey, parameterValue){
 		return this.context._setParameter(this._createParameterKey(parameterKey), parameterValue);
@@ -176,16 +175,19 @@
 		//test if parameters match conditions
 		if(!this.context._getParameter(".IF", this.getScope(), true)){
 			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
-			ui5strap.Action.runTasks(this.context, this.context._getParameter(".ELSE", this.getScope(), true), true);
+			ui5strap.Action.runTasks(this.context, this.context._getParameter(".ELSE", this.getScope()), true);
 		}
 		else{
 			this.run();
+			
+			ui5strap.Action.runTasks(this.context, this.context._getParameter(".THEN", this.getScope()), true);
 		}
 
 		//Exceution complete
 		//@deprecated
 		this.completed();
-
+		
+		
 		this.context._log.debug("EXECUTION COMPLETE " + this);
 	};
 
