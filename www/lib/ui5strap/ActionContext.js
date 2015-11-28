@@ -390,14 +390,14 @@
 	
 	ActionContextProto._setParameter = function(parameterKey, parameterValue, parameterScope){
 		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._setParameter is deprecated. Use .set instead.");
-		this.set(parameterKey, parameterValue, parameterScope);
+		this.set(parameterScope, parameterKey, parameterValue);
 	};
 	
 	/**
 	* @Protected
 	*/
-	ActionContextProto.set = function(parameterKey, parameterValue, parameterScope){
-		if(-1 === parameterKey.indexOf('.')){
+	ActionContextProto.set = function(parameterScope, parameterKey, parameterValue){
+		if(!parameterKey || -1 === parameterKey.indexOf('.')){console.log(parameterScope, parameterKey,parameterValue);
 			throw new Error("Cannot get parameter: no root node provided.");
 		}
 		if(parameterKey.charAt(0) === "."){
@@ -417,10 +417,12 @@
 			if(i === keyParts.length - 1){
 				if(pointer[keyPart] && ("function" === typeof pointer[keyPart])){
 					//Value already exists, but its a function
-					throw new Error("Cannot override parameter: '" + parameterKey + "' is a function.");
+					throw new Error("Cannot override parameter: '" + keyPart + "' is a function.");
 				}
 				//Set (or override) value
 				pointer[keyPart] = parameterValue;
+				
+				return true;
 			}
 			else if(!(keyPart in pointer)){
 				//Create new empty object
@@ -428,12 +430,26 @@
 				pointer[keyPart] = {};
 			}
 			
+			var prevPointer = pointer;
 			pointer = pointer[keyPart];
+			var pointerType = typeof pointer;
+			
+			if(null === pointer){
+				throw new Error("Cannot write parameter: '" + keyPart + "' is null.");
+			}
+			else if("string" === pointerType && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
+				prevPointer[keyPart] = this._getParameter(pointer.substring(ActionContext.RESOLVE_LENGTH).trim(), parameterScope);
+				pointer = prevPointer[keyPart];
+			}
+			else if("object" !== pointerType){
+				throw new Error("Cannot write parameter: '" + keyPart + "' is not an object.");
+			}
+			
 			i++;
 			
 		}
 		
-		return this;
+		return false;
 	};
 
 	/**

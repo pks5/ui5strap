@@ -16,10 +16,12 @@
 	},
 	
 	"error" : {
-		"srcParam" : "action.testTask.compareValue",
-		"message" : "&=> get(action.error.srcParam)",
-		
-		"DO" : "&=> global.alert(.message)"
+		"abc" : "&=> action.error.poo",
+		"poo" : {},
+		"srcParam" : "action.error.abc.q",
+		"set" : "&=> set(.srcParam, action.testTask.compareValue)",
+		"alert" : "&=> global.alert(.poo.q)", 
+		"DO" : "&=> tools.lang.do(.set, .alert)"
 	}
 	
 }
