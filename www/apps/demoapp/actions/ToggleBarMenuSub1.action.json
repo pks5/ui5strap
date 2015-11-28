@@ -4,8 +4,6 @@
 	"TASKS" : "toggleBarMenuSub1",
 	
 	"toggleBarMenuSub1" : {
-		"TASK" : "ui5strap.task.Exec",
-		
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",
 		"navContainer" : "&=> app.getControl(.controlId, .viewId)",

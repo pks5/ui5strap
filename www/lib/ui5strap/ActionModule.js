@@ -288,7 +288,7 @@
 	* @Protected
 	*/
 	ActionModuleProto.run = function(){
-		throw new Error('Please override the run method in action module ' + this);
+		this.context._getParameter(".RESULT", this.getScope());
 	};
 	
 	/**

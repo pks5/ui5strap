@@ -4,8 +4,6 @@
 	"TASKS" : "toggleBarMenuRoot",
 	
 	"toggleBarMenuRoot" : {
-		"TASK" : "ui5strap.task.Exec",
-		
 		"navContainer" : "&=> app.getRootControl()",
 		"currentValue" : "&=> .navContainer.getBarVisible()",
 		"oppositeValue" : "&=> tools.bool.not(.currentValue)",

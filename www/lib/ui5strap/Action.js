@@ -217,7 +217,9 @@
 				if(!taskDefinition){
 					throw new Error("No task definition for task '" + actionModulesList[i] + "'");
 				}
-				
+				if(!taskDefinition[ActionContext.PARAM_MODULE]){
+					taskDefinition[ActionContext.PARAM_MODULE] = "ui5strap.ActionModule";
+				}
 				actionInstanceDef = {
 					namespace : actionModulesList[i],
 					module : taskDefinition[ActionContext.PARAM_MODULE]

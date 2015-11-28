@@ -19,7 +19,9 @@
 	
 	"error" : {
 		"TASK" : "ui5strap.task.Exec",
+		
 		"message" : "Error occurred.",
+		
 		"RESULT" : "&=> window.alert(.message)"
 	}
 	
