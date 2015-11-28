@@ -4,7 +4,7 @@
 	"TASKS" : "toggleBarMenuRoot",
 	
 	"toggleBarMenuRoot" : {
-		"MODULE" : "ui5strap.task.Exec",
+		"TASK" : "ui5strap.task.Exec",
 		
 		"navContainer" : "&=> app.getRootControl()",
 		"currentValue" : "&=> .navContainer.getBarVisible()",

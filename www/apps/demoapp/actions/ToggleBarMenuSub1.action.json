@@ -4,7 +4,7 @@
 	"TASKS" : "toggleBarMenuSub1",
 	
 	"toggleBarMenuSub1" : {
-		"MODULE" : "ui5strap.task.Exec",
+		"TASK" : "ui5strap.task.Exec",
 		
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",
