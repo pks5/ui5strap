@@ -1,10 +1,10 @@
 {
 	"//" : "Toggles the visibility of the menu bar of the specified NavContainer.",
 	
-	"__tasks" : "toggleBarMenuSub1",
+	"TASKS" : "toggleBarMenuSub1",
 	
 	"toggleBarMenuSub1" : {
-		"__module" : "ui5strap.task.Exec",
+		"MODULE" : "ui5strap.task.Exec",
 		
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",

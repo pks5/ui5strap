@@ -1222,7 +1222,7 @@
 		
 		var _getActionFromEvent = function(oEvent, customDataKey){
 			var actionName = oEvent.getSource().data(customDataKey),
-				actionNamesList = ui5strap.Utils.parseIContent(actionName); 
+				actionNamesList = ui5strap.Utils.parseIContent(actionName); console.log(oEvent.getSource().data());
 			if(typeof actionNamesList === 'object'){
 				var eventId = oEvent.getId();
 				//Different actions for each event
@@ -1240,6 +1240,15 @@
 				"eventParameters" : oEvent.getParameters(),
 				"controller" : this,
 				"parameters" : _getActionFromEvent(oEvent, "__action")
+			});
+		};
+		
+		controllerImpl["execute"] = function(oEvent){
+			this.getApp().runAction({
+				"eventSource" : oEvent.getSource(),
+				"eventParameters" : oEvent.getParameters(),
+				"controller" : this,
+				"parameters" : _getActionFromEvent(oEvent, "action")
 			});
 		};
 

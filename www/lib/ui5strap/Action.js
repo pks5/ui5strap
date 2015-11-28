@@ -116,7 +116,7 @@
 			if(newFormat){
 				actionInstanceDef = {
 					namespace : actionModulesList[i],
-					module : context.parameters[actionModulesList[i]][ActionContext.PREFIX + ActionContext.PARAM_MODULE]
+					module : context.parameters[actionModulesList[i]][ActionContext.PARAM_MODULE]
 				};
 			}	
 			else{
@@ -149,7 +149,7 @@
 			_executeModules(context, actionModuleName, false);
 		}
 		else{  
-			actionModuleNameParameter = ActionContext.PREFIX + ActionContext.PARAM_TASKS,
+			actionModuleNameParameter = ActionContext.PARAM_TASKS,
 			actionModuleName = context.parameters[actionModuleNameParameter];
 		
 			if(actionModuleName){ //Expected string
