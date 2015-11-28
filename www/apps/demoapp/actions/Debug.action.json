@@ -4,14 +4,17 @@
 	
 	"testTask" : {
 		"TASK" : "ui5strap.task.Exec",
+		
 		"compareValue" : "DELETE",
 		"customDataKey" : "command",
 		"customDataValue" : "&=> eventParameters.srcControl.data(.customDataKey)",
 		
 		"IF" : "&=> tools.lang.eq(.compareValue, .customDataValue)",
-		"ELSE" : "error", 
+		
 		"message" : "&=> .customDataValue",
-		"RESULT" : "&=> window.alert(.message)"
+		"RESULT" : "&=> window.alert(.message)",
+		
+		"ELSE" : "error"
 	},
 	
 	"error" : {

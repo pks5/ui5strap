@@ -163,28 +163,30 @@
 	* @Public
 	*/
 	ActionModuleProto.execute = function(){
-		this.context._log.debug("EXECUTE " + this);
-
+		this.context._log.debug("Executing Task " + this);
+		
+		var taskScope = this.getScope();
+		
 		//Apply local parameter functions
 		//@deprecated
-		this.context._process(this.getScope());
+		this.context._process(taskScope);
 
 		//Prepare parameters
 		this.prepareParameters();
 
 		//test if parameters match conditions
-		if(!this.context._getParameter(".IF", this.getScope(), true)){
+		if(!this.context._getParameter(".IF", taskScope, true)){
 			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
-			ui5strap.Action.runTasks(this.context, this.context._getParameter(".ELSE", this.getScope()), true);
+			ui5strap.Action.runTasks(this.context, this.context._getParameter(".ELSE", taskScope), true);
 		}
 		else{
 			try{
 				this.run();
 				
-				ui5strap.Action.runTasks(this.context, this.context._getParameter(".THEN", this.getScope()), true);
+				ui5strap.Action.runTasks(this.context, this.context._getParameter(".THEN", taskScope), true);
 			}
 			catch(err){
-				ui5strap.Action.runTasks(this.context, this.context._getParameter(".ERROR", this.getScope()), true);
+				ui5strap.Action.runTasks(this.context, this.context._getParameter(".ERROR", taskScope), true);
 			}
 		}
 
@@ -193,7 +195,7 @@
 		this.completed();
 		
 		
-		this.context._log.debug("EXECUTION COMPLETE " + this);
+		this.context._log.debug("Task execution completed " + this);
 	};
 
 	/**

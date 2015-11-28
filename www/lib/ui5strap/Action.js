@@ -196,10 +196,10 @@
 	* Executes a list of AM Modules
 	* @Public
 	* @Static
+	* @FIXME remove arg newFormat once the old action format has been dropped.
 	*/
 	Action.runTasks = function(context, actionModulesList, newFormat){
 		if(!actionModulesList){
-			jQuery.sap.log.warning("Cannot run Tasks: empty list.");
 			return;
 		}
 		
