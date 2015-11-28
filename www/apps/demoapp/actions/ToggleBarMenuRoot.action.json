@@ -7,7 +7,7 @@
 	"exec" : {
 		"navContainer" : "&=> app.getRootControl()",
 		"currentValue" : "&=> .navContainer.getBarVisible()",
-		"oppositeValue" : "&=> tools.not(.currentValue)",
+		"oppositeValue" : "&=> tools.bool.not(.currentValue)",
 		"RESULT" : "&=> .navContainer.setBarVisible(.oppositeValue)"
 	}
 

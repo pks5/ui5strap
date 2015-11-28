@@ -83,9 +83,16 @@
 	ActionContext.WORKPOOL = "parameters";
 	
 	var _tools = {
-		not : function(value){
-			return !value;
-		}	
+		"bool" : {
+	 		"not" : function(value){
+				return !value;
+			}
+		},
+		"lang" : {
+			"do" : function(){
+				return;
+			}
+		}
 	};
 	
 	/*
