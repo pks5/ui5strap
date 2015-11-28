@@ -241,14 +241,14 @@
 
 	ActionContextProto.resolve = function(taskScope, pointer, onlyString){
 		if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
-			pointer = this._getParameter(pointer.substring(ActionContext.RESOLVE_LENGTH).trim(), taskScope);
+			pointer = this.get(taskScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
 		}
 		else if(!onlyString && ("object" === typeof pointer)){
 			var objectKeys = Object.keys(pointer),
 				objectKeysLength = objectKeys.length;
 		
 			for(var i=0; i < objectKeysLength; i++){
-				pointer[objectKeys[i]] = this._getParameter(pointer[objectKeys[i]], taskScope);
+				pointer[objectKeys[i]] = this.get(taskScope, pointer[objectKeys[i]]);
 			}
 		}
 		return pointer;
@@ -270,7 +270,7 @@
 		}
 		
 		for(var i = 0; i < args.length; i++){
-			args[i] = _this._getParameter(args[i].trim(), parameterScope);
+			args[i] = _this.get(parameterScope, args[i].trim());
 		}
 		
 		if(isRoot){
@@ -365,7 +365,7 @@
 					if(functionApplied){
 						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
 					}
-					prevPointer[keyPart] = this._getParameter(pointer.substring(ActionContext.RESOLVE_LENGTH).trim(), parameterScope);
+					prevPointer[keyPart] = this.get(parameterScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
 				    pointer = prevPointer[keyPart];
 				}
 				i++;
@@ -438,7 +438,7 @@
 				throw new Error("Cannot write parameter: '" + keyPart + "' is null.");
 			}
 			else if("string" === pointerType && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
-				prevPointer[keyPart] = this._getParameter(pointer.substring(ActionContext.RESOLVE_LENGTH).trim(), parameterScope);
+				prevPointer[keyPart] = this.get(parameterScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
 				pointer = prevPointer[keyPart];
 			}
 			else if("object" !== pointerType){
@@ -455,8 +455,10 @@
 	/**
 	* @Protected
 	* FIXME
+	* @deprecated
 	*/
 	ActionContextProto._deleteParameter = function(parameterKey){
+			jQuery.sap.log.warning("ui5strap.ActionContext.prototype._deleteParameter is deprecated and will be dropped.");
 			delete this.parameters[parameterKey];
 
 			return this;
@@ -467,6 +469,7 @@
 	* @deprecated
 	*/
 	ActionContextProto._copyParameter = function(parameterKeySrc, parameterKeyTgt){
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._copyParameter is deprecated and will be dropped.");
 		var paramSrcValue = this._getParameter(parameterKeySrc);
 		if(null !== paramSrcValue){
 			this._setParameter(parameterKeyTgt, paramSrcValue);
@@ -481,6 +484,7 @@
 	* FIXME
 	*/
 	ActionContextProto._moveParameter = function(parameterKeySrc, parameterKeyTgt){
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._moveParameter is deprecated and will be dropped.");
 		this._copyParameter(parameterKeySrc, parameterKeyTgt);
 		this._deleteParameter(parameterKeySrc);
 
