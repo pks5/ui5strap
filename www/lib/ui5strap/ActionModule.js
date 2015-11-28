@@ -57,6 +57,7 @@
 
 	/**
 	* Initializes the action module
+	* @PostConstruct
 	*/
 	ActionModuleProto.init = function(context, instanceDef){
 		this.context = context;
@@ -84,15 +85,6 @@
 		return this._instanceDef.module + ' ' + this.context;
 	};
 
-	/**
-	* Creates a action module specific parameter key
-	* @Protected
-	* @deprecated
-	*/
-	ActionModuleProto._createParameterKey = function(parameterKey){
-		return  this.getScope() + '.' + parameterKey;
-	};	
-	
 	/**
 	 * @Public
 	 */
@@ -147,18 +139,6 @@
 	};
 
 	/**
-	* Deletes an action module specific parameter from the action context
-	* @Public
-	* FIXME
-	*/
-	ActionModuleProto.deleteParameter = function(parameterKey){
-		return this.context._deleteParameter(this._createParameterKey(parameterKey));
-	};
-
-
-	//--------------------------
-
-	/**
 	* Execute the action module
 	* @Public
 	*/
@@ -203,7 +183,43 @@
 		
 		this.context._log.debug("Task execution completed " + this);
 	};
+	
+	/**
+	* Run the action module. Inheritants should override this method.
+	* @Protected
+	*/
+	ActionModuleProto.run = function(){
+		this.context._getParameter(".DO", this.getScope());
+	};
+	
+	/*
+	 * 
+	 * ------------------------------------------------
+	 * ------------------------------------------------
+	 * 
+	 */
+	
+	/**
+	* Deletes an action module specific parameter from the action context
+	* @Public
+	* @deprecated
+	*/
+	ActionModuleProto.deleteParameter = function(parameterKey){
+		return this.context._deleteParameter(this._createParameterKey(parameterKey));
+	};
 
+
+	
+	/**
+	* Creates a action module specific parameter key
+	* @Protected
+	* @deprecated
+	*/
+	ActionModuleProto._createParameterKey = function(parameterKey){
+		return  this.getScope() + '.' + parameterKey;
+	};	
+	
+	
 	/**
 	* Prepare the action module and parameters
 	* @Protected
@@ -287,14 +303,6 @@
 		}
 
 		return theControl;
-	};
-	
-	/**
-	* Run the action module. Inheritants should override this method.
-	* @Protected
-	*/
-	ActionModuleProto.run = function(){
-		this.context._getParameter(".DO", this.getScope());
 	};
 	
 	/**
