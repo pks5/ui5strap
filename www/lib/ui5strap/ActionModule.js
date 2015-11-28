@@ -186,7 +186,13 @@
 				ui5strap.Action.runTasks(this.context, this.context._getParameter(".THEN", taskScope), true);
 			}
 			catch(err){
-				ui5strap.Action.runTasks(this.context, this.context._getParameter(".ERROR", taskScope), true);
+				var errorTask = this.context._getParameter(".ERROR", taskScope);
+				if(errorTask){
+					ui5strap.Action.runTasks(this.context, errorTask, true);
+				}
+				else{
+					throw err;
+				}
 			}
 		}
 

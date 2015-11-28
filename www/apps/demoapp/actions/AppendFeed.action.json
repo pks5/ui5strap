@@ -3,7 +3,7 @@
 	"__modules" : [
 		"ui5strap.AMCreateControl #createMediaListItem",
 		"ui5strap.AMCreateControl #createMediaListImage",
-		"ui5strap.task.Exec #addItemToList"
+		"ui5strap.ActionModule #addItemToList"
 	],
 	
 	"createMediaListItem" : {
@@ -39,7 +39,7 @@
 		"mediaList" : "&=> app.getControl( .mediaListId, .viewId )",
 		"addToMediaList" : "&=> .mediaList.addItems( action.createMediaListItem.result )",
 		
-		"RESULT" : "&=> tools.lang.do(.addToListItem, .addToMediaList)" 
+		"DO" : "&=> tools.lang.do(.addToListItem, .addToMediaList)" 
 	}
 
 }
