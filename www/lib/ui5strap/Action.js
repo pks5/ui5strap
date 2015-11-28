@@ -88,8 +88,13 @@
 		//Push to callstack
 		context._callStack.push(instanceDef);
 
-		var actionModuleName = instanceDef.module,
-			ActionModuleConstructor = ui5strap.Utils.getObject(actionModuleName),
+		var actionModuleName = instanceDef.module;
+		
+		if(!instanceDef.module){
+			throw new Error("No task module specified!");
+		}
+			
+		var ActionModuleConstructor = ui5strap.Utils.getObject(actionModuleName),
 			oActionModule = new ActionModuleConstructor();
 					
 		if(!(oActionModule instanceof ui5strap.ActionModule)){
@@ -208,9 +213,14 @@
 		for ( var i = 0; i < actionModulesListLength; i++ ) { 
 			var actionInstanceDef = null;
 			if(newFormat){
+				var taskDefinition = context.action[actionModulesList[i]];
+				if(!taskDefinition){
+					throw new Error("No task definition for task '" + actionModulesList[i] + "'");
+				}
+				
 				actionInstanceDef = {
 					namespace : actionModulesList[i],
-					module : context.action[actionModulesList[i]][ActionContext.PARAM_MODULE]
+					module : taskDefinition[ActionContext.PARAM_MODULE]
 				};
 			}	
 			else{

@@ -178,9 +178,14 @@
 			ui5strap.Action.runTasks(this.context, this.context._getParameter(".ELSE", this.getScope()), true);
 		}
 		else{
-			this.run();
-			
-			ui5strap.Action.runTasks(this.context, this.context._getParameter(".THEN", this.getScope()), true);
+			try{
+				this.run();
+				
+				ui5strap.Action.runTasks(this.context, this.context._getParameter(".THEN", this.getScope()), true);
+			}
+			catch(err){
+				ui5strap.Action.runTasks(this.context, this.context._getParameter(".ERROR", this.getScope()), true);
+			}
 		}
 
 		//Exceution complete
