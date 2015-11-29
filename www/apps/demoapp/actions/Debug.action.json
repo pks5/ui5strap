@@ -23,7 +23,7 @@
 		"srcParam" : "action.error.abc.q",
 		"set" : "=-> set(.srcParam, action.testTask.anotherValue)",
 		"alert" : "=-> global.alert(.poo.q)", 
-		"DO" : "=-> do(.set, .alert)"
+		"DO" : "=-> (.set, .alert)"
 	}
 	
 }

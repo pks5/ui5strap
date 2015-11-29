@@ -276,6 +276,8 @@
 		if(!parameterKey){
 			throw new Error("Parameter key is required for get!");
 		}
+		
+		//Check for conditional statement
 		var qPos = parameterKey.indexOf('?');
 		if(-1 !== qPos){
 			var dPos = parameterKey.indexOf(':');
@@ -289,9 +291,10 @@
 			return this.get(task, p1) ? this.get(task, p2) : this.get(task, p3);
 		}
 		
-		var fPart = null;
-		var kPart = parameterKey;
-		var c1Pos = parameterKey.indexOf('(');
+		//Extract function parameters if any.
+		var fPart = null,
+			kPart = parameterKey,
+			c1Pos = parameterKey.indexOf('(');
 		if(-1 !== c1Pos){
 			var c2Pos = parameterKey.length - 1;
 			if(parameterKey.charAt(c2Pos) !== ')'){
@@ -304,8 +307,19 @@
 				fPart = "";
 			}
 			fPart = parameterKey.substring(c1Pos + 1, c2Pos).trim();
+			
+			if(kPart === ''){
+				//Just brackets, no funtion
+				var args = fPart.split(/,/);
+				for(var i = 0; i < args.length; i++){
+					this.get(task, args[i].trim());
+				}
+				
+				return;
+			}
 		}
 		
+		//Check for relative path
 		if(kPart.charAt(0) === "."){
 			if(!task){
 				throw new Error("Cannot resolve relative paramter without task reference!");
@@ -452,7 +466,7 @@
 		return false;
 	};
 	
-	ActionContextProto["do"] = function(){
+	ActionContextProto["doaaa"] = function(){
 		
 	};
 	

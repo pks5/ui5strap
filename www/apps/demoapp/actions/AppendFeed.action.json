@@ -42,7 +42,7 @@
 		"mediaList" : "=-> app.getControl( .mediaListId, .viewId )",
 		"addToMediaList" : "=-> .mediaList.addItems( action.createMediaListItem.INSTANCE )",
 		
-		"DO" : "=-> do(.addToListItem, .addToMediaList)" 
+		"DO" : "=-> (.addToListItem, .addToMediaList)" 
 	}
 
 }

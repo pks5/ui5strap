@@ -134,6 +134,7 @@
 		if(param){
 			param = this.context.resolve(this, param, true);
 		}
+		
 		if(('undefined' === typeof param) && ('undefined' !== typeof defaultValue)){
 			param = this.context.resolve(this, defaultValue, true);
 		}
