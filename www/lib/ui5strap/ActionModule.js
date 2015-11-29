@@ -98,7 +98,7 @@
 	};
 
 	/**
-	* Gets the value of an action module specific parameter
+	* Does same as ActionContext.prototype.get - plus type validation.
 	* @Public
 	*/
 	ActionModuleProto.getParameter = function(paramKey){
@@ -108,9 +108,8 @@
 			throw new Error("Invalid definition for parameter '" + paramKey + "'.");
 		}
 
-		var value = this.context.get(this, "." + paramKey, paramDef.defaultValue);
-		
-		var paramDefType = paramDef.type;
+		var value = this.context.get(this, "." + paramKey, paramDef.defaultValue),
+			paramDefType = paramDef.type;
 		
 		if(value && paramDefType){
 			var parameterType = typeof value,
@@ -121,18 +120,28 @@
 			){
 				throw new Error(this + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDefType) + ") for parameter '" + paramKey + "'.");
 			}
-		
-			if("object" === paramDefType){
-				var objectKeys = Object.keys(value),
-					objectKeysLength = objectKeys.length;
-				
-				for(var i=0; i < objectKeysLength; i++){
-					this.context.get(this, "." + paramKey + "." + objectKeys[i]);
-				}
-			}
 		}
 		
 		return value;
+	};
+	
+	/**
+	 * Faster variant of ActionContext.prototype.get - only for task root paramaters!
+	 * @Public
+	 */
+	ActionModuleProto.getRootParameter = function(parameterKey, defaultValue){
+		var param = this.context.action[this.namespace][parameterKey];
+		if(param){
+			param = this.context.resolve(this, param, true);
+		}
+		if(('undefined' === typeof param) && ('undefined' !== typeof defaultValue)){
+			param = this.context.resolve(this, defaultValue, true);
+		}
+		
+		//Store back the value in the context
+		this.context.action[this.namespace][parameterKey] = param;
+		
+		return param;
 	};
 
 	/**
@@ -140,7 +149,7 @@
 	* @Public
 	*/
 	ActionModuleProto.setParameter = function(parameterKey, parameterValue){
-		return this.context._setParameter(this._createParameterKey(parameterKey), parameterValue);
+		return this.context.set(this, "." + parameterKey, parameterValue);
 	};
 
 	/**
@@ -150,28 +159,27 @@
 	ActionModuleProto.execute = function(){
 		this.context._log.debug("Executing Task " + this);
 		
-		var taskScope = this.getScope();
-		
 		//Apply local parameter functions
 		//@deprecated
-		this.context._process(taskScope);
+		this.context._process(this.getScope());
 
 		//Prepare parameters
 		this.prepareParameters();
 
 		//test if parameters match conditions
-		if(!this.context.get(this, ".IF", true)){
+		if(!this.getRootParameter("IF", true)){
 			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
-			ui5strap.Action.runTasks(this.context, this.context.get(this, ".ELSE"));
+			
+			this["else"]();
 		}
 		else{
 			try{
 				this.run();
 				
-				ui5strap.Action.runTasks(this.context, this.context.get(this, ".THEN"));
+				this.then();
 			}
 			catch(err){
-				var errorTask = this.context.get(this, ".ERROR");
+				var errorTask = this.getRootParameter("ERROR");
 				if(errorTask){
 					ui5strap.Action.runTasks(this.context, errorTask);
 				}
@@ -181,11 +189,6 @@
 			}
 		}
 
-		//Exceution complete
-		//@deprecated
-		this.completed();
-		
-		
 		this.context._log.debug("Task execution completed " + this);
 	};
 	
@@ -194,7 +197,19 @@
 	* @Protected
 	*/
 	ActionModuleProto.run = function(){
-		this.context.get(this, ".DO");
+		this.getRootParameter("DO");
+	};
+	
+	ActionModuleProto.then = function(){
+		ui5strap.Action.runTasks(this.context, this.getRootParameter("THEN"));
+		
+		//Exceution complete
+		//@deprecated
+		this.completed();
+	};
+	
+	ActionModuleProto["else"] = function(){
+		ui5strap.Action.runTasks(this.context, this.getRootParameter("ELSE"));
 	};
 	
 	/*

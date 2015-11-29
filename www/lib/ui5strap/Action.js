@@ -193,7 +193,8 @@
 	* @deprecated
 	*/
 	Action.executeEventModules = function(context, parameterKey, eventName){
-		var paramEvents = context._getParameter(
+		var paramEvents = context.get(
+				null,
 				parameterKey
 				+ "." 
 				+ ActionContext.PREFIX 

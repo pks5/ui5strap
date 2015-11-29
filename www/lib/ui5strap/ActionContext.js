@@ -233,6 +233,7 @@
 				objectKeysLength = objectKeys.length;
 		
 			for(var i=0; i < objectKeysLength; i++){
+				//Store back the value in the context
 				pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], true);
 			}
 		}
@@ -345,8 +346,10 @@
 					if(functionApplied){
 						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
 					}
+					//Store back the value in the context
 					prevPointer[keyPart] = this._evalExpression(task, pointer);
-				    pointer = prevPointer[keyPart];
+				    
+					pointer = prevPointer[keyPart];
 				}
 				i++;
 			}
@@ -413,7 +416,9 @@
 				throw new Error("Cannot write parameter: '" + keyPart + "' is null.");
 			}
 			else if(this._isExpression(pointer)){
+				//Store back the value in the context
 				prevPointer[keyPart] = this._evalExpression(task, pointer);
+				
 				pointer = prevPointer[keyPart];
 			}
 			
@@ -445,7 +450,7 @@
 	* @private
 	*/
 	var _applyFunctions = function(_this, parameterKey){
-		var paramFunctions = _this._getParameter(parameterKey);
+		var paramFunctions = _this.get(null, parameterKey);
 
 		if(paramFunctions){ //Expected array
 			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
@@ -476,8 +481,8 @@
 	* @Protected
 	* @deprecated
 	*/
-	ActionContextProto._process = function(taskScope){
-		_applyFunctions(this, taskScope + "." + ActionContext.PREFIX + ActionContext.PARAM_FUNCTIONS);
+	ActionContextProto._process = function(parameterScope){
+		_applyFunctions(this, parameterScope + "." + ActionContext.PREFIX + ActionContext.PARAM_FUNCTIONS);
 	};
 	
 	/**
@@ -515,9 +520,9 @@
 	*/
 	ActionContextProto._copyParameter = function(parameterKeySrc, parameterKeyTgt){
 		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._copyParameter is deprecated and will be dropped.");
-		var paramSrcValue = this._getParameter(parameterKeySrc);
+		var paramSrcValue = this.get(null, parameterKeySrc);
 		if(null !== paramSrcValue){
-			this._setParameter(parameterKeyTgt, paramSrcValue);
+			this.set(null, parameterKeyTgt, paramSrcValue);
 		}
 
 		return this;

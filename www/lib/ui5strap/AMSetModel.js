@@ -96,7 +96,7 @@
 				theControl = this.findControl(true);
 			
 			if(null !== srcParam){
-				data = this.context._getParameter(srcParam);
+				data = this.context.get(this, srcParam);
 			}
 
 			if(!data){

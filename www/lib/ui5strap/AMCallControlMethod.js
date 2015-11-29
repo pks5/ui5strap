@@ -99,7 +99,7 @@
 		var result = control[funcName].apply(control, funcArgs);
 
 		if(tgtParam){
-			this.context._setParameter(tgtParam, result);
+			this.context.set(this, tgtParam, result);
 		}
 
 		this.context._log.debug("Calling control method '" + funcName + "' of control '" + control.getId() + "'");

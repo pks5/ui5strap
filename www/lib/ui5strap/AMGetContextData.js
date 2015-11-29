@@ -90,7 +90,7 @@
 			var model = bindingContext.getModel();
 			var data = model.getProperty(bindingContext.getPath());
 
-			this.context._setParameter(tgtParam, data);
+			this.context.set(this, tgtParam, data);
 			//this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
 	};
 

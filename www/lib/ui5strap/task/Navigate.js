@@ -70,7 +70,7 @@
 	NavigateProto.run = function(){
 			var control = this.getParameter("CONTROL");
 		
-			var page = this.getParameter("PAGE"),
+			var page = this.context.resolve(this, this.getParameter("PAGE")),
 				component = this.getParameter("COMPONENT");
 
 			if(!component){

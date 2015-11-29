@@ -99,7 +99,7 @@
 			currentPage = nc.getTarget(target);
 		
 		if(tgtParam){
-			this.context._setParameter(tgtParam, currentPage.getId());
+			this.context.set(this, tgtParam, currentPage.getId());
 		}
 		this.setParameter("result", currentPage.getId());
 	};

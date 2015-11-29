@@ -86,13 +86,13 @@
 				tgtParam = this.getParameter("tgtParam"),
 				control = this.findControl(false),
 				propertyValue = control["get" + jQuery.sap.charToUpperCase(propertyKey, 0)]();
+			
 			if(tgtParam){
-				this.context._setParameter(tgtParam, propertyValue);
+				this.context.set(this, tgtParam, propertyValue);
 			}
 			
 			this.setParameter("result", propertyValue);
 			
-				
 			this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
 	};
 

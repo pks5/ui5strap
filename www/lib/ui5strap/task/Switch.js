@@ -81,7 +81,7 @@
 				controller : this.context.controller,
 				eventSource : this.context.eventSource,
 				eventParameters : this.context.eventParameters,
-				parameters: theAction
+				parameters: this.context.resolve(this, theAction)
 			});
 		}
 	};

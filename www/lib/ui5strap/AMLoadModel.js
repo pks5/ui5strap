@@ -136,7 +136,7 @@
 				}	
 				
 				for(var paramKey in mapping){
-					var replaceValue = this.context._getParameter(mapping[paramKey]);
+					var replaceValue = this.context.get(this, mapping[paramKey]);
 					modelUrl = modelUrl.replace("{"+paramKey+"}", replaceValue);
 				}	
 			}

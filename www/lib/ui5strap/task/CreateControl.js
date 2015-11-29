@@ -64,7 +64,7 @@
 	*/
 	CreateControlProto.run = function(){
 		var moduleName = this.getParameter("MODULE"),
-			moduleSettings = this.getParameter("SETTINGS"),
+			moduleSettings = this.context.resolve(this, this.getParameter("SETTINGS")),
 			Constructor = jQuery.sap.getObject(moduleName);
 		
 		if(!Constructor){

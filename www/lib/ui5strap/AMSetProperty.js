@@ -96,7 +96,7 @@
 			
 			//Read value from another parameter
 			if(null !== srcParam){
-				propertyValue = this.context._getParameter(srcParam);
+				propertyValue = this.context.get(this, srcParam);
 			}
 			
 			if(!control[setter]){
