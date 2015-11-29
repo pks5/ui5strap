@@ -353,6 +353,7 @@
 					}
 				}
 				
+				//Check if value contains expression
 				if(this._isExpression(pointer)){
 					if(functionApplied){
 						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
@@ -366,9 +367,10 @@
 				i++;
 			}
 			else{
-				if(null !== fPart){
-					throw new Error("Cannot execute function '" + kPart + "': '" + keyPart + "' is undefined.");
+				if(i < keyParts.length - 1){
+					throw new Error("'" + keyPart + "' is not defined in '" + kPart + "'");
 				}
+				
 				break;
 			}
 		}
@@ -456,15 +458,17 @@
 	};
 	
 	ActionContextProto.lang = {
-			
+			// !
 			"not" : function(value){
 					return !value;
 			},
 			
+			// !!
 			"notnot" : function(value){
 				return !!value;
 			},
 			
+			// ==
 			"equal" : function(){
 					if(arguments.length === 0){
 						return true;
@@ -476,6 +480,92 @@
 						}
 					}
 					return true;
+			},
+			
+			// !=
+			"notEqual" : function(){
+				if(arguments.length === 0){
+					return false;
+				}
+				var cmp = arguments[0];
+				for(var i = 1; i < arguments.length; i++){
+					if(arguments[i] != cmp){
+						return true;
+					}
+				}
+				return false;
+			},
+			
+			// ===
+			"same" : function(){
+				if(arguments.length === 0){
+					return true;
+				}
+				var cmp = arguments[0];
+				for(var i = 1; i < arguments.length; i++){
+					if(arguments[i] !== cmp){
+						return false;
+					}
+				}
+				return true;
+			},
+			
+			// !==
+			"notSame" : function(){
+				if(arguments.length === 0){
+					return false;
+				}
+				var cmp = arguments[0];
+				for(var i = 1; i < arguments.length; i++){
+					if(arguments[i] !== cmp){
+						return true;
+					}
+				}
+				return false;
+			},
+			
+			// >
+			"greaterThan" : function(v1, v2){
+				return v1 > v2;
+			},
+			
+			// <
+			"lessThan" : function(v1, v2){
+				return v1 < v2;
+			},
+			
+			// >=
+			"greaterEqualThan" : function(v1, v2){
+				return v1 >= v2;
+			},
+			
+			// <=
+			"lessEqualThan" : function(v1, v2){
+				return v1 <= v2;
+			},
+			
+			// &&
+			"and" : function(){
+				var cmp = true;
+				for(var i = 1; i < arguments.length; i++){
+					cmp = cmp && arguments[i];
+					if(!cmp){
+						break;
+					}
+				}
+				return cmp;
+			},
+			
+			// ||
+			"or" : function(){
+				var cmp = false;
+				for(var i = 1; i < arguments.length; i++){
+					cmp = cmp || arguments[i];
+					if(cmp){
+						break;
+					}
+				}
+				return cmp;
 			}
 			
 	};
