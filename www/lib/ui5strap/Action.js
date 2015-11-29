@@ -40,10 +40,10 @@
 	var Action = ui5strap.Action,
 		ActionProto = Action.prototype,
 		ActionContext = ui5strap.ActionContext,
-		ActionModule = ui5strap.ActionModule;
-
-	Action.cache = {};
-
+		ActionModule = ui5strap.ActionModule,
+		_actionsCache = {},
+		_modulesCache = {};
+	
 	/**
 	* @Private
 	* @Static
@@ -93,12 +93,21 @@
 		if(!instanceDef.module){
 			throw new Error("No task module specified!");
 		}
+		
+		var oActionModule = _modulesCache[actionModuleName];
+		
+		if(!oActionModule){
+			var ActionModuleConstructor = ui5strap.Utils.getObject(actionModuleName);
 			
-		var ActionModuleConstructor = ui5strap.Utils.getObject(actionModuleName),
-			oActionModule = new ActionModuleConstructor();
-					
-		if(!(oActionModule instanceof ui5strap.ActionModule)){
-			throw new Error("Error in action '" + context + "':  '" + actionModuleName +  "' must be an instance of ui5strap.ActionModule!");
+				oActionModule = new ActionModuleConstructor();
+						
+			if(!(oActionModule instanceof ui5strap.ActionModule)){
+				throw new Error("Error in action '" + context + "':  '" + actionModuleName +  "' must be an instance of ui5strap.ActionModule!");
+			}
+			
+			if(!ActionModuleConstructor.cacheable){
+				_modulesCache[actionModuleName] = oActionModule;
+			}
 		}
 
 		oActionModule.init(context, instanceDef).execute();
@@ -146,9 +155,8 @@
 	* @Static
 	*/
 	Action.loadFromFile = function(actionName, callback){
-		var actionCache = Action.cache;
-		if(actionCache[actionName]){
-			callback && callback(actionCache[actionName]);
+		if(_actionsCache[actionName]){
+			callback && callback(_actionsCache[actionName]);
 			
 			return;
 		}
@@ -160,7 +168,7 @@
 				actionUrl, 
 				'json', 
 				function(data){
-					actionCache[actionName] = data;
+					_actionsCache[actionName] = data;
 				
 					callback && callback(data);
 				},

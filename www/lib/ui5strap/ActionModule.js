@@ -44,7 +44,9 @@
 	* Name of the event that is triggered when the event is completed
 	*/
 	ActionModule.EVENT_COMPLETED = "completed";
-
+	
+	ActionModule.cacheable = true;
+	
 	/*
 	* Namespace of the action module instance
 	*/
