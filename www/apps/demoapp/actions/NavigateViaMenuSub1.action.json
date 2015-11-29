@@ -13,11 +13,11 @@
 	"navigate" : {
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",
-		"CONTROL" : "&=> app.getControl(.controlId, .viewId)",
+		"CONTROL" : "=-> app.getControl(.controlId, .viewId)",
 		"PAGE" : {
 			"transition" : "zoom-out",
 			"writeHistory" : true,
-			"viewName" : "&=> parameters.menuItem.viewName",
+			"viewName" : "=-> parameters.menuItem.viewName",
 			"target" : "content"
 		}
 	}

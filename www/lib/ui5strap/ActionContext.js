@@ -49,7 +49,7 @@
 	ActionContext.NUMBER = 0;
 
 	ActionContext.PREFIX = "__";
-	ActionContext.RESOLVE = "&=>";
+	ActionContext.RESOLVE = "=->";
 	ActionContext.RESOLVE_LENGTH = ActionContext.RESOLVE.length;
 	
 	//Action Name
@@ -211,21 +211,29 @@
 	ActionContextProto.toString = function(){
 		return '[ACTION#' + this._actionNumber + ']';
 	};
-
+	
+	ActionContextProto._isExpression = function(pointer){
+		return ("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE;
+	};
+	
+	ActionContextProto._evalExpression = function(taskScope, pointer){
+		return this.get(taskScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
+	};
+	
 	/**
 	 * @Public
 	 * FIXME
 	 */
 	ActionContextProto.resolve = function(taskScope, pointer, onlyString){
-		if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
-			pointer = this.get(taskScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
+		if(this._isExpression(pointer)){
+			pointer = this._evalExpression(taskScope, pointer);
 		}
 		else if(!onlyString && ("object" === typeof pointer)){
 			var objectKeys = Object.keys(pointer),
 				objectKeysLength = objectKeys.length;
 		
 			for(var i=0; i < objectKeysLength; i++){
-				pointer[objectKeys[i]] = this.get(taskScope, pointer[objectKeys[i]]);
+				pointer[objectKeys[i]] = this.resolve(taskScope, pointer[objectKeys[i]], true);
 			}
 		}
 		return pointer;
@@ -333,11 +341,11 @@
 					}
 				}
 				
-				if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
+				if(this._isExpression(pointer)){
 					if(functionApplied){
 						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
 					}
-					prevPointer[keyPart] = this.get(parameterScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
+					prevPointer[keyPart] = this._evalExpression(parameterScope, pointer);
 				    pointer = prevPointer[keyPart];
 				}
 				i++;
@@ -350,8 +358,8 @@
 		//Set value to default if null or undefined
 		if(("undefined" === typeof pointer) && ("undefined" !== typeof defaultValue)){
 			pointer = defaultValue;
-			if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
-				pointer = this._getParameter(pointer.substring(ActionContext.RESOLVE_LENGTH).trim(), parameterScope);
+			if(this._isExpression(pointer)){
+				pointer = this._evalExpression(parameterScope, pointer);
 			}
 		}
 		
@@ -404,8 +412,8 @@
 			if(null === pointer){
 				throw new Error("Cannot write parameter: '" + keyPart + "' is null.");
 			}
-			else if(("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
-				prevPointer[keyPart] = this.get(parameterScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
+			else if(this._isExpression(pointer)){
+				prevPointer[keyPart] = this._evalExpression(parameterScope, pointer);
 				pointer = prevPointer[keyPart];
 			}
 			

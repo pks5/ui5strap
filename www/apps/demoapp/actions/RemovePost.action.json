@@ -4,7 +4,7 @@
 	
 	"//" : "The 'call' task calls the control's method removeItems.",
 	"exec" : {
-		"DO" : "&=> eventSource.removeItems(eventParameters.listItem)"
+		"DO" : "=-> eventSource.removeItems(eventParameters.listItem)"
 	}
 	
 }

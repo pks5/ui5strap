@@ -29,7 +29,7 @@
 
 	jQuery.sap.declare("ui5strap.task.Navigate");
 	jQuery.sap.require("ui5strap.ActionModule");
-
+	
 	ui5strap.ActionModule.extend("ui5strap.task.Navigate");
 
 	var NavigateProto = ui5strap.task.Navigate.prototype;
@@ -45,7 +45,7 @@
 	NavigateProto.parameters = {
 		"CONTROL" : {
 			"required" : false,
-			"defaultValue" : "&=> app.getRootControl()",
+			"defaultValue" : ui5strap.ActionContext.RESOLVE + " app.getRootControl()",
 			"type" : ["string", "object"]
 		},
 			
@@ -58,7 +58,7 @@
 		"COMPONENT" : {
 			"required" : false,
 			"type" : ["string", "object"],
-			"defaultValue" : "&=> app.components.frame"
+			"defaultValue" : ui5strap.ActionContext.RESOLVE + " app.components.frame"
 		}
 
 	};

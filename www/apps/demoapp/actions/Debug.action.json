@@ -5,23 +5,23 @@
 	"testTask" : {
 		"compareValue" : "DELETE",
 		"customDataKey" : "command",
-		"customDataValue" : "&=> eventParameters.srcControl.data(.customDataKey)",
+		"customDataValue" : "=-> eventParameters.srcControl.data(.customDataKey)",
 		
-		"IF" : "&=> tools.lang.eq(.compareValue, .customDataValue)",
+		"IF" : "=-> tools.lang.eq(.compareValue, .customDataValue)",
 		
-		"message" : "&=> toString()",
-		"DO" : "&=> global.alert(.message)",
+		"message" : "=-> toString()",
+		"DO" : "=-> global.alert(.message)",
 		
 		"ELSE" : "error"
 	},
 	
 	"error" : {
-		"abc" : "&=> action.error.poo",
+		"abc" : "=-> action.error.poo",
 		"poo" : {},
 		"srcParam" : "action.error.abc.q",
-		"set" : "&=> set(.srcParam, action.testTask.compareValue)",
-		"alert" : "&=> global.alert(.poo.q)", 
-		"DO" : "&=> tools.lang.do(.set, .alert)"
+		"set" : "=-> set(.srcParam, action.testTask.compareValue)",
+		"alert" : "=-> global.alert(.poo.q)", 
+		"DO" : "=-> tools.lang.do(.set, .alert)"
 	}
 	
 }
