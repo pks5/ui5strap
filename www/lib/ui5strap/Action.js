@@ -148,8 +148,6 @@
 			actionModuleName = context.parameters[ActionContext.PARAM_TASKS];
 		
 			if(actionModuleName){ //Expected string
-				delete context.parameters[ActionContext.PARAM_TASKS];
-				//New Format
 				Action.runTasks(context, actionModuleName);
 			}
 			else{  
@@ -214,7 +212,6 @@
 	* Executes a list of AM Modules
 	* @Public
 	* @Static
-	* @FIXME remove arg newFormat once the old action format has been dropped.
 	*/
 	Action.runTasks = function(context, actionModulesList){
 		if(!actionModulesList){

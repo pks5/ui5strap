@@ -108,7 +108,7 @@
 			throw new Error("Invalid definition for parameter '" + paramKey + "'.");
 		}
 
-		var value = this.context._getParameter("." + paramKey, this.getScope(), paramDef.defaultValue);
+		var value = this.context.get(this.getScope(), "." + paramKey, paramDef.defaultValue);
 		
 		var paramDefType = paramDef.type;
 		
@@ -127,7 +127,7 @@
 					objectKeysLength = objectKeys.length;
 				
 				for(var i=0; i < objectKeysLength; i++){
-					this.context._getParameter("." + paramKey + "." + objectKeys[i], this.getScope());
+					this.context.get(this.getScope(), "." + paramKey + "." + objectKeys[i]);
 				}
 			}
 		}
@@ -160,18 +160,18 @@
 		this.prepareParameters();
 
 		//test if parameters match conditions
-		if(!this.context._getParameter(".IF", taskScope, true)){
+		if(!this.context.get(taskScope, ".IF", true)){
 			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
-			ui5strap.Action.runTasks(this.context, this.context._getParameter(".ELSE", taskScope));
+			ui5strap.Action.runTasks(this.context, this.context.get(taskScope, ".ELSE"));
 		}
 		else{
 			try{
 				this.run();
 				
-				ui5strap.Action.runTasks(this.context, this.context._getParameter(".THEN", taskScope));
+				ui5strap.Action.runTasks(this.context, this.context.get(taskScope, ".THEN"));
 			}
 			catch(err){
-				var errorTask = this.context._getParameter(".ERROR", taskScope);
+				var errorTask = this.context.get(taskScope, ".ERROR");
 				if(errorTask){
 					ui5strap.Action.runTasks(this.context, errorTask);
 				}
@@ -194,7 +194,7 @@
 	* @Protected
 	*/
 	ActionModuleProto.run = function(){
-		this.context._getParameter(".DO", this.getScope());
+		this.context.get(this.getScope(), ".DO");
 	};
 	
 	/*
@@ -299,7 +299,7 @@
 		}
 		else if("CONTEXT" === scope){
 			var parameterKey = this.getParameter("parameterKey"),
-				theControl = this.context._getParameter(parameterKey);
+				theControl = this.context.get(this.getScope(), parameterKey);
 		}
 		
 		if(!theControl){
