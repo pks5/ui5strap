@@ -1,9 +1,10 @@
 {
-	"//" : "Makes the root NavContainer navigate to the home page.",
+	"//" : "Makes the root NavContainer navigate to the 'Home' view.",
 	
-	"__modules" : "ui5strap.task.Navigate",
+	"TASKS" : "navigateToHome",
 	
-	"navigate" : {
+	"navigateToHome" : {
+		"TASK" : "ui5strap.task.Navigate",
 		"PAGE" : {
 			"viewName" : "ui5strap.demoapp.views.Home",
 			"transition" : "slide-ltr",

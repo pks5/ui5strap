@@ -106,7 +106,7 @@
 			}
 			
 			if(!ActionModuleConstructor.cacheable){
-				_modulesCache[actionModuleName] = oActionModule;
+				//_modulesCache[actionModuleName] = oActionModule;
 			}
 		}
 

@@ -70,6 +70,9 @@
 		if(instanceDef.namespace){
 			this.namespace = instanceDef.namespace;
 		}
+		else{
+			//this.namespace = ActionModuleProto.namespace;
+		}
 		
 		//Test if Namespace is valid
 		if(jQuery.sap.startsWith(this.namespace, ActionContext.PREFIX)){
