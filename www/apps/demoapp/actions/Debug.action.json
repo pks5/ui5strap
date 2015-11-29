@@ -21,7 +21,7 @@
 		"srcParam" : "action.error.abc.q",
 		"set" : "=-> set(.srcParam, action.testTask.compareValue)",
 		"alert" : "=-> global.alert(.poo.q)", 
-		"DO" : "=-> tools.lang.do(.set, .alert)"
+		"DO" : "=-> do(.set, .alert)"
 	}
 	
 }

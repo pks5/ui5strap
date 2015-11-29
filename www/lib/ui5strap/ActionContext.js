@@ -216,24 +216,24 @@
 		return ("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE;
 	};
 	
-	ActionContextProto._evalExpression = function(taskScope, pointer){
-		return this.get(taskScope, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
+	ActionContextProto._evalExpression = function(task, pointer){
+		return this.get(task, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
 	};
 	
 	/**
 	 * @Public
 	 * FIXME
 	 */
-	ActionContextProto.resolve = function(taskScope, pointer, onlyString){
+	ActionContextProto.resolve = function(task, pointer, onlyString){
 		if(this._isExpression(pointer)){
-			pointer = this._evalExpression(taskScope, pointer);
+			pointer = this._evalExpression(task, pointer);
 		}
 		else if(!onlyString && ("object" === typeof pointer)){
 			var objectKeys = Object.keys(pointer),
 				objectKeysLength = objectKeys.length;
 		
 			for(var i=0; i < objectKeysLength; i++){
-				pointer[objectKeys[i]] = this.resolve(taskScope, pointer[objectKeys[i]], true);
+				pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], true);
 			}
 		}
 		return pointer;
@@ -242,7 +242,7 @@
 	/**
 	 * @Private
 	 */
-	var _callParamFunction = function(_this, scope, func, paramString, parameterScope, isRoot){
+	var _callParamFunction = function(_this, scope, func, paramString, task, isRoot){
 		var args = null;
 		if('' !== paramString){
 			args = paramString.split(/,/);
@@ -255,11 +255,11 @@
 		}
 		
 		for(var i = 0; i < args.length; i++){
-			args[i] = _this.get(parameterScope, args[i].trim());
+			args[i] = _this.get(task, args[i].trim());
 		}
 		
 		if(isRoot){
-			args.unshift(parameterScope);
+			args.unshift(task);
 		}
 		
 		return func.apply(scope, args);
@@ -271,7 +271,7 @@
 	* 
 	* @Protected
 	*/
-	ActionContextProto.get = function(parameterScope, parameterKey, defaultValue){
+	ActionContextProto.get = function(task, parameterKey, defaultValue){
 		var fPart = null;
 		var kPart = parameterKey;
 		var c1Pos = parameterKey.indexOf('(');
@@ -290,10 +290,10 @@
 		}
 		
 		if(kPart.charAt(0) === "."){
-			if(!parameterScope){
-				throw new Error("Cannot resolve relative paramter without scope!");
+			if(!task){
+				throw new Error("Cannot resolve relative paramter without task reference!");
 			}
-			kPart = parameterScope + kPart;
+			kPart = task.getScope() + kPart;
 		}
 		
 		if(!kPart.match(/([a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+/)){
@@ -331,7 +331,7 @@
 								prevPointer, 
 								pointer, 
 								fPart, 
-								parameterScope, 
+								task, 
 								keyParts.length === 1
 						);
 						functionApplied = true;
@@ -345,7 +345,7 @@
 					if(functionApplied){
 						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
 					}
-					prevPointer[keyPart] = this._evalExpression(parameterScope, pointer);
+					prevPointer[keyPart] = this._evalExpression(task, pointer);
 				    pointer = prevPointer[keyPart];
 				}
 				i++;
@@ -359,7 +359,7 @@
 		if(("undefined" === typeof pointer) && ("undefined" !== typeof defaultValue)){
 			pointer = defaultValue;
 			if(this._isExpression(pointer)){
-				pointer = this._evalExpression(parameterScope, pointer);
+				pointer = this._evalExpression(task, pointer);
 			}
 		}
 		
@@ -372,15 +372,15 @@
 	 * Sets a value.
 	* @Protected
 	*/
-	ActionContextProto.set = function(parameterScope, parameterKey, parameterValue){
-		if(!parameterKey || -1 === parameterKey.indexOf('.')){console.log(parameterScope, parameterKey,parameterValue);
+	ActionContextProto.set = function(task, parameterKey, parameterValue){
+		if(!parameterKey || -1 === parameterKey.indexOf('.')){
 			throw new Error("Cannot get parameter: no root node provided.");
 		}
 		if(parameterKey.charAt(0) === "."){
-			if(!parameterScope){
-				throw new Error("Cannot resolve relative paramter without scope!");
+			if(!task){
+				throw new Error("Cannot resolve relative paramter without task reference!");
 			}
-			parameterKey = parameterScope + parameterKey;
+			parameterKey = task.getScope() + parameterKey;
 		}
 		
 		var keyParts = parameterKey.split('.'),
@@ -413,7 +413,7 @@
 				throw new Error("Cannot write parameter: '" + keyPart + "' is null.");
 			}
 			else if(this._isExpression(pointer)){
-				prevPointer[keyPart] = this._evalExpression(parameterScope, pointer);
+				prevPointer[keyPart] = this._evalExpression(task, pointer);
 				pointer = prevPointer[keyPart];
 			}
 			
@@ -426,6 +426,10 @@
 		}
 		
 		return false;
+	};
+	
+	ActionContextProto["do"] = function(){
+		
 	};
 	
 	/*
@@ -479,18 +483,18 @@
 	/**
 	 * @deprecated
 	 */
-	ActionContextProto._getParameter = function(parameterKey, parameterScope, defaultValue){
+	ActionContextProto._getParameter = function(parameterKey, task, defaultValue){
 		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._getParameter is deprecated. Use .get instead.");
 		
-		return this.get(parameterScope, parameterKey, defaultValue);
+		return this.get(task, parameterKey, defaultValue);
 	}
 	
 	/**
 	 * @deprecated
 	 */
-	ActionContextProto._setParameter = function(parameterKey, parameterValue, parameterScope){
+	ActionContextProto._setParameter = function(parameterKey, parameterValue, task){
 		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._setParameter is deprecated. Use .set instead.");
-		this.set(parameterScope, parameterKey, parameterValue);
+		this.set(task, parameterKey, parameterValue);
 	};
 	
 	/**
