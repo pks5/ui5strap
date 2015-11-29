@@ -7,7 +7,7 @@
 	],
 	
 	"createMediaListItem" : {
-		"TYPE" : "ui5strap.AMCreateControl",
+		"TYPE" : "ui5strap.task.CreateControl",
 		
 		"viewId" : "=-> view.getId()",
 		"titleInputId" : "titleInput",
@@ -15,17 +15,18 @@
 		"titleInputField" : "=-> app.getControl( .titleInputId, .viewId )",
 		"textInputField" : "=-> app.getControl( .textInputId, .viewId )",
 		
-		"moduleName" : "ui5strap.ListMediaItem",
-		"settings" : {
+		"MODULE" : "ui5strap.ListMediaItem",
+		"SETTINGS" : {
 			"heading" : "=-> .titleInputField.getValue()",
 			"text" : "=-> .textInputField.getValue()"
 		}
 	},
 	
 	"createMediaListImage" : {
-		"TYPE" : "ui5strap.AMCreateControl",
-		"moduleName" : "ui5strap.Image",
-		"settings" : {
+		"TYPE" : "ui5strap.task.CreateControl",
+		
+		"MODULE" : "ui5strap.Image",
+		"SETTINGS" : {
 			"type" : "MediaObject",
 			"mpath" : "ui5strap.demoapp.img.awesome",
 			"ext" : "png",
@@ -34,12 +35,12 @@
 	},
 	
 	"addItemToList" : {
-		"addToListItem" : "=-> action.createMediaListItem.result.setMedia( action.createMediaListImage.result )",
+		"addToListItem" : "=-> action.createMediaListItem.INSTANCE.setMedia( action.createMediaListImage.INSTANCE )",
 		
 		"viewId" : "=-> view.getId()",
 		"mediaListId" : "feeds",
 		"mediaList" : "=-> app.getControl( .mediaListId, .viewId )",
-		"addToMediaList" : "=-> .mediaList.addItems( action.createMediaListItem.result )",
+		"addToMediaList" : "=-> .mediaList.addItems( action.createMediaListItem.INSTANCE )",
 		
 		"DO" : "=-> tools.lang.do(.addToListItem, .addToMediaList)" 
 	}

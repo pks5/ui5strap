@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AMCreateControl
+ * ui5strap.task.CreateControl
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -28,38 +28,33 @@
 (function(){
 
 	//Declare Module
-	jQuery.sap.declare("ui5strap.AMCreateControl");
+	jQuery.sap.declare("ui5strap.task.CreateControl");
 
 	//Require ui5strap.ActionModule
 	jQuery.sap.require("ui5strap.ActionModule");
 
 	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.AMCreateControl");
+	ui5strap.ActionModule.extend("ui5strap.task.CreateControl");
 	
-	var AMCreateControlProto = ui5strap.AMCreateControl.prototype;
+	var CreateControlProto = ui5strap.task.CreateControl.prototype;
 	
 	/*
 	* @Override
 	*/
-	AMCreateControlProto.namespace = 'createControl';
+	CreateControlProto.namespace = 'createControl';
 
 	/*
 	* @Override
 	*/
-	AMCreateControlProto.parameters = {
-			"moduleName" : {
+	CreateControlProto.parameters = {
+			"MODULE" : {
 				"required" : true, 
 				"type" : "string"
 			},
-			"settings" : {
+			"SETTINGS" : {
 				"required" : false, 
 				"defaultValue" : {}, 
 				"type" : "object"
-			},
-			"tgtParam" : {
-				"required" : false,
-				"defaultValue" : null,
-				"type" : "string"
 			}
 	};
 	
@@ -67,10 +62,9 @@
 	* Run the ActionModule
 	* @override
 	*/
-	AMCreateControlProto.run = function(){
-		var moduleName = this.getParameter("moduleName"),
-			moduleSettings = this.getParameter("settings"),
-			tgtParam = this.getParameter("tgtParam"),
+	CreateControlProto.run = function(){
+		var moduleName = this.getParameter("MODULE"),
+			moduleSettings = this.getParameter("SETTINGS"),
 			Constructor = jQuery.sap.getObject(moduleName);
 		
 		if(!Constructor){
@@ -78,11 +72,7 @@
 		}
 		var instance = new Constructor(moduleSettings);
 		
-		if(tgtParam){
-			this.context._setParameter(tgtParam, instance);
-		}
-		
-		this.setParameter("result", instance);
+		this.setParameter("INSTANCE", instance);
 		
 	};
 
