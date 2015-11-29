@@ -162,18 +162,18 @@
 		//test if parameters match conditions
 		if(!this.context._getParameter(".IF", taskScope, true)){
 			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
-			ui5strap.Action.runTasks(this.context, this.context._getParameter(".ELSE", taskScope), true);
+			ui5strap.Action.runTasks(this.context, this.context._getParameter(".ELSE", taskScope));
 		}
 		else{
 			try{
 				this.run();
 				
-				ui5strap.Action.runTasks(this.context, this.context._getParameter(".THEN", taskScope), true);
+				ui5strap.Action.runTasks(this.context, this.context._getParameter(".THEN", taskScope));
 			}
 			catch(err){
 				var errorTask = this.context._getParameter(".ERROR", taskScope);
 				if(errorTask){
-					ui5strap.Action.runTasks(this.context, errorTask, true);
+					ui5strap.Action.runTasks(this.context, errorTask);
 				}
 				else{
 					throw err;

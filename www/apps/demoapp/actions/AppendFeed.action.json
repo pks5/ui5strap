@@ -1,12 +1,13 @@
 {
 	"//" : "Appends a new media list item to an existing media list.",
-	"__modules" : [
-		"ui5strap.AMCreateControl #createMediaListItem",
-		"ui5strap.AMCreateControl #createMediaListImage",
-		"ui5strap.ActionModule #addItemToList"
+	"TASKS" : [
+		"createMediaListItem",
+		"createMediaListImage",
+		"addItemToList"
 	],
 	
 	"createMediaListItem" : {
+		"TYPE" : "ui5strap.AMCreateControl",
 		
 		"viewId" : "=-> view.getId()",
 		"titleInputId" : "titleInput",
@@ -22,6 +23,7 @@
 	},
 	
 	"createMediaListImage" : {
+		"TYPE" : "ui5strap.AMCreateControl",
 		"moduleName" : "ui5strap.Image",
 		"settings" : {
 			"type" : "MediaObject",

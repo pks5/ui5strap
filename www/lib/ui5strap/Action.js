@@ -49,18 +49,28 @@
 	* @Static
 	* @deprecated
 	*/
-	var _getActionInstanceDef = function (actionModuleName){
+	var _getActionInstanceDef = function (context, actionModuleName){
 		var instanceDef = {};
 
 		if(typeof actionModuleName === 'string'){
 			//If string, the namespace is taken from the protoype
-			var parts = actionModuleName.split(/#/);
-			if(parts.length > 1){
-				instanceDef.module = parts[0].trim();
-				instanceDef.namespace = parts[1];
+			if(-1 === actionModuleName.indexOf(".")){
+				var taskDefinition = context.action[actionModuleName];
+				if(!taskDefinition){
+					throw new Error("No task definition for task '" + actionModuleName + "'");
+				}
+				if(!taskDefinition[ActionContext.PARAM_MODULE]){
+					taskDefinition[ActionContext.PARAM_MODULE] = "ui5strap.ActionModule";
+				}
+				instanceDef = {
+					namespace : actionModuleName,
+					module : taskDefinition[ActionContext.PARAM_MODULE]
+				};
 			}
 			else{
-				instanceDef.module = actionModuleName;
+				instanceDef = { 
+						module : actionModuleName
+				};
 			}
 		}	
 		else if(typeof actionModuleName === 'object'){
@@ -131,7 +141,7 @@
 			//Expected string
 			delete context.parameters[actionModuleNameParameter];
 			//Old format
-			Action.runTasks(context, actionModuleName, false);
+			Action.runTasks(context, actionModuleName);
 		}
 		else{  
 			//New format
@@ -140,7 +150,7 @@
 			if(actionModuleName){ //Expected string
 				delete context.parameters[ActionContext.PARAM_TASKS];
 				//New Format
-				Action.runTasks(context, actionModuleName, true);
+				Action.runTasks(context, actionModuleName);
 			}
 			else{  
 				throw new Error("Invalid action '" + context + "': '" + ActionContext.PARAM_TASKS + "' attribute is missing!");
@@ -206,7 +216,7 @@
 	* @Static
 	* @FIXME remove arg newFormat once the old action format has been dropped.
 	*/
-	Action.runTasks = function(context, actionModulesList, newFormat){
+	Action.runTasks = function(context, actionModulesList){
 		if(!actionModulesList){
 			return;
 		}
@@ -219,23 +229,8 @@
 			actionModulesListLength = actionModulesList.length;
 				
 		for ( var i = 0; i < actionModulesListLength; i++ ) { 
-			var actionInstanceDef = null;
-			if(newFormat){
-				var taskDefinition = context.action[actionModulesList[i]];
-				if(!taskDefinition){
-					throw new Error("No task definition for task '" + actionModulesList[i] + "'");
-				}
-				if(!taskDefinition[ActionContext.PARAM_MODULE]){
-					taskDefinition[ActionContext.PARAM_MODULE] = "ui5strap.ActionModule";
-				}
-				actionInstanceDef = {
-					namespace : actionModulesList[i],
-					module : taskDefinition[ActionContext.PARAM_MODULE]
-				};
-			}	
-			else{
-				actionInstanceDef = _getActionInstanceDef(actionModulesList[i]);
-			}
+			var actionInstanceDef = _getActionInstanceDef(context, actionModulesList[i]);
+			
 			instanceDefs.push(actionInstanceDef);
 			jQuery.sap.require(actionInstanceDef.module);
 		}
