@@ -6,11 +6,12 @@
 		"compareValue" : "DELETE",
 		"anotherValue" : "QRS",
 		"customDataKey" : "command",
+		"tt" : false,
 		"customDataValue" : "=-> eventParameters.srcControl.data(.customDataKey)",
 		
 		"IF" : "=-> tools.lang.eq(.compareValue, .customDataValue)",
 		
-		"message" : "=-> toString()",
+		"message" : "=-> .tt ? toString() : .customDataKey",
 		"DO" : "=-> global.alert(.message)",
 		
 		"ELSE" : "error"

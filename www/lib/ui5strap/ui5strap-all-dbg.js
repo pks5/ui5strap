@@ -225,7 +225,7 @@
   * -------
   */
 
-  var tapSupport = jQuery.sap.touchEventMode != "OFF";
+  var tapSupport = sap.ui.Device.support.touch;
   
   ui5strap.options = {
   	enableTapEvents : tapSupport,
@@ -850,10 +850,18 @@
   jQuery.sap.declare("ui5strap.ImageShape");
 
   ui5strap.ImageShape = {
-    Default : "Default",
-    Rounded : "Rounded",
-    Circle : "Circle",
-    Thumbnail : "Thumbnail"
+		  Default : "Default",
+		  Rounded : "Rounded",
+		  Circle : "Circle",
+		  Thumbnail : "Thumbnail"
+  };
+  
+  jQuery.sap.declare("ui5strap.ImageType");
+
+  ui5strap.ImageType = {
+		  Default : "Default",
+		  MediaObject : "MediaObject",
+		  Responsive : "Responsive"
   };
 
   /*
@@ -1948,6 +1956,23 @@
 			this._log.debug("{move} '" + paramKey + "' => '" + arguments[paramKey] + "'");
 		}
 	};
+	
+	ActionFunctions.data = function(args){
+		if(!args.tgtParam){
+			this._log.error("{func} missing argument 'tgtParam'");
+		}
+		var srcControl = args.srcControl;
+		if(!args.srcControl){
+			this._log.error("{func} missing argument 'srcControl'");
+		}
+		srcControl = this._getParameter(args.srcControl);
+		if(!(srcControl instanceof sap.ui.core.Control)){
+			this._log.error("{func} not an Control");
+		}
+		var data = args.dataKey ? srcControl.data(args.dataKey) : srcControl.data(); 
+		
+		this._setParameter(args.tgtParam, data);
+	}; 
 
 	ActionFunctions.not = function(arguments){
 		if(!("srcParam" in arguments)){
@@ -2142,55 +2167,58 @@
 
 	ActionContext.NUMBER = 0;
 
-	var _paramNames = {
-		"AJ1.0" : {
-			"PREFIX" : "a_",
-			"PARAM_ACTION" : "id",
-			"PARAM_MODULES" : "modules",
-			"PARAM_BINDING_CONTEXT" : "context",
-			"PARAM_DOM_SELECTOR" : "selector",
-			"PARAM_EVENTS" : "events",
-			"PARAM_FUNCTIONS" : "functions"
-		},
-		"AJ2.0" : {
-			"PREFIX" : "__",
-			"PARAM_ACTION" : "action",
-			"PARAM_MODULES" : "modules",
-			"PARAM_BINDING_CONTEXT" : "context",
-			"PARAM_DOM_SELECTOR" : "selector",
-			"PARAM_EVENTS" : "events",
-			"PARAM_FUNCTIONS" : "functions"
-		}
-	};
-
-	//Default Format
-	ActionContext.DEFAULT_FORMAT = "AJ1.0";
-
-	//Prefix
-	ActionContext.PREFIX = 'PREFIX';
-
+	ActionContext.PREFIX = "__";
+	ActionContext.RESOLVE = "=->";
+	ActionContext.RESOLVE_LENGTH = ActionContext.RESOLVE.length;
+	
 	//Action Name
-	ActionContext.PARAM_ACTION = 'PARAM_ACTION';
+	ActionContext.PARAM_ACTION = 'action';
 	
 	//AM Modules
-	ActionContext.PARAM_MODULES = 'PARAM_MODULES';
-	
-	//Binding Context
-	ActionContext.PARAM_BINDING_CONTEXT = 'PARAM_BINDING_CONTEXT';
-	
-	//DOM Selector
-	//@deprecated
-	ActionContext.PARAM_DOM_SELECTOR = 'PARAM_DOM_SELECTOR';
+	ActionContext.PARAM_MODULES = 'modules';
+	ActionContext.PARAM_TASKS = 'TASKS';
+	ActionContext.PARAM_MODULE = 'TYPE';
 	
 	//Action Events
-	ActionContext.PARAM_EVENTS = 'PARAM_EVENTS';
+	ActionContext.PARAM_EVENTS = 'events';
 	
 	//Action Functions
-	ActionContext.PARAM_FUNCTIONS = 'PARAM_FUNCTIONS';
-
+	ActionContext.PARAM_FUNCTIONS = 'functions';
+	
+	ActionContext.WORKPOOL = "action";
+	
 	/*
+	 * Tools functions
+	 * CLEANUP
+	 */
+	var _tools = {
+		"bool" : {
+	 		"not" : function(value){
+				return !value;
+			}
+		},
+		"lang" : {
+			"do" : function(){
+				return arguments;
+			},
+			"eq" : function(){
+				if(arguments.length === 0){
+					return true;
+				}
+				var cmp = arguments[0];
+				for(var i = 1; i < arguments.length; i++){
+					if(arguments[i] != cmp){
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+	};
+	
+	/**
 	* Init log
-	* @private
+	* @Private
 	*/
 	var _initLog = function(_this){
 		_this._log = {
@@ -2216,72 +2244,45 @@
 		};
 	};
 
-	/*
-	* @private
+	/**
+	 * @PostConstruct
+	* @Private
 	*/
 	var _init = function(_this, action){
 		
+		//Validate
+		if(!action.app || !action.parameters || ('object' !== typeof action.parameters)){
+			throw new Error("Constructor argument must contain 'app' reference and 'parameters' object.");
+		}
+		
 		//App Reference
-		if(!action.app){
-			throw new Error('App reference required!')
-		}
 		_this.app = action.app;
-
-		//Files
-		_this.FILES = [];
-
-		//Data to parse
-		_this.PARSE = [];
-
+		
+		//Tools Reference
+		_this.tools = _tools;
+		
 		//Default parameters
-		if(action.parameters){
-			var actionParametersType = typeof action.parameters;
-			if(actionParametersType === 'object'){
-				_this.defaultParameters = jQuery.extend({}, action.parameters);
-
-				//Set parameters to default format
-				if(!_this.defaultParameters.__format){
-					_this.defaultParameters.__format = ActionContext.DEFAULT_FORMAT;
-				}
-			}
-			else{
-				//parameters is a string
-				throw new Error('Context Parameters must be an object!');
-			}
+		_this.defaultParameters = action.parameters;
+			
+		//Pool
+		_this.action = jQuery.extend(true, {}, _this.defaultParameters);
+		
+		//Old Pool
+		//@deprecated
+		_this.parameters = _this.action;
+		
+		console.log(action);
+		
+		//Event Source
+		if(action.eventSource){
+			_this.eventSource = action.eventSource;
 		}
 		
-		//Event
-		if(action.event){ //Expected sap.ui.base.Event instance 
-			var oEvent = action.event;
-
-			//Add sap.ui.base.Event object to context
-			_this.event = oEvent;
-
-			//Event Source
-			var eventSource = oEvent.getSource();
-			if(eventSource instanceof sap.ui.base.EventProvider){ //Expected sap.ui.base.EventProvider
-				_this.eventSource = eventSource;
-
-				var customData = eventSource.data();
-				if(customData && Object.keys(customData).length){ //Expected object
-					_this.PARSE.push(customData);
-					
-					//Format check
-					//TODO: Make this better
-					if((!_this.defaultParameters || !_this.defaultParameters.__format) && !customData.__format){
-						customData.__format = ActionContext.DEFAULT_FORMAT;
-					}
-				}
-			}
-
-			//Event parameters (e.g. from a list selection)
-			var eventParameters = oEvent.getParameters();
-			if(eventParameters){
-				_this.eventParameters = eventParameters;
-			}
-		
+		//Event Parameters
+		if(action.eventParameters){
+			_this.eventParameters = action.eventParameters;
 		}
-
+		
 		//OpenUI5 Standard Controller
 		if(action.controller){
 			//Add Controller reference to context
@@ -2304,8 +2305,9 @@
 		_this.localStorage = localStorage ? localStorage : {};
 		_this.sessionStorage = sessionStorage ? sessionStorage : {};
 		
-		//_this.window = window;
-		//_this.document = document;
+		_this.window = window;
+		_this.document = document;
+		_this.global = window;
 		
 		//Number
 		ActionContext.NUMBER ++;
@@ -2313,51 +2315,264 @@
 
 		//Call stack
 		_this._callStack = [];
+		
+		_this._loopDir = {};
 
 		//Init Log
 		_initLog(_this);
-		
-		//Merge the context
-		_this._merge();
 	};
 
-	/*
-	* Parse data and merge it into the context
-	* @private
+	/**
+	* Returns String representation of this context.
+	* 
+	* @Public
 	*/
-	var _parseAndMerge = function(_this, customData){
-		var customDataKeys = Object.keys(customData),
-			customDataKeysLength = customDataKeys.length;
-		
-		for ( var i = 0; i < customDataKeysLength; i++ ){
-			var customDataKey = customDataKeys[i],
-				iContent = ui5strap.Utils.parseIContent(customData[customDataKey]),
-				iContentType = typeof iContent;
-			if(iContentType === 'string'){
-				//iContent is a string, just set or replace the value in the parameter pool
-				_this.parameters[customDataKey] = iContent;
-			}
-			else if(iContentType === 'object'){ 
-				//iContent is an object, if parameter already exists in pool, deep copy, otherwise just set
-				if(_this.parameters[customDataKey]){
-					jQuery.extend(true, _this.parameters[customDataKey], iContent);
-				}
-				else{
-					_this.parameters[customDataKey] = iContent;
-				}
-
-			} 
-		}
+	ActionContextProto.toString = function(){
+		return '[ACTION#' + this._actionNumber + ']';
 	};
-
+	
+	ActionContextProto._isExpression = function(pointer){
+		return ("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE;
+	};
+	
+	ActionContextProto._evalExpression = function(task, pointer){
+		return this.get(task, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
+	};
+	
+	/**
+	 * @Public
+	 * FIXME
+	 */
+	ActionContextProto.resolve = function(task, pointer, onlyString){
+		if(this._isExpression(pointer)){
+			pointer = this._evalExpression(task, pointer);
+		}
+		else if(!onlyString && ("object" === typeof pointer)){
+			var objectKeys = Object.keys(pointer),
+				objectKeysLength = objectKeys.length;
+		
+			for(var i=0; i < objectKeysLength; i++){
+				//Store back the value in the context
+				pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], true);
+			}
+		}
+		return pointer;
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _callParamFunction = function(_this, scope, func, paramString, task, isRoot){
+		var args = null;
+		if('' !== paramString){
+			args = paramString.split(/,/);
+		}
+		else{
+			args = [];
+		}
+		if(null === args){
+			throw new Error("Cannot execute function: no parameters provided!");
+		}
+		
+		for(var i = 0; i < args.length; i++){
+			args[i] = _this.get(task, args[i].trim());
+		}
+		
+		if(isRoot){
+			args.unshift(task);
+		}
+		
+		return func.apply(scope, args);
+	};
+	
+	
+	/**
+	* Gets and evaluates a context parameter.
+	* 
+	* @Protected
+	*/
+	ActionContextProto.get = function(task, parameterKey, defaultValue){
+		var fPart = null;
+		var kPart = parameterKey;
+		var c1Pos = parameterKey.indexOf('(');
+		if(-1 !== c1Pos){
+			var c2Pos = parameterKey.length - 1;
+			if(parameterKey.charAt(c2Pos) !== ')'){
+				throw new Error("Invalid function part in " + parameterKey);
+			}
+			
+			kPart = parameterKey.substring(0, c1Pos);
+			
+			if(c1Pos >= c2Pos - 1){
+				fPart = "";
+			}
+			fPart = parameterKey.substring(c1Pos + 1, c2Pos).trim();
+		}
+		
+		if(kPart.charAt(0) === "."){
+			if(!task){
+				throw new Error("Cannot resolve relative paramter without task reference!");
+			}
+			kPart = task.getScope() + kPart;
+		}
+		
+		if(!kPart.match(/([a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+/)){
+			throw new Error("Invalid key part in " + kPart);
+		}
+		
+		if(this._loopDir["t_" + kPart]){
+			throw new Error("Cannot access " + kPart + ": is locked by another process.");
+		}
+		this._loopDir["t_" + kPart] = true;
+		//console.log(kPart, fPart);
+			
+		var keyParts = kPart.split('.'),
+				pointer = this,
+				i=0;
+			
+		while(i < keyParts.length){
+			var keyPart = keyParts[i];
+			if("object" !== typeof pointer){
+				console.log(pointer);
+				throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": not an object.");
+			}
+			var prevPointer = pointer;
+			pointer = pointer[keyPart];
+			if(pointer){
+				var functionApplied = false;
+				if("function" === typeof pointer){
+					if(i === keyParts.length - 1){
+						if(keyPart.charAt(0) === '_'){
+							throw new Error("Cannot execute protected function '" + keyPart + "'.");
+						}
+						jQuery.sap.log.info("Executing function '" + kPart + "' with arguments (" + fPart + ")");
+						pointer = _callParamFunction(
+								this, 
+								prevPointer, 
+								pointer, 
+								fPart, 
+								task, 
+								keyParts.length === 1
+						);
+						functionApplied = true;
+					}
+					else{
+						throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": is a function.");
+					}
+				}
+				
+				if(this._isExpression(pointer)){
+					if(functionApplied){
+						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
+					}
+					//Store back the value in the context
+					prevPointer[keyPart] = this._evalExpression(task, pointer);
+				    
+					pointer = prevPointer[keyPart];
+				}
+				i++;
+			}
+			else{
+				break;
+			}
+		}
+		
+		//Set value to default if null or undefined
+		if(("undefined" === typeof pointer) && ("undefined" !== typeof defaultValue)){
+			pointer = defaultValue;
+			if(this._isExpression(pointer)){
+				pointer = this._evalExpression(task, pointer);
+			}
+		}
+		
+		this._loopDir["t_" + kPart] = false;
+		
+		return pointer;
+	};
+	
+	/**
+	 * Sets a value.
+	* @Protected
+	*/
+	ActionContextProto.set = function(task, parameterKey, parameterValue){
+		if(!parameterKey || -1 === parameterKey.indexOf('.')){
+			throw new Error("Cannot get parameter: no root node provided.");
+		}
+		if(parameterKey.charAt(0) === "."){
+			if(!task){
+				throw new Error("Cannot resolve relative paramter without task reference!");
+			}
+			parameterKey = task.getScope() + parameterKey;
+		}
+		
+		var keyParts = parameterKey.split('.'),
+			pointer = this,
+			i=0;
+		
+		while(i < keyParts.length){
+			var keyPart = keyParts[i];
+			
+			if(i === keyParts.length - 1){
+				if(pointer[keyPart] && ("function" === typeof pointer[keyPart])){
+					//Value already exists, but its a function
+					throw new Error("Cannot override parameter: '" + keyPart + "' is a function.");
+				}
+				//Set (or override) value
+				pointer[keyPart] = parameterValue;
+				
+				return true;
+			}
+			else if(!(keyPart in pointer)){
+				//Create new empty object
+				//TODO if pointer[keypart] is a string we will land here too and override it!
+				pointer[keyPart] = {};
+			}
+			
+			var prevPointer = pointer;
+			pointer = pointer[keyPart];
+			
+			if(null === pointer){
+				throw new Error("Cannot write parameter: '" + keyPart + "' is null.");
+			}
+			else if(this._isExpression(pointer)){
+				//Store back the value in the context
+				prevPointer[keyPart] = this._evalExpression(task, pointer);
+				
+				pointer = prevPointer[keyPart];
+			}
+			
+			if("object" !== typeof pointer){
+				throw new Error("Cannot write parameter: '" + keyPart + "' is not an object.");
+			}
+			
+			i++;
+			
+		}
+		
+		return false;
+	};
+	
+	ActionContextProto["do"] = function(){
+		
+	};
+	
 	/*
+	 * 
+	 * ------------------------------------------------
+	 * ------------------------------------------------
+	 * 
+	 */
+	
+	/**
 	* Apply functions
+	* @deprecated
 	* @private
 	*/
 	var _applyFunctions = function(_this, parameterKey){
-		var paramFunctions = _this._getParameter(parameterKey);
+		var paramFunctions = _this.get(null, parameterKey);
 
 		if(paramFunctions){ //Expected array
+			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
 			var paramFunctionsLength = paramFunctions.length,
 				availableFunctions = ui5strap.ActionFunctions;
 			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
@@ -2380,268 +2595,69 @@
 		}	
 
 	};
-
-	/*
-	* Creates an action parameter based on the prefix for actions
-	* @Static
-	*/
-	ActionContextProto.parameterKey = function (parameterKey, prefix){
-		if(!this.parameters.__format || !_paramNames[this.parameters.__format]){
-			throw new Error('Cannot read parameter "' + parameterKey + '": Invalid action format: ' + this.parameters.__format);
-		}
-
-		var paramData = _paramNames[this.parameters.__format],
-			actionParam = paramData[ActionContext.PREFIX] + paramData[parameterKey];
-		
-		if(prefix){
-			actionParam = prefix + '.' + actionParam;
-		}
-		
-		return actionParam;
-	};
-
-	/*
-	* Gets a parameter by key
+	
+	/**
 	* @Protected
+	* @deprecated
 	*/
-	ActionContextProto._getParameter = function(parameterKey){
-		if(-1 !== parameterKey.indexOf('.')){
-			var keyParts = parameterKey.split('.'),
-				pointer = this,
-				i=0;
-			
-			while(i < keyParts.length){
-				if(keyParts[i] in pointer){ // && null !== pointer[keyParts[i]]
-					pointer = pointer[keyParts[i]];
-					i++;
-				}
-				else{
-					return null;
-				}
-			}
-			
-			return pointer;
-		}	
+	ActionContextProto._process = function(parameterScope){
+		_applyFunctions(this, parameterScope + "." + ActionContext.PREFIX + ActionContext.PARAM_FUNCTIONS);
+	};
+	
+	/**
+	 * @deprecated
+	 */
+	ActionContextProto._getParameter = function(parameterKey, task, defaultValue){
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._getParameter is deprecated. Use .get instead.");
 		
-		//Without a dot in the key, use "parameters"
-		//TODO Is this ever happen somewhere?
-		if(!(parameterKey in this.parameters)){
-			return null;
-		}
-
-		return this.parameters[parameterKey];
+		return this.get(task, parameterKey, defaultValue);
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	ActionContextProto._setParameter = function(parameterKey, parameterValue, task){
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._setParameter is deprecated. Use .set instead.");
+		this.set(task, parameterKey, parameterValue);
 	};
-
-	/*
+	
+	/**
 	* @Protected
-	*/
-	ActionContextProto._setParameter = function(parameterKey, parameterValue){
-			if(-1 !== parameterKey.indexOf('.')){
-				var keyParts = parameterKey.split('.'),
-					pointer = this,
-					i=0;
-				while(i < keyParts.length){
-					var keyPart = keyParts[i];
-					
-					if(i === keyParts.length - 1){
-						 pointer[keyPart] = parameterValue;
-					}
-					else if(!(keyPart in pointer)){
-						pointer[keyPart] = {};
-					}
-					
-					pointer = pointer[keyPart];
-					i++;
-					
-				}
-				return this;
-			}	
-			
-			//Without a dot in the key, use "parameters"
-			//TODO Is this ever happen somewhere?
-			this.parameters[parameterKey] = parameterValue;
-
-			return this;
-	};
-
-	/*
-	* @Protected
+	* FIXME
+	* @deprecated
 	*/
 	ActionContextProto._deleteParameter = function(parameterKey){
+			jQuery.sap.log.warning("ui5strap.ActionContext.prototype._deleteParameter is deprecated and will be dropped.");
 			delete this.parameters[parameterKey];
 
 			return this;
 	};
 
-	/*
+	/**
 	* @Protected
+	* @deprecated
 	*/
 	ActionContextProto._copyParameter = function(parameterKeySrc, parameterKeyTgt){
-		var paramSrcValue = this._getParameter(parameterKeySrc);
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._copyParameter is deprecated and will be dropped.");
+		var paramSrcValue = this.get(null, parameterKeySrc);
 		if(null !== paramSrcValue){
-			this._setParameter(parameterKeyTgt, paramSrcValue);
+			this.set(null, parameterKeyTgt, paramSrcValue);
 		}
 
 		return this;
 	};
 
-	/*
+	/**
 	* @Protected
+	* @deprecated
+	* FIXME
 	*/
 	ActionContextProto._moveParameter = function(parameterKeySrc, parameterKeyTgt){
+		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._moveParameter is deprecated and will be dropped.");
 		this._copyParameter(parameterKeySrc, parameterKeyTgt);
 		this._deleteParameter(parameterKeySrc);
 
 		return this;
-	};
-
-	/*
-	* Merge the parameters from custom data into the existing computed parameters
-	* @protected
-	*/
-	ActionContextProto._merge = function(){
-			this._log.debug("MERGING PARAMETERS");
-			
-			//Reinitialize parameters with default values
-			this.parameters = {};
-			
-			//Add JSON Files in opposite order
-			for (var i = this.FILES.length-1; i >= 0; i--){
-				jQuery.extend(true, this.parameters, this.FILES[i]);
-			}
-
-			if(this.defaultParameters){
-				//Add Default Values
-				jQuery.extend(true, this.parameters, this.defaultParameters);
-			}
-
-			//Parse and add Custom Data 
-			for (var i = 0; i < this.PARSE.length; i++){
-				_parseAndMerge(this, this.PARSE[i]);
-			}
-
-			//Load additional data from DOM nodes and Control Context
-			//@deprecated
-			//this._fetch("parameters");
-
-			//If a format is present, we can process the parameters
-			if(this.parameters.__format){
-				this._process("parameters");
-			}
-			
-	};
-
-	/*
-	* @protected
-	*/
-	ActionContextProto._process = function(parameterKey){
-		_applyFunctions(this, this.parameterKey(ActionContext.PARAM_FUNCTIONS, parameterKey));
-	};
-
-	/*
-	* Fetch additional data from a dom node and from a binding context inside the event
-	* @deprecated
-	* @Protected
-	*
-	ActionContextProto._fetch = function(parameterKey){
-		jQuery.sap.log.debug("F ActionContext::_fetch ('" + parameterKey + "')");
-
-		//DOM Selector
-		//@deprecated
-		var domsel = this._getParameter(this.parameterKey(ActionContext.PARAM_DOM_SELECTOR, parameterKey));
-		if(domsel){ //Expected string
-			
-			var domsels = ui5strap.Utils.parseIContent(domsel);
-			if(typeof domsels === 'string'){
-				domsels = [domsels];
-			}
-			var domselsLength = domsels.length;
-			
-			if(!("DOM" in this)){
-				this.DOM = {};
-			}
-			
-			//Copy all attributes of the nodes covered by domselKey
-			for ( var i = 0; i < domselsLength; i++ ){
-
-				var domselKey = domsels[i];
-				this.DOM[domselKey] = jQuery(domselKey).attr();
-			
-			}
-		
-		}
-
-		//Binding Context
-		var bindingContextPath = this._getParameter(this.parameterKey(ActionContext.PARAM_BINDING_CONTEXT, parameterKey));
-		if(this.eventParameters && bindingContextPath){ //string expected
-			var eventParameters = this.eventParameters,
-				eventParametersKeys = Object.keys(eventParameters),
-				eventParametersKeysLength = eventParametersKeys.length;
-			
-			for( var i = 0; i < eventParametersKeysLength; i++ ){
-				
-				var eventParameterValue = eventParameters[ eventParametersKeys[i] ];
-				if(eventParameterValue instanceof sap.ui.core.Control){
-					var oBindingContext = eventParameterValue.getBindingContext(bindingContextPath);
-					if(oBindingContext){ //object expected
-						var bModel = oBindingContext.getModel();
-						if(bModel){ //sap.ui.core.model.Model expected
-							var bPath = oBindingContext.getPath(); 
-							
-							if(!("CONTEXT" in this)){
-								this.CONTEXT = {};
-							}
-
-							this.CONTEXT[bindingContextPath] = {
-									"model" : bModel,
-									"path" : bPath,
-									"data" : bModel.getProperty(bPath)
-							};
-
-						}
-						else{
-							this._log.error('Invalid model in binding context: ' + bindingContextPath);
-						}
-					}
-					else{
-						this._log.error('Invalid binding context: ' + bindingContextPath);
-					}
-				}
-
-			}
-		}
-	};
-	*/
-
-	/*
-	* 
-	* Executes an AM Module (ui5strap.ActionModule)
-	* @protected
-	*/
-	ActionContextProto._run = function(instanceDef){
-		//Set index
-		instanceDef.index = this._callStack.length;
-		
-		//Push to callstack
-		this._callStack.push(instanceDef);
-
-		var actionModuleName = instanceDef.module,
-			ActionModuleConstructor = ui5strap.Utils.getObject(actionModuleName),
-			oActionModule = new ActionModuleConstructor();
-					
-		if(!(oActionModule instanceof ui5strap.ActionModule)){
-			throw new Error("Error in action '" + this + "':  '" + actionModuleName +  "' must be an instance of ui5strap.ActionModule!");
-		}
-
-		oActionModule.init(this, instanceDef).execute();
-	};
-
-	/*
-	* String representation of the context
-	* @public
-	*/
-	ActionContextProto.toString = function(){
-		return '[ACTION#' + this._actionNumber + ']';
 	};
 
 }());;/*
@@ -2690,7 +2706,9 @@
 	* Name of the event that is triggered when the event is completed
 	*/
 	ActionModule.EVENT_COMPLETED = "completed";
-
+	
+	ActionModule.cacheable = true;
+	
 	/*
 	* Namespace of the action module instance
 	*/
@@ -2703,6 +2721,7 @@
 
 	/**
 	* Initializes the action module
+	* @PostConstruct
 	*/
 	ActionModuleProto.init = function(context, instanceDef){
 		this.context = context;
@@ -2713,11 +2732,13 @@
 		if(instanceDef.namespace){
 			this.namespace = instanceDef.namespace;
 		}
+		else{
+			//this.namespace = ActionModuleProto.namespace;
+		}
 		
 		//Test if Namespace is valid
-		var paramPrefix = context.parameterKey("");
-		if(jQuery.sap.startsWith(this.namespace, paramPrefix)){
-			throw new Error("Action namespace must not start with '" + paramPrefix + "'!");
+		if(jQuery.sap.startsWith(this.namespace, ActionContext.PREFIX)){
+			throw new Error("Action namespace must not start with '" + ActionContext.PREFIX + "'!");
 		}
 
 		return this;
@@ -2725,193 +2746,174 @@
 
 	/**
 	 * String representation of the Module
+	 * @Public
 	 */
 	ActionModuleProto.toString = function(){
 		return this._instanceDef.module + ' ' + this.context;
 	};
 
 	/**
-	* Returns the Definition for a Parameter
-	* @public
-	* @return The Definition or null
-	*/
-	ActionModuleProto.getParameterDefinition = function(parameterKey){
-		return this.parameters[parameterKey] || null;
-	};	
-
-	/**
-	* Returns a Field (type, defaultValue, etc) of a Parameter Definition
-	* @public
-	* @return The Field intormation or null
-	*/
-	ActionModuleProto.getParameterDefinitionField = function(parameterKey, fieldKey){
-		var paramDef = this.getParameterDefinition(parameterKey);
-
-		if(!paramDef){
-			//Parameter is not defined in module
-			return null;
-		}
-
-		return paramDef[fieldKey] || null;
-	};	
-
-	/*
-	* Creates a action module specific parameter key
-	* @protected
-	*/
-	ActionModuleProto._createParameterKey = function(parameterKey){
-		if(-1 !== parameterKey.indexOf('.')){
-			return parameterKey;
-		}
-		
-		//By default, use the Module's Namespace
-		return 'parameters.' + this.namespace + '.' + parameterKey;
-	};	
-
-	/*
-	* Gets the value of an action module specific parameter
-	* @public
-	*/
-	ActionModuleProto.getParameter = function(parameterKey){
-		return this.context._getParameter(this._createParameterKey(parameterKey));
+	 * @Public
+	 */
+	ActionModuleProto.getScope = function(){
+		return ActionContext.WORKPOOL + "." + this.namespace;
 	};
 
 	/**
-	* Returns the type of an Parameter
-	* @public
+	* Does same as ActionContext.prototype.get - plus type validation.
+	* @Public
 	*/
-	ActionModuleProto.getParameterType = function(parameterKey){
-		var paramValue = this.getParameter(parameterKey);
-		if(null === paramValue){
-			//Parameter does not exist
-			return false;
+	ActionModuleProto.getParameter = function(paramKey){
+		var paramDef = this.parameters[paramKey];
+		
+		if(!paramDef){
+			throw new Error("Invalid definition for parameter '" + paramKey + "'.");
+		}
+
+		var value = this.context.get(this, "." + paramKey, paramDef.defaultValue),
+			paramDefType = paramDef.type;
+		
+		if(value && paramDefType){
+			var parameterType = typeof value,
+				defIsString = typeof paramDefType === 'string';
+			
+			if( (defIsString && parameterType !== paramDefType) || 
+				(!defIsString && -1 === jQuery.inArray(parameterType, paramDefType) )
+			){
+				throw new Error(this + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDefType) + ") for parameter '" + paramKey + "'.");
+			}
 		}
 		
-		//Return the Type
-		return typeof paramValue;
-	};	
+		return value;
+	};
+	
+	/**
+	 * Faster variant of ActionContext.prototype.get - only for task root paramaters!
+	 * @Public
+	 */
+	ActionModuleProto.getRootParameter = function(parameterKey, defaultValue){
+		var param = this.context.action[this.namespace][parameterKey];
+		if(param){
+			param = this.context.resolve(this, param, true);
+		}
+		if(('undefined' === typeof param) && ('undefined' !== typeof defaultValue)){
+			param = this.context.resolve(this, defaultValue, true);
+		}
+		
+		//Store back the value in the context
+		this.context.action[this.namespace][parameterKey] = param;
+		
+		return param;
+	};
 
-	/*
+	/**
 	* Sets an action module specific parameter to the action context
-	* @public
+	* @Public
 	*/
 	ActionModuleProto.setParameter = function(parameterKey, parameterValue){
-		return this.context._setParameter(this._createParameterKey(parameterKey), parameterValue);
+		return this.context.set(this, "." + parameterKey, parameterValue);
 	};
 
+	/**
+	* Execute the action module
+	* @Public
+	*/
+	ActionModuleProto.execute = function(){
+		this.context._log.debug("Executing Task " + this);
+		
+		//Apply local parameter functions
+		//@deprecated
+		this.context._process(this.getScope());
+
+		//Prepare parameters
+		this.prepareParameters();
+
+		//test if parameters match conditions
+		if(!this.getRootParameter("IF", true)){
+			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
+			
+			this["else"]();
+		}
+		else{
+			try{
+				this.run();
+				
+				this.then();
+			}
+			catch(err){
+				var errorTask = this.getRootParameter("ERROR");
+				if(errorTask){
+					ui5strap.Action.runTasks(this.context, errorTask);
+				}
+				else{
+					throw err;
+				}
+			}
+		}
+
+		this.context._log.debug("Task execution completed " + this);
+	};
+	
+	/**
+	* Run the action module. Inheritants should override this method.
+	* @Protected
+	*/
+	ActionModuleProto.run = function(){
+		this.getRootParameter("DO");
+	};
+	
+	ActionModuleProto.then = function(){
+		ui5strap.Action.runTasks(this.context, this.getRootParameter("THEN"));
+		
+		//Exceution complete
+		//@deprecated
+		this.completed();
+	};
+	
+	ActionModuleProto["else"] = function(){
+		ui5strap.Action.runTasks(this.context, this.getRootParameter("ELSE"));
+	};
+	
 	/*
+	 * 
+	 * ------------------------------------------------
+	 * ------------------------------------------------
+	 * 
+	 */
+	
+	/**
 	* Deletes an action module specific parameter from the action context
-	* @public
+	* @Public
+	* @deprecated
 	*/
 	ActionModuleProto.deleteParameter = function(parameterKey){
 		return this.context._deleteParameter(this._createParameterKey(parameterKey));
 	};
 
 
-	//--------------------------
-
-	/*
-	* Execute the action module
-	* @public
+	
+	/**
+	* Creates a action module specific parameter key
+	* @Protected
+	* @deprecated
 	*/
-	ActionModuleProto.execute = function(){
-		this.context._log.debug("EXECUTE " + this);
-
-		//Apply local parameter functions
-		this.context._process("parameters." + this.namespace);
-
-		//Prepare parameters
-		this.prepareParameters();
-
-		//test if parameters match conditions
-		if(!this.testConditions()){
-			this.context._log.debug("CONDITIONS DONT MATCH " + this);
-		}
-		else{
-			this.validateParameters();
-
-			this.run();
-		}
-
-		//Exceution complete
-		this.completed();
-
-		this.context._log.debug("EXECUTION COMPLETE " + this);
-	};
-
-	/*
+	ActionModuleProto._createParameterKey = function(parameterKey){
+		return  this.getScope() + '.' + parameterKey;
+	};	
+	
+	
+	/**
 	* Prepare the action module and parameters
-	* @protected
+	* @Protected
+	* @deprecated
 	*/
 	ActionModuleProto.prepareParameters = function(){
 		//throw new Error('Please override the prepareParameters method in action module ' + this);
 	};
 
-	/*
-	* Check if the conditions for this action module are met
-	* @protected
-	*/
-	ActionModuleProto.testConditions = function(){
-		this.context._log.debug("TEST CONDITIONS " + this.context.action_conditions);
-		
-		//TODO Implement Action Conditions
-		
-		return true;
-	};	
-
-	/*
-	* Validate the parameters of this action module
-	* @protected
-	*/
-	ActionModuleProto.validateParameters = function(){
-		this.context._log.debug("VALIDATE PARAMETERS " + this);
-
-		for(paramKey in this.parameters){
-			var paramDef = this.getParameterDefinition(paramKey);
-			var publicParamKey = this._createParameterKey(paramKey);
-			if(null === paramDef){
-				throw new Error("missing definition for parameter '" + paramKey + "'.");
-			}
-
-			var typeDef = this.getParameterDefinitionField(paramKey, "type"); 
-			if( null === typeDef ){
-				throw new Error("missing type definition for parameter '" + paramKey + "'.");
-			}
-
-			if(typeof paramDef.type === 'string'){
-				paramDef.type = [paramDef.type];
-			}
-
-			
-			var parameterValue = this.getParameter(paramKey);
-			
-			//Test if required param exists
-			if( paramDef.required ){
-				if(null === parameterValue){
-					throw new Error("missing required action parameter: " + publicParamKey);
-				}
-			}
-
-			//Set default value
-			var defaultValueDef = this.getParameterDefinitionField(paramKey, "defaultValue");
-			if( null !== defaultValueDef && null === parameterValue){
-				this.setParameter(paramKey, defaultValueDef);
-			}
-
-			//Check if the parameter type is correct
-			var parameterType = this.getParameterType(paramKey);
-			if( ( null !== parameterValue ) && ( -1 === jQuery.inArray(parameterType, paramDef.type) ) )
-			{
-				throw new Error(this + ": wrong type '" + parameterType + "' (expected: " + JSON.stringify(paramDef.type) + ") for parameter '" + publicParamKey + "'.");
-			}
-
-		}
-
-		return true;
-	};
-
 	/**
 	 * Tries to find a control by a given scope and additional paramters
+	 * @deprecated
 	 */
 	ActionModuleProto.findControl = function(){
 		var theControl = null,
@@ -2972,6 +2974,10 @@
 			
 			theControl = this.context.eventParameters[parameterKey];
 		}
+		else if("CONTEXT" === scope){
+			var parameterKey = this.getParameter("parameterKey"),
+				theControl = this.context.get(this, parameterKey);
+		}
 		
 		if(!theControl){
 			//Either scope or controlId is invalid
@@ -2980,28 +2986,18 @@
 
 		return theControl;
 	};
-
-	/*
-	* Run the action module
-	* @protected
-	*/
-	ActionModuleProto.run = function(){
-		throw new Error('Please override the run method in action module ' + this);
-	};
-
+	
+	/**
+	 * @deprecated
+	 */
 	ActionModuleProto.fireEvents = function(eventName){
-		ui5strap.Action.executeEventModules(
-			this.context,
-			"parameters" 
-				+ "." 
-				+ this.namespace,
-			eventName
-		);
+		ui5strap.Action.executeEventModules(this.context, this.getScope(), eventName);
 	};
 
-	/*
+	/**
 	* Called when the action module has been completed
-	* @protected
+	* @deprecated
+	* @Protected
 	*/
 	ActionModuleProto.completed = function(){
 		this.fireEvents(ActionModule.EVENT_COMPLETED);
@@ -3049,20 +3045,38 @@
 	var Action = ui5strap.Action,
 		ActionProto = Action.prototype,
 		ActionContext = ui5strap.ActionContext,
-		ActionModule = ui5strap.ActionModule;
-
-	Action.cache = {};
-
-	/*
-	* @private
-	* @static
+		ActionModule = ui5strap.ActionModule,
+		_actionsCache = {},
+		_modulesCache = {};
+	
+	/**
+	* @Private
+	* @Static
+	* @deprecated
 	*/
-	var _getActionInstanceDef = function (actionModuleName){
+	var _getActionInstanceDef = function (context, actionModuleName){
 		var instanceDef = {};
 
 		if(typeof actionModuleName === 'string'){
 			//If string, the namespace is taken from the protoype
-			instanceDef.module = actionModuleName;
+			if(-1 === actionModuleName.indexOf(".")){
+				var taskDefinition = context.action[actionModuleName];
+				if(!taskDefinition){
+					throw new Error("No task definition for task '" + actionModuleName + "'");
+				}
+				if(!taskDefinition[ActionContext.PARAM_MODULE]){
+					taskDefinition[ActionContext.PARAM_MODULE] = "ui5strap.ActionModule";
+				}
+				instanceDef = {
+					namespace : actionModuleName,
+					module : taskDefinition[ActionContext.PARAM_MODULE]
+				};
+			}
+			else{
+				instanceDef = { 
+						module : actionModuleName
+				};
+			}
 		}	
 		else if(typeof actionModuleName === 'object'){
 			//Action Module def is an object, it can contain a custom namespace 
@@ -3075,104 +3089,87 @@
 
 		return instanceDef;
 	};
-
-	/*
-	* Executes a list of AM Modules
-	* @private
-	* @static
+	
+	/**
+	* 
+	* Executes an AM Module (ui5strap.ActionModule)
+	* @Static
+	* @Private
 	*/
-	var _executeModules = function(context, actionModulesList){
-		if(typeof actionModulesList === 'string'){
-			actionModulesList = [actionModulesList];
-		}
-
-		var instanceDefs = [],
-			actionModulesListLength = actionModulesList.length;
-				
-		for ( var i = 0; i < actionModulesListLength; i++ ) { 
-			var actionInstanceDef = _getActionInstanceDef(actionModulesList[i]);
-			instanceDefs.push(actionInstanceDef);
-			jQuery.sap.require(actionInstanceDef.module);
-		}
-
-		var instanceDefsLength = instanceDefs.length;
-		for ( var i = 0; i < instanceDefsLength; i++ ) { 
-			context._run(instanceDefs[i]);
-		}
-	};
-
-	/*
-	* Executes the action modules that are defined in the class parameter of the current context
-	* @private
-	* @static
-	*/
-	var _execute = function(context){
-		var actionModuleNameParameter = context.parameterKey(ActionContext.PARAM_MODULES),
-			actionModuleName = context._getParameter(actionModuleNameParameter);
+	var _runTaskInContext = function(context, instanceDef){
+		//Set index
+		instanceDef.index = context._callStack.length;
 		
-		if(actionModuleName){ //Expected string
-			context._deleteParameter(actionModuleNameParameter);
-			_executeModules(context, ui5strap.Utils.parseIContent(actionModuleName));
-		}
-		else{   
-			throw new Error("Invalid action '" + context + "': '" + actionModuleNameParameter + "' attribute is missing!");
-		}
-	};
+		//Push to callstack
+		context._callStack.push(instanceDef);
 
-	/*
-	* @private
-	* @static
-	*/
-	var _extendContextFromFileOrMerge = function(context, actionName, callback){
-		if(actionName){ //Expected string or object
-			var actionNamesList = ui5strap.Utils.parseIContent(actionName); 
-			if(typeof actionNamesList === 'object'){
-				var eventId = context.event.getId();
-				//Different actions for each event
-				if(!eventId || !actionNamesList[eventId]){
-					throw new Error('Cannot execute action: no action for eventId ' + eventId);
-				}
-				actionName = actionNamesList[eventId];
+		var actionModuleName = instanceDef.module;
+		
+		if(!instanceDef.module){
+			throw new Error("No task module specified!");
+		}
+		
+		var oActionModule = _modulesCache[actionModuleName];
+		
+		if(!oActionModule){
+			var ActionModuleConstructor = ui5strap.Utils.getObject(actionModuleName);
+			
+				oActionModule = new ActionModuleConstructor();
+						
+			if(!(oActionModule instanceof ui5strap.ActionModule)){
+				throw new Error("Error in action '" + context + "':  '" + actionModuleName +  "' must be an instance of ui5strap.ActionModule!");
 			}
 			
-			Action.loadFromFile(actionName, function _loadActionFromFile_complete(actionJSON){
-
-				//Action JSON files cannot be loaded if they differ in format
-				//TODO: Make this better
-				actionJSON.__format = actionJSON.__format || ActionContext.DEFAULT_FORMAT;
-				if(context.parameters.__format && context.parameters.__format !== actionJSON.__format){
-					throw new Error('Cannot load action "' + actionName + '": Bad format: ' + actionJSON.__format + " (expected: " + context.parameters.__format + ")");
-				}
-				else{
-					//If no format string prensent in context, set it to the format of the JSON
-					context.parameters.__format = actionJSON.__format;
-				}
-
-				//Add to context
-				context.FILES.push(actionJSON);
-
-				//Recursive call
-				_extendContextFromFileOrMerge(context, actionJSON[context.parameterKey(ActionContext.PARAM_ACTION)], callback);
-
-			});
-			
+			if(!ActionModuleConstructor.cacheable){
+				//_modulesCache[actionModuleName] = oActionModule;
+			}
 		}
-		else{
-			context._merge();
 
-			callback && callback();
+		oActionModule.init(context, instanceDef).execute();
+	};
+
+	
+
+	/**
+	* Executes the action modules that are defined in the class parameter of the current context
+	* @Private
+	* @Static
+	* FIXME
+	*/
+	var _execute = function(context){
+		context._process(ActionContext.WORKPOOL);
+		
+		var actionModuleNameParameter = ActionContext.PREFIX + ActionContext.PARAM_MODULES,
+			actionModuleName = context.parameters[actionModuleNameParameter];
+		
+		if(actionModuleName){ 
+			//Expected string
+			delete context.parameters[actionModuleNameParameter];
+			//Old format
+			Action.runTasks(context, actionModuleName);
+		}
+		else{  
+			//New format
+			actionModuleName = context.parameters[ActionContext.PARAM_TASKS];
+		
+			if(actionModuleName){ //Expected string
+				Action.runTasks(context, actionModuleName);
+			}
+			else{  
+				throw new Error("Invalid action '" + context + "': '" + ActionContext.PARAM_TASKS + "' attribute is missing!");
+			}
+			//New format end
 		}
 	};
-	
-	/*
+
+	/**
 	* Load an action from a json file
-	* @private
-	* @static
+	* @Private
+	* @Static
 	*/
 	Action.loadFromFile = function(actionName, callback){
-		var actionCache = Action.cache;
-		if(actionCache[actionName]){
-			callback && callback(actionCache[actionName]);
+		if(_actionsCache[actionName]){
+			callback && callback(_actionsCache[actionName]);
 			
 			return;
 		}
@@ -3184,7 +3181,7 @@
 				actionUrl, 
 				'json', 
 				function(data){
-					actionCache[actionName] = data;
+					_actionsCache[actionName] = data;
 				
 					callback && callback(data);
 				},
@@ -3194,44 +3191,79 @@
 		);
 	};
 
-	/*
+	/**
 	* Run events
-	* @public
-	* @static
+	* @Public
+	* @Static
+	* @deprecated
 	*/
 	Action.executeEventModules = function(context, parameterKey, eventName){
-		var paramEvents = context._getParameter(context.parameterKey(ActionContext.PARAM_EVENTS, parameterKey));
+		var paramEvents = context.get(
+				null,
+				parameterKey
+				+ "." 
+				+ ActionContext.PREFIX 
+				+ ActionContext.PARAM_EVENTS
+		);
 
 		if(paramEvents && paramEvents[eventName]){
 			context._log.debug("Triggering event actions '" + eventName + "'...");
 
 			//Execute one or multiple AM modules that are defined in the event
-			_executeModules(context, paramEvents[eventName]);
+			Action.runTasks(context, paramEvents[eventName]);
+		}
+	};
+	
+	/**
+	* Executes a list of AM Modules
+	* @Public
+	* @Static
+	*/
+	Action.runTasks = function(context, actionModulesList){
+		if(!actionModulesList){
+			return;
+		}
+		
+		if(typeof actionModulesList === 'string'){
+			actionModulesList = [actionModulesList];
+		}
+
+		var instanceDefs = [],
+			actionModulesListLength = actionModulesList.length;
+				
+		for ( var i = 0; i < actionModulesListLength; i++ ) { 
+			var actionInstanceDef = _getActionInstanceDef(context, actionModulesList[i]);
+			
+			instanceDefs.push(actionInstanceDef);
+			jQuery.sap.require(actionInstanceDef.module);
+		}
+
+		var instanceDefsLength = instanceDefs.length;
+		for ( var i = 0; i < instanceDefsLength; i++ ) { 
+			_runTaskInContext(context, instanceDefs[i]);
 		}
 	};
 
-	/*
+	/**
 	* Runs an action
-	* @static
+	* @Static
+	* @Public
 	*/
 	Action.run = function(action){
 		jQuerySap.log.debug("[ACTION] Action.run");
 
-		var actionName = null;
-		if(action.parameters && typeof action.parameters === 'string'){
-			actionName = action.parameters;
-			delete action.parameters;
+		var actionName = action.parameters;
+		if(typeof actionName === 'string'){
+			Action.loadFromFile(actionName, function loadFromFileSuccess(actionJSON){
+				action.parameters = actionJSON;
+				var context = new ActionContext(action);
+				_execute(context);
+			});
 		}
-
-		var context = new ActionContext(action);
-
-		if(null === actionName){
-			actionName = context._getParameter(context.parameterKey(ActionContext.PARAM_ACTION));
-		}
-
-		_extendContextFromFileOrMerge(context, actionName, function _extendContextFromFileOrMerge_complete(){
+		else{
+			var context = new ActionContext(action);
 			_execute(context);
-		});
+		}
 	};
 
 }());;/*
@@ -3797,7 +3829,8 @@
 					for(var j = 0; j < data.actions.length; j ++){
 						app.runAction({
 							"parameters" : data.actions[j], 
-							"event" : oEvent
+							"eventSource" : oEvent.getSource(),
+							"eventParameters" : oEvent.getParameters()
 						});
 					}
 					
@@ -4681,7 +4714,9 @@
 
 		//Original Event
 		if("orgEvent" in eventParameters){
-			actionParameters.event = eventParameters.orgEvent;
+			actionParameters.eventSource = eventParameters.orgEvent.getSource();
+			actionParameters.eventParameters = eventParameters.orgEvent.getParameters();
+			
 		}
 
 		this.runAction(actionParameters);
@@ -5179,6 +5214,10 @@
 	* --------------------------------------------------
 	*/
 
+	/**
+	 * Creates an action event handler for the given event.
+	 * @Private
+	 */
 	var _createActionEventHandler = function(controllerImpl, eventName){
 		var eventFunctionName = 'on' + jQuery.sap.charToUpperCase(eventName, 0),
 			oldOnPageShow = controllerImpl[eventFunctionName];
@@ -5198,7 +5237,8 @@
 					app.runAction({
 						"parameters" : actionName, 
 						"controller" : this,
-						"event" : oEvent
+						"eventSource" : oEvent.getSource(),
+						"eventParameters" : oEvent.getParameters()
 					});
 				}
 			}
@@ -5209,11 +5249,19 @@
 		};
 	};
 
-	/*
+	/**
+	 * Adds action functionality to the controller.
 	* @Static
 	*/
 	AppBase.blessController = function(controllerImpl){
-
+		
+		if(!controllerImpl.actionEventHandler){
+			controllerImpl.actionEventHandler = "execute";
+		}
+		if(!controllerImpl.actionAttribute){
+			controllerImpl.actionAttribute = "action";
+		}
+		
 		//Add getApp method if not already exists
 		if(!controllerImpl.getApp){
 	          controllerImpl.getApp = function(){
@@ -5227,36 +5275,65 @@
 	          }
       	}
 		
+		/*
+		 * All available formatters
+		 */
 		if(!controllerImpl.formatters){
 			controllerImpl.formatters = {};
 		}
 		
+		/**
+		 * Formatter that resolves a i18n string.
+		 * @Public
+		 */
 		controllerImpl.formatters.localeString = function(localeString){
 			return this.getApp().getLocaleString(localeString);
 		};
-
-        //Controller event handler
-        var _controllerEventHandler = function(oEvent){
-			this.getApp().runAction({
-				"event" : oEvent, 
-				"controller" : this
-			});
-		};
-
-		//New action event handler
-		controllerImpl["a_run"] = _controllerEventHandler;
 		
-		var _controllerEventHandler2 = function(oEvent){
-			this.getApp().runAction({
-				"event" : oEvent, 
-				"controller" : this,
-				"parameters" : {
-					"__format" : "AJ2.0"
+		/**
+		 * Extracts the action names for the given event.
+		 * @Private
+		 */
+		var _getActionFromEvent = function(oEvent, customDataKey){
+			var actionName = oEvent.getSource().data(customDataKey),
+				actionNamesList = ui5strap.Utils.parseIContent(actionName);
+			
+			if(typeof actionNamesList === 'object'){
+				var eventId = oEvent.getId();
+				//Different actions for each event
+				if(!eventId || !actionNamesList[eventId]){
+					throw new Error('Cannot execute action: no action for eventId ' + eventId);
 				}
-			});
+				actionName = actionNamesList[eventId];
+			}
+			
+			return actionName;
 		};
 
-		controllerImpl["__execute"] = _controllerEventHandler2;
+		/*
+		 * Old action event handler
+		 * @deprecated
+		 */
+		controllerImpl["__execute"] = function(oEvent){
+			this.getApp().runAction({
+				"eventSource" : oEvent.getSource(),
+				"eventParameters" : oEvent.getParameters(),
+				"controller" : this,
+				"parameters" : _getActionFromEvent(oEvent, "__action")
+			});
+		};
+		
+		/*
+		 * New action event handler
+		 */
+		controllerImpl[controllerImpl.actionEventHandler] = function(oEvent){
+			this.getApp().runAction({
+				"eventSource" : oEvent.getSource(),
+				"eventParameters" : oEvent.getParameters(),
+				"controller" : this,
+				"parameters" : _getActionFromEvent(oEvent, this.actionAttribute)
+			});
+		};
 
 		var oldOnInit = controllerImpl.onInit;
 
@@ -5277,7 +5354,8 @@
 					
 					app.runAction({
 						"parameters" : actionName, 
-						"event" : oEvent,
+						"eventSource" : oEvent.getSource(),
+						"eventParameters" : oEvent.getParameters(),
 						"controller" : this
 					});
 				} 
@@ -7770,7 +7848,6 @@
 				} 
 			},
 			events:{
-		        "click":{},
 		        "tap":{}
 		    }
 
@@ -7789,17 +7866,19 @@
 	ui5strap.Utils.dynamicText(ButtonPrototype);
 
 	ui5strap.Utils.dynamicClass(ButtonPrototype, 'selected', { 'true' : 'active' });
-
+	var _handlePress = function(oEvent) {
+		if (this.getEnabled()) {
+			oEvent.setMarked();
+			this.fireTap({});
+		}
+	}		
+			
 	if(ui5strap.options.enableTapEvents){
-		ButtonPrototype.ontap = function(){
-			this.fireTap();
-		};
+		ButtonPrototype.ontap = _handlePress;
 	}
 
 	if(ui5strap.options.enableClickEvents){
-		ButtonPrototype.onclick = function(){
-			this.fireClick();
-		};
+		ButtonPrototype.onclick = _handlePress;
 	}
 
 
@@ -8671,6 +8750,10 @@
 					type: "string", 
 					defaultValue: ""
 				},
+				bubbleUp : {
+					type : "boolean",
+					defaultValue : false
+				},
 				href : {
 					type:"string", 
 					defaultValue:""
@@ -8695,8 +8778,7 @@
 				}
 			},
 			events:{
-		        click: {},
-		        tap : {}
+		        tap : {allowPreventDefault : true}
 		    }
 
 		}
@@ -8712,17 +8794,25 @@
 	);
 
 	ui5strap.Utils.dynamicText(ui5strap.Link.prototype);
+	
+	var _handlePress = function(oEvent) {
+		//if (this.getEnabled()) {
+			oEvent.setMarked();
 
+			if (!this.fireTap() || !this.getHref()) {
+				oEvent.preventDefault();
+			}
+		//} else {
+		//	oEvent.preventDefault();
+		//}
+	};
+	
 	if(ui5strap.options.enableTapEvents){
-		ui5strap.Link.prototype.ontap = function(){
-			this.fireTap();
-		};
+		ui5strap.Link.prototype.ontap = _handlePress;
 	}
 
 	if(ui5strap.options.enableClickEvents){
-		ui5strap.Link.prototype.onclick = function(){
-			this.fireClick();
-		};
+		ui5strap.Link.prototype.onclick = _handlePress;
 	}
 
 }());;/*
@@ -9940,7 +10030,21 @@
 	});
 
 	var ListBaseProto = ui5strap.ListBase.prototype;
-
+	
+	var _findClosestControl = function(_this, control, Constructor){
+		var parentControl = control,
+			maxDepth = 20,
+			i = 0;
+		while(!(parentControl instanceof Constructor)){
+			parentControl = parentControl.getParent()
+			i++;
+			if(i >= maxDepth){
+				throw new Error("Cannot find parent control: max depth reached.");
+			}
+		}
+		return parentControl;
+	};
+	
 	ListBaseProto.setSelectedIndex = function(itemIndex){
 
 		var items = this.getItems();
@@ -9965,7 +10069,8 @@
 		
 			var parent = this.getParent(),
 				grandParent = parent.getParent();
-
+			
+			//TODO
 			if(grandParent instanceof ui5strap.ListBase){
 				grandParent.setSelectedControl(parent, this);
 			}
@@ -10002,34 +10107,43 @@
 		}
 		return null;
 	};
+	
+	/*
+	ListBaseProto.setSelectedCustom = function(dataKey, value){
+		items = this.getItems(),
+			selectedItem = null;
+		
+		for(var i = 0; i < items.length; i++){
+			if(this.context.app.createControlId(itemId) === this.context.app.createControlId(items[i].getItemId())){
+				selectedItem = items[i];
+				break;
+			}
+		}
+		
+		menu.setSelectedControl(selectedItem);
+	};
+	*/
 
 	var _processSelection = function(_this, oEvent){
 		var srcControl = oEvent.srcControl,
+			listItem = _findClosestControl(_this, srcControl, ui5strap.ListItem),
 			eventOptions = {
-				srcControl : srcControl
+				srcControl : srcControl,
+				listItem : listItem,
+				listItemIndex : _this.indexOfAggregation("items", listItem)
 			},
 			selectionMode = _this.getSelectionMode();
 
-		if(srcControl instanceof ui5strap.ListItem){
-			eventOptions.listItem = srcControl;
-		}
-		else{
-			var parentControl = srcControl.getParent();
-			if(parentControl instanceof ui5strap.ListItem){
-				eventOptions.listItem = parentControl;
-			}
-		}
-
-		if(eventOptions.listItem && eventOptions.listItem.getSelectable()){
+		if(listItem && listItem.getSelectable()){
 			if(selectionMode === ui5strap.SelectionMode.Single || selectionMode === ui5strap.SelectionMode.SingleMaster){
-				_this.setSelectedControl(eventOptions.listItem);
+				_this.setSelectedControl(listItem);
 			}
 			else if(selectionMode === ui5strap.SelectionMode.Master){
-				_this.setMasterSelected(eventOptions.listItem);
+				_this.setMasterSelected(listItem);
 			}
 		}
 		else{
-			jQuery.sap.log.debug("Click ommitted.");
+			jQuery.sap.log.debug("Event ommitted.");
 		}
 
 		return eventOptions;
@@ -10045,7 +10159,7 @@
 	if(ui5strap.options.enableClickEvents){
 		ListBaseProto.onclick = function(oEvent){
 			oEvent.stopPropagation();
-			this.fireClick(_processSelection(this, oEvent));
+			this.fireTap(_processSelection(this, oEvent));
 		};
 	}
 
@@ -10442,8 +10556,9 @@
 		rm.write(">");
 
 		if(null !== media){
-			media.addStyleClass('pull-left');
-			rm.renderControl(media);
+			rm.write('<div class="media-left">');
+				rm.renderControl(media);
+			rm.write('</div>');
 		}
 
 		rm.write('<div class="media-body">');
@@ -11234,7 +11349,7 @@
 		var result = control[funcName].apply(control, funcArgs);
 
 		if(tgtParam){
-			this.context._setParameter(tgtParam, result);
+			this.context.set(this, tgtParam, result);
 		}
 
 		this.context._log.debug("Calling control method '" + funcName + "' of control '" + control.getId() + "'");
@@ -11535,7 +11650,7 @@
 			var model = bindingContext.getModel();
 			var data = model.getProperty(bindingContext.getPath());
 
-			this.context._setParameter(tgtParam, data);
+			this.context.set(this, tgtParam, data);
 			//this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
 	};
 
@@ -11596,7 +11711,7 @@
 			"type" : "string"
 		},
 		"tgtParam" : {
-			"required" : true, 
+			"required" : false, 
 			"type" : "string"
 		},
 		
@@ -11628,7 +11743,8 @@
 	*/
 	AMGetCurrentPageProto.run = function(){
 		var target = this.getParameter("target"),
-			scope = this.getParameter("scope")
+			scope = this.getParameter("scope"),
+			tgtParam = this.getParameter("tgtParam");
 		
 		//TODO better with action conditions
 		if(scope === "SOURCE" && target !== this.context.eventParameters["target"]){
@@ -11637,8 +11753,11 @@
 		
 		var nc = this.findControl(),
 			currentPage = nc.getTarget(target);
-			
-		this.context._setParameter(this.getParameter("tgtParam"), currentPage.getId());
+		
+		if(tgtParam){
+			this.context.set(this, tgtParam, currentPage.getId());
+		}
+		this.setParameter("result", currentPage.getId());
 	};
 
 }());;/*
@@ -11693,7 +11812,7 @@
 			"type" : "string"
 		},
 		"tgtParam" : {
-			"required" : true, 
+			"required" : false, 
 			"type" : "string"
 		},
 		
@@ -11729,8 +11848,13 @@
 				tgtParam = this.getParameter("tgtParam"),
 				control = this.findControl(false),
 				propertyValue = control["get" + jQuery.sap.charToUpperCase(propertyKey, 0)]();
-
-			this.context._setParameter(tgtParam, propertyValue);
+			
+			if(tgtParam){
+				this.context.set(this, tgtParam, propertyValue);
+			}
+			
+			this.setParameter("result", propertyValue);
+			
 			this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
 	};
 
@@ -11883,7 +12007,9 @@
 			if(!this.context.app[frameGetter]){
 				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
 			}
-
+			
+			this.setParameter("viewName", this.getParameter("viewName"));
+			
 			this.context.app[frameGetter]().navigateTo(control, this.context.parameters[this.namespace]);
 	}
 
@@ -12083,7 +12209,7 @@
 				}	
 				
 				for(var paramKey in mapping){
-					var replaceValue = this.context._getParameter(mapping[paramKey]);
+					var replaceValue = this.context.get(this, mapping[paramKey]);
 					modelUrl = modelUrl.replace("{"+paramKey+"}", replaceValue);
 				}	
 			}
@@ -12403,7 +12529,6 @@
 		//Required
 		"itemId" : {
 			"required" : true, 
-			"defaultValue" : null, 
 			"type" : "string"
 		},
 		
@@ -12435,6 +12560,10 @@
 	*/
 	AMSetListItemSelectedProto.run = function(){
 		var itemId = this.getParameter("itemId");
+		
+		if(!itemId){
+			return;
+		}
 		
 		var menu = this.findControl(),
 			items = menu.getItems(),
@@ -12548,7 +12677,7 @@
 				theControl = this.findControl(true);
 			
 			if(null !== srcParam){
-				data = this.context._getParameter(srcParam);
+				data = this.context.get(this, srcParam);
 			}
 
 			if(!data){
@@ -12658,7 +12787,7 @@
 			
 			//Read value from another parameter
 			if(null !== srcParam){
-				propertyValue = this.context._getParameter(srcParam);
+				propertyValue = this.context.get(this, srcParam);
 			}
 			
 			if(!control[setter]){
@@ -14856,7 +14985,7 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 				this.$().toggleClass('open'); 
 			}
 			else{
-				this.fireClick();
+				this.fireTap();
 			}
 		};
 	}
@@ -15005,7 +15134,6 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 			},
 
 			events:{
-		        click : {},
 		        tap : {},
 		        select : {}
 		    }
@@ -15060,23 +15188,36 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 		}
 		return null;
 	};
+	
+	var _findClosestControl = function(_this, control, Constructor){
+		var parentControl = control,
+			maxDepth = 20,
+			i = 0;
+		while(!(parentControl instanceof Constructor)){
+			parentControl = parentControl.getParent()
+			i++;
+			if(i >= maxDepth){
+				throw new Error("Cannot find parent control: max depth reached.");
+			}
+		}
+		return parentControl;
+	};
 
 	var _processSelection = function(_this, oEvent){
 		var srcControl = oEvent.srcControl,
 			selectionMode = _this.getSelectionMode(),
 			eventOptions = {
-				button : srcControl
+				srcControl : srcControl,
+				button : _findClosestControl(_this, srcControl, ui5strap.Button)
 			};
-
-		if(!(srcControl instanceof ui5strap.Button)){
-			var parentControl = srcControl.getParent();
-			if(parentControl instanceof ui5strap.Button){
-				eventOptions.button = parentControl;
+		
+		if(eventOptions.button){
+			if(selectionMode === ui5strap.SelectionMode.Single){
+				_this.setSelectedControl(eventOptions.button);
 			}
 		}
-
-		if(selectionMode === ui5strap.SelectionMode.Single){
-			_this.setSelectedControl(eventOptions.button);
+		else{
+			jQuery.sap.log.debug("Event ommitted.");
 		}
 
 		return eventOptions;
@@ -15090,7 +15231,7 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 
 	if(ui5strap.options.enableClickEvents){
 		ButtonGroupProto.onclick = function(oEvent){
-			this.fireClick(_processSelection(this, oEvent));
+			this.fireTap(_processSelection(this, oEvent));
 		};
 	}
 
@@ -17151,7 +17292,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 				},
 				responsive : {
 					type : "boolean",
-					defaultValue : true
+					defaultValue : false
 				},
 				alt : {
 					type:"string", 
@@ -17172,6 +17313,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 				shape: {
 					type:"ui5strap.ImageShape",
 					defaultValue:ui5strap.ImageShape.Default
+				},
+				type: {
+					type:"ui5strap.ImageType",
+					defaultValue:ui5strap.ImageType.Default
 				}
 			}
 
@@ -17214,6 +17359,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 			Rounded : 'img-rounded',
 			Circle : 'img-circle',
 			Thumbnail : 'img-thumbnail'
+		},
+		typeToClass : {
+			MediaObject : "media-object",
+			Responsive : "img-responsive"
 		}
 	};
 
@@ -17225,6 +17374,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 			width = oControl.getWidth(),
 			height = oControl.getHeight(),
 			shape = oControl.getShape(),
+			type = oControl.getType(),
 			title = oControl.getTitle();
 
 		if(mpath){
@@ -17234,10 +17384,14 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		rm.write("<img");
 		rm.writeControlData(oControl);
 		if(oControl.getResponsive()){
+			jQuery.sap.log.debug("The property 'reponsive' is deprecated. Please use 'type' with 'Responsive' instead.");
 			rm.addClass('img-responsive');
 		}
-		if(shape in this.shapeToClass){
+		if(this.shapeToClass[shape]){
 			rm.addClass(this.shapeToClass[shape]);
+		}
+		if(this.typeToClass[type]){
+			rm.addClass(this.typeToClass[type]);
 		}
 		rm.writeClasses();
 		

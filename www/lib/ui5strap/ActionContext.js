@@ -273,6 +273,22 @@
 	* @Protected
 	*/
 	ActionContextProto.get = function(task, parameterKey, defaultValue){
+		if(!parameterKey){
+			throw new Error("Parameter key is required for get!");
+		}
+		var qPos = parameterKey.indexOf('?');
+		if(-1 !== qPos){
+			var dPos = parameterKey.indexOf(':');
+			if(-1 === dPos){
+				throw new Error("Invalid expression: " + parameterKey);
+			}
+			var p1 = parameterKey.substring(0, qPos).trim(),
+				p2 = parameterKey.substring(qPos + 1, dPos).trim(),
+				p3 = parameterKey.substring(dPos + 1).trim();
+			
+			return this.get(task, p1) ? this.get(task, p2) : this.get(task, p3);
+		}
+		
 		var fPart = null;
 		var kPart = parameterKey;
 		var c1Pos = parameterKey.indexOf('(');
@@ -298,7 +314,7 @@
 		}
 		
 		if(!kPart.match(/([a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+/)){
-			throw new Error("Invalid key part in " + kPart);
+			throw new Error("Invalid parameter key for get: " + kPart);
 		}
 		
 		if(this._loopDir["t_" + kPart]){
@@ -376,9 +392,12 @@
 	* @Protected
 	*/
 	ActionContextProto.set = function(task, parameterKey, parameterValue){
-		if(!parameterKey || -1 === parameterKey.indexOf('.')){
-			throw new Error("Cannot get parameter: no root node provided.");
+		if(!parameterKey 
+				|| -1 === parameterKey.indexOf('.') 
+				|| -1 !== parameterKey.indexOf('(')){
+			throw new Error("Invalid parameter key for set: " + parameterKey);
 		}
+		
 		if(parameterKey.charAt(0) === "."){
 			if(!task){
 				throw new Error("Cannot resolve relative paramter without task reference!");
