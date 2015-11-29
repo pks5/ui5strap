@@ -9,7 +9,7 @@
 		"navContainer" : "=-> app.getControl(.controlId, .viewId)",
 		
 		"currentValue" : "=-> .navContainer.getBarVisible()",
-		"oppositeValue" : "=-> tools.bool.not(.currentValue)",
+		"oppositeValue" : "=-> lang.not(.currentValue)",
 		
 		"DO" : "=-> .navContainer.setBarVisible(.oppositeValue)"
 	}

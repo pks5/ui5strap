@@ -6,7 +6,7 @@
 	"toggleBarMenuRoot" : {
 		"navContainer" : "=-> app.getRootControl()",
 		"currentValue" : "=-> .navContainer.getBarVisible()",
-		"oppositeValue" : "=-> tools.bool.not(.currentValue)",
+		"oppositeValue" : "=-> lang.not(.currentValue)",
 		
 		"DO" : "=-> .navContainer.setBarVisible(.oppositeValue)"
 	}

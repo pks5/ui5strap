@@ -9,7 +9,7 @@
 		"tt" : false,
 		"customDataValue" : "=-> eventParameters.srcControl.data(.customDataKey)",
 		
-		"IF" : "=-> tools.lang.eq(.compareValue, .customDataValue)",
+		"IF" : "=-> lang.equal(.compareValue, .customDataValue)",
 		
 		"message" : "=-> .tt ? toString() : .customDataKey",
 		"DO" : "=-> global.alert(.message)",

@@ -31,18 +31,18 @@
 			"mpath" : "ui5strap.demoapp.img.awesome",
 			"ext" : "png",
 			"width" : 64
-		}
+		},
+		"addToListItem" : "=-> action.createMediaListItem.INSTANCE.setMedia(.INSTANCE)",
+		"DO" : "=-> .addToListItem"
 	},
 	
 	"addItemToList" : {
-		"addToListItem" : "=-> action.createMediaListItem.INSTANCE.setMedia( action.createMediaListImage.INSTANCE )",
 		
 		"viewId" : "=-> view.getId()",
 		"mediaListId" : "feeds",
 		"mediaList" : "=-> app.getControl( .mediaListId, .viewId )",
-		"addToMediaList" : "=-> .mediaList.addItems( action.createMediaListItem.INSTANCE )",
 		
-		"DO" : "=-> (.addToListItem, .addToMediaList)" 
+		"DO" : "=-> .mediaList.addItems( action.createMediaListItem.INSTANCE )" 
 	}
 
 }

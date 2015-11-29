@@ -68,35 +68,6 @@
 	
 	ActionContext.WORKPOOL = "action";
 	
-	/*
-	 * Tools functions
-	 * CLEANUP
-	 */
-	var _tools = {
-		"bool" : {
-	 		"not" : function(value){
-				return !value;
-			}
-		},
-		"lang" : {
-			"do" : function(){
-				return arguments;
-			},
-			"eq" : function(){
-				if(arguments.length === 0){
-					return true;
-				}
-				var cmp = arguments[0];
-				for(var i = 1; i < arguments.length; i++){
-					if(arguments[i] != cmp){
-						return false;
-					}
-				}
-				return true;
-			}
-		}
-	};
-	
 	/**
 	* Init log
 	* @Private
@@ -138,9 +109,6 @@
 		
 		//App Reference
 		_this.app = action.app;
-		
-		//Tools Reference
-		_this.tools = _tools;
 		
 		//Default parameters
 		_this.defaultParameters = action.parameters;
@@ -343,32 +311,45 @@
 			
 		while(i < keyParts.length){
 			var keyPart = keyParts[i];
-			if("object" !== typeof pointer){
-				console.log(pointer);
-				throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": not an object.");
+			
+			if(keyPart.charAt(0) === '_'){
+				//throw new Error("Cannot access protected property '" + keyPart + "'.");
 			}
+			
 			var prevPointer = pointer;
 			pointer = pointer[keyPart];
 			if(pointer){
-				var functionApplied = false;
-				if("function" === typeof pointer){
-					if(i === keyParts.length - 1){
-						if(keyPart.charAt(0) === '_'){
-							throw new Error("Cannot execute protected function '" + keyPart + "'.");
+				var functionApplied = false,
+					pointerType = typeof pointer;
+				
+				if(i === keyParts.length - 1){
+					//Last path part
+					
+					if(null !== fPart){
+						if("function" === pointerType){
+							jQuery.sap.log.info("Executing function '" + kPart + "' with arguments (" + fPart + ")");
+							pointer = _callParamFunction(
+										this, 
+										prevPointer, 
+										pointer, 
+										fPart, 
+										task, 
+										keyParts.length === 1
+							);
+							functionApplied = true;
 						}
-						jQuery.sap.log.info("Executing function '" + kPart + "' with arguments (" + fPart + ")");
-						pointer = _callParamFunction(
-								this, 
-								prevPointer, 
-								pointer, 
-								fPart, 
-								task, 
-								keyParts.length === 1
-						);
-						functionApplied = true;
+						else{
+							throw new Error("Cannot execute function '" + kPart + "': not a function!");
+						}
 					}
-					else{
-						throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": is a function.");
+					
+				}
+				else{
+					if("number" === pointerType || "boolean" === pointerType){
+						//We cannot continue searching
+						pointer = undefined;
+						
+						break;
 					}
 				}
 				
@@ -381,9 +362,13 @@
 				    
 					pointer = prevPointer[keyPart];
 				}
+				
 				i++;
 			}
 			else{
+				if(null !== fPart){
+					throw new Error("Cannot execute function '" + kPart + "': '" + keyPart + "' is undefined.");
+				}
 				break;
 			}
 		}
@@ -466,8 +451,33 @@
 		return false;
 	};
 	
-	ActionContextProto["doaaa"] = function(){
+	ActionContextProto["doaaa"] = function(task){
 		
+	};
+	
+	ActionContextProto.lang = {
+			
+			"not" : function(value){
+					return !value;
+			},
+			
+			"notnot" : function(value){
+				return !!value;
+			},
+			
+			"equal" : function(){
+					if(arguments.length === 0){
+						return true;
+					}
+					var cmp = arguments[0];
+					for(var i = 1; i < arguments.length; i++){
+						if(arguments[i] != cmp){
+							return false;
+						}
+					}
+					return true;
+			}
+			
 	};
 	
 	/*

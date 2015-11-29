@@ -74,6 +74,8 @@
 		
 		this.setParameter("INSTANCE", instance);
 		
+		//Run do task
+		ui5strap.ActionModule.prototype.run.call(this);
 	};
 
 }());
