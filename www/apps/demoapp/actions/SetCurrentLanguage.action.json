@@ -1,0 +1,18 @@
+{
+	"//" : "Preselect the current system language on the specified ButtonGroup control.",
+	"TASKS" : "setCurrentLanguage",
+	
+	"setCurrentLanguage" : {
+		
+		"configOBJ" : "=-> core.getConfiguration()",
+		"languageSTR" : "=-> .configOBJ.getLanguage()",
+		
+		"viewID" : "=-> view.getId()",
+		"buttonGroupID" : "languageSelect",
+		"buttonGroupCTRL" : "=-> app.getControl(.buttonGroupID, .viewID)",
+		"customDataKEY" : "language",
+		
+		"DO" : "=-> .buttonGroupCTRL.setSelectedCustom(.customDataKEY, .languageSTR)"
+	}
+	
+}

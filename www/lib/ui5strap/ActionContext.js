@@ -157,6 +157,9 @@
 		_this.window = window;
 		_this.document = document;
 		_this.global = window;
+		_this.core = sap.ui.getCore();
+		_this.jQuery = jQuery;
+		_this.jQuerySap = jQuery.sap;
 		
 		//Number
 		ActionContext.NUMBER ++;

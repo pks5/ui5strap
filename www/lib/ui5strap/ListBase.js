@@ -135,6 +135,24 @@
 		return null;
 	};
 	
+	/**
+	 * Select by custom data value
+	 */
+	ListBaseProto.setSelectedCustom = function(dataKey, value){
+		items = this.getItems(),
+			selectedItem = null;
+		
+		for(var i = 0; i < items.length; i++){
+			if(items[i].data(dataKey) === value){
+				selectedItem = items[i];
+				break;
+			}
+		}
+		
+		this.setSelectedControl(selectedItem);
+	};
+	
+	
 	/*
 	 * END implementation of Selectable interface
 	 */
@@ -163,21 +181,6 @@
 		}
 	};
 	
-	/*
-	ListBaseProto.setSelectedCustom = function(dataKey, value){
-		items = this.getItems(),
-			selectedItem = null;
-		
-		for(var i = 0; i < items.length; i++){
-			if(this.context.app.createControlId(itemId) === this.context.app.createControlId(items[i].getItemId())){
-				selectedItem = items[i];
-				break;
-			}
-		}
-		
-		menu.setSelectedControl(selectedItem);
-	};
-	*/
 	
 	/**
 	 * @Private

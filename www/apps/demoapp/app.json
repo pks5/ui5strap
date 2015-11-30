@@ -94,7 +94,12 @@
                 "id" : "my-app-page5",
                 
                 "target" : "content",
-                "preload" : true
+                "preload" : true,
+                "events" : {
+                	"controller" : {
+                		"update" : "ui5strap.demoapp.actions.SetCurrentLanguage"	
+                	}
+                }
             },
             
             "ui5strap.demoapp.views.MyPage6" : {

@@ -136,6 +136,23 @@
 		return null;
 	};
 	
+	/**
+	 * Select by custom data value
+	 */
+	ButtonGroupProto.setSelectedCustom = function(dataKey, value){console.log(dataKey, value);
+		items = this.getButtons(),
+			selectedItem = null;
+		
+		for(var i = 0; i < items.length; i++){
+			if(items[i].data(dataKey) === value){
+				selectedItem = items[i];
+				break;
+			}
+		}
+		
+		this.setSelectedControl(selectedItem);
+	};
+	
 	/*
 	 * END implementation of Selectable interface
 	 */
