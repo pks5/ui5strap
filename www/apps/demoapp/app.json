@@ -16,6 +16,11 @@
                 "src" : "data/menu.json",
                 "type" : "JSON",
                 "modelName" : "menu" 
+            },
+            {
+                "src" : "data/posts.json",
+                "type" : "JSON",
+                "modelName" : "posts" 
             }
     ],
     

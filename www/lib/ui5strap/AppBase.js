@@ -97,6 +97,9 @@
 		};
 	};
 	
+	/**
+	 * @Private
+	 */
 	var _createAppClass = function(_this, appClasses){
 		if(_this.config.data.app.styleClass){
 			appClasses += " " + _this.config.data.app.styleClass;
@@ -110,15 +113,17 @@
 	* ----------------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Initializes the App
+	* @Public
 	*/
 	AppBaseProto.init = function(){
 		this.onInit(new sap.ui.base.Event("ui5strap.app.init", this, {}));
 	};
 
-	/*
+	/**
 	* Preload JavaScript libraries
+	* @Private
 	*/
 	var _preloadJavaScript = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadJavaScript");
@@ -151,7 +156,10 @@
 			callback && callback.call(_this);
 		});
 	};
-
+	
+	/**
+	 * @Private
+	 */
 	var _preloadModels = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadModels");
 
@@ -333,7 +341,14 @@
 			ui5strap.Action.loadFromFile(actions[i], successCallback);
 		}
 	};
-
+	
+	/**
+	 * @Public
+	 */
+	AppBaseProto.setLanguage = function(language){
+		sap.ui.getCore().getConfiguration().setLanguage(language);
+	};
+	
 	/**
 	 * @Public
 	 */
@@ -369,7 +384,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Start the app
 	*/
 	AppBaseProto.start = function(callback){
@@ -395,6 +410,9 @@
 		callback && callback();
 	};
 
+	/**
+	 * 
+	 */
 	AppBaseProto.show = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.show");
 
@@ -412,6 +430,9 @@
 		callback && callback(isFirstTimeShow);
 	};
 
+	/**
+	 * 
+	 */
 	AppBaseProto.shown = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.shown");
 
@@ -432,7 +453,10 @@
 			callback && callback(isFirstTimeShown);
 		});
 	};
-
+	
+	/**
+	 * 
+	 */
 	AppBaseProto.hide = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.hide");
 		
@@ -442,7 +466,10 @@
 
 		callback && callback();
 	};
-
+	
+	/**
+	 * 
+	 */
 	AppBaseProto.hidden = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.hidden");
 
@@ -456,7 +483,7 @@
 		})
 	};
 
-	/*
+	/**
 	* Stop the app
 	*/
 	AppBaseProto.stop = function(callback){
@@ -514,7 +541,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been initialized
 	* @public
 	*/
@@ -526,7 +553,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been (pre-)loaded
 	* @public
 	*/
@@ -538,7 +565,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been unloaded
 	* @public
 	*/
@@ -550,7 +577,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been started
 	* @public
 	*/
@@ -562,7 +589,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been stopped
 	* @public
 	*/
@@ -574,7 +601,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app is going to show
 	* @public
 	*/
@@ -586,7 +613,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been shown
 	* @public
 	*/
@@ -598,7 +625,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app is going to show for the first time
 	* @public
 	*/
@@ -610,7 +637,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been shown for the first time
 	* @public
 	*/
@@ -622,7 +649,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app is going to hide
 	* @public
 	*/
@@ -634,7 +661,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been hidden
 	* @public
 	*/
@@ -646,7 +673,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Run an action that is assiged to a certain event
 	* @public
 	*/
@@ -671,7 +698,7 @@
 		this.runAction(actionParameters);
 	};
 
-	/*
+	/**
 	* Fires an app event. 
 	* The event is either defined in the configuration, or attached to the app instance programatically.
 	* @public
@@ -718,7 +745,7 @@
 		}
 	};
 
-	/*
+	/**
 	* Registers an event action to this app instance
 	* @public
 	*/ 
@@ -741,7 +768,7 @@
 	* ----------------------------------------------------------------------
 	*/
 	
-	/*
+	/**
 	* Loader
 	*/
 	AppBaseProto.setLoaderVisible = function(visible, callback){
@@ -749,7 +776,7 @@
 		ui5strap.Layer.setVisible(this.getDomId('loader'), visible, callback);
 	};
 
-	/*
+	/**
 	* Splash Screen
 	* @notimplemented
 	*/
@@ -760,7 +787,7 @@
 	
 	
 
-	/*
+	/**
 	* Inititalzes the overlay
 	*/
 	AppBaseProto.registerOverlay = function(){
@@ -791,7 +818,7 @@
 		//});
 	};
 
-	/*
+	/**
 	* Returns whether the overlay layer is visible
 	* @public
 	*/
@@ -799,7 +826,7 @@
 		return ui5strap.Layer.isVisible(this.overlayId);
 	};
 
-	/*
+	/**
 	* Shows the overlay layer
 	* @public
 	*/
@@ -816,7 +843,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Hides the overlay layer
 	* @public
 	*/
@@ -840,7 +867,7 @@
 	* ----------------------------------------------------------
 	*/
 
-	/*
+	/**
 	 * Create a new page
 	 */
 	AppBaseProto.createView = function(viewConfig){
@@ -909,13 +936,14 @@
 	* --------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Execute an Action
 	*/
 	AppBaseProto.runAction = function(action){
 		action.app = this;
 
 		jQuery.sap.require('ui5strap.Action');
+		
 		ui5strap.Action.run(action);
 	};
 
@@ -925,6 +953,10 @@
 	* --------------------------------------------------
 	*/
 	
+	/**
+	 * @deprecated
+	 * TODO move to component
+	 */
 	AppBaseProto.setLocalStorageItem = function(storageKey, storageValue){
 		if(typeof(Storage) === "undefined"){
 			throw new Error('Storage is not supported by this device / browser.');
@@ -933,6 +965,10 @@
 		localStorage[this.getId() + '.localStorage.' + storageKey] = JSON.stringify(storageValue);
 	};
 	
+	/**
+	 * @deprecated
+	 * TODO move to component
+	 */
 	AppBaseProto.getLocalStorageItem = function(storageKey){
 		if(typeof(Storage) === "undefined"){
 			throw new Error('Storage is not supported by this device / browser.');
@@ -943,6 +979,10 @@
 		return localStorage[storageId] ? JSON.parse(localStorage[storageId]) : null;
 	};
 	
+	/**
+	 * @deprecated
+	 * TODO move to component
+	 */
 	AppBaseProto.setSessionStorageItem = function(storageKey, storageValue){
 		if(typeof(Storage) === "undefined"){
 			throw new Error('Storage is not supported by this device / browser.');
@@ -951,6 +991,10 @@
 		sessionStorage[this.getId() + '.sessionStorage.' + storageKey] = JSON.stringify(storageValue);
 	};
 	
+	/**
+	 * @deprecated
+	 * TODO move to component
+	 */
 	AppBaseProto.getSessionStorageItem = function(storageKey){
 		if(typeof(Storage) === "undefined"){
 			throw new Error('Storage is not supported by this device / browser.');
@@ -1043,7 +1087,7 @@
 		return jQuery(this.domRef);
 	};
 
-	/*
+	/**
 	* Get the id of the app defined in the config
 	* @public
 	* @deprecated
@@ -1052,11 +1096,11 @@
 		return this.config.data.app.url;
 	};
 
-	/*
+	/**
 	* Returns the Dom ID of the App
 	*/
 	AppBaseProto.getDomId = function(subElement){
-		return this.config.data.app.id.replace(/\./g, '__') + (subElement ? '---' + subElement : '');
+		return this.config.data.app.id.replace(/\./g, '-') + (subElement ? '---' + subElement : '');
 	};
 
 	/**
@@ -1135,16 +1179,17 @@
 		}
 	};
 
-	/*
-	* @override
+	/**
+	* @Override
+	* @Public
 	*/
 	AppBaseProto.toString = function(){
 		return '[' + this.getId() + ']';
 	};
 
-	/*
+	/**
 	* Destroys the App and all of its components
-	* @override
+	* @Override
 	*/
 	AppBaseProto.destroy = function(){
 		//Destroy the root control first
@@ -1166,6 +1211,7 @@
 	/**
 	 * Creates an action event handler for the given event.
 	 * @Private
+	 * @Static
 	 */
 	var _createActionEventHandler = function(controllerImpl, eventName){
 		var eventFunctionName = 'on' + jQuery.sap.charToUpperCase(eventName, 0),
@@ -1201,6 +1247,7 @@
 	/**
 	 * Adds action functionality to the controller.
 	* @Static
+	* @Public
 	*/
 	AppBase.blessController = function(controllerImpl){
 		
@@ -1242,6 +1289,7 @@
 		/**
 		 * Extracts the action names for the given event.
 		 * @Private
+		 * @Static
 		 */
 		var _getActionFromEvent = function(oEvent, customDataKey){
 			var actionName = oEvent.getSource().data(customDataKey),

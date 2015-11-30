@@ -1463,6 +1463,32 @@
 	  
 	  var origin = a.protocol + "//" + a.host;
   };
+  
+  ui5strap.Utils.addPropertyPropagation = function(fromControl, toControl){
+		toControl.oPropagatedProperties = fromControl._getPropertiesToPropagate();
+		
+		if (toControl.hasModel()) {
+			toControl.updateBindingContext(false, true, undefined, true);
+			toControl.updateBindings(true,null); // TODO could be restricted to models that changed
+			toControl.propagateProperties(true);
+		}
+  };
+
+  ui5strap.Utils.findClosestParentControl = function(control, TargetType){
+		var parentControl = control,
+			maxDepth = 20,
+			i = 0;
+		while(!(parentControl instanceof TargetType)){
+			parentControl = parentControl.getParent()
+			i++;
+			if(i >= maxDepth){
+				jQuery.sap.log.warning("Cannot find parent control: max depth reached.");
+				parentControl = null;
+			}
+		}
+		
+		return parentControl;
+  };	
 
   /*
   * ---------

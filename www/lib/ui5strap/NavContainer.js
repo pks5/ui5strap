@@ -370,24 +370,9 @@
 			//Append page container to the dom
 			jQuery('#' + _this.targetPagesDomId(target)).append($newPageContainer);
 			
-			/*
-			 * START OpenUi5 MOD
-			 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
-			 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
-			 */
-			page.oPropagatedProperties = _this._getPropertiesToPropagate();
-			
-			if (page.hasModel()) {
-				page.updateBindingContext(false, true, undefined, true);
-				page.updateBindings(true,null); // TODO could be restricted to models that changed
-				page.propagateProperties(true);
-			}
-			/*
-			 * END OpenUi5 MOD
-			 */
-			
 			//Add page to new page container
 			page.placeAt(newPageContainer);
+			
 			//jQuery.sap.log.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
 
 			return $newPageContainer;
@@ -486,6 +471,10 @@
 		}
 		
 	};
+	
+	/*
+	 * END OpenUi5 MOD
+	 */
 	
 	/**
 	* @Override
@@ -732,8 +721,16 @@
 
 		this.targets[target] = page;
 		
+		/*
+		 * START OpenUi5 MOD
+		 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
+		 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
+		 */
+		ui5strap.Utils.addPropertyPropagation(this, page);
+		/*
+		 * END OpenUi5 MOD
+		 */
 		
-
 		var changeName = '{' + target + '} '
 							+ (null === currentPage ? 'None' : '#' + currentPage.getId()) 
 							+ ' => '

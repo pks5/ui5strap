@@ -71,30 +71,25 @@
 
 	var ListBaseProto = ui5strap.ListBase.prototype;
 	
-	var _findClosestControl = function(_this, control, Constructor){
-		var parentControl = control,
-			maxDepth = 20,
-			i = 0;
-		while(!(parentControl instanceof Constructor)){
-			parentControl = parentControl.getParent()
-			i++;
-			if(i >= maxDepth){
-				throw new Error("Cannot find parent control: max depth reached.");
-			}
-		}
-		return parentControl;
-	};
+	/*
+	 * START implementation of Selectable interface
+	 */
 	
+	/**
+	 * Set list item selected by index
+	 */
 	ListBaseProto.setSelectedIndex = function(itemIndex){
-
 		var items = this.getItems();
 		if(itemIndex < 0 || itemIndex >= items.length){
 			return false;
 		}
-		this.setSelectedControl(items[itemIndex]);
-
+		
+		return this.setSelectedControl(items[itemIndex]);
 	};
  
+	/**
+	 * Get index of selected index
+	 */
 	ListBaseProto.getSelectedIndex = function(){
 		var items = this.getItems();
 		for(var i = 0; i < items.length; i++){
@@ -105,30 +100,18 @@
 		return -1;
 	};
 
-	ListBaseProto.setMasterSelected = function(listItem){
-		
-			var parent = this.getParent(),
-				grandParent = parent.getParent();
-			
-			//TODO
-			if(grandParent instanceof ui5strap.ListBase){
-				grandParent.setSelectedControl(parent, this);
-			}
 	
-	};
-
-	ListBaseProto.setSelectedControl = function(item, nestedList){
-
-		var items = this.getItems();
-		for(var i = 0; i < items.length; i++){ 
-			if(items[i] === item){
+	/**
+	 * Set control selected by reference
+	 */
+	ListBaseProto.setSelectedControl = function(item){
+		var items = this.getItems(),
+			changed = false;
+		for(var i = 0; i < items.length; i++){
+			if(item && items[i] === item){
 				if(!item.getSelected()){
-					item.setSelected(true);
-					this.fireSelect({ "selectionSource" : nestedList ? nestedList : this });
-
-					if(this.getSelectionMode() === ui5strap.SelectionMode.SingleMaster){
-						this.setMasterSelected(item);
-					}
+					changed = true;
+					items[i].setSelected(true);
 				}
 			}
 			else{
@@ -136,8 +119,12 @@
 			}
 		}
 		
+		return changed;
 	};
-
+	
+	/**
+	 * Get selected list item control
+	 */
 	ListBaseProto.getSelectedControl = function(){
 		var items = this.getItems();
 		for(var i = 0; i < items.length; i++){
@@ -146,6 +133,34 @@
 			}
 		}
 		return null;
+	};
+	
+	/*
+	 * END implementation of Selectable interface
+	 */
+	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._selectionRequest = function(item, eventOptions){
+		this.setSelectedControl(item);
+		
+		this.fireSelect(eventOptions);
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _setMasterSelected = function(_this, listItem, eventOptions){
+		var parentListItem = ui5strap.Utils.findClosestParentControl(listItem, ui5strap.ListBase),
+			parentList = ui5strap.Utils.findClosestParentControl(parentListItem, ui5strap.ListItem);
+		
+		if(parentListItem && parentList){
+			parentList._selectionRequest(parentListItem, eventOptions);
+		}
+		else{
+			jQuery.sap.log.warning("Cannot select master list item: list or listItem not found.");
+		}
 	};
 	
 	/*
@@ -163,10 +178,13 @@
 		menu.setSelectedControl(selectedItem);
 	};
 	*/
-
+	
+	/**
+	 * @Private
+	 */
 	var _processSelection = function(_this, oEvent){
 		var srcControl = oEvent.srcControl,
-			listItem = _findClosestControl(_this, srcControl, ui5strap.ListItem),
+			listItem = ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem),
 			eventOptions = {
 				srcControl : srcControl,
 				listItem : listItem,
@@ -175,20 +193,38 @@
 			selectionMode = _this.getSelectionMode();
 
 		if(listItem && listItem.getSelectable()){
-			if(selectionMode === ui5strap.SelectionMode.Single || selectionMode === ui5strap.SelectionMode.SingleMaster){
-				_this.setSelectedControl(listItem);
+			if(selectionMode === ui5strap.SelectionMode.Single){
+				if(_this.setSelectedControl(listItem)){
+					eventOptions.selectionSource = _this;
+				
+					_this.fireSelect(eventOptions);
+				}
+			}
+			else if(selectionMode === ui5strap.SelectionMode.SingleMaster){
+				if(_this.setSelectedControl(listItem)){
+					eventOptions.selectionSource = _this;
+					
+					_setMasterSelected(_this, item, eventOptions);
+				}
 			}
 			else if(selectionMode === ui5strap.SelectionMode.Master){
-				_this.setMasterSelected(listItem);
+				
+				eventOptions.selectionSource = _this;
+				
+				_setMasterSelected(_this, listItem, eventOptions);
 			}
 		}
 		else{
-			jQuery.sap.log.debug("Event ommitted.");
+			jQuery.sap.log.warning("Could not select list item: List Item not found.");
 		}
 
 		return eventOptions;
 	};
-
+	
+	/*
+	 * HANDLE UI EVENTS
+	 */
+	
 	if(ui5strap.options.enableTapEvents){
 		ListBaseProto.ontap = function(oEvent){
 			oEvent.stopPropagation();

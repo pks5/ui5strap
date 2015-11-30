@@ -1,0 +1,12 @@
+{
+	"//" : "Removes a post from the list.",
+	"TASKS" : "selectAppLanguage",
+	
+	"//" : "The 'call' task calls the control's method removeItems.",
+	"selectAppLanguage" : {
+		"customDataKey" : "language",
+		"language" : "=-> eventParameters.srcControl.data(.customDataKey)",
+		"DO" : "=-> app.setLanguage(.language)"
+	}
+	
+}

@@ -71,16 +71,27 @@
 
 	var ButtonGroupProto = ui5strap.ButtonGroup.prototype;
 
+	/*
+	 * START implementation of Selectable interface
+	 */
+	
+	/**
+	 * Set button selected by index
+	 */
 	ButtonGroupProto.setSelectedIndex = function(itemIndex){
 
 		var items = this.getButtons();
 		if(itemIndex < 0 || itemIndex >= items.length){
 			return false;
 		}
-		this.setSelectedControl(items[itemIndex]);
+		
+		return this.setSelectedControl(items[itemIndex]);
 
 	};
 
+	/**
+	 * Get index of selected button
+	 */
 	ButtonGroupProto.getSelectedIndex = function(){
 		var items = this.getButtons();
 		for(var i = 0; i < items.length; i++){
@@ -91,14 +102,17 @@
 		return -1;
 	};
 
-	ButtonGroupProto.setSelectedControl = function(item, nestedList){
-
-		var items = this.getButtons();
+	/**
+	 * Set button selected by reference
+	 */
+	ButtonGroupProto.setSelectedControl = function(item){
+		var items = this.getButtons(),
+			changed = false;
 		for(var i = 0; i < items.length; i++){
-			if(items[i] === item){
+			if(item && items[i] === item){
 				if(!item.getSelected()){
-					item.setSelected(true);
-					this.fireSelect({ "selectionSource" : nestedList ? nestedList : this });
+					changed = true;
+					items[i].setSelected(true);
 				}
 			}
 			else{
@@ -106,8 +120,12 @@
 			}
 		}
 		
+		return changed;
 	};
-
+	
+	/**
+	 * Get selected button control
+	 */
 	ButtonGroupProto.getSelectedControl = function(){
 		var items = this.getButtons();
 		for(var i = 0; i < items.length; i++){
@@ -118,40 +136,42 @@
 		return null;
 	};
 	
-	var _findClosestControl = function(_this, control, Constructor){
-		var parentControl = control,
-			maxDepth = 20,
-			i = 0;
-		while(!(parentControl instanceof Constructor)){
-			parentControl = parentControl.getParent()
-			i++;
-			if(i >= maxDepth){
-				throw new Error("Cannot find parent control: max depth reached.");
-			}
-		}
-		return parentControl;
-	};
-
+	/*
+	 * END implementation of Selectable interface
+	 */
+	
+	/**
+	 * @Private
+	 */
 	var _processSelection = function(_this, oEvent){
 		var srcControl = oEvent.srcControl,
 			selectionMode = _this.getSelectionMode(),
 			eventOptions = {
 				srcControl : srcControl,
-				button : _findClosestControl(_this, srcControl, ui5strap.Button)
+				button : ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.Button)
 			};
 		
 		if(eventOptions.button){
 			if(selectionMode === ui5strap.SelectionMode.Single){
-				_this.setSelectedControl(eventOptions.button);
+				if(_this.setSelectedControl(eventOptions.button)){
+					//TODO is this needed for Button Group?
+					eventOptions.selectionSource = _this;
+				
+					_this.fireSelect(eventOptions);
+				}
 			}
 		}
 		else{
-			jQuery.sap.log.debug("Event ommitted.");
+			jQuery.sap.log.warning("Could not select button: not found.");
 		}
 
 		return eventOptions;
 	};
 
+	/*
+	 * UI EVENTS
+	 */
+	
 	if(ui5strap.options.enableTapEvents){
 		ButtonGroupProto.ontap = function(oEvent){
 			this.fireTap(_processSelection(this, oEvent));
