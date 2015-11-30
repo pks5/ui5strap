@@ -472,6 +472,51 @@
 		
 	};
 	
+	NavContainerBaseProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
+		jQuery.sap.log.debug("UBC");
+		sap.ui.core.Control.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
+		
+		var oModelNames = {},
+			sModelName,
+			oContext;
+
+		// find models that need an context update
+		if (bUpdateAll) {
+			for (sModelName in this.oModels) {
+				if ( this.oModels.hasOwnProperty(sModelName) ) {
+					oModelNames[sModelName] = sModelName;
+				}
+			}
+			for (sModelName in this.oPropagatedProperties.oModels) {
+				if ( this.oPropagatedProperties.oModels.hasOwnProperty(sModelName) ) {
+					oModelNames[sModelName] = sModelName;
+				}
+			}
+		} else {
+			oModelNames[sFixedModelName] = sFixedModelName;
+		}
+
+		/*eslint-disable no-loop-func */
+		for (sModelName in oModelNames ) {
+			if ( oModelNames.hasOwnProperty(sModelName) ) {
+				sModelName = sModelName === "undefined" ? undefined : sModelName;
+
+				if (!bSkipChildren) {
+					var oContext = this.getBindingContext(sModelName);
+					// also update context in all child elements
+					for (sTarget in this.targets) {
+						var oTarget = this.targets[sTarget];
+						if (oTarget instanceof sap.ui.base.ManagedObject) {
+							oTarget.oPropagatedProperties.oBindingContexts[sModelName] = oContext;
+							oTarget.updateBindingContext(false,false,sModelName);
+						}
+					}
+				}
+			}
+		}
+		/*eslint-enable no-loop-func */
+	};
+	
 	/*
 	 * END OpenUi5 MOD
 	 */

@@ -50,7 +50,7 @@
 	/**
 	 * TODO More efficient rerendering
 	 */
-	ui5strap.BarMenuItem.prototype.setText = function(newText, suppressInvalidate){
+	ui5strap.BarMenuItem.prototype.setText = function(newText, suppressInvalidate){console.log(newText);
 		this.setProperty('text', newText, suppressInvalidate);
 	};
 

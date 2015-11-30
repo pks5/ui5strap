@@ -1383,19 +1383,20 @@
 
       //@deprecated
       dynamicText : function(controlProto){
-          controlProto.setText = function(newText){
-              ui5strap.Utils.updateText(this, this.$(), newText);
+          controlProto.setText = function(newText, suppressInvalidate){
+        	  //console.log(newText, suppressInvalidate);
+              ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
           };
       },
 
       //@deprecated
-      updateText : function(oControl, $target, newText){
+      updateText : function(oControl, $target, newText, suppressInvalidate){
           if(oControl.getDomRef() && oControl.getContent().length === 0){
               $target.text(newText);
               oControl.setProperty('text', newText, true);
           }
           else{
-              oControl.setProperty('text', newText);
+              oControl.setProperty('text', newText, suppressInvalidate);
           }
       }
   };

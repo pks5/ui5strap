@@ -166,14 +166,31 @@
 		//Models
 		var models = _this.config.data.models,
 			callI = models.length, 
+			loaded = {},
 			successCallback = function(oEvent, oData){
 				callI --;
-				_this.log.debug("Loaded model '" + oData.modelName + "'");
-				_this.getRootControl().setModel(oData.oModel, oData.modelName);
-
+				
+				if(callI >= 0){
+					if(oData.oModel !== loaded[oData.modelName]){
+						_this.log.debug("Loaded model '" + oData.modelName + "'");
+						_this.getRootControl().setModel(oData.oModel, oData.modelName);
+						loaded[oData.modelName] = oData.oModel;
+					}
+					else{
+						jQuery.sap.log.warning("Model already loaded: " + oData.modelName);
+					}
+				}
+				
 				if(callI === 0){
 					//sap.ui.getCore().setModel(oModel, model['modelName']);
 					callback && callback();
+				}
+				
+				if(callI < 0){
+					jQuery.sap.log.warning("Loaded additional model data: " + oData.modelName);
+					//_this.getRootControl().rerender();
+					//sap.ui.getCore().fireLocalizationChanged();
+					console.log(sap.ui.getCore());
 				}
 			},
 			errorCallback = function(){
@@ -195,8 +212,9 @@
 			if(modelType === 'RESOURCE'){
 				oModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl : modelSrc,
-					async : true
+					async_DEACTIVATED : true
 				});
+				/*
 				oModel.attachRequestCompleted(
 					{ 
 						modelName: modelName, 
@@ -211,6 +229,11 @@
 					}, 
 					errorCallback
 				);
+				*/
+				successCallback(null, { 
+					modelName: modelName, 
+					oModel : oModel
+				});
 			}
 			else if(modelType === 'JSON'){
 				oModel = new sap.ui.model.json.JSONModel();

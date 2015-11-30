@@ -82,12 +82,12 @@
 
 	var TextProto = ui5strap.Text.prototype;
 
-	TextProto.setText = function(newText){
+	TextProto.setText = function(newText, suppressInvalidate){
 		if(ui5strap.TextType.Default === this.getType()){
-			this.setProperty('text', newText);
+			this.setProperty('text', newText, suppressInvalidate);
 		}
 		else{ 
-			ui5strap.Utils.updateText(this, this.$(), newText);
+			ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
 		}
 		
 	};
