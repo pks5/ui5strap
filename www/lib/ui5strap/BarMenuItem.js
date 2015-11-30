@@ -46,5 +46,12 @@
 			}
 		}
 	});
+	
+	/**
+	 * TODO More efficient rerendering
+	 */
+	ui5strap.BarMenuItem.prototype.setText = function(newText, suppressInvalidate){
+		this.setProperty('text', newText, suppressInvalidate);
+	};
 
 }());
