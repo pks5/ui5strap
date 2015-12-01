@@ -560,10 +560,10 @@
 	ui5strap.ButtonType = {
 		Default : "Default",
 		Button : "Button",
-    Block : "Block",
-    Close : "Close",
+		Block : "Block",
+		Close : "Close",
 		Icon : "Icon",
-    Link : "Link"
+		Link : "Link"
 	};
 
   /*
@@ -817,9 +817,12 @@
   ui5strap.SelectionMode = {
     None : "None",
     Single : "Single",
+    Multiple : "Multiple",
+    
+    //Deprecated
     SingleMaster : "SingleMaster",
-    Master : "Master",
-    Multiple : "Multiple"
+    Master : "Master"
+    
   };
 
   /*

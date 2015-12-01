@@ -36,6 +36,8 @@
 
 			library : "ui5strap",
 			
+			defaultAggregation : "items",
+			
 			properties : { 
 				"inverse" : {
 					type:"boolean", 
@@ -92,5 +94,7 @@
 
 		}
 	});
+	
+	var BarMenuProto = ui5strap.BarMenu.prototype;
 	
 }());

@@ -46,11 +46,27 @@
 			},
 			
 			events : {
-				pageHide : {},
-				pageShow : {},
-				pageHidden : {},
-				pageShown : {},
-				update : {}
+				pageChange : {
+					parameters : {
+						"target" : {type : "string"},
+						"oldPage" : {type : "ui5strap.Control"}
+					}
+				},
+				
+				pageChanged : {
+					parameters : {
+						"target" : {type : "string"},
+						"oldPage" : {type : "ui5strap.Control"}
+					}
+				},
+				
+				pageUpdate : {
+					parameters : {
+						"target" : {type : "string"},
+						"pageParameters" : {type : "object"},
+						"page" : {type : "ui5strap.Control"}
+					}
+				}
 			}
 		}
 	});
@@ -86,8 +102,6 @@
 				controller[funcName](new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}));
 			}
 		}
-		
-		_this["fire" + eventNameCC](eventParameters);
 	};
 
 	/**
@@ -180,6 +194,11 @@
 				//If next page is null, then execute the callbacks when old page has been hidden
 				if(pageChange.page === null){
 					_transitionCallback(_this, pageChange, transList);
+					
+					_this.firePageChanged({
+						target : pageChange.target,
+						oldPage : pageChange.currentPage
+					});
 				}
 
 				//onPageHidden event
@@ -196,6 +215,11 @@
 
 				//onPageShown event
 				_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShown', {
+					target : pageChange.target,
+					oldPage : pageChange.currentPage
+				});
+				
+				_this.firePageChanged({
 					target : pageChange.target,
 					oldPage : pageChange.currentPage
 				});
@@ -708,9 +732,14 @@
 			throw new Error('Parameters must not contain a target attribute!');
 		}
 		
-		eventParameters.target = target;
-
 		_triggerControllerEvent(this, target, oPage, 'update', eventParameters);
+		
+		this.firePageUpdate({
+			"target" : target,
+			"pageParameters" : eventParameters,
+			"page" : oPage
+		});
+		
 	};
 	
 	/**
@@ -809,6 +838,11 @@
 				oldPage : currentPage
 			});
 		}
+		
+		_this.firePageChange({
+			target : target,
+			oldPage : currentPage
+		});
 
 		if(this.getDomRef()){
 			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");

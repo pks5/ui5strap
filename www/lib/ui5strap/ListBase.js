@@ -31,42 +31,36 @@
 	jQuery.sap.require("ui5strap.library");
 	jQuery.sap.require("ui5strap.ListItem");
 	
-	var _metadata = {
-		defaultAggregation : "items",
+	ui5strap.Control.extend("ui5strap.ListBase", {
+		metadata : {
+			interfaces : ["ui5strap.ISelectionProvider"],
 
-		library : "ui5strap",
+			library : "ui5strap",
+			
+			properties : {
+				"selectionMode" : {
+					"type" : "ui5strap.SelectionMode",
+					"defaultValue" : ui5strap.SelectionMode.None
+				}
+			},
+			
+			events:{
 
-		properties : { 
-			selectionMode : {
-				type : "ui5strap.SelectionMode",
-				defaultValue : ui5strap.SelectionMode.None
+				select : {
+					parameters : {
+						listItem : {type : "ui5strap.ListItem"},
+						srcControl : {type : "ui5strap.Control"}
+					}
+				},
+				tap : {
+					parameters : {
+						listItem : {type : "ui5strap.ListItem"},
+						srcControl : {type : "ui5strap.Control"}
+					}
+				}
+
 			}
-		},
-				
-		aggregations : { 
-			items : {
-				type : "ui5strap.ListItem",
-				singularName: "items"
-			} 
-		},
-
-		events:{
-
-			select : {}
-
 		}
-	};
-
-	if(ui5strap.options.enableTapEvents){
-		_metadata.events.tap = {};
-	}
-
-	if(ui5strap.options.enableClickEvents){
-		_metadata.events.click = {};
-	}
-
-	sap.ui.core.Control.extend("ui5strap.ListBase", {
-		metadata : _metadata
 	});
 
 	var ListBaseProto = ui5strap.ListBase.prototype;
@@ -79,7 +73,7 @@
 	 * Set list item selected by index
 	 */
 	ListBaseProto.setSelectedIndex = function(itemIndex){
-		var items = this.getItems();
+		var items = this._getItems();
 		if(itemIndex < 0 || itemIndex >= items.length){
 			return false;
 		}
@@ -91,7 +85,7 @@
 	 * Get index of selected index
 	 */
 	ListBaseProto.getSelectedIndex = function(){
-		var items = this.getItems();
+		var items = this._getItems();
 		for(var i = 0; i < items.length; i++){
 			if(items[i].getSelected()){
 				return i;
@@ -105,13 +99,14 @@
 	 * Set control selected by reference
 	 */
 	ListBaseProto.setSelectedControl = function(item){
-		var items = this.getItems(),
+		var items = this._getItems(),
 			changed = false;
 		for(var i = 0; i < items.length; i++){
 			if(item && items[i] === item){
 				if(!item.getSelected()){
 					changed = true;
 					items[i].setSelected(true);
+					
 				}
 			}
 			else{
@@ -126,7 +121,7 @@
 	 * Get selected list item control
 	 */
 	ListBaseProto.getSelectedControl = function(){
-		var items = this.getItems();
+		var items = this._getItems();
 		for(var i = 0; i < items.length; i++){
 			if(items[i].getSelected()){
 				return items[i];
@@ -139,7 +134,7 @@
 	 * Select by custom data value
 	 */
 	ListBaseProto.setSelectedCustom = function(dataKey, value){
-		items = this.getItems(),
+		items = this._getItems(),
 			selectedItem = null;
 		
 		for(var i = 0; i < items.length; i++){
@@ -157,65 +152,43 @@
 	 * END implementation of Selectable interface
 	 */
 	
-	/**
-	 * @Protected
-	 */
-	ListBaseProto._selectionRequest = function(item, eventOptions){
-		this.setSelectedControl(item);
-		
-		this.fireSelect(eventOptions);
+	ListBaseProto._getItems = function(){
+		return this.getItems();
 	};
 	
-	/**
-	 * @Private
-	 */
-	var _setMasterSelected = function(_this, listItem, eventOptions){
-		var parentListItem = ui5strap.Utils.findClosestParentControl(listItem, ui5strap.ListBase),
-			parentList = ui5strap.Utils.findClosestParentControl(parentListItem, ui5strap.ListItem);
-		
-		if(parentListItem && parentList){
-			parentList._selectionRequest(parentListItem, eventOptions);
-		}
-		else{
-			jQuery.sap.log.warning("Cannot select master list item: list or listItem not found.");
-		}
+	ListBaseProto._findClosestListItem = function(srcControl){
+		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem);
 	};
 	
+	ListBaseProto.getListItemIndex = function(item){
+		return this.indexOfAggregation("items", item);
+	};
+	
+	ListBaseProto._getEventOptions = function(srcControl){
+		var listItem = this._findClosestListItem(srcControl);
+		
+		return {
+			srcControl : srcControl,
+			listItem : listItem,
+			listItemIndex : this.getListItemIndex(listItem)
+		};
+	};
 	
 	/**
 	 * @Private
 	 */
 	var _processSelection = function(_this, oEvent){
-		var srcControl = oEvent.srcControl,
-			listItem = ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem),
-			eventOptions = {
-				srcControl : srcControl,
-				listItem : listItem,
-				listItemIndex : _this.indexOfAggregation("items", listItem)
-			},
-			selectionMode = _this.getSelectionMode();
+		var eventOptions = _this._getEventOptions(oEvent.srcControl),
+			selectionMode = _this.getSelectionMode(),
+			listItem = eventOptions.listItem;
 
 		if(listItem && listItem.getSelectable()){
 			if(selectionMode === ui5strap.SelectionMode.Single){
 				if(_this.setSelectedControl(listItem)){
-					eventOptions.selectionSource = _this;
-				
 					_this.fireSelect(eventOptions);
 				}
 			}
-			else if(selectionMode === ui5strap.SelectionMode.SingleMaster){
-				if(_this.setSelectedControl(listItem)){
-					eventOptions.selectionSource = _this;
-					
-					_setMasterSelected(_this, item, eventOptions);
-				}
-			}
-			else if(selectionMode === ui5strap.SelectionMode.Master){
-				
-				eventOptions.selectionSource = _this;
-				
-				_setMasterSelected(_this, listItem, eventOptions);
-			}
+			
 		}
 		else{
 			jQuery.sap.log.warning("Could not select list item: List Item not found.");
@@ -228,6 +201,7 @@
 	 * HANDLE UI EVENTS
 	 */
 	
+	//Touchscreen
 	if(ui5strap.options.enableTapEvents){
 		ListBaseProto.ontap = function(oEvent){
 			oEvent.stopPropagation();
@@ -235,6 +209,7 @@
 		};
 	}
 
+	//Mouse
 	if(ui5strap.options.enableClickEvents){
 		ListBaseProto.onclick = function(oEvent){
 			oEvent.stopPropagation();

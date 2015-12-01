@@ -36,7 +36,9 @@
 		metadata : {
 
 			library : "ui5strap",
-
+			
+			defaultAggregation : "items",
+			
 			properties : { 
 				type : {
 					type:"ui5strap.NavType", 
@@ -46,11 +48,18 @@
 					type:"ui5strap.Alignment",
 					defaultValue:ui5strap.Alignment.Default
 				}
+			},
+			
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "items"
+				} 
 			}
 
 		}
 	});
 
 	var NavProto = ui5strap.Nav.prototype;
-
+	
 }());

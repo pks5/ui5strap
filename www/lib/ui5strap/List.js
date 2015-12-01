@@ -36,16 +36,26 @@
 		metadata : {
 
 			library : "ui5strap",
-
+			
+			defaultAggregation : "items",
+			
 			properties : { 
 				type : {
 					type:"ui5strap.ListType", 
 					defaultValue:ui5strap.ListType.Unordered
 				}
+			},
+			
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "items"
+				} 
 			}
 
 		}
 	});
 
-
+	var ListProto = ui5strap.List.prototype;
+	
 }());

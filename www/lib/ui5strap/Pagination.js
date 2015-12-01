@@ -36,11 +36,22 @@
 		metadata : {
 
 			library : "ui5strap",
-
+			
+			defaultAggregation : "items",
+			
 			properties : { 
 				
+			},
+			
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "items"
+				} 
 			}
 		}
 	});
-
+	
+	var PaginationProto = ui5strap.Pagination.prototype;
+	
 }());

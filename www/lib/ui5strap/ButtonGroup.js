@@ -29,8 +29,9 @@
 
 	jQuery.sap.declare("ui5strap.ButtonGroup");
 	jQuery.sap.require("ui5strap.library");
+	jQuery.sap.require("ui5strap.ListBase");
 	
-	sap.ui.core.Control.extend("ui5strap.ButtonGroup", {
+	ui5strap.ListBase.extend("ui5strap.ButtonGroup", {
 		metadata : {
 
 			defaultAggregation : "buttons",
@@ -46,10 +47,6 @@
 					type: "ui5strap.ButtonGroupType", 
 					defaultValue: ui5strap.ButtonGroupType.Default
 				},
-				selectionMode : {
-					type : "ui5strap.SelectionMode",
-					defaultValue : ui5strap.SelectionMode.None
-				},
 				align : {
 					type:"ui5strap.Alignment",
 					defaultValue:ui5strap.Alignment.Default
@@ -63,142 +60,63 @@
 			},
 
 			events:{
-		        tap : {},
-		        select : {}
+				select : {
+					parameters : {
+						listItem : {type : "ui5strap.Button"},
+						button : {type : "ui5strap.Button"},
+						srcControl : {type : "ui5strap.Control"}
+					}
+				},
+				tap : {
+					parameters : {
+						listItem : {type : "ui5strap.Button"},
+						button : {type : "ui5strap.Button"},
+						srcControl : {type : "ui5strap.Control"}
+					}
+				}
 		    }
 		}
 	});
 
 	var ButtonGroupProto = ui5strap.ButtonGroup.prototype;
-
-	/*
-	 * START implementation of Selectable interface
-	 */
 	
 	/**
-	 * Set button selected by index
+	 * @Protected
+	 * @Override
 	 */
-	ButtonGroupProto.setSelectedIndex = function(itemIndex){
-
-		var items = this.getButtons();
-		if(itemIndex < 0 || itemIndex >= items.length){
-			return false;
-		}
+	ButtonGroupProto._getItems = function(){
+		return this.getButtons();
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonGroupProto._findClosestListItem = function(srcControl){
+		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.Button);
+	};
+	
+	/**
+	 * @Public
+	 * @Override
+	 */
+	ButtonGroupProto.getListItemIndex = function(item){
+		return this.indexOfAggregation("buttons", item);
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonGroupProto._getEventOptions = function(srcControl){
+		var listItem = this._findClosestListItem(srcControl);
 		
-		return this.setSelectedControl(items[itemIndex]);
-
-	};
-
-	/**
-	 * Get index of selected button
-	 */
-	ButtonGroupProto.getSelectedIndex = function(){
-		var items = this.getButtons();
-		for(var i = 0; i < items.length; i++){
-			if(items[i].getSelected()){
-				return i;
-			}
-		}
-		return -1;
-	};
-
-	/**
-	 * Set button selected by reference
-	 */
-	ButtonGroupProto.setSelectedControl = function(item){
-		var items = this.getButtons(),
-			changed = false;
-		for(var i = 0; i < items.length; i++){
-			if(item && items[i] === item){
-				if(!item.getSelected()){
-					changed = true;
-					items[i].setSelected(true);
-				}
-			}
-			else{
-				items[i].setSelected(false);
-			}
-		}
-		
-		return changed;
-	};
-	
-	/**
-	 * Get selected button control
-	 */
-	ButtonGroupProto.getSelectedControl = function(){
-		var items = this.getButtons();
-		for(var i = 0; i < items.length; i++){
-			if(items[i].getSelected()){
-				return items[i];
-			}
-		}
-		return null;
-	};
-	
-	/**
-	 * Select by custom data value
-	 */
-	ButtonGroupProto.setSelectedCustom = function(dataKey, value){console.log(dataKey, value);
-		items = this.getButtons(),
-			selectedItem = null;
-		
-		for(var i = 0; i < items.length; i++){
-			if(items[i].data(dataKey) === value){
-				selectedItem = items[i];
-				break;
-			}
-		}
-		
-		this.setSelectedControl(selectedItem);
-	};
-	
-	/*
-	 * END implementation of Selectable interface
-	 */
-	
-	/**
-	 * @Private
-	 */
-	var _processSelection = function(_this, oEvent){
-		var srcControl = oEvent.srcControl,
-			selectionMode = _this.getSelectionMode(),
-			eventOptions = {
-				srcControl : srcControl,
-				button : ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.Button)
-			};
-		
-		if(eventOptions.button){
-			if(selectionMode === ui5strap.SelectionMode.Single){
-				if(_this.setSelectedControl(eventOptions.button)){
-					//TODO is this needed for Button Group?
-					eventOptions.selectionSource = _this;
-				
-					_this.fireSelect(eventOptions);
-				}
-			}
-		}
-		else{
-			jQuery.sap.log.warning("Could not select button: not found.");
-		}
-
-		return eventOptions;
-	};
-
-	/*
-	 * UI EVENTS
-	 */
-	
-	if(ui5strap.options.enableTapEvents){
-		ButtonGroupProto.ontap = function(oEvent){
-			this.fireTap(_processSelection(this, oEvent));
+		return {
+			srcControl : srcControl,
+			listItem : listItem,
+			button : listItem, //deprecated
+			listItemIndex : this.getListItemIndex(listItem)
 		};
-	}
-
-	if(ui5strap.options.enableClickEvents){
-		ButtonGroupProto.onclick = function(oEvent){
-			this.fireTap(_processSelection(this, oEvent));
-		};
-	}
+	};
 
 }());

@@ -28,9 +28,11 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.TabContainer");
-
-	sap.ui.core.Control.extend("ui5strap.TabContainer", {
+	jQuery.sap.require("ui5strap.library");
+	
+	ui5strap.Control.extend("ui5strap.TabContainer", {
 		metadata : {
+			interfaces : ["ui5strap.ISelectionProvider"],
 
 			// ---- object ----
 			defaultAggregation : "panes",
@@ -39,23 +41,27 @@
 			library : "ui5strap",
 
 			properties : { 
-				listenTo : {
+				
+				animate : {
+		          type:"boolean", 
+		          defaultValue:true
+		        },
+		        
+				selectedIndex : {
+					type : "int",
+					defaultValue : 1
+				}
+				
+				,
+				"listenTo" : {
 					type : "string",
 					defaultValue : "select",
 					bindable : false
 				},
-				animate : {
-		          type:"boolean", 
-		          defaultValue:true
-		        }, 
-				customAssociation : {
+				"customAssociation" : {
 					type : "string",
 					defaultValue : "",
 					bindable : false
-				},
-				selectedIndex : {
-					type : "int",
-					defaultValue : 1
 				}
 			},
 			
@@ -64,9 +70,11 @@
 					singularName: "pane"
 				}
 			},
-
-			associations : {
+			
+			"associations" : {
 				"source" : {
+					"deprecated" : true,
+					"type" : "ui5strap.SelectionProvider",
 					multiple : false
 				}
 			}
@@ -74,19 +82,19 @@
 		}
 	});
 
-	var TabContainer = ui5strap.TabContainer;
+	var TabContainerProto = ui5strap.TabContainer.prototype;
 
-	TabContainer.prototype.init = function(){
+	TabContainerProto.init = function(){
 		this.sourceControl = null;
 	};
 
-	  TabContainer.prototype.onAfterRendering= function(){
+	  TabContainerProto.onAfterRendering= function(){
 	  	var _this = this;
 			var sourceControl = this.getSourceControl();
 			if(typeof sourceControl !== 'undefined'){
 				sourceControl.attachEvent(this.getListenTo(), {}, function(oEvent){
 					
-					_this.synchronize(oEvent.getParameter('selectionSource'));
+					_this.synchronize(sourceControl);
 					
 				});
 
@@ -94,7 +102,7 @@
 			}
 	  };
 
-	  TabContainer.prototype.synchronize = function(srcControl){
+	  TabContainerProto.synchronize = function(srcControl){
 	  		var customAssociation = this.getCustomAssociation();
 	  		if('' === customAssociation){
 				this.setSelectedIndex(srcControl.getSelectedIndex());
@@ -105,20 +113,15 @@
 			}
 	  };
 
-	  TabContainer.prototype.getSourceControl = function(){
+	  TabContainerProto.getSourceControl = function(){
 	      if(null === this.sourceControl){
 	        this.sourceControl = sap.ui.getCore().byId(this.getSource());
-	        
 	      }
 
 	      return this.sourceControl;
 	  };
 
-	  TabContainer.prototype.getSourceDomRef = function(){
-	      return this.getSourceControl().$();
-	  };
-
-	TabContainer.prototype.setSelectedIndex = function(newIndex){
+	 TabContainerProto.setSelectedIndex = function(newIndex){
 		if(this.getDomRef()){
 			
 			this.setProperty('selectedIndex', newIndex, true);
@@ -130,11 +133,11 @@
 		}
 	};
 
-	TabContainer.prototype.setSelectedControlById = function(controlId){
+	TabContainerProto.setSelectedControlById = function(controlId){
 		this.setSelectedPane(this.$().find('#' + this.getId() + '---' + controlId));
 	};
 
-	TabContainer.prototype.setSelectedPane = function($pane){
+	TabContainerProto.setSelectedPane = function($pane){
 		var $active = this.$getSelectedPane(),
 			_this = this;
 
@@ -159,17 +162,17 @@
         $active.removeClass('in');
 	};
 
-	TabContainer.prototype.$getSelectedPane = function(){
+	TabContainerProto.$getSelectedPane = function(){
 		return this.$().find('> .active');
 	};
 
-	TabContainer.prototype.getSelectedControl = function(){
+	TabContainerProto.getSelectedControl = function(){
 		var selectedIndex = this.$getSelectedPane().attr('data-pane-index');
 
 		return this.getPanes()[selectedIndex];
 	};
 
-	TabContainer.prototype.setSelectedControl = function(pane){
+	TabContainerProto.setSelectedControl = function(pane){
 		this.setSelectedControlById(pane.getId());
 	};
 

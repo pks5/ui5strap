@@ -35,9 +35,20 @@
 	ui5strap.ListBase.extend("ui5strap.Breadcrumb", {
 		metadata : {
 
-			library : "ui5strap"
+			library : "ui5strap",
+			
+			defaultAggregation : "items",
+			
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "items"
+				} 
+			}
 			
 		}
 	});
-
+	
+	var BreadcrumbProto = ui5strap.Breadcrumb.prototype;
+	
 }());

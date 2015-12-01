@@ -36,19 +36,28 @@
 		metadata : {
 
 			library : "ui5strap",
-
+			
+			defaultAggregation : "items",
+			
 			properties : {
 				updateMasterText : {
 					type : "boolean",
 					defaultValue : false
 				}
+			},
+	
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "items"
+				} 
 			}
 
 		}
 	});
 
 	var ListDropdownMenuProto = ui5strap.ListDropdownMenu.prototype;
-
+	
 	ListDropdownMenuProto.setMasterSelected = function(listItem){ 
 		ui5strap.ListBase.prototype.setMasterSelected.call(this, listItem);
 		

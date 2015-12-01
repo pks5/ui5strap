@@ -36,6 +36,8 @@
 
 			library : "ui5strap",
 			
+			defaultAggregation : "items",
+			
 			properties : { 
 				listMode : {
 					type:"ui5strap.ListGroupMode", 
@@ -52,5 +54,7 @@
 
 		}
 	});
-
+	
+	var ListGroupProto = ui5strap.ListGroup.prototype;
+	
 }());

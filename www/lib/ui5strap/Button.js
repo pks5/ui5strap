@@ -62,6 +62,10 @@
 					type: "ui5strap.Size", 
 					defaultValue: ui5strap.Size.Default
 				},
+				selectable : {
+					type : "boolean",
+					defaultValue : true
+				},
 				selected : {
 					type:"boolean", 
 					defaultValue:false

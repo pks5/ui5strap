@@ -34,17 +34,17 @@
 	ui5strap.ListBase.extend("ui5strap.ListMedia", {
 		metadata : {
 
-			// ---- object ----
+			library : "ui5strap",
+			
 			defaultAggregation : "items",
 			
-			// ---- control specific ----
-			library : "ui5strap",
 			properties : { 
 				container : {
 					type:"boolean", 
 					defaultValue:false
 				}
 			},
+			
 			aggregations : { 
 				items : {
 					type : "ui5strap.ListMediaItem",
@@ -54,5 +54,7 @@
 
 		}
 	});
-
+	
+	var ListMediaProto = ui5strap.ListMedia.prototype;
+	
 }());
