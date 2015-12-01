@@ -1383,19 +1383,20 @@
 
       //@deprecated
       dynamicText : function(controlProto){
-          controlProto.setText = function(newText){
-              ui5strap.Utils.updateText(this, this.$(), newText);
+          controlProto.setText = function(newText, suppressInvalidate){
+        	  //console.log(newText, suppressInvalidate);
+              ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
           };
       },
 
       //@deprecated
-      updateText : function(oControl, $target, newText){
+      updateText : function(oControl, $target, newText, suppressInvalidate){
           if(oControl.getDomRef() && oControl.getContent().length === 0){
               $target.text(newText);
               oControl.setProperty('text', newText, true);
           }
           else{
-              oControl.setProperty('text', newText);
+              oControl.setProperty('text', newText, suppressInvalidate);
           }
       }
   };
@@ -1463,6 +1464,32 @@
 	  
 	  var origin = a.protocol + "//" + a.host;
   };
+  
+  ui5strap.Utils.addPropertyPropagation = function(fromControl, toControl){
+		toControl.oPropagatedProperties = fromControl._getPropertiesToPropagate();
+		
+		if (toControl.hasModel()) {
+			toControl.updateBindingContext(false, true, undefined, true);
+			toControl.updateBindings(true,null); // TODO could be restricted to models that changed
+			toControl.propagateProperties(true);
+		}
+  };
+
+  ui5strap.Utils.findClosestParentControl = function(control, TargetType){
+		var parentControl = control,
+			maxDepth = 20,
+			i = 0;
+		while(!(parentControl instanceof TargetType)){
+			parentControl = parentControl.getParent()
+			i++;
+			if(i >= maxDepth){
+				jQuery.sap.log.warning("Cannot find parent control: max depth reached.");
+				parentControl = null;
+			}
+		}
+		
+		return parentControl;
+  };	
 
   /*
   * ---------
@@ -2187,35 +2214,6 @@
 	
 	ActionContext.WORKPOOL = "action";
 	
-	/*
-	 * Tools functions
-	 * CLEANUP
-	 */
-	var _tools = {
-		"bool" : {
-	 		"not" : function(value){
-				return !value;
-			}
-		},
-		"lang" : {
-			"do" : function(){
-				return arguments;
-			},
-			"eq" : function(){
-				if(arguments.length === 0){
-					return true;
-				}
-				var cmp = arguments[0];
-				for(var i = 1; i < arguments.length; i++){
-					if(arguments[i] != cmp){
-						return false;
-					}
-				}
-				return true;
-			}
-		}
-	};
-	
 	/**
 	* Init log
 	* @Private
@@ -2257,9 +2255,6 @@
 		
 		//App Reference
 		_this.app = action.app;
-		
-		//Tools Reference
-		_this.tools = _tools;
 		
 		//Default parameters
 		_this.defaultParameters = action.parameters;
@@ -2308,6 +2303,9 @@
 		_this.window = window;
 		_this.document = document;
 		_this.global = window;
+		_this.core = sap.ui.getCore();
+		_this.jQuery = jQuery;
+		_this.jQuerySap = jQuery.sap;
 		
 		//Number
 		ActionContext.NUMBER ++;
@@ -2392,9 +2390,28 @@
 	* @Protected
 	*/
 	ActionContextProto.get = function(task, parameterKey, defaultValue){
-		var fPart = null;
-		var kPart = parameterKey;
-		var c1Pos = parameterKey.indexOf('(');
+		if(!parameterKey){
+			throw new Error("Parameter key is required for get!");
+		}
+		
+		//Check for conditional statement
+		var qPos = parameterKey.indexOf('?');
+		if(-1 !== qPos){
+			var dPos = parameterKey.indexOf(':');
+			if(-1 === dPos){
+				throw new Error("Invalid expression: " + parameterKey);
+			}
+			var p1 = parameterKey.substring(0, qPos).trim(),
+				p2 = parameterKey.substring(qPos + 1, dPos).trim(),
+				p3 = parameterKey.substring(dPos + 1).trim();
+			
+			return this.get(task, p1) ? this.get(task, p2) : this.get(task, p3);
+		}
+		
+		//Extract function parameters if any.
+		var fPart = null,
+			kPart = parameterKey,
+			c1Pos = parameterKey.indexOf('(');
 		if(-1 !== c1Pos){
 			var c2Pos = parameterKey.length - 1;
 			if(parameterKey.charAt(c2Pos) !== ')'){
@@ -2407,8 +2424,19 @@
 				fPart = "";
 			}
 			fPart = parameterKey.substring(c1Pos + 1, c2Pos).trim();
+			
+			if(kPart === ''){
+				//Just brackets, no funtion
+				var args = fPart.split(/,/);
+				for(var i = 0; i < args.length; i++){
+					this.get(task, args[i].trim());
+				}
+				
+				return;
+			}
 		}
 		
+		//Check for relative path
 		if(kPart.charAt(0) === "."){
 			if(!task){
 				throw new Error("Cannot resolve relative paramter without task reference!");
@@ -2417,7 +2445,7 @@
 		}
 		
 		if(!kPart.match(/([a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+/)){
-			throw new Error("Invalid key part in " + kPart);
+			throw new Error("Invalid parameter key for get: " + kPart);
 		}
 		
 		if(this._loopDir["t_" + kPart]){
@@ -2432,35 +2460,49 @@
 			
 		while(i < keyParts.length){
 			var keyPart = keyParts[i];
-			if("object" !== typeof pointer){
-				console.log(pointer);
-				throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": not an object.");
+			
+			if(keyPart.charAt(0) === '_'){
+				//throw new Error("Cannot access protected property '" + keyPart + "'.");
 			}
+			
 			var prevPointer = pointer;
 			pointer = pointer[keyPart];
 			if(pointer){
-				var functionApplied = false;
-				if("function" === typeof pointer){
-					if(i === keyParts.length - 1){
-						if(keyPart.charAt(0) === '_'){
-							throw new Error("Cannot execute protected function '" + keyPart + "'.");
+				var functionApplied = false,
+					pointerType = typeof pointer;
+				
+				if(i === keyParts.length - 1){
+					//Last path part
+					
+					if(null !== fPart){
+						if("function" === pointerType){
+							jQuery.sap.log.info("Executing function '" + kPart + "' with arguments (" + fPart + ")");
+							pointer = _callParamFunction(
+										this, 
+										prevPointer, 
+										pointer, 
+										fPart, 
+										task, 
+										keyParts.length === 1
+							);
+							functionApplied = true;
 						}
-						jQuery.sap.log.info("Executing function '" + kPart + "' with arguments (" + fPart + ")");
-						pointer = _callParamFunction(
-								this, 
-								prevPointer, 
-								pointer, 
-								fPart, 
-								task, 
-								keyParts.length === 1
-						);
-						functionApplied = true;
+						else{
+							throw new Error("Cannot execute function '" + kPart + "': not a function!");
+						}
 					}
-					else{
-						throw new Error("Cannot access '" + keyPart + "' in " + parameterKey + ": is a function.");
+					
+				}
+				else{
+					if("number" === pointerType || "boolean" === pointerType){
+						//We cannot continue searching
+						pointer = undefined;
+						
+						break;
 					}
 				}
 				
+				//Check if value contains expression
 				if(this._isExpression(pointer)){
 					if(functionApplied){
 						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
@@ -2470,9 +2512,14 @@
 				    
 					pointer = prevPointer[keyPart];
 				}
+				
 				i++;
 			}
 			else{
+				if(i < keyParts.length - 1){
+					throw new Error("'" + keyPart + "' is not defined in '" + kPart + "'");
+				}
+				
 				break;
 			}
 		}
@@ -2495,9 +2542,12 @@
 	* @Protected
 	*/
 	ActionContextProto.set = function(task, parameterKey, parameterValue){
-		if(!parameterKey || -1 === parameterKey.indexOf('.')){
-			throw new Error("Cannot get parameter: no root node provided.");
+		if(!parameterKey 
+				|| -1 === parameterKey.indexOf('.') 
+				|| -1 !== parameterKey.indexOf('(')){
+			throw new Error("Invalid parameter key for set: " + parameterKey);
 		}
+		
 		if(parameterKey.charAt(0) === "."){
 			if(!task){
 				throw new Error("Cannot resolve relative paramter without task reference!");
@@ -2552,8 +2602,121 @@
 		return false;
 	};
 	
-	ActionContextProto["do"] = function(){
+	ActionContextProto["doaaa"] = function(task){
 		
+	};
+	
+	ActionContextProto.lang = {
+			// !
+			"not" : function(value){
+					return !value;
+			},
+			
+			// !!
+			"notnot" : function(value){
+				return !!value;
+			},
+			
+			// ==
+			"equal" : function(){
+					if(arguments.length === 0){
+						return true;
+					}
+					var cmp = arguments[0];
+					for(var i = 1; i < arguments.length; i++){
+						if(arguments[i] != cmp){
+							return false;
+						}
+					}
+					return true;
+			},
+			
+			// !=
+			"notEqual" : function(){
+				if(arguments.length === 0){
+					return false;
+				}
+				var cmp = arguments[0];
+				for(var i = 1; i < arguments.length; i++){
+					if(arguments[i] != cmp){
+						return true;
+					}
+				}
+				return false;
+			},
+			
+			// ===
+			"same" : function(){
+				if(arguments.length === 0){
+					return true;
+				}
+				var cmp = arguments[0];
+				for(var i = 1; i < arguments.length; i++){
+					if(arguments[i] !== cmp){
+						return false;
+					}
+				}
+				return true;
+			},
+			
+			// !==
+			"notSame" : function(){
+				if(arguments.length === 0){
+					return false;
+				}
+				var cmp = arguments[0];
+				for(var i = 1; i < arguments.length; i++){
+					if(arguments[i] !== cmp){
+						return true;
+					}
+				}
+				return false;
+			},
+			
+			// >
+			"greaterThan" : function(v1, v2){
+				return v1 > v2;
+			},
+			
+			// <
+			"lessThan" : function(v1, v2){
+				return v1 < v2;
+			},
+			
+			// >=
+			"greaterEqualThan" : function(v1, v2){
+				return v1 >= v2;
+			},
+			
+			// <=
+			"lessEqualThan" : function(v1, v2){
+				return v1 <= v2;
+			},
+			
+			// &&
+			"and" : function(){
+				var cmp = true;
+				for(var i = 1; i < arguments.length; i++){
+					cmp = cmp && arguments[i];
+					if(!cmp){
+						break;
+					}
+				}
+				return cmp;
+			},
+			
+			// ||
+			"or" : function(){
+				var cmp = false;
+				for(var i = 1; i < arguments.length; i++){
+					cmp = cmp || arguments[i];
+					if(cmp){
+						break;
+					}
+				}
+				return cmp;
+			}
+			
 	};
 	
 	/*
@@ -2796,6 +2959,7 @@
 		if(param){
 			param = this.context.resolve(this, param, true);
 		}
+		
 		if(('undefined' === typeof param) && ('undefined' !== typeof defaultValue)){
 			param = this.context.resolve(this, defaultValue, true);
 		}
@@ -4148,6 +4312,9 @@
 		};
 	};
 	
+	/**
+	 * @Private
+	 */
 	var _createAppClass = function(_this, appClasses){
 		if(_this.config.data.app.styleClass){
 			appClasses += " " + _this.config.data.app.styleClass;
@@ -4161,15 +4328,17 @@
 	* ----------------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Initializes the App
+	* @Public
 	*/
 	AppBaseProto.init = function(){
 		this.onInit(new sap.ui.base.Event("ui5strap.app.init", this, {}));
 	};
 
-	/*
+	/**
 	* Preload JavaScript libraries
+	* @Private
 	*/
 	var _preloadJavaScript = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadJavaScript");
@@ -4202,21 +4371,41 @@
 			callback && callback.call(_this);
 		});
 	};
-
+	
+	/**
+	 * @Private
+	 */
 	var _preloadModels = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadModels");
 
 		//Models
 		var models = _this.config.data.models,
 			callI = models.length, 
+			loaded = {},
 			successCallback = function(oEvent, oData){
 				callI --;
-				_this.log.debug("Loaded model '" + oData.modelName + "'");
-				_this.getRootControl().setModel(oData.oModel, oData.modelName);
-
+				
+				if(callI >= 0){
+					if(oData.oModel !== loaded[oData.modelName]){
+						_this.log.debug("Loaded model '" + oData.modelName + "'");
+						_this.getRootControl().setModel(oData.oModel, oData.modelName);
+						loaded[oData.modelName] = oData.oModel;
+					}
+					else{
+						jQuery.sap.log.warning("Model already loaded: " + oData.modelName);
+					}
+				}
+				
 				if(callI === 0){
 					//sap.ui.getCore().setModel(oModel, model['modelName']);
 					callback && callback();
+				}
+				
+				if(callI < 0){
+					jQuery.sap.log.warning("Loaded additional model data: " + oData.modelName);
+					//_this.getRootControl().rerender();
+					//sap.ui.getCore().fireLocalizationChanged();
+					console.log(sap.ui.getCore());
 				}
 			},
 			errorCallback = function(){
@@ -4238,8 +4427,9 @@
 			if(modelType === 'RESOURCE'){
 				oModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl : modelSrc,
-					async : true
+					async_DEACTIVATED : true
 				});
+				/*
 				oModel.attachRequestCompleted(
 					{ 
 						modelName: modelName, 
@@ -4254,6 +4444,11 @@
 					}, 
 					errorCallback
 				);
+				*/
+				successCallback(null, { 
+					modelName: modelName, 
+					oModel : oModel
+				});
 			}
 			else if(modelType === 'JSON'){
 				oModel = new sap.ui.model.json.JSONModel();
@@ -4384,7 +4579,14 @@
 			ui5strap.Action.loadFromFile(actions[i], successCallback);
 		}
 	};
-
+	
+	/**
+	 * @Public
+	 */
+	AppBaseProto.setLanguage = function(language){
+		sap.ui.getCore().getConfiguration().setLanguage(language);
+	};
+	
 	/**
 	 * @Public
 	 */
@@ -4420,7 +4622,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Start the app
 	*/
 	AppBaseProto.start = function(callback){
@@ -4446,6 +4648,9 @@
 		callback && callback();
 	};
 
+	/**
+	 * 
+	 */
 	AppBaseProto.show = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.show");
 
@@ -4463,6 +4668,9 @@
 		callback && callback(isFirstTimeShow);
 	};
 
+	/**
+	 * 
+	 */
 	AppBaseProto.shown = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.shown");
 
@@ -4483,7 +4691,10 @@
 			callback && callback(isFirstTimeShown);
 		});
 	};
-
+	
+	/**
+	 * 
+	 */
 	AppBaseProto.hide = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.hide");
 		
@@ -4493,7 +4704,10 @@
 
 		callback && callback();
 	};
-
+	
+	/**
+	 * 
+	 */
 	AppBaseProto.hidden = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.hidden");
 
@@ -4507,7 +4721,7 @@
 		})
 	};
 
-	/*
+	/**
 	* Stop the app
 	*/
 	AppBaseProto.stop = function(callback){
@@ -4565,7 +4779,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been initialized
 	* @public
 	*/
@@ -4577,7 +4791,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been (pre-)loaded
 	* @public
 	*/
@@ -4589,7 +4803,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been unloaded
 	* @public
 	*/
@@ -4601,7 +4815,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been started
 	* @public
 	*/
@@ -4613,7 +4827,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been stopped
 	* @public
 	*/
@@ -4625,7 +4839,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app is going to show
 	* @public
 	*/
@@ -4637,7 +4851,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been shown
 	* @public
 	*/
@@ -4649,7 +4863,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app is going to show for the first time
 	* @public
 	*/
@@ -4661,7 +4875,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been shown for the first time
 	* @public
 	*/
@@ -4673,7 +4887,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app is going to hide
 	* @public
 	*/
@@ -4685,7 +4899,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Triggered when the app has been hidden
 	* @public
 	*/
@@ -4697,7 +4911,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Run an action that is assiged to a certain event
 	* @public
 	*/
@@ -4722,7 +4936,7 @@
 		this.runAction(actionParameters);
 	};
 
-	/*
+	/**
 	* Fires an app event. 
 	* The event is either defined in the configuration, or attached to the app instance programatically.
 	* @public
@@ -4769,7 +4983,7 @@
 		}
 	};
 
-	/*
+	/**
 	* Registers an event action to this app instance
 	* @public
 	*/ 
@@ -4792,7 +5006,7 @@
 	* ----------------------------------------------------------------------
 	*/
 	
-	/*
+	/**
 	* Loader
 	*/
 	AppBaseProto.setLoaderVisible = function(visible, callback){
@@ -4800,7 +5014,7 @@
 		ui5strap.Layer.setVisible(this.getDomId('loader'), visible, callback);
 	};
 
-	/*
+	/**
 	* Splash Screen
 	* @notimplemented
 	*/
@@ -4811,7 +5025,7 @@
 	
 	
 
-	/*
+	/**
 	* Inititalzes the overlay
 	*/
 	AppBaseProto.registerOverlay = function(){
@@ -4842,7 +5056,7 @@
 		//});
 	};
 
-	/*
+	/**
 	* Returns whether the overlay layer is visible
 	* @public
 	*/
@@ -4850,7 +5064,7 @@
 		return ui5strap.Layer.isVisible(this.overlayId);
 	};
 
-	/*
+	/**
 	* Shows the overlay layer
 	* @public
 	*/
@@ -4867,7 +5081,7 @@
 		});
 	};
 
-	/*
+	/**
 	* Hides the overlay layer
 	* @public
 	*/
@@ -4891,7 +5105,7 @@
 	* ----------------------------------------------------------
 	*/
 
-	/*
+	/**
 	 * Create a new page
 	 */
 	AppBaseProto.createView = function(viewConfig){
@@ -4960,13 +5174,14 @@
 	* --------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Execute an Action
 	*/
 	AppBaseProto.runAction = function(action){
 		action.app = this;
 
 		jQuery.sap.require('ui5strap.Action');
+		
 		ui5strap.Action.run(action);
 	};
 
@@ -4976,6 +5191,10 @@
 	* --------------------------------------------------
 	*/
 	
+	/**
+	 * @deprecated
+	 * TODO move to component
+	 */
 	AppBaseProto.setLocalStorageItem = function(storageKey, storageValue){
 		if(typeof(Storage) === "undefined"){
 			throw new Error('Storage is not supported by this device / browser.');
@@ -4984,6 +5203,10 @@
 		localStorage[this.getId() + '.localStorage.' + storageKey] = JSON.stringify(storageValue);
 	};
 	
+	/**
+	 * @deprecated
+	 * TODO move to component
+	 */
 	AppBaseProto.getLocalStorageItem = function(storageKey){
 		if(typeof(Storage) === "undefined"){
 			throw new Error('Storage is not supported by this device / browser.');
@@ -4994,6 +5217,10 @@
 		return localStorage[storageId] ? JSON.parse(localStorage[storageId]) : null;
 	};
 	
+	/**
+	 * @deprecated
+	 * TODO move to component
+	 */
 	AppBaseProto.setSessionStorageItem = function(storageKey, storageValue){
 		if(typeof(Storage) === "undefined"){
 			throw new Error('Storage is not supported by this device / browser.');
@@ -5002,6 +5229,10 @@
 		sessionStorage[this.getId() + '.sessionStorage.' + storageKey] = JSON.stringify(storageValue);
 	};
 	
+	/**
+	 * @deprecated
+	 * TODO move to component
+	 */
 	AppBaseProto.getSessionStorageItem = function(storageKey){
 		if(typeof(Storage) === "undefined"){
 			throw new Error('Storage is not supported by this device / browser.');
@@ -5094,7 +5325,7 @@
 		return jQuery(this.domRef);
 	};
 
-	/*
+	/**
 	* Get the id of the app defined in the config
 	* @public
 	* @deprecated
@@ -5103,11 +5334,11 @@
 		return this.config.data.app.url;
 	};
 
-	/*
+	/**
 	* Returns the Dom ID of the App
 	*/
 	AppBaseProto.getDomId = function(subElement){
-		return this.config.data.app.id.replace(/\./g, '__') + (subElement ? '---' + subElement : '');
+		return this.config.data.app.id.replace(/\./g, '-') + (subElement ? '---' + subElement : '');
 	};
 
 	/**
@@ -5186,16 +5417,17 @@
 		}
 	};
 
-	/*
-	* @override
+	/**
+	* @Override
+	* @Public
 	*/
 	AppBaseProto.toString = function(){
 		return '[' + this.getId() + ']';
 	};
 
-	/*
+	/**
 	* Destroys the App and all of its components
-	* @override
+	* @Override
 	*/
 	AppBaseProto.destroy = function(){
 		//Destroy the root control first
@@ -5217,6 +5449,7 @@
 	/**
 	 * Creates an action event handler for the given event.
 	 * @Private
+	 * @Static
 	 */
 	var _createActionEventHandler = function(controllerImpl, eventName){
 		var eventFunctionName = 'on' + jQuery.sap.charToUpperCase(eventName, 0),
@@ -5252,6 +5485,7 @@
 	/**
 	 * Adds action functionality to the controller.
 	* @Static
+	* @Public
 	*/
 	AppBase.blessController = function(controllerImpl){
 		
@@ -5293,6 +5527,7 @@
 		/**
 		 * Extracts the action names for the given event.
 		 * @Private
+		 * @Static
 		 */
 		var _getActionFromEvent = function(oEvent, customDataKey){
 			var actionName = oEvent.getSource().data(customDataKey),
@@ -6034,24 +6269,9 @@
 			//Append page container to the dom
 			jQuery('#' + _this.targetPagesDomId(target)).append($newPageContainer);
 			
-			/*
-			 * START OpenUi5 MOD
-			 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
-			 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
-			 */
-			page.oPropagatedProperties = _this._getPropertiesToPropagate();
-			
-			if (page.hasModel()) {
-				page.updateBindingContext(false, true, undefined, true);
-				page.updateBindings(true,null); // TODO could be restricted to models that changed
-				page.propagateProperties(true);
-			}
-			/*
-			 * END OpenUi5 MOD
-			 */
-			
 			//Add page to new page container
 			page.placeAt(newPageContainer);
+			
 			//jQuery.sap.log.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
 
 			return $newPageContainer;
@@ -6150,6 +6370,55 @@
 		}
 		
 	};
+	
+	NavContainerBaseProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
+		jQuery.sap.log.debug("UBC");
+		sap.ui.core.Control.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
+		
+		var oModelNames = {},
+			sModelName,
+			oContext;
+
+		// find models that need an context update
+		if (bUpdateAll) {
+			for (sModelName in this.oModels) {
+				if ( this.oModels.hasOwnProperty(sModelName) ) {
+					oModelNames[sModelName] = sModelName;
+				}
+			}
+			for (sModelName in this.oPropagatedProperties.oModels) {
+				if ( this.oPropagatedProperties.oModels.hasOwnProperty(sModelName) ) {
+					oModelNames[sModelName] = sModelName;
+				}
+			}
+		} else {
+			oModelNames[sFixedModelName] = sFixedModelName;
+		}
+
+		/*eslint-disable no-loop-func */
+		for (sModelName in oModelNames ) {
+			if ( oModelNames.hasOwnProperty(sModelName) ) {
+				sModelName = sModelName === "undefined" ? undefined : sModelName;
+
+				if (!bSkipChildren) {
+					var oContext = this.getBindingContext(sModelName);
+					// also update context in all child elements
+					for (sTarget in this.targets) {
+						var oTarget = this.targets[sTarget];
+						if (oTarget instanceof sap.ui.base.ManagedObject) {
+							oTarget.oPropagatedProperties.oBindingContexts[sModelName] = oContext;
+							oTarget.updateBindingContext(false,false,sModelName);
+						}
+					}
+				}
+			}
+		}
+		/*eslint-enable no-loop-func */
+	};
+	
+	/*
+	 * END OpenUi5 MOD
+	 */
 	
 	/**
 	* @Override
@@ -6396,8 +6665,16 @@
 
 		this.targets[target] = page;
 		
+		/*
+		 * START OpenUi5 MOD
+		 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
+		 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
+		 */
+		ui5strap.Utils.addPropertyPropagation(this, page);
+		/*
+		 * END OpenUi5 MOD
+		 */
 		
-
 		var changeName = '{' + target + '} '
 							+ (null === currentPage ? 'None' : '#' + currentPage.getId()) 
 							+ ' => '
@@ -6712,6 +6989,19 @@
 				callback && callback();
 			});
 		});	
+	};
+	
+	/*
+	* ----------------------------------------------------------------------
+	* --------------------- Settings  ----------------------------------
+	* ----------------------------------------------------------------------
+	*/
+	
+	/**
+	 * @Public
+	 */
+	ViewerBaseProto.setLanguage = function(language){
+		//sap.ui.getCore().getConfiguration().setLanguage(language);
 	};
 
 	/*
@@ -9009,12 +9299,12 @@
 
 	var TextProto = ui5strap.Text.prototype;
 
-	TextProto.setText = function(newText){
+	TextProto.setText = function(newText, suppressInvalidate){
 		if(ui5strap.TextType.Default === this.getType()){
-			this.setProperty('text', newText);
+			this.setProperty('text', newText, suppressInvalidate);
 		}
 		else{ 
-			ui5strap.Utils.updateText(this, this.$(), newText);
+			ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
 		}
 		
 	};
@@ -10031,30 +10321,25 @@
 
 	var ListBaseProto = ui5strap.ListBase.prototype;
 	
-	var _findClosestControl = function(_this, control, Constructor){
-		var parentControl = control,
-			maxDepth = 20,
-			i = 0;
-		while(!(parentControl instanceof Constructor)){
-			parentControl = parentControl.getParent()
-			i++;
-			if(i >= maxDepth){
-				throw new Error("Cannot find parent control: max depth reached.");
-			}
-		}
-		return parentControl;
-	};
+	/*
+	 * START implementation of Selectable interface
+	 */
 	
+	/**
+	 * Set list item selected by index
+	 */
 	ListBaseProto.setSelectedIndex = function(itemIndex){
-
 		var items = this.getItems();
 		if(itemIndex < 0 || itemIndex >= items.length){
 			return false;
 		}
-		this.setSelectedControl(items[itemIndex]);
-
+		
+		return this.setSelectedControl(items[itemIndex]);
 	};
  
+	/**
+	 * Get index of selected index
+	 */
 	ListBaseProto.getSelectedIndex = function(){
 		var items = this.getItems();
 		for(var i = 0; i < items.length; i++){
@@ -10065,30 +10350,18 @@
 		return -1;
 	};
 
-	ListBaseProto.setMasterSelected = function(listItem){
-		
-			var parent = this.getParent(),
-				grandParent = parent.getParent();
-			
-			//TODO
-			if(grandParent instanceof ui5strap.ListBase){
-				grandParent.setSelectedControl(parent, this);
-			}
 	
-	};
-
-	ListBaseProto.setSelectedControl = function(item, nestedList){
-
-		var items = this.getItems();
-		for(var i = 0; i < items.length; i++){ 
-			if(items[i] === item){
+	/**
+	 * Set control selected by reference
+	 */
+	ListBaseProto.setSelectedControl = function(item){
+		var items = this.getItems(),
+			changed = false;
+		for(var i = 0; i < items.length; i++){
+			if(item && items[i] === item){
 				if(!item.getSelected()){
-					item.setSelected(true);
-					this.fireSelect({ "selectionSource" : nestedList ? nestedList : this });
-
-					if(this.getSelectionMode() === ui5strap.SelectionMode.SingleMaster){
-						this.setMasterSelected(item);
-					}
+					changed = true;
+					items[i].setSelected(true);
 				}
 			}
 			else{
@@ -10096,8 +10369,12 @@
 			}
 		}
 		
+		return changed;
 	};
-
+	
+	/**
+	 * Get selected list item control
+	 */
 	ListBaseProto.getSelectedControl = function(){
 		var items = this.getItems();
 		for(var i = 0; i < items.length; i++){
@@ -10108,25 +10385,59 @@
 		return null;
 	};
 	
-	/*
+	/**
+	 * Select by custom data value
+	 */
 	ListBaseProto.setSelectedCustom = function(dataKey, value){
 		items = this.getItems(),
 			selectedItem = null;
 		
 		for(var i = 0; i < items.length; i++){
-			if(this.context.app.createControlId(itemId) === this.context.app.createControlId(items[i].getItemId())){
+			if(items[i].data(dataKey) === value){
 				selectedItem = items[i];
 				break;
 			}
 		}
 		
-		menu.setSelectedControl(selectedItem);
+		this.setSelectedControl(selectedItem);
 	};
-	*/
-
+	
+	
+	/*
+	 * END implementation of Selectable interface
+	 */
+	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._selectionRequest = function(item, eventOptions){
+		this.setSelectedControl(item);
+		
+		this.fireSelect(eventOptions);
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _setMasterSelected = function(_this, listItem, eventOptions){
+		var parentListItem = ui5strap.Utils.findClosestParentControl(listItem, ui5strap.ListBase),
+			parentList = ui5strap.Utils.findClosestParentControl(parentListItem, ui5strap.ListItem);
+		
+		if(parentListItem && parentList){
+			parentList._selectionRequest(parentListItem, eventOptions);
+		}
+		else{
+			jQuery.sap.log.warning("Cannot select master list item: list or listItem not found.");
+		}
+	};
+	
+	
+	/**
+	 * @Private
+	 */
 	var _processSelection = function(_this, oEvent){
 		var srcControl = oEvent.srcControl,
-			listItem = _findClosestControl(_this, srcControl, ui5strap.ListItem),
+			listItem = ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem),
 			eventOptions = {
 				srcControl : srcControl,
 				listItem : listItem,
@@ -10135,20 +10446,38 @@
 			selectionMode = _this.getSelectionMode();
 
 		if(listItem && listItem.getSelectable()){
-			if(selectionMode === ui5strap.SelectionMode.Single || selectionMode === ui5strap.SelectionMode.SingleMaster){
-				_this.setSelectedControl(listItem);
+			if(selectionMode === ui5strap.SelectionMode.Single){
+				if(_this.setSelectedControl(listItem)){
+					eventOptions.selectionSource = _this;
+				
+					_this.fireSelect(eventOptions);
+				}
+			}
+			else if(selectionMode === ui5strap.SelectionMode.SingleMaster){
+				if(_this.setSelectedControl(listItem)){
+					eventOptions.selectionSource = _this;
+					
+					_setMasterSelected(_this, item, eventOptions);
+				}
 			}
 			else if(selectionMode === ui5strap.SelectionMode.Master){
-				_this.setMasterSelected(listItem);
+				
+				eventOptions.selectionSource = _this;
+				
+				_setMasterSelected(_this, listItem, eventOptions);
 			}
 		}
 		else{
-			jQuery.sap.log.debug("Event ommitted.");
+			jQuery.sap.log.warning("Could not select list item: List Item not found.");
 		}
 
 		return eventOptions;
 	};
-
+	
+	/*
+	 * HANDLE UI EVENTS
+	 */
+	
 	if(ui5strap.options.enableTapEvents){
 		ListBaseProto.ontap = function(oEvent){
 			oEvent.stopPropagation();
@@ -14056,6 +14385,13 @@
 			}
 		}
 	});
+	
+	/**
+	 * TODO More efficient rerendering
+	 */
+	ui5strap.BarMenuItem.prototype.setText = function(newText, suppressInvalidate){console.log(newText);
+		this.setProperty('text', newText, suppressInvalidate);
+	};
 
 }());;/*
  * 
@@ -15142,16 +15478,27 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 
 	var ButtonGroupProto = ui5strap.ButtonGroup.prototype;
 
+	/*
+	 * START implementation of Selectable interface
+	 */
+	
+	/**
+	 * Set button selected by index
+	 */
 	ButtonGroupProto.setSelectedIndex = function(itemIndex){
 
 		var items = this.getButtons();
 		if(itemIndex < 0 || itemIndex >= items.length){
 			return false;
 		}
-		this.setSelectedControl(items[itemIndex]);
+		
+		return this.setSelectedControl(items[itemIndex]);
 
 	};
 
+	/**
+	 * Get index of selected button
+	 */
 	ButtonGroupProto.getSelectedIndex = function(){
 		var items = this.getButtons();
 		for(var i = 0; i < items.length; i++){
@@ -15162,14 +15509,17 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 		return -1;
 	};
 
-	ButtonGroupProto.setSelectedControl = function(item, nestedList){
-
-		var items = this.getButtons();
+	/**
+	 * Set button selected by reference
+	 */
+	ButtonGroupProto.setSelectedControl = function(item){
+		var items = this.getButtons(),
+			changed = false;
 		for(var i = 0; i < items.length; i++){
-			if(items[i] === item){
+			if(item && items[i] === item){
 				if(!item.getSelected()){
-					item.setSelected(true);
-					this.fireSelect({ "selectionSource" : nestedList ? nestedList : this });
+					changed = true;
+					items[i].setSelected(true);
 				}
 			}
 			else{
@@ -15177,8 +15527,12 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 			}
 		}
 		
+		return changed;
 	};
-
+	
+	/**
+	 * Get selected button control
+	 */
 	ButtonGroupProto.getSelectedControl = function(){
 		var items = this.getButtons();
 		for(var i = 0; i < items.length; i++){
@@ -15189,40 +15543,59 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 		return null;
 	};
 	
-	var _findClosestControl = function(_this, control, Constructor){
-		var parentControl = control,
-			maxDepth = 20,
-			i = 0;
-		while(!(parentControl instanceof Constructor)){
-			parentControl = parentControl.getParent()
-			i++;
-			if(i >= maxDepth){
-				throw new Error("Cannot find parent control: max depth reached.");
+	/**
+	 * Select by custom data value
+	 */
+	ButtonGroupProto.setSelectedCustom = function(dataKey, value){console.log(dataKey, value);
+		items = this.getButtons(),
+			selectedItem = null;
+		
+		for(var i = 0; i < items.length; i++){
+			if(items[i].data(dataKey) === value){
+				selectedItem = items[i];
+				break;
 			}
 		}
-		return parentControl;
+		
+		this.setSelectedControl(selectedItem);
 	};
-
+	
+	/*
+	 * END implementation of Selectable interface
+	 */
+	
+	/**
+	 * @Private
+	 */
 	var _processSelection = function(_this, oEvent){
 		var srcControl = oEvent.srcControl,
 			selectionMode = _this.getSelectionMode(),
 			eventOptions = {
 				srcControl : srcControl,
-				button : _findClosestControl(_this, srcControl, ui5strap.Button)
+				button : ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.Button)
 			};
 		
 		if(eventOptions.button){
 			if(selectionMode === ui5strap.SelectionMode.Single){
-				_this.setSelectedControl(eventOptions.button);
+				if(_this.setSelectedControl(eventOptions.button)){
+					//TODO is this needed for Button Group?
+					eventOptions.selectionSource = _this;
+				
+					_this.fireSelect(eventOptions);
+				}
 			}
 		}
 		else{
-			jQuery.sap.log.debug("Event ommitted.");
+			jQuery.sap.log.warning("Could not select button: not found.");
 		}
 
 		return eventOptions;
 	};
 
+	/*
+	 * UI EVENTS
+	 */
+	
 	if(ui5strap.options.enableTapEvents){
 		ButtonGroupProto.ontap = function(oEvent){
 			this.fireTap(_processSelection(this, oEvent));
