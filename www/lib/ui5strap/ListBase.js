@@ -80,7 +80,7 @@
 	 * @Private
 	 */
 	var _getSelection = function(_this){
-		var items = this._getItems(),
+		var items = _this._getItems(),
 			selection = {
 				indices : [],
 				items : []
@@ -184,9 +184,9 @@
 		}
 		
 		if(changes.all.length){
-			this.fireChange(changes);
+			this.fireSelectionChange(changes);
 		
-			this.fireChanged(changes);
+			this.fireSelectionChanged(changes);
 		}
 		
 		return changes;
@@ -312,9 +312,9 @@
 	 * @deprecated
 	 */
 	ListBaseProto.setSelectedIndex = function(itemIndex){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndex instead.");
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
 		
-		return this.setSelectionIndex(itemIndex, 0);
+		return this.setSelectionIndices(itemIndex, 0);
 	};
  
 	/**
@@ -322,9 +322,9 @@
 	 * @deprecated
 	 */
 	ListBaseProto.getSelectedIndex = function(){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndex instead.");
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
 		
-		return this.getSelectionIndex(0);
+		return this.getSelectionIndices(0);
 	};
 
 	
