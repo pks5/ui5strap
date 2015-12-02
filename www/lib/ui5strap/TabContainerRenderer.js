@@ -46,7 +46,7 @@
 		for(var i = 0; i < content.length; i++){ 
 			var item = content[i];
 			
-			rm.write('<div');
+			rm.write('<div role="tabpanel"');
 			
 			rm.writeAttribute('data-pane-index', i);
 			if(customAssociation){

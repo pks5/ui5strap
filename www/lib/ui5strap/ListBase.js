@@ -81,7 +81,7 @@
 	 * 
 	 * @Private
 	 */
-	var _getSelection = function(_this){
+	var _getSelectionData = function(_this){
 		var items = _this._getItems(),
 			selection = {
 				x : [],
@@ -101,6 +101,33 @@
 	/**
 	 * @Private
 	 */
+	var _getSelection = function(_this, dimension){
+		var selection = _getSelectionData(_this);
+		if(!dimension){
+			//Single value
+			return selection.items.length ? selection.items[0] : null;
+		}
+		else if(1 === dimension){
+			//1 dimensional array
+			return selection.items;
+		}
+		else if(2 === dimension){
+			//2 dimensional array
+			return [selection.items];
+		}
+		else if(3 === dimension){
+			//3 dimensional array
+			return [[selection.items]];
+		}
+		else{
+			//more than dimensional array
+			throw new Error("At most 3 dimension are supported.");
+		}
+	};
+	
+	/**
+	 * @Private
+	 */
 	var _changeSelection = function(_this, itemsToSelect, dimension, mode){
 		var items = _this._getItems(),
 			changes = {
@@ -111,6 +138,7 @@
 			};
 		
 		if(!dimension){
+			//Single value
 			for(var i = 0; i < items.length; i++){
 				var item = items[i];
 				if(itemsToSelect && item === itemsToSelect){
@@ -158,6 +186,7 @@
 			}
 		}
 		else if(1 === dimension){
+			//1 dimensional array
 			for(var i = 0; i < items.length; i++){
 				var item = items[i];
 				if(-1 !== jQuery.inArray(item, itemsToSelect)){
@@ -205,6 +234,7 @@
 			}
 		}
 		else{
+			//more dimensional array
 			throw new Error("Lists do not support more than 1 dimension!");
 		}
 		
@@ -220,10 +250,38 @@
 	/**
 	 * @Private
 	 */
+	var _getSelectionIndex = function(_this, dimension){
+		var selection = _getSelectionData(_this);
+		if(!dimension){
+			//single value
+			return selection.x.length ? selection.x[0] : undefined;
+		}
+		else if(1 === dimension){
+			//1 dimensional array
+			return selection.x;
+		}
+		else if(2 === dimension){
+			//2 dimensional array
+			return [selection.x];
+		}
+		else if(3 === dimension){
+			//3 dimensional array
+			return [[selection.x]];
+		}
+		else{
+			//more than 3 dimensional array
+			throw new Error("At most 3 dimension are supported.");
+		}
+	};
+	
+	/**
+	 * @Private
+	 */
 	var _changeSelectionIndices = function(_this, indices, dimension, mode){
 		var items = this._getItems();
 		
 		if(!dimension){
+			//Single value
 			if(indices < 0 || indices >= items.length){
 				throw new Error("Array out of bounds!");
 			}
@@ -231,6 +289,7 @@
 			return _changeSelection(_this, items[indices], dimension, mode);
 		}
 		else if(1 === dimension){
+			//1 dimensional array
 			var itemsToSelect = [];
 			for(var i=0; i<indices.length; i++){
 				var index = indices[i];
@@ -243,6 +302,7 @@
 			return _changeSelection(_this, itemsToSelect, dimension, mode);
 		}
 		else{
+			//more dimensional array
 			throw new Error("Lists do not support more than 1 dimension!");
 		}
 	};
@@ -287,16 +347,7 @@
 	 * @Override
 	 */
 	ListBaseProto.getSelection = function(dimension){
-		var selection = _getSelection(this);
-		if(!dimension){
-			return selection.items.length ? selection.items[0] : null;
-		}
-		else if(1 === dimension){
-			return selection.items;
-		}
-		else{
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
+		return _getSelection(this, dimension);
 	};
 	
 	/**
@@ -332,16 +383,7 @@
 	 * @Override
 	 */
 	ListBaseProto.getSelectionIndex = function(dimension){
-		var selection = _getSelection(this);
-		if(!dimension){
-			return selection.x.length ? selection.x[0] : undefined;
-		}
-		else if(1 === dimension){
-			return selection.x;
-		}
-		else{
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
+		return _getSelectionIndex(this, dimension);
 	};
 	
 	/**
