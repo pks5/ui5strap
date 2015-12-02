@@ -49,7 +49,7 @@
 		        
 				selectedIndex : {
 					type : "int",
-					defaultValue : 1
+					defaultValue : 0
 				}
 				
 				,
@@ -113,8 +113,14 @@
 			this.setSelectedIndex(this.sourceControl.getSelectionIndex(), true);
 		}
 		else{
-			//TODO change custom association behaviour
-			this.setSelectedControlById(this.sourceControl.getSelection().data(customAssociation));
+			var panes = this.getPanes();
+			
+			for(var i = 0; i < panes.length; i++){
+				if(this.sourceControl.getSelection().data(customAssociation) === panes[i].data(customAssociation)){
+					this.setSelectedIndex(i, true);
+					break;
+				}
+			}
 		}
 	};
 	
@@ -124,7 +130,7 @@
 	 * @Public
 	 */
 	TabContainerProto.setSelectedPane = function($pane){
-		var $active = this.$getSelectedPane(),
+		var $active = this.$().find('> .active'),
 			_this = this;
 
 		if($active.attr('data-pane-index') === $pane.attr('data-pane-index') || $pane.length === 0){
@@ -151,26 +157,6 @@
 
 	/**
 	 * @Public
-	 */
-	TabContainerProto.$getSelectedPane = function(){
-		return this.$().find('> .active');
-	};
-	
-	/*
-	 * ----------
-	 * DEPRECATED
-	 * ----------
-	 */
-	
-	/**
-	 * @Public
-	 */
-	TabContainerProto.setSelectedControlById = function(controlId){
-		this.setSelectedPane(this.$().find('#' + this.getId() + '---' + controlId));
-	};
-	
-	/**
-	 * @Public
 	 * @Override
 	 */
 	TabContainerProto.setSelectedIndex = function(newIndex, suppressInvalidate){
@@ -185,22 +171,33 @@
 		}
 	};
 	
+	/*
+	 * ----------
+	 * DEPRECATED
+	 * ----------
+	 */
+	
 	/**
 	 * @Public
 	 * @deprecated
 	 */
 	TabContainerProto.getSelectedControl = function(){
-		var selectedIndex = this.$getSelectedPane().attr('data-pane-index');
-
-		return this.getPanes()[selectedIndex];
+		return this.getPanes()[this.getSelectedIndex()];
 	};
 
 	/**
 	 * @Public
 	 * @deprecated
 	 */
-	TabContainerProto.setSelectedControl = function(pane){
-		this.setSelectedControlById(pane.getId());
+	TabContainerProto.setSelectedControl = function(pane, suppressInvalidate){
+		var panes = this.getPanes();
+		
+		for(var i = 0; i < panes.length; i++){
+			if(panes[i].getId() === pane.getId()){
+				this.setSelectedIndex(i, suppressInvalidate);
+				break;
+			}
+		}
 	};
 
 }());

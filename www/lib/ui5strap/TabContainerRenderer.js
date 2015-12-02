@@ -45,13 +45,13 @@
 		
 		for(var i = 0; i < content.length; i++){ 
 			var item = content[i];
-			var paneId = i;
-			if('' !== customAssociation){
-				paneId = item.data(customAssociation);
-			}
-
-			rm.write('<div id="' + oControl.getId() + '---' + paneId + '"');
+			
+			rm.write('<div');
+			
 			rm.writeAttribute('data-pane-index', i);
+			if(customAssociation){
+				rm.writeAttribute('data-pane-key', item.data(customAssociation));
+			}
 			rm.addClass('tab-pane');
 			if(selectedIndex > -1 && i === selectedIndex){
 				rm.addClass('active');
