@@ -57,6 +57,7 @@
 				},
 
 				select : {
+					deprecated : true,
 					parameters : {
 						listItem : {type : "ui5strap.ListItem"},
 						srcControl : {type : "ui5strap.Control"}
@@ -97,6 +98,9 @@
 		return selection;
 	};
 	
+	/**
+	 * @Private
+	 */
 	var _changeSelection = function(_this, itemsToSelect, dimension, mode){
 		var items = _this._getItems(),
 			changes = {
@@ -213,6 +217,9 @@
 		return changes;
 	};
 	
+	/**
+	 * @Private
+	 */
 	var _changeSelectionIndices = function(_this, indices, dimension, mode){
 		var items = this._getItems();
 		
@@ -297,7 +304,7 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelectionIndices = function(indices, dimension){
+	ListBaseProto.setSelectionIndex = function(indices, dimension){
 		return _changeSelectionIndices(this, indices, dimension, "replace");
 	};
 	
@@ -306,7 +313,7 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.addSelectionIndices = function(indices, dimension){
+	ListBaseProto.addSelectionIndex = function(indices, dimension){
 		return _changeSelectionIndices(this, indices, dimension, "add");
 	};
 	
@@ -315,7 +322,7 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.removeSelectionIndices = function(indices, dimension){
+	ListBaseProto.removeSelectionIndex = function(indices, dimension){
 		return _changeSelectionIndices(this, indices, dimension, "remove");
 	};
 	
@@ -324,7 +331,7 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.getSelectionIndices = function(dimension){
+	ListBaseProto.getSelectionIndex = function(dimension){
 		var selection = _getSelection(this);
 		if(!dimension){
 			return selection.x.length ? selection.x[0] : undefined;
@@ -344,6 +351,15 @@
 	 */
 	ListBaseProto.setSelectionByProperty = function(propertyName, values, dimension){
 		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
+	};
+	
+	/**
+	 * Gets one or multiple selected items that have the given value in the specified property.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.getItemsByProperty = function(propertyName){
+		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByProperty");
 	};
 	
 	
@@ -377,15 +393,6 @@
 		else{
 			throw new Error("Lists do not support more than 1 dimension!");
 		}
-	};
-	
-	/**
-	 * Gets one or multiple selected items that have the given value in the specified property.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.getItemsByProperty = function(propertyName){
-		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByProperty");
 	};
 	
 	/**
@@ -451,20 +458,21 @@
 		eventOptions.srcControl = oEvent.srcControl;
 
 		if(item && item.getEnabled() && item.getSelectable()){
+			var changes = null;
+			
 			if(selectionMode === ui5strap.SelectionMode.Single){
-				var changes = _this.setSelection(item);
-				
-				if(changes.changed.length){
-					eventOptions.selectionChanges = changes;
-					
-					//Select event is deprecated
-					_this.fireSelect(eventOptions);
-				}
-				else{
-					jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
-				}
+				changes = _this.setSelection(item);
 			}
 			
+			if(changes && changes.changed.length){
+				eventOptions.selectionChanges = changes;
+				
+				//Select event is deprecated
+				_this.fireSelect(eventOptions);
+			}
+			else{
+				jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
+			}
 		}
 		else{
 			jQuery.sap.log.warning("Could not select list item: List Item not found.");
@@ -481,8 +489,11 @@
 		 * @Override
 		 */
 		ListBaseProto.ontap = function(oEvent){
-			oEvent.stopPropagation();
-			this.fireTap(_processSelection(this, oEvent));
+			var eventOptions = _processSelection(this, oEvent);
+			//if(eventOptions.item.getEnabled()){
+				oEvent.stopPropagation();
+				this.fireTap(eventOptions);
+			//}
 		};
 	}
 

@@ -59,6 +59,7 @@
 					bindable : false
 				},
 				"customAssociation" : {
+					deprecated : true,
 					type : "string",
 					defaultValue : "",
 					bindable : false
@@ -83,67 +84,53 @@
 	});
 
 	var TabContainerProto = ui5strap.TabContainer.prototype;
+	
+	/**
+	 * @Public
+	 */
+	TabContainerProto.onBeforeRendering= function(){
+  		var _this = this;
+  		
+  		if(!this.sourceControl){
+			this.sourceControl = sap.ui.getCore().byId(this.getSource());
+		    
+			this.sourceControl.attachEvent(this.getListenTo(), {}, function(oEvent){
+				
+				_this.synchronize();
+				
+			});
 
-	TabContainerProto.init = function(){
-		this.sourceControl = null;
+			this.synchronize();
+		}
 	};
-
-	  TabContainerProto.onAfterRendering= function(){
-	  	var _this = this;
-			var sourceControl = this.getSourceControl();
-			if(typeof sourceControl !== 'undefined'){
-				sourceControl.attachEvent(this.getListenTo(), {}, function(oEvent){
-					
-					_this.synchronize(sourceControl);
-					
-				});
-
-				this.synchronize(sourceControl);
-			}
-	  };
-
-	  TabContainerProto.synchronize = function(srcControl){
-	  		var customAssociation = this.getCustomAssociation();
-	  		if('' === customAssociation){
-				this.setSelectedIndex(srcControl.getSelectedIndex());
-			}
-			else{
-				var relatedId = srcControl.getSelectedControl().data(customAssociation);
-				this.setSelectedControlById(relatedId);
-			}
-	  };
-
-	  TabContainerProto.getSourceControl = function(){
-	      if(null === this.sourceControl){
-	        this.sourceControl = sap.ui.getCore().byId(this.getSource());
-	      }
-
-	      return this.sourceControl;
-	  };
-
-	 TabContainerProto.setSelectedIndex = function(newIndex){
-		if(this.getDomRef()){
-			
-			this.setProperty('selectedIndex', newIndex, true);
-
-			this.setSelectedPane(this.$().find('.tab-pane').eq(newIndex));
+	
+	/**
+	 * @Public
+	 */
+	TabContainerProto.synchronize = function(){
+  		var customAssociation = this.getCustomAssociation();
+  		if(!customAssociation){
+			this.setSelectedIndex(this.sourceControl.getSelectionIndex(), true);
 		}
 		else{
-			this.setProperty('selectedIndex', newIndex);
+			//TODO change custom association behaviour
+			this.setSelectedControlById(this.sourceControl.getSelection().data(customAssociation));
 		}
 	};
+	
+	
 
-	TabContainerProto.setSelectedControlById = function(controlId){
-		this.setSelectedPane(this.$().find('#' + this.getId() + '---' + controlId));
-	};
-
+	/**
+	 * @Public
+	 */
 	TabContainerProto.setSelectedPane = function($pane){
 		var $active = this.$getSelectedPane(),
 			_this = this;
 
-			if($active.attr('data-pane-index') === $pane.attr('data-pane-index') || $pane.length === 0){
-				return;
-			}
+		if($active.attr('data-pane-index') === $pane.attr('data-pane-index') || $pane.length === 0){
+			return;
+		}
+		
 		//this.$().find('.tab-pane').attr('class', 'tab-pane fade');
 		var transition = $.support.transition
       					&& $active.hasClass('fade');
@@ -162,16 +149,56 @@
         $active.removeClass('in');
 	};
 
+	/**
+	 * @Public
+	 */
 	TabContainerProto.$getSelectedPane = function(){
 		return this.$().find('> .active');
 	};
+	
+	/*
+	 * ----------
+	 * DEPRECATED
+	 * ----------
+	 */
+	
+	/**
+	 * @Public
+	 */
+	TabContainerProto.setSelectedControlById = function(controlId){
+		this.setSelectedPane(this.$().find('#' + this.getId() + '---' + controlId));
+	};
+	
+	/**
+	 * @Public
+	 * @Override
+	 */
+	TabContainerProto.setSelectedIndex = function(newIndex, suppressInvalidate){
+		if(this.getDomRef()){
+			
+			this.setProperty('selectedIndex', newIndex, true);
 
+			this.setSelectedPane(this.$().find('.tab-pane').eq(newIndex));
+		}
+		else{
+			this.setProperty('selectedIndex', newIndex, suppressInvalidate);
+		}
+	};
+	
+	/**
+	 * @Public
+	 * @deprecated
+	 */
 	TabContainerProto.getSelectedControl = function(){
 		var selectedIndex = this.$getSelectedPane().attr('data-pane-index');
 
 		return this.getPanes()[selectedIndex];
 	};
 
+	/**
+	 * @Public
+	 * @deprecated
+	 */
 	TabContainerProto.setSelectedControl = function(pane){
 		this.setSelectedControlById(pane.getId());
 	};

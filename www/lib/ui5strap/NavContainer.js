@@ -548,17 +548,18 @@
 	/**
 	* @Override
 	*/
-	NavContainerBaseProto.destroy = function(bSuppressInvalidate){
+	NavContainerBaseProto.exit = function(){
 		for(var target in this.targets){
 			if(this.targets[target]){
 				var oldTarget = this.targets[target];
 				this.targets[target] = null;
 				
-				oldTarget.destroy(bSuppressInvalidate);
+				oldTarget.destroy();
+				
 				delete oldTarget;
 			}
 		}
-		sap.ui.core.Control.prototype.destroy.call(this, bSuppressInvalidate);
+		//sap.ui.core.Control.prototype.destroy.call(this, bSuppressInvalidate);
 	};
 	
 	/*

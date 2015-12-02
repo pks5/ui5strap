@@ -12,7 +12,7 @@
 		"buttonGroupCTRL" : "=-> app.getControl(.buttonGroupID, .viewID)",
 		"customDataKEY" : "language",
 		
-		"DO" : "=-> .buttonGroupCTRL.setSelectedCustom(.customDataKEY, .languageSTR)"
+		"DO" : "=-> .buttonGroupCTRL.setSelectionByCustomData(.customDataKEY, .languageSTR)"
 	}
 	
 }
