@@ -110,29 +110,39 @@
 	ListBaseProto.setSelection = function(itemsSelected, dimension){
 		
 		var items = this._getItems(),
-			changes = [];
+			changes = {
+				"selected" : [],
+				"deselected" : [],
+				"unchanged" : [],
+				"all" : []
+			};
 		
 		if(!dimension){
 			for(var i = 0; i < items.length; i++){
-				var item = items[i];
+				var item = items[i],
+					change = {
+						item : item,
+						index : i
+					};
+				changes.all.push(change);
 				if(itemsSelected && item === itemsSelected){
 					if(!item.getSelected()){
-						changes.push({
-							item : item,
-							index : i,
-							selected : true
-						});
+						change.selected = true;
+						changes.selected.push(change);
 						
 						item.setSelected(true);
+					}
+					else{
+						changes.unchanged.push(change);
 					}
 				}
 				else{
 					if(item.getSelected()){
-						changes.push({
-							item : item,
-							index : i,
-							selected : false
-						});
+						change.selected = false;
+						changes.deselected.push(change);
+					}
+					else{
+						changes.unchanged.push(change);
 					}
 					
 					item.setSelected(false);
@@ -141,24 +151,28 @@
 		}
 		else if(1 === dimension){
 			for(var i = 0; i < items.length; i++){
-				var item = items[i];
+				var item = items[i],
+					change = {
+						item : item,
+						index : i
+					};
 				if(-1 !== jQuery.inArray(item, itemsSelected)){
 					if(!item.getSelected()){
-						changes.push({
-							item : item,
-							index : i,
-							selected : true
-						});
+						change.selected = true;
+						changes.selected.push(change);
 						item.setSelected(true);
+					}
+					else{
+						changes.unchanged.push(change);
 					}
 				}
 				else{
 					if(item.getSelected()){
-						changes.push({
-							item : item,
-							index : i,
-							selected : false
-						});
+						change.selected = false;
+						changes.deselected.push(change);
+					}
+					else{
+						changes.unchanged.push(change);
 					}
 					
 					item.setSelected(false);
@@ -167,6 +181,12 @@
 		}
 		else{
 			throw new Error("Lists do not support more than 1 dimension!");
+		}
+		
+		if(changes.all.length){
+			this.fireChange(changes);
+		
+			this.fireChanged(changes);
 		}
 		
 		return changes;
@@ -292,12 +312,9 @@
 	 * @deprecated
 	 */
 	ListBaseProto.setSelectedIndex = function(itemIndex){
-		var items = this._getItems();
-		if(itemIndex < 0 || itemIndex >= items.length){
-			return false;
-		}
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndex instead.");
 		
-		return this.setSelectedControl(items[itemIndex]);
+		return this.setSelectionIndex(itemIndex, 0);
 	};
  
 	/**
@@ -305,13 +322,9 @@
 	 * @deprecated
 	 */
 	ListBaseProto.getSelectedIndex = function(){
-		var items = this._getItems();
-		for(var i = 0; i < items.length; i++){
-			if(items[i].getSelected()){
-				return i;
-			}
-		}
-		return -1;
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndex instead.");
+		
+		return this.getSelectionIndex(0);
 	};
 
 	
@@ -320,22 +333,9 @@
 	 * @deprecated
 	 */
 	ListBaseProto.setSelectedControl = function(item){
-		var items = this._getItems(),
-			changed = false;
-		for(var i = 0; i < items.length; i++){
-			if(item && items[i] === item){
-				if(!item.getSelected()){
-					changed = true;
-					items[i].setSelected(true);
-					
-				}
-			}
-			else{
-				items[i].setSelected(false);
-			}
-		}
-		
-		return changed;
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedControl is deprecated! Use .setSelection instead.");
+	
+		return this.setSelection(item, 0);
 	};
 	
 	/**
@@ -343,13 +343,9 @@
 	 * @deprecated
 	 */
 	ListBaseProto.getSelectedControl = function(){
-		var items = this._getItems();
-		for(var i = 0; i < items.length; i++){
-			if(items[i].getSelected()){
-				return items[i];
-			}
-		}
-		return null;
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedControl is deprecated! Use .getSelection instead.");
+		
+		return this.getSelection(0);
 	};
 	
 	/**
@@ -416,7 +412,7 @@
 
 		if(listItem && listItem.getEnabled() && listItem.getSelectable()){
 			if(selectionMode === ui5strap.SelectionMode.Single){
-				if(_this.setSelectedControl(listItem)){
+				if(_this.setSelectedControl(listItem).all.length){
 					_this.fireSelect(eventOptions);
 				}
 			}
