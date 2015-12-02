@@ -55,7 +55,7 @@
 					
 			aggregations : { 
 				buttons : {
-					singularName: "buttons"
+					singularName: "button"
 				} 
 			},
 
@@ -108,15 +108,9 @@
 	 * @Protected
 	 * @Override
 	 */
-	ButtonGroupProto._getEventOptions = function(srcControl){
-		var button = this._findClosestItem(srcControl);
-		
+	ButtonGroupProto._getEventOptions = function(item){
 		return {
-			srcControl : srcControl,
-			item : button,
-			listItem : button, //deprecated
-			button : button, //deprecated
-			listItemIndex : this.getItemIndex(button) //deprecated
+			button : item
 		};
 	};
 

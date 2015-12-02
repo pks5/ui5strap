@@ -97,23 +97,8 @@
 		return selection;
 	};
 	
-	/*
-	 * --------------------
-	 * START implementation of ISelectionProvider interface
-	 * --------------------
-	 */
-	
-	
-	
-	/**
-	 * Tries to select one or multiple items and returns all changes.
-	 * 
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.setSelection = function(itemsSelected, dimension){
-		
-		var items = this._getItems(),
+	var _changeSelection = function(_this, itemsToSelect, dimension, mode){
+		var items = _this._getItems(),
 			changes = {
 				"selected" : [],
 				"deselected" : [],
@@ -124,25 +109,45 @@
 		if(!dimension){
 			for(var i = 0; i < items.length; i++){
 				var item = items[i];
-				if(itemsSelected && item === itemsSelected){
-					if(!item.getSelected()){
-						changes.selected.push(item);
-						changes.changed.push(item);
-						
-						item.setSelected(true);
+				if(itemsToSelect && item === itemsToSelect){
+					//Item is subject to select / deselect
+					if("replace" === mode || "add" === mode){
+						if(!item.getSelected()){
+							changes.selected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(true);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
 					}
-					else{
-						changes.unchanged.push(item);
+					else if("remove" === mode){
+						if(item.getSelected()){
+							changes.deselected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(false);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
 					}
 				}
 				else{
-					if(item.getSelected()){
-						changes.deselected.push(item);
-						changes.changed.push(item);
-						
-						item.setSelected(false);
+					//Item is no subject to select / deselect
+					if("replace" === mode){
+						if(item.getSelected()){
+							changes.deselected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(false);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
 					}
-					else{
+					else if("add" === mode || "remove" === mode){
 						changes.unchanged.push(item);
 					}
 			     }
@@ -151,25 +156,45 @@
 		else if(1 === dimension){
 			for(var i = 0; i < items.length; i++){
 				var item = items[i];
-				if(-1 !== jQuery.inArray(item, itemsSelected)){
-					if(!item.getSelected()){
-						changes.selected.push(item);
-						changes.changed.push(item);
-						
-						item.setSelected(true);
+				if(-1 !== jQuery.inArray(item, itemsToSelect)){
+					//Item is subject to select / deselect
+					if("replace" === mode || "add" === mode){
+						if(!item.getSelected()){
+							changes.selected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(true);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
 					}
-					else{
-						changes.unchanged.push(item);
+					else if("remove" === mode){
+						if(item.getSelected()){
+							changes.deselected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(false);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
 					}
 				}
 				else{
-					if(item.getSelected()){
-						changes.deselected.push(item);
-						changes.changed.push(item);
-						
-						item.setSelected(false);
+					//Item is no subject to select / deselect
+					if("replace" === mode){
+						if(item.getSelected()){
+							changes.deselected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(false);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
 					}
-					else{
+					else if("add" === mode || "remove" === mode){
 						changes.unchanged.push(item);
 					}
 				}
@@ -180,12 +205,55 @@
 		}
 		
 		if(changes.changed.length){
-			this.fireSelectionChange({ selectionChanges: changes });
+			_this.fireSelectionChange({ selectionChanges: changes });
 		
-			this.fireSelectionChanged({ selectionChanges: changes });
+			_this.fireSelectionChanged({ selectionChanges: changes });
 		}
 		
 		return changes;
+	};
+	
+	var _changeSelectionIndices = function(_this, indices, dimension, mode){
+		var items = this._getItems();
+		
+		if(!dimension){
+			if(indices < 0 || indices >= items.length){
+				throw new Error("Array out of bounds!");
+			}
+			
+			return _changeSelection(_this, items[indices], dimension, mode);
+		}
+		else if(1 === dimension){
+			var itemsToSelect = [];
+			for(var i=0; i<indices.length; i++){
+				var index = indices[i];
+				if(index < 0 || index >= items.length){
+					throw new Error("Array out of bounds!");
+				}
+				itemsToSelect.push(items[index]);
+			}
+			
+			return _changeSelection(_this, itemsToSelect, dimension, mode);
+		}
+		else{
+			throw new Error("Lists do not support more than 1 dimension!");
+		}
+	};
+	
+	/*
+	 * --------------------
+	 * START implementation of ISelectionProvider interface
+	 * --------------------
+	 */
+	
+	/**
+	 * Tries to select one or multiple items and returns all changes.
+	 * 
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.setSelection = function(itemsToSelect, dimension){
+		return _changeSelection(this, itemsToSelect, dimension, "replace");
 	};
 	
 	/**
@@ -193,16 +261,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.addSelection = function(itemsSelected, dimension){
-		if(!dimension){
-			this.setSelection(itemsSelected, dimension);
-		}
-		else if(1 === dimension){
-			//TODO Implement
-		}
-		else{
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
+	ListBaseProto.addSelection = function(itemsToSelect, dimension){
+		return _changeSelection(this, itemsToSelect, dimension, "add");
 	};
 	
 	/**
@@ -210,16 +270,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.removeSelection = function(itemsSelected, dimension){
-		if(!dimension){
-			//TODO Implement
-		}
-		else if(1 === dimension){
-			//TODO Implement
-		}
-		else{
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
+	ListBaseProto.removeSelection = function(itemsToSelect, dimension){
+		return _changeSelection(this, itemsToSelect, dimension, "remove");
 	};
 	
 	/**
@@ -246,33 +298,7 @@
 	 * @Override
 	 */
 	ListBaseProto.setSelectionIndices = function(indices, dimension){
-		var changes = null;
-		if(!dimension){
-			var items = this._getItems();
-			if(indices < 0 || indices >= items.length){
-				throw new Error("Array out of bounds!");
-			}
-			
-			changes = this.setSelection(items[indices], dimension);
-		}
-		else if(1 === dimension){
-			var items = this._getItems(),
-				toSelect = [];
-			for(var i=0; i<indices.length; i++){
-				var index = indices[i];
-				if(index < 0 || index >= items.length){
-					throw new Error("Array out of bounds!");
-				}
-				toSelect.push(items[index]);
-			}
-			
-			changes = this.setSelection(toSelect, dimension);
-		}
-		else{
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
-		
-		return changes;
+		return _changeSelectionIndices(this, indices, dimension, "replace");
 	};
 	
 	/**
@@ -281,15 +307,7 @@
 	 * @Override
 	 */
 	ListBaseProto.addSelectionIndices = function(indices, dimension){
-		if(!dimension){
-			this.setSelection(indices, dimension);
-		}
-		else if(1 === dimension){
-			//TODO Implement
-		}
-		else{
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
+		return _changeSelectionIndices(this, indices, dimension, "add");
 	};
 	
 	/**
@@ -298,15 +316,7 @@
 	 * @Override
 	 */
 	ListBaseProto.removeSelectionIndices = function(indices, dimension){
-		if(!dimension){
-			//TODO Implement
-		}
-		else if(1 === dimension){
-			//TODO Implement
-		}
-		else{
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
+		return _changeSelectionIndices(this, indices, dimension, "remove");
 	};
 	
 	/**
@@ -395,14 +405,9 @@
 	/**
 	 * @Protected
 	 */
-	ListBaseProto._getEventOptions = function(srcControl){
-		var listItem = this._findClosestItem(srcControl);
-		
+	ListBaseProto._getEventOptions = function(item){
 		return {
-			srcControl : srcControl,
-			item : listItem,
-			listItem : listItem, //deprecated
-			listItemIndex : this.getItemIndex(listItem) //deprecated
+			listItem : item
 		};
 	};
 	
@@ -417,16 +422,20 @@
 	 * @Private
 	 */
 	var _processSelection = function(_this, oEvent){
-		var eventOptions = _this._getEventOptions(oEvent.srcControl),
+		var item = _this._findClosestItem(oEvent.srcControl),
 			selectionMode = _this.getSelectionMode(),
-			listItem = eventOptions.listItem;
+			eventOptions = _this._getEventOptions(item);
+		
+		eventOptions.srcControl = oEvent.srcControl;
 
-		if(listItem && listItem.getEnabled() && listItem.getSelectable()){
+		if(item && item.getEnabled() && item.getSelectable()){
 			if(selectionMode === ui5strap.SelectionMode.Single){
-				var changes = _this.setSelection(listItem, 0);
+				var changes = _this.setSelection(item);
 				
 				if(changes.changed.length){
 					eventOptions.selectionChanges = changes;
+					
+					//Select event is deprecated
 					_this.fireSelect(eventOptions);
 				}
 				else{
@@ -480,7 +489,7 @@
 	ListBaseProto.setSelectedIndex = function(itemIndex){
 		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
 		
-		return this.setSelectionIndices(itemIndex, 0);
+		return this.setSelectionIndices(itemIndex);
 	};
  
 	/**
@@ -490,7 +499,7 @@
 	ListBaseProto.getSelectedIndex = function(){
 		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
 		
-		return this.getSelectionIndices(0);
+		return this.getSelectionIndices();
 	};
 
 	
@@ -501,7 +510,7 @@
 	ListBaseProto.setSelectedControl = function(item){
 		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedControl is deprecated! Use .setSelection instead.");
 	
-		return this.setSelection(item, 0);
+		return this.setSelection(item);
 	};
 	
 	/**
@@ -511,7 +520,7 @@
 	ListBaseProto.getSelectedControl = function(){
 		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedControl is deprecated! Use .getSelection instead.");
 		
-		return this.getSelection(0);
+		return this.getSelection();
 	};
 	
 	/**
