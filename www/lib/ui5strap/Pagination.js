@@ -46,7 +46,7 @@
 			aggregations : { 
 				items : {
 					type : "ui5strap.ListItem",
-					singularName: "items"
+					singularName: "item"
 				} 
 			}
 		}

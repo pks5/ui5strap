@@ -82,14 +82,14 @@
 	var _getSelection = function(_this){
 		var items = _this._getItems(),
 			selection = {
-				indices : [],
+				x : [],
 				items : []
 			};
 		
 		for(var i = 0; i < items.length; i++){
 			if(items[i].getSelected()){
 				selection.items.push(items[i]);
-				selection.indices.push(i);
+				selection.x.push(i);
 			}
 		}
 		
@@ -122,7 +122,7 @@
 				var item = items[i],
 					change = {
 						item : item,
-						index : i
+						x : i
 					};
 				changes.all.push(change);
 				if(itemsSelected && item === itemsSelected){
@@ -154,7 +154,7 @@
 				var item = items[i],
 					change = {
 						item : item,
-						index : i
+						x : i
 					};
 				if(-1 !== jQuery.inArray(item, itemsSelected)){
 					if(!item.getSelected()){
@@ -253,7 +253,7 @@
 	ListBaseProto.getSelectionIndices = function(dimension){
 		var selection = _getSelection(this);
 		if(!dimension){
-			return selection.indices.length ? selection.indices[0] : undefined;
+			return selection.x.length ? selection.x[0] : undefined;
 		}
 		else if(1 === dimension){
 			return selection.indices;

@@ -306,7 +306,7 @@
 			throw new Error("Cannot access " + kPart + ": is locked by another process.");
 		}
 		this._loopDir["t_" + kPart] = true;
-		//console.log(kPart, fPart);
+		
 			
 		var keyParts = kPart.split('.'),
 				pointer = this,
@@ -373,7 +373,9 @@
 				if(i < keyParts.length - 1){
 					throw new Error("'" + keyPart + "' is not defined in '" + kPart + "'");
 				}
-				
+				else if(null !== fPart){
+					throw new Error("Cannot execute function '" + keyPart + "': not a function!");
+				}
 				break;
 			}
 		}
@@ -386,6 +388,7 @@
 			}
 		}
 		
+		//console.log(kPart, fPart, pointer);
 		this._loopDir["t_" + kPart] = false;
 		
 		return pointer;

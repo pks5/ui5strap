@@ -42,7 +42,7 @@
 		"mediaListId" : "feeds",
 		"mediaList" : "=-> app.getControl( .mediaListId, .viewId )",
 		
-		"DO" : "=-> .mediaList.addItems( action.createMediaListItem.INSTANCE )" 
+		"DO" : "=-> .mediaList.addItem( action.createMediaListItem.INSTANCE )" 
 	}
 
 }
