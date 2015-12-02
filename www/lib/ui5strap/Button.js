@@ -32,11 +32,11 @@
 
 	sap.ui.core.Control.extend("ui5strap.Button", {
 		metadata : {
-
-			// ---- object ----
+			interfaces : ["ui5strap.ISelectableItem"],
+			
 			defaultAggregation : "content",
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
 				type : {
 					type: "ui5strap.ButtonType", 

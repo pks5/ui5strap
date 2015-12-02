@@ -32,11 +32,10 @@
 	
 	sap.ui.core.Control.extend("ui5strap.ListItem", {
 		metadata : {
-
-			// ---- object ----
+			interfaces : ["ui5strap.ISelectableItem"],
+			
 			defaultAggregation : "content",
 			
-			// ---- control specific ----
 			library : "ui5strap",
 
 			properties : { 
@@ -86,7 +85,7 @@
 	//ui5strap.Utils.dynamicClass(ListItemPrototype, 'selected', { 'true' : 'active' });
 	
 	ListItemPrototype.setSelected = function(newSelected, suppressInvalidate){
-		if(this.getDomRef()){//alert(this.getId() + "::" + newSelected);
+		if(this.getDomRef()){
               if(newSelected){
                   this.$().addClass("active");
               }

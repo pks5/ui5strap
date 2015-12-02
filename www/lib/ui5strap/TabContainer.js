@@ -74,7 +74,7 @@
 			"associations" : {
 				"source" : {
 					"deprecated" : true,
-					"type" : "ui5strap.SelectionProvider",
+					"type" : "ui5strap.ISelectionProvider",
 					multiple : false
 				}
 			}
