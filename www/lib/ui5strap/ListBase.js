@@ -113,6 +113,7 @@
 			changes = {
 				"selected" : [],
 				"deselected" : [],
+				"changed" : [],
 				"unchanged" : [],
 				"all" : []
 			};
@@ -129,6 +130,7 @@
 					if(!item.getSelected()){
 						change.selected = true;
 						changes.selected.push(change);
+						changes.changed.push(change);
 						
 						item.setSelected(true);
 					}
@@ -140,6 +142,7 @@
 					if(item.getSelected()){
 						change.selected = false;
 						changes.deselected.push(change);
+						changes.changed.push(change);
 					}
 					else{
 						changes.unchanged.push(change);
@@ -160,6 +163,8 @@
 					if(!item.getSelected()){
 						change.selected = true;
 						changes.selected.push(change);
+						changes.changed.push(change);
+						
 						item.setSelected(true);
 					}
 					else{
@@ -170,6 +175,7 @@
 					if(item.getSelected()){
 						change.selected = false;
 						changes.deselected.push(change);
+						changes.changed.push(change);
 					}
 					else{
 						changes.unchanged.push(change);
@@ -183,10 +189,10 @@
 			throw new Error("Lists do not support more than 1 dimension!");
 		}
 		
-		if(changes.all.length){
-			this.fireSelectionChange(changes);
+		if(changes.changed.length){
+			this.fireSelectionChange({ selectionChanges: changes });
 		
-			this.fireSelectionChanged(changes);
+			this.fireSelectionChanged({ selectionChanges: changes });
 		}
 		
 		return changes;
@@ -412,8 +418,14 @@
 
 		if(listItem && listItem.getEnabled() && listItem.getSelectable()){
 			if(selectionMode === ui5strap.SelectionMode.Single){
-				if(_this.setSelectedControl(listItem).all.length){
+				var changes = _this.setSelectedControl(listItem);
+				
+				if(changes.changed.length){
+					eventOptions.selectionChanges = changes;
 					_this.fireSelect(eventOptions);
+				}
+				else{
+					jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
 				}
 			}
 			
