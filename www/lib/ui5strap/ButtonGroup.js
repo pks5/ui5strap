@@ -92,7 +92,7 @@
 	 * @Protected
 	 * @Override
 	 */
-	ButtonGroupProto._findClosestListItem = function(srcControl){
+	ButtonGroupProto._findClosestItem = function(srcControl){
 		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.Button);
 	};
 	
@@ -100,7 +100,7 @@
 	 * @Public
 	 * @Override
 	 */
-	ButtonGroupProto.getListItemIndex = function(item){
+	ButtonGroupProto.getItemIndex = function(item){
 		return this.indexOfAggregation("buttons", item);
 	};
 	
@@ -109,13 +109,14 @@
 	 * @Override
 	 */
 	ButtonGroupProto._getEventOptions = function(srcControl){
-		var listItem = this._findClosestListItem(srcControl);
+		var button = this._findClosestItem(srcControl);
 		
 		return {
 			srcControl : srcControl,
-			listItem : listItem,
-			button : listItem, //deprecated
-			listItemIndex : this.getListItemIndex(listItem)
+			item : button,
+			listItem : button, //deprecated
+			button : button, //deprecated
+			listItemIndex : this.getItemIndex(button) //deprecated
 		};
 	};
 

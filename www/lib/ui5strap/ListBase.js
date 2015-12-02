@@ -38,7 +38,7 @@
 			library : "ui5strap",
 			
 			properties : {
-				"selectionMode" : {
+				selectionMode : {
 					"type" : "ui5strap.SelectionMode",
 					"defaultValue" : ui5strap.SelectionMode.None
 				}
@@ -76,7 +76,8 @@
 	var ListBaseProto = ui5strap.ListBase.prototype;
 	
 	/**
-	 * Returns an array of selected items and indices
+	 * Returns an array of selected items and their indices.
+	 * 
 	 * @Private
 	 */
 	var _getSelection = function(_this){
@@ -105,7 +106,8 @@
 	
 	
 	/**
-	 * Selects one or multiple items
+	 * Tries to select one or multiple items and returns all changes.
+	 * 
 	 * @Public
 	 * @Override
 	 */
@@ -117,73 +119,59 @@
 				"deselected" : [],
 				"changed" : [],
 				"unchanged" : [],
-				"all" : []
 			};
 		
 		if(!dimension){
 			for(var i = 0; i < items.length; i++){
-				var item = items[i],
-					change = {
-						item : item,
-						x : i
-					};
-				changes.all.push(change);
+				var item = items[i];
 				if(itemsSelected && item === itemsSelected){
 					if(!item.getSelected()){
-						change.selected = true;
-						changes.selected.push(change);
-						changes.changed.push(change);
+						changes.selected.push(item);
+						changes.changed.push(item);
 						
 						item.setSelected(true);
 					}
 					else{
-						changes.unchanged.push(change);
+						changes.unchanged.push(item);
 					}
 				}
 				else{
 					if(item.getSelected()){
-						change.selected = false;
-						changes.deselected.push(change);
-						changes.changed.push(change);
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						item.setSelected(false);
 					}
 					else{
-						changes.unchanged.push(change);
+						changes.unchanged.push(item);
 					}
-					
-					item.setSelected(false);
-				}
+			     }
 			}
 		}
 		else if(1 === dimension){
 			for(var i = 0; i < items.length; i++){
-				var item = items[i],
-					change = {
-						item : item,
-						x : i
-					};
+				var item = items[i];
 				if(-1 !== jQuery.inArray(item, itemsSelected)){
 					if(!item.getSelected()){
-						change.selected = true;
-						changes.selected.push(change);
-						changes.changed.push(change);
+						changes.selected.push(item);
+						changes.changed.push(item);
 						
 						item.setSelected(true);
 					}
 					else{
-						changes.unchanged.push(change);
+						changes.unchanged.push(item);
 					}
 				}
 				else{
 					if(item.getSelected()){
-						change.selected = false;
-						changes.deselected.push(change);
-						changes.changed.push(change);
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						item.setSelected(false);
 					}
 					else{
-						changes.unchanged.push(change);
+						changes.unchanged.push(item);
 					}
-					
-					item.setSelected(false);
 				}
 			}
 		}
@@ -206,6 +194,15 @@
 	 * @Override
 	 */
 	ListBaseProto.addSelection = function(itemsSelected, dimension){
+		if(!dimension){
+			this.setSelection(itemsSelected, dimension);
+		}
+		else if(1 === dimension){
+			//TODO Implement
+		}
+		else{
+			throw new Error("Lists do not support more than 1 dimension!");
+		}
 	};
 	
 	/**
@@ -214,6 +211,15 @@
 	 * @Override
 	 */
 	ListBaseProto.removeSelection = function(itemsSelected, dimension){
+		if(!dimension){
+			//TODO Implement
+		}
+		else if(1 === dimension){
+			//TODO Implement
+		}
+		else{
+			throw new Error("Lists do not support more than 1 dimension!");
+		}
 	};
 	
 	/**
@@ -243,7 +249,7 @@
 		var changes = null;
 		if(!dimension){
 			var items = this._getItems();
-			if(indices >= 0 && indices < items.length){
+			if(indices < 0 || indices >= items.length){
 				throw new Error("Array out of bounds!");
 			}
 			
@@ -252,9 +258,9 @@
 		else if(1 === dimension){
 			var items = this._getItems(),
 				toSelect = [];
-			for(var i=0; i<indices; i++){
+			for(var i=0; i<indices.length; i++){
 				var index = indices[i];
-				if(indices < 0 || indices >= items.length){
+				if(index < 0 || index >= items.length){
 					throw new Error("Array out of bounds!");
 				}
 				toSelect.push(items[index]);
@@ -275,6 +281,15 @@
 	 * @Override
 	 */
 	ListBaseProto.addSelectionIndices = function(indices, dimension){
+		if(!dimension){
+			this.setSelection(indices, dimension);
+		}
+		else if(1 === dimension){
+			//TODO Implement
+		}
+		else{
+			throw new Error("Lists do not support more than 1 dimension!");
+		}
 	};
 	
 	/**
@@ -283,6 +298,15 @@
 	 * @Override
 	 */
 	ListBaseProto.removeSelectionIndices = function(indices, dimension){
+		if(!dimension){
+			//TODO Implement
+		}
+		else if(1 === dimension){
+			//TODO Implement
+		}
+		else{
+			throw new Error("Lists do not support more than 1 dimension!");
+		}
 	};
 	
 	/**
@@ -296,7 +320,7 @@
 			return selection.x.length ? selection.x[0] : undefined;
 		}
 		else if(1 === dimension){
-			return selection.indices;
+			return selection.x;
 		}
 		else{
 			throw new Error("Lists do not support more than 1 dimension!");
@@ -347,7 +371,107 @@
 	 * ------------------
 	 */
 	
+	/**
+	 * @Public
+	 */
+	ListBaseProto._getItems = function(){
+		return this.getItems();
+	};
 	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._findClosestItem = function(srcControl){
+		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem);
+	};
+	
+	/**
+	 * @Public
+	 */
+	ListBaseProto.getItemIndex = function(item){
+		return this.indexOfAggregation("items", item);
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._getEventOptions = function(srcControl){
+		var listItem = this._findClosestItem(srcControl);
+		
+		return {
+			srcControl : srcControl,
+			item : listItem,
+			listItem : listItem, //deprecated
+			listItemIndex : this.getItemIndex(listItem) //deprecated
+		};
+	};
+	
+	
+	/*
+	 * ----------------
+	 * HANDLE UI EVENTS
+	 * ----------------
+	 */
+	
+	/**
+	 * @Private
+	 */
+	var _processSelection = function(_this, oEvent){
+		var eventOptions = _this._getEventOptions(oEvent.srcControl),
+			selectionMode = _this.getSelectionMode(),
+			listItem = eventOptions.listItem;
+
+		if(listItem && listItem.getEnabled() && listItem.getSelectable()){
+			if(selectionMode === ui5strap.SelectionMode.Single){
+				var changes = _this.setSelection(listItem, 0);
+				
+				if(changes.changed.length){
+					eventOptions.selectionChanges = changes;
+					_this.fireSelect(eventOptions);
+				}
+				else{
+					jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
+				}
+			}
+			
+		}
+		else{
+			jQuery.sap.log.warning("Could not select list item: List Item not found.");
+		}
+
+		return eventOptions;
+	};
+	
+	
+	//Touchscreen
+	if(ui5strap.options.enableTapEvents){
+		/**
+		 * @Public
+		 * @Override
+		 */
+		ListBaseProto.ontap = function(oEvent){
+			oEvent.stopPropagation();
+			this.fireTap(_processSelection(this, oEvent));
+		};
+	}
+
+	//Mouse
+	if(ui5strap.options.enableClickEvents){
+		/**
+		 * @Public
+		 * @Override
+		 */
+		ListBaseProto.onclick = function(oEvent){
+			oEvent.stopPropagation();
+			this.fireTap(_processSelection(this, oEvent));
+		};
+	}
+	
+	/*
+	 * ----------
+	 * DEPRECATED
+	 * ----------
+	 */
 	
 	/**
 	 * Set list item selected by index
@@ -409,98 +533,5 @@
 		
 		this.setSelection(selectedItem);
 	};
-	
-	
-	
-	/**
-	 * @Public
-	 */
-	ListBaseProto._getItems = function(){
-		return this.getItems();
-	};
-	
-	/**
-	 * @Protected
-	 */
-	ListBaseProto._findClosestListItem = function(srcControl){
-		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem);
-	};
-	
-	/**
-	 * @Public
-	 */
-	ListBaseProto.getListItemIndex = function(item){
-		return this.indexOfAggregation("items", item);
-	};
-	
-	/**
-	 * @Protected
-	 */
-	ListBaseProto._getEventOptions = function(srcControl){
-		var listItem = this._findClosestListItem(srcControl);
-		
-		return {
-			srcControl : srcControl,
-			listItem : listItem,
-			listItemIndex : this.getListItemIndex(listItem)
-		};
-	};
-	
-	/**
-	 * @Private
-	 */
-	var _processSelection = function(_this, oEvent){
-		var eventOptions = _this._getEventOptions(oEvent.srcControl),
-			selectionMode = _this.getSelectionMode(),
-			listItem = eventOptions.listItem;
-
-		if(listItem && listItem.getEnabled() && listItem.getSelectable()){
-			if(selectionMode === ui5strap.SelectionMode.Single){
-				var changes = _this.setSelection(listItem, 0);
-				
-				if(changes.changed.length){
-					eventOptions.selectionChanges = changes;
-					_this.fireSelect(eventOptions);
-				}
-				else{
-					jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
-				}
-			}
-			
-		}
-		else{
-			jQuery.sap.log.warning("Could not select list item: List Item not found.");
-		}
-
-		return eventOptions;
-	};
-	
-	/*
-	 * HANDLE UI EVENTS
-	 */
-	
-	//Touchscreen
-	if(ui5strap.options.enableTapEvents){
-		/**
-		 * @Public
-		 * @Override
-		 */
-		ListBaseProto.ontap = function(oEvent){
-			oEvent.stopPropagation();
-			this.fireTap(_processSelection(this, oEvent));
-		};
-	}
-
-	//Mouse
-	if(ui5strap.options.enableClickEvents){
-		/**
-		 * @Public
-		 * @Override
-		 */
-		ListBaseProto.onclick = function(oEvent){
-			oEvent.stopPropagation();
-			this.fireTap(_processSelection(this, oEvent));
-		};
-	}
 
 }());
