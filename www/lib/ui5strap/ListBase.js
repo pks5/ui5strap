@@ -354,7 +354,29 @@
 	 * @Override
 	 */
 	ListBaseProto.setSelectionByCustomData = function(dataKey, values, dimension){
-		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByCustomData");
+		var items = this._getItems();
+		
+		if(!dimension){
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === values){
+					selectedItem = items[i];
+					
+					return _changeSelection(this, selectedItem, dimension, "replace");
+				}
+			}
+		}
+		else if(1 === dimension){
+			var itemsToSelect = [];
+			for(var i = 0; i < items.length; i++){
+				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+					itemsToSelect.push(items[i]);
+				}
+			}
+			return _changeSelection(this, itemsToSelect, dimension, "replace");
+		}
+		else{
+			throw new Error("Lists do not support more than 1 dimension!");
+		}
 	};
 	
 	/**
@@ -530,17 +552,7 @@
 	ListBaseProto.setSelectedCustom = function(dataKey, value){
 		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedCustom is deprecated! Use .setSelectionByCustomData instead.");
 		
-		items = this._getItems(),
-			selectedItem = null;
-		
-		for(var i = 0; i < items.length; i++){
-			if(items[i].data(dataKey) === value){
-				selectedItem = items[i];
-				break;
-			}
-		}
-		
-		this.setSelection(selectedItem);
+		return this.setSelectionByCustomData(dataKey, value);
 	};
 
 }());
