@@ -97,7 +97,9 @@
 	};
 	
 	/*
+	 * --------------------
 	 * START implementation of ISelectionProvider interface
+	 * --------------------
 	 */
 	
 	
@@ -199,6 +201,22 @@
 	};
 	
 	/**
+	 * Adds one or multiple items to selection
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.addSelection = function(itemsSelected, dimension){
+	};
+	
+	/**
+	 * Removes one or multiple items from selection
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.removeSelection = function(itemsSelected, dimension){
+	};
+	
+	/**
 	 * Gets one or multiple selected items
 	 * @Public
 	 * @Override
@@ -249,6 +267,22 @@
 		}
 		
 		return changes;
+	};
+	
+	/**
+	 * Adds one or multiple items to selection by indices
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.addSelectionIndices = function(indices, dimension){
+	};
+	
+	/**
+	 * Removes one or multiple items from selection by indices
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.removeSelectionIndices = function(indices, dimension){
 	};
 	
 	/**
@@ -308,7 +342,9 @@
 	};
 	
 	/*
+	 * ------------------
 	 * END implementation of ISelectionProvider interface
+	 * ------------------
 	 */
 	
 	
@@ -359,6 +395,8 @@
 	 * @deprecated
 	 */
 	ListBaseProto.setSelectedCustom = function(dataKey, value){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedCustom is deprecated! Use .setSelectionByCustomData instead.");
+		
 		items = this._getItems(),
 			selectedItem = null;
 		
@@ -369,7 +407,7 @@
 			}
 		}
 		
-		this.setSelectedControl(selectedItem);
+		this.setSelection(selectedItem);
 	};
 	
 	
@@ -418,7 +456,7 @@
 
 		if(listItem && listItem.getEnabled() && listItem.getSelectable()){
 			if(selectionMode === ui5strap.SelectionMode.Single){
-				var changes = _this.setSelectedControl(listItem);
+				var changes = _this.setSelection(listItem, 0);
 				
 				if(changes.changed.length){
 					eventOptions.selectionChanges = changes;

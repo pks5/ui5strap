@@ -98,7 +98,7 @@
 			}
 		}
 		
-		menu.setSelectedControl(selectedItem);
+		menu.setSelection(selectedItem);
 	};
 
 }());
