@@ -35,6 +35,10 @@
 				tagName : "div",
 				className : null
 			},
+			Text : {
+				tagName : "span",
+				className : null
+			},
 			
 			//Bootstrap container and container-fluid
 			//container-inset is an additional class that adds padding-top and padding-bottom

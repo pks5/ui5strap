@@ -852,6 +852,12 @@
 		//Plain HTML <div>
 		Default : "Default",
 		
+		//Plain HTML <span>
+		Text : "Text",
+		
+		//Plain HTML <section>
+		Section : "Section",
+		
 		//Bootstrap "container" & "container-fluid"
 		Fixed : "Fixed",
 		Fluid : "Fluid",
@@ -864,7 +870,6 @@
 		PageHeader : "PageHeader",
 		
 		//Deprecated
-		Section : "Section",
 		Page : "Page",
 		FluidInset : "FluidInset",
 		Paragraph : "Paragraph",
