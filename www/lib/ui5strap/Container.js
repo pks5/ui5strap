@@ -56,7 +56,11 @@
 						defaultValue : ""
 					},
 					
-					
+					//Visibility DOES NOT inherit from smaller sizes
+					visibility : {
+						type : "ui5strap.Visibility",
+						defaultValue : ui5strap.Visibility.Default
+					},
 					visibilityExtraSmall : {
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
@@ -73,12 +77,9 @@
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
 					},
+					//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
 					
 					//Deprecated
-					visibility : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
 					invisible : {
 						deprecated : true,
 						type : "boolean",

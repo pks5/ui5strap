@@ -62,6 +62,8 @@
 		        label : {
 		            type:"string", defaultValue : ""
 		        },
+		        
+		        //Columns DO inherit from smaller sizes
 		        //TODO rename to columns
 		        columnsExtraSmall : {
 		            type:"int", defaultValue:-1

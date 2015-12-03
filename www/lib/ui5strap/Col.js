@@ -33,68 +33,96 @@
 	ui5strap.Control.extend("ui5strap.Col", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
-			// ---- object ----
-			defaultAggregation : "content",
 			
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
+				//Size DOES inherit from smaller sizes
+				//TODO rename to size
 				columnsExtraSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to sizeSmallUp
 				columnsSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to sizeMediumUp
 				columnsMedium : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to sizeLargeUp
 				columnsLarge : {
 					type:"int", defaultValue:-1
 				},
+				//TODO add sizeExtraLarge on Bootstrap 4 Upgrade
+				
+				//Offset DOES inherit from smaller sizes
+				//TODO rename to offset
 				offsetExtraSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to offsetSmallUp
 				offsetSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to offsetMediumUp
 				offsetMedium : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to offsetLargeUp
 				offsetLarge : {
 					type:"int", defaultValue:-1
 				},
+				//TODO add offsetExtraLarge on Bootstrap 4 Upgrade
+				
+				//Pull DOES inherit from smaller sizes
+				//TODO rename to pull
 				pullExtraSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pullSmallUp
 				pullSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pullMediumUp
 				pullMedium : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pullLargeUp
 				pullLarge : {
 					type:"int", defaultValue:-1
 				},
+				//TODO add pullExtraLarge on Bootstrap 4 Upgrade
+				
+				//Push DOES inherit from smaller sizes
+				//TODO rename to push
 				pushExtraSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pushSmallUp
 				pushSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pushMediumUp
 				pushMedium : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pushLargeUp
 				pushLarge : {
 					type:"int", defaultValue:-1
 				}
+				//TODO add pushExtraLarge on Bootstrap 4 Upgrade
 			},
+			
 			aggregations : { 
 				content : {
 					singularName: "content"
 				} 
-			}
+			},
+			
+			defaultAggregation : "content"
 
-		}
+		} // END metadata
 	});
 
 }());
