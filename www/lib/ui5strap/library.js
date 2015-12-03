@@ -59,12 +59,12 @@
    jQuery.sap.log.setLevel(3); //INFO
   _addTimeMark("LIBRARY", "ui5strap", "LOAD_START");
       
-  /*
+  /**
   *
   * Test system requirements
   *
-  * @private
-  * @static
+  * @Private
+  * @Static
   */
   var _testRequirements = function(){
     if(!Object.keys){
@@ -88,6 +88,14 @@
       + "</ul>"
     );
   }
+  
+  /*
+   * ---------------
+   *
+   * Declare Library
+   *
+   * ---------------
+   */
 
   jQuerySap.declare("ui5strap.library");
   
@@ -100,7 +108,7 @@
       {
       	  name : "ui5strap",
       	  
-      	  version: "0.9.16",
+      	  version: "0.9.17",
       	  
       	  dependencies : [],
       	  
@@ -406,6 +414,7 @@
 
   /*
   * ContentPlacement
+  * Defines where to place the rendering of the content aggregation. Used when there are both properties and aggregation that produces output.
   */
   jQuery.sap.declare("ui5strap.ContentPlacement");
 
@@ -416,6 +425,7 @@
 
   /*
   * Placement
+  * Used by Popover and Tooltip controls
   */
 	jQuery.sap.declare("ui5strap.Placement");
 
@@ -428,7 +438,7 @@
 		Bottom : "Bottom",
 		Right : "Right",
 		
-    AutoTop : "AutoTop",
+		AutoTop : "AutoTop",
 		AutoLeft : "AutoLeft",
 		AutoBottom : "AutoBottom",
 		AutoRight : "AutoRight"
@@ -449,45 +459,32 @@
 
   /*
   * Alignment
+  * Used for align block elements
   */
   jQuery.sap.declare("ui5strap.Alignment");
 
   ui5strap.Alignment = {
     Default : "Default",
-    
-    NavBar : "NavBar",
-    NavBarLeft : "NavBarLeft",
-    NavBarRight : "NavBarRight",
-    
-    Sidebar : "Sidebar",
-    
     PullLeft : "PullLeft",
     PullRight : "PullRight",
-    CenterBlock : "CenterBlock"
+    CenterBlock : "CenterBlock",
+    
+    //Deprecated
+	NavBar : "NavBar",
+    NavBarLeft : "NavBarLeft",
+    NavBarRight : "NavBarRight",
+    Sidebar : "Sidebar"
   };
   
-  /*
-   * TextAlignment
-   */
-   jQuery.sap.declare("ui5strap.TextAlignment");
-
-   ui5strap.TextAlignment = {
-     Default : "Default",
-     
-     Left : "Left",
-     Right : "Right",
-     Center : "Center",
-     Justify : "Justify"
-   };
-
   //Bootstrap CSS mapping
   ui5strap.BSAlignment = {
-    NavBarLeft : "navbar-left",
-    NavBarRight : "navbar-right",
-    
     PullLeft : "pull-left",
     PullRight : "pull-right",
-    CenterBlock : "center-block"
+    CenterBlock : "center-block",
+    
+    //Deprecated
+    NavBarLeft : "navbar-left",
+    NavBarRight : "navbar-right"
   };
 
   /*
@@ -512,6 +509,20 @@
 		Label : "Label",
 		Badge : "Badge"
 	};
+	
+	/*
+	   * TextAlignment
+	   */
+	   jQuery.sap.declare("ui5strap.TextAlignment");
+
+	   ui5strap.TextAlignment = {
+	     Default : "Default",
+	     
+	     Left : "Left",
+	     Right : "Right",
+	     Center : "Center",
+	     Justify : "Justify"
+	   };
 
   /*
   * ListType
@@ -537,11 +548,14 @@
 
 	ui5strap.LinkType = {
 		Default : "Default",
+		
+		//Deprecated
 		Thumbnail : "Thumbnail"
 	};
 
   /*
   * HeadingType
+  * TODO check this
   */
   jQuery.sap.declare("ui5strap.HeadingType");
 
@@ -554,6 +568,7 @@
 
   /*
   * ButtonType
+  * TODO check this
   */
 	jQuery.sap.declare("ui5strap.ButtonType");
 
@@ -568,6 +583,7 @@
 
   /*
   * ButtonGroupType
+  * Used by ButtonGroup
   */
   jQuery.sap.declare("ui5strap.ButtonGroupType");
 
@@ -619,7 +635,8 @@
   };
 
   /*
-  * BsAction
+  * BsAction adds a special class to a control that is used by Bootstrap's JavaScript.
+  * This is the most bad way to create dynamic behaviour. Use Actions instead.
   * @deprecated Will be removed in future releases.
   */
 	jQuery.sap.declare("ui5strap.BsAction");
@@ -627,8 +644,8 @@
 	ui5strap.BsAction = {
 		None : "None",
 		DismissModal : "DismissModal",
-    ToggleNavbar : "ToggleNavbar",
-    ToggleSidenav : "ToggleSidenav"
+		ToggleNavbar : "ToggleNavbar",
+		ToggleSidenav : "ToggleSidenav"
 	};
 
   /*
@@ -875,9 +892,11 @@
   * ---------
   */
 
-  /*
+  /**
   * Create a Controller instance with Action support.
-  * TODO remove ui5strap.App dependency
+  * TODO remove ui5strap.App dependency from here?
+  * @Public
+  * @Static
   */
   ui5strap.controller = function(controllerName, controllerImpl){
       jQuery.sap.require('ui5strap.AppBase');
@@ -888,8 +907,17 @@
   };
 
   /*
+   * -----------
+   *
+   * Transitions
+   *
+   * -----------
+   */
+  
+  /**
   * Constructs a Transition
-  * @constructor
+  * @Constructor
+  * @deprecated use ui5strap.ResponsiveTransition instead.
   */
   ui5strap.Transition = function(transitionName, $currentRoot, $nextRoot, transitionId){
 	  jQuery.sap.log.warning("ui5strap.Transition is deprecated. Please use ui5strap.ResponsiveTransition instead.");
@@ -1001,6 +1029,11 @@
 
   };
   
+  /**
+   * Converts old transition strings into new ones.
+   * @deprecated
+   * @Private
+   */
   var _deprecatedTransitionsConvert = function($trans){
 	  var $newTrans = "";
 	  if($trans === 'transition-zoom')
@@ -1019,9 +1052,10 @@
 	  return $newTrans;
   };
   
-  /*
+  /**
    * Constructs a responsive Transition (experimental)
-   * @constructor
+   * @Constructor
+   * @Public
    */
    ui5strap.ResponsiveTransition = function(data){
      this._data = data;
@@ -1060,6 +1094,7 @@
      
      /**
       * Should always be surrounded by a RAF.
+      * @Public
       */
      this.prepare = function (){
  		  if(this._prepared || this._executed){
@@ -1080,6 +1115,7 @@
  	
  	/**
  	 * Should always be surrounded by a RAF.
+ 	 * @Public
  	 */
      this.execute = function (callbackCurrent, callbackNext){
  	      var _this = this;
@@ -1196,10 +1232,18 @@
 
   jQuery.sap.declare("ui5strap.Layer");
   
+  /**
+   * @Package
+   * @Public
+   */
   ui5strap.Layer = {
     layers : {}
   };
   
+  /**
+   * Registers a new layer
+   * @Public
+   */
   ui5strap.Layer.register = function(layerId, $layer){
       if(this.layers[layerId]){
           throw new Error('Layer ' + layerId + ' already registered.');
@@ -1225,21 +1269,34 @@
       return true;
   };
 
+  /**
+   * @Public
+   * @Static
+   */
   ui5strap.Layer.get = function(layerId){
     return this.layers[layerId];
   };
 
+  /**
+   * @Public
+   * @Static
+   */
   ui5strap.Layer.unregister = function(layerId){
       delete this.layers[layerId];
   };
 
+  /**
+   * @Public
+   * @Static
+   */
   ui5strap.Layer.isVisible = function(layerId){
       return this.layers[layerId] && this.layers[layerId].visible;
   };
 
-  /*
-  * @Private
-  */
+  /**
+   * @Public
+   * @Static
+   */
   ui5strap.Layer.setVisible = function(layerId, visible, callback){
       
       var layer = this.layers[layerId],
@@ -1332,6 +1389,9 @@
   */
   jQuery.sap.declare("ui5strap.Utils");
 
+  /*
+   * @Package
+   */
   ui5strap.Utils = {
 		  
 		//@deprecated
@@ -1404,6 +1464,11 @@
       }
   };
 
+  /**
+   * @Static
+   * @Public
+   * @deprecated Use jQuery.sap.getObject instead.
+   */
   ui5strap.Utils.getObject = function(packageString, levelsUp){
       if(!levelsUp){
           levelsUp = 0;
@@ -1426,11 +1491,19 @@
     return constructor;
   };
 
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.createObject = function(packageString){
     var Constructor = this.getObject(packageString);
     return new Constructor();
   };
 
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.queryToObject = function(query){
       var vars = query.split('&'),
           obj = {};
@@ -1443,6 +1516,10 @@
       return obj;
   };
 
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.parseIContent = function(iContent){
       var iContentType = typeof iContent;
       
@@ -1455,12 +1532,20 @@
       return iContent;
   };
   
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.qualifyURL = function(url) {
 	  var a = document.createElement('a');
 	  a.href = url;
 	  return a.href;
   };
   
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.urlOrigin = function(url) {
 	  var a = document.createElement('a');
 	  a.href = url;
@@ -1470,6 +1555,8 @@
   
   /**
    * Transfers a property propagation from one to an other control.
+   * @Public
+   * @Static
    */
   ui5strap.Utils.addPropertyPropagation = function(fromControl, toControl){
 		toControl.oPropagatedProperties = fromControl._getPropertiesToPropagate();
@@ -1484,6 +1571,7 @@
   /**
    * Finds the closest parent control of type TargetType.
    * @Public
+   * @Static
    */
   ui5strap.Utils.findClosestParentControl = function(control, TargetType){
 		var parentControl = control,
@@ -1511,10 +1599,16 @@
 
   jQuery.sap.declare("ui5strap.RenderUtils");
 
+  /**
+   * @Package
+   * @Public
+   */
   ui5strap.RenderUtils = {
 		
 	  /**
 	   * Renders title content, used in Panel
+	   * @Public
+	   * @Static
 	   */
       renderTitleContent : function(rm, oControl, text){
           var content = oControl.getTitleContent(),
@@ -1550,6 +1644,8 @@
 
       /**
        * Parses BBCode inside text
+       * @Public
+       * @Static
        */
       parseText : function(text){
           return text.replace(/\[\/?strong\]|\[\/?em\]|\[\/?small\]|\[\/?span\]/gi, function(matched){
@@ -1559,6 +1655,8 @@
       
       /**
        * Default rendering for controls that have both text property and content aggregation 
+       * @Public
+       * @Static
        */
       renderContent : function(rm, oControl, text, dontEscape){
           var content = oControl.getContent(),
@@ -1914,6 +2012,14 @@
 	    } 
     
   };
+  
+  /*
+   * ----------
+   *
+   * Read Files
+   *
+   * ----------
+   */
   
   /**
    * Read a text file via GET

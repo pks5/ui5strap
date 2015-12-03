@@ -46,6 +46,7 @@
 					defaultValue : false
 				},
 				bsAction : {
+					deprecated : true,
 					type: "ui5strap.BsAction", 
 					defaultValue: ui5strap.BsAction.None
 				},

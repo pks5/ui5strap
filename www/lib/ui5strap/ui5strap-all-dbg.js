@@ -356,20 +356,20 @@
 	ui5strap.Visibility = {
 		Default : "Default",
 		Visible : "Visible",
-		Hidden : "Hidden",
-    Covered : "Covered"
+		Hidden : "Hidden"
 	};
 
-  ui5strap.BSVisibility = {
-    Visible : "show",
-    Hidden : "hidden",
+    /**
+     * CarouselOverflow defines how you see overflowing content in Carousel controls.
+     */
+    jQuery.sap.declare("ui5strap.CarouselOverflow");
 
-    //??? is this used
-    Invisible : "invisible",
-    
-    //Not available for all Controls
-    Covered : "covered"
-  };
+	ui5strap.CarouselOverflow = {
+		Default : "Default",
+		Visible : "Visible",
+		Hidden : "Hidden",
+		Covered : "Covered"
+	};
 
   /*
   * TriggerMode
@@ -560,10 +560,10 @@
 	ui5strap.ButtonType = {
 		Default : "Default",
 		Button : "Button",
-    Block : "Block",
-    Close : "Close",
+		Block : "Block",
+		Close : "Close",
 		Icon : "Icon",
-    Link : "Link"
+		Link : "Link"
 	};
 
   /*
@@ -817,9 +817,12 @@
   ui5strap.SelectionMode = {
     None : "None",
     Single : "Single",
+    Multiple : "Multiple",
+    
+    //Deprecated
     SingleMaster : "SingleMaster",
-    Master : "Master",
-    Multiple : "Multiple"
+    Master : "Master"
+    
   };
 
   /*
@@ -1465,6 +1468,9 @@
 	  var origin = a.protocol + "//" + a.host;
   };
   
+  /**
+   * Transfers a property propagation from one to an other control.
+   */
   ui5strap.Utils.addPropertyPropagation = function(fromControl, toControl){
 		toControl.oPropagatedProperties = fromControl._getPropertiesToPropagate();
 		
@@ -1475,6 +1481,10 @@
 		}
   };
 
+  /**
+   * Finds the closest parent control of type TargetType.
+   * @Public
+   */
   ui5strap.Utils.findClosestParentControl = function(control, TargetType){
 		var parentControl = control,
 			maxDepth = 20,
@@ -1502,7 +1512,10 @@
   jQuery.sap.declare("ui5strap.RenderUtils");
 
   ui5strap.RenderUtils = {
-
+		
+	  /**
+	   * Renders title content, used in Panel
+	   */
       renderTitleContent : function(rm, oControl, text){
           var content = oControl.getTitleContent(),
               contentPlacement = oControl.getTitleContentPlacement(),
@@ -1520,7 +1533,10 @@
               rm.writeEscaped(text);
           }
       },
-
+      
+      /**
+       * parse map
+       */
       parseMap : {
           '[strong]' : '<strong>',
           '[/strong]' : '</strong>',
@@ -1532,12 +1548,18 @@
           '[/span]' : '</span>'
       },
 
+      /**
+       * Parses BBCode inside text
+       */
       parseText : function(text){
           return text.replace(/\[\/?strong\]|\[\/?em\]|\[\/?small\]|\[\/?span\]/gi, function(matched){
             return ui5strap.RenderUtils.parseMap[matched];
           });
       },
-
+      
+      /**
+       * Default rendering for controls that have both text property and content aggregation 
+       */
       renderContent : function(rm, oControl, text, dontEscape){
           var content = oControl.getContent(),
               contentPlacement = oControl.getContentPlacement(),
@@ -1565,13 +1587,19 @@
               }
           }
       },
-
+      
+      /**
+       * Trail mapping
+       */
       trailHtml : {
           Space : ' ',
           DoubleSpace : '&nbsp; ',
           Break : '<br />'
       },
-
+      
+      /**
+       * Renders the trail after inline controls
+       */
       renderTrail : function(rm, oControl, text){
           var trail = oControl.getTrail();
 
@@ -1579,7 +1607,10 @@
               rm.write(this.trailHtml[trail]);
           }
       },
-
+      
+      /**
+       * @deprecated
+       */
       alignment : function(rm, oControl, navbarClass, sidebarClass){
           var align = oControl.getAlign(),
               Alignment = ui5strap.Alignment;
@@ -1587,7 +1618,12 @@
           if(align !== Alignment.Default){
               rm.addClass(ui5strap.BSAlignment[align]);
           }
-
+          
+          /*
+          * This are special options for
+          * Button, ButtonGroup, Nav and Form to show properly inside NavBar controls
+          * @deprecated
+          */
           if(typeof navbarClass === 'string'){
               if(align === Alignment.NavBar ||
                 align === Alignment.NavBarLeft ||
@@ -1595,14 +1631,23 @@
                   rm.addClass(navbarClass);
               }
           }
-
+          
+          /*
+           * This are special options for
+           * Nav controls to show properly inside Sidebar controls
+           * @deprecated
+           */
           if(typeof sidebarClass === 'string'){
               if(align === Alignment.Sidebar){
                   rm.addClass(sidebarClass);
               }
           }
       },
-
+      
+      /**
+       * Responsive visibility
+       * @Public
+       */
       visibility : function(rm, oControl){
           var visibility = oControl.getVisibility(),
               visibilityExtraSmall = oControl.getVisibilityExtraSmall(),
@@ -1611,38 +1656,54 @@
               visibilityLarge = oControl.getVisibilityLarge(),
               Visibility = ui5strap.Visibility;
 
+          //Generic visibility
+          //TODO check if necccessary and working at all
           if(visibility !== Visibility.Default){
-              rm.addClass(ui5strap.BSVisibility[visibility]);
+              rm.addClass(visibility.toLowerCase());
           }
-
+          
+          //Visibility for EXTRA_SMALL screens
           if(visibilityExtraSmall === Visibility.Visible){
+        	  //Visible on EXTRA_SMALL, hidden on smaller
               rm.addClass('visible-xs');
           }
           else if(visibilityExtraSmall === Visibility.Hidden){
-              rm.addClass('hidden-xs');
+        	  //Hidden on EXTRA_SMALL, visible else
+        	  rm.addClass('hidden-xs');
           }
-
+          
+          //Visibility for SMALL screens
           if(visibilitySmall === Visibility.Visible){
+        	  //Visible on SMALL, hidden on smaller
               rm.addClass('visible-sm');
           }
           else if(visibilitySmall === Visibility.Hidden){
+        	  //Hidden on SMALL, visible else
               rm.addClass('hidden-sm');
           }
-
+          
+          //Visibility for MEDIUM screens
           if(visibilityMedium === Visibility.Visible){
+        	  //Visible on MEDIUM, hidden on smaller
               rm.addClass('visible-md');
           }
           else if(visibilityMedium === Visibility.Hidden){
+        	  //Hidden on MEDIUM, visible else
               rm.addClass('hidden-md');
           }
-
+          
+          //Visibility for LARGE screens
           if(visibilityLarge === Visibility.Visible){
+        	  //Visible on LARGE, hidden on smaller
               rm.addClass('visible-lg');
           }
           else if(visibilityLarge === Visibility.Hidden){
+        	  //Hidden on LARGE, visible on smaller
               rm.addClass('hidden-lg');
           }
-
+          
+          //Invisibility
+          //TODO neccessary?
           if(oControl.getInvisible()){
             rm.addClass('invisible');
           }
@@ -2452,7 +2513,7 @@
 			throw new Error("Cannot access " + kPart + ": is locked by another process.");
 		}
 		this._loopDir["t_" + kPart] = true;
-		//console.log(kPart, fPart);
+		
 			
 		var keyParts = kPart.split('.'),
 				pointer = this,
@@ -2519,7 +2580,9 @@
 				if(i < keyParts.length - 1){
 					throw new Error("'" + keyPart + "' is not defined in '" + kPart + "'");
 				}
-				
+				else if(null !== fPart){
+					throw new Error("Cannot execute function '" + keyPart + "': not a function!");
+				}
 				break;
 			}
 		}
@@ -2532,6 +2595,7 @@
 			}
 		}
 		
+		//console.log(kPart, fPart, pointer);
 		this._loopDir["t_" + kPart] = false;
 		
 		return pointer;
@@ -5945,11 +6009,27 @@
 			},
 			
 			events : {
-				pageHide : {},
-				pageShow : {},
-				pageHidden : {},
-				pageShown : {},
-				update : {}
+				pageChange : {
+					parameters : {
+						"target" : {type : "string"},
+						"oldPage" : {type : "ui5strap.Control"}
+					}
+				},
+				
+				pageChanged : {
+					parameters : {
+						"target" : {type : "string"},
+						"oldPage" : {type : "ui5strap.Control"}
+					}
+				},
+				
+				pageUpdate : {
+					parameters : {
+						"target" : {type : "string"},
+						"pageParameters" : {type : "object"},
+						"page" : {type : "ui5strap.Control"}
+					}
+				}
 			}
 		}
 	});
@@ -5985,8 +6065,6 @@
 				controller[funcName](new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}));
 			}
 		}
-		
-		_this["fire" + eventNameCC](eventParameters);
 	};
 
 	/**
@@ -6079,6 +6157,11 @@
 				//If next page is null, then execute the callbacks when old page has been hidden
 				if(pageChange.page === null){
 					_transitionCallback(_this, pageChange, transList);
+					
+					_this.firePageChanged({
+						target : pageChange.target,
+						oldPage : pageChange.currentPage
+					});
 				}
 
 				//onPageHidden event
@@ -6095,6 +6178,11 @@
 
 				//onPageShown event
 				_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShown', {
+					target : pageChange.target,
+					oldPage : pageChange.currentPage
+				});
+				
+				_this.firePageChanged({
 					target : pageChange.target,
 					oldPage : pageChange.currentPage
 				});
@@ -6423,17 +6511,18 @@
 	/**
 	* @Override
 	*/
-	NavContainerBaseProto.destroy = function(bSuppressInvalidate){
+	NavContainerBaseProto.exit = function(){
 		for(var target in this.targets){
 			if(this.targets[target]){
 				var oldTarget = this.targets[target];
 				this.targets[target] = null;
 				
-				oldTarget.destroy(bSuppressInvalidate);
+				oldTarget.destroy();
+				
 				delete oldTarget;
 			}
 		}
-		sap.ui.core.Control.prototype.destroy.call(this, bSuppressInvalidate);
+		//sap.ui.core.Control.prototype.destroy.call(this, bSuppressInvalidate);
 	};
 	
 	/*
@@ -6607,9 +6696,14 @@
 			throw new Error('Parameters must not contain a target attribute!');
 		}
 		
-		eventParameters.target = target;
-
 		_triggerControllerEvent(this, target, oPage, 'update', eventParameters);
+		
+		this.firePageUpdate({
+			"target" : target,
+			"pageParameters" : eventParameters,
+			"page" : oPage
+		});
+		
 	};
 	
 	/**
@@ -6708,6 +6802,11 @@
 				oldPage : currentPage
 			});
 		}
+		
+		_this.firePageChange({
+			target : target,
+			oldPage : currentPage
+		});
 
 		if(this.getDomRef()){
 			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
@@ -8081,11 +8180,11 @@
 
 	sap.ui.core.Control.extend("ui5strap.Button", {
 		metadata : {
-
-			// ---- object ----
+			interfaces : ["ui5strap.ISelectableItem"],
+			
 			defaultAggregation : "content",
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
 				type : {
 					type: "ui5strap.ButtonType", 
@@ -8110,6 +8209,10 @@
 				size : {
 					type: "ui5strap.Size", 
 					defaultValue: ui5strap.Size.Default
+				},
+				selectable : {
+					type : "boolean",
+					defaultValue : true
 				},
 				selected : {
 					type:"boolean", 
@@ -10117,11 +10220,10 @@
 	
 	sap.ui.core.Control.extend("ui5strap.ListItem", {
 		metadata : {
-
-			// ---- object ----
+			interfaces : ["ui5strap.ISelectableItem"],
+			
 			defaultAggregation : "content",
 			
-			// ---- control specific ----
 			library : "ui5strap",
 
 			properties : { 
@@ -10171,7 +10273,7 @@
 	//ui5strap.Utils.dynamicClass(ListItemPrototype, 'selected', { 'true' : 'active' });
 	
 	ListItemPrototype.setSelected = function(newSelected, suppressInvalidate){
-		if(this.getDomRef()){//alert(this.getId() + "::" + newSelected);
+		if(this.getDomRef()){
               if(newSelected){
                   this.$().addClass("active");
               }
@@ -10281,190 +10383,489 @@
 	jQuery.sap.require("ui5strap.library");
 	jQuery.sap.require("ui5strap.ListItem");
 	
-	var _metadata = {
-		defaultAggregation : "items",
+	ui5strap.Control.extend("ui5strap.ListBase", {
+		metadata : {
+			interfaces : ["ui5strap.ISelectionProvider"],
 
-		library : "ui5strap",
+			library : "ui5strap",
+			
+			properties : {
+				selectionMode : {
+					"type" : "ui5strap.SelectionMode",
+					"defaultValue" : ui5strap.SelectionMode.None
+				}
+			},
+			
+			events:{
+				selectionChange : {
+					parameters : {
+						listItem : {type : "ui5strap.ListItem"}
+					}
+				},
+				selectionChanged : {
+					parameters : {
+						listItem : {type : "ui5strap.ListItem"}
+					}
+				},
 
-		properties : { 
-			selectionMode : {
-				type : "ui5strap.SelectionMode",
-				defaultValue : ui5strap.SelectionMode.None
+				select : {
+					deprecated : true,
+					parameters : {
+						listItem : {type : "ui5strap.ListItem"},
+						srcControl : {type : "ui5strap.Control"}
+					}
+				},
+				tap : {
+					parameters : {
+						listItem : {type : "ui5strap.ListItem"},
+						srcControl : {type : "ui5strap.Control"}
+					}
+				}
+
 			}
-		},
-				
-		aggregations : { 
-			items : {
-				type : "ui5strap.ListItem",
-				singularName: "items"
-			} 
-		},
-
-		events:{
-
-			select : {}
-
 		}
-	};
-
-	if(ui5strap.options.enableTapEvents){
-		_metadata.events.tap = {};
-	}
-
-	if(ui5strap.options.enableClickEvents){
-		_metadata.events.click = {};
-	}
-
-	sap.ui.core.Control.extend("ui5strap.ListBase", {
-		metadata : _metadata
 	});
 
 	var ListBaseProto = ui5strap.ListBase.prototype;
 	
-	/*
-	 * START implementation of Selectable interface
-	 */
-	
 	/**
-	 * Set list item selected by index
+	 * Returns an array of selected items and their indices.
+	 * 
+	 * @Private
 	 */
-	ListBaseProto.setSelectedIndex = function(itemIndex){
-		var items = this.getItems();
-		if(itemIndex < 0 || itemIndex >= items.length){
-			return false;
-		}
+	var _getSelectionData = function(_this){
+		var items = _this._getItems(),
+			selection = {
+				x : [],
+				items : []
+			};
 		
-		return this.setSelectedControl(items[itemIndex]);
-	};
- 
-	/**
-	 * Get index of selected index
-	 */
-	ListBaseProto.getSelectedIndex = function(){
-		var items = this.getItems();
 		for(var i = 0; i < items.length; i++){
 			if(items[i].getSelected()){
-				return i;
-			}
-		}
-		return -1;
-	};
-
-	
-	/**
-	 * Set control selected by reference
-	 */
-	ListBaseProto.setSelectedControl = function(item){
-		var items = this.getItems(),
-			changed = false;
-		for(var i = 0; i < items.length; i++){
-			if(item && items[i] === item){
-				if(!item.getSelected()){
-					changed = true;
-					items[i].setSelected(true);
-				}
-			}
-			else{
-				items[i].setSelected(false);
+				selection.items.push(items[i]);
+				selection.x.push(i);
 			}
 		}
 		
-		return changed;
-	};
-	
-	/**
-	 * Get selected list item control
-	 */
-	ListBaseProto.getSelectedControl = function(){
-		var items = this.getItems();
-		for(var i = 0; i < items.length; i++){
-			if(items[i].getSelected()){
-				return items[i];
-			}
-		}
-		return null;
-	};
-	
-	/**
-	 * Select by custom data value
-	 */
-	ListBaseProto.setSelectedCustom = function(dataKey, value){
-		items = this.getItems(),
-			selectedItem = null;
-		
-		for(var i = 0; i < items.length; i++){
-			if(items[i].data(dataKey) === value){
-				selectedItem = items[i];
-				break;
-			}
-		}
-		
-		this.setSelectedControl(selectedItem);
-	};
-	
-	
-	/*
-	 * END implementation of Selectable interface
-	 */
-	
-	/**
-	 * @Protected
-	 */
-	ListBaseProto._selectionRequest = function(item, eventOptions){
-		this.setSelectedControl(item);
-		
-		this.fireSelect(eventOptions);
+		return selection;
 	};
 	
 	/**
 	 * @Private
 	 */
-	var _setMasterSelected = function(_this, listItem, eventOptions){
-		var parentListItem = ui5strap.Utils.findClosestParentControl(listItem, ui5strap.ListBase),
-			parentList = ui5strap.Utils.findClosestParentControl(parentListItem, ui5strap.ListItem);
-		
-		if(parentListItem && parentList){
-			parentList._selectionRequest(parentListItem, eventOptions);
+	var _getSelection = function(_this, dimension){
+		var selection = _getSelectionData(_this);
+		if(!dimension){
+			//Single value
+			return selection.items.length ? selection.items[0] : null;
+		}
+		else if(1 === dimension){
+			//1 dimensional array
+			return selection.items;
+		}
+		else if(2 === dimension){
+			//2 dimensional array
+			return [selection.items];
+		}
+		else if(3 === dimension){
+			//3 dimensional array
+			return [[selection.items]];
 		}
 		else{
-			jQuery.sap.log.warning("Cannot select master list item: list or listItem not found.");
+			//more than dimensional array
+			throw new Error("At most 3 dimension are supported.");
 		}
 	};
 	
+	/**
+	 * @Private
+	 */
+	var _changeSelection = function(_this, itemsToSelect, dimension, mode){
+		var items = _this._getItems(),
+			changes = {
+				"selected" : [],
+				"deselected" : [],
+				"changed" : [],
+				"unchanged" : [],
+			};
+		
+		if(!dimension){
+			//Single value
+			for(var i = 0; i < items.length; i++){
+				var item = items[i];
+				if(itemsToSelect && item === itemsToSelect){
+					//Item is subject to select / deselect
+					if("replace" === mode || "add" === mode){
+						if(!item.getSelected()){
+							changes.selected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(true);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
+					}
+					else if("remove" === mode){
+						if(item.getSelected()){
+							changes.deselected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(false);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
+					}
+				}
+				else{
+					//Item is no subject to select / deselect
+					if("replace" === mode){
+						if(item.getSelected()){
+							changes.deselected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(false);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
+					}
+					else if("add" === mode || "remove" === mode){
+						changes.unchanged.push(item);
+					}
+			     }
+			}
+		}
+		else if(1 === dimension){
+			//1 dimensional array
+			for(var i = 0; i < items.length; i++){
+				var item = items[i];
+				if(-1 !== jQuery.inArray(item, itemsToSelect)){
+					//Item is subject to select / deselect
+					if("replace" === mode || "add" === mode){
+						if(!item.getSelected()){
+							changes.selected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(true);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
+					}
+					else if("remove" === mode){
+						if(item.getSelected()){
+							changes.deselected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(false);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
+					}
+				}
+				else{
+					//Item is no subject to select / deselect
+					if("replace" === mode){
+						if(item.getSelected()){
+							changes.deselected.push(item);
+							changes.changed.push(item);
+							
+							item.setSelected(false);
+						}
+						else{
+							changes.unchanged.push(item);
+						}
+					}
+					else if("add" === mode || "remove" === mode){
+						changes.unchanged.push(item);
+					}
+				}
+			}
+		}
+		else{
+			//more dimensional array
+			throw new Error("Lists do not support more than 1 dimension!");
+		}
+		
+		if(changes.changed.length){
+			_this.fireSelectionChange({ selectionChanges: changes });
+		
+			_this.fireSelectionChanged({ selectionChanges: changes });
+		}
+		
+		return changes;
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _getSelectionIndex = function(_this, dimension){
+		var selection = _getSelectionData(_this);
+		if(!dimension){
+			//single value
+			return selection.x.length ? selection.x[0] : undefined;
+		}
+		else if(1 === dimension){
+			//1 dimensional array
+			return selection.x;
+		}
+		else if(2 === dimension){
+			//2 dimensional array
+			return [selection.x];
+		}
+		else if(3 === dimension){
+			//3 dimensional array
+			return [[selection.x]];
+		}
+		else{
+			//more than 3 dimensional array
+			throw new Error("At most 3 dimension are supported.");
+		}
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _changeSelectionIndices = function(_this, indices, dimension, mode){
+		var items = this._getItems();
+		
+		if(!dimension){
+			//Single value
+			if(indices < 0 || indices >= items.length){
+				throw new Error("Array out of bounds!");
+			}
+			
+			return _changeSelection(_this, items[indices], dimension, mode);
+		}
+		else if(1 === dimension){
+			//1 dimensional array
+			var itemsToSelect = [];
+			for(var i=0; i<indices.length; i++){
+				var index = indices[i];
+				if(index < 0 || index >= items.length){
+					throw new Error("Array out of bounds!");
+				}
+				itemsToSelect.push(items[index]);
+			}
+			
+			return _changeSelection(_this, itemsToSelect, dimension, mode);
+		}
+		else{
+			//more dimensional array
+			throw new Error("Lists do not support more than 1 dimension!");
+		}
+	};
+	
+	/*
+	 * --------------------
+	 * START implementation of ISelectionProvider interface
+	 * --------------------
+	 */
+	
+	/**
+	 * Tries to select one or multiple items and returns all changes.
+	 * 
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.setSelection = function(itemsToSelect, dimension){
+		return _changeSelection(this, itemsToSelect, dimension, "replace");
+	};
+	
+	/**
+	 * Adds one or multiple items to selection
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.addSelection = function(itemsToSelect, dimension){
+		return _changeSelection(this, itemsToSelect, dimension, "add");
+	};
+	
+	/**
+	 * Removes one or multiple items from selection
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.removeSelection = function(itemsToSelect, dimension){
+		return _changeSelection(this, itemsToSelect, dimension, "remove");
+	};
+	
+	/**
+	 * Gets one or multiple selected items
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.getSelection = function(dimension){
+		return _getSelection(this, dimension);
+	};
+	
+	/**
+	 * Selects one or multiple items by indices
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.setSelectionIndex = function(indices, dimension){
+		return _changeSelectionIndices(this, indices, dimension, "replace");
+	};
+	
+	/**
+	 * Adds one or multiple items to selection by indices
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.addSelectionIndex = function(indices, dimension){
+		return _changeSelectionIndices(this, indices, dimension, "add");
+	};
+	
+	/**
+	 * Removes one or multiple items from selection by indices
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.removeSelectionIndex = function(indices, dimension){
+		return _changeSelectionIndices(this, indices, dimension, "remove");
+	};
+	
+	/**
+	 * Gets one or multiple indices of selected items
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.getSelectionIndex = function(dimension){
+		return _getSelectionIndex(this, dimension);
+	};
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified property.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.setSelectionByProperty = function(propertyName, values, dimension){
+		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
+	};
+	
+	/**
+	 * Gets one or multiple selected items that have the given value in the specified property.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.getItemsByProperty = function(propertyName){
+		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByProperty");
+	};
+	
+	
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.setSelectionByCustomData = function(dataKey, values, dimension){
+		var items = this._getItems();
+		
+		if(!dimension){
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === values){
+					selectedItem = items[i];
+					
+					return _changeSelection(this, selectedItem, dimension, "replace");
+				}
+			}
+		}
+		else if(1 === dimension){
+			var itemsToSelect = [];
+			for(var i = 0; i < items.length; i++){
+				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+					itemsToSelect.push(items[i]);
+				}
+			}
+			return _changeSelection(this, itemsToSelect, dimension, "replace");
+		}
+		else{
+			throw new Error("Lists do not support more than 1 dimension!");
+		}
+	};
+	
+	/**
+	 * Gets one or multiple selected items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.getItemsByCustomData = function(dataKey){
+		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByCustomData");
+	};
+	
+	/*
+	 * ------------------
+	 * END implementation of ISelectionProvider interface
+	 * ------------------
+	 */
+	
+	/**
+	 * @Public
+	 */
+	ListBaseProto._getItems = function(){
+		return this.getItems();
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._findClosestItem = function(srcControl){
+		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem);
+	};
+	
+	/**
+	 * @Public
+	 */
+	ListBaseProto.getItemIndex = function(item){
+		return this.indexOfAggregation("items", item);
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._getEventOptions = function(item){
+		return {
+			listItem : item
+		};
+	};
+	
+	
+	/*
+	 * ----------------
+	 * HANDLE UI EVENTS
+	 * ----------------
+	 */
 	
 	/**
 	 * @Private
 	 */
 	var _processSelection = function(_this, oEvent){
-		var srcControl = oEvent.srcControl,
-			listItem = ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem),
-			eventOptions = {
-				srcControl : srcControl,
-				listItem : listItem,
-				listItemIndex : _this.indexOfAggregation("items", listItem)
-			},
-			selectionMode = _this.getSelectionMode();
+		var item = _this._findClosestItem(oEvent.srcControl),
+			selectionMode = _this.getSelectionMode(),
+			eventOptions = _this._getEventOptions(item);
+		
+		eventOptions.srcControl = oEvent.srcControl;
 
-		if(listItem && listItem.getSelectable()){
+		if(item && item.getEnabled() && item.getSelectable()){
+			var changes = null;
+			
 			if(selectionMode === ui5strap.SelectionMode.Single){
-				if(_this.setSelectedControl(listItem)){
-					eventOptions.selectionSource = _this;
-				
-					_this.fireSelect(eventOptions);
-				}
+				changes = _this.setSelection(item);
 			}
-			else if(selectionMode === ui5strap.SelectionMode.SingleMaster){
-				if(_this.setSelectedControl(listItem)){
-					eventOptions.selectionSource = _this;
-					
-					_setMasterSelected(_this, item, eventOptions);
-				}
+			
+			if(changes && changes.changed.length){
+				eventOptions.selectionChanges = changes;
+				
+				//Select event is deprecated
+				_this.fireSelect(eventOptions);
 			}
-			else if(selectionMode === ui5strap.SelectionMode.Master){
-				
-				eventOptions.selectionSource = _this;
-				
-				_setMasterSelected(_this, listItem, eventOptions);
+			else{
+				jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
 			}
 		}
 		else{
@@ -10474,23 +10875,90 @@
 		return eventOptions;
 	};
 	
-	/*
-	 * HANDLE UI EVENTS
-	 */
 	
+	//Touchscreen
 	if(ui5strap.options.enableTapEvents){
+		/**
+		 * @Public
+		 * @Override
+		 */
 		ListBaseProto.ontap = function(oEvent){
-			oEvent.stopPropagation();
-			this.fireTap(_processSelection(this, oEvent));
+			var eventOptions = _processSelection(this, oEvent);
+			//if(eventOptions.item.getEnabled()){
+				oEvent.stopPropagation();
+				this.fireTap(eventOptions);
+			//}
 		};
 	}
 
+	//Mouse
 	if(ui5strap.options.enableClickEvents){
+		/**
+		 * @Public
+		 * @Override
+		 */
 		ListBaseProto.onclick = function(oEvent){
 			oEvent.stopPropagation();
 			this.fireTap(_processSelection(this, oEvent));
 		};
 	}
+	
+	/*
+	 * ----------
+	 * DEPRECATED
+	 * ----------
+	 */
+	
+	/**
+	 * Set list item selected by index
+	 * @deprecated
+	 */
+	ListBaseProto.setSelectedIndex = function(itemIndex){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
+		
+		return this.setSelectionIndices(itemIndex);
+	};
+ 
+	/**
+	 * Get index of selected index
+	 * @deprecated
+	 */
+	ListBaseProto.getSelectedIndex = function(){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
+		
+		return this.getSelectionIndices();
+	};
+
+	
+	/**
+	 * Set control selected by reference
+	 * @deprecated
+	 */
+	ListBaseProto.setSelectedControl = function(item){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedControl is deprecated! Use .setSelection instead.");
+	
+		return this.setSelection(item);
+	};
+	
+	/**
+	 * Get selected list item control
+	 * @deprecated
+	 */
+	ListBaseProto.getSelectedControl = function(){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedControl is deprecated! Use .getSelection instead.");
+		
+		return this.getSelection();
+	};
+	
+	/**
+	 * Select by custom data value
+	 * @deprecated
+	 */
+	ListBaseProto.setSelectedCustom = function(dataKey, value){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedCustom is deprecated! Use .setSelectionByCustomData instead.");
+		
+		return this.setSelectionByCustomData(dataKey, value);
+	};
 
 }());;/*
  * 
@@ -12905,7 +13373,7 @@
 			}
 		}
 		
-		menu.setSelectedControl(selectedItem);
+		menu.setSelection(selectedItem);
 	};
 
 }());;/*
@@ -14280,6 +14748,8 @@
 
 			library : "ui5strap",
 			
+			defaultAggregation : "items",
+			
 			properties : { 
 				"inverse" : {
 					type:"boolean", 
@@ -14337,6 +14807,8 @@
 		}
 	});
 	
+	var BarMenuProto = ui5strap.BarMenu.prototype;
+	
 }());;/*
  * 
  * UI5Strap
@@ -14389,7 +14861,7 @@
 	/**
 	 * TODO More efficient rerendering
 	 */
-	ui5strap.BarMenuItem.prototype.setText = function(newText, suppressInvalidate){console.log(newText);
+	ui5strap.BarMenuItem.prototype.setText = function(newText, suppressInvalidate){
 		this.setProperty('text', newText, suppressInvalidate);
 	};
 
@@ -14821,7 +15293,7 @@
 							"transitionSpeed" : this.getBarTransitionSpeed().toLowerCase(),
 							"$current" : newBarVisible ? null : $target, 
 							"$next" : newBarVisible ? $target : null , 
-							"id" : 'x'
+							"id" : 'bar-navcontainer-bar-change'
 						}
 					),
 					transitionComplete = function (){
@@ -15069,11 +15541,22 @@
 	ui5strap.ListBase.extend("ui5strap.Breadcrumb", {
 		metadata : {
 
-			library : "ui5strap"
+			library : "ui5strap",
+			
+			defaultAggregation : "items",
+			
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "item"
+				} 
+			}
 			
 		}
 	});
-
+	
+	var BreadcrumbProto = ui5strap.Breadcrumb.prototype;
+	
 }());;/*
  * 
  * UI5Strap
@@ -15436,8 +15919,9 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 
 	jQuery.sap.declare("ui5strap.ButtonGroup");
 	jQuery.sap.require("ui5strap.library");
+	jQuery.sap.require("ui5strap.ListBase");
 	
-	sap.ui.core.Control.extend("ui5strap.ButtonGroup", {
+	ui5strap.ListBase.extend("ui5strap.ButtonGroup", {
 		metadata : {
 
 			defaultAggregation : "buttons",
@@ -15453,10 +15937,6 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 					type: "ui5strap.ButtonGroupType", 
 					defaultValue: ui5strap.ButtonGroupType.Default
 				},
-				selectionMode : {
-					type : "ui5strap.SelectionMode",
-					defaultValue : ui5strap.SelectionMode.None
-				},
 				align : {
 					type:"ui5strap.Alignment",
 					defaultValue:ui5strap.Alignment.Default
@@ -15465,148 +15945,64 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 					
 			aggregations : { 
 				buttons : {
-					singularName: "buttons"
+					singularName: "button"
 				} 
 			},
 
 			events:{
-		        tap : {},
-		        select : {}
+				select : {
+					parameters : {
+						listItem : {type : "ui5strap.Button"},
+						button : {type : "ui5strap.Button"},
+						srcControl : {type : "ui5strap.Control"}
+					}
+				},
+				tap : {
+					parameters : {
+						listItem : {type : "ui5strap.Button"},
+						button : {type : "ui5strap.Button"},
+						srcControl : {type : "ui5strap.Control"}
+					}
+				}
 		    }
 		}
 	});
 
 	var ButtonGroupProto = ui5strap.ButtonGroup.prototype;
-
-	/*
-	 * START implementation of Selectable interface
-	 */
 	
 	/**
-	 * Set button selected by index
+	 * @Protected
+	 * @Override
 	 */
-	ButtonGroupProto.setSelectedIndex = function(itemIndex){
-
-		var items = this.getButtons();
-		if(itemIndex < 0 || itemIndex >= items.length){
-			return false;
-		}
-		
-		return this.setSelectedControl(items[itemIndex]);
-
-	};
-
-	/**
-	 * Get index of selected button
-	 */
-	ButtonGroupProto.getSelectedIndex = function(){
-		var items = this.getButtons();
-		for(var i = 0; i < items.length; i++){
-			if(items[i].getSelected()){
-				return i;
-			}
-		}
-		return -1;
-	};
-
-	/**
-	 * Set button selected by reference
-	 */
-	ButtonGroupProto.setSelectedControl = function(item){
-		var items = this.getButtons(),
-			changed = false;
-		for(var i = 0; i < items.length; i++){
-			if(item && items[i] === item){
-				if(!item.getSelected()){
-					changed = true;
-					items[i].setSelected(true);
-				}
-			}
-			else{
-				items[i].setSelected(false);
-			}
-		}
-		
-		return changed;
+	ButtonGroupProto._getItems = function(){
+		return this.getButtons();
 	};
 	
 	/**
-	 * Get selected button control
+	 * @Protected
+	 * @Override
 	 */
-	ButtonGroupProto.getSelectedControl = function(){
-		var items = this.getButtons();
-		for(var i = 0; i < items.length; i++){
-			if(items[i].getSelected()){
-				return items[i];
-			}
-		}
-		return null;
+	ButtonGroupProto._findClosestItem = function(srcControl){
+		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.Button);
 	};
 	
 	/**
-	 * Select by custom data value
+	 * @Public
+	 * @Override
 	 */
-	ButtonGroupProto.setSelectedCustom = function(dataKey, value){console.log(dataKey, value);
-		items = this.getButtons(),
-			selectedItem = null;
-		
-		for(var i = 0; i < items.length; i++){
-			if(items[i].data(dataKey) === value){
-				selectedItem = items[i];
-				break;
-			}
-		}
-		
-		this.setSelectedControl(selectedItem);
+	ButtonGroupProto.getItemIndex = function(item){
+		return this.indexOfAggregation("buttons", item);
 	};
-	
-	/*
-	 * END implementation of Selectable interface
-	 */
 	
 	/**
-	 * @Private
+	 * @Protected
+	 * @Override
 	 */
-	var _processSelection = function(_this, oEvent){
-		var srcControl = oEvent.srcControl,
-			selectionMode = _this.getSelectionMode(),
-			eventOptions = {
-				srcControl : srcControl,
-				button : ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.Button)
-			};
-		
-		if(eventOptions.button){
-			if(selectionMode === ui5strap.SelectionMode.Single){
-				if(_this.setSelectedControl(eventOptions.button)){
-					//TODO is this needed for Button Group?
-					eventOptions.selectionSource = _this;
-				
-					_this.fireSelect(eventOptions);
-				}
-			}
-		}
-		else{
-			jQuery.sap.log.warning("Could not select button: not found.");
-		}
-
-		return eventOptions;
-	};
-
-	/*
-	 * UI EVENTS
-	 */
-	
-	if(ui5strap.options.enableTapEvents){
-		ButtonGroupProto.ontap = function(oEvent){
-			this.fireTap(_processSelection(this, oEvent));
+	ButtonGroupProto._getEventOptions = function(item){
+		return {
+			button : item
 		};
-	}
-
-	if(ui5strap.options.enableClickEvents){
-		ButtonGroupProto.onclick = function(oEvent){
-			this.fireTap(_processSelection(this, oEvent));
-		};
-	}
+	};
 
 }());;/*
  * 
@@ -15823,66 +16219,71 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	sap.ui.core.Control.extend("ui5strap.Carousel", {
 		metadata : {
 
-			// ---- object ----
 			defaultAggregation : "items",
-			// ---- control specific ----
+			
 			library : "ui5strap",
+			
+			//Properties
 			properties : { 
 				index : {
 					type:"int", defaultValue : 0
 				},
-        swipe : {
-          type:"boolean", defaultValue : true
-        },
+		        swipe : {
+		            type:"boolean", defaultValue : true
+		        },
 				controls : {
 					type:"boolean", defaultValue : true
 				},
 				pagination : {
 					type:"boolean", defaultValue : true
 				},
-        innerAlign : {
-          type:"ui5strap.Alignment",
-          defaultValue : ui5strap.Alignment.CenterBlock
-        },
-        innerOverflow : {
-            type:"ui5strap.Visibility",
-            defaultValue : ui5strap.Visibility.Visible
-        },
-        label : {
-          type:"string", defaultValue : ""
-        },
-        columnsExtraSmall : {
-          type:"int", defaultValue:-1
-        },
-        columnsSmall : {
-          type:"int", defaultValue:-1
-        },
-        columnsMedium : {
-          type:"int", defaultValue:-1
-        },
-        columnsLarge : {
-          type:"int", defaultValue:-1
-        },
-        speed : {
-          type:"float", defaultValue : 0.5
-        },
-        cycle : {
-          type:"boolean",
-          defaultValue : false
-        },
-        interval : {
-          type:"int", defaultValue : 0
-        }
+		        innerAlign : {
+			        type: "ui5strap.Alignment",
+			        defaultValue : ui5strap.Alignment.CenterBlock
+		        },
+		        innerOverflow : {
+		            type: "ui5strap.CarouselOverflow",
+		            defaultValue : ui5strap.CarouselOverflow.Visible
+		        },
+		        label : {
+		            type:"string", defaultValue : ""
+		        },
+		        columnsExtraSmall : {
+		            type:"int", defaultValue:-1
+		        },
+		        columnsSmall : {
+		            type:"int", defaultValue:-1
+		        },
+		        columnsMedium : {
+		            type:"int", defaultValue:-1
+		        },
+		        columnsLarge : {
+		            type:"int", defaultValue:-1
+		        },
+		        speed : {
+		            type:"float", defaultValue : 0.5
+		        },
+		        cycle : {
+		            type:"boolean",
+		            defaultValue : false
+		        },
+		        interval : {
+		            type:"int", defaultValue : 0
+		        }
 			},
+			
+			//Aggregations
 			aggregations : {
 
 				"items" : {},
-        "content" : {}
+				"content" : {}
 
 			},
+			
+			//Events
 			events : {
 				"change" : {},
-        "changed" : {}
+				"changed" : {}
 			}
 
 		}
@@ -15918,7 +16319,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
     if(!ui5strap.support.transitionEndEvent){
       throw new Error('ui5strap.Carousel requires "transitionEndEvent" support.');
     }
-	};
+  };
 
   CarouselProto._cssClasses = function(){
       var cssClasses = "carousel carousel-advanced",
@@ -15943,7 +16344,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
       cssClasses += " carousel-xs-" + columsExtraSmall;
     }
 
-    cssClasses += " carousel-overflow-" + ui5strap.BSVisibility[this.getInnerOverflow()];
+    cssClasses += " carousel-overflow-" + this.getInnerOverflow().toLowerCase();
     cssClasses += " carousel-align-" + ui5strap.BSAlignment[this.getInnerAlign()];
        cssClasses += " carousel-current-" + newIndex;
       if(newIndex === 0){
@@ -18319,18 +18720,28 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		metadata : {
 
 			library : "ui5strap",
-
+			
+			defaultAggregation : "items",
+			
 			properties : { 
 				type : {
 					type:"ui5strap.ListType", 
 					defaultValue:ui5strap.ListType.Unordered
 				}
+			},
+			
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "item"
+				} 
 			}
 
 		}
 	});
 
-
+	var ListProto = ui5strap.List.prototype;
+	
 }());;/*
  * 
  * UI5Strap
@@ -18531,19 +18942,28 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		metadata : {
 
 			library : "ui5strap",
-
+			
+			defaultAggregation : "items",
+			
 			properties : {
 				updateMasterText : {
 					type : "boolean",
 					defaultValue : false
 				}
+			},
+	
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "item"
+				} 
 			}
 
 		}
 	});
 
 	var ListDropdownMenuProto = ui5strap.ListDropdownMenu.prototype;
-
+	
 	ListDropdownMenuProto.setMasterSelected = function(listItem){ 
 		ui5strap.ListBase.prototype.setMasterSelected.call(this, listItem);
 		
@@ -18695,6 +19115,8 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 
 			library : "ui5strap",
 			
+			defaultAggregation : "items",
+			
 			properties : { 
 				listMode : {
 					type:"ui5strap.ListGroupMode", 
@@ -18711,7 +19133,9 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 
 		}
 	});
-
+	
+	var ListGroupProto = ui5strap.ListGroup.prototype;
+	
 }());;/*
  * 
  * UI5Strap
@@ -18801,17 +19225,17 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 	ui5strap.ListBase.extend("ui5strap.ListMedia", {
 		metadata : {
 
-			// ---- object ----
+			library : "ui5strap",
+			
 			defaultAggregation : "items",
 			
-			// ---- control specific ----
-			library : "ui5strap",
 			properties : { 
 				container : {
 					type:"boolean", 
 					defaultValue:false
 				}
 			},
+			
 			aggregations : { 
 				items : {
 					type : "ui5strap.ListMediaItem",
@@ -18821,7 +19245,9 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 
 		}
 	});
-
+	
+	var ListMediaProto = ui5strap.ListMedia.prototype;
+	
 }());;/*
  * 
  * UI5Strap
@@ -19505,7 +19931,9 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 		metadata : {
 
 			library : "ui5strap",
-
+			
+			defaultAggregation : "items",
+			
 			properties : { 
 				type : {
 					type:"ui5strap.NavType", 
@@ -19515,13 +19943,20 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 					type:"ui5strap.Alignment",
 					defaultValue:ui5strap.Alignment.Default
 				}
+			},
+			
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "item"
+				} 
 			}
 
 		}
 	});
 
 	var NavProto = ui5strap.Nav.prototype;
-
+	
 }());;/*
  * 
  * UI5Strap
@@ -20611,13 +21046,24 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
 		metadata : {
 
 			library : "ui5strap",
-
+			
+			defaultAggregation : "items",
+			
 			properties : { 
 				
+			},
+			
+			aggregations : { 
+				items : {
+					type : "ui5strap.ListItem",
+					singularName: "item"
+				} 
 			}
 		}
 	});
-
+	
+	var PaginationProto = ui5strap.Pagination.prototype;
+	
 }());;/*
  * 
  * UI5Strap
@@ -22306,9 +22752,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.TabContainer");
-
-	sap.ui.core.Control.extend("ui5strap.TabContainer", {
+	jQuery.sap.require("ui5strap.library");
+	
+	ui5strap.Control.extend("ui5strap.TabContainer", {
 		metadata : {
+			interfaces : ["ui5strap.ISelectionProvider"],
 
 			// ---- object ----
 			defaultAggregation : "panes",
@@ -22317,23 +22765,33 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 			library : "ui5strap",
 
 			properties : { 
-				listenTo : {
+				
+				selectedIndex : {
+					type : "int",
+					defaultValue : 0
+				},
+				
+				transition : {
+					type : "string",
+					defaultValue : "fade"
+				},
+				
+				animate : {
+					deprecated : true,
+			        type:"boolean", 
+			        defaultValue:true
+			    },
+				"listenTo" : {
+					deprecated : true,
 					type : "string",
 					defaultValue : "select",
 					bindable : false
 				},
-				animate : {
-		          type:"boolean", 
-		          defaultValue:true
-		        }, 
-				customAssociation : {
+				"customAssociation" : {
+					deprecated : true,
 					type : "string",
 					defaultValue : "",
 					bindable : false
-				},
-				selectedIndex : {
-					type : "int",
-					defaultValue : 1
 				}
 			},
 			
@@ -22342,9 +22800,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 					singularName: "pane"
 				}
 			},
-
-			associations : {
+			
+			"associations" : {
 				"source" : {
+					"deprecated" : true,
+					"type" : "ui5strap.ISelectionProvider",
 					multiple : false
 				}
 			}
@@ -22352,73 +22812,125 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		}
 	});
 
-	var TabContainer = ui5strap.TabContainer;
+	var TabContainerProto = ui5strap.TabContainer.prototype;
+	
+	/**
+	 * @Public
+	 */
+	TabContainerProto.onBeforeRendering= function(){
+  		var _this = this;
+  		
+  		if(!this.sourceControl){
+  			jQuery.sap.log.warning("Usage of ui5strap.TabContainer.prototype.getSource is deprecated. Please use actions instead.")
+			this.sourceControl = sap.ui.getCore().byId(this.getSource());
+		    
+			this.sourceControl.attachEvent(this.getListenTo(), {}, function(oEvent){
+				
+				_this.synchronize();
+				
+			});
 
-	TabContainer.prototype.init = function(){
-		this.sourceControl = null;
+			this.synchronize();
+		}
+	};
+	
+	/**
+	 * @Public
+	 * @deprecated
+	 */
+	TabContainerProto.synchronize = function(){
+  		var customAssociation = this.getCustomAssociation();
+  		if(!customAssociation){
+			this.setSelectedIndex(this.sourceControl.getSelectionIndex(), true);
+		}
+		else{
+			var panes = this.getPanes();
+			
+			for(var i = 0; i < panes.length; i++){
+				if(this.sourceControl.getSelection().data(customAssociation) === panes[i].data(customAssociation)){
+					this.setSelectedIndex(i, true);
+					break;
+				}
+			}
+		}
+	};
+	
+	
+
+	
+	
+	/**
+	 * @Public
+	 */
+	TabContainerProto.showSelectedPane = function($next){
+		var _this = this,
+			$current = this.$().find('> .active'),
+			transition = new ui5strap.ResponsiveTransition(
+				{
+					"$current" : $current, 
+					"$next" : $next, 
+					"id" : 'tab-container-page-change',
+					"transitionAll" : this.getTransition()
+				}
+			),
+			transitionNextComplete = function (){
+				$next.attr("class", "tab-pane active");
+			},
+			transitionCurrentComplete = function (){
+				$current.attr("class", "tab-pane ui5strap-hidden");
+			};
+		
+		//RAF start
+		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+			
+			//Prepare Transition
+			transition.prepare();
+			
+			$next.addClass("active");
+			
+			//RAF
+			ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+				//Execure Transition
+				transition.execute(transitionCurrentComplete, transitionNextComplete);
+			});
+	
+		});
 	};
 
-	  TabContainer.prototype.onAfterRendering= function(){
-	  	var _this = this;
-			var sourceControl = this.getSourceControl();
-			if(typeof sourceControl !== 'undefined'){
-				sourceControl.attachEvent(this.getListenTo(), {}, function(oEvent){
-					
-					_this.synchronize(oEvent.getParameter('selectionSource'));
-					
-				});
-
-				this.synchronize(sourceControl);
-			}
-	  };
-
-	  TabContainer.prototype.synchronize = function(srcControl){
-	  		var customAssociation = this.getCustomAssociation();
-	  		if('' === customAssociation){
-				this.setSelectedIndex(srcControl.getSelectedIndex());
-			}
-			else{
-				var relatedId = srcControl.getSelectedControl().data(customAssociation);
-				this.setSelectedControlById(relatedId);
-			}
-	  };
-
-	  TabContainer.prototype.getSourceControl = function(){
-	      if(null === this.sourceControl){
-	        this.sourceControl = sap.ui.getCore().byId(this.getSource());
-	        
-	      }
-
-	      return this.sourceControl;
-	  };
-
-	  TabContainer.prototype.getSourceDomRef = function(){
-	      return this.getSourceControl().$();
-	  };
-
-	TabContainer.prototype.setSelectedIndex = function(newIndex){
+	/**
+	 * @Public
+	 * @Override
+	 */
+	TabContainerProto.setSelectedIndex = function(newIndex, suppressInvalidate){
 		if(this.getDomRef()){
 			
 			this.setProperty('selectedIndex', newIndex, true);
 
-			this.setSelectedPane(this.$().find('.tab-pane').eq(newIndex));
+			this.showSelectedPane(this.$().find('.tab-pane').eq(newIndex));
 		}
 		else{
-			this.setProperty('selectedIndex', newIndex);
+			this.setProperty('selectedIndex', newIndex, suppressInvalidate);
 		}
 	};
-
-	TabContainer.prototype.setSelectedControlById = function(controlId){
-		this.setSelectedPane(this.$().find('#' + this.getId() + '---' + controlId));
-	};
-
-	TabContainer.prototype.setSelectedPane = function($pane){
-		var $active = this.$getSelectedPane(),
+	
+	/*
+	 * ----------
+	 * DEPRECATED
+	 * ----------
+	 */
+	
+	/**
+	 * @Public
+	 * @deprecated
+	 */
+	TabContainerProto.setSelectedPane = function($pane){
+		var $active = this.$().find('> .active'),
 			_this = this;
 
-			if($active.attr('data-pane-index') === $pane.attr('data-pane-index') || $pane.length === 0){
-				return;
-			}
+		if($active.attr('data-pane-index') === $pane.attr('data-pane-index') || $pane.length === 0){
+			return;
+		}
+		
 		//this.$().find('.tab-pane').attr('class', 'tab-pane fade');
 		var transition = $.support.transition
       					&& $active.hasClass('fade');
@@ -22436,19 +22948,28 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 
         $active.removeClass('in');
 	};
-
-	TabContainer.prototype.$getSelectedPane = function(){
-		return this.$().find('> .active');
+	
+	/**
+	 * @Public
+	 * @deprecated
+	 */
+	TabContainerProto.getSelectedControl = function(){
+		return this.getPanes()[this.getSelectedIndex()];
 	};
 
-	TabContainer.prototype.getSelectedControl = function(){
-		var selectedIndex = this.$getSelectedPane().attr('data-pane-index');
-
-		return this.getPanes()[selectedIndex];
-	};
-
-	TabContainer.prototype.setSelectedControl = function(pane){
-		this.setSelectedControlById(pane.getId());
+	/**
+	 * @Public
+	 * @deprecated
+	 */
+	TabContainerProto.setSelectedControl = function(pane, suppressInvalidate){
+		var panes = this.getPanes();
+		
+		for(var i = 0; i < panes.length; i++){
+			if(panes[i].getId() === pane.getId()){
+				this.setSelectedIndex(i, suppressInvalidate);
+				break;
+			}
+		}
 	};
 
 }());;/*
@@ -22492,22 +23013,25 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('tab-content')
+		rm.addClass('tab-content u5sl-tab-content')
 		rm.writeClasses();
 		rm.write(">");
 		
 		for(var i = 0; i < content.length; i++){ 
 			var item = content[i];
-			var paneId = i;
-			if('' !== customAssociation){
-				paneId = item.data(customAssociation);
-			}
-
-			rm.write('<div id="' + oControl.getId() + '---' + paneId + '"');
+			
+			rm.write('<div role="tabpanel"');
+			
 			rm.writeAttribute('data-pane-index', i);
+			if(customAssociation){
+				rm.writeAttribute('data-pane-key', item.data(customAssociation));
+			}
 			rm.addClass('tab-pane');
 			if(selectedIndex > -1 && i === selectedIndex){
 				rm.addClass('active');
+			}
+			else{
+				rm.addClass('ui5strap-hidden');
 			}
 			rm.writeClasses();
 			rm.write(">");
