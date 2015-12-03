@@ -35,7 +35,10 @@
 				tagName : "div",
 				className : null
 			},
-			Page : {
+			
+			//Bootstrap container and container-fluid
+			//container-inset is an additional class that adds padding-top and padding-bottom
+			Fixed : {
 				tagName : "div",
 				className : "container"
 			},
@@ -43,10 +46,12 @@
 				tagName : "div",
 				className : "container-fluid"
 			},
-			FluidInset : {
+			Full : {
 				tagName : "div",
-				className : "container-fluid container-inset"
+				className : "container-full"
 			},
+			
+			//Bootstrap Components
 			Jumbotron : {
 				tagName : "div",
 				className : "container-jumbotron jumbotron"
@@ -63,23 +68,30 @@
 				tagName : "div",
 				className : "container-page-header page-header"
 			},
+			
+			
+			
+			//Deprecated
 			Section : {
 				tagName : "section",
 				className : "container-section"
 			},
-			
-			
-			//Deprecated
+			Page : {
+				tagName : "div",
+				className : "container"
+			},
+			FluidInset : {
+				tagName : "div",
+				className : "container-fluid container-inset"
+			},
 			Paragraph : {
 				tagName : "div",
 				className : "container-paragraph"
 			},
-			//Deprecated
 			Phrasing : {
 				tagName : "div",
 				className : "container-phrasing"
 			},
-			//Deprecated
 			Floating : {
 				tagName : "div",
 				className : "container-floating"

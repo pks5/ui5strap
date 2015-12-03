@@ -849,17 +849,26 @@
 	jQuery.sap.declare("ui5strap.ContainerType");
 
 	ui5strap.ContainerType = {
+		//Plain HTML <div>
 		Default : "Default",
-		Page : "Page",
+		
+		//Bootstrap "container" & "container-fluid"
+		Fixed : "Fixed",
 		Fluid : "Fluid",
-		FluidInset : "FluidInset",
+		Full : "Full",
+		
+		//Bootstrap styles
 		Jumbotron : "Jumbotron",
 		Well : "Well",
 		WellLarge : "WellLarge",
 		PageHeader : "PageHeader",
+		
+		//Deprecated
+		Section : "Section",
+		Page : "Page",
+		FluidInset : "FluidInset",
 		Paragraph : "Paragraph",
 		Floating : "Floating",
-		Section : "Section",
 		Phrasing : "Phrasing"
 	};
 

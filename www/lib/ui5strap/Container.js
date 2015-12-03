@@ -43,14 +43,22 @@
 						type:"ui5strap.ContainerType", 
 						defaultValue: ui5strap.ContainerType.Default
 					},
+					
 					severity : {
 						type: "ui5strap.Severity", 
 						defaultValue: ui5strap.Severity.None
 					},
+					
 					align : {
 						type : "ui5strap.Alignment",
 						defaultValue : ui5strap.Alignment.Default
 					},
+					
+					html : {
+						type : "string",
+						defaultValue : ""
+					},
+					
 					visibility : {
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
@@ -74,10 +82,6 @@
 					invisible : {
 						type : "boolean",
 						defaultValue : false
-					},
-					html : {
-						type : "string",
-						defaultValue : ""
 					}
 			},
 			aggregations : { 

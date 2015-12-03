@@ -9076,6 +9076,11 @@ a {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+.container-full {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+}
 /*
 * List Group
 */
