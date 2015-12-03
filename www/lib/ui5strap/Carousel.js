@@ -62,18 +62,24 @@
 		        label : {
 		            type:"string", defaultValue : ""
 		        },
+		        //TODO rename to columns
 		        columnsExtraSmall : {
 		            type:"int", defaultValue:-1
 		        },
+		        //TODO rename to columnsSmallUp
 		        columnsSmall : {
 		            type:"int", defaultValue:-1
 		        },
+		        //TODO rename to columnsMediumUp
 		        columnsMedium : {
 		            type:"int", defaultValue:-1
 		        },
+		        //TODO rename to columnsLargeUp
 		        columnsLarge : {
 		            type:"int", defaultValue:-1
 		        },
+		        //TODO add columnsExtraLarge on Bootstrap 4 Upgrade
+		        
 		        speed : {
 		            type:"float", defaultValue : 0.5
 		        },

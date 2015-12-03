@@ -15,6 +15,15 @@
 						>
 							<div data-sap-ui-type="ui5strap.Icon" data-icon="home"></div>
 						</div>
+						<div data-sap-ui-type="ui5strap.Container" data-type="Text" data-visibility-small="Hidden">
+							<div 
+							data-sap-ui-type="ui5strap.Button" 
+							data-tap="__execute" 
+							data-custom-data:__action="ui5strap.demoapp.actions.ToggleBarMenuRoot"
+							>
+								<div data-sap-ui-type="ui5strap.Icon" data-icon="columns"></div>
+							</div>
+						</div>
 					</div>
 					
 					<!-- Middle area of bar -->
@@ -23,12 +32,14 @@
 					</div>
 					
 					<div data-sap-ui-aggregation="right">
-						<div 
-						data-sap-ui-type="ui5strap.Button" 
-						data-tap="__execute" 
-						data-custom-data:__action="ui5strap.demoapp.actions.ToggleBarMenuRoot"
-						>
-							<div data-sap-ui-type="ui5strap.Icon" data-icon="columns"></div>
+						<div data-sap-ui-type="ui5strap.Container" data-type="Text" data-visibility-small="Visible">
+							<div 
+							data-sap-ui-type="ui5strap.Button" 
+							data-tap="__execute" 
+							data-custom-data:__action="ui5strap.demoapp.actions.ToggleBarMenuRoot"
+							>
+								<div data-sap-ui-type="ui5strap.Icon" data-icon="columns"></div>
+							</div>
 						</div>
 					</div>
 				</div>

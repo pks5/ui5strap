@@ -39,50 +39,62 @@
 			defaultAggregation : "items",
 			
 			properties : { 
-				"inverse" : {
+				inverse : {
 					type:"boolean", 
 					defaultValue:false
 				},
 				
-				"zoomExtraSmall" : {
+				//TODO rename to zoom
+				zoomExtraSmall : {
 					type:"int",
 					defaultValue : 0
 				},
 				
+				//TODO rename to zoomSmallUp
 				zoomSmall : {
 					type : "int",
 					defaultValue : 0
 				},
 				
+				//TODO rename to zoomMediumUp
 				zoomMedium : {
 					type : "int",
 					defaultValue : 0
 				},
 				
+				//TODO rename to zoomLargeUp
 				zoomLarge : {
 					type : "int",
 					defaultValue : 0
 				},
 				
+				//TODO add zoomExtraLarge on Bootstrap 4 Upgrade
+				
+				//TODO rename to type
 				typeExtraSmall : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.ListVertical
 				},
 				
+				//TODO rename to typeSmallUp
 				typeSmall : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.Default
 				},
 				
+				//TODO rename to typeMediumUp
 				typeMedium : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.Default
 				},
 				
+				//TODO rename to typeLargeUp
 				typeLarge : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.Default
 				}
+				
+				//TODO add typeExtraLarge on Bootstrap 4 Upgrade
 			},
 			
 			aggregations : { 

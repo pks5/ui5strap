@@ -41,6 +41,9 @@
 					defaultValue : true
 				},
 				
+				//Bar Mode DOES NOT inherit from smaller sizes
+				//TODO add barMode for all sizes?
+				
 				barModeExtraSmall : {
 					type : "ui5strap.BarNavContainerMode",
 					defaultValue : ui5strap.BarNavContainerMode.Intrude
@@ -57,23 +60,33 @@
 					type : "ui5strap.BarNavContainerMode",
 					defaultValue : ui5strap.BarNavContainerMode.Intrude
 				},
+				//TODO add barModeExtraLarge on Bootstrap 4 Upgrade
 				
+				//Bar Size DOES inherit from smaller sizes
+				//TODO rename to barSize
 				barSizeExtraSmall : {
 					type : "int",
 					defaultValue : -1
 				},
+				//TODO rename to barSizeSmallUp
 				barSizeSmall : {
 					type : "int",
 					defaultValue : -1
 				},
+				//TODO rename to barSizeMediumUp
 				barSizeMedium : {
 					type : "int",
 					defaultValue : -1
 				},
+				//TODO rename to barSizeLargeUp
 				barSizeLarge : {
 					type : "int",
 					defaultValue : -1
 				},
+				//TODO Add barSizeExtraLarge on Bootstrap 4 Upgrade
+				
+				//Bar placement DOES NOT inherit from smaller sizes
+				//TODO add barPlacement for all sizes?
 				
 				barPlacementExtraSmall : {
 					type : "ui5strap.BarNavContainerPlacement",
@@ -91,6 +104,10 @@
 					type : "ui5strap.BarNavContainerPlacement",
 					defaultValue : ui5strap.BarNavContainerPlacement.Left
 				},
+				//TODO add barPlacementExtraLarge on Bootstrap 4 Upgrade
+				
+				//Bar Transition DOES NOT inherit from smaller sizes
+				//TODO add barTransition for all sizes?
 				
 				barTransitionExtraSmall : {
 					type : "string",
@@ -108,6 +125,7 @@
 					type : "string",
 					defaultValue : ""
 				},
+				//TODO add barTransitionExtraLarge on Bootstrap 4 Upgrade
 				
 				barTransitionSpeed : {
 					type : "ui5strap.TransitionSpeed",
