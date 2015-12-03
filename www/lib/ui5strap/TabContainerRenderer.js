@@ -39,7 +39,7 @@
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('tab-content')
+		rm.addClass('tab-content u5sl-tab-content')
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -55,6 +55,9 @@
 			rm.addClass('tab-pane');
 			if(selectedIndex > -1 && i === selectedIndex){
 				rm.addClass('active');
+			}
+			else{
+				rm.addClass('ui5strap-hidden');
 			}
 			rm.writeClasses();
 			rm.write(">");

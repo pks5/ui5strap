@@ -8990,6 +8990,17 @@ a {
   cursor: pointer;
 }
 /*
+ * Tab Container
+ */
+.tab-content.u5sl-tab-content {
+  position: relative;
+}
+.tab-content.u5sl-tab-content > .tab-pane {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+/*
 * Container
 */
 .container-floating {

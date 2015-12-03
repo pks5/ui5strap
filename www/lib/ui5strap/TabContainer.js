@@ -42,18 +42,23 @@
 
 			properties : { 
 				
-				animate : {
-		          type:"boolean", 
-		          defaultValue:true
-		        },
-		        
 				selectedIndex : {
 					type : "int",
 					defaultValue : 0
-				}
+				},
 				
-				,
+				transition : {
+					type : "string",
+					defaultValue : "fade"
+				},
+				
+				animate : {
+					deprecated : true,
+			        type:"boolean", 
+			        defaultValue:true
+			    },
 				"listenTo" : {
+					deprecated : true,
 					type : "string",
 					defaultValue : "select",
 					bindable : false
@@ -92,6 +97,7 @@
   		var _this = this;
   		
   		if(!this.sourceControl){
+  			jQuery.sap.log.warning("Usage of ui5strap.TabContainer.prototype.getSource is deprecated. Please use actions instead.")
 			this.sourceControl = sap.ui.getCore().byId(this.getSource());
 		    
 			this.sourceControl.attachEvent(this.getListenTo(), {}, function(oEvent){
@@ -106,6 +112,7 @@
 	
 	/**
 	 * @Public
+	 * @deprecated
 	 */
 	TabContainerProto.synchronize = function(){
   		var customAssociation = this.getCustomAssociation();
@@ -126,8 +133,71 @@
 	
 	
 
+	
+	
 	/**
 	 * @Public
+	 */
+	TabContainerProto.showSelectedPane = function($next){
+		var _this = this,
+			$current = this.$().find('> .active'),
+			transition = new ui5strap.ResponsiveTransition(
+				{
+					"$current" : $current, 
+					"$next" : $next, 
+					"id" : 'tab-container-page-change',
+					"transitionAll" : this.getTransition()
+				}
+			),
+			transitionNextComplete = function (){
+				$next.attr("class", "tab-pane active");
+			},
+			transitionCurrentComplete = function (){
+				$current.attr("class", "tab-pane ui5strap-hidden");
+			};
+		
+		//RAF start
+		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+			
+			//Prepare Transition
+			transition.prepare();
+			
+			$next.addClass("active");
+			
+			//RAF
+			ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+				//Execure Transition
+				transition.execute(transitionCurrentComplete, transitionNextComplete);
+			});
+	
+		});
+	};
+
+	/**
+	 * @Public
+	 * @Override
+	 */
+	TabContainerProto.setSelectedIndex = function(newIndex, suppressInvalidate){
+		if(this.getDomRef()){
+			
+			this.setProperty('selectedIndex', newIndex, true);
+
+			this.showSelectedPane(this.$().find('.tab-pane').eq(newIndex));
+		}
+		else{
+			this.setProperty('selectedIndex', newIndex, suppressInvalidate);
+		}
+	};
+	
+	/*
+	 * ----------
+	 * DEPRECATED
+	 * ----------
+	 */
+	
+	/**
+	 * @Public
+	 * @deprecated
 	 */
 	TabContainerProto.setSelectedPane = function($pane){
 		var $active = this.$().find('> .active'),
@@ -154,28 +224,6 @@
 
         $active.removeClass('in');
 	};
-
-	/**
-	 * @Public
-	 * @Override
-	 */
-	TabContainerProto.setSelectedIndex = function(newIndex, suppressInvalidate){
-		if(this.getDomRef()){
-			
-			this.setProperty('selectedIndex', newIndex, true);
-
-			this.setSelectedPane(this.$().find('.tab-pane').eq(newIndex));
-		}
-		else{
-			this.setProperty('selectedIndex', newIndex, suppressInvalidate);
-		}
-	};
-	
-	/*
-	 * ----------
-	 * DEPRECATED
-	 * ----------
-	 */
 	
 	/**
 	 * @Public

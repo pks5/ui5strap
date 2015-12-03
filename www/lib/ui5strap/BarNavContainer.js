@@ -259,7 +259,7 @@
 							"transitionSpeed" : this.getBarTransitionSpeed().toLowerCase(),
 							"$current" : newBarVisible ? null : $target, 
 							"$next" : newBarVisible ? $target : null , 
-							"id" : 'x'
+							"id" : 'bar-navcontainer-bar-change'
 						}
 					),
 					transitionComplete = function (){
