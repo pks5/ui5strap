@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * LESS for ui5strap.Page controls
+ * LESS for Responsive Utilities
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -24,41 +24,53 @@
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-
-/*
-* TODO: add library prefix "u5sl-"
-*/
-
-/*
-* Page
-*/
-.page{
-  height:100%;
-  position: relative;
+ 
+ /**
+  * START BOOTSTRAP 4 FEATURE
+  * Will be available in Bootstrap 4 (!)
+  */
+.ui5strapMakeHideUpRule(@size){
+	.hide-@{size}-up{
+		display:none !important;
+	}	
 }
 
-.page-head{
-  position:absolute;
-  width:100%;
-  top:0;	
+.ui5strapMakeHideDownRule(@size){
+	.hide-@{size}-down{
+		display:none !important;
+	}	
 }
 
-.page-body{
-  width:100%;
-  height:100%;
-  position: relative;
+@media (max-width: @screen-xs) {
+	.ui5strapMakeHideDownRule(xs);
 }
 
-.page.page-with-head{
-	 padding-top: @bar-height;
+@media (max-width: @screen-sm) {
+	.ui5strapMakeHideDownRule(sm);
 }
 
-.page.page-with-footer{
-	padding-bottom: @bar-height;
+@media (max-width: @screen-md) {
+	.ui5strapMakeHideDownRule(md);
 }
 
-.page-footer{
-	position:absolute;
-	width:100%;
-	bottom:0;
+//Always hide if lg-down is specified
+.ui5strapMakeHideDownRule(lg);
+
+//Always hide if xs-up is specified
+.ui5strapMakeHideUpRule(xs);
+
+@media (min-width: @screen-sm) {
+	.ui5strapMakeHideUpRule(sm);
 }
+
+@media (min-width: @screen-md) {
+	.ui5strapMakeHideUpRule(md);
+}
+
+@media (min-width: @screen-lg) {
+	.ui5strapMakeHideUpRule(lg);
+}
+
+/**
+  * END BOOTSTRAP 4 FEATURE
+  */
