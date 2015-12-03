@@ -196,7 +196,7 @@
 		var transition = this.getBarTransitionSmall();
 		
 		if(!transition){
-			if(0 < this.getBarSizeSmall()){
+			if(-1 < this.getBarSizeSmall()){
 				//Get transition by placement
 				transition = this._getBarTransitionByPlacement(this.getBarPlacementSmall());
 			}
@@ -213,7 +213,7 @@
 		var transition = this.getBarTransitionMedium();
 		
 		if(!transition){
-			if(0 < this.getBarSizeMedium()){
+			if(-1 < this.getBarSizeMedium()){
 				//Get transition by placement
 				transition = this._getBarTransitionByPlacement(this.getBarPlacementMedium());
 			}
@@ -230,7 +230,7 @@
 		var transition = this.getBarTransitionLarge();
 		
 		if(!transition){
-			if(0 < this.getBarSizeLarge()){
+			if(-1 < this.getBarSizeLarge()){
 				//Get transition by placement
 				transition = this._getBarTransitionByPlacement(this.getBarPlacementLarge());
 			}
@@ -293,6 +293,8 @@
 						$target.attr('class', _this._getTargetClassString('bar'));
 							
 						_this.fireBarChanged();
+						
+						jQuery.sap.log.debug("[BarNavContainer] Transition complete.")
 					};
 				
 				//RAF start
@@ -348,19 +350,19 @@
 			
 		//Ensure that at least size xs is set
 		if(1 > columnsExtraSmall){
-			classes += " navcontainer-flag-col-xs-1";
+			classes += " navcontainer-flag-col-xs-0";
 		}
 		else{
 	      classes += " navcontainer-flag-col-xs-" + columnsExtraSmall;
 	    }
 		
-	    if(0 < columnsSmall){
+	    if(-1 < columnsSmall){
 	      classes += " navcontainer-flag-col-sm-" + columnsSmall;
 	    }
-	    if(0 < columnsMedium){
+	    if(-1 < columnsMedium){
 		  classes += " navcontainer-flag-col-md-" + columnsMedium;
 		}
-	    if(0 < columnsLarge){
+	    if(-1 < columnsLarge){
 	      classes += " navcontainer-flag-col-lg-" + columnsLarge;
 	    }
 		    

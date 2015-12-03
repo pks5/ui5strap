@@ -13447,6 +13447,254 @@ a {
   width: auto;
   height: auto;
 }
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-intrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-extrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-bar {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-bar {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-intrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-extrude > .navcontainer-target-content {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-intrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-extrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-bar {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: auto;
+  height: 0;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-bar {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: auto;
+  height: 0;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-intrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-extrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: auto;
+  height: 100%;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: auto;
+  height: 100%;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-intrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-extrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-bar {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 0;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-bar {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 0;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-intrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-extrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 100%;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 100%;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-intrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-extrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-bar {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: 0;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-bar {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: 0;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-intrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-extrude > .navcontainer-target-content {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-content {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
 @media (min-width: 768px) {
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
@@ -16417,6 +16665,254 @@ a {
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrude > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-extrude > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -19402,6 +19898,254 @@ a {
     width: auto;
     height: auto;
   }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-extrude > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-extrude > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
 }
 @media (min-width: 1200px) {
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
@@ -22373,6 +23117,254 @@ a {
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-lg-1.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-extrude > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-extrude > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;

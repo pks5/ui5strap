@@ -119,12 +119,14 @@
 	             "module" : "ui5strap.AppFrame",
 	             "navContainer" : "ui5strap.BarNavContainer",
 	             "navContainerOptions" : {
+	             	"barSizeExtraSmall" : 1,
 	             	"barPlacementExtraSmall" : "Top",
+	             	
 	             
 	             	"barSizeSmall" : 2,
 	             	"barPlacementSmall" : "Right",
 	             	
-	             	"barSizeMedium" : 2,
+	             	"barSizeMedium" : 0,
 	             	"barPlacementMedium" : "Bottom",
 	             	"barTransitionMedigum" : "none",
 	             	

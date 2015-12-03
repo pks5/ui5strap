@@ -101,6 +101,8 @@
 		.ui5strapSnapFullSize();
 	}
 	
+	//SPEED_NORMAL / Default
+	//Show to hide
 	& > .navcontainer-target-content{
 		position:absolute;
 		
@@ -109,24 +111,29 @@
 		.ui5strapTransitionAllSides((@transition-speed-normal * @transition-speed-fix-faster));
 	}
 	
+	//Hide to Show
 	&.navcontainer-flag-bar-hidden > .navcontainer-target-content{
 		.ui5strapTransitionAllSides((@transition-speed-normal * @transition-speed-fix-slower));
 	}
 	
-	//Slow
+	//SPEED_SLOW
+	//Show to hide
 	&.ui5strap-transition-speed-slow > .navcontainer-target-content{
 		.ui5strapTransitionAllSides((@transition-speed-slow * @transition-speed-fix-faster));
 	}
 	
+	//Hide to Show
 	&.navcontainer-flag-bar-hidden.ui5strap-transition-speed-slow > .navcontainer-target-content{
 		.ui5strapTransitionAllSides((@transition-speed-slow * @transition-speed-fix-slower));
 	}
 	
-	//Fast
+	//SPEED_FAST
+	//Show to hide
 	&.ui5strap-transition-speed-fast > .navcontainer-target-content{
 		.ui5strapTransitionAllSides((@transition-speed-fast * @transition-speed-fix-faster));
 	}
 	
+	//Hide to Show
 	&.navcontainer-flag-bar-hidden.ui5strap-transition-speed-fast > .navcontainer-target-content{
 		.ui5strapTransitionAllSides((@transition-speed-fast * @transition-speed-fix-slower));
 	}
@@ -137,7 +144,7 @@
 /*
 * RESPONSIVE Style
 */
-.makeBarNavContainerSize(@size, @fullWidth, @i) when (@i > 0) {
+.makeBarNavContainerSize(@size, @fullWidth, @i) when (@i >= 0) {
 	//Placement Left
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-left{
 		//Bar
@@ -297,16 +304,20 @@
 	.makeBarNavContainerSize(@size, @fullWidth, (@i - 1));
 }
 
+//SIZE_EXTRA_SMALL
 .makeBarNavContainerSize(xs, @screen-sm, @grid-columns);
 
+//SIZE_SMALL
 @media (min-width: @screen-sm) {
 	.makeBarNavContainerSize(sm, @screen-sm, @grid-columns);
 }
 
+//SIZE_MEDIUM
 @media (min-width: @screen-md) {
 	.makeBarNavContainerSize(md, @screen-md, @grid-columns);
 }
 
+//SIZE_LARGE
 @media (min-width: @screen-lg) {
 	.makeBarNavContainerSize(lg, @screen-lg, @grid-columns);
 }
