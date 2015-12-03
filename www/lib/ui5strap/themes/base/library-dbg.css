@@ -8988,9 +8988,9 @@ button.close {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-.ui5strap-hidden {
-  display: none !important;
-}
+/*
+ * Text align
+ */
 .ui5strap-text-align-left {
   text-align: left;
 }
@@ -9121,49 +9121,68 @@ a {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-/**
-  * START BOOTSTRAP 4 FEATURE
-  * Will be available in Bootstrap 4 (!)
+/*
+  * Hide
   */
+.ui5strap-hidden {
+  display: none !important;
+}
 @media (max-width: 480px) {
-  .hide-xs-down {
+  .ui5strap-hide-xs-down {
     display: none !important;
   }
 }
+@media (max-width: 767px) {
+  .ui5strap-hide-xs {
+    display: none !important;
+  }
+}
+.ui5strap-hide-xs-up {
+  display: none !important;
+}
 @media (max-width: 768px) {
-  .hide-sm-down {
+  .ui5strap-hide-sm-down {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .ui5strap-hide-sm {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .ui5strap-hide-sm-up {
     display: none !important;
   }
 }
 @media (max-width: 992px) {
-  .hide-md-down {
+  .ui5strap-hide-md-down {
     display: none !important;
   }
 }
-.hide-lg-down {
-  display: none !important;
-}
-.hide-xs-up {
-  display: none !important;
-}
-@media (min-width: 768px) {
-  .hide-sm-up {
+@media (min-width: 992px) and (max-width: 1199px) {
+  .ui5strap-hide-md {
     display: none !important;
   }
 }
 @media (min-width: 992px) {
-  .hide-md-up {
+  .ui5strap-hide-md-up {
+    display: none !important;
+  }
+}
+.ui5strap-hide-lg-down {
+  display: none !important;
+}
+@media (min-width: 1200px) {
+  .ui5strap-hide-lg {
     display: none !important;
   }
 }
 @media (min-width: 1200px) {
-  .hide-lg-up {
+  .ui5strap-hide-lg-up {
     display: none !important;
   }
 }
-/**
-  * END BOOTSTRAP 4 FEATURE
-  */
 /*
  * 
  * UI5Strap

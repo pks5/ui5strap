@@ -25,52 +25,77 @@
  * 
  */
  
- /**
-  * START BOOTSTRAP 4 FEATURE
-  * Will be available in Bootstrap 4 (!)
+ /*
+  * Hide
   */
-.ui5strapMakeHideUpRule(@size){
-	.hide-@{size}-up{
-		display:none !important;
-	}	
+  
+.ui5strap-hidden{
+    display: none !important;
 }
-
+  
 .ui5strapMakeHideDownRule(@size){
-	.hide-@{size}-down{
+	.ui5strap-hide-@{size}-down{
 		display:none !important;
 	}	
 }
 
+.ui5strapMakeHideEqualRule(@size){
+	.ui5strap-hide-@{size}{
+		display:none !important;
+	}	
+}
+
+.ui5strapMakeHideUpRule(@size){
+	.ui5strap-hide-@{size}-up{
+		display:none !important;
+	}	
+}
+
+//EXTRA_SMALL
 @media (max-width: @screen-xs) {
 	.ui5strapMakeHideDownRule(xs);
 }
 
+@media (max-width: (@screen-sm - 1)) {
+	.ui5strapMakeHideEqualRule(xs);
+}
+
+.ui5strapMakeHideUpRule(xs);
+
+//SMALL
 @media (max-width: @screen-sm) {
 	.ui5strapMakeHideDownRule(sm);
 }
 
+@media (min-width: @screen-sm) and (max-width: (@screen-md - 1)) {
+	.ui5strapMakeHideEqualRule(sm);
+}
+
+@media (min-width: @screen-sm) {
+	.ui5strapMakeHideUpRule(sm);
+}
+
+//MEDIUM
 @media (max-width: @screen-md) {
 	.ui5strapMakeHideDownRule(md);
 }
 
-//Always hide if lg-down is specified
-.ui5strapMakeHideDownRule(lg);
-
-//Always hide if xs-up is specified
-.ui5strapMakeHideUpRule(xs);
-
-@media (min-width: @screen-sm) {
-	.ui5strapMakeHideUpRule(sm);
+@media (min-width: @screen-md) and (max-width: (@screen-lg - 1)) {
+	.ui5strapMakeHideEqualRule(md);
 }
 
 @media (min-width: @screen-md) {
 	.ui5strapMakeHideUpRule(md);
 }
 
+//LARGE
+//Always hide if lg-down is specified
+.ui5strapMakeHideDownRule(lg);
+
+@media (min-width: @screen-lg) {
+	.ui5strapMakeHideEqualRule(lg);
+}
+
 @media (min-width: @screen-lg) {
 	.ui5strapMakeHideUpRule(lg);
 }
-
-/**
-  * END BOOTSTRAP 4 FEATURE
-  */

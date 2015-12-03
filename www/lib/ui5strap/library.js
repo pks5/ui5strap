@@ -1767,52 +1767,64 @@
               visibilityMedium = oControl.getVisibilityMedium(),
               visibilityLarge = oControl.getVisibilityLarge(),
               Visibility = ui5strap.Visibility;
-
+          
+          var resultHidden = ["", "", "", ""];
+          
           //Generic visibility
           //TODO check if necccessary and working at all
           if(visibility !== Visibility.Default){
-              rm.addClass(visibility.toLowerCase());
+              if(visibility === Visibility.Hidden){
+            	  resultHidden = [
+            	                  "ui5strap-hide-xs", 
+            	                  "ui5strap-hide-sm", 
+            	                  "ui5strap-hide-md", 
+            	                  "ui5strap-hide-lg"
+            	                  ];
+              }
           }
           
           //Visibility for EXTRA_SMALL screens
           if(visibilityExtraSmall === Visibility.Visible){
-        	  //Visible on EXTRA_SMALL, hidden on smaller
-              rm.addClass('visible-xs');
+        	  //Visible on EXTRA_SMALL
+              resultHidden[0] = "";
           }
           else if(visibilityExtraSmall === Visibility.Hidden){
-        	  //Hidden on EXTRA_SMALL, visible else
-        	  rm.addClass('hidden-xs');
+        	  //Hidden on EXTRA_SMALL
+        	  resultHidden[0] = "ui5strap-hide-xs";
           }
           
           //Visibility for SMALL screens
           if(visibilitySmall === Visibility.Visible){
-        	  //Visible on SMALL, hidden on smaller
-              rm.addClass('visible-sm');
+        	  //Visible on SMALL
+              resultHidden[1] = "";
           }
           else if(visibilitySmall === Visibility.Hidden){
-        	  //Hidden on SMALL, visible else
-              rm.addClass('hidden-sm');
+        	  //Hidden on SMALL
+              resultHidden[1] = "ui5strap-hide-sm";
           }
           
           //Visibility for MEDIUM screens
           if(visibilityMedium === Visibility.Visible){
-        	  //Visible on MEDIUM, hidden on smaller
-              rm.addClass('visible-md');
+        	  //Visible on MEDIUM
+              resultHidden[2] = "";
           }
           else if(visibilityMedium === Visibility.Hidden){
-        	  //Hidden on MEDIUM, visible else
-              rm.addClass('hidden-md');
+        	  //Hidden on MEDIUM
+              resultHidden[2] = "ui5strap-hide-md";
           }
           
           //Visibility for LARGE screens
           if(visibilityLarge === Visibility.Visible){
-        	  //Visible on LARGE, hidden on smaller
-              rm.addClass('visible-lg');
+        	  //Visible on LARGE
+              resultHidden[3] = "";
           }
           else if(visibilityLarge === Visibility.Hidden){
-        	  //Hidden on LARGE, visible on smaller
-              rm.addClass('hidden-lg');
+        	  //Hidden on LARGE
+              resultHidden[3] = "ui5strap-hide-lg";
           }
+          
+          resultHidden = resultHidden.join(" ");
+          rm.addClass(resultHidden);
           
           //Invisibility
           //TODO neccessary?
