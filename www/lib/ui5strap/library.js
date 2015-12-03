@@ -359,14 +359,6 @@
 		Hidden : "Hidden"
 	};
 
-  ui5strap.BSVisibility = {
-    Visible : "show",
-    Hidden : "hidden",
-
-    //??? is this used
-    Invisible : "invisible"
-  };
-    
     /**
      * CarouselOverflow defines how you see overflowing content in Carousel controls.
      */
@@ -1476,6 +1468,9 @@
 	  var origin = a.protocol + "//" + a.host;
   };
   
+  /**
+   * Transfers a property propagation from one to an other control.
+   */
   ui5strap.Utils.addPropertyPropagation = function(fromControl, toControl){
 		toControl.oPropagatedProperties = fromControl._getPropertiesToPropagate();
 		
@@ -1486,6 +1481,10 @@
 		}
   };
 
+  /**
+   * Finds the closest parent control of type TargetType.
+   * @Public
+   */
   ui5strap.Utils.findClosestParentControl = function(control, TargetType){
 		var parentControl = control,
 			maxDepth = 20,
@@ -1513,7 +1512,10 @@
   jQuery.sap.declare("ui5strap.RenderUtils");
 
   ui5strap.RenderUtils = {
-
+		
+	  /**
+	   * Renders title content, used in Panel
+	   */
       renderTitleContent : function(rm, oControl, text){
           var content = oControl.getTitleContent(),
               contentPlacement = oControl.getTitleContentPlacement(),
@@ -1531,7 +1533,10 @@
               rm.writeEscaped(text);
           }
       },
-
+      
+      /**
+       * parse map
+       */
       parseMap : {
           '[strong]' : '<strong>',
           '[/strong]' : '</strong>',
@@ -1543,12 +1548,18 @@
           '[/span]' : '</span>'
       },
 
+      /**
+       * Parses BBCode inside text
+       */
       parseText : function(text){
           return text.replace(/\[\/?strong\]|\[\/?em\]|\[\/?small\]|\[\/?span\]/gi, function(matched){
             return ui5strap.RenderUtils.parseMap[matched];
           });
       },
-
+      
+      /**
+       * Default rendering for controls that have both text property and content aggregation 
+       */
       renderContent : function(rm, oControl, text, dontEscape){
           var content = oControl.getContent(),
               contentPlacement = oControl.getContentPlacement(),
@@ -1576,13 +1587,19 @@
               }
           }
       },
-
+      
+      /**
+       * Trail mapping
+       */
       trailHtml : {
           Space : ' ',
           DoubleSpace : '&nbsp; ',
           Break : '<br />'
       },
-
+      
+      /**
+       * Renders the trail after inline controls
+       */
       renderTrail : function(rm, oControl, text){
           var trail = oControl.getTrail();
 
@@ -1590,7 +1607,10 @@
               rm.write(this.trailHtml[trail]);
           }
       },
-
+      
+      /**
+       * @deprecated
+       */
       alignment : function(rm, oControl, navbarClass, sidebarClass){
           var align = oControl.getAlign(),
               Alignment = ui5strap.Alignment;
@@ -1598,7 +1618,12 @@
           if(align !== Alignment.Default){
               rm.addClass(ui5strap.BSAlignment[align]);
           }
-
+          
+          /*
+          * This are special options for
+          * Button, ButtonGroup, Nav and Form to show properly inside NavBar controls
+          * @deprecated
+          */
           if(typeof navbarClass === 'string'){
               if(align === Alignment.NavBar ||
                 align === Alignment.NavBarLeft ||
@@ -1606,14 +1631,23 @@
                   rm.addClass(navbarClass);
               }
           }
-
+          
+          /*
+           * This are special options for
+           * Nav controls to show properly inside Sidebar controls
+           * @deprecated
+           */
           if(typeof sidebarClass === 'string'){
               if(align === Alignment.Sidebar){
                   rm.addClass(sidebarClass);
               }
           }
       },
-
+      
+      /**
+       * Responsive visibility
+       * @Public
+       */
       visibility : function(rm, oControl){
           var visibility = oControl.getVisibility(),
               visibilityExtraSmall = oControl.getVisibilityExtraSmall(),
@@ -1625,7 +1659,7 @@
           //Generic visibility
           //TODO check if necccessary and working at all
           if(visibility !== Visibility.Default){
-              rm.addClass(ui5strap.BSVisibility[visibility]);
+              rm.addClass(visibility.toLowerCase());
           }
           
           //Visibility for EXTRA_SMALL screens
