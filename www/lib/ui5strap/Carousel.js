@@ -33,66 +33,71 @@
 	sap.ui.core.Control.extend("ui5strap.Carousel", {
 		metadata : {
 
-			// ---- object ----
 			defaultAggregation : "items",
-			// ---- control specific ----
+			
 			library : "ui5strap",
+			
+			//Properties
 			properties : { 
 				index : {
 					type:"int", defaultValue : 0
 				},
-        swipe : {
-          type:"boolean", defaultValue : true
-        },
+		        swipe : {
+		            type:"boolean", defaultValue : true
+		        },
 				controls : {
 					type:"boolean", defaultValue : true
 				},
 				pagination : {
 					type:"boolean", defaultValue : true
 				},
-        innerAlign : {
-          type:"ui5strap.Alignment",
-          defaultValue : ui5strap.Alignment.CenterBlock
-        },
-        innerOverflow : {
-            type:"ui5strap.Visibility",
-            defaultValue : ui5strap.Visibility.Visible
-        },
-        label : {
-          type:"string", defaultValue : ""
-        },
-        columnsExtraSmall : {
-          type:"int", defaultValue:-1
-        },
-        columnsSmall : {
-          type:"int", defaultValue:-1
-        },
-        columnsMedium : {
-          type:"int", defaultValue:-1
-        },
-        columnsLarge : {
-          type:"int", defaultValue:-1
-        },
-        speed : {
-          type:"float", defaultValue : 0.5
-        },
-        cycle : {
-          type:"boolean",
-          defaultValue : false
-        },
-        interval : {
-          type:"int", defaultValue : 0
-        }
+		        innerAlign : {
+			        type: "ui5strap.Alignment",
+			        defaultValue : ui5strap.Alignment.CenterBlock
+		        },
+		        innerOverflow : {
+		            type: "ui5strap.CarouselOverflow",
+		            defaultValue : ui5strap.CarouselOverflow.Visible
+		        },
+		        label : {
+		            type:"string", defaultValue : ""
+		        },
+		        columnsExtraSmall : {
+		            type:"int", defaultValue:-1
+		        },
+		        columnsSmall : {
+		            type:"int", defaultValue:-1
+		        },
+		        columnsMedium : {
+		            type:"int", defaultValue:-1
+		        },
+		        columnsLarge : {
+		            type:"int", defaultValue:-1
+		        },
+		        speed : {
+		            type:"float", defaultValue : 0.5
+		        },
+		        cycle : {
+		            type:"boolean",
+		            defaultValue : false
+		        },
+		        interval : {
+		            type:"int", defaultValue : 0
+		        }
 			},
+			
+			//Aggregations
 			aggregations : {
 
 				"items" : {},
-        "content" : {}
+				"content" : {}
 
 			},
+			
+			//Events
 			events : {
 				"change" : {},
-        "changed" : {}
+				"changed" : {}
 			}
 
 		}
@@ -128,7 +133,7 @@
     if(!ui5strap.support.transitionEndEvent){
       throw new Error('ui5strap.Carousel requires "transitionEndEvent" support.');
     }
-	};
+  };
 
   CarouselProto._cssClasses = function(){
       var cssClasses = "carousel carousel-advanced",
@@ -153,7 +158,7 @@
       cssClasses += " carousel-xs-" + columsExtraSmall;
     }
 
-    cssClasses += " carousel-overflow-" + ui5strap.BSVisibility[this.getInnerOverflow()];
+    cssClasses += " carousel-overflow-" + this.getInnerOverflow().toLowerCase();
     cssClasses += " carousel-align-" + ui5strap.BSAlignment[this.getInnerAlign()];
        cssClasses += " carousel-current-" + newIndex;
       if(newIndex === 0){

@@ -356,8 +356,7 @@
 	ui5strap.Visibility = {
 		Default : "Default",
 		Visible : "Visible",
-		Hidden : "Hidden",
-    Covered : "Covered"
+		Hidden : "Hidden"
 	};
 
   ui5strap.BSVisibility = {
@@ -365,11 +364,20 @@
     Hidden : "hidden",
 
     //??? is this used
-    Invisible : "invisible",
-    
-    //Not available for all Controls
-    Covered : "covered"
+    Invisible : "invisible"
   };
+    
+    /**
+     * CarouselOverflow defines how you see overflowing content in Carousel controls.
+     */
+    jQuery.sap.declare("ui5strap.CarouselOverflow");
+
+	ui5strap.CarouselOverflow = {
+		Default : "Default",
+		Visible : "Visible",
+		Hidden : "Hidden",
+		Covered : "Covered"
+	};
 
   /*
   * TriggerMode
@@ -1614,38 +1622,54 @@
               visibilityLarge = oControl.getVisibilityLarge(),
               Visibility = ui5strap.Visibility;
 
+          //Generic visibility
+          //TODO check if necccessary and working at all
           if(visibility !== Visibility.Default){
               rm.addClass(ui5strap.BSVisibility[visibility]);
           }
-
+          
+          //Visibility for EXTRA_SMALL screens
           if(visibilityExtraSmall === Visibility.Visible){
+        	  //Visible on EXTRA_SMALL, hidden on smaller
               rm.addClass('visible-xs');
           }
           else if(visibilityExtraSmall === Visibility.Hidden){
-              rm.addClass('hidden-xs');
+        	  //Hidden on EXTRA_SMALL, visible else
+        	  rm.addClass('hidden-xs');
           }
-
+          
+          //Visibility for SMALL screens
           if(visibilitySmall === Visibility.Visible){
+        	  //Visible on SMALL, hidden on smaller
               rm.addClass('visible-sm');
           }
           else if(visibilitySmall === Visibility.Hidden){
+        	  //Hidden on SMALL, visible else
               rm.addClass('hidden-sm');
           }
-
+          
+          //Visibility for MEDIUM screens
           if(visibilityMedium === Visibility.Visible){
+        	  //Visible on MEDIUM, hidden on smaller
               rm.addClass('visible-md');
           }
           else if(visibilityMedium === Visibility.Hidden){
+        	  //Hidden on MEDIUM, visible else
               rm.addClass('hidden-md');
           }
-
+          
+          //Visibility for LARGE screens
           if(visibilityLarge === Visibility.Visible){
+        	  //Visible on LARGE, hidden on smaller
               rm.addClass('visible-lg');
           }
           else if(visibilityLarge === Visibility.Hidden){
+        	  //Hidden on LARGE, visible on smaller
               rm.addClass('hidden-lg');
           }
-
+          
+          //Invisibility
+          //TODO neccessary?
           if(oControl.getInvisible()){
             rm.addClass('invisible');
           }
