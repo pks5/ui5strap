@@ -83,22 +83,11 @@
 	var TextProto = ui5strap.Text.prototype;
 
 	TextProto.setText = function(newText, suppressInvalidate){
-		if(ui5strap.TextType.Default === this.getType()){
-			this.setProperty('text', newText, suppressInvalidate);
-		}
-		else{ 
-			ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
-		}
-		
+		ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
 	};
 
 	TextProto.setTitle = function(newTitle){
-		if(ui5strap.TextType.Default === this.getType()){
-			this.setProperty('title', newTitle, true);
-		}
-		else{ 
-			ui5strap.Utils.updateAttribute(this, 'title', newTitle);
-		}
+		ui5strap.Utils.updateAttribute(this, 'title', newTitle);
 	};
 
 }());

@@ -33,10 +33,6 @@
 	ui5strap.TextRenderer = {
 		typeToTag : {
 			Default : { 
-				tagName : null,
-				className : null
-			},
-			Phrasing : {
 				tagName : "span",
 				className : null
 			},
@@ -91,7 +87,14 @@
 			Badge : {
 				tagName : "span",
 				className : "badge"
+			},
+			
+			//Deprecated
+			Phrasing : {
+				tagName : "span",
+				className : null
 			}
+			
  		}
 
 	};
@@ -108,56 +111,45 @@
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 
-		if(ui5strap.TextType.Default === type){
-			//Text only
-			//TODO still needed?
-			if(parse){
-				rm.write(text);
-			}
-			else{
-				rm.writeEscaped(text);
-			}
-		}
-		else{
-			//Text with tag
-			var tagData = this.typeToTag[type];
+		//Text with tag
+		var tagData = this.typeToTag[type];
 
-			rm.write("<" + tagData.tagName);
-			rm.writeControlData(oControl);
-			
-			//CSS Classes
-			if(ui5strap.TextType.Label === type){
-				//Severity for labels
-				rm.addClass("label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity]);
-			}
-			else if(ui5strap.Severity.None !== severity){
-				//Severity for general text
-				rm.addClass("text-" + ui5strap.BSSeverity[severity]);
-			}
-			
-			if(ui5strap.TextAlignment.Default !== textAlign){
-				rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
-			}
-			
-			if(tagData.className){
-				rm.addClass(tagData.className);
-			}
-			
-			rm.writeClasses();
-			
-			//Title
-			if('' !== title){
-	    		rm.writeAttribute('title', title);
-	    	}
-			
-			rm.write(">");
-				
-				//Content
-				ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
-			
-			rm.write("</" + tagData.tagName + ">");
-
+		rm.write("<" + tagData.tagName);
+		rm.writeControlData(oControl);
+		
+		//CSS Classes
+		if(ui5strap.TextType.Label === type){
+			//Severity for labels
+			rm.addClass("label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity]);
 		}
+		else if(ui5strap.Severity.None !== severity){
+			//Severity for general text
+			rm.addClass("text-" + ui5strap.BSSeverity[severity]);
+		}
+		
+		if(ui5strap.TextAlignment.Default !== textAlign){
+			rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
+		}
+		
+		if(tagData.className){
+			rm.addClass(tagData.className);
+		}
+		
+		rm.writeClasses();
+		
+		//Title
+		if('' !== title){
+    		rm.writeAttribute('title', title);
+    	}
+		
+		rm.write(">");
+			
+			//Content
+			ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		
+		rm.write("</" + tagData.tagName + ">");
+
+		
 		
 		//Trail
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
