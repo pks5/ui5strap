@@ -33,11 +33,8 @@
 	sap.ui.core.Control.extend("ui5strap.Container", {
 		metadata : {
 
-			// ---- object ----
-			defaultAggregation : "content",
-			
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
 					type : {
 						type:"ui5strap.ContainerType", 
@@ -59,10 +56,7 @@
 						defaultValue : ""
 					},
 					
-					visibility : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
+					
 					visibilityExtraSmall : {
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
@@ -79,19 +73,28 @@
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
 					},
+					
+					//Deprecated
+					visibility : {
+						type : "ui5strap.Visibility",
+						defaultValue : ui5strap.Visibility.Default
+					},
 					invisible : {
+						deprecated : true,
 						type : "boolean",
 						defaultValue : false
 					}
 			},
+			
 			aggregations : { 
 				content : {
 					singularName: "content"
 				}
-			}
-
-		}
+			},
+			
+			defaultAggregation : "content"
+			
+		} //END metadata
 	});
-
 
 }());
