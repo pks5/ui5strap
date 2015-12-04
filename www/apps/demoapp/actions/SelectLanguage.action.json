@@ -2,7 +2,6 @@
 	"//" : "Sets the application language. The value is read from a custom data field of a List or ButtonGroup.",
 	"TASKS" : "selectAppLanguage",
 	
-	"//" : "The 'call' task calls the control's method removeItems.",
 	"selectAppLanguage" : {
 		"customDataKEY" : "language",
 		"languageSTR" : "=-> eventParameters.srcControl.data(.customDataKEY)",

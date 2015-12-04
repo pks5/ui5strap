@@ -45,7 +45,7 @@
 	NavigateProto.parameters = {
 		"CONTROL" : {
 			"required" : false,
-			"defaultValue" : ui5strap.ActionContext.RESOLVE + " app.getRootControl()",
+			"defaultValue" : null,
 			"type" : ["string", "object"]
 		},
 			
@@ -58,7 +58,7 @@
 		"COMPONENT" : {
 			"required" : false,
 			"type" : ["string", "object"],
-			"defaultValue" : ui5strap.ActionContext.RESOLVE + " app.components.frame"
+			"defaultValue" : null
 		}
 
 	};
@@ -68,13 +68,25 @@
 	* @override
 	*/
 	NavigateProto.run = function(){
-			var control = this.getParameter("CONTROL");
-		
-			var page = this.context.resolve(this, this.getParameter("PAGE")),
-				component = this.getParameter("COMPONENT");
-
-			if(!component){
-				throw new Error("Cannot goto page: No such component.");
+			var component = this.getParameter("COMPONENT"),
+				control = this.getParameter("CONTROL"),
+				page = this.context.resolve(this, this.getParameter("PAGE"));
+				
+			
+			if(null === control){
+				control = this.context.app.getRootControl();
+			}
+			
+			if(null === component){
+				component = this.context.app.components.frame;
+			}
+			
+			if(!(component instanceof ui5strap.AppFrame)){
+				throw new Error("Cannot goto page: component must be instance of ui5strap.AppFrame!");
+			}
+			
+			if(!(control instanceof ui5strap.NavContainer)){
+				throw new Error("Cannot goto page: control must be instance of ui5strap.NavContainer!");
 			}
 			
 			component.navigateTo(control, page);

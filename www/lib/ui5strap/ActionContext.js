@@ -114,13 +114,13 @@
 		_this.defaultParameters = action.parameters;
 			
 		//Pool
-		_this.action = jQuery.extend(true, {}, _this.defaultParameters);
+		_this.action = _buildPool(_this.defaultParameters);
 		
 		//Old Pool
 		//@deprecated
 		_this.parameters = _this.action;
 		
-		console.log(action);
+		console.log(_this);
 		
 		//Event Source
 		if(action.eventSource){
@@ -173,7 +173,52 @@
 		//Init Log
 		_initLog(_this);
 	};
-
+	
+	var _ActionExpression = function(expression){
+		this.expression = expression;
+	},
+	_buildPool = function(pointer){
+		var pointerType = typeof pointer;
+		
+		if(pointerType === "string"){
+			if(pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
+				return new _ActionExpression(pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
+			}
+			else{
+				return pointer;
+			}
+		}
+		else if(pointerType === "function"){
+			throw new Error("Action parameters must not contain functions!");
+		}
+		else if(pointerType === "object"){
+			var isArray = jQuery.isArray(pointer);
+			
+			if(isArray){
+				//Array
+				var newArray = [],
+					arrayLength = pointer.length;
+				for(var i = 0; i < arrayLength; i++){
+					newArray[i] = _buildPool(pointer[i]);
+				}
+				return newArray;
+			}
+			else{
+				//Object
+				var newObject = {},
+					keys = Object.keys(pointer),
+					keysLength = keys.length;
+				for(var i = 0; i < keysLength; i++){
+					newObject[keys[i]] = _buildPool(pointer[keys[i]]);
+				}
+				return newObject;
+			}
+		}
+		else{
+			return pointer;
+		}
+	};
+	
 	/**
 	* Returns String representation of this context.
 	* 
@@ -183,21 +228,13 @@
 		return '[ACTION#' + this._actionNumber + ']';
 	};
 	
-	ActionContextProto._isExpression = function(pointer){
-		return ("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE;
-	};
-	
-	ActionContextProto._evalExpression = function(task, pointer){
-		return this.get(task, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
-	};
-	
 	/**
 	 * @Public
 	 * FIXME
 	 */
 	ActionContextProto.resolve = function(task, pointer, onlyString){
-		if(this._isExpression(pointer)){
-			pointer = this._evalExpression(task, pointer);
+		if(pointer instanceof _ActionExpression){
+			return this.get(task, pointer.expression);
 		}
 		else if(!onlyString && ("object" === typeof pointer)){
 			var objectKeys = Object.keys(pointer),
@@ -357,12 +394,12 @@
 				}
 				
 				//Check if value contains expression
-				if(this._isExpression(pointer)){
+				if(pointer instanceof _ActionExpression){
 					if(functionApplied){
-						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
+						throw new Error("Function '" + kPart + "' must not return Action Expression!");
 					}
 					//Store back the value in the context
-					prevPointer[keyPart] = this._evalExpression(task, pointer);
+					prevPointer[keyPart] = this.get(task, pointer.expression);
 				    
 					pointer = prevPointer[keyPart];
 				}
@@ -383,8 +420,8 @@
 		//Set value to default if null or undefined
 		if(("undefined" === typeof pointer) && ("undefined" !== typeof defaultValue)){
 			pointer = defaultValue;
-			if(this._isExpression(pointer)){
-				pointer = this._evalExpression(task, pointer);
+			if(pointer instanceof _ActionExpression){
+				pointer = this.get(task, pointer.expression);
 			}
 		}
 		
@@ -441,9 +478,9 @@
 			if(null === pointer){
 				throw new Error("Cannot write parameter: '" + keyPart + "' is null.");
 			}
-			else if(this._isExpression(pointer)){
+			else if(pointer instanceof _ActionExpression){
 				//Store back the value in the context
-				prevPointer[keyPart] = this._evalExpression(task, pointer);
+				prevPointer[keyPart] = this.get(task, pointer.expression);
 				
 				pointer = prevPointer[keyPart];
 			}
@@ -643,7 +680,6 @@
 	
 	/**
 	* @Protected
-	* FIXME
 	* @deprecated
 	*/
 	ActionContextProto._deleteParameter = function(parameterKey){
@@ -670,7 +706,6 @@
 	/**
 	* @Protected
 	* @deprecated
-	* FIXME
 	*/
 	ActionContextProto._moveParameter = function(parameterKeySrc, parameterKeyTgt){
 		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._moveParameter is deprecated and will be dropped.");
