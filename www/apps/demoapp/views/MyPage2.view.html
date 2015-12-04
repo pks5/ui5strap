@@ -15,6 +15,7 @@
 						>
 							<div data-sap-ui-type="ui5strap.Icon" data-icon="home"></div>
 						</div>
+						<!-- Toggle Menu Button (except for small screens) -->
 						<div data-sap-ui-type="ui5strap.Container" data-type="Text" data-visibility-small="Hidden">
 							<div 
 							data-sap-ui-type="ui5strap.Button" 
@@ -32,6 +33,7 @@
 					</div>
 					
 					<div data-sap-ui-aggregation="right">
+						<!-- Toggle Menu Button (only for small screens) -->
 						<div data-sap-ui-type="ui5strap.Container" data-type="Text" data-visibility-extra-small="Hidden" data-visibility-medium="Hidden" data-visibility-large="Hidden">
 							<div 
 							data-sap-ui-type="ui5strap.Button" 
@@ -56,8 +58,9 @@
 							
 								<div data-sap-ui-type="ui5strap.Panel" data-title="{i18n>PAGE2_PANEL_LEFT_TITLE}">
 										<div data-sap-ui-type="ui5strap.Form">
-												<div data-sap-ui-type="ui5strap.FormGroup" data-label="Your Name">
+												<div data-sap-ui-type="ui5strap.FormGroup" data-label="Your Name" data-feedback="true">
 													<div id="titleInput"  data-sap-ui-type="ui5strap.TextInput" data-placeholder="Enter your name here ..."></div>
+													<div data-sap-ui-type="ui5strap.Icon" data-icon="remove" data-type="FormFeedback"></div>
 												</div>
 												<div data-sap-ui-type="ui5strap.FormGroup" data-label="Message">
 													<div id="messageInput" data-sap-ui-type="ui5strap.TextInput" data-rows="3" data-placeholder="Write something ..."></div>

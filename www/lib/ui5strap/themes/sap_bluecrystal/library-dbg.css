@@ -8910,26 +8910,87 @@ button.close {
 .fa-percent:before {
   content: "\f295";
 }
-/*!
+/*
  * 
  * UI5Strap
  *
- * Library stylesheet for theme bsdefault
+ * Main LESS
  * 
- * Author: Jan Philipp Knoeller
+ * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
- * Copyright (c) 2013 Jan Philipp Knoeller
- * 
- * http://pksoftware.de
+ * Homepage: http://ui5strap.com
  *
- * Get the latest version: https://github.com/pks5/ui5strap
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
  * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-.ui5strap-hidden {
-  display: none;
-}
+/*
+ * 
+ * UI5Strap
+ *
+ * Variables used in LESS files
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for base style
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+/*
+ * Text align
+ */
 .ui5strap-text-align-left {
   text-align: left;
 }
@@ -8990,6 +9051,17 @@ a {
   cursor: pointer;
 }
 /*
+ * Tab Container
+ */
+.tab-content.u5sl-tab-content {
+  position: relative;
+}
+.tab-content.u5sl-tab-content > .tab-pane {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+/*
 * Container
 */
 .container-floating {
@@ -9004,6 +9076,11 @@ a {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+.container-full {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+}
 /*
 * List Group
 */
@@ -9013,11 +9090,134 @@ a {
   font-size: 19px;
 }
 /*
+ * Icons
+ */
+.form-control-feedback {
+  display: none;
+}
+.has-feedback .form-control-feedback {
+  display: block;
+}
+/*
 * Font awesome fix
 */
 .fa.form-control-feedback {
   line-height: 34px;
 }
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for Responsive Utilities
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+/*
+  * Hide
+  */
+.ui5strap-hidden {
+  display: none;
+}
+@media (max-width: 480px) {
+  .ui5strap-hide-xs-down {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .ui5strap-hide-xs {
+    display: none;
+  }
+}
+.ui5strap-hide-xs-up {
+  display: none;
+}
+@media (max-width: 768px) {
+  .ui5strap-hide-sm-down {
+    display: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .ui5strap-hide-sm {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .ui5strap-hide-sm-up {
+    display: none;
+  }
+}
+@media (max-width: 992px) {
+  .ui5strap-hide-md-down {
+    display: none;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .ui5strap-hide-md {
+    display: none;
+  }
+}
+@media (min-width: 992px) {
+  .ui5strap-hide-md-up {
+    display: none;
+  }
+}
+.ui5strap-hide-lg-down {
+  display: none;
+}
+@media (min-width: 1200px) {
+  .ui5strap-hide-lg {
+    display: none;
+  }
+}
+@media (min-width: 1200px) {
+  .ui5strap-hide-lg-up {
+    display: none;
+  }
+}
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.Carousel controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 /*
 * TODO: add library prefix "u5sl-"
 * TODO: Check if independant of Bootstrap Carousel
@@ -9691,6 +9891,32 @@ a {
   }
 }
 /*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.Sandbox controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+/*
 * TODO: add library prefix "u5sl-"
 * TODO: change "navcontainer" to "navcon"
 */
@@ -9704,6 +9930,32 @@ a {
   height: 100%;
   border: none;
 }
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.Sidebar controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 /*
 * TODO: add library prefix "u5sl-"
 */
@@ -9783,6 +10035,32 @@ a {
   background-color: transparent;
 }
 /*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.Bar controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+/*
 * TODO: add library prefix "u5sl-"
 */
 /*
@@ -9831,6 +10109,32 @@ a {
   text-align: right;
 }
 /*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.Page controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+/*
 * TODO: add library prefix "u5sl-"
 */
 /*
@@ -9862,6 +10166,32 @@ a {
   width: 100%;
 }
 /*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.StaticOverlay controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+/*
 * TODO: change library prefix to "u5sl-"
 */
 .ui5strap-static-overlay {
@@ -9884,6 +10214,32 @@ a {
        -o-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.ScrollContainer controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 /*
 * TODO: change library prefix to "u5sl-"
 * TODO: integrate into container???
@@ -9908,6 +10264,32 @@ a {
 .sapUiMedia-Std-Desktop .ui5strap-scroll-container-vertical {
   overflow-y: auto;
 }
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.NavContainer controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 /*
 * TODO: add library prefix "u5sl-"
 * TODO: change "navcontainer" to "navcon"
@@ -9979,6 +10361,32 @@ a {
   overflow: hidden;
 }
 /*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.NavContainer controls of type default
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+/*
 * TODO: add library prefix "u5sl-"
 * TODO: change "navcontainer" to "navcon"
 */
@@ -9990,6 +10398,32 @@ a {
   width: 100%;
   height: 100%;
 }
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.BarNavContainer controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 /*
 * TODO: add library prefix "u5sl-"
 * TODO: change "navcontainer" to "navcon"
@@ -13022,6 +13456,254 @@ a {
   width: auto;
   height: auto;
 }
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-intrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-extrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-bar {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-bar {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-intrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-extrude > .navcontainer-target-content {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-intrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-extrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-bar {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: auto;
+  height: 0;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-bar {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: auto;
+  height: 0;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-intrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-extrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: auto;
+  height: 100%;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: auto;
+  height: 100%;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-intrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-extrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-bar {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 0;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-bar {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 0;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-intrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-extrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 100%;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 100%;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-intrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-extrude > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-bar {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: 0;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-bar,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-bar {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: 0;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-intrude > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-intrudefixed > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-extrude > .navcontainer-target-content {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-extrudefixed > .navcontainer-target-content {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+}
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlay > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-mode-xs-overlayfixed > .navcontainer-target-content,
+.navcontainer-type-bar.navcontainer-flag-col-xs-0.navcontainer-flag-placement-xs-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
 @media (min-width: 768px) {
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
   .navcontainer-type-bar.navcontainer-flag-col-sm-12.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
@@ -15992,6 +16674,254 @@ a {
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
   .navcontainer-type-bar.navcontainer-flag-col-sm-1.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrude > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-extrude > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-extrudefixed > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-mode-sm-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-sm-0.navcontainer-flag-placement-sm-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
     top: 0;
     right: 0;
     bottom: 0;
@@ -18977,6 +19907,254 @@ a {
     width: auto;
     height: auto;
   }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-extrude > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-extrude > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-extrudefixed > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-mode-md-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-md-0.navcontainer-flag-placement-md-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
 }
 @media (min-width: 1200px) {
   .navcontainer-type-bar.navcontainer-flag-col-lg-12.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
@@ -21955,7 +23133,281 @@ a {
     width: auto;
     height: auto;
   }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-extrude > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-left.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-top.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-bar {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-extrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-right.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-intrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-extrude > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-bar,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-bar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 0;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-intrude > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-intrudefixed > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-extrude > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-extrudefixed > .navcontainer-target-content {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+  }
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlay > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-mode-lg-overlayfixed > .navcontainer-target-content,
+  .navcontainer-type-bar.navcontainer-flag-col-lg-0.navcontainer-flag-placement-lg-bottom.navcontainer-flag-bar-hide > .navcontainer-target-content {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
 }
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.NavContainerStandard controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 /*
 * TODO: add library prefix "u5sl-"
 * TODO: change "navcontainer" to "navcon"
@@ -22472,6 +23924,32 @@ a {
   font-size: inherit;
   line-height: normal;
 }
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.BarMenu controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 .u5sl-barmenu {
   padding: 0;
   margin: 0;
@@ -23226,6 +24704,32 @@ a {
   }
 }
 /*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.Console controls
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+/*
 * TODO: change library prefix to "u5sl-"
 */
 /*
@@ -23262,6 +24766,32 @@ a {
 .ui5strap-console .ui5strap-console-line.ui5strap-console-line-fatal {
   color: red;
 }
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for transitions
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 /*
 * TODO: add library prefix "u5sl-"
 */

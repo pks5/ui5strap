@@ -66,7 +66,7 @@
 				//TODO rename to barSize
 				barSizeExtraSmall : {
 					type : "int",
-					defaultValue : -1
+					defaultValue : 1
 				},
 				//TODO rename to barSizeSmallUp
 				barSizeSmall : {

@@ -683,6 +683,22 @@
       Default : "Default",
       FormControl : "FormControl"
   };
+  
+  /*
+   * TextInputFormat
+   * Only used by ui5strap.TextInput
+   */
+   jQuery.sap.declare("ui5strap.TextInputFormat");
+
+   ui5strap.TextInputFormat = {
+       Default : "Default",
+       Plain : "Plain",
+       Html : "Html",
+       Email : "Email",
+       Date : "Date"
+   }
+
+   
 
   /*
   * SelectBoxType
@@ -694,20 +710,6 @@
       Default : "Default",
       FormControl : "FormControl"
   };
-
-  /*
-  * TextInputFormat
-  * Only used by ui5strap.TextInput
-  */
-  jQuery.sap.declare("ui5strap.TextInputFormat");
-
-  ui5strap.TextInputFormat = {
-      Default : "Default",
-      Plain : "Plain",
-      Html : "Html",
-      Email : "Email",
-      Date : "Date"
-  }
 
   /*
   * CheckboxType
@@ -859,7 +861,7 @@
 		Section : "Section",
 		
 		//Bootstrap "container" & "container-fluid"
-		Fixed : "Fixed",
+		FixedWidth : "FixedWidth",
 		Fluid : "Fluid",
 		Full : "Full",
 		

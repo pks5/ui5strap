@@ -9090,6 +9090,15 @@ a {
   font-size: 19px;
 }
 /*
+ * Icons
+ */
+.form-control-feedback {
+  display: none;
+}
+.has-feedback .form-control-feedback {
+  display: block;
+}
+/*
 * Font awesome fix
 */
 .fa.form-control-feedback {
@@ -9125,62 +9134,62 @@ a {
   * Hide
   */
 .ui5strap-hidden {
-  display: none !important;
+  display: none;
 }
 @media (max-width: 480px) {
   .ui5strap-hide-xs-down {
-    display: none !important;
+    display: none;
   }
 }
 @media (max-width: 767px) {
   .ui5strap-hide-xs {
-    display: none !important;
+    display: none;
   }
 }
 .ui5strap-hide-xs-up {
-  display: none !important;
+  display: none;
 }
 @media (max-width: 768px) {
   .ui5strap-hide-sm-down {
-    display: none !important;
+    display: none;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .ui5strap-hide-sm {
-    display: none !important;
+    display: none;
   }
 }
 @media (min-width: 768px) {
   .ui5strap-hide-sm-up {
-    display: none !important;
+    display: none;
   }
 }
 @media (max-width: 992px) {
   .ui5strap-hide-md-down {
-    display: none !important;
+    display: none;
   }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .ui5strap-hide-md {
-    display: none !important;
+    display: none;
   }
 }
 @media (min-width: 992px) {
   .ui5strap-hide-md-up {
-    display: none !important;
+    display: none;
   }
 }
 .ui5strap-hide-lg-down {
-  display: none !important;
+  display: none;
 }
 @media (min-width: 1200px) {
   .ui5strap-hide-lg {
-    display: none !important;
+    display: none;
   }
 }
 @media (min-width: 1200px) {
   .ui5strap-hide-lg-up {
-    display: none !important;
+    display: none;
   }
 }
 /*

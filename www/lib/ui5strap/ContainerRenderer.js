@@ -42,7 +42,7 @@
 			
 			//Bootstrap container and container-fluid
 			//container-inset is an additional class that adds padding-top and padding-bottom
-			Fixed : {
+			FixedWidth : {
 				tagName : "div",
 				className : "container"
 			},
