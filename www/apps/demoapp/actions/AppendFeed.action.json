@@ -38,11 +38,13 @@
 	
 	"addItemToList" : {
 		
-		"viewId" : "=-> view.getId()",
+		"viewId" : "my-app-page2",
 		"mediaListId" : "feeds",
 		"mediaList" : "=-> app.getControl( .mediaListId, .viewId )",
+		"addItem" : "=-> .mediaList.addItem( action.createMediaListItem.INSTANCE )",
+		"closeOverlay" : "=-> app.hideOverlay()",
 		
-		"DO" : "=-> .mediaList.addItem( action.createMediaListItem.INSTANCE )" 
+		"DO" : "=-> (.addItem, .closeOverlay)" 
 	}
 
 }

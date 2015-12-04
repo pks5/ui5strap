@@ -796,16 +796,6 @@
 
 		this.targets[target] = page;
 		
-		/*
-		 * START OpenUi5 MOD
-		 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
-		 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
-		 */
-		ui5strap.Utils.addPropertyPropagation(this, page);
-		/*
-		 * END OpenUi5 MOD
-		 */
-		
 		var changeName = '{' + target + '} '
 							+ (null === currentPage ? 'None' : '#' + currentPage.getId()) 
 							+ ' => '
@@ -834,6 +824,16 @@
 		}
 
 		if(page){
+			/*
+			 * START OpenUi5 MOD
+			 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
+			 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
+			 */
+			ui5strap.Utils.addPropertyPropagation(this, page);
+			/*
+			 * END OpenUi5 MOD
+			 */
+			
 			_triggerControllerEvent(_this, target, page, 'pageShow', {
 				target : target,
 				oldPage : currentPage

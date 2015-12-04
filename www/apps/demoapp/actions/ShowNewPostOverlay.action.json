@@ -1,0 +1,13 @@
+{
+	"TASKS" : "showOverlay",
+	
+	"showOverlay" : {
+		
+		"page" : {
+			"viewName" : "ui5strap.demoapp.views.NewPost" 
+		},
+		
+		"DO" : "=-> app.showOverlay(.page)"
+	}
+
+}

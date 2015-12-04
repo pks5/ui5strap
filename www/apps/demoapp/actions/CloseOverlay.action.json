@@ -1,0 +1,7 @@
+{
+	"TASKS" : "closeOverlay",
+	
+	"closeOverlay" : {
+		"DO" : "=-> app.hideOverlay()"
+	}
+}

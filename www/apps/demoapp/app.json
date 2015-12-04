@@ -39,7 +39,6 @@
                 
                 "id" : "home",
                 
-                "target" : "content",
                 "preload" : true
             },
 
@@ -48,7 +47,6 @@
                 
                 "id" : "my-app-page2",
                 
-                "target" : "content",
                 "preload" : true
             },
 
@@ -57,7 +55,6 @@
                 
                 "id" : "my-app-page3",
                 
-                "target" : "content",
                 "preload" : true
             },
 
@@ -66,7 +63,6 @@
                 
                 "id" : "my-app-page4",
                 
-                "target" : "content",
                 "preload" : true,
                 
                 "events" : {
@@ -93,7 +89,6 @@
                 
                 "id" : "my-app-page5",
                 
-                "target" : "content",
                 "preload" : true,
                 "events" : {
                 	"controller" : {
@@ -107,7 +102,14 @@
                 
                 "id" : "my-app-page6",
                 
-                "target" : "content",
+                "preload" : true
+            },
+            
+            "ui5strap.demoapp.views.NewPost" : {
+                "type" : "HTML",
+                
+                "id" : "my-app-new-post",
+                
                 "preload" : true
             }
       },
