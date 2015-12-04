@@ -28,8 +28,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.Bar");
-
-	sap.ui.core.Control.extend("ui5strap.Bar", {
+	jQuery.sap.require("ui5strap.library");
+	
+	ui5strap.ControlBase.extend("ui5strap.Bar", {
 		metadata : {
 			interfaces : ["ui5strap.IBar"],
 			

@@ -28,8 +28,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.ScrollContainer");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.ScrollContainer", {
+	ui5strap.ControlBase.extend("ui5strap.ScrollContainer", {
 		metadata : {
 
 			library : "ui5strap",

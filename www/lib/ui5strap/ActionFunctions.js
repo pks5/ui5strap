@@ -72,7 +72,7 @@
 			this._log.error("{func} missing argument 'srcControl'");
 		}
 		srcControl = this._getParameter(args.srcControl);
-		if(!(srcControl instanceof sap.ui.core.Control)){
+		if(!(srcControl instanceof ui5strap.Control)){
 			this._log.error("{func} not an Control");
 		}
 		var data = args.dataKey ? srcControl.data(args.dataKey) : srcControl.data(); 

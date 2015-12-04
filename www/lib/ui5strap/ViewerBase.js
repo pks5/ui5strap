@@ -135,7 +135,7 @@
 			transitionName = transitionName || 'transition-slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.options.overlay, true, function(){
-			if(viewDataOrControl instanceof sap.ui.core.Control){
+			if(viewDataOrControl instanceof ui5strap.Control){
 				//Control is directly injected into the frame
 				overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
 			}

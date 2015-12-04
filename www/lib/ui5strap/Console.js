@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Console");
 	jQuery.sap.require("ui5strap.library");
 	
-	ui5strap.Control.extend("ui5strap.Console", {
+	ui5strap.ControlBase.extend("ui5strap.Console", {
 		metadata : {
 
 			library : "ui5strap",

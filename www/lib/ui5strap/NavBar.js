@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.NavBar");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.NavBar", {
+	ui5strap.ControlBase.extend("ui5strap.NavBar", {
 		metadata : {
 			deprecated : true,
 			

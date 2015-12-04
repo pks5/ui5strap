@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Image");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Image", {
+	ui5strap.ControlBase.extend("ui5strap.Image", {
 		metadata : {
 
 			library : "ui5strap",

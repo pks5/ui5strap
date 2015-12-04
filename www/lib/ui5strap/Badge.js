@@ -29,7 +29,7 @@
 
 	jQuery.sap.declare("ui5strap.Badge");
 	
-	sap.ui.core.Control.extend("ui5strap.Badge", {
+	ui5strap.ControlBase.extend("ui5strap.Badge", {
 		metadata : {
 			deprecated : true,
 			library : "ui5strap",

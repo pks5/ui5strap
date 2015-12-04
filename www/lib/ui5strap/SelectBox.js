@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.SelectBox");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.SelectBox", {
+	ui5strap.ControlBase.extend("ui5strap.SelectBox", {
 		metadata : {
 
 			defaultAggregation : "items",

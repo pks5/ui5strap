@@ -29,7 +29,7 @@
 
 	jQuery.sap.declare("ui5strap.Row");
 
-	sap.ui.core.Control.extend("ui5strap.Row", {
+	ui5strap.ControlBase.extend("ui5strap.Row", {
 		metadata : {
 
 			// ---- object ----

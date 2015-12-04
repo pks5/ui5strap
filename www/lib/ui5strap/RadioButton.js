@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.RadioButton");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.RadioButton", {
+	ui5strap.ControlBase.extend("ui5strap.RadioButton", {
 		metadata : {
 
 			library : "ui5strap",

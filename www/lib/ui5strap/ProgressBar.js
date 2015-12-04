@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.ProgressBar");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.ProgressBar", {
+	ui5strap.ControlBase.extend("ui5strap.ProgressBar", {
 		metadata : {
 
 			// ---- object ----

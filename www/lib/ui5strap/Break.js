@@ -28,8 +28,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.Break");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Break", {
+	ui5strap.ControlBase.extend("ui5strap.Break", {
 		metadata : {
 
 			library : "ui5strap",

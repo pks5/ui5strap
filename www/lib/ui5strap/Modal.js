@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Modal");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Modal", {
+	ui5strap.ControlBase.extend("ui5strap.Modal", {
 		metadata : {
 
 			// ---- object ----

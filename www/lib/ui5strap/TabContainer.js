@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.TabContainer");
 	jQuery.sap.require("ui5strap.library");
 	
-	ui5strap.Control.extend("ui5strap.TabContainer", {
+	ui5strap.ControlBase.extend("ui5strap.TabContainer", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectionProvider"],
 

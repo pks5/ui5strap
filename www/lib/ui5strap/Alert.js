@@ -32,7 +32,7 @@
   jQuery.sap.require("ui5strap.Button");
   jQuery.sap.require("ui5strap.Icon");
 	
-	sap.ui.core.Control.extend("ui5strap.Alert", {
+	ui5strap.ControlBase.extend("ui5strap.Alert", {
 		metadata : {
 
 			// ---- object ----

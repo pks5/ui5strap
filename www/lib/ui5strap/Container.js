@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Container");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Container", {
+	ui5strap.ControlBase.extend("ui5strap.Container", {
 		metadata : {
 
 			library : "ui5strap",

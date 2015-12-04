@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Label");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Label", {
+	ui5strap.ControlBase.extend("ui5strap.Label", {
 		metadata : {
 
 			// ---- object ----

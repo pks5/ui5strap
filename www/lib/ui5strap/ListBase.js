@@ -31,7 +31,7 @@
 	jQuery.sap.require("ui5strap.library");
 	jQuery.sap.require("ui5strap.ListItem");
 	
-	ui5strap.Control.extend("ui5strap.ListBase", {
+	ui5strap.ControlBase.extend("ui5strap.ListBase", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectionProvider"],
 

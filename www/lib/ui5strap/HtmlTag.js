@@ -28,8 +28,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.HtmlTag");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.HtmlTag", {
+	ui5strap.ControlBase.extend("ui5strap.HtmlTag", {
 		metadata : {
 
 			library : "ui5strap",

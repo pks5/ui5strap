@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.NavContainer");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.NavContainer", {
+	ui5strap.ControlBase.extend("ui5strap.NavContainer", {
 		metadata : {
 			library : "ui5strap",
 			
@@ -498,7 +498,7 @@
 	
 	NavContainerBaseProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
 		jQuery.sap.log.debug("UBC");
-		sap.ui.core.Control.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
+		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
 		
 		var oModelNames = {},
 			sModelName,
@@ -559,7 +559,7 @@
 				delete oldTarget;
 			}
 		}
-		//sap.ui.core.Control.prototype.destroy.call(this, bSuppressInvalidate);
+		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
 	};
 	
 	/*

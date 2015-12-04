@@ -59,12 +59,12 @@
    jQuery.sap.log.setLevel(3); //INFO
   _addTimeMark("LIBRARY", "ui5strap", "LOAD_START");
       
-  /*
+  /**
   *
   * Test system requirements
   *
-  * @private
-  * @static
+  * @Private
+  * @Static
   */
   var _testRequirements = function(){
     if(!Object.keys){
@@ -88,6 +88,14 @@
       + "</ul>"
     );
   }
+  
+  /*
+   * ---------------
+   *
+   * Declare Library
+   *
+   * ---------------
+   */
 
   jQuerySap.declare("ui5strap.library");
   
@@ -100,7 +108,7 @@
       {
       	  name : "ui5strap",
       	  
-      	  version: "0.9.16",
+      	  version: "0.9.17",
       	  
       	  dependencies : [],
       	  
@@ -406,6 +414,7 @@
 
   /*
   * ContentPlacement
+  * Defines where to place the rendering of the content aggregation. Used when there are both properties and aggregation that produces output.
   */
   jQuery.sap.declare("ui5strap.ContentPlacement");
 
@@ -416,6 +425,7 @@
 
   /*
   * Placement
+  * Used by Popover and Tooltip controls
   */
 	jQuery.sap.declare("ui5strap.Placement");
 
@@ -428,7 +438,7 @@
 		Bottom : "Bottom",
 		Right : "Right",
 		
-    AutoTop : "AutoTop",
+		AutoTop : "AutoTop",
 		AutoLeft : "AutoLeft",
 		AutoBottom : "AutoBottom",
 		AutoRight : "AutoRight"
@@ -449,45 +459,32 @@
 
   /*
   * Alignment
+  * Used for align block elements
   */
   jQuery.sap.declare("ui5strap.Alignment");
 
   ui5strap.Alignment = {
     Default : "Default",
-    
-    NavBar : "NavBar",
-    NavBarLeft : "NavBarLeft",
-    NavBarRight : "NavBarRight",
-    
-    Sidebar : "Sidebar",
-    
     PullLeft : "PullLeft",
     PullRight : "PullRight",
-    CenterBlock : "CenterBlock"
+    CenterBlock : "CenterBlock",
+    
+    //Deprecated
+	NavBar : "NavBar",
+    NavBarLeft : "NavBarLeft",
+    NavBarRight : "NavBarRight",
+    Sidebar : "Sidebar"
   };
   
-  /*
-   * TextAlignment
-   */
-   jQuery.sap.declare("ui5strap.TextAlignment");
-
-   ui5strap.TextAlignment = {
-     Default : "Default",
-     
-     Left : "Left",
-     Right : "Right",
-     Center : "Center",
-     Justify : "Justify"
-   };
-
   //Bootstrap CSS mapping
   ui5strap.BSAlignment = {
-    NavBarLeft : "navbar-left",
-    NavBarRight : "navbar-right",
-    
     PullLeft : "pull-left",
     PullRight : "pull-right",
-    CenterBlock : "center-block"
+    CenterBlock : "center-block",
+    
+    //Deprecated
+    NavBarLeft : "navbar-left",
+    NavBarRight : "navbar-right"
   };
 
   /*
@@ -512,6 +509,20 @@
 		Label : "Label",
 		Badge : "Badge"
 	};
+	
+	/*
+	   * TextAlignment
+	   */
+	   jQuery.sap.declare("ui5strap.TextAlignment");
+
+	   ui5strap.TextAlignment = {
+	     Default : "Default",
+	     
+	     Left : "Left",
+	     Right : "Right",
+	     Center : "Center",
+	     Justify : "Justify"
+	   };
 
   /*
   * ListType
@@ -537,11 +548,14 @@
 
 	ui5strap.LinkType = {
 		Default : "Default",
+		
+		//Deprecated
 		Thumbnail : "Thumbnail"
 	};
 
   /*
   * HeadingType
+  * TODO check this
   */
   jQuery.sap.declare("ui5strap.HeadingType");
 
@@ -554,6 +568,7 @@
 
   /*
   * ButtonType
+  * TODO check this
   */
 	jQuery.sap.declare("ui5strap.ButtonType");
 
@@ -568,6 +583,7 @@
 
   /*
   * ButtonGroupType
+  * Used by ButtonGroup
   */
   jQuery.sap.declare("ui5strap.ButtonGroupType");
 
@@ -619,7 +635,8 @@
   };
 
   /*
-  * BsAction
+  * BsAction adds a special class to a control that is used by Bootstrap's JavaScript.
+  * This is the most bad way to create dynamic behaviour. Use Actions instead.
   * @deprecated Will be removed in future releases.
   */
 	jQuery.sap.declare("ui5strap.BsAction");
@@ -627,8 +644,8 @@
 	ui5strap.BsAction = {
 		None : "None",
 		DismissModal : "DismissModal",
-    ToggleNavbar : "ToggleNavbar",
-    ToggleSidenav : "ToggleSidenav"
+		ToggleNavbar : "ToggleNavbar",
+		ToggleSidenav : "ToggleSidenav"
 	};
 
   /*
@@ -666,6 +683,22 @@
       Default : "Default",
       FormControl : "FormControl"
   };
+  
+  /*
+   * TextInputFormat
+   * Only used by ui5strap.TextInput
+   */
+   jQuery.sap.declare("ui5strap.TextInputFormat");
+
+   ui5strap.TextInputFormat = {
+       Default : "Default",
+       Plain : "Plain",
+       Html : "Html",
+       Email : "Email",
+       Date : "Date"
+   }
+
+   
 
   /*
   * SelectBoxType
@@ -677,20 +710,6 @@
       Default : "Default",
       FormControl : "FormControl"
   };
-
-  /*
-  * TextInputFormat
-  * Only used by ui5strap.TextInput
-  */
-  jQuery.sap.declare("ui5strap.TextInputFormat");
-
-  ui5strap.TextInputFormat = {
-      Default : "Default",
-      Plain : "Plain",
-      Html : "Html",
-      Email : "Email",
-      Date : "Date"
-  }
 
   /*
   * CheckboxType
@@ -832,17 +851,31 @@
 	jQuery.sap.declare("ui5strap.ContainerType");
 
 	ui5strap.ContainerType = {
+		//Plain HTML <div>
 		Default : "Default",
-		Page : "Page",
+		
+		//Plain HTML <span>
+		Text : "Text",
+		
+		//Plain HTML <section>
+		Section : "Section",
+		
+		//Bootstrap "container" & "container-fluid"
+		FixedWidth : "FixedWidth",
 		Fluid : "Fluid",
-		FluidInset : "FluidInset",
+		Full : "Full",
+		
+		//Bootstrap styles
 		Jumbotron : "Jumbotron",
 		Well : "Well",
 		WellLarge : "WellLarge",
 		PageHeader : "PageHeader",
+		
+		//Deprecated
+		Page : "Page",
+		FluidInset : "FluidInset",
 		Paragraph : "Paragraph",
 		Floating : "Floating",
-		Section : "Section",
 		Phrasing : "Phrasing"
 	};
 
@@ -875,9 +908,11 @@
   * ---------
   */
 
-  /*
+  /**
   * Create a Controller instance with Action support.
-  * TODO remove ui5strap.App dependency
+  * TODO remove ui5strap.App dependency from here?
+  * @Public
+  * @Static
   */
   ui5strap.controller = function(controllerName, controllerImpl){
       jQuery.sap.require('ui5strap.AppBase');
@@ -888,8 +923,17 @@
   };
 
   /*
+   * -----------
+   *
+   * Transitions
+   *
+   * -----------
+   */
+  
+  /**
   * Constructs a Transition
-  * @constructor
+  * @Constructor
+  * @deprecated use ui5strap.ResponsiveTransition instead.
   */
   ui5strap.Transition = function(transitionName, $currentRoot, $nextRoot, transitionId){
 	  jQuery.sap.log.warning("ui5strap.Transition is deprecated. Please use ui5strap.ResponsiveTransition instead.");
@@ -1001,6 +1045,11 @@
 
   };
   
+  /**
+   * Converts old transition strings into new ones.
+   * @deprecated
+   * @Private
+   */
   var _deprecatedTransitionsConvert = function($trans){
 	  var $newTrans = "";
 	  if($trans === 'transition-zoom')
@@ -1019,9 +1068,10 @@
 	  return $newTrans;
   };
   
-  /*
+  /**
    * Constructs a responsive Transition (experimental)
-   * @constructor
+   * @Constructor
+   * @Public
    */
    ui5strap.ResponsiveTransition = function(data){
      this._data = data;
@@ -1060,6 +1110,7 @@
      
      /**
       * Should always be surrounded by a RAF.
+      * @Public
       */
      this.prepare = function (){
  		  if(this._prepared || this._executed){
@@ -1080,6 +1131,7 @@
  	
  	/**
  	 * Should always be surrounded by a RAF.
+ 	 * @Public
  	 */
      this.execute = function (callbackCurrent, callbackNext){
  	      var _this = this;
@@ -1186,6 +1238,17 @@
 
   ui5strap.JSONModel = sap.ui.model.json.JSONModel;
 
+  //View
+  jQuery.sap.declare("ui5strap.View");
+
+  ui5strap.View = sap.ui.core.mvc.View;
+  
+  
+  //Control
+  jQuery.sap.declare("ui5strap.ControlBase");
+
+  ui5strap.ControlBase = sap.ui.core.Control;
+  
   /*
   * -----
   *
@@ -1196,10 +1259,18 @@
 
   jQuery.sap.declare("ui5strap.Layer");
   
+  /**
+   * @Package
+   * @Public
+   */
   ui5strap.Layer = {
     layers : {}
   };
   
+  /**
+   * Registers a new layer
+   * @Public
+   */
   ui5strap.Layer.register = function(layerId, $layer){
       if(this.layers[layerId]){
           throw new Error('Layer ' + layerId + ' already registered.');
@@ -1225,21 +1296,34 @@
       return true;
   };
 
+  /**
+   * @Public
+   * @Static
+   */
   ui5strap.Layer.get = function(layerId){
     return this.layers[layerId];
   };
 
+  /**
+   * @Public
+   * @Static
+   */
   ui5strap.Layer.unregister = function(layerId){
       delete this.layers[layerId];
   };
 
+  /**
+   * @Public
+   * @Static
+   */
   ui5strap.Layer.isVisible = function(layerId){
       return this.layers[layerId] && this.layers[layerId].visible;
   };
 
-  /*
-  * @Private
-  */
+  /**
+   * @Public
+   * @Static
+   */
   ui5strap.Layer.setVisible = function(layerId, visible, callback){
       
       var layer = this.layers[layerId],
@@ -1332,6 +1416,9 @@
   */
   jQuery.sap.declare("ui5strap.Utils");
 
+  /*
+   * @Package
+   */
   ui5strap.Utils = {
 		  
 		//@deprecated
@@ -1404,6 +1491,11 @@
       }
   };
 
+  /**
+   * @Static
+   * @Public
+   * @deprecated Use jQuery.sap.getObject instead.
+   */
   ui5strap.Utils.getObject = function(packageString, levelsUp){
       if(!levelsUp){
           levelsUp = 0;
@@ -1426,11 +1518,19 @@
     return constructor;
   };
 
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.createObject = function(packageString){
     var Constructor = this.getObject(packageString);
     return new Constructor();
   };
 
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.queryToObject = function(query){
       var vars = query.split('&'),
           obj = {};
@@ -1443,6 +1543,10 @@
       return obj;
   };
 
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.parseIContent = function(iContent){
       var iContentType = typeof iContent;
       
@@ -1455,12 +1559,20 @@
       return iContent;
   };
   
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.qualifyURL = function(url) {
 	  var a = document.createElement('a');
 	  a.href = url;
 	  return a.href;
   };
   
+  /**
+   * @Static
+   * @Public
+   */
   ui5strap.Utils.urlOrigin = function(url) {
 	  var a = document.createElement('a');
 	  a.href = url;
@@ -1470,6 +1582,8 @@
   
   /**
    * Transfers a property propagation from one to an other control.
+   * @Public
+   * @Static
    */
   ui5strap.Utils.addPropertyPropagation = function(fromControl, toControl){
 		toControl.oPropagatedProperties = fromControl._getPropertiesToPropagate();
@@ -1484,6 +1598,7 @@
   /**
    * Finds the closest parent control of type TargetType.
    * @Public
+   * @Static
    */
   ui5strap.Utils.findClosestParentControl = function(control, TargetType){
 		var parentControl = control,
@@ -1511,10 +1626,16 @@
 
   jQuery.sap.declare("ui5strap.RenderUtils");
 
+  /**
+   * @Package
+   * @Public
+   */
   ui5strap.RenderUtils = {
 		
 	  /**
 	   * Renders title content, used in Panel
+	   * @Public
+	   * @Static
 	   */
       renderTitleContent : function(rm, oControl, text){
           var content = oControl.getTitleContent(),
@@ -1550,6 +1671,8 @@
 
       /**
        * Parses BBCode inside text
+       * @Public
+       * @Static
        */
       parseText : function(text){
           return text.replace(/\[\/?strong\]|\[\/?em\]|\[\/?small\]|\[\/?span\]/gi, function(matched){
@@ -1559,6 +1682,8 @@
       
       /**
        * Default rendering for controls that have both text property and content aggregation 
+       * @Public
+       * @Static
        */
       renderContent : function(rm, oControl, text, dontEscape){
           var content = oControl.getContent(),
@@ -1655,52 +1780,64 @@
               visibilityMedium = oControl.getVisibilityMedium(),
               visibilityLarge = oControl.getVisibilityLarge(),
               Visibility = ui5strap.Visibility;
-
+          
+          var resultHidden = ["", "", "", ""];
+          
           //Generic visibility
           //TODO check if necccessary and working at all
           if(visibility !== Visibility.Default){
-              rm.addClass(visibility.toLowerCase());
+              if(visibility === Visibility.Hidden){
+            	  resultHidden = [
+            	                  "ui5strap-hide-xs", 
+            	                  "ui5strap-hide-sm", 
+            	                  "ui5strap-hide-md", 
+            	                  "ui5strap-hide-lg"
+            	                  ];
+              }
           }
           
           //Visibility for EXTRA_SMALL screens
           if(visibilityExtraSmall === Visibility.Visible){
-        	  //Visible on EXTRA_SMALL, hidden on smaller
-              rm.addClass('visible-xs');
+        	  //Visible on EXTRA_SMALL
+              resultHidden[0] = "";
           }
           else if(visibilityExtraSmall === Visibility.Hidden){
-        	  //Hidden on EXTRA_SMALL, visible else
-        	  rm.addClass('hidden-xs');
+        	  //Hidden on EXTRA_SMALL
+        	  resultHidden[0] = "ui5strap-hide-xs";
           }
           
           //Visibility for SMALL screens
           if(visibilitySmall === Visibility.Visible){
-        	  //Visible on SMALL, hidden on smaller
-              rm.addClass('visible-sm');
+        	  //Visible on SMALL
+              resultHidden[1] = "";
           }
           else if(visibilitySmall === Visibility.Hidden){
-        	  //Hidden on SMALL, visible else
-              rm.addClass('hidden-sm');
+        	  //Hidden on SMALL
+              resultHidden[1] = "ui5strap-hide-sm";
           }
           
           //Visibility for MEDIUM screens
           if(visibilityMedium === Visibility.Visible){
-        	  //Visible on MEDIUM, hidden on smaller
-              rm.addClass('visible-md');
+        	  //Visible on MEDIUM
+              resultHidden[2] = "";
           }
           else if(visibilityMedium === Visibility.Hidden){
-        	  //Hidden on MEDIUM, visible else
-              rm.addClass('hidden-md');
+        	  //Hidden on MEDIUM
+              resultHidden[2] = "ui5strap-hide-md";
           }
           
           //Visibility for LARGE screens
           if(visibilityLarge === Visibility.Visible){
-        	  //Visible on LARGE, hidden on smaller
-              rm.addClass('visible-lg');
+        	  //Visible on LARGE
+              resultHidden[3] = "";
           }
           else if(visibilityLarge === Visibility.Hidden){
-        	  //Hidden on LARGE, visible on smaller
-              rm.addClass('hidden-lg');
+        	  //Hidden on LARGE
+              resultHidden[3] = "ui5strap-hide-lg";
           }
+          
+          resultHidden = resultHidden.join(" ");
+          rm.addClass(resultHidden);
           
           //Invisibility
           //TODO neccessary?
@@ -1915,6 +2052,14 @@
     
   };
   
+  /*
+   * ----------
+   *
+   * Read Files
+   *
+   * ----------
+   */
+  
   /**
    * Read a text file via GET
    */
@@ -2054,7 +2199,7 @@
 			this._log.error("{func} missing argument 'srcControl'");
 		}
 		srcControl = this._getParameter(args.srcControl);
-		if(!(srcControl instanceof sap.ui.core.Control)){
+		if(!(srcControl instanceof ui5strap.Control)){
 			this._log.error("{func} not an Control");
 		}
 		var data = args.dataKey ? srcControl.data(args.dataKey) : srcControl.data(); 
@@ -2256,8 +2401,7 @@
 	ActionContext.NUMBER = 0;
 
 	ActionContext.PREFIX = "__";
-	ActionContext.RESOLVE = "=->";
-	ActionContext.RESOLVE_LENGTH = ActionContext.RESOLVE.length;
+	ActionContext.RESOLVE = "=";
 	
 	//Action Name
 	ActionContext.PARAM_ACTION = 'action';
@@ -2321,13 +2465,13 @@
 		_this.defaultParameters = action.parameters;
 			
 		//Pool
-		_this.action = jQuery.extend(true, {}, _this.defaultParameters);
+		_this.action = _buildPool(_this.defaultParameters);
 		
 		//Old Pool
 		//@deprecated
 		_this.parameters = _this.action;
 		
-		console.log(action);
+		console.log(_this);
 		
 		//Event Source
 		if(action.eventSource){
@@ -2380,7 +2524,56 @@
 		//Init Log
 		_initLog(_this);
 	};
-
+	
+	var _ActionExpression = function(expression){
+		this.expression = expression;
+	},
+	_buildPool = function(pointer){
+		var pointerType = typeof pointer;
+		
+		if(pointerType === "string"){
+			var firstChar = pointer.charAt(0);
+			if(firstChar === ActionContext.RESOLVE){
+				return new _ActionExpression(pointer.substring(1).trim());
+			}
+			else if(firstChar === "\\" && pointer.charAt(1) === ActionContext.RESOLVE){
+				return pointer.substring(1);
+			}
+			else{
+				return pointer;
+			}
+		}
+		else if(pointerType === "function"){
+			throw new Error("Action parameters must not contain functions!");
+		}
+		else if(pointerType === "object"){
+			var isArray = jQuery.isArray(pointer);
+			
+			if(isArray){
+				//Array
+				var newArray = [],
+					arrayLength = pointer.length;
+				for(var i = 0; i < arrayLength; i++){
+					newArray[i] = _buildPool(pointer[i]);
+				}
+				return newArray;
+			}
+			else{
+				//Object
+				var newObject = {},
+					keys = Object.keys(pointer),
+					keysLength = keys.length;
+				for(var i = 0; i < keysLength; i++){
+					newObject[keys[i]] = _buildPool(pointer[keys[i]]);
+				}
+				return newObject;
+			}
+		}
+		else{
+			return pointer;
+		}
+	};
+	
 	/**
 	* Returns String representation of this context.
 	* 
@@ -2390,21 +2583,13 @@
 		return '[ACTION#' + this._actionNumber + ']';
 	};
 	
-	ActionContextProto._isExpression = function(pointer){
-		return ("string" === typeof pointer) && pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE;
-	};
-	
-	ActionContextProto._evalExpression = function(task, pointer){
-		return this.get(task, pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
-	};
-	
 	/**
 	 * @Public
 	 * FIXME
 	 */
 	ActionContextProto.resolve = function(task, pointer, onlyString){
-		if(this._isExpression(pointer)){
-			pointer = this._evalExpression(task, pointer);
+		if(pointer instanceof _ActionExpression){
+			return this.get(task, pointer.expression);
 		}
 		else if(!onlyString && ("object" === typeof pointer)){
 			var objectKeys = Object.keys(pointer),
@@ -2450,7 +2635,7 @@
 	* 
 	* @Protected
 	*/
-	ActionContextProto.get = function(task, parameterKey, defaultValue){
+	ActionContextProto.get = function(task, parameterKey){
 		if(!parameterKey){
 			throw new Error("Parameter key is required for get!");
 		}
@@ -2564,12 +2749,12 @@
 				}
 				
 				//Check if value contains expression
-				if(this._isExpression(pointer)){
+				if(pointer instanceof _ActionExpression){
 					if(functionApplied){
-						throw new Error("Function '" + kPart + "' must not return string value starting with " + ActionContext.RESOLVE);
+						throw new Error("Function '" + kPart + "' must not return Action Expression!");
 					}
 					//Store back the value in the context
-					prevPointer[keyPart] = this._evalExpression(task, pointer);
+					prevPointer[keyPart] = this.get(task, pointer.expression);
 				    
 					pointer = prevPointer[keyPart];
 				}
@@ -2584,14 +2769,6 @@
 					throw new Error("Cannot execute function '" + keyPart + "': not a function!");
 				}
 				break;
-			}
-		}
-		
-		//Set value to default if null or undefined
-		if(("undefined" === typeof pointer) && ("undefined" !== typeof defaultValue)){
-			pointer = defaultValue;
-			if(this._isExpression(pointer)){
-				pointer = this._evalExpression(task, pointer);
 			}
 		}
 		
@@ -2648,9 +2825,9 @@
 			if(null === pointer){
 				throw new Error("Cannot write parameter: '" + keyPart + "' is null.");
 			}
-			else if(this._isExpression(pointer)){
+			else if(pointer instanceof _ActionExpression){
 				//Store back the value in the context
-				prevPointer[keyPart] = this._evalExpression(task, pointer);
+				prevPointer[keyPart] = this.get(task, pointer.expression);
 				
 				pointer = prevPointer[keyPart];
 			}
@@ -2834,10 +3011,10 @@
 	/**
 	 * @deprecated
 	 */
-	ActionContextProto._getParameter = function(parameterKey, task, defaultValue){
+	ActionContextProto._getParameter = function(parameterKey, task){
 		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._getParameter is deprecated. Use .get instead.");
 		
-		return this.get(task, parameterKey, defaultValue);
+		return this.get(task, parameterKey);
 	}
 	
 	/**
@@ -2850,7 +3027,6 @@
 	
 	/**
 	* @Protected
-	* FIXME
 	* @deprecated
 	*/
 	ActionContextProto._deleteParameter = function(parameterKey){
@@ -2877,7 +3053,6 @@
 	/**
 	* @Protected
 	* @deprecated
-	* FIXME
 	*/
 	ActionContextProto._moveParameter = function(parameterKeySrc, parameterKeyTgt){
 		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._moveParameter is deprecated and will be dropped.");
@@ -2997,8 +3172,12 @@
 			throw new Error("Invalid definition for parameter '" + paramKey + "'.");
 		}
 
-		var value = this.context.get(this, "." + paramKey, paramDef.defaultValue),
+		var value = this.context.get(this, "." + paramKey),
 			paramDefType = paramDef.type;
+		
+		if(('undefined' === typeof value) && ('undefined' !== typeof paramDef.defaultValue)){
+			value = paramDef.defaultValue;
+		}
 		
 		if(value && paramDefType){
 			var parameterType = typeof value,
@@ -3016,20 +3195,17 @@
 	
 	/**
 	 * Faster variant of ActionContext.prototype.get - only for task root paramaters!
-	 * @Public
+	 * @Private
 	 */
-	ActionModuleProto.getRootParameter = function(parameterKey, defaultValue){
-		var param = this.context.action[this.namespace][parameterKey];
+	var _expression = function(_this, parameterKey, defaultValue){
+		var param = _this.context.action[_this.namespace][parameterKey];
 		if(param){
-			param = this.context.resolve(this, param, true);
+			param = _this.context.resolve(_this, param, true);
 		}
 		
 		if(('undefined' === typeof param) && ('undefined' !== typeof defaultValue)){
-			param = this.context.resolve(this, defaultValue, true);
+			param = defaultValue;
 		}
-		
-		//Store back the value in the context
-		this.context.action[this.namespace][parameterKey] = param;
 		
 		return param;
 	};
@@ -3057,7 +3233,7 @@
 		this.prepareParameters();
 
 		//test if parameters match conditions
-		if(!this.getRootParameter("IF", true)){
+		if(!_expression(this, "IF", true)){
 			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
 			
 			this["else"]();
@@ -3069,7 +3245,7 @@
 				this.then();
 			}
 			catch(err){
-				var errorTask = this.getRootParameter("ERROR");
+				var errorTask = _expression(this, "ERROR");
 				if(errorTask){
 					ui5strap.Action.runTasks(this.context, errorTask);
 				}
@@ -3087,11 +3263,11 @@
 	* @Protected
 	*/
 	ActionModuleProto.run = function(){
-		this.getRootParameter("DO");
+		ui5strap.Action.runTasks(this.context, _expression(this, "DO"));
 	};
 	
 	ActionModuleProto.then = function(){
-		ui5strap.Action.runTasks(this.context, this.getRootParameter("THEN"));
+		ui5strap.Action.runTasks(this.context, _expression(this, "THEN"));
 		
 		//Exceution complete
 		//@deprecated
@@ -3099,7 +3275,7 @@
 	};
 	
 	ActionModuleProto["else"] = function(){
-		ui5strap.Action.runTasks(this.context, this.getRootParameter("ELSE"));
+		ui5strap.Action.runTasks(this.context, _expression(this, "ELSE"));
 	};
 	
 	/*
@@ -3449,6 +3625,7 @@
 	*/
 	Action.runTasks = function(context, actionModulesList){
 		if(!actionModulesList){
+			jQuery.sap.log.debug("[ACTION] Tried to run empty task list.");
 			return;
 		}
 		
@@ -5138,7 +5315,7 @@
 			transitionName = transitionName || 'transition-slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.overlayId, true, function(){
-			if(!(viewDataOrControl instanceof sap.ui.core.Control)){
+			if(!(viewDataOrControl instanceof ui5strap.Control)){
 				viewDataOrControl = _this.createView(_this.config.getViewConfig(viewDataOrControl));
 			}
 			overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
@@ -5993,7 +6170,7 @@
 	jQuery.sap.declare("ui5strap.NavContainer");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.NavContainer", {
+	ui5strap.ControlBase.extend("ui5strap.NavContainer", {
 		metadata : {
 			library : "ui5strap",
 			
@@ -6461,7 +6638,7 @@
 	
 	NavContainerBaseProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
 		jQuery.sap.log.debug("UBC");
-		sap.ui.core.Control.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
+		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
 		
 		var oModelNames = {},
 			sModelName,
@@ -6522,7 +6699,7 @@
 				delete oldTarget;
 			}
 		}
-		//sap.ui.core.Control.prototype.destroy.call(this, bSuppressInvalidate);
+		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
 	};
 	
 	/*
@@ -6759,16 +6936,6 @@
 
 		this.targets[target] = page;
 		
-		/*
-		 * START OpenUi5 MOD
-		 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
-		 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
-		 */
-		ui5strap.Utils.addPropertyPropagation(this, page);
-		/*
-		 * END OpenUi5 MOD
-		 */
-		
 		var changeName = '{' + target + '} '
 							+ (null === currentPage ? 'None' : '#' + currentPage.getId()) 
 							+ ' => '
@@ -6797,6 +6964,16 @@
 		}
 
 		if(page){
+			/*
+			 * START OpenUi5 MOD
+			 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
+			 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
+			 */
+			ui5strap.Utils.addPropertyPropagation(this, page);
+			/*
+			 * END OpenUi5 MOD
+			 */
+			
 			_triggerControllerEvent(_this, target, page, 'pageShow', {
 				target : target,
 				oldPage : currentPage
@@ -7023,7 +7200,7 @@
 			transitionName = transitionName || 'transition-slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.options.overlay, true, function(){
-			if(viewDataOrControl instanceof sap.ui.core.Control){
+			if(viewDataOrControl instanceof ui5strap.Control){
 				//Control is directly injected into the frame
 				overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
 			}
@@ -8178,7 +8355,7 @@
 	jQuery.sap.declare("ui5strap.Button");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Button", {
+	ui5strap.ControlBase.extend("ui5strap.Button", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectableItem"],
 			
@@ -8191,6 +8368,7 @@
 					defaultValue: ui5strap.ButtonType.Button
 				},
 				bsAction : {
+					deprecated : true,
 					type: "ui5strap.BsAction", 
 					defaultValue: ui5strap.BsAction.None
 				},
@@ -8437,7 +8615,7 @@
 	jQuery.sap.declare("ui5strap.Console");
 	jQuery.sap.require("ui5strap.library");
 	
-	ui5strap.Control.extend("ui5strap.Console", {
+	ui5strap.ControlBase.extend("ui5strap.Console", {
 		metadata : {
 
 			library : "ui5strap",
@@ -8780,7 +8958,7 @@
 	jQuery.sap.declare("ui5strap.Sandbox");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Sandbox", {
+	ui5strap.ControlBase.extend("ui5strap.Sandbox", {
 		metadata : {
 
 			library : "ui5strap",
@@ -8919,7 +9097,7 @@
 	jQuery.sap.declare("ui5strap.Icon");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Icon", {
+	ui5strap.ControlBase.extend("ui5strap.Icon", {
 		metadata : {
 
 			library : "ui5strap",
@@ -9113,8 +9291,7 @@
 	jQuery.sap.declare("ui5strap.Link");
 	jQuery.sap.require("ui5strap.library");
 	
-
-	sap.ui.core.Control.extend("ui5strap.Link", {
+	ui5strap.ControlBase.extend("ui5strap.Link", {
 		metadata : {
 
 			// ---- object ----
@@ -9128,6 +9305,7 @@
 					defaultValue : ui5strap.LinkType.Default
 				},
 				bsAction : {
+					deprecated : true,
 					type: "ui5strap.BsAction", 
 					defaultValue: ui5strap.BsAction.None
 				},
@@ -9350,7 +9528,7 @@
 	jQuery.sap.declare("ui5strap.Text");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Text", {
+	ui5strap.ControlBase.extend("ui5strap.Text", {
 		metadata : {
 
 			// ---- object ----
@@ -9403,22 +9581,11 @@
 	var TextProto = ui5strap.Text.prototype;
 
 	TextProto.setText = function(newText, suppressInvalidate){
-		if(ui5strap.TextType.Default === this.getType()){
-			this.setProperty('text', newText, suppressInvalidate);
-		}
-		else{ 
-			ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
-		}
-		
+		ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
 	};
 
 	TextProto.setTitle = function(newTitle){
-		if(ui5strap.TextType.Default === this.getType()){
-			this.setProperty('title', newTitle, true);
-		}
-		else{ 
-			ui5strap.Utils.updateAttribute(this, 'title', newTitle);
-		}
+		ui5strap.Utils.updateAttribute(this, 'title', newTitle);
 	};
 
 }());;/*
@@ -9456,10 +9623,6 @@
 	ui5strap.TextRenderer = {
 		typeToTag : {
 			Default : { 
-				tagName : null,
-				className : null
-			},
-			Phrasing : {
 				tagName : "span",
 				className : null
 			},
@@ -9514,7 +9677,14 @@
 			Badge : {
 				tagName : "span",
 				className : "badge"
+			},
+			
+			//Deprecated
+			Phrasing : {
+				tagName : "span",
+				className : null
 			}
+			
  		}
 
 	};
@@ -9531,56 +9701,45 @@
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 
-		if(ui5strap.TextType.Default === type){
-			//Text only
-			//TODO still needed?
-			if(parse){
-				rm.write(text);
-			}
-			else{
-				rm.writeEscaped(text);
-			}
-		}
-		else{
-			//Text with tag
-			var tagData = this.typeToTag[type];
+		//Text with tag
+		var tagData = this.typeToTag[type];
 
-			rm.write("<" + tagData.tagName);
-			rm.writeControlData(oControl);
-			
-			//CSS Classes
-			if(ui5strap.TextType.Label === type){
-				//Severity for labels
-				rm.addClass("label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity]);
-			}
-			else if(ui5strap.Severity.None !== severity){
-				//Severity for general text
-				rm.addClass("text-" + ui5strap.BSSeverity[severity]);
-			}
-			
-			if(ui5strap.TextAlignment.Default !== textAlign){
-				rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
-			}
-			
-			if(tagData.className){
-				rm.addClass(tagData.className);
-			}
-			
-			rm.writeClasses();
-			
-			//Title
-			if('' !== title){
-	    		rm.writeAttribute('title', title);
-	    	}
-			
-			rm.write(">");
-				
-				//Content
-				ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
-			
-			rm.write("</" + tagData.tagName + ">");
-
+		rm.write("<" + tagData.tagName);
+		rm.writeControlData(oControl);
+		
+		//CSS Classes
+		if(ui5strap.TextType.Label === type){
+			//Severity for labels
+			rm.addClass("label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity]);
 		}
+		else if(ui5strap.Severity.None !== severity){
+			//Severity for general text
+			rm.addClass("text-" + ui5strap.BSSeverity[severity]);
+		}
+		
+		if(ui5strap.TextAlignment.Default !== textAlign){
+			rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
+		}
+		
+		if(tagData.className){
+			rm.addClass(tagData.className);
+		}
+		
+		rm.writeClasses();
+		
+		//Title
+		if('' !== title){
+    		rm.writeAttribute('title', title);
+    	}
+		
+		rm.write(">");
+			
+			//Content
+			ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		
+		rm.write("</" + tagData.tagName + ">");
+
+		
 		
 		//Trail
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
@@ -9619,7 +9778,7 @@
 	jQuery.sap.declare("ui5strap.TextInput");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.TextInput", {
+	ui5strap.ControlBase.extend("ui5strap.TextInput", {
 		metadata : {
 
 			library : "ui5strap",
@@ -9832,7 +9991,7 @@
 	jQuery.sap.declare("ui5strap.RadioButton");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.RadioButton", {
+	ui5strap.ControlBase.extend("ui5strap.RadioButton", {
 		metadata : {
 
 			library : "ui5strap",
@@ -10027,7 +10186,7 @@
 	jQuery.sap.declare("ui5strap.SelectBox");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.SelectBox", {
+	ui5strap.ControlBase.extend("ui5strap.SelectBox", {
 		metadata : {
 
 			defaultAggregation : "items",
@@ -10218,7 +10377,7 @@
 	jQuery.sap.declare("ui5strap.ListItem");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.ListItem", {
+	ui5strap.ControlBase.extend("ui5strap.ListItem", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectableItem"],
 			
@@ -10383,7 +10542,7 @@
 	jQuery.sap.require("ui5strap.library");
 	jQuery.sap.require("ui5strap.ListItem");
 	
-	ui5strap.Control.extend("ui5strap.ListBase", {
+	ui5strap.ControlBase.extend("ui5strap.ListBase", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectionProvider"],
 
@@ -11008,6 +11167,7 @@
 					defaultValue : false
 				},
 				bsAction : {
+					deprecated : true,
 					type: "ui5strap.BsAction", 
 					defaultValue: ui5strap.BsAction.None
 				},
@@ -11406,7 +11566,7 @@
   jQuery.sap.declare("ui5strap.Tooltip");
   jQuery.sap.require("ui5strap.library");
 
-  sap.ui.core.Control.extend("ui5strap.Tooltip", {
+  ui5strap.ControlBase.extend("ui5strap.Tooltip", {
     metadata : {
 
       // ---- object ----
@@ -14135,7 +14295,7 @@
   jQuery.sap.require("ui5strap.Button");
   jQuery.sap.require("ui5strap.Icon");
 	
-	sap.ui.core.Control.extend("ui5strap.Alert", {
+	ui5strap.ControlBase.extend("ui5strap.Alert", {
 		metadata : {
 
 			// ---- object ----
@@ -14587,7 +14747,7 @@
 
 	jQuery.sap.declare("ui5strap.Badge");
 	
-	sap.ui.core.Control.extend("ui5strap.Badge", {
+	ui5strap.ControlBase.extend("ui5strap.Badge", {
 		metadata : {
 			deprecated : true,
 			library : "ui5strap",
@@ -14677,8 +14837,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.Bar");
-
-	sap.ui.core.Control.extend("ui5strap.Bar", {
+	jQuery.sap.require("ui5strap.library");
+	
+	ui5strap.ControlBase.extend("ui5strap.Bar", {
 		metadata : {
 			interfaces : ["ui5strap.IBar"],
 			
@@ -14751,50 +14912,62 @@
 			defaultAggregation : "items",
 			
 			properties : { 
-				"inverse" : {
+				inverse : {
 					type:"boolean", 
 					defaultValue:false
 				},
 				
-				"zoomExtraSmall" : {
+				//TODO rename to zoom
+				zoomExtraSmall : {
 					type:"int",
 					defaultValue : 0
 				},
 				
+				//TODO rename to zoomSmallUp
 				zoomSmall : {
 					type : "int",
 					defaultValue : 0
 				},
 				
+				//TODO rename to zoomMediumUp
 				zoomMedium : {
 					type : "int",
 					defaultValue : 0
 				},
 				
+				//TODO rename to zoomLargeUp
 				zoomLarge : {
 					type : "int",
 					defaultValue : 0
 				},
 				
+				//TODO add zoomExtraLarge on Bootstrap 4 Upgrade
+				
+				//TODO rename to type
 				typeExtraSmall : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.ListVertical
 				},
 				
+				//TODO rename to typeSmallUp
 				typeSmall : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.Default
 				},
 				
+				//TODO rename to typeMediumUp
 				typeMedium : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.Default
 				},
 				
+				//TODO rename to typeLargeUp
 				typeLarge : {
 					type : "ui5strap.BarMenuType",
 					defaultValue : ui5strap.BarMenuType.Default
 				}
+				
+				//TODO add typeExtraLarge on Bootstrap 4 Upgrade
 			},
 			
 			aggregations : { 
@@ -15075,6 +15248,9 @@
 					defaultValue : true
 				},
 				
+				//Bar Mode DOES NOT inherit from smaller sizes
+				//TODO add barMode for all sizes?
+				
 				barModeExtraSmall : {
 					type : "ui5strap.BarNavContainerMode",
 					defaultValue : ui5strap.BarNavContainerMode.Intrude
@@ -15091,23 +15267,33 @@
 					type : "ui5strap.BarNavContainerMode",
 					defaultValue : ui5strap.BarNavContainerMode.Intrude
 				},
+				//TODO add barModeExtraLarge on Bootstrap 4 Upgrade
 				
+				//Bar Size DOES inherit from smaller sizes
+				//TODO rename to barSize
 				barSizeExtraSmall : {
 					type : "int",
-					defaultValue : -1
+					defaultValue : 1
 				},
+				//TODO rename to barSizeSmallUp
 				barSizeSmall : {
 					type : "int",
 					defaultValue : -1
 				},
+				//TODO rename to barSizeMediumUp
 				barSizeMedium : {
 					type : "int",
 					defaultValue : -1
 				},
+				//TODO rename to barSizeLargeUp
 				barSizeLarge : {
 					type : "int",
 					defaultValue : -1
 				},
+				//TODO Add barSizeExtraLarge on Bootstrap 4 Upgrade
+				
+				//Bar placement DOES NOT inherit from smaller sizes
+				//TODO add barPlacement for all sizes?
 				
 				barPlacementExtraSmall : {
 					type : "ui5strap.BarNavContainerPlacement",
@@ -15125,6 +15311,10 @@
 					type : "ui5strap.BarNavContainerPlacement",
 					defaultValue : ui5strap.BarNavContainerPlacement.Left
 				},
+				//TODO add barPlacementExtraLarge on Bootstrap 4 Upgrade
+				
+				//Bar Transition DOES NOT inherit from smaller sizes
+				//TODO add barTransition for all sizes?
 				
 				barTransitionExtraSmall : {
 					type : "string",
@@ -15142,6 +15332,7 @@
 					type : "string",
 					defaultValue : ""
 				},
+				//TODO add barTransitionExtraLarge on Bootstrap 4 Upgrade
 				
 				barTransitionSpeed : {
 					type : "ui5strap.TransitionSpeed",
@@ -15212,7 +15403,7 @@
 		var transition = this.getBarTransitionSmall();
 		
 		if(!transition){
-			if(0 < this.getBarSizeSmall()){
+			if(-1 < this.getBarSizeSmall()){
 				//Get transition by placement
 				transition = this._getBarTransitionByPlacement(this.getBarPlacementSmall());
 			}
@@ -15229,7 +15420,7 @@
 		var transition = this.getBarTransitionMedium();
 		
 		if(!transition){
-			if(0 < this.getBarSizeMedium()){
+			if(-1 < this.getBarSizeMedium()){
 				//Get transition by placement
 				transition = this._getBarTransitionByPlacement(this.getBarPlacementMedium());
 			}
@@ -15246,7 +15437,7 @@
 		var transition = this.getBarTransitionLarge();
 		
 		if(!transition){
-			if(0 < this.getBarSizeLarge()){
+			if(-1 < this.getBarSizeLarge()){
 				//Get transition by placement
 				transition = this._getBarTransitionByPlacement(this.getBarPlacementLarge());
 			}
@@ -15309,6 +15500,8 @@
 						$target.attr('class', _this._getTargetClassString('bar'));
 							
 						_this.fireBarChanged();
+						
+						jQuery.sap.log.debug("[BarNavContainer] Transition complete.")
 					};
 				
 				//RAF start
@@ -15364,19 +15557,19 @@
 			
 		//Ensure that at least size xs is set
 		if(1 > columnsExtraSmall){
-			classes += " navcontainer-flag-col-xs-1";
+			classes += " navcontainer-flag-col-xs-0";
 		}
 		else{
 	      classes += " navcontainer-flag-col-xs-" + columnsExtraSmall;
 	    }
 		
-	    if(0 < columnsSmall){
+	    if(-1 < columnsSmall){
 	      classes += " navcontainer-flag-col-sm-" + columnsSmall;
 	    }
-	    if(0 < columnsMedium){
+	    if(-1 < columnsMedium){
 		  classes += " navcontainer-flag-col-md-" + columnsMedium;
 		}
-	    if(0 < columnsLarge){
+	    if(-1 < columnsLarge){
 	      classes += " navcontainer-flag-col-lg-" + columnsLarge;
 	    }
 		    
@@ -15638,8 +15831,9 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.Break");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Break", {
+	ui5strap.ControlBase.extend("ui5strap.Break", {
 		metadata : {
 
 			library : "ui5strap",
@@ -16109,8 +16303,9 @@ ui5strap.ButtonGroupRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.ButtonToolbar");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.ButtonToolbar", {
+	ui5strap.ControlBase.extend("ui5strap.ButtonToolbar", {
 		metadata : {
 
 			// ---- object ----
@@ -16214,9 +16409,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.Carousel");
-  jQuery.sap.require("ui5strap.library");
+    jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Carousel", {
+	ui5strap.ControlBase.extend("ui5strap.Carousel", {
 		metadata : {
 
 			defaultAggregation : "items",
@@ -16248,18 +16443,26 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		        label : {
 		            type:"string", defaultValue : ""
 		        },
+		        
+		        //Columns DO inherit from smaller sizes
+		        //TODO rename to columns
 		        columnsExtraSmall : {
 		            type:"int", defaultValue:-1
 		        },
+		        //TODO rename to columnsSmallUp
 		        columnsSmall : {
 		            type:"int", defaultValue:-1
 		        },
+		        //TODO rename to columnsMediumUp
 		        columnsMedium : {
 		            type:"int", defaultValue:-1
 		        },
+		        //TODO rename to columnsLargeUp
 		        columnsLarge : {
 		            type:"int", defaultValue:-1
 		        },
+		        //TODO add columnsExtraLarge on Bootstrap 4 Upgrade
+		        
 		        speed : {
 		            type:"float", defaultValue : 0.5
 		        },
@@ -16425,10 +16628,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
     }
   };
 
-  CarouselProto.setIndex = function(newIndex){
+  CarouselProto.setIndex = function(newIndex, suppressInvalidate){
   
     if(!this.getDomRef()){ 
-      sap.ui.core.Control.prototype.setProperty.call(this, 'index', newIndex);
+      this.setProperty('index', newIndex, suppressInvalidate);
     }
     else{
 
@@ -16693,7 +16896,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Checkbox");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Checkbox", {
+	ui5strap.ControlBase.extend("ui5strap.Checkbox", {
 		metadata : {
 
 			library : "ui5strap",
@@ -16864,7 +17067,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Clearfix");
 	jQuery.sap.require("ui5strap.library");
 	
-	ui5strap.Control.extend("ui5strap.Clearfix", {
+	ui5strap.ControlBase.extend("ui5strap.Clearfix", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
 			library : "ui5strap",
@@ -17012,71 +17215,99 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Col");
 	jQuery.sap.require("ui5strap.library");
 
-	ui5strap.Control.extend("ui5strap.Col", {
+	ui5strap.ControlBase.extend("ui5strap.Col", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
-			// ---- object ----
-			defaultAggregation : "content",
 			
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
+				//Size DOES inherit from smaller sizes
+				//TODO rename to size
 				columnsExtraSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to sizeSmallUp
 				columnsSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to sizeMediumUp
 				columnsMedium : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to sizeLargeUp
 				columnsLarge : {
 					type:"int", defaultValue:-1
 				},
+				//TODO add sizeExtraLarge on Bootstrap 4 Upgrade
+				
+				//Offset DOES inherit from smaller sizes
+				//TODO rename to offset
 				offsetExtraSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to offsetSmallUp
 				offsetSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to offsetMediumUp
 				offsetMedium : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to offsetLargeUp
 				offsetLarge : {
 					type:"int", defaultValue:-1
 				},
+				//TODO add offsetExtraLarge on Bootstrap 4 Upgrade
+				
+				//Pull DOES inherit from smaller sizes
+				//TODO rename to pull
 				pullExtraSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pullSmallUp
 				pullSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pullMediumUp
 				pullMedium : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pullLargeUp
 				pullLarge : {
 					type:"int", defaultValue:-1
 				},
+				//TODO add pullExtraLarge on Bootstrap 4 Upgrade
+				
+				//Push DOES inherit from smaller sizes
+				//TODO rename to push
 				pushExtraSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pushSmallUp
 				pushSmall : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pushMediumUp
 				pushMedium : {
 					type:"int", defaultValue:-1
 				},
+				//TODO rename to pushLargeUp
 				pushLarge : {
 					type:"int", defaultValue:-1
 				}
+				//TODO add pushExtraLarge on Bootstrap 4 Upgrade
 			},
+			
 			aggregations : { 
 				content : {
 					singularName: "content"
 				} 
-			}
+			},
+			
+			defaultAggregation : "content"
 
-		}
+		} // END metadata
 	});
 
 }());;/*
@@ -17233,27 +17464,33 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Container");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Container", {
+	ui5strap.ControlBase.extend("ui5strap.Container", {
 		metadata : {
 
-			// ---- object ----
-			defaultAggregation : "content",
-			
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
 					type : {
 						type:"ui5strap.ContainerType", 
 						defaultValue: ui5strap.ContainerType.Default
 					},
+					
 					severity : {
 						type: "ui5strap.Severity", 
 						defaultValue: ui5strap.Severity.None
 					},
+					
 					align : {
 						type : "ui5strap.Alignment",
 						defaultValue : ui5strap.Alignment.Default
 					},
+					
+					html : {
+						type : "string",
+						defaultValue : ""
+					},
+					
+					//Visibility DOES NOT inherit from smaller sizes
 					visibility : {
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
@@ -17274,24 +17511,26 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
 					},
+					//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
+					
+					//Deprecated
 					invisible : {
+						deprecated : true,
 						type : "boolean",
 						defaultValue : false
-					},
-					html : {
-						type : "string",
-						defaultValue : ""
 					}
 			},
+			
 			aggregations : { 
 				content : {
 					singularName: "content"
 				}
-			}
-
-		}
+			},
+			
+			defaultAggregation : "content"
+			
+		} //END metadata
 	});
-
 
 }());;/*
  * 
@@ -17330,7 +17569,14 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 				tagName : "div",
 				className : null
 			},
-			Page : {
+			Text : {
+				tagName : "span",
+				className : null
+			},
+			
+			//Bootstrap container and container-fluid
+			//container-inset is an additional class that adds padding-top and padding-bottom
+			FixedWidth : {
 				tagName : "div",
 				className : "container"
 			},
@@ -17338,10 +17584,12 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 				tagName : "div",
 				className : "container-fluid"
 			},
-			FluidInset : {
+			Full : {
 				tagName : "div",
-				className : "container-fluid container-inset"
+				className : "container-full"
 			},
+			
+			//Bootstrap Components
 			Jumbotron : {
 				tagName : "div",
 				className : "container-jumbotron jumbotron"
@@ -17358,23 +17606,30 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 				tagName : "div",
 				className : "container-page-header page-header"
 			},
+			
+			
+			
+			//Deprecated
 			Section : {
 				tagName : "section",
 				className : "container-section"
 			},
-			
-			
-			//Deprecated
+			Page : {
+				tagName : "div",
+				className : "container"
+			},
+			FluidInset : {
+				tagName : "div",
+				className : "container-fluid container-inset"
+			},
 			Paragraph : {
 				tagName : "div",
 				className : "container-paragraph"
 			},
-			//Deprecated
 			Phrasing : {
 				tagName : "div",
 				className : "container-phrasing"
 			},
-			//Deprecated
 			Floating : {
 				tagName : "div",
 				className : "container-floating"
@@ -17455,7 +17710,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Form");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Form", {
+	ui5strap.ControlBase.extend("ui5strap.Form", {
 		metadata : {
 
 			defaultAggregation : "content",
@@ -17536,7 +17791,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.FormGroup");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.FormGroup", {
+	ui5strap.ControlBase.extend("ui5strap.FormGroup", {
 		metadata : {
 
 			defaultAggregation : "controls",
@@ -17790,7 +18045,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Heading");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Heading", {
+	ui5strap.ControlBase.extend("ui5strap.Heading", {
 		metadata : {
 
 			// ---- object ----
@@ -17926,8 +18181,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.HtmlTag");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.HtmlTag", {
+	ui5strap.ControlBase.extend("ui5strap.HtmlTag", {
 		metadata : {
 
 			library : "ui5strap",
@@ -18043,7 +18299,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Image");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Image", {
+	ui5strap.ControlBase.extend("ui5strap.Image", {
 		metadata : {
 
 			library : "ui5strap",
@@ -18227,7 +18483,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.require("ui5strap.RadioButton");
 	jQuery.sap.require("ui5strap.SelectBox");
 	
-	sap.ui.core.Control.extend("ui5strap.InputGroup", {
+	ui5strap.ControlBase.extend("ui5strap.InputGroup", {
 		metadata : {
 
 			// ---- object ----
@@ -18425,8 +18681,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.Jumbotron");
-
-	sap.ui.core.Control.extend("ui5strap.Jumbotron", {
+	jQuery.sap.require("ui5strap.library");
+	
+	ui5strap.ControlBase.extend("ui5strap.Jumbotron", {
 		metadata : {
 
 			// ---- object ----
@@ -18531,7 +18788,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Label");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Label", {
+	ui5strap.ControlBase.extend("ui5strap.Label", {
 		metadata : {
 
 			// ---- object ----
@@ -18633,8 +18890,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.Line");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Line", {
+	ui5strap.ControlBase.extend("ui5strap.Line", {
 		metadata : {
 
 			library : "ui5strap",
@@ -19502,7 +19760,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Modal");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Modal", {
+	ui5strap.ControlBase.extend("ui5strap.Modal", {
 		metadata : {
 
 			// ---- object ----
@@ -19989,7 +20247,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.NavBar");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.NavBar", {
+	ui5strap.ControlBase.extend("ui5strap.NavBar", {
 		metadata : {
 			deprecated : true,
 			
@@ -20651,7 +20909,7 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Page");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Page", {
+	ui5strap.ControlBase.extend("ui5strap.Page", {
 		metadata : {
 
 			// ---- object ----
@@ -20707,8 +20965,9 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.PageHeader");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.PageHeader", {metadata : {
+	ui5strap.ControlBase.extend("ui5strap.PageHeader", {metadata : {
 
 		library : "ui5strap",
 		
@@ -20901,7 +21160,7 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Pager");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Pager", {
+	ui5strap.ControlBase.extend("ui5strap.Pager", {
 		metadata : {
 
 			// ---- control specific ----
@@ -21147,7 +21406,7 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Panel");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Panel", {
+	ui5strap.ControlBase.extend("ui5strap.Panel", {
 		metadata : {
 
 			// ---- object ----
@@ -21328,8 +21587,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.PanelGroup");
-
-	sap.ui.core.Control.extend("ui5strap.PanelGroup", {
+	jQuery.sap.require("ui5strap.library");
+	
+	ui5strap.ControlBase.extend("ui5strap.PanelGroup", {
 		metadata : {
 
 			// ---- object ----
@@ -21539,7 +21799,7 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Paragraph");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Paragraph", {
+	ui5strap.ControlBase.extend("ui5strap.Paragraph", {
 		metadata : {
 
 			// ---- object ----
@@ -21973,8 +22233,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.Progress");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Progress", {
+	ui5strap.ControlBase.extend("ui5strap.Progress", {
 		metadata : {
 
 			// ---- object ----
@@ -22045,7 +22306,7 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.ProgressBar");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.ProgressBar", {
+	ui5strap.ControlBase.extend("ui5strap.ProgressBar", {
 		metadata : {
 
 			// ---- object ----
@@ -22260,7 +22521,7 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 
 	jQuery.sap.declare("ui5strap.Row");
 
-	sap.ui.core.Control.extend("ui5strap.Row", {
+	ui5strap.ControlBase.extend("ui5strap.Row", {
 		metadata : {
 
 			// ---- object ----
@@ -22365,8 +22626,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.ScrollContainer");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.ScrollContainer", {
+	ui5strap.ControlBase.extend("ui5strap.ScrollContainer", {
 		metadata : {
 
 			library : "ui5strap",
@@ -22498,7 +22760,7 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.Sidebar");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Sidebar", {
+	ui5strap.ControlBase.extend("ui5strap.Sidebar", {
 		metadata : {
 			deprecated : true,
 			// ---- object ----
@@ -22619,8 +22881,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.StaticOverlay");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.StaticOverlay", {
+	ui5strap.ControlBase.extend("ui5strap.StaticOverlay", {
 		metadata : {
 
 			library : "ui5strap",
@@ -22754,7 +23017,7 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 	jQuery.sap.declare("ui5strap.TabContainer");
 	jQuery.sap.require("ui5strap.library");
 	
-	ui5strap.Control.extend("ui5strap.TabContainer", {
+	ui5strap.ControlBase.extend("ui5strap.TabContainer", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectionProvider"],
 
@@ -23074,10 +23337,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.Table");
-	jQuery.sap.require("sap.ui.core.Control");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Table", {
+	ui5strap.Control.extend("ui5strap.Table", {
 		metadata : {
 
 			// ---- object ----
@@ -23149,10 +23411,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 (function(){
 
 	jQuery.sap.declare("ui5strap.TableColumn");
-	jQuery.sap.require("sap.ui.core.Control");
+	jQuery.sap.require("ui5strap.library");
 
-
-	sap.ui.core.Element.extend("ui5strap.TableColumn", {
+	ui5strap.Element.extend("ui5strap.TableColumn", {
 		metadata : {
 
 			// ---- object ----
@@ -23381,7 +23642,7 @@ ui5strap.TableRow.prototype.init = function(){
 	jQuery.sap.declare("ui5strap.Thumbnail");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Thumbnail", {
+	ui5strap.ControlBase.extend("ui5strap.Thumbnail", {
 		metadata : {
 
 			// ---- object ----
@@ -23497,7 +23758,7 @@ ui5strap.TableRow.prototype.init = function(){
 	jQuery.sap.declare("ui5strap.Well");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Well", {
+	ui5strap.ControlBase.extend("ui5strap.Well", {
 		metadata : {
 
 			// ---- object ----

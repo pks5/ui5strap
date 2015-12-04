@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.TextInput");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.TextInput", {
+	ui5strap.ControlBase.extend("ui5strap.TextInput", {
 		metadata : {
 
 			library : "ui5strap",

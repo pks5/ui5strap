@@ -28,10 +28,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.TableColumn");
-	jQuery.sap.require("sap.ui.core.Control");
+	jQuery.sap.require("ui5strap.library");
 
-
-	sap.ui.core.Element.extend("ui5strap.TableColumn", {
+	ui5strap.Element.extend("ui5strap.TableColumn", {
 		metadata : {
 
 			// ---- object ----

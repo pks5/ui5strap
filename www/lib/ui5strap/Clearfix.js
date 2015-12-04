@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Clearfix");
 	jQuery.sap.require("ui5strap.library");
 	
-	ui5strap.Control.extend("ui5strap.Clearfix", {
+	ui5strap.ControlBase.extend("ui5strap.Clearfix", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
 			library : "ui5strap",

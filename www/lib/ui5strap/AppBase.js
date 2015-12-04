@@ -859,7 +859,7 @@
 			transitionName = transitionName || 'transition-slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.overlayId, true, function(){
-			if(!(viewDataOrControl instanceof sap.ui.core.Control)){
+			if(!(viewDataOrControl instanceof ui5strap.Control)){
 				viewDataOrControl = _this.createView(_this.config.getViewConfig(viewDataOrControl));
 			}
 			overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);

@@ -36,7 +36,7 @@
 	jQuery.sap.require("ui5strap.RadioButton");
 	jQuery.sap.require("ui5strap.SelectBox");
 	
-	sap.ui.core.Control.extend("ui5strap.InputGroup", {
+	ui5strap.ControlBase.extend("ui5strap.InputGroup", {
 		metadata : {
 
 			// ---- object ----

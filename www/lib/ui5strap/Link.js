@@ -30,8 +30,7 @@
 	jQuery.sap.declare("ui5strap.Link");
 	jQuery.sap.require("ui5strap.library");
 	
-
-	sap.ui.core.Control.extend("ui5strap.Link", {
+	ui5strap.ControlBase.extend("ui5strap.Link", {
 		metadata : {
 
 			// ---- object ----

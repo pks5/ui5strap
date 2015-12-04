@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Thumbnail");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Thumbnail", {
+	ui5strap.ControlBase.extend("ui5strap.Thumbnail", {
 		metadata : {
 
 			// ---- object ----

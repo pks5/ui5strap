@@ -28,9 +28,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.Carousel");
-  jQuery.sap.require("ui5strap.library");
+    jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Carousel", {
+	ui5strap.ControlBase.extend("ui5strap.Carousel", {
 		metadata : {
 
 			defaultAggregation : "items",
@@ -247,10 +247,10 @@
     }
   };
 
-  CarouselProto.setIndex = function(newIndex){
+  CarouselProto.setIndex = function(newIndex, suppressInvalidate){
   
     if(!this.getDomRef()){ 
-      sap.ui.core.Control.prototype.setProperty.call(this, 'index', newIndex);
+      this.setProperty('index', newIndex, suppressInvalidate);
     }
     else{
 

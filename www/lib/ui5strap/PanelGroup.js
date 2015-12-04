@@ -28,8 +28,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.PanelGroup");
-
-	sap.ui.core.Control.extend("ui5strap.PanelGroup", {
+	jQuery.sap.require("ui5strap.library");
+	
+	ui5strap.ControlBase.extend("ui5strap.PanelGroup", {
 		metadata : {
 
 			// ---- object ----

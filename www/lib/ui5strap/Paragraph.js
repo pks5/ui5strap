@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Paragraph");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Paragraph", {
+	ui5strap.ControlBase.extend("ui5strap.Paragraph", {
 		metadata : {
 
 			// ---- object ----

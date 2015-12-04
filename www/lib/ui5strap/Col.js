@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Col");
 	jQuery.sap.require("ui5strap.library");
 
-	ui5strap.Control.extend("ui5strap.Col", {
+	ui5strap.ControlBase.extend("ui5strap.Col", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
 			

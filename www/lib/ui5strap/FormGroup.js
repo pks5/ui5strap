@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.FormGroup");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.FormGroup", {
+	ui5strap.ControlBase.extend("ui5strap.FormGroup", {
 		metadata : {
 
 			defaultAggregation : "controls",

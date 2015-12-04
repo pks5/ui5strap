@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Sandbox");
 	jQuery.sap.require("ui5strap.library");
 
-	sap.ui.core.Control.extend("ui5strap.Sandbox", {
+	ui5strap.ControlBase.extend("ui5strap.Sandbox", {
 		metadata : {
 
 			library : "ui5strap",

@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Checkbox");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Checkbox", {
+	ui5strap.ControlBase.extend("ui5strap.Checkbox", {
 		metadata : {
 
 			library : "ui5strap",

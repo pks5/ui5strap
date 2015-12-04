@@ -28,8 +28,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.Line");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Line", {
+	ui5strap.ControlBase.extend("ui5strap.Line", {
 		metadata : {
 
 			library : "ui5strap",

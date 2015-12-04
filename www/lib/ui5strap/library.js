@@ -1243,6 +1243,12 @@
 
   ui5strap.View = sap.ui.core.mvc.View;
   
+  
+  //Control
+  jQuery.sap.declare("ui5strap.ControlBase");
+
+  ui5strap.ControlBase = sap.ui.core.Control;
+  
   /*
   * -----
   *

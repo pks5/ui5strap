@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.ListItem");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.ListItem", {
+	ui5strap.ControlBase.extend("ui5strap.ListItem", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectableItem"],
 			

@@ -30,7 +30,7 @@
 	jQuery.sap.declare("ui5strap.Heading");
 	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.Heading", {
+	ui5strap.ControlBase.extend("ui5strap.Heading", {
 		metadata : {
 
 			// ---- object ----

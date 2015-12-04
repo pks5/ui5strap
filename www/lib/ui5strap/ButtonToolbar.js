@@ -28,8 +28,9 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.ButtonToolbar");
+	jQuery.sap.require("ui5strap.library");
 	
-	sap.ui.core.Control.extend("ui5strap.ButtonToolbar", {
+	ui5strap.ControlBase.extend("ui5strap.ButtonToolbar", {
 		metadata : {
 
 			// ---- object ----
