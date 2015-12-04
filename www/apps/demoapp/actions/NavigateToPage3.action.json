@@ -1,9 +1,11 @@
 {
 	"//" : "Makes the root NavContainer navigate to the specified view.",
 	
-	"__modules" : "ui5strap.task.Navigate",
+	"TASKS" : "navigate",
 	
 	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		
 		"PAGE" : {
 			"viewName" : "ui5strap.demoapp.views.MyPage3",
 			"transition" : "fade",

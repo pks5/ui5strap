@@ -3,10 +3,10 @@
 	"TASKS" : "selectAppLanguage",
 	
 	"selectAppLanguage" : {
-		"customDataKEY" : "language",
-		"languageSTR" : "= eventParameters.srcControl.data(.customDataKEY)",
+		"customDataKey" : "language",
+		"language" : "= eventParameters.srcControl.data(.customDataKey)",
 		
-		"DO" : "= app.setLanguage(.languageSTR)"
+		"DO" : "= app.setLanguage(.language)"
 	}
 	
 }

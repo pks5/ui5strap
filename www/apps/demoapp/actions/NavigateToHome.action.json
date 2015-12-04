@@ -5,6 +5,7 @@
 	
 	"navigateToHome" : {
 		"TYPE" : "ui5strap.task.Navigate",
+		
 		"PAGE" : {
 			"viewName" : "ui5strap.demoapp.views.Home",
 			"transition" : "slide-ltr",

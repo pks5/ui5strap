@@ -216,6 +216,7 @@
 	*/
 	Action.runTasks = function(context, actionModulesList){
 		if(!actionModulesList){
+			jQuery.sap.log.debug("[ACTION] Tried to run empty task list.");
 			return;
 		}
 		

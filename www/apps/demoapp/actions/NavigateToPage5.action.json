@@ -1,11 +1,14 @@
 {
 	"//" : "Goto Page 5",
-	"__modules" : "ui5strap.task.Navigate",
+	"TASKS" : "navigate",
 	
 	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",
 		"CONTROL" : "= app.getControl(.controlId, .viewId)",
+		
 		"PAGE" : {
 			"viewName" : "ui5strap.demoapp.views.MyPage5",
 			"transition" : "zoom-in",

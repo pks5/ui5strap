@@ -131,20 +131,17 @@
 	
 	/**
 	 * Faster variant of ActionContext.prototype.get - only for task root paramaters!
-	 * @Public
+	 * @Private
 	 */
-	ActionModuleProto.getRootParameter = function(parameterKey, defaultValue){
-		var param = this.context.action[this.namespace][parameterKey];
+	var _expression = function(_this, parameterKey, defaultValue){
+		var param = _this.context.action[_this.namespace][parameterKey];
 		if(param){
-			param = this.context.resolve(this, param, true);
+			param = _this.context.resolve(_this, param, true);
 		}
 		
 		if(('undefined' === typeof param) && ('undefined' !== typeof defaultValue)){
 			param = defaultValue;
 		}
-		
-		//Store back the value in the context
-		this.context.action[this.namespace][parameterKey] = param;
 		
 		return param;
 	};
@@ -172,7 +169,7 @@
 		this.prepareParameters();
 
 		//test if parameters match conditions
-		if(!this.getRootParameter("IF", true)){
+		if(!_expression(this, "IF", true)){
 			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
 			
 			this["else"]();
@@ -184,7 +181,7 @@
 				this.then();
 			}
 			catch(err){
-				var errorTask = this.getRootParameter("ERROR");
+				var errorTask = _expression(this, "ERROR");
 				if(errorTask){
 					ui5strap.Action.runTasks(this.context, errorTask);
 				}
@@ -202,11 +199,11 @@
 	* @Protected
 	*/
 	ActionModuleProto.run = function(){
-		this.getRootParameter("DO");
+		ui5strap.Action.runTasks(this.context, _expression(this, "DO"));
 	};
 	
 	ActionModuleProto.then = function(){
-		ui5strap.Action.runTasks(this.context, this.getRootParameter("THEN"));
+		ui5strap.Action.runTasks(this.context, _expression(this, "THEN"));
 		
 		//Exceution complete
 		//@deprecated
@@ -214,7 +211,7 @@
 	};
 	
 	ActionModuleProto["else"] = function(){
-		ui5strap.Action.runTasks(this.context, this.getRootParameter("ELSE"));
+		ui5strap.Action.runTasks(this.context, _expression(this, "ELSE"));
 	};
 	
 	/*

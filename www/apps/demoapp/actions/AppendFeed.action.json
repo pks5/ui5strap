@@ -32,8 +32,9 @@
 			"ext" : "png",
 			"width" : 64
 		},
+		
 		"addToListItem" : "= action.createMediaListItem.INSTANCE.setMedia(.INSTANCE)",
-		"DO" : "= .addToListItem"
+		"THEN" : "= .addToListItem"
 	},
 	
 	"addItemToList" : {
