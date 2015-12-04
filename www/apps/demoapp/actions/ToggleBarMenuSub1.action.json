@@ -6,12 +6,12 @@
 	"toggleBarMenuSub1" : {
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",
-		"navContainer" : "=-> app.getControl(.controlId, .viewId)",
+		"navContainer" : "= app.getControl(.controlId, .viewId)",
 		
-		"currentValue" : "=-> .navContainer.getBarVisible()",
-		"oppositeValue" : "=-> lang.not(.currentValue)",
+		"currentValue" : "= .navContainer.getBarVisible()",
+		"oppositeValue" : "= lang.not(.currentValue)",
 		
-		"DO" : "=-> .navContainer.setBarVisible(.oppositeValue)"
+		"DO" : "= .navContainer.setBarVisible(.oppositeValue)"
 	}
 
 }

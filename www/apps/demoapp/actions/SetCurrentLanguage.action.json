@@ -4,15 +4,15 @@
 	
 	"setCurrentLanguage" : {
 		
-		"configOBJ" : "=-> core.getConfiguration()",
-		"languageSTR" : "=-> .configOBJ.getLanguage()",
+		"configOBJ" : "= core.getConfiguration()",
+		"languageSTR" : "= .configOBJ.getLanguage()",
 		
-		"viewID" : "=-> view.getId()",
+		"viewID" : "= view.getId()",
 		"buttonGroupID" : "languageSelect",
-		"buttonGroupCTRL" : "=-> app.getControl(.buttonGroupID, .viewID)",
+		"buttonGroupCTRL" : "= app.getControl(.buttonGroupID, .viewID)",
 		"customDataKEY" : "language",
 		
-		"DO" : "=-> .buttonGroupCTRL.setSelectionByCustomData(.customDataKEY, .languageSTR)"
+		"DO" : "= .buttonGroupCTRL.setSelectionByCustomData(.customDataKEY, .languageSTR)"
 	}
 	
 }

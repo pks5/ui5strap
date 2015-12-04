@@ -7,7 +7,7 @@
 			"viewName" : "ui5strap.demoapp.views.NewPost" 
 		},
 		
-		"DO" : "=-> app.showOverlay(.page)"
+		"DO" : "= app.showOverlay(.page)"
 	}
 
 }

@@ -4,11 +4,11 @@
 	"TASKS" : "toggleBarMenuRoot",
 	
 	"toggleBarMenuRoot" : {
-		"navContainer" : "=-> app.getRootControl()",
-		"currentValue" : "=-> .navContainer.getBarVisible()",
-		"oppositeValue" : "=-> lang.not(.currentValue)",
+		"navContainer" : "= app.getRootControl()",
+		"currentValue" : "= .navContainer.getBarVisible()",
+		"oppositeValue" : "= lang.not(.currentValue)",
 		
-		"DO" : "=-> .navContainer.setBarVisible(.oppositeValue)"
+		"DO" : "= .navContainer.setBarVisible(.oppositeValue)"
 	}
 
 }

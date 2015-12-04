@@ -12,7 +12,7 @@
 	},
 	
 	"setListItemSelected" : {
-		"itemId" : "=-> parameters.getCurrentPage.result",
+		"itemId" : "= parameters.getCurrentPage.result",
 		"controlId" : "mySubMenu",
 		"viewId" : "my-app-bar-sub-menu",
 		"scope" : "APP"

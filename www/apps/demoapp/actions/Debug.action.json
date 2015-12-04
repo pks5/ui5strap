@@ -7,23 +7,23 @@
 		"anotherValue" : "QRS",
 		"customDataKey" : "command",
 		"tt" : false,
-		"customDataValue" : "=-> eventParameters.srcControl.data(.customDataKey)",
+		"customDataValue" : "= eventParameters.srcControl.data(.customDataKey)",
 		
-		"IF" : "=-> lang.equal(.compareValue, .customDataValue)",
+		"IF" : "= lang.equal(.compareValue, .customDataValue)",
 		
-		"message" : "=-> .tt ? toString() : .customDataKey",
-		"DO" : "=-> global.alert(.message)",
+		"message" : "= .tt ? toString() : .customDataKey",
+		"DO" : "= global.alert(.message)",
 		
 		"ELSE" : "error"
 	},
 	
 	"error" : {
-		"abc" : "=-> action.error.poo",
+		"abc" : "= action.error.poo",
 		"poo" : {},
 		"srcParam" : "action.error.abc.q",
-		"set" : "=-> set(.srcParam, action.testTask.anotherValue)",
-		"alert" : "=-> global.alert(.poo.q)", 
-		"DO" : "=-> (.set, .alert)"
+		"set" : "= set(.srcParam, action.testTask.anotherValue)",
+		"alert" : "= global.alert(.poo.q)", 
+		"DO" : "= (.set, .alert)"
 	}
 	
 }

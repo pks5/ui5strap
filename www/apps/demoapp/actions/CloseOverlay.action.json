@@ -2,6 +2,6 @@
 	"TASKS" : "closeOverlay",
 	
 	"closeOverlay" : {
-		"DO" : "=-> app.hideOverlay()"
+		"DO" : "= app.hideOverlay()"
 	}
 }

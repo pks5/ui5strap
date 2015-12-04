@@ -5,7 +5,7 @@
 	
 	"switch" : {
 		"customDataKey" : "command", 
-		"expression" : "=-> eventParameters.srcControl.data(.customDataKey)",
+		"expression" : "= eventParameters.srcControl.data(.customDataKey)",
 		"actions" : {
 			"DELETE" : "ui5strap.demoapp.actions.NavigateToHome",
 			"MORE" : "ui5strap.demoapp.actions.NavigateToPage3"

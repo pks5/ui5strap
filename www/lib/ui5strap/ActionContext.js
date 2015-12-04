@@ -49,7 +49,7 @@
 	ActionContext.NUMBER = 0;
 
 	ActionContext.PREFIX = "__";
-	ActionContext.RESOLVE = "=->";
+	ActionContext.RESOLVE = "=";
 	ActionContext.RESOLVE_LENGTH = ActionContext.RESOLVE.length;
 	
 	//Action Name
@@ -280,7 +280,7 @@
 	* 
 	* @Protected
 	*/
-	ActionContextProto.get = function(task, parameterKey, defaultValue){
+	ActionContextProto.get = function(task, parameterKey){
 		if(!parameterKey){
 			throw new Error("Parameter key is required for get!");
 		}
@@ -414,14 +414,6 @@
 					throw new Error("Cannot execute function '" + keyPart + "': not a function!");
 				}
 				break;
-			}
-		}
-		
-		//Set value to default if null or undefined
-		if(("undefined" === typeof pointer) && ("undefined" !== typeof defaultValue)){
-			pointer = defaultValue;
-			if(pointer instanceof _ActionExpression){
-				pointer = this.get(task, pointer.expression);
 			}
 		}
 		
@@ -664,10 +656,10 @@
 	/**
 	 * @deprecated
 	 */
-	ActionContextProto._getParameter = function(parameterKey, task, defaultValue){
+	ActionContextProto._getParameter = function(parameterKey, task){
 		jQuery.sap.log.warning("ui5strap.ActionContext.prototype._getParameter is deprecated. Use .get instead.");
 		
-		return this.get(task, parameterKey, defaultValue);
+		return this.get(task, parameterKey);
 	}
 	
 	/**

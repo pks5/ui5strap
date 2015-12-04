@@ -5,7 +5,7 @@
 	"navigate" : {
 		"controlId" : "subNav",
 		"viewId" : "my-app-page4",
-		"CONTROL" : "=-> app.getControl(.controlId, .viewId)",
+		"CONTROL" : "= app.getControl(.controlId, .viewId)",
 		"PAGE" : {
 			"viewName" : "ui5strap.demoapp.views.MyPage5",
 			"transition" : "zoom-in",

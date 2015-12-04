@@ -108,8 +108,12 @@
 			throw new Error("Invalid definition for parameter '" + paramKey + "'.");
 		}
 
-		var value = this.context.get(this, "." + paramKey, paramDef.defaultValue),
+		var value = this.context.get(this, "." + paramKey),
 			paramDefType = paramDef.type;
+		
+		if(('undefined' === typeof value) && ('undefined' !== typeof paramDef.defaultValue)){
+			value = paramDef.defaultValue;
+		}
 		
 		if(value && paramDefType){
 			var parameterType = typeof value,
@@ -136,7 +140,7 @@
 		}
 		
 		if(('undefined' === typeof param) && ('undefined' !== typeof defaultValue)){
-			param = this.context.resolve(this, defaultValue, true);
+			param = defaultValue;
 		}
 		
 		//Store back the value in the context

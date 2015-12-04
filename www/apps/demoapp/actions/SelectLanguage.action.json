@@ -4,9 +4,9 @@
 	
 	"selectAppLanguage" : {
 		"customDataKEY" : "language",
-		"languageSTR" : "=-> eventParameters.srcControl.data(.customDataKEY)",
+		"languageSTR" : "= eventParameters.srcControl.data(.customDataKEY)",
 		
-		"DO" : "=-> app.setLanguage(.languageSTR)"
+		"DO" : "= app.setLanguage(.languageSTR)"
 	}
 	
 }
