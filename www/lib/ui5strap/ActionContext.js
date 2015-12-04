@@ -50,7 +50,6 @@
 
 	ActionContext.PREFIX = "__";
 	ActionContext.RESOLVE = "=";
-	ActionContext.RESOLVE_LENGTH = ActionContext.RESOLVE.length;
 	
 	//Action Name
 	ActionContext.PARAM_ACTION = 'action';
@@ -181,8 +180,12 @@
 		var pointerType = typeof pointer;
 		
 		if(pointerType === "string"){
-			if(pointer.substr(0, ActionContext.RESOLVE_LENGTH) === ActionContext.RESOLVE){
-				return new _ActionExpression(pointer.substring(ActionContext.RESOLVE_LENGTH).trim());
+			var firstChar = pointer.charAt(0);
+			if(firstChar === ActionContext.RESOLVE){
+				return new _ActionExpression(pointer.substring(1).trim());
+			}
+			else if(firstChar === "\\" && pointer.charAt(1) === ActionContext.RESOLVE){
+				return pointer.substring(1);
 			}
 			else{
 				return pointer;

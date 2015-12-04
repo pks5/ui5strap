@@ -1,8 +1,8 @@
 {
-	"__modules" : "ui5strap.AMChangeTheme",
-	"__description" : "Change Theme",
+	"TASKS" : "changeTheme",
 
 	"changeTheme" : {
+		"TYPE" : "ui5strap.AMChangeTheme",
 		"customDataKey" : "theme",
 		"theme" : "= eventParameters.srcControl.data(.customDataKey)"
 	}
