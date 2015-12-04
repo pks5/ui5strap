@@ -1,0 +1,103 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!-- The page control -->
+	<Page>
+		<!-- Head area with horizontal bar -->
+		<head>
+			<!-- Bar on top of page -->
+			<Bar inverse="true">
+				<!-- Left area of bar -->
+				<left>
+					<!-- Back Button -->
+					<Button tap=".execute" custom:action="ui5strap.demoapp.actions.NavigateToHome">
+						<Icon icon="home" />
+					</Button>
+					<!-- Toggle Menu Button (except for small screens) -->
+					<Container type="Text" visibilitySmall="Hidden">
+						<Button tap=".execute" custom:action="ui5strap.demoapp.actions.ToggleBarMenuRoot">
+							<Icon icon="columns" />
+						</Button>
+					</Container>
+				</left>
+
+				<!-- Middle area of bar -->
+				<middle>
+					<Text text="{i18n>PAGE2_TITLE}" />
+				</middle>
+
+				<right>
+					<!-- Toggle Menu Button (only for small screens) -->
+					<Container type="Text" visibilityExtraSmall="Hidden"
+						visibilityMedium="Hidden" visibilityLarge="Hidden">
+						<Button tap=".execute" custom:action="ui5strap.demoapp.actions.ToggleBarMenuRoot">
+							<Icon icon="columns" />
+						</Button>
+					</Container>
+				</right>
+			</Bar>
+		</head>
+
+		<!-- Body area with page content -->
+		<body>
+			<ScrollContainer vertical="true">
+				<Container type="Full">
+
+					<Panel>
+
+						<titleContent>
+							<Text text="{i18n>PAGE2_PANEL_RIGHT_TITLE}" />
+							<Container type="Text" align="PullRight">
+								<Button tap=".execute" custom:action="ui5strap.demoapp.actions.ShowNewPostOverlay">
+									<Icon icon="plus" />
+								</Button>
+							</Container>
+						</titleContent>
+						<content>
+							<ListMedia id="feeds" tap=".execute"
+								custom:action="ui5strap.demoapp.actions.Debug" items="{posts>/posts}">
+
+								<!-- Media Item 1 -->
+								<ListMediaItem>
+									<media>
+										<Image type="MediaObject" mpath="{posts>image}" ext="png"
+											alt="Image" width="64" />
+									</media>
+									<content>
+										<Icon icon="times" align="PullRight" custom:command="DELETE" />
+										<Heading level="4" type="MediaHeading" text="{posts>title}" />
+										<Text text="{posts>text}" />
+										<Button custom:command="MORE" text="Submit" severity="Success">
+											<Icon custom:command="MORE" icon="arrow-right" />
+										</Button>
+
+										<ListMedia id="feedsA" tap=".execute"
+											custom:action="ui5strap.demoapp.actions.RemovePost">
+											<!-- Media Item 2 (nested) -->
+											<ListMediaItem>
+												<media>
+													<Image type="MediaObject" mpath="ui5strap.demoapp.img.awesome"
+														ext="png" alt="Image" width="64" />
+												</media>
+												<content>
+													<Icon icon="times" align="PullRight" custom:command="DELETE" />
+													<Heading level="4" type="MediaHeading" text="Media Heading" />
+													<Text
+														text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." />
+												</content>
+											</ListMediaItem>
+
+										</ListMedia>
+									</content>
+								</ListMediaItem>
+
+
+							</ListMedia>
+						</content>
+
+					</Panel>
+				</Container>
+			</ScrollContainer>
+		</body>
+
+	</Page>
+</View>

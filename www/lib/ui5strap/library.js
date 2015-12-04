@@ -1238,6 +1238,11 @@
 
   ui5strap.JSONModel = sap.ui.model.json.JSONModel;
 
+  //View
+  jQuery.sap.declare("ui5strap.View");
+
+  ui5strap.View = sap.ui.core.mvc.View;
+  
   /*
   * -----
   *
