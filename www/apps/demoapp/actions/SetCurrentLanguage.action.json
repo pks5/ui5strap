@@ -6,9 +6,9 @@
 		
 		"CONTROLS" : {
 			"languageButtons" : {
-				"mode" : "Select",
-				"type" : "ui5strap.ButtonGroup",
-				"controlId" : "languageSelect"
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.ButtonGroup",
+				"CONTROL_ID" : "languageSelect"
 			}
 		},
 		

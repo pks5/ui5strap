@@ -6,10 +6,10 @@
 	"toggleBarMenuSub1" : {
 		"CONTROLS" : {
 			"navContainer" : {
-				"mode" : "Select",
-				"type" : "ui5strap.NavContainer",
-				"controlId" : "subNav",
-				"viewId" : "my-app-page4"
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.NavContainer",
+				"CONTROL_ID" : "subNav",
+				"VIEW_ID" : "my-app-page4"
 			}
 		},
 		

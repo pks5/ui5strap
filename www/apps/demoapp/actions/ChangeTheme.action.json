@@ -6,8 +6,8 @@
 		
 		"CONTROLS" : {
 			"themeButton" : {
-				"mode" : "Event",
-				"type" : "ui5strap.Button",
+				"SOURCE" : "Event",
+				"TYPE" : "ui5strap.Button",
 				"parameter" : "button"
 			}
 		},

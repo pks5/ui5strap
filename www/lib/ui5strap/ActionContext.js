@@ -185,7 +185,6 @@
 		this._parentPointer = parent;
 		this._controlName = key;
 		
-		
 		var newObject = {},
 			keys = Object.keys(pointer),
 			keysLength = keys.length;
@@ -205,8 +204,8 @@
 		var controlOrDef = this._controlDef;
 		if(typeof controlOrDef === "object"){
 			if(!(controlOrDef instanceof ui5strap.Control)){
-				var mode = context.resolve(task, controlOrDef.mode, true),
-					moduleName = context.resolve(task, controlOrDef.type, true);
+				var mode = context.resolve(task, controlOrDef.SOURCE, true),
+					moduleName = context.resolve(task, controlOrDef.TYPE, true);
 				
 				if(!mode || !moduleName){
 					throw new Error("Please provide both 'mode' and 'type' for Control '" + this._controlName + "'");
@@ -218,8 +217,8 @@
 					throw new Error("'" + moduleName + "' is not a valid Control!");
 				}
 				
-				if("Create" === mode){
-					var moduleSettings = context.resolve(task, controlOrDef.settings);
+				if("New" === mode){
+					var moduleSettings = context.resolve(task, controlOrDef.SETTINGS);
 					controlOrDef = new Constructor(moduleSettings);
 				}
 				else if("Event" === mode){
@@ -231,9 +230,9 @@
 						controlOrDef = context.eventSource;
 					}
 				}
-				else if("Select" === mode){
-					var controlId = context.resolve(task, controlOrDef.controlId, true),
-						viewId = context.resolve(task, controlOrDef.viewId);
+				else if("View" === mode){
+					var controlId = context.resolve(task, controlOrDef.CONTROL_ID, true),
+						viewId = context.resolve(task, controlOrDef.VIEW_ID);
 					
 					if(controlId){
 						if(!viewId){

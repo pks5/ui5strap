@@ -8,28 +8,28 @@
 	"createMediaListItem" : {
 		"CONTROLS" : {
 			"titleInputField" : {
-				"mode" : "Select",
-				"type" : "ui5strap.TextInput",
-				"controlId" : "titleInput"
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.TextInput",
+				"CONTROL_ID" : "titleInput"
 			},
 			"textInputField" : {
-				"mode" : "Select",
-				"type" : "ui5strap.TextInput",
-				"controlId" : "messageInput"
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.TextInput",
+				"CONTROL_ID" : "messageInput"
 			},
 			"listItem" : {
-				"mode" : "Create",
-				"type" : "ui5strap.ListMediaItem",
-				"settings" : {
+				"SOURCE" : "New",
+				"TYPE" : "ui5strap.ListMediaItem",
+				"SETTINGS" : {
 					"heading" : "= .CONTROLS.titleInputField.getValue()",
 					"text" : "= .CONTROLS.textInputField.getValue()"
 				}
 			},
 			"image" : {
-				"mode" : "Create",
+				"SOURCE" : "New",
 					
-				"type" : "ui5strap.Image",
-				"settings" : {
+				"TYPE" : "ui5strap.Image",
+				"SETTINGS" : {
 					"type" : "MediaObject",
 					"mpath" : "ui5strap.demoapp.img.awesome",
 					"ext" : "png",
@@ -45,10 +45,10 @@
 		
 		"CONTROLS" : {
 			"mediaList" : {
-				"mode" : "Select",
-				"type" : "ui5strap.ListMedia",
-				"controlId" : "feeds",
-				"viewId" : "my-app-page2"
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.ListMedia",
+				"CONTROL_ID" : "feeds",
+				"VIEW_ID" : "my-app-page2"
 			}
 		},
 		
