@@ -143,12 +143,7 @@
 					currentOptions.splice(optionIndex, 1);
 				}
 				
-				/*
-				this.fireOptionChange({ 
-					optionName : optionName, 
-					optionEnabled : optionEnabled
-				});
-				*/
+				this.onOptionChange(optionName, optionEnabled);
 			}
 		}
 		this.setOptions(currentOptions.join(' '));
@@ -174,5 +169,12 @@
 	*/
 	ControlBaseProto.toggleOption = function(optionName){
 		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
+	};
+	
+	/**
+	* @Public
+	*/
+	ControlBaseProto.onOptionChange = function(optionName, optionEnabled){
+		
 	};
 }());
