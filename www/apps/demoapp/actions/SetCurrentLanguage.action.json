@@ -4,15 +4,20 @@
 	
 	"setCurrentLanguage" : {
 		
-		"configOBJ" : "= core.getConfiguration()",
-		"languageSTR" : "= .configOBJ.getLanguage()",
+		"CONTROLS" : {
+			"languageButtons" : {
+				"mode" : "Select",
+				"type" : "ui5strap.ButtonGroup",
+				"controlId" : "languageSelect"
+			}
+		},
 		
-		"viewID" : "= view.getId()",
-		"buttonGroupID" : "languageSelect",
-		"buttonGroupCTRL" : "= app.getControl(.buttonGroupID, .viewID)",
-		"customDataKEY" : "language",
+		"config" : "= core.getConfiguration()",
+		"language" : "= .config.getLanguage()",
 		
-		"DO" : "= .buttonGroupCTRL.setSelectionByCustomData(.customDataKEY, .languageSTR)"
+		"customDataKey" : "language",
+		
+		"DO" : "= .CONTROLS.languageButtons.setSelectionByCustomData(.customDataKey, .language)"
 	}
 	
 }

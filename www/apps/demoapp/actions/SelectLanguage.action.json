@@ -3,8 +3,16 @@
 	"TASKS" : "selectAppLanguage",
 	
 	"selectAppLanguage" : {
+		"CONTROLS" : {
+			"languageButton" : {
+				"mode" : "Event",
+				"type" : "ui5strap.Button",
+				"parameter" : "button"
+			}
+		},
+		
 		"customDataKey" : "language",
-		"language" : "= eventParameters.srcControl.data(.customDataKey)",
+		"language" : "= .CONTROLS.languageButton.data(.customDataKey)",
 		
 		"DO" : "= app.setLanguage(.language)"
 	}

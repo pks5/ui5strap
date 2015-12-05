@@ -167,29 +167,59 @@
 			if(typeof controlOrDef === "object"){
 				if(!(controlOrDef instanceof ui5strap.Control)){
 					var mode = _this.context.resolve(_this, controlOrDef.mode, true),
+						moduleName = _this.context.resolve(_this, controlOrDef.type, true);
+					
+					if(!mode || !moduleName){
+						throw new Error("Please provide both 'mode' and 'type' for Control '" + keys[i] + "'");
+					}
+					
+					var Constructor = jQuery.sap.getObject(moduleName),
 						control = null;
+					
+					if(!Constructor){
+						throw new Error("'" + moduleName + "' is not a valid Control!");
+					}
+					
 					if("Create" === mode){
-						var moduleName = _this.context.resolve(_this, controlOrDef.type, true),
-							moduleSettings = _this.context.resolve(_this, controlOrDef.settings),
-							Constructor = jQuery.sap.getObject(moduleName);
+						var moduleSettings = _this.context.resolve(_this, controlOrDef.settings);
 						
-							if(!Constructor){
-								throw new Error("Cannot create instance of '" + moduleName + "'");
-							}
 						control = new Constructor(moduleSettings);
+					}
+					else if("Event" === mode){
+						var parameter = _this.context.resolve(_this, controlOrDef.parameter);
+						if(parameter){
+							control = _this.context.eventParameters[parameter];
+						}
+						else{
+							control = _this.context.eventSource;
+						}
 					}
 					else if("Select" === mode){
 						var controlId = _this.context.resolve(_this, controlOrDef.controlId, true),
-							viewId = _this.context.resolve(_this, controlOrDef.viewId),
+							viewId = _this.context.resolve(_this, controlOrDef.viewId);
+						
+						if(controlId){
+							if(!viewId){
+								if(_this.context.view){
+									viewId = _this.context.view.getId();
+								}
+								else{
+									throw new Error("Please provide a viewId to select Control '" + keys[i] + "' or remove controlId to select the root control!");
+								}
+							}
 							control = _this.context.app.getControl(controlId, viewId);
+						}
+						else{
+							control = _this.context.app.getRootControl();
+						}
 					}
 					else{
 						throw new Error("Please provide a mode for Control '" + keys[i] + "'!" );
 						
 					}
 					
-					if(!control instanceof ui5strap.Control){
-						throw new Error("Control '" + keys[i] + "' must be an instance of ui5strap.Control!" );
+					if(!(control instanceof Constructor)){
+						throw new Error("Control '" + keys[i] + "' must be an instance of '" + moduleName + "'!" );
 					}
 					
 					controls[keys[i]] = control;

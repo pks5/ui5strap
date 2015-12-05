@@ -4,14 +4,19 @@
 	"TASKS" : "toggleBarMenuSub1",
 	
 	"toggleBarMenuSub1" : {
-		"controlId" : "subNav",
-		"viewId" : "my-app-page4",
-		"navContainer" : "= app.getControl(.controlId, .viewId)",
+		"CONTROLS" : {
+			"navContainer" : {
+				"mode" : "Select",
+				"type" : "ui5strap.NavContainer",
+				"controlId" : "subNav",
+				"viewId" : "my-app-page4"
+			}
+		},
 		
-		"currentValue" : "= .navContainer.getBarVisible()",
+		"currentValue" : "= .CONTROLS.navContainer.getBarVisible()",
 		"oppositeValue" : "= lang.not(.currentValue)",
 		
-		"DO" : "= .navContainer.setBarVisible(.oppositeValue)"
+		"DO" : "= .CONTROLS.navContainer.setBarVisible(.oppositeValue)"
 	}
 
 }

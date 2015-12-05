@@ -6,18 +6,16 @@
 	],
 	
 	"createMediaListItem" : {
-		"viewId" : "= view.getId()",
-		
 		"CONTROLS" : {
 			"titleInputField" : {
 				"mode" : "Select",
-				"controlId" : "titleInput",
-				"viewId" : "= .viewId"
+				"type" : "ui5strap.TextInput",
+				"controlId" : "titleInput"
 			},
 			"textInputField" : {
 				"mode" : "Select",
-				"controlId" : "messageInput",
-				"viewId" : "= .viewId"
+				"type" : "ui5strap.TextInput",
+				"controlId" : "messageInput"
 			},
 			"listItem" : {
 				"mode" : "Create",
@@ -48,6 +46,7 @@
 		"CONTROLS" : {
 			"mediaList" : {
 				"mode" : "Select",
+				"type" : "ui5strap.ListMedia",
 				"controlId" : "feeds",
 				"viewId" : "my-app-page2"
 			}
