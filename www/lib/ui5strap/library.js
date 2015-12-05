@@ -1242,13 +1242,7 @@
   jQuery.sap.declare("ui5strap.View");
 
   ui5strap.View = sap.ui.core.mvc.View;
-  
-  
-  //Control
-  jQuery.sap.declare("ui5strap.ControlBase");
-
-  ui5strap.ControlBase = sap.ui.core.Control;
-  
+   
   /*
   * -----
   *
@@ -2071,6 +2065,8 @@
 			"error" : error
 	  });
   };
+  
+  jQuery.sap.require("ui5strap.ControlBase");
   
   _addTimeMark("LIBRARY", "ui5strap", "LOAD_END");
   

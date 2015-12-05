@@ -35,10 +35,6 @@
 			library : "ui5strap",
 			
 			properties : {
-				options : {
-					type : "string",
-					defaultValue : ""
-				},
 				defaultTransition : {
 					type : "string",
 					defaultValue : "transition-slide"
@@ -74,7 +70,9 @@
 	var NavContainerBase = ui5strap.NavContainer,
 		NavContainerBaseProto = NavContainerBase.prototype,
 		domAttachTimeout = 50;
-
+	
+	NavContainerBaseProto._STYLE_PREFIX = "navcontainer";
+	
 	/*
 	*
 	* STATIC FIELDS & METHODS
@@ -597,126 +595,6 @@
 	 */
 	NavContainerBaseProto._getTargetClassString = function(target){
 		return "navcontainer-target navcontainer-target-" + target;
-	};
-	
-	
-	/**
-	* @Protected
-	*/
-	NavContainerBaseProto._getOptionsClassString = function(){
-		var options = this.getOptions(),
-			classes = '';
-	    
-		if(options){
-	    	options = options.split(' ');
-	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + 'navcontainer-option-' + options[i];
-	    	}
-	    }
-		
-		return classes;
-	};
-	
-	/**
-	* @Protected
-	*/
-	NavContainerBaseProto._updateStyleClass = function(){
-		var currentClassesString = '',
-			options = this.getOptions();
-		
-		var classes = this.$().attr('class').split(' ');
-		for(var i = 0; i < classes.length; i++){
-			var cClass = classes[i];
-			if(cClass && cClass.indexOf('navcontainer-option-') !== 0){
-				currentClassesString += ' ' + cClass;
-			}
-			
-		}
-		
-		if(options){
-	    	options = options.split(' ');
-	    	for(var i = 0; i < options.length; i++){
-	    		currentClassesString += ' navcontainer-option-' + options[i];
-	    	}
-	    }
-	
-		this.$().attr('class', currentClassesString.trim());
-	};
-	
-	/**
-	* @Public
-	* @Override
-	* TODO avoid overriding of user provided css classes
-	*/
-	NavContainerBaseProto.setOptions = function(newOptions){
-		if(this.getDomRef()){
-			this.setProperty('options', newOptions, true);
-			this._updateStyleClass();
-		}
-		else{
-			this.setProperty('options', newOptions);
-		}
-	};
-
-	/**
-	* @Public
-	*/
-	NavContainerBaseProto.setOptionsEnabled = function(options){
-		var currentOptions = [],
-			cOptions = this.getOptions();
-		
-		if(cOptions){
-			currentOptions = cOptions.split(' ');
-		}
-		
-		for(var optionName in options){
-			var optionIndex = jQuery.inArray(optionName, currentOptions),
-				optionEnabled = options[optionName];
-
-			if(optionEnabled && -1 === optionIndex
-				|| !optionEnabled && -1 !== optionIndex){
-				
-				if(optionEnabled){
-					currentOptions.push(optionName);
-				}
-				else{
-					currentOptions.splice(optionIndex, 1);
-				}
-				
-				this.onOptionChanged(optionName, optionEnabled);
-			}
-		}
-		this.setOptions(currentOptions.join(' '));
-	};
-
-	/**
-	* @Public
-	*/
-	NavContainerBaseProto.isOptionEnabled = function(optionName){
-		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
-	};
-	
-	NavContainerBaseProto.setOptionEnabled = function(optionName, optionEnabled){
-		var options = {};
-		
-		options[optionName] = optionEnabled;
-		
-		this.setOptionsEnabled(options);
-	};
-	
-	/**
-	* @Public
-	*/
-	NavContainerBaseProto.toggleOption = function(optionName){
-		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
-	};
-
-	/**
-	 * @Public
-	 */
-	NavContainerBaseProto.onOptionChanged = function(optionName, optionEnabled){
-		jQuery.sap.log.info("Option '" + optionName + "' changed to " + (optionEnabled ? 'enabled' : 'disabled'));
-		//console.log(this.aCustomStyleClasses);
 	};
 	
 	/**
