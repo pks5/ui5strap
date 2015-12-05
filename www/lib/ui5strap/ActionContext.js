@@ -173,6 +173,10 @@
 		_initLog(_this);
 	};
 	
+	/**
+	 * @Constructor
+	 * @Private
+	 */
 	var _ActionExpression = function(expression){
 		this._expression = expression;
 		
@@ -181,6 +185,38 @@
 		};
 	};
 	
+	/**
+	 * @Constructor
+	 * @Private
+	 */
+	var _ActionExpressionResolveObject = function(parent, key, pointer, path){
+		this._parentPointer = parent;
+		this._viewName = key;
+		
+		var newObject = {},
+			keys = Object.keys(pointer),
+			keysLength = keys.length;
+		for(var i = 0; i < keysLength; i++){
+			var newPath = path.slice(0);
+			newPath.push(keys[i]);
+		
+			newObject[keys[i]] = _buildPool(pointer[keys[i]], newPath, pointer);
+		}
+		
+		this._controlDef = newObject;
+	};
+	
+	_ActionExpressionResolveObject.prototype = new _ActionExpression();
+	
+	_ActionExpressionResolveObject.prototype.evaluate = function(context, task){
+		return context.resolve(task, this._controlDef);
+	};
+	
+	
+	/**
+	 * @Constructor
+	 * @Private
+	 */
 	var _ActionExpressionFindControl = function(parent, key, pointer, path){
 		this._parentPointer = parent;
 		this._controlName = key;
@@ -200,6 +236,9 @@
 	
 	_ActionExpressionFindControl.prototype = new _ActionExpression();
 	
+	/**
+	 * @Public
+	 */
 	_ActionExpressionFindControl.prototype.evaluate = function(context, task){
 		var controlOrDef = this._controlDef;
 		if(typeof controlOrDef === "object"){
@@ -266,6 +305,10 @@
 		}
 	};
 	
+	/**
+	 * @Static
+	 * @Private
+	 */
 	var _buildPool = function(pointer, path, parent){
 		var pointerType = typeof pointer;
 		
@@ -299,8 +342,14 @@
 				return newArray;
 			}
 			else{
-				if(path.length === 3 && path[1] === "CONTROLS"){
-					return new _ActionExpressionFindControl(parent, path[2], pointer, path);
+				if(path.length === 3){
+					var rootKey = path[1];
+					if(rootKey === "CONTROLS"){
+						return new _ActionExpressionFindControl(parent, path[2], pointer, path);
+					}
+					else if(rootKey === "VIEWS"){
+						return new _ActionExpressionResolveObject(parent, path[2], pointer, path);
+					}
 				}
 				
 				//Object

@@ -6,11 +6,15 @@
 	"navigateToHome" : {
 		"TYPE" : "ui5strap.task.Navigate",
 		
-		"PAGE" : {
-			"viewName" : "ui5strap.demoapp.views.Home",
-			"transition" : "slide-ltr",
-			"writeHistory" : true
-		}
+		"VIEWS" : {
+			"homePage" : {
+				"viewName" : "ui5strap.demoapp.views.Home",
+				"transition" : "slide-ltr",
+				"writeHistory" : true
+			}
+		},
+		
+		"PAGE" : "= .VIEWS.homePage" 
 	}
 
 }
