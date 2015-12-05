@@ -102,7 +102,7 @@
 			if(-1 !== jQuery.inArray(item, itemsToSelect)){
 				//Item is subject to select / deselect
 				if("replace" === mode || "add" === mode){
-					if(!_this._getListItemSelected(selectionGroup, item)){
+					if(!_this._isListItemSelected(selectionGroup, item)){
 						changes.selected.push(item);
 						changes.changed.push(item);
 						
@@ -113,7 +113,7 @@
 					}
 				}
 				else if("remove" === mode){
-					if(_this._getListItemSelected(selectionGroup, item)){
+					if(_this._isListItemSelected(selectionGroup, item)){
 						changes.deselected.push(item);
 						changes.changed.push(item);
 						
@@ -124,7 +124,7 @@
 					}
 				}
 				else if("toggle" === mode){
-					var selected = _this._getListItemSelected(selectionGroup, item);
+					var selected = _this._isListItemSelected(selectionGroup, item);
 						
 						if(!selected){
 							changes.selected.push(item);
@@ -141,7 +141,7 @@
 			else{
 				//Item is no subject to select / deselect
 				if("replace" === mode){
-					if(_this._getListItemSelected(selectionGroup, item)){
+					if(_this._isListItemSelected(selectionGroup, item)){
 						changes.deselected.push(item);
 						changes.changed.push(item);
 						
@@ -228,6 +228,37 @@
 	 */
 	
 	/**
+	 * Gets one or multiple selected items
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.getSelection = function(dimension, selectionGroup){
+		var selection = this._getListSelection(selectionGroup);
+		if(typeof dimension === "undefined"){
+			return selection.items;
+		}
+		else if(0 === dimension){
+			//Single value
+			return selection.items.length ? selection.items[0] : null;
+		}
+		else if(1 === dimension){
+			//1 dimensional array
+			return selection.items;
+		}
+		else if(2 === dimension){
+			//2 dimensional array
+			return [selection.items];
+		}
+		else if(3 === dimension){
+			//3 dimensional array
+			return [[selection.items]];
+		}
+		else{
+			throw new Error("Only 3 dimensions are supported by this Control.");
+		}
+	};
+	
+	/**
 	 * Tries to select one or multiple items and returns all changes.
 	 * 
 	 * @Public
@@ -264,31 +295,35 @@
 		return _changeSelection(this, itemsToSelect, "toggle", selectionGroup);
 	};
 	
+	/*
+	 * Index
+	 */
+	
 	/**
-	 * Gets one or multiple selected items
+	 * Gets one or multiple indices of selected items
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.getSelection = function(dimension, selectionGroup){
+	ListBaseProto.getSelectionIndex = function(dimension, selectionGroup){
 		var selection = this._getListSelection(selectionGroup);
 		if(typeof dimension === "undefined"){
-			return selection.items;
+			return selection.indices;
 		}
 		else if(0 === dimension){
-			//Single value
-			return selection.items.length ? selection.items[0] : null;
+			//single value
+			return selection.indices.length ? selection.indices[0] : undefined;
 		}
 		else if(1 === dimension){
 			//1 dimensional array
-			return selection.items;
+			return selection.indices;
 		}
 		else if(2 === dimension){
 			//2 dimensional array
-			return [selection.items];
+			return [selection.indices];
 		}
 		else if(3 === dimension){
 			//3 dimensional array
-			return [[selection.items]];
+			return [[selection.indices]];
 		}
 		else{
 			throw new Error("Only 3 dimensions are supported by this Control.");
@@ -331,45 +366,9 @@
 		return _changeSelectionIndices(this, indices, "toggle", selectionGroup);
 	};
 	
-	/**
-	 * Gets one or multiple indices of selected items
-	 * @Public
-	 * @Override
+	/*
+	 * CustomData 
 	 */
-	ListBaseProto.getSelectionIndex = function(dimension, selectionGroup){
-		var selection = this._getListSelection(selectionGroup);
-		if(typeof dimension === "undefined"){
-			return selection.indices;
-		}
-		else if(0 === dimension){
-			//single value
-			return selection.indices.length ? selection.indices[0] : undefined;
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			return selection.indices;
-		}
-		else if(2 === dimension){
-			//2 dimensional array
-			return [selection.indices];
-		}
-		else if(3 === dimension){
-			//3 dimensional array
-			return [[selection.indices]];
-		}
-		else{
-			throw new Error("Only 3 dimensions are supported by this Control.");
-		}
-	};
-	
-	/**
-	 * Selects one or multiple items that have the given value in the specified property.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.setSelectionByProperty = function(propertyName, values, selectionGroup){
-		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
-	};
 	
 	/**
 	 * Selects one or multiple items that have the given value in the specified custom data field.
@@ -407,27 +406,56 @@
 		_changeSelectionByCustomData(this, dataKey, values, "toggle", selectionGroup);
 	};
 	
+	/*
+	 * Property
+	 */
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified property.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.setSelectionByProperty = function(propertyName, values, selectionGroup){
+		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
+	};
+	
+	/*
+	 * ------------------
+	 * END implementation of ISelectionProvider interface
+	 * ------------------
+	 */
+	
+	/*
+	 * --------------------
+	 * START implementation of IList interface
+	 * --------------------
+	 */
+	/**
+	 * Gets one or multiple selected items that have the given value in the specified custom data field.
+	 * @Public
+	 */
+	ListBaseProto.getItemsByCustomData = function(dataKey){
+		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByCustomData");
+	};
+	
 	/**
 	 * Gets one or multiple selected items that have the given value in the specified property.
 	 * @Public
-	 * @Override
 	 */
 	ListBaseProto.getItemsByProperty = function(propertyName){
 		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByProperty");
 	};
 	
 	/**
-	 * Gets one or multiple selected items that have the given value in the specified custom data field.
 	 * @Public
-	 * @Override
 	 */
-	ListBaseProto.getItemsByCustomData = function(dataKey){
-		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByCustomData");
+	ListBaseProto.getItemIndex = function(item){
+		return this.indexOfAggregation("items", item);
 	};
 	
 	/*
 	 * ------------------
-	 * END implementation of ISelectionProvider interface
+	 * END implementation of IList interface
 	 * ------------------
 	 */
 	
@@ -451,7 +479,7 @@
 			};
 		
 		for(var i = 0; i < items.length; i++){
-			if(this._getListItemSelected(selectionGroup, items[i])){
+			if(this._isListItemSelected(selectionGroup, items[i])){
 				selection.items.push(items[i]);
 				selection.indices.push(i);
 			}
@@ -463,7 +491,7 @@
 	/**
 	 * @Protected
 	 */
-	ListBaseProto._getListItemSelected = function(group, item){
+	ListBaseProto._isListItemSelected = function(group, item){
 		return item.getSelected();
 	};
 	
@@ -495,13 +523,6 @@
 		return {
 			listItem : item
 		};
-	};
-	
-	/**
-	 * @Public
-	 */
-	ListBaseProto.getItemIndex = function(item){
-		return this.indexOfAggregation("items", item);
 	};
 	
 	/*
