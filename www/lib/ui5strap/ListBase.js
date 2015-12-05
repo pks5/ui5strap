@@ -102,29 +102,29 @@
 			if(-1 !== jQuery.inArray(item, itemsToSelect)){
 				//Item is subject to select / deselect
 				if("replace" === mode || "add" === mode){
-					if(!_this._getItemSelected(selectionGroup, item)){
+					if(!_this._getListItemSelected(selectionGroup, item)){
 						changes.selected.push(item);
 						changes.changed.push(item);
 						
-						_this._setItemSelected(selectionGroup, item, true);
+						_this._setListItemSelected(selectionGroup, item, true);
 					}
 					else{
 						changes.unchanged.push(item);
 					}
 				}
 				else if("remove" === mode){
-					if(_this._getItemSelected(selectionGroup, item)){
+					if(_this._getListItemSelected(selectionGroup, item)){
 						changes.deselected.push(item);
 						changes.changed.push(item);
 						
-						_this._setItemSelected(selectionGroup, item, false);
+						_this._setListItemSelected(selectionGroup, item, false);
 					}
 					else{
 						changes.unchanged.push(item);
 					}
 				}
 				else if("toggle" === mode){
-					var selected = _this._getItemSelected(selectionGroup, item);
+					var selected = _this._getListItemSelected(selectionGroup, item);
 						
 						if(!selected){
 							changes.selected.push(item);
@@ -135,17 +135,17 @@
 						
 						changes.changed.push(item);
 						
-						_this._setItemSelected(selectionGroup, item, !selected);
+						_this._setListItemSelected(selectionGroup, item, !selected);
 				}
 			}
 			else{
 				//Item is no subject to select / deselect
 				if("replace" === mode){
-					if(_this._getItemSelected(selectionGroup, item)){
+					if(_this._getListItemSelected(selectionGroup, item)){
 						changes.deselected.push(item);
 						changes.changed.push(item);
 						
-						_this._setItemSelected(selectionGroup, item, false);
+						_this._setListItemSelected(selectionGroup, item, false);
 					}
 					else{
 						changes.unchanged.push(item);
@@ -451,7 +451,7 @@
 			};
 		
 		for(var i = 0; i < items.length; i++){
-			if(this._getItemSelected(selectionGroup, items[i])){
+			if(this._getListItemSelected(selectionGroup, items[i])){
 				selection.items.push(items[i]);
 				selection.indices.push(i);
 			}
@@ -463,14 +463,14 @@
 	/**
 	 * @Protected
 	 */
-	ListBaseProto._getItemSelected = function(group, item){
+	ListBaseProto._getListItemSelected = function(group, item){
 		return item.getSelected();
 	};
 	
 	/**
 	 * @Protected
 	 */
-	ListBaseProto._setItemSelected = function(group, item, selected){
+	ListBaseProto._setListItemSelected = function(group, item, selected){
 		item.setSelected(selected);
 	};
 	
