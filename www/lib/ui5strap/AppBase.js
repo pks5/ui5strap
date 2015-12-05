@@ -361,7 +361,7 @@
 		};
 		
 		for(var i = 0; i < actions.length; i++){
-			ui5strap.Action.loadFromFile(actions[i], successCallback);
+			ui5strap.Action.loadFromFile(actions[i], successCallback, true);
 		}
 	};
 	

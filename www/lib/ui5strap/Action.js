@@ -162,9 +162,9 @@
 	* @Private
 	* @Static
 	*/
-	Action.loadFromFile = function(actionName, callback){
+	Action.loadFromFile = function(actionName, callback, preload){
 		if(_actionsCache[actionName]){
-			callback && callback(_actionsCache[actionName]);
+			callback && callback(_actionsCache[actionName].actionParameters);
 			
 			return;
 		}
@@ -175,10 +175,30 @@
 		ui5strap.readTextFile(
 				actionUrl, 
 				'json', 
-				function(data){
-					_actionsCache[actionName] = data;
-				
-					callback && callback(data);
+				function(actionParameters){
+					_actionsCache[actionName] = {
+							actionParameters : actionParameters,
+							preload : preload
+					};
+					
+					if(preload){
+						jQuery.sap.declare(actionName);
+						
+						//TODO Optimize performance
+						var pack = ui5strap.Utils.getObject(actionName, 1),
+							parts = actionName.split(/\./);
+						
+						pack[parts[parts.length - 1]] = function(oEvent){
+							this.getApp().runAction({
+								"eventSource" : oEvent.getSource(),
+								"eventParameters" : oEvent.getParameters(),
+								"controller" : this,
+								"parameters" : actionName
+							});
+						};
+					}
+					
+					callback && callback(actionParameters);
 				},
 				function(data){
 					throw new Error('Invalid Action: "' + actionUrl + '"');
