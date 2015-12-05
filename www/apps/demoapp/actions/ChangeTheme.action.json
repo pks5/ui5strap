@@ -3,8 +3,18 @@
 
 	"changeTheme" : {
 		"TYPE" : "ui5strap.AMChangeTheme",
+		
+		"CONTROLS" : {
+			"themeButton" : {
+				"mode" : "Event",
+				"type" : "ui5strap.Button",
+				"parameter" : "button"
+			}
+		},
+		
+		
 		"customDataKey" : "theme",
-		"theme" : "= eventParameters.button.data(.customDataKey)"
+		"theme" : "= .CONTROLS.themeButton.data(.customDataKey)"
 	}
 	
 }

@@ -173,8 +173,7 @@
 						throw new Error("Please provide both 'mode' and 'type' for Control '" + keys[i] + "'");
 					}
 					
-					var Constructor = jQuery.sap.getObject(moduleName),
-						control = null;
+					var Constructor = jQuery.sap.getObject(moduleName);
 					
 					if(!Constructor){
 						throw new Error("'" + moduleName + "' is not a valid Control!");
@@ -183,15 +182,15 @@
 					if("Create" === mode){
 						var moduleSettings = _this.context.resolve(_this, controlOrDef.settings);
 						
-						control = new Constructor(moduleSettings);
+						controlOrDef = new Constructor(moduleSettings);
 					}
 					else if("Event" === mode){
 						var parameter = _this.context.resolve(_this, controlOrDef.parameter);
 						if(parameter){
-							control = _this.context.eventParameters[parameter];
+							controlOrDef = _this.context.eventParameters[parameter];
 						}
 						else{
-							control = _this.context.eventSource;
+							controlOrDef = _this.context.eventSource;
 						}
 					}
 					else if("Select" === mode){
@@ -207,10 +206,10 @@
 									throw new Error("Please provide a viewId to select Control '" + keys[i] + "' or remove controlId to select the root control!");
 								}
 							}
-							control = _this.context.app.getControl(controlId, viewId);
+							controlOrDef = _this.context.app.getControl(controlId, viewId);
 						}
 						else{
-							control = _this.context.app.getRootControl();
+							controlOrDef = _this.context.app.getRootControl();
 						}
 					}
 					else{
@@ -218,11 +217,11 @@
 						
 					}
 					
-					if(!(control instanceof Constructor)){
+					if(!(controlOrDef instanceof Constructor)){
 						throw new Error("Control '" + keys[i] + "' must be an instance of '" + moduleName + "'!" );
 					}
 					
-					controls[keys[i]] = control;
+					controls[keys[i]] = controlOrDef;
 				}
 			}
 			else{
@@ -261,6 +260,8 @@
 		}
 		else{
 			try{
+				_collectControls(this);
+				
 				this.run();
 				
 				this.then();
@@ -284,8 +285,6 @@
 	* @Protected
 	*/
 	ActionModuleProto.run = function(){
-		_collectControls(this);
-		
 		_expression(this, "DO");
 	};
 	
