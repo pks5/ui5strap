@@ -117,7 +117,7 @@
 	TabContainerProto.synchronize = function(){
   		var customAssociation = this.getCustomAssociation();
   		if(!customAssociation){
-			this.setSelectedIndex(this.sourceControl.getSelectionIndex(), true);
+			this.setSelectedIndex(this.sourceControl.getSelectionIndex(0), true);
 		}
 		else{
 			var panes = this.getPanes();

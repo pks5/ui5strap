@@ -103,7 +103,10 @@
 	 */
 	var _getSelection = function(_this, dimension){
 		var selection = _getSelectionData(_this);
-		if(!dimension){
+		if(typeof dimension === "undefined"){
+			return selection.items;
+		}
+		else if(0 === dimension){
 			//Single value
 			return selection.items.length ? selection.items[0] : null;
 		}
@@ -120,15 +123,14 @@
 			return [[selection.items]];
 		}
 		else{
-			//more than dimensional array
-			throw new Error("At most 3 dimension are supported.");
+			throw new Error("Only 3 dimensions are supported by this Control.");
 		}
 	};
 	
 	/**
 	 * @Private
 	 */
-	var _changeSelection = function(_this, itemsToSelect, dimension, mode){
+	var _changeSelection = function(_this, itemsToSelect, mode){
 		var items = _this._getItems(),
 			changes = {
 				"selected" : [],
@@ -137,105 +139,54 @@
 				"unchanged" : [],
 			};
 		
-		if(!dimension){
-			//Single value
-			for(var i = 0; i < items.length; i++){
-				var item = items[i];
-				if(itemsToSelect && item === itemsToSelect){
-					//Item is subject to select / deselect
-					if("replace" === mode || "add" === mode){
-						if(!item.getSelected()){
-							changes.selected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(true);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
+		if(!jQuery.isArray(itemsToSelect)){
+			itemsToSelect = [itemsToSelect];
+		}
+		
+		for(var i = 0; i < items.length; i++){
+			var item = items[i];
+			if(-1 !== jQuery.inArray(item, itemsToSelect)){
+				//Item is subject to select / deselect
+				if("replace" === mode || "add" === mode){
+					if(!item.getSelected()){
+						changes.selected.push(item);
+						changes.changed.push(item);
+						
+						item.setSelected(true);
 					}
-					else if("remove" === mode){
-						if(item.getSelected()){
-							changes.deselected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(false);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
-				}
-				else{
-					//Item is no subject to select / deselect
-					if("replace" === mode){
-						if(item.getSelected()){
-							changes.deselected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(false);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
-					else if("add" === mode || "remove" === mode){
+					else{
 						changes.unchanged.push(item);
 					}
-			     }
-			}
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			for(var i = 0; i < items.length; i++){
-				var item = items[i];
-				if(-1 !== jQuery.inArray(item, itemsToSelect)){
-					//Item is subject to select / deselect
-					if("replace" === mode || "add" === mode){
-						if(!item.getSelected()){
-							changes.selected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(true);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
-					else if("remove" === mode){
-						if(item.getSelected()){
-							changes.deselected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(false);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
 				}
-				else{
-					//Item is no subject to select / deselect
-					if("replace" === mode){
-						if(item.getSelected()){
-							changes.deselected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(false);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
+				else if("remove" === mode){
+					if(item.getSelected()){
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						item.setSelected(false);
 					}
-					else if("add" === mode || "remove" === mode){
+					else{
 						changes.unchanged.push(item);
 					}
 				}
 			}
-		}
-		else{
-			//more dimensional array
-			throw new Error("Lists do not support more than 1 dimension!");
+			else{
+				//Item is no subject to select / deselect
+				if("replace" === mode){
+					if(item.getSelected()){
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						item.setSelected(false);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("add" === mode || "remove" === mode){
+					changes.unchanged.push(item);
+				}
+			}
 		}
 		
 		if(changes.changed.length){
@@ -252,7 +203,10 @@
 	 */
 	var _getSelectionIndex = function(_this, dimension){
 		var selection = _getSelectionData(_this);
-		if(!dimension){
+		if(typeof dimension === "undefined"){
+			return selection.x;
+		}
+		else if(0 === dimension){
 			//single value
 			return selection.x.length ? selection.x[0] : undefined;
 		}
@@ -269,26 +223,25 @@
 			return [[selection.x]];
 		}
 		else{
-			//more than 3 dimensional array
-			throw new Error("At most 3 dimension are supported.");
+			throw new Error("Only 3 dimensions are supported by this Control.");
 		}
 	};
 	
 	/**
 	 * @Private
 	 */
-	var _changeSelectionIndices = function(_this, indices, dimension, mode){
+	var _changeSelectionIndices = function(_this, indices, mode){
 		var items = this._getItems();
 		
-		if(!dimension){
+		if(!jQuery.isArray(indices)){
 			//Single value
 			if(indices < 0 || indices >= items.length){
 				throw new Error("Array out of bounds!");
 			}
 			
-			return _changeSelection(_this, items[indices], dimension, mode);
+			return _changeSelection(_this, items[indices], mode);
 		}
-		else if(1 === dimension){
+		else{
 			//1 dimensional array
 			var itemsToSelect = [];
 			for(var i=0; i<indices.length; i++){
@@ -299,11 +252,33 @@
 				itemsToSelect.push(items[index]);
 			}
 			
-			return _changeSelection(_this, itemsToSelect, dimension, mode);
+			return _changeSelection(_this, itemsToSelect, mode);
+		}
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _changeSelectionByCustomData = function(_this, dataKey, values, mode){
+		var items = _this._getItems();
+		
+		if(!jQuery.isArray(values)){
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === values){
+					selectedItem = items[i];
+					
+					return _changeSelection(_this, selectedItem, mode);
+				}
+			}
 		}
 		else{
-			//more dimensional array
-			throw new Error("Lists do not support more than 1 dimension!");
+			var itemsToSelect = [];
+			for(var i = 0; i < items.length; i++){
+				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+					itemsToSelect.push(items[i]);
+				}
+			}
+			return _changeSelection(_this, itemsToSelect, mode);
 		}
 	};
 	
@@ -319,8 +294,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelection = function(itemsToSelect, dimension){
-		return _changeSelection(this, itemsToSelect, dimension, "replace");
+	ListBaseProto.setSelection = function(itemsToSelect){
+		return _changeSelection(this, itemsToSelect, "replace");
 	};
 	
 	/**
@@ -328,8 +303,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.addSelection = function(itemsToSelect, dimension){
-		return _changeSelection(this, itemsToSelect, dimension, "add");
+	ListBaseProto.addSelection = function(itemsToSelect){
+		return _changeSelection(this, itemsToSelect, "add");
 	};
 	
 	/**
@@ -337,8 +312,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.removeSelection = function(itemsToSelect, dimension){
-		return _changeSelection(this, itemsToSelect, dimension, "remove");
+	ListBaseProto.removeSelection = function(itemsToSelect){
+		return _changeSelection(this, itemsToSelect, "remove");
 	};
 	
 	/**
@@ -355,8 +330,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelectionIndex = function(indices, dimension){
-		return _changeSelectionIndices(this, indices, dimension, "replace");
+	ListBaseProto.setSelectionIndex = function(indices){
+		return _changeSelectionIndices(this, indices, "replace");
 	};
 	
 	/**
@@ -364,8 +339,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.addSelectionIndex = function(indices, dimension){
-		return _changeSelectionIndices(this, indices, dimension, "add");
+	ListBaseProto.addSelectionIndex = function(indices){
+		return _changeSelectionIndices(this, indices, "add");
 	};
 	
 	/**
@@ -373,8 +348,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.removeSelectionIndex = function(indices, dimension){
-		return _changeSelectionIndices(this, indices, dimension, "remove");
+	ListBaseProto.removeSelectionIndex = function(indices){
+		return _changeSelectionIndices(this, indices, "remove");
 	};
 	
 	/**
@@ -391,7 +366,7 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelectionByProperty = function(propertyName, values, dimension){
+	ListBaseProto.setSelectionByProperty = function(propertyName, values){
 		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
 	};
 	
@@ -411,30 +386,26 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelectionByCustomData = function(dataKey, values, dimension){
-		var items = this._getItems();
-		
-		if(!dimension){
-			for(var i = 0; i < items.length; i++){
-				if(items[i].data(dataKey) === values){
-					selectedItem = items[i];
-					
-					return _changeSelection(this, selectedItem, dimension, "replace");
-				}
-			}
-		}
-		else if(1 === dimension){
-			var itemsToSelect = [];
-			for(var i = 0; i < items.length; i++){
-				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
-					itemsToSelect.push(items[i]);
-				}
-			}
-			return _changeSelection(this, itemsToSelect, dimension, "replace");
-		}
-		else{
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
+	ListBaseProto.setSelectionByCustomData = function(dataKey, values){
+		_changeSelectionByCustomData(this, dataKey, values, "replace");
+	};
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.addSelectionByCustomData = function(dataKey, values){
+		_changeSelectionByCustomData(this, dataKey, values, "add");
+	};
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.removeSelectionByCustomData = function(dataKey, values){
+		_changeSelectionByCustomData(this, dataKey, values, "remove");
 	};
 	
 	/**
