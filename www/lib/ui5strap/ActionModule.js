@@ -152,84 +152,6 @@
 		return param;
 	};
 	
-	var _collectControls = function(_this){
-		var controls = _expression(_this, "CONTROLS");
-		
-		if(!controls){
-			return;
-		}
-		
-		var	keys = Object.keys(controls),
-			keysL = keys.length;
-		
-		for(var i = 0; i < keysL; i++){
-			var controlOrDef = _this.context.resolve(_this, controls[keys[i]], true);
-			if(typeof controlOrDef === "object"){
-				if(!(controlOrDef instanceof ui5strap.Control)){
-					var mode = _this.context.resolve(_this, controlOrDef.mode, true),
-						moduleName = _this.context.resolve(_this, controlOrDef.type, true);
-					
-					if(!mode || !moduleName){
-						throw new Error("Please provide both 'mode' and 'type' for Control '" + keys[i] + "'");
-					}
-					
-					var Constructor = jQuery.sap.getObject(moduleName);
-					
-					if(!Constructor){
-						throw new Error("'" + moduleName + "' is not a valid Control!");
-					}
-					
-					if("Create" === mode){
-						var moduleSettings = _this.context.resolve(_this, controlOrDef.settings);
-						
-						controlOrDef = new Constructor(moduleSettings);
-					}
-					else if("Event" === mode){
-						var parameter = _this.context.resolve(_this, controlOrDef.parameter);
-						if(parameter){
-							controlOrDef = _this.context.eventParameters[parameter];
-						}
-						else{
-							controlOrDef = _this.context.eventSource;
-						}
-					}
-					else if("Select" === mode){
-						var controlId = _this.context.resolve(_this, controlOrDef.controlId, true),
-							viewId = _this.context.resolve(_this, controlOrDef.viewId);
-						
-						if(controlId){
-							if(!viewId){
-								if(_this.context.view){
-									viewId = _this.context.view.getId();
-								}
-								else{
-									throw new Error("Please provide a viewId to select Control '" + keys[i] + "' or remove controlId to select the root control!");
-								}
-							}
-							controlOrDef = _this.context.app.getControl(controlId, viewId);
-						}
-						else{
-							controlOrDef = _this.context.app.getRootControl();
-						}
-					}
-					else{
-						throw new Error("Please provide a mode for Control '" + keys[i] + "'!" );
-						
-					}
-					
-					if(!(controlOrDef instanceof Constructor)){
-						throw new Error("Control '" + keys[i] + "' must be an instance of '" + moduleName + "'!" );
-					}
-					
-					controls[keys[i]] = controlOrDef;
-				}
-			}
-			else{
-				throw new Error("CONTROLS must contain control instances only.");
-			}
-		}
-	}
-
 	/**
 	* Sets an action module specific parameter to the action context
 	* @Public
@@ -260,8 +182,6 @@
 		}
 		else{
 			try{
-				_collectControls(this);
-				
 				this.run();
 				
 				this.then();

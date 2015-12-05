@@ -113,7 +113,7 @@
 		_this.defaultParameters = action.parameters;
 			
 		//Pool
-		_this.action = _buildPool(_this.defaultParameters);
+		_this.action = _buildPool(_this.defaultParameters, [], _this);
 		
 		//Old Pool
 		//@deprecated
@@ -174,9 +174,100 @@
 	};
 	
 	var _ActionExpression = function(expression){
-		this.expression = expression;
-	},
-	_buildPool = function(pointer){
+		this._expression = expression;
+		
+		this.evaluate = function(context, task){
+			return context.get(task, this._expression);
+		};
+	};
+	
+	var _ActionExpressionFindControl = function(parent, key, pointer, path){
+		this._parentPointer = parent;
+		this._controlName = key;
+		
+		
+		var newObject = {},
+			keys = Object.keys(pointer),
+			keysLength = keys.length;
+		for(var i = 0; i < keysLength; i++){
+			var newPath = path.slice(0);
+			newPath.push(keys[i]);
+		
+			newObject[keys[i]] = _buildPool(pointer[keys[i]], newPath, pointer);
+		}
+		
+		this._controlDef = newObject;
+	};
+	
+	_ActionExpressionFindControl.prototype = new _ActionExpression();
+	
+	_ActionExpressionFindControl.prototype.evaluate = function(context, task){
+		var controlOrDef = this._controlDef;
+		if(typeof controlOrDef === "object"){
+			if(!(controlOrDef instanceof ui5strap.Control)){
+				var mode = context.resolve(task, controlOrDef.mode, true),
+					moduleName = context.resolve(task, controlOrDef.type, true);
+				
+				if(!mode || !moduleName){
+					throw new Error("Please provide both 'mode' and 'type' for Control '" + this._controlName + "'");
+				}
+				
+				var Constructor = jQuery.sap.getObject(moduleName);
+				
+				if(!Constructor){
+					throw new Error("'" + moduleName + "' is not a valid Control!");
+				}
+				
+				if("Create" === mode){
+					var moduleSettings = context.resolve(task, controlOrDef.settings);
+					controlOrDef = new Constructor(moduleSettings);
+				}
+				else if("Event" === mode){
+					var parameter = context.resolve(task, controlOrDef.parameter);
+					if(parameter){
+						controlOrDef = context.eventParameters[parameter];
+					}
+					else{
+						controlOrDef = context.eventSource;
+					}
+				}
+				else if("Select" === mode){
+					var controlId = context.resolve(task, controlOrDef.controlId, true),
+						viewId = context.resolve(task, controlOrDef.viewId);
+					
+					if(controlId){
+						if(!viewId){
+							if(context.view){
+								viewId = context.view.getId();
+							}
+							else{
+								throw new Error("Please provide a viewId to select Control '" + this._controlName + "' or remove controlId to select the root control!");
+							}
+						}
+						controlOrDef = context.app.getControl(controlId, viewId);
+					}
+					else{
+						controlOrDef = context.app.getRootControl();
+					}
+				}
+				else{
+					throw new Error("Please provide a mode for Control '" + this._controlName + "'!" );
+					
+				}
+				
+				if(!(controlOrDef instanceof Constructor)){
+					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "'!" );
+				}
+				
+				return controlOrDef;
+			}
+		}
+		else{
+			throw new Error("CONTROLS must contain control instances only.");
+		}
+	};
+	
+	var _buildPool = function(pointer, path, parent){
 		var pointerType = typeof pointer;
 		
 		if(pointerType === "string"){
@@ -202,18 +293,28 @@
 				var newArray = [],
 					arrayLength = pointer.length;
 				for(var i = 0; i < arrayLength; i++){
-					newArray[i] = _buildPool(pointer[i]);
+					var newPath = path.slice(0);
+					newPath.push(i);
+					newArray[i] = _buildPool(pointer[i], newPath, pointer);
 				}
 				return newArray;
 			}
 			else{
+				if(path.length === 3 && path[1] === "CONTROLS"){
+					return new _ActionExpressionFindControl(parent, path[2], pointer, path);
+				}
+				
 				//Object
 				var newObject = {},
 					keys = Object.keys(pointer),
 					keysLength = keys.length;
 				for(var i = 0; i < keysLength; i++){
-					newObject[keys[i]] = _buildPool(pointer[keys[i]]);
+					var newPath = path.slice(0);
+					newPath.push(keys[i]);
+					
+					newObject[keys[i]] = _buildPool(pointer[keys[i]], newPath, pointer);
 				}
+				
 				return newObject;
 			}
 		}
@@ -237,7 +338,7 @@
 	 */
 	ActionContextProto.resolve = function(task, pointer, onlyString){
 		if(pointer instanceof _ActionExpression){
-			return this.get(task, pointer.expression);
+			return pointer.evaluate(this, task);
 		}
 		else if(!onlyString && ("object" === typeof pointer)){
 			var objectKeys = Object.keys(pointer),
@@ -402,7 +503,7 @@
 						throw new Error("Function '" + kPart + "' must not return Action Expression!");
 					}
 					//Store back the value in the context
-					prevPointer[keyPart] = this.get(task, pointer.expression);
+					prevPointer[keyPart] = pointer.evaluate(this, task);
 				    
 					pointer = prevPointer[keyPart];
 				}
@@ -475,7 +576,7 @@
 			}
 			else if(pointer instanceof _ActionExpression){
 				//Store back the value in the context
-				prevPointer[keyPart] = this.get(task, pointer.expression);
+				prevPointer[keyPart] = pointer.evaluate(this, task);
 				
 				pointer = prevPointer[keyPart];
 			}
