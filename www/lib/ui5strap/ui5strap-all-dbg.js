@@ -1242,13 +1242,7 @@
   jQuery.sap.declare("ui5strap.View");
 
   ui5strap.View = sap.ui.core.mvc.View;
-  
-  
-  //Control
-  jQuery.sap.declare("ui5strap.ControlBase");
-
-  ui5strap.ControlBase = sap.ui.core.Control;
-  
+   
   /*
   * -----
   *
@@ -2072,6 +2066,8 @@
 	  });
   };
   
+  jQuery.sap.require("ui5strap.ControlBase");
+  
   _addTimeMark("LIBRARY", "ui5strap", "LOAD_END");
   
   //End of library
@@ -2465,7 +2461,7 @@
 		_this.defaultParameters = action.parameters;
 			
 		//Pool
-		_this.action = _buildPool(_this.defaultParameters);
+		_this.action = _buildPool(_this.defaultParameters, [], _this);
 		
 		//Old Pool
 		//@deprecated
@@ -2525,10 +2521,147 @@
 		_initLog(_this);
 	};
 	
+	/**
+	 * @Constructor
+	 * @Private
+	 */
 	var _ActionExpression = function(expression){
-		this.expression = expression;
-	},
-	_buildPool = function(pointer){
+		this._expression = expression;
+		
+		this.evaluate = function(context, task){
+			return context.get(task, this._expression);
+		};
+	};
+	
+	/**
+	 * @Constructor
+	 * @Private
+	 */
+	var _ActionExpressionResolveObject = function(parent, key, pointer, path){
+		this._parentPointer = parent;
+		this._viewName = key;
+		
+		var newObject = new _ActionParameterObject,
+			keys = Object.keys(pointer),
+			keysLength = keys.length;
+		for(var i = 0; i < keysLength; i++){
+			var newPath = path.slice(0);
+			newPath.push(keys[i]);
+		
+			newObject[keys[i]] = _buildPool(pointer[keys[i]], newPath, pointer);
+		}
+		
+		this._controlDef = newObject;
+	};
+	
+	_ActionExpressionResolveObject.prototype = new _ActionExpression();
+	
+	_ActionExpressionResolveObject.prototype.evaluate = function(context, task){
+		return context.resolve(task, this._controlDef);
+	};
+	
+	
+	/**
+	 * @Constructor
+	 * @Private
+	 */
+	var _ActionExpressionFindControl = function(parent, key, pointer, path){
+		this._parentPointer = parent;
+		this._controlName = key;
+		
+		var newObject = new _ActionParameterObject,
+			keys = Object.keys(pointer),
+			keysLength = keys.length;
+		for(var i = 0; i < keysLength; i++){
+			var newPath = path.slice(0);
+			newPath.push(keys[i]);
+		
+			newObject[keys[i]] = _buildPool(pointer[keys[i]], newPath, pointer);
+		}
+		
+		this._controlDef = newObject;
+	};
+	
+	_ActionExpressionFindControl.prototype = new _ActionExpression();
+	
+	/**
+	 * @Public
+	 */
+	_ActionExpressionFindControl.prototype.evaluate = function(context, task){
+		var controlOrDef = this._controlDef;
+		if(typeof controlOrDef === "object"){
+			if(!(controlOrDef instanceof ui5strap.Control)){
+				var mode = context.resolve(task, controlOrDef.SOURCE, true),
+					moduleName = context.resolve(task, controlOrDef.TYPE, true);
+				
+				if(!mode || !moduleName){
+					throw new Error("Please provide both 'mode' and 'type' for Control '" + this._controlName + "'");
+				}
+				
+				var Constructor = jQuery.sap.getObject(moduleName);
+				
+				if(!Constructor){
+					throw new Error("'" + moduleName + "' is not a valid Control!");
+				}
+				
+				if("New" === mode){
+					var moduleSettings = context.resolve(task, controlOrDef.SETTINGS);
+					controlOrDef = new Constructor(moduleSettings);
+				}
+				else if("Event" === mode){
+					var parameter = context.resolve(task, controlOrDef.parameter);
+					if(parameter){
+						controlOrDef = context.eventParameters[parameter];
+					}
+					else{
+						controlOrDef = context.eventSource;
+					}
+				}
+				else if("View" === mode){
+					var controlId = context.resolve(task, controlOrDef.CONTROL_ID, true),
+						viewId = context.resolve(task, controlOrDef.VIEW_ID);
+					
+					if(controlId){
+						if(!viewId){
+							if(context.view){
+								viewId = context.view.getId();
+							}
+							else{
+								throw new Error("Please provide a viewId to select Control '" + this._controlName + "' or remove controlId to select the root control!");
+							}
+						}
+						controlOrDef = context.app.getControl(controlId, viewId);
+					}
+					else{
+						controlOrDef = context.app.getRootControl();
+					}
+				}
+				else{
+					throw new Error("Please provide a mode for Control '" + this._controlName + "'!" );
+					
+				}
+				
+				if(!(controlOrDef instanceof Constructor)){
+					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "'!" );
+				}
+				
+				return controlOrDef;
+			}
+		}
+		else{
+			throw new Error("CONTROLS must contain control instances only.");
+		}
+	};
+	
+	var _ActionParameterObject = function(){
+		
+	};
+	
+	/**
+	 * @Static
+	 * @Private
+	 */
+	var _buildPool = function(pointer, path, parent){
 		var pointerType = typeof pointer;
 		
 		if(pointerType === "string"){
@@ -2554,18 +2687,34 @@
 				var newArray = [],
 					arrayLength = pointer.length;
 				for(var i = 0; i < arrayLength; i++){
-					newArray[i] = _buildPool(pointer[i]);
+					var newPath = path.slice(0);
+					newPath.push(i);
+					newArray[i] = _buildPool(pointer[i], newPath, pointer);
 				}
 				return newArray;
 			}
 			else{
+				if(path.length === 3){
+					var rootKey = path[1];
+					if(rootKey === "CONTROLS"){
+						return new _ActionExpressionFindControl(parent, path[2], pointer, path);
+					}
+					else if(rootKey === "VIEWS"){
+						return new _ActionExpressionResolveObject(parent, path[2], pointer, path);
+					}
+				}
+				
 				//Object
-				var newObject = {},
+				var newObject = new _ActionParameterObject(),
 					keys = Object.keys(pointer),
 					keysLength = keys.length;
 				for(var i = 0; i < keysLength; i++){
-					newObject[keys[i]] = _buildPool(pointer[keys[i]]);
+					var newPath = path.slice(0);
+					newPath.push(keys[i]);
+					
+					newObject[keys[i]] = _buildPool(pointer[keys[i]], newPath, pointer);
 				}
+				
 				return newObject;
 			}
 		}
@@ -2589,9 +2738,9 @@
 	 */
 	ActionContextProto.resolve = function(task, pointer, onlyString){
 		if(pointer instanceof _ActionExpression){
-			return this.get(task, pointer.expression);
+			return pointer.evaluate(this, task);
 		}
-		else if(!onlyString && ("object" === typeof pointer)){
+		else if(!onlyString && (pointer instanceof _ActionParameterObject)){
 			var objectKeys = Object.keys(pointer),
 				objectKeysLength = objectKeys.length;
 		
@@ -2754,7 +2903,7 @@
 						throw new Error("Function '" + kPart + "' must not return Action Expression!");
 					}
 					//Store back the value in the context
-					prevPointer[keyPart] = this.get(task, pointer.expression);
+					prevPointer[keyPart] = pointer.evaluate(this, task);
 				    
 					pointer = prevPointer[keyPart];
 				}
@@ -2827,7 +2976,7 @@
 			}
 			else if(pointer instanceof _ActionExpression){
 				//Store back the value in the context
-				prevPointer[keyPart] = this.get(task, pointer.expression);
+				prevPointer[keyPart] = pointer.evaluate(this, task);
 				
 				pointer = prevPointer[keyPart];
 			}
@@ -3165,19 +3314,25 @@
 	* Does same as ActionContext.prototype.get - plus type validation.
 	* @Public
 	*/
-	ActionModuleProto.getParameter = function(paramKey){
+	ActionModuleProto.getParameter = function(paramKey, resolveAll){
 		var paramDef = this.parameters[paramKey];
 		
 		if(!paramDef){
 			throw new Error("Invalid definition for parameter '" + paramKey + "'.");
 		}
 
-		var value = this.context.get(this, "." + paramKey),
-			paramDefType = paramDef.type;
+		var paramDefType = paramDef.type,
+			value = this.context.action[this.namespace][paramKey];
+		
+		if(value){
+			value = this.context.resolve(this, value, !resolveAll);
+		}
 		
 		if(('undefined' === typeof value) && ('undefined' !== typeof paramDef.defaultValue)){
 			value = paramDef.defaultValue;
 		}
+		
+		this.context.action[this.namespace][paramKey] = value;
 		
 		if(value && paramDefType){
 			var parameterType = typeof value,
@@ -3209,7 +3364,7 @@
 		
 		return param;
 	};
-
+	
 	/**
 	* Sets an action module specific parameter to the action context
 	* @Public
@@ -3263,7 +3418,7 @@
 	* @Protected
 	*/
 	ActionModuleProto.run = function(){
-		ui5strap.Action.runTasks(this.context, _expression(this, "DO"));
+		_expression(this, "DO");
 	};
 	
 	ActionModuleProto.then = function(){
@@ -3571,9 +3726,9 @@
 	* @Private
 	* @Static
 	*/
-	Action.loadFromFile = function(actionName, callback){
+	Action.loadFromFile = function(actionName, callback, preload){
 		if(_actionsCache[actionName]){
-			callback && callback(_actionsCache[actionName]);
+			callback && callback(_actionsCache[actionName].actionParameters);
 			
 			return;
 		}
@@ -3584,10 +3739,30 @@
 		ui5strap.readTextFile(
 				actionUrl, 
 				'json', 
-				function(data){
-					_actionsCache[actionName] = data;
-				
-					callback && callback(data);
+				function(actionParameters){
+					_actionsCache[actionName] = {
+							actionParameters : actionParameters,
+							preload : preload
+					};
+					
+					if(preload){
+						jQuery.sap.declare(actionName);
+						
+						//TODO Optimize performance
+						var pack = ui5strap.Utils.getObject(actionName, 1),
+							parts = actionName.split(/\./);
+						
+						pack[parts[parts.length - 1]] = function(oEvent){
+							this.getApp().runAction({
+								"eventSource" : oEvent.getSource(),
+								"eventParameters" : oEvent.getParameters(),
+								"controller" : this,
+								"parameters" : actionName
+							});
+						};
+					}
+					
+					callback && callback(actionParameters);
 				},
 				function(data){
 					throw new Error('Invalid Action: "' + actionUrl + '"');
@@ -4817,7 +4992,7 @@
 		};
 		
 		for(var i = 0; i < actions.length; i++){
-			ui5strap.Action.loadFromFile(actions[i], successCallback);
+			ui5strap.Action.loadFromFile(actions[i], successCallback, true);
 		}
 	};
 	
@@ -6175,10 +6350,6 @@
 			library : "ui5strap",
 			
 			properties : {
-				options : {
-					type : "string",
-					defaultValue : ""
-				},
 				defaultTransition : {
 					type : "string",
 					defaultValue : "transition-slide"
@@ -6214,7 +6385,9 @@
 	var NavContainerBase = ui5strap.NavContainer,
 		NavContainerBaseProto = NavContainerBase.prototype,
 		domAttachTimeout = 50;
-
+	
+	NavContainerBaseProto._STYLE_PREFIX = "navcontainer";
+	
 	/*
 	*
 	* STATIC FIELDS & METHODS
@@ -6737,126 +6910,6 @@
 	 */
 	NavContainerBaseProto._getTargetClassString = function(target){
 		return "navcontainer-target navcontainer-target-" + target;
-	};
-	
-	
-	/**
-	* @Protected
-	*/
-	NavContainerBaseProto._getOptionsClassString = function(){
-		var options = this.getOptions(),
-			classes = '';
-	    
-		if(options){
-	    	options = options.split(' ');
-	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + 'navcontainer-option-' + options[i];
-	    	}
-	    }
-		
-		return classes;
-	};
-	
-	/**
-	* @Protected
-	*/
-	NavContainerBaseProto._updateStyleClass = function(){
-		var currentClassesString = '',
-			options = this.getOptions();
-		
-		var classes = this.$().attr('class').split(' ');
-		for(var i = 0; i < classes.length; i++){
-			var cClass = classes[i];
-			if(cClass && cClass.indexOf('navcontainer-option-') !== 0){
-				currentClassesString += ' ' + cClass;
-			}
-			
-		}
-		
-		if(options){
-	    	options = options.split(' ');
-	    	for(var i = 0; i < options.length; i++){
-	    		currentClassesString += ' navcontainer-option-' + options[i];
-	    	}
-	    }
-	
-		this.$().attr('class', currentClassesString.trim());
-	};
-	
-	/**
-	* @Public
-	* @Override
-	* TODO avoid overriding of user provided css classes
-	*/
-	NavContainerBaseProto.setOptions = function(newOptions){
-		if(this.getDomRef()){
-			this.setProperty('options', newOptions, true);
-			this._updateStyleClass();
-		}
-		else{
-			this.setProperty('options', newOptions);
-		}
-	};
-
-	/**
-	* @Public
-	*/
-	NavContainerBaseProto.setOptionsEnabled = function(options){
-		var currentOptions = [],
-			cOptions = this.getOptions();
-		
-		if(cOptions){
-			currentOptions = cOptions.split(' ');
-		}
-		
-		for(var optionName in options){
-			var optionIndex = jQuery.inArray(optionName, currentOptions),
-				optionEnabled = options[optionName];
-
-			if(optionEnabled && -1 === optionIndex
-				|| !optionEnabled && -1 !== optionIndex){
-				
-				if(optionEnabled){
-					currentOptions.push(optionName);
-				}
-				else{
-					currentOptions.splice(optionIndex, 1);
-				}
-				
-				this.onOptionChanged(optionName, optionEnabled);
-			}
-		}
-		this.setOptions(currentOptions.join(' '));
-	};
-
-	/**
-	* @Public
-	*/
-	NavContainerBaseProto.isOptionEnabled = function(optionName){
-		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
-	};
-	
-	NavContainerBaseProto.setOptionEnabled = function(optionName, optionEnabled){
-		var options = {};
-		
-		options[optionName] = optionEnabled;
-		
-		this.setOptionsEnabled(options);
-	};
-	
-	/**
-	* @Public
-	*/
-	NavContainerBaseProto.toggleOption = function(optionName){
-		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
-	};
-
-	/**
-	 * @Public
-	 */
-	NavContainerBaseProto.onOptionChanged = function(optionName, optionEnabled){
-		jQuery.sap.log.info("Option '" + optionName + "' changed to " + (optionEnabled ? 'enabled' : 'disabled'));
-		//console.log(this.aCustomStyleClasses);
 	};
 	
 	/**
@@ -10585,36 +10638,170 @@
 		}
 	});
 
-	var ListBaseProto = ui5strap.ListBase.prototype;
+	var ListBaseProto = ui5strap.ListBase.prototype,
+		_defaultSelectionGroup = "group";
 	
 	/**
-	 * Returns an array of selected items and their indices.
-	 * 
 	 * @Private
 	 */
-	var _getSelectionData = function(_this){
+	var _changeSelection = function(_this, itemsToSelect, mode, selectionGroup){
 		var items = _this._getItems(),
-			selection = {
-				x : [],
-				items : []
+			changes = {
+				"selected" : [],
+				"deselected" : [],
+				"changed" : [],
+				"unchanged" : [],
 			};
 		
+		if(!jQuery.isArray(itemsToSelect)){
+			itemsToSelect = [itemsToSelect];
+		}
+		
+		if(!selectionGroup){
+			selectionGroup = _defaultSelectionGroup;
+		}
+		
 		for(var i = 0; i < items.length; i++){
-			if(items[i].getSelected()){
-				selection.items.push(items[i]);
-				selection.x.push(i);
+			var item = items[i];
+			if(-1 !== jQuery.inArray(item, itemsToSelect)){
+				//Item is subject to select / deselect
+				if("replace" === mode || "add" === mode){
+					if(!_this._isListItemSelected(selectionGroup, item)){
+						changes.selected.push(item);
+						changes.changed.push(item);
+						
+						_this._setListItemSelected(selectionGroup, item, true);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("remove" === mode){
+					if(_this._isListItemSelected(selectionGroup, item)){
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						_this._setListItemSelected(selectionGroup, item, false);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("toggle" === mode){
+					var selected = _this._isListItemSelected(selectionGroup, item);
+						
+						if(!selected){
+							changes.selected.push(item);
+						}
+						else{
+							changes.deselected.push(item);
+						}
+						
+						changes.changed.push(item);
+						
+						_this._setListItemSelected(selectionGroup, item, !selected);
+				}
+			}
+			else{
+				//Item is no subject to select / deselect
+				if("replace" === mode){
+					if(_this._isListItemSelected(selectionGroup, item)){
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						_this._setListItemSelected(selectionGroup, item, false);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("add" === mode || "remove" === mode || "toggle" === mode){
+					changes.unchanged.push(item);
+				}
 			}
 		}
 		
-		return selection;
+		if(changes.changed.length){
+			_this.fireSelectionChange({ selectionChanges: changes });
+		
+			_this.fireSelectionChanged({ selectionChanges: changes });
+		}
+		
+		return changes;
 	};
 	
 	/**
 	 * @Private
 	 */
-	var _getSelection = function(_this, dimension){
-		var selection = _getSelectionData(_this);
-		if(!dimension){
+	var _changeSelectionIndices = function(_this, indices, mode, selectionGroup){
+		var items = this._getItems();
+		
+		if(!jQuery.isArray(indices)){
+			//Single value
+			if(indices < 0 || indices >= items.length){
+				throw new Error("Array out of bounds!");
+			}
+			
+			return _changeSelection(_this, items[indices], mode, selectionGroup);
+		}
+		else{
+			//1 dimensional array
+			var itemsToSelect = [];
+			for(var i=0; i<indices.length; i++){
+				var index = indices[i];
+				if(index < 0 || index >= items.length){
+					throw new Error("Array out of bounds!");
+				}
+				itemsToSelect.push(items[index]);
+			}
+			
+			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
+		}
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _changeSelectionByCustomData = function(_this, dataKey, values, mode, selectionGroup){
+		var items = _this._getItems();
+		
+		if(!jQuery.isArray(values)){
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === values){
+					selectedItem = items[i];
+					
+					return _changeSelection(_this, selectedItem, mode, selectionGroup);
+				}
+			}
+		}
+		else{
+			var itemsToSelect = [];
+			for(var i = 0; i < items.length; i++){
+				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+					itemsToSelect.push(items[i]);
+				}
+			}
+			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
+		}
+	};
+	
+	/*
+	 * --------------------
+	 * START implementation of ISelectionProvider interface
+	 * --------------------
+	 */
+	
+	/**
+	 * Gets one or multiple selected items
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.getSelection = function(dimension, selectionGroup){
+		var selection = this._getListSelection(selectionGroup);
+		if(typeof dimension === "undefined"){
+			return selection.items;
+		}
+		else if(0 === dimension){
 			//Single value
 			return selection.items.length ? selection.items[0] : null;
 		}
@@ -10631,198 +10818,9 @@
 			return [[selection.items]];
 		}
 		else{
-			//more than dimensional array
-			throw new Error("At most 3 dimension are supported.");
+			throw new Error("Only 3 dimensions are supported by this Control.");
 		}
 	};
-	
-	/**
-	 * @Private
-	 */
-	var _changeSelection = function(_this, itemsToSelect, dimension, mode){
-		var items = _this._getItems(),
-			changes = {
-				"selected" : [],
-				"deselected" : [],
-				"changed" : [],
-				"unchanged" : [],
-			};
-		
-		if(!dimension){
-			//Single value
-			for(var i = 0; i < items.length; i++){
-				var item = items[i];
-				if(itemsToSelect && item === itemsToSelect){
-					//Item is subject to select / deselect
-					if("replace" === mode || "add" === mode){
-						if(!item.getSelected()){
-							changes.selected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(true);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
-					else if("remove" === mode){
-						if(item.getSelected()){
-							changes.deselected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(false);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
-				}
-				else{
-					//Item is no subject to select / deselect
-					if("replace" === mode){
-						if(item.getSelected()){
-							changes.deselected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(false);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
-					else if("add" === mode || "remove" === mode){
-						changes.unchanged.push(item);
-					}
-			     }
-			}
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			for(var i = 0; i < items.length; i++){
-				var item = items[i];
-				if(-1 !== jQuery.inArray(item, itemsToSelect)){
-					//Item is subject to select / deselect
-					if("replace" === mode || "add" === mode){
-						if(!item.getSelected()){
-							changes.selected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(true);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
-					else if("remove" === mode){
-						if(item.getSelected()){
-							changes.deselected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(false);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
-				}
-				else{
-					//Item is no subject to select / deselect
-					if("replace" === mode){
-						if(item.getSelected()){
-							changes.deselected.push(item);
-							changes.changed.push(item);
-							
-							item.setSelected(false);
-						}
-						else{
-							changes.unchanged.push(item);
-						}
-					}
-					else if("add" === mode || "remove" === mode){
-						changes.unchanged.push(item);
-					}
-				}
-			}
-		}
-		else{
-			//more dimensional array
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
-		
-		if(changes.changed.length){
-			_this.fireSelectionChange({ selectionChanges: changes });
-		
-			_this.fireSelectionChanged({ selectionChanges: changes });
-		}
-		
-		return changes;
-	};
-	
-	/**
-	 * @Private
-	 */
-	var _getSelectionIndex = function(_this, dimension){
-		var selection = _getSelectionData(_this);
-		if(!dimension){
-			//single value
-			return selection.x.length ? selection.x[0] : undefined;
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			return selection.x;
-		}
-		else if(2 === dimension){
-			//2 dimensional array
-			return [selection.x];
-		}
-		else if(3 === dimension){
-			//3 dimensional array
-			return [[selection.x]];
-		}
-		else{
-			//more than 3 dimensional array
-			throw new Error("At most 3 dimension are supported.");
-		}
-	};
-	
-	/**
-	 * @Private
-	 */
-	var _changeSelectionIndices = function(_this, indices, dimension, mode){
-		var items = this._getItems();
-		
-		if(!dimension){
-			//Single value
-			if(indices < 0 || indices >= items.length){
-				throw new Error("Array out of bounds!");
-			}
-			
-			return _changeSelection(_this, items[indices], dimension, mode);
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			var itemsToSelect = [];
-			for(var i=0; i<indices.length; i++){
-				var index = indices[i];
-				if(index < 0 || index >= items.length){
-					throw new Error("Array out of bounds!");
-				}
-				itemsToSelect.push(items[index]);
-			}
-			
-			return _changeSelection(_this, itemsToSelect, dimension, mode);
-		}
-		else{
-			//more dimensional array
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
-	};
-	
-	/*
-	 * --------------------
-	 * START implementation of ISelectionProvider interface
-	 * --------------------
-	 */
 	
 	/**
 	 * Tries to select one or multiple items and returns all changes.
@@ -10830,8 +10828,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelection = function(itemsToSelect, dimension){
-		return _changeSelection(this, itemsToSelect, dimension, "replace");
+	ListBaseProto.setSelection = function(itemsToSelect, selectionGroup){
+		return _changeSelection(this, itemsToSelect, "replace", selectionGroup);
 	};
 	
 	/**
@@ -10839,8 +10837,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.addSelection = function(itemsToSelect, dimension){
-		return _changeSelection(this, itemsToSelect, dimension, "add");
+	ListBaseProto.addSelection = function(itemsToSelect, selectionGroup){
+		return _changeSelection(this, itemsToSelect, "add", selectionGroup);
 	};
 	
 	/**
@@ -10848,17 +10846,52 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.removeSelection = function(itemsToSelect, dimension){
-		return _changeSelection(this, itemsToSelect, dimension, "remove");
+	ListBaseProto.removeSelection = function(itemsToSelect, selectionGroup){
+		return _changeSelection(this, itemsToSelect, "remove", selectionGroup);
 	};
 	
 	/**
-	 * Gets one or multiple selected items
+	 * Toggles one or multiple items from selection
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.getSelection = function(dimension){
-		return _getSelection(this, dimension);
+	ListBaseProto.toggleSelection = function(itemsToSelect, selectionGroup){
+		return _changeSelection(this, itemsToSelect, "toggle", selectionGroup);
+	};
+	
+	/*
+	 * Index
+	 */
+	
+	/**
+	 * Gets one or multiple indices of selected items
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.getSelectionIndex = function(dimension, selectionGroup){
+		var selection = this._getListSelection(selectionGroup);
+		if(typeof dimension === "undefined"){
+			return selection.indices;
+		}
+		else if(0 === dimension){
+			//single value
+			return selection.indices.length ? selection.indices[0] : undefined;
+		}
+		else if(1 === dimension){
+			//1 dimensional array
+			return selection.indices;
+		}
+		else if(2 === dimension){
+			//2 dimensional array
+			return [selection.indices];
+		}
+		else if(3 === dimension){
+			//3 dimensional array
+			return [[selection.indices]];
+		}
+		else{
+			throw new Error("Only 3 dimensions are supported by this Control.");
+		}
 	};
 	
 	/**
@@ -10866,8 +10899,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelectionIndex = function(indices, dimension){
-		return _changeSelectionIndices(this, indices, dimension, "replace");
+	ListBaseProto.setSelectionIndex = function(indices, selectionGroup){
+		return _changeSelectionIndices(this, indices, "replace", selectionGroup);
 	};
 	
 	/**
@@ -10875,8 +10908,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.addSelectionIndex = function(indices, dimension){
-		return _changeSelectionIndices(this, indices, dimension, "add");
+	ListBaseProto.addSelectionIndex = function(indices, selectionGroup){
+		return _changeSelectionIndices(this, indices, "add", selectionGroup);
 	};
 	
 	/**
@@ -10884,77 +10917,70 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.removeSelectionIndex = function(indices, dimension){
-		return _changeSelectionIndices(this, indices, dimension, "remove");
+	ListBaseProto.removeSelectionIndex = function(indices, selectionGroup){
+		return _changeSelectionIndices(this, indices, "remove", selectionGroup);
 	};
 	
 	/**
-	 * Gets one or multiple indices of selected items
+	 * Toggles one or multiple items from selection by indices
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.getSelectionIndex = function(dimension){
-		return _getSelectionIndex(this, dimension);
+	ListBaseProto.toggleSelectionIndex = function(indices, selectionGroup){
+		return _changeSelectionIndices(this, indices, "toggle", selectionGroup);
 	};
 	
-	/**
-	 * Selects one or multiple items that have the given value in the specified property.
-	 * @Public
-	 * @Override
+	/*
+	 * CustomData 
 	 */
-	ListBaseProto.setSelectionByProperty = function(propertyName, values, dimension){
-		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
-	};
-	
-	/**
-	 * Gets one or multiple selected items that have the given value in the specified property.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.getItemsByProperty = function(propertyName){
-		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByProperty");
-	};
-	
-	
 	
 	/**
 	 * Selects one or multiple items that have the given value in the specified custom data field.
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelectionByCustomData = function(dataKey, values, dimension){
-		var items = this._getItems();
-		
-		if(!dimension){
-			for(var i = 0; i < items.length; i++){
-				if(items[i].data(dataKey) === values){
-					selectedItem = items[i];
-					
-					return _changeSelection(this, selectedItem, dimension, "replace");
-				}
-			}
-		}
-		else if(1 === dimension){
-			var itemsToSelect = [];
-			for(var i = 0; i < items.length; i++){
-				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
-					itemsToSelect.push(items[i]);
-				}
-			}
-			return _changeSelection(this, itemsToSelect, dimension, "replace");
-		}
-		else{
-			throw new Error("Lists do not support more than 1 dimension!");
-		}
+	ListBaseProto.setSelectionByCustomData = function(dataKey, values, selectionGroup){
+		_changeSelectionByCustomData(this, dataKey, values, "replace", selectionGroup);
 	};
 	
 	/**
-	 * Gets one or multiple selected items that have the given value in the specified custom data field.
+	 * Selects one or multiple items that have the given value in the specified custom data field.
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.getItemsByCustomData = function(dataKey){
-		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByCustomData");
+	ListBaseProto.addSelectionByCustomData = function(dataKey, values, selectionGroup){
+		_changeSelectionByCustomData(this, dataKey, values, "add", selectionGroup);
+	};
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.removeSelectionByCustomData = function(dataKey, values, selectionGroup){
+		_changeSelectionByCustomData(this, dataKey, values, "remove", selectionGroup);
+	};
+	
+	/**
+	 * Toggles one or multiple items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.toggleSelectionByCustomData = function(dataKey, values, selectionGroup){
+		_changeSelectionByCustomData(this, dataKey, values, "toggle", selectionGroup);
+	};
+	
+	/*
+	 * Property
+	 */
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified property.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.setSelectionByProperty = function(propertyName, values, selectionGroup){
+		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
 	};
 	
 	/*
@@ -10963,8 +10989,85 @@
 	 * ------------------
 	 */
 	
+	/*
+	 * --------------------
+	 * START implementation of IList interface
+	 * --------------------
+	 */
+	/**
+	 * Gets one or multiple selected items that have the given value in the specified custom data field.
+	 * @Public
+	 */
+	ListBaseProto.getItemsByCustomData = function(dataKey){
+		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByCustomData");
+	};
+	
+	/**
+	 * Gets one or multiple selected items that have the given value in the specified property.
+	 * @Public
+	 */
+	ListBaseProto.getItemsByProperty = function(propertyName){
+		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByProperty");
+	};
+	
 	/**
 	 * @Public
+	 */
+	ListBaseProto.getItemIndex = function(item){
+		return this.indexOfAggregation("items", item);
+	};
+	
+	/*
+	 * ------------------
+	 * END implementation of IList interface
+	 * ------------------
+	 */
+	
+	/**
+	 * @Protected
+	 */
+	/**
+	 * Returns an array of selected items and their indices.
+	 * 
+	 * @Private
+	 */
+	ListBaseProto._getListSelection = function(selectionGroup){
+		if(!selectionGroup){
+			selectionGroup = _defaultSelectionGroup;
+		}
+		
+		var items = this._getItems(),
+			selection = {
+				indices : [],
+				items : []
+			};
+		
+		for(var i = 0; i < items.length; i++){
+			if(this._isListItemSelected(selectionGroup, items[i])){
+				selection.items.push(items[i]);
+				selection.indices.push(i);
+			}
+		}
+		
+		return selection;
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._isListItemSelected = function(group, item){
+		return item.getSelected();
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._setListItemSelected = function(group, item, selected){
+		item.setSelected(selected);
+	};
+	
+	/**
+	 * @Protected
 	 */
 	ListBaseProto._getItems = function(){
 		return this.getItems();
@@ -10978,13 +11081,6 @@
 	};
 	
 	/**
-	 * @Public
-	 */
-	ListBaseProto.getItemIndex = function(item){
-		return this.indexOfAggregation("items", item);
-	};
-	
-	/**
 	 * @Protected
 	 */
 	ListBaseProto._getEventOptions = function(item){
@@ -10992,7 +11088,6 @@
 			listItem : item
 		};
 	};
-	
 	
 	/*
 	 * ----------------
@@ -11015,6 +11110,9 @@
 			
 			if(selectionMode === ui5strap.SelectionMode.Single){
 				changes = _this.setSelection(item);
+			}
+			else if(selectionMode === ui5strap.SelectionMode.Multiple){
+				changes = _this.toggleSelection(item);
 			}
 			
 			if(changes && changes.changed.length){
@@ -17682,6 +17780,185 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  * UI5Strap
  *
+ * ui5strap.ControlBase
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+(function(){
+
+	jQuery.sap.declare("ui5strap.ControlBase");
+	jQuery.sap.require("ui5strap.library");
+	
+	ui5strap.Control.extend("ui5strap.ControlBase", {
+		metadata : {
+
+			library : "ui5strap",
+			
+			properties : {
+				options : {
+					type : "string",
+					defaultValue : ""
+				}
+			},
+			
+			
+			events : {
+				/*
+				optionChange : {
+					parameters : {
+						"optionName" : {type : "string"},
+						"optionEnabled" : {type : "boolean"}
+					}
+				}
+				*/
+			}
+		}
+	});
+	
+	var ControlBaseProto = ui5strap.ControlBase.prototype;
+	
+	ControlBaseProto._STYLE_PREFIX = 'us5l-control';
+	
+	/**
+	* @Protected
+	*/
+	ControlBaseProto._getOptionsClassString = function(){
+		var options = this.getOptions(),
+			classes = '';
+	    
+		if(options){
+	    	options = options.split(' ');
+	    	for(var i = 0; i < options.length; i++){
+	    		classes += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
+	    	}
+	    }
+		
+		return classes;
+	};
+	
+	/**
+	* @Protected
+	*/
+	ControlBaseProto._updateStyleClass = function(){
+		var currentClassesString = '',
+			options = this.getOptions();
+		
+		var classes = this.$().attr('class').split(' ');
+		for(var i = 0; i < classes.length; i++){
+			var cClass = classes[i];
+			if(cClass && cClass.indexOf(this._STYLE_PREFIX + '-option-') !== 0){
+				currentClassesString += ' ' + cClass;
+			}
+			
+		}
+		
+		if(options){
+	    	options = options.split(' ');
+	    	for(var i = 0; i < options.length; i++){
+	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
+	    	}
+	    }
+	
+		this.$().attr('class', currentClassesString.trim());
+	};
+	
+	/**
+	* @Public
+	* @Override
+	* TODO avoid overriding of user provided css classes
+	*/
+	ControlBaseProto.setOptions = function(newOptions){
+		if(this.getDomRef()){
+			this.setProperty('options', newOptions, true);
+			this._updateStyleClass();
+		}
+		else{
+			this.setProperty('options', newOptions);
+		}
+	};
+
+	/**
+	* @Public
+	*/
+	ControlBaseProto.setOptionsEnabled = function(options){
+		var currentOptions = [],
+			cOptions = this.getOptions();
+		
+		if(cOptions){
+			currentOptions = cOptions.split(' ');
+		}
+		
+		for(var optionName in options){
+			var optionIndex = jQuery.inArray(optionName, currentOptions),
+				optionEnabled = options[optionName];
+
+			if(optionEnabled && -1 === optionIndex
+				|| !optionEnabled && -1 !== optionIndex){
+				
+				if(optionEnabled){
+					currentOptions.push(optionName);
+				}
+				else{
+					currentOptions.splice(optionIndex, 1);
+				}
+				
+				this.onOptionChange(optionName, optionEnabled);
+			}
+		}
+		this.setOptions(currentOptions.join(' '));
+	};
+
+	/**
+	* @Public
+	*/
+	ControlBaseProto.isOptionEnabled = function(optionName){
+		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
+	};
+	
+	ControlBaseProto.setOptionEnabled = function(optionName, optionEnabled){
+		var options = {};
+		
+		options[optionName] = optionEnabled;
+		
+		this.setOptionsEnabled(options);
+	};
+	
+	/**
+	* @Public
+	*/
+	ControlBaseProto.toggleOption = function(optionName){
+		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
+	};
+	
+	/**
+	* @Public
+	*/
+	ControlBaseProto.onOptionChange = function(optionName, optionEnabled){
+		
+	};
+}());;/*
+ * 
+ * UI5Strap
+ *
  * ui5strap.Form
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
@@ -23104,7 +23381,7 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 	TabContainerProto.synchronize = function(){
   		var customAssociation = this.getCustomAssociation();
   		if(!customAssociation){
-			this.setSelectedIndex(this.sourceControl.getSelectionIndex(), true);
+			this.setSelectedIndex(this.sourceControl.getSelectionIndex(0), true);
 		}
 		else{
 			var panes = this.getPanes();
