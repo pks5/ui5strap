@@ -2,7 +2,6 @@
 	"//" : "Appends a new media list item to an existing media list.",
 	"TASKS" : [
 		"createMediaListItem",
-		"createMediaListImage",
 		"addItemToList"
 	],
 	
@@ -15,26 +14,25 @@
 		"titleInputField" : "= app.getControl( .titleInputId, .viewId )",
 		"textInputField" : "= app.getControl( .textInputId, .viewId )",
 		
-		"MODULE" : "ui5strap.ListMediaItem",
-		"SETTINGS" : {
-			"heading" : "= .titleInputField.getValue()",
-			"text" : "= .textInputField.getValue()"
-		}
-	},
-	
-	"createMediaListImage" : {
-		"TYPE" : "ui5strap.task.CreateControl",
-		
-		"MODULE" : "ui5strap.Image",
-		"SETTINGS" : {
-			"type" : "MediaObject",
-			"mpath" : "ui5strap.demoapp.img.awesome",
-			"ext" : "png",
-			"width" : 64
+		"CONTROLS" : {
+			"listItem" : {
+				"module" : "ui5strap.ListMediaItem",
+				"settings" : {
+					"heading" : "= .titleInputField.getValue()",
+					"text" : "= .textInputField.getValue()"
+				}
+			},
+			"image" : {
+				"module" : "ui5strap.Image",
+				"settings" : {
+					"type" : "MediaObject",
+					"mpath" : "ui5strap.demoapp.img.awesome",
+					"ext" : "png",
+					"width" : 64
+				}
+			}
 		},
-		
-		"addToListItem" : "= action.createMediaListItem.INSTANCE.setMedia(.INSTANCE)",
-		"THEN" : "= .addToListItem"
+		"THEN" : "= .CONTROLS.listItem.setMedia(.CONTROLS.image)"
 	},
 	
 	"addItemToList" : {
@@ -42,7 +40,7 @@
 		"viewId" : "my-app-page2",
 		"mediaListId" : "feeds",
 		"mediaList" : "= app.getControl( .mediaListId, .viewId )",
-		"addItem" : "= .mediaList.addItem( action.createMediaListItem.INSTANCE )",
+		"addItem" : "= .mediaList.addItem( action.createMediaListItem.CONTROLS.listItem )",
 		"closeOverlay" : "= app.hideOverlay()",
 		
 		"DO" : "= (.addItem, .closeOverlay)" 

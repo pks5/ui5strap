@@ -47,13 +47,8 @@
 	* @Override
 	*/
 	CreateControlProto.parameters = {
-			"MODULE" : {
+			"CONTROLS" : {
 				"required" : true, 
-				"type" : "string"
-			},
-			"SETTINGS" : {
-				"required" : false, 
-				"defaultValue" : {}, 
 				"type" : "object"
 			}
 	};
@@ -63,16 +58,28 @@
 	* @override
 	*/
 	CreateControlProto.run = function(){
-		var moduleName = this.getParameter("MODULE"),
-			moduleSettings = this.context.resolve(this, this.getParameter("SETTINGS")),
-			Constructor = jQuery.sap.getObject(moduleName);
+		var controls = this.getParameter("CONTROLS"),
+			keys = Object.keys(controls),
+			keysL = keys.length;
 		
-		if(!Constructor){
-			throw new Error("Cannot create instance of '" + moduleName + "'");
+		for(var i = 0; i < keysL; i++){
+			var controlOrDef = this.context.resolve(this, controls[keys[i]], true);
+			if(typeof controlOrDef === "object"){
+				if(!(controlOrDef instanceof ui5strap.Control)){
+					var moduleName = this.context.resolve(this, controlOrDef.module, true),
+						moduleSettings = this.context.resolve(this, controlOrDef.settings),
+						Constructor = jQuery.sap.getObject(moduleName);
+					
+						if(!Constructor){
+							throw new Error("Cannot create instance of '" + moduleName + "'");
+						}
+					controls[keys[i]] = new Constructor(moduleSettings);
+				}
+			}
+			else{
+				throw new Error("CONTROLS must contain control instances only.");
+			}
 		}
-		var instance = new Constructor(moduleSettings);
-		
-		this.setParameter("INSTANCE", instance);
 	};
 
 }());

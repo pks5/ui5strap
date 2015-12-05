@@ -4,7 +4,7 @@
 	"changeTheme" : {
 		"TYPE" : "ui5strap.AMChangeTheme",
 		"customDataKey" : "theme",
-		"theme" : "= eventParameters.srcControl.data(.customDataKey)"
+		"theme" : "= eventParameters.button.data(.customDataKey)"
 	}
 	
 }
