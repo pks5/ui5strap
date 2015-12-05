@@ -101,7 +101,7 @@
 	* Does same as ActionContext.prototype.get - plus type validation.
 	* @Public
 	*/
-	ActionModuleProto.getParameter = function(paramKey){
+	ActionModuleProto.getParameter = function(paramKey, resolveAll){
 		var paramDef = this.parameters[paramKey];
 		
 		if(!paramDef){
@@ -112,7 +112,7 @@
 			value = this.context.action[this.namespace][paramKey];
 		
 		if(value){
-			value = this.context.resolve(this, value, true);
+			value = this.context.resolve(this, value, !resolveAll);
 		}
 		
 		if(('undefined' === typeof value) && ('undefined' !== typeof paramDef.defaultValue)){

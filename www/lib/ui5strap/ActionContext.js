@@ -193,7 +193,7 @@
 		this._parentPointer = parent;
 		this._viewName = key;
 		
-		var newObject = {},
+		var newObject = new _ActionParameterObject,
 			keys = Object.keys(pointer),
 			keysLength = keys.length;
 		for(var i = 0; i < keysLength; i++){
@@ -221,7 +221,7 @@
 		this._parentPointer = parent;
 		this._controlName = key;
 		
-		var newObject = {},
+		var newObject = new _ActionParameterObject,
 			keys = Object.keys(pointer),
 			keysLength = keys.length;
 		for(var i = 0; i < keysLength; i++){
@@ -305,6 +305,10 @@
 		}
 	};
 	
+	var _ActionParameterObject = function(){
+		
+	};
+	
 	/**
 	 * @Static
 	 * @Private
@@ -353,7 +357,7 @@
 				}
 				
 				//Object
-				var newObject = {},
+				var newObject = new _ActionParameterObject(),
 					keys = Object.keys(pointer),
 					keysLength = keys.length;
 				for(var i = 0; i < keysLength; i++){
@@ -388,7 +392,7 @@
 		if(pointer instanceof _ActionExpression){
 			return pointer.evaluate(this, task);
 		}
-		else if(!onlyString && ("object" === typeof pointer)){
+		else if(!onlyString && (pointer instanceof _ActionParameterObject)){
 			var objectKeys = Object.keys(pointer),
 				objectKeysLength = objectKeys.length;
 		
