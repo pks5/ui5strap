@@ -6,24 +6,31 @@
 	],
 	
 	"createMediaListItem" : {
-		"TYPE" : "ui5strap.task.CreateControl",
-		
 		"viewId" : "= view.getId()",
-		"titleInputId" : "titleInput",
-		"textInputId" : "messageInput",
-		"titleInputField" : "= app.getControl( .titleInputId, .viewId )",
-		"textInputField" : "= app.getControl( .textInputId, .viewId )",
 		
 		"CONTROLS" : {
+			"titleInputField" : {
+				"mode" : "Select",
+				"controlId" : "titleInput",
+				"viewId" : "= .viewId"
+			},
+			"textInputField" : {
+				"mode" : "Select",
+				"controlId" : "messageInput",
+				"viewId" : "= .viewId"
+			},
 			"listItem" : {
-				"module" : "ui5strap.ListMediaItem",
+				"mode" : "Create",
+				"type" : "ui5strap.ListMediaItem",
 				"settings" : {
-					"heading" : "= .titleInputField.getValue()",
-					"text" : "= .textInputField.getValue()"
+					"heading" : "= .CONTROLS.titleInputField.getValue()",
+					"text" : "= .CONTROLS.textInputField.getValue()"
 				}
 			},
 			"image" : {
-				"module" : "ui5strap.Image",
+				"mode" : "Create",
+					
+				"type" : "ui5strap.Image",
 				"settings" : {
 					"type" : "MediaObject",
 					"mpath" : "ui5strap.demoapp.img.awesome",
@@ -32,15 +39,21 @@
 				}
 			}
 		},
-		"THEN" : "= .CONTROLS.listItem.setMedia(.CONTROLS.image)"
+		
+		"DO" : "= .CONTROLS.listItem.setMedia(.CONTROLS.image)"
 	},
 	
 	"addItemToList" : {
 		
-		"viewId" : "my-app-page2",
-		"mediaListId" : "feeds",
-		"mediaList" : "= app.getControl( .mediaListId, .viewId )",
-		"addItem" : "= .mediaList.addItem( action.createMediaListItem.CONTROLS.listItem )",
+		"CONTROLS" : {
+			"mediaList" : {
+				"mode" : "Select",
+				"controlId" : "feeds",
+				"viewId" : "my-app-page2"
+			}
+		},
+		
+		"addItem" : "= .CONTROLS.mediaList.addItem( action.createMediaListItem.CONTROLS.listItem )",
 		"closeOverlay" : "= app.hideOverlay()",
 		
 		"DO" : "= (.addItem, .closeOverlay)" 

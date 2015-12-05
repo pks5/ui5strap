@@ -151,6 +151,55 @@
 		
 		return param;
 	};
+	
+	var _collectControls = function(_this){
+		var controls = _expression(_this, "CONTROLS");
+		
+		if(!controls){
+			return;
+		}
+		
+		var	keys = Object.keys(controls),
+			keysL = keys.length;
+		
+		for(var i = 0; i < keysL; i++){
+			var controlOrDef = _this.context.resolve(_this, controls[keys[i]], true);
+			if(typeof controlOrDef === "object"){
+				if(!(controlOrDef instanceof ui5strap.Control)){
+					var mode = _this.context.resolve(_this, controlOrDef.mode, true),
+						control = null;
+					if("Create" === mode){
+						var moduleName = _this.context.resolve(_this, controlOrDef.type, true),
+							moduleSettings = _this.context.resolve(_this, controlOrDef.settings),
+							Constructor = jQuery.sap.getObject(moduleName);
+						
+							if(!Constructor){
+								throw new Error("Cannot create instance of '" + moduleName + "'");
+							}
+						control = new Constructor(moduleSettings);
+					}
+					else if("Select" === mode){
+						var controlId = _this.context.resolve(_this, controlOrDef.controlId, true),
+							viewId = _this.context.resolve(_this, controlOrDef.viewId),
+							control = _this.context.app.getControl(controlId, viewId);
+					}
+					else{
+						throw new Error("Please provide a mode for Control '" + keys[i] + "'!" );
+						
+					}
+					
+					if(!control instanceof ui5strap.Control){
+						throw new Error("Control '" + keys[i] + "' must be an instance of ui5strap.Control!" );
+					}
+					
+					controls[keys[i]] = control;
+				}
+			}
+			else{
+				throw new Error("CONTROLS must contain control instances only.");
+			}
+		}
+	}
 
 	/**
 	* Sets an action module specific parameter to the action context
@@ -205,7 +254,9 @@
 	* @Protected
 	*/
 	ActionModuleProto.run = function(){
-		ui5strap.Action.runTasks(this.context, _expression(this, "DO"));
+		_collectControls(this);
+		
+		_expression(this, "DO");
 	};
 	
 	ActionModuleProto.then = function(){
