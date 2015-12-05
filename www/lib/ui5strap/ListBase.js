@@ -74,35 +74,203 @@
 		}
 	});
 
-	var ListBaseProto = ui5strap.ListBase.prototype;
+	var ListBaseProto = ui5strap.ListBase.prototype,
+		_defaultSelectionGroup = "group";
 	
 	/**
-	 * Returns an array of selected items and their indices.
-	 * 
 	 * @Private
 	 */
-	var _getSelectionData = function(_this){
+	var _changeSelection = function(_this, itemsToSelect, mode, selectionGroup){
 		var items = _this._getItems(),
-			selection = {
-				x : [],
-				items : []
+			changes = {
+				"selected" : [],
+				"deselected" : [],
+				"changed" : [],
+				"unchanged" : [],
 			};
 		
+		if(!jQuery.isArray(itemsToSelect)){
+			itemsToSelect = [itemsToSelect];
+		}
+		
+		if(!selectionGroup){
+			selectionGroup = _defaultSelectionGroup;
+		}
+		
 		for(var i = 0; i < items.length; i++){
-			if(items[i].getSelected()){
-				selection.items.push(items[i]);
-				selection.x.push(i);
+			var item = items[i];
+			if(-1 !== jQuery.inArray(item, itemsToSelect)){
+				//Item is subject to select / deselect
+				if("replace" === mode || "add" === mode){
+					if(!_this._getItemSelected(selectionGroup, item)){
+						changes.selected.push(item);
+						changes.changed.push(item);
+						
+						_this._setItemSelected(selectionGroup, item, true);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("remove" === mode){
+					if(_this._getItemSelected(selectionGroup, item)){
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						_this._setItemSelected(selectionGroup, item, false);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("toggle" === mode){
+					var selected = _this._getItemSelected(selectionGroup, item);
+						
+						if(!selected){
+							changes.selected.push(item);
+						}
+						else{
+							changes.deselected.push(item);
+						}
+						
+						changes.changed.push(item);
+						
+						_this._setItemSelected(selectionGroup, item, !selected);
+				}
+			}
+			else{
+				//Item is no subject to select / deselect
+				if("replace" === mode){
+					if(_this._getItemSelected(selectionGroup, item)){
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						_this._setItemSelected(selectionGroup, item, false);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("add" === mode || "remove" === mode || "toggle" === mode){
+					changes.unchanged.push(item);
+				}
 			}
 		}
 		
-		return selection;
+		if(changes.changed.length){
+			_this.fireSelectionChange({ selectionChanges: changes });
+		
+			_this.fireSelectionChanged({ selectionChanges: changes });
+		}
+		
+		return changes;
 	};
 	
 	/**
 	 * @Private
 	 */
-	var _getSelection = function(_this, dimension){
-		var selection = _getSelectionData(_this);
+	var _changeSelectionIndices = function(_this, indices, mode, selectionGroup){
+		var items = this._getItems();
+		
+		if(!jQuery.isArray(indices)){
+			//Single value
+			if(indices < 0 || indices >= items.length){
+				throw new Error("Array out of bounds!");
+			}
+			
+			return _changeSelection(_this, items[indices], mode, selectionGroup);
+		}
+		else{
+			//1 dimensional array
+			var itemsToSelect = [];
+			for(var i=0; i<indices.length; i++){
+				var index = indices[i];
+				if(index < 0 || index >= items.length){
+					throw new Error("Array out of bounds!");
+				}
+				itemsToSelect.push(items[index]);
+			}
+			
+			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
+		}
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _changeSelectionByCustomData = function(_this, dataKey, values, mode, selectionGroup){
+		var items = _this._getItems();
+		
+		if(!jQuery.isArray(values)){
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === values){
+					selectedItem = items[i];
+					
+					return _changeSelection(_this, selectedItem, mode, selectionGroup);
+				}
+			}
+		}
+		else{
+			var itemsToSelect = [];
+			for(var i = 0; i < items.length; i++){
+				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+					itemsToSelect.push(items[i]);
+				}
+			}
+			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
+		}
+	};
+	
+	/*
+	 * --------------------
+	 * START implementation of ISelectionProvider interface
+	 * --------------------
+	 */
+	
+	/**
+	 * Tries to select one or multiple items and returns all changes.
+	 * 
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.setSelection = function(itemsToSelect, selectionGroup){
+		return _changeSelection(this, itemsToSelect, "replace", selectionGroup);
+	};
+	
+	/**
+	 * Adds one or multiple items to selection
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.addSelection = function(itemsToSelect, selectionGroup){
+		return _changeSelection(this, itemsToSelect, "add", selectionGroup);
+	};
+	
+	/**
+	 * Removes one or multiple items from selection
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.removeSelection = function(itemsToSelect, selectionGroup){
+		return _changeSelection(this, itemsToSelect, "remove", selectionGroup);
+	};
+	
+	/**
+	 * Toggles one or multiple items from selection
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.toggleSelection = function(itemsToSelect, selectionGroup){
+		return _changeSelection(this, itemsToSelect, "toggle", selectionGroup);
+	};
+	
+	/**
+	 * Gets one or multiple selected items
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.getSelection = function(dimension, selectionGroup){
+		var selection = this._getListSelection(selectionGroup);
 		if(typeof dimension === "undefined"){
 			return selection.items;
 		}
@@ -128,210 +296,12 @@
 	};
 	
 	/**
-	 * @Private
-	 */
-	var _changeSelection = function(_this, itemsToSelect, mode){
-		var items = _this._getItems(),
-			changes = {
-				"selected" : [],
-				"deselected" : [],
-				"changed" : [],
-				"unchanged" : [],
-			};
-		
-		if(!jQuery.isArray(itemsToSelect)){
-			itemsToSelect = [itemsToSelect];
-		}
-		
-		for(var i = 0; i < items.length; i++){
-			var item = items[i];
-			if(-1 !== jQuery.inArray(item, itemsToSelect)){
-				//Item is subject to select / deselect
-				if("replace" === mode || "add" === mode){
-					if(!item.getSelected()){
-						changes.selected.push(item);
-						changes.changed.push(item);
-						
-						item.setSelected(true);
-					}
-					else{
-						changes.unchanged.push(item);
-					}
-				}
-				else if("remove" === mode){
-					if(item.getSelected()){
-						changes.deselected.push(item);
-						changes.changed.push(item);
-						
-						item.setSelected(false);
-					}
-					else{
-						changes.unchanged.push(item);
-					}
-				}
-			}
-			else{
-				//Item is no subject to select / deselect
-				if("replace" === mode){
-					if(item.getSelected()){
-						changes.deselected.push(item);
-						changes.changed.push(item);
-						
-						item.setSelected(false);
-					}
-					else{
-						changes.unchanged.push(item);
-					}
-				}
-				else if("add" === mode || "remove" === mode){
-					changes.unchanged.push(item);
-				}
-			}
-		}
-		
-		if(changes.changed.length){
-			_this.fireSelectionChange({ selectionChanges: changes });
-		
-			_this.fireSelectionChanged({ selectionChanges: changes });
-		}
-		
-		return changes;
-	};
-	
-	/**
-	 * @Private
-	 */
-	var _getSelectionIndex = function(_this, dimension){
-		var selection = _getSelectionData(_this);
-		if(typeof dimension === "undefined"){
-			return selection.x;
-		}
-		else if(0 === dimension){
-			//single value
-			return selection.x.length ? selection.x[0] : undefined;
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			return selection.x;
-		}
-		else if(2 === dimension){
-			//2 dimensional array
-			return [selection.x];
-		}
-		else if(3 === dimension){
-			//3 dimensional array
-			return [[selection.x]];
-		}
-		else{
-			throw new Error("Only 3 dimensions are supported by this Control.");
-		}
-	};
-	
-	/**
-	 * @Private
-	 */
-	var _changeSelectionIndices = function(_this, indices, mode){
-		var items = this._getItems();
-		
-		if(!jQuery.isArray(indices)){
-			//Single value
-			if(indices < 0 || indices >= items.length){
-				throw new Error("Array out of bounds!");
-			}
-			
-			return _changeSelection(_this, items[indices], mode);
-		}
-		else{
-			//1 dimensional array
-			var itemsToSelect = [];
-			for(var i=0; i<indices.length; i++){
-				var index = indices[i];
-				if(index < 0 || index >= items.length){
-					throw new Error("Array out of bounds!");
-				}
-				itemsToSelect.push(items[index]);
-			}
-			
-			return _changeSelection(_this, itemsToSelect, mode);
-		}
-	};
-	
-	/**
-	 * @Private
-	 */
-	var _changeSelectionByCustomData = function(_this, dataKey, values, mode){
-		var items = _this._getItems();
-		
-		if(!jQuery.isArray(values)){
-			for(var i = 0; i < items.length; i++){
-				if(items[i].data(dataKey) === values){
-					selectedItem = items[i];
-					
-					return _changeSelection(_this, selectedItem, mode);
-				}
-			}
-		}
-		else{
-			var itemsToSelect = [];
-			for(var i = 0; i < items.length; i++){
-				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
-					itemsToSelect.push(items[i]);
-				}
-			}
-			return _changeSelection(_this, itemsToSelect, mode);
-		}
-	};
-	
-	/*
-	 * --------------------
-	 * START implementation of ISelectionProvider interface
-	 * --------------------
-	 */
-	
-	/**
-	 * Tries to select one or multiple items and returns all changes.
-	 * 
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.setSelection = function(itemsToSelect){
-		return _changeSelection(this, itemsToSelect, "replace");
-	};
-	
-	/**
-	 * Adds one or multiple items to selection
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.addSelection = function(itemsToSelect){
-		return _changeSelection(this, itemsToSelect, "add");
-	};
-	
-	/**
-	 * Removes one or multiple items from selection
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.removeSelection = function(itemsToSelect){
-		return _changeSelection(this, itemsToSelect, "remove");
-	};
-	
-	/**
-	 * Gets one or multiple selected items
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.getSelection = function(dimension){
-		return _getSelection(this, dimension);
-	};
-	
-	/**
 	 * Selects one or multiple items by indices
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelectionIndex = function(indices){
-		return _changeSelectionIndices(this, indices, "replace");
+	ListBaseProto.setSelectionIndex = function(indices, selectionGroup){
+		return _changeSelectionIndices(this, indices, "replace", selectionGroup);
 	};
 	
 	/**
@@ -339,8 +309,8 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.addSelectionIndex = function(indices){
-		return _changeSelectionIndices(this, indices, "add");
+	ListBaseProto.addSelectionIndex = function(indices, selectionGroup){
+		return _changeSelectionIndices(this, indices, "add", selectionGroup);
 	};
 	
 	/**
@@ -348,8 +318,17 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.removeSelectionIndex = function(indices){
-		return _changeSelectionIndices(this, indices, "remove");
+	ListBaseProto.removeSelectionIndex = function(indices, selectionGroup){
+		return _changeSelectionIndices(this, indices, "remove", selectionGroup);
+	};
+	
+	/**
+	 * Toggles one or multiple items from selection by indices
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.toggleSelectionIndex = function(indices, selectionGroup){
+		return _changeSelectionIndices(this, indices, "toggle", selectionGroup);
 	};
 	
 	/**
@@ -357,8 +336,30 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.getSelectionIndex = function(dimension){
-		return _getSelectionIndex(this, dimension);
+	ListBaseProto.getSelectionIndex = function(dimension, selectionGroup){
+		var selection = this._getListSelection(selectionGroup);
+		if(typeof dimension === "undefined"){
+			return selection.indices;
+		}
+		else if(0 === dimension){
+			//single value
+			return selection.indices.length ? selection.indices[0] : undefined;
+		}
+		else if(1 === dimension){
+			//1 dimensional array
+			return selection.indices;
+		}
+		else if(2 === dimension){
+			//2 dimensional array
+			return [selection.indices];
+		}
+		else if(3 === dimension){
+			//3 dimensional array
+			return [[selection.indices]];
+		}
+		else{
+			throw new Error("Only 3 dimensions are supported by this Control.");
+		}
 	};
 	
 	/**
@@ -366,8 +367,44 @@
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.setSelectionByProperty = function(propertyName, values){
+	ListBaseProto.setSelectionByProperty = function(propertyName, values, selectionGroup){
 		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
+	};
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.setSelectionByCustomData = function(dataKey, values, selectionGroup){
+		_changeSelectionByCustomData(this, dataKey, values, "replace", selectionGroup);
+	};
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.addSelectionByCustomData = function(dataKey, values, selectionGroup){
+		_changeSelectionByCustomData(this, dataKey, values, "add", selectionGroup);
+	};
+	
+	/**
+	 * Selects one or multiple items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.removeSelectionByCustomData = function(dataKey, values, selectionGroup){
+		_changeSelectionByCustomData(this, dataKey, values, "remove", selectionGroup);
+	};
+	
+	/**
+	 * Toggles one or multiple items that have the given value in the specified custom data field.
+	 * @Public
+	 * @Override
+	 */
+	ListBaseProto.toggleSelectionByCustomData = function(dataKey, values, selectionGroup){
+		_changeSelectionByCustomData(this, dataKey, values, "toggle", selectionGroup);
 	};
 	
 	/**
@@ -377,35 +414,6 @@
 	 */
 	ListBaseProto.getItemsByProperty = function(propertyName){
 		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByProperty");
-	};
-	
-	
-	
-	/**
-	 * Selects one or multiple items that have the given value in the specified custom data field.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.setSelectionByCustomData = function(dataKey, values){
-		_changeSelectionByCustomData(this, dataKey, values, "replace");
-	};
-	
-	/**
-	 * Selects one or multiple items that have the given value in the specified custom data field.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.addSelectionByCustomData = function(dataKey, values){
-		_changeSelectionByCustomData(this, dataKey, values, "add");
-	};
-	
-	/**
-	 * Selects one or multiple items that have the given value in the specified custom data field.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.removeSelectionByCustomData = function(dataKey, values){
-		_changeSelectionByCustomData(this, dataKey, values, "remove");
 	};
 	
 	/**
@@ -424,7 +432,50 @@
 	 */
 	
 	/**
-	 * @Public
+	 * @Protected
+	 */
+	/**
+	 * Returns an array of selected items and their indices.
+	 * 
+	 * @Private
+	 */
+	ListBaseProto._getListSelection = function(selectionGroup){
+		if(!selectionGroup){
+			selectionGroup = _defaultSelectionGroup;
+		}
+		
+		var items = this._getItems(),
+			selection = {
+				indices : [],
+				items : []
+			};
+		
+		for(var i = 0; i < items.length; i++){
+			if(this._getItemSelected(selectionGroup, items[i])){
+				selection.items.push(items[i]);
+				selection.indices.push(i);
+			}
+		}
+		
+		return selection;
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._getItemSelected = function(group, item){
+		return item.getSelected();
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ListBaseProto._setItemSelected = function(group, item, selected){
+		item.setSelected(selected);
+	};
+	
+	/**
+	 * @Protected
 	 */
 	ListBaseProto._getItems = function(){
 		return this.getItems();
@@ -438,13 +489,6 @@
 	};
 	
 	/**
-	 * @Public
-	 */
-	ListBaseProto.getItemIndex = function(item){
-		return this.indexOfAggregation("items", item);
-	};
-	
-	/**
 	 * @Protected
 	 */
 	ListBaseProto._getEventOptions = function(item){
@@ -453,6 +497,12 @@
 		};
 	};
 	
+	/**
+	 * @Public
+	 */
+	ListBaseProto.getItemIndex = function(item){
+		return this.indexOfAggregation("items", item);
+	};
 	
 	/*
 	 * ----------------
@@ -475,6 +525,9 @@
 			
 			if(selectionMode === ui5strap.SelectionMode.Single){
 				changes = _this.setSelection(item);
+			}
+			else if(selectionMode === ui5strap.SelectionMode.Multiple){
+				changes = _this.toggleSelection(item);
 			}
 			
 			if(changes && changes.changed.length){
