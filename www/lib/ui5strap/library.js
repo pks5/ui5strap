@@ -233,6 +233,7 @@
   * -------
   */
 
+  //@deprecated
   var tapSupport = sap.ui.Device.support.touch;
   
   ui5strap.options = {
@@ -251,7 +252,7 @@
   */
   
   ui5strap.support = {
-    
+		  "touch" : sap.ui.Device.support.touch
   };
    
   var _transitionEndEvents = {

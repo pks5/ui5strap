@@ -93,9 +93,11 @@
 
 		}
 	});
+	
+	var LinkProto = ui5strap.Link.prototype;
 
 	ui5strap.Utils.dynamicAttributes(
-		ui5strap.Link.prototype, 
+		LinkProto, 
 		[
 			"title",
 			"href",
@@ -103,9 +105,13 @@
 		]
 	);
 
-	ui5strap.Utils.dynamicText(ui5strap.Link.prototype);
+	ui5strap.Utils.dynamicText(LinkProto);
 	
-	var _handlePress = function(oEvent) {
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	LinkProto._handlePress = function(oEvent) {
 		//if (this.getEnabled()) {
 			oEvent.setMarked();
 
@@ -117,12 +123,11 @@
 		//}
 	};
 	
-	if(ui5strap.options.enableTapEvents){
-		ui5strap.Link.prototype.ontap = _handlePress;
+	if(ui5strap.support.touch){
+		LinkProto.ontap = LinkProto._handlePress;
 	}
-
-	if(ui5strap.options.enableClickEvents){
-		ui5strap.Link.prototype.onclick = _handlePress;
+	else{
+		LinkProto.onclick = LinkProto._handlePress;
 	}
 
 }());

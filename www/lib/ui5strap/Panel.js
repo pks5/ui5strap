@@ -150,35 +150,33 @@
 	PanelProto.toggle = function(){
 		this.setCollapsed(!this.getCollapsed());
 	};
-
-	if(ui5strap.options.enableTapEvents){
-		PanelProto.ontap = function(e){
-			var $target = jQuery(e.target);
-			if($target.hasClass('panel-heading') || $target.parent().hasClass('panel-heading')){
-				var parent = this.getParent();
-				if(parent instanceof ui5strap.PanelGroup){
-					parent.setSelectedControl(this);
-				}
-				else{ 
-					this.toggle();
-				}
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	PanelProto._handlePress = function(oEvent){
+		oEvent.setMarked();
+		
+		var $target = jQuery(oEvent.target);
+		if($target.hasClass('panel-heading') || $target.parent().hasClass('panel-heading')){
+			var parent = this.getParent();
+			if(parent instanceof ui5strap.PanelGroup){
+				parent.setSelectedControl(this);
 			}
-		};
+			else{ 
+				this.toggle();
+			}
+		}
+	};
+
+	//Registering Event Handler
+	//TODO Desktop / Mobile Test!!!
+	if(ui5strap.support.touch){
+		PanelProto.ontap = PanelProto._handlePress;
 	}
-
-	if(ui5strap.options.enableClickEvents){
-		PanelProto.onclick = function(e){
-			var $target = jQuery(e.target);
-			if($target.hasClass('panel-heading') || $target.parent().hasClass('panel-heading')){
-				var parent = this.getParent();
-				if(parent instanceof ui5strap.PanelGroup){
-					parent.setSelectedControl(this);
-				}
-				else{ 
-					this.toggle();
-				}
-			}
-		};
+	else{
+		PanelProto.onclick = PanelProto._handlePress;
 	}
 
 }());

@@ -99,28 +99,20 @@
 		this.$().toggleClass('open');
 	};
 	
-	if(ui5strap.options.enableTapEvents){
-		ButtonDropdownProto.ontap = function(oEvent){
-			var $target = jQuery(oEvent.target);
-			if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
-				this.$().toggleClass('open');
-			}
-			else{
-				this.fireTap();
-			}
-		};
-	}
-
-	if(ui5strap.options.enableClickEvents){
-		ButtonDropdownProto.onclick = function(oEvent){
-			var $target = jQuery(oEvent.target);
-			if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
-				this.$().toggleClass('open'); 
-			}
-			else{
-				this.fireTap();
-			}
-		};
-	}
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ButtonDropdownProto._handlePress = function(oEvent){
+		oEvent.setMarked();
+		
+		var $target = jQuery(oEvent.target);
+		if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
+			this.$().toggleClass('open');
+		}
+		else{
+			this.fireTap();
+		}
+	};
 
 }());

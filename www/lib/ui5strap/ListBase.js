@@ -568,32 +568,23 @@
 		return eventOptions;
 	};
 	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ListBaseProto._handlePress = function(oEvent){
+		var eventOptions = _processSelection(this, oEvent);
+		//if(eventOptions.item.getEnabled()){
+			this.fireTap(eventOptions);
+		//}
+	};
 	
 	//Touchscreen
-	if(ui5strap.options.enableTapEvents){
-		/**
-		 * @Public
-		 * @Override
-		 */
-		ListBaseProto.ontap = function(oEvent){
-			var eventOptions = _processSelection(this, oEvent);
-			//if(eventOptions.item.getEnabled()){
-				oEvent.stopPropagation();
-				this.fireTap(eventOptions);
-			//}
-		};
+	if(ui5strap.support.touch){
+		ListBaseProto.ontap = ListBaseProto._handlePress;
 	}
-
-	//Mouse
-	if(ui5strap.options.enableClickEvents){
-		/**
-		 * @Public
-		 * @Override
-		 */
-		ListBaseProto.onclick = function(oEvent){
-			oEvent.stopPropagation();
-			this.fireTap(_processSelection(this, oEvent));
-		};
+	else{
+		ListBaseProto.onclick = ListBaseProto._handlePress;
 	}
 	
 	/*

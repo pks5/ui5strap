@@ -112,21 +112,24 @@
 	ui5strap.Utils.dynamicText(ButtonPrototype);
 
 	ui5strap.Utils.dynamicClass(ButtonPrototype, 'selected', { 'true' : 'active' });
-	var _handlePress = function(oEvent) {
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ButtonPrototype._handlePress = function(oEvent) {
+		oEvent.setMarked();
+		
 		if (this.getEnabled()) {
-			oEvent.setMarked();
 			this.fireTap({});
 		}
-	}		
-			
-	if(ui5strap.options.enableTapEvents){
-		ButtonPrototype.ontap = _handlePress;
+	};
+	
+	if(ui5strap.support.touch){	
+		ButtonPrototype.ontap = ButtonPrototype._handlePress;
 	}
-
-	if(ui5strap.options.enableClickEvents){
-		ButtonPrototype.onclick = _handlePress;
+	else{
+		ButtonPrototype.onclick = ButtonPrototype._handlePress;
 	}
-
-
 
 }());

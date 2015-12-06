@@ -96,27 +96,26 @@
 				}
 			}
 	};
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 * @Override
+	 */
+	ListDropdownMenuProto._handlePress = function(oEvent){
+		ui5strap.ListBase.prototype._handlePress.call(this, oEvent);
 
-	if(ui5strap.options.enableTapEvents){
-		ListDropdownMenuProto.ontap = function(oEvent){
-			ui5strap.ListBase.prototype.ontap.call(this, oEvent);
+		var parent = this.getParent();
+		if("close" in parent){
+			parent.close();
+		}
+	};
 
-			var parent = this.getParent();
-			if("close" in parent){
-				parent.close();
-			}
-		};
+	if(ui5strap.support.touch){
+		ListDropdownMenuProto.ontap = ListDropdownMenuProto._handlePress;
 	}
-
-	if(ui5strap.options.enableClickEvents){
-		ListDropdownMenuProto.onclick = function(oEvent){
-			ui5strap.ListBase.prototype.onclick.call(this, oEvent);
-
-			var parent = this.getParent();
-			if("close" in parent){
-				parent.close();
-			}
-		};
+	else{
+		ListDropdownMenuProto.onclick = ListDropdownMenuProto._handlePress;
 	}
 
 }());

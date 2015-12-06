@@ -75,18 +75,25 @@
 	ListDropdownItemProto.toggle = function(){
 		this.$().toggleClass('open');
 	};
-
-	if(ui5strap.options.enableTapEvents){
-		ListDropdownItemProto.ontap = function(oEvent){
-			this.$().toggleClass('open');
-		};
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ListDropdownItemProto._handlePress = function(oEvent){
+		oEvent.setMarked();
+		
+		this.$().toggleClass('open');
 	};
 
-	if(ui5strap.options.enableClickEvents){
-		ListDropdownItemProto.onclick = function(oEvent){
-			this.$().toggleClass('open');
-		};
-	};
+	//Registering Event Handler
+	//TODO Desktop / Mobile Test!!!
+	if(ui5strap.support.touch){
+		ListDropdownItemProto.ontap = ListDropdownItemProto._handlePress;
+	}
+	else{
+		ListDropdownItemProto.onclick = ListDropdownItemProto._handlePress;
+	}
 	
 
 }());

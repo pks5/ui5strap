@@ -343,6 +343,7 @@
 					newPath.push(i);
 					newArray[i] = _buildPool(pointer[i], newPath, pointer);
 				}
+				newArray._isActionArray = true;
 				return newArray;
 			}
 			else{
@@ -392,13 +393,20 @@
 		if(pointer instanceof _ActionExpression){
 			return pointer.evaluate(this, task);
 		}
-		else if(!onlyString && (pointer instanceof _ActionParameterObject)){
-			var objectKeys = Object.keys(pointer),
-				objectKeysLength = objectKeys.length;
-		
-			for(var i=0; i < objectKeysLength; i++){
-				//Store back the value in the context
-				pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], true);
+		else if(!onlyString && ("object" === typeof pointer)){
+			if(pointer._isActionArray){
+				for(var i = 0; i < pointer.length; i++){
+					pointer[i] = this.resolve(task, pointer[i], true);
+				}
+			}
+			else if(pointer instanceof _ActionParameterObject){
+				var objectKeys = Object.keys(pointer),
+					objectKeysLength = objectKeys.length;
+			
+				for(var i=0; i < objectKeysLength; i++){
+					//Store back the value in the context
+					pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], true);
+				}
 			}
 		}
 		return pointer;
