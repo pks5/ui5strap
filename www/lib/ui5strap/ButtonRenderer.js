@@ -111,6 +111,8 @@
 	    if(oControl.getSelected()){
 			rm.addClass("active");
 		}
+	    
+	    rm.addClass(oControl._getOptionsClassString());
 	
 		if(!oControl.getEnabled()){
 			rm.writeAttribute("disabled", "disabled");

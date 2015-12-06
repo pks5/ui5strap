@@ -31,6 +31,7 @@ jQuery.sap.declare("ui5strap.NavRenderer");
 
 ui5strap.NavRenderer = {
 	typeToClass : {
+		Default : "nav-default",
 		Tabs : "nav-tabs",
 		Pills : "nav-pills",
 		PillsStacked : "nav-pills nav-stacked",
@@ -49,9 +50,7 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
 	rm.writeControlData(oControl);
 
 	rm.addClass('nav');
-	if(ui5strap.NavType.Default !== type){
-		rm.addClass(this.typeToClass[type]);
-	}
+	rm.addClass(this.typeToClass[type]);
 	
 	ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
 

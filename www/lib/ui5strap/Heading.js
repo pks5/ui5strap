@@ -46,10 +46,6 @@
 					type : "boolean",
 					defaultValue : false
 				},
-				type : {
-					type: "ui5strap.HeadingType", 
-					defaultValue: ""
-				},
 				level : {
 					type: "int", 
 					defaultValue: 3
@@ -57,7 +53,14 @@
 				contentPlacement : {
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
+				},
+				
+				type : {
+					deprecated : true,
+					type: "ui5strap.HeadingType", 
+					defaultValue: ""
 				}
+				
 			},
 			aggregations : { 
 				content : {
@@ -67,6 +70,8 @@
 
 		}
 	});
+	
+	ui5strap.Heading.prototype._STYLE_PREFIX = 'u5sl-heading';
 
 	ui5strap.Utils.dynamicText(ui5strap.Heading.prototype);
 

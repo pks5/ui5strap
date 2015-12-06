@@ -25,13 +25,17 @@
  * 
  */
  
-@size-B:       576px;
-@size-C:       768px;
-@size-D:       992px;
+//Transition Speeds
+@transition-speed-slow:     0.75s;
+@transition-speed-normal:   0.5s;
+@transition-speed-fast:     0.25s;
+@transition-speed-dummy:    0.1s;
+
+@transition-speed-fix-slower: 1.02;
+@transition-speed-fix-faster: 0.98;
 
 //Abstract generic bar
-@bar-height:                      43px;
-@bar-padding-horizontal:          15px;
+@bar-height:                      44px;
 
 @bar-default-bg:                  @navbar-default-bg;
 @bar-default-border:              @navbar-default-border;
@@ -57,6 +61,35 @@
 @bar-inverse-link-active-bg:             @navbar-inverse-link-active-bg;
 @bar-inverse-link-disabled-color:        @navbar-inverse-link-disabled-color;
 @bar-inverse-link-disabled-bg:           @navbar-inverse-link-disabled-bg;
+
+//Bar Menu
+//Default
+@barmenu-default-color:                @navbar-default-link-color;
+@barmenu-default-hover-color:          @navbar-default-link-hover-color;
+@barmenu-default-hover-bg:             @navbar-default-link-hover-bg;
+@barmenu-default-active-color:         @navbar-default-link-active-color;
+@barmenu-default-active-bg:            @navbar-default-link-active-bg;
+@barmenu-default-disabled-color:       @navbar-default-link-disabled-color;
+@barmenu-default-disabled-bg:          @navbar-default-link-disabled-bg;
+
+// Inverted
+@barmenu-inverse-color:                 @navbar-inverse-link-color;
+@barmenu-inverse-hover-color:           @navbar-inverse-link-hover-color;
+@barmenu-inverse-hover-bg:              @navbar-inverse-link-hover-bg;
+@barmenu-inverse-active-color:          @navbar-inverse-link-active-color;
+@barmenu-inverse-active-bg:             @navbar-inverse-link-active-bg;
+@barmenu-inverse-disabled-color:        @navbar-inverse-link-disabled-color;
+@barmenu-inverse-disabled-bg:           @navbar-inverse-link-disabled-bg;
+
+/*
+ * ==========================
+ * DEPRECATED will be dropped
+ * ==========================
+ */
+
+@size-B:       576px;
+@size-C:       768px;
+@size-D:       992px;
 
 //Sidebar
 @sidebar-default-bg:                  @navbar-default-bg;
@@ -104,31 +137,3 @@
 @sidenav-D-width:                   450px;
 
 @sidebar-2nav-threshold:             @size-C;
-
-//Transition Speeds
-@transition-speed-slow:     0.75s;
-@transition-speed-normal:   0.5s;
-@transition-speed-fast:     0.25s;
-@transition-speed-dummy:    0.1s;
-
-@transition-speed-fix-slower: 1.02;
-@transition-speed-fix-faster: 0.98;
-
-//Bar Menu
-//Default
-@barmenu-default-color:                @navbar-default-link-color;
-@barmenu-default-hover-color:          @navbar-default-link-hover-color;
-@barmenu-default-hover-bg:             @navbar-default-link-hover-bg;
-@barmenu-default-active-color:         @navbar-default-link-active-color;
-@barmenu-default-active-bg:            @navbar-default-link-active-bg;
-@barmenu-default-disabled-color:       @navbar-default-link-disabled-color;
-@barmenu-default-disabled-bg:          @navbar-default-link-disabled-bg;
-
-// Inverted
-@barmenu-inverse-color:                 @navbar-inverse-link-color;
-@barmenu-inverse-hover-color:           @navbar-inverse-link-hover-color;
-@barmenu-inverse-hover-bg:              @navbar-inverse-link-hover-bg;
-@barmenu-inverse-active-color:          @navbar-inverse-link-active-color;
-@barmenu-inverse-active-bg:             @navbar-inverse-link-active-bg;
-@barmenu-inverse-disabled-color:        @navbar-inverse-link-disabled-color;
-@barmenu-inverse-disabled-bg:           @navbar-inverse-link-disabled-bg;

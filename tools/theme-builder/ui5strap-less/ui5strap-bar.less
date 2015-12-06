@@ -33,10 +33,11 @@
 * Bar
 */
 .bar{
-  height: @bar-height;
-  
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
+  mkin-height: @bar-height;
 }
+
+
 
 .bar-default{
     background-color: @bar-default-bg;
@@ -50,17 +51,22 @@
   color: @bar-inverse-color;
 }
 
-.bar > .bar-inner{
-  height:100%;
-  position:relative;
-  padding:0 @bar-padding-horizontal;
+.bar.bar-type-full,
+.bar.bar-type-fluid-full,
+.bar.bar-type-inset-full,
+.bar.bar-type-fluid-inset-full{
+	height:100%;
+}
+
+.bar > .bar-inner::after {
+    content: '';
+    clear: both;
+    display: block;
+    height:0;
 }
 
 .bar > .bar-inner > .bar-content{
-  height:100%; 
-  top:0px;
-  overflow:hidden;
-  line-height : @bar-height;
+  
 }
 
 .bar > .bar-inner > .bar-content-left{
@@ -68,10 +74,7 @@
 }
 
 .bar > .bar-inner > .bar-content-middle{
-  text-align:center;
-}
-
-.bar > .bar-inner > .bar-content-middle{
+	text-align:center;
     width:50%;
 	position:absolute;
     margin-left: -25%;

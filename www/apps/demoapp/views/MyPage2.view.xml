@@ -9,12 +9,12 @@
 				<!-- Left area of bar -->
 				<left>
 					<!-- Back Button -->
-					<Button tap="ui5strap.demoapp.actions.NavigateToHome">
+					<Button tap="ui5strap.demoapp.actions.NavigateToHome" options="BarButton">
 						<Icon icon="home" />
 					</Button>
 					<!-- Toggle Menu Button (except for small screens) -->
 					<Container type="Text" visibilitySmall="Hidden">
-						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot">
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" options="BarButton">
 							<Icon icon="columns" />
 						</Button>
 					</Container>
@@ -22,14 +22,14 @@
 
 				<!-- Middle area of bar -->
 				<middle>
-					<Text text="{i18n>PAGE2_TITLE}" />
+					<Heading text="{i18n>PAGE2_TITLE}" options="BarHeading" />
 				</middle>
 
 				<right>
 					<!-- Toggle Menu Button (only for small screens) -->
 					<Container type="Text" visibilityExtraSmall="Hidden"
 						visibilityMedium="Hidden" visibilityLarge="Hidden">
-						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot">
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" options="BarButton">
 							<Icon icon="columns" />
 						</Button>
 					</Container>

@@ -55,6 +55,7 @@
 		if(ui5strap.HeadingType.Default !== type){
 			rm.addClass(this.typeToClass[type]);
 		}
+		rm.addClass(oControl._getOptionsClassString());
 		
 		rm.writeClasses();
 		rm.write(">");

@@ -863,11 +863,18 @@
 		Section : "Section",
 		
 		//Bootstrap "container" & "container-fluid"
-		FixedWidth : "FixedWidth",
 		Fluid : "Fluid",
+		Inset : "Inset",
 		Full : "Full",
 		
+		FluidInset : "FluidInset",
+		
+		FluidFull : "FluidFull",
+		InsetFull : "InsetFull",
+		FluidInsetFull : "FluidInsetFull",
+		
 		//Bootstrap styles
+		Website : "Website",
 		Jumbotron : "Jumbotron",
 		Well : "Well",
 		WellLarge : "WellLarge",
@@ -875,7 +882,6 @@
 		
 		//Deprecated
 		Page : "Page",
-		FluidInset : "FluidInset",
 		Paragraph : "Paragraph",
 		Floating : "Floating",
 		Phrasing : "Phrasing"
@@ -1749,6 +1755,7 @@
               if(align === Alignment.NavBar ||
                 align === Alignment.NavBarLeft ||
                 align === Alignment.NavBarRight){
+            	  jQuery.sap.log.warning("Using Alignment.NavBar* options is deprecated.");
                   rm.addClass(navbarClass);
               }
           }
@@ -1760,6 +1767,7 @@
            */
           if(typeof sidebarClass === 'string'){
               if(align === Alignment.Sidebar){
+            	  jQuery.sap.log.warning("Using Alignment.Sidebar options is deprecated.");
                   rm.addClass(sidebarClass);
               }
           }

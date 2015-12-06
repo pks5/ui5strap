@@ -119,7 +119,8 @@
 		"ui5strap.demoapp.actions.ShowNewPostOverlay",
 		"ui5strap.demoapp.actions.NavigateToHome",
 		"ui5strap.demoapp.actions.ToggleBarMenuRoot",
-		"ui5strap.demoapp.actions.Debug"
+		"ui5strap.demoapp.actions.Debug",
+		"ui5strap.demoapp.actions.ToggleBarMenuSub1"
 	],
 	
 	"components" : [

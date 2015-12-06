@@ -103,7 +103,9 @@
 	});
 
 	var ButtonPrototype = ui5strap.Button.prototype;
-
+	
+	ButtonPrototype._STYLE_PREFIX = 'btn';
+	
 	ui5strap.Utils.dynamicAttributes(
 		ButtonPrototype, 
 		[

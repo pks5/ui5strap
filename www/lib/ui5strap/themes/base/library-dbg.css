@@ -8963,6 +8963,11 @@ button.close {
  * 
  */
 /*
+ * ==========================
+ * DEPRECATED will be dropped
+ * ==========================
+ */
+/*
  * 
  * UI5Strap
  *
@@ -9045,6 +9050,15 @@ a {
   margin-left: 15px;
 }
 /*
+ * Nav
+ */
+.nav-default > li {
+  float: left;
+}
+.bar .nav-default > li > a {
+  padding: 12px 15px;
+}
+/*
 * Panel
 */
 .panel-collapsible > .panel-heading {
@@ -9070,6 +9084,16 @@ a {
 /*
 * Container
 */
+.container-inset {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.container-full {
+  height: 100%;
+}
+/*
+ * DEPRECATED
+ */
 .container-floating {
   float: left;
   margin-right: 10px;
@@ -9077,15 +9101,6 @@ a {
 }
 .container-paragraph {
   margin-bottom: 10px;
-}
-.container-inset {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-.container-full {
-  width: 100%;
-  height: 100%;
-  padding: 15px;
 }
 /*
 * List Group
@@ -9109,6 +9124,26 @@ a {
 */
 .fa.form-control-feedback {
   line-height: 34px;
+}
+/*
+ * Buttons
+ */
+.btn.btn-option-BarButton {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+/*
+ * Headings
+ */
+h1.u5sl-heading-option-BarHeading,
+h2.u5sl-heading-option-BarHeading,
+h3.u5sl-heading-option-BarHeading,
+h4.u5sl-heading-option-BarHeading,
+h5.u5sl-heading-option-BarHeading,
+h6.u5sl-heading-option-BarHeading {
+  margin-top: 13px;
+  margin-bottom: 13px;
+  font-size: 16px;
 }
 /*
  * 
@@ -10073,9 +10108,10 @@ a {
 * Bar
 */
 .bar {
-  height: 43px;
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .5);
           box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+
+  mkin-height: 44px;
 }
 .bar-default {
   color: #777;
@@ -10087,28 +10123,27 @@ a {
   background-color: #222;
   border-color: #080808;
 }
-.bar > .bar-inner {
-  position: relative;
+.bar.bar-type-full,
+.bar.bar-type-fluid-full,
+.bar.bar-type-inset-full,
+.bar.bar-type-fluid-inset-full {
   height: 100%;
-  padding: 0 15px;
 }
-.bar > .bar-inner > .bar-content {
-  top: 0;
-  height: 100%;
-  overflow: hidden;
-  line-height: 43px;
+.bar > .bar-inner::after {
+  display: block;
+  height: 0;
+  clear: both;
+  content: '';
 }
 .bar > .bar-inner > .bar-content-left {
   float: left;
-}
-.bar > .bar-inner > .bar-content-middle {
-  text-align: center;
 }
 .bar > .bar-inner > .bar-content-middle {
   position: absolute;
   left: 50%;
   width: 50%;
   margin-left: -25%;
+  text-align: center;
 }
 .bar > .bar-inner > .bar-content-right {
   float: right;
@@ -10154,6 +10189,7 @@ a {
   position: absolute;
   top: 0;
   width: 100%;
+  height: 44px;
 }
 .page-body {
   position: relative;
@@ -10161,10 +10197,10 @@ a {
   height: 100%;
 }
 .page.page-with-head {
-  padding-top: 43px;
+  padding-top: 44px;
 }
 .page.page-with-footer {
-  padding-bottom: 43px;
+  padding-bottom: 44px;
 }
 .page-footer {
   position: absolute;

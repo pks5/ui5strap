@@ -35,19 +35,26 @@
 			interfaces : ["ui5strap.IBar"],
 			
 			// ---- object ----
-			"defaultAggregation" : "middle",
+			"defaultAggregation" : "content",
 
 			// ---- control specific ----
 			"library" : "ui5strap",
 			
-			"properties" : { 
+			"properties" : {
+				type : {
+					type:"ui5strap.ContainerType", 
+					defaultValue: ui5strap.ContainerType.FluidFull
+				},
 				"inverse" : {
 					type:"boolean", 
 					defaultValue:false
 				}
 			},
 			
-			"aggregations" : { 
+			"aggregations" : {
+				"content":{
+					"singularName" : "left"
+				},
 				"left" : {
 					"singularName" : "left"
 				},

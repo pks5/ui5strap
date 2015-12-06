@@ -29,13 +29,47 @@
 
 	jQuery.sap.declare("ui5strap.BarRenderer");
 
-	var BarRenderer = {};
+	var BarRenderer = {
+			typeToTag : {
+				Fluid : {
+					typeClassName : "bar-type-fluid",
+					containerClassName : "container-fluid"
+				},
+				Inset : {
+					typeClassName : "bar-type-inset",
+					containerClassName : "container-inset"
+				},
+				Full : {
+					typeClassName : "bar-type-full",
+					containerClassName : "container-full"
+				},
+				
+				FluidInset : {
+					typeClassName : "bar-type-fluid-inset",
+					containerClassName : "container-fluid container-inset"
+				},
+				FluidFull : {
+					typeClassName : "bar-type-fluid-full",
+					containerClassName : "container-fluid container-full"
+				},
+				InsetFull : {
+					typeClassName : "bar-type-inset-full",
+					containerClassName : "container-inset container-full"
+				},
+				FluidInsetFull : {
+					typeClassName : "bar-type-fluid-inset-full",
+					containerClassName : "container-fluid container-inset container-full"
+				}
+			}
+	};
 
 	ui5strap.BarRenderer = BarRenderer;
 
 	BarRenderer.render = function(rm, oControl) {
 		var inverse = oControl.getInverse(),
+			tagData = this.typeToTag[oControl.getType()],
 		 	contentLeft = oControl.getLeft(),
+		 	content = oControl.getContent(),
 		 	contentMiddle = oControl.getMiddle(),
 			contentRight = oControl.getRight();
 		
@@ -43,15 +77,28 @@
 		rm.write("<div");
 		rm.writeControlData(oControl);
 		rm.addClass('bar ' + (inverse ? 'bar-inverse' : 'bar-default'));
+		rm.addClass(tagData.typeClassName);
 		rm.writeClasses();
 		rm.write(">");
 
 			rm.write("<div");
-			rm.addClass('bar-inner');
+			rm.addClass('bar-inner ' + tagData.containerClassName);
 			rm.writeClasses();
 			rm.write(">");
-			   
-			//Content left
+			  
+			//Middle
+			if(contentMiddle.length > 0){     
+				rm.write("<div");
+				rm.addClass("bar-content bar-content-middle");
+				rm.writeClasses();
+				rm.write(">");
+				for(var i = 0; i < contentMiddle.length; i++){ 
+					rm.renderControl(contentMiddle[i]);
+				}
+				rm.write("</div>");
+			}
+			
+			//Left
 			if(contentLeft.length > 0){     
 				rm.write("<div");
 				rm.addClass("bar-content bar-content-left");
@@ -63,19 +110,14 @@
 				rm.write("</div>");
 			}
 	
-			//Content middle
-			if(contentMiddle.length > 0){     
-				rm.write("<div");
-				rm.addClass("bar-content bar-content-middle");
-				rm.writeClasses();
-				rm.write(">");
-				for(var i = 0; i < contentMiddle.length; i++){ 
-					rm.renderControl(contentMiddle[i]);
+			//Content
+			if(content.length > 0){     
+				for(var i = 0; i < content.length; i++){ 
+					rm.renderControl(content[i]);
 				}
-				rm.write("</div>");
 			}
 			   
-			//Content right
+			//Right
 			if(contentRight.length > 0){     
 				rm.write("<div");
 				rm.addClass("bar-content bar-content-right");

@@ -33,29 +33,56 @@
 		typeToTag : {
 			Default : {
 				tagName : "div",
-				className : null
+				className : "container-default"
 			},
 			Text : {
 				tagName : "span",
-				className : null
+				className : "container-text"
+			},
+			Section : {
+				tagName : "section",
+				className : "container-section"
 			},
 			
 			//Bootstrap container and container-fluid
 			//container-inset is an additional class that adds padding-top and padding-bottom
-			FixedWidth : {
-				tagName : "div",
-				className : "container"
-			},
+			
 			Fluid : {
 				tagName : "div",
 				className : "container-fluid"
+			},
+			Inset : {
+				tagName : "div",
+				className : "container-inset"
 			},
 			Full : {
 				tagName : "div",
 				className : "container-full"
 			},
 			
+			FluidInset : {
+				tagName : "div",
+				className : "container-fluid container-inset"
+			},
+			FluidFull : {
+				tagName : "div",
+				className : "container-fluid container-full"
+			},
+			InsetFull : {
+				tagName : "div",
+				className : "container-inset container-full"
+			},
+			FluidInsetFull : {
+				tagName : "div",
+				className : "container-fluid container-inset container-full"
+			},
+			
+			
 			//Bootstrap Components
+			Website : {
+				tagName : "div",
+				className : "container"
+			},
 			Jumbotron : {
 				tagName : "div",
 				className : "container-jumbotron jumbotron"
@@ -76,17 +103,9 @@
 			
 			
 			//Deprecated
-			Section : {
-				tagName : "section",
-				className : "container-section"
-			},
 			Page : {
 				tagName : "div",
 				className : "container"
-			},
-			FluidInset : {
-				tagName : "div",
-				className : "container-fluid container-inset"
 			},
 			Paragraph : {
 				tagName : "div",
