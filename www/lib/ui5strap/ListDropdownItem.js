@@ -81,6 +81,7 @@
 	 * @Protected
 	 */
 	ListDropdownItemProto._handlePress = function(oEvent){
+		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		
 		this.$().toggleClass('open');

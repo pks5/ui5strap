@@ -73,6 +73,10 @@
 				content : {
 					singularName: "content"
 				} 
+			},
+			events : {
+				
+				//TODO Add panelCollapse events
 			}
 
 		}
@@ -156,6 +160,7 @@
 	 * @Protected
 	 */
 	PanelProto._handlePress = function(oEvent){
+		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		
 		var $target = jQuery(oEvent.target);

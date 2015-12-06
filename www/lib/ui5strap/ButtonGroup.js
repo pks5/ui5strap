@@ -105,13 +105,13 @@
 	};
 	
 	/**
+	 * Adds additional event options.
 	 * @Protected
 	 * @Override
 	 */
-	ButtonGroupProto._getEventOptions = function(item){
-		return {
-			button : item
-		};
+	ButtonGroupProto._addEventOptions = function(eventOptions, oEvent){
+		//@deprecated
+		eventOptions.button = eventOptions.srcItem;
 	};
 
 }());

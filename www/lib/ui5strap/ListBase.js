@@ -63,6 +63,8 @@
 						srcControl : {type : "ui5strap.Control"}
 					}
 				},
+				
+				//TODO Rename 'tap' event to 'press' sometimes
 				tap : {
 					parameters : {
 						listItem : {type : "ui5strap.ListItem"},
@@ -75,7 +77,7 @@
 	});
 
 	var ListBaseProto = ui5strap.ListBase.prototype,
-		_defaultSelectionGroup = "group";
+		_defaultSelectionGroup = "selectionGroup";
 	
 	/**
 	 * @Private
@@ -102,29 +104,29 @@
 			if(-1 !== jQuery.inArray(item, itemsToSelect)){
 				//Item is subject to select / deselect
 				if("replace" === mode || "add" === mode){
-					if(!_this._isListItemSelected(selectionGroup, item)){
+					if(!_this._isItemSelected(item, selectionGroup)){
 						changes.selected.push(item);
 						changes.changed.push(item);
 						
-						_this._setListItemSelected(selectionGroup, item, true);
+						_this._setItemSelected(item, true, selectionGroup);
 					}
 					else{
 						changes.unchanged.push(item);
 					}
 				}
 				else if("remove" === mode){
-					if(_this._isListItemSelected(selectionGroup, item)){
+					if(_this._isItemSelected(item, selectionGroup)){
 						changes.deselected.push(item);
 						changes.changed.push(item);
 						
-						_this._setListItemSelected(selectionGroup, item, false);
+						_this._setItemSelected(item, false, selectionGroup);
 					}
 					else{
 						changes.unchanged.push(item);
 					}
 				}
 				else if("toggle" === mode){
-					var selected = _this._isListItemSelected(selectionGroup, item);
+					var selected = _this._isItemSelected(item, selectionGroup);
 						
 						if(!selected){
 							changes.selected.push(item);
@@ -135,17 +137,17 @@
 						
 						changes.changed.push(item);
 						
-						_this._setListItemSelected(selectionGroup, item, !selected);
+						_this._setItemSelected(item, !selected, selectionGroup);
 				}
 			}
 			else{
 				//Item is no subject to select / deselect
 				if("replace" === mode){
-					if(_this._isListItemSelected(selectionGroup, item)){
+					if(_this._isItemSelected(item, selectionGroup)){
 						changes.deselected.push(item);
 						changes.changed.push(item);
 						
-						_this._setListItemSelected(selectionGroup, item, false);
+						_this._setItemSelected(item, false, selectionGroup);
 					}
 					else{
 						changes.unchanged.push(item);
@@ -460,12 +462,9 @@
 	 */
 	
 	/**
-	 * @Protected
-	 */
-	/**
 	 * Returns an array of selected items and their indices.
 	 * 
-	 * @Private
+	 * @Protected
 	 */
 	ListBaseProto._getListSelection = function(selectionGroup){
 		if(!selectionGroup){
@@ -479,7 +478,7 @@
 			};
 		
 		for(var i = 0; i < items.length; i++){
-			if(this._isListItemSelected(selectionGroup, items[i])){
+			if(this._isItemSelected(items[i], selectionGroup)){
 				selection.items.push(items[i]);
 				selection.indices.push(i);
 			}
@@ -489,20 +488,39 @@
 	};
 	
 	/**
+	 * Defines how to decide whether an item is selected within a selectionGroup.
 	 * @Protected
 	 */
-	ListBaseProto._isListItemSelected = function(group, item){
+	ListBaseProto._isItemSelected = function(item, selectionGroup){
 		return item.getSelected();
 	};
 	
 	/**
+	 * Defines how to decide whether an item is enabled within a selectionGroup.
 	 * @Protected
 	 */
-	ListBaseProto._setListItemSelected = function(group, item, selected){
+	ListBaseProto._isItemEnabled = function(item, selectionGroup){
+		return item.getEnabled();
+	};
+	
+	/**
+	 * Defines how to decide whether an item is selectable within a selectionGroup.
+	 * @Protected
+	 */
+	ListBaseProto._isItemSelectable = function(item, selectionGroup){
+		return item.getSelectable();
+	};
+	
+	/**
+	 * Defines how to select an item within a selectionGroup.
+	 * @Protected
+	 */
+	ListBaseProto._setItemSelected = function(item, selected, selectionGroup){
 		item.setSelected(selected);
 	};
 	
 	/**
+	 * Gets the list of items. This depends on the available aggregations.
 	 * @Protected
 	 */
 	ListBaseProto._getItems = function(){
@@ -510,6 +528,8 @@
 	};
 	
 	/**
+	 * Defines how to find the closest item starting at any control within the item.
+	 * For example, if you click a button somewhere within the list, this method finds the corresponding list item.
 	 * @Protected
 	 */
 	ListBaseProto._findClosestItem = function(srcControl){
@@ -517,12 +537,12 @@
 	};
 	
 	/**
+	 * Adds additional event options.
 	 * @Protected
 	 */
-	ListBaseProto._getEventOptions = function(item){
-		return {
-			listItem : item
-		};
+	ListBaseProto._addEventOptions = function(eventOptions, oEvent){
+		//@deprecated
+		eventOptions.listItem = eventOptions.srcItem;
 	};
 	
 	/*
@@ -532,51 +552,60 @@
 	 */
 	
 	/**
-	 * @Private
-	 */
-	var _processSelection = function(_this, oEvent){
-		var item = _this._findClosestItem(oEvent.srcControl),
-			selectionMode = _this.getSelectionMode(),
-			eventOptions = _this._getEventOptions(item);
-		
-		eventOptions.srcControl = oEvent.srcControl;
-
-		if(item && item.getEnabled() && item.getSelectable()){
-			var changes = null;
-			
-			if(selectionMode === ui5strap.SelectionMode.Single){
-				changes = _this.setSelection(item);
-			}
-			else if(selectionMode === ui5strap.SelectionMode.Multiple){
-				changes = _this.toggleSelection(item);
-			}
-			
-			if(changes && changes.changed.length){
-				eventOptions.selectionChanges = changes;
-				
-				//Select event is deprecated
-				_this.fireSelect(eventOptions);
-			}
-			else{
-				jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
-			}
-		}
-		else{
-			jQuery.sap.log.warning("Could not select list item: List Item not found.");
-		}
-
-		return eventOptions;
-	};
-	
-	/**
 	 * Handler for Tap / Click Events
 	 * @Protected
 	 */
 	ListBaseProto._handlePress = function(oEvent){
-		var eventOptions = _processSelection(this, oEvent);
-		//if(eventOptions.item.getEnabled()){
+		console.log(oEvent.isMarked());
+		
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		
+		var item = this._findClosestItem(oEvent.srcControl),
+			eventOptions = {
+				srcControl : oEvent.srcControl,
+				srcItem : item,
+				srcItems : [item],
+			};
+				
+		this._addEventOptions(eventOptions, oEvent);
+		
+		if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
+			//Item is enabled
+			
+			//TODO Rename 'tap' event to 'press' sometimes
 			this.fireTap(eventOptions);
-		//}
+			
+			//Process selection
+			var selectionMode = this.getSelectionMode();
+			if(ui5strap.SelectionMode.None !== selectionMode 
+					&& this._isItemSelectable(item, _defaultSelectionGroup)){
+				//List allows selections and item is selectable
+				
+				var changes = null;
+				
+				if(selectionMode === ui5strap.SelectionMode.Single){
+					changes = this.setSelection(item, _defaultSelectionGroup);
+				}
+				else if(selectionMode === ui5strap.SelectionMode.Multiple){
+					changes = this.toggleSelection(item, _defaultSelectionGroup);
+				}
+				
+				if(changes && changes.changed.length){
+					eventOptions.selectionChanges = changes;
+					
+					//Select event is deprecated
+					this.fireSelect(eventOptions);
+				}
+				else{
+					jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
+				}
+			}
+			else{
+				jQuery.sap.log.warning("Could not select list item: List Item not found.");
+			}
+			
+		}
 	};
 	
 	//Touchscreen

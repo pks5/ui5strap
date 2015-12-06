@@ -94,6 +94,8 @@
 				} 
 			},
 			events:{
+				
+				//TODO Rename 'tap' event to 'press' sometimes
 		        "tap":{}
 		    }
 
@@ -118,6 +120,7 @@
 	 * @Protected
 	 */
 	ButtonPrototype._handlePress = function(oEvent) {
+		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		
 		if (this.getEnabled()) {

@@ -88,6 +88,8 @@
 				}
 			},
 			events:{
+				
+				//TODO Rename 'tap' event to 'press' sometimes
 		        tap : {allowPreventDefault : true}
 		    }
 
@@ -113,7 +115,8 @@
 	 */
 	LinkProto._handlePress = function(oEvent) {
 		//if (this.getEnabled()) {
-			oEvent.setMarked();
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
 
 			if (!this.fireTap() || !this.getHref()) {
 				oEvent.preventDefault();

@@ -104,6 +104,8 @@
 			
 			//Events
 			events : {
+				
+				//TODO rename to pageChange & pageChanged
 				"change" : {},
 				"changed" : {}
 			}
@@ -358,6 +360,9 @@
 	 * @Protected
 	 */
   CarouselProto._handlePress = function(oEvent){
+	  //Mark the event so parent Controls know that event has been handled already
+	  oEvent.setMarked();
+	  
 	  	var $target = jQuery(oEvent.target);
 	    if(this.getControls()){
 		      if($target.hasClass('carousel-control-prev')){
