@@ -113,6 +113,9 @@
 
   var CarouselProto = ui5strap.Carousel.prototype;
 
+  /**
+   * @Private
+   */
   var _setInterval = function(_this, newInterval){
       if(_this.timer){
             window.clearInterval(_this.timer);
@@ -127,6 +130,9 @@
        }, newInterval);
   };
 
+  /**
+   * @Private
+   */
   var _findPart = function(_this, partId, index){
       var idString = '#' + _this.getId()+ '--carousel-' + partId;
       if(index >= 0){
@@ -135,6 +141,10 @@
       return _this.$().find(idString);
   };
 
+  /**
+   * @Public
+   * @Override
+   */
   CarouselProto.init = function(){
 		this.items = [];
 
@@ -143,6 +153,9 @@
     }
   };
 
+  /**
+   * @Protected
+   */
   CarouselProto._cssClasses = function(){
       var cssClasses = "carousel carousel-advanced",
       newIndex = this.getIndex(),
@@ -179,32 +192,40 @@
       return cssClasses;
   };
 
+  /**
+   * @Public
+   * @Override
+   */
 	CarouselProto.onAfterRendering = function(){
-    var _this = this,
-    itemsLength = this.getItems().length;
-
-    //Store lane reference
-		this.$lane = _findPart(this, 'lane');
-
-    if(ui5strap.support.transitionEndEvent){
-        this.$lane.on(ui5strap.support.transitionEndEvent, function(){
-            _this.fireChanged({});
-        });
-    }
-
-    this.pagination = [];
-    this.items = [];
-
-    for(var i = 0; i < itemsLength; i++){
-          this.pagination.push(_findPart(this, 'indicator', i));
-          this.items.push(_findPart(this, 'item', i));
-    }
-
-    this._refreshLabel();
-    
-    _setInterval(this, this.getInterval());
+	    var _this = this,
+	    itemsLength = this.getItems().length;
+	
+	    //Store lane reference
+			this.$lane = _findPart(this, 'lane');
+	
+	    if(ui5strap.support.transitionEndEvent){
+	        this.$lane.on(ui5strap.support.transitionEndEvent, function(){
+	            _this.fireChanged({});
+	        });
+	    }
+	
+	    this.pagination = [];
+	    this.items = [];
+	
+	    for(var i = 0; i < itemsLength; i++){
+	          this.pagination.push(_findPart(this, 'indicator', i));
+	          this.items.push(_findPart(this, 'item', i));
+	    }
+	
+	    this._refreshLabel();
+	    
+	    _setInterval(this, this.getInterval());
 	};
 
+  /**
+   * @Public
+   * @Override
+   */	
   CarouselProto.setInterval = function(newInterval, noRefresh){
   
       if(!this.getDomRef()){ 
@@ -216,37 +237,10 @@
       }
   };
 
-
-  CarouselProto.onswipeleft = function(){
-      if(this.getSwipe()){ 
-        this.nextPage();
-      }
-  };
-
-  CarouselProto.onswiperight = function(){
-      if(this.getSwipe()){ 
-        this.previousPage();
-      }
-  };
-
-  CarouselProto.ontap = function(e){
-    var $target = jQuery(e.target);
-    if(this.getControls()){
-      if($target.hasClass('carousel-control-prev')){
-        this.previousPage();
-      }
-      else if($target.hasClass('carousel-control-next')){
-        this.nextPage();
-      }
-    }
-
-    if(this.getPagination()){
-      if($target.hasClass('carousel-indicator')){
-        this.setIndex(parseInt($target.attr('data-slide-to')));
-      }
-    }
-  };
-
+  /**
+   * @Public
+   * @Override
+   */
   CarouselProto.setIndex = function(newIndex, suppressInvalidate){
   
     if(!this.getDomRef()){ 
@@ -305,6 +299,7 @@
 
   /**
   * Refreshes the label
+  * @Protected
   */
   CarouselProto._refreshLabel = function(){
       var label = this.getLabel();
@@ -316,6 +311,7 @@
 
   /**
   * Change to next page
+  * @Public
   */
   CarouselProto.nextPage = function(){
       var newIndex = this.getIndex()+1;
@@ -327,6 +323,7 @@
 
   /**
   * Change to previous page
+  * @Public
   */
   CarouselProto.previousPage = function(){
       var newIndex = this.getIndex()-1;
@@ -335,5 +332,54 @@
       }
       this.setIndex(newIndex);
   };
+  
+  /**
+   * @Public
+   * @Override
+   */
+  CarouselProto.onswipeleft = function(){
+      if(this.getSwipe()){ 
+        this.nextPage();
+      }
+  };
+
+  /**
+   * @Public
+   * @Override
+   */
+  CarouselProto.onswiperight = function(){
+      if(this.getSwipe()){ 
+        this.previousPage();
+      }
+  };
+  
+  /**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+  CarouselProto._handlePress = function(oEvent){
+	  	var $target = jQuery(oEvent.target);
+	    if(this.getControls()){
+		      if($target.hasClass('carousel-control-prev')){
+		        this.previousPage();
+		      }
+		      else if($target.hasClass('carousel-control-next')){
+		        this.nextPage();
+		      }
+	    }
+	
+	    if(this.getPagination()){
+		      if($target.hasClass('carousel-indicator')){
+		        this.setIndex(parseInt($target.attr('data-slide-to')));
+		      }
+	    }
+  };
+
+  if(ui5strap.support.touch){
+	    CarouselProto.ontap = CarouselProto._handlePress;
+	}
+	else{
+		CarouselProto.onclick = CarouselProto._handlePress;
+	}
 
 }());
