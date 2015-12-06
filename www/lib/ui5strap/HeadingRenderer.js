@@ -51,7 +51,7 @@
 
 		rm.write("<h" + level);
 		rm.writeControlData(oControl);
-
+		rm.addClass("u5sl-heading");
 		if(ui5strap.HeadingType.Default !== type){
 			rm.addClass(this.typeToClass[type]);
 		}

@@ -70,7 +70,7 @@
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
+	    		classes += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
 	    	}
 	    }
 		
@@ -96,7 +96,7 @@
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
+	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
 	    	}
 	    }
 	

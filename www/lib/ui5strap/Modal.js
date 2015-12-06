@@ -32,7 +32,7 @@
 	
 	ui5strap.ControlBase.extend("ui5strap.Modal", {
 		metadata : {
-
+			deprecated : true,
 			// ---- object ----
 			defaultAggregation : "body",
 			// ---- control specific ----

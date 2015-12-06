@@ -56,12 +56,15 @@
 					"singularName" : "left"
 				},
 				"left" : {
+					deprecated : true,
 					"singularName" : "left"
 				},
 				"middle" : {
+					deprecated : true,
 					"singularName" : "middle"
 				}, 
 				"right" : {
+					deprecated : true,
 					"singularName" : "right"
 				}  
 			}
