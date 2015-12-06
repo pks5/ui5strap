@@ -261,6 +261,27 @@
 	};
 	
 	/**
+	 * Returns whether one or multiple items are currently part of selection.
+	 * @Public
+	 */
+	ListBaseProto.isInSelection = function(itemsToCheck, selectionGroup){
+		var inSelection = true;
+		
+		if(!jQuery.isArray(itemsToCheck)){
+			itemsToCheck = [itemsToCheck];
+		}
+		
+		for(var i = 0; i < itemsToCheck.length; i++){
+			if(!this._isItemSelected(itemsToCheck[i], selectionGroup)){
+				inSelection = false;
+				break;
+			}
+		}
+		
+		return inSelection;
+	};
+	
+	/**
 	 * Tries to select one or multiple items and returns all changes.
 	 * 
 	 * @Public
@@ -333,6 +354,34 @@
 	};
 	
 	/**
+	 * Returns whether one or multiple item indices are currently part of selection.
+	 * @Public
+	 */
+	ListBaseProto.isInSelectionIndex = function(indices, selectionGroup){
+		var items = _this._getItems();
+		if(!jQuery.isArray(indices)){
+			//Single value
+			if(indices < 0 || indices >= items.length){
+				throw new Error("Array out of bounds!");
+			}
+			
+			return this.isInSelection(items[indices], selectionGroup);
+		}
+		else{
+			var itemsToCheck = [];
+			for(var i=0; i<indices.length; i++){
+				var index = indices[i];
+				if(index < 0 || index >= items.length){
+					throw new Error("Array out of bounds!");
+				}
+				itemsToCheck.push(items[index]);
+			}
+			
+			return this.isInSelection(itemsToCheck, selectionGroup);
+		}
+	};
+	
+	/**
 	 * Selects one or multiple items by indices
 	 * @Public
 	 * @Override
@@ -371,6 +420,33 @@
 	/*
 	 * CustomData 
 	 */
+	
+	/**
+	 * Returns whether one or multiple items are currently part of selection. Items are selected by custom data key and possible values.
+	 * @Public
+	 */
+	ListBaseProto.isInSelectionByCustomData = function(dataKey, values, selectionGroup){
+		var items = _this._getItems();
+		
+		if(!jQuery.isArray(values)){
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === values){
+					selectedItem = items[i];
+					
+					return this.isInSelection(selectedItem, selectionGroup);
+				}
+			}
+		}
+		else{
+			var itemsToCheck = [];
+			for(var i = 0; i < items.length; i++){
+				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+					itemsToCheck.push(items[i]);
+				}
+			}
+			return this.isInSelection(itemsToCheck, selectionGroup);
+		}
+	};
 	
 	/**
 	 * Selects one or multiple items that have the given value in the specified custom data field.
@@ -587,6 +663,14 @@
 				if(selectionMode === ui5strap.SelectionMode.Single){
 					changes = this.setSelection(item, _defaultSelectionGroup);
 				}
+				else if(selectionMode === ui5strap.SelectionMode.SingleToggle){
+					if(this.isInSelection(item)){
+						changes = this.removeSelection(item, _defaultSelectionGroup);
+					}
+					else{
+						changes = this.setSelection(item, _defaultSelectionGroup);
+					}
+				}
 				else if(selectionMode === ui5strap.SelectionMode.Multiple){
 					changes = this.toggleSelection(item, _defaultSelectionGroup);
 				}
@@ -602,9 +686,11 @@
 				}
 			}
 			else{
-				jQuery.sap.log.warning("Could not select list item: List Item not found.");
+				jQuery.sap.log.warning("Could not select list item: List item not selectable.");
 			}
-			
+		}
+		else{
+			jQuery.sap.log.warning("Could not select list item: List item not found or disabled.");
 		}
 	};
 	

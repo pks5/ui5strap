@@ -837,6 +837,7 @@
   ui5strap.SelectionMode = {
     None : "None",
     Single : "Single",
+    SingleToggle : "SingleToggle",
     Multiple : "Multiple",
     
     //Deprecated
