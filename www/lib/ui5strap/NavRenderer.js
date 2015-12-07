@@ -51,7 +51,7 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
 
 	rm.addClass('nav');
 	rm.addClass(this.typeToClass[type]);
-	
+	rm.addClass(oControl._getOptionsClassString());
 	ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
 
 	rm.writeClasses();

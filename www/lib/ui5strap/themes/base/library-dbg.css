@@ -9052,10 +9052,10 @@ a {
 /*
  * Nav
  */
-.nav-default > li {
+.nav.nav-default.nav-option-bar-nav > li {
   float: left;
 }
-.bar .nav-default > li > a {
+.nav.nav-default.nav-option-bar-nav > li > a {
   padding: 12px 15px;
 }
 /*
@@ -10102,45 +10102,45 @@ a {
 /*
 * Bar
 */
-.bar {
+.u5sl-bar {
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .5);
           box-shadow: 0 0 3px rgba(0, 0, 0, .5);
 
   mkin-height: 44px;
 }
-.bar-default {
+.u5sl-bar-flag-default {
   color: #777;
   background-color: #f8f8f8;
   border-color: #e7e7e7;
 }
-.bar-inverse {
+.u5sl-bar-flag-inverse {
   color: #9d9d9d;
   background-color: #222;
   border-color: #080808;
 }
-.bar.bar-type-full,
-.bar.bar-type-fluid-full,
-.bar.bar-type-inset-full,
-.bar.bar-type-fluid-inset-full {
+.u5sl-bar.u5sl-bar-type-full,
+.u5sl-bar.u5sl-bar-type-fluid-full,
+.u5sl-bar.u5sl-bar-type-inset-full,
+.u5sl-bar.u5sl-bar-type-fluid-inset-full {
   height: 100%;
 }
-.bar > .bar-inner::after {
+.u5sl-bar > .u5sl-bar-inner::after {
   display: block;
   height: 0;
   clear: both;
   content: '';
 }
-.bar > .bar-inner > .bar-content-left {
+.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-left {
   float: left;
 }
-.bar > .bar-inner > .bar-content-middle {
+.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-middle {
   position: absolute;
   left: 50%;
   width: 50%;
   margin-left: -25%;
   text-align: center;
 }
-.bar > .bar-inner > .bar-content-right {
+.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-right {
   float: right;
   text-align: right;
 }
@@ -10230,6 +10230,7 @@ a {
  */
 /*
 * TODO: change library prefix to "u5sl-"
+* TODO: rename static-overlay to staticoverlay
 */
 .ui5strap-static-overlay {
   position: absolute;

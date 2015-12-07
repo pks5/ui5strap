@@ -72,4 +72,5 @@
 		}
 	});
 
+	ui5strap.Bar.prototype._STYLE_PREFIX = "u5sl-bar";
 }());

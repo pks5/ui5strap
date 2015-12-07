@@ -32,32 +32,32 @@
 	var BarRenderer = {
 			typeToTag : {
 				Fluid : {
-					typeClassName : "bar-type-fluid",
+					typeClassName : "u5sl-bar-type-fluid",
 					containerClassName : "container-fluid"
 				},
 				Inset : {
-					typeClassName : "bar-type-inset",
+					typeClassName : "u5sl-bar-type-inset",
 					containerClassName : "container-inset"
 				},
 				Full : {
-					typeClassName : "bar-type-full",
+					typeClassName : "u5sl-bar-type-full",
 					containerClassName : "container-full"
 				},
 				
 				FluidInset : {
-					typeClassName : "bar-type-fluid-inset",
+					typeClassName : "u5sl-bar-type-fluid-inset",
 					containerClassName : "container-fluid container-inset"
 				},
 				FluidFull : {
-					typeClassName : "bar-type-fluid-full",
+					typeClassName : "u5sl-bar-type-fluid-full",
 					containerClassName : "container-fluid container-full"
 				},
 				InsetFull : {
-					typeClassName : "bar-type-inset-full",
+					typeClassName : "u5sl-bar-type-inset-full",
 					containerClassName : "container-inset container-full"
 				},
 				FluidInsetFull : {
-					typeClassName : "bar-type-fluid-inset-full",
+					typeClassName : "u5sl-bar-type-fluid-inset-full",
 					containerClassName : "container-fluid container-inset container-full"
 				}
 			}
@@ -76,20 +76,21 @@
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('bar ' + (inverse ? 'bar-inverse' : 'bar-default'));
+		rm.addClass('u5sl-bar ' + (inverse ? 'u5sl-bar-flag-inverse' : 'u5sl-bar-flag-default'));
 		rm.addClass(tagData.typeClassName);
+		rm.addClass(oControl._getOptionsClassString());
 		rm.writeClasses();
 		rm.write(">");
 
 			rm.write("<div");
-			rm.addClass('bar-inner ' + tagData.containerClassName);
+			rm.addClass('u5sl-bar-inner ' + tagData.containerClassName);
 			rm.writeClasses();
 			rm.write(">");
 			  
 			//Middle
 			if(contentMiddle.length > 0){     
 				rm.write("<div");
-				rm.addClass("bar-content bar-content-middle");
+				rm.addClass("u5sl-bar-content u5sl-bar-content-middle");
 				rm.writeClasses();
 				rm.write(">");
 				for(var i = 0; i < contentMiddle.length; i++){ 
@@ -101,7 +102,7 @@
 			//Left
 			if(contentLeft.length > 0){     
 				rm.write("<div");
-				rm.addClass("bar-content bar-content-left");
+				rm.addClass("u5sl-bar-content u5sl-bar-content-left");
 				rm.writeClasses();
 				rm.write(">");
 				for(var i = 0; i < contentLeft.length; i++){ 
@@ -120,7 +121,7 @@
 			//Right
 			if(contentRight.length > 0){     
 				rm.write("<div");
-				rm.addClass("bar-content bar-content-right");
+				rm.addClass("u5sl-bar-content u5sl-bar-content-right");
 				rm.writeClasses();
 				rm.write(">");
 				for(var i = 0; i < contentRight.length; i++){ 
