@@ -7,36 +7,35 @@
 			<!-- Bar on top of page -->
 			<Bar inverse="true">
 				<!-- Left area of bar -->
-				<left>
+				<Container align="PullLeft">
 					<!-- Back Button -->
 					<Button tap="ui5strap.demoapp.actions.NavigateToHome"
 						options="BarButton">
 						<Icon icon="home" />
 					</Button>
+
 					<!-- Toggle Menu Button (except for small screens) -->
-					<Container type="Text" visibilitySmall="Hidden">
-						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot"
-							options="BarButton">
+					<Container type="Text" visibilitySmall="Hidden"
+						visibilityMedium="Visible">
+						<Button options="BarButton"
+							tap="ui5strap.demoapp.actions.ToggleBarMenuRoot">
 							<Icon icon="columns" />
 						</Button>
 					</Container>
-				</left>
+				</Container>
 
 				<!-- Middle area of bar -->
-				<middle>
-					<Heading text="{i18n>PAGE2_TITLE}" options="BarHeading" />
-				</middle>
+				<Heading text="{i18n>PAGE2_TITLE}" options="BarHeading" />
 
-				<right>
-					<!-- Toggle Menu Button (only for small screens) -->
-					<Container type="Text" visibilityExtraSmall="Hidden"
-						visibilityMedium="Hidden" visibilityLarge="Hidden">
-						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot"
-							options="BarButton">
-							<Icon icon="columns" />
-						</Button>
-					</Container>
-				</right>
+				<!-- Toggle Menu Button (only for small screens) -->
+				<Container type="Text" align="PullRight"
+					visibilityExtraSmall="Hidden" visibilitySmall="Visible"
+					visibilityMedium="Hidden">
+					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot"
+						options="BarButton">
+						<Icon icon="columns" />
+					</Button>
+				</Container>
 			</Bar>
 		</head>
 
@@ -67,7 +66,7 @@
 									</media>
 									<content>
 										<Icon icon="times" align="PullRight" data:command="DELETE" />
-										<Heading level="4" type="MediaHeading" text="{posts>title}" />
+										<Heading level="4" options="MediaHeading" text="{posts>title}" />
 										<Text text="{posts>text}" />
 										<Button data:command="MORE" text="Submit" severity="Success">
 											<Icon data:command="MORE" icon="arrow-right" />
@@ -82,7 +81,7 @@
 												</media>
 												<content>
 													<Icon icon="times" align="PullRight" data:command="DELETE" />
-													<Heading level="4" type="MediaHeading" text="Test Comment" />
+													<Heading level="4" options="MediaHeading" text="Test Comment" />
 													<Text
 														text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." />
 												</content>

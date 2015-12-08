@@ -9146,6 +9146,10 @@ a {
   font-size: 16px;
   text-align: center;
 }
+.u5sl-heading.u5sl-heading-option-media-heading {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
 /*
  * 
  * UI5Strap

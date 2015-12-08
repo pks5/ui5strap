@@ -1791,6 +1791,7 @@
           //Generic visibility
           //TODO check if necccessary and working at all
           if(visibility !== Visibility.Default){
+        	  
               if(visibility === Visibility.Hidden){
             	  resultHidden = [
             	                  "ui5strap-hide-xs", 

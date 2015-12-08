@@ -56,8 +56,10 @@
 						defaultValue : ""
 					},
 					
-					//Visibility DOES NOT inherit from smaller sizes
+					//Visibility DOES inherit from smaller sizes
+					//TODO remove visibility since it does same as visibilityExtraSmall
 					visibility : {
+						deprecated : true,
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
 					},
