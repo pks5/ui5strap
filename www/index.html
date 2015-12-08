@@ -174,15 +174,15 @@
 		
 		<!-- 
 			Minimized OpenUI5 library without sap.m and sap.ui.core.commons Controls. 
-		-->	
+			
 		<script id="sap-ui-bootstrap" src="lib/openui5/sap-ui-core.js" data-sap-ui-xx-test-mobile="false" data-sap-ui-xx-bindingSyntax="complex"></script>
-		
+		-->
 		
 		<!-- 
 			Full OpenUI5 library from CDN. You can download the library from http://openui5.org/ if needed. 
-		
-			<script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/1.26.10/resources/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
 		-->
+			<script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/1.32.8/resources/sap-ui-core.js" data-sap-ui-compatVersion="edge" data-sap-ui-preload="async"></script>
+		
 		
 		<!-- Set Ui5Strap Library location. -->
 		<script>
@@ -194,54 +194,56 @@
 
 		<!-- App Start -->
 		<script>
-
-			/*
-			* Define Viewer Options
-			* Use "app.defaultValue" to set the Default App. 
-			* It is used if no "app" GET parameter is present.
-			* For example, you can load the App "50 Buttons" also via http://localhost:8282/?app=apps/50buttons/app.json
-			*/
-			var defaultApp = "demoapp",
-				viewerOptions = {
-				"app" : {
-					type : "URI",
-					uriParam : "app",
-					defaultValue : "./apps/" + defaultApp + "/app.json"
-				}
-			};
-
-			/*
-			* Initialize Viewer
-			*/
-			jQuery.sap.require("ui5strap.Viewer");
-			
-			//Wrap the start function with a callback function
-			var onDeviceReady = function(){
-				//The reference to the viewer instance should not be global
-				var viewer = new ui5strap.Viewer(viewerOptions);
+			sap.ui.getCore().attachInit(function(){
 				
 				/*
-				* Viewer.prototype.start accepts two callback functions as parameters.
-				* The first callback is fired when the app has been completely started and shown.
-				* The second callback is fired when the app has been loaded but did not show yet.
-				* Both parameters are optional.
+				* Define Viewer Options
+				* Use "app.defaultValue" to set the Default App. 
+				* It is used if no "app" GET parameter is present.
+				* For example, you can load the App "50 Buttons" also via http://localhost:8282/?app=apps/50buttons/app.json
 				*/
-				viewer.start(null, function(){
-					//In this example we want to show the welcome message when the App has been loaded.
-					document.getElementById('ui5strap-splash-screen-spinner').className = 'ui5strap-hidden';
-					document.getElementById('ui5strap-splash-screen-message').className = 'ui5strap-splash-screen-message-visible';
-				});
-			};
+				var defaultApp = "demoapp",
+					viewerOptions = {
+					"app" : {
+						type : "URI",
+						uriParam : "app",
+						defaultValue : "./apps/" + defaultApp + "/app.json"
+					}
+				};
+	
+				/*
+				* Initialize Viewer
+				*/
+				jQuery.sap.require("ui5strap.Viewer");
+				
+				//Wrap the start function with a callback function
+				var onDeviceReady = function(){
+					//The reference to the viewer instance should not be global
+					var viewer = new ui5strap.Viewer(viewerOptions);
+					
+					/*
+					* Viewer.prototype.start accepts two callback functions as parameters.
+					* The first callback is fired when the app has been completely started and shown.
+					* The second callback is fired when the app has been loaded but did not show yet.
+					* Both parameters are optional.
+					*/
+					viewer.start(null, function(){
+						//In this example we want to show the welcome message when the App has been loaded.
+						document.getElementById('ui5strap-splash-screen-spinner').className = 'ui5strap-hidden';
+						document.getElementById('ui5strap-splash-screen-message').className = 'ui5strap-splash-screen-message-visible';
+					});
+				};
+				
+				if(window.cordova){
+					//App is executed within Cordova
+					document.addEventListener("deviceready", onDeviceReady, false);
+				}
+				else{
+					//Otherwise, trigger the callback immediately
+					onDeviceReady();
+				}
 			
-			if(window.cordova){
-				//App is executed within Cordova
-				document.addEventListener("deviceready", onDeviceReady, false);
-			}
-			else{
-				//Otherwise, trigger the callback immediately
-				onDeviceReady();
-			}
-			
+			});
 		</script>
 
 	</body>

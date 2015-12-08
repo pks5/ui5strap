@@ -5,7 +5,7 @@
 			<!-- Head area with horizontal bar -->
 			<div data-sap-ui-aggregation="head">
 				<div data-sap-ui-type="ui5strap.Bar" data-inverse="true">
-					<div data-sap-ui-aggregation="content">	
+					
 						<!-- Toggle Menu Button (except for small screens) -->
 						<div data-sap-ui-type="ui5strap.Container" data-align="PullLeft" data-visibility-small="Hidden">
 							<div 
@@ -14,6 +14,11 @@
 							>
 								<div data-sap-ui-type="ui5strap.Icon" data-icon="columns"></div>
 							</div>
+						</div>
+						
+						<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-options="BarHeading">
+							<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE1_TITLE}"></div>
+							<div data-sap-ui-type="ui5strap.Text" data-type="Label" data-severity="Success" data-text="New"></div>
 						</div>
 						
 						<div data-sap-ui-type="ui5strap.Container" data-align="PullLeft">
@@ -26,16 +31,9 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div data-sap-ui-aggregation="middle">
-						<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-options="BarHeading">
-							<div data-sap-ui-type="ui5strap.Text" data-text="{i18n>PAGE1_TITLE}"></div>
-							<div data-sap-ui-type="ui5strap.Text" data-type="Label" data-severity="Success" data-text="New"></div>
-						</div>
-					</div>
-					<div data-sap-ui-aggregation="right">
+						
 						<!-- Toggle Menu Button (only for small screens) -->
-						<div data-sap-ui-type="ui5strap.Container" data-type="Text" data-visibility-extra-small="Hidden" data-visibility-medium="Hidden" data-visibility-large="Hidden">
+						<div data-sap-ui-type="ui5strap.Container"  data-align="PullRight" data-type="Text" data-visibility-extra-small="Hidden" data-visibility-medium="Hidden" data-visibility-large="Hidden">
 							<div 
 							data-sap-ui-type="ui5strap.Button" 
 							data-options="BarButton"
@@ -44,7 +42,7 @@
 								<div data-sap-ui-type="ui5strap.Icon" data-icon="columns"></div>
 							</div>
 						</div>
-					</div>
+					
 					
 				</div>
 			</div>

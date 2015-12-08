@@ -686,7 +686,7 @@
 				}
 			}
 			else{
-				jQuery.sap.log.warning("Could not select list item: List item not selectable.");
+				jQuery.sap.log.debug("[LIST#" + this.getId() + "] Did not select list item: List item not selectable.");
 			}
 		}
 		else{

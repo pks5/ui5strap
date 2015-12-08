@@ -1,15 +1,17 @@
 {
 	"//" : "Set the main-menu item selected that has the same id as specified NavContainer's current page.",
 	
-	"__modules" : ["ui5strap.AMGetCurrentPage", "ui5strap.AMSetListItemSelected"],
+	"TASKS" : ["getCurrentPage", "setListItemSelected"],
 	
 	"getCurrentPage" : {
+		"TYPE" : "ui5strap.AMGetCurrentPage",
 		"scope" : "SOURCE",
 		
 		"target" : "content"
 	},
 	
 	"setListItemSelected" : {
+		"TYPE" : "ui5strap.AMSetListItemSelected",
 		"scope" : "APP",
 		"viewId" : "my-app-bar-menu",
 		"controlId" : "myMenu",

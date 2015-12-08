@@ -936,10 +936,14 @@
 		//if(!viewConfig.viewName){
 		//	throw new Error('Cannot obtain view configuration: no "viewName" specified.');
 		//}
+		
+		viewConfig.afterInit = function(oEvent){
+			alert("Event 'afterInit' called from view '" + viewConfig.viewName + "'");
+		};
 
 		//Will crash if "viewName" or "type" attribute is missing!
 		var page = new sap.ui.view(viewConfig);
-
+		
 		//Add css style class
 		if(viewConfig.styleClass){
 			page.addStyleClass(viewConfig.styleClass);

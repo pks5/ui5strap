@@ -31,7 +31,7 @@
                 "id" : "my-app-bar-menu",
                 
                 "target" : "bar",
-                "preload" : true
+                "preload2" : true
             },
             
             "ui5strap.demoapp.views.Home" : {
@@ -39,7 +39,7 @@
                 
                 "id" : "home",
                 
-                "preload" : true
+                "preload2" : true
             },
 
             "ui5strap.demoapp.views.MyPage2" : {
@@ -47,7 +47,7 @@
                 
                 "id" : "my-app-page2",
                 
-                "preload" : true
+                "preload2" : true
             },
 
             "ui5strap.demoapp.views.MyPage3" : {
@@ -55,7 +55,7 @@
                 
                 "id" : "my-app-page3",
                 
-                "preload" : true
+                "preload2" : true
             },
 
             "ui5strap.demoapp.views.MyPage4" : {
@@ -63,7 +63,7 @@
                 
                 "id" : "my-app-page4",
                 
-                "preload" : true,
+                "preload2" : true,
                 
                 "events" : {
                 	"controller" : {
@@ -81,7 +81,7 @@
                 "id" : "my-app-bar-sub-menu",
                 
                 "target" : "bar",
-                "preload" : true
+                "preload2" : true
             },
             
             "ui5strap.demoapp.views.MyPage5" : {
@@ -89,7 +89,7 @@
                 
                 "id" : "my-app-page5",
                 
-                "preload" : true,
+                "preload2" : true,
                 "events" : {
                 	"controller" : {
                 		"update" : "ui5strap.demoapp.actions.SetCurrentLanguage"	
@@ -102,7 +102,7 @@
                 
                 "id" : "my-app-page6",
                 
-                "preload" : true
+                "preload2" : true
             },
             
             "ui5strap.demoapp.views.NewPost" : {
@@ -110,7 +110,7 @@
                 
                 "id" : "my-app-new-post",
                 
-                "preload" : true
+                "preload2" : true
             }
       },
 	
@@ -120,7 +120,8 @@
 		"ui5strap.demoapp.actions.NavigateToHome",
 		"ui5strap.demoapp.actions.ToggleBarMenuRoot",
 		"ui5strap.demoapp.actions.Debug",
-		"ui5strap.demoapp.actions.ToggleBarMenuSub1"
+		"ui5strap.demoapp.actions.ToggleBarMenuSub1",
+		"ui5strap.demoapp.actions.SetSelectedMenuSub1"
 	],
 	
 	"components" : [

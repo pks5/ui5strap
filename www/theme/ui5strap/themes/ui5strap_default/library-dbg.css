@@ -8963,6 +8963,11 @@ button.close {
  * 
  */
 /*
+ * ==========================
+ * DEPRECATED will be dropped
+ * ==========================
+ */
+/*
  * 
  * UI5Strap
  *
@@ -9045,6 +9050,15 @@ a {
   margin-left: 15px;
 }
 /*
+ * Nav
+ */
+.nav.nav-default.nav-option-bar-nav > li {
+  float: left;
+}
+.nav.nav-default.nav-option-bar-nav > li > a {
+  padding: 12px 15px;
+}
+/*
 * Panel
 */
 .panel-collapsible > .panel-heading {
@@ -9070,6 +9084,16 @@ a {
 /*
 * Container
 */
+.container-inset {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.container-full {
+  height: 100%;
+}
+/*
+ * DEPRECATED
+ */
 .container-floating {
   float: left;
   margin-right: 10px;
@@ -9077,15 +9101,6 @@ a {
 }
 .container-paragraph {
   margin-bottom: 10px;
-}
-.container-inset {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-.container-full {
-  width: 100%;
-  height: 100%;
-  padding: 15px;
 }
 /*
 * List Group
@@ -9109,6 +9124,21 @@ a {
 */
 .fa.form-control-feedback {
   line-height: 34px;
+}
+/*
+ * Buttons
+ */
+.btn.btn-option-bar-button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+/*
+ * Headings
+ */
+.u5sl-heading.u5sl-heading-option-bar-heading {
+  margin-top: 13px;
+  margin-bottom: 13px;
+  font-size: 16px;
 }
 /*
  * 
@@ -10072,45 +10102,45 @@ a {
 /*
 * Bar
 */
-.bar {
-  height: 43px;
+.u5sl-bar {
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .5);
           box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+
+  mkin-height: 44px;
 }
-.bar-default {
+.u5sl-bar-flag-default {
   color: #777;
   background-color: #f8f8f8;
   border-color: #e7e7e7;
 }
-.bar-inverse {
+.u5sl-bar-flag-inverse {
   color: #eee;
   background-color: #025d8c;
   border-color: #013c5a;
 }
-.bar > .bar-inner {
-  position: relative;
+.u5sl-bar.u5sl-bar-type-full,
+.u5sl-bar.u5sl-bar-type-fluid-full,
+.u5sl-bar.u5sl-bar-type-inset-full,
+.u5sl-bar.u5sl-bar-type-fluid-inset-full {
   height: 100%;
-  padding: 0 15px;
 }
-.bar > .bar-inner > .bar-content {
-  top: 0;
-  height: 100%;
-  overflow: hidden;
-  line-height: 43px;
+.u5sl-bar > .u5sl-bar-inner::after {
+  display: block;
+  height: 0;
+  clear: both;
+  content: '';
 }
-.bar > .bar-inner > .bar-content-left {
+.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-left {
   float: left;
 }
-.bar > .bar-inner > .bar-content-middle {
-  text-align: center;
-}
-.bar > .bar-inner > .bar-content-middle {
+.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-middle {
   position: absolute;
   left: 50%;
   width: 50%;
   margin-left: -25%;
+  text-align: center;
 }
-.bar > .bar-inner > .bar-content-right {
+.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-right {
   float: right;
   text-align: right;
 }
@@ -10154,6 +10184,7 @@ a {
   position: absolute;
   top: 0;
   width: 100%;
+  height: 44px;
 }
 .page-body {
   position: relative;
@@ -10161,10 +10192,10 @@ a {
   height: 100%;
 }
 .page.page-with-head {
-  padding-top: 43px;
+  padding-top: 44px;
 }
 .page.page-with-footer {
-  padding-bottom: 43px;
+  padding-bottom: 44px;
 }
 .page-footer {
   position: absolute;
@@ -10199,6 +10230,7 @@ a {
  */
 /*
 * TODO: change library prefix to "u5sl-"
+* TODO: rename static-overlay to staticoverlay
 */
 .ui5strap-static-overlay {
   position: absolute;
