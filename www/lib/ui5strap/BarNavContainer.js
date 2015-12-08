@@ -344,40 +344,43 @@
 			columnsLarge = this.getBarSizeLarge(),
 			transitionSpeed = this.getBarTransitionSpeed();
 		
-			if(transitionSpeed !== ui5strap.TransitionSpeed.Normal){
-				classes += " ui5strap-transition-speed-" + transitionSpeed.toLowerCase();
-			}
-			
-		//Ensure that at least size xs is set
-		if(1 > columnsExtraSmall){
-			classes += " navcontainer-flag-col-xs-0";
+		//Transition Speed
+		//Applies for all sizes
+		if(transitionSpeed !== ui5strap.TransitionSpeed.Normal){
+			classes += " ui5strap-transition-speed-" + transitionSpeed.toLowerCase();
 		}
-		else{
+			
+		//SIZE_EXTRA_SMALL
+		if(-1 < columnsExtraSmall){
 	      classes += " navcontainer-flag-col-xs-" + columnsExtraSmall;
+	      classes += " navcontainer-flag-placement-xs-" + placementExtraSmall.toLowerCase();
+	      classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
 	    }
 		
+		//SIZE_SMALL
 	    if(-1 < columnsSmall){
 	      classes += " navcontainer-flag-col-sm-" + columnsSmall;
+	      classes += " navcontainer-flag-placement-sm-" + placementSmall.toLowerCase();
+	      classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
 	    }
+	    
+	    //SIZE_MEDIUM
 	    if(-1 < columnsMedium){
 		  classes += " navcontainer-flag-col-md-" + columnsMedium;
+		  classes += " navcontainer-flag-placement-md-" + placementMedium.toLowerCase();
+		  classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
+		  
 		}
+	    
+	    //SIZE_LARGE
 	    if(-1 < columnsLarge){
 	      classes += " navcontainer-flag-col-lg-" + columnsLarge;
+	      classes += " navcontainer-flag-placement-lg-" + placementLarge.toLowerCase();
+	      classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
 	    }
-		    
-		//Placement
-		classes += " navcontainer-flag-placement-xs-" + placementExtraSmall.toLowerCase();
-        classes += " navcontainer-flag-placement-sm-" + placementSmall.toLowerCase();
-        classes += " navcontainer-flag-placement-md-" + placementMedium.toLowerCase();
-        classes += " navcontainer-flag-placement-lg-" + placementLarge.toLowerCase();
-        
-        //Mode
-		classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
-        classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
-        classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
-        classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
-        
+		
+	    //TODO add columnsExtraLarge on BOOTSTRAP_4 Upgrade
+		
 		if(!this.getBarVisible()){
 			classes += " navcontainer-flag-bar-hide navcontainer-flag-bar-hidden";
 		}
