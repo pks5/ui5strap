@@ -26,7 +26,7 @@
     
     "views" : {
     		"ui5strap.demoapp.views.MenuRoot" : {
-                "type" : "HTML",
+                "type" : "XML",
                 
                 "id" : "my-app-bar-menu",
                 
@@ -162,12 +162,10 @@
 	             
 	             "initialViews" : [
 	                 { 
-	                     "viewName" : "ui5strap.demoapp.views.Home",
-	                     "type" : "HTML"
+	                     "viewName" : "ui5strap.demoapp.views.Home"
 	                 },
 	                 { 
-	                     "viewName" : "ui5strap.demoapp.views.MenuRoot",
-	                     "type" : "HTML"
+	                     "viewName" : "ui5strap.demoapp.views.MenuRoot"
 	                 }
 	             ]
 	
