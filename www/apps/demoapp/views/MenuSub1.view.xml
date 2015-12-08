@@ -1,0 +1,14 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<Bar type="Full">
+	<BarMenu id="mySubMenu"
+		typeExtraSmall="ButtonsVertical"
+		tap="ui5strap.demoapp.actions.NavigateViaMenuSub1" 
+		items="{menu>/sub1}">
+		<BarMenuItem text="{formatter:'.formatters.localeString', path:'menu>label'}" 
+			icon="{menu>icon}"
+			itemId="{menu>pageId}"
+		></BarMenuItem>
+	</BarMenu>
+</Bar>
+</View>

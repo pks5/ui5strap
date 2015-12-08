@@ -6,11 +6,12 @@
 				<!-- Bar on top of page -->
 				<div data-sap-ui-type="ui5strap.Bar" data-inverse="true">
 					<!-- Left area of bar -->
-					<div data-sap-ui-aggregation="left">
+					<div data-sap-ui-type="ui5strap.Container" data-align="PullLeft">
 						<!-- Back Button -->
 						<div 
 							data-sap-ui-type="ui5strap.Button" 
 							data-tap="ui5strap.demoapp.actions.NavigateToHome" 
+							data-options="BarButton"
 						>
 							<div data-sap-ui-type="ui5strap.Icon" data-icon="home"></div>
 						</div>
@@ -19,23 +20,22 @@
 							<div 
 							data-sap-ui-type="ui5strap.Button" 
 							data-tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+							data-options="BarButton"
 							>
 								<div data-sap-ui-type="ui5strap.Icon" data-icon="columns"></div>
 							</div>
 						</div>
 					</div>
 					
-					<!-- Middle area of bar -->
-					<div data-sap-ui-aggregation="middle">
-						<div data-sap-ui-type="ui5strap.Text" data-type="Phrasing" data-text="{i18n>PAGE4_TITLE}"></div>
-					</div>
+					<div data-sap-ui-type="ui5strap.Heading" data-text="{i18n>PAGE4_TITLE}" data-options="BarHeading"></div>
 					
-					<div data-sap-ui-aggregation="right">
+					<div data-sap-ui-type="ui5strap.Container" data-align="PullRight">
 						<!-- Toggle Menu Button (only for small screens) -->
 						<div data-sap-ui-type="ui5strap.Container" data-type="Text" data-visibility-extra-small="Hidden" data-visibility-medium="Hidden" data-visibility-large="Hidden">
 							<div 
 							data-sap-ui-type="ui5strap.Button" 
 							data-tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+							data-options="BarButton"
 							>
 								<div data-sap-ui-type="ui5strap.Icon" data-icon="columns"></div>
 							</div>
