@@ -1785,7 +1785,8 @@
               visibilityLarge = oControl.getVisibilityLarge(),
               Visibility = ui5strap.Visibility;
           
-          var resultHidden = ["", "", "", ""];
+          var resultHidden = ["", "", "", ""],
+          	  inheritHide = false;
           
           //Generic visibility
           //TODO check if necccessary and working at all
@@ -1797,6 +1798,7 @@
             	                  "ui5strap-hide-md", 
             	                  "ui5strap-hide-lg"
             	                  ];
+            	  inheritHide = true;
               }
           }
           
@@ -1804,30 +1806,37 @@
           if(visibilityExtraSmall === Visibility.Visible){
         	  //Visible on EXTRA_SMALL
               resultHidden[0] = "";
+              inheritHide = false;
           }
-          else if(visibilityExtraSmall === Visibility.Hidden){
+          else if(inheritHide || visibilityExtraSmall === Visibility.Hidden){
         	  //Hidden on EXTRA_SMALL
         	  resultHidden[0] = "ui5strap-hide-xs";
+        	  inheritHide = true;
           }
           
           //Visibility for SMALL screens
           if(visibilitySmall === Visibility.Visible){
         	  //Visible on SMALL
               resultHidden[1] = "";
+              inheritHide = false;
           }
-          else if(visibilitySmall === Visibility.Hidden){
+          else if(inheritHide || visibilitySmall === Visibility.Hidden){
         	  //Hidden on SMALL
               resultHidden[1] = "ui5strap-hide-sm";
+              inheritHide = true;
           }
+          
           
           //Visibility for MEDIUM screens
           if(visibilityMedium === Visibility.Visible){
         	  //Visible on MEDIUM
               resultHidden[2] = "";
+              inheritHide = false;
           }
-          else if(visibilityMedium === Visibility.Hidden){
+          else if(inheritHide || visibilityMedium === Visibility.Hidden){
         	  //Hidden on MEDIUM
               resultHidden[2] = "ui5strap-hide-md";
+              inheritHide = true;
           }
           
           //Visibility for LARGE screens
@@ -1835,7 +1844,7 @@
         	  //Visible on LARGE
               resultHidden[3] = "";
           }
-          else if(visibilityLarge === Visibility.Hidden){
+          else if(inheritHide || visibilityLarge === Visibility.Hidden){
         	  //Hidden on LARGE
               resultHidden[3] = "ui5strap-hide-lg";
           }

@@ -9,12 +9,14 @@
 				<!-- Left area of bar -->
 				<left>
 					<!-- Back Button -->
-					<Button tap="ui5strap.demoapp.actions.NavigateToHome" options="BarButton">
+					<Button tap="ui5strap.demoapp.actions.NavigateToHome"
+						options="BarButton">
 						<Icon icon="home" />
 					</Button>
 					<!-- Toggle Menu Button (except for small screens) -->
 					<Container type="Text" visibilitySmall="Hidden">
-						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" options="BarButton">
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot"
+							options="BarButton">
 							<Icon icon="columns" />
 						</Button>
 					</Container>
@@ -29,7 +31,8 @@
 					<!-- Toggle Menu Button (only for small screens) -->
 					<Container type="Text" visibilityExtraSmall="Hidden"
 						visibilityMedium="Hidden" visibilityLarge="Hidden">
-						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" options="BarButton">
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot"
+							options="BarButton">
 							<Icon icon="columns" />
 						</Button>
 					</Container>
@@ -53,7 +56,8 @@
 							</Container>
 						</titleContent>
 						<content>
-							<ListMedia id="feeds" tap="ui5strap.demoapp.actions.Debug" items="{posts>/posts}">
+							<ListMedia id="feeds" tap="ui5strap.demoapp.actions.Debug"
+								items="{posts>/posts}">
 
 								<!-- Media Item 1 -->
 								<ListMediaItem>

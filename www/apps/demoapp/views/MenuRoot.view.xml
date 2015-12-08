@@ -1,22 +1,13 @@
 <View controllerName="ui5strap.ActionController" xmlns="ui5strap"
 	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<Bar inverse="true" type="Full">
-		<BarMenu id="myMenu"
-				inverse="true"
-				zoomExtraSmall="-3"
-				zoomSmall="3"
-				typeExtraSmall="ButtonsHorizontal"
-				typeSmall="ButtonsVertical"
-				typeMedium="ListHorizontal"
-				typeLarge="ListVertical"
-				tap="ui5strap.demoapp.actions.NavigateViaMenuRoot" 
-				items="{menu>/root}"
-					>
-						<BarMenuItem
-							text="{formatter:'.formatters.localeString', path:'menu>label'}" 
-							icon="{menu>icon}"
-							itemId="{menu>pageId}"
-						></BarMenuItem>
+		<BarMenu id="myMenu" inverse="true" zoomExtraSmall="-3"
+			zoomSmall="3" typeExtraSmall="ButtonsHorizontal" typeSmall="ButtonsVertical"
+			typeMedium="ListHorizontal" typeLarge="ListVertical"
+			tap="ui5strap.demoapp.actions.NavigateViaMenuRoot" items="{menu>/root}">
+			<BarMenuItem
+				text="{formatter:'.formatters.localeString', path:'menu>label'}"
+				icon="{menu>icon}" itemId="{menu>pageId}"></BarMenuItem>
 		</BarMenu>
 	</Bar>
 </View>
