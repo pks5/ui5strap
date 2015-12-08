@@ -1064,24 +1064,64 @@
 	* Create an control id with app namespace. If viewId is given, the controlId must be local.
 	*/ 
 	AppBaseProto.createControlId = function(controlId, viewId){
-
-		if(viewId){
-			controlId = viewId + '--' + controlId;
+		var appPrefix = this.getDomId() + '---';
+		if(jQuery.sap.startsWith(controlId, appPrefix)){
+			if(viewId){
+				throw new Error("Cannot create absolute control id: controlId is already absolute but viewId is given!");
+			}
+			
+			//ControlID already has a app prefix, just return it.
+			jQuery.sap.log.warning("Control ID '" + controlId + "' already have an app prefix.");
+			
+			return controlId;
 		}
 		
-		var appPrefix = this.getDomId() + '---';
-		if(!jQuery.sap.startsWith(controlId, appPrefix)){
+		if(viewId){
+			if(jQuery.sap.startsWith(viewId, appPrefix)){
+				controlId = viewId + "--" + controlId;
+			}
+			else{
+				controlId = appPrefix + viewId + "--" + controlId;
+			}
+		}
+		else{
 			controlId = appPrefix + controlId;
 		}
 		
 		return controlId;
 	
 	};
+	
+	AppBaseProto.extractRelativeControlId = function(controlId, viewId){
+		var prefix = this.getDomId() + '---';
+		
+		if(viewId){
+			if(jQuery.sap.startsWith(controlId, prefix)){
+				//View ID is given, but control ID is already absolute.
+				throw new Error("Cannot extract relative control id: controlId is absolute but viewId is given!");
+			}
+			
+			if(jQuery.sap.startsWith(viewId, prefix)){
+				//View ID is absolute (has an app prefix)
+				prefix = viewId;
+			}
+			else{	
+				//View ID is relative
+				prefix += viewId + "--";
+			}
+		}
+		else if(!jQuery.sap.startsWith(controlId, prefix)){
+			//View ID is given, but control ID is already absolute.
+			throw new Error("Cannot extract relative control id: controlId is not absolute!");
+		}
+		
+		return controlId.substring(prefix.length);
+	};
 
 	/*
 	* Returns the Control with the given controlId. Depending if a viewId is specified, the controlId must be global or local.
 	*/
-	AppBaseProto.getControl = function(controlId, viewId){
+	AppBaseProto.getControl = function(controlId, viewId){console.log(this.createControlId(controlId, viewId));
 		return sap.ui.getCore().byId(this.createControlId(controlId, viewId));
 	};
 

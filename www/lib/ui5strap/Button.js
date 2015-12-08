@@ -42,11 +42,6 @@
 					type: "ui5strap.ButtonType", 
 					defaultValue: ui5strap.ButtonType.Button
 				},
-				bsAction : {
-					deprecated : true,
-					type: "ui5strap.BsAction", 
-					defaultValue: ui5strap.BsAction.None
-				},
 				text : {
 					type: "string", 
 					defaultValue: ""
@@ -83,7 +78,15 @@
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
 				},
+				
+				//@deprecated
+				bsAction : {
+					deprecated : true,
+					type: "ui5strap.BsAction", 
+					defaultValue: ui5strap.BsAction.None
+				},
 				align : {
+					deprecated : true,
 					type:"ui5strap.Alignment",
 					defaultValue:ui5strap.Alignment.Default
 				}

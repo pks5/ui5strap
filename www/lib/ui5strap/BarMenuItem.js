@@ -33,17 +33,16 @@
 	ui5strap.ListItem.extend("ui5strap.BarMenuItem", {
 		metadata : {
 
-			// ---- object ----
-			defaultAggregation : "content",
-			
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
 				icon : {
 					type:"string",
 					defaultValue : ""
 				}
-			}
+			},
+			
+			defaultAggregation : "content"
 		}
 	});
 	

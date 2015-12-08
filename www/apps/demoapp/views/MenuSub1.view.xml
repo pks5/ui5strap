@@ -5,7 +5,7 @@
 			tap="ui5strap.demoapp.actions.NavigateViaMenuSub1" items="{menu>/sub1}">
 			<BarMenuItem
 				text="{formatter:'.formatters.localeString', path:'menu>label'}"
-				icon="{menu>icon}" itemId="{menu>pageId}"></BarMenuItem>
+				icon="{menu>icon}" itemId="{menu>pageId}" data:pageId="{menu>pageId}"></BarMenuItem>
 		</BarMenu>
 	</Bar>
 </View>

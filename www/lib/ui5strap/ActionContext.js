@@ -294,7 +294,7 @@
 				}
 				
 				if(!(controlOrDef instanceof Constructor)){
-					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "'!" );
+					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef + "' given!" );
 				}
 				
 				return controlOrDef;

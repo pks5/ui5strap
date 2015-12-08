@@ -63,7 +63,10 @@
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
 				},
+				
+				//@deprecated
 				itemId : {
+					deprecated: true,
 					type:"string",
 					defaultValue : ""
 				}

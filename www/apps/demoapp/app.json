@@ -30,40 +30,31 @@
                 
                 "id" : "my-app-bar-menu",
                 
-                "target" : "bar",
-                "preload2" : true
+                "target" : "bar"
             },
             
             "ui5strap.demoapp.views.Home" : {
                 "type" : "HTML",
                 
-                "id" : "home",
-                
-                "preload2" : true
+                "id" : "home"
             },
 
             "ui5strap.demoapp.views.MyPage2" : {
                 "type" : "XML",
                 
-                "id" : "my-app-page2",
-                
-                "preload2" : true
+                "id" : "my-app-page2"
             },
 
             "ui5strap.demoapp.views.MyPage3" : {
                 "type" : "HTML",
                 
-                "id" : "my-app-page3",
-                
-                "preload2" : true
+                "id" : "my-app-page3"
             },
 
             "ui5strap.demoapp.views.MyPage4" : {
                 "type" : "HTML",
                 
                 "id" : "my-app-page4",
-                
-                "preload2" : true,
                 
                 "events" : {
                 	"controller" : {
@@ -80,8 +71,7 @@
                 
                 "id" : "my-app-bar-sub-menu",
                 
-                "target" : "bar",
-                "preload2" : true
+                "target" : "bar"
             },
             
             "ui5strap.demoapp.views.MyPage5" : {
@@ -89,10 +79,9 @@
                 
                 "id" : "my-app-page5",
                 
-                "preload2" : true,
                 "events" : {
                 	"controller" : {
-                		"update" : "ui5strap.demoapp.actions.SetCurrentLanguage"	
+                		"pageShown" : "ui5strap.demoapp.actions.SetCurrentLanguage"	
                 	}
                 }
             },
@@ -100,17 +89,13 @@
             "ui5strap.demoapp.views.MyPage6" : {
                 "type" : "HTML",
                 
-                "id" : "my-app-page6",
-                
-                "preload2" : true
+                "id" : "my-app-page6"
             },
             
             "ui5strap.demoapp.views.NewPost" : {
                 "type" : "HTML",
                 
-                "id" : "my-app-new-post",
-                
-                "preload2" : true
+                "id" : "my-app-new-post"
             }
       },
 	

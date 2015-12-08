@@ -1,21 +1,28 @@
 {
 	"//" : "Set the main-menu item selected that has the same id as specified NavContainer's current page.",
 	
-	"TASKS" : ["getCurrentPage", "setListItemSelected"],
-	
-	"getCurrentPage" : {
-		"TYPE" : "ui5strap.AMGetCurrentPage",
-		"scope" : "SOURCE",
-		
-		"target" : "content"
-	},
+	"TASKS" : "setListItemSelected",
 	
 	"setListItemSelected" : {
-		"TYPE" : "ui5strap.AMSetListItemSelected",
-		"scope" : "APP",
-		"viewId" : "my-app-bar-menu",
-		"controlId" : "myMenu",
+		"CONTROLS" : {
+			"navContainer" : {
+				"SOURCE" : "Event",
+				"TYPE" : "ui5strap.NavContainer"
+			},
+			"barMenu" : {
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.BarMenu",
+				"CONTROL_ID" : "myMenu",
+				"VIEW_ID" : "my-app-bar-menu"
+			}
+		},
 		
-		"itemId" : "= action.getCurrentPage.result"
+		"targetName" : "content",
+		"page" : "= .CONTROLS.navContainer.getTarget(.targetName)",
+		"pageId" : "= .page.getId()",
+		"relativePageId" : "= app.extractRelativeControlId(.pageId)",
+		"customDataKey" : "pageId",
+		
+		"DO" : "= .CONTROLS.barMenu.setSelectionByCustomData(.customDataKey, .relativePageId)"
 	}
 }
