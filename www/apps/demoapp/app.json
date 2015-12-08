@@ -81,7 +81,7 @@
                 
                 "events" : {
                 	"controller" : {
-                		"pageShown" : "ui5strap.demoapp.actions.SetCurrentLanguage"	
+                		"update" : "ui5strap.demoapp.actions.SetCurrentLanguage"	
                 	}
                 }
             },

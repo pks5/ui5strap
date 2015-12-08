@@ -1121,7 +1121,7 @@
 	/*
 	* Returns the Control with the given controlId. Depending if a viewId is specified, the controlId must be global or local.
 	*/
-	AppBaseProto.getControl = function(controlId, viewId){console.log(this.createControlId(controlId, viewId));
+	AppBaseProto.getControl = function(controlId, viewId){
 		return sap.ui.getCore().byId(this.createControlId(controlId, viewId));
 	};
 
@@ -1430,7 +1430,7 @@
 				oldOnInit.call(this, oEvent);
 			}
 		};
-
+		
 		//Update
 		_createActionEventHandler(controllerImpl, 'update');
 

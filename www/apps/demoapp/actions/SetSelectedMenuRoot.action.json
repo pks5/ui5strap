@@ -4,6 +4,8 @@
 	"TASKS" : "setListItemSelected",
 	
 	"setListItemSelected" : {
+		"IF" : "= lang.equal(eventParameters.target, .targetName)",
+		
 		"CONTROLS" : {
 			"navContainer" : {
 				"SOURCE" : "Event",

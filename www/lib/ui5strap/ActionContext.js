@@ -293,7 +293,10 @@
 					
 				}
 				
-				if(!(controlOrDef instanceof Constructor)){
+				if(!controlOrDef){
+					throw new Error("Cannot find control '" + this._controlName + "'!");
+				}
+				else if(!(controlOrDef instanceof Constructor)){
 					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef + "' given!" );
 				}
 				
