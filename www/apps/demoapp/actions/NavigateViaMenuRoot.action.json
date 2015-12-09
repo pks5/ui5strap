@@ -19,9 +19,7 @@
 				"transition" : "flip-horizontal-ccw",
 				"writeHistory" : true
 			}
-		},
-	
-		"PAGE" : "= .VIEWS.menuTarget"
+		}
 	}
 
 }

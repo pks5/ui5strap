@@ -6,11 +6,13 @@
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",
 		
-		"PAGE" : {
-			"viewName" : "ui5strap.demoapp.views.MyPage2",
-			"transition" : "slide-rtl",
-			"writeHistory" : true,
-			"bookmarkable" : false
+		"VIEWS" : {
+			"page2" : {
+				"viewName" : "ui5strap.demoapp.views.MyPage2",
+				"transition" : "slide-rtl",
+				"writeHistory" : true,
+				"bookmarkable" : false
+			}
 		}
 	}
 

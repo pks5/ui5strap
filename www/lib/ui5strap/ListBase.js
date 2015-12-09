@@ -204,21 +204,27 @@
 		var items = _this._getItems();
 		
 		if(!jQuery.isArray(values)){
+			var selectedItem = null;
+			
 			for(var i = 0; i < items.length; i++){
 				if(items[i].data(dataKey) === values){
 					selectedItem = items[i];
 					
-					return _changeSelection(_this, selectedItem, mode, selectionGroup);
+					break;
 				}
 			}
+			
+			return _changeSelection(_this, selectedItem, mode, selectionGroup);
 		}
 		else{
 			var itemsToSelect = [];
+			
 			for(var i = 0; i < items.length; i++){
 				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
 					itemsToSelect.push(items[i]);
 				}
 			}
+			
 			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
 		}
 	};

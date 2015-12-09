@@ -11,14 +11,22 @@
 	},
 	
 	"navigate" : {
-		"controlId" : "subNav",
-		"viewId" : "my-app-page4",
-		"CONTROL" : "= app.getControl(.controlId, .viewId)",
-		"PAGE" : {
-			"transition" : "zoom-out",
-			"writeHistory" : true,
-			"viewName" : "= parameters.menuItem.viewName",
-			"target" : "content"
+		"CONTROLS" : {
+			"navContainer" : {
+				"TYPE" : "ui5strap.NavContainer",
+				"SOURCE" : "View",
+				"CONTROL_ID" : "subNav",
+				"VIEW_ID" : "my-app-page4"
+			}
+		},
+		
+		"VIEWS" : {
+			"menuTarget" : {
+				"transition" : "zoom-out",
+				"writeHistory" : true,
+				"viewName" : "= parameters.menuItem.viewName",
+				"target" : "content"
+			}
 		}
 	}
 

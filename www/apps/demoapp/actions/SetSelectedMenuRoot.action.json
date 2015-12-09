@@ -4,6 +4,9 @@
 	"TASKS" : "setListItemSelected",
 	
 	"setListItemSelected" : {
+		"targetName" : "content",
+		"customDataKey" : "pageId",
+		
 		"IF" : "= lang.equal(eventParameters.target, .targetName)",
 		
 		"CONTROLS" : {
@@ -19,11 +22,9 @@
 			}
 		},
 		
-		"targetName" : "content",
 		"page" : "= .CONTROLS.navContainer.getTarget(.targetName)",
 		"pageId" : "= .page.getId()",
 		"relativePageId" : "= app.extractRelativeControlId(.pageId)",
-		"customDataKey" : "pageId",
 		
 		"DO" : "= .CONTROLS.barMenu.setSelectionByCustomData(.customDataKey, .relativePageId)"
 	}

@@ -43,19 +43,13 @@
 	* @Override
 	*/
 	NavigateProto.parameters = {
-		"CONTROL" : {
-			"required" : false,
-			"defaultValue" : null,
-			"type" : ["string", "object"]
-		},
-			
 		//Required
 		"PAGE" : {
 			"required" : true, 
 			"type" : "object"
 		},
 		
-		"COMPONENT" : {
+		"FRAME_CONTROLLER" : {
 			"required" : false,
 			"type" : ["string", "object"],
 			"defaultValue" : null
@@ -68,12 +62,13 @@
 	* @override
 	*/
 	NavigateProto.run = function(){
-			var component = this.getParameter("COMPONENT"),
-				control = this.getParameter("CONTROL"),
-				page =  this.getParameter("PAGE", true);
+			var component = this.getParameter("FRAME_CONTROLLER"),
+				navContainer = this.context.app.getRootControl(),
+				CONTROLS = this.context.action[this.namespace]["CONTROLS"],
+				VIEWS = this.context.action[this.namespace]["VIEWS"];
 			
-			if(null === control){
-				control = this.context.app.getRootControl();
+			if(CONTROLS && ("navContainer" in CONTROLS)){
+				navContainer = this.context.resolve(this, CONTROLS.navContainer, true);
 			}
 			
 			if(null === component){
@@ -84,11 +79,14 @@
 				throw new Error("Cannot goto page: component must be instance of ui5strap.AppFrame!");
 			}
 			
-			if(!(control instanceof ui5strap.NavContainer)){
-				throw new Error("Cannot goto page: control must be instance of ui5strap.NavContainer!");
+			if(!navContainer || !(navContainer instanceof ui5strap.NavContainer)){
+				throw new Error("[ui5strap.Task.Navigate] Please provide a valid NavContainer instance in .CONTROLS.navContainer!");
 			}
 			
-			component.navigateTo(control, page);
+			var viewsKeys = Object.keys(VIEWS);
+			for(var i = 0; i < viewsKeys.length; i++){
+				component.navigateTo(navContainer, this.context.resolve(this, VIEWS[viewsKeys[i]]));
+			}
 	}
 
 }());

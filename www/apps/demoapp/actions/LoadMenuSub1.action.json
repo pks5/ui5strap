@@ -4,14 +4,22 @@
 	"__modules" : "ui5strap.task.Navigate",
 	
 	"navigate" : {
-		"controlId" : "subNav",
-		"viewId" : "my-app-page4",
-		"CONTROL" : "= app.getControl(.controlId, .viewId)",
-		"PAGE" : {
-			"viewName" : "ui5strap.demoapp.views.MenuSub1",
-			"transition" : "transition-none",
-			"writeHistory" : true,
-			"target" : "bar"
+		"CONTROLS" : {
+			"navContainer" : {
+				"TYPE" : "ui5strap.NavContainer",
+				"SOURCE" : "View",
+				"CONTROL_ID" : "subNav",
+				"VIEW_ID" : "my-app-page4"
+			}
+		},
+		
+		"VIEWS" : {
+			"menuSub" : {
+				"viewName" : "ui5strap.demoapp.views.MenuSub1",
+				"transition" : "transition-none",
+				"writeHistory" : true,
+				"target" : "bar"
+			}
 		}
 	}
 

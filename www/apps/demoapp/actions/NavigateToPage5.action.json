@@ -5,15 +5,22 @@
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",
 		
-		"controlId" : "subNav",
-		"viewId" : "my-app-page4",
-		"CONTROL" : "= app.getControl(.controlId, .viewId)",
+		"CONTROLS" : {
+			"navContainer" : {
+				"TYPE" : "ui5strap.NavContainer",
+				"SOURCE" : "View",
+				"CONTROL_ID" : "subNav",
+				"VIEW_ID" : "my-app-page4"
+			}
+		},
 		
-		"PAGE" : {
-			"viewName" : "ui5strap.demoapp.views.MyPage5",
-			"transition" : "zoom-in",
-			"writeHistory" : true,
-			"target" : "content"
+		"VIEWS" : {
+			"page5" : {
+				"viewName" : "ui5strap.demoapp.views.MyPage5",
+				"transition" : "zoom-in",
+				"writeHistory" : true,
+				"target" : "content"
+			}
 		}
 	}
 	
