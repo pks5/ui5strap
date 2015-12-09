@@ -108,7 +108,7 @@
       {
       	  name : "ui5strap",
       	  
-      	  version: "0.9.17",
+      	  version: "0.9.18",
       	  
       	  dependencies : [],
       	  
@@ -233,6 +233,7 @@
   * -------
   */
 
+  //@deprecated
   var tapSupport = sap.ui.Device.support.touch;
   
   ui5strap.options = {
@@ -251,7 +252,7 @@
   */
   
   ui5strap.support = {
-    
+		  "touch" : sap.ui.Device.support.touch
   };
    
   var _transitionEndEvents = {
@@ -836,6 +837,7 @@
   ui5strap.SelectionMode = {
     None : "None",
     Single : "Single",
+    SingleToggle : "SingleToggle",
     Multiple : "Multiple",
     
     //Deprecated
@@ -861,11 +863,18 @@
 		Section : "Section",
 		
 		//Bootstrap "container" & "container-fluid"
-		FixedWidth : "FixedWidth",
 		Fluid : "Fluid",
+		Inset : "Inset",
 		Full : "Full",
 		
+		FluidInset : "FluidInset",
+		
+		FluidFull : "FluidFull",
+		InsetFull : "InsetFull",
+		FluidInsetFull : "FluidInsetFull",
+		
 		//Bootstrap styles
+		Website : "Website",
 		Jumbotron : "Jumbotron",
 		Well : "Well",
 		WellLarge : "WellLarge",
@@ -873,7 +882,6 @@
 		
 		//Deprecated
 		Page : "Page",
-		FluidInset : "FluidInset",
 		Paragraph : "Paragraph",
 		Floating : "Floating",
 		Phrasing : "Phrasing"
@@ -1747,6 +1755,7 @@
               if(align === Alignment.NavBar ||
                 align === Alignment.NavBarLeft ||
                 align === Alignment.NavBarRight){
+            	  jQuery.sap.log.warning("Using Alignment.NavBar* options is deprecated.");
                   rm.addClass(navbarClass);
               }
           }
@@ -1758,6 +1767,7 @@
            */
           if(typeof sidebarClass === 'string'){
               if(align === Alignment.Sidebar){
+            	  jQuery.sap.log.warning("Using Alignment.Sidebar options is deprecated.");
                   rm.addClass(sidebarClass);
               }
           }
@@ -1775,11 +1785,13 @@
               visibilityLarge = oControl.getVisibilityLarge(),
               Visibility = ui5strap.Visibility;
           
-          var resultHidden = ["", "", "", ""];
+          var resultHidden = ["", "", "", ""],
+          	  inheritHide = false;
           
           //Generic visibility
           //TODO check if necccessary and working at all
           if(visibility !== Visibility.Default){
+        	  
               if(visibility === Visibility.Hidden){
             	  resultHidden = [
             	                  "ui5strap-hide-xs", 
@@ -1787,6 +1799,7 @@
             	                  "ui5strap-hide-md", 
             	                  "ui5strap-hide-lg"
             	                  ];
+            	  inheritHide = true;
               }
           }
           
@@ -1794,30 +1807,37 @@
           if(visibilityExtraSmall === Visibility.Visible){
         	  //Visible on EXTRA_SMALL
               resultHidden[0] = "";
+              inheritHide = false;
           }
-          else if(visibilityExtraSmall === Visibility.Hidden){
+          else if(inheritHide || visibilityExtraSmall === Visibility.Hidden){
         	  //Hidden on EXTRA_SMALL
         	  resultHidden[0] = "ui5strap-hide-xs";
+        	  inheritHide = true;
           }
           
           //Visibility for SMALL screens
           if(visibilitySmall === Visibility.Visible){
         	  //Visible on SMALL
               resultHidden[1] = "";
+              inheritHide = false;
           }
-          else if(visibilitySmall === Visibility.Hidden){
+          else if(inheritHide || visibilitySmall === Visibility.Hidden){
         	  //Hidden on SMALL
               resultHidden[1] = "ui5strap-hide-sm";
+              inheritHide = true;
           }
+          
           
           //Visibility for MEDIUM screens
           if(visibilityMedium === Visibility.Visible){
         	  //Visible on MEDIUM
               resultHidden[2] = "";
+              inheritHide = false;
           }
-          else if(visibilityMedium === Visibility.Hidden){
+          else if(inheritHide || visibilityMedium === Visibility.Hidden){
         	  //Hidden on MEDIUM
               resultHidden[2] = "ui5strap-hide-md";
+              inheritHide = true;
           }
           
           //Visibility for LARGE screens
@@ -1825,7 +1845,7 @@
         	  //Visible on LARGE
               resultHidden[3] = "";
           }
-          else if(visibilityLarge === Visibility.Hidden){
+          else if(inheritHide || visibilityLarge === Visibility.Hidden){
         	  //Hidden on LARGE
               resultHidden[3] = "ui5strap-hide-lg";
           }
@@ -2467,7 +2487,9 @@
 		//@deprecated
 		_this.parameters = _this.action;
 		
-		console.log(_this);
+		if(_this.action.DEBUG && console){
+			console.log(_this);
+		}
 		
 		//Event Source
 		if(action.eventSource){
@@ -2641,8 +2663,11 @@
 					
 				}
 				
-				if(!(controlOrDef instanceof Constructor)){
-					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "'!" );
+				if(!controlOrDef){
+					throw new Error("Cannot find control '" + this._controlName + "'!");
+				}
+				else if(!(controlOrDef instanceof Constructor)){
+					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef + "' given!" );
 				}
 				
 				return controlOrDef;
@@ -2691,6 +2716,7 @@
 					newPath.push(i);
 					newArray[i] = _buildPool(pointer[i], newPath, pointer);
 				}
+				newArray._isActionArray = true;
 				return newArray;
 			}
 			else{
@@ -2740,13 +2766,20 @@
 		if(pointer instanceof _ActionExpression){
 			return pointer.evaluate(this, task);
 		}
-		else if(!onlyString && (pointer instanceof _ActionParameterObject)){
-			var objectKeys = Object.keys(pointer),
-				objectKeysLength = objectKeys.length;
-		
-			for(var i=0; i < objectKeysLength; i++){
-				//Store back the value in the context
-				pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], true);
+		else if(!onlyString && ("object" === typeof pointer)){
+			if(pointer._isActionArray){
+				for(var i = 0; i < pointer.length; i++){
+					pointer[i] = this.resolve(task, pointer[i], true);
+				}
+			}
+			else if(pointer instanceof _ActionParameterObject){
+				var objectKeys = Object.keys(pointer),
+					objectKeysLength = objectKeys.length;
+			
+				for(var i=0; i < objectKeysLength; i++){
+					//Store back the value in the context
+					pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], true);
+				}
 			}
 		}
 		return pointer;
@@ -3753,6 +3786,9 @@
 							parts = actionName.split(/\./);
 						
 						pack[parts[parts.length - 1]] = function(oEvent){
+							
+							//console.log(oEvent);
+							
 							this.getApp().runAction({
 								"eventSource" : oEvent.getSource(),
 								"eventParameters" : oEvent.getParameters(),
@@ -5567,10 +5603,14 @@
 		//if(!viewConfig.viewName){
 		//	throw new Error('Cannot obtain view configuration: no "viewName" specified.');
 		//}
+		
+		viewConfig.afterInit = function(oEvent){
+			alert("Event 'afterInit' called from view '" + viewConfig.viewName + "'");
+		};
 
 		//Will crash if "viewName" or "type" attribute is missing!
 		var page = new sap.ui.view(viewConfig);
-
+		
 		//Add css style class
 		if(viewConfig.styleClass){
 			page.addStyleClass(viewConfig.styleClass);
@@ -5691,18 +5731,58 @@
 	* Create an control id with app namespace. If viewId is given, the controlId must be local.
 	*/ 
 	AppBaseProto.createControlId = function(controlId, viewId){
-
-		if(viewId){
-			controlId = viewId + '--' + controlId;
+		var appPrefix = this.getDomId() + '---';
+		if(jQuery.sap.startsWith(controlId, appPrefix)){
+			if(viewId){
+				throw new Error("Cannot create absolute control id: controlId is already absolute but viewId is given!");
+			}
+			
+			//ControlID already has a app prefix, just return it.
+			jQuery.sap.log.warning("Control ID '" + controlId + "' already have an app prefix.");
+			
+			return controlId;
 		}
 		
-		var appPrefix = this.getDomId() + '---';
-		if(!jQuery.sap.startsWith(controlId, appPrefix)){
+		if(viewId){
+			if(jQuery.sap.startsWith(viewId, appPrefix)){
+				controlId = viewId + "--" + controlId;
+			}
+			else{
+				controlId = appPrefix + viewId + "--" + controlId;
+			}
+		}
+		else{
 			controlId = appPrefix + controlId;
 		}
 		
 		return controlId;
 	
+	};
+	
+	AppBaseProto.extractRelativeControlId = function(controlId, viewId){
+		var prefix = this.getDomId() + '---';
+		
+		if(viewId){
+			if(jQuery.sap.startsWith(controlId, prefix)){
+				//View ID is given, but control ID is already absolute.
+				throw new Error("Cannot extract relative control id: controlId is absolute but viewId is given!");
+			}
+			
+			if(jQuery.sap.startsWith(viewId, prefix)){
+				//View ID is absolute (has an app prefix)
+				prefix = viewId;
+			}
+			else{	
+				//View ID is relative
+				prefix += viewId + "--";
+			}
+		}
+		else if(!jQuery.sap.startsWith(controlId, prefix)){
+			//View ID is given, but control ID is already absolute.
+			throw new Error("Cannot extract relative control id: controlId is not absolute!");
+		}
+		
+		return controlId.substring(prefix.length);
 	};
 
 	/*
@@ -6017,7 +6097,7 @@
 				oldOnInit.call(this, oEvent);
 			}
 		};
-
+		
 		//Update
 		_createActionEventHandler(controllerImpl, 'update');
 
@@ -8420,11 +8500,6 @@
 					type: "ui5strap.ButtonType", 
 					defaultValue: ui5strap.ButtonType.Button
 				},
-				bsAction : {
-					deprecated : true,
-					type: "ui5strap.BsAction", 
-					defaultValue: ui5strap.BsAction.None
-				},
 				text : {
 					type: "string", 
 					defaultValue: ""
@@ -8461,7 +8536,15 @@
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
 				},
+				
+				//@deprecated
+				bsAction : {
+					deprecated : true,
+					type: "ui5strap.BsAction", 
+					defaultValue: ui5strap.BsAction.None
+				},
 				align : {
+					deprecated : true,
 					type:"ui5strap.Alignment",
 					defaultValue:ui5strap.Alignment.Default
 				}
@@ -8472,6 +8555,8 @@
 				} 
 			},
 			events:{
+				
+				//TODO Rename 'tap' event to 'press' sometimes
 		        "tap":{}
 		    }
 
@@ -8479,7 +8564,9 @@
 	});
 
 	var ButtonPrototype = ui5strap.Button.prototype;
-
+	
+	ButtonPrototype._STYLE_PREFIX = 'btn';
+	
 	ui5strap.Utils.dynamicAttributes(
 		ButtonPrototype, 
 		[
@@ -8490,22 +8577,26 @@
 	ui5strap.Utils.dynamicText(ButtonPrototype);
 
 	ui5strap.Utils.dynamicClass(ButtonPrototype, 'selected', { 'true' : 'active' });
-	var _handlePress = function(oEvent) {
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ButtonPrototype._handlePress = function(oEvent) {
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		
 		if (this.getEnabled()) {
-			oEvent.setMarked();
 			this.fireTap({});
 		}
-	}		
-			
-	if(ui5strap.options.enableTapEvents){
-		ButtonPrototype.ontap = _handlePress;
+	};
+	
+	if(ui5strap.support.touch){	
+		ButtonPrototype.ontap = ButtonPrototype._handlePress;
 	}
-
-	if(ui5strap.options.enableClickEvents){
-		ButtonPrototype.onclick = _handlePress;
+	else{
+		ButtonPrototype.onclick = ButtonPrototype._handlePress;
 	}
-
-
 
 }());;/*
  * 
@@ -8620,6 +8711,8 @@
 	    if(oControl.getSelected()){
 			rm.addClass("active");
 		}
+	    
+	    rm.addClass(oControl._getOptionsClassString());
 	
 		if(!oControl.getEnabled()){
 			rm.writeAttribute("disabled", "disabled");
@@ -9402,14 +9495,18 @@
 				}
 			},
 			events:{
+				
+				//TODO Rename 'tap' event to 'press' sometimes
 		        tap : {allowPreventDefault : true}
 		    }
 
 		}
 	});
+	
+	var LinkProto = ui5strap.Link.prototype;
 
 	ui5strap.Utils.dynamicAttributes(
-		ui5strap.Link.prototype, 
+		LinkProto, 
 		[
 			"title",
 			"href",
@@ -9417,11 +9514,16 @@
 		]
 	);
 
-	ui5strap.Utils.dynamicText(ui5strap.Link.prototype);
+	ui5strap.Utils.dynamicText(LinkProto);
 	
-	var _handlePress = function(oEvent) {
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	LinkProto._handlePress = function(oEvent) {
 		//if (this.getEnabled()) {
-			oEvent.setMarked();
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
 
 			if (!this.fireTap() || !this.getHref()) {
 				oEvent.preventDefault();
@@ -9431,12 +9533,11 @@
 		//}
 	};
 	
-	if(ui5strap.options.enableTapEvents){
-		ui5strap.Link.prototype.ontap = _handlePress;
+	if(ui5strap.support.touch){
+		LinkProto.ontap = LinkProto._handlePress;
 	}
-
-	if(ui5strap.options.enableClickEvents){
-		ui5strap.Link.prototype.onclick = _handlePress;
+	else{
+		LinkProto.onclick = LinkProto._handlePress;
 	}
 
 }());;/*
@@ -10463,7 +10564,10 @@
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
 				},
+				
+				//@deprecated
 				itemId : {
+					deprecated: true,
 					type:"string",
 					defaultValue : ""
 				}
@@ -10621,12 +10725,13 @@
 				},
 
 				select : {
-					deprecated : true,
 					parameters : {
 						listItem : {type : "ui5strap.ListItem"},
 						srcControl : {type : "ui5strap.Control"}
 					}
 				},
+				
+				//TODO Rename 'tap' event to 'press' sometimes
 				tap : {
 					parameters : {
 						listItem : {type : "ui5strap.ListItem"},
@@ -10639,7 +10744,7 @@
 	});
 
 	var ListBaseProto = ui5strap.ListBase.prototype,
-		_defaultSelectionGroup = "group";
+		_defaultSelectionGroup = "selectionGroup";
 	
 	/**
 	 * @Private
@@ -10666,29 +10771,29 @@
 			if(-1 !== jQuery.inArray(item, itemsToSelect)){
 				//Item is subject to select / deselect
 				if("replace" === mode || "add" === mode){
-					if(!_this._isListItemSelected(selectionGroup, item)){
+					if(!_this._isItemSelected(item, selectionGroup)){
 						changes.selected.push(item);
 						changes.changed.push(item);
 						
-						_this._setListItemSelected(selectionGroup, item, true);
+						_this._setItemSelected(item, true, selectionGroup);
 					}
 					else{
 						changes.unchanged.push(item);
 					}
 				}
 				else if("remove" === mode){
-					if(_this._isListItemSelected(selectionGroup, item)){
+					if(_this._isItemSelected(item, selectionGroup)){
 						changes.deselected.push(item);
 						changes.changed.push(item);
 						
-						_this._setListItemSelected(selectionGroup, item, false);
+						_this._setItemSelected(item, false, selectionGroup);
 					}
 					else{
 						changes.unchanged.push(item);
 					}
 				}
 				else if("toggle" === mode){
-					var selected = _this._isListItemSelected(selectionGroup, item);
+					var selected = _this._isItemSelected(item, selectionGroup);
 						
 						if(!selected){
 							changes.selected.push(item);
@@ -10699,17 +10804,17 @@
 						
 						changes.changed.push(item);
 						
-						_this._setListItemSelected(selectionGroup, item, !selected);
+						_this._setItemSelected(item, !selected, selectionGroup);
 				}
 			}
 			else{
 				//Item is no subject to select / deselect
 				if("replace" === mode){
-					if(_this._isListItemSelected(selectionGroup, item)){
+					if(_this._isItemSelected(item, selectionGroup)){
 						changes.deselected.push(item);
 						changes.changed.push(item);
 						
-						_this._setListItemSelected(selectionGroup, item, false);
+						_this._setItemSelected(item, false, selectionGroup);
 					}
 					else{
 						changes.unchanged.push(item);
@@ -10766,21 +10871,27 @@
 		var items = _this._getItems();
 		
 		if(!jQuery.isArray(values)){
+			var selectedItem = null;
+			
 			for(var i = 0; i < items.length; i++){
 				if(items[i].data(dataKey) === values){
 					selectedItem = items[i];
 					
-					return _changeSelection(_this, selectedItem, mode, selectionGroup);
+					break;
 				}
 			}
+			
+			return _changeSelection(_this, selectedItem, mode, selectionGroup);
 		}
 		else{
 			var itemsToSelect = [];
+			
 			for(var i = 0; i < items.length; i++){
 				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
 					itemsToSelect.push(items[i]);
 				}
 			}
+			
 			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
 		}
 	};
@@ -10820,6 +10931,27 @@
 		else{
 			throw new Error("Only 3 dimensions are supported by this Control.");
 		}
+	};
+	
+	/**
+	 * Returns whether one or multiple items are currently part of selection.
+	 * @Public
+	 */
+	ListBaseProto.isInSelection = function(itemsToCheck, selectionGroup){
+		var inSelection = true;
+		
+		if(!jQuery.isArray(itemsToCheck)){
+			itemsToCheck = [itemsToCheck];
+		}
+		
+		for(var i = 0; i < itemsToCheck.length; i++){
+			if(!this._isItemSelected(itemsToCheck[i], selectionGroup)){
+				inSelection = false;
+				break;
+			}
+		}
+		
+		return inSelection;
 	};
 	
 	/**
@@ -10895,6 +11027,34 @@
 	};
 	
 	/**
+	 * Returns whether one or multiple item indices are currently part of selection.
+	 * @Public
+	 */
+	ListBaseProto.isInSelectionIndex = function(indices, selectionGroup){
+		var items = _this._getItems();
+		if(!jQuery.isArray(indices)){
+			//Single value
+			if(indices < 0 || indices >= items.length){
+				throw new Error("Array out of bounds!");
+			}
+			
+			return this.isInSelection(items[indices], selectionGroup);
+		}
+		else{
+			var itemsToCheck = [];
+			for(var i=0; i<indices.length; i++){
+				var index = indices[i];
+				if(index < 0 || index >= items.length){
+					throw new Error("Array out of bounds!");
+				}
+				itemsToCheck.push(items[index]);
+			}
+			
+			return this.isInSelection(itemsToCheck, selectionGroup);
+		}
+	};
+	
+	/**
 	 * Selects one or multiple items by indices
 	 * @Public
 	 * @Override
@@ -10933,6 +11093,33 @@
 	/*
 	 * CustomData 
 	 */
+	
+	/**
+	 * Returns whether one or multiple items are currently part of selection. Items are selected by custom data key and possible values.
+	 * @Public
+	 */
+	ListBaseProto.isInSelectionByCustomData = function(dataKey, values, selectionGroup){
+		var items = _this._getItems();
+		
+		if(!jQuery.isArray(values)){
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === values){
+					selectedItem = items[i];
+					
+					return this.isInSelection(selectedItem, selectionGroup);
+				}
+			}
+		}
+		else{
+			var itemsToCheck = [];
+			for(var i = 0; i < items.length; i++){
+				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+					itemsToCheck.push(items[i]);
+				}
+			}
+			return this.isInSelection(itemsToCheck, selectionGroup);
+		}
+	};
 	
 	/**
 	 * Selects one or multiple items that have the given value in the specified custom data field.
@@ -11024,12 +11211,9 @@
 	 */
 	
 	/**
-	 * @Protected
-	 */
-	/**
 	 * Returns an array of selected items and their indices.
 	 * 
-	 * @Private
+	 * @Protected
 	 */
 	ListBaseProto._getListSelection = function(selectionGroup){
 		if(!selectionGroup){
@@ -11043,7 +11227,7 @@
 			};
 		
 		for(var i = 0; i < items.length; i++){
-			if(this._isListItemSelected(selectionGroup, items[i])){
+			if(this._isItemSelected(items[i], selectionGroup)){
 				selection.items.push(items[i]);
 				selection.indices.push(i);
 			}
@@ -11053,20 +11237,39 @@
 	};
 	
 	/**
+	 * Defines how to decide whether an item is selected within a selectionGroup.
 	 * @Protected
 	 */
-	ListBaseProto._isListItemSelected = function(group, item){
+	ListBaseProto._isItemSelected = function(item, selectionGroup){
 		return item.getSelected();
 	};
 	
 	/**
+	 * Defines how to decide whether an item is enabled within a selectionGroup.
 	 * @Protected
 	 */
-	ListBaseProto._setListItemSelected = function(group, item, selected){
+	ListBaseProto._isItemEnabled = function(item, selectionGroup){
+		return item.getEnabled();
+	};
+	
+	/**
+	 * Defines how to decide whether an item is selectable within a selectionGroup.
+	 * @Protected
+	 */
+	ListBaseProto._isItemSelectable = function(item, selectionGroup){
+		return item.getSelectable();
+	};
+	
+	/**
+	 * Defines how to select an item within a selectionGroup.
+	 * @Protected
+	 */
+	ListBaseProto._setItemSelected = function(item, selected, selectionGroup){
 		item.setSelected(selected);
 	};
 	
 	/**
+	 * Gets the list of items. This depends on the available aggregations.
 	 * @Protected
 	 */
 	ListBaseProto._getItems = function(){
@@ -11074,6 +11277,8 @@
 	};
 	
 	/**
+	 * Defines how to find the closest item starting at any control within the item.
+	 * For example, if you click a button somewhere within the list, this method finds the corresponding list item.
 	 * @Protected
 	 */
 	ListBaseProto._findClosestItem = function(srcControl){
@@ -11081,12 +11286,12 @@
 	};
 	
 	/**
+	 * Adds additional event options.
 	 * @Protected
 	 */
-	ListBaseProto._getEventOptions = function(item){
-		return {
-			listItem : item
-		};
+	ListBaseProto._addEventOptions = function(eventOptions, oEvent){
+		//@deprecated
+		eventOptions.listItem = eventOptions.srcItem;
 	};
 	
 	/*
@@ -11096,68 +11301,78 @@
 	 */
 	
 	/**
-	 * @Private
+	 * Handler for Tap / Click Events
+	 * @Protected
 	 */
-	var _processSelection = function(_this, oEvent){
-		var item = _this._findClosestItem(oEvent.srcControl),
-			selectionMode = _this.getSelectionMode(),
-			eventOptions = _this._getEventOptions(item);
+	ListBaseProto._handlePress = function(oEvent){
+		//console.log(oEvent.isMarked());
 		
-		eventOptions.srcControl = oEvent.srcControl;
-
-		if(item && item.getEnabled() && item.getSelectable()){
-			var changes = null;
-			
-			if(selectionMode === ui5strap.SelectionMode.Single){
-				changes = _this.setSelection(item);
-			}
-			else if(selectionMode === ui5strap.SelectionMode.Multiple){
-				changes = _this.toggleSelection(item);
-			}
-			
-			if(changes && changes.changed.length){
-				eventOptions.selectionChanges = changes;
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		
+		var item = this._findClosestItem(oEvent.srcControl),
+			eventOptions = {
+				srcControl : oEvent.srcControl,
+				srcItem : item,
+				srcItems : [item],
+			};
 				
-				//Select event is deprecated
-				_this.fireSelect(eventOptions);
+		this._addEventOptions(eventOptions, oEvent);
+		
+		if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
+			//Item is enabled
+			
+			//TODO Rename 'tap' event to 'press' sometimes
+			this.fireTap(eventOptions);
+			
+			//Process selection
+			var selectionMode = this.getSelectionMode();
+			if(ui5strap.SelectionMode.None !== selectionMode 
+					&& this._isItemSelectable(item, _defaultSelectionGroup)){
+				//List allows selections and item is selectable
+				
+				var changes = null;
+				
+				if(selectionMode === ui5strap.SelectionMode.Single){
+					changes = this.setSelection(item, _defaultSelectionGroup);
+				}
+				else if(selectionMode === ui5strap.SelectionMode.SingleToggle){
+					if(this.isInSelection(item)){
+						changes = this.removeSelection(item, _defaultSelectionGroup);
+					}
+					else{
+						changes = this.setSelection(item, _defaultSelectionGroup);
+					}
+				}
+				else if(selectionMode === ui5strap.SelectionMode.Multiple){
+					changes = this.toggleSelection(item, _defaultSelectionGroup);
+				}
+				
+				if(changes && changes.changed.length){
+					eventOptions.selectionChanges = changes;
+					
+					//Select event is deprecated
+					this.fireSelect(eventOptions);
+				}
+				else{
+					jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
+				}
 			}
 			else{
-				jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
+				jQuery.sap.log.debug("[LIST#" + this.getId() + "] Did not select list item: List item not selectable.");
 			}
 		}
 		else{
-			jQuery.sap.log.warning("Could not select list item: List Item not found.");
+			jQuery.sap.log.warning("Could not select list item: List item not found or disabled.");
 		}
-
-		return eventOptions;
 	};
 	
-	
 	//Touchscreen
-	if(ui5strap.options.enableTapEvents){
-		/**
-		 * @Public
-		 * @Override
-		 */
-		ListBaseProto.ontap = function(oEvent){
-			var eventOptions = _processSelection(this, oEvent);
-			//if(eventOptions.item.getEnabled()){
-				oEvent.stopPropagation();
-				this.fireTap(eventOptions);
-			//}
-		};
+	if(ui5strap.support.touch){
+		ListBaseProto.ontap = ListBaseProto._handlePress;
 	}
-
-	//Mouse
-	if(ui5strap.options.enableClickEvents){
-		/**
-		 * @Public
-		 * @Override
-		 */
-		ListBaseProto.onclick = function(oEvent){
-			oEvent.stopPropagation();
-			this.fireTap(_processSelection(this, oEvent));
-		};
+	else{
+		ListBaseProto.onclick = ListBaseProto._handlePress;
 	}
 	
 	/*
@@ -14942,26 +15157,36 @@
 			interfaces : ["ui5strap.IBar"],
 			
 			// ---- object ----
-			"defaultAggregation" : "middle",
+			"defaultAggregation" : "content",
 
 			// ---- control specific ----
 			"library" : "ui5strap",
 			
-			"properties" : { 
+			"properties" : {
+				type : {
+					type:"ui5strap.ContainerType", 
+					defaultValue: ui5strap.ContainerType.FluidFull
+				},
 				"inverse" : {
 					type:"boolean", 
 					defaultValue:false
 				}
 			},
 			
-			"aggregations" : { 
+			"aggregations" : {
+				"content":{
+					"singularName" : "left"
+				},
 				"left" : {
+					deprecated : true,
 					"singularName" : "left"
 				},
 				"middle" : {
+					deprecated : true,
 					"singularName" : "middle"
 				}, 
 				"right" : {
+					deprecated : true,
 					"singularName" : "right"
 				}  
 			}
@@ -14969,6 +15194,7 @@
 		}
 	});
 
+	ui5strap.Bar.prototype._STYLE_PREFIX = "u5sl-bar";
 }());;/*
  * 
  * UI5Strap
@@ -15115,17 +15341,16 @@
 	ui5strap.ListItem.extend("ui5strap.BarMenuItem", {
 		metadata : {
 
-			// ---- object ----
-			defaultAggregation : "content",
-			
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
 				icon : {
 					type:"string",
 					defaultValue : ""
 				}
-			}
+			},
+			
+			defaultAggregation : "content"
 		}
 	});
 	
@@ -15649,40 +15874,43 @@
 			columnsLarge = this.getBarSizeLarge(),
 			transitionSpeed = this.getBarTransitionSpeed();
 		
-			if(transitionSpeed !== ui5strap.TransitionSpeed.Normal){
-				classes += " ui5strap-transition-speed-" + transitionSpeed.toLowerCase();
-			}
-			
-		//Ensure that at least size xs is set
-		if(1 > columnsExtraSmall){
-			classes += " navcontainer-flag-col-xs-0";
+		//Transition Speed
+		//Applies for all sizes
+		if(transitionSpeed !== ui5strap.TransitionSpeed.Normal){
+			classes += " ui5strap-transition-speed-" + transitionSpeed.toLowerCase();
 		}
-		else{
+			
+		//SIZE_EXTRA_SMALL
+		if(-1 < columnsExtraSmall){
 	      classes += " navcontainer-flag-col-xs-" + columnsExtraSmall;
+	      classes += " navcontainer-flag-placement-xs-" + placementExtraSmall.toLowerCase();
+	      classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
 	    }
 		
+		//SIZE_SMALL
 	    if(-1 < columnsSmall){
 	      classes += " navcontainer-flag-col-sm-" + columnsSmall;
+	      classes += " navcontainer-flag-placement-sm-" + placementSmall.toLowerCase();
+	      classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
 	    }
+	    
+	    //SIZE_MEDIUM
 	    if(-1 < columnsMedium){
 		  classes += " navcontainer-flag-col-md-" + columnsMedium;
+		  classes += " navcontainer-flag-placement-md-" + placementMedium.toLowerCase();
+		  classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
+		  
 		}
+	    
+	    //SIZE_LARGE
 	    if(-1 < columnsLarge){
 	      classes += " navcontainer-flag-col-lg-" + columnsLarge;
+	      classes += " navcontainer-flag-placement-lg-" + placementLarge.toLowerCase();
+	      classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
 	    }
-		    
-		//Placement
-		classes += " navcontainer-flag-placement-xs-" + placementExtraSmall.toLowerCase();
-        classes += " navcontainer-flag-placement-sm-" + placementSmall.toLowerCase();
-        classes += " navcontainer-flag-placement-md-" + placementMedium.toLowerCase();
-        classes += " navcontainer-flag-placement-lg-" + placementLarge.toLowerCase();
-        
-        //Mode
-		classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
-        classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
-        classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
-        classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
-        
+		
+	    //TODO add columnsExtraLarge on BOOTSTRAP_4 Upgrade
+		
 		if(!this.getBarVisible()){
 			classes += " navcontainer-flag-bar-hide navcontainer-flag-bar-hidden";
 		}
@@ -15734,32 +15962,80 @@
 
 	jQuery.sap.declare("ui5strap.BarRenderer");
 
-	var BarRenderer = {};
+	var BarRenderer = {
+			typeToTag : {
+				Fluid : {
+					typeClassName : "u5sl-bar-type-fluid",
+					containerClassName : "container-fluid"
+				},
+				Inset : {
+					typeClassName : "u5sl-bar-type-inset",
+					containerClassName : "container-inset"
+				},
+				Full : {
+					typeClassName : "u5sl-bar-type-full",
+					containerClassName : "container-full"
+				},
+				
+				FluidInset : {
+					typeClassName : "u5sl-bar-type-fluid-inset",
+					containerClassName : "container-fluid container-inset"
+				},
+				FluidFull : {
+					typeClassName : "u5sl-bar-type-fluid-full",
+					containerClassName : "container-fluid container-full"
+				},
+				InsetFull : {
+					typeClassName : "u5sl-bar-type-inset-full",
+					containerClassName : "container-inset container-full"
+				},
+				FluidInsetFull : {
+					typeClassName : "u5sl-bar-type-fluid-inset-full",
+					containerClassName : "container-fluid container-inset container-full"
+				}
+			}
+	};
 
 	ui5strap.BarRenderer = BarRenderer;
 
 	BarRenderer.render = function(rm, oControl) {
 		var inverse = oControl.getInverse(),
+			tagData = this.typeToTag[oControl.getType()],
 		 	contentLeft = oControl.getLeft(),
+		 	content = oControl.getContent(),
 		 	contentMiddle = oControl.getMiddle(),
 			contentRight = oControl.getRight();
 		
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('bar ' + (inverse ? 'bar-inverse' : 'bar-default'));
+		rm.addClass('u5sl-bar ' + (inverse ? 'u5sl-bar-flag-inverse' : 'u5sl-bar-flag-default'));
+		rm.addClass(tagData.typeClassName);
+		rm.addClass(oControl._getOptionsClassString());
 		rm.writeClasses();
 		rm.write(">");
 
 			rm.write("<div");
-			rm.addClass('bar-inner');
+			rm.addClass('u5sl-bar-inner ' + tagData.containerClassName);
 			rm.writeClasses();
 			rm.write(">");
-			   
-			//Content left
+			  
+			//Middle
+			if(contentMiddle.length > 0){     
+				rm.write("<div");
+				rm.addClass("u5sl-bar-content u5sl-bar-content-middle");
+				rm.writeClasses();
+				rm.write(">");
+				for(var i = 0; i < contentMiddle.length; i++){ 
+					rm.renderControl(contentMiddle[i]);
+				}
+				rm.write("</div>");
+			}
+			
+			//Left
 			if(contentLeft.length > 0){     
 				rm.write("<div");
-				rm.addClass("bar-content bar-content-left");
+				rm.addClass("u5sl-bar-content u5sl-bar-content-left");
 				rm.writeClasses();
 				rm.write(">");
 				for(var i = 0; i < contentLeft.length; i++){ 
@@ -15768,22 +16044,17 @@
 				rm.write("</div>");
 			}
 	
-			//Content middle
-			if(contentMiddle.length > 0){     
-				rm.write("<div");
-				rm.addClass("bar-content bar-content-middle");
-				rm.writeClasses();
-				rm.write(">");
-				for(var i = 0; i < contentMiddle.length; i++){ 
-					rm.renderControl(contentMiddle[i]);
+			//Content
+			if(content.length > 0){     
+				for(var i = 0; i < content.length; i++){ 
+					rm.renderControl(content[i]);
 				}
-				rm.write("</div>");
 			}
 			   
-			//Content right
+			//Right
 			if(contentRight.length > 0){     
 				rm.write("<div");
-				rm.addClass("bar-content bar-content-right");
+				rm.addClass("u5sl-bar-content u5sl-bar-content-right");
 				rm.writeClasses();
 				rm.write(">");
 				for(var i = 0; i < contentRight.length; i++){ 
@@ -16077,29 +16348,21 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 		this.$().toggleClass('open');
 	};
 	
-	if(ui5strap.options.enableTapEvents){
-		ButtonDropdownProto.ontap = function(oEvent){
-			var $target = jQuery(oEvent.target);
-			if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
-				this.$().toggleClass('open');
-			}
-			else{
-				this.fireTap();
-			}
-		};
-	}
-
-	if(ui5strap.options.enableClickEvents){
-		ButtonDropdownProto.onclick = function(oEvent){
-			var $target = jQuery(oEvent.target);
-			if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
-				this.$().toggleClass('open'); 
-			}
-			else{
-				this.fireTap();
-			}
-		};
-	}
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ButtonDropdownProto._handlePress = function(oEvent){
+		oEvent.setMarked();
+		
+		var $target = jQuery(oEvent.target);
+		if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
+			this.$().toggleClass('open');
+		}
+		else{
+			this.fireTap();
+		}
+	};
 
 }());;/*
  * 
@@ -16287,13 +16550,13 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 	};
 	
 	/**
+	 * Adds additional event options.
 	 * @Protected
 	 * @Override
 	 */
-	ButtonGroupProto._getEventOptions = function(item){
-		return {
-			button : item
-		};
+	ButtonGroupProto._addEventOptions = function(eventOptions, oEvent){
+		//@deprecated
+		eventOptions.button = eventOptions.srcItem;
 	};
 
 }());;/*
@@ -16583,6 +16846,8 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 			
 			//Events
 			events : {
+				
+				//TODO rename to pageChange & pageChanged
 				"change" : {},
 				"changed" : {}
 			}
@@ -16592,6 +16857,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 
   var CarouselProto = ui5strap.Carousel.prototype;
 
+  /**
+   * @Private
+   */
   var _setInterval = function(_this, newInterval){
       if(_this.timer){
             window.clearInterval(_this.timer);
@@ -16606,6 +16874,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
        }, newInterval);
   };
 
+  /**
+   * @Private
+   */
   var _findPart = function(_this, partId, index){
       var idString = '#' + _this.getId()+ '--carousel-' + partId;
       if(index >= 0){
@@ -16614,6 +16885,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
       return _this.$().find(idString);
   };
 
+  /**
+   * @Public
+   * @Override
+   */
   CarouselProto.init = function(){
 		this.items = [];
 
@@ -16622,6 +16897,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
     }
   };
 
+  /**
+   * @Protected
+   */
   CarouselProto._cssClasses = function(){
       var cssClasses = "carousel carousel-advanced",
       newIndex = this.getIndex(),
@@ -16658,32 +16936,40 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
       return cssClasses;
   };
 
+  /**
+   * @Public
+   * @Override
+   */
 	CarouselProto.onAfterRendering = function(){
-    var _this = this,
-    itemsLength = this.getItems().length;
-
-    //Store lane reference
-		this.$lane = _findPart(this, 'lane');
-
-    if(ui5strap.support.transitionEndEvent){
-        this.$lane.on(ui5strap.support.transitionEndEvent, function(){
-            _this.fireChanged({});
-        });
-    }
-
-    this.pagination = [];
-    this.items = [];
-
-    for(var i = 0; i < itemsLength; i++){
-          this.pagination.push(_findPart(this, 'indicator', i));
-          this.items.push(_findPart(this, 'item', i));
-    }
-
-    this._refreshLabel();
-    
-    _setInterval(this, this.getInterval());
+	    var _this = this,
+	    itemsLength = this.getItems().length;
+	
+	    //Store lane reference
+			this.$lane = _findPart(this, 'lane');
+	
+	    if(ui5strap.support.transitionEndEvent){
+	        this.$lane.on(ui5strap.support.transitionEndEvent, function(){
+	            _this.fireChanged({});
+	        });
+	    }
+	
+	    this.pagination = [];
+	    this.items = [];
+	
+	    for(var i = 0; i < itemsLength; i++){
+	          this.pagination.push(_findPart(this, 'indicator', i));
+	          this.items.push(_findPart(this, 'item', i));
+	    }
+	
+	    this._refreshLabel();
+	    
+	    _setInterval(this, this.getInterval());
 	};
 
+  /**
+   * @Public
+   * @Override
+   */	
   CarouselProto.setInterval = function(newInterval, noRefresh){
   
       if(!this.getDomRef()){ 
@@ -16695,37 +16981,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
       }
   };
 
-
-  CarouselProto.onswipeleft = function(){
-      if(this.getSwipe()){ 
-        this.nextPage();
-      }
-  };
-
-  CarouselProto.onswiperight = function(){
-      if(this.getSwipe()){ 
-        this.previousPage();
-      }
-  };
-
-  CarouselProto.ontap = function(e){
-    var $target = jQuery(e.target);
-    if(this.getControls()){
-      if($target.hasClass('carousel-control-prev')){
-        this.previousPage();
-      }
-      else if($target.hasClass('carousel-control-next')){
-        this.nextPage();
-      }
-    }
-
-    if(this.getPagination()){
-      if($target.hasClass('carousel-indicator')){
-        this.setIndex(parseInt($target.attr('data-slide-to')));
-      }
-    }
-  };
-
+  /**
+   * @Public
+   * @Override
+   */
   CarouselProto.setIndex = function(newIndex, suppressInvalidate){
   
     if(!this.getDomRef()){ 
@@ -16784,6 +17043,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 
   /**
   * Refreshes the label
+  * @Protected
   */
   CarouselProto._refreshLabel = function(){
       var label = this.getLabel();
@@ -16795,6 +17055,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 
   /**
   * Change to next page
+  * @Public
   */
   CarouselProto.nextPage = function(){
       var newIndex = this.getIndex()+1;
@@ -16806,6 +17067,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 
   /**
   * Change to previous page
+  * @Public
   */
   CarouselProto.previousPage = function(){
       var newIndex = this.getIndex()-1;
@@ -16814,6 +17076,58 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
       }
       this.setIndex(newIndex);
   };
+  
+  /**
+   * @Public
+   * @Override
+   */
+  CarouselProto.onswipeleft = function(){
+      if(this.getSwipe()){ 
+        this.nextPage();
+      }
+  };
+
+  /**
+   * @Public
+   * @Override
+   */
+  CarouselProto.onswiperight = function(){
+      if(this.getSwipe()){ 
+        this.previousPage();
+      }
+  };
+  
+  /**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+  CarouselProto._handlePress = function(oEvent){
+	  //Mark the event so parent Controls know that event has been handled already
+	  oEvent.setMarked();
+	  
+	  	var $target = jQuery(oEvent.target);
+	    if(this.getControls()){
+		      if($target.hasClass('carousel-control-prev')){
+		        this.previousPage();
+		      }
+		      else if($target.hasClass('carousel-control-next')){
+		        this.nextPage();
+		      }
+	    }
+	
+	    if(this.getPagination()){
+		      if($target.hasClass('carousel-indicator')){
+		        this.setIndex(parseInt($target.attr('data-slide-to')));
+		      }
+	    }
+  };
+
+  if(ui5strap.support.touch){
+	    CarouselProto.ontap = CarouselProto._handlePress;
+	}
+	else{
+		CarouselProto.onclick = CarouselProto._handlePress;
+	}
 
 }());;/*
  * 
@@ -17588,8 +17902,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 						defaultValue : ""
 					},
 					
-					//Visibility DOES NOT inherit from smaller sizes
+					//Visibility DOES inherit from smaller sizes
+					//TODO remove visibility since it does same as visibilityExtraSmall
 					visibility : {
+						deprecated : true,
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
 					},
@@ -17665,29 +17981,56 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		typeToTag : {
 			Default : {
 				tagName : "div",
-				className : null
+				className : "container-default"
 			},
 			Text : {
 				tagName : "span",
-				className : null
+				className : "container-text"
+			},
+			Section : {
+				tagName : "section",
+				className : "container-section"
 			},
 			
 			//Bootstrap container and container-fluid
 			//container-inset is an additional class that adds padding-top and padding-bottom
-			FixedWidth : {
-				tagName : "div",
-				className : "container"
-			},
+			
 			Fluid : {
 				tagName : "div",
 				className : "container-fluid"
+			},
+			Inset : {
+				tagName : "div",
+				className : "container-inset"
 			},
 			Full : {
 				tagName : "div",
 				className : "container-full"
 			},
 			
+			FluidInset : {
+				tagName : "div",
+				className : "container-fluid container-inset"
+			},
+			FluidFull : {
+				tagName : "div",
+				className : "container-fluid container-full"
+			},
+			InsetFull : {
+				tagName : "div",
+				className : "container-inset container-full"
+			},
+			FluidInsetFull : {
+				tagName : "div",
+				className : "container-fluid container-inset container-full"
+			},
+			
+			
 			//Bootstrap Components
+			Website : {
+				tagName : "div",
+				className : "container"
+			},
 			Jumbotron : {
 				tagName : "div",
 				className : "container-jumbotron jumbotron"
@@ -17708,17 +18051,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 			
 			
 			//Deprecated
-			Section : {
-				tagName : "section",
-				className : "container-section"
-			},
 			Page : {
 				tagName : "div",
 				className : "container"
-			},
-			FluidInset : {
-				tagName : "div",
-				className : "container-fluid container-inset"
 			},
 			Paragraph : {
 				tagName : "div",
@@ -17848,7 +18183,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
+	    		classes += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
 	    	}
 	    }
 		
@@ -17874,7 +18209,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
+	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
 	    	}
 	    }
 	
@@ -18338,10 +18673,6 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 					type : "boolean",
 					defaultValue : false
 				},
-				type : {
-					type: "ui5strap.HeadingType", 
-					defaultValue: ""
-				},
 				level : {
 					type: "int", 
 					defaultValue: 3
@@ -18349,7 +18680,14 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 				contentPlacement : {
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
+				},
+				
+				type : {
+					deprecated : true,
+					type: "ui5strap.HeadingType", 
+					defaultValue: ""
 				}
+				
 			},
 			aggregations : { 
 				content : {
@@ -18359,6 +18697,8 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 
 		}
 	});
+	
+	ui5strap.Heading.prototype._STYLE_PREFIX = 'u5sl-heading';
 
 	ui5strap.Utils.dynamicText(ui5strap.Heading.prototype);
 
@@ -18415,10 +18755,11 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 
 		rm.write("<h" + level);
 		rm.writeControlData(oControl);
-
+		rm.addClass("u5sl-heading");
 		if(ui5strap.HeadingType.Default !== type){
 			rm.addClass(this.typeToClass[type]);
 		}
+		rm.addClass(oControl._getOptionsClassString());
 		
 		rm.writeClasses();
 		rm.write(">");
@@ -19354,18 +19695,26 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	ListDropdownItemProto.toggle = function(){
 		this.$().toggleClass('open');
 	};
-
-	if(ui5strap.options.enableTapEvents){
-		ListDropdownItemProto.ontap = function(oEvent){
-			this.$().toggleClass('open');
-		};
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ListDropdownItemProto._handlePress = function(oEvent){
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		
+		this.$().toggleClass('open');
 	};
 
-	if(ui5strap.options.enableClickEvents){
-		ListDropdownItemProto.onclick = function(oEvent){
-			this.$().toggleClass('open');
-		};
-	};
+	//Registering Event Handler
+	//TODO Desktop / Mobile Test!!!
+	if(ui5strap.support.touch){
+		ListDropdownItemProto.ontap = ListDropdownItemProto._handlePress;
+	}
+	else{
+		ListDropdownItemProto.onclick = ListDropdownItemProto._handlePress;
+	}
 	
 
 }());;/*
@@ -19537,27 +19886,26 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 				}
 			}
 	};
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 * @Override
+	 */
+	ListDropdownMenuProto._handlePress = function(oEvent){
+		ui5strap.ListBase.prototype._handlePress.call(this, oEvent);
 
-	if(ui5strap.options.enableTapEvents){
-		ListDropdownMenuProto.ontap = function(oEvent){
-			ui5strap.ListBase.prototype.ontap.call(this, oEvent);
+		var parent = this.getParent();
+		if("close" in parent){
+			parent.close();
+		}
+	};
 
-			var parent = this.getParent();
-			if("close" in parent){
-				parent.close();
-			}
-		};
+	if(ui5strap.support.touch){
+		ListDropdownMenuProto.ontap = ListDropdownMenuProto._handlePress;
 	}
-
-	if(ui5strap.options.enableClickEvents){
-		ListDropdownMenuProto.onclick = function(oEvent){
-			ui5strap.ListBase.prototype.onclick.call(this, oEvent);
-
-			var parent = this.getParent();
-			if("close" in parent){
-				parent.close();
-			}
-		};
+	else{
+		ListDropdownMenuProto.onclick = ListDropdownMenuProto._handlePress;
 	}
 
 }());;/*
@@ -20039,7 +20387,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	
 	ui5strap.ControlBase.extend("ui5strap.Modal", {
 		metadata : {
-
+			deprecated : true,
 			// ---- object ----
 			defaultAggregation : "body",
 			// ---- control specific ----
@@ -20474,7 +20822,10 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 					type:"ui5strap.NavType", 
 					defaultValue:ui5strap.NavType.Default
 				},
+				
+				//@deprecated
 				align : {
+					deprecated : true,
 					type:"ui5strap.Alignment",
 					defaultValue:ui5strap.Alignment.Default
 				}
@@ -20492,6 +20843,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 
 	var NavProto = ui5strap.Nav.prototype;
 	
+	NavProto._STYLE_PREFIX = "nav";
 }());;/*
  * 
  * UI5Strap
@@ -21033,6 +21385,7 @@ jQuery.sap.declare("ui5strap.NavRenderer");
 
 ui5strap.NavRenderer = {
 	typeToClass : {
+		Default : "nav-default",
 		Tabs : "nav-tabs",
 		Pills : "nav-pills",
 		PillsStacked : "nav-pills nav-stacked",
@@ -21051,10 +21404,8 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
 	rm.writeControlData(oControl);
 
 	rm.addClass('nav');
-	if(ui5strap.NavType.Default !== type){
-		rm.addClass(this.typeToClass[type]);
-	}
-	
+	rm.addClass(this.typeToClass[type]);
+	rm.addClass(oControl._getOptionsClassString());
 	ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
 
 	rm.writeClasses();
@@ -21726,6 +22077,10 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 				content : {
 					singularName: "content"
 				} 
+			},
+			events : {
+				
+				//TODO Add panelCollapse events
 			}
 
 		}
@@ -21803,35 +22158,34 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 	PanelProto.toggle = function(){
 		this.setCollapsed(!this.getCollapsed());
 	};
-
-	if(ui5strap.options.enableTapEvents){
-		PanelProto.ontap = function(e){
-			var $target = jQuery(e.target);
-			if($target.hasClass('panel-heading') || $target.parent().hasClass('panel-heading')){
-				var parent = this.getParent();
-				if(parent instanceof ui5strap.PanelGroup){
-					parent.setSelectedControl(this);
-				}
-				else{ 
-					this.toggle();
-				}
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	PanelProto._handlePress = function(oEvent){
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		
+		var $target = jQuery(oEvent.target);
+		if($target.hasClass('panel-heading') || $target.parent().hasClass('panel-heading')){
+			var parent = this.getParent();
+			if(parent instanceof ui5strap.PanelGroup){
+				parent.setSelectedControl(this);
 			}
-		};
+			else{ 
+				this.toggle();
+			}
+		}
+	};
+
+	//Registering Event Handler
+	//TODO Desktop / Mobile Test!!!
+	if(ui5strap.support.touch){
+		PanelProto.ontap = PanelProto._handlePress;
 	}
-
-	if(ui5strap.options.enableClickEvents){
-		PanelProto.onclick = function(e){
-			var $target = jQuery(e.target);
-			if($target.hasClass('panel-heading') || $target.parent().hasClass('panel-heading')){
-				var parent = this.getParent();
-				if(parent instanceof ui5strap.PanelGroup){
-					parent.setSelectedControl(this);
-				}
-				else{ 
-					this.toggle();
-				}
-			}
-		};
+	else{
+		PanelProto.onclick = PanelProto._handlePress;
 	}
 
 }());;/*

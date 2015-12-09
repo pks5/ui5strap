@@ -12,9 +12,7 @@
 				"transition" : "slide-ltr",
 				"writeHistory" : true
 			}
-		},
-		
-		"PAGE" : "= .VIEWS.homePage" 
+		}
 	}
 
 }

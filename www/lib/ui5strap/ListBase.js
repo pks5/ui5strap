@@ -57,7 +57,6 @@
 				},
 
 				select : {
-					deprecated : true,
 					parameters : {
 						listItem : {type : "ui5strap.ListItem"},
 						srcControl : {type : "ui5strap.Control"}
@@ -638,7 +637,7 @@
 	 * @Protected
 	 */
 	ListBaseProto._handlePress = function(oEvent){
-		console.log(oEvent.isMarked());
+		//console.log(oEvent.isMarked());
 		
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();

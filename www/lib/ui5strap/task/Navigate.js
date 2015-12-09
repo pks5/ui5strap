@@ -43,16 +43,11 @@
 	* @Override
 	*/
 	NavigateProto.parameters = {
-		//Required
-		"PAGE" : {
-			"required" : true, 
-			"type" : "object"
-		},
 		
 		"FRAME_CONTROLLER" : {
 			"required" : false,
 			"type" : ["string", "object"],
-			"defaultValue" : null
+			"defaultValue" : "frame"
 		}
 
 	};
@@ -62,7 +57,7 @@
 	* @override
 	*/
 	NavigateProto.run = function(){
-			var component = this.getParameter("FRAME_CONTROLLER"),
+			var frameController = this.getParameter("FRAME_CONTROLLER"),
 				navContainer = this.context.app.getRootControl(),
 				CONTROLS = this.context.action[this.namespace]["CONTROLS"],
 				VIEWS = this.context.action[this.namespace]["VIEWS"];
@@ -71,12 +66,12 @@
 				navContainer = this.context.resolve(this, CONTROLS.navContainer, true);
 			}
 			
-			if(null === component){
-				component = this.context.app.components.frame;
+			if("string" === typeof frameController){
+				frameController = this.context.app.components[frameController];
 			}
 			
-			if(!(component instanceof ui5strap.AppFrame)){
-				throw new Error("Cannot goto page: component must be instance of ui5strap.AppFrame!");
+			if(!(frameController instanceof ui5strap.AppFrame)){
+				throw new Error("Cannot goto page: .FRAME_CONTROLLER must be an instance of ui5strap.AppFrame!");
 			}
 			
 			if(!navContainer || !(navContainer instanceof ui5strap.NavContainer)){
@@ -85,7 +80,7 @@
 			
 			var viewsKeys = Object.keys(VIEWS);
 			for(var i = 0; i < viewsKeys.length; i++){
-				component.navigateTo(navContainer, this.context.resolve(this, VIEWS[viewsKeys[i]]));
+				frameController.navigateTo(navContainer, this.context.resolve(this, VIEWS[viewsKeys[i]]));
 			}
 	}
 

@@ -119,7 +119,9 @@
 		//@deprecated
 		_this.parameters = _this.action;
 		
-		console.log(_this);
+		if(_this.action.DEBUG && console){
+			console.log(_this);
+		}
 		
 		//Event Source
 		if(action.eventSource){

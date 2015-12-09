@@ -188,7 +188,10 @@
 						var pack = ui5strap.Utils.getObject(actionName, 1),
 							parts = actionName.split(/\./);
 						
-						pack[parts[parts.length - 1]] = function(oEvent){console.log(oEvent);
+						pack[parts[parts.length - 1]] = function(oEvent){
+							
+							//console.log(oEvent);
+							
 							this.getApp().runAction({
 								"eventSource" : oEvent.getSource(),
 								"eventParameters" : oEvent.getParameters(),

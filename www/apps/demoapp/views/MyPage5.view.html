@@ -6,19 +6,17 @@
 				<!-- Bar on top of page -->
 				<div data-sap-ui-type="ui5strap.Bar">
 					<!-- Left area of bar -->
-					<div data-sap-ui-aggregation="left">
+					<div data-sap-ui-type="ui5strap.Container" data-align="PullLeft">
 						<div 
 						data-sap-ui-type="ui5strap.Button" 
-						data-tap="__execute" 
-						data-custom-data:__action="ui5strap.demoapp.actions.ToggleBarMenuSub1"
+						data-options="BarButton"
+						data-tap="ui5strap.demoapp.actions.ToggleBarMenuSub1" 
 						>
 							<div data-sap-ui-type="ui5strap.Icon" data-icon="columns"></div>
 						</div>
 					</div>
-					<!-- Middle area of bar -->
-					<div data-sap-ui-aggregation="middle">
-						<div data-sap-ui-type="ui5strap.Text" data-type="Phrasing" data-text="{i18n>PAGE5_TITLE}"></div>
-					</div>
+					
+					<div data-sap-ui-type="ui5strap.Heading" data-options="BarHeading" data-text="{i18n>PAGE5_TITLE}"></div>
 					
 				</div>
 			</div>

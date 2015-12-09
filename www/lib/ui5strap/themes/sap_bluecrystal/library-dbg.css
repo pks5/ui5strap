@@ -9136,9 +9136,19 @@ a {
  * Headings
  */
 .u5sl-heading.u5sl-heading-option-bar-heading {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
   margin-top: 13px;
   margin-bottom: 13px;
+  margin-left: -25%;
   font-size: 16px;
+  text-align: center;
+}
+.u5sl-heading.u5sl-heading-option-media-heading {
+  margin-top: 0;
+  margin-bottom: 5px;
 }
 /*
  * 

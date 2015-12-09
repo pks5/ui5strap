@@ -108,7 +108,7 @@
       {
       	  name : "ui5strap",
       	  
-      	  version: "0.9.17",
+      	  version: "0.9.18",
       	  
       	  dependencies : [],
       	  
