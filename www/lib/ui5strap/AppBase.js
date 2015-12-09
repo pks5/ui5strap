@@ -25,18 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', 'sap/ui/base/Object', 'ui5strap/Action'], function(library, ObjectBase, Action){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.AppBase');
-
-	jQuerySap.require("ui5strap.library");
-	jQuerySap.require("ui5strap.Action");
-
-	//jQuerySap.require("sap.ui.base.Event");
-
-	sap.ui.base.Object.extend('ui5strap.AppBase', {
+	var AppBase = ObjectBase.extend('ui5strap.AppBase', {
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
 			
@@ -61,10 +52,8 @@
 				viewer.sendMessage(appMessage);
 			};
 		}
-	});
-
-	var AppBase = ui5strap.AppBase,
-		AppBaseProto = AppBase.prototype;
+	}),
+	AppBaseProto = AppBase.prototype;
 
 	/*
 	* Init sapplication specific logging
@@ -361,7 +350,7 @@
 		};
 		
 		for(var i = 0; i < actions.length; i++){
-			ui5strap.Action.loadFromFile(actions[i], successCallback, true);
+			Action.loadFromFile(actions[i], successCallback, true);
 		}
 	};
 	
@@ -856,7 +845,7 @@
 	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this,
 			overlayControl = this.overlayControl,
-			transitionName = transitionName || 'transition-slide-ttb';
+			transitionName = transitionName || 'slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.overlayId, true, function(){
 			if(!(viewDataOrControl instanceof ui5strap.Control)){
@@ -877,7 +866,7 @@
 
 		var _this = this,
 			overlayControl = this.overlayControl,
-			transitionName = transitionName || 'transition-slide-btt';
+			transitionName = transitionName || 'slide-btt';
 		
 		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
 			ui5strap.Layer.setVisible(_this.overlayId, false, callback);
@@ -969,9 +958,7 @@
 	AppBaseProto.runAction = function(action){
 		action.app = this;
 
-		jQuery.sap.require('ui5strap.Action');
-		
-		ui5strap.Action.run(action);
+		Action.run(action);
 	};
 
 	/*
@@ -1448,4 +1435,5 @@
 		
 	};
 
-}());
+	return AppBase;
+});

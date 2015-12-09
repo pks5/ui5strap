@@ -25,25 +25,12 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', 'ui5strap/AppBase', 'ui5strap/AppConfig','ui5strap/AppComponent', "sap/ui/core/mvc/HTMLView", "sap/ui/core/mvc/XMLView", "sap/ui/core/CustomData", "sap/ui/model/resource/ResourceModel", "sap/ui/model/json/JSONModel"], 
+				function(library, AppBase, AppConfig, AppComponent, HTMLView, XMLView, CustomData, ResourceModel, JSONModel){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.App');
-
-	jQuerySap.require("ui5strap.library");
-
-	jQuerySap.require("ui5strap.AppBase");
-	jQuerySap.require("ui5strap.AppComponent");
-	
-	jQuerySap.require("sap.ui.core.mvc.HTMLView");
-	jQuerySap.require("sap.ui.core.CustomData");
-	jQuerySap.require("sap.ui.model.resource.ResourceModel");
-	jQuerySap.require("sap.ui.model.json.JSONModel");
-	
-	ui5strap.AppBase.extend('ui5strap.App', {
+	var App = AppBase.extend('ui5strap.App', {
 		"constructor" : function(config, viewer){
-			ui5strap.AppBase.call(this, config, viewer);
+			AppBase.call(this, config, viewer);
 			
 			//Init local vars
 			this._runtimeData = {
@@ -53,11 +40,8 @@
 			};
 
 		}
-	});
-
-	var App = ui5strap.App,
-		AppProto = App.prototype,
-		AppConfig = ui5strap.AppConfig;
+	}),
+	AppProto = App.prototype;
 
 	/*
 	* ------------------------------------------------
@@ -94,9 +78,9 @@
 			var viewConfig = views[viewSrc];
 			if(viewConfig.preload && 'HTML' === viewConfig.type){
 				//We are currently only able to cache HTML views
-				var viewUrl = sap.ui.core.mvc.HTMLView._getViewUrl(viewSrc);
+				var viewUrl = HTMLView._getViewUrl(viewSrc);
 
-				if(viewUrl in sap.ui.core.mvc.HTMLView._mTemplates){
+				if(viewUrl in HTMLView._mTemplates){
 					viewCallback();
 				}
 				else{ 
@@ -110,7 +94,7 @@
 								
 								//TODO
 								//Find a better way to preload HTML views!
-								sap.ui.core.mvc.HTMLView._mTemplates[this.url] = text;
+								HTMLView._mTemplates[this.url] = text;
 								
 								viewCallback();
 							},
@@ -131,7 +115,7 @@
 	 */
 	AppProto.preload = function(callback){
 		var _this = this;
-		ui5strap.AppBase.prototype.preload.call(this, function(){
+		AppBase.prototype.preload.call(this, function(){
 			_this.includeStyle(function includeStyle_complete(){
 				_this.log.debug("PRELOADING VIEWS...");
 				
@@ -275,5 +259,7 @@
 	AppProto.getRootControl = function(){
 		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');
 	};
-
-}());
+	
+	return App;
+	
+});

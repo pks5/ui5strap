@@ -25,26 +25,12 @@
  * 
  */
 
-(function(){
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare("ui5strap.Viewer");
+sap.ui.define(['./library', 'ui5strap/ViewerBase', 'ui5strap/App', 'ui5strap/AppConfig', 'ui5strap/NavContainer'], 
+				function(library, ViewerBase, App, AppConfig, NavContainer){
 	
-	jQuerySap.require("ui5strap.library");
-	
-	jQuerySap.require("ui5strap.ViewerBase");
-	
-	jQuerySap.require("ui5strap.AppConfig");
-	jQuerySap.require("ui5strap.NavContainer");
-
-	jQuerySap.require("ui5strap.App");
-	//jQuerySap.require("ui5strap.AppSystem");
-	//jQuerySap.require("ui5strap.AppSandbox");
-	//jQuerySap.require("ui5strap.AppConsole");
-	
-	ui5strap.ViewerBase.extend("ui5strap.Viewer", {
+	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", {
 		"constructor" : function(options){
-			ui5strap.ViewerBase.call(this, options);
+			ViewerBase.call(this, options);
 
 			this._loadedLibraries = {};
 			this._loadingSapplication = null;
@@ -53,11 +39,9 @@
 			
 			this._console = null;
 		}
-	});
-
-	var ViewerMulti = ui5strap.Viewer,
-		ViewerMultiProto = ViewerMulti.prototype,
-		domAttachTimeout = 50;
+	}),
+	ViewerMultiProto = ViewerMulti.prototype,
+	domAttachTimeout = 50;
 
 	//Private properties that are linked to the scope of the anonymous self executing function around this module
 	//This prevents other apps from accessing data easily
@@ -74,7 +58,7 @@
 	 * @Public
 	 */
 	ViewerMultiProto.init = function(){
-		ui5strap.ViewerBase.prototype.init.call(this);
+		ViewerBase.prototype.init.call(this);
 		
 		//Init methods
 		//TOOO Move to Viewer base
@@ -92,7 +76,7 @@
 		
 		this.init();
 
-		var appUrl = ui5strap.AppConfig.processOption("app", this.options.app);
+		var appUrl = AppConfig.processOption("app", this.options.app);
 
 		if(null === appUrl){
 			throw new Error('Cannot start viewer: no app url specified.');
@@ -298,7 +282,7 @@
 				throw new Error('Do not include the libraries "ui5strap" and "ui5os" into your libraries configuration.');
 			}
 			
-			jQuerySap.registerModulePath(libPackage, libLocation);
+			jQuery.sap.registerModulePath(libPackage, libLocation);
 			_this._loadedLibraries[libPackage] = libLocation;
 
 			if(lib.preload){
@@ -365,13 +349,13 @@
 		jQuery.sap.log.debug("ViewerProto.loadApp");
 
 		var _this = this,
-			appConfig = new ui5strap.AppConfig(this.options, parameters);
+			appConfig = new AppConfig(this.options, parameters);
 		
 		appConfig.setData(configDataJSON);
 
 		//TODO log level should only affect on app level
 		if("logLevel" in configDataJSON.app){
-			jQuerySap.log.setLevel(configDataJSON.app.logLevel);
+			jQuery.sap.log.setLevel(configDataJSON.app.logLevel);
 		}
 		
 		if(_m_loadedSapplicationsById[configDataJSON.app.id]){
@@ -720,7 +704,7 @@
 	*/
 	ViewerMultiProto._initConsole = function(){
 		if(this.options.enableConsole){
-			jQuerySap.require("ui5strap.Console");
+			jQuery.sap.require("ui5strap.Console");
 			this._console = new ui5strap.Console();
 		}
 	};	
@@ -817,5 +801,6 @@
 			false
 		);
 	};
-
-}());
+	
+	return ViewerMulti;
+});

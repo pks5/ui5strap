@@ -214,22 +214,24 @@
 				/*
 				* Initialize Viewer
 				*/
-				jQuery.sap.require("ui5strap.Viewer");
+				sap.ui.require(["ui5strap/Viewer"], function(Viewer){
 			
 			
-				//The reference to the viewer instance should not be global
-				var viewer = new ui5strap.Viewer(viewerOptions);
-				
-				/*
-				* Viewer.prototype.start accepts two callback functions as parameters.
-				* The first callback is fired when the app has been completely started and shown.
-				* The second callback is fired when the app has been loaded but did not show yet.
-				* Both parameters are optional.
-				*/
-				viewer.start(null, function(){
-					//In this example we want to show the welcome message when the App has been loaded.
-					document.getElementById('ui5strap-splash-screen-spinner').className = 'ui5strap-hidden';
-					document.getElementById('ui5strap-splash-screen-message').className = 'ui5strap-splash-screen-message-visible';
+					//The reference to the viewer instance should not be global
+					var viewer = new Viewer(viewerOptions);
+					
+					/*
+					* Viewer.prototype.start accepts two callback functions as parameters.
+					* The first callback is fired when the app has been completely started and shown.
+					* The second callback is fired when the app has been loaded but did not show yet.
+					* Both parameters are optional.
+					*/
+					viewer.start(null, function(){
+						//In this example we want to show the welcome message when the App has been loaded.
+						document.getElementById('ui5strap-splash-screen-spinner').className = 'ui5strap-hidden';
+						document.getElementById('ui5strap-splash-screen-message').className = 'ui5strap-splash-screen-message-visible';
+					});
+					
 				});
 			};
 			

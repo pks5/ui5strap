@@ -25,22 +25,17 @@
  * 
  */
 
-(function (){
+sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare("ui5strap.AppConfig");
-	sap.ui.base.Object.extend("ui5strap.AppConfig", {
+	var AppConfig = ObjectBase.extend("ui5strap.AppConfig", {
 		"constructor" : function(options, parameters){
 			this.options = options || {};
 			this.parameters = parameters || {};
 			
 			this.data = {};
 		}
-	});
-
-	var AppConfig = ui5strap.AppConfig,
-		AppConfigProto = AppConfig.prototype;
+	}),
+	AppConfigProto = AppConfig.prototype;
 
 	/*
 	* @deprecated
@@ -371,5 +366,6 @@
 	AppConfigProto.getModel = function(){
 		return new sap.ui.model.json.JSONModel(this.data);
 	};
-
-}());
+	
+	return AppConfig;
+});

@@ -57,14 +57,7 @@
 	* @override
 	*/
 	NavigateProto.run = function(){
-			var frameController = this.getParameter("FRAME_CONTROLLER"),
-				navContainer = this.context.app.getRootControl(),
-				CONTROLS = this.context.action[this.namespace]["CONTROLS"],
-				VIEWS = this.context.action[this.namespace]["VIEWS"];
-			
-			if(CONTROLS && ("navContainer" in CONTROLS)){
-				navContainer = this.context.resolve(this, CONTROLS.navContainer, true);
-			}
+			var frameController = this.getParameter("FRAME_CONTROLLER");
 			
 			if("string" === typeof frameController){
 				frameController = this.context.app.components[frameController];
@@ -74,11 +67,19 @@
 				throw new Error("Cannot goto page: .FRAME_CONTROLLER must be an instance of ui5strap.AppFrame!");
 			}
 			
+			var navContainer = this.context.app.getRootControl(),
+				CONTROLS = this.context.action[this.namespace]["CONTROLS"];
+			
+			if(CONTROLS && ("navContainer" in CONTROLS)){
+				navContainer = this.context.resolve(this, CONTROLS.navContainer, true);
+			}
+			
 			if(!navContainer || !(navContainer instanceof ui5strap.NavContainer)){
 				throw new Error("[ui5strap.Task.Navigate] Please provide a valid NavContainer instance in .CONTROLS.navContainer!");
 			}
 			
-			var viewsKeys = Object.keys(VIEWS);
+			var VIEWS = this.context.action[this.namespace]["VIEWS"],
+				viewsKeys = Object.keys(VIEWS);
 			for(var i = 0; i < viewsKeys.length; i++){
 				frameController.navigateTo(navContainer, this.context.resolve(this, VIEWS[viewsKeys[i]]));
 			}

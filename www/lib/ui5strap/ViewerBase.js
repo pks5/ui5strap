@@ -26,14 +26,9 @@
  */
  
 
-(function(){
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.ViewerBase');
-
-	jQuerySap.require('ui5strap.library');
-
-	sap.ui.base.Object.extend('ui5strap.ViewerBase', {
+sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
+	
+	var ViewerBase = ObjectBase.extend('ui5strap.ViewerBase', {
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);
 			
@@ -72,9 +67,8 @@
 				this.options.app = "./app/app.json";
 			}
 		}
-	});
-
-	var ViewerBaseProto = ui5strap.ViewerBase.prototype;
+	}),
+	ViewerBaseProto = ViewerBase.prototype;
 	
 	/**
 	 * Initialzer
@@ -251,4 +245,5 @@
 
 	//End ViewerBase
 	
-}());
+	return ViewerBase;
+});

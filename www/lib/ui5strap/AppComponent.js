@@ -25,20 +25,17 @@
  * 
  */
  
-(function(){
+sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
 
-	jQuery.sap.declare("ui5strap.AppComponent");
-	
-	sap.ui.base.Object.extend("ui5strap.AppComponent", {
+	var AppComponent = ObjectBase.extend("ui5strap.AppComponent", {
 		"constructor" : function(app, options){
-			sap.ui.base.Object.apply(this);
+			ObjectBase.apply(this);
 			
 			this.app = app;
 			this.options = options;
 		}
-	});
-
-	var AppComponentProto = ui5strap.AppComponent.prototype;
+	}),
+	AppComponentProto = AppComponent.prototype;
 
 	AppComponentProto.init = function(){
 
@@ -54,4 +51,5 @@
 	};
 	*/
 	
-}());
+	return AppComponent;
+});

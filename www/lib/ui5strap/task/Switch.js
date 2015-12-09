@@ -47,15 +47,15 @@
 	* @Override
 	*/
 	SwitchProto.parameters = {
-			"expression" : {
+			"EXPRESSION" : {
 				"required" : true, 
 				"type" : "string"
 			},
-			"actions" : {
+			"ACTIONS" : {
 				"required" : true, 
 				"type" : "object"
 			},
-			"defaultAction" : {
+			"DEFAULT_ACTION" : {
 				"required" : false,
 				"defaultValue" : null,
 				"type" : "string"
@@ -67,12 +67,12 @@
 	* @override
 	*/
 	SwitchProto.run = function(){
-		var expression = this.getParameter("expression"),
-			actions = this.getParameter("actions"),
-			theAction = this.getParameter("defaultAction");
+		var actionKey = this.getParameter("EXPRESSION"),
+			actions = this.getParameter("ACTIONS"),
+			theAction = this.getParameter("DEFAULT_ACTION");
 		
-		if(actions[expression]){
-			theAction = actions[expression];
+		if(actions[actionKey]){
+			theAction = this.context.resolve(this, actions[actionKey]);
 		}
 		
 		if(theAction){

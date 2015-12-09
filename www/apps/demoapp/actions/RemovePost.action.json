@@ -1,8 +1,7 @@
 {
-	"//" : "Removes a post from the list.",
+	"DESCRIPTION" : "Removes a post from the list.",
 	"TASKS" : "removeMediaItem",
 	
-	"//" : "The 'call' task calls the control's method removeItems.",
 	"removeMediaItem" : {
 		"DO" : "= eventSource.removeItem(eventParameters.listItem)"
 	}
