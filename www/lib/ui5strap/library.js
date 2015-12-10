@@ -921,9 +921,12 @@
   * TODO remove ui5strap.App dependency from here?
   * @Public
   * @Static
+  * @deprecated
   */
   ui5strap.controller = function(controllerName, controllerImpl){
-      jQuery.sap.require('ui5strap.AppBase');
+	  jQuery.sap.log.warning("ui5strap.controller is deprecated. Please extend ui5strap.ActionController instead.");
+      
+	  jQuery.sap.require('ui5strap.AppBase');
 
       ui5strap.AppBase.blessController(controllerImpl);
 

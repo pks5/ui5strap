@@ -25,12 +25,12 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function(library, AppBase, Controller){
 
-	jQuery.sap.require("ui5strap.library");
-	
 	var controllerImpl = {};
+	
+	AppBase.blessController(controllerImpl);
+    
+	return Controller.extend("ui5strap.ActionController", controllerImpl);
 
-	ui5strap.controller("ui5strap.ActionController", controllerImpl);
-
-}());
+});
