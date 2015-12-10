@@ -78,7 +78,7 @@
 		rm.writeControlData(oControl);
 		rm.addClass('u5sl-bar ' + (inverse ? 'u5sl-bar-flag-inverse' : 'u5sl-bar-flag-default'));
 		rm.addClass(tagData.typeClassName);
-		rm.addClass(oControl._getOptionsClassString());
+		rm.addClass(oControl._getStyleClassesOptions());
 		rm.writeClasses();
 		rm.write(">");
 

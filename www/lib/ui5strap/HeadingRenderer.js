@@ -61,7 +61,7 @@
 		}
 		
 		//Options classes
-		rm.addClass(oControl._getOptionsClassString());
+		rm.addClass(oControl._getStyleClassesOptions());
 		
 		rm.writeClasses();
 		rm.write(">");

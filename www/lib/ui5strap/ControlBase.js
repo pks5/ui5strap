@@ -46,19 +46,47 @@
 	
 	var ControlBaseProto = ui5strap.ControlBase.prototype;
 	
-	ControlBaseProto._STYLE_PREFIX = 'ui5strapControlBase';
+	ControlBaseProto._stylePrefix = 'ui5strapControlBase';
+	
+	/**
+	 * @Protected
+	 */
+	ControlBaseProto._getStyleClassesRoot = function(){
+		return this._stylePrefix;
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ControlBaseProto._getStyleClassComponent = function(component){
+		return this._stylePrefix + "-" + component;
+	};
 	
 	/**
 	* @Protected
 	*/
-	ControlBaseProto._getOptionsClassString = function(){
+	ControlBaseProto._getStyleClassType = function(type){
+		return 	this._stylePrefix + "-type-" + type;
+	};
+	
+	/**
+	* @Protected
+	*/
+	ControlBaseProto._getStyleClassesFlags = function(flags){
+		return 	this._stylePrefix + "-flag-" + flag;
+	};
+	
+	/**
+	* @Protected
+	*/
+	ControlBaseProto._getStyleClassesOptions = function(){
 		var options = this.getOptions(),
 			classes = '';
 	    
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
+	    		classes += ' ' + this._stylePrefix + '-option-' + options[i];
 	    	}
 	    }
 		
@@ -75,7 +103,7 @@
 		var classes = this.$().attr('class').split(' ');
 		for(var i = 0; i < classes.length; i++){
 			var cClass = classes[i];
-			if(cClass && cClass.indexOf(this._STYLE_PREFIX + '-option-') !== 0){
+			if(cClass && cClass.indexOf(this._stylePrefix + '-option-') !== 0){
 				currentClassesString += ' ' + cClass;
 			}
 			
@@ -84,7 +112,7 @@
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
+	    		currentClassesString += ' ' + this._stylePrefix + '-option-' + options[i];
 	    	}
 	    }
 	

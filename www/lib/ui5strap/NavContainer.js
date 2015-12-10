@@ -71,7 +71,7 @@
 		NavContainerBaseProto = NavContainerBase.prototype,
 		domAttachTimeout = 50;
 	
-	NavContainerBaseProto._STYLE_PREFIX = "navcontainer";
+	NavContainerBaseProto._stylePrefix = "navcontainer";
 	
 	/*
 	*
@@ -565,7 +565,7 @@
 	 * @Protected
 	 * @Override
 	 */
-	NavContainerBaseProto._getBaseClassString = function(){
+	NavContainerBaseProto._getStyleClassesRoot = function(){
 		return "navcontainer navcontainer-type-" + this.ncType;
 	};
 	

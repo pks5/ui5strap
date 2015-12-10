@@ -327,8 +327,9 @@
 	
 	/**
 	 * @Protected
+	 * @Override
 	 */
-	BarNavContainerProto._getBaseClassString = function(){
+	BarNavContainerProto._getStyleClassesRoot = function(){
 		var classes = "navcontainer navcontainer-type-" + this.ncType,
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),

@@ -65,5 +65,5 @@
 
 	var NavProto = ui5strap.Nav.prototype;
 	
-	NavProto._STYLE_PREFIX = "nav";
+	NavProto._stylePrefix = "nav";
 }());
