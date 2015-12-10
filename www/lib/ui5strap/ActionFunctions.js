@@ -157,15 +157,16 @@ sap.ui.define([], function(){
 			throw new Error($el + " has no method '" + arguments.methodName + "'");
 		}
 
-		var functionArgs = [],
-			argumentKeys = Object.keys(arguments.methodArgs),
-			argumentKeysLength = argumentKeys.length;
+		console.log(arguments);
 		
-		for(var i = 0; i < argumentKeysLength; i++){
-			var funcArg = argumentKeys[i];
-			var srcParamValue = this._getParameter(arguments.methodArgs[funcArg]);
+		var functionArgs = [];
+		
+		for(var i = 0; i < arguments.methodArgs.length; i++){
+			var funcArg = arguments.methodArgs[i];
+			
+			var srcParamValue = this._getParameter(funcArg);
 			if(null === srcParamValue){
-				this._log.error("{func} missing parameter '" + arguments.methodArgs[funcArg] + "'");
+				this._log.error("{func} missing parameter '" + funcArg + "'");
 				return false;
 			}
 			functionArgs.push(srcParamValue);
@@ -194,15 +195,13 @@ sap.ui.define([], function(){
 			return false;
 		}
 
-		var functionArgs = [],
-			argumentKeys = Object.keys(arguments.funcArgs),
-			argumentKeysLength = argumentKeys.length;
+		var functionArgs = [];
 		
-		for(var i = 0; i < argumentKeysLength; i++){
-			var funcArg = argumentKeys[i];
-			var srcParamValue = this._getParameter(arguments.funcArgs[funcArg]);
+		for(var i = 0; i < arguments.funcArgs.length; i++){
+			var funcArg = arguments.funcArgs[i];
+			var srcParamValue = this._getParameter(funcArg);
 			if(null === srcParamValue){
-				this._log.error("{func} missing parameter '" + arguments.funcArgs[funcArg] + "'");
+				this._log.error("{func} missing parameter '" + funcArg + "'");
 				return false;
 			}
 			functionArgs.push(srcParamValue);

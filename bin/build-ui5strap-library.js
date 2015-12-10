@@ -26,6 +26,8 @@ module.exports = function(grunt) {
           '<%= ui5strapLib %>AppBase.js',
           '<%= ui5strapLib %>App.js',
           
+          '<%= ui5strapLib %>ControlBase.js',
+          
           '<%= ui5strapLib %>NavContainer.js',
           
           '<%= ui5strapLib %>ViewerBase.js',

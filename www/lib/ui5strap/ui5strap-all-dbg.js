@@ -108,7 +108,7 @@
       {
       	  name : "ui5strap",
       	  
-      	  version: "0.9.18",
+      	  version: "0.9.19-SNAPSHOT",
       	  
       	  dependencies : [],
       	  
@@ -921,9 +921,12 @@
   * TODO remove ui5strap.App dependency from here?
   * @Public
   * @Static
+  * @deprecated
   */
   ui5strap.controller = function(controllerName, controllerImpl){
-      jQuery.sap.require('ui5strap.AppBase');
+	  jQuery.sap.log.warning("ui5strap.controller is deprecated. Please extend ui5strap.ActionController instead.");
+      
+	  jQuery.sap.require('ui5strap.AppBase');
 
       ui5strap.AppBase.blessController(controllerImpl);
 
@@ -2168,13 +2171,9 @@
  * 
  */
 
-(function(){
+sap.ui.define([], function(){
 	
-	jQuery.sap.declare('ui5strap.ActionFunctions');
-
 	var ActionFunctions = {};
-
-	ui5strap.ActionFunctions = ActionFunctions;
 
 	ActionFunctions.set = function(arguments){
 		var argumentKeys = Object.keys(arguments),
@@ -2365,8 +2364,9 @@
 		
 		return true;
 	};
-
-}());;/*
+	
+	return ActionFunctions;
+});;/*
  * 
  * UI5Strap
  *
@@ -2393,26 +2393,17 @@
  * 
  */
 
-(function(){
-
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.ActionContext');
-	
-	jQuerySap.require("ui5strap.library");
-	jQuerySap.require("ui5strap.ActionFunctions");
+sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFunctions){
 
 	/*
 	* @constructor
 	*/ 
-	ui5strap.Object.extend('ui5strap.ActionContext', {
+	var ActionContext = ui5strap.Object.extend('ui5strap.ActionContext', {
 		"constructor" : function(action){
 			_init(this, action);
 		}
-	});
-
-	var ActionContext = ui5strap.ActionContext,
-		ActionContextProto = ActionContext.prototype;
+	}),
+	ActionContextProto = ActionContext.prototype;
 
 	ActionContext.NUMBER = 0;
 
@@ -3160,7 +3151,7 @@
 		if(paramFunctions){ //Expected array
 			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
 			var paramFunctionsLength = paramFunctions.length,
-				availableFunctions = ui5strap.ActionFunctions;
+				availableFunctions = ActionFunctions;
 			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
 				
 			for( var i = 0; i < paramFunctionsLength; i++ ){
@@ -3243,8 +3234,9 @@
 
 		return this;
 	};
-
-}());;/*
+	
+	return ActionContext;
+});;/*
  * 
  * UI5Strap
  *
@@ -3271,20 +3263,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionContext'], function(library, ActionContext){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuery.sap.declare("ui5strap.ActionModule");
-
-	jQuerySap.require("ui5strap.library");
-	jQuerySap.require("ui5strap.ActionContext");
-
-	ui5strap.Object.extend("ui5strap.ActionModule");
-
-	var ActionModule = ui5strap.ActionModule,
-		ActionModuleProto = ActionModule.prototype,
-		ActionContext = ui5strap.ActionContext;
+	var ActionModule = ui5strap.Object.extend("ui5strap.ActionModule"),
+		ActionModuleProto = ActionModule.prototype;
 
 	/*
 	* Name of the event that is triggered when the event is completed
@@ -3594,8 +3576,9 @@
 	ActionModuleProto.completed = function(){
 		this.fireEvents(ActionModule.EVENT_COMPLETED);
 	};
-
-}());;/*
+	
+	return ActionModule;
+});;/*
  * 
  * UI5Strap
  *
@@ -3622,22 +3605,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionContext', './ActionModule'], function(library, ActionContext, ActionModule){
 	
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.Action');
-
-	jQuerySap.require("ui5strap.library");
-	jQuerySap.require("ui5strap.ActionContext");
-	jQuerySap.require('ui5strap.ActionModule');
-
-	ui5strap.Object.extend("ui5strap.Action");
-
-	var Action = ui5strap.Action,
+	var Action = ui5strap.Object.extend("ui5strap.Action"),
 		ActionProto = Action.prototype,
-		ActionContext = ui5strap.ActionContext,
-		ActionModule = ui5strap.ActionModule,
 		_actionsCache = {},
 		_modulesCache = {};
 	
@@ -3766,8 +3737,8 @@
 			return;
 		}
 		
-		var actionUrl = jQuerySap.getModulePath(actionName) + '.action.json';
-		jQuerySap.log.debug("[ACTION] Loading '" + actionName + "' from '" + actionUrl + "'" );
+		var actionUrl = jQuery.sap.getModulePath(actionName) + '.action.json';
+		jQuery.sap.log.debug("[ACTION] Loading '" + actionName + "' from '" + actionUrl + "'" );
 		
 		ui5strap.readTextFile(
 				actionUrl, 
@@ -3866,7 +3837,7 @@
 	* @Public
 	*/
 	Action.run = function(action){
-		jQuerySap.log.debug("[ACTION] Action.run");
+		jQuery.sap.log.debug("[ACTION] Action.run");
 
 		var actionName = action.parameters;
 		if(typeof actionName === 'string'){
@@ -3881,8 +3852,9 @@
 			_execute(context);
 		}
 	};
-
-}());;/*
+	
+	return Action;
+});;/*
  * 
  * UI5Strap
  *
@@ -3909,22 +3881,17 @@
  * 
  */
 
-(function (){
+sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel'], function(library, ObjectBase, JSONModel){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare("ui5strap.AppConfig");
-	sap.ui.base.Object.extend("ui5strap.AppConfig", {
+	var AppConfig = ObjectBase.extend("ui5strap.AppConfig", {
 		"constructor" : function(options, parameters){
 			this.options = options || {};
 			this.parameters = parameters || {};
 			
 			this.data = {};
 		}
-	});
-
-	var AppConfig = ui5strap.AppConfig,
-		AppConfigProto = AppConfig.prototype;
+	}),
+	AppConfigProto = AppConfig.prototype;
 
 	/*
 	* @deprecated
@@ -4253,10 +4220,11 @@
 	};
 
 	AppConfigProto.getModel = function(){
-		return new sap.ui.model.json.JSONModel(this.data);
+		return new JSONModel(this.data);
 	};
-
-}());;/*
+	
+	return AppConfig;
+});;/*
  * 
  * UI5Strap
  *
@@ -4283,20 +4251,17 @@
  * 
  */
  
-(function(){
+sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
 
-	jQuery.sap.declare("ui5strap.AppComponent");
-	
-	sap.ui.base.Object.extend("ui5strap.AppComponent", {
+	var AppComponent = ObjectBase.extend("ui5strap.AppComponent", {
 		"constructor" : function(app, options){
-			sap.ui.base.Object.apply(this);
+			ObjectBase.apply(this);
 			
 			this.app = app;
 			this.options = options;
 		}
-	});
-
-	var AppComponentProto = ui5strap.AppComponent.prototype;
+	}),
+	AppComponentProto = AppComponent.prototype;
 
 	AppComponentProto.init = function(){
 
@@ -4312,7 +4277,8 @@
 	};
 	*/
 	
-}());;/*
+	return AppComponent;
+});;/*
  * 
  * UI5Strap
  *
@@ -4339,14 +4305,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
-	jQuery.sap.declare("ui5strap.AppFrame");
-	jQuery.sap.require("ui5strap.AppComponent");
-	
-	ui5strap.AppComponent.extend("ui5strap.AppFrame", {
+	var AppFrame = AppComponent.extend("ui5strap.AppFrame", {
 		"constructor" : function(app, options){
-			ui5strap.AppComponent.call(this, app, options);
+			AppComponent.call(this, app, options);
 			
 			this.vTargets = {};
 
@@ -4354,10 +4317,8 @@
 
 			this.initialized = false;
 		}
-	});
-
-	var AppFrame = ui5strap.AppFrame,
-		AppFrameProto = AppFrame.prototype;
+	}),
+	AppFrameProto = AppFrame.prototype;
 
 	/*
 	 * Must be explicitely called from outside
@@ -4664,8 +4625,8 @@
 		return oPage;
 	};
 	
-
-}());;/*
+	return AppFrame;
+});;/*
  * 
  * UI5Strap
  *
@@ -4692,18 +4653,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library, ObjectBase, Action){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.AppBase');
-
-	jQuerySap.require("ui5strap.library");
-	jQuerySap.require("ui5strap.Action");
-
-	//jQuerySap.require("sap.ui.base.Event");
-
-	sap.ui.base.Object.extend('ui5strap.AppBase', {
+	var AppBase = ObjectBase.extend('ui5strap.AppBase', {
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
 			
@@ -4728,10 +4680,8 @@
 				viewer.sendMessage(appMessage);
 			};
 		}
-	});
-
-	var AppBase = ui5strap.AppBase,
-		AppBaseProto = AppBase.prototype;
+	}),
+	AppBaseProto = AppBase.prototype;
 
 	/*
 	* Init sapplication specific logging
@@ -5028,7 +4978,7 @@
 		};
 		
 		for(var i = 0; i < actions.length; i++){
-			ui5strap.Action.loadFromFile(actions[i], successCallback, true);
+			Action.loadFromFile(actions[i], successCallback, true);
 		}
 	};
 	
@@ -5523,7 +5473,7 @@
 	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this,
 			overlayControl = this.overlayControl,
-			transitionName = transitionName || 'transition-slide-ttb';
+			transitionName = transitionName || 'slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.overlayId, true, function(){
 			if(!(viewDataOrControl instanceof ui5strap.Control)){
@@ -5544,7 +5494,7 @@
 
 		var _this = this,
 			overlayControl = this.overlayControl,
-			transitionName = transitionName || 'transition-slide-btt';
+			transitionName = transitionName || 'slide-btt';
 		
 		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
 			ui5strap.Layer.setVisible(_this.overlayId, false, callback);
@@ -5636,9 +5586,7 @@
 	AppBaseProto.runAction = function(action){
 		action.app = this;
 
-		jQuery.sap.require('ui5strap.Action');
-		
-		ui5strap.Action.run(action);
+		Action.run(action);
 	};
 
 	/*
@@ -6115,7 +6063,8 @@
 		
 	};
 
-}());;/*
+	return AppBase;
+});;/*
  * 
  * UI5Strap
  *
@@ -6142,25 +6091,12 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui/core/mvc/HTMLView", "sap/ui/core/mvc/XMLView", "sap/ui/core/CustomData", "sap/ui/model/resource/ResourceModel", "sap/ui/model/json/JSONModel"], 
+				function(library, AppBase, AppConfig, AppComponent, HTMLView, XMLView, CustomData, ResourceModel, JSONModel){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.App');
-
-	jQuerySap.require("ui5strap.library");
-
-	jQuerySap.require("ui5strap.AppBase");
-	jQuerySap.require("ui5strap.AppComponent");
-	
-	jQuerySap.require("sap.ui.core.mvc.HTMLView");
-	jQuerySap.require("sap.ui.core.CustomData");
-	jQuerySap.require("sap.ui.model.resource.ResourceModel");
-	jQuerySap.require("sap.ui.model.json.JSONModel");
-	
-	ui5strap.AppBase.extend('ui5strap.App', {
+	var App = AppBase.extend('ui5strap.App', {
 		"constructor" : function(config, viewer){
-			ui5strap.AppBase.call(this, config, viewer);
+			AppBase.call(this, config, viewer);
 			
 			//Init local vars
 			this._runtimeData = {
@@ -6170,11 +6106,8 @@
 			};
 
 		}
-	});
-
-	var App = ui5strap.App,
-		AppProto = App.prototype,
-		AppConfig = ui5strap.AppConfig;
+	}),
+	AppProto = App.prototype;
 
 	/*
 	* ------------------------------------------------
@@ -6211,9 +6144,9 @@
 			var viewConfig = views[viewSrc];
 			if(viewConfig.preload && 'HTML' === viewConfig.type){
 				//We are currently only able to cache HTML views
-				var viewUrl = sap.ui.core.mvc.HTMLView._getViewUrl(viewSrc);
+				var viewUrl = HTMLView._getViewUrl(viewSrc);
 
-				if(viewUrl in sap.ui.core.mvc.HTMLView._mTemplates){
+				if(viewUrl in HTMLView._mTemplates){
 					viewCallback();
 				}
 				else{ 
@@ -6227,7 +6160,7 @@
 								
 								//TODO
 								//Find a better way to preload HTML views!
-								sap.ui.core.mvc.HTMLView._mTemplates[this.url] = text;
+								HTMLView._mTemplates[this.url] = text;
 								
 								viewCallback();
 							},
@@ -6248,7 +6181,7 @@
 	 */
 	AppProto.preload = function(callback){
 		var _this = this;
-		ui5strap.AppBase.prototype.preload.call(this, function(){
+		AppBase.prototype.preload.call(this, function(){
 			_this.includeStyle(function includeStyle_complete(){
 				_this.log.debug("PRELOADING VIEWS...");
 				
@@ -6392,7 +6325,188 @@
 	AppProto.getRootControl = function(){
 		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');
 	};
+	
+	return App;
+	
+});;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.ControlBase
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 
+(function(){
+
+	jQuery.sap.declare("ui5strap.ControlBase");
+	jQuery.sap.require("ui5strap.library");
+	
+	ui5strap.Control.extend("ui5strap.ControlBase", {
+		metadata : {
+
+			library : "ui5strap",
+			
+			properties : {
+				options : {
+					type : "string",
+					defaultValue : ""
+				}
+			},
+			
+			
+			events : {
+				/*
+				optionChange : {
+					parameters : {
+						"optionName" : {type : "string"},
+						"optionEnabled" : {type : "boolean"}
+					}
+				}
+				*/
+			}
+		}
+	});
+	
+	var ControlBaseProto = ui5strap.ControlBase.prototype;
+	
+	ControlBaseProto._STYLE_PREFIX = 'us5l-control';
+	
+	/**
+	* @Protected
+	*/
+	ControlBaseProto._getOptionsClassString = function(){
+		var options = this.getOptions(),
+			classes = '';
+	    
+		if(options){
+	    	options = options.split(' ');
+	    	for(var i = 0; i < options.length; i++){
+	    		classes += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
+	    	}
+	    }
+		
+		return classes;
+	};
+	
+	/**
+	* @Protected
+	*/
+	ControlBaseProto._updateStyleClass = function(){
+		var currentClassesString = '',
+			options = this.getOptions();
+		
+		var classes = this.$().attr('class').split(' ');
+		for(var i = 0; i < classes.length; i++){
+			var cClass = classes[i];
+			if(cClass && cClass.indexOf(this._STYLE_PREFIX + '-option-') !== 0){
+				currentClassesString += ' ' + cClass;
+			}
+			
+		}
+		
+		if(options){
+	    	options = options.split(' ');
+	    	for(var i = 0; i < options.length; i++){
+	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
+	    	}
+	    }
+	
+		this.$().attr('class', currentClassesString.trim());
+	};
+	
+	/**
+	* @Public
+	* @Override
+	* TODO avoid overriding of user provided css classes
+	*/
+	ControlBaseProto.setOptions = function(newOptions){
+		if(this.getDomRef()){
+			this.setProperty('options', newOptions, true);
+			this._updateStyleClass();
+		}
+		else{
+			this.setProperty('options', newOptions);
+		}
+	};
+
+	/**
+	* @Public
+	*/
+	ControlBaseProto.setOptionsEnabled = function(options){
+		var currentOptions = [],
+			cOptions = this.getOptions();
+		
+		if(cOptions){
+			currentOptions = cOptions.split(' ');
+		}
+		
+		for(var optionName in options){
+			var optionIndex = jQuery.inArray(optionName, currentOptions),
+				optionEnabled = options[optionName];
+
+			if(optionEnabled && -1 === optionIndex
+				|| !optionEnabled && -1 !== optionIndex){
+				
+				if(optionEnabled){
+					currentOptions.push(optionName);
+				}
+				else{
+					currentOptions.splice(optionIndex, 1);
+				}
+				
+				this.onOptionChange(optionName, optionEnabled);
+			}
+		}
+		this.setOptions(currentOptions.join(' '));
+	};
+
+	/**
+	* @Public
+	*/
+	ControlBaseProto.isOptionEnabled = function(optionName){
+		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
+	};
+	
+	ControlBaseProto.setOptionEnabled = function(optionName, optionEnabled){
+		var options = {};
+		
+		options[optionName] = optionEnabled;
+		
+		this.setOptionsEnabled(options);
+	};
+	
+	/**
+	* @Public
+	*/
+	ControlBaseProto.toggleOption = function(optionName){
+		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
+	};
+	
+	/**
+	* @Public
+	*/
+	ControlBaseProto.onOptionChange = function(optionName, optionEnabled){
+		
+	};
 }());;/*
  * 
  * UI5Strap
@@ -7224,14 +7338,9 @@
  */
  
 
-(function(){
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.ViewerBase');
-
-	jQuerySap.require('ui5strap.library');
-
-	sap.ui.base.Object.extend('ui5strap.ViewerBase', {
+sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
+	
+	var ViewerBase = ObjectBase.extend('ui5strap.ViewerBase', {
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);
 			
@@ -7270,9 +7379,8 @@
 				this.options.app = "./app/app.json";
 			}
 		}
-	});
-
-	var ViewerBaseProto = ui5strap.ViewerBase.prototype;
+	}),
+	ViewerBaseProto = ViewerBase.prototype;
 	
 	/**
 	 * Initialzer
@@ -7449,7 +7557,8 @@
 
 	//End ViewerBase
 	
-}());;/*
+	return ViewerBase;
+});;/*
  * 
  * UI5Strap
  *
@@ -7476,26 +7585,12 @@
  * 
  */
 
-(function(){
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare("ui5strap.Viewer");
+sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer'], 
+				function(library, ViewerBase, App, AppConfig, NavContainer){
 	
-	jQuerySap.require("ui5strap.library");
-	
-	jQuerySap.require("ui5strap.ViewerBase");
-	
-	jQuerySap.require("ui5strap.AppConfig");
-	jQuerySap.require("ui5strap.NavContainer");
-
-	jQuerySap.require("ui5strap.App");
-	//jQuerySap.require("ui5strap.AppSystem");
-	//jQuerySap.require("ui5strap.AppSandbox");
-	//jQuerySap.require("ui5strap.AppConsole");
-	
-	ui5strap.ViewerBase.extend("ui5strap.Viewer", {
+	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", {
 		"constructor" : function(options){
-			ui5strap.ViewerBase.call(this, options);
+			ViewerBase.call(this, options);
 
 			this._loadedLibraries = {};
 			this._loadingSapplication = null;
@@ -7504,11 +7599,9 @@
 			
 			this._console = null;
 		}
-	});
-
-	var ViewerMulti = ui5strap.Viewer,
-		ViewerMultiProto = ViewerMulti.prototype,
-		domAttachTimeout = 50;
+	}),
+	ViewerMultiProto = ViewerMulti.prototype,
+	domAttachTimeout = 50;
 
 	//Private properties that are linked to the scope of the anonymous self executing function around this module
 	//This prevents other apps from accessing data easily
@@ -7525,7 +7618,7 @@
 	 * @Public
 	 */
 	ViewerMultiProto.init = function(){
-		ui5strap.ViewerBase.prototype.init.call(this);
+		ViewerBase.prototype.init.call(this);
 		
 		//Init methods
 		//TOOO Move to Viewer base
@@ -7543,7 +7636,7 @@
 		
 		this.init();
 
-		var appUrl = ui5strap.AppConfig.processOption("app", this.options.app);
+		var appUrl = AppConfig.processOption("app", this.options.app);
 
 		if(null === appUrl){
 			throw new Error('Cannot start viewer: no app url specified.');
@@ -7749,7 +7842,7 @@
 				throw new Error('Do not include the libraries "ui5strap" and "ui5os" into your libraries configuration.');
 			}
 			
-			jQuerySap.registerModulePath(libPackage, libLocation);
+			jQuery.sap.registerModulePath(libPackage, libLocation);
 			_this._loadedLibraries[libPackage] = libLocation;
 
 			if(lib.preload){
@@ -7816,13 +7909,13 @@
 		jQuery.sap.log.debug("ViewerProto.loadApp");
 
 		var _this = this,
-			appConfig = new ui5strap.AppConfig(this.options, parameters);
+			appConfig = new AppConfig(this.options, parameters);
 		
 		appConfig.setData(configDataJSON);
 
 		//TODO log level should only affect on app level
 		if("logLevel" in configDataJSON.app){
-			jQuerySap.log.setLevel(configDataJSON.app.logLevel);
+			jQuery.sap.log.setLevel(configDataJSON.app.logLevel);
 		}
 		
 		if(_m_loadedSapplicationsById[configDataJSON.app.id]){
@@ -8171,7 +8264,7 @@
 	*/
 	ViewerMultiProto._initConsole = function(){
 		if(this.options.enableConsole){
-			jQuerySap.require("ui5strap.Console");
+			jQuery.sap.require("ui5strap.Console");
 			this._console = new ui5strap.Console();
 		}
 	};	
@@ -8268,8 +8361,9 @@
 			false
 		);
 	};
-
-}());;/*
+	
+	return ViewerMulti;
+});;/*
  * 
  * UI5Strap
  *
@@ -14566,15 +14660,15 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function(library, AppBase, Controller){
 
-	jQuery.sap.require("ui5strap.library");
-	
 	var controllerImpl = {};
+	
+	AppBase.blessController(controllerImpl);
+    
+	return Controller.extend("ui5strap.ActionController", controllerImpl);
 
-	ui5strap.controller("ui5strap.ActionController", controllerImpl);
-
-}());;/*
+});;/*
  * 
  * UI5Strap
  *
@@ -14804,21 +14898,9 @@
  * 
  */
 
- (function(){
+ sap.ui.define(['./library', './AppBase', './Console'], function(library, AppBase, Console){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare("ui5strap.AppConsole");
-
-	jQuerySap.require("ui5strap.library");
-	
-	jQuerySap.require("ui5strap.AppBase");
-	
-	jQuerySap.require("ui5strap.Console");
-	
-	ui5strap.AppBase.extend("ui5strap.AppConsole");
-
-	var AppConsole = ui5strap.AppConsole, 
+	 var AppConsole = AppBase.extend("ui5strap.AppConsole"),
 		AppConsoleProto = AppConsole.prototype;
 
 	/*
@@ -14873,7 +14955,7 @@
 
 	AppConsoleProto.getRootControl = function(){
 		if(!this.console){
-			this.console = new ui5strap.Console();
+			this.console = new Console();
 			this.console.setCurrentLog(this.getId());
 			this.console.setLogLevel(this.config.data.app.logLevel);
 		}
@@ -14894,8 +14976,8 @@
 
 	};
 
-	
-}());;/*
+	return AppConsole;
+});;/*
  * 
  * UI5Strap
  *
@@ -14922,27 +15004,16 @@
  * 
  */
 
- (function(){
+ sap.ui.define(['./library', './AppBase', './Sandbox'], function(library, AppBase, Sandbox){
 
-	var jQuerySap = jQuery.sap;
-	jQuerySap.declare("ui5strap.AppSandbox");
-
-	jQuerySap.require("ui5strap.library");
-
-	jQuerySap.require("ui5strap.AppBase");
-	
-	jQuerySap.require("ui5strap.Sandbox");
-
-	ui5strap.AppBase.extend("ui5strap.AppSandbox", {
+	 var AppSandbox = AppBase.extend("ui5strap.AppSandbox", {
 		"constructor" : function(config, viewer){
-			ui5strap.AppBase.call(this, config, viewer);
+			AppBase.call(this, config, viewer);
 			
-			this._sandboxControl = new ui5strap.Sandbox();
+			this._sandboxControl = new Sandbox();
 		}
-	});
-
-	var AppSandbox = ui5strap.AppSandbox, 
-		AppSandboxProto = AppSandbox.prototype;
+	}),
+	AppSandboxProto = AppSandbox.prototype;
 
 	/*
 	* -------------------------------------------------------------
@@ -14965,7 +15036,7 @@
 	* @public
 	*/
 	AppSandboxProto.onMessage = function(oEvent){
-		ui5strap.AppBase.prototype.onMessage.call(this, oEvent);
+		AppBase.prototype.onMessage.call(this, oEvent);
 		
 		var appMessage = oEvent.getParameters();
 		
@@ -14976,7 +15047,7 @@
 	};
 
 	AppSandboxProto.onFirstShow = function(){
-		ui5strap.AppBase.prototype.onFirstShow.call(this);
+		AppBase.prototype.onFirstShow.call(this);
 
 		this._sandboxControl.setSrc(this.config.data.app.appURL);
 	};
@@ -14992,8 +15063,9 @@
 	};
 
 	AppSandboxProto.removeStyle = function(){};
-
-}());;/*
+	
+	return AppSandbox;
+});;/*
  * 
  * Ui5OS
  * 
@@ -15009,27 +15081,20 @@
  * 
  */
 
- (function(){
+ sap.ui.define(['./library', './App'], function(library, App){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.require("ui5strap.App");
-	
-	jQuerySap.declare("ui5strap.AppSystem");
-
-	ui5strap.App.extend("ui5strap.AppSystem", {
+	 var AppSystem = App.extend("ui5strap.AppSystem", {
 		"constructor" : function(config, viewer){
-			ui5strap.App.call(this, config, viewer);
+			App.call(this, config, viewer);
 
 			this.getViewer = function(){
 				return viewer;
 			};
 		}
 	});
-	var AppSystem = ui5strap.AppSystem, 
-		AppSystemProto = AppSystem.prototype;
-
-}());;/*
+	
+	 return AppSystem;
+});;/*
  * 
  * UI5Strap
  *
@@ -18111,185 +18176,6 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 	};
 
 
-}());;/*
- * 
- * UI5Strap
- *
- * ui5strap.ControlBase
- * 
- * @author Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Homepage: http://ui5strap.com
- *
- * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
- * 
- */
-
-(function(){
-
-	jQuery.sap.declare("ui5strap.ControlBase");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.Control.extend("ui5strap.ControlBase", {
-		metadata : {
-
-			library : "ui5strap",
-			
-			properties : {
-				options : {
-					type : "string",
-					defaultValue : ""
-				}
-			},
-			
-			
-			events : {
-				/*
-				optionChange : {
-					parameters : {
-						"optionName" : {type : "string"},
-						"optionEnabled" : {type : "boolean"}
-					}
-				}
-				*/
-			}
-		}
-	});
-	
-	var ControlBaseProto = ui5strap.ControlBase.prototype;
-	
-	ControlBaseProto._STYLE_PREFIX = 'us5l-control';
-	
-	/**
-	* @Protected
-	*/
-	ControlBaseProto._getOptionsClassString = function(){
-		var options = this.getOptions(),
-			classes = '';
-	    
-		if(options){
-	    	options = options.split(' ');
-	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
-	    	}
-	    }
-		
-		return classes;
-	};
-	
-	/**
-	* @Protected
-	*/
-	ControlBaseProto._updateStyleClass = function(){
-		var currentClassesString = '',
-			options = this.getOptions();
-		
-		var classes = this.$().attr('class').split(' ');
-		for(var i = 0; i < classes.length; i++){
-			var cClass = classes[i];
-			if(cClass && cClass.indexOf(this._STYLE_PREFIX + '-option-') !== 0){
-				currentClassesString += ' ' + cClass;
-			}
-			
-		}
-		
-		if(options){
-	    	options = options.split(' ');
-	    	for(var i = 0; i < options.length; i++){
-	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
-	    	}
-	    }
-	
-		this.$().attr('class', currentClassesString.trim());
-	};
-	
-	/**
-	* @Public
-	* @Override
-	* TODO avoid overriding of user provided css classes
-	*/
-	ControlBaseProto.setOptions = function(newOptions){
-		if(this.getDomRef()){
-			this.setProperty('options', newOptions, true);
-			this._updateStyleClass();
-		}
-		else{
-			this.setProperty('options', newOptions);
-		}
-	};
-
-	/**
-	* @Public
-	*/
-	ControlBaseProto.setOptionsEnabled = function(options){
-		var currentOptions = [],
-			cOptions = this.getOptions();
-		
-		if(cOptions){
-			currentOptions = cOptions.split(' ');
-		}
-		
-		for(var optionName in options){
-			var optionIndex = jQuery.inArray(optionName, currentOptions),
-				optionEnabled = options[optionName];
-
-			if(optionEnabled && -1 === optionIndex
-				|| !optionEnabled && -1 !== optionIndex){
-				
-				if(optionEnabled){
-					currentOptions.push(optionName);
-				}
-				else{
-					currentOptions.splice(optionIndex, 1);
-				}
-				
-				this.onOptionChange(optionName, optionEnabled);
-			}
-		}
-		this.setOptions(currentOptions.join(' '));
-	};
-
-	/**
-	* @Public
-	*/
-	ControlBaseProto.isOptionEnabled = function(optionName){
-		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
-	};
-	
-	ControlBaseProto.setOptionEnabled = function(optionName, optionEnabled){
-		var options = {};
-		
-		options[optionName] = optionEnabled;
-		
-		this.setOptionsEnabled(options);
-	};
-	
-	/**
-	* @Public
-	*/
-	ControlBaseProto.toggleOption = function(optionName){
-		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
-	};
-	
-	/**
-	* @Public
-	*/
-	ControlBaseProto.onOptionChange = function(optionName, optionEnabled){
-		
-	};
 }());;/*
  * 
  * UI5Strap

@@ -784,14 +784,14 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
 			var paramFunctionsLength = paramFunctions.length,
 				availableFunctions = ActionFunctions;
-			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
+			jQuery.sap.log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
 				
 			for( var i = 0; i < paramFunctionsLength; i++ ){
 				var functionDef = paramFunctions[i],
 					functionName = functionDef['function'];
 
 				if(availableFunctions[functionName]){
-					_this._log.debug("Calling parameter function '" + functionName + "'");
+					jQuery.sap.log.debug("Calling parameter function '" + functionName + "'");
 					var funcResult = availableFunctions[functionName].call(_this, functionDef.args);
 					if(false === funcResult){
 						throw new Error("Parameter function '" + functionName + "' failed.");
