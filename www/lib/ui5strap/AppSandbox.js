@@ -25,27 +25,16 @@
  * 
  */
 
- (function(){
+ sap.ui.define(['./library', './AppBase', './Sandbox'], function(library, AppBase, Sandbox){
 
-	var jQuerySap = jQuery.sap;
-	jQuerySap.declare("ui5strap.AppSandbox");
-
-	jQuerySap.require("ui5strap.library");
-
-	jQuerySap.require("ui5strap.AppBase");
-	
-	jQuerySap.require("ui5strap.Sandbox");
-
-	ui5strap.AppBase.extend("ui5strap.AppSandbox", {
+	 var AppSandbox = AppBase.extend("ui5strap.AppSandbox", {
 		"constructor" : function(config, viewer){
-			ui5strap.AppBase.call(this, config, viewer);
+			AppBase.call(this, config, viewer);
 			
-			this._sandboxControl = new ui5strap.Sandbox();
+			this._sandboxControl = new Sandbox();
 		}
-	});
-
-	var AppSandbox = ui5strap.AppSandbox, 
-		AppSandboxProto = AppSandbox.prototype;
+	}),
+	AppSandboxProto = AppSandbox.prototype;
 
 	/*
 	* -------------------------------------------------------------
@@ -68,7 +57,7 @@
 	* @public
 	*/
 	AppSandboxProto.onMessage = function(oEvent){
-		ui5strap.AppBase.prototype.onMessage.call(this, oEvent);
+		AppBase.prototype.onMessage.call(this, oEvent);
 		
 		var appMessage = oEvent.getParameters();
 		
@@ -79,7 +68,7 @@
 	};
 
 	AppSandboxProto.onFirstShow = function(){
-		ui5strap.AppBase.prototype.onFirstShow.call(this);
+		AppBase.prototype.onFirstShow.call(this);
 
 		this._sandboxControl.setSrc(this.config.data.app.appURL);
 	};
@@ -95,5 +84,6 @@
 	};
 
 	AppSandboxProto.removeStyle = function(){};
-
-}());
+	
+	return AppSandbox;
+});

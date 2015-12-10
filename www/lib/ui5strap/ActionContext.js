@@ -25,26 +25,17 @@
  * 
  */
 
-(function(){
-
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.ActionContext');
-	
-	jQuerySap.require("ui5strap.library");
-	jQuerySap.require("ui5strap.ActionFunctions");
+sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFunctions){
 
 	/*
 	* @constructor
 	*/ 
-	ui5strap.Object.extend('ui5strap.ActionContext', {
+	var ActionContext = ui5strap.Object.extend('ui5strap.ActionContext', {
 		"constructor" : function(action){
 			_init(this, action);
 		}
-	});
-
-	var ActionContext = ui5strap.ActionContext,
-		ActionContextProto = ActionContext.prototype;
+	}),
+	ActionContextProto = ActionContext.prototype;
 
 	ActionContext.NUMBER = 0;
 
@@ -792,7 +783,7 @@
 		if(paramFunctions){ //Expected array
 			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
 			var paramFunctionsLength = paramFunctions.length,
-				availableFunctions = ui5strap.ActionFunctions;
+				availableFunctions = ActionFunctions;
 			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
 				
 			for( var i = 0; i < paramFunctionsLength; i++ ){
@@ -875,5 +866,6 @@
 
 		return this;
 	};
-
-}());
+	
+	return ActionContext;
+});

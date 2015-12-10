@@ -25,21 +25,9 @@
  * 
  */
 
- (function(){
+ sap.ui.define(['./library', './AppBase', './Console'], function(library, AppBase, Console){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare("ui5strap.AppConsole");
-
-	jQuerySap.require("ui5strap.library");
-	
-	jQuerySap.require("ui5strap.AppBase");
-	
-	jQuerySap.require("ui5strap.Console");
-	
-	ui5strap.AppBase.extend("ui5strap.AppConsole");
-
-	var AppConsole = ui5strap.AppConsole, 
+	 var AppConsole = AppBase.extend("ui5strap.AppConsole"),
 		AppConsoleProto = AppConsole.prototype;
 
 	/*
@@ -94,7 +82,7 @@
 
 	AppConsoleProto.getRootControl = function(){
 		if(!this.console){
-			this.console = new ui5strap.Console();
+			this.console = new Console();
 			this.console.setCurrentLog(this.getId());
 			this.console.setLogLevel(this.config.data.app.logLevel);
 		}
@@ -115,5 +103,5 @@
 
 	};
 
-	
-}());
+	return AppConsole;
+});

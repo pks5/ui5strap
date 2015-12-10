@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
+sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel'], function(library, ObjectBase, JSONModel){
 
 	var AppConfig = ObjectBase.extend("ui5strap.AppConfig", {
 		"constructor" : function(options, parameters){
@@ -364,7 +364,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 	};
 
 	AppConfigProto.getModel = function(){
-		return new sap.ui.model.json.JSONModel(this.data);
+		return new JSONModel(this.data);
 	};
 	
 	return AppConfig;

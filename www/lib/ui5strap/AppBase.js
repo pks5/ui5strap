@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object', 'ui5strap/Action'], function(library, ObjectBase, Action){
+sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library, ObjectBase, Action){
 
 	var AppBase = ObjectBase.extend('ui5strap.AppBase', {
 		"constructor" : function(config, viewer){

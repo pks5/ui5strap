@@ -25,13 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define([], function(){
 	
-	jQuery.sap.declare('ui5strap.ActionFunctions');
-
 	var ActionFunctions = {};
-
-	ui5strap.ActionFunctions = ActionFunctions;
 
 	ActionFunctions.set = function(arguments){
 		var argumentKeys = Object.keys(arguments),
@@ -222,5 +218,6 @@
 		
 		return true;
 	};
-
-}());
+	
+	return ActionFunctions;
+});

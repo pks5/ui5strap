@@ -25,22 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionContext', './ActionModule'], function(library, ActionContext, ActionModule){
 	
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare('ui5strap.Action');
-
-	jQuerySap.require("ui5strap.library");
-	jQuerySap.require("ui5strap.ActionContext");
-	jQuerySap.require('ui5strap.ActionModule');
-
-	ui5strap.Object.extend("ui5strap.Action");
-
-	var Action = ui5strap.Action,
+	var Action = ui5strap.Object.extend("ui5strap.Action"),
 		ActionProto = Action.prototype,
-		ActionContext = ui5strap.ActionContext,
-		ActionModule = ui5strap.ActionModule,
 		_actionsCache = {},
 		_modulesCache = {};
 	
@@ -169,8 +157,8 @@
 			return;
 		}
 		
-		var actionUrl = jQuerySap.getModulePath(actionName) + '.action.json';
-		jQuerySap.log.debug("[ACTION] Loading '" + actionName + "' from '" + actionUrl + "'" );
+		var actionUrl = jQuery.sap.getModulePath(actionName) + '.action.json';
+		jQuery.sap.log.debug("[ACTION] Loading '" + actionName + "' from '" + actionUrl + "'" );
 		
 		ui5strap.readTextFile(
 				actionUrl, 
@@ -269,7 +257,7 @@
 	* @Public
 	*/
 	Action.run = function(action){
-		jQuerySap.log.debug("[ACTION] Action.run");
+		jQuery.sap.log.debug("[ACTION] Action.run");
 
 		var actionName = action.parameters;
 		if(typeof actionName === 'string'){
@@ -284,5 +272,6 @@
 			_execute(context);
 		}
 	};
-
-}());
+	
+	return Action;
+});

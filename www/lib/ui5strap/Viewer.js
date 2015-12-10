@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'ui5strap/ViewerBase', 'ui5strap/App', 'ui5strap/AppConfig', 'ui5strap/NavContainer'], 
+sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer'], 
 				function(library, ViewerBase, App, AppConfig, NavContainer){
 	
 	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", {

@@ -14,24 +14,17 @@
  * 
  */
 
- (function(){
+ sap.ui.define(['./library', './App'], function(library, App){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuerySap.require("ui5strap.App");
-	
-	jQuerySap.declare("ui5strap.AppSystem");
-
-	ui5strap.App.extend("ui5strap.AppSystem", {
+	 var AppSystem = App.extend("ui5strap.AppSystem", {
 		"constructor" : function(config, viewer){
-			ui5strap.App.call(this, config, viewer);
+			App.call(this, config, viewer);
 
 			this.getViewer = function(){
 				return viewer;
 			};
 		}
 	});
-	var AppSystem = ui5strap.AppSystem, 
-		AppSystemProto = AppSystem.prototype;
-
-}());
+	
+	 return AppSystem;
+});

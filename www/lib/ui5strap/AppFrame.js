@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
-	jQuery.sap.declare("ui5strap.AppFrame");
-	jQuery.sap.require("ui5strap.AppComponent");
-	
-	ui5strap.AppComponent.extend("ui5strap.AppFrame", {
+	var AppFrame = AppComponent.extend("ui5strap.AppFrame", {
 		"constructor" : function(app, options){
-			ui5strap.AppComponent.call(this, app, options);
+			AppComponent.call(this, app, options);
 			
 			this.vTargets = {};
 
@@ -40,10 +37,8 @@
 
 			this.initialized = false;
 		}
-	});
-
-	var AppFrame = ui5strap.AppFrame,
-		AppFrameProto = AppFrame.prototype;
+	}),
+	AppFrameProto = AppFrame.prototype;
 
 	/*
 	 * Must be explicitely called from outside
@@ -350,5 +345,5 @@
 		return oPage;
 	};
 	
-
-}());
+	return AppFrame;
+});
