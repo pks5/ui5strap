@@ -25,16 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './RestClient'], function(library, RestClient){
 
-    jQuery.sap.declare("ui5strap.ODataClient");
-
-    jQuery.sap.require("ui5strap.RestClient");
-
-    ui5strap.RestClient.extend("ui5strap.ODataClient");
-
-    var ODataClient = ui5strap.ODataClient,
-        ODataClientProto = ODataClient.prototype;
+	var ODataClient = RestClient.extend("ui5strap.ODataClient"),
+		ODataClientProto = ODataClient.prototype;
     
     ODataClientProto.init = function(){
         ui5strap.RestClient.prototype.init.call(this);
@@ -82,5 +76,7 @@
             "error" : options.error
         });
     };
-
-}());
+    
+    //Return Module Constructor
+	return ODataClient;
+});

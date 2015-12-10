@@ -25,16 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
-    jQuery.sap.declare("ui5strap.RestClient");
-
-    jQuery.sap.require("ui5strap.AppComponent");
-
-    ui5strap.AppComponent.extend("ui5strap.RestClient");
-
-    var RestClient = ui5strap.RestClient,
-        RestClientProto = RestClient.prototype;
+	var RestClient = AppComponent.extend("ui5strap.RestClient"),
+		RestClientProto = RestClient.prototype;
 
     RestClient.CONTENT_TYPE_TEXT = 'text/plain';
     RestClient.CONTENT_TYPE_XML = 'application/xml';
@@ -184,5 +178,7 @@
             error : options.error
         });
     };
-    
-}());
+
+    //Return Module Constructor
+    return RestClient;
+});
