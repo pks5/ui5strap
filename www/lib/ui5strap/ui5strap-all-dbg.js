@@ -2303,15 +2303,16 @@ sap.ui.define([], function(){
 			throw new Error($el + " has no method '" + arguments.methodName + "'");
 		}
 
-		var functionArgs = [],
-			argumentKeys = Object.keys(arguments.methodArgs),
-			argumentKeysLength = argumentKeys.length;
+		console.log(arguments);
 		
-		for(var i = 0; i < argumentKeysLength; i++){
-			var funcArg = argumentKeys[i];
-			var srcParamValue = this._getParameter(arguments.methodArgs[funcArg]);
+		var functionArgs = [];
+		
+		for(var i = 0; i < arguments.methodArgs.length; i++){
+			var funcArg = arguments.methodArgs[i];
+			
+			var srcParamValue = this._getParameter(funcArg);
 			if(null === srcParamValue){
-				this._log.error("{func} missing parameter '" + arguments.methodArgs[funcArg] + "'");
+				this._log.error("{func} missing parameter '" + funcArg + "'");
 				return false;
 			}
 			functionArgs.push(srcParamValue);
@@ -2340,15 +2341,13 @@ sap.ui.define([], function(){
 			return false;
 		}
 
-		var functionArgs = [],
-			argumentKeys = Object.keys(arguments.funcArgs),
-			argumentKeysLength = argumentKeys.length;
+		var functionArgs = [];
 		
-		for(var i = 0; i < argumentKeysLength; i++){
-			var funcArg = argumentKeys[i];
-			var srcParamValue = this._getParameter(arguments.funcArgs[funcArg]);
+		for(var i = 0; i < arguments.funcArgs.length; i++){
+			var funcArg = arguments.funcArgs[i];
+			var srcParamValue = this._getParameter(funcArg);
 			if(null === srcParamValue){
-				this._log.error("{func} missing parameter '" + arguments.funcArgs[funcArg] + "'");
+				this._log.error("{func} missing parameter '" + funcArg + "'");
 				return false;
 			}
 			functionArgs.push(srcParamValue);
@@ -2364,7 +2363,8 @@ sap.ui.define([], function(){
 		
 		return true;
 	};
-	
+
+	//Return Module Constructor
 	return ActionFunctions;
 });;/*
  * 
@@ -2611,6 +2611,7 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 					throw new Error("Please provide both 'mode' and 'type' for Control '" + this._controlName + "'");
 				}
 				
+				jQuery.sap.require(moduleName);
 				var Constructor = jQuery.sap.getObject(moduleName);
 				
 				if(!Constructor){
@@ -3152,14 +3153,14 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
 			var paramFunctionsLength = paramFunctions.length,
 				availableFunctions = ActionFunctions;
-			_this._log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
+			jQuery.sap.log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
 				
 			for( var i = 0; i < paramFunctionsLength; i++ ){
 				var functionDef = paramFunctions[i],
 					functionName = functionDef['function'];
 
 				if(availableFunctions[functionName]){
-					_this._log.debug("Calling parameter function '" + functionName + "'");
+					jQuery.sap.log.debug("Calling parameter function '" + functionName + "'");
 					var funcResult = availableFunctions[functionName].call(_this, functionDef.args);
 					if(false === funcResult){
 						throw new Error("Parameter function '" + functionName + "' failed.");
@@ -3234,7 +3235,8 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 
 		return this;
 	};
-	
+
+	//Return Module Constructor
 	return ActionContext;
 });;/*
  * 
@@ -3576,7 +3578,8 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	ActionModuleProto.completed = function(){
 		this.fireEvents(ActionModule.EVENT_COMPLETED);
 	};
-	
+
+	//Return Module Constructor
 	return ActionModule;
 });;/*
  * 
@@ -3853,6 +3856,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 		}
 	};
 	
+	//Return Module Constructor
 	return Action;
 });;/*
  * 
@@ -4222,7 +4226,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	AppConfigProto.getModel = function(){
 		return new JSONModel(this.data);
 	};
-	
+
+	//Return Module Constructor
 	return AppConfig;
 });;/*
  * 
@@ -4276,7 +4281,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 		return this.options;
 	};
 	*/
-	
+
+	//Return Module Constructor
 	return AppComponent;
 });;/*
  * 
@@ -4624,7 +4630,8 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		
 		return oPage;
 	};
-	
+
+	//Return Module Constructor
 	return AppFrame;
 });;/*
  * 
@@ -6063,6 +6070,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		
 	};
 
+	//Return Module Constructor
 	return AppBase;
 });;/*
  * 
@@ -6325,7 +6333,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto.getRootControl = function(){
 		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');
 	};
-	
+
+	//Return Module Constructor
 	return App;
 	
 });;/*
@@ -6370,37 +6379,53 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					type : "string",
 					defaultValue : ""
 				}
-			},
-			
-			
-			events : {
-				/*
-				optionChange : {
-					parameters : {
-						"optionName" : {type : "string"},
-						"optionEnabled" : {type : "boolean"}
-					}
-				}
-				*/
 			}
 		}
 	});
 	
 	var ControlBaseProto = ui5strap.ControlBase.prototype;
 	
-	ControlBaseProto._STYLE_PREFIX = 'us5l-control';
+	ControlBaseProto._stylePrefix = 'ui5strapControlBase';
+	
+	/**
+	 * @Protected
+	 */
+	ControlBaseProto._getStyleClassesRoot = function(){
+		return this._stylePrefix;
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ControlBaseProto._getStyleClassComponent = function(component){
+		return this._stylePrefix + "-" + component;
+	};
 	
 	/**
 	* @Protected
 	*/
-	ControlBaseProto._getOptionsClassString = function(){
+	ControlBaseProto._getStyleClassType = function(type){
+		return 	this._stylePrefix + "-type-" + type;
+	};
+	
+	/**
+	* @Protected
+	*/
+	ControlBaseProto._getStyleClassFlag = function(flag){
+		return 	this._stylePrefix + "-flag-" + flag;
+	};
+	
+	/**
+	* @Protected
+	*/
+	ControlBaseProto._getStyleClassesOptions = function(){
 		var options = this.getOptions(),
 			classes = '';
 	    
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
+	    		classes += ' ' + this._stylePrefix + '-option-' + options[i];
 	    	}
 	    }
 		
@@ -6417,7 +6442,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var classes = this.$().attr('class').split(' ');
 		for(var i = 0; i < classes.length; i++){
 			var cClass = classes[i];
-			if(cClass && cClass.indexOf(this._STYLE_PREFIX + '-option-') !== 0){
+			if(cClass && cClass.indexOf(this._stylePrefix + '-option-') !== 0){
 				currentClassesString += ' ' + cClass;
 			}
 			
@@ -6426,7 +6451,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
+	    		currentClassesString += ' ' + this._stylePrefix + '-option-' + options[i];
 	    	}
 	    }
 	
@@ -6580,7 +6605,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		NavContainerBaseProto = NavContainerBase.prototype,
 		domAttachTimeout = 50;
 	
-	NavContainerBaseProto._STYLE_PREFIX = "navcontainer";
+	NavContainerBaseProto._stylePrefix = "navcontainer";
 	
 	/*
 	*
@@ -7053,6 +7078,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 */
 	
 	/**
+	 * Destroys targets before the current control is destroyed.
 	* @Override
 	*/
 	NavContainerBaseProto.exit = function(){
@@ -7069,34 +7095,36 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
 	};
 	
-	/*
-	 * END OpenUi5 MOD
+	/**
+	 * @Protected
+	 * @Override
 	 */
+	NavContainerBaseProto._getStyleClassesRoot = function(){
+		return "navcontainer navcontainer-type-" + this.ncType;
+	};
 	
+	/**
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
 	NavContainerBaseProto.targetDomId = function(target){
 		return 'navcontainer-target-' + target + '---' + this.getId();
 	};
 	
 	/**
-	*
-	* @Public
-	*/
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
 	NavContainerBaseProto.targetPagesDomId = function(target){
 		return 'navcontainer-pages-' + target + '---' + this.getId();
 	};
 
 	/**
-	* @Public
-	*/
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
 	NavContainerBaseProto.targetLayersDomId = function(target){
 		return 'navcontainer-layers-' + target + '---' + this.getId();
-	};
-	
-	/**
-	 * @Protected
-	 */
-	NavContainerBaseProto._getBaseClassString = function(){
-		return "navcontainer navcontainer-type-" + this.ncType;
 	};
 	
 	/**
@@ -8390,16 +8418,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
-    jQuery.sap.declare("ui5strap.RestClient");
-
-    jQuery.sap.require("ui5strap.AppComponent");
-
-    ui5strap.AppComponent.extend("ui5strap.RestClient");
-
-    var RestClient = ui5strap.RestClient,
-        RestClientProto = RestClient.prototype;
+	var RestClient = AppComponent.extend("ui5strap.RestClient"),
+		RestClientProto = RestClient.prototype;
 
     RestClient.CONTENT_TYPE_TEXT = 'text/plain';
     RestClient.CONTENT_TYPE_XML = 'application/xml';
@@ -8549,8 +8571,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
             error : options.error
         });
     };
-    
-}());;/*
+
+    //Return Module Constructor
+    return RestClient;
+});;/*
  * 
  * UI5Strap
  *
@@ -8659,7 +8683,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 
 	var ButtonPrototype = ui5strap.Button.prototype;
 	
-	ButtonPrototype._STYLE_PREFIX = 'btn';
+	ButtonPrototype._stylePrefix = 'ui5strapButton';
 	
 	ui5strap.Utils.dynamicAttributes(
 		ButtonPrototype, 
@@ -8782,6 +8806,8 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	    if('' !== title){
 	    	rm.writeAttribute('title', title);
 	    }
+	    
+	    rm.addClass("ui5strapButton");
 
 	    if(type === ui5strap.ButtonType.Button || ui5strap.ButtonType.Block === type){
 		    rm.addClass("btn");
@@ -8806,7 +8832,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			rm.addClass("active");
 		}
 	    
-	    rm.addClass(oControl._getOptionsClassString());
+	    rm.addClass(oControl._getStyleClassesOptions());
 	
 		if(!oControl.getEnabled()){
 			rm.writeAttribute("disabled", "disabled");
@@ -12578,14 +12604,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMAppMessage");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMAppMessage");
-
-	var AMAppMessageProto = ui5strap.AMAppMessage.prototype;
+	var AMAppMessage = ActionModule.extend("ui5strap.AMAppMessage"),
+		AMAppMessageProto = AMAppMessage.prototype;
 
 	AMAppMessageProto.namespace = 'appMessage';
 
@@ -12605,14 +12627,16 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		}
 	};
 
-	/*
+	/**
 	* @Override
 	*/
 	AMAppMessageProto.run = function(){
 		this.context.app.sendMessage(this.context.parameters[this.namespace]);
 	};
 
-}());;/*
+	//Return Module Constructor
+	return AMAppMessage;
+});;/*
  * 
  * UI5Strap
  *
@@ -12639,14 +12663,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMCallControlMethod");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMCallControlMethod");
-
-	var AMCallControlMethodProto = ui5strap.AMCallControlMethod.prototype;
+	var AMCallControlMethod = ActionModule.extend("ui5strap.AMCallControlMethod"),
+		AMCallControlMethodProto = AMCallControlMethod.prototype;
 
 	/*
 	* @Override
@@ -12719,7 +12739,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		this.context._log.debug("Calling control method '" + funcName + "' of control '" + control.getId() + "'");
 	};
 
-}());;/*
+	//Return Module Constructor
+	return AMCallControlMethod;
+});;/*
  * 
  * UI5Strap
  *
@@ -12746,14 +12768,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMChangeTheme");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMChangeTheme");
-
-	var AMChangeThemeProto = ui5strap.AMChangeTheme.prototype;
+	var AMChangeTheme = ActionModule.extend("ui5strap.AMChangeTheme"),
+		AMChangeThemeProto = AMChangeTheme.prototype;
 
 	/*
 	* @Override
@@ -12794,7 +12812,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		}, 'opaque');
 	};
 
-}());;/*
+	//Return Module Constructor
+	return AMChangeTheme;
+});;/*
  * 
  * UI5Strap
  *
@@ -12821,13 +12841,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMCloseOverlay");
-
-	ui5strap.ActionModule.extend("ui5strap.AMCloseOverlay");
-
-	var AMCloseOverlayProto = ui5strap.AMCloseOverlay.prototype;
+	var AMCloseOverlay = ActionModule.extend("ui5strap.AMCloseOverlay"),
+		AMCloseOverlayProto = AMCloseOverlay.prototype;
 
 	/*
 	* @Override
@@ -12877,8 +12894,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	AMCloseOverlayProto.completed = function(){
 
 	};
-
-}());;/*
+	
+	return AMCloseOverlay;
+});;/*
  * 
  * UI5Strap
  *
@@ -12905,24 +12923,18 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	//Declare Module
-	jQuery.sap.declare("ui5strap.AMDummy");
-
-	//Require ui5strap.ActionModule
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.AMDummy");
+	var AMDummy = ActionModule.extend("ui5strap.AMDummy");
 
 	/*
 	* Run the ActionModule
 	* @override
 	*/
-	ui5strap.AMDummy.prototype.run = function(){};
-
-}());;/*
+	AMDummy.prototype.run = function(){};
+	
+	return AMDummy;
+});;/*
  * 
  * UI5Strap
  *
@@ -12949,14 +12961,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMGetContextData");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMGetContextData");
-
-	var AMGetContextDataProto = ui5strap.AMGetContextData.prototype;
+	var AMGetContextData = ActionModule.extend("ui5strap.AMGetContextData"),
+		AMGetContextDataProto = AMGetContextData.prototype;
 
 	/*
 	* @Override
@@ -13018,7 +13026,8 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			//this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
 	};
 
-}());;/*
+	return AMGetContextData;
+});;/*
  * 
  * UI5Strap
  *
@@ -13045,18 +13054,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	//Declare Module
-	jQuery.sap.declare("ui5strap.AMGetCurrentPage");
-
-	//Require ui5strap.ActionModule
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.AMGetCurrentPage");
-
-	var AMGetCurrentPageProto = ui5strap.AMGetCurrentPage.prototype;
+	var AMGetCurrentPage = ActionModule.extend("ui5strap.AMGetCurrentPage"),
+		AMGetCurrentPageProto = AMGetCurrentPage.prototype;
 	
 	/*
 	* @Override
@@ -13123,8 +13124,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		}
 		this.setParameter("result", currentPage.getId());
 	};
-
-}());;/*
+	
+	return AMGetCurrentPage;
+});;/*
  * 
  * UI5Strap
  *
@@ -13151,14 +13153,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMGetProperty");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMGetProperty");
-
-	var AMGetPropertyProto = ui5strap.AMGetProperty.prototype;
+	var AMGetProperty = ActionModule.extend("ui5strap.AMGetProperty"),
+		AMGetPropertyProto = AMGetProperty.prototype;
 
 	/*
 	* @Override
@@ -13221,8 +13219,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			
 			this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
 	};
-
-}());;/*
+	
+	return AMGetProperty;
+});;/*
  * 
  * UI5Strap
  *
@@ -13249,14 +13248,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMGotoPage");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMGotoPage");
-
-	var AMGotoPageProto = ui5strap.AMGotoPage.prototype;
+	var AMGotoPage = ActionModule.extend("ui5strap.AMGotoPage"),
+		AMGotoPageProto = AMGotoPage.prototype;
 
 	/*
 	* @Override
@@ -13376,8 +13371,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			
 			this.context.app[frameGetter]().navigateTo(control, this.context.parameters[this.namespace]);
 	}
-
-}());;/*
+	
+	return AMGotoPage;
+});;/*
  * 
  * UI5Strap
  *
@@ -13404,14 +13400,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMJsAlert");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMJsAlert");
-
-	var AMJsAlertProto = ui5strap.AMJsAlert.prototype;
+	var AMJsAlert = ActionModule.extend("ui5strap.AMJsAlert"),
+		AMJsAlertProto = AMJsAlert.prototype;
 
 	/*
 	* @Override
@@ -13434,8 +13426,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	AMJsAlertProto.run = function(){
 		alert(this.getParameter('message'));
 	};
-
-}());;/*
+	
+	return AMJsAlert;
+});;/*
  * 
  * UI5Strap
  *
@@ -13462,13 +13455,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
-	jQuery.sap.declare("ui5strap.AMLoadModel");
-	jQuery.sap.require("ui5strap.ActionModule");
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	ui5strap.ActionModule.extend("ui5strap.AMLoadModel");
-
-	var AMLoadModel = ui5strap.AMLoadModel,
+	var AMLoadModel = ActionModule.extend("ui5strap.AMLoadModel"),
 		AMLoadModelProto = AMLoadModel.prototype;
 	
 
@@ -13627,8 +13616,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				_this.context._log.debug(this._actionNameShort + "Model '" + modelName + "' (type: '" + modelType + "', scope: '" + _this.getParameter("scope") + "') loaded.");
 			});
 	};
-
-}());;/*
+	
+	return AMLoadModel;
+});;/*
  * 
  * UI5Strap
  *
@@ -13655,13 +13645,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMLog");
-
-	ui5strap.ActionModule.extend("ui5strap.AMLog");
-
-	var AMLogProto = ui5strap.AMLog.prototype;
+	var AMLog = ActionModule.extend("ui5strap.AMLog"),
+		AMLogProto = AMLog.prototype;
 
 	/*
 	* @Override
@@ -13688,8 +13675,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	AMLogProto.run = function(){
 		this.context._log[this.getParameter("logType")](this.getParameter("message"));
 	};
-
-}());;/*
+	
+	return AMLog;
+});;/*
  * 
  * UI5Strap
  *
@@ -13716,17 +13704,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMOpenApp");
-	
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	var ActionModule = ui5strap.ActionModule;
-
-	ActionModule.extend("ui5strap.AMOpenApp");
-
-	var OpenAppProto = ui5strap.AMOpenApp.prototype;
+	var AMOpenApp = ActionModule.extend("ui5strap.AMOpenApp"),
+		OpenAppProto = AMOpenApp.prototype;
 
 	/*
 	* @Override
@@ -13839,8 +13820,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	OpenAppProto.completed = function(){
 		//Originally, the EVENT_COMPLETED is fired here. We have to override this method to disable this default behaviour.
 	};
-
-}());;/*
+	
+	return AMOpenApp;
+});;/*
  * 
  * UI5Strap
  *
@@ -13867,18 +13849,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	//Declare Module
-	jQuery.sap.declare("ui5strap.AMSetListItemSelected");
-
-	//Require ui5strap.ActionModule
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.AMSetListItemSelected");
-
-	var AMSetListItemSelectedProto = ui5strap.AMSetListItemSelected.prototype;
+	var AMSetListItemSelected = ActionModule.extend("ui5strap.AMSetListItemSelected"),
+		AMSetListItemSelectedProto = AMSetListItemSelected.prototype;
 	
 	/*
 	* @Override
@@ -13942,8 +13916,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		
 		menu.setSelection(selectedItem);
 	};
-
-}());;/*
+	
+	return AMSetListItemSelected;
+});;/*
  * 
  * UI5Strap
  *
@@ -13970,14 +13945,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMSetModel");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMSetModel");
-
-	var AMSetModelProto = ui5strap.AMSetModel.prototype;
+	var AMSetModel = ActionModule.extend("ui5strap.AMSetModel"),
+		AMSetModelProto = AMSetModel.prototype;
 
 	/*
 	* @Override
@@ -14052,8 +14023,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 
 			this.context._log.debug("Model '" + modelName + "' (src param: '" + srcParam + "', scope: '" + this.getParameter("scope") + "') set.");
 	};
-
-}());;/*
+	
+	return AMSetModel;
+});;/*
  * 
  * UI5Strap
  *
@@ -14080,14 +14052,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMSetProperty");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMSetProperty");
-
-	var AMSetPropertyProto = ui5strap.AMSetProperty.prototype;
+	var AMSetProperty = ActionModule.extend("ui5strap.AMSetProperty"),
+		AMSetPropertyProto = AMSetProperty.prototype;
 
 	/*
 	* @Override
@@ -14162,8 +14130,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 
 			this.context._log.debug("[AMSetProperty]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
-
-}());;/*
+	
+	return AMSetProperty;
+});;/*
  * 
  * UI5Strap
  *
@@ -14190,17 +14159,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMShowApp");
-	
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	var ActionModule = ui5strap.ActionModule;
-
-	ActionModule.extend("ui5strap.AMShowApp");
-
-	var ShowAppProto = ui5strap.AMShowApp.prototype;
+	var AMShowApp = ActionModule.extend("ui5strap.AMShowApp"),
+		ShowAppProto = AMShowApp.prototype;
 
 	/*
 	* @Override
@@ -14245,8 +14207,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	ShowAppProto.completed = function(){
 		//Originally, the EVENT_COMPLETED is fired here. We have to override this method to disable this default behaviour.
 	};
-
-}());;/*
+	
+	return AMShowApp;
+});;/*
  * 
  * UI5Strap
  *
@@ -14273,13 +14236,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMShowOverlay");
-
-	ui5strap.ActionModule.extend("ui5strap.AMShowOverlay");
-
-	var AMShowOverlayProto = ui5strap.AMShowOverlay.prototype;
+	var AMShowOverlay = ActionModule.extend("ui5strap.AMShowOverlay"),
+		AMShowOverlayProto = AMShowOverlay.prototype;
 
 	/*
 	* @Override
@@ -14366,8 +14326,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	AMShowOverlayProto.completed = function(){
 
 	};
-
-}());;/*
+	
+	return AMShowOverlay;
+});;/*
  * 
  * UI5Strap
  *
@@ -14394,14 +14355,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMToggleProperty");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMToggleProperty");
-
-	var AMTogglePropertyProto = ui5strap.AMToggleProperty.prototype;
+	var AMToggleProperty = ActionModule.extend("ui5strap.AMToggleProperty"),
+		AMTogglePropertyProto = AMToggleProperty.prototype;
 
 	/*
 	* @Override
@@ -14461,8 +14418,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 
 			this.context._log.debug("[AMToggleProperty]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
-
-}());;/*
+	
+	return AMToggleProperty;
+});;/*
  * 
  * UI5Strap
  *
@@ -14489,14 +14447,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMUnloadModel");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMUnloadModel");
-
-	var AMUnloadModelProto = ui5strap.AMUnloadModel.prototype;
+	var AMUnloadModel = ActionModule.extend("ui5strap.AMUnloadModel"),
+		AMUnloadModelProto = AMUnloadModel.prototype;
 
 	/*
 	* @Override
@@ -14549,8 +14503,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			
 			this.context._log.debug(this._actionNameShort + "Model '" + modelName + "' (scope: '" + this.getParameter("scope") + "') unloaded.");
 	};
-
-}());;/*
+	
+	return AMUnloadModel;
+});;/*
  * 
  * UI5Strap
  *
@@ -14577,14 +14532,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMWorker");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMWorker");
-
-	var AMWorkerProto = ui5strap.AMWorker.prototype;
+	var AMWorker = ActionModule.extend("ui5strap.AMWorker"),
+		AMWorkerProto = AMWorker.prototype;
 
 	/*
 	* @Override
@@ -14632,8 +14583,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 
 		worker.postMessage('START');
 	};
-
-}());;/*
+	
+	return AMWorker;
+});;/*
  * 
  * UI5Strap
  *
@@ -14665,7 +14617,8 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 	var controllerImpl = {};
 	
 	AppBase.blessController(controllerImpl);
-    
+
+	//Return Module Constructor
 	return Controller.extend("ui5strap.ActionController", controllerImpl);
 
 });;/*
@@ -14953,6 +14906,10 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 	* -------------------------------------------------------------
 	*/
 
+	/**
+	 * Returns the root control of this app.
+	 * @Override
+	 */
 	AppConsoleProto.getRootControl = function(){
 		if(!this.console){
 			this.console = new Console();
@@ -14968,14 +14925,23 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 	* -------------------------------------------------
 	*/
 
+	/**
+	 * Includes the style that is needed for this app.
+	 * @Override
+	 */
 	AppConsoleProto.includeStyle = function(callback){
 		callback && callback();
 	};
 
+	/**
+	 * Removes the style that is needed for this app.
+	 * @Override
+	 */
 	AppConsoleProto.removeStyle = function(){
 
 	};
 
+	//Return Module Constructor
 	return AppConsole;
 });;/*
  * 
@@ -15063,7 +15029,8 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 	};
 
 	AppSandboxProto.removeStyle = function(){};
-	
+
+	//Return Module Constructor
 	return AppSandbox;
 });;/*
  * 
@@ -15092,8 +15059,9 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 			};
 		}
 	});
-	
-	 return AppSystem;
+
+	//Return Module Constructor
+	return AppSystem;
 });;/*
  * 
  * UI5Strap
@@ -15259,7 +15227,7 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 		}
 	});
 
-	ui5strap.Bar.prototype._STYLE_PREFIX = "u5sl-bar";
+	ui5strap.Bar.prototype._stylePrefix = "u5sl-bar";
 }());;/*
  * 
  * UI5Strap
@@ -15922,8 +15890,9 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 	
 	/**
 	 * @Protected
+	 * @Override
 	 */
-	BarNavContainerProto._getBaseClassString = function(){
+	BarNavContainerProto._getStyleClassesRoot = function(){
 		var classes = "navcontainer navcontainer-type-" + this.ncType,
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
@@ -16076,7 +16045,7 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 		rm.writeControlData(oControl);
 		rm.addClass('u5sl-bar ' + (inverse ? 'u5sl-bar-flag-inverse' : 'u5sl-bar-flag-default'));
 		rm.addClass(tagData.typeClassName);
-		rm.addClass(oControl._getOptionsClassString());
+		rm.addClass(oControl._getStyleClassesOptions());
 		rm.writeClasses();
 		rm.write(">");
 
@@ -17936,12 +17905,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Container");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Container", {
+	var Container = ControlBase.extend("ui5strap.Container", {
 		metadata : {
 
 			library : "ui5strap",
@@ -18009,9 +17975,114 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 			defaultAggregation : "content"
 			
 		} //END metadata
-	});
-
-}());;/*
+	}),
+	ContainerProto = Container.prototype;
+	
+	ContainerProto._stylePrefix = "ui5strapContainer";
+	
+	ContainerProto._typeData = {
+		Default : {
+			tagName : "div",
+			className : "container-default"
+		},
+		Text : {
+			tagName : "span",
+			className : "container-text"
+		},
+		Section : {
+			tagName : "section",
+			className : "container-section"
+		},
+		
+		//Bootstrap container and container-fluid
+		//container-inset is an additional class that adds padding-top and padding-bottom
+		
+		Fluid : {
+			tagName : "div",
+			className : "container-fluid"
+		},
+		Inset : {
+			tagName : "div",
+			className : "container-inset"
+		},
+		Full : {
+			tagName : "div",
+			className : "container-full"
+		},
+		
+		FluidInset : {
+			tagName : "div",
+			className : "container-fluid container-inset"
+		},
+		FluidFull : {
+			tagName : "div",
+			className : "container-fluid container-full"
+		},
+		InsetFull : {
+			tagName : "div",
+			className : "container-inset container-full"
+		},
+		FluidInsetFull : {
+			tagName : "div",
+			className : "container-fluid container-inset container-full"
+		},
+		
+		
+		//Bootstrap Components
+		Website : {
+			tagName : "div",
+			className : "container"
+		},
+		Jumbotron : {
+			tagName : "div",
+			className : "container-jumbotron jumbotron"
+		},
+		Well : {
+			tagName : "div",
+			className : "container-well well"
+		},
+		WellLarge : {
+			tagName : "div",
+			className : "container-well well well-lg"
+		},
+		PageHeader : {
+			tagName : "div",
+			className : "container-page-header page-header"
+		},
+		
+		
+		
+		//Deprecated
+		Page : {
+			tagName : "div",
+			className : "container"
+		},
+		Paragraph : {
+			tagName : "div",
+			className : "container-paragraph"
+		},
+		Phrasing : {
+			tagName : "div",
+			className : "container-phrasing"
+		},
+		Floating : {
+			tagName : "div",
+			className : "container-floating"
+		}
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ContainerProto._getStyleClassesRoot = function(){
+		return this._stylePrefix + " " + this._getStyleClassType(this.getType());
+	};
+	
+	//Return Module Constructor
+	return Container;
+	
+});;/*
  * 
  * UI5Strap
  *
@@ -18038,118 +18109,20 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ContainerRenderer");
+	var ContainerRenderer = {};
 
-	ui5strap.ContainerRenderer = {
-		typeToTag : {
-			Default : {
-				tagName : "div",
-				className : "container-default"
-			},
-			Text : {
-				tagName : "span",
-				className : "container-text"
-			},
-			Section : {
-				tagName : "section",
-				className : "container-section"
-			},
-			
-			//Bootstrap container and container-fluid
-			//container-inset is an additional class that adds padding-top and padding-bottom
-			
-			Fluid : {
-				tagName : "div",
-				className : "container-fluid"
-			},
-			Inset : {
-				tagName : "div",
-				className : "container-inset"
-			},
-			Full : {
-				tagName : "div",
-				className : "container-full"
-			},
-			
-			FluidInset : {
-				tagName : "div",
-				className : "container-fluid container-inset"
-			},
-			FluidFull : {
-				tagName : "div",
-				className : "container-fluid container-full"
-			},
-			InsetFull : {
-				tagName : "div",
-				className : "container-inset container-full"
-			},
-			FluidInsetFull : {
-				tagName : "div",
-				className : "container-fluid container-inset container-full"
-			},
-			
-			
-			//Bootstrap Components
-			Website : {
-				tagName : "div",
-				className : "container"
-			},
-			Jumbotron : {
-				tagName : "div",
-				className : "container-jumbotron jumbotron"
-			},
-			Well : {
-				tagName : "div",
-				className : "container-well well"
-			},
-			WellLarge : {
-				tagName : "div",
-				className : "container-well well well-lg"
-			},
-			PageHeader : {
-				tagName : "div",
-				className : "container-page-header page-header"
-			},
-			
-			
-			
-			//Deprecated
-			Page : {
-				tagName : "div",
-				className : "container"
-			},
-			Paragraph : {
-				tagName : "div",
-				className : "container-paragraph"
-			},
-			Phrasing : {
-				tagName : "div",
-				className : "container-phrasing"
-			},
-			Floating : {
-				tagName : "div",
-				className : "container-floating"
-			}
-		}
-	};
-
-	/*
-	Show : "show",
-			Hidden : "hidden",
-			Invisible : "invisible",
-			
-			*/
-
-	ui5strap.ContainerRenderer.render = function(rm, oControl) {
+	ContainerRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			severity = oControl.getSeverity(),
-			tagData = this.typeToTag[oControl.getType()],
+			tagData = oControl._typeData[oControl.getType()],
 			html = oControl.getHtml();
 
 		rm.write("<" + tagData.tagName);
 		rm.writeControlData(oControl);
+		
+		rm.addClass(oControl._getStyleClassesRoot());
 		
 		rm.addClass(tagData.className);
 
@@ -18163,11 +18136,11 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 
 		rm.writeClasses();
 		rm.write(">");
-
-		if('' !== html){
-			rm.write(html);
-		}
 		
+		//Render plain HTML
+		html && rm.write(html);
+		
+		//Render Content
 		for(var i = 0; i < content.length; i++){ 
 			rm.renderControl(content[i]);
 		}
@@ -18175,8 +18148,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		rm.write("</" + tagData.tagName + ">");
 	};
 
-
-}());;/*
+	//Return Module Constructor
+	return ContainerRenderer;
+	
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -18584,7 +18559,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		}
 	});
 	
-	ui5strap.Heading.prototype._STYLE_PREFIX = 'u5sl-heading';
+	ui5strap.Heading.prototype._stylePrefix = 'ui5strapHeading';
 
 	ui5strap.Utils.dynamicText(ui5strap.Heading.prototype);
 
@@ -18641,11 +18616,17 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 
 		rm.write("<h" + level);
 		rm.writeControlData(oControl);
-		rm.addClass("u5sl-heading");
+		
+		//Base Classes
+		rm.addClass("ui5strapHeading");
+		
+		//@deprecated Heading type is deprecated
 		if(ui5strap.HeadingType.Default !== type){
 			rm.addClass(this.typeToClass[type]);
 		}
-		rm.addClass(oControl._getOptionsClassString());
+		
+		//Options classes
+		rm.addClass(oControl._getStyleClassesOptions());
 		
 		rm.writeClasses();
 		rm.write(">");
@@ -20729,7 +20710,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 
 	var NavProto = ui5strap.Nav.prototype;
 	
-	NavProto._STYLE_PREFIX = "nav";
+	NavProto._stylePrefix = "nav";
 }());;/*
  * 
  * UI5Strap
@@ -21121,8 +21102,8 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 			rm.write('<div');
 		    rm.writeControlData(oControl);
 		    
-		    rm.addClass(oControl._getBaseClassString());
-		    rm.addClass(oControl._getOptionsClassString());
+		    rm.addClass(oControl._getStyleClassesRoot());
+		    rm.addClass(oControl._getStyleClassesOptions());
 		    rm.writeClasses();
 		    
 		    rm.write(">");
@@ -21291,7 +21272,7 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
 
 	rm.addClass('nav');
 	rm.addClass(this.typeToClass[type]);
-	rm.addClass(oControl._getOptionsClassString());
+	rm.addClass(oControl._getStyleClassesOptions());
 	ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
 
 	rm.writeClasses();
@@ -21333,16 +21314,10 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './RestClient'], function(library, RestClient){
 
-    jQuery.sap.declare("ui5strap.ODataClient");
-
-    jQuery.sap.require("ui5strap.RestClient");
-
-    ui5strap.RestClient.extend("ui5strap.ODataClient");
-
-    var ODataClient = ui5strap.ODataClient,
-        ODataClientProto = ODataClient.prototype;
+	var ODataClient = RestClient.extend("ui5strap.ODataClient"),
+		ODataClientProto = ODataClient.prototype;
     
     ODataClientProto.init = function(){
         ui5strap.RestClient.prototype.init.call(this);
@@ -21390,8 +21365,10 @@ ui5strap.NavRenderer.render = function(rm, oControl) {
             "error" : options.error
         });
     };
-
-}());;/*
+    
+    //Return Module Constructor
+	return ODataClient;
+});;/*
  * 
  * UI5Strap
  *
@@ -23140,18 +23117,14 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.ScrollContainer");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.ScrollContainer", {
+	var ScrollContainer = ControlBase.extend("ui5strap.ScrollContainer", {
+		
 		metadata : {
 
 			library : "ui5strap",
 
-			defaultAggregation : "content",
-			
 			properties : { 
 				vertical : {
 					type:"boolean", 
@@ -23162,15 +23135,28 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 					defaultValue:false
 				}
 			},
+			
 			aggregations : { 
 				"content" : {
 					singularName: "content"
 				} 
-			}
+			},
+			
+			defaultAggregation : "content"
 		}
-	});
+	
+	}),
+	ScrollContainerProto = ScrollContainer.prototype;
+	
+	/*
+	 * Style Prefix
+	 */
+	ScrollContainerProto._stylePrefix = "ui5strapScrollContainer";
 
-	ui5strap.ScrollContainer.prototype.onBeforeRendering = function(){
+	/**
+	 * @Override
+	 */
+	ScrollContainerProto.onBeforeRendering = function(){
 		if(this.getDomRef()){
 			this._scrollTop = this.getDomRef().scrollTop;
 		}
@@ -23179,13 +23165,18 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		}
 	};
 
-	ui5strap.ScrollContainer.prototype.onAfterRendering = function(){
+	/**
+	 * @Override
+	 */
+	ScrollContainerProto.onAfterRendering = function(){
 		if(this._scrollTop){
 			this.getDomRef().scrollTop = this._scrollTop;
 		}
 	};
-
-}());;/*
+	
+	//Return Module Constructor
+	return ScrollContainer;
+});;/*
  * 
  * UI5Strap
  *
@@ -23212,31 +23203,29 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ScrollContainerRenderer");
+	var ScrollContainerRenderer = {};
 
-	ui5strap.ScrollContainerRenderer = {};
-
-	ui5strap.ScrollContainerRenderer.render = function(rm, oControl) {
-		var content = oControl.getContent();
-
+	ScrollContainerRenderer.render = function(rm, oControl) {
+		
 		rm.write("<div");
 		rm.writeControlData(oControl);
 		
-		rm.addClass("ui5strap-scroll-container");
+		rm.addClass(oControl._getStyleClassesRoot());
 		
 		if(oControl.getHorizontal()){
-			rm.addClass("ui5strap-scroll-container-horizontal");
+			rm.addClass(oControl._getStyleClassFlag("horizontal"));
 		}
 		
 		if(oControl.getVertical()){
-			rm.addClass("ui5strap-scroll-container-vertical");
+			rm.addClass(oControl._getStyleClassFlag("vertical"));
 		}
 		
 		rm.writeClasses();
 		rm.write(">");
 		
+		var content = oControl.getContent();
 		for(var i = 0; i < content.length; i++){ 
 			rm.renderControl(content[i]);
 		}
@@ -23244,8 +23233,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		rm.write("</div>");
 
 	};
+	
+	//Return Module Constructor
+	return ScrollContainerRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
