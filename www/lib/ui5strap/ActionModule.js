@@ -25,20 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionContext'], function(library, ActionContext){
 
-	var jQuerySap = jQuery.sap;
-
-	jQuery.sap.declare("ui5strap.ActionModule");
-
-	jQuerySap.require("ui5strap.library");
-	jQuerySap.require("ui5strap.ActionContext");
-
-	ui5strap.Object.extend("ui5strap.ActionModule");
-
-	var ActionModule = ui5strap.ActionModule,
-		ActionModuleProto = ActionModule.prototype,
-		ActionContext = ui5strap.ActionContext;
+	var ActionModule = ui5strap.Object.extend("ui5strap.ActionModule"),
+		ActionModuleProto = ActionModule.prototype;
 
 	/*
 	* Name of the event that is triggered when the event is completed
@@ -348,5 +338,6 @@
 	ActionModuleProto.completed = function(){
 		this.fireEvents(ActionModule.EVENT_COMPLETED);
 	};
-
-}());
+	
+	return ActionModule;
+});

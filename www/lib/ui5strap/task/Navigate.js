@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.task.Navigate");
-	jQuery.sap.require("ui5strap.ActionModule");
-	
-	ui5strap.ActionModule.extend("ui5strap.task.Navigate");
-
-	var NavigateProto = ui5strap.task.Navigate.prototype;
+	var Navigate = ActionModule.extend("ui5strap.task.Navigate"),
+		NavigateProto = ui5strap.task.Navigate.prototype;
 
 	/*
 	* @Override
@@ -83,6 +79,7 @@
 			for(var i = 0; i < viewsKeys.length; i++){
 				frameController.navigateTo(navContainer, this.context.resolve(this, VIEWS[viewsKeys[i]]));
 			}
-	}
-
-}());
+	};
+	
+	return Navigate;
+});

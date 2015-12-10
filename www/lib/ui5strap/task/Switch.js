@@ -25,18 +25,11 @@
  * 
  */
 
-(function(){
-
-	//Declare Module
-	jQuery.sap.declare("ui5strap.task.Switch");
-
-	//Require ui5strap.ActionModule
-	jQuery.sap.require("ui5strap.ActionModule");
+sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule){
 
 	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.task.Switch");
-	
-	var SwitchProto = ui5strap.task.Switch.prototype;
+	var Switch = ActionModule.extend("ui5strap.task.Switch"),
+		SwitchProto = ui5strap.task.Switch.prototype;
 	
 	/*
 	* @Override
@@ -86,4 +79,5 @@
 		}
 	};
 
-}());
+	return Switch;
+});
