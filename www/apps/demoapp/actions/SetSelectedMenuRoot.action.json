@@ -2,6 +2,7 @@
 	"//" : "Set the main-menu item selected that has the same id as specified NavContainer's current page.",
 	
 	"TASKS" : "setListItemSelected",
+	"DEBUG" : true,
 	
 	"setListItemSelected" : {
 		"targetName" : "content",
@@ -31,7 +32,9 @@
 		"ERROR" : "errorHandler"
 	},
 	
+	"//errorHandler" : "The error handler if the menu selection failed.",
 	"errorHandler" : {
-	
+		"errorMessage" : "Could not select main menu item!",
+		"DO" : "= jQuery.sap.log.error(.errorMessage)"
 	}
 }

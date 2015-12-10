@@ -11694,7 +11694,7 @@ a {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-.u5sl-heading.u5sl-heading-option-bar-heading {
+.ui5strapHeading-option-BarHeading {
   position: absolute;
   top: 0;
   left: 50%;
@@ -11705,7 +11705,7 @@ a {
   font-size: 16px;
   text-align: center;
 }
-.u5sl-heading.u5sl-heading-option-media-heading {
+.ui5strapHeading-option-MediaHeading {
   margin-top: 0;
   margin-bottom: 5px;
 }
@@ -11779,7 +11779,7 @@ a {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-.btn.btn-option-bar-button {
+.ui5strapButton-option-BarButton {
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -11922,10 +11922,10 @@ a {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-.nav.nav-default.nav-option-bar-nav > li {
+.nav.nav-default.nav-option-BarNav > li {
   float: left;
 }
-.nav.nav-default.nav-option-bar-nav > li > a {
+.nav.nav-default.nav-option-BarNav > li > a {
   padding: 12px 15px;
 }
 /*

@@ -71,7 +71,7 @@
 		}
 	});
 	
-	ui5strap.Heading.prototype._STYLE_PREFIX = 'u5sl-heading';
+	ui5strap.Heading.prototype._STYLE_PREFIX = 'ui5strapHeading';
 
 	ui5strap.Utils.dynamicText(ui5strap.Heading.prototype);
 

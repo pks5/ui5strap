@@ -107,7 +107,7 @@
 
 	var ButtonPrototype = ui5strap.Button.prototype;
 	
-	ButtonPrototype._STYLE_PREFIX = 'btn';
+	ButtonPrototype._STYLE_PREFIX = 'ui5strapButton';
 	
 	ui5strap.Utils.dynamicAttributes(
 		ButtonPrototype, 

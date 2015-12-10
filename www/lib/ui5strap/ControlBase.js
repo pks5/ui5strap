@@ -40,25 +40,13 @@
 					type : "string",
 					defaultValue : ""
 				}
-			},
-			
-			
-			events : {
-				/*
-				optionChange : {
-					parameters : {
-						"optionName" : {type : "string"},
-						"optionEnabled" : {type : "boolean"}
-					}
-				}
-				*/
 			}
 		}
 	});
 	
 	var ControlBaseProto = ui5strap.ControlBase.prototype;
 	
-	ControlBaseProto._STYLE_PREFIX = 'us5l-control';
+	ControlBaseProto._STYLE_PREFIX = 'ui5strapControlBase';
 	
 	/**
 	* @Protected
@@ -70,7 +58,7 @@
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
+	    		classes += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
 	    	}
 	    }
 		
@@ -96,7 +84,7 @@
 		if(options){
 	    	options = options.split(' ');
 	    	for(var i = 0; i < options.length; i++){
-	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option' + jQuery.sap.hyphen(options[i]);
+	    		currentClassesString += ' ' + this._STYLE_PREFIX + '-option-' + options[i];
 	    	}
 	    }
 	

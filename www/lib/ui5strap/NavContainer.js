@@ -544,6 +544,7 @@
 	 */
 	
 	/**
+	 * Destroys targets before the current control is destroyed.
 	* @Override
 	*/
 	NavContainerBaseProto.exit = function(){
@@ -560,34 +561,36 @@
 		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
 	};
 	
-	/*
-	 * END OpenUi5 MOD
+	/**
+	 * @Protected
+	 * @Override
 	 */
+	NavContainerBaseProto._getBaseClassString = function(){
+		return "navcontainer navcontainer-type-" + this.ncType;
+	};
 	
+	/**
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
 	NavContainerBaseProto.targetDomId = function(target){
 		return 'navcontainer-target-' + target + '---' + this.getId();
 	};
 	
 	/**
-	*
-	* @Public
-	*/
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
 	NavContainerBaseProto.targetPagesDomId = function(target){
 		return 'navcontainer-pages-' + target + '---' + this.getId();
 	};
 
 	/**
-	* @Public
-	*/
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
 	NavContainerBaseProto.targetLayersDomId = function(target){
 		return 'navcontainer-layers-' + target + '---' + this.getId();
-	};
-	
-	/**
-	 * @Protected
-	 */
-	NavContainerBaseProto._getBaseClassString = function(){
-		return "navcontainer navcontainer-type-" + this.ncType;
 	};
 	
 	/**

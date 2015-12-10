@@ -51,10 +51,16 @@
 
 		rm.write("<h" + level);
 		rm.writeControlData(oControl);
-		rm.addClass("u5sl-heading");
+		
+		//Base Classes
+		rm.addClass("ui5strapHeading");
+		
+		//@deprecated Heading type is deprecated
 		if(ui5strap.HeadingType.Default !== type){
 			rm.addClass(this.typeToClass[type]);
 		}
+		
+		//Options classes
 		rm.addClass(oControl._getOptionsClassString());
 		
 		rm.writeClasses();

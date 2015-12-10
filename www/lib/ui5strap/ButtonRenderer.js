@@ -88,6 +88,8 @@
 	    if('' !== title){
 	    	rm.writeAttribute('title', title);
 	    }
+	    
+	    rm.addClass("ui5strapButton");
 
 	    if(type === ui5strap.ButtonType.Button || ui5strap.ButtonType.Block === type){
 		    rm.addClass("btn");
