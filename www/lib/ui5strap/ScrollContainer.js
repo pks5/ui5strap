@@ -25,18 +25,13 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.ScrollContainer");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.ScrollContainer", {
+	var ScrollContainer = ControlBase.extend("ui5strap.ScrollContainer", {
 		metadata : {
 
 			library : "ui5strap",
 
-			defaultAggregation : "content",
-			
 			properties : { 
 				vertical : {
 					type:"boolean", 
@@ -47,15 +42,21 @@
 					defaultValue:false
 				}
 			},
+			
 			aggregations : { 
 				"content" : {
 					singularName: "content"
 				} 
-			}
+			},
+			
+			defaultAggregation : "content"
 		}
-	});
+	}),
+	ScrollContainerProto = ScrollContainer.prototype;
+	
+	ScrollContainerProto._stylePrefix = "ui5strapScrollContainer";
 
-	ui5strap.ScrollContainer.prototype.onBeforeRendering = function(){
+	ScrollContainerProto.onBeforeRendering = function(){
 		if(this.getDomRef()){
 			this._scrollTop = this.getDomRef().scrollTop;
 		}
@@ -64,10 +65,11 @@
 		}
 	};
 
-	ui5strap.ScrollContainer.prototype.onAfterRendering = function(){
+	ScrollContainerProto.onAfterRendering = function(){
 		if(this._scrollTop){
 			this.getDomRef().scrollTop = this._scrollTop;
 		}
 	};
-
-}());
+	
+	return ScrollContainer;
+});

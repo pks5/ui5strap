@@ -72,7 +72,7 @@
 	/**
 	* @Protected
 	*/
-	ControlBaseProto._getStyleClassesFlags = function(flags){
+	ControlBaseProto._getStyleClassFlag = function(flag){
 		return 	this._stylePrefix + "-flag-" + flag;
 	};
 	

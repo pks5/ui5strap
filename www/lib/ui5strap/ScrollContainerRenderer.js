@@ -37,14 +37,14 @@
 		rm.write("<div");
 		rm.writeControlData(oControl);
 		
-		rm.addClass("ui5strap-scroll-container");
+		rm.addClass(oControl._getStyleClassesRoot());
 		
 		if(oControl.getHorizontal()){
-			rm.addClass("ui5strap-scroll-container-horizontal");
+			rm.addClass(oControl._getStyleClassFlag("horizontal"));
 		}
 		
 		if(oControl.getVertical()){
-			rm.addClass("ui5strap-scroll-container-vertical");
+			rm.addClass(oControl._getStyleClassFlag("vertical"));
 		}
 		
 		rm.writeClasses();
