@@ -34,7 +34,7 @@
             },
             
             "ui5strap.demoapp.views.Home" : {
-                "type" : "HTML",
+                "type" : "XML",
                 
                 "id" : "home"
             },
@@ -46,13 +46,13 @@
             },
 
             "ui5strap.demoapp.views.MyPage3" : {
-                "type" : "HTML",
+                "type" : "XML",
                 
                 "id" : "my-app-page3"
             },
 
             "ui5strap.demoapp.views.MyPage4" : {
-                "type" : "HTML",
+                "type" : "XML",
                 
                 "id" : "my-app-page4",
                 
@@ -75,7 +75,7 @@
             },
             
             "ui5strap.demoapp.views.MyPage5" : {
-                "type" : "HTML",
+                "type" : "XML",
                 
                 "id" : "my-app-page5",
                 
@@ -87,28 +87,42 @@
             },
             
             "ui5strap.demoapp.views.MyPage6" : {
-                "type" : "HTML",
+                "type" : "XML",
                 
                 "id" : "my-app-page6"
             },
             
             "ui5strap.demoapp.views.NewPost" : {
-                "type" : "HTML",
+                "type" : "XML",
                 
                 "id" : "my-app-new-post"
             }
       },
 	
 	"actions" : [
+		"ui5strap.demoapp.actions.NavigateToHome",
+		"ui5strap.demoapp.actions.NavigateToPage2",
+		"ui5strap.demoapp.actions.NavigateToPage3",
+		"ui5strap.demoapp.actions.NavigateToPage5",
+		
+		"ui5strap.demoapp.actions.ToggleBarMenuRoot",
+		"ui5strap.demoapp.actions.NavigateViaMenuRoot",
+		"ui5strap.demoapp.actions.SetSelectedMenuRoot",
+		
+		"ui5strap.demoapp.actions.LoadMenuSub1",
+		"ui5strap.demoapp.actions.ToggleBarMenuSub1",
+		"ui5strap.demoapp.actions.NavigateViaMenuSub1", 
+		"ui5strap.demoapp.actions.SetSelectedMenuSub1",
+		
+		"ui5strap.demoapp.actions.AppendFeed",
 		"ui5strap.demoapp.actions.RemovePost",
 		"ui5strap.demoapp.actions.ShowNewPostOverlay",
-		"ui5strap.demoapp.actions.NavigateToHome",
-		"ui5strap.demoapp.actions.ToggleBarMenuRoot",
-		"ui5strap.demoapp.actions.Debug",
-		"ui5strap.demoapp.actions.ToggleBarMenuSub1",
-		"ui5strap.demoapp.actions.SetSelectedMenuSub1",
-		"ui5strap.demoapp.actions.NavigateViaMenuRoot",
-		"ui5strap.demoapp.actions.NavigateViaMenuSub1" 
+		"ui5strap.demoapp.actions.CloseOverlay",
+		
+		"ui5strap.demoapp.actions.ChangeTheme",
+		"ui5strap.demoapp.actions.SelectLanguage",
+		
+		"ui5strap.demoapp.actions.Debug"
 	],
 	
 	"components" : [

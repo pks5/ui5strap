@@ -1,0 +1,58 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:demoapp="ui5strap.demoapp.controls"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!-- The page control -->
+	<Page>
+		<!-- Head area with horizontal bar -->
+		<head>
+			<!-- Bar on top of page -->
+			<Bar>
+				<!-- Left area of bar -->
+				<Container align="PullLeft">
+					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuSub1" 
+						options="BarButton">
+						<Icon icon="columns" />
+					</Button>
+				</Container>
+				
+				<Heading options="BarHeading" text="{i18n>PAGE5_TITLE}" />
+				
+			</Bar>
+		</head>
+		
+		<!-- Body area with page content -->
+		<body>
+			<Container type="FluidInset">
+				<Nav type="Tabs" id="tabContainer1Tabs" selectionMode="Single">
+					<ListItem selected="true">
+						<Link text="Theme" />
+					</ListItem>
+					<ListItem>
+						<Link text="Navigation" />
+					</ListItem>
+				</Nav>
+
+				<TabContainer class="tabContainer1" source="tabContainer1Tabs">
+					<Container>
+						<Paragraph>
+							<ButtonGroup id="languageSelect" select="ui5strap.demoapp.actions.SelectLanguage" selectionMode="Single">
+								<Button text="EN" data:language="en-US" />
+								<Button text="DE" data:language="de-DE"  />
+							</ButtonGroup>
+						</Paragraph>
+					</Container>
+					<Container>
+						<demoapp:EventTest/>
+					
+						<Button 
+							text="{i18n>PAGE5_BUTTON}"
+							tap="ui5strap.demoapp.actions.NavigateToPage2"
+							></Button>
+					</Container>
+				</TabContainer>
+			
+			</Container>
+		</body>
+			
+	</Page>
+
+</View>

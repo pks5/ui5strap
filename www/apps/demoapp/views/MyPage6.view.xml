@@ -1,0 +1,48 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:demoapp="ui5strap.demoapp.controls"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!-- The page control -->
+	<Page>
+		<!-- Head area with horizontal bar -->
+		<head>
+			<!-- Bar on top of page -->
+			<Bar>
+				<!-- Left area of bar -->
+				<left>
+					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuSub1" 
+						size="Large"
+						options="BarButton">
+						<Icon icon="columns" />
+					</Button>
+				</left>
+				<!-- Middle area of bar -->
+				<middle>
+					<Heading text="{i18n>PAGE6_TITLE}" options="BarHeading" />
+				</middle>
+			</Bar>
+		</head>
+		
+		<!-- Body area with page content -->
+		<body>
+			<Container type="FluidInset">
+				<Container type="Well">
+					<Paragraph text="{i18n>PAGE6_THEME_INTRO}" />
+					<Paragraph>
+						<ButtonGroup select="ui5strap.demoapp.actions.ChangeTheme" selectionMode="Single">
+							<Button text="base" data:theme="base" selected="true"  />
+							<Button id="defaultThemeButton" severity="Primary" text="ui5strap_default" data:theme="ui5strap_default"  />
+						</ButtonGroup>
+					</Paragraph>
+					<Paragraph text="{i18n>PAGE6_BACK_NOTICE}" />
+					<Paragraph>
+						<Button 
+						text="{i18n>PAGE6_BUTTON}"
+						tap="ui5strap.demoapp.actions.NavigateToPage3"
+									></Button>
+					</Paragraph>
+				</Container>
+			</Container>
+		</body>
+			
+	</Page>
+
+</View>

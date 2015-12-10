@@ -243,6 +243,7 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 					throw new Error("Please provide both 'mode' and 'type' for Control '" + this._controlName + "'");
 				}
 				
+				jQuery.sap.require(moduleName);
 				var Constructor = jQuery.sap.getObject(moduleName);
 				
 				if(!Constructor){

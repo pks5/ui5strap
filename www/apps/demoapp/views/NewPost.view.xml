@@ -1,0 +1,25 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:demoapp="ui5strap.demoapp.controls"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<StaticOverlay backdrop="true" close="ui5strap.demoapp.actions.CloseOverlay">
+		<Panel title="{i18n>PAGE2_PANEL_LEFT_TITLE}">
+				<Form>
+						<FormGroup label="Your Name" feedback="true">
+							<TextInput id="titleInput" placeholder="Enter your name here ..." />
+							<Icon icon="remove" type="FormFeedback" />
+						</FormGroup>
+						<FormGroup label="Message">
+							<TextInput id="messageInput" rows="3" placeholder="Write something ..." />
+						</FormGroup>
+						
+						<Button 
+								text="Submit" 
+								severity="Success"
+								tap="ui5strap.demoapp.actions.AppendFeed"></Button>
+						<Button 
+								text="Cancel" 
+								tap="ui5strap.demoapp.actions.CloseOverlay"></Button>
+						
+				</Form>
+		</Panel>
+	</StaticOverlay>
+</View>

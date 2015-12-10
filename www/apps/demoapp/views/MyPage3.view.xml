@@ -1,0 +1,114 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!-- The page control -->
+	<Page>
+		<!-- Head area with horizontal bar -->
+		<head>
+			<!-- Bar on top of page -->
+			<Bar inverse="true">
+				<!-- Left area of bar -->
+				<left>
+					<!-- Back Button -->
+					<Button tap="ui5strap.demoapp.actions.NavigateToHome" 
+						options="BarButton">
+						<Icon icon="home"/>
+					</Button>
+					<!-- Toggle Menu Button (except for small screens) -->
+					<Container type="Text" visibilitySmall="Hidden">
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+							options="BarButton">
+							<Icon icon="columns" />
+						</Button>
+					</Container>
+				</left>
+				
+				<!-- Middle area of bar -->
+				<middle>
+					<Heading options="BarHeading" text="{i18n>PAGE3_TITLE}" />
+				</middle>
+				
+				<right>
+					<!-- Toggle Menu Button (only for small screens) -->
+					<Container type="Text" visibilityExtraSmall="Hidden" visibilityMedium="Hidden" visibilityLarge="Hidden">
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+							options="BarButton">
+							<Icon icon="columns" />
+						</Button>
+					</Container>
+				</right>
+			</Bar>
+		</head>
+		
+		<!-- Body area with page content -->
+		<body>
+			<ScrollContainer vertical="true">
+			<Container type="FluidInset">
+				
+					<Row>
+						<!-- Left Column -->
+						<Col columnsExtraSmall="12" columnsSmall="6">
+							<Container type="Well"> 
+								<Heading level="1" text="{i18n>PAGE3_HEADING1_TITLE}" />
+								<Text type="Lead" text="{i18n>PAGE3_HEADING1_TEXT}" />
+							</Container>
+						</Col>
+						
+						<!-- Right Column -->
+						<Col columnsExtraSmall="12" columnsSmall="6">
+						
+							<Table bordered="true" hover="true">
+								<head>
+									<TableRow>
+										<TableColumn text="" />
+										<TableColumn text="A" />
+										<TableColumn text="B" />
+										<TableColumn text="C" />
+										<TableColumn text="D" />
+										<TableColumn text="E" />
+									</TableRow>
+								</head>
+								<body>
+									<TableRow>
+										<TableColumn text="1" />
+										<TableColumn text="21" />
+										<TableColumn text="2332" />
+										<TableColumn text="2354" />
+										<TableColumn text="24" />
+										<TableColumn text="1212" />
+									</TableRow>
+									<TableRow severity="Success">
+										<TableColumn text="2" />
+										<TableColumn text="32" />
+										<TableColumn text="34332" />
+										<TableColumn text="4354" />
+										<TableColumn text="24" />
+										<TableColumn text="3232" />
+									</TableRow>
+									<TableRow>
+										<TableColumn text="3" />
+										<TableColumn text="453" />
+										<TableColumn text="3332" />
+										<TableColumn text="4254" />
+										<TableColumn text="124" />
+										<TableColumn text="232" />
+									</TableRow>
+									<TableRow>
+										<TableColumn text="4" />
+										<TableColumn text="723" />
+										<TableColumn text="82" />
+										<TableColumn text="7874" />
+										<TableColumn text="7824" />
+										<TableColumn text="652" />
+									</TableRow>
+								</body>
+							</Table>
+							
+						</Col>
+					</Row>
+				</Container>
+			</ScrollContainer>
+		</body>
+		
+	</Page>
+
+</View>

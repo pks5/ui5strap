@@ -26,6 +26,12 @@
 		"pageId" : "= .page.getId()",
 		"relativePageId" : "= app.extractRelativeControlId(.pageId)",
 		
-		"DO" : "= .CONTROLS.barMenu.setSelectionByCustomData(.customDataKey, .relativePageId)"
+		"DO" : "= .CONTROLS.barMenu.setSelectionByCustomData(.customDataKey, .relativePageId)",
+		
+		"ERROR" : "errorHandler"
+	},
+	
+	"errorHandler" : {
+	
 	}
 }
