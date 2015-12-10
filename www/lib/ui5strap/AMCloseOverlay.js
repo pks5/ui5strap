@@ -25,13 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMCloseOverlay");
-
-	ui5strap.ActionModule.extend("ui5strap.AMCloseOverlay");
-
-	var AMCloseOverlayProto = ui5strap.AMCloseOverlay.prototype;
+	var AMCloseOverlay = ActionModule.extend("ui5strap.AMCloseOverlay"),
+		AMCloseOverlayProto = AMCloseOverlay.prototype;
 
 	/*
 	* @Override
@@ -81,5 +78,6 @@
 	AMCloseOverlayProto.completed = function(){
 
 	};
-
-}());
+	
+	return AMCloseOverlay;
+});

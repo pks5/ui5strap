@@ -28,6 +28,7 @@
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var ScrollContainer = ControlBase.extend("ui5strap.ScrollContainer", {
+		
 		metadata : {
 
 			library : "ui5strap",
@@ -51,11 +52,18 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			
 			defaultAggregation : "content"
 		}
+	
 	}),
 	ScrollContainerProto = ScrollContainer.prototype;
 	
+	/*
+	 * Style Prefix
+	 */
 	ScrollContainerProto._stylePrefix = "ui5strapScrollContainer";
 
+	/**
+	 * @Override
+	 */
 	ScrollContainerProto.onBeforeRendering = function(){
 		if(this.getDomRef()){
 			this._scrollTop = this.getDomRef().scrollTop;
@@ -65,11 +73,15 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	};
 
+	/**
+	 * @Override
+	 */
 	ScrollContainerProto.onAfterRendering = function(){
 		if(this._scrollTop){
 			this.getDomRef().scrollTop = this._scrollTop;
 		}
 	};
 	
+	//Return Module Constructor
 	return ScrollContainer;
 });

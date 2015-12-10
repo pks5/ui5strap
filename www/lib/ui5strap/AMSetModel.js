@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMSetModel");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMSetModel");
-
-	var AMSetModelProto = ui5strap.AMSetModel.prototype;
+	var AMSetModel = ActionModule.extend("ui5strap.AMSetModel"),
+		AMSetModelProto = AMSetModel.prototype;
 
 	/*
 	* @Override
@@ -107,5 +103,6 @@
 
 			this.context._log.debug("Model '" + modelName + "' (src param: '" + srcParam + "', scope: '" + this.getParameter("scope") + "') set.");
 	};
-
-}());
+	
+	return AMSetModel;
+});

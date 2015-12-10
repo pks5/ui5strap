@@ -259,7 +259,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto.getRootControl = function(){
 		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');
 	};
-	
+
+	//Return Module Constructor
 	return App;
 	
 });

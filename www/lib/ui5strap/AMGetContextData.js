@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMGetContextData");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMGetContextData");
-
-	var AMGetContextDataProto = ui5strap.AMGetContextData.prototype;
+	var AMGetContextData = ActionModule.extend("ui5strap.AMGetContextData"),
+		AMGetContextDataProto = AMGetContextData.prototype;
 
 	/*
 	* @Override
@@ -94,4 +90,5 @@
 			//this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
 	};
 
-}());
+	return AMGetContextData;
+});

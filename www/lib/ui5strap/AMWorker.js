@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMWorker");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMWorker");
-
-	var AMWorkerProto = ui5strap.AMWorker.prototype;
+	var AMWorker = ActionModule.extend("ui5strap.AMWorker"),
+		AMWorkerProto = AMWorker.prototype;
 
 	/*
 	* @Override
@@ -80,5 +76,6 @@
 
 		worker.postMessage('START');
 	};
-
-}());
+	
+	return AMWorker;
+});

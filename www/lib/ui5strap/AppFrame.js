@@ -344,6 +344,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		
 		return oPage;
 	};
-	
+
+	//Return Module Constructor
 	return AppFrame;
 });

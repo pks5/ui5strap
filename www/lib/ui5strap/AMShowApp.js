@@ -25,17 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMShowApp");
-	
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	var ActionModule = ui5strap.ActionModule;
-
-	ActionModule.extend("ui5strap.AMShowApp");
-
-	var ShowAppProto = ui5strap.AMShowApp.prototype;
+	var AMShowApp = ActionModule.extend("ui5strap.AMShowApp"),
+		ShowAppProto = AMShowApp.prototype;
 
 	/*
 	* @Override
@@ -80,5 +73,6 @@
 	ShowAppProto.completed = function(){
 		//Originally, the EVENT_COMPLETED is fired here. We have to override this method to disable this default behaviour.
 	};
-
-}());
+	
+	return AMShowApp;
+});

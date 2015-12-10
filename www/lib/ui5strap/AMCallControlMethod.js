@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMCallControlMethod");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMCallControlMethod");
-
-	var AMCallControlMethodProto = ui5strap.AMCallControlMethod.prototype;
+	var AMCallControlMethod = ActionModule.extend("ui5strap.AMCallControlMethod"),
+		AMCallControlMethodProto = AMCallControlMethod.prototype;
 
 	/*
 	* @Override
@@ -105,4 +101,6 @@
 		this.context._log.debug("Calling control method '" + funcName + "' of control '" + control.getId() + "'");
 	};
 
-}());
+	//Return Module Constructor
+	return AMCallControlMethod;
+});

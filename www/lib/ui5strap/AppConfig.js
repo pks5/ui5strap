@@ -366,6 +366,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	AppConfigProto.getModel = function(){
 		return new JSONModel(this.data);
 	};
-	
+
+	//Return Module Constructor
 	return AppConfig;
 });

@@ -25,13 +25,9 @@
  * 
  */
 
-(function(){
-	jQuery.sap.declare("ui5strap.AMLoadModel");
-	jQuery.sap.require("ui5strap.ActionModule");
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	ui5strap.ActionModule.extend("ui5strap.AMLoadModel");
-
-	var AMLoadModel = ui5strap.AMLoadModel,
+	var AMLoadModel = ActionModule.extend("ui5strap.AMLoadModel"),
 		AMLoadModelProto = AMLoadModel.prototype;
 	
 
@@ -190,5 +186,6 @@
 				_this.context._log.debug(this._actionNameShort + "Model '" + modelName + "' (type: '" + modelType + "', scope: '" + _this.getParameter("scope") + "') loaded.");
 			});
 	};
-
-}());
+	
+	return AMLoadModel;
+});

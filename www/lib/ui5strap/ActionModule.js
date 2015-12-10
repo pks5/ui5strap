@@ -338,6 +338,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	ActionModuleProto.completed = function(){
 		this.fireEvents(ActionModule.EVENT_COMPLETED);
 	};
-	
+
+	//Return Module Constructor
 	return ActionModule;
 });

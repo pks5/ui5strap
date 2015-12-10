@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMJsAlert");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMJsAlert");
-
-	var AMJsAlertProto = ui5strap.AMJsAlert.prototype;
+	var AMJsAlert = ActionModule.extend("ui5strap.AMJsAlert"),
+		AMJsAlertProto = AMJsAlert.prototype;
 
 	/*
 	* @Override
@@ -55,5 +51,6 @@
 	AMJsAlertProto.run = function(){
 		alert(this.getParameter('message'));
 	};
-
-}());
+	
+	return AMJsAlert;
+});

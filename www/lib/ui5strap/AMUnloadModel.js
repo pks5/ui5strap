@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMUnloadModel");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMUnloadModel");
-
-	var AMUnloadModelProto = ui5strap.AMUnloadModel.prototype;
+	var AMUnloadModel = ActionModule.extend("ui5strap.AMUnloadModel"),
+		AMUnloadModelProto = AMUnloadModel.prototype;
 
 	/*
 	* @Override
@@ -85,5 +81,6 @@
 			
 			this.context._log.debug(this._actionNameShort + "Model '" + modelName + "' (scope: '" + this.getParameter("scope") + "') unloaded.");
 	};
-
-}());
+	
+	return AMUnloadModel;
+});

@@ -25,18 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	//Declare Module
-	jQuery.sap.declare("ui5strap.AMGetCurrentPage");
-
-	//Require ui5strap.ActionModule
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.AMGetCurrentPage");
-
-	var AMGetCurrentPageProto = ui5strap.AMGetCurrentPage.prototype;
+	var AMGetCurrentPage = ActionModule.extend("ui5strap.AMGetCurrentPage"),
+		AMGetCurrentPageProto = AMGetCurrentPage.prototype;
 	
 	/*
 	* @Override
@@ -103,5 +95,6 @@
 		}
 		this.setParameter("result", currentPage.getId());
 	};
-
-}());
+	
+	return AMGetCurrentPage;
+});

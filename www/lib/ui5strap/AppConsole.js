@@ -80,6 +80,10 @@
 	* -------------------------------------------------------------
 	*/
 
+	/**
+	 * Returns the root control of this app.
+	 * @Override
+	 */
 	AppConsoleProto.getRootControl = function(){
 		if(!this.console){
 			this.console = new Console();
@@ -95,13 +99,22 @@
 	* -------------------------------------------------
 	*/
 
+	/**
+	 * Includes the style that is needed for this app.
+	 * @Override
+	 */
 	AppConsoleProto.includeStyle = function(callback){
 		callback && callback();
 	};
 
+	/**
+	 * Removes the style that is needed for this app.
+	 * @Override
+	 */
 	AppConsoleProto.removeStyle = function(){
 
 	};
 
+	//Return Module Constructor
 	return AppConsole;
 });

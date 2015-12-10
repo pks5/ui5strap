@@ -50,6 +50,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 		return this.options;
 	};
 	*/
-	
+
+	//Return Module Constructor
 	return AppComponent;
 });

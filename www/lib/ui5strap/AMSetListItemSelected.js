@@ -25,18 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	//Declare Module
-	jQuery.sap.declare("ui5strap.AMSetListItemSelected");
-
-	//Require ui5strap.ActionModule
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.AMSetListItemSelected");
-
-	var AMSetListItemSelectedProto = ui5strap.AMSetListItemSelected.prototype;
+	var AMSetListItemSelected = ActionModule.extend("ui5strap.AMSetListItemSelected"),
+		AMSetListItemSelectedProto = AMSetListItemSelected.prototype;
 	
 	/*
 	* @Override
@@ -100,5 +92,6 @@
 		
 		menu.setSelection(selectedItem);
 	};
-
-}());
+	
+	return AMSetListItemSelected;
+});

@@ -31,12 +31,12 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 	var Switch = ActionModule.extend("ui5strap.task.Switch"),
 		SwitchProto = ui5strap.task.Switch.prototype;
 	
-	/*
+	/**
 	* @Override
 	*/
 	SwitchProto.namespace = 'switch';
 
-	/*
+	/**
 	* @Override
 	*/
 	SwitchProto.parameters = {
@@ -55,7 +55,7 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 			}
 	};
 	
-	/*
+	/**
 	* Run the ActionModule
 	* @override
 	*/
@@ -79,5 +79,6 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 		}
 	};
 
+	//Return Module Constructor
 	return Switch;
 });

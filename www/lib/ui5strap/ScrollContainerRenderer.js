@@ -25,15 +25,12 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ScrollContainerRenderer");
+	var ScrollContainerRenderer = {};
 
-	ui5strap.ScrollContainerRenderer = {};
-
-	ui5strap.ScrollContainerRenderer.render = function(rm, oControl) {
-		var content = oControl.getContent();
-
+	ScrollContainerRenderer.render = function(rm, oControl) {
+		
 		rm.write("<div");
 		rm.writeControlData(oControl);
 		
@@ -50,6 +47,7 @@
 		rm.writeClasses();
 		rm.write(">");
 		
+		var content = oControl.getContent();
 		for(var i = 0; i < content.length; i++){ 
 			rm.renderControl(content[i]);
 		}
@@ -57,5 +55,8 @@
 		rm.write("</div>");
 
 	};
+	
+	//Return Module Constructor
+	return ScrollContainerRenderer;
 
-}());
+}, true);

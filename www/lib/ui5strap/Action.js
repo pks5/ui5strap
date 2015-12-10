@@ -273,5 +273,6 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 		}
 	};
 	
+	//Return Module Constructor
 	return Action;
 });

@@ -30,7 +30,8 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 	var controllerImpl = {};
 	
 	AppBase.blessController(controllerImpl);
-    
+
+	//Return Module Constructor
 	return Controller.extend("ui5strap.ActionController", controllerImpl);
 
 });

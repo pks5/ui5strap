@@ -25,21 +25,15 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	//Declare Module
-	jQuery.sap.declare("ui5strap.AMDummy");
-
-	//Require ui5strap.ActionModule
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	//Define Constructor
-	ui5strap.ActionModule.extend("ui5strap.AMDummy");
+	var AMDummy = ActionModule.extend("ui5strap.AMDummy");
 
 	/*
 	* Run the ActionModule
 	* @override
 	*/
-	ui5strap.AMDummy.prototype.run = function(){};
-
-}());
+	AMDummy.prototype.run = function(){};
+	
+	return AMDummy;
+});

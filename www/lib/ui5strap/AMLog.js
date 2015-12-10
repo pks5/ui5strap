@@ -25,13 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMLog");
-
-	ui5strap.ActionModule.extend("ui5strap.AMLog");
-
-	var AMLogProto = ui5strap.AMLog.prototype;
+	var AMLog = ActionModule.extend("ui5strap.AMLog"),
+		AMLogProto = AMLog.prototype;
 
 	/*
 	* @Override
@@ -58,5 +55,6 @@
 	AMLogProto.run = function(){
 		this.context._log[this.getParameter("logType")](this.getParameter("message"));
 	};
-
-}());
+	
+	return AMLog;
+});

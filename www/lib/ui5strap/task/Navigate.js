@@ -30,12 +30,12 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 	var Navigate = ActionModule.extend("ui5strap.task.Navigate"),
 		NavigateProto = ui5strap.task.Navigate.prototype;
 
-	/*
+	/**
 	* @Override
 	*/
 	NavigateProto.namespace = "navigate";
 
-	/*
+	/**
 	* @Override
 	*/
 	NavigateProto.parameters = {
@@ -48,7 +48,7 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 
 	};
 
-	/*
+	/**
 	* Run the ActionModule
 	* @override
 	*/
@@ -80,6 +80,7 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 				frameController.navigateTo(navContainer, this.context.resolve(this, VIEWS[viewsKeys[i]]));
 			}
 	};
-	
+
+	//Return Module Constructor
 	return Navigate;
 });

@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMToggleProperty");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMToggleProperty");
-
-	var AMTogglePropertyProto = ui5strap.AMToggleProperty.prototype;
+	var AMToggleProperty = ActionModule.extend("ui5strap.AMToggleProperty"),
+		AMTogglePropertyProto = AMToggleProperty.prototype;
 
 	/*
 	* @Override
@@ -92,5 +88,6 @@
 
 			this.context._log.debug("[AMToggleProperty]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
-
-}());
+	
+	return AMToggleProperty;
+});

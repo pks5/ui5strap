@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMChangeTheme");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMChangeTheme");
-
-	var AMChangeThemeProto = ui5strap.AMChangeTheme.prototype;
+	var AMChangeTheme = ActionModule.extend("ui5strap.AMChangeTheme"),
+		AMChangeThemeProto = AMChangeTheme.prototype;
 
 	/*
 	* @Override
@@ -73,4 +69,6 @@
 		}, 'opaque');
 	};
 
-}());
+	//Return Module Constructor
+	return AMChangeTheme;
+});

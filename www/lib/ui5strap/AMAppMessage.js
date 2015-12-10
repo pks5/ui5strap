@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMAppMessage");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMAppMessage");
-
-	var AMAppMessageProto = ui5strap.AMAppMessage.prototype;
+	var AMAppMessage = ActionModule.extend("ui5strap.AMAppMessage"),
+		AMAppMessageProto = AMAppMessage.prototype;
 
 	AMAppMessageProto.namespace = 'appMessage';
 
@@ -52,11 +48,13 @@
 		}
 	};
 
-	/*
+	/**
 	* @Override
 	*/
 	AMAppMessageProto.run = function(){
 		this.context.app.sendMessage(this.context.parameters[this.namespace]);
 	};
 
-}());
+	//Return Module Constructor
+	return AMAppMessage;
+});

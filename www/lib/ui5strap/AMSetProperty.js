@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMSetProperty");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMSetProperty");
-
-	var AMSetPropertyProto = ui5strap.AMSetProperty.prototype;
+	var AMSetProperty = ActionModule.extend("ui5strap.AMSetProperty"),
+		AMSetPropertyProto = AMSetProperty.prototype;
 
 	/*
 	* @Override
@@ -107,5 +103,6 @@
 
 			this.context._log.debug("[AMSetProperty]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
-
-}());
+	
+	return AMSetProperty;
+});

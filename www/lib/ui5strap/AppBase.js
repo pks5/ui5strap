@@ -1435,5 +1435,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		
 	};
 
+	//Return Module Constructor
 	return AppBase;
 });

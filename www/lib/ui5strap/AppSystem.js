@@ -25,6 +25,7 @@
 			};
 		}
 	});
-	
-	 return AppSystem;
+
+	//Return Module Constructor
+	return AppSystem;
 });

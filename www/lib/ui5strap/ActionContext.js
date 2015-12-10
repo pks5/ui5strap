@@ -867,6 +867,7 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 
 		return this;
 	};
-	
+
+	//Return Module Constructor
 	return ActionContext;
 });

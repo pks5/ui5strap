@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Container");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Container", {
+	var Container = ControlBase.extend("ui5strap.Container", {
 		metadata : {
 
 			library : "ui5strap",
@@ -98,6 +95,111 @@
 			defaultAggregation : "content"
 			
 		} //END metadata
-	});
-
-}());
+	}),
+	ContainerProto = Container.prototype;
+	
+	ContainerProto._stylePrefix = "ui5strapContainer";
+	
+	ContainerProto._typeData = {
+		Default : {
+			tagName : "div",
+			className : "container-default"
+		},
+		Text : {
+			tagName : "span",
+			className : "container-text"
+		},
+		Section : {
+			tagName : "section",
+			className : "container-section"
+		},
+		
+		//Bootstrap container and container-fluid
+		//container-inset is an additional class that adds padding-top and padding-bottom
+		
+		Fluid : {
+			tagName : "div",
+			className : "container-fluid"
+		},
+		Inset : {
+			tagName : "div",
+			className : "container-inset"
+		},
+		Full : {
+			tagName : "div",
+			className : "container-full"
+		},
+		
+		FluidInset : {
+			tagName : "div",
+			className : "container-fluid container-inset"
+		},
+		FluidFull : {
+			tagName : "div",
+			className : "container-fluid container-full"
+		},
+		InsetFull : {
+			tagName : "div",
+			className : "container-inset container-full"
+		},
+		FluidInsetFull : {
+			tagName : "div",
+			className : "container-fluid container-inset container-full"
+		},
+		
+		
+		//Bootstrap Components
+		Website : {
+			tagName : "div",
+			className : "container"
+		},
+		Jumbotron : {
+			tagName : "div",
+			className : "container-jumbotron jumbotron"
+		},
+		Well : {
+			tagName : "div",
+			className : "container-well well"
+		},
+		WellLarge : {
+			tagName : "div",
+			className : "container-well well well-lg"
+		},
+		PageHeader : {
+			tagName : "div",
+			className : "container-page-header page-header"
+		},
+		
+		
+		
+		//Deprecated
+		Page : {
+			tagName : "div",
+			className : "container"
+		},
+		Paragraph : {
+			tagName : "div",
+			className : "container-paragraph"
+		},
+		Phrasing : {
+			tagName : "div",
+			className : "container-phrasing"
+		},
+		Floating : {
+			tagName : "div",
+			className : "container-floating"
+		}
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ContainerProto._getStyleClassesRoot = function(){
+		return this._stylePrefix + " " + this._getStyleClassType(this.getType());
+	};
+	
+	//Return Module Constructor
+	return Container;
+	
+});

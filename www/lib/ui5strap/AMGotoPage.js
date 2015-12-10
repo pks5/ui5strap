@@ -25,14 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMGotoPage");
-	jQuery.sap.require("ui5strap.ActionModule");
-
-	ui5strap.ActionModule.extend("ui5strap.AMGotoPage");
-
-	var AMGotoPageProto = ui5strap.AMGotoPage.prototype;
+	var AMGotoPage = ActionModule.extend("ui5strap.AMGotoPage"),
+		AMGotoPageProto = AMGotoPage.prototype;
 
 	/*
 	* @Override
@@ -152,5 +148,6 @@
 			
 			this.context.app[frameGetter]().navigateTo(control, this.context.parameters[this.namespace]);
 	}
-
-}());
+	
+	return AMGotoPage;
+});

@@ -84,6 +84,7 @@
 	};
 
 	AppSandboxProto.removeStyle = function(){};
-	
+
+	//Return Module Constructor
 	return AppSandbox;
 });

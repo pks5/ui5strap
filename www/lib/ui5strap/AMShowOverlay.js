@@ -25,13 +25,10 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
-	jQuery.sap.declare("ui5strap.AMShowOverlay");
-
-	ui5strap.ActionModule.extend("ui5strap.AMShowOverlay");
-
-	var AMShowOverlayProto = ui5strap.AMShowOverlay.prototype;
+	var AMShowOverlay = ActionModule.extend("ui5strap.AMShowOverlay"),
+		AMShowOverlayProto = AMShowOverlay.prototype;
 
 	/*
 	* @Override
@@ -118,5 +115,6 @@
 	AMShowOverlayProto.completed = function(){
 
 	};
-
-}());
+	
+	return AMShowOverlay;
+});

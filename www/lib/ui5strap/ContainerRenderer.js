@@ -25,118 +25,20 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ContainerRenderer");
+	var ContainerRenderer = {};
 
-	ui5strap.ContainerRenderer = {
-		typeToTag : {
-			Default : {
-				tagName : "div",
-				className : "container-default"
-			},
-			Text : {
-				tagName : "span",
-				className : "container-text"
-			},
-			Section : {
-				tagName : "section",
-				className : "container-section"
-			},
-			
-			//Bootstrap container and container-fluid
-			//container-inset is an additional class that adds padding-top and padding-bottom
-			
-			Fluid : {
-				tagName : "div",
-				className : "container-fluid"
-			},
-			Inset : {
-				tagName : "div",
-				className : "container-inset"
-			},
-			Full : {
-				tagName : "div",
-				className : "container-full"
-			},
-			
-			FluidInset : {
-				tagName : "div",
-				className : "container-fluid container-inset"
-			},
-			FluidFull : {
-				tagName : "div",
-				className : "container-fluid container-full"
-			},
-			InsetFull : {
-				tagName : "div",
-				className : "container-inset container-full"
-			},
-			FluidInsetFull : {
-				tagName : "div",
-				className : "container-fluid container-inset container-full"
-			},
-			
-			
-			//Bootstrap Components
-			Website : {
-				tagName : "div",
-				className : "container"
-			},
-			Jumbotron : {
-				tagName : "div",
-				className : "container-jumbotron jumbotron"
-			},
-			Well : {
-				tagName : "div",
-				className : "container-well well"
-			},
-			WellLarge : {
-				tagName : "div",
-				className : "container-well well well-lg"
-			},
-			PageHeader : {
-				tagName : "div",
-				className : "container-page-header page-header"
-			},
-			
-			
-			
-			//Deprecated
-			Page : {
-				tagName : "div",
-				className : "container"
-			},
-			Paragraph : {
-				tagName : "div",
-				className : "container-paragraph"
-			},
-			Phrasing : {
-				tagName : "div",
-				className : "container-phrasing"
-			},
-			Floating : {
-				tagName : "div",
-				className : "container-floating"
-			}
-		}
-	};
-
-	/*
-	Show : "show",
-			Hidden : "hidden",
-			Invisible : "invisible",
-			
-			*/
-
-	ui5strap.ContainerRenderer.render = function(rm, oControl) {
+	ContainerRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			severity = oControl.getSeverity(),
-			tagData = this.typeToTag[oControl.getType()],
+			tagData = oControl._typeData[oControl.getType()],
 			html = oControl.getHtml();
 
 		rm.write("<" + tagData.tagName);
 		rm.writeControlData(oControl);
+		
+		rm.addClass(oControl._getStyleClassesRoot());
 		
 		rm.addClass(tagData.className);
 
@@ -150,11 +52,11 @@
 
 		rm.writeClasses();
 		rm.write(">");
-
-		if('' !== html){
-			rm.write(html);
-		}
 		
+		//Render plain HTML
+		html && rm.write(html);
+		
+		//Render Content
 		for(var i = 0; i < content.length; i++){ 
 			rm.renderControl(content[i]);
 		}
@@ -162,5 +64,7 @@
 		rm.write("</" + tagData.tagName + ">");
 	};
 
-
-}());
+	//Return Module Constructor
+	return ContainerRenderer;
+	
+}, true);
