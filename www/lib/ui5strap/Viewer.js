@@ -184,7 +184,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 						}
 						else{
 							//_this.hideLoader(callback);
-							callback && callback();
+							callback && callback(appInstance);
 						}
 					};
 				
