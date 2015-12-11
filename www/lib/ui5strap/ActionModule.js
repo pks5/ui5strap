@@ -40,7 +40,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	/*
 	* Namespace of the action module instance
 	*/
-	ActionModuleProto.namespace = 'action';
+	ActionModuleProto.namespace = 'task';
 
 	/*
 	* Defined parameters for this action module
@@ -67,6 +67,10 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 		//Test if Namespace is valid
 		if(jQuery.sap.startsWith(this.namespace, ActionContext.PREFIX)){
 			throw new Error("Action namespace must not start with '" + ActionContext.PREFIX + "'!");
+		}
+		
+		if(!context.action[this.namespace]){
+			context.action[this.namespace] = {};
 		}
 
 		return this;
