@@ -114,37 +114,14 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 	* @override
 	*/
 	AMGotoPageProto.run = function(){
-			var viewId = this.getParameter("id"),
-				viewType = this.getParameter("type"),
-				viewName = this.getParameter("viewName"),
-				target = this.getParameter("target"),
-				writeHistory = this.getParameter("writeHistory"),
-				bookmarkable = this.getParameter("bookmarkable"),
-				virtual = this.getParameter("virtual"),
-				frameId = this.getParameter("frameId"),
-				parameters = this.getParameter("parameters"),
+			var frameId = this.getParameter("frameId");
 				control = this.findControl();
 
-			this.context._log.debug("Goto page '" + viewId + "' on target '" + target + "' ...");
-			
-			var view = {
-				id : viewId,
-				viewName : viewName,
-				type : viewType,
-				target : target,
-				writeHistory : writeHistory,
-				bookmarkable : bookmarkable,
-				virtual : virtual,
-				parameters : parameters
-			};
-			
 			var frameGetter = 'get' + jQuery.sap.charToUpperCase(frameId, 0);
 			
 			if(!this.context.app[frameGetter]){
 				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
 			}
-			
-			this.setParameter("viewName", this.getParameter("viewName"));
 			
 			this.context.app[frameGetter]().navigateTo(control, this.context.parameters[this.namespace]);
 	}
