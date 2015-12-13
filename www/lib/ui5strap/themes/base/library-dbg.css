@@ -14094,7 +14094,7 @@ a {
 * Base style for target "sidebar"
 */
 .navcontainer-type-standard > .navcontainer-target-sidebar {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: auto;
   bottom: 0;
