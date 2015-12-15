@@ -25,87 +25,66 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.LinkRenderer");
-
-	ui5strap.LinkRenderer = {
+	var LinkRenderer = {
 
 		typeToClass : {
 			Thumbnail : "thumbnail"
 		}
 	};
 
-	ui5strap.LinkRenderer.render = function(rm, oControl) {
-		this.startRender(rm, oControl, { standalone : true });
-		
-		this.renderContent(rm, oControl);
-		
-		this.endRender(rm, oControl);
-
-		ui5strap.RenderUtils.renderTrail(rm, oControl);
-	};
-
-	ui5strap.LinkRenderer.renderContent = function(rm, oControl){
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
-	};
-
-	ui5strap.LinkRenderer.startRender = function(rm, oControl, options) {
+	LinkRenderer.render = function(rm, oControl) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			action = oControl.getBsAction(),
 			target = oControl.getTarget();
-
+	
 		rm.write("<a");
-
+	
 		if(action === ui5strap.BsAction.DismissModal){
 			rm.writeAttribute('data-dismiss', 'modal');	
 		}
-
-		if(options.toggleDropdown){
-			rm.writeAttribute('id', oControl.getId() + '---link');
-			rm.addClass("dropdown-toggle");
-	    }
-	    else if(options.listLink){
-			rm.writeAttribute('id', oControl.getId() + '---link');
+	
+		rm.writeControlData(oControl);
+		
+		rm.addClass(oControl._getStyleClassRoot());
+		
+		var type = oControl.getType();
+		if(ui5strap.LinkType.Default !== type){
+			rm.addClass(this.typeToClass[type]);
 		}
-		else{
-			rm.writeControlData(oControl);
-			
-			if(options.standalone){
-				var type = oControl.getType();
-				if(ui5strap.LinkType.Default !== type){
-					rm.addClass(this.typeToClass[type]);
-				}
-			}
-		}
-
+		
 		rm.writeClasses();
 		    
 		if('' !== href){
 			rm.writeAttribute('href', href);
 		}
-
+	
 		if('' !== target){
 			rm.writeAttribute('target', target);
 		}
-
+	
 		if('' !== title){
 	    	rm.writeAttribute('title', title);
 	    }
-
+	
 		rm.write(">");
-	};
-
-	ui5strap.LinkRenderer.endRender = function(rm, oControl){
+		
+		var text = oControl.getText(),
+			parse = oControl.getParse();
+	
+		if(parse){
+			text = ui5strap.RenderUtils.parseText(text);
+		}
+	
+		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		
 		rm.write("</a>");
-	};
 
-}());
+		ui5strap.RenderUtils.renderTrail(rm, oControl);
+	};
+	
+	return LinkRenderer;
+	
+}, true);

@@ -28,15 +28,21 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.ListLinkItemRenderer");
-	jQuery.sap.require("ui5strap.LinkRenderer");
-
+	
 	ui5strap.ListLinkItemRenderer = {
 	};
 
 	ui5strap.ListLinkItemRenderer.render = function(rm, oControl) {
 		this.startRender(rm, oControl, {});
 
-		ui5strap.LinkRenderer.renderContent(rm, oControl);
+		var text = oControl.getText(),
+			parse = oControl.getParse();
+	
+		if(parse){
+			text = ui5strap.RenderUtils.parseText(text);
+		}
+	
+		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
 
 		this.endRender(rm, oControl);
 	};
@@ -53,13 +59,38 @@
 		rm.writeClasses();
 		rm.write(">");
 
-		ui5strap.LinkRenderer.startRender(rm, oControl, { listLink : true });
+		this.startRenderLink(rm, oControl);
 	};
 
 	ui5strap.ListLinkItemRenderer.endRender = function(rm, oControl){
-		ui5strap.LinkRenderer.endRender(rm, oControl);
+		rm.write('</a>');
 		    
 		rm.write("</li>");
+	};
+	
+	ui5strap.ListLinkItemRenderer.startRenderLink = function(rm, oControl) {
+		var href = oControl.getHref(),
+			title = oControl.getTitle(),
+			target = oControl.getTarget();
+
+		rm.write("<a");
+
+		rm.writeAttribute('id', oControl.getId() + '---link');
+		rm.writeClasses();
+		    
+		if('' !== href){
+			rm.writeAttribute('href', href);
+		}
+
+		if('' !== target){
+			rm.writeAttribute('target', target);
+		}
+
+		if('' !== title){
+	    	rm.writeAttribute('title', title);
+	    }
+
+		rm.write(">");
 	};
 
 }());

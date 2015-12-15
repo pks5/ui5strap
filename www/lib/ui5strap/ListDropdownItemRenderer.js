@@ -29,14 +29,12 @@
 
 	jQuery.sap.declare("ui5strap.ListDropdownItemRenderer");
 	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.LinkRenderer");
-
+	
 	ui5strap.ListDropdownItemRenderer = {
 	};
 
 	ui5strap.ListDropdownItemRenderer.render = function(rm, oControl) {
-		var menu = oControl.getMenu(),
-			LinkRenderer = ui5strap.LinkRenderer;
+		var menu = oControl.getMenu();
 
 		rm.write("<li");
 		rm.writeControlData(oControl);
@@ -50,11 +48,11 @@
 		rm.writeClasses();
 		rm.write(">");
 
-		LinkRenderer.startRender(rm, oControl, { toggleDropdown : true });
+		this.startRenderLink(rm, oControl);
 		
 		this.renderContent(rm, oControl);
 
-		LinkRenderer.endRender(rm, oControl);
+		rm.write('</a>');
 		
 		if(null !== menu){
 			rm.renderControl(menu);
@@ -64,8 +62,42 @@
 	};
 
 	ui5strap.ListDropdownItemRenderer.renderContent = function(rm, oControl){
-		ui5strap.LinkRenderer.renderContent(rm, oControl);
+		var text = oControl.getText(),
+			parse = oControl.getParse();
+	
+		if(parse){
+			text = ui5strap.RenderUtils.parseText(text);
+		}
+	
+		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
 		rm.write(' <span class="caret"></span>');
+	};
+	
+	ui5strap.ListDropdownItemRenderer.startRenderLink = function(rm, oControl) {
+		var href = oControl.getHref(),
+			title = oControl.getTitle(),
+			target = oControl.getTarget();
+
+		rm.write("<a");
+
+		rm.writeAttribute('id', oControl.getId() + '---link');
+		rm.addClass("dropdown-toggle");
+	    
+		rm.writeClasses();
+		    
+		if('' !== href){
+			rm.writeAttribute('href', href);
+		}
+
+		if('' !== target){
+			rm.writeAttribute('target', target);
+		}
+
+		if('' !== title){
+	    	rm.writeAttribute('title', title);
+	    }
+
+		rm.write(">");
 	};
 
 }());

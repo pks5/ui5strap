@@ -25,24 +25,18 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.Link");
-	jQuery.sap.require("ui5strap.library");
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
-	ui5strap.ControlBase.extend("ui5strap.Link", {
+	var Link = ControlBase.extend("ui5strap.Link", {
 		metadata : {
 
-			// ---- object ----
-			defaultAggregation : "content",
-			// ---- control specific ----
 			library : "ui5strap",
 
 			properties : { 
 				
 				text : {
 					type:"string", 
-					defaultValue:""
+					defaultValue : ""
 				},
 				parse : {
 					type : "boolean",
@@ -50,22 +44,25 @@
 				},
 				title : {
 					type: "string", 
-					defaultValue: ""
+					defaultValue : ""
 				},
-				href : {
-					type:"string", 
-					defaultValue:""
-				},
+				
 				contentPlacement : {
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
 				},
 				trail : {
 					type:"ui5strap.TrailHtml", 
-					defaultValue:ui5strap.TrailHtml.None
+					defaultValue : ui5strap.TrailHtml.None
+				},
+				
+				//Default functionality
+				href : {
+					type : "string", 
+					defaultValue : ""
 				},
 				target  : {
-					type:"string", 
+					type : "string", 
 					defaultValue : ""
 				},	
 				
@@ -77,8 +74,8 @@
 				},
 				bsAction : {
 					deprecated : true,
-					type: "ui5strap.BsAction", 
-					defaultValue: ui5strap.BsAction.None
+					type : "ui5strap.BsAction", 
+					defaultValue : ui5strap.BsAction.None
 				}
 			},
 
@@ -87,16 +84,20 @@
 					singularName: "content"
 				}
 			},
-			events:{
+			
+			defaultAggregation : "content",
+			
+			events : {
 				
 				//TODO Rename 'tap' event to 'press' sometimes
 		        tap : {allowPreventDefault : true}
 		    }
 
 		}
-	});
+	}),
+	LinkProto = Link.prototype;
 	
-	var LinkProto = ui5strap.Link.prototype;
+	LinkProto._stylePrefix = "ui5strapLink";
 
 	ui5strap.Utils.dynamicAttributes(
 		LinkProto, 
@@ -132,5 +133,7 @@
 	else{
 		LinkProto.onclick = LinkProto._handlePress;
 	}
+	
+	return Link;
 
-}());
+});

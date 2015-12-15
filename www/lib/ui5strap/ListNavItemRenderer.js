@@ -28,14 +28,12 @@
 (function(){
 
 	jQuery.sap.declare("ui5strap.ListNavItemRenderer");
-	jQuery.sap.require("ui5strap.LinkRenderer");
-
+	
 	ui5strap.ListNavItemRenderer = {
 	};
 
 	ui5strap.ListNavItemRenderer.render = function(rm, oControl) {
-		var badge = oControl.getBadge(),
-			LinkRenderer = ui5strap.LinkRenderer;
+		var badge = oControl.getBadge();
 
 		rm.write("<li");
 		rm.writeControlData(oControl);
@@ -48,9 +46,16 @@
 		rm.writeClasses();
 		rm.write(">");
 
-		LinkRenderer.startRender(rm, oControl, { listLink : true });
+		this.startRenderLink(rm, oControl);
 		
-		LinkRenderer.renderContent(rm, oControl);
+		var text = oControl.getText(),
+			parse = oControl.getParse();
+	
+		if(parse){
+			text = ui5strap.RenderUtils.parseText(text);
+		}
+	
+		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
 
 		if('' !== badge){
 			rm.write('<span class="badge">');
@@ -58,9 +63,36 @@
 			rm.write('</span>');
 		}
 
-		LinkRenderer.endRender(rm, oControl);
+		rm.write('</a>');
 		    
 		rm.write("</li>");
+	};
+	
+	ui5strap.ListNavItemRenderer.startRenderLink = function(rm, oControl, options) {
+		var href = oControl.getHref(),
+			title = oControl.getTitle(),
+			target = oControl.getTarget();
+
+		rm.write("<a");
+
+		rm.writeAttribute('id', oControl.getId() + '---link');
+		
+
+		rm.writeClasses();
+		    
+		if('' !== href){
+			rm.writeAttribute('href', href);
+		}
+
+		if('' !== target){
+			rm.writeAttribute('target', target);
+		}
+
+		if('' !== title){
+	    	rm.writeAttribute('title', title);
+	    }
+
+		rm.write(">");
 	};
 
 }());
