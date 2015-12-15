@@ -11790,6 +11790,24 @@ a {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.ui5strapButton-option-NavBarButton {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.ui5strapLink-option-BarBrand {
+  float: left;
+  height: 44px;
+  padding: 12px 12px;
+  font-size: 18px;
+  line-height: 20px;
+}
+.ui5strapLink-option-NavBarBrand {
+  float: left;
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+}
 /*
  * 
  * UI5Strap
