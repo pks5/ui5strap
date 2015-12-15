@@ -21,7 +21,7 @@
 							</Button>
 						</Container>
 						
-						<Heading text="{i18n>PAGE4_TITLE}" options="BarHeadingText" />
+						<Heading text="{i18n>PAGE4_TITLE}" options="BarHeading" />
 					</Container>
 					
 					<Heading text="{i18n>PAGE4_TITLE}" options="BarHeadingCenter" />

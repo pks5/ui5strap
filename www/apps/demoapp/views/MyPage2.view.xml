@@ -42,7 +42,7 @@
 		<!-- Body area with page content -->
 		<body>
 			<ScrollContainer vertical="true">
-				<Container type="FluidInset">
+				<Container type="FluidInset" severity="Warning">
 
 					<Panel>
 

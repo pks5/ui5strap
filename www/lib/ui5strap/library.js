@@ -1852,11 +1852,6 @@
           resultHidden = resultHidden.join(" ");
           rm.addClass(resultHidden);
           
-          //Invisibility
-          //TODO neccessary?
-          if(oControl.getInvisible()){
-            rm.addClass('invisible');
-          }
       }
 
   };

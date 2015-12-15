@@ -53,6 +53,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 						defaultValue : ""
 					},
 					
+					fullHeight : {
+						type : "boolean",
+						defaultValue : false
+					},
+					
 					//Visibility DOES inherit from smaller sizes
 					//TODO remove visibility since it does same as visibilityExtraSmall
 					visibility : {
@@ -75,15 +80,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					visibilityLarge : {
 						type : "ui5strap.Visibility",
 						defaultValue : ui5strap.Visibility.Default
-					},
-					//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
-					
-					//Deprecated
-					invisible : {
-						deprecated : true,
-						type : "boolean",
-						defaultValue : false
 					}
+					//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
 			},
 			
 			aggregations : { 
@@ -150,7 +148,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	ContainerProto._getStyleClassRoot = function(){
-		return this._stylePrefix + " " + this._getStyleClassType(this.getType());
+		var styleClass = this._stylePrefix + " " + this._getStyleClassType(this.getType()),
+			severity = this.getSeverity();
+		
+		if(ui5strap.Severity.None !== severity){
+			styleClass += " bg-" + ui5strap.BSSeverity[severity];
+		}
+		
+		return styleClass;
 	};
 	
 	//Return Module Constructor

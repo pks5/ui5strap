@@ -31,7 +31,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	ContainerRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
-			severity = oControl.getSeverity(),
 			tagData = oControl._typeData[oControl.getType()],
 			html = oControl.getHtml();
 
@@ -42,9 +41,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.addClass(tagData.className);
 
-		if(ui5strap.Severity.None !== severity){
-			rm.addClass("bg-" + ui5strap.BSSeverity[severity]);
-		}
+		
 
 		ui5strap.RenderUtils.visibility(rm, oControl);
 
