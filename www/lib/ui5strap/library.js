@@ -576,9 +576,11 @@
 		Default : "Default",
 		Button : "Button",
 		Block : "Block",
+		Link : "Link",
+		
+		//@deprecated
 		Close : "Close",
-		Icon : "Icon",
-		Link : "Link"
+		Icon : "Icon"
 	};
 
   /*

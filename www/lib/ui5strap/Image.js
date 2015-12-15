@@ -76,7 +76,10 @@
 					type:"ui5strap.ImageShape",
 					defaultValue:ui5strap.ImageShape.Default
 				},
+				
+				//@deprecated
 				type: {
+					deprecated : true,
 					type:"ui5strap.ImageType",
 					defaultValue:ui5strap.ImageType.Default
 				}

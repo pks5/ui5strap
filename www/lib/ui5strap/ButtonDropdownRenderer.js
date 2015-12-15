@@ -71,7 +71,8 @@
 	};
 
 	ui5strap.ButtonDropdownRenderer.renderContent = function(rm, oControl) {
-		ui5strap.ButtonRenderer.renderContent(rm, oControl);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
+		
 		if(!oControl.getSplit()){
 			rm.write(' <span class="caret"></span>');
 		}

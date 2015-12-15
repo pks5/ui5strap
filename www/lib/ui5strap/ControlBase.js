@@ -46,6 +46,20 @@
 	
 	var ControlBaseProto = ui5strap.ControlBase.prototype;
 	
+	/**
+	 * @Protected
+	 */
+	ControlBaseProto._getIdPart = function(){
+		return this.getId() + "___" + arguments.join('-');
+	};
+	
+	/**
+	 * @Protected
+	 */
+	ControlBaseProto._$getPart = function(){
+		return jQuery('#' + this._getIdPart.apply(this, arguments));
+	};
+	
 	ControlBaseProto._stylePrefix = 'ui5strapControlBase';
 	
 	/**
