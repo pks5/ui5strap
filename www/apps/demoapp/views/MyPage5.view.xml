@@ -14,7 +14,7 @@
 					</Button>
 				</Container>
 				
-				<Heading options="BarHeading" text="{i18n>PAGE5_TITLE}" />
+				<Heading options="BarHeadingRight" text="{i18n>PAGE5_TITLE}" />
 				
 			</Bar>
 		</head>
@@ -52,7 +52,10 @@
 			
 			</Container>
 		</body>
-			
+		<footer>
+				<!-- Bar on top of page -->
+				<Bar></Bar>
+			</footer>		
 	</Page>
 
 </View>

@@ -859,19 +859,8 @@
 		//Plain HTML <span>
 		Text : "Text",
 		
-		//Plain HTML <section>
-		Section : "Section",
-		
 		//Bootstrap "container" & "container-fluid"
 		Fluid : "Fluid",
-		Inset : "Inset",
-		Full : "Full",
-		
-		FluidInset : "FluidInset",
-		
-		FluidFull : "FluidFull",
-		InsetFull : "InsetFull",
-		FluidInsetFull : "FluidInsetFull",
 		
 		//Bootstrap styles
 		Website : "Website",
@@ -881,6 +870,9 @@
 		PageHeader : "PageHeader",
 		
 		//Deprecated
+		//Plain HTML <section>
+		Section : "Section",
+		FluidInset : "FluidInset",
 		Page : "Page",
 		Paragraph : "Paragraph",
 		Floating : "Floating",

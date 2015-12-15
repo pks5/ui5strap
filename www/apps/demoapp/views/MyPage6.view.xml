@@ -16,7 +16,7 @@
 				</left>
 				<!-- Middle area of bar -->
 				<middle>
-					<Heading text="{i18n>PAGE6_TITLE}" options="BarHeading" />
+					<Heading text="{i18n>PAGE6_TITLE}" options="BarHeadingCenter" />
 				</middle>
 			</Bar>
 		</head>
@@ -42,7 +42,10 @@
 				</Container>
 			</Container>
 		</body>
-			
+		<footer>
+				<!-- Bar on top of page -->
+				<Bar></Bar>
+			</footer>	
 	</Page>
 
 </View>

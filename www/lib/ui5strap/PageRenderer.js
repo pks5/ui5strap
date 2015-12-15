@@ -38,30 +38,30 @@
 
 		rm.write("<div");
 		
-		rm.addClass('page');
+		rm.addClass('ui5strapPage');
 		if(head){
-			rm.addClass('page-with-head');
+			rm.addClass('ui5strapPage-flag-withHead');
 		}
 		if(footer){
-			rm.addClass('page-with-footer');
+			rm.addClass('ui5strapPage-flag-withFooter');
 		}
 		rm.writeClasses();
 		rm.write(">");
 		
 		if(head){
-			rm.write("<div class='page-head'>");
+			rm.write("<div class='ui5strapPage-head'>");
 			rm.renderControl(head);
 			rm.write("</div>");
 		}
 
-		rm.write("<div class='page-body'>");
+		rm.write("<div class='ui5strapPage-body'>");
 		for(var i = 0; i < content.length; i++){ 
 			rm.renderControl(content[i]);
 		}
 		rm.write("</div>");
 
 		if(footer){
-			rm.write("<div class='page-footer'>");
+			rm.write("<div class='ui5strapPage-footer'>");
 			rm.renderControl(footer);
 			rm.write("</div>");
 		}

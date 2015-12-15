@@ -20,9 +20,11 @@
 								<Icon icon="columns" />
 							</Button>
 						</Container>
+						
+						<Heading text="{i18n>PAGE4_TITLE}" options="BarHeadingText" />
 					</Container>
 					
-					<Heading text="{i18n>PAGE4_TITLE}" options="BarHeading" />
+					<Heading text="{i18n>PAGE4_TITLE}" options="BarHeadingCenter" />
 					
 					<Container align="PullRight">
 						<!-- Toggle Menu Button (only for small screens) -->

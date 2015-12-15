@@ -34,27 +34,29 @@
 		metadata : {
 			interfaces : ["ui5strap.IBar"],
 			
-			// ---- object ----
-			"defaultAggregation" : "content",
-
-			// ---- control specific ----
 			"library" : "ui5strap",
 			
 			"properties" : {
 				type : {
 					type:"ui5strap.ContainerType", 
-					defaultValue: ui5strap.ContainerType.FluidFull
+					defaultValue: ui5strap.ContainerType.Fluid
 				},
 				"inverse" : {
 					type:"boolean", 
-					defaultValue:false
+					defaultValue: false
+				},
+				"fullHeight" : {
+					type:"boolean", 
+					defaultValue: true
 				}
 			},
 			
 			"aggregations" : {
 				"content":{
-					"singularName" : "left"
+					"singularName" : "content"
 				},
+				
+				//@deprecated
 				"left" : {
 					deprecated : true,
 					"singularName" : "left"
@@ -67,10 +69,22 @@
 					deprecated : true,
 					"singularName" : "right"
 				}  
-			}
-
+			},
+			
+			"defaultAggregation" : "content"
 		}
-	});
+	}),
+	BarProto = ui5strap.Bar.prototype; 
 
-	ui5strap.Bar.prototype._stylePrefix = "u5sl-bar";
+	BarProto._stylePrefix = "ui5strapBar";
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	BarProto._getStyleClassesRoot = function(){
+		return "ui5strapBar ui5strapBar-type-" + this.getType() 
+				+ (this.getInverse() ? ' ui5strapBar-flag-styleInverse' : ' ui5strapBar-flag-styleDefault')
+				+ (this.getFullHeight() ? ' ui5strapBar-flag-fullHeight' : '');
+	};
 }());

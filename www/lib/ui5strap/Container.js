@@ -109,46 +109,12 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			tagName : "span",
 			className : "container-text"
 		},
-		Section : {
-			tagName : "section",
-			className : "container-section"
-		},
 		
-		//Bootstrap container and container-fluid
-		//container-inset is an additional class that adds padding-top and padding-bottom
-		
+		//Bootstrap Components
 		Fluid : {
 			tagName : "div",
 			className : "container-fluid"
 		},
-		Inset : {
-			tagName : "div",
-			className : "container-inset"
-		},
-		Full : {
-			tagName : "div",
-			className : "container-full"
-		},
-		
-		FluidInset : {
-			tagName : "div",
-			className : "container-fluid container-inset"
-		},
-		FluidFull : {
-			tagName : "div",
-			className : "container-fluid container-full"
-		},
-		InsetFull : {
-			tagName : "div",
-			className : "container-inset container-full"
-		},
-		FluidInsetFull : {
-			tagName : "div",
-			className : "container-fluid container-inset container-full"
-		},
-		
-		
-		//Bootstrap Components
 		Website : {
 			tagName : "div",
 			className : "container"
@@ -173,6 +139,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		
 		
 		//Deprecated
+		Section : {
+			tagName : "section",
+			className : "container-section"
+		},
+		FluidInset : {
+			tagName : "div",
+			className : "container-fluid container-inset"
+		},
 		Page : {
 			tagName : "div",
 			className : "container"

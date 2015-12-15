@@ -31,35 +31,15 @@
 
 	var BarRenderer = {
 			typeToTag : {
+				Default : {
+					typeClassName : "ui5strapBar-type-default",
+					containerClassName : ""
+				},
 				Fluid : {
-					typeClassName : "u5sl-bar-type-fluid",
+					typeClassName : "ui5strapBar-type-fluid",
 					containerClassName : "container-fluid"
-				},
-				Inset : {
-					typeClassName : "u5sl-bar-type-inset",
-					containerClassName : "container-inset"
-				},
-				Full : {
-					typeClassName : "u5sl-bar-type-full",
-					containerClassName : "container-full"
-				},
-				
-				FluidInset : {
-					typeClassName : "u5sl-bar-type-fluid-inset",
-					containerClassName : "container-fluid container-inset"
-				},
-				FluidFull : {
-					typeClassName : "u5sl-bar-type-fluid-full",
-					containerClassName : "container-fluid container-full"
-				},
-				InsetFull : {
-					typeClassName : "u5sl-bar-type-inset-full",
-					containerClassName : "container-inset container-full"
-				},
-				FluidInsetFull : {
-					typeClassName : "u5sl-bar-type-fluid-inset-full",
-					containerClassName : "container-fluid container-inset container-full"
 				}
+				
 			}
 	};
 
@@ -76,21 +56,22 @@
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('u5sl-bar ' + (inverse ? 'u5sl-bar-flag-inverse' : 'u5sl-bar-flag-default'));
-		rm.addClass(tagData.typeClassName);
+		
+		rm.addClass(oControl._getStyleClassesRoot());
 		rm.addClass(oControl._getStyleClassesOptions());
+		
 		rm.writeClasses();
 		rm.write(">");
 
 			rm.write("<div");
-			rm.addClass('u5sl-bar-inner ' + tagData.containerClassName);
+			rm.addClass('ui5strapBar-inner ' + tagData.containerClassName);
 			rm.writeClasses();
 			rm.write(">");
 			  
 			//Middle
 			if(contentMiddle.length > 0){     
 				rm.write("<div");
-				rm.addClass("u5sl-bar-content u5sl-bar-content-middle");
+				rm.addClass("ui5strapBar-contentMiddle");
 				rm.writeClasses();
 				rm.write(">");
 				for(var i = 0; i < contentMiddle.length; i++){ 
@@ -102,7 +83,7 @@
 			//Left
 			if(contentLeft.length > 0){     
 				rm.write("<div");
-				rm.addClass("u5sl-bar-content u5sl-bar-content-left");
+				rm.addClass("uui5strapBar-contentLeft");
 				rm.writeClasses();
 				rm.write(">");
 				for(var i = 0; i < contentLeft.length; i++){ 
@@ -121,7 +102,7 @@
 			//Right
 			if(contentRight.length > 0){     
 				rm.write("<div");
-				rm.addClass("u5sl-bar-content u5sl-bar-content-right");
+				rm.addClass("ui5strapBar-contentRight");
 				rm.writeClasses();
 				rm.write(">");
 				for(var i = 0; i < contentRight.length; i++){ 

@@ -15,7 +15,7 @@
 					</Button>
 				</Container>
 					
-					<Heading level="1" options="BarHeading">
+					<Heading level="1" options="BarHeadingCenter">
 						<Text text="{i18n>PAGE1_TITLE}" />
 						<Text type="Label" severity="Success" text="New" />
 					</Heading>

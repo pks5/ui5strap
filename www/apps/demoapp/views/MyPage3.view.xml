@@ -24,7 +24,7 @@
 				
 				<!-- Middle area of bar -->
 				<middle>
-					<Heading options="BarHeading" text="{i18n>PAGE3_TITLE}" />
+					<Heading options="BarHeadingCenter" text="{i18n>PAGE3_TITLE}" />
 				</middle>
 				
 				<right>

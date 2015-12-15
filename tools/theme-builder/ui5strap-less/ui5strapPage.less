@@ -26,40 +26,36 @@
  */
 
 /*
-* TODO: add library prefix "u5sl-"
-*/
-
-/*
 * Page
 */
-.page{
+.ui5strapPage{
   height:100%;
   position: relative;
 }
 
-.page-head{
-  position:absolute;
-  width:100%;
+.ui5strapPage-head{
   height: @bar-height;
-  top:0;
 }
 
-.page-body{
-  width:100%;
-  height:100%;
-  position: relative;
+.ui5strapPage-body{
+  	position:absolute;
+  	top:0;
+  	bottom:0;
+  	left:0;
+  	right:0;
 }
 
-.page.page-with-head{
-	 padding-top: @bar-height;
+.ui5strapPage-flag-withHead > .ui5strapPage-body{
+	 top: @bar-height;
 }
 
-.page.page-with-footer{
-	padding-bottom: @bar-height;
+.ui5strapPage-flag-withFooter > .ui5strapPage-body{
+	bottom: @bar-height;
 }
 
-.page-footer{
+.ui5strapPage-footer{
 	position:absolute;
 	width:100%;
 	bottom:0;
+	height: @bar-height;
 }

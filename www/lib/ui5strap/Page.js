@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.Page");
-	jQuery.sap.require("ui5strap.library");
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
-	ui5strap.ControlBase.extend("ui5strap.Page", {
+	var Page = ControlBase.extend("ui5strap.Page", {
 		metadata : {
 
 			// ---- object ----
@@ -53,7 +50,10 @@
 			}
 
 		}
-	});
+	}),
+	PageProto = Page.prototype;
 
-
-}());
+	PageProto._stylePrefix = "ui5strapPage";
+	
+	return Page;
+});

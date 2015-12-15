@@ -26,50 +26,48 @@
  */
 
 /*
-* TODO: add library prefix "u5sl-"
-*/
-
-/*
 * Bar
 */
-.u5sl-bar{
+.ui5strapBar{
   box-shadow: 0 0 3px rgba(0,0,0,0.5);
-  mkin-height: @bar-height;
 }
 
+.ui5strapBar-flag-fullHeight{
+	height: 100%;
+}
 
-
-.u5sl-bar-flag-default{
+.ui5strapBar-flag-styleDefault{
     background-color: @bar-default-bg;
     border-color: @bar-default-border;
     color: @bar-default-color;
 }
 
-.u5sl-bar-flag-inverse{
+.ui5strapBar-flag-styleInverse{
   background-color: @bar-inverse-bg;
   border-color: @bar-inverse-border;
   color: @bar-inverse-color;
 }
 
-.u5sl-bar.u5sl-bar-type-full,
-.u5sl-bar.u5sl-bar-type-fluid-full,
-.u5sl-bar.u5sl-bar-type-inset-full,
-.u5sl-bar.u5sl-bar-type-fluid-inset-full{
+.ui5strapBar-flag-fullHeight{
 	height:100%;
 }
 
-.u5sl-bar > .u5sl-bar-inner::after {
+.ui5strapBar-inner::after {
     content: '';
     clear: both;
     display: block;
     height:0;
 }
 
-.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-left{
+/*
+ * @deprecated
+ */
+ 
+.ui5strapBar-contentLeft{
   float:left; 
 }
 
-.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-middle{
+.ui5strapBar-contentMiddle{
 	text-align:center;
     width:50%;
 	position:absolute;
@@ -77,7 +75,7 @@
 	left:50%;
 }
 
-.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-right{
+.ui5strapBar-contentRight{
     float:right; 
     text-align:right;
 }

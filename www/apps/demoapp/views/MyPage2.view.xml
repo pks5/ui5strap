@@ -25,7 +25,7 @@
 				</Container>
 
 				<!-- Middle area of bar -->
-				<Heading text="{i18n>PAGE2_TITLE}" options="BarHeading" />
+				<Heading text="{i18n>PAGE2_TITLE}" options="BarHeadingCenter" />
 
 				<!-- Toggle Menu Button (only for small screens) -->
 				<Container type="Text" align="PullRight"
