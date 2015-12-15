@@ -11753,23 +11753,12 @@ a {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-.container-inset {
+.ui5strapContainer-type-FluidInset {
   padding-top: 15px;
   padding-bottom: 15px;
 }
-.container-full {
+.ui5strapContainer-flag-fullHeight {
   height: 100%;
-}
-/*
- * DEPRECATED
- */
-.container-floating {
-  float: left;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-.container-paragraph {
-  margin-bottom: 10px;
 }
 /*
  * 

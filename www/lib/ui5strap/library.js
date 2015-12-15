@@ -880,13 +880,7 @@
 		PageHeader : "PageHeader",
 		
 		//Deprecated
-		//Plain HTML <section>
-		Section : "Section",
-		FluidInset : "FluidInset",
-		Page : "Page",
-		Paragraph : "Paragraph",
-		Floating : "Floating",
-		Phrasing : "Phrasing"
+		FluidInset : "FluidInset"
 	};
 
   /*

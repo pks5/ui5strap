@@ -103,11 +103,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	ContainerProto._typeData = {
 		Default : {
 			tagName : "div",
-			className : "container-default"
+			className : ""
 		},
 		Text : {
 			tagName : "span",
-			className : "container-text"
+			className : ""
 		},
 		
 		//Bootstrap Components
@@ -121,47 +121,27 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		},
 		Jumbotron : {
 			tagName : "div",
-			className : "container-jumbotron jumbotron"
+			className : "jumbotron"
 		},
 		Well : {
 			tagName : "div",
-			className : "container-well well"
+			className : "well"
 		},
 		WellLarge : {
 			tagName : "div",
-			className : "container-well well well-lg"
+			className : "well well-lg"
 		},
 		PageHeader : {
 			tagName : "div",
-			className : "container-page-header page-header"
+			className : "page-header"
 		},
 		
 		
 		
 		//Deprecated
-		Section : {
-			tagName : "section",
-			className : "container-section"
-		},
 		FluidInset : {
 			tagName : "div",
-			className : "container-fluid container-inset"
-		},
-		Page : {
-			tagName : "div",
-			className : "container"
-		},
-		Paragraph : {
-			tagName : "div",
-			className : "container-paragraph"
-		},
-		Phrasing : {
-			tagName : "div",
-			className : "container-phrasing"
-		},
-		Floating : {
-			tagName : "div",
-			className : "container-floating"
+			className : "container-fluid"
 		}
 	};
 	
