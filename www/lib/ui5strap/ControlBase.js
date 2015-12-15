@@ -51,7 +51,7 @@
 	/**
 	 * @Protected
 	 */
-	ControlBaseProto._getStyleClassesRoot = function(){
+	ControlBaseProto._getStyleClassRoot = function(){
 		return this._stylePrefix;
 	};
 	
@@ -79,7 +79,7 @@
 	/**
 	* @Protected
 	*/
-	ControlBaseProto._getStyleClassesOptions = function(){
+	ControlBaseProto._getStyleClassOptions = function(){
 		var options = this.getOptions(),
 			classes = '';
 	    

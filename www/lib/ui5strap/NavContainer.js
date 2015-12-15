@@ -565,7 +565,7 @@
 	 * @Protected
 	 * @Override
 	 */
-	NavContainerBaseProto._getStyleClassesRoot = function(){
+	NavContainerBaseProto._getStyleClassRoot = function(){
 		return "navcontainer navcontainer-type-" + this.ncType;
 	};
 	

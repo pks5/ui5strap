@@ -114,7 +114,7 @@
 			rm.addClass("active");
 		}
 	    
-	    rm.addClass(oControl._getStyleClassesOptions());
+	    rm.addClass(oControl._getStyleClassOptions());
 	
 		if(!oControl.getEnabled()){
 			rm.writeAttribute("disabled", "disabled");

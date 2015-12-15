@@ -38,7 +38,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<" + tagData.tagName);
 		rm.writeControlData(oControl);
 		
-		rm.addClass(oControl._getStyleClassesRoot());
+		rm.addClass(oControl._getStyleClassRoot());
 		
 		rm.addClass(tagData.className);
 

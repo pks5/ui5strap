@@ -169,7 +169,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Protected
 	 * @Override
 	 */
-	ContainerProto._getStyleClassesRoot = function(){
+	ContainerProto._getStyleClassRoot = function(){
 		return this._stylePrefix + " " + this._getStyleClassType(this.getType());
 	};
 	

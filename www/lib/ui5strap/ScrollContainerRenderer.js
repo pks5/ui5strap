@@ -34,7 +34,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<div");
 		rm.writeControlData(oControl);
 		
-		rm.addClass(oControl._getStyleClassesRoot());
+		rm.addClass(oControl._getStyleClassRoot());
 		
 		if(oControl.getHorizontal()){
 			rm.addClass(oControl._getStyleClassFlag("horizontal"));

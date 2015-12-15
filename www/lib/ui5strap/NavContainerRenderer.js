@@ -53,8 +53,8 @@
 			rm.write('<div');
 		    rm.writeControlData(oControl);
 		    
-		    rm.addClass(oControl._getStyleClassesRoot());
-		    rm.addClass(oControl._getStyleClassesOptions());
+		    rm.addClass(oControl._getStyleClassRoot());
+		    rm.addClass(oControl._getStyleClassOptions());
 		    rm.writeClasses();
 		    
 		    rm.write(">");
