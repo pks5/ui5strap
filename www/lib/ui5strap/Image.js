@@ -47,13 +47,14 @@
 					type : "string",
 					defaultValue : "jpg"
 				},
-				title : {
-					type: "string", 
-					defaultValue: ""
-				},
+				
 				responsive : {
 					type : "boolean",
 					defaultValue : false
+				},
+				title : {
+					type: "string", 
+					defaultValue: ""
 				},
 				alt : {
 					type:"string", 

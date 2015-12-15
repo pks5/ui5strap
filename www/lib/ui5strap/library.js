@@ -170,7 +170,6 @@
             "ui5strap.Form",
             "ui5strap.FormGroup",
             "ui5strap.Heading",
-            "ui5strap.HtmlTag",
             "ui5strap.Icon",
             "ui5strap.Image",
             "ui5strap.InputGroup",
