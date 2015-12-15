@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.StaticOverlay");
-	jQuery.sap.require("ui5strap.library");
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
-	ui5strap.ControlBase.extend("ui5strap.StaticOverlay", {
+	var StaticOverlay = ControlBase.extend("ui5strap.StaticOverlay", {
 		metadata : {
 
 			library : "ui5strap",
@@ -55,16 +52,19 @@
 				}
 			}
 		}
-	});
+	}),
+	StaticOverlayProto = StaticOverlay.prototype;
 	
-	ui5strap.StaticOverlay.prototype.onBeforeRendering = function(oEvent){
+	StaticOverlayProto._stylePrefix = "ui5strapStaticOverlay";
+	
+	StaticOverlayProto.onBeforeRendering = function(oEvent){
 		if(this.getBackdrop()){
 			this._$backdrop && this._$backdrop.off('click');
 			delete(this._$backdrop);
 		}
 	};
 	
-	ui5strap.StaticOverlay.prototype.onAfterRendering = function(oEvent){
+	StaticOverlayProto.onAfterRendering = function(oEvent){
 		if(this.getBackdrop()){
 			var _this = this;
 			this._$backdrop = this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
@@ -73,9 +73,10 @@
 		}
 	};
 	
-	ui5strap.StaticOverlay.prototype.addContent = function(oObject, bSuppressInvalidate){
+	StaticOverlayProto.addContent = function(oObject, bSuppressInvalidate){
 		this.addAggregation("content", oObject, bSuppressInvalidate);
 		oObject.addStyleClass('modal-dialog');
 	};
-
-}());
+	
+	return StaticOverlay;
+});

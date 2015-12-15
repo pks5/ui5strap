@@ -13854,18 +13854,14 @@ a {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-/*
-* TODO: change library prefix to "u5sl-"
-* TODO: rename static-overlay to staticoverlay
-*/
-.ui5strap-static-overlay {
+.ui5strapStaticOverlay {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
-.ui5strap-static-overlay-backdrop {
+.ui5strapStaticOverlay-backdrop {
   position: absolute;
   top: 0;
   right: 0;

@@ -39,15 +39,7 @@
 			library : "ui5strap",
 
 			properties : { 
-				type : {
-					type : "ui5strap.LinkType",
-					defaultValue : ui5strap.LinkType.Default
-				},
-				bsAction : {
-					deprecated : true,
-					type: "ui5strap.BsAction", 
-					defaultValue: ui5strap.BsAction.None
-				},
+				
 				text : {
 					type:"string", 
 					defaultValue:""
@@ -59,10 +51,6 @@
 				title : {
 					type: "string", 
 					defaultValue: ""
-				},
-				bubbleUp : {
-					type : "boolean",
-					defaultValue : false
 				},
 				href : {
 					type:"string", 
@@ -79,7 +67,19 @@
 				target  : {
 					type:"string", 
 					defaultValue : ""
-				}			
+				},	
+				
+				//@deprecated
+				type : {
+					deprecated : true,
+					type : "ui5strap.LinkType",
+					defaultValue : ui5strap.LinkType.Default
+				},
+				bsAction : {
+					deprecated : true,
+					type: "ui5strap.BsAction", 
+					defaultValue: ui5strap.BsAction.None
+				}
 			},
 
 			aggregations : { 

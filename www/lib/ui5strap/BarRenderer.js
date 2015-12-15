@@ -25,9 +25,7 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.BarRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	var BarRenderer = {
 			typeToTag : {
@@ -42,8 +40,6 @@
 				
 			}
 	};
-
-	ui5strap.BarRenderer = BarRenderer;
 
 	BarRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
@@ -116,4 +112,7 @@
 			rm.write("</div>");    
 		rm.write("</div>");
 	};
-}());
+	
+	return BarRenderer;
+	
+}, true);

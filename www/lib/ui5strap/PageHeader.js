@@ -31,7 +31,7 @@
 	jQuery.sap.require("ui5strap.library");
 	
 	ui5strap.ControlBase.extend("ui5strap.PageHeader", {metadata : {
-
+		deprecated : true,
 		library : "ui5strap",
 		
 		properties : { 

@@ -32,7 +32,7 @@
 	
 	ui5strap.ControlBase.extend("ui5strap.Label", {
 		metadata : {
-
+			deprecated : true,
 			// ---- object ----
 			defaultAggregation : "content",
 			// ---- control specific ----
