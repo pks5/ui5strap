@@ -58,8 +58,8 @@
 	/**
 	 * @Protected
 	 */
-	ControlBaseProto._getStyleClassComponent = function(component){
-		return this._stylePrefix + "-" + component;
+	ControlBaseProto._getStyleClassPart = function(partName){
+		return this._stylePrefix + "-" + partName;
 	};
 	
 	/**

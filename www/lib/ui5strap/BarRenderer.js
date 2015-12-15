@@ -46,10 +46,9 @@
 	ui5strap.BarRenderer = BarRenderer;
 
 	BarRenderer.render = function(rm, oControl) {
-		var inverse = oControl.getInverse(),
-			tagData = this.typeToTag[oControl.getType()],
-		 	contentLeft = oControl.getLeft(),
-		 	content = oControl.getContent(),
+		var content = oControl.getContent(),
+	 	
+			contentLeft = oControl.getLeft(),
 		 	contentMiddle = oControl.getMiddle(),
 			contentRight = oControl.getRight();
 		
@@ -64,11 +63,12 @@
 		rm.write(">");
 
 			rm.write("<div");
-			rm.addClass('ui5strapBar-inner ' + tagData.containerClassName);
+			rm.addClass(oControl._getStyleClassPart("inner"));
 			rm.writeClasses();
 			rm.write(">");
 			  
 			//Middle
+			//@deprecated
 			if(contentMiddle.length > 0){     
 				rm.write("<div");
 				rm.addClass("ui5strapBar-contentMiddle");
@@ -81,6 +81,7 @@
 			}
 			
 			//Left
+			//@deprecated
 			if(contentLeft.length > 0){     
 				rm.write("<div");
 				rm.addClass("uui5strapBar-contentLeft");
@@ -100,6 +101,7 @@
 			}
 			   
 			//Right
+			//@deprecated
 			if(contentRight.length > 0){     
 				rm.write("<div");
 				rm.addClass("ui5strapBar-contentRight");

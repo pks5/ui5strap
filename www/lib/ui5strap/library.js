@@ -827,6 +827,16 @@
 		ButtonsHorizontal : "ButtonsHorizontal",
 		ButtonsVertical : "ButtonsVertical"
 	}
+	
+	/*
+	   * BarMenuType
+	   */
+		jQuery.sap.declare("ui5strap.BarType");
+
+		ui5strap.BarType = {
+			Default : "Default",
+			Fluid : "Fluid"
+		}
 		
   /*
   * SelectionMode

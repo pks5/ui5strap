@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.Bar");
-	jQuery.sap.require("ui5strap.library");
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
-	ui5strap.ControlBase.extend("ui5strap.Bar", {
+	var Bar = ControlBase.extend("ui5strap.Bar", {
 		metadata : {
 			interfaces : ["ui5strap.IBar"],
 			
@@ -38,8 +35,8 @@
 			
 			"properties" : {
 				type : {
-					type:"ui5strap.ContainerType", 
-					defaultValue: ui5strap.ContainerType.Fluid
+					type:"ui5strap.BarType", 
+					defaultValue: ui5strap.BarType.Fluid
 				},
 				"inverse" : {
 					type:"boolean", 
@@ -74,7 +71,7 @@
 			"defaultAggregation" : "content"
 		}
 	}),
-	BarProto = ui5strap.Bar.prototype; 
+	BarProto = Bar.prototype; 
 
 	BarProto._stylePrefix = "ui5strapBar";
 	
@@ -87,4 +84,18 @@
 				+ (this.getInverse() ? ' ui5strapBar-flag-styleInverse' : ' ui5strapBar-flag-styleDefault')
 				+ (this.getFullHeight() ? ' ui5strapBar-flag-fullHeight' : '');
 	};
-}());
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	BarProto._getStyleClassPart = function(partName){
+		var partClassName = ControlBase.prototype._getStyleClassPart.call(this, partName);
+		if("inner" === partName && this.getType() === ui5strap.BarType.Fluid){
+			partClassName += " container-fluid";
+		}
+		return partClassName;
+	};
+	
+	return Bar;
+});
