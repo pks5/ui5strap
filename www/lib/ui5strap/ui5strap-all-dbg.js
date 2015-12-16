@@ -6385,7 +6385,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @Protected
 	 */
 	ControlBaseProto._getIdPart = function(){
-		return this.getId() + "___" + arguments.join('-');
+		if(arguments.legnth === 0){
+			throw new Error("Please provide at least one argument for ui5strap.ControlBase.prototype._getIdPart!");
+		}
+		var args = jQuery.makeArray(arguments);
+		return this.getId() + "___" + args.join('-');
 	};
 	
 	/**

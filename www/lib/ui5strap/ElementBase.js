@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ControlBase
+ * ui5strap.ElementBase
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,7 +27,7 @@
 
 sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSupport){
 
-	var ControlBase = ui5strap.Control.extend("ui5strap.ControlBase", {
+	var ElementBase = ui5strap.Element.extend("ui5strap.ElementBase", {
 		metadata : {
 
 			library : "ui5strap",
@@ -40,9 +40,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 			}
 		}
 	}),
-	ControlBaseProto = ControlBase.prototype;
+	ElementBaseProto = ElementBase.prototype;
 	
-	OptionsSupport.bless(ControlBaseProto);
+	OptionsSupport.bless(ElementBaseProto);
 	
-	return ControlBase;
+	return ElementBase;
 });
