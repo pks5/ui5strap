@@ -263,6 +263,9 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 						controlOrDef = context.eventSource;
 					}
 				}
+				else if("Root" === mode){
+					controlOrDef = context.app.getRootControl();
+				}
 				else if("View" === mode){
 					var controlId = context.resolve(task, controlOrDef.CONTROL_ID, true),
 						viewId = context.resolve(task, controlOrDef.VIEW_ID);
@@ -273,13 +276,18 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 								viewId = context.view.getId();
 							}
 							else{
-								throw new Error("Please provide a viewId to select Control '" + this._controlName + "' or remove controlId to select the root control!");
+								throw new Error("Please provide a viewId to select Control '" + this._controlName + "'!");
 							}
 						}
 						controlOrDef = context.app.getControl(controlId, viewId);
 					}
 					else{
-						controlOrDef = context.app.getRootControl();
+						if(context.view){
+							controlOrDef = context.view;
+						}
+						else{
+							throw new Error("Please provide a controlId to select Control '" + this._controlName + "'!");
+						}
 					}
 				}
 				else{

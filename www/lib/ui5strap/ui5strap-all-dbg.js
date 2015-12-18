@@ -2623,6 +2623,9 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 						controlOrDef = context.eventSource;
 					}
 				}
+				else if("Root" === mode){
+					controlOrDef = context.app.getRootControl();
+				}
 				else if("View" === mode){
 					var controlId = context.resolve(task, controlOrDef.CONTROL_ID, true),
 						viewId = context.resolve(task, controlOrDef.VIEW_ID);
@@ -2633,13 +2636,18 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 								viewId = context.view.getId();
 							}
 							else{
-								throw new Error("Please provide a viewId to select Control '" + this._controlName + "' or remove controlId to select the root control!");
+								throw new Error("Please provide a viewId to select Control '" + this._controlName + "'!");
 							}
 						}
 						controlOrDef = context.app.getControl(controlId, viewId);
 					}
 					else{
-						controlOrDef = context.app.getRootControl();
+						if(context.view){
+							controlOrDef = context.view;
+						}
+						else{
+							throw new Error("Please provide a controlId to select Control '" + this._controlName + "'!");
+						}
 					}
 				}
 				else{
@@ -6360,12 +6368,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSupport){
 
-	jQuery.sap.declare("ui5strap.ControlBase");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.Control.extend("ui5strap.ControlBase", {
+	var ControlBase = ui5strap.Control.extend("ui5strap.ControlBase", {
 		metadata : {
 
 			library : "ui5strap",
@@ -6377,176 +6382,13 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				}
 			}
 		}
-	});
+	}),
+	ControlBaseProto = ControlBase.prototype;
 	
-	var ControlBaseProto = ui5strap.ControlBase.prototype;
+	OptionsSupport.bless(ControlBaseProto);
 	
-	/**
-	 * @Protected
-	 */
-	ControlBaseProto._getIdPart = function(){
-		if(arguments.legnth === 0){
-			throw new Error("Please provide at least one argument for ui5strap.ControlBase.prototype._getIdPart!");
-		}
-		var args = jQuery.makeArray(arguments);
-		return this.getId() + "___" + args.join('-');
-	};
-	
-	/**
-	 * @Protected
-	 */
-	ControlBaseProto._$getPart = function(){
-		return jQuery('#' + this._getIdPart.apply(this, arguments));
-	};
-	
-	ControlBaseProto._stylePrefix = 'ui5strapControlBase';
-	
-	/**
-	 * @Protected
-	 */
-	ControlBaseProto._getStyleClassRoot = function(){
-		return this._stylePrefix;
-	};
-	
-	/**
-	 * @Protected
-	 */
-	ControlBaseProto._getStyleClassPart = function(partName){
-		return this._stylePrefix + "-" + partName;
-	};
-	
-	/**
-	* @Protected
-	*/
-	ControlBaseProto._getStyleClassType = function(type){
-		return 	this._stylePrefix + "-type-" + type;
-	};
-	
-	/**
-	* @Protected
-	*/
-	ControlBaseProto._getStyleClassFlag = function(flag){
-		return 	this._stylePrefix + "-flag-" + flag;
-	};
-	
-	/**
-	* @Protected
-	*/
-	ControlBaseProto._getStyleClassOptions = function(){
-		var options = this.getOptions(),
-			classes = '';
-	    
-		if(options){
-	    	options = options.split(' ');
-	    	for(var i = 0; i < options.length; i++){
-	    		classes += ' ' + this._stylePrefix + '-option-' + options[i];
-	    	}
-	    }
-		
-		return classes;
-	};
-	
-	/**
-	* @Protected
-	*/
-	ControlBaseProto._updateStyleClass = function(){
-		var currentClassesString = '',
-			options = this.getOptions();
-		
-		var classes = this.$().attr('class').split(' ');
-		for(var i = 0; i < classes.length; i++){
-			var cClass = classes[i];
-			if(cClass && cClass.indexOf(this._stylePrefix + '-option-') !== 0){
-				currentClassesString += ' ' + cClass;
-			}
-			
-		}
-		
-		if(options){
-	    	options = options.split(' ');
-	    	for(var i = 0; i < options.length; i++){
-	    		currentClassesString += ' ' + this._stylePrefix + '-option-' + options[i];
-	    	}
-	    }
-	
-		this.$().attr('class', currentClassesString.trim());
-	};
-	
-	/**
-	* @Public
-	* @Override
-	* TODO avoid overriding of user provided css classes
-	*/
-	ControlBaseProto.setOptions = function(newOptions){
-		if(this.getDomRef()){
-			this.setProperty('options', newOptions, true);
-			this._updateStyleClass();
-		}
-		else{
-			this.setProperty('options', newOptions);
-		}
-	};
-
-	/**
-	* @Public
-	*/
-	ControlBaseProto.setOptionsEnabled = function(options){
-		var currentOptions = [],
-			cOptions = this.getOptions();
-		
-		if(cOptions){
-			currentOptions = cOptions.split(' ');
-		}
-		
-		for(var optionName in options){
-			var optionIndex = jQuery.inArray(optionName, currentOptions),
-				optionEnabled = options[optionName];
-
-			if(optionEnabled && -1 === optionIndex
-				|| !optionEnabled && -1 !== optionIndex){
-				
-				if(optionEnabled){
-					currentOptions.push(optionName);
-				}
-				else{
-					currentOptions.splice(optionIndex, 1);
-				}
-				
-				this.onOptionChange(optionName, optionEnabled);
-			}
-		}
-		this.setOptions(currentOptions.join(' '));
-	};
-
-	/**
-	* @Public
-	*/
-	ControlBaseProto.isOptionEnabled = function(optionName){
-		return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
-	};
-	
-	ControlBaseProto.setOptionEnabled = function(optionName, optionEnabled){
-		var options = {};
-		
-		options[optionName] = optionEnabled;
-		
-		this.setOptionsEnabled(options);
-	};
-	
-	/**
-	* @Public
-	*/
-	ControlBaseProto.toggleOption = function(optionName){
-		this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
-	};
-	
-	/**
-	* @Public
-	*/
-	ControlBaseProto.onOptionChange = function(optionName, optionEnabled){
-		
-	};
-}());;/*
+	return ControlBase;
+});;/*
  * 
  * UI5Strap
  *
@@ -18123,6 +17965,53 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  * UI5Strap
  *
+ * ui5strap.ElementBase
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSupport){
+
+	var ElementBase = ui5strap.Element.extend("ui5strap.ElementBase", {
+		metadata : {
+
+			library : "ui5strap",
+			
+			properties : {
+				options : {
+					type : "string",
+					defaultValue : ""
+				}
+			}
+		}
+	}),
+	ElementBaseProto = ElementBase.prototype;
+	
+	OptionsSupport.bless(ElementBaseProto);
+	
+	return ElementBase;
+});;/*
+ * 
+ * UI5Strap
+ *
  * ui5strap.Form
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
@@ -21289,6 +21178,208 @@ sap.ui.define(['./library', './RestClient'], function(library, RestClient){
     //Return Module Constructor
 	return ODataClient;
 });;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.OptionsSupport
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+sap.ui.define(['./library'], function(library){
+	
+	var OptionsSupport = {};
+	
+	OptionsSupport.bless = function(obj){
+		/**
+		 * @Protected
+		 */
+		obj._getIdPart = function(){
+			if(arguments.legnth === 0){
+				throw new Error("Please provide at least one argument for ui5strap.ControlBase.prototype._getIdPart!");
+			}
+			var args = jQuery.makeArray(arguments);
+			return this.getId() + "___" + args.join('-');
+		};
+		
+		/**
+		 * @Protected
+		 */
+		obj._$getPart = function(){
+			return jQuery('#' + this._getIdPart.apply(this, arguments));
+		};
+		
+		obj._stylePrefix = 'ui5strapControlBase';
+		
+		/**
+		 * @Protected
+		 */
+		obj._getStyleClassRoot = function(){
+			return this._stylePrefix;
+		};
+		
+		/**
+		 * @Protected
+		 */
+		obj._getStyleClassPart = function(partName){
+			return this._stylePrefix + "-" + partName;
+		};
+		
+		/**
+		* @Protected
+		*/
+		obj._getStyleClassType = function(type){
+			return 	this._stylePrefix + "-type-" + type;
+		};
+		
+		/**
+		* @Protected
+		*/
+		obj._getStyleClassFlag = function(flag){
+			return 	this._stylePrefix + "-flag-" + flag;
+		};
+		
+		/**
+		* @Public
+		* @Override
+		* TODO avoid overriding of user provided css classes
+		*/
+		obj.setOptions = function(newOptions){
+			if(this.getDomRef()){
+				this.setProperty('options', newOptions, true);
+				this._updateStyleClass();
+			}
+			else{
+				this.setProperty('options', newOptions);
+			}
+		};
+		
+		/**
+		* @Protected
+		*/
+		obj._getStyleClassOptions = function(){
+			var options = this.getOptions(),
+				classes = '';
+		    
+			if(options){
+		    	options = options.split(' ');
+		    	for(var i = 0; i < options.length; i++){
+		    		classes += ' ' + this._stylePrefix + '-option-' + options[i];
+		    	}
+		    }
+			
+			return classes;
+		};
+		
+		/**
+		* @Protected
+		*/
+		obj._updateStyleClass = function(){
+			var currentClassesString = '',
+				options = this.getOptions();
+			
+			var classes = this.$().attr('class').split(' ');
+			for(var i = 0; i < classes.length; i++){
+				var cClass = classes[i];
+				if(cClass && cClass.indexOf(this._stylePrefix + '-option-') !== 0){
+					currentClassesString += ' ' + cClass;
+				}
+				
+			}
+			
+			if(options){
+		    	options = options.split(' ');
+		    	for(var i = 0; i < options.length; i++){
+		    		currentClassesString += ' ' + this._stylePrefix + '-option-' + options[i];
+		    	}
+		    }
+		
+			this.$().attr('class', currentClassesString.trim());
+		};
+		
+		
+
+		/**
+		* @Public
+		*/
+		obj.setOptionsEnabled = function(options){
+			var currentOptions = [],
+				cOptions = this.getOptions();
+			
+			if(cOptions){
+				currentOptions = cOptions.split(' ');
+			}
+			
+			for(var optionName in options){
+				var optionIndex = jQuery.inArray(optionName, currentOptions),
+					optionEnabled = options[optionName];
+
+				if(optionEnabled && -1 === optionIndex
+					|| !optionEnabled && -1 !== optionIndex){
+					
+					if(optionEnabled){
+						currentOptions.push(optionName);
+					}
+					else{
+						currentOptions.splice(optionIndex, 1);
+					}
+					
+					this.onOptionChange(optionName, optionEnabled);
+				}
+			}
+			this.setOptions(currentOptions.join(' '));
+		};
+
+		/**
+		* @Public
+		*/
+		obj.isOptionEnabled = function(optionName){
+			return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
+		};
+		
+		obj.setOptionEnabled = function(optionName, optionEnabled){
+			var options = {};
+			
+			options[optionName] = optionEnabled;
+			
+			this.setOptionsEnabled(options);
+		};
+		
+		/**
+		* @Public
+		*/
+		obj.toggleOption = function(optionName){
+			this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
+		};
+		
+		/**
+		* @Public
+		*/
+		obj.onOptionChange = function(optionName, optionEnabled){};
+	};
+	
+	return OptionsSupport;
+	
+}, true);
+	;/*
  * 
  * UI5Strap
  *
