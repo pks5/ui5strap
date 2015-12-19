@@ -44,5 +44,11 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	
 	OptionsSupport.bless(ControlBaseProto);
 	
+	ControlBaseProto.getBindingContextData = function(modelName){
+		var bindingContext = this.getBindingContext(modelName);
+		
+		return bindingContext.getModel().getProperty(bindingContext.getPath());
+	};
+	
 	return ControlBase;
 });
