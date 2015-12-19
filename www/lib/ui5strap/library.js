@@ -503,6 +503,7 @@
 		Code : "Code",
 		Paragraph : "Paragraph",
 		HelpBlock : "HelpBlock",
+		FormStatic : "FormStatic",
 		Small : "Small",
 		Lead : "Lead",
 		Abbreviation : "Abbreviation",

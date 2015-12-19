@@ -80,6 +80,10 @@
 				tagName : "p",
 				className : "help-block"
 			},
+			FormStatic : {
+				tagName : "p",
+				className : "form-static"
+			},
 			Label : {
 				tagName : "span",
 				className : "label"

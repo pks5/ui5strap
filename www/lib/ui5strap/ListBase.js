@@ -517,16 +517,40 @@
 	 * Gets one or multiple selected items that have the given value in the specified custom data field.
 	 * @Public
 	 */
-	ListBaseProto.getItemsByCustomData = function(dataKey){
-		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByCustomData");
+	ListBaseProto.getItemsByCustomData = function(dataKey, value){
+		var items = this._getItems(),
+			returnItems = [];
+		for(var i = 0; i < items.length; i++){
+			if(items[i].data(dataKey) === value){
+				returnItems.push(items[i]);
+			}
+		}
+		
+		return returnItems;
 	};
 	
 	/**
 	 * Gets one or multiple selected items that have the given value in the specified property.
 	 * @Public
 	 */
-	ListBaseProto.getItemsByProperty = function(propertyName){
-		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByProperty");
+	ListBaseProto.getItemsByProperty = function(propertyName, value){
+		var items = this._getItems(),
+			getter = "get" + jQuery.sap.charToUpper(propertyName, 0),
+			returnItems = [];
+		
+		for(var i = 0; i < items.length; i++){
+			var item = items[i];
+			
+			if(!item[getter]){
+				throw new Error("Item " + i + ": no such getter: " + getter);
+			}
+			
+			if(item[getter]() === value){
+				returnItems.push(items[i]);
+			}
+		}
+		
+		return returnItems;
 	};
 	
 	/**
