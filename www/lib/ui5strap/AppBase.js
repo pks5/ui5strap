@@ -844,14 +844,30 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this,
-			overlayControl = this.overlayControl,
+			navControl = this.overlayControl,
+			target = "content",
 			transitionName = transitionName || 'slide-ttb';
 		
+		//Set target busy
+		navControl.setTargetBusy(target, true);
+		
+		if(!(viewDataOrControl instanceof ui5strap.Control)){
+			var viewParameters = viewDataOrControl.parameters;
+			viewDataOrControl = _this.createView(_this.config.getViewConfig(viewDataOrControl));
+			
+			//Trigger onUpdate events
+			navControl.updateTarget(target, viewDataOrControl, viewParameters);
+		}
+		
 		ui5strap.Layer.setVisible(this.overlayId, true, function(){
-			if(!(viewDataOrControl instanceof ui5strap.Control)){
-				viewDataOrControl = _this.createView(_this.config.getViewConfig(viewDataOrControl));
-			}
-			overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
+			navControl.toPage(viewDataOrControl, target, transitionName, function toPage_complete(){
+				
+				//Set target available
+				navControl.setTargetBusy(target, false);
+				
+				//Trigger callback
+				callback && callback();
+			});
 		});
 	};
 
