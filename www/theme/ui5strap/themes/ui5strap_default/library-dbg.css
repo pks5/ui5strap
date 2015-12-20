@@ -11694,7 +11694,7 @@ a {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-.ui5strapHeading-option-BarHeading {
+.ui5strapHeading-option-BarHeadingCenter {
   position: absolute;
   top: 0;
   left: 50%;
@@ -11704,6 +11704,24 @@ a {
   margin-left: -25%;
   font-size: 16px;
   text-align: center;
+}
+.ui5strapHeading-option-BarHeadingLeft {
+  float: left;
+  margin-top: 13px;
+  margin-bottom: 13px;
+  font-size: 16px;
+}
+.ui5strapHeading-option-BarHeadingRight {
+  float: right;
+  margin-top: 13px;
+  margin-bottom: 13px;
+  font-size: 16px;
+}
+.ui5strapHeading-option-BarHeading {
+  display: inline;
+  margin-top: 13px;
+  margin-bottom: 13px;
+  font-size: 16px;
 }
 .ui5strapHeading-option-MediaHeading {
   margin-top: 0;
@@ -11735,23 +11753,12 @@ a {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-.container-inset {
+.ui5strapContainer-type-FluidInset {
   padding-top: 15px;
   padding-bottom: 15px;
 }
-.container-full {
+.ui5strapContainer-flag-fullHeight {
   height: 100%;
-}
-/*
- * DEPRECATED
- */
-.container-floating {
-  float: left;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-.container-paragraph {
-  margin-bottom: 10px;
 }
 /*
  * 
@@ -11782,6 +11789,24 @@ a {
 .ui5strapButton-option-BarButton {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+.ui5strapButton-option-NavBarButton {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.ui5strapLink-option-BarBrand {
+  float: left;
+  height: 44px;
+  padding: 12px 12px;
+  font-size: 18px;
+  line-height: 20px;
+}
+.ui5strapLink-option-NavBarBrand {
+  float: left;
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
 }
 /*
  * 
@@ -12130,50 +12155,49 @@ a {
  * 
  */
 /*
-* TODO: add library prefix "u5sl-"
-*/
-/*
 * Bar
 */
-.u5sl-bar {
+.ui5strapBar {
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .5);
           box-shadow: 0 0 3px rgba(0, 0, 0, .5);
-
-  mkin-height: 44px;
 }
-.u5sl-bar-flag-default {
+.ui5strapBar-flag-fullHeight {
+  height: 100%;
+}
+.ui5strapBar-flag-styleDefault {
   color: #777;
   background-color: #f8f8f8;
   border-color: #e7e7e7;
 }
-.u5sl-bar-flag-inverse {
+.ui5strapBar-flag-styleInverse {
   color: #eee;
   background-color: #025d8c;
   border-color: #013c5a;
 }
-.u5sl-bar.u5sl-bar-type-full,
-.u5sl-bar.u5sl-bar-type-fluid-full,
-.u5sl-bar.u5sl-bar-type-inset-full,
-.u5sl-bar.u5sl-bar-type-fluid-inset-full {
+.ui5strapBar-flag-fullHeight {
   height: 100%;
+  overflow: hidden;
 }
-.u5sl-bar > .u5sl-bar-inner::after {
+.ui5strapBar-inner::after {
   display: block;
   height: 0;
   clear: both;
   content: '';
 }
-.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-left {
+/*
+ * @deprecated
+ */
+.ui5strapBar-contentLeft {
   float: left;
 }
-.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-middle {
+.ui5strapBar-contentMiddle {
   position: absolute;
   left: 50%;
   width: 50%;
   margin-left: -25%;
   text-align: center;
 }
-.u5sl-bar > .u5sl-bar-inner > .u5sl-bar-content-right {
+.ui5strapBar-contentRight {
   float: right;
   text-align: right;
 }
@@ -12204,36 +12228,33 @@ a {
  * 
  */
 /*
-* TODO: add library prefix "u5sl-"
-*/
-/*
 * Page
 */
-.page {
+.ui5strapPage {
   position: relative;
   height: 100%;
 }
-.page-head {
-  position: absolute;
-  top: 0;
-  width: 100%;
+.ui5strapPage-head {
   height: 44px;
 }
-.page-body {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.ui5strapPage-body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
-.page.page-with-head {
-  padding-top: 44px;
+.ui5strapPage-flag-withHead > .ui5strapPage-body {
+  top: 44px;
 }
-.page.page-with-footer {
-  padding-bottom: 44px;
+.ui5strapPage-flag-withFooter > .ui5strapPage-body {
+  bottom: 44px;
 }
-.page-footer {
+.ui5strapPage-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
+  height: 44px;
 }
 /*
  * 
@@ -13851,18 +13872,14 @@ a {
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-/*
-* TODO: change library prefix to "u5sl-"
-* TODO: rename static-overlay to staticoverlay
-*/
-.ui5strap-static-overlay {
+.ui5strapStaticOverlay {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
-.ui5strap-static-overlay-backdrop {
+.ui5strapStaticOverlay-backdrop {
   position: absolute;
   top: 0;
   right: 0;
@@ -14094,7 +14111,7 @@ a {
 * Base style for target "sidebar"
 */
 .navcontainer-type-standard > .navcontainer-target-sidebar {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: auto;
   bottom: 0;

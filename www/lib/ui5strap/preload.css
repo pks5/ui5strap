@@ -109,76 +109,22 @@ html, body{
 * Global Overlay
 */
 #ui5strap-overlay{
-  z-index:9999;
+  z-index:200000;
 }
 
 /*
 * Global Loader
 */
 #ui5strap-loader{
-	z-index:10000;
+	z-index:300000;
 }
-
-/*
-* Global Splash Screen
-*/
-#ui5strap-splash{
-	z-index : 10001;
-
-	background: #ffffff; /* Old browsers */
-	background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
-}
-
-/*
-* Splash Screen Image
-*/
-#ui5strap-splash-image{
-	width:100px;
-	height:100px;
-	position:absolute;
-	left:50%;
-	top:50%;
-	margin-left:-50px;
-	margin-top:-50px;
-}
-
-/*
-* Splash Screen Loader
-*/
-#ui5strap-splash-loader{
-	width:16px;
-	height:16px;
-	position:absolute;
-	left:50%;
-	top:50%;
-	margin-left:-8px;
-	margin-top:96px;
-}
-
-/*
-* No Script Screen
-* Only visible when JavaScript is deactivated.
-*/
-#ui5strap-noscript{
-	z-index:10002;
-	padding:20px;
-	color:white;
-	background-color: rgba(0,0,0,0.9);
-}
-
 
 /*
 * Fatal Error Screen
 * Shown when a fatal error occurs.
 */
 #ui5strap-fatal{
-	z-index:10003;
+	z-index:400000;
 	display:none;
 	padding:20px;
 	color:white;
@@ -190,6 +136,17 @@ html, body{
 */
 #ui5strap-fatal-message{
 
+}
+
+/*
+* No Script Screen
+* Only visible when JavaScript is deactivated.
+*/
+#ui5strap-noscript{
+	z-index:500000;
+	padding:20px;
+	color:white;
+	background-color: rgba(0,0,0,0.9);
 }
 
 /*
@@ -230,6 +187,14 @@ html, body{
   bottom:0;
 
   overflow:hidden;
+}
+
+.ui5strap-app-overlay{
+	z-index:20000;
+}
+
+.ui5strap-app-loader{
+	z-index:30000;
 }
 
 /*
