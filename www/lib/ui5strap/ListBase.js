@@ -678,9 +678,6 @@
 		if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
 			//Item is enabled
 			
-			//TODO Rename 'tap' event to 'press' sometimes
-			this.fireTap(eventOptions);
-			
 			//Process selection
 			var selectionMode = this.getSelectionMode();
 			if(ui5strap.SelectionMode.None !== selectionMode 
@@ -717,6 +714,9 @@
 			else{
 				jQuery.sap.log.debug("[LIST#" + this.getId() + "] Did not select list item: List item not selectable.");
 			}
+			
+			//TODO Rename 'tap' event to 'press' sometimes
+			this.fireTap(eventOptions);
 		}
 		else{
 			jQuery.sap.log.warning("Could not select list item: List item not found or disabled.");
