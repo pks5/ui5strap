@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ListGroupRenderer");
+	var ListGroupRenderer = {};
 
-	ui5strap.ListGroupRenderer = {
-	};
-
-	ui5strap.ListGroupRenderer.render = function(rm, oControl) {
+	ListGroupRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
 			tag = oControl.getListMode() === ui5strap.ListGroupMode.Default ? 'ul' : 'div';
 		
@@ -49,5 +46,7 @@
 		    
 		rm.write("</" + tag + ">");
 	};
+	
+	return ListGroupRenderer;
 
-}());
+}, true);

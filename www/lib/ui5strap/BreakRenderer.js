@@ -25,14 +25,13 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.BreakRenderer");
+	var BreakRenderer = {};
 
-	ui5strap.BreakRenderer = {};
-
-	ui5strap.BreakRenderer.render = function(rm, oControl) {
+	BreakRenderer.render = function(rm, oControl) {
 		rm.write("<br />");
 	};
-
-}());
+	
+	return BreakRenderer;
+}, true);

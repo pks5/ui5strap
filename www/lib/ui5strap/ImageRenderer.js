@@ -25,11 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ImageRenderer");
-
-	ui5strap.ImageRenderer = {
+	var ImageRenderer = {
 		shapeToClass : {
 			Rounded : 'img-rounded',
 			Circle : 'img-circle',
@@ -41,7 +39,7 @@
 		}
 	};
 
-	ui5strap.ImageRenderer.render = function(rm, oControl) {
+	ImageRenderer.render = function(rm, oControl) {
 		var src = oControl.getSrc(),
 			mpath = oControl.getMpath(),
 			mext = oControl.getExt(),
@@ -88,5 +86,7 @@
 
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
+	
+	return ImageRenderer;
 
-}());
+}, true);

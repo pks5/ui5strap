@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Button");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Button", {
+	var Button = ControlBase.extend("ui5strap.Button", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectableItem"],
 			
@@ -103,9 +100,8 @@
 		    }
 
 		}
-	});
-
-	var ButtonPrototype = ui5strap.Button.prototype;
+	}),
+	ButtonPrototype = Button.prototype;
 	
 	ButtonPrototype._stylePrefix = 'ui5strapButton';
 	
@@ -139,5 +135,6 @@
 	else{
 		ButtonPrototype.onclick = ButtonPrototype._handlePress;
 	}
-
-}());
+	
+	return Button;
+});

@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Jumbotron");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Jumbotron", {
+	var Jumbotron = ControlBase.extend("ui5strap.Jumbotron", {
 		metadata : {
 
 			// ---- object ----
@@ -51,5 +48,6 @@
 
 		}
 	});
-
-}());
+	
+	return Jumbotron;
+});

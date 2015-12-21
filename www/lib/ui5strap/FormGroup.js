@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.FormGroup");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.FormGroup", {
+	var FormGroup = ControlBase.extend("ui5strap.FormGroup", {
 		metadata : {
 
 			defaultAggregation : "controls",
@@ -73,4 +70,5 @@
 		}
 	});
 
-}());
+	return FormGroup;
+});

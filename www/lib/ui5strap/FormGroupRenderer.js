@@ -25,11 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.FormGroupRenderer");
-
-	ui5strap.FormGroupRenderer = {
+	var FormGroupRenderer = {
 
 		severityToClass : {
 			Success : "success",
@@ -38,7 +36,7 @@
 		}
 	};
 
-	ui5strap.FormGroupRenderer.render = function(rm, oControl) {
+	FormGroupRenderer.render = function(rm, oControl) {
 		var severity = oControl.getSeverity(),
 			hasFeedback = oControl.getFeedback(),
 			label = oControl.getLabel(),
@@ -103,5 +101,7 @@
 		
 		rm.write("</div> ");
 	};
+	
+	return FormGroupRenderer;
 
-}());
+}, true);

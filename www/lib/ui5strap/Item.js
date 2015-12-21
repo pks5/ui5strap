@@ -25,11 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Item");
-
-	sap.ui.core.Element.extend("ui5strap.Item", {
+	var Item = ui5strap.Element.extend("ui5strap.Item", {
 		metadata : {
 
 			// ---- control specific ----
@@ -48,5 +46,6 @@
 
 		}
 	});
-
-}());
+	
+	return Item;
+});

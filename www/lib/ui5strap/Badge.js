@@ -25,11 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Badge");
-	
-	ui5strap.ControlBase.extend("ui5strap.Badge", {
+	var Badge = ControlBase.extend("ui5strap.Badge", {
 		metadata : {
 			deprecated : true,
 			library : "ui5strap",
@@ -42,5 +40,6 @@
 			}
 		}
 	});
-
-}());
+	
+	return Badge;
+});

@@ -25,13 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.BarMenu");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.BarMenuItem");
-
-	ui5strap.ListBase.extend("ui5strap.BarMenu", {
+	var BarMenu = ListBase.extend("ui5strap.BarMenu", {
 		metadata : {
 
 			library : "ui5strap",
@@ -105,8 +101,8 @@
 			}
 
 		}
-	});
+	}),
+	BarMenuProto = BarMenu.prototype;
 	
-	var BarMenuProto = ui5strap.BarMenu.prototype;
-	
-}());
+	return BarMenu;
+});

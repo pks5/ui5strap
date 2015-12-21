@@ -25,14 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Alert");
-	jQuery.sap.require("ui5strap.library");
-  jQuery.sap.require("ui5strap.Button");
-  jQuery.sap.require("ui5strap.Icon");
-	
-	ui5strap.ControlBase.extend("ui5strap.Alert", {
+	var Alert = ControlBase.extend("ui5strap.Alert", {
 		metadata : {
 
 			// ---- object ----
@@ -82,9 +77,8 @@
       }
 
 		}
-	});
-
-  var AlertProto = ui5strap.Alert.prototype;
+	}),
+	AlertProto = Alert.prototype;
 
   ui5strap.Utils.dynamicText(AlertProto);
 
@@ -148,5 +142,7 @@
         .emulateTransitionEnd(150) :
       removeElement()
   };
+  
+  return Alert;
 
-}());
+});

@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ClearfixRenderer");
+	var ClearfixRenderer = {};
 
-	ui5strap.ClearfixRenderer = {};
-
-	ui5strap.ClearfixRenderer.render = function(rm, oControl) {
+	var ClearfixRenderer.render = function(rm, oControl) {
 		rm.write("<div");
 		
 		rm.writeControlData(oControl);
@@ -85,4 +83,6 @@
 		rm.write("</div>");
 	};
 
-}());
+	return ClearfixRenderer;
+	
+}, true);

@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.CarouselRenderer");
+	var CarouselRenderer = {};
 
-	ui5strap.CarouselRenderer = {
-	};
-
-	ui5strap.CarouselRenderer.render = function(rm, oControl) {
+	CarouselRenderer.render = function(rm, oControl) {
 		var speed = oControl.getSpeed(),
 			items = oControl.getItems(),
 			itemsLength = items.length,
@@ -143,5 +140,7 @@
 		}
 		rm.write("</div>");
 	};
+	
+	return CarouselRenderer;
 
-}());
+}, true);

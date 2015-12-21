@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Carousel");
-    jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Carousel", {
+	var Carousel = ControlBase.extend("ui5strap.Carousel", {
 		metadata : {
 
 			defaultAggregation : "items",
@@ -111,9 +108,8 @@
 			}
 
 		}
-	});
-
-  var CarouselProto = ui5strap.Carousel.prototype;
+	}),
+	CarouselProto = Carousel.prototype;
 
   /**
    * @Private
@@ -387,4 +383,5 @@
 		CarouselProto.onclick = CarouselProto._handlePress;
 	}
 
-}());
+  return Carousel;
+});

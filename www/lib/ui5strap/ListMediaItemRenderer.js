@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ListMediaItemRenderer");
+	var ListMediaItemRenderer = {};
 
-	ui5strap.ListMediaItemRenderer = {
-	};
-
-	ui5strap.ListMediaItemRenderer.render = function(rm, oControl) {
+	ListMediaItemRenderer.render = function(rm, oControl) {
 		var parent = oControl.getParent(),
 			media = oControl.getMedia(),
 			heading = oControl.getHeading(),
@@ -73,5 +70,7 @@
 		    
 		rm.write("</"+ tag + ">");
 	};
+	
+	return ListMediaItemRenderer;
 
-}());
+}, true);

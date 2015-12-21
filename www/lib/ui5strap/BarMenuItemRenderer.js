@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.BarMenuItemRenderer");
+	var BarMenuItemRenderer = {};
 
-	ui5strap.BarMenuItemRenderer = {
-	};
-
-	ui5strap.BarMenuItemRenderer.render = function(rm, oControl) {
+	BarMenuItemRenderer.render = function(rm, oControl) {
 		var icon = oControl.getIcon(),
 			text = oControl.getText(),
 			parse = oControl.getParse(),
@@ -77,4 +74,6 @@
 		rm.write("</li>");
 	};
 	
-}());
+	return BarMenuItemRenderer;
+	
+}, true);

@@ -25,31 +25,30 @@
  * 
  */
 
-(function(){
-
-jQuery.sap.declare("ui5strap.ListRenderer");
-
-ui5strap.ListRenderer = {
-};
-
-ui5strap.ListRenderer.render = function(rm, oControl) {
-	var items = oControl.getItems();
-
-	var tagName = 'ul';
-	if(oControl.getType() === ui5strap.ListType.Ordered){
-		tagName = 'ol';
-	}
-
-	rm.write("<" + tagName);
-	rm.writeControlData(oControl);
-	rm.writeClasses();
-	rm.write(">");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
+	var ListRenderer = {};
 	
-	rm.write("</" + tagName + ">");
-};
+	ListRenderer.render = function(rm, oControl) {
+		var items = oControl.getItems();
+	
+		var tagName = 'ul';
+		if(oControl.getType() === ui5strap.ListType.Ordered){
+			tagName = 'ol';
+		}
+	
+		rm.write("<" + tagName);
+		rm.writeControlData(oControl);
+		rm.writeClasses();
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</" + tagName + ">");
+	};
+	
+	return ListRenderer;
 
-}());
+}, true);

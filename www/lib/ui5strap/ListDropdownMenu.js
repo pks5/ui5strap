@@ -25,14 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.ListDropdownMenu");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ListBase.extend("ui5strap.ListDropdownMenu", {
+	var ListDropdownMenu = ListBase.extend("ui5strap.ListDropdownMenu", {
 		metadata : {
 
 			library : "ui5strap",
@@ -54,9 +49,8 @@
 			}
 
 		}
-	});
-
-	var ListDropdownMenuProto = ui5strap.ListDropdownMenu.prototype;
+	}),
+	ListDropdownMenuProto = ListDropdownMenu.prototype;
 	
 	ListDropdownMenuProto.setMasterSelected = function(listItem){ 
 		ui5strap.ListBase.prototype.setMasterSelected.call(this, listItem);
@@ -117,5 +111,6 @@
 	else{
 		ListDropdownMenuProto.onclick = ListDropdownMenuProto._handlePress;
 	}
-
-}());
+	
+	return ListDropdownMenu;
+});

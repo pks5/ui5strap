@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.BadgeRenderer");
+	var BadgeRenderer = {};
 
-	ui5strap.BadgeRenderer = {};
-
-	ui5strap.BadgeRenderer.render = function(rm, oControl) {
+	BadgeRenderer.render = function(rm, oControl) {
 		rm.write("<span");
 		rm.writeControlData(oControl);
 		rm.addClass("badge");
@@ -44,4 +42,5 @@
 
 	};
 
-}());
+	return BadgeRenderer;
+}, true);

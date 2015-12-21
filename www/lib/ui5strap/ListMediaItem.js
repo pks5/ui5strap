@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.ListMediaItem");
-		jQuery.sap.require("ui5strap.ListItem");
-
-	ui5strap.ListItem.extend("ui5strap.ListMediaItem", {
+	var ListMediaItem = ListItem.extend("ui5strap.ListMediaItem", {
 		metadata : {
 
 			// ---- object ----
@@ -55,13 +52,16 @@
 				}
 			}
 		}
-	});
+	}),
+	ListMediaItemProto = ListMediaItem.prototype;
 	
 	/**
 	 * TODO More efficient rerendering
 	 */
-	ui5strap.ListMediaItem.prototype.setText = function(newText, suppressInvalidate){
+	ListMediaItemProto.setText = function(newText, suppressInvalidate){
 		this.setProperty('text', newText, suppressInvalidate);
 	};
+	
+	return ListMediaItem;
 
-}());
+});

@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Label");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Label", {
+	var Label = ControlBase.extend("ui5strap.Label", {
 		metadata : {
 			deprecated : true,
 			// ---- object ----
@@ -54,5 +51,6 @@
 			}
 		}
 	});
-
-}());
+	
+	return Label;
+});

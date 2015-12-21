@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ButtonRenderer");
+	var ButtonRenderer = {};
 
-	ui5strap.ButtonRenderer = {};
-
-	ui5strap.ButtonRenderer.render = function(rm, oControl) {
+	ButtonRenderer.render = function(rm, oControl) {
 		this.startRender(rm, oControl, {});
 
 	    this.renderContent(rm, oControl);
@@ -41,11 +39,11 @@
 	    ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-	ui5strap.ButtonRenderer.renderContent = function(rm, oControl) {
+	ButtonRenderer.renderContent = function(rm, oControl) {
 		ui5strap.RenderUtils.renderContent(rm, oControl);
 	};
 
-	ui5strap.ButtonRenderer.startRender = function(rm, oControl, options) {
+	ButtonRenderer.startRender = function(rm, oControl, options) {
 		var size = oControl.getSize(),
 			action = oControl.getBsAction(),
 			type = oControl.getType(),
@@ -126,8 +124,10 @@
 	    rm.write(">");
 	};
 
-	ui5strap.ButtonRenderer.endRender = function(rm, oControl){
+	ButtonRenderer.endRender = function(rm, oControl){
 		rm.write("</button>");
 	};
+	
+	return ButtonRenderer;
 
-}());
+}, true);

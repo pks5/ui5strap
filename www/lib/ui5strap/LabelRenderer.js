@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.LabelRenderer");
+	var LabelRenderer = {};
 
-	ui5strap.LabelRenderer = {};
-
-	ui5strap.LabelRenderer.render = function(rm, oControl) {
+	LabelRenderer.render = function(rm, oControl) {
 		rm.write("<span");
 		rm.writeControlData(oControl);
 		rm.addClass("label label-" + ui5strap.BSSeverity[oControl.getSeverity()] );
@@ -44,5 +42,7 @@
 
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
+	
+	return LabelRenderer;
 
-}());
+}, true);

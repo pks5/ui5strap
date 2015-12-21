@@ -25,15 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ButtonDropdownRenderer");
-	jQuery.sap.require("ui5strap.ButtonRenderer");
+	var ButtonDropdownRenderer = {};
 
-	ui5strap.ButtonDropdownRenderer = {
-	};
-
-	ui5strap.ButtonDropdownRenderer.render = function(rm, oControl) {
+	ButtonDropdownRenderer.render = function(rm, oControl) {
 		var menu = oControl.getMenu(),
 			split = oControl.getSplit(),
 			buttonRenderer = ui5strap.ButtonRenderer;
@@ -70,12 +66,14 @@
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-	ui5strap.ButtonDropdownRenderer.renderContent = function(rm, oControl) {
+	ButtonDropdownRenderer.renderContent = function(rm, oControl) {
 		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		if(!oControl.getSplit()){
 			rm.write(' <span class="caret"></span>');
 		}
 	};
+	
+	return ButtonDropdownRenderer;
 
-}());
+}, true);

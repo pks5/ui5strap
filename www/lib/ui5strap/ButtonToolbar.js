@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.ButtonToolbar");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.ButtonToolbar", {
+	var ButtonToolbar = ControlBase.extend("ui5strap.ButtonToolbar", {
 		metadata : {
 
 			// ---- object ----
@@ -51,5 +48,6 @@
 			}
 		}
 	});
-
-}());
+	
+	return ButtonToolbar;
+});

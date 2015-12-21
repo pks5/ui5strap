@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.InputGroupRenderer");
+	var InputGroupRenderer = {};
 
-	ui5strap.InputGroupRenderer = {
-	};
-
-	ui5strap.InputGroupRenderer.render = function(rm, oControl) {
+	InputGroupRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			size = oControl.getSize();
 		
@@ -90,5 +87,7 @@
 		    
 		rm.write("</div>");
 	};
+	
+	return InputGroupRenderer;
 
-}());
+}, true);

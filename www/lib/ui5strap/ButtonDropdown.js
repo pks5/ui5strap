@@ -25,13 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './Button'], function(library, Button){
 
-	jQuery.sap.declare("ui5strap.ButtonDropdown");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.Button");
-	
-	ui5strap.Button.extend("ui5strap.ButtonDropdown", {
+	var ButtonDropdown = Button.extend("ui5strap.ButtonDropdown", {
 		metadata : {
 
 			// ---- object ----
@@ -59,9 +55,8 @@
 			}
 
 		}
-	});
-
-	var ButtonDropdownProto = ui5strap.ButtonDropdown.prototype;
+	}),
+	ButtonDropdownProto = ui5strap.ButtonDropdown.prototype;
 
 	ButtonDropdownProto.setText = function(newText){
 		if(this.getMenu() === null){
@@ -114,5 +109,6 @@
 			this.fireTap();
 		}
 	};
-
-}());
+	
+	return ButtonDropdown;
+});

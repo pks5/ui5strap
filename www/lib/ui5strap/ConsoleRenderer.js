@@ -25,13 +25,9 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.ConsoleRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	var ConsoleRenderer = {};
-
-	ui5strap.ConsoleRenderer = ConsoleRenderer;
 
 	ConsoleRenderer.render = function(rm, oControl) {
 		rm.write("<div");
@@ -56,4 +52,5 @@
 		rm.write("</div>");
 	};
 
-}());
+	return ConsoleRenderer;
+}, true);

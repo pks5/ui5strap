@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 
-	jQuery.sap.declare("ui5strap.BarNavContainer");
-	jQuery.sap.require("ui5strap.NavContainer");
-	
-	ui5strap.NavContainer.extend("ui5strap.BarNavContainer", {
+	var BarNavContainer = NavContainer.extend("ui5strap.BarNavContainer", {
 		metadata : {
 
 			library : "ui5strap",
@@ -142,9 +139,9 @@
 
 		//Use default NavContainerRenderer
 		renderer : "ui5strap.NavContainerRenderer"
-	});
-
-	var BarNavContainerProto = ui5strap.BarNavContainer.prototype;
+	}),
+	BarNavContainerProto = BarNavContainer.prototype;
+	
 	/**
 	* @Override
 	* @Protected
@@ -401,5 +398,6 @@
 		
 		return ui5strap.NavContainer.prototype._getTargetClassString.call(this, target);
 	}
-
-}());
+	
+	return BarNavContainer;
+});

@@ -25,11 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.IconRenderer");
-
-	ui5strap.IconRenderer = {
+	var IconRenderer = {
 
 		sizeToClass : {
 		    Large : "lg",
@@ -48,7 +46,7 @@
 		  }
 	};
 
-	ui5strap.IconRenderer.render = function(rm, oControl) {
+	IconRenderer.render = function(rm, oControl) {
 		var iconGroup = oControl.getIconSet(),
 			size = oControl.getSize(),
 			transform = oControl.getTransform(),
@@ -102,4 +100,5 @@
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-}());
+	return IconRenderer;
+}, true);

@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Col");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Col", {
+	var Col = ControlBase.extend("ui5strap.Col", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
 			
@@ -124,5 +121,6 @@
 
 		} // END metadata
 	});
-
-}());
+	
+	return Col;
+});

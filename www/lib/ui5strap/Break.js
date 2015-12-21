@@ -25,17 +25,15 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Break");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Break", {
+	var Break = ControlBase.extend("ui5strap.Break", {
 		metadata : {
 
 			library : "ui5strap",
 			
 		}
 	});
-
-}());
+	
+	return Break;
+});

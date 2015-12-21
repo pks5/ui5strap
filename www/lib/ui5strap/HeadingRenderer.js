@@ -25,11 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.HeadingRenderer");
-
-	ui5strap.HeadingRenderer = {
+	var HeadingRenderer = {
 
 		typeToClass : {
 			"PageHeader" : 'page-header',
@@ -38,7 +36,7 @@
 		}
 	};
 
-	ui5strap.HeadingRenderer.render = function(rm, oControl) {
+	HeadingRenderer.render = function(rm, oControl) {
 		var level = oControl.getLevel(),
 			type = oControl.getType(),
 			text = oControl.getText(),
@@ -70,5 +68,7 @@
 		    
 		rm.write("</h" + level + ">");
 	};
+	
+	return HeadingRenderer;
 
-}());
+}, true);

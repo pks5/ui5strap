@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Clearfix");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Clearfix", {
+	return ControlBase.extend("ui5strap.Clearfix", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
 			library : "ui5strap",
@@ -58,4 +55,4 @@
 		}
 	});
 
-}());
+});

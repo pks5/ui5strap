@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.JumbotronRenderer");
+	var JumbotronRenderer = {};
 
-	ui5strap.JumbotronRenderer = {
-	};
-
-	ui5strap.JumbotronRenderer.render = function(rm, oControl) {
+	JumbotronRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent();
 
 		rm.write("<div");
@@ -48,5 +45,7 @@
 
 		rm.write("</div>");
 	};
+	
+	return JumbotronRenderer;
 
-}());
+}, true);

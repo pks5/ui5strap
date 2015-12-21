@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Form");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Form", {
+	var Form = ControlBase.extend("ui5strap.Form", {
 		metadata : {
 
 			defaultAggregation : "content",
@@ -67,9 +64,10 @@
 			}
 
 		}
-	});
+	}),
+	FormProto = Form.prototype;
 
-	ui5strap.Form.prototype.onAfterRendering = function(){
+	FormProto.onAfterRendering = function(){
 		var _this = this;
 		this.$().on('submit', function(){
 			_this.fireSubmit({});
@@ -78,5 +76,6 @@
 			}
 		});
 	};
-
-}());
+	
+	return Form;
+});

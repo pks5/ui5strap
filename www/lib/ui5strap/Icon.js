@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Icon");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Icon", {
+	var Icon = ControlBase.extend("ui5strap.Icon", {
 		metadata : {
 
 			library : "ui5strap",
@@ -87,5 +84,6 @@
 			}
 		}
 	});
-
-}());
+	
+	return Icon;
+});

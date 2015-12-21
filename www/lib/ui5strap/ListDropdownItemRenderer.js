@@ -25,15 +25,11 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.ListDropdownItemRenderer");
-	jQuery.sap.require("ui5strap.library");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	ui5strap.ListDropdownItemRenderer = {
-	};
+	var ListDropdownItemRenderer = {};
 
-	ui5strap.ListDropdownItemRenderer.render = function(rm, oControl) {
+	ListDropdownItemRenderer.render = function(rm, oControl) {
 		var menu = oControl.getMenu();
 
 		rm.write("<li");
@@ -61,7 +57,7 @@
 		rm.write("</li>");
 	};
 
-	ui5strap.ListDropdownItemRenderer.renderContent = function(rm, oControl){
+	ListDropdownItemRenderer.renderContent = function(rm, oControl){
 		var text = oControl.getText(),
 			parse = oControl.getParse();
 	
@@ -73,7 +69,7 @@
 		rm.write(' <span class="caret"></span>');
 	};
 	
-	ui5strap.ListDropdownItemRenderer.startRenderLink = function(rm, oControl) {
+	ListDropdownItemRenderer.startRenderLink = function(rm, oControl) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			target = oControl.getTarget();
@@ -99,5 +95,7 @@
 
 		rm.write(">");
 	};
+	
+	return ListDropdownItemRenderer;
 
-}());
+}, true);

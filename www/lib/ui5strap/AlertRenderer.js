@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.AlertRenderer");
+	var AlertRenderer = {};
 
-	ui5strap.AlertRenderer = {};
-
-	ui5strap.AlertRenderer.render = function(rm, oControl) {
+	AlertRenderer.render = function(rm, oControl) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -49,5 +47,7 @@
 		rm.write("</div>");
 
 	};
-
-}());
+	
+	return AlertRenderer;
+	
+}, true);

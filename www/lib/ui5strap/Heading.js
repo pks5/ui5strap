@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Heading");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Heading", {
+	var Heading = ControlBase.extend("ui5strap.Heading", {
 		metadata : {
 
 			// ---- object ----
@@ -69,10 +66,12 @@
 			}
 
 		}
-	});
+	}),
+	HeadingProto = Heading.prototype;
 	
-	ui5strap.Heading.prototype._stylePrefix = 'ui5strapHeading';
+	HeadingProto._stylePrefix = 'ui5strapHeading';
 
-	ui5strap.Utils.dynamicText(ui5strap.Heading.prototype);
-
-}());
+	ui5strap.Utils.dynamicText(HeadingProto);
+	
+	return Heading;
+});

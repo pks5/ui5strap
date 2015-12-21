@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ListGroupItemRenderer");
+	var ListGroupItemRenderer = {};
 
-	ui5strap.ListGroupItemRenderer = {
-	};
-
-	ui5strap.ListGroupItemRenderer.render = function(rm, oControl) {
+	ListGroupItemRenderer.render = function(rm, oControl) {
 		var badge = oControl.getBadge(),
 			icon = oControl.getIcon(),
 			parent = oControl.getParent(),
@@ -74,5 +71,7 @@
 		    
 		rm.write("</"+ tag + ">");
 	};
+	
+	return ListGroupItemRenderer;
 
-}());
+}, true);

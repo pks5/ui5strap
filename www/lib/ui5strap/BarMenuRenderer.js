@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.BarMenuRenderer");
+	var BarMenuRenderer = {};
 
-	ui5strap.BarMenuRenderer = {
-	};
-
-	ui5strap.BarMenuRenderer.render = function(rm, oControl) {
+	BarMenuRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
 			zoomExtraSmall = oControl.getZoomExtraSmall(),
 			zoomSmall = oControl.getZoomSmall(),
@@ -83,5 +80,6 @@
 		    
 		rm.write("</ul>");
 	};
-
-}());
+	
+	return BarMenuRenderer;
+}, true);

@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ListItemRenderer");
+	var ListItemRenderer = {};
 
-	ui5strap.ListItemRenderer = {
-	};
-
-	ui5strap.ListItemRenderer.render = function(rm, oControl) {
+	ListItemRenderer.render = function(rm, oControl) {
 		var text = oControl.getText(),
 			parse = oControl.getParse();
 
@@ -59,5 +56,7 @@
 
 		rm.write("</li>");
 	};
+	
+	return ListItemRenderer;
 
-}());
+}, true);

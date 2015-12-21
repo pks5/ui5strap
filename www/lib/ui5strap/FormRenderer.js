@@ -25,11 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.FormRenderer");
-
-	ui5strap.FormRenderer = {
+	var FormRenderer = {
 
 		typeToClass : {
 			"Horizontal" : 'form-horizontal',
@@ -37,7 +35,7 @@
 		}
 	};
 
-	ui5strap.FormRenderer.render = function(rm, oControl) {
+	FormRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			action = oControl.getAction(),
 			method = oControl.getMethod(),
@@ -68,5 +66,7 @@
 		
 		rm.write("</form>");
 	};
+	
+	return FormRenderer;
 
-}());
+}, true);

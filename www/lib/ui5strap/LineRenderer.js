@@ -25,17 +25,17 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.LineRenderer");
+	var LineRenderer = {};
 
-	ui5strap.LineRenderer = {};
-
-	ui5strap.LineRenderer.render = function(rm, oControl) {
+	LineRenderer.render = function(rm, oControl) {
 		rm.write("<hr");
 		rm.writeControlData(oControl);
 		rm.writeClasses();
 		rm.write(" />");
 	};
+	
+	return LineRenderer;
 
-}());
+}, true);

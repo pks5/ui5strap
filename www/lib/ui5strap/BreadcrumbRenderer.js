@@ -25,27 +25,25 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-jQuery.sap.declare("ui5strap.BreadcrumbRenderer");
-
-ui5strap.BreadcrumbRenderer = {
-};
-
-ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
-	var items = oControl.getItems();
-
-	rm.write("<ol");
-	rm.writeControlData(oControl);
-	rm.addClass('breadcrumb');
-	rm.writeClasses();
-	rm.write(">");
+	var BreadcrumbRenderer = {};
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
+	BreadcrumbRenderer.render = function(rm, oControl) {
+		var items = oControl.getItems();
 	
-	rm.write("</ol>");
-};
+		rm.write("<ol");
+		rm.writeControlData(oControl);
+		rm.addClass('breadcrumb');
+		rm.writeClasses();
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</ol>");
+	};
 
-}());
+	return BreadcrumbRenderer;
+}, true);

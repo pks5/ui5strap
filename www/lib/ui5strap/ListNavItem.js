@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListLinkItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.ListNavItem");
-	jQuery.sap.require("ui5strap.ListLinkItem");
-
-	ui5strap.ListLinkItem.extend("ui5strap.ListNavItem", {
+	var ListNavItem = ListLinkItem.extend("ui5strap.ListNavItem", {
 		metadata : {
 
 			// ---- object ----
@@ -46,5 +43,6 @@
 			}
 		}
 	});
-
-}());
+	
+	return ListNavItem;
+});

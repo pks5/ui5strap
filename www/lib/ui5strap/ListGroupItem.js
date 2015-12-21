@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.ListGroupItem");
-	jQuery.sap.require("ui5strap.ListItem");
-
-	ui5strap.ListItem.extend("ui5strap.ListGroupItem", {
+	var ListGroupItem = ListItem.extend("ui5strap.ListGroupItem", {
 		metadata : {
 
 			// ---- object ----
@@ -54,5 +51,6 @@
 			}
 		}
 	});
-
-}());
+	
+	return ListGroupItem;
+});

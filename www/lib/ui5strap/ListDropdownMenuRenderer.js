@@ -25,28 +25,27 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-jQuery.sap.declare("ui5strap.ListDropdownMenuRenderer");
-
-ui5strap.ListDropdownMenuRenderer = {
-};
-
-ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
-	var items = oControl.getItems();
-
-	rm.write("<ul");
-	rm.writeControlData(oControl);
-	rm.addClass("dropdown-menu");
-	rm.writeClasses();
-	rm.writeAttribute("role", "menu");
-	rm.write(">");
+	var ListDropdownMenuRenderer = {};
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
+	ListDropdownMenuRenderer.render = function(rm, oControl) {
+		var items = oControl.getItems();
 	
-	rm.write("</ul>");
-};
+		rm.write("<ul");
+		rm.writeControlData(oControl);
+		rm.addClass("dropdown-menu");
+		rm.writeClasses();
+		rm.writeAttribute("role", "menu");
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</ul>");
+	};
+	
+	return ListDropdownMenuRenderer;
 
-}());
+}, true);

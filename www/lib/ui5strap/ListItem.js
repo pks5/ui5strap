@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.ListItem");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.ListItem", {
+	var ListItem = ControlBase.extend("ui5strap.ListItem", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectableItem"],
 			
@@ -79,9 +76,8 @@
 			}
 
 		}
-	});
-
-	var ListItemPrototype = ui5strap.ListItem.prototype;
+	}),
+	ListItemPrototype = ListItem.prototype;
 
 	ui5strap.Utils.dynamicText(ListItemPrototype);
 
@@ -103,4 +99,6 @@
               this.setProperty("selected", newSelected, suppressInvalidate);
           }
 	};
-}());
+	
+	return ListItem;
+});

@@ -25,14 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.List");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ListBase.extend("ui5strap.List", {
+	var List = ListBase.extend("ui5strap.List", {
 		metadata : {
 
 			library : "ui5strap",
@@ -54,8 +49,8 @@
 			}
 
 		}
-	});
-
-	var ListProto = ui5strap.List.prototype;
+	}),
+	ListProto = List.prototype;
 	
-}());
+	return List;
+});

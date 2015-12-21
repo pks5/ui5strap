@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.CheckboxRenderer");
+	var CheckboxRenderer = {};
 
-	ui5strap.CheckboxRenderer = {};
-
-	ui5strap.CheckboxRenderer.render = function(rm, oControl) {
+	CheckboxRenderer.render = function(rm, oControl) {
 		var type = oControl.getType(),
 			typeBlock = ui5strap.CheckboxType.Block;
 
@@ -75,5 +73,7 @@
 			rm.write("</div>");
 		}
 	};
+	
+	return CheckboxRenderer;
 
-}());
+}, true);

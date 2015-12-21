@@ -25,13 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.ButtonGroup");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	
-	ui5strap.ListBase.extend("ui5strap.ButtonGroup", {
+	var ButtonGroup = ListBase.extend("ui5strap.ButtonGroup", {
 		metadata : {
 
 			defaultAggregation : "buttons",
@@ -76,9 +72,8 @@
 				}
 		    }
 		}
-	});
-
-	var ButtonGroupProto = ui5strap.ButtonGroup.prototype;
+	}),
+	ButtonGroupProto = ButtonGroup.prototype;
 	
 	/**
 	 * @Protected
@@ -113,5 +108,6 @@
 		//@deprecated
 		eventOptions.button = eventOptions.srcItem;
 	};
-
-}());
+	
+	return ButtonGroup;
+});

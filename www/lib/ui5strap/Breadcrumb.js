@@ -25,14 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.Breadcrumb");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ListBase.extend("ui5strap.Breadcrumb", {
+	var Breadcrumb = ListBase.extend("ui5strap.Breadcrumb", {
 		metadata : {
 
 			library : "ui5strap",
@@ -47,8 +42,8 @@
 			}
 			
 		}
-	});
+	}),
+	BreadcrumbProto = Breadcrumb.prototype;
 	
-	var BreadcrumbProto = ui5strap.Breadcrumb.prototype;
-	
-}());
+	return Breadcrumb;
+});

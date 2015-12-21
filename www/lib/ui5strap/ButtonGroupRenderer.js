@@ -25,51 +25,51 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 
-jQuery.sap.declare("ui5strap.ButtonGroupRenderer");
-
-ui5strap.ButtonGroupRenderer = {
-	typeToClass : {
-		Default : "btn-group",
-		Justified : "btn-group btn-group-justified",
-		Vertical : "btn-group-vertical"
-	}
-};
-
-ui5strap.ButtonGroupRenderer.render = function(rm, oControl) {
-	var size = oControl.getSize(),
-		type = oControl.getType(),
-		buttons = oControl.getButtons();
-
-	rm.write("<div");
-	rm.writeControlData(oControl);
-
-	rm.addClass(this.typeToClass[type]);
-	
-	if(ui5strap.Size.Default !== size){
-		rm.addClass('btn-group-' + ui5strap.BSSize[size]);
-	}
-
-	ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
-
-	rm.writeClasses();
-	rm.write(">");
-	
-	for(var i = 0; i < buttons.length; i++){
-		var button = buttons[i];
-		if(type === ui5strap.ButtonGroupType.Justified && button instanceof ui5strap.Button){
-			rm.write('<div class="btn-group">');
-			rm.renderControl(button);
-			rm.write("</div>");
+	var ButtonGroupRenderer = {
+		typeToClass : {
+			Default : "btn-group",
+			Justified : "btn-group btn-group-justified",
+			Vertical : "btn-group-vertical"
 		}
-		else{
-			rm.renderControl(button);
-		}
-	}
+	};
 	
-	rm.write("</div>");
+	ButtonGroupRenderer.render = function(rm, oControl) {
+		var size = oControl.getSize(),
+			type = oControl.getType(),
+			buttons = oControl.getButtons();
+	
+		rm.write("<div");
+		rm.writeControlData(oControl);
+	
+		rm.addClass(this.typeToClass[type]);
+		
+		if(ui5strap.Size.Default !== size){
+			rm.addClass('btn-group-' + ui5strap.BSSize[size]);
+		}
+	
+		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
+	
+		rm.writeClasses();
+		rm.write(">");
+		
+		for(var i = 0; i < buttons.length; i++){
+			var button = buttons[i];
+			if(type === ui5strap.ButtonGroupType.Justified && button instanceof Button){
+				rm.write('<div class="btn-group">');
+				rm.renderControl(button);
+				rm.write("</div>");
+			}
+			else{
+				rm.renderControl(button);
+			}
+		}
+		
+		rm.write("</div>");
+	
+	};
+	
+	return ButtonGroupRenderer;
 
-};
-
-}());
+}, true);

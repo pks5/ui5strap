@@ -25,18 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.InputGroup");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.Text");
-	jQuery.sap.require("ui5strap.Button");
-	jQuery.sap.require("ui5strap.TextInput");
-	jQuery.sap.require("ui5strap.Checkbox");
-	jQuery.sap.require("ui5strap.RadioButton");
-	jQuery.sap.require("ui5strap.SelectBox");
-	
-	ui5strap.ControlBase.extend("ui5strap.InputGroup", {
+	var InputGroup = ControlBase.extend("ui5strap.InputGroup", {
 		metadata : {
 
 			// ---- object ----
@@ -58,5 +49,6 @@
 
 		}
 	});
-
-}());
+	
+	return InputGroup;
+});

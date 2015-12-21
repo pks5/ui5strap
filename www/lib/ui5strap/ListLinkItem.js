@@ -25,14 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.ListLinkItem");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListItem");
-	jQuery.sap.require("ui5strap.Link");
-
-	ui5strap.ListItem.extend("ui5strap.ListLinkItem", {
+	var ListLinkItem = ListItem.extend("ui5strap.ListLinkItem", {
 		metadata : {
 			library : "ui5strap",
 			
@@ -64,10 +59,12 @@
 				}			
 			}
 		}
-	});
+	}),
+	ListLinkItemProto = ListLinkItem.prototype;
 
-	ui5strap.ListLinkItem.prototype.setText = function(newText){
+	ListLinkItemProto.setText = function(newText){
 		ui5strap.Utils.updateText(this, jQuery('#' + this.getId() + '---link'), newText);
 	};
-
-}());
+	
+	return ListLinkItem;
+});

@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.ListNavItemRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	ui5strap.ListNavItemRenderer = {
-	};
+	var ListNavItemRenderer = {};
 
-	ui5strap.ListNavItemRenderer.render = function(rm, oControl) {
+	ListNavItemRenderer.render = function(rm, oControl) {
 		var badge = oControl.getBadge();
 
 		rm.write("<li");
@@ -68,7 +65,7 @@
 		rm.write("</li>");
 	};
 	
-	ui5strap.ListNavItemRenderer.startRenderLink = function(rm, oControl, options) {
+	ListNavItemRenderer.startRenderLink = function(rm, oControl, options) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			target = oControl.getTarget();
@@ -94,5 +91,7 @@
 
 		rm.write(">");
 	};
+	
+	return ListNavItemRenderer;
 
-}());
+}, true);

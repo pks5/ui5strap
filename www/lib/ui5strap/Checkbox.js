@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Checkbox");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Checkbox", {
+	var Checkbox = ControlBase.extend("ui5strap.Checkbox", {
 		metadata : {
 
 			library : "ui5strap",
@@ -55,7 +52,8 @@
 			}
 
 		}
-	});
+	}),
+	CheckboxProto = Checkbox.prototype;
 
 	var _onChange = function(_this){
 		return function(ev){
@@ -66,19 +64,19 @@
 		}
 	};
 
-	ui5strap.Checkbox.prototype.onAfterRendering = function(){
+	CheckboxProto.onAfterRendering = function(){
 		this.$checkbox = this.$().find('#' + this.getId() + '---checkbox');
 		this.$checkbox.on('change', _onChange(this));
 	};
 
-	ui5strap.Checkbox.prototype.onBeforeRendering = function() {
+	CheckboxProto.onBeforeRendering = function() {
 		if (this.getDomRef()) {
 			this.$checkbox.off();
 			//this._curpos = this._$input.cursorPos();
 		}
 	};
 
-	ui5strap.Checkbox.prototype.setSelected = function(sValue) {
+	CheckboxProto.setSelected = function(sValue) {
 		sValue = this.validateProperty("selected", sValue);
 		
 		if (sValue != this.getSelected()) {
@@ -89,5 +87,6 @@
 		}
 		return this;
 	};
-
-}());
+	
+	return Checkbox;
+});

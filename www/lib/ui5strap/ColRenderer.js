@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ColRenderer");
+	var ColRenderer = {};
 
-	ui5strap.ColRenderer = {};
-
-	ui5strap.ColRenderer.render = function(rm, oControl) {
+	ColRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent();
 
 		rm.write("<div");
@@ -117,6 +115,7 @@
 		
 		rm.write("</div>");
 	};
+	
+	return ColRenderer;
 
-
-}());
+}, true);

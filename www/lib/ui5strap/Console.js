@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Console");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Console", {
+	var Console = ControlBase.extend("ui5strap.Console", {
 		metadata : {
 
 			library : "ui5strap",
@@ -42,10 +39,8 @@
 			},
 
 		}
-	});
-
-	var Console = ui5strap.Console,
-		ConsolePrototype = Console.prototype;
+	}),
+	ConsolePrototype = Console.prototype;
 
 	Console.LOG_DEFAULT = '__DEFAULT_LOG';
 	Console.MAX_SIZE = 200;
@@ -283,4 +278,6 @@
             this.flush();
         }
     };
-}());
+    
+    return Console;
+});
