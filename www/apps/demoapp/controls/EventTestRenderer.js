@@ -25,16 +25,16 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.demoapp.controls.EventTestRenderer");
+	var EventTestRenderer = {};
 
-	ui5strap.demoapp.controls.EventTestRenderer = {};
-
-	ui5strap.demoapp.controls.EventTestRenderer.render = function(rm, oControl) {
+	EventTestRenderer.render = function(rm, oControl) {
 		rm.write('<div');
 		rm.writeControlData(oControl);
 		rm.write(' tabindex="0" style="width:100px; height:100px; display:inline-block; background-color:#025d8c; border:solid 1px white;cursor:pointer;padding:5; color:white;margin:5;">Native support for touch: ' + (ui5strap.support.touch ? 'supported' : 'not supported') + '</div>');
 	};
 
-}());
+	return EventTestRenderer;
+	
+}, true);

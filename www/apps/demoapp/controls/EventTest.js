@@ -25,20 +25,16 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.demoapp.controls.EventTest");
-	jQuery.sap.require("ui5strap.library");
+sap.ui.define(['ui5strap/library', 'ui5strap/ControlBase'], function(library, ControlBase){
 	
-	ui5strap.ControlBase.extend("ui5strap.demoapp.controls.EventTest", {
+	var EventTest = ControlBase.extend("ui5strap.demoapp.controls.EventTest", {
 		metadata : {
 
 			library : "ui5strap.demoapp",
 			
 		}
-	});
-	
-	var EventTestProto = ui5strap.demoapp.controls.EventTest.prototype;
+	}),
+	EventTestProto = EventTest.prototype;
 
 	/*
 	 * Events that are liset in jquery.sap.events.js
@@ -213,4 +209,6 @@
 	EventTestProto.onscrollstop = function(oEvent){
 		console.log("SCROLLSTOP");
 	};
-}());
+	
+	return EventTest;
+});

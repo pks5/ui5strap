@@ -51,9 +51,5 @@ sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
 		}
 	});
 
-	TableColumn.prototype.init = function(){
-
-	};
-
 	return TableColumn;
 });

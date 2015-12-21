@@ -195,36 +195,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Public
 	 * @deprecated
 	 */
-	TabContainerProto.setSelectedPane = function($pane){
-		var $active = this.$().find('> .active'),
-			_this = this;
-
-		if($active.attr('data-pane-index') === $pane.attr('data-pane-index') || $pane.length === 0){
-			return;
-		}
-		
-		//this.$().find('.tab-pane').attr('class', 'tab-pane fade');
-		var transition = $.support.transition
-      					&& $active.hasClass('fade');
-
-		var next = function(){
-			$pane.addClass('active' + (_this.getAnimate() ? ' fade in' : ''));
-			$active.removeClass('active');
-		};
-
-		transition ?
-		      $active
-		        .one($.support.transition.end, next)
-		        .emulateTransitionEnd(150) :
-		      next();
-
-        $active.removeClass('in');
-	};
-	
-	/**
-	 * @Public
-	 * @deprecated
-	 */
 	TabContainerProto.getSelectedControl = function(){
 		return this.getPanes()[this.getSelectedIndex()];
 	};
