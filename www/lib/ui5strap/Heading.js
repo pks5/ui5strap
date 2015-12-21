@@ -69,8 +69,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	HeadingProto = Heading.prototype;
 	
-	HeadingProto._stylePrefix = 'ui5strapHeading';
-
 	ui5strap.Utils.dynamicText(HeadingProto);
 	
 	return Heading;

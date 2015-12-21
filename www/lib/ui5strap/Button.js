@@ -103,8 +103,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ButtonPrototype = Button.prototype;
 	
-	ButtonPrototype._stylePrefix = 'ui5strapButton';
-	
 	ui5strap.Utils.dynamicAttributes(
 		ButtonPrototype, 
 		[

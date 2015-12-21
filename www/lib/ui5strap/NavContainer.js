@@ -66,7 +66,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	NavContainerProto = NavContainer.prototype,
 	domAttachTimeout = 50;
 	
-	NavContainerProto._stylePrefix = "navcontainer";
+	NavContainerProto._getStyleClassPrefix = function(){
+		return "navcontainer";
+	};
 	
 	/*
 	*

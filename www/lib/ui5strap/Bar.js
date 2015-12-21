@@ -73,8 +73,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	BarProto = Bar.prototype; 
 
-	BarProto._stylePrefix = "ui5strapBar";
-	
 	/**
 	 * @Protected
 	 * @Override

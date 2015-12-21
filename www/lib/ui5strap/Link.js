@@ -97,8 +97,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	LinkProto = Link.prototype;
 	
-	LinkProto._stylePrefix = "ui5strapLink";
-
 	ui5strap.Utils.dynamicAttributes(
 		LinkProto, 
 		[

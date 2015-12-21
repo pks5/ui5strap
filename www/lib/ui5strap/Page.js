@@ -53,7 +53,5 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	PageProto = Page.prototype;
 
-	PageProto._stylePrefix = "ui5strapPage";
-	
 	return Page;
 });

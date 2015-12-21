@@ -59,7 +59,9 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	NavProto = ui5strap.Nav.prototype;
 	
-	NavProto._stylePrefix = "nav";
+	NavProto._getStyleClassPrefix = function(){
+		return "nav";
+	};
 
 	return Nav;
 });

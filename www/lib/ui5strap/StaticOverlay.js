@@ -55,8 +55,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	StaticOverlayProto = StaticOverlay.prototype;
 	
-	StaticOverlayProto._stylePrefix = "ui5strapStaticOverlay";
-	
 	StaticOverlayProto.onBeforeRendering = function(oEvent){
 		if(this.getBackdrop()){
 			this._$backdrop && this._$backdrop.off('click');

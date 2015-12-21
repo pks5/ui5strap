@@ -56,11 +56,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ScrollContainerProto = ScrollContainer.prototype;
 	
-	/*
-	 * Style Prefix
-	 */
-	ScrollContainerProto._stylePrefix = "ui5strapScrollContainer";
-
 	/**
 	 * @Override
 	 */

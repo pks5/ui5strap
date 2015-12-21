@@ -48,34 +48,39 @@ sap.ui.define(['./library'], function(library){
 			return jQuery('#' + this._getIdPart.apply(this, arguments));
 		};
 		
-		obj._stylePrefix = 'ui5strapControlBase';
+		/**
+		 * @Protected
+		 */
+		obj._getStyleClassPrefix = function(){
+			return this.getMetadata().getElementName().replace(/\./g, '');
+		};
 		
 		/**
 		 * @Protected
 		 */
 		obj._getStyleClassRoot = function(){
-			return this._stylePrefix;
+			return this._getStyleClassPrefix();
 		};
 		
 		/**
 		 * @Protected
 		 */
 		obj._getStyleClassPart = function(partName){
-			return this._stylePrefix + "-" + partName;
+			return this._getStyleClassPrefix() + "-" + partName;
 		};
 		
 		/**
 		* @Protected
 		*/
-		obj._getStyleClassType = function(type){
-			return 	this._stylePrefix + "-type-" + type;
+		obj._getStyleClassType = function(type, typeKey){
+			return 	this._getStyleClassPrefix() + "-" + (typeKey || "type") + "-" + type;
 		};
 		
 		/**
 		* @Protected
 		*/
 		obj._getStyleClassFlag = function(flag){
-			return 	this._stylePrefix + "-flag-" + flag;
+			return 	this._getStyleClassPrefix() + "-flag-" + flag;
 		};
 		
 		/**
@@ -103,11 +108,15 @@ sap.ui.define(['./library'], function(library){
 			if(options){
 		    	options = options.split(' ');
 		    	for(var i = 0; i < options.length; i++){
-		    		classes += ' ' + this._stylePrefix + '-option-' + options[i];
+		    		classes += ' ' + this._getStyleClassPrefix() + '-option-' + options[i];
 		    	}
 		    }
 			
 			return classes;
+		};
+		
+		obj._getStyleClass = function(){
+			return this._getStyleClassRoot() + " " + this._getStyleClassOptions();	
 		};
 		
 		/**
@@ -120,7 +129,7 @@ sap.ui.define(['./library'], function(library){
 			var classes = this.$().attr('class').split(' ');
 			for(var i = 0; i < classes.length; i++){
 				var cClass = classes[i];
-				if(cClass && cClass.indexOf(this._stylePrefix + '-option-') !== 0){
+				if(cClass && cClass.indexOf(this._getStyleClassPrefix() + '-option-') !== 0){
 					currentClassesString += ' ' + cClass;
 				}
 				
@@ -129,7 +138,7 @@ sap.ui.define(['./library'], function(library){
 			if(options){
 		    	options = options.split(' ');
 		    	for(var i = 0; i < options.length; i++){
-		    		currentClassesString += ' ' + this._stylePrefix + '-option-' + options[i];
+		    		currentClassesString += ' ' + this._getStyleClassPrefix() + '-option-' + options[i];
 		    	}
 		    }
 		

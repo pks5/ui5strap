@@ -96,8 +96,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ContainerProto = Container.prototype;
 	
-	ContainerProto._stylePrefix = "ui5strapContainer";
-	
 	ContainerProto._typeData = {
 		Default : {
 			tagName : "div",
@@ -148,7 +146,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	ContainerProto._getStyleClassRoot = function(){
-		var styleClass = this._stylePrefix + " " + this._getStyleClassType(this.getType()),
+		var styleClass = this._getStyleClassPrefix() + " " + this._getStyleClassType(this.getType()),
 			severity = this.getSeverity();
 		
 		if(ui5strap.Severity.None !== severity){
