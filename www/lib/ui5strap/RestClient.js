@@ -27,8 +27,14 @@
 
 sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
-	var RestClient = AppComponent.extend("ui5strap.RestClient"),
-		RestClientProto = RestClient.prototype;
+	var RestClient = AppComponent.extend("ui5strap.RestClient", {
+		"constructor" : function(app, options){
+			AppComponent.call(this, app, options);
+			
+			this._createMethods();
+		}
+	}),
+	RestClientProto = RestClient.prototype;
 
     RestClient.CONTENT_TYPE_TEXT = 'text/plain';
     RestClient.CONTENT_TYPE_XML = 'application/xml';
@@ -44,6 +50,101 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     RestClient.RESPONSE_DATA_TYPE_JSON = 'json';
     RestClient.RESPONSE_DATA_TYPE_JSONP = 'jsonp';
     RestClient.RESPONSE_DATA_TYPE_XML = 'xml';
+    
+    RestClientProto._createMethods = function(){
+    	var methodsSettings = this.options.methods;
+    	if(!methodsSettings){
+    		return;
+    	}
+    	
+    	var _this = this,
+    		methods = Object.keys(methodsSettings),
+    		methodsLength = methods.length;
+    	
+    	for(var i = 0; i < methodsLength; i++){
+    		(function(){
+	    		var methodName = methods[i],
+	    			methodData = methodsSettings[methodName],
+	    			methodType = methodData.type,
+	    			path = methodData.path;
+	    		
+	    		if(!methodType){
+	    			continue;
+	    		}
+	    		
+	    		if(!path){
+	    			throw new Error("Path is required!");
+	    		}
+	    		
+	    		var param = jQuery.extend({}, methodData);
+	    		
+	    		//Delete provided type
+	    		delete param.type;
+	    		
+	    		if(methodType === "get"){
+	    			this[methodName] = function(){
+	    				return this._get(this._buildParam(param, arguments));
+	    			};
+	    		}
+	    		else if(methodType === "postWithPayload"){
+	    			this[methodName] = function(){
+	    				return this._postWithPayload(this._buildParam(param, arguments));
+	    			};
+	    		}
+	    		else if(methodType === "postUrlEncoded"){
+	    			this[methodName] = function(){
+	    				return this._postUrlEncoded(this._buildParam(param, arguments));
+	    			};
+	    		}
+	    		
+    		}());
+    	}
+    	
+    };
+    
+    /**
+     * @Protected
+     */
+    RestClientProto._buildParam = function(param, args){
+    	if(!param.arguments){
+    		return param;
+    	}
+    	
+    	for(var j=0; j<param.arguments.length; j++){
+			var p = param.arguments[j].split("."),
+				key = p[0];
+    		
+    		if(key === "path"){
+    			if(!param.pathParameters){
+    				param.pathParameters = {};
+    			}
+    			param.pathParameters[p[1]] = arg[j];
+    		}
+    		else if(key === "query"){
+    			if(!param.queryParameters){
+    				param.queryParameters = {};
+    			}
+    			param.queryParameters[p[1]] = arg[j];
+    		}
+    		else if(key === "post"){
+    			if(!param.postParameters){
+    				param.postParameters = {};
+    			}
+    			param.postParameters[p[1]] = arg[j];
+    		}
+    		else if(key === "payload"){
+    			param.payload = arg[j];
+    		}
+    		else if(key === "success"){
+    			param.success = arg[j];
+    		}
+    		else if(key === "error"){
+    			param.error = arg[j];
+    		}
+		}
+    	
+    	return param;
+    };
     
     /**
     * Parses a path and replaces {placeholder} with values of pathParam directory, if present.
@@ -73,6 +174,13 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     };
     
     /**
+     * Global request headers
+     */
+    RestClientProto._requestHeaders = function(options){
+    	return {};
+    };
+    
+    /**
     * GET Request with Query Parameters
     * @protected 
     */
@@ -83,7 +191,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
         
-        var requestHeaders = {};
+        var requestHeaders = this._requestHeaders(options);
         
         if(options.requestHeaders){
         	jQuery.extend(requestHeaders, options.requestHeaders);
@@ -115,7 +223,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
         
-        var requestHeaders = {};
+        var requestHeaders = this._requestHeaders(options);
         
         if(options.requestHeaders){
         	jQuery.extend(requestHeaders, options.requestHeaders);
@@ -157,10 +265,16 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
         
-        var requestHeaders = {};
+        var requestHeaders = this._requestHeaders(options);
         
         if(options.requestHeaders){
         	jQuery.extend(requestHeaders, options.requestHeaders);
+        }
+        
+        var postUrl = this._determineRequestURL(options);
+
+        if(options.queryParameters){
+            postUrl += '?' + (-1 === postUrl.indexOf('?') ? '?' : '&') + jQuery.param(options.queryParameters);
         }
 
         jQuery.ajax({
@@ -169,7 +283,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             dataType: options.responseDataType,
             processData: false,
             type: 'POST',
-            url: this._determineRequestURL(options),
+            url: postUrl,
             headers : requestHeaders,
             beforeSend: function (xhr) {
             	_this._beforeSend(xhr, options);
