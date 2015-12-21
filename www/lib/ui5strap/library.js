@@ -29,7 +29,7 @@ sap.ui
 		.define(
 				[ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 						'jquery.sap.mobile' // referenced here in case the Core
-											// decides to throw it out.
+				// decides to throw it out.
 				],
 				function(jQuery, Device) {
 
@@ -213,6 +213,59 @@ sap.ui
 							break;
 						}
 					}
+
+					/*
+					 * Bootstrap Transition End Legacy
+					 */
+
+					// CSS TRANSITION SUPPORT (Shoutout:
+					// http://www.modernizr.com/)
+					// ============================================================
+					var _bootstrapTransitionEnd = function() {
+						var el = document.createElement('bootstrap');
+
+						var transEndEventNames = {
+							'WebkitTransition' : 'webkitTransitionEnd',
+							'MozTransition' : 'transitionend',
+							'OTransition' : 'oTransitionEnd otransitionend',
+							'transition' : 'transitionend'
+						};
+
+						for ( var name in transEndEventNames) {
+							if (el.style[name] !== undefined) {
+								return {
+									end : transEndEventNames[name]
+								};
+							}
+						}
+
+						return false; // explicit for ie8 ( ._.)
+					};
+
+					ui5strap.support.transition = _bootstrapTransitionEnd();
+
+					// http://blog.alexmaccaw.com/css-transitions
+					jQuery.fn.emulateTransitionEnd = function(duration) {
+						var called = false, $el = this;
+						jQuery(this).one(ui5strap.support.transition.end,
+								function() {
+									called = true
+								});
+
+						var callback = function() {
+							if (!called)
+								jQuery($el).trigger(
+										ui5strap.support.transition.end);
+						};
+
+						setTimeout(callback, duration);
+
+						return this;
+					};
+
+					/*
+					 * END Bootstrap Transition End Legacy
+					 */
 
 					/*
 					 * -------
@@ -1389,99 +1442,97 @@ sap.ui
 					 * 
 					 * -----
 					 */
-					
+
 					/*
 					 * @Package
 					 */
-					ui5strap.Utils = {
+					ui5strap.Utils = {};
 
-						// @deprecated
-						dynamicAttributes : function(controlProto,
-								attributeNames) {
-							for (var i = 0; i < attributeNames.length; i++) {
-								ui5strap.Utils.dynamicAttribute(controlProto,
-										attributeNames[i]);
-							}
-						},
+					// @deprecated
+					ui5strap.Utils.dynamicAttributes = function(controlProto,
+							attributeNames) {
+						for (var i = 0; i < attributeNames.length; i++) {
+							ui5strap.Utils.dynamicAttribute(controlProto,
+									attributeNames[i]);
+						}
+					};
 
-						// @deprecated
-						dynamicAttribute : function(controlProto, attributeName) {
-							controlProto['set'
-									+ jQuery.sap.charToUpperCase(attributeName,
-											0)] = function(newValue) {
-								ui5strap.Utils.updateAttribute(this,
-										attributeName, newValue);
-							};
-						},
-
-						// @deprecated
-						updateAttribute : function(oControl, attributeName,
+					// @deprecated
+					ui5strap.Utils.dynamicAttribute = function(controlProto,
+							attributeName) {
+						controlProto['set'
+								+ jQuery.sap.charToUpperCase(attributeName, 0)] = function(
 								newValue) {
-							if (oControl.getDomRef()) {
-								oControl.$().attr(attributeName, newValue);
-								oControl.setProperty(attributeName, newValue,
-										true);
-							} else {
-								oControl.setProperty(attributeName, newValue);
-							}
-						},
+							ui5strap.Utils.updateAttribute(this, attributeName,
+									newValue);
+						};
+					};
 
-						// @deprecated
-						dynamicClass : function(controlProto, propertyName,
-								valueMapping) {
-							controlProto['set'
+					// @deprecated
+					ui5strap.Utils.updateAttribute = function(oControl,
+							attributeName, newValue) {
+						if (oControl.getDomRef()) {
+							oControl.$().attr(attributeName, newValue);
+							oControl.setProperty(attributeName, newValue, true);
+						} else {
+							oControl.setProperty(attributeName, newValue);
+						}
+					};
+
+					// @deprecated
+					ui5strap.Utils.dynamicClass = function(controlProto,
+							propertyName, valueMapping) {
+						controlProto['set'
+								+ jQuery.sap.charToUpperCase(propertyName, 0)] = function(
+								newValue, suppressInvalidate) {
+							ui5strap.Utils.updateClass(this, this.$(),
+									propertyName, newValue, valueMapping,
+									suppressInvalidate);
+						};
+					};
+
+					// @deprecated
+					ui5strap.Utils.updateClass = function(oControl, $target,
+							propertyName, newValue, valueMapping,
+							suppressInvalidate) {
+						if (oControl.getDomRef()) {
+							var oldValue = oControl['get'
 									+ jQuery.sap.charToUpperCase(propertyName,
-											0)] = function(newValue,
-									suppressInvalidate) {
-								ui5strap.Utils.updateClass(this, this.$(),
-										propertyName, newValue, valueMapping,
-										suppressInvalidate);
-							};
-						},
-
-						// @deprecated
-						updateClass : function(oControl, $target, propertyName,
-								newValue, valueMapping, suppressInvalidate) {
-							if (oControl.getDomRef()) {
-								var oldValue = oControl['get'
-										+ jQuery.sap.charToUpperCase(
-												propertyName, 0)]();
-								if (oldValue in valueMapping) {
-									$target.removeClass(valueMapping[oldValue]);
-								}
-								if (newValue in valueMapping) {
-									$target.addClass(valueMapping[newValue]);
-								}
-
-								oControl.setProperty(propertyName, newValue,
-										true);
-							} else {
-								oControl.setProperty(propertyName, newValue,
-										suppressInvalidate);
+											0)]();
+							if (oldValue in valueMapping) {
+								$target.removeClass(valueMapping[oldValue]);
 							}
-						},
+							if (newValue in valueMapping) {
+								$target.addClass(valueMapping[newValue]);
+							}
 
-						// @deprecated
-						dynamicText : function(controlProto) {
-							controlProto.setText = function(newText,
-									suppressInvalidate) {
-								// console.log(newText, suppressInvalidate);
-								ui5strap.Utils.updateText(this, this.$(),
-										newText, suppressInvalidate);
-							};
-						},
+							oControl.setProperty(propertyName, newValue, true);
+						} else {
+							oControl.setProperty(propertyName, newValue,
+									suppressInvalidate);
+						}
+					};
 
-						// @deprecated
-						updateText : function(oControl, $target, newText,
+					// @deprecated
+					ui5strap.Utils.dynamicText = function(controlProto) {
+						controlProto.setText = function(newText,
 								suppressInvalidate) {
-							if (oControl.getDomRef()
-									&& oControl.getContent().length === 0) {
-								$target.text(newText);
-								oControl.setProperty('text', newText, true);
-							} else {
-								oControl.setProperty('text', newText,
-										suppressInvalidate);
-							}
+							// console.log(newText, suppressInvalidate);
+							ui5strap.Utils.updateText(this, this.$(), newText,
+									suppressInvalidate);
+						};
+					};
+
+					// @deprecated
+					ui5strap.Utils.updateText = function(oControl, $target,
+							newText, suppressInvalidate) {
+						if (oControl.getDomRef()
+								&& oControl.getContent().length === 0) {
+							$target.text(newText);
+							oControl.setProperty('text', newText, true);
+						} else {
+							oControl.setProperty('text', newText,
+									suppressInvalidate);
 						}
 					};
 
@@ -1633,234 +1684,233 @@ sap.ui
 					 * @Package
 					 * @Public
 					 */
-					ui5strap.RenderUtils = {
+					ui5strap.RenderUtils = {};
 
-						/**
-						 * Renders title content, used in Panel
-						 * 
-						 * @Public
-						 * @Static
-						 */
-						renderTitleContent : function(rm, oControl, text) {
-							var content = oControl.getTitleContent(), contentPlacement = oControl
-									.getTitleContentPlacement(), text = text
-									|| oControl.getTitle();
+					/**
+					 * Renders title content, used in Panel
+					 * 
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.RenderUtils.renderTitleContent = function(rm,
+							oControl, text) {
+						var content = oControl.getTitleContent(), contentPlacement = oControl
+								.getTitleContentPlacement(), text = text
+								|| oControl.getTitle();
 
-							if (contentPlacement === ui5strap.ContentPlacement.End) {
+						if (contentPlacement === ui5strap.ContentPlacement.End) {
+							rm.writeEscaped(text);
+						}
+
+						for (var i = 0; i < content.length; i++) {
+							rm.renderControl(content[i]);
+						}
+
+						if (contentPlacement === ui5strap.ContentPlacement.Start) {
+							rm.writeEscaped(text);
+						}
+					};
+
+					/**
+					 * parse map
+					 */
+					ui5strap.RenderUtils.parseMap = {
+						'[strong]' : '<strong>',
+						'[/strong]' : '</strong>',
+						'[em]' : '<em>',
+						'[/em]' : '</em>',
+						'[small]' : '<small>',
+						'[/small]' : '</small>',
+						'[span]' : '<span>',
+						'[/span]' : '</span>'
+					};
+
+					/**
+					 * Parses BBCode inside text
+					 * 
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.RenderUtils.parseText = function(text) {
+						return text
+								.replace(
+										/\[\/?strong\]|\[\/?em\]|\[\/?small\]|\[\/?span\]/gi,
+										function(matched) {
+											return ui5strap.RenderUtils.parseMap[matched];
+										});
+					};
+
+					/**
+					 * Default rendering for controls that have both text
+					 * property and content aggregation
+					 * 
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.RenderUtils.renderContent = function(rm, oControl,
+							text, dontEscape) {
+						var content = oControl.getContent(), contentPlacement = oControl
+								.getContentPlacement(), text = text
+								|| oControl.getText();
+
+						if (contentPlacement === ui5strap.ContentPlacement.End) {
+							if (dontEscape) {
+								rm.write(text);
+							} else {
 								rm.writeEscaped(text);
 							}
+						}
 
-							for (var i = 0; i < content.length; i++) {
-								rm.renderControl(content[i]);
-							}
+						for (var i = 0; i < content.length; i++) {
+							rm.renderControl(content[i]);
+						}
 
-							if (contentPlacement === ui5strap.ContentPlacement.Start) {
+						if (contentPlacement === ui5strap.ContentPlacement.Start) {
+							if (dontEscape) {
+								rm.write(text);
+							} else {
 								rm.writeEscaped(text);
 							}
-						},
+						}
+					};
 
-						/**
-						 * parse map
-						 */
-						parseMap : {
-							'[strong]' : '<strong>',
-							'[/strong]' : '</strong>',
-							'[em]' : '<em>',
-							'[/em]' : '</em>',
-							'[small]' : '<small>',
-							'[/small]' : '</small>',
-							'[span]' : '<span>',
-							'[/span]' : '</span>'
-						},
+					/**
+					 * Trail mapping
+					 */
+					ui5strap.RenderUtils.trailHtml = {
+						Space : ' ',
+						DoubleSpace : '&nbsp; ',
+						Break : '<br />'
+					};
 
-						/**
-						 * Parses BBCode inside text
+					/**
+					 * Renders the trail after inline controls
+					 */
+					ui5strap.RenderUtils.renderTrail = function(rm, oControl,
+							text) {
+						var trail = oControl.getTrail();
+
+						if (trail !== ui5strap.TrailHtml.None) {
+							rm.write(this.trailHtml[trail]);
+						}
+					};
+
+					/**
+					 * @deprecated
+					 */
+					ui5strap.RenderUtils.alignment = function(rm, oControl,
+							navbarClass, sidebarClass) {
+						var align = oControl.getAlign(), Alignment = ui5strap.Alignment;
+
+						if (align !== Alignment.Default) {
+							rm.addClass(ui5strap.BSAlignment[align]);
+						}
+
+						/*
+						 * This are special options for Button, ButtonGroup, Nav
+						 * and Form to show properly inside NavBar controls
 						 * 
-						 * @Public
-						 * @Static
-						 */
-						parseText : function(text) {
-							return text
-									.replace(
-											/\[\/?strong\]|\[\/?em\]|\[\/?small\]|\[\/?span\]/gi,
-											function(matched) {
-												return ui5strap.RenderUtils.parseMap[matched];
-											});
-						},
-
-						/**
-						 * Default rendering for controls that have both text
-						 * property and content aggregation
-						 * 
-						 * @Public
-						 * @Static
-						 */
-						renderContent : function(rm, oControl, text, dontEscape) {
-							var content = oControl.getContent(), contentPlacement = oControl
-									.getContentPlacement(), text = text
-									|| oControl.getText();
-
-							if (contentPlacement === ui5strap.ContentPlacement.End) {
-								if (dontEscape) {
-									rm.write(text);
-								} else {
-									rm.writeEscaped(text);
-								}
-							}
-
-							for (var i = 0; i < content.length; i++) {
-								rm.renderControl(content[i]);
-							}
-
-							if (contentPlacement === ui5strap.ContentPlacement.Start) {
-								if (dontEscape) {
-									rm.write(text);
-								} else {
-									rm.writeEscaped(text);
-								}
-							}
-						},
-
-						/**
-						 * Trail mapping
-						 */
-						trailHtml : {
-							Space : ' ',
-							DoubleSpace : '&nbsp; ',
-							Break : '<br />'
-						},
-
-						/**
-						 * Renders the trail after inline controls
-						 */
-						renderTrail : function(rm, oControl, text) {
-							var trail = oControl.getTrail();
-
-							if (trail !== ui5strap.TrailHtml.None) {
-								rm.write(this.trailHtml[trail]);
-							}
-						},
-
-						/**
 						 * @deprecated
 						 */
-						alignment : function(rm, oControl, navbarClass,
-								sidebarClass) {
-							var align = oControl.getAlign(), Alignment = ui5strap.Alignment;
-
-							if (align !== Alignment.Default) {
-								rm.addClass(ui5strap.BSAlignment[align]);
+						if (typeof navbarClass === 'string') {
+							if (align === Alignment.NavBar
+									|| align === Alignment.NavBarLeft
+									|| align === Alignment.NavBarRight) {
+								jQuery.sap.log
+										.warning("Using Alignment.NavBar* options is deprecated.");
+								rm.addClass(navbarClass);
 							}
-
-							/*
-							 * This are special options for Button, ButtonGroup,
-							 * Nav and Form to show properly inside NavBar
-							 * controls
-							 * 
-							 * @deprecated
-							 */
-							if (typeof navbarClass === 'string') {
-								if (align === Alignment.NavBar
-										|| align === Alignment.NavBarLeft
-										|| align === Alignment.NavBarRight) {
-									jQuery.sap.log
-											.warning("Using Alignment.NavBar* options is deprecated.");
-									rm.addClass(navbarClass);
-								}
-							}
-
-							/*
-							 * This are special options for Nav controls to show
-							 * properly inside Sidebar controls
-							 * 
-							 * @deprecated
-							 */
-							if (typeof sidebarClass === 'string') {
-								if (align === Alignment.Sidebar) {
-									jQuery.sap.log
-											.warning("Using Alignment.Sidebar options is deprecated.");
-									rm.addClass(sidebarClass);
-								}
-							}
-						},
-
-						/**
-						 * Responsive visibility
-						 * 
-						 * @Public
-						 */
-						visibility : function(rm, oControl) {
-							var visibility = oControl.getVisibility(), visibilityExtraSmall = oControl
-									.getVisibilityExtraSmall(), visibilitySmall = oControl
-									.getVisibilitySmall(), visibilityMedium = oControl
-									.getVisibilityMedium(), visibilityLarge = oControl
-									.getVisibilityLarge(), Visibility = ui5strap.Visibility;
-
-							var resultHidden = [ "", "", "", "" ], inheritHide = false;
-
-							// Generic visibility
-							// TODO check if necccessary and working at all
-							if (visibility !== Visibility.Default) {
-
-								if (visibility === Visibility.Hidden) {
-									resultHidden = [ "ui5strap-hide-xs",
-											"ui5strap-hide-sm",
-											"ui5strap-hide-md",
-											"ui5strap-hide-lg" ];
-									inheritHide = true;
-								}
-							}
-
-							// Visibility for EXTRA_SMALL screens
-							if (visibilityExtraSmall === Visibility.Visible) {
-								// Visible on EXTRA_SMALL
-								resultHidden[0] = "";
-								inheritHide = false;
-							} else if (inheritHide
-									|| visibilityExtraSmall === Visibility.Hidden) {
-								// Hidden on EXTRA_SMALL
-								resultHidden[0] = "ui5strap-hide-xs";
-								inheritHide = true;
-							}
-
-							// Visibility for SMALL screens
-							if (visibilitySmall === Visibility.Visible) {
-								// Visible on SMALL
-								resultHidden[1] = "";
-								inheritHide = false;
-							} else if (inheritHide
-									|| visibilitySmall === Visibility.Hidden) {
-								// Hidden on SMALL
-								resultHidden[1] = "ui5strap-hide-sm";
-								inheritHide = true;
-							}
-
-							// Visibility for MEDIUM screens
-							if (visibilityMedium === Visibility.Visible) {
-								// Visible on MEDIUM
-								resultHidden[2] = "";
-								inheritHide = false;
-							} else if (inheritHide
-									|| visibilityMedium === Visibility.Hidden) {
-								// Hidden on MEDIUM
-								resultHidden[2] = "ui5strap-hide-md";
-								inheritHide = true;
-							}
-
-							// Visibility for LARGE screens
-							if (visibilityLarge === Visibility.Visible) {
-								// Visible on LARGE
-								resultHidden[3] = "";
-							} else if (inheritHide
-									|| visibilityLarge === Visibility.Hidden) {
-								// Hidden on LARGE
-								resultHidden[3] = "ui5strap-hide-lg";
-							}
-
-							resultHidden = resultHidden.join(" ");
-							rm.addClass(resultHidden);
-
 						}
+
+						/*
+						 * This are special options for Nav controls to show
+						 * properly inside Sidebar controls
+						 * 
+						 * @deprecated
+						 */
+						if (typeof sidebarClass === 'string') {
+							if (align === Alignment.Sidebar) {
+								jQuery.sap.log
+										.warning("Using Alignment.Sidebar options is deprecated.");
+								rm.addClass(sidebarClass);
+							}
+						}
+					};
+
+					/**
+					 * Responsive visibility
+					 * 
+					 * @Public
+					 */
+					ui5strap.RenderUtils.visibility = function(rm, oControl) {
+						var visibility = oControl.getVisibility(), visibilityExtraSmall = oControl
+								.getVisibilityExtraSmall(), visibilitySmall = oControl
+								.getVisibilitySmall(), visibilityMedium = oControl
+								.getVisibilityMedium(), visibilityLarge = oControl
+								.getVisibilityLarge(), Visibility = ui5strap.Visibility;
+
+						var resultHidden = [ "", "", "", "" ], inheritHide = false;
+
+						// Generic visibility
+						// TODO check if necccessary and working at all
+						if (visibility !== Visibility.Default) {
+
+							if (visibility === Visibility.Hidden) {
+								resultHidden = [ "ui5strap-hide-xs",
+										"ui5strap-hide-sm", "ui5strap-hide-md",
+										"ui5strap-hide-lg" ];
+								inheritHide = true;
+							}
+						}
+
+						// Visibility for EXTRA_SMALL screens
+						if (visibilityExtraSmall === Visibility.Visible) {
+							// Visible on EXTRA_SMALL
+							resultHidden[0] = "";
+							inheritHide = false;
+						} else if (inheritHide
+								|| visibilityExtraSmall === Visibility.Hidden) {
+							// Hidden on EXTRA_SMALL
+							resultHidden[0] = "ui5strap-hide-xs";
+							inheritHide = true;
+						}
+
+						// Visibility for SMALL screens
+						if (visibilitySmall === Visibility.Visible) {
+							// Visible on SMALL
+							resultHidden[1] = "";
+							inheritHide = false;
+						} else if (inheritHide
+								|| visibilitySmall === Visibility.Hidden) {
+							// Hidden on SMALL
+							resultHidden[1] = "ui5strap-hide-sm";
+							inheritHide = true;
+						}
+
+						// Visibility for MEDIUM screens
+						if (visibilityMedium === Visibility.Visible) {
+							// Visible on MEDIUM
+							resultHidden[2] = "";
+							inheritHide = false;
+						} else if (inheritHide
+								|| visibilityMedium === Visibility.Hidden) {
+							// Hidden on MEDIUM
+							resultHidden[2] = "ui5strap-hide-md";
+							inheritHide = true;
+						}
+
+						// Visibility for LARGE screens
+						if (visibilityLarge === Visibility.Visible) {
+							// Visible on LARGE
+							resultHidden[3] = "";
+						} else if (inheritHide
+								|| visibilityLarge === Visibility.Hidden) {
+							// Hidden on LARGE
+							resultHidden[3] = "ui5strap-hide-lg";
+						}
+
+						resultHidden = resultHidden.join(" ");
+						rm.addClass(resultHidden);
 
 					};
 
@@ -1970,39 +2020,11 @@ sap.ui
 					 * -------
 					 */
 
-					/*
-					 * var _callbackStack = [], _callbackTimer = null,
-					 * _requiredModules = {}, _checkModules = function(_this){
-					 * jQuery.sap.log.debug('[LIBRARY] _checkModules');
-					 * 
-					 * var i = 0; while(i < _callbackStack.length){ var request =
-					 * _callbackStack[i], modulesExecuted = true;
-					 * 
-					 * for(var j = 0; j < request.modules.length; j++){
-					 * if(!jQuery.sap.getObject(request.modules[j])){
-					 * modulesExecuted = false; request.attempts ++ ;
-					 * if(request.attempts === 10){ throw new Error("Could not
-					 * find module '" + request.modules[j] + "'"); }
-					 * 
-					 * break; } }
-					 * 
-					 * //Run the callback if(modulesExecuted){
-					 * jQuery.sap.log.debug('[LIBRARY] _checkModules: Modules
-					 * loaded.');
-					 * 
-					 * var callee = _callbackStack.shift(); callee.callback(); }
-					 * else{ jQuery.sap.log.debug('[LIBRARY] _checkModules: Some
-					 * modules are still loading.'); break; } }
-					 * 
-					 * //Callback stack empty, remove the timer if(0 ===
-					 * _callbackStack.length){ _callbackTimer = null; } else{
-					 * _callbackTimer = window.setTimeout(function(){
-					 * _checkModules(_this); }, 200); } };
-					 */
-
-					/*
+					/**
 					 * Require one or more JavaScript Module, evaluated as one
 					 * large script block.
+					 * 
+					 * @deprecated
 					 */
 					ui5strap.require = function(modules, callback) {
 						var _this = this;
@@ -2015,38 +2037,23 @@ sap.ui
 								+ modules.join(', '));
 
 						var loadModules = [];
-						// loadModuleNames = [];
 						for (var i = 0; i < modules.length; i++) {
 							var moduleName = modules[i], scriptUrl = jQuery.sap
 									.getModulePath(moduleName)
 									+ '.js';
 
-							if (!jQuery.sap.getObject(moduleName)) { // &&
-								// !_requiredModules[scriptUrl]
+							if (!jQuery.sap.getObject(moduleName)) {
 								loadModules.push(scriptUrl);
-								// loadModuleNames.push(moduleName);
 							}
-
-							// _requiredModules[scriptUrl] = true;
 						}
 
 						if (loadModules.length === 0) {
 							callback && callback();
 						} else {
-							/*
-							 * _callbackStack.unshift({ "attempts" : 0,
-							 * "modules" : loadModuleNames, "callback" :
-							 * callback });
-							 */
-
 							var scriptBlock = new ui5strap.ScriptBlock();
 							scriptBlock.load(loadModules, function() {
 								scriptBlock.execute();
 
-								/*
-								 * if(null === _callbackTimer){
-								 * _checkModules(_this); }
-								 */
 								callback && callback();
 							});
 						}
@@ -2073,59 +2080,6 @@ sap.ui
 							"error" : error
 						});
 					};
-
-					/*
-					 * Bootstrap Transition End Legacy
-					 */
-
-					// CSS TRANSITION SUPPORT (Shoutout:
-					// http://www.modernizr.com/)
-					// ============================================================
-					var _bootstrapTransitionEnd = function() {
-						var el = document.createElement('bootstrap');
-
-						var transEndEventNames = {
-							'WebkitTransition' : 'webkitTransitionEnd',
-							'MozTransition' : 'transitionend',
-							'OTransition' : 'oTransitionEnd otransitionend',
-							'transition' : 'transitionend'
-						};
-
-						for ( var name in transEndEventNames) {
-							if (el.style[name] !== undefined) {
-								return {
-									end : transEndEventNames[name]
-								};
-							}
-						}
-
-						return false; // explicit for ie8 ( ._.)
-					};
-
-					// http://blog.alexmaccaw.com/css-transitions
-					jQuery.fn.emulateTransitionEnd = function(duration) {
-						var called = false, $el = this;
-						jQuery(this).one(jQuery.support.transition.end,
-								function() {
-									called = true
-								});
-
-						var callback = function() {
-							if (!called)
-								jQuery($el).trigger(
-										jQuery.support.transition.end);
-						};
-
-						setTimeout(callback, duration);
-
-						return this;
-					};
-
-					jQuery.support.transition = _bootstrapTransitionEnd();
-
-					/*
-					 * END Bootstrap Transition End Legacy
-					 */
 
 					// End of library
 					return ui5strap;
