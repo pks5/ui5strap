@@ -69,7 +69,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	    			path = methodData.path;
 	    		
 	    		if(!methodType){
-	    			continue;
+	    			return;
 	    		}
 	    		
 	    		if(!path){
@@ -82,17 +82,17 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	    		delete param.type;
 	    		
 	    		if(methodType === "get"){
-	    			this[methodName] = function(){
+	    			_this[methodName] = function(){
 	    				return this._get(this._buildParam(param, arguments));
 	    			};
 	    		}
 	    		else if(methodType === "postWithPayload"){
-	    			this[methodName] = function(){
+	    			_this[methodName] = function(){
 	    				return this._postWithPayload(this._buildParam(param, arguments));
 	    			};
 	    		}
 	    		else if(methodType === "postUrlEncoded"){
-	    			this[methodName] = function(){
+	    			_this[methodName] = function(){
 	    				return this._postUrlEncoded(this._buildParam(param, arguments));
 	    			};
 	    		}
@@ -118,28 +118,28 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     			if(!param.pathParameters){
     				param.pathParameters = {};
     			}
-    			param.pathParameters[p[1]] = arg[j];
+    			param.pathParameters[p[1]] = args[j];
     		}
     		else if(key === "query"){
     			if(!param.queryParameters){
     				param.queryParameters = {};
     			}
-    			param.queryParameters[p[1]] = arg[j];
+    			param.queryParameters[p[1]] = args[j];
     		}
     		else if(key === "post"){
     			if(!param.postParameters){
     				param.postParameters = {};
     			}
-    			param.postParameters[p[1]] = arg[j];
+    			param.postParameters[p[1]] = args[j];
     		}
     		else if(key === "payload"){
-    			param.payload = arg[j];
+    			param.payload = args[j];
     		}
     		else if(key === "success"){
-    			param.success = arg[j];
+    			param.success = args[j];
     		}
     		else if(key === "error"){
-    			param.error = arg[j];
+    			param.error = args[j];
     		}
 		}
     	
