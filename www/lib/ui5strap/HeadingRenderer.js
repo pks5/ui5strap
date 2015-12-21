@@ -27,14 +27,7 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var HeadingRenderer = {
-
-		typeToClass : {
-			"PageHeader" : 'page-header',
-			'ListGroupItemHeading' : 'list-group-item-heading',
-			'MediaHeading' : 'media-heading'
-		}
-	};
+	var HeadingRenderer = {};
 
 	HeadingRenderer.render = function(rm, oControl) {
 		var level = oControl.getLevel(),
@@ -46,22 +39,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 			
-
-		rm.write("<h" + level);
+		rm.write("<h" + level + ' class="' + oControl._getStyleClass() + '"');
 		rm.writeControlData(oControl);
-		
-		//Base Classes
-		rm.addClass("ui5strapHeading");
-		
-		//@deprecated Heading type is deprecated
-		if(ui5strap.HeadingType.Default !== type){
-			rm.addClass(this.typeToClass[type]);
-		}
-		
-		//Options classes
-		rm.addClass(oControl._getStyleClassOptions());
-		
-		rm.writeClasses();
 		rm.write(">");
 		    
 		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);

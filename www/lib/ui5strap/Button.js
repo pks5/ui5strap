@@ -101,24 +101,77 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 		}
 	}),
-	ButtonPrototype = Button.prototype;
+	ButtonProto = Button.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonProto._getStyleClassRoot = function(){
+		var type = this.getType(),
+			classAdd = "";
+		if(ui5strap.ButtonType.Default !== type){
+			classAdd = " " + this._getStyleClassType(type);
+		}
+		
+		//Bootstrap classes
+		if(type === ui5strap.ButtonType.Button || ui5strap.ButtonType.Block === type){
+			classAdd += " btn";
+			classAdd += " btn-" + ui5strap.BSSeverity[this.getSeverity()];
+		    
+			var size = this.getSize();
+			if(ui5strap.Size.Default !== size){
+				classAdd += ' btn-' + ui5strap.BSSize[size];
+		    }
+
+		    if(ui5strap.ButtonType.Block === type){
+		    	classAdd += " btn-block";
+			}
+		}
+		else if(type === ui5strap.ButtonType.Link){
+			classAdd += " btn btn-link";
+		}
+		else if(type === ui5strap.ButtonType.Close || type === ui5strap.ButtonType.Icon){
+			classAdd += " close";
+		}
+		
+		//Selected
+		if(this.getSelected()){
+			classAdd + " active";
+		}
+		
+		//Bootstrap Actions (deprecated)
+		var action = this.getBsAction();
+		//Navbar toggle
+		//@deprecated
+		if(action === ui5strap.BsAction.ToggleNavbar){
+			classAdd + " btn-toggle-navbar";
+		}
+		//Sidenav toggle
+		//@deprecated
+		else if(action === ui5strap.BsAction.ToggleSidenav){
+			classAdd + " btn-toggle-sidenav";
+		}
+		
+		return this._getStyleClassPrefix() + classAdd;
+	};
 	
 	ui5strap.Utils.dynamicAttributes(
-		ButtonPrototype, 
+		ButtonProto, 
 		[
 			"title"
 		]
 	);
 
-	ui5strap.Utils.dynamicText(ButtonPrototype);
+	ui5strap.Utils.dynamicText(ButtonProto);
 
-	ui5strap.Utils.dynamicClass(ButtonPrototype, 'selected', { 'true' : 'active' });
+	ui5strap.Utils.dynamicClass(ButtonProto, 'selected', { 'true' : 'active' });
 	
 	/**
 	 * Handler for Tap / Click Events
 	 * @Protected
 	 */
-	ButtonPrototype._handlePress = function(oEvent) {
+	ButtonProto._handlePress = function(oEvent) {
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		
@@ -128,10 +181,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	};
 	
 	if(ui5strap.support.touch){	
-		ButtonPrototype.ontap = ButtonPrototype._handlePress;
+		ButtonProto.ontap = ButtonProto._handlePress;
 	}
 	else{
-		ButtonPrototype.onclick = ButtonPrototype._handlePress;
+		ButtonProto.onclick = ButtonProto._handlePress;
 	}
 	
 	return Button;

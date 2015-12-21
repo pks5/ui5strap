@@ -31,8 +31,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	ButtonDropdownRenderer.render = function(rm, oControl) {
 		var menu = oControl.getMenu(),
-			split = oControl.getSplit(),
-			buttonRenderer = ui5strap.ButtonRenderer;
+			split = oControl.getSplit();
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -43,18 +42,18 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.writeClasses();
 		rm.write(">");
 
-		buttonRenderer.startRender(rm, oControl, { toggleDropdown : !split });
+		this.startRender(rm, oControl, !split);
 
 	    this.renderContent(rm, oControl);
 
-	    buttonRenderer.endRender(rm, oControl);
+	    rm.write("</button>");
 
 	    if(split){
-		    buttonRenderer.startRender(rm, oControl, { toggleDropdown : true });
+		    this.startRender(rm, oControl, true);
 
 		    rm.write(' <span class="caret"></span>');
 
-		    buttonRenderer.endRender(rm, oControl);
+		    rm.write("</button>");
 		}
 
 	    if(null !== menu){
@@ -64,6 +63,43 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("</div>");
 
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
+	};
+	
+	ButtonDropdownRenderer.startRender = function(rm, oControl, tog) {
+		var size = oControl.getSize(),
+			action = oControl.getBsAction(),
+			title = oControl.getTitle();
+
+		rm.write("<button");
+	    
+	    rm.writeAttribute('id', oControl.getId() + '---' + ( tog ? 'toggle' : 'button') );
+
+    	if(tog && action !== ui5strap.BsAction.ToggleDropdown){ 
+	    	rm.addClass("dropdown-toggle");
+	    }
+	    
+	    rm.addClass(oControl._getStyleClass());
+	
+	    //@deprecated
+	    ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
+
+	    rm.writeClasses();
+	    
+	    if('' !== title){
+	    	rm.writeAttribute('title', title);
+	    }
+	    
+		if(!oControl.getEnabled()){
+			rm.writeAttribute("disabled", "disabled");
+		}
+		
+		//Modal close button
+		//@deprecated
+		if(action === ui5strap.BsAction.DismissModal){
+			rm.writeAttribute('data-dismiss', 'modal');	
+		}
+		
+	    rm.write(">");
 	};
 
 	ButtonDropdownRenderer.renderContent = function(rm, oControl) {

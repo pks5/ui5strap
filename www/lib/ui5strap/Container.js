@@ -146,7 +146,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	ContainerProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " " + this._getStyleClassType(this.getType()),
+		var type = this.getType(),
+			styleClass = this._getStyleClassPrefix() 
+						+ " " + this._getStyleClassType(type)
+						+ " " + this._typeData[type].className,
+			
 			severity = this.getSeverity();
 		
 		if(ui5strap.Severity.None !== severity){

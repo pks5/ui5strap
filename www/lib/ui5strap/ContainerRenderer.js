@@ -37,12 +37,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<" + tagData.tagName);
 		rm.writeControlData(oControl);
 		
-		rm.addClass(oControl._getStyleClassRoot());
+		rm.addClass(oControl._getStyleClass());
 		
-		rm.addClass(tagData.className);
-
-		
-
 		ui5strap.RenderUtils.visibility(rm, oControl);
 
 		ui5strap.RenderUtils.alignment(rm, oControl);

@@ -55,7 +55,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				type : {
 					deprecated : true,
 					type: "ui5strap.HeadingType", 
-					defaultValue: ""
+					defaultValue: ui5strap.HeadingType.Default
 				}
 				
 			},
@@ -68,6 +68,26 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	}),
 	HeadingProto = Heading.prototype;
+	
+	Heading._typeToClass = {
+		"PageHeader" : 'page-header',
+		'ListGroupItemHeading' : 'list-group-item-heading',
+		'MediaHeading' : 'media-heading'
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	HeadingProto._getStyleClassRoot = function(){
+		var type = this.getType(),
+			classAdd = "";
+		if(ui5strap.HeadingType.Default !== type){
+			classAdd = " " + Heading._typeToClass[type] + " " + this._getStyleClassType(type);
+		}
+		
+		return this._getStyleClassPrefix() + classAdd;
+	};
 	
 	ui5strap.Utils.dynamicText(HeadingProto);
 	
