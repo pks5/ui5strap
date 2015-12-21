@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ModalRenderer");
+	var ModalRenderer = {};
 
-	ui5strap.ModalRenderer = {};
-
-	ui5strap.ModalRenderer.render = function(rm, oControl) {
+	ModalRenderer.render = function(rm, oControl) {
 		var header = oControl.getHeader(),
 			body = oControl.getBody(),
 			footer = oControl.getFooter();
@@ -73,5 +71,7 @@
 			rm.write("</div>");
 		rm.write("</div>");
 	};
+	
+	return ModalRenderer;
 
-}());
+}, true);

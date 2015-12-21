@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-    jQuery.sap.declare("ui5strap.PageHeaderRenderer");
+    var PageHeaderRenderer = {};
 
-    ui5strap.PageHeaderRenderer = {};
-
-    ui5strap.PageHeaderRenderer.render = function(rm, oControl) {
+    PageHeaderRenderer.render = function(rm, oControl) {
         var lead = oControl.getLead();
 
         rm.write("<div");
@@ -64,4 +62,5 @@
         
     };
 
-}());
+    return PageHeaderRenderer;
+}, true);

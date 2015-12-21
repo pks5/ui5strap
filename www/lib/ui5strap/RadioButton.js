@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.RadioButton");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.RadioButton", {
+	var RadioButton = ControlBase.extend("ui5strap.RadioButton", {
 		metadata : {
 
 			library : "ui5strap",
@@ -59,7 +56,8 @@
 			}
 
 		}
-	});
+	}),
+	RadioButtonProto = RadioButton.prototype;
 
 	var _onChange = function(_this){
 		return function(ev){
@@ -72,19 +70,19 @@
 		}
 	};
 
-	ui5strap.RadioButton.prototype.onAfterRendering = function(){
+	RadioButtonProto.onAfterRendering = function(){
 		this.$checkbox = this.$().find('#' + 'ui5strap-radio---' + this.getId());
 		this.$checkbox.on('change', _onChange(this));
 	};
 
-	ui5strap.RadioButton.prototype.onBeforeRendering = function() {
+	RadioButtonProto.onBeforeRendering = function() {
 		if (this.getDomRef()) {
 			this.$checkbox.off();
 			//this._curpos = this._$input.cursorPos();
 		}
 	};
 
-	ui5strap.RadioButton.prototype.updateGroup = function() {
+	RadioButtonProto.updateGroup = function() {
 		var radio = this;
 		jQuery('.ui5strap-radio-' + this.getGroupName()).each(function(i, o){
 			var controlId = o.id.substr(17);
@@ -94,7 +92,7 @@
 		});
 	};
 
-	ui5strap.RadioButton.prototype.setSelected = function(sValue) {
+	RadioButtonProto.setSelected = function(sValue) {
 		var checkbox = this;
 		sValue = this.validateProperty("selected", sValue);
 		
@@ -111,5 +109,6 @@
 		
 		return this;
 	};
-
-}());
+	
+	return RadioButton;
+});

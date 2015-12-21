@@ -25,14 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.Pagination");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ListBase.extend("ui5strap.Pagination", {
+	var Pagination = ListBase.extend("ui5strap.Pagination", {
 		metadata : {
 
 			library : "ui5strap",
@@ -50,8 +45,8 @@
 				} 
 			}
 		}
-	});
+	}),
+	PaginationProto = Pagination.prototype;
 	
-	var PaginationProto = ui5strap.Pagination.prototype;
-	
-}());
+	return Pagination;
+});

@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.ProgressBar");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.ProgressBar", {
+	var ProgressBar = ControlBase.extend("ui5strap.ProgressBar", {
 		metadata : {
 
 			// ---- object ----
@@ -62,9 +59,8 @@
 				}
 			}
 		}
-	});
-
-	var ProgressBarProto = ui5strap.ProgressBar.prototype;
+	}),
+	ProgressBarProto = ui5strap.ProgressBar.prototype;
 
 	ProgressBarProto.setValue = function(newValue){
 		if(this.getDomRef()){
@@ -85,5 +81,6 @@
 		var percentage = ( this.getValue() - this.getMinValue() ) / ( this.getMaxValue() - this.getMinValue() ) * 100;
 		return Math.round(percentage * 100) / 100;
 	};
-
-}());
+	
+	return ProgressBar;
+});

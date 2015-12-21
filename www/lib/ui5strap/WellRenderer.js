@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.WellRenderer");
+	var WellRenderer = {};
 
-	ui5strap.WellRenderer = {};
-
-	ui5strap.WellRenderer.render = function(rm, oControl) {
+	WellRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			size = oControl.getSize();
 
@@ -57,4 +55,5 @@
 		rm.write("</div>");
 	};
 
-}());
+	return WellRenderer;
+}, true);

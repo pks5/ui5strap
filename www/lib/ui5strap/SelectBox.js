@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.SelectBox");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.SelectBox", {
+	var SelectBox = ControlBase.extend("ui5strap.SelectBox", {
 		metadata : {
 
 			defaultAggregation : "items",
@@ -72,7 +69,8 @@
 			}
 
 		}
-	});
+	}),
+	SelectBoxProto = SelectBox.prototype;
 	
 	var _getInputValue = function(_this){
 		return _this.$().val();
@@ -87,18 +85,18 @@
 		}
 	};
 
-	ui5strap.SelectBox.prototype.onAfterRendering = function(){
+	SelectBoxProto.onAfterRendering = function(){
 		this.$().on('change', _onChange(this));
 	};
 
-	ui5strap.SelectBox.prototype.onBeforeRendering = function() {
+	SelectBoxProto.onBeforeRendering = function() {
 		if (this.getDomRef()) {
 			this.$().off();
 			//this._curpos = this._$input.cursorPos();
 		}
 	};
 
-	ui5strap.SelectBox.prototype.setValue = function(sValue) {
+	SelectBoxProto.setValue = function(sValue) {
 		sValue = this.validateProperty("value", sValue);
 		
 		if (sValue != this.getValue()) {
@@ -111,5 +109,5 @@
 		return this;
 	};
 
-
-}());
+	return SelectBox;
+});

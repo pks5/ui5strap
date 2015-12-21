@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.PanelRenderer");
+	var PanelRenderer = {};
 
-	ui5strap.PanelRenderer = {};
-
-	ui5strap.PanelRenderer.render = function(rm, oControl) {
+	PanelRenderer.render = function(rm, oControl) {
 		var severity = oControl.getSeverity(),
 			collapse = oControl.getCollapse();
 
@@ -87,4 +85,5 @@
 		rm.write("</div>");
 	};
 
-}());
+	return PanelRenderer;
+}, true);

@@ -25,27 +25,25 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-jQuery.sap.declare("ui5strap.PaginationRenderer");
+	var PaginationRenderer = {};
 
-ui5strap.PaginationRenderer = {
-};
-
-ui5strap.PaginationRenderer.render = function(rm, oControl) {
-	var items = oControl.getItems();
-
-	rm.write("<ul");
-	rm.writeControlData(oControl);
-	rm.addClass('pagination');
-	rm.writeClasses();
-	rm.write(">");
+	PaginationRenderer.render = function(rm, oControl) {
+		var items = oControl.getItems();
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
-	
-	rm.write("</ul>");
-};
+		rm.write("<ul");
+		rm.writeControlData(oControl);
+		rm.addClass('pagination');
+		rm.writeClasses();
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</ul>");
+	};
 
-}());
+	return PaginationRenderer;
+}, true);

@@ -25,11 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.NavBarRenderer");
-
-	ui5strap.NavBarRenderer = {
+	var NavBarRenderer = {
 
 		positionToClass : {
 			FixedTop : "navbar-fixed-top",
@@ -43,7 +41,7 @@
 
 	};
 
-	ui5strap.NavBarRenderer.render = function(rm, oControl) {
+	NavBarRenderer.render = function(rm, oControl) {
 		var brand = oControl.getBrand(),
 			contentLeft = oControl.getContentLeft(),
 			content = oControl.getContent(),
@@ -163,5 +161,7 @@
 		//End control
 		rm.write("</div>");
 	};
+	
+	return NavBarRenderer;
 
-}());
+}, true);

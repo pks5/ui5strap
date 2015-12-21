@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.PagerRenderer");
+	var PagerRenderer = {};
 
-	ui5strap.PagerRenderer = {};
-
-	ui5strap.PagerRenderer.render = function(rm, oControl) {
+	PagerRenderer.render = function(rm, oControl) {
 		var previous = oControl.getPrevious(),
 			next = oControl.getNext(),
 			spread = oControl.getAligned();
@@ -69,5 +67,7 @@
 		rm.write("</ul>");
 
 	};
+	
+	return PagerRenderer;
 
-}());
+}, true);

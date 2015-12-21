@@ -25,13 +25,9 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.NavContainerRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	var NavContainerRenderer = {};
-
-	ui5strap.NavContainerRenderer = NavContainerRenderer;
 
 	NavContainerRenderer.render = function(rm, oControl) {
 		this.startRender(rm, oControl);
@@ -105,5 +101,5 @@
 		 	rm.write("<!-- NavContainer END -->");
 	};
 
-
-}());
+	return NavContainerRenderer;
+}, true);

@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.TabContainerRenderer");
+	var TabContainerRenderer = {};
 
-	ui5strap.TabContainerRenderer = {
-	};
-
-	ui5strap.TabContainerRenderer.render = function(rm, oControl) {
+	TabContainerRenderer.render = function(rm, oControl) {
 		var content = oControl.getPanes(),
 			selectedIndex = oControl.getSelectedIndex(),
 			customAssociation = oControl.getCustomAssociation();
@@ -69,5 +66,7 @@
 
 		rm.write("</div>");
 	};
+	
+	return TabContainerRenderer;
 
-}());
+}, true);

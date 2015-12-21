@@ -25,44 +25,44 @@
  * 
  */
 
-(function(){
-
-jQuery.sap.declare("ui5strap.NavRenderer");
-
-ui5strap.NavRenderer = {
-	typeToClass : {
-		Default : "nav-default",
-		Tabs : "nav-tabs",
-		Pills : "nav-pills",
-		PillsStacked : "nav-pills nav-stacked",
-		PillsJustified : "nav-pills nav-justified",
-		TabsJustified : "nav-tabs nav-justified"
-	}
-
-};
-
-ui5strap.NavRenderer.render = function(rm, oControl) {
-	var type = oControl.getType(),
-		items = oControl.getItems();
-
-	rm.write("<ul");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	rm.writeControlData(oControl);
-
-	rm.addClass('nav');
-	rm.addClass(this.typeToClass[type]);
-	rm.addClass(oControl._getStyleClassOptions());
-	ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
-
-	rm.writeClasses();
+	var NavRenderer = {
+		typeToClass : {
+			Default : "nav-default",
+			Tabs : "nav-tabs",
+			Pills : "nav-pills",
+			PillsStacked : "nav-pills nav-stacked",
+			PillsJustified : "nav-pills nav-justified",
+			TabsJustified : "nav-tabs nav-justified"
+		}
 	
-	rm.write(">");
+	};
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
+	NavRenderer.render = function(rm, oControl) {
+		var type = oControl.getType(),
+			items = oControl.getItems();
 	
-	rm.write("</ul>");
-};
+		rm.write("<ul");
+		
+		rm.writeControlData(oControl);
+	
+		rm.addClass('nav');
+		rm.addClass(this.typeToClass[type]);
+		rm.addClass(oControl._getStyleClassOptions());
+		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
+	
+		rm.writeClasses();
+		
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</ul>");
+	};
+	
+	return NavRenderer;
 
-}());
+}, true);

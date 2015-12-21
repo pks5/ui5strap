@@ -25,12 +25,9 @@
  * 
  */
  
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.NavContainer");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.NavContainer", {
+	var NavContainer = ControlBase.extend("ui5strap.NavContainer", {
 		metadata : {
 			library : "ui5strap",
 			
@@ -65,13 +62,11 @@
 				}
 			}
 		}
-	});
-
-	var NavContainerBase = ui5strap.NavContainer,
-		NavContainerBaseProto = NavContainerBase.prototype,
-		domAttachTimeout = 50;
+	}),
+	NavContainerProto = NavContainer.prototype,
+	domAttachTimeout = 50;
 	
-	NavContainerBaseProto._stylePrefix = "navcontainer";
+	NavContainerProto._stylePrefix = "navcontainer";
 	
 	/*
 	*
@@ -410,7 +405,7 @@
 	* @Public
 	* @PostConstruct
 	*/
-	NavContainerBaseProto.init = function(){
+	NavContainerProto.init = function(){
 		//ui5strap.tm("APP", "NC", "INIT");
 		
 		this._pendingTransitions = [];
@@ -429,7 +424,7 @@
 	* @Override
 	* @Protected
 	*/
-	NavContainerBaseProto._initNavContainer = function(){
+	NavContainerProto._initNavContainer = function(){
 		//ui5strap.tm("APP", "NC", "INIT_NC");
 		
 		//NavContainer type string. Should only contain letters, numbers and hyphens.
@@ -448,7 +443,7 @@
 	* Creates a dom id for a given target and page
 	* @Public
 	*/
-	NavContainerBaseProto.createPageDomId = function(target, page){
+	NavContainerProto.createPageDomId = function(target, page){
 		if(page === null){
 			return 'navcontainer-page---' + this._targetPagesCount[target];
 		}
@@ -460,7 +455,7 @@
 	* Registers a new dom id for a given target and page
 	* @Public
 	*/
-	NavContainerBaseProto.pageDomId = function(target, page){
+	NavContainerProto.pageDomId = function(target, page){
 		if(!(target in this._targetPagesCount)){
 			this._targetPagesCount[target] = 0;
 		}
@@ -479,7 +474,7 @@
 	/**
 	* @Override
 	*/
-	NavContainerBaseProto.propagateProperties = function(vName){
+	NavContainerProto.propagateProperties = function(vName){
 		var oProperties = this._getPropertiesToPropagate(),
 			bUpdateAll = vName === true, // update all bindings when no model name parameter has been specified
 			sName = bUpdateAll ? undefined : vName,
@@ -494,7 +489,7 @@
 		
 	};
 	
-	NavContainerBaseProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
+	NavContainerProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
 		jQuery.sap.log.debug("UBC");
 		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
 		
@@ -547,7 +542,7 @@
 	 * Destroys targets before the current control is destroyed.
 	* @Override
 	*/
-	NavContainerBaseProto.exit = function(){
+	NavContainerProto.exit = function(){
 		for(var target in this.targets){
 			if(this.targets[target]){
 				var oldTarget = this.targets[target];
@@ -565,7 +560,7 @@
 	 * @Protected
 	 * @Override
 	 */
-	NavContainerBaseProto._getStyleClassRoot = function(){
+	NavContainerProto._getStyleClassRoot = function(){
 		return "navcontainer navcontainer-type-" + this.ncType;
 	};
 	
@@ -573,7 +568,7 @@
 	 * @Public
 	 * TODO Improve component ID syntax
 	 */
-	NavContainerBaseProto.targetDomId = function(target){
+	NavContainerProto.targetDomId = function(target){
 		return 'navcontainer-target-' + target + '---' + this.getId();
 	};
 	
@@ -581,7 +576,7 @@
 	 * @Public
 	 * TODO Improve component ID syntax
 	 */
-	NavContainerBaseProto.targetPagesDomId = function(target){
+	NavContainerProto.targetPagesDomId = function(target){
 		return 'navcontainer-pages-' + target + '---' + this.getId();
 	};
 
@@ -589,21 +584,21 @@
 	 * @Public
 	 * TODO Improve component ID syntax
 	 */
-	NavContainerBaseProto.targetLayersDomId = function(target){
+	NavContainerProto.targetLayersDomId = function(target){
 		return 'navcontainer-layers-' + target + '---' + this.getId();
 	};
 	
 	/**
 	 * @Protected
 	 */
-	NavContainerBaseProto._getTargetClassString = function(target){
+	NavContainerProto._getTargetClassString = function(target){
 		return "navcontainer-target navcontainer-target-" + target;
 	};
 	
 	/**
 	* @Public
 	*/
-	NavContainerBaseProto.updateTarget = function(target, oPage, eventParameters){
+	NavContainerProto.updateTarget = function(target, oPage, eventParameters){
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
@@ -627,28 +622,28 @@
 	/**
 	 * @Public
 	 */
-	NavContainerBaseProto.hasTarget = function(target){
+	NavContainerProto.hasTarget = function(target){
 		return target in this.targets;
 	};
 	
 	/**
 	 * @Public
 	 */
-	NavContainerBaseProto.getTarget = function(target){
+	NavContainerProto.getTarget = function(target){
 		return this.targets[target];
 	};
 	
 	/**
 	 * @Public
 	 */
-	NavContainerBaseProto.isTargetBusy = function(target){
+	NavContainerProto.isTargetBusy = function(target){
 		return this._targetStatus[target];
 	};
 	
 	/**
 	 * @Public
 	 */
-	NavContainerBaseProto.setTargetBusy = function(target, targetBusy){
+	NavContainerProto.setTargetBusy = function(target, targetBusy){
 		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
 		this._targetStatus[target] = targetBusy;
 	};
@@ -656,7 +651,7 @@
 	/**
 	* @Public
 	*/
-	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
+	NavContainerProto.toPage = function(page, target, transitionName, callback){
 		//ui5strap.tm("APP", "NC", "TO_PAGE");
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
@@ -750,7 +745,7 @@
 	* @Override
 	* @Public
 	*/
-	NavContainerBaseProto.onBeforeRendering = function(){
+	NavContainerProto.onBeforeRendering = function(){
 		//ui5strap.tm("APP", "NC", "BEFORE_RENDERING");
 
 		for(var target in this.targets){
@@ -776,7 +771,7 @@
 	* @Override
 	* @Public
 	*/
-	NavContainerBaseProto.onAfterRendering = function(){ 
+	NavContainerProto.onAfterRendering = function(){ 
 		//ui5strap.tm("APP", "NC", "AFTER_RENDERING");
 		
 		var _pendingTransitions = this._pendingTransitions,
@@ -804,4 +799,5 @@
 		
 	};
 
-}());
+	return NavContainer;
+});

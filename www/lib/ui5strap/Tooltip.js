@@ -25,68 +25,63 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-  jQuery.sap.declare("ui5strap.Tooltip");
-  jQuery.sap.require("ui5strap.library");
-
-  ui5strap.ControlBase.extend("ui5strap.Tooltip", {
-    metadata : {
-
-      // ---- object ----
-      defaultAggregation : "titleContent",
-      // ---- control specific ----
-      library : "ui5strap",
-      
-      properties : { 
-        
-        title : {
-          type:"string", 
-          defaultValue:""
-        },
-        
-        titleContentPlacement : {
-          type:"ui5strap.ContentPlacement",
-          defaultValue : ui5strap.ContentPlacement.Start
-        },
-
-        placement : {
-          type: "ui5strap.Placement", 
-          defaultValue: ui5strap.Placement.Right
-        },
-
-        trigger : {
-          type: "ui5strap.TriggerMode", 
-          defaultValue: ui5strap.TriggerMode.Hover
-        },
-
-        animate : {
-          type:"boolean", 
-          defaultValue:true
-        }
-
-      },
-      
-      aggregations : { 
-        titleContent : {
-          singularName: "titleContent"
-        },
-      },
-      
-      associations : {
-        source : {
-            multiple : false
-        }
-      },
-      events : {
-         shown : {},
-         hidden : {}
-      }
-
-    }
+	var Tooltip = ControlBase.extend("ui5strap.Tooltip", {
+	    metadata : {
+	
+	      // ---- object ----
+	      defaultAggregation : "titleContent",
+	      // ---- control specific ----
+	      library : "ui5strap",
+	      
+	      properties : { 
+	        
+	        title : {
+	          type:"string", 
+	          defaultValue:""
+	        },
+	        
+	        titleContentPlacement : {
+	          type:"ui5strap.ContentPlacement",
+	          defaultValue : ui5strap.ContentPlacement.Start
+	        },
+	
+	        placement : {
+	          type: "ui5strap.Placement", 
+	          defaultValue: ui5strap.Placement.Right
+	        },
+	
+	        trigger : {
+	          type: "ui5strap.TriggerMode", 
+	          defaultValue: ui5strap.TriggerMode.Hover
+	        },
+	
+	        animate : {
+	          type:"boolean", 
+	          defaultValue:true
+	        }
+	
+	      },
+	      
+	      aggregations : { 
+	        titleContent : {
+	          singularName: "titleContent"
+	        },
+	      },
+	      
+	      associations : {
+	        source : {
+	            multiple : false
+	        }
+	      },
+	      events : {
+	         shown : {},
+	         hidden : {}
+	      }
+	
+	    }
   });
-
-  var Tooltip = ui5strap.Tooltip;
 
   Tooltip.prototype.init = function(){
       this.sourceControl = null;
@@ -153,7 +148,9 @@
       this.getSourceDomRef().tooltip('toggle');
   };
   
-}());
+  return Tooltip;
+  
+});
 
 /* ========================================================================
  * Bootstrap: tooltip.js v3.1.1

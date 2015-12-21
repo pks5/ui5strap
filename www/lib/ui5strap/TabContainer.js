@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.TabContainer");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.TabContainer", {
+	var TabContainer = ControlBase.extend("ui5strap.TabContainer", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectionProvider"],
 
@@ -86,9 +83,8 @@
 			}
 
 		}
-	});
-
-	var TabContainerProto = ui5strap.TabContainer.prototype;
+	}),
+	TabContainerProto = ui5strap.TabContainer.prototype;
 	
 	/**
 	 * @Public
@@ -248,4 +244,5 @@
 		}
 	};
 
-}());
+	return TabContainer;
+});

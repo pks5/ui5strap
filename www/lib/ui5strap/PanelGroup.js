@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.PanelGroup");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.PanelGroup", {
+	var PanelGroup = ControlBase.extend("ui5strap.PanelGroup", {
 		metadata : {
 
 			// ---- object ----
@@ -53,7 +50,7 @@
 		}
 	});
 
-	ui5strap.PanelGroup.prototype.setSelectedControl = function(panel){
+	PanelGroup.prototype.setSelectedControl = function(panel){
 		var panels = this.getPanels();
 		for(var i = 0; i < panels.length; i++){
 			var panelI = panels[i];
@@ -67,5 +64,6 @@
 			}
 		}
 	};
-
-}());
+	
+	return PanelGroup;
+});

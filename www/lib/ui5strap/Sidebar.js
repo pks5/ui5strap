@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Sidebar");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Sidebar", {
+	var Sidebar = ControlBase.extend("ui5strap.Sidebar", {
 		metadata : {
 			deprecated : true,
 			// ---- object ----
@@ -58,5 +55,6 @@
 
 		}
 	});
-
-}());
+	
+	return Sidebar;
+});

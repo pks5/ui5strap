@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Panel");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Panel", {
+	var Panel = ControlBase.extend("ui5strap.Panel", {
 		metadata : {
 
 			// ---- object ----
@@ -80,9 +77,8 @@
 			}
 
 		}
-	});
-
-	var PanelProto = ui5strap.Panel.prototype;
+	}),
+	PanelProto = ui5strap.Panel.prototype;
 
 	PanelProto.setCollapsed = function(newCollapsed){
 		if(!this.getCollapse() || newCollapsed === this.getCollapsed()){
@@ -183,5 +179,6 @@
 	else{
 		PanelProto.onclick = PanelProto._handlePress;
 	}
-
-}());
+	
+	return Panel;
+});

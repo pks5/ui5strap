@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ThumbnailRenderer");
+	var ThumbnailRenderer = {};
 
-	ui5strap.ThumbnailRenderer = {};
-
-	ui5strap.ThumbnailRenderer.render = function(rm, oControl) {
+	ThumbnailRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			image = oControl.getImage();
 
@@ -58,4 +56,5 @@
 		rm.write("</div></div>");
 	};
 
-}());
+	return ThumbnailRenderer;
+}, true);

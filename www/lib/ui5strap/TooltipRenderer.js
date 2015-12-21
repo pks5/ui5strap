@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.TooltipRenderer");
+	var TooltipRenderer = {};
 
-	ui5strap.TooltipRenderer = {};
-
-	ui5strap.TooltipRenderer.render = function(rm, oControl) {
+	TooltipRenderer.render = function(rm, oControl) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -53,4 +51,5 @@
 		    
 	};
 
-}());
+	return TooltipRenderer;
+}, true);

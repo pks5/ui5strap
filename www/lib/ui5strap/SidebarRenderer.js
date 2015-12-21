@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.SidebarRenderer");
+	var SidebarRenderer = {};
 
-	ui5strap.SidebarRenderer = {
-	};
-
-	ui5strap.SidebarRenderer.render = function(rm, oControl) {
+	SidebarRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			inverse = oControl.getInverse();
 
@@ -60,4 +57,5 @@
 		rm.write("</div>");
 	};
 
-}());
+	return SidebarRenderer;
+}, true);

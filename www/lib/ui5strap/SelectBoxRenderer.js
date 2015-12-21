@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.SelectBoxRenderer");
+	var SelectBoxRenderer = {};
 
-	ui5strap.SelectBoxRenderer = {};
-
-	ui5strap.SelectBoxRenderer.render = function(rm, oControl) {
+	SelectBoxRenderer.render = function(rm, oControl) {
 		var size = oControl.getSize(),
 			type = oControl.getType(),
 			items = oControl.getItems();
@@ -61,7 +59,7 @@
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-	ui5strap.SelectBoxRenderer.renderOption = function(rm, oControl, item) {
+	SelectBoxRenderer.renderOption = function(rm, oControl, item) {
 		var itemValue = item.getValue();
 
 			rm.write("<option");
@@ -74,4 +72,5 @@
 			rm.write("</option>");
 	};
 
-}());
+	return SelectBoxRenderer;
+}, true);

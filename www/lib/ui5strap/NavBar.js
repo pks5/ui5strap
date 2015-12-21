@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.NavBar");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.NavBar", {
+	var NavBar = ControlBase.extend("ui5strap.NavBar", {
 		metadata : {
 			deprecated : true,
 			
@@ -88,9 +85,8 @@
 			}
 
 		}
-	});
-
-	var NavBarProto = ui5strap.NavBar.prototype;
+	}),
+	NavBarProto = ui5strap.NavBar.prototype;
 
 	NavBarProto.getCollapseId = function(){
 		return this.getId() + '---collapse';
@@ -166,5 +162,6 @@
 	NavBarProto.toggle = function(){
 		this.setCollapsed(!this.getCollapsed());
 	};
-
-}());
+	
+	return NavBar;
+});

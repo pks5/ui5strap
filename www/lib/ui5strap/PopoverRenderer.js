@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.PopoverRenderer");
+	var PopoverRenderer = {};
 
-	ui5strap.PopoverRenderer = {};
-
-	ui5strap.PopoverRenderer.render = function(rm, oControl) {
+	PopoverRenderer.render = function(rm, oControl) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -65,4 +63,5 @@
 		    
 	};
 
-}());
+	return PopoverRenderer;
+}, true);

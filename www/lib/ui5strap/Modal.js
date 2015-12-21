@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Modal");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Modal", {
+	var Modal = ControlBase.extend("ui5strap.Modal", {
 		metadata : {
 			deprecated : true,
 			// ---- object ----
@@ -100,7 +97,8 @@
     this.$().modal('toggle');
   };
 
-}());
+  return Modal;
+});
 
 /* ========================================================================
  * Bootstrap: modal.js v3.1.1

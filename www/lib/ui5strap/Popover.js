@@ -25,13 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './Tooltip'], function(library, Tooltip){
 
-  jQuery.sap.declare("ui5strap.Popover");
-  jQuery.sap.require("ui5strap.library");
-  jQuery.sap.require("ui5strap.Tooltip");
-
-  ui5strap.Tooltip.extend("ui5strap.Popover", {
+	var Popover = Tooltip.extend("ui5strap.Popover", {
     metadata : {
 
       // ---- object ----
@@ -59,8 +55,6 @@
 
     }
   });
-
-  var Popover = ui5strap.Popover;
 
   Popover.lastShownInstance = null;
 
@@ -114,8 +108,9 @@
   Popover.prototype.toggle = function(){
       this.getSourceDomRef().popover('toggle');
   };
-  
-}());
+ 
+  return Popover;
+});
 
 /* ========================================================================
  * Bootstrap: popover.js v3.1.1

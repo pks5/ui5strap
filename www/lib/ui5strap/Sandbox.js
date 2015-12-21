@@ -25,12 +25,9 @@
  * 
  */
 
-(function ui5osControlSandbox(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Sandbox");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Sandbox", {
+	var Sandbox = ControlBase.extend("ui5strap.Sandbox", {
 		metadata : {
 
 			library : "ui5strap",
@@ -47,9 +44,8 @@
 			}
 
 		}
-	});
-
-	var SandboxProto = ui5strap.Sandbox.prototype;
+	}),
+	SandboxProto = Sandbox.prototype;
 
 	SandboxProto.init = function(){
 		var iframe = document.createElement('iframe');
@@ -95,4 +91,6 @@
 	SandboxProto.sendMessage = function(appMessage, targetOrigin){
 		this.$iframe[0].contentWindow.postMessage(appMessage, targetOrigin);
 	};
-}());
+	
+	return Sandbox;
+});

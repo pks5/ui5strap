@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.PageHeader");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.PageHeader", {metadata : {
+	var PageHeader = ControlBase.extend("ui5strap.PageHeader", {metadata : {
 		deprecated : true,
 		library : "ui5strap",
 		
@@ -52,5 +49,6 @@
 		aggregations : {}
 
 	}});
-
-}());
+	
+	return PageHeader;
+});

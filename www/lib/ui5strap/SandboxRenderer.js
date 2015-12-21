@@ -25,13 +25,11 @@
  * 
  */
 
-(function ui5osControlSandboxRenderer(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.SandboxRenderer");
+	var SandboxRenderer = {};
 
-	ui5strap.SandboxRenderer = {};
-
-	ui5strap.SandboxRenderer.render = function(rm, oControl) {
+	SandboxRenderer.render = function(rm, oControl) {
 		 rm.write("<div");
 		 rm.writeControlData(oControl);
 		 rm.addClass("sandbox");
@@ -39,5 +37,7 @@
 		 rm.write(">");
 		 rm.write("</div>");
 	};
+	
+	return SandboxRenderer;
 
-}());
+}, true);

@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ParagraphRenderer");
+	var ParagraphRenderer = {};
 
-	ui5strap.ParagraphRenderer = {};
-
-	ui5strap.ParagraphRenderer.render = function(rm, oControl) {
+	ParagraphRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			severity = oControl.getSeverity(),
 			text = oControl.getText(),
@@ -62,4 +60,5 @@
 		rm.write("</p>");
 	};
 
-}());
+	return ParagraphRenderer;
+}, true);

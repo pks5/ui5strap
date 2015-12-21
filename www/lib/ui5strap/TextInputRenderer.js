@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.TextInputRenderer");
+	var TextInputRenderer = {};
 
-	ui5strap.TextInputRenderer = {};
-
-	ui5strap.TextInputRenderer.render = function(rm, oControl) {
+	TextInputRenderer.render = function(rm, oControl) {
 		var rows = oControl.getRows(),
 			type = oControl.getType();
 
@@ -90,4 +88,5 @@
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-}());
+	return TextInputRenderer;
+}, true);

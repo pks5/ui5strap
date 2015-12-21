@@ -25,13 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.RadioButtonRenderer");
+	var RadioButtonRenderer = {};
 
-	ui5strap.RadioButtonRenderer = {};
-
-	ui5strap.RadioButtonRenderer.render = function(rm, oControl) {
+	RadioButtonRenderer.render = function(rm, oControl) {
 		var groupName = oControl.getGroupName(),
 			type = oControl.getType(),
 			typeBlock = ui5strap.RadioButtonType.Block;
@@ -77,5 +75,7 @@
 			rm.write("</div>");
 		}
 	};
+	
+	return RadioButtonRenderer;
 
-}());
+}, true);

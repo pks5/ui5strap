@@ -25,12 +25,10 @@
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.TextRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 
-	ui5strap.TextRenderer = {
+	var TextRenderer = {
 		typeToTag : {
 			Default : { 
 				tagName : "span",
@@ -103,7 +101,7 @@
 
 	};
 
-	ui5strap.TextRenderer.render = function(rm, oControl) {
+	TextRenderer.render = function(rm, oControl) {
 		var severity = oControl.getSeverity(),
 			type = oControl.getType(),
 			text = oControl.getText(),
@@ -159,4 +157,5 @@
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-}());
+	return TextRenderer;
+}, true);

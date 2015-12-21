@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.TextInput");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.TextInput", {
+	var TextInput = ControlBase.extend("ui5strap.TextInput", {
 		metadata : {
 
 			library : "ui5strap",
@@ -75,9 +72,8 @@
 			}
 
 		}
-	});
-	
-	var TextInputProto = ui5strap.TextInput.prototype;
+	}),
+	TextInputProto = TextInput.prototype;
 	
 	TextInputProto.onAfterRendering = function(){
 		var _this = this;
@@ -117,5 +113,5 @@
 		
 	};
 
-
-}());
+	return TextInput;
+});

@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
 
-	jQuery.sap.declare("ui5strap.TableColumn");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.Element.extend("ui5strap.TableColumn", {
+	var TableColumn = ElementBase.extend("ui5strap.TableColumn", {
 		metadata : {
 
 			// ---- object ----
@@ -54,8 +51,9 @@
 		}
 	});
 
-	ui5strap.TableColumn.prototype.init = function(){
+	TableColumn.prototype.init = function(){
 
 	};
 
-}());
+	return TableColumn;
+});

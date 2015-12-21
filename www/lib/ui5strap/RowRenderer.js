@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.RowRenderer");
+	var RowRenderer = {};
 
-	ui5strap.RowRenderer = {
-	};
-
-	ui5strap.RowRenderer.render = function(rm, oControl) {
+	RowRenderer.render = function(rm, oControl) {
 		var content = oControl.getColumns();
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -46,6 +43,7 @@
 		
 		rm.write("</div>");
 	};
+	
+	return RowRenderer;
 
-
-}());
+}, true);

@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Text");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Text", {
+	var Text = ControlBase.extend("ui5strap.Text", {
 		metadata : {
 
 			// ---- object ----
@@ -78,9 +75,8 @@
 			}
 
 		}
-	});
-
-	var TextProto = ui5strap.Text.prototype;
+	}),
+	TextProto = Text.prototype;
 
 	TextProto.setText = function(newText, suppressInvalidate){
 		ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
@@ -90,4 +86,5 @@
 		ui5strap.Utils.updateAttribute(this, 'title', newTitle);
 	};
 
-}());
+	return Text;
+});

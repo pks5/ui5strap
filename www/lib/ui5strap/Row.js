@@ -25,11 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Row");
-
-	ui5strap.ControlBase.extend("ui5strap.Row", {
+	var Row = ControlBase.extend("ui5strap.Row", {
 		metadata : {
 
 			// ---- object ----
@@ -52,5 +50,5 @@
 		}
 	});
 
-
-}());
+	return Row;
+});

@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Progress");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Progress", {
+	var Progress = ControlBase.extend("ui5strap.Progress", {
 		metadata : {
 
 			// ---- object ----
@@ -57,9 +54,8 @@
 				} 
 			}
 		}
-	});
-
-	var ProgressProto = ui5strap.Progress.prototype;
+	}),
+	ProgressProto = Progress.prototype;
 
 	ProgressProto.getFirstBar = function(){
 		var bars = this.getBars();
@@ -69,4 +65,5 @@
 		return bars[0];
 	};
 
-}());
+	return Progress;
+});

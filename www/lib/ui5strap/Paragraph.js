@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Paragraph");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Paragraph", {
+	var Paragraph = ControlBase.extend("ui5strap.Paragraph", {
 		metadata : {
 
 			// ---- object ----
@@ -72,6 +69,7 @@
 		}
 	});
 
-	ui5strap.Utils.dynamicText(ui5strap.Paragraph.prototype);
-
-}());
+	ui5strap.Utils.dynamicText(Paragraph.prototype);
+	
+	return Paragraph;
+});

@@ -25,38 +25,32 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
 
-jQuery.sap.declare("ui5strap.TableRow");
-jQuery.sap.require("sap.ui.core.Element");
-
-
-sap.ui.core.Element.extend("ui5strap.TableRow", {
-	metadata : {
-
-		// ---- object ----
-		defaultAggregation : "columns",
-		// ---- control specific ----
-		library : "ui5strap",
-
-		properties : {
-			severity : {
-				type: "ui5strap.Severity", 
-				defaultValue: ui5strap.Severity.None
+	var TableRow = ElementBase.extend("ui5strap.TableRow", {
+		metadata : {
+	
+			// ---- object ----
+			defaultAggregation : "columns",
+			// ---- control specific ----
+			library : "ui5strap",
+	
+			properties : {
+				severity : {
+					type: "ui5strap.Severity", 
+					defaultValue: ui5strap.Severity.None
+				}
+			},
+	
+			aggregations : { 
+				"columns" : {
+					type : "ui5strap.TableColumn"
+				} 
 			}
-		},
-
-		aggregations : { 
-			"columns" : {
-				type : "ui5strap.TableColumn"
-			} 
+	
 		}
+	});
+	
+	return TableRow;
 
-	}
 });
-
-ui5strap.TableRow.prototype.init = function(){
-
-};
-
-}());

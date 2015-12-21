@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 
-	jQuery.sap.declare("ui5strap.NavContainerStandard");
-	jQuery.sap.require("ui5strap.NavContainer");
-	
-	ui5strap.NavContainer.extend("ui5strap.NavContainerStandard", {
+	var NavContainerStandard = NavContainer.extend("ui5strap.NavContainerStandard", {
 		metadata : {
 
 			library : "ui5strap",
@@ -39,13 +36,14 @@
 
 		//Use default NavContainerRenderer
 		renderer : "ui5strap.NavContainerRenderer"
-	});
+	}),
+	NavContainerStandardProto = NavContainerStandard.prototype;
 
 	/**
 	* @Override
 	* @Protected
 	*/
-	ui5strap.NavContainerStandard.prototype._initNavContainer = function(){
+	NavContainerStandardProto._initNavContainer = function(){
 		//NavContainer type string
 		//Resulting css class is "navcontainer navcontainer-standard"
 		this.ncType = "standard";
@@ -60,5 +58,6 @@
 			"navbar" : null
 		};
 	};
-
-}());
+	
+	return NavContainerStandard;
+});

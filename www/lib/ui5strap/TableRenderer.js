@@ -25,48 +25,45 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
+	
+	var TableRenderer = {};
+	
+	TableRenderer.render = function(rm, oControl) {
+		 rm.write("<table");
+		    rm.writeControlData(oControl);
+		    rm.addClass("table");
+		    if(oControl.getCondensed()){
+		    	rm.addClass('table-condensed');
+		    }
+		    if(oControl.getBordered()){
+		    	rm.addClass('table-bordered');
+		    }
+		    if(oControl.getStriped()){
+		    	rm.addClass('table-striped');
+		    }
+		    if(oControl.getHover()){
+		    	rm.addClass('table-hover');
+		    }
+		    rm.writeClasses();
+		    rm.write(">");
+		    
+		    var head = oControl.getHead();
+	
+		    if(null !== head){
+		    	this.renderRow(rm, oControl, head, true);
+		    }
+	
+		   	var rows = oControl.getBody();
+	
+		    for(var i = 0; i < rows.length; i++){
+		    	this.renderRow(rm, oControl, rows[i]);
+		    }
+	
+		rm.write("</table>");
+	};
 
-jQuery.sap.declare("ui5strap.TableRenderer");
-
-ui5strap.TableRenderer = {
-};
-
-ui5strap.TableRenderer.render = function(rm, oControl) {
-	 rm.write("<table");
-	    rm.writeControlData(oControl);
-	    rm.addClass("table");
-	    if(oControl.getCondensed()){
-	    	rm.addClass('table-condensed');
-	    }
-	    if(oControl.getBordered()){
-	    	rm.addClass('table-bordered');
-	    }
-	    if(oControl.getStriped()){
-	    	rm.addClass('table-striped');
-	    }
-	    if(oControl.getHover()){
-	    	rm.addClass('table-hover');
-	    }
-	    rm.writeClasses();
-	    rm.write(">");
-	    
-	    var head = oControl.getHead();
-
-	    if(null !== head){
-	    	this.renderRow(rm, oControl, head, true);
-	    }
-
-	   	var rows = oControl.getBody();
-
-	    for(var i = 0; i < rows.length; i++){
-	    	this.renderRow(rm, oControl, rows[i]);
-	    }
-
-	rm.write("</table>");
-};
-
-ui5strap.TableRenderer.renderRow = function(rm, oControl, row, isHeader) {
+	TableRenderer.renderRow = function(rm, oControl, row, isHeader) {
 
 		var columns = row.getColumns(),
 			columnsLength = columns.length,
@@ -85,24 +82,25 @@ ui5strap.TableRenderer.renderRow = function(rm, oControl, row, isHeader) {
 
 	    rm.write("</tr>");
 
-};
+	};
 
-ui5strap.TableRenderer.renderColumn = function(rm, oControl, col, i, isHeader) {
-	var tagName = isHeader ? 'th' : 'td';
-	rm.write("<" + tagName);
-	    
-	    rm.writeClasses();
-	    rm.write(">");
-	    
-	    var text = col.getText();
-	    rm.writeEscaped(text);
+	TableRenderer.renderColumn = function(rm, oControl, col, i, isHeader) {
+		var tagName = isHeader ? 'th' : 'td';
+		rm.write("<" + tagName);
+		    
+		    rm.writeClasses();
+		    rm.write(">");
+		    
+		    var text = col.getText();
+		    rm.writeEscaped(text);
+	
+		    var content = col.getContent();
+	
+		    for(var i = 0; i < content.length; i++){
+		    	rm.renderControl(content[i]);
+		    }
+		rm.write("</" + tagName + ">");
+	}
 
-	    var content = col.getContent();
-
-	    for(var i = 0; i < content.length; i++){
-	    	rm.renderControl(content[i]);
-	    }
-	rm.write("</" + tagName + ">");
-}
-
-}());
+	return TableRenderer;
+}, true);

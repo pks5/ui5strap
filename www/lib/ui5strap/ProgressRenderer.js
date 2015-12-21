@@ -25,14 +25,11 @@
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ProgressRenderer");
+	var ProgressRenderer = {};
 
-	ui5strap.ProgressRenderer = {
-	};
-
-	ui5strap.ProgressRenderer.render = function(rm, oControl) {
+	ProgressRenderer.render = function(rm, oControl) {
 		var items = oControl.getBars();
 
 		rm.write("<div");
@@ -57,4 +54,5 @@
 		rm.write("</div>");
 	};
 
-}());
+	return ProgressRenderer;
+}, true);

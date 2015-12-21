@@ -25,12 +25,9 @@
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Pager");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Pager", {
+	var Pager = ControlBase.extend("ui5strap.Pager", {
 		metadata : {
 
 			// ---- control specific ----
@@ -64,5 +61,6 @@
 
 		}
 	});
-
-}());
+	
+	return Pager;
+});
