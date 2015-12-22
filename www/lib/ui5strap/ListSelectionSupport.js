@@ -36,7 +36,7 @@ sap.ui.define(['./library'], function(library){
 	ListSelectionSupport.meta = function(meta){
 		//Interfaces
 		
-		meta.interfaces.push("ui5strap.ISelectionProvider");
+		meta.interfaces.push("ui5strap.IItemsProvider", "ui5strap.ISelectionProvider", "ui5strap.IPressProvider");
 		
 		//Properties
 		
@@ -236,13 +236,106 @@ sap.ui.define(['./library'], function(library){
 			return oldGetStyleClass.call(this) + " " + ListSelectionSupport.getStyleClass(this);	
 		};
 		
+		/*
+		 * --------------------
+		 * START implementation of IItemsProvider interface
+		 * --------------------
+		 */
 		
+		/**
+		 * Gets the list of items. This depends on the available aggregations.
+		 * @Protected
+		 */
+		oControl._getItems = function(){
+			return this.getItems();
+		};
+		
+		/**
+		 * @Public
+		 */
+		oControl.getItemIndex = function(item){
+			return this.indexOfAggregation("items", item);
+		};
+		
+		/**
+		 * Gets one or multiple selected items that have the given value in the specified custom data field.
+		 * @Public
+		 */
+		oControl.getItemsByCustomData = function(dataKey, value){
+			var items = this._getItems(),
+				returnItems = [];
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === value){
+					returnItems.push(items[i]);
+				}
+			}
+			
+			return returnItems;
+		};
+		
+		/**
+		 * Gets one or multiple selected items that have the given value in the specified property.
+		 * @Public
+		 */
+		oControl.getItemsByProperty = function(propertyName, value){
+			var items = this._getItems(),
+				getter = "get" + jQuery.sap.charToUpper(propertyName, 0),
+				returnItems = [];
+			
+			for(var i = 0; i < items.length; i++){
+				var item = items[i];
+				
+				if(!item[getter]){
+					throw new Error("Item " + i + ": no such getter: " + getter);
+				}
+				
+				if(item[getter]() === value){
+					returnItems.push(items[i]);
+				}
+			}
+			
+			return returnItems;
+		};
+		
+		
+		
+		/*
+		 * ------------------
+		 * END implementation of IItemsProvider interface
+		 * ------------------
+		 */
 		
 		/*
 		 * --------------------
 		 * START implementation of ISelectionProvider interface
 		 * --------------------
 		 */
+		
+		/**
+		 * Returns an array of selected items and their indices.
+		 * 
+		 * @Protected
+		 */
+		oControl._getListSelection = function(selectionGroup){
+			if(!selectionGroup){
+				selectionGroup = _defaultSelectionGroup;
+			}
+			
+			var items = this._getItems(),
+				selection = {
+					indices : [],
+					items : []
+				};
+			
+			for(var i = 0; i < items.length; i++){
+				if(this._isItemSelected(items[i], selectionGroup)){
+					selection.items.push(items[i]);
+					selection.indices.push(i);
+				}
+			}
+			
+			return selection;
+		};
 		
 		/**
 		 * Gets one or multiple selected items
@@ -473,94 +566,8 @@ sap.ui.define(['./library'], function(library){
 		};
 		
 		/*
-		 * ------------------
-		 * END implementation of ISelectionProvider interface
-		 * ------------------
+		 * Methods to override 
 		 */
-		
-		/*
-		 * --------------------
-		 * START implementation of IList interface
-		 * --------------------
-		 */
-		/**
-		 * Gets one or multiple selected items that have the given value in the specified custom data field.
-		 * @Public
-		 */
-		oControl.getItemsByCustomData = function(dataKey, value){
-			var items = this._getItems(),
-				returnItems = [];
-			for(var i = 0; i < items.length; i++){
-				if(items[i].data(dataKey) === value){
-					returnItems.push(items[i]);
-				}
-			}
-			
-			return returnItems;
-		};
-		
-		/**
-		 * Gets one or multiple selected items that have the given value in the specified property.
-		 * @Public
-		 */
-		oControl.getItemsByProperty = function(propertyName, value){
-			var items = this._getItems(),
-				getter = "get" + jQuery.sap.charToUpper(propertyName, 0),
-				returnItems = [];
-			
-			for(var i = 0; i < items.length; i++){
-				var item = items[i];
-				
-				if(!item[getter]){
-					throw new Error("Item " + i + ": no such getter: " + getter);
-				}
-				
-				if(item[getter]() === value){
-					returnItems.push(items[i]);
-				}
-			}
-			
-			return returnItems;
-		};
-		
-		/**
-		 * @Public
-		 */
-		oControl.getItemIndex = function(item){
-			return this.indexOfAggregation("items", item);
-		};
-		
-		/*
-		 * ------------------
-		 * END implementation of IList interface
-		 * ------------------
-		 */
-		
-		/**
-		 * Returns an array of selected items and their indices.
-		 * 
-		 * @Protected
-		 */
-		oControl._getListSelection = function(selectionGroup){
-			if(!selectionGroup){
-				selectionGroup = _defaultSelectionGroup;
-			}
-			
-			var items = this._getItems(),
-				selection = {
-					indices : [],
-					items : []
-				};
-			
-			for(var i = 0; i < items.length; i++){
-				if(this._isItemSelected(items[i], selectionGroup)){
-					selection.items.push(items[i]);
-					selection.indices.push(i);
-				}
-			}
-			
-			return selection;
-		};
 		
 		/**
 		 * Defines how to decide whether an item is selected within a selectionGroup.
@@ -594,22 +601,43 @@ sap.ui.define(['./library'], function(library){
 			item.setSelected(selected);
 		};
 		
-		
-		
 		/*
-		 * ----------------
-		 * HANDLE UI EVENTS
-		 * ----------------
+		 * 
 		 */
 		
-		oControl.pressItem = function(item, srcControl, srcSelectionProvider){
+		/*
+		 * ------------------
+		 * END implementation of ISelectionProvider interface
+		 * ------------------
+		 */
+		
+		/*
+		 * --------------------
+		 * START implementation of IPressProvider interface
+		 * --------------------
+		 */
+		
+		/**
+		 * Adds additional event options.
+		 * @Protected
+		 * @Override
+		 */
+		oControl._addEventOptions = function(eventOptions){
+			//To be overwritten by inheritants
+		};
+		
+		/**
+		 * Performs a press on an item.
+		 * @Public
+		 */
+		oControl.pressItem = function(item, srcControl, selectionProvider){
 			if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
 				//Item is enabled
 				
 				var eventOptions = {
 						srcControl : srcControl,
 						srcItem : item,
-						srcItems : [item],
+						selectionProvider : selectionProvider
 					};
 						
 				this._addEventOptions(eventOptions);
@@ -617,7 +645,7 @@ sap.ui.define(['./library'], function(library){
 				//Process selection
 				var selectionMode = this.getSelectionMode();
 				if(ui5strap.SelectionMode.None !== selectionMode 
-						&& this._isItemSelectable(item, _defaultSelectionGroup, srcSelectionProvider)){
+						&& this._isItemSelectable(item, _defaultSelectionGroup, selectionProvider)){
 					//List allows selections and item is selectable
 					
 					var changes = null;
@@ -659,21 +687,11 @@ sap.ui.define(['./library'], function(library){
 			}
 		};
 		
-		/**
-		 * Handler for Tap / Click Events
-		 * @Protected
+		/*
+		 * --------------------
+		 * END implementation of IPressProvider interface
+		 * --------------------
 		 */
-		oControl._handlePress = function(oEvent){
-			//console.log(oEvent.isMarked());
-			
-			//Mark the event so parent Controls know that event has been handled already
-			oEvent.setMarked();
-			
-			var item = this._findClosestItem(oEvent.srcControl);
-				
-			this.pressItem(item, oEvent.srcControl, this);
-			
-		};
 	};
 	
 	ListSelectionSupport.getStyleClass = function(oControl){

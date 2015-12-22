@@ -79,14 +79,6 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	};
 	
 	/**
-	 * @Protected
-	 * @Override
-	 */
-	ButtonGroupProto._findClosestItem = function(srcControl){
-		return ui5strap.Utils.findClosestParentControl(srcControl, Button);
-	};
-	
-	/**
 	 * @Public
 	 * @Override
 	 */
@@ -102,6 +94,22 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	ButtonGroupProto._addEventOptions = function(eventOptions, oEvent){
 		//@deprecated
 		eventOptions.button = eventOptions.srcItem;
+	};
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ButtonGroupProto._handlePress = function(oEvent){
+		//console.log(oEvent.isMarked());
+		
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		
+		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, Button);
+			
+		this.pressItem(item, oEvent.srcControl, this);
+		
 	};
 	
 	//Touchscreen

@@ -51,32 +51,30 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport'], function
 	ListSelectionSupport.proto(ListBaseProto);
 	
 	/**
-	 * Gets the list of items. This depends on the available aggregations.
-	 * @Protected
-	 */
-	ListBaseProto._getItems = function(){
-		return this.getItems();
-	};
-	
-	/**
-	 * Defines how to find the closest item starting at any control within the item.
-	 * For example, if you click a button somewhere within the list, this method finds the corresponding list item.
-	 * @Protected
-	 */
-	ListBaseProto._findClosestItem = function(srcControl){
-		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem);
-	};
-	
-	/**
 	 * Adds additional event options.
 	 * @Protected
+	 * @Override
 	 */
 	ListBaseProto._addEventOptions = function(eventOptions){
 		//@deprecated
 		eventOptions.listItem = eventOptions.srcItem;
 	};
 	
-	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ListBaseProto._handlePress = function(oEvent){
+		//console.log(oEvent.isMarked());
+		
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		
+		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem);
+			
+		this.pressItem(item, oEvent.srcControl, this);
+		
+	};
 	
 	//Touchscreen
 	if(ui5strap.support.touch){
