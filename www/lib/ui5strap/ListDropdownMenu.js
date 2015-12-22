@@ -75,7 +75,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 		}
 		
 		if(grandParent.getMetadata().isInstanceOf("ui5strap.ISelectionProvider")){
-			grandParent.pressItem(parent, oEvent.srcControl, this);
+			grandParent.pressItem(oEvent.srcControl, parent, this, listItem);
 		}
 	};
 	

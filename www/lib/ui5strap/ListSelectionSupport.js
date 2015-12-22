@@ -316,7 +316,7 @@ sap.ui.define(['./library'], function(library){
 		 * 
 		 * @Protected
 		 */
-		oControl._getListSelection = function(selectionGroup){
+		oControl._getSelection = function(selectionGroup){
 			if(!selectionGroup){
 				selectionGroup = _defaultSelectionGroup;
 			}
@@ -343,7 +343,7 @@ sap.ui.define(['./library'], function(library){
 		 * @Override
 		 */
 		oControl.getSelection = function(selectionGroup){
-			var selection = this._getListSelection(selectionGroup);
+			var selection = this._getSelection(selectionGroup);
 			
 			return selection.items;
 		};
@@ -416,7 +416,7 @@ sap.ui.define(['./library'], function(library){
 		 * @Override
 		 */
 		oControl.getSelectionIndex = function(selectionGroup){
-			var selection = this._getListSelection(selectionGroup);
+			var selection = this._getSelection(selectionGroup);
 			
 			return selection.indices;
 		};
@@ -618,7 +618,7 @@ sap.ui.define(['./library'], function(library){
 		 * Performs a press on an item.
 		 * @Public
 		 */
-		oControl.pressItem = function(item, srcControl, selectionProvider){
+		oControl.pressItem = function(srcControl, item, selectionProvider, providerItem){
 			if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
 				//Item is enabled
 				
@@ -653,6 +653,7 @@ sap.ui.define(['./library'], function(library){
 						changes = this.toggleSelection(item, _defaultSelectionGroup);
 					}
 					
+					//Check if something has changed
 					if(changes && changes.changed.length){
 						eventOptions.selectionChanges = changes;
 						

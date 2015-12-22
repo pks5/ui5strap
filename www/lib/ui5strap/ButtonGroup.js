@@ -108,7 +108,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 		
 		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, Button);
 			
-		this.pressItem(item, oEvent.srcControl, this);
+		this.pressItem(oEvent.srcControl, item, this, item);
 		
 	};
 	

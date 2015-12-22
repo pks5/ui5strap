@@ -72,7 +72,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport'], function
 		
 		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem);
 			
-		this.pressItem(item, oEvent.srcControl, this);
+		this.pressItem(oEvent.srcControl, item, this, item);
 		
 	};
 	
