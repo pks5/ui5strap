@@ -58,7 +58,7 @@ sap.ui.define(['./library'], function(library){
 	PositionSupport.getStyleClass = function(oControl){
 		var align = oControl.getAlign(), Alignment = ui5strap.Alignment, styleClass = "";
 
-		if (align !== Alignment.Default) {
+		if (align !== Alignment.Default && align !== Alignment.NavBar && align !== Alignment.Sidebar) {
 			styleClass += ui5strap.BSAlignment[align];
 		}
 

@@ -34,10 +34,7 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 			defaultAggregation : "menu",
 			
 			properties : {
-				selectable : {
-					type : "boolean",
-					defaultValue : false
-				}
+				
 			},
 
 			aggregations : { 
@@ -57,6 +54,14 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 		else{
 			this.setProperty('text', newText);
 		}
+	};
+	
+	/**
+	 * @Public
+	 * @Override
+	 */
+	ListDropdownItemProto.isSelectable = function(selectionProvider){
+		return this.getSelectable() && selectionProvider === this.getMenu();
 	};
 
 	ListDropdownItemProto.open = function(){
@@ -79,7 +84,7 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		
-		this.$().toggleClass('open');
+		this.toggle();
 	};
 
 	//Registering Event Handler

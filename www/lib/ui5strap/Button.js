@@ -172,6 +172,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	ui5strap.Utils.dynamicClass(ButtonProto, 'selected', { 'true' : 'active' });
 	
 	/**
+	 * @Public
+	 * @Override
+	 */
+	ButtonProto.isSelectable = function(selectionProvider){
+		return this.getSelectable();
+	};
+	
+	/**
 	 * Handler for Tap / Click Events
 	 * @Protected
 	 */

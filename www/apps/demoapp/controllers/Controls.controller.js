@@ -24,7 +24,11 @@ sap.ui.controller("ui5strap.demoapp.controllers.Controls", {
 	},
 
 	buttonDropdownTap : function(oEvent){
-
+		console.log("BUTTON DROPDOWN");
+	},
+	
+	listDropdownMenuTap : function(oEvent){
+		console.log("DROPDOWN MENU");
 	},
 
 	alertClosed : function(oEvent){

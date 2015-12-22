@@ -1,4 +1,10 @@
 .ui5strapContainer-option-PictureFrame{
-	padding:50px 20%;
+	padding:15px 16%;
 	height:100%;
+}
+
+.ui5strapContainer-option-FloatingContainer{
+	float: left;
+    width: 300px;
+    margin-left: 20px;
 }

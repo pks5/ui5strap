@@ -567,8 +567,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * Defines how to decide whether an item is selectable within a selectionGroup.
 	 * @Protected
 	 */
-	ListBaseProto._isItemSelectable = function(item, selectionGroup){
-		return item.getSelectable();
+	ListBaseProto._isItemSelectable = function(item, selectionGroup, selectionProvider){
+		return item.isSelectable(selectionProvider);
 	};
 	
 	/**
@@ -600,7 +600,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * Adds additional event options.
 	 * @Protected
 	 */
-	ListBaseProto._addEventOptions = function(eventOptions, oEvent){
+	ListBaseProto._addEventOptions = function(eventOptions){
 		//@deprecated
 		eventOptions.listItem = eventOptions.srcItem;
 	};
@@ -611,32 +611,22 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * ----------------
 	 */
 	
-	/**
-	 * Handler for Tap / Click Events
-	 * @Protected
-	 */
-	ListBaseProto._handlePress = function(oEvent){
-		//console.log(oEvent.isMarked());
-		
-		//Mark the event so parent Controls know that event has been handled already
-		oEvent.setMarked();
-		
-		var item = this._findClosestItem(oEvent.srcControl),
-			eventOptions = {
-				srcControl : oEvent.srcControl,
-				srcItem : item,
-				srcItems : [item],
-			};
-				
-		this._addEventOptions(eventOptions, oEvent);
-		
+	ListBaseProto.pressItem = function(item, srcControl, srcSelectionProvider){
 		if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
 			//Item is enabled
+			
+			var eventOptions = {
+					srcControl : srcControl,
+					srcItem : item,
+					srcItems : [item],
+				};
+					
+			this._addEventOptions(eventOptions);
 			
 			//Process selection
 			var selectionMode = this.getSelectionMode();
 			if(ui5strap.SelectionMode.None !== selectionMode 
-					&& this._isItemSelectable(item, _defaultSelectionGroup)){
+					&& this._isItemSelectable(item, _defaultSelectionGroup, srcSelectionProvider)){
 				//List allows selections and item is selectable
 				
 				var changes = null;
@@ -676,6 +666,22 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		else{
 			jQuery.sap.log.warning("Could not select list item: List item not found or disabled.");
 		}
+	};
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ListBaseProto._handlePress = function(oEvent){
+		//console.log(oEvent.isMarked());
+		
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		
+		var item = this._findClosestItem(oEvent.srcControl);
+			
+		this.pressItem(item, oEvent.srcControl, this);
+		
 	};
 	
 	//Touchscreen

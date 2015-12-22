@@ -35,7 +35,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 			defaultAggregation : "items",
 			
 			properties : {
-				updateMasterText : {
+				updateParent : {
 					type : "boolean",
 					defaultValue : false
 				}
@@ -52,43 +52,23 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	ListDropdownMenuProto = ListDropdownMenu.prototype;
 	
-	ListDropdownMenuProto.setMasterSelected = function(listItem){ 
-		ui5strap.ListBase.prototype.setMasterSelected.call(this, listItem);
-		
-		var parent = this.getParent(),
-			grandParent = parent.getParent(),
-			updateText = false;
-
-		if(grandParent instanceof ui5strap.ButtonGroup){
-			grandParent.setSelectedControl(parent, this);
-
-			updateText = this.getUpdateMasterText();
-		}
-		else if(parent instanceof ui5strap.ButtonDropdown){
-			parent.setSelected(true);
-
-			updateText = this.getUpdateMasterText();
-		}
-		else if(grandParent instanceof ui5strap.ListBase){
-			updateText = this.getUpdateMasterText();
-		}
-		
-		if(updateText){
-				var selectedText = listItem.getText();
-				if(selectedText === ''){
-					var listItemContent = listItem.getContent();
-					if(listItemContent.length > 0){
-						//TODO define "textual" interface
-						if('getText' in listItemContent[0]){
-							selectedText = listItemContent[0].getText();
-						}
-					}
-				}
-
-				if(selectedText !== ''){
-					parent.setText(selectedText);
-				}
+	var _updateParentTap = function(oEvent, data){
+		if(this.getUpdateParent()){
+			var parent = this.getParent(),
+				listItem = oEvent.getParameter("srcItem");
+			parent.setText && parent.setText(listItem.getText());
+			parent.data(listItem.data());
+			
+			if(parent instanceof ui5strap.ListDropdownItem){
+				parent.getParent().pressItem(parent, oEvent.srcControl, this);
 			}
+		}
+	};
+	
+	
+	
+	ListDropdownMenuProto.init = function(){
+		this.attachEvent("tap", {}, _updateParentTap);
 	};
 	
 	/**
@@ -98,7 +78,10 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 */
 	ListDropdownMenuProto._handlePress = function(oEvent){
 		ui5strap.ListBase.prototype._handlePress.call(this, oEvent);
-
+		
+		oEvent.stopPropagation();
+		
+		//Close ButtonDropdown or ListDropdownItem
 		var parent = this.getParent();
 		if("close" in parent){
 			parent.close();

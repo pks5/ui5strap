@@ -100,5 +100,13 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
           }
 	};
 	
+	/**
+	 * @Public
+	 * @Override
+	 */
+	ListItemPrototype.isSelectable = function(selectionProvider){
+		return this.getSelectable();
+	};
+	
 	return ListItem;
 });

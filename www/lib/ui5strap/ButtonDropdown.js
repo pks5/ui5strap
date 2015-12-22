@@ -98,10 +98,16 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 		
 		if (this.getEnabled()) {
 			var $target = jQuery(oEvent.target);
-			if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
-				this.$().toggleClass('open');
+			if(this.getSplit()){
+				if($target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
+					this.$().toggleClass('open');
+				}
+				else{
+					this.fireTap();
+				}
 			}
 			else{
+				this.$().toggleClass('open');
 				this.fireTap();
 			}
 		}
