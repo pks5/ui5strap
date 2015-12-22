@@ -27,12 +27,7 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var LinkRenderer = {
-
-		typeToClass : {
-			Thumbnail : "thumbnail"
-		}
-	};
+	var LinkRenderer = {};
 
 	LinkRenderer.render = function(rm, oControl) {
 		var href = oControl.getHref(),
@@ -41,22 +36,12 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			target = oControl.getTarget();
 	
 		rm.write("<a");
-	
-		if(action === ui5strap.BsAction.DismissModal){
-			rm.writeAttribute('data-dismiss', 'modal');	
-		}
-	
 		rm.writeControlData(oControl);
-		
-		rm.addClass(oControl._getStyleClassRoot());
-		
-		var type = oControl.getType();
-		if(ui5strap.LinkType.Default !== type){
-			rm.addClass(this.typeToClass[type]);
-		}
-		
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		    
+		//Attributes
+		
 		if('' !== href){
 			rm.writeAttribute('href', href);
 		}
@@ -69,6 +54,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	    	rm.writeAttribute('title', title);
 	    }
 	
+		if(action === ui5strap.BsAction.DismissModal){
+			rm.writeAttribute('data-dismiss', 'modal');	
+		}
+		
 		rm.write(">");
 		
 		var text = oControl.getText(),
@@ -78,10 +67,12 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 	
+		//Content
 		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
 		
 		rm.write("</a>");
 
+		//Trail
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 	

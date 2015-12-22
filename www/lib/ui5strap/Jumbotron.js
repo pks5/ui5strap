@@ -47,7 +47,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}),
+	JumbotronProto = Jumbotron.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	JumbotronProto._getStyleClassRoot = function(){
+		return this._getStyleClassPrefix() + " jumbotron";
+	};
 	
 	return Jumbotron;
 });

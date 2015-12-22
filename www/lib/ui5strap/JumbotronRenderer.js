@@ -33,9 +33,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		var content = oControl.getContent();
 
 		rm.write("<div");
-
 		rm.writeControlData(oControl);
-		rm.addClass('jumbotron')
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		

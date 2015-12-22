@@ -83,7 +83,77 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 		}
-	});
+	}),
+	IconProto = Icon.prototype;
+	
+	IconProto._sizeToClass = {
+	    Large : "lg",
+	    X2 : "2x",
+	    X3 : "3x",
+	    X4 : "4x",
+	    X5 : "5x"
+	 };
+
+	IconProto._transformToClass = {
+	    Rotate90 : "rotate-90",
+	    Rotate180 : "rotate-180",
+	    Rotate270 : "rotate-270",
+	    FlipHorizontal : "flip-horizontal",
+	    FlipVertical : "flip-vertical"
+	  };
+	  
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	IconProto._getStyleClassRoot = function(){
+		var iconGroup = this.getIconSet(),
+			size = this.getSize(),
+			transform = this.getTransform(),
+			severity = this.getSeverity(),
+			prefix = iconGroup + '-',
+			modPrefix = 'fa-',
+			styleClass = this._getStyleClassPrefix() 
+				+ " " + iconGroup
+				+ " " + prefix + this.getIcon();
+		
+		//Font Awesome only
+		if(prefix === modPrefix){
+			if(size !== ui5strap.IconSize.Default){
+				styleClass += " " + modPrefix + this._sizeToClass[size];
+			}
+	
+			if(transform !== ui5strap.IconTransform.Default){
+				styleClass += " " + modPrefix + this._transformToClass[transform];
+			}
+	
+			if(this.getFixedWidth()){
+				styleClass += " " + modPrefix + 'fw';
+			}
+	
+			if(this.getSpin()){
+				styleClass += " " + modPrefix + 'spin';
+			}
+	
+			if(this.getInverse()){
+				styleClass += " " + modPrefix + 'inverse';
+			}
+	
+			if(this.getBorder()){
+				styleClass += " " + modPrefix + 'border';
+			}
+		}
+		
+		if(ui5strap.IconType.FormFeedback === this.getType()){
+			styleClass += " form-control-feedback";
+		}
+
+		if(ui5strap.Severity.None !== severity){
+			styleClass += " text-" + ui5strap.BSSeverity[severity];
+		}
+		
+		return styleClass;
+	};
 	
 	return Icon;
 });

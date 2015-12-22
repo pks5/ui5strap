@@ -97,6 +97,25 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	LinkProto = Link.prototype;
 	
+	LinkProto._typeToClass = {
+		Thumbnail : "thumbnail"
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	LinkProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix();
+		
+		var type = this.getType();
+		if(ui5strap.LinkType.Default !== type){
+			styleClass += " " + this._typeToClass[type];
+		}
+		
+		return styleClass;
+	};
+	
 	ui5strap.Utils.dynamicAttributes(
 		LinkProto, 
 		[
