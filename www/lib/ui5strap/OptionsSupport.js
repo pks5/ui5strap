@@ -29,7 +29,14 @@ sap.ui.define(['./library'], function(library){
 	
 	var OptionsSupport = {};
 	
-	OptionsSupport.bless = function(obj){
+	OptionsSupport.meta = function(meta){
+		meta.properties.options = {
+			type : "string",
+			defaultValue : ""
+		};
+	};
+	
+	OptionsSupport.proto = function(obj){
 		/**
 		 * @Protected
 		 */
@@ -208,5 +215,5 @@ sap.ui.define(['./library'], function(library){
 	
 	return OptionsSupport;
 	
-}, true);
+});
 	

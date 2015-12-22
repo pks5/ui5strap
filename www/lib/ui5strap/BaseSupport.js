@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ElementBase
+ * ui5strap.OptionsSupport
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,25 +25,17 @@
  * 
  */
 
-sap.ui.define(['./library', './BaseSupport', './OptionsSupport'], function(library, BaseSupport, OptionsSupport){
-
-	var _meta = {
-		library : "ui5strap",
-		
-		properties : {
+sap.ui.define(['./library'], function(library){
+	
+	var BaseSupport = {};
+	
+	BaseSupport.proto = function(obj){
+		obj.getBindingContextData = function(modelName){
+			var bindingContext = this.getBindingContext(modelName);
 			
-		}
+			return bindingContext.getModel().getProperty(bindingContext.getPath());
+		};
 	};
 	
-	OptionsSupport.meta(_meta);
-		
-	var ElementBase = ui5strap.Element.extend("ui5strap.ElementBase", {
-		metadata : _meta
-	}),
-	ElementBaseProto = ElementBase.prototype;
-	
-	BaseSupport.proto(ElementBaseProto);
-	OptionsSupport.proto(ElementBaseProto);
-	
-	return ElementBase;
+	return BaseSupport;
 });

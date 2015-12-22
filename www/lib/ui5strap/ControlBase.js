@@ -25,30 +25,25 @@
  * 
  */
 
-sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSupport){
+sap.ui.define(['./library', './BaseSupport', './OptionsSupport'], function(library, BaseSupport, OptionsSupport){
 
-	var ControlBase = ui5strap.Control.extend("ui5strap.ControlBase", {
-		metadata : {
-
-			library : "ui5strap",
+	var _meta = {
+		library : "ui5strap",
+		
+		properties : {
 			
-			properties : {
-				options : {
-					type : "string",
-					defaultValue : ""
-				}
-			}
 		}
+	};
+	
+	OptionsSupport.meta(_meta);
+	
+	var ControlBase = ui5strap.Control.extend("ui5strap.ControlBase", {
+		metadata : _meta
 	}),
 	ControlBaseProto = ControlBase.prototype;
 	
-	OptionsSupport.bless(ControlBaseProto);
-	
-	ControlBaseProto.getBindingContextData = function(modelName){
-		var bindingContext = this.getBindingContext(modelName);
-		
-		return bindingContext.getModel().getProperty(bindingContext.getPath());
-	};
+	BaseSupport.proto(ControlBaseProto);
+	OptionsSupport.proto(ControlBaseProto);
 	
 	return ControlBase;
 });
