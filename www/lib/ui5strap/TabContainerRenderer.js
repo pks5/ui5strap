@@ -36,7 +36,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('tab-content u5sl-tab-content')
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -49,7 +49,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			if(customAssociation){
 				rm.writeAttribute('data-pane-key', item.data(customAssociation));
 			}
-			rm.addClass('tab-pane');
+			rm.addClass(oControl._getStyleClassPart("pane"));
 			if(selectedIndex > -1 && i === selectedIndex){
 				rm.addClass('active');
 			}

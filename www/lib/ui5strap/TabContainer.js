@@ -87,6 +87,30 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	TabContainerProto = ui5strap.TabContainer.prototype;
 	
 	/**
+	 * @Protected
+	 * @Override
+	 */
+	TabContainerProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " tab-content";
+		
+		return styleClass;
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	TabContainerProto._getStyleClassPart = function(partName){
+		var classPart = ControlBase.prototype._getStyleClassPart.call(this, partName);
+		
+		if("pane" === partName){
+			classPart += " tab-pane";
+		}
+		
+		return classPart;
+	};
+	
+	/**
 	 * @Public
 	 */
 	TabContainerProto.onBeforeRendering= function(){
@@ -146,10 +170,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			),
 			transitionNextComplete = function (){
-				$next.attr("class", "tab-pane active");
+				$next.attr("class", _this._getStyleClassPart("pane") + " active");
 			},
 			transitionCurrentComplete = function (){
-				$current.attr("class", "tab-pane ui5strap-hidden");
+				$current.attr("class", _this._getStyleClassPart("pane") + " ui5strap-hidden");
 			};
 		
 		//RAF start
