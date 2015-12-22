@@ -509,6 +509,13 @@ sap.ui
 						Default : "Default",
 						Navigation : "Navigation"
 					};
+					
+					ui5strap.DropdownMenuHostUpdate = {
+							None : "None",
+							Text : "Text",
+							Data : "Data",
+							All : "All"
+					};
 
 					/*
 					 * LinkType

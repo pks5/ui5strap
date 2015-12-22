@@ -35,9 +35,9 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 			defaultAggregation : "items",
 			
 			properties : {
-				updateParent : {
-					type : "boolean",
-					defaultValue : false
+				hostUpdate : {
+					type : "ui5strap.DropdownMenuHostUpdate",
+					defaultValue : ui5strap.DropdownMenuHostUpdate.None
 				}
 			},
 	
@@ -53,15 +53,29 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	ListDropdownMenuProto = ListDropdownMenu.prototype;
 	
 	var _updateParentTap = function(oEvent, data){
-		if(this.getUpdateParent()){
-			var parent = this.getParent(),
-				listItem = oEvent.getParameter("srcItem");
+		var hostUpdate = this.getHostUpdate(),
+			parent = this.getParent(),
+			grandParent = parent.getParent(),
+			listItem = oEvent.getParameter("srcItem");
+		
+		if(!parent.getMetadata().isInstanceOf("ui5strap.IDropdownMenuHost")){
+			throw new Error("Cannot update host: not an instance of 'ui5strap.IDropdownMenuHost'");
+		}
+		
+		if(hostUpdate === ui5strap.DropdownMenuHostUpdate.All
+			|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
+			
 			parent.setText && parent.setText(listItem.getText());
+		}
+		
+		if(hostUpdate === ui5strap.DropdownMenuHostUpdate.All
+			|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Data){
+			
 			parent.data(listItem.data());
 		}
 		
-		if(parent.getMetadata().isInstanceOf("ui5strap.IDropdownMenuHost")){
-			parent.getParent().pressItem(parent, oEvent.srcControl, this);
+		if(grandParent.getMetadata().isInstanceOf("ui5strap.ISelectionProvider")){
+			grandParent.pressItem(parent, oEvent.srcControl, this);
 		}
 	};
 	
