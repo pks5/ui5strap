@@ -25,11 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', './ListBase'], function(library, ListBase){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button'], function(library, ControlBase, ListSelectionSupport, Button){
 
-	var ButtonGroup = ListBase.extend("ui5strap.ButtonGroup", {
-		metadata : {
-
+	var _meta = {
+			
+			interfaces : [],
+			
 			defaultAggregation : "buttons",
 				
 			library : "ui5strap",
@@ -56,24 +57,18 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 			},
 
 			events:{
-				select : {
-					parameters : {
-						listItem : {type : "ui5strap.Button"},
-						button : {type : "ui5strap.Button"},
-						srcControl : {type : "ui5strap.Control"}
-					}
-				},
-				tap : {
-					parameters : {
-						listItem : {type : "ui5strap.Button"},
-						button : {type : "ui5strap.Button"},
-						srcControl : {type : "ui5strap.Control"}
-					}
-				}
+				
 		    }
-		}
+		};
+	
+	ListSelectionSupport.meta(_meta);
+	
+	var ButtonGroup = ControlBase.extend("ui5strap.ButtonGroup", {
+		metadata : _meta
 	}),
 	ButtonGroupProto = ButtonGroup.prototype;
+	
+	ListSelectionSupport.proto(ButtonGroupProto);
 	
 	/**
 	 * @Protected
@@ -88,7 +83,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Override
 	 */
 	ButtonGroupProto._findClosestItem = function(srcControl){
-		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.Button);
+		return ui5strap.Utils.findClosestParentControl(srcControl, Button);
 	};
 	
 	/**
@@ -108,6 +103,14 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 		//@deprecated
 		eventOptions.button = eventOptions.srcItem;
 	};
+	
+	//Touchscreen
+	if(ui5strap.support.touch){
+		ButtonGroupProto.ontap = ButtonGroupProto._handlePress;
+	}
+	else{
+		ButtonGroupProto.onclick = ButtonGroupProto._handlePress;
+	}
 	
 	return ButtonGroup;
 });

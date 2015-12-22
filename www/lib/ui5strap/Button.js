@@ -25,10 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
 
-	var Button = ControlBase.extend("ui5strap.Button", {
-		metadata : {
+	var _meta =  {
 			interfaces : ["ui5strap.ISelectableItem"],
 			
 			defaultAggregation : "content",
@@ -55,18 +54,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					type: "ui5strap.Size", 
 					defaultValue: ui5strap.Size.Default
 				},
-				selectable : {
-					type : "boolean",
-					defaultValue : true
-				},
-				selected : {
-					type:"boolean", 
-					defaultValue:false
-				}, 
-				enabled : {
-					type:"boolean", 
-					defaultValue:true
-				},
+				
 				trail : {
 					type:"ui5strap.TrailHtml", 
 					defaultValue:ui5strap.TrailHtml.Space
@@ -94,9 +82,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		        "tap":{}
 		    }
 
-		}
+		};
+	
+	SelectableSupport.meta(_meta);
+	
+	var Button = ControlBase.extend("ui5strap.Button", {
+		metadata : _meta
 	}),
 	ButtonProto = Button.prototype;
+	
+	SelectableSupport.proto(ButtonProto);
 	
 	/**
 	 * @Protected
@@ -130,11 +125,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			classAdd += " close";
 		}
 		
-		//Selected
-		if(this.getSelected()){
-			classAdd + " active";
-		}
-		
 		//Bootstrap Actions (deprecated)
 		var action = this.getBsAction();
 		//Navbar toggle
@@ -166,19 +156,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 */
 	ui5strap.Utils.dynamicText(ButtonProto);
 
-	/**
-	 * Setter for dynamic flag selected.
-	 */
-	ui5strap.Utils.dynamicClass(ButtonProto, 'selected', { 'true' : 'active' });
-	
-	/**
-	 * @Public
-	 * @Override
-	 */
-	ButtonProto.isSelectable = function(selectionProvider){
-		return this.getSelectable();
-	};
-	
 	/**
 	 * Handler for Tap / Click Events
 	 * @Protected

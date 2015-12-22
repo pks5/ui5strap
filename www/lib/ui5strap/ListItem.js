@@ -25,29 +25,16 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
 
-	var ListItem = ControlBase.extend("ui5strap.ListItem", {
-		metadata : {
-			interfaces : ["ui5strap.ISelectableItem"],
+	var _meta = {
+			interfaces : [],
 			
 			defaultAggregation : "content",
 			
 			library : "ui5strap",
 
 			properties : { 
-				selected : {
-					type:"boolean", 
-					defaultValue:false
-				}, 
-				enabled : {
-					type:"boolean", 
-					defaultValue:true
-				},
-				selectable : {
-					type : "boolean",
-					defaultValue : true
-				},
 				text : {
 					type:"string",
 					defaultValue:""
@@ -75,38 +62,18 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
-		}
+		};
+	
+	SelectableSupport.meta(_meta);
+	
+	var ListItem = ControlBase.extend("ui5strap.ListItem", {
+		metadata : _meta
 	}),
-	ListItemPrototype = ListItem.prototype;
+	ListItemProto = ListItem.prototype;
 
-	ui5strap.Utils.dynamicText(ListItemPrototype);
+	SelectableSupport.proto(ListItemProto);
+	
+	ui5strap.Utils.dynamicText(ListItemProto);
 
-	//ui5strap.Utils.dynamicClass(ListItemPrototype, 'selected', { 'true' : 'active' });
-	
-	ListItemPrototype.setSelected = function(newSelected, suppressInvalidate){
-		if(this.getDomRef()){
-              if(newSelected){
-                  this.$().addClass("active");
-              }
-              else{
-                  this.$().removeClass("active");
-              }
-              
-
-              this.setProperty("selected", newSelected, true);
-          }
-          else{
-              this.setProperty("selected", newSelected, suppressInvalidate);
-          }
-	};
-	
-	/**
-	 * @Public
-	 * @Override
-	 */
-	ListItemPrototype.isSelectable = function(selectionProvider){
-		return this.getSelectable();
-	};
-	
 	return ListItem;
 });

@@ -40,13 +40,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<li");
 		rm.writeControlData(oControl);
 		
-		if(oControl.getSelected()){
-			rm.addClass("active");
-		}
-		
-		if(!oControl.getEnabled()){
-			rm.addClass("disabled");
-		}
+		rm.addClass(oControl._getStyleClass());
 
 		rm.writeClasses();
 
