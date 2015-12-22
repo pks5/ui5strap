@@ -36,7 +36,7 @@ sap.ui.define(['./library'], function(library){
 	ListSelectionSupport.meta = function(meta){
 		//Interfaces
 		
-		meta.interfaces.push("ui5strap.IItemsProvider", "ui5strap.ISelectionProvider", "ui5strap.IPressProvider");
+		meta.interfaces.push("ui5strap.IItemsProvider", "ui5strap.ISelectionProvider", "ui5strap.IPressable");
 		
 		//Properties
 		
@@ -601,22 +601,6 @@ sap.ui.define(['./library'], function(library){
 			item.setSelected(selected);
 		};
 		
-		/*
-		 * 
-		 */
-		
-		/*
-		 * ------------------
-		 * END implementation of ISelectionProvider interface
-		 * ------------------
-		 */
-		
-		/*
-		 * --------------------
-		 * START implementation of IPressProvider interface
-		 * --------------------
-		 */
-		
 		/**
 		 * Adds additional event options.
 		 * @Protected
@@ -625,6 +609,10 @@ sap.ui.define(['./library'], function(library){
 		oControl._addEventOptions = function(eventOptions){
 			//To be overwritten by inheritants
 		};
+		
+		/*
+		 * 
+		 */
 		
 		/**
 		 * Performs a press on an item.
@@ -688,9 +676,9 @@ sap.ui.define(['./library'], function(library){
 		};
 		
 		/*
-		 * --------------------
-		 * END implementation of IPressProvider interface
-		 * --------------------
+		 * ------------------
+		 * END implementation of ISelectionProvider interface
+		 * ------------------
 		 */
 	};
 	

@@ -58,10 +58,10 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 				listItem = oEvent.getParameter("srcItem");
 			parent.setText && parent.setText(listItem.getText());
 			parent.data(listItem.data());
-			
-			if(parent instanceof ui5strap.ListDropdownItem){
-				parent.getParent().pressItem(parent, oEvent.srcControl, this);
-			}
+		}
+		
+		if(parent.getMetadata().isInstanceOf("ui5strap.IDropdownMenuHost")){
+			parent.getParent().pressItem(parent, oEvent.srcControl, this);
 		}
 	};
 	

@@ -29,11 +29,10 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 
 	var ButtonDropdown = Button.extend("ui5strap.ButtonDropdown", {
 		metadata : {
-
-			// ---- object ----
+			interfaces : ["ui5strap.IDropdownMenuHost"],
+			
 			defaultAggregation : "menu",
 				
-			// ---- control specific ----
 			library : "ui5strap",
 
 			properties : { 

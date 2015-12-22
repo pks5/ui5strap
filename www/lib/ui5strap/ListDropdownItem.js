@@ -29,6 +29,8 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 
 	var ListDropdownItem = ListLinkItem.extend("ui5strap.ListDropdownItem", {
 		metadata : {
+			interfaces : ["ui5strap.IDropdownMenuHost"],
+			
 			library : "ui5strap",
 
 			defaultAggregation : "menu",
