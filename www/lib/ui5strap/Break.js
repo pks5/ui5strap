@@ -25,13 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library'], function(library){
 
-	var Break = ControlBase.extend("ui5strap.Break", {
+	var Break = ui5strap.Control.extend("ui5strap.Break", {
 		metadata : {
-
-			library : "ui5strap",
-			
+			deprecated : true,
+			library : "ui5strap"
 		}
 	});
 	

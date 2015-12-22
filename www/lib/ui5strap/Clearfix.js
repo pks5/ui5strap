@@ -27,32 +27,16 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	return ControlBase.extend("ui5strap.Clearfix", {
+	var Clearfix = ControlBase.extend("ui5strap.Clearfix", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
-			library : "ui5strap",
-			
-			properties : { 
-				visibilityExtraSmall : {
-					type : "ui5strap.Visibility", 
-					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilitySmall : {
-					type : "ui5strap.Visibility", 
-					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilityMedium : {
-					type : "ui5strap.Visibility", 
-					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilityLarge : {
-					type : "ui5strap.Visibility", 
-					defaultValue : ui5strap.Visibility.Default
-				}
-				
-			}
-
+			library : "ui5strap"
 		}
-	});
+	}),
+	ClearFixProto = Clearfix.prototype;
+	
+	ClearFixProto._getStyleClassRoot = function(){
+		return this._getStyleClassPrefix() + " clearfix";
+	};
 
 });

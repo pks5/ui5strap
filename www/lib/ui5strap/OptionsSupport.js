@@ -44,66 +44,15 @@ sap.ui.define(['./library'], function(library){
 	 * Adds Support for Options to an prototype or object
 	 * @Public
 	 */
-	OptionsSupport.proto = function(obj){
-		/**
-		 * @Protected
-		 */
-		obj._getIdPart = function(){
-			if(arguments.legnth === 0){
-				throw new Error("Please provide at least one argument for ui5strap.ControlBase.prototype._getIdPart!");
-			}
-			var args = jQuery.makeArray(arguments);
-			return this.getId() + "___" + args.join('-');
-		};
+	OptionsSupport.proto = function(oControl){
 		
-		/**
-		 * @Protected
-		 */
-		obj._$getPart = function(){
-			return jQuery('#' + this._getIdPart.apply(this, arguments));
-		};
-		
-		/**
-		 * @Protected
-		 */
-		obj._getStyleClassPrefix = function(){
-			return this.getMetadata().getElementName().replace(/\./g, '');
-		};
-		
-		/**
-		 * @Protected
-		 */
-		obj._getStyleClassRoot = function(){
-			return this._getStyleClassPrefix();
-		};
-		
-		/**
-		 * @Protected
-		 */
-		obj._getStyleClassPart = function(partName){
-			return this._getStyleClassPrefix() + "-" + partName;
-		};
-		
-		/**
-		* @Protected
-		*/
-		obj._getStyleClassType = function(type, typeKey){
-			return 	this._getStyleClassPrefix() + "-" + (typeKey || "type") + "-" + type;
-		};
-		
-		/**
-		* @Protected
-		*/
-		obj._getStyleClassFlag = function(flag){
-			return 	this._getStyleClassPrefix() + "-flag-" + flag;
-		};
 		
 		/**
 		* @Public
 		* @Override
 		* TODO avoid overriding of user provided css classes
 		*/
-		obj.setOptions = function(newOptions){
+		oControl.setOptions = function(newOptions){
 			if(this.getDomRef()){
 				this.setProperty('options', newOptions, true);
 				this._updateStyleClass();
@@ -116,7 +65,7 @@ sap.ui.define(['./library'], function(library){
 		/**
 		* @Protected
 		*/
-		obj._getStyleClassOptions = function(){
+		oControl._getStyleClassOptions = function(){
 			var options = this.getOptions(),
 				classes = '';
 		    
@@ -130,14 +79,15 @@ sap.ui.define(['./library'], function(library){
 			return classes;
 		};
 		
-		obj._getStyleClass = function(){
-			return this._getStyleClassRoot() + " " + this._getStyleClassOptions();	
+		var oldGetStyleClass = oControl._getStyleClass;
+		oControl._getStyleClass = function(){
+			return oldGetStyleClass.call(this) + " " + this._getStyleClassOptions();	
 		};
 		
 		/**
 		* @Protected
 		*/
-		obj._updateStyleClass = function(){
+		oControl._updateStyleClass = function(){
 			var currentClassesString = '',
 				options = this.getOptions();
 			
@@ -165,7 +115,7 @@ sap.ui.define(['./library'], function(library){
 		/**
 		* @Public
 		*/
-		obj.setOptionsEnabled = function(options){
+		oControl.setOptionsEnabled = function(options){
 			var currentOptions = [],
 				cOptions = this.getOptions();
 			
@@ -196,11 +146,11 @@ sap.ui.define(['./library'], function(library){
 		/**
 		* @Public
 		*/
-		obj.isOptionEnabled = function(optionName){
+		oControl.isOptionEnabled = function(optionName){
 			return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
 		};
 		
-		obj.setOptionEnabled = function(optionName, optionEnabled){
+		oControl.setOptionEnabled = function(optionName, optionEnabled){
 			var options = {};
 			
 			options[optionName] = optionEnabled;
@@ -211,14 +161,14 @@ sap.ui.define(['./library'], function(library){
 		/**
 		* @Public
 		*/
-		obj.toggleOption = function(optionName){
+		oControl.toggleOption = function(optionName){
 			this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
 		};
 		
 		/**
 		* @Public
 		*/
-		obj.onOptionChange = function(optionName, optionEnabled){};
+		oControl.onOptionChange = function(optionName, optionEnabled){};
 	};
 	
 	return OptionsSupport;

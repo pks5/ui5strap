@@ -35,6 +35,7 @@ sap.ui.define(['./library', './BaseSupport', './OptionsSupport'], function(libra
 		}
 	};
 	
+	BaseSupport.meta(_meta);
 	OptionsSupport.meta(_meta);
 		
 	var ElementBase = ui5strap.Element.extend("ui5strap.ElementBase", {

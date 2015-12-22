@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library, ControlBase, BaseSupport){
 
 	var _meta = {
 
@@ -57,30 +57,12 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					defaultValue : ui5strap.Alignment.Default
 				},
 				
-				//Visibility DOES inherit from smaller sizes
-				//TODO remove visibility since it does same as visibilityExtraSmall
+				//@deprecated
 				visibility : {
 					deprecated : true,
 					type : "ui5strap.Visibility",
 					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilityExtraSmall : {
-					type : "ui5strap.Visibility",
-					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilitySmall : {
-					type : "ui5strap.Visibility",
-					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilityMedium : {
-					type : "ui5strap.Visibility",
-					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilityLarge : {
-					type : "ui5strap.Visibility",
-					defaultValue : ui5strap.Visibility.Default
 				}
-				//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
 		},
 		
 		aggregations : { 
@@ -161,6 +143,15 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		
 		return styleClass;
 	};
+	
+	/**
+	 * @deprecated
+	 */
+	ContainerProto.setVisibility = function(newVisibility, suppressInvalidate){
+		this.setProperty("visibility", newVisibility, true);
+		this.setVisibilityExtraSmall(newVisibility, suppressInvalidate);
+		return this;
+	}
 	
 	//Return Module Constructor
 	return Container;

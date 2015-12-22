@@ -1854,25 +1854,15 @@ sap.ui
 					 * @Public
 					 */
 					ui5strap.RenderUtils.visibility = function(rm, oControl) {
-						var visibility = oControl.getVisibility(), visibilityExtraSmall = oControl
+						jQuery.sap.log.warning("ui5strap.RenderUtils.visibility is deprecated! Use BaseSupport instead.");
+						
+						var visibility = visibilityExtraSmall = oControl
 								.getVisibilityExtraSmall(), visibilitySmall = oControl
 								.getVisibilitySmall(), visibilityMedium = oControl
 								.getVisibilityMedium(), visibilityLarge = oControl
 								.getVisibilityLarge(), Visibility = ui5strap.Visibility;
 
 						var resultHidden = [ "", "", "", "" ], inheritHide = false;
-
-						// Generic visibility
-						// TODO check if necccessary and working at all
-						if (visibility !== Visibility.Default) {
-
-							if (visibility === Visibility.Hidden) {
-								resultHidden = [ "ui5strap-hide-xs",
-										"ui5strap-hide-sm", "ui5strap-hide-md",
-										"ui5strap-hide-lg" ];
-								inheritHide = true;
-							}
-						}
 
 						// Visibility for EXTRA_SMALL screens
 						if (visibilityExtraSmall === Visibility.Visible) {

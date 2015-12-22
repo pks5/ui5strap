@@ -33,50 +33,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<div");
 		
 		rm.writeControlData(oControl);
-		rm.addClass('clearfix');
-		
-		var visibilityMedium = oControl.getVisibilityMedium(),
-			visibilityLarge = oControl.getVisibilityLarge(),
-			visibilitySmall = oControl.getVisibilitySmall(),
-			visibilityExtraSmall = oControl.getVisibilityExtraSmall(),
-			defaultVisibility = ui5strap.Visibility.Default,
-			visible = ui5strap.Visibility.Visible,
-			hidden = ui5strap.Visibility.Hidden;
-
-
-		if(defaultVisibility !== visibilityMedium){
-			if(visibilityMedium === visible){
-				rm.addClass('visible-md');
-			}
-			if(visibilityMedium === hidden){
-				rm.addClass('hidden-md');
-			}
-		}
-		if(defaultVisibility !== visibilityLarge){
-			if(visibilityLarge === visible){
-				rm.addClass('visible-lg');
-			}
-			if(visibilityLarge === hidden){
-				rm.addClass('hidden-lg');
-			}
-		}
-		if(defaultVisibility !== visibilitySmall){
-			if(visibilitySmall === visible){
-				rm.addClass('visible-sm');
-			}
-			if(visibilitySmall === hidden){
-				rm.addClass('hidden-sm');
-			}
-		}
-		if(defaultVisibility !== visibilityExtraSmall){
-			if(visibilityExtraSmall === visible){
-				rm.addClass('visible-xs');
-			}
-			if(visibilityExtraSmall === hidden){
-				rm.addClass('hidden-xs');
-			}
-		}
-
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
