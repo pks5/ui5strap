@@ -180,12 +180,22 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		return styleClass;
 	};
 
+	/**
+	 * Dynamic text
+	 * @Override
+	 * @Public
+	 */
 	TextProto.setText = function(newText, suppressInvalidate){
 		ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
 	};
 
-	TextProto.setTitle = function(newTitle){
-		ui5strap.Utils.updateAttribute(this, 'title', newTitle);
+	/**
+	 * Dynamic title
+	 * @Override
+	 * @Public
+	 */
+	TextProto.setTitle = function(newTitle, suppressInvalidate){
+		ui5strap.Utils.updateAttribute(this, 'title', newTitle, suppressInvalidate);
 	};
 
 	return Text;

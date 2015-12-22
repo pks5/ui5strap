@@ -29,6 +29,10 @@ sap.ui.define(['./library'], function(library){
 	
 	var BaseSupport = {};
 	
+	/**
+	 * General enhancements
+	 * @Public
+	 */
 	BaseSupport.proto = function(obj){
 		obj.getBindingContextData = function(modelName){
 			var bindingContext = this.getBindingContext(modelName);

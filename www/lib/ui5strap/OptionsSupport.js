@@ -29,6 +29,10 @@ sap.ui.define(['./library'], function(library){
 	
 	var OptionsSupport = {};
 	
+	/**
+	 * Adds the required properties to the Meta Data definition.
+	 * @Public
+	 */
 	OptionsSupport.meta = function(meta){
 		meta.properties.options = {
 			type : "string",
@@ -36,6 +40,10 @@ sap.ui.define(['./library'], function(library){
 		};
 	};
 	
+	/**
+	 * Adds Support for Options to an prototype or object
+	 * @Public
+	 */
 	OptionsSupport.proto = function(obj){
 		/**
 		 * @Protected

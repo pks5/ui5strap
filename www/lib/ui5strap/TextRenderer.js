@@ -47,6 +47,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		
+		//Attributes
+		
 		//Title
 		if('' !== title){
     		rm.writeAttribute('title', title);

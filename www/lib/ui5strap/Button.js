@@ -156,6 +156,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		return this._getStyleClassPrefix() + classAdd;
 	};
 	
+	/**
+	 * Setter for dynamic html tag attributes.
+	 */
 	ui5strap.Utils.dynamicAttributes(
 		ButtonProto, 
 		[
@@ -163,8 +166,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		]
 	);
 
+	/**
+	 * Setter for dynamic text.
+	 */
 	ui5strap.Utils.dynamicText(ButtonProto);
 
+	/**
+	 * Setter for dynamic flag selected.
+	 */
 	ui5strap.Utils.dynamicClass(ButtonProto, 'selected', { 'true' : 'active' });
 	
 	/**

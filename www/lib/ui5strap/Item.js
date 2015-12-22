@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library'], function(library){
 
 	var Item = ui5strap.Element.extend("ui5strap.Item", {
 		metadata : {

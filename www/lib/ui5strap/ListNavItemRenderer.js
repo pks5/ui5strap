@@ -30,7 +30,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var ListNavItemRenderer = {};
 
 	ListNavItemRenderer.render = function(rm, oControl) {
-		var badge = oControl.getBadge();
+		var badge = oControl.getBadge(),
+			href = oControl.getHref(),
+			title = oControl.getTitle(),
+			target = oControl.getTarget();
 
 		rm.write("<li");
 		rm.writeControlData(oControl);
@@ -43,7 +46,26 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.writeClasses();
 		rm.write(">");
 
-		this.startRenderLink(rm, oControl);
+		rm.write("<a");
+	
+		rm.writeAttribute('id', oControl.getId() + '---link');
+		
+	
+		rm.writeClasses();
+		    
+		if('' !== href){
+			rm.writeAttribute('href', href);
+		}
+	
+		if('' !== target){
+			rm.writeAttribute('target', target);
+		}
+	
+		if('' !== title){
+	    	rm.writeAttribute('title', title);
+	    }
+	
+		rm.write(">");
 		
 		var text = oControl.getText(),
 			parse = oControl.getParse();
@@ -63,33 +85,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write('</a>');
 		    
 		rm.write("</li>");
-	};
-	
-	ListNavItemRenderer.startRenderLink = function(rm, oControl, options) {
-		var href = oControl.getHref(),
-			title = oControl.getTitle(),
-			target = oControl.getTarget();
-
-		rm.write("<a");
-
-		rm.writeAttribute('id', oControl.getId() + '---link');
-		
-
-		rm.writeClasses();
-		    
-		if('' !== href){
-			rm.writeAttribute('href', href);
-		}
-
-		if('' !== target){
-			rm.writeAttribute('target', target);
-		}
-
-		if('' !== title){
-	    	rm.writeAttribute('title', title);
-	    }
-
-		rm.write(">");
 	};
 	
 	return ListNavItemRenderer;

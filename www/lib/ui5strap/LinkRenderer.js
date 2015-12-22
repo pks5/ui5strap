@@ -33,7 +33,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			action = oControl.getBsAction(),
-			target = oControl.getTarget();
+			target = oControl.getTarget(),
+			text = oControl.getText(),
+			parse = oControl.getParse();
 	
 		rm.write("<a");
 		rm.writeControlData(oControl);
@@ -54,15 +56,13 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	    	rm.writeAttribute('title', title);
 	    }
 	
+		//@deprecated
 		if(action === ui5strap.BsAction.DismissModal){
 			rm.writeAttribute('data-dismiss', 'modal');	
 		}
 		
 		rm.write(">");
 		
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-	
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
 		}

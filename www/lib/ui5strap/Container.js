@@ -27,72 +27,74 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	var Container = ControlBase.extend("ui5strap.Container", {
-		metadata : {
+	var _meta = {
 
-			library : "ui5strap",
-			
-			properties : { 
-					type : {
-						type:"ui5strap.ContainerType", 
-						defaultValue: ui5strap.ContainerType.Default
-					},
-					
-					severity : {
-						type: "ui5strap.Severity", 
-						defaultValue: ui5strap.Severity.None
-					},
-					
-					align : {
-						type : "ui5strap.Alignment",
-						defaultValue : ui5strap.Alignment.Default
-					},
-					
-					html : {
-						type : "string",
-						defaultValue : ""
-					},
-					
-					fullHeight : {
-						type : "boolean",
-						defaultValue : false
-					},
-					
-					//Visibility DOES inherit from smaller sizes
-					//TODO remove visibility since it does same as visibilityExtraSmall
-					visibility : {
-						deprecated : true,
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
-					visibilityExtraSmall : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
-					visibilitySmall : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
-					visibilityMedium : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
-					visibilityLarge : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					}
-					//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
-			},
-			
-			aggregations : { 
-				content : {
-					singularName: "content"
+		library : "ui5strap",
+		
+		properties : { 
+				type : {
+					type:"ui5strap.ContainerType", 
+					defaultValue: ui5strap.ContainerType.Default
+				},
+				
+				severity : {
+					type: "ui5strap.Severity", 
+					defaultValue: ui5strap.Severity.None
+				},
+				
+				html : {
+					type : "string",
+					defaultValue : ""
+				},
+				
+				fullHeight : {
+					type : "boolean",
+					defaultValue : false
+				},
+				
+				align : {
+					type : "ui5strap.Alignment",
+					defaultValue : ui5strap.Alignment.Default
+				},
+				
+				//Visibility DOES inherit from smaller sizes
+				//TODO remove visibility since it does same as visibilityExtraSmall
+				visibility : {
+					deprecated : true,
+					type : "ui5strap.Visibility",
+					defaultValue : ui5strap.Visibility.Default
+				},
+				visibilityExtraSmall : {
+					type : "ui5strap.Visibility",
+					defaultValue : ui5strap.Visibility.Default
+				},
+				visibilitySmall : {
+					type : "ui5strap.Visibility",
+					defaultValue : ui5strap.Visibility.Default
+				},
+				visibilityMedium : {
+					type : "ui5strap.Visibility",
+					defaultValue : ui5strap.Visibility.Default
+				},
+				visibilityLarge : {
+					type : "ui5strap.Visibility",
+					defaultValue : ui5strap.Visibility.Default
 				}
-			},
-			
-			defaultAggregation : "content"
-			
-		} //END metadata
+				//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
+		},
+		
+		aggregations : { 
+			content : {
+				singularName: "content"
+			}
+		},
+		
+		defaultAggregation : "content"
+		
+	};
+	
+	var Container = ControlBase.extend("ui5strap.Container", {
+		metadata : _meta
 	}),
 	ContainerProto = Container.prototype;
 	

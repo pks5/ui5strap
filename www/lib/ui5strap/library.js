@@ -1443,12 +1443,15 @@ sap.ui
 					 * -----
 					 */
 
-					/*
+					/**
 					 * @Package
 					 */
 					ui5strap.Utils = {};
 
-					// @deprecated
+					/**
+					 * Builds dynamic setters from a list of html tag attributes.
+					 * @Public
+					 */
 					ui5strap.Utils.dynamicAttributes = function(controlProto,
 							attributeNames) {
 						for (var i = 0; i < attributeNames.length; i++) {
@@ -1457,25 +1460,31 @@ sap.ui
 						}
 					};
 
-					// @deprecated
+					/**
+					 * Builds a dynamic setter from a html tag attribute.
+					 * @Public
+					 */
 					ui5strap.Utils.dynamicAttribute = function(controlProto,
 							attributeName) {
 						controlProto['set'
 								+ jQuery.sap.charToUpperCase(attributeName, 0)] = function(
-								newValue) {
+								newValue, suppressInvalidate) {
 							ui5strap.Utils.updateAttribute(this, attributeName,
-									newValue);
+									newValue, suppressInvalidate);
 						};
 					};
 
-					// @deprecated
+					/**
+					 * Builds dynamic setters from a list of html tag attributes.
+					 * @Public
+					 */
 					ui5strap.Utils.updateAttribute = function(oControl,
-							attributeName, newValue) {
+							attributeName, newValue, suppressInvalidate) {
 						if (oControl.getDomRef()) {
 							oControl.$().attr(attributeName, newValue);
 							oControl.setProperty(attributeName, newValue, true);
 						} else {
-							oControl.setProperty(attributeName, newValue);
+							oControl.setProperty(attributeName, newValue, suppressInvalidate);
 						}
 					};
 
