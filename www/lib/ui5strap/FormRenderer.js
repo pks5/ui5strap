@@ -27,35 +27,30 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var FormRenderer = {
-
-		typeToClass : {
-			"Horizontal" : 'form-horizontal',
-			"Inline" : 'form-inline',
-		}
-	};
+	var FormRenderer = {};
 
 	FormRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			action = oControl.getAction(),
-			method = oControl.getMethod(),
-			type = oControl.getType();
+			method = oControl.getMethod();
 
 		rm.write("<form");
 		
 		rm.writeControlData(oControl);
+		
+		rm.addClass(oControl._getStyleClass());
+		
+		rm.writeClasses();
+		
+		//Attributes
 		rm.writeAttribute('role', 'form');
-		if('' !== action){
-			rm.writeAttribute('action', action);
-		}
+		
+		action && rm.writeAttribute('action', action);
+		
 		if(ui5strap.FormMethod.Default !== method && ui5strap.FormMethod.None !== method){
 			rm.writeAttribute('method', method);
 		}
-		if(ui5strap.FormType.Default !== type){
-			rm.addClass(this.typeToClass[type]);
-		}
 		
-		rm.writeClasses();
 		rm.write(">");
 		
 		for(var i = 0; i < content.length; i++){ 

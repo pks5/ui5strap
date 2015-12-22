@@ -66,7 +66,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	}),
 	FormProto = Form.prototype;
-
+	
+	var _typeToClass = {
+		"Horizontal" : 'form-horizontal',
+		"Inline" : 'form-inline',
+	};
+	
+	FormProto._getStyleClassRoot = function(){
+		return  this._getStyleClassPrefix() + " " + _typeToClass[this.getType()];
+	};
+	
 	FormProto.onAfterRendering = function(){
 		var _this = this;
 		this.$().on('submit', function(){

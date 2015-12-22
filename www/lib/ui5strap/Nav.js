@@ -52,9 +52,22 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	NavProto = ui5strap.Nav.prototype;
 	
+	var _typeToClass = {
+		Default : "nav-default",
+		Tabs : "nav-tabs",
+		Pills : "nav-pills",
+		PillsStacked : "nav-pills nav-stacked",
+		PillsJustified : "nav-pills nav-justified",
+		TabsJustified : "nav-tabs nav-justified"
+	};
+	
 	NavProto._getStyleClassPrefix = function(){
 		return "nav";
 	};
-
+	
+	NavProto._getStyleClassRoot = function(){
+		return  this._getStyleClassPrefix() + " " + _typeToClass[this.getType()];
+	};
+	
 	return Nav;
 });

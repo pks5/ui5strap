@@ -27,29 +27,17 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	var NavRenderer = {
-		typeToClass : {
-			Default : "nav-default",
-			Tabs : "nav-tabs",
-			Pills : "nav-pills",
-			PillsStacked : "nav-pills nav-stacked",
-			PillsJustified : "nav-pills nav-justified",
-			TabsJustified : "nav-tabs nav-justified"
-		}
-	
-	};
+	var NavRenderer = {};
 	
 	NavRenderer.render = function(rm, oControl) {
-		var type = oControl.getType(),
-			items = oControl.getItems();
+		var items = oControl.getItems();
 	
 		rm.write("<ul");
 		
 		rm.writeControlData(oControl);
 	
 		rm.addClass('nav');
-		rm.addClass(this.typeToClass[type]);
-		rm.addClass(oControl._getStyleClassOptions());
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		
 		rm.write(">");

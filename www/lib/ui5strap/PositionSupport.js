@@ -86,8 +86,6 @@ sap.ui.define(['./library'], function(library){
 			else if(elName === "ui5strap.Nav"){
 				styleClass += " navbar-nav";
 			}
-			
-			styleClass += " " + navbarClass;
 		}
 		
 
