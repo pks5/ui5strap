@@ -6,6 +6,10 @@
 	        "logLevel" : 5
 	},
 	
+	"css" : [
+		"css/demoapp.css"
+	],
+	
 	"models" : [
             {
                 "src" : "i18n/i18n.properties",
@@ -64,6 +68,11 @@
                 		]
                 	}
                 }
+            },
+            
+            "ui5strap.demoapp.views.Controls" :{
+            	"id" : "controls",
+            	"type" : "HTML"
             },
 			
 			"ui5strap.demoapp.views.MenuSub1" : {

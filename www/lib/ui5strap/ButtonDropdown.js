@@ -76,11 +76,6 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	ButtonDropdownProto.setSelected = function(newValue){ 
         ui5strap.Utils.updateClass(this, jQuery('#' + this.getId() + '---' + (this.getSplit() ? 'button' : 'toggle')), "selected", newValue, { 'true' : 'active' });
     };
-/*
-	ButtonDropdownProto.onAfterRendering = function(){
-		this.$().dropdown();
-	};	
-*/
 	
 	ButtonDropdownProto.open = function(){
 		this.$().addClass('open');
@@ -101,14 +96,23 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	ButtonDropdownProto._handlePress = function(oEvent){
 		oEvent.setMarked();
 		
-		var $target = jQuery(oEvent.target);
-		if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
-			this.$().toggleClass('open');
-		}
-		else{
-			this.fireTap();
+		if (this.getEnabled()) {
+			var $target = jQuery(oEvent.target);
+			if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
+				this.$().toggleClass('open');
+			}
+			else{
+				this.fireTap();
+			}
 		}
 	};
+	
+	if(ui5strap.support.touch){	
+		ButtonDropdownProto.ontap = ButtonDropdownProto._handlePress;
+	}
+	else{
+		ButtonDropdownProto.onclick = ButtonDropdownProto._handlePress;
+	}
 	
 	return ButtonDropdown;
 });

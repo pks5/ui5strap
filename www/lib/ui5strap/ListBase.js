@@ -177,7 +177,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			return _changeSelection(_this, items[indices], mode, selectionGroup);
 		}
 		else{
-			//1 dimensional array
+			//array
 			var itemsToSelect = [];
 			for(var i=0; i<indices.length; i++){
 				var index = indices[i];
@@ -234,30 +234,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.getSelection = function(dimension, selectionGroup){
+	ListBaseProto.getSelection = function(selectionGroup){
 		var selection = this._getListSelection(selectionGroup);
-		if(typeof dimension === "undefined"){
-			return selection.items;
-		}
-		else if(0 === dimension){
-			//Single value
-			return selection.items.length ? selection.items[0] : null;
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			return selection.items;
-		}
-		else if(2 === dimension){
-			//2 dimensional array
-			return [selection.items];
-		}
-		else if(3 === dimension){
-			//3 dimensional array
-			return [[selection.items]];
-		}
-		else{
-			throw new Error("Only 3 dimensions are supported by this Control.");
-		}
+		
+		return selection.items;
 	};
 	
 	/**
@@ -327,30 +307,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Public
 	 * @Override
 	 */
-	ListBaseProto.getSelectionIndex = function(dimension, selectionGroup){
+	ListBaseProto.getSelectionIndex = function(selectionGroup){
 		var selection = this._getListSelection(selectionGroup);
-		if(typeof dimension === "undefined"){
-			return selection.indices;
-		}
-		else if(0 === dimension){
-			//single value
-			return selection.indices.length ? selection.indices[0] : undefined;
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			return selection.indices;
-		}
-		else if(2 === dimension){
-			//2 dimensional array
-			return [selection.indices];
-		}
-		else if(3 === dimension){
-			//3 dimensional array
-			return [[selection.indices]];
-		}
-		else{
-			throw new Error("Only 3 dimensions are supported by this Control.");
-		}
+		
+		return selection.indices;
 	};
 	
 	/**

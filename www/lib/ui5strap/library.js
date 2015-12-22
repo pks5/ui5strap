@@ -752,12 +752,7 @@ sap.ui
 						None : "None",
 						Single : "Single",
 						SingleToggle : "SingleToggle",
-						Multiple : "Multiple",
-
-						// Deprecated
-						SingleMaster : "SingleMaster",
-						Master : "Master"
-
+						Multiple : "Multiple"
 					};
 
 					/*

@@ -13077,6 +13077,8 @@ a {
 .ui5strapScrollContainer {
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
 .ui5strapScrollContainer-flag-horizontal {
@@ -13205,6 +13207,9 @@ a {
 .carousel-advanced > .carousel-inner > .carousel-lane > .carousel-item {
   position: absolute;
   width: 100%;
+  height: 100%;
+}
+.carousel-advanced > .carousel-inner > .carousel-lane > .carousel-item > .sapUiView {
   height: 100%;
 }
 .carousel-xs-12 > .carousel-inner {

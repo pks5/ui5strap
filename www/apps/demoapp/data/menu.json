@@ -24,6 +24,14 @@
 			"pageId" : "my-app-page4",
 			"icon" : "cog",
 			"severity" : "Success"
+		},
+		{
+			"label" : "PAGE4_TITLE",
+			"viewName" : "ui5strap.demoapp.views.Controls",
+			"pageId" : "controls",
+			"icon" : "button",
+			"severity" : "Success",
+			"type" : "HTML"
 		}
 		
 	],

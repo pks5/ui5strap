@@ -137,13 +137,13 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	TabContainerProto.synchronize = function(){
   		var customAssociation = this.getCustomAssociation();
   		if(!customAssociation){
-			this.setSelectedIndex(this.sourceControl.getSelectionIndex(0), true);
+			this.setSelectedIndex(this.sourceControl.getSelectionIndex()[0], true);
 		}
 		else{
 			var panes = this.getPanes();
 			
 			for(var i = 0; i < panes.length; i++){
-				if(this.sourceControl.getSelection(0).data(customAssociation) === panes[i].data(customAssociation)){
+				if(this.sourceControl.getSelection()[0].data(customAssociation) === panes[i].data(customAssociation)){
 					this.setSelectedIndex(i, true);
 					break;
 				}
