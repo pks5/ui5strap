@@ -38,13 +38,6 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 				type : {
 					type:"ui5strap.NavType", 
 					defaultValue:ui5strap.NavType.Default
-				},
-				
-				//@deprecated
-				align : {
-					deprecated : true,
-					type:"ui5strap.Alignment",
-					defaultValue:ui5strap.Alignment.Default
 				}
 			},
 			

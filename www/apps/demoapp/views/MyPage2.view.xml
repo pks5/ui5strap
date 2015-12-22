@@ -61,7 +61,7 @@
 								<!-- Media Item 1 -->
 								<ListMediaItem>
 									<media>
-										<Image type="MediaObject" mpath="{posts>image}" ext="png"
+										<Image options="MediaObject" mpath="{posts>image}" ext="png"
 											alt="Image" width="64" />
 									</media>
 									<content>
@@ -76,7 +76,7 @@
 											<!-- Media Item 2 (nested) -->
 											<ListMediaItem>
 												<media>
-													<Image type="MediaObject" mpath="ui5strap.demoapp.img.awesome"
+													<Image options="MediaObject" mpath="ui5strap.demoapp.img.awesome"
 														ext="png" alt="Image" width="64" />
 												</media>
 												<content>

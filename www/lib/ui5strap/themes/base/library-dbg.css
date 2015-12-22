@@ -11794,6 +11794,9 @@ a {
   margin-top: 8px;
   margin-bottom: 8px;
 }
+.ui5strapImage-option-MediaObject {
+  display: block;
+}
 .ui5strapLink-option-BarBrand {
   float: left;
   height: 44px;

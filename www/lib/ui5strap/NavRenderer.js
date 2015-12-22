@@ -50,8 +50,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.addClass('nav');
 		rm.addClass(this.typeToClass[type]);
 		rm.addClass(oControl._getStyleClassOptions());
-		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
-	
 		rm.writeClasses();
 		
 		rm.write(">");

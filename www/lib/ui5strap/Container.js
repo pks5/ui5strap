@@ -52,11 +52,6 @@ sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library,
 					defaultValue : false
 				},
 				
-				align : {
-					type : "ui5strap.Alignment",
-					defaultValue : ui5strap.Alignment.Default
-				},
-				
 				//@deprecated
 				visibility : {
 					deprecated : true,

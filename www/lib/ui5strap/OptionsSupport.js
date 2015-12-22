@@ -45,7 +45,14 @@ sap.ui.define(['./library'], function(library){
 	 * @Public
 	 */
 	OptionsSupport.proto = function(oControl){
-		
+		/**
+		 * @Protected
+		 * @Override
+		 */
+		var oldGetStyleClass = oControl._getStyleClass;
+		oControl._getStyleClass = function(){
+			return oldGetStyleClass.call(this) + " " + this._getStyleClassOptions();	
+		};
 		
 		/**
 		* @Public
@@ -77,11 +84,6 @@ sap.ui.define(['./library'], function(library){
 		    }
 			
 			return classes;
-		};
-		
-		var oldGetStyleClass = oControl._getStyleClass;
-		oControl._getStyleClass = function(){
-			return oldGetStyleClass.call(this) + " " + this._getStyleClassOptions();	
 		};
 		
 		/**

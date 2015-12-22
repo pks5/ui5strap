@@ -1852,6 +1852,7 @@ sap.ui
 					 * Responsive visibility
 					 * 
 					 * @Public
+					 * @deprecated
 					 */
 					ui5strap.RenderUtils.visibility = function(rm, oControl) {
 						jQuery.sap.log.warning("ui5strap.RenderUtils.visibility is deprecated! Use BaseSupport instead.");

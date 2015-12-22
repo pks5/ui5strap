@@ -49,7 +49,7 @@
 					<Text type="Lead" textAlign="Center" text="{i18n>HOME_INTRO}" />
 					
 					<Paragraph textAlign="Center">
-						<Image responsive="false" mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="256" height="256" />
+						<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="256" height="256" />
 					</Paragraph>
 					<Row>
 						<Col columnsSmall="6" offsetSmall="3" columnsMedium="6" offsetMedium="3" >

@@ -81,11 +81,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					deprecated : true,
 					type: "ui5strap.BsAction", 
 					defaultValue: ui5strap.BsAction.None
-				},
-				align : {
-					deprecated : true,
-					type:"ui5strap.Alignment",
-					defaultValue:ui5strap.Alignment.Default
 				}
 			},
 			aggregations : { 

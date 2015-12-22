@@ -30,29 +30,16 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var ButtonRenderer = {};
 
 	ButtonRenderer.render = function(rm, oControl) {
-		this.startRender(rm, oControl);
-
-		ui5strap.RenderUtils.renderContent(rm, oControl);
-
-		rm.write("</button>");
-
-	    ui5strap.RenderUtils.renderTrail(rm, oControl);
-	};
-
-	ButtonRenderer.startRender = function(rm, oControl) {
 		var size = oControl.getSize(),
 			action = oControl.getBsAction(),
 			title = oControl.getTitle();
-
+	
 		rm.write("<button");
 	    
 	    rm.writeControlData(oControl);
 	    
 	    rm.addClass(oControl._getStyleClass());
 	
-	    //@deprecated
-	    ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
-
 	    rm.writeClasses();
 	    
 	    if('' !== title){
@@ -70,6 +57,12 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 		
 	    rm.write(">");
+
+		ui5strap.RenderUtils.renderContent(rm, oControl);
+
+		rm.write("</button>");
+
+	    ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
 	return ButtonRenderer;

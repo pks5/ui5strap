@@ -65,10 +65,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					type : "ui5strap.IconSize",
 					defaultValue : ui5strap.IconSize.Default
 				},
-				align : {
-					type : "ui5strap.Alignment",
-					defaultValue : ui5strap.Alignment.Default
-				},
 				transform : {
 					type : "ui5strap.IconTransform",
 					defaultValue : ui5strap.IconTransform.Default
