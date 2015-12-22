@@ -41,17 +41,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 
 		rm.write("<p");
-		
 		rm.writeControlData(oControl);
-		if(oControl.getFormStatic()){
-			rm.addClass('form-control-static');
-		}
-		if(ui5strap.Severity.None !== severity){
-			rm.addClass("text-" + ui5strap.BSSeverity[severity]);
-		}
-		if(ui5strap.TextAlignment.Default !== textAlign){
-			rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		

@@ -77,6 +77,108 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	}),
 	TextProto = Text.prototype;
+	
+	TextProto._typeToTag = {
+		Default : { 
+			tagName : "span",
+			className : null
+		},
+		Strong : {
+			tagName : "strong",
+			className : null
+		},
+		Emphasized : {
+			tagName : "em",
+			className : null
+		},
+		Paragraph : {
+			tagName : "p",
+			className : null
+		},
+		Blockquote : {
+			tagName : "blockquote",
+			className : null
+		},
+		Quote : {
+			tagName : "q",
+			className : null
+		},
+		Preformatted : {
+			tagName : "pre",
+			className : null
+		},
+		Code : {
+			tagName : "code",
+			className : null
+		},
+		Small : {
+			tagName : "small",
+			className : null
+		},
+		Lead : {
+			tagName : "p",
+			className : "lead"
+		},
+		Abbreviation : {
+			tagName : "abbr",
+			className : null
+		},
+		HelpBlock : {
+			tagName : "p",
+			className : "help-block"
+		},
+		FormStatic : {
+			tagName : "p",
+			className : "form-static"
+		},
+		Label : {
+			tagName : "span",
+			className : "label"
+		},
+		Badge : {
+			tagName : "span",
+			className : "badge"
+		},
+		
+		//Deprecated
+		Phrasing : {
+			tagName : "span",
+			className : null
+		}
+		
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	TextProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix(),
+			severity = this.getSeverity(),
+			textAlign = this.getTextAlign(),
+			type = this.getType(),
+			tagData = this._typeToTag[type];
+		
+		//CSS Classes
+		if(ui5strap.TextType.Label === type){
+			//Severity for labels
+			styleClass += " label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity];
+		}
+		else if(ui5strap.Severity.None !== severity){
+			//Severity for general text
+			styleClass += " text-" + ui5strap.BSSeverity[severity];
+		}
+		
+		if(ui5strap.TextAlignment.Default !== textAlign){
+			styleClass += " ui5strap-text-align-" + textAlign.toLowerCase();
+		}
+		
+		if(tagData.className){
+			styleClass += " " + tagData.className;
+		}
+		
+		return styleClass;
+	};
 
 	TextProto.setText = function(newText, suppressInvalidate){
 		ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);

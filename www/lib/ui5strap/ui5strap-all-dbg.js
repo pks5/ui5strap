@@ -25,2118 +25,2080 @@
  * 
  */
 
-(function(){
-
-  var jQuerySap = jQuery.sap,
-  	  _timeMarks = {},
-      _addTimeMark = function(scope, group, markName){
-    	  var label = scope + "--" + group,
-		  	tm = _timeMarks[label];
-    	  
-		  if(!tm){
-			  tm = [];
-			  _timeMarks[label] = tm;
-		  }
-		  
-		  if(window.performance && performance.now){
-			  tm.push([markName, performance.now()]);
-		  }
-		  else{
-			  tm.push([markName, (new Date()).getTime()]);
-		  }
-		  
-		  if(tm.length > 1){
-			  var l1 = tm[tm.length-2],
-			  	l2 = tm[tm.length-1];
-			  jQuerySap.log.info(
-					  label 
-					  + " [" + l1[0] + "] -> [" + l2[0] + "] : " 
-					  + (l2[1] - l1[1]) + " millies."
-			  );
-		  }
-      };
-  
-   jQuery.sap.log.setLevel(3); //INFO
-  _addTimeMark("LIBRARY", "ui5strap", "LOAD_START");
-      
-  /**
-  *
-  * Test system requirements
-  *
-  * @Private
-  * @Static
-  */
-  var _testRequirements = function(){
-    if(!Object.keys){
-      jQuerySap.log.warning('Object.keys is not supported by the browser!');
-      return false;
-    }
-
-    return true;
-  };
-
-  if(!_testRequirements()){
-    throw new Error(
-      "<h4>We are sorry!</h4>" 
-      + "<p>You're browser / device is not supported by Ui5Strap yet.</p>"
-      + "<p>Please use one of following browsers:</p>" 
-      + "<ul>" 
-      + "<li>Chrome 26+</li>"
-      + "<li>Firefox 10+</li>"
-      + "<li>Safari 5+</li>"
-      + "<li>Internet Explorer 9+</li>"
-      + "</ul>"
-    );
-  }
-  
-  /*
-   * ---------------
-   *
-   * Declare Library
-   *
-   * ---------------
-   */
-
-  jQuerySap.declare("ui5strap.library");
-  
-  ui5strap.tm = _addTimeMark;
-  
-  jQuerySap.require("sap.ui.core.Core");
-	
-  //Register Ui5Strap as library
-  sap.ui.getCore().initLibrary(
-      {
-      	  name : "ui5strap",
-      	  
-      	  version: "0.9.19-SNAPSHOT",
-      	  
-      	  dependencies : [],
-      	  
-      	  types: [
-      	  	"ui5strap.Size",
-      	  	"ui5strap.Severity",
-            "ui5strap.Visibility",
-            "ui5strap.TriggerMode",
-            "ui5strap.TrailHtml",
-            "ui5strap.ContentPlacement",
-            "ui5strap.Placement",
-            "ui5strap.Alignment",
-            "ui5strap.TextAlignment",
-            "ui5strap.TextType",
-            "ui5strap.ListType",
-            "ui5strap.LinkType",
-            "ui5strap.HeadingType",
-            "ui5strap.ButtonType",
-            "ui5strap.ButtonGroupType",
-            "ui5strap.IconType",
-            "ui5strap.IconSize",
-            "ui5strap.IconTransform",
-            "ui5strap.BsAction",
-            "ui5strap.FormSeverity",
-            "ui5strap.FormType",
-            "ui5strap.TextInputType",
-            "ui5strap.SelectBoxType",
-            "ui5strap.TextInputFormat",
-            "ui5strap.CheckboxType",
-            "ui5strap.RadioButtonType",
-            "ui5strap.FormMethod",
-            "ui5strap.NavBarType",
-            "ui5strap.NavBarPosition",
-            "ui5strap.NavType",
-            "ui5strap.SelectionMode",
-            "ui5strap.ContainerType",
-            "ui5strap.ImageShape"
-      	  ],
-      	  
-      	  interfaces: [
-            "ui5strap.IColumn",
-            "ui5strap.IBar"
-          ],
-          
-      	  controls: [
-            "ui5strap.Alert",
-            "ui5strap.Badge",
-            "ui5strap.Breadcrumb",
-            "ui5strap.Break",
-            "ui5strap.Button",
-            "ui5strap.ButtonDropdown",
-            "ui5strap.ButtonGroup",
-            "ui5strap.ButtonToolbar",
-            "ui5strap.Carousel",
-            "ui5strap.Checkbox",
-            "ui5strap.Clearfix",
-            "ui5strap.Col",
-            "ui5strap.Container",
-            "ui5strap.Form",
-            "ui5strap.FormGroup",
-            "ui5strap.Heading",
-            "ui5strap.Icon",
-            "ui5strap.Image",
-            "ui5strap.InputGroup",
-            "ui5strap.Jumbotron",
-            "ui5strap.Label",
-            "ui5strap.Line",
-            "ui5strap.Link",
-            "ui5strap.List",
-            "ui5strap.ListBase",
-            "ui5strap.ListDropdownItem",
-            "ui5strap.ListDropdownMenu",
-            "ui5strap.ListGroup",
-            "ui5strap.ListGroupItem",
-            "ui5strap.ListItem",
-            "ui5strap.ListLinkItem",
-            "ui5strap.ListMedia",
-            "ui5strap.ListMediaItem",
-            "ui5strap.ListNavItem",
-            "ui5strap.Modal",
-            "ui5strap.Nav",
-            "ui5strap.NavBar",
-            "ui5strap.NavContainer",
-            "ui5strap.NavContainerStandard",
-            "ui5strap.PageHeader",
-            "ui5strap.Pager",
-            "ui5strap.Pagination",
-            "ui5strap.Panel",
-            "ui5strap.PanelGroup",
-            "ui5strap.Paragraph",
-            "ui5strap.Popover",
-            "ui5strap.Progress",
-            "ui5strap.ProgressBar",
-            "ui5strap.RadioButton",
-            "ui5strap.Row",
-            "ui5strap.ScrollContainer",
-            "ui5strap.SelectBox",
-            "ui5strap.Sidebar",
-            "ui5strap.TabContainer",
-            "ui5strap.Table",
-            "ui5strap.Text",
-            "ui5strap.TextInput",
-            "ui5strap.Thumbnail",
-            "ui5strap.Tooltip",
-            "ui5strap.Well"
-          ],
-          
-          elements: [
-            "ui5strap.Item",
-            "ui5strap.TableColumn",
-            "ui5strap.TableRow"
-          ]
-      }
-  );
-  
-  /*
-  * -------
-  *
-  * Options
-  *
-  * -------
-  */
-
-  //@deprecated
-  var tapSupport = sap.ui.Device.support.touch;
-  
-  ui5strap.options = {
-  	enableTapEvents : tapSupport,
-  	enableClickEvents : !tapSupport,
-    transitionTimeout : 2000,
-    layerTimeout : 1000
-  };
-
-  /*
-  * -------
-  *
-  * Support
-  *
-  * -------
-  */
-  
-  ui5strap.support = {
-		  "touch" : sap.ui.Device.support.touch
-  };
-   
-  var _transitionEndEvents = {
-        'transition': 'transitionend',
-        'WebkitTransition': 'webkitTransitionEnd',
-        'MozTransition': 'transitionend',
-        'OTransition': 'otransitionend'
-      },
-      elem = document.createElement('div');
-  
-  for(var t in _transitionEndEvents){
-      if(typeof elem.style[t] !== 'undefined'){
-        ui5strap.support.transitionEndEvent = _transitionEndEvents[t];
-        break;
-      }
-  }
-
-  /*
-  * -------
-  *
-  * Polyfill
-  *
-  * -------
-  */
-  ui5strap.polyfill = {};
-
-  var _requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       ||
-              window.webkitRequestAnimationFrame ||
-              window.mozRequestAnimationFrame    ||
-              function( callback ){
-    	  		//For Browsers that do not support requestAnimationFrame
-                window.setTimeout(callback, 1000 / 30);
-              };
-  })();
-
-  ui5strap.polyfill.requestAnimationFrame = function(callback){
-    _requestAnimFrame.call(window, callback);
-  };
-  
-
-  /*
-  * -----
-  *
-  * Types
-  *
-  * -----
-  */
-
-  /*
-  * Size
-  */
-  jQuery.sap.declare("ui5strap.Size");
-
-	ui5strap.Size = {
-		ExtraSmall : "ExtraSmall",
-		Small : "Small",
-		Medium : "Medium",
-		Large : "Large",
-		Default : "Default"
-	};
-
-	ui5strap.BSSize = {
-		ExtraSmall : "xs",
-		Small : "sm",
-		Medium : "md",
-		Large : "lg"
-	};
-	
-	/*
-	  * TransitionSpeed
-	  */
-	  jQuery.sap.declare("ui5strap.TransitionSpeed");
-
-		ui5strap.TransitionSpeed = {
-			Slow : "Slow",
-			Normal : "Normal",
-			Fast : "Fast"
-		};
-
-  /*
-  * Severity
-  */
-	jQuery.sap.declare("ui5strap.Severity");
-
-	ui5strap.Severity = {
-		Default : "Default",
-		Primary : "Primary",
-		Success : "Success",
-		Warning : "Warning",
-		Info : "Info",
-		Danger : "Danger",
-		None : "None"
-	};
-
-	ui5strap.BSSeverity = {
-		Default : "default",
-		Primary : "primary",
-		Success : "success",
-		Warning : "warning",
-		Info : "info",
-		Danger : "danger"
-	};
-
-  /*
-  * Visibility
-  */
-	jQuery.sap.declare("ui5strap.Visibility");
-
-	ui5strap.Visibility = {
-		Default : "Default",
-		Visible : "Visible",
-		Hidden : "Hidden"
-	};
-
-    /**
-     * CarouselOverflow defines how you see overflowing content in Carousel controls.
-     */
-    jQuery.sap.declare("ui5strap.CarouselOverflow");
-
-	ui5strap.CarouselOverflow = {
-		Default : "Default",
-		Visible : "Visible",
-		Hidden : "Hidden",
-		Covered : "Covered"
-	};
-
-  /*
-  * TriggerMode
-  * Used by Popovers
-  */
-  jQuery.sap.declare("ui5strap.TriggerMode");
-
-	ui5strap.TriggerMode = {
-		Click : "Click",
-		Hover : "Hover",
-		Focus : "Focus",
-		Manual : "Manual"
-	};
-
-	ui5strap.BSTriggerMode = {
-      Click : "click",
-      Hover : "hover",
-      Focus : "focus",
-      Manual : "manual"
-  };
-
-  /*
-  * TrailHtml
-  * Used by inline Controls
-  */
-  jQuery.sap.declare("ui5strap.TrailHtml");
-
-  ui5strap.TrailHtml = {
-      "None" : "None",
-      "Space" : "Space",
-      "DoubleSpace" : "DoubleSpace",
-      "Break" : "Break"
-  };
-
-  /*
-  * ContentPlacement
-  * Defines where to place the rendering of the content aggregation. Used when there are both properties and aggregation that produces output.
-  */
-  jQuery.sap.declare("ui5strap.ContentPlacement");
-
-  ui5strap.ContentPlacement = {
-      Start : "Start",
-      End : "End"
-  };
-
-  /*
-  * Placement
-  * Used by Popover and Tooltip controls
-  */
-	jQuery.sap.declare("ui5strap.Placement");
-
-	ui5strap.Placement = {
-		None : "None",
-		Default : "Default",
-
-		Top : "Top",
-		Left : "Left",
-		Bottom : "Bottom",
-		Right : "Right",
-		
-		AutoTop : "AutoTop",
-		AutoLeft : "AutoLeft",
-		AutoBottom : "AutoBottom",
-		AutoRight : "AutoRight"
-	};
-
-  //Bootstrap CSS mapping
-  ui5strap.BSPlacement = {
-	      Top : "top",
-	      Left : "left",
-	      Bottom : "bottom",
-	      Right : "right",
-
-	      AutoTop : "auto top",
-	      AutoLeft : "auto left",
-	      AutoBottom : "auto bottom",
-	      AutoRight : "auto right"
-  };
-
-  /*
-  * Alignment
-  * Used for align block elements
-  */
-  jQuery.sap.declare("ui5strap.Alignment");
-
-  ui5strap.Alignment = {
-    Default : "Default",
-    PullLeft : "PullLeft",
-    PullRight : "PullRight",
-    CenterBlock : "CenterBlock",
-    
-    //Deprecated
-	NavBar : "NavBar",
-    NavBarLeft : "NavBarLeft",
-    NavBarRight : "NavBarRight",
-    Sidebar : "Sidebar"
-  };
-  
-  //Bootstrap CSS mapping
-  ui5strap.BSAlignment = {
-    PullLeft : "pull-left",
-    PullRight : "pull-right",
-    CenterBlock : "center-block",
-    
-    //Deprecated
-    NavBarLeft : "navbar-left",
-    NavBarRight : "navbar-right"
-  };
-
-  /*
-  * TextType
-  */
-  jQuery.sap.declare("ui5strap.TextType");
-
-	ui5strap.TextType = {
-		Default : "Default",
-		Phrasing : "Phrasing",
-		Strong : "Strong",
-		Blockquote : "Blockquote",
-		Quote : "Quote",
-		Preformatted : "Preformatted",
-		Emphasized : "Emphasized",
-		Code : "Code",
-		Paragraph : "Paragraph",
-		HelpBlock : "HelpBlock",
-		Small : "Small",
-		Lead : "Lead",
-		Abbreviation : "Abbreviation",
-		Label : "Label",
-		Badge : "Badge"
-	};
-	
-	/*
-	   * TextAlignment
-	   */
-	   jQuery.sap.declare("ui5strap.TextAlignment");
-
-	   ui5strap.TextAlignment = {
-	     Default : "Default",
-	     
-	     Left : "Left",
-	     Right : "Right",
-	     Center : "Center",
-	     Justify : "Justify"
-	   };
-
-  /*
-  * ListType
-  */
-	jQuery.sap.declare("ui5strap.ListType");
-
-	ui5strap.ListType = {
-		Unordered : "Unordered",
-		Ordered : "Ordered"
-	};
-	
-	jQuery.sap.declare("ui5strap.ListGroupMode");
-
-	ui5strap.ListGroupMode = {
-		Default : "Default",
-		Navigation : "Navigation"
-	};
-
-  /*
-  * LinkType
-  */
-	jQuery.sap.declare("ui5strap.LinkType");
-
-	ui5strap.LinkType = {
-		Default : "Default",
-		
-		//Deprecated
-		Thumbnail : "Thumbnail"
-	};
-
-  /*
-  * HeadingType
-  * TODO check this
-  */
-  jQuery.sap.declare("ui5strap.HeadingType");
-
-  ui5strap.HeadingType = {
-    Default : "Default",
-    PageHeader : "PageHeader",
-    ListGroupItemHeading : "ListGroupItemHeading",
-    MediaHeading : "MediaHeading"
-  };
-
-  /*
-  * ButtonType
-  * TODO check this
-  */
-	jQuery.sap.declare("ui5strap.ButtonType");
-
-	ui5strap.ButtonType = {
-		Default : "Default",
-		Button : "Button",
-		Block : "Block",
-		Link : "Link",
-		
-		//@deprecated
-		Close : "Close",
-		Icon : "Icon"
-	};
-
-  /*
-  * ButtonGroupType
-  * Used by ButtonGroup
-  */
-  jQuery.sap.declare("ui5strap.ButtonGroupType");
-
-  ui5strap.ButtonGroupType = {
-    Default : "Default",
-    Justified : "Justified",
-    Vertical : "Vertical"
-  };
-
-  /*
-  * IconType
-  * Only used by ui5strap.Icon
-  */
-  jQuery.sap.declare("ui5strap.IconType");
-
-  ui5strap.IconType = {
-    Default : "Default",
-    FormFeedback : "FormFeedback"
-  };
-
-  /*
-  * IconSize
-  * Only used by ui5strap.Icon
-  */
-  jQuery.sap.declare("ui5strap.IconSize");
-
-  ui5strap.IconSize = {
-    Default : "Default",
-    Large : "Large",
-    X2 : "X2",
-    X3 : "X3",
-    X4 : "X4",
-    X5 : "X5"
-  };
-
-  /*
-  * IconTransform
-  * Only used by ui5strap.Icon
-  */
-  jQuery.sap.declare("ui5strap.IconTransform");
-
-  ui5strap.IconTransform = {
-    Default : "Default",
-    Rotate90 : "Rotate90",
-    Rotate180 : "Rotate180",
-    Rotate270 : "Rotate270",
-    FlipHorizontal : "FlipHorizontal",
-    FlipVertical : "FlipVertical"
-  };
-
-  /*
-  * BsAction adds a special class to a control that is used by Bootstrap's JavaScript.
-  * This is the most bad way to create dynamic behaviour. Use Actions instead.
-  * @deprecated Will be removed in future releases.
-  */
-	jQuery.sap.declare("ui5strap.BsAction");
-
-	ui5strap.BsAction = {
-		None : "None",
-		DismissModal : "DismissModal",
-		ToggleNavbar : "ToggleNavbar",
-		ToggleSidenav : "ToggleSidenav"
-	};
-
-  /*
-  * FormSeverity
-  * Only used by ui5strap.Form
-  */
-	jQuery.sap.declare("ui5strap.FormSeverity");
-
-	ui5strap.FormSeverity = {
-		Success : "Success",
-		Warning : "Warning",
-		Error : "Error",
-		None : "None"
-	};
-
-  /*
-  * FormType
-  * Only used by ui5strap.Form
-  */
-	jQuery.sap.declare("ui5strap.FormType");
-
-	ui5strap.FormType = {
-		Default : "Default",
-		Horizontal : "Horizontal",
-		Inline : "Inline"
-	};
-
-  /*
-  * TextInputType
-  * Only used by ui5strap.TextInput
-  */
-  jQuery.sap.declare("ui5strap.TextInputType");
-
-  ui5strap.TextInputType = {
-      Default : "Default",
-      FormControl : "FormControl"
-  };
-  
-  /*
-   * TextInputFormat
-   * Only used by ui5strap.TextInput
-   */
-   jQuery.sap.declare("ui5strap.TextInputFormat");
-
-   ui5strap.TextInputFormat = {
-       Default : "Default",
-       Plain : "Plain",
-       Html : "Html",
-       Email : "Email",
-       Date : "Date"
-   }
-
-   
-
-  /*
-  * SelectBoxType
-  * Only used by ui5strap.SelectBox
-  */
-  jQuery.sap.declare("ui5strap.SelectBoxType");
-
-  ui5strap.SelectBoxType = {
-      Default : "Default",
-      FormControl : "FormControl"
-  };
-
-  /*
-  * CheckboxType
-  * Only used by ui5strap.Checkbox
-  */
-	jQuery.sap.declare("ui5strap.CheckboxType");
-
-	ui5strap.CheckboxType = {
-		Default : "Default",
-		Block : "Block",
-		Inline : "Inline"
-	};
-
-  /*
-  * RadioButtonType
-  * Only used by ui5strap.RadioButton
-  */
-	jQuery.sap.declare("ui5strap.RadioButtonType");
-
-	ui5strap.RadioButtonType = {
-		Default : "Default",
-		Block : "Block",
-		Inline : "Inline"
-	};
-
-  /*
-  * FormMethod
-  * Only used by ui5strap.Form
-  */
-	jQuery.sap.declare("ui5strap.FormMethod");
-
-	ui5strap.FormMethod = {
-		None : "None",
-		Default : "Default",
-		POST : "POST",
-		GET : "GET",
-		PUT : "PUT"
-	};
-
-  /*
-  * NavBarType
-  * Only used by ui5strap.NavBar
-  */
-	jQuery.sap.declare("ui5strap.NavBarType");
-
-	ui5strap.NavBarType = {
-		Default : "Default",
-		None : "None"
-	};
-
-  /*
-  * NavBarPosition
-  * Only used by ui5strap.NavBar
-  */
-	jQuery.sap.declare("ui5strap.NavBarPosition");
-
-	ui5strap.NavBarPosition = {
-		Default : "Default",
-		FixedTop : "FixedTop",
-		FixedBottom : "FixedBottom",
-		StaticTop : "StaticTop"
-	};
-
-  /*
-  * NavType
-  * Only used by ui5strap.Nav
-  */
-	jQuery.sap.declare("ui5strap.NavType");
-
-	ui5strap.NavType = {
-		Tabs : "Tabs",
-		Pills : "Pills",
-		PillsStacked : "PillsStacked",
-		PillsJustified : "PillsJustified",
-		TabsJustified : "TabsJustified",
-		Default : "Default"
-	};
-	
-  /*
-   * BarNavContainerMode
-   */
-	jQuery.sap.declare("ui5strap.BarNavContainerMode");
-
-	ui5strap.BarNavContainerMode = {
-		Intrude : "Intrude",
-		Extrude : "Extrude",
-		Overlay : "Overlay",
-		IntrudeFixed : "IntrudeFixed",
-		ExtrudeFixed : "ExtrudeFixed",
-		OverlayFixed : "OverlayFixed"
-	};
-	
-	/*
-   * BarNavContainerPlacement
-   */
-	jQuery.sap.declare("ui5strap.BarNavContainerPlacement");
-
-	ui5strap.BarNavContainerPlacement = {
-		Left : "Left",
-		Top : "Top",
-		Right : "Right",
-		Bottom : "Bottom"
-	};	
-  
-   /*
-   * BarMenuType
-   */
-	jQuery.sap.declare("ui5strap.BarMenuType");
-
-	ui5strap.BarMenuType = {
-		Default : "Default",
-		ListHorizontal : "ListHorizontal",
-		ListVertical : "ListVertical",
-		ButtonsHorizontal : "ButtonsHorizontal",
-		ButtonsVertical : "ButtonsVertical"
-	}
-	
-	/*
-	   * BarMenuType
-	   */
-		jQuery.sap.declare("ui5strap.BarType");
-
-		ui5strap.BarType = {
-			Default : "Default",
-			Fluid : "Fluid"
-		}
-		
-  /*
-  * SelectionMode
-  * Used by ui5strap.ListBase
-  */
-  jQuery.sap.declare("ui5strap.SelectionMode");
-
-  ui5strap.SelectionMode = {
-    None : "None",
-    Single : "Single",
-    SingleToggle : "SingleToggle",
-    Multiple : "Multiple",
-    
-    //Deprecated
-    SingleMaster : "SingleMaster",
-    Master : "Master"
-    
-  };
-
-  /*
-  * ContainerType
-  * Only used by ui5strap.Container
-  */
-	jQuery.sap.declare("ui5strap.ContainerType");
-
-	ui5strap.ContainerType = {
-		//Plain HTML <div>
-		Default : "Default",
-		
-		//Plain HTML <span>
-		Text : "Text",
-		
-		//Bootstrap "container" & "container-fluid"
-		Fluid : "Fluid",
-		
-		//Bootstrap styles
-		Website : "Website",
-		Jumbotron : "Jumbotron",
-		Well : "Well",
-		WellLarge : "WellLarge",
-		PageHeader : "PageHeader",
-		
-		//Deprecated
-		FluidInset : "FluidInset"
-	};
-
-  /*
-  * ImageShape
-  * Only used by ui5strap.Image
-  */
-  jQuery.sap.declare("ui5strap.ImageShape");
-
-  ui5strap.ImageShape = {
-		  Default : "Default",
-		  Rounded : "Rounded",
-		  Circle : "Circle",
-		  Thumbnail : "Thumbnail"
-  };
-  
-  jQuery.sap.declare("ui5strap.ImageType");
-
-  ui5strap.ImageType = {
-		  Default : "Default",
-		  MediaObject : "MediaObject",
-		  Responsive : "Responsive"
-  };
-
-  /*
-  * ---------
-  *
-  * Shorthand
-  *
-  * ---------
-  */
-
-  /**
-  * Create a Controller instance with Action support.
-  * TODO remove ui5strap.App dependency from here?
-  * @Public
-  * @Static
-  * @deprecated
-  */
-  ui5strap.controller = function(controllerName, controllerImpl){
-	  jQuery.sap.log.warning("ui5strap.controller is deprecated. Please extend ui5strap.ActionController instead.");
-      
-	  jQuery.sap.require('ui5strap.AppBase');
-
-      ui5strap.AppBase.blessController(controllerImpl);
-
-      return sap.ui.controller(controllerName, controllerImpl);
-  };
-
-  /*
-   * -----------
-   *
-   * Transitions
-   *
-   * -----------
-   */
-  
-  /**
-  * Constructs a Transition
-  * @Constructor
-  * @deprecated use ui5strap.ResponsiveTransition instead.
-  */
-  ui5strap.Transition = function(transitionName, $currentRoot, $nextRoot, transitionId){
-	  jQuery.sap.log.warning("ui5strap.Transition is deprecated. Please use ui5strap.ResponsiveTransition instead.");
-    this.$current = $currentRoot;
-    this.$next = $nextRoot;
-    
-    this._prepared = false;
-    this._executed = false;
-    
-    var transitionClass = transitionName,
-        transitionTimeout = ui5strap.options.transitionTimeout,
-        transitionEndEvent = ui5strap.support.transitionEndEvent;
-    
-    /**
-     * Should always be surrounded by a RAF.
-     */
-    this.prepare = function (){
-		  if(this._prepared || this._executed){
-			  throw new Error('Cannot prepare transition: already prepared or executed!');
-		  }
-		  
-		  this._prepared = true;
-		
-		  if(!transitionName){
-			  return;
-		  }
-		
-		  this.$current && this.$current.addClass(transitionClass + ' ' + transitionClass+'-current');
-		  this.$next && this.$next.addClass(transitionClass + ' ' + transitionClass+'-next').removeClass('ui5strap-hidden');
-	};
-	
-	/**
-	 * Should always be surrounded by a RAF.
-	 */
-    this.execute = function (currentRootCallback, nextRootCallback){
-	      var _this = this;
-	
-	      if(!this._prepared){
-	    	  throw new Error('Cannot execute transition: not prepared!');
-	      }
-	
-	      if(this._executed){
-	    	  throw new Error('Cannot execute transition: already executed!');
-	      }
-	
-	      this._executed = true;
-	      this._neca = false;
-	      this._cuca = false;
-	
-	      if(transitionName && transitionEndEvent){
-		        jQuery.sap.log.debug('[TRANSITION#' + transitionId + '] ' + transitionName);
-		
-		        if(currentRootCallback && this.$current){ 
-			          var _currentTimout = window.setTimeout(function(){
-				            if(_this._cuca){
-				            	return;
-				            }
-				            _this._cuca = true;
-				            jQuery.sap.log.warning('[TRANSITION#' + transitionId + '] Transition "' + transitionName + '" of hiding page caused a timeout.');
-				            currentRootCallback.call(_this);
-			          }, transitionTimeout);
-			
-			          this.$current.one(transitionEndEvent, function(){
-				            if(_this._cuca){
-				            	return;
-				            }
-				            _this._cuca = true;
-				            window.clearTimeout(_currentTimout);
-				            currentRootCallback.call(_this);
-			          });
-		        }
-		        
-		        if(nextRootCallback && this.$next){
-			          var _nextTimout = window.setTimeout(function(){
-				            if(_this._neca){
-				            	return;
-				            }
-				            _this._neca = true;
-				            jQuery.sap.log.warning('[TRANSITION#' + transitionId + '] Transition "' + transitionName + '" of showing page caused a timeout.');
-				            nextRootCallback.call(_this);
-			          }, transitionTimeout);
-			
-			          this.$next.one(transitionEndEvent, function(){
-				            if(_this._neca){
-				            	return;
-				            }
-				            _this._neca = true;
-				            window.clearTimeout(_nextTimout);
-				            nextRootCallback.call(_this);
-			          });
-		        }
-		
-		        this.$current && this.$current.addClass(transitionClass+'-current-out');
-		        this.$next && this.$next.removeClass(transitionClass + '-next');
-	      }
-	      else{ 
-		        jQuery.sap.log.debug('[TRANSITION#' + transitionId + '] No Transition (' + transitionName + ') or transition end event not supported.');
-		        
-		        //TODO is it needed to remove ui5strap-hidden class here and make a RAF?
-		        this.$next && this.$next.removeClass('ui5strap-hidden');
-		
-		        ui5strap.polyfill.requestAnimationFrame(function(){
-			          currentRootCallback && currentRootCallback.call(_this);
-			          nextRootCallback && nextRootCallback.call(_this);
-		        });
-	      }
-
-     };
-
-  };
-  
-  /**
-   * Converts old transition strings into new ones.
-   * @deprecated
-   * @Private
-   */
-  var _deprecatedTransitionsConvert = function($trans){
-	  var $newTrans = "";
-	  if($trans === 'transition-zoom')
-		  $newTrans = 'zoom-in';
-	  else if($trans === 'transition-zoom2')
-		  $newTrans = 'zoom-out';
-	  
-	  else if($trans === 'transition-flip')
-		  $newTrans = 'flip-horizontal-ccw';
-	  else if($trans === 'transition-slide')
-		  $newTrans = 'slide-rtl';
-	  else
-		  $newTrans = $trans.substring(11);
-	  
-	  jQuery.sap.log.warning("Transition deprecated: '" + $trans + "'. Please use instead: " + $newTrans);
-	  return $newTrans;
-  };
-  
-  /**
-   * Constructs a responsive Transition (experimental)
-   * @Constructor
-   * @Public
-   */
-   ui5strap.ResponsiveTransition = function(data){
-     this._data = data;
-     
-     var transString = "",
-     	transSpeed = data.transitionSpeed;
-     
-     if(data.transitionAll){
-    	 if(data.transitionAll.indexOf("transition-") === 0){
-    		 
-    		 data.transitionAll = _deprecatedTransitionsConvert(data.transitionAll);
-    	 }
-    	 transString = "ui5strap-trans-all-type-" + data.transitionAll;
-     }
-     else{
-    	 transString += data.transitionExtraSmall ? "ui5strap-trans-xs-type-" + data.transitionExtraSmall : "ui5strap-trans-xs-type-none";
-    	 transString += data.transitionSmall ? " ui5strap-trans-sm-type-" + data.transitionSmall : " ui5strap-trans-sm-type-none";
-    	 transString += data.transitionMedium ? " ui5strap-trans-md-type-" + data.transitionMedium : " ui5strap-trans-md-type-none";
-    	 transString += data.transitionLarge ? " ui5strap-trans-lg-type-" + data.transitionLarge : " ui5strap-trans-lg-type-none";
-     
-    	 if(transString === "ui5strap-trans-xs-type-none ui5strap-trans-sm-type-none ui5strap-trans-md-type-none ui5strap-trans-lg-type-none"){
-        	 transString = "ui5strap-trans-all-type-none";
-         }
-     }
-     
-     this._skip = transString === "ui5strap-trans-all-type-none";
-     
-     this._transitions = transString;
-     
-     if(transSpeed && transitionSpeed !== "normal"){
-    	 this._transitions += " ui5strap-transition-speed-" + transSpeed;
-     }
-     
-     this._prepared = false;
-     this._executed = false;
-     
-     /**
-      * Should always be surrounded by a RAF.
-      * @Public
-      */
-     this.prepare = function (){
- 		  if(this._prepared || this._executed){
- 			  throw new Error('Cannot prepare transition: already prepared or executed!');
- 		  }
- 		  
- 		  this._prepared = true;
- 		
- 		  if(!ui5strap.support.transitionEndEvent || this._skip){
- 			  this._data.$next && this._data.$next.removeClass('ui5strap-hidden');
- 			 
- 			  return;
- 		  }
- 		
- 		  this._data.$current && this._data.$current.addClass(this._transitions + ' ' + 'ui5strap-transition-current');
- 		  this._data.$next && this._data.$next.addClass(this._transitions + ' ' + 'ui5strap-transition-next').removeClass('ui5strap-hidden');
- 	};
- 	
- 	/**
- 	 * Should always be surrounded by a RAF.
- 	 * @Public
- 	 */
-     this.execute = function (callbackCurrent, callbackNext){
- 	      var _this = this;
- 	
- 	      if(!this._prepared){
- 	    	  throw new Error('Cannot execute responsive transition: not prepared!');
- 	      }
- 	
- 	      if(this._executed){
- 	    	  throw new Error('Cannot execute responsive transition: already executed!');
- 	      }
- 	
- 	      this._executed = true;
- 	      this._neca = false;
- 	      this._cuca = false;
- 	
- 	      if(ui5strap.support.transitionEndEvent && !this._skip){
- 		        jQuery.sap.log.debug("[TRANS#" + this._data.id +"] Executing '" + _this._transitions + "'");
- 		
- 		        if(callbackCurrent && this._data.$current){ 
- 			          var _currentTimout = window.setTimeout(function(){
- 				            if(_this._cuca){
- 				            	return;
- 				            }
- 				            _this._cuca = true;
- 				            jQuery.sap.log.warning('[TRANS#' + _this._data.id + ' (' + _this._transitions +')] Hiding page caused a timeout.');
- 				            callbackCurrent.call(_this);
- 			          }, ui5strap.options.transitionTimeout);
- 			
- 			          this._data.$current.one(ui5strap.support.transitionEndEvent, function(){
- 				            if(_this._cuca){
- 				            	return;
- 				            }
- 				            _this._cuca = true;
- 				            window.clearTimeout(_currentTimout);
- 				            callbackCurrent.call(_this);
- 			          });
- 		        }
- 		        
- 		        if(callbackNext && this._data.$next){
- 			          var _nextTimout = window.setTimeout(function(){
- 				            if(_this._neca){
- 				            	return;
- 				            }
- 				            _this._neca = true;
- 				            jQuery.sap.log.warning('[TRANS#' + _this._data.id + ' (' + _this._transitions +')] Showing page caused a timeout.');
- 				            callbackNext.call(_this);
- 			          }, ui5strap.options.transitionTimeout);
- 			
- 			          this._data.$next.one(ui5strap.support.transitionEndEvent, function(){
- 				            if(_this._neca){
- 				            	return;
- 				            }
- 				            _this._neca = true;
- 				            window.clearTimeout(_nextTimout);
- 				            callbackNext.call(_this);
- 			          });
- 		        }
- 		
- 		        this._data.$current && this._data.$current.addClass('ui5strap-transition-current-out');
- 		        this._data.$next && this._data.$next.removeClass('ui5strap-transition-next');
- 	      }
- 	      else{ 
- 		        jQuery.sap.log.debug("[TRANS#" + _this._data.id + "] Transition skipped: '" + _this._transitions + "'");
- 		        
- 		        callbackCurrent && callbackCurrent.call(_this);
- 			    callbackNext && callbackNext.call(_this);
- 		  }
-
-      };
-
-   };
-
-  /*
-  * -------
-  *
-  * Wrapper
-  *
-  * -------
-  */
-
-  //Object
-  jQuery.sap.declare("ui5strap.Object");
-
-  ui5strap.Object = sap.ui.base.Object;
-
-  //Managed Object
-  jQuery.sap.declare("ui5strap.ManagedObject");
-
-  ui5strap.ManagedObject = sap.ui.base.ManagedObject;
-
-  //Element
-  jQuery.sap.declare("ui5strap.Element");
-
-  ui5strap.Element = sap.ui.core.Element;
-
-  //Control
-  jQuery.sap.declare("ui5strap.Control");
-
-  ui5strap.Control = sap.ui.core.Control;
-
-  //JSONModel
-  jQuery.sap.declare("ui5strap.JSONModel");
-
-  ui5strap.JSONModel = sap.ui.model.json.JSONModel;
-
-  //View
-  jQuery.sap.declare("ui5strap.View");
-
-  ui5strap.View = sap.ui.core.mvc.View;
-   
-  /*
-  * -----
-  *
-  * Layer
-  *
-  * -----
-  */
-
-  jQuery.sap.declare("ui5strap.Layer");
-  
-  /**
-   * @Package
-   * @Public
-   */
-  ui5strap.Layer = {
-    layers : {}
-  };
-  
-  /**
-   * Registers a new layer
-   * @Public
-   */
-  ui5strap.Layer.register = function(layerId, $layer){
-      if(this.layers[layerId]){
-          throw new Error('Layer ' + layerId + ' already registered.');
-      }
-
-      $layer = $layer || jQuery('#' + layerId);
-      if($layer.length === 0){
-          jQuery.sap.log.error("Layer " + layerId + " does not exist.");
-          
-          return false;
-      }
-
-      if(!$layer.hasClass('ui5strap-layer')){
-          throw new Error("Cannot register layer '" + layerId + "': layers must have the css class 'ui5strap-layer'.");
-      }
-
-      this.layers[layerId] = {
-    	  id : layerId,
-          visible : !$layer.hasClass('ui5strap-hidden'),
-          $domElement : $layer
-      }
-
-      return true;
-  };
-
-  /**
-   * @Public
-   * @Static
-   */
-  ui5strap.Layer.get = function(layerId){
-    return this.layers[layerId];
-  };
-
-  /**
-   * @Public
-   * @Static
-   */
-  ui5strap.Layer.unregister = function(layerId){
-      delete this.layers[layerId];
-  };
-
-  /**
-   * @Public
-   * @Static
-   */
-  ui5strap.Layer.isVisible = function(layerId){
-      return this.layers[layerId] && this.layers[layerId].visible;
-  };
-
-  /**
-   * @Public
-   * @Static
-   */
-  ui5strap.Layer.setVisible = function(layerId, visible, callback){
-      
-      var layer = this.layers[layerId],
-      	  $layer = layer.$domElement;
-
-      if(!layer || visible == layer.visible){
-    	  //If the layer is not defined or its already visible/invisible, just call the callback
-        callback && callback();
-        return;
-      }
-      
-      layer.visible = visible;
-      
-      if(layer.busy){
-    	  //Apply Css immediately if the layer is busy but a new request comes in
-    	  $layer.css({
-              display : visible ? 'block' : 'none',
-              opacity : visible ? 1 : 0
-          });
-    	  
-    	  //Call the existing callback
-    	  layer.busy(null);
-    	  
-    	  callback && callback();
-          
-    	  return;
-      }
-      
-      if(visible){
-        $layer.css({
-          display : 'block',
-          opacity : 0
-        });
-      }
-
-      var triggered = false,
-      	  transTimeout = null,
-          transCallback = function(ev){
-    	      if(triggered){
-                 return;
-              }
-              
-    	      window.clearTimeout(transTimeout);
-              
-    	  	  triggered = true;
-    	  	  
-    	  	  if(null === ev){
-    	  		  //Callack executed by another instance
-    	  		  jQuery.sap.log.warning("Transition of layer " + layer.id + " has been canceled by another instance.");
-    	  	  }
-    	  	  else{
-	    	  	  //Callback executed either by transition end event or timout
-    	  		  
-    	  		  if(!visible){
-	                  $layer.css('display', 'none');
-	              }
-	    	  	  
-	    	  	  if(!ev){
-	    	  		  jQuery.sap.log.warning("Layer '" + layerId + "' transition-end event failed - timeout triggered.");
-	    	  	  }
-    	  	  }
-              
-    	  	  delete layer.busy;
-    	  	  
-              callback && callback();
-          };
-          
-      layer.busy = transCallback;
-          
-      //Start Transition
-      ui5strap.polyfill.requestAnimationFrame(function(){
-	      //Transition end event
-	      $layer.one(ui5strap.support.transitionEndEvent, transCallback);
-	  	
-	      //Start transition
-	      ui5strap.polyfill.requestAnimationFrame(function(){
-	    	  //Transition timeout
-	          transTimeout = window.setTimeout(transCallback, ui5strap.options.layerTimeout);
-	    	  $layer.css('opacity', visible ? 1 : 0);
-	      });
-      });
-  };
-
-  /*
-  * -----
-  *
-  * Utils
-  *
-  * -----
-  */
-  jQuery.sap.declare("ui5strap.Utils");
-
-  /*
-   * @Package
-   */
-  ui5strap.Utils = {
-		  
-		//@deprecated
-      dynamicAttributes : function(controlProto, attributeNames){
-          for(var i = 0; i < attributeNames.length; i++){
-              ui5strap.Utils.dynamicAttribute(controlProto, attributeNames[i]);
-          }
-      },
-
-      //@deprecated
-      dynamicAttribute : function(controlProto, attributeName){
-          controlProto['set' + jQuery.sap.charToUpperCase(attributeName, 0)] = function(newValue){
-              ui5strap.Utils.updateAttribute(this, attributeName, newValue);
-          };
-      },
-
-      //@deprecated
-      updateAttribute : function(oControl, attributeName, newValue){
-          if(oControl.getDomRef()){
-            oControl.$().attr(attributeName, newValue);
-            oControl.setProperty(attributeName, newValue, true);
-          }
-          else{
-            oControl.setProperty(attributeName, newValue);
-          }
-      },
-
-    //@deprecated
-      dynamicClass : function(controlProto, propertyName, valueMapping){
-          controlProto['set' + jQuery.sap.charToUpperCase(propertyName, 0)] = function(newValue, suppressInvalidate){ 
-              ui5strap.Utils.updateClass(this, this.$(), propertyName, newValue, valueMapping, suppressInvalidate);
-          };
-      },
-
-    //@deprecated
-      updateClass : function(oControl, $target, propertyName, newValue, valueMapping, suppressInvalidate){
-          if(oControl.getDomRef()){
-              var oldValue = oControl['get' + jQuery.sap.charToUpperCase(propertyName, 0)]();
-              if(oldValue in valueMapping){
-                    $target.removeClass(valueMapping[oldValue]);
-              }
-              if(newValue in valueMapping){
-                    $target.addClass(valueMapping[newValue]);
-              }
-
-              oControl.setProperty(propertyName, newValue, true);
-          }
-          else{
-              oControl.setProperty(propertyName, newValue, suppressInvalidate);
-          }
-      },
-
-      //@deprecated
-      dynamicText : function(controlProto){
-          controlProto.setText = function(newText, suppressInvalidate){
-        	  //console.log(newText, suppressInvalidate);
-              ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
-          };
-      },
-
-      //@deprecated
-      updateText : function(oControl, $target, newText, suppressInvalidate){
-          if(oControl.getDomRef() && oControl.getContent().length === 0){
-              $target.text(newText);
-              oControl.setProperty('text', newText, true);
-          }
-          else{
-              oControl.setProperty('text', newText, suppressInvalidate);
-          }
-      }
-  };
-
-  /**
-   * @Static
-   * @Public
-   * @deprecated Use jQuery.sap.getObject instead.
-   */
-  ui5strap.Utils.getObject = function(packageString, levelsUp){
-      if(!levelsUp){
-          levelsUp = 0;
-      }
-
-    var classParts = packageString.split('.');
-      if(!(classParts[0] in window)){
-          return;
-      }
-
-    var constructor = window[classParts[0]];
-
-    for(var i = 1 ; i < classParts.length - levelsUp; i++){
-          if(!(classParts[i] in constructor)){
-              return;
-          }
-      constructor = constructor[classParts[i]];
-    }
-    
-    return constructor;
-  };
-
-  /**
-   * @Static
-   * @Public
-   */
-  ui5strap.Utils.createObject = function(packageString){
-    var Constructor = this.getObject(packageString);
-    return new Constructor();
-  };
-
-  /**
-   * @Static
-   * @Public
-   */
-  ui5strap.Utils.queryToObject = function(query){
-      var vars = query.split('&'),
-          obj = {};
-      
-      for (var i = 0; i < vars.length; i++) {
-          var pair = vars[i].split('=');
-          obj[pair[0]] = pair[1];
-      }
-
-      return obj;
-  };
-
-  /**
-   * @Static
-   * @Public
-   */
-  ui5strap.Utils.parseIContent = function(iContent){
-      var iContentType = typeof iContent;
-      
-      if(iContentType === 'string'){
-          if(jQuerySap.startsWith(iContent, "?")){
-              return ui5strap.Utils.queryToObject(iContent.slice(1));
-          }
-      }
-      
-      return iContent;
-  };
-  
-  /**
-   * @Static
-   * @Public
-   */
-  ui5strap.Utils.qualifyURL = function(url) {
-	  var a = document.createElement('a');
-	  a.href = url;
-	  return a.href;
-  };
-  
-  /**
-   * @Static
-   * @Public
-   */
-  ui5strap.Utils.urlOrigin = function(url) {
-	  var a = document.createElement('a');
-	  a.href = url;
-	  
-	  var origin = a.protocol + "//" + a.host;
-  };
-  
-  /**
-   * Transfers a property propagation from one to an other control.
-   * @Public
-   * @Static
-   */
-  ui5strap.Utils.addPropertyPropagation = function(fromControl, toControl){
-		toControl.oPropagatedProperties = fromControl._getPropertiesToPropagate();
-		
-		if (toControl.hasModel()) {
-			toControl.updateBindingContext(false, true, undefined, true);
-			toControl.updateBindings(true,null); // TODO could be restricted to models that changed
-			toControl.propagateProperties(true);
-		}
-  };
-
-  /**
-   * Finds the closest parent control of type TargetType.
-   * @Public
-   * @Static
-   */
-  ui5strap.Utils.findClosestParentControl = function(control, TargetType){
-		var parentControl = control,
-			maxDepth = 20,
-			i = 0;
-		while(!(parentControl instanceof TargetType)){
-			parentControl = parentControl.getParent()
-			i++;
-			if(i >= maxDepth){
-				jQuery.sap.log.warning("Cannot find parent control: max depth reached.");
-				parentControl = null;
-			}
-		}
-		
-		return parentControl;
-  };	
-
-  /*
-  * ---------
-  *
-  * Rendering
-  *
-  * ---------
-  */
-
-  jQuery.sap.declare("ui5strap.RenderUtils");
-
-  /**
-   * @Package
-   * @Public
-   */
-  ui5strap.RenderUtils = {
-		
-	  /**
-	   * Renders title content, used in Panel
-	   * @Public
-	   * @Static
-	   */
-      renderTitleContent : function(rm, oControl, text){
-          var content = oControl.getTitleContent(),
-              contentPlacement = oControl.getTitleContentPlacement(),
-              text = text || oControl.getTitle();
-        
-          if(contentPlacement === ui5strap.ContentPlacement.End){
-              rm.writeEscaped(text);
-          }
-
-          for(var i = 0; i < content.length; i++){ 
-              rm.renderControl(content[i]);
-          }
-
-          if(contentPlacement === ui5strap.ContentPlacement.Start){
-              rm.writeEscaped(text);
-          }
-      },
-      
-      /**
-       * parse map
-       */
-      parseMap : {
-          '[strong]' : '<strong>',
-          '[/strong]' : '</strong>',
-          '[em]' : '<em>',
-          '[/em]' : '</em>',
-          '[small]' : '<small>',
-          '[/small]' : '</small>',
-          '[span]' : '<span>',
-          '[/span]' : '</span>'
-      },
-
-      /**
-       * Parses BBCode inside text
-       * @Public
-       * @Static
-       */
-      parseText : function(text){
-          return text.replace(/\[\/?strong\]|\[\/?em\]|\[\/?small\]|\[\/?span\]/gi, function(matched){
-            return ui5strap.RenderUtils.parseMap[matched];
-          });
-      },
-      
-      /**
-       * Default rendering for controls that have both text property and content aggregation 
-       * @Public
-       * @Static
-       */
-      renderContent : function(rm, oControl, text, dontEscape){
-          var content = oControl.getContent(),
-              contentPlacement = oControl.getContentPlacement(),
-              text = text || oControl.getText();
-        
-          if(contentPlacement === ui5strap.ContentPlacement.End){
-              if(dontEscape){
-                rm.write(text);
-              }
-              else{
-                rm.writeEscaped(text);
-              }
-          }
-
-          for(var i = 0; i < content.length; i++){ 
-              rm.renderControl(content[i]);
-          }
-
-          if(contentPlacement === ui5strap.ContentPlacement.Start){
-              if(dontEscape){
-                rm.write(text);
-              }
-              else{
-                rm.writeEscaped(text);
-              }
-          }
-      },
-      
-      /**
-       * Trail mapping
-       */
-      trailHtml : {
-          Space : ' ',
-          DoubleSpace : '&nbsp; ',
-          Break : '<br />'
-      },
-      
-      /**
-       * Renders the trail after inline controls
-       */
-      renderTrail : function(rm, oControl, text){
-          var trail = oControl.getTrail();
-
-          if(trail !== ui5strap.TrailHtml.None){
-              rm.write(this.trailHtml[trail]);
-          }
-      },
-      
-      /**
-       * @deprecated
-       */
-      alignment : function(rm, oControl, navbarClass, sidebarClass){
-          var align = oControl.getAlign(),
-              Alignment = ui5strap.Alignment;
-
-          if(align !== Alignment.Default){
-              rm.addClass(ui5strap.BSAlignment[align]);
-          }
-          
-          /*
-          * This are special options for
-          * Button, ButtonGroup, Nav and Form to show properly inside NavBar controls
-          * @deprecated
-          */
-          if(typeof navbarClass === 'string'){
-              if(align === Alignment.NavBar ||
-                align === Alignment.NavBarLeft ||
-                align === Alignment.NavBarRight){
-            	  jQuery.sap.log.warning("Using Alignment.NavBar* options is deprecated.");
-                  rm.addClass(navbarClass);
-              }
-          }
-          
-          /*
-           * This are special options for
-           * Nav controls to show properly inside Sidebar controls
-           * @deprecated
-           */
-          if(typeof sidebarClass === 'string'){
-              if(align === Alignment.Sidebar){
-            	  jQuery.sap.log.warning("Using Alignment.Sidebar options is deprecated.");
-                  rm.addClass(sidebarClass);
-              }
-          }
-      },
-      
-      /**
-       * Responsive visibility
-       * @Public
-       */
-      visibility : function(rm, oControl){
-          var visibility = oControl.getVisibility(),
-              visibilityExtraSmall = oControl.getVisibilityExtraSmall(),
-              visibilitySmall = oControl.getVisibilitySmall(),
-              visibilityMedium = oControl.getVisibilityMedium(),
-              visibilityLarge = oControl.getVisibilityLarge(),
-              Visibility = ui5strap.Visibility;
-          
-          var resultHidden = ["", "", "", ""],
-          	  inheritHide = false;
-          
-          //Generic visibility
-          //TODO check if necccessary and working at all
-          if(visibility !== Visibility.Default){
-        	  
-              if(visibility === Visibility.Hidden){
-            	  resultHidden = [
-            	                  "ui5strap-hide-xs", 
-            	                  "ui5strap-hide-sm", 
-            	                  "ui5strap-hide-md", 
-            	                  "ui5strap-hide-lg"
-            	                  ];
-            	  inheritHide = true;
-              }
-          }
-          
-          //Visibility for EXTRA_SMALL screens
-          if(visibilityExtraSmall === Visibility.Visible){
-        	  //Visible on EXTRA_SMALL
-              resultHidden[0] = "";
-              inheritHide = false;
-          }
-          else if(inheritHide || visibilityExtraSmall === Visibility.Hidden){
-        	  //Hidden on EXTRA_SMALL
-        	  resultHidden[0] = "ui5strap-hide-xs";
-        	  inheritHide = true;
-          }
-          
-          //Visibility for SMALL screens
-          if(visibilitySmall === Visibility.Visible){
-        	  //Visible on SMALL
-              resultHidden[1] = "";
-              inheritHide = false;
-          }
-          else if(inheritHide || visibilitySmall === Visibility.Hidden){
-        	  //Hidden on SMALL
-              resultHidden[1] = "ui5strap-hide-sm";
-              inheritHide = true;
-          }
-          
-          
-          //Visibility for MEDIUM screens
-          if(visibilityMedium === Visibility.Visible){
-        	  //Visible on MEDIUM
-              resultHidden[2] = "";
-              inheritHide = false;
-          }
-          else if(inheritHide || visibilityMedium === Visibility.Hidden){
-        	  //Hidden on MEDIUM
-              resultHidden[2] = "ui5strap-hide-md";
-              inheritHide = true;
-          }
-          
-          //Visibility for LARGE screens
-          if(visibilityLarge === Visibility.Visible){
-        	  //Visible on LARGE
-              resultHidden[3] = "";
-          }
-          else if(inheritHide || visibilityLarge === Visibility.Hidden){
-        	  //Hidden on LARGE
-              resultHidden[3] = "ui5strap-hide-lg";
-          }
-          
-          resultHidden = resultHidden.join(" ");
-          rm.addClass(resultHidden);
-          
-      }
-
-  };
-
-  /*
-  * ------
-  *
-  * Script
-  *
-  * ------
-  */
-  jQuery.sap.declare("ui5strap.ScriptBlock");
-
-  ui5strap.ScriptBlock = function(){
-      this._pending = {};
-      this._order = [];
-      this._pendingRequests = 0;
-      this._buffer = '';
-
-      var _this = this;
-      
-      /**
-       * @Private
-       */
-      var _successCallback = function(response, callback){
-        _this._pending[this.url]["script"] = response;
-        
-        _this._pendingRequests--;
-        
-        if(0 === _this._pendingRequests){
-        	for(var i = 0; i < _this._order.length; i++){
-                if(!_this._order[i].script){
-              	  throw new Error('Could not append script to buffer: ' + _this._order[i].url);
-                }
-                _this._buffer = _this._buffer.concat("\n;\n", _this._order[i].script);
-              }
-
-              _this._pending = {};
-              _this._order = [];
-              
-              callback && callback();
-        }
-      };
-
-      /**
-       * @Public
-       */
-      this.load = function(scripts, callback){
-        if(0 < this._pendingRequests || this._order.length > 0){
-          throw new Error('Could not load scripts: requests still pending.');
-        }
-
-        this._pendingRequests = scripts.length;
-
-        for(var i = 0; i < this._pendingRequests; i++){
-          var scriptUrl = scripts[i],
-          	scriptData = {
-	            "index" : i,
-	            "url" : scriptUrl,
-	            "script" : null
-	        };
-
-          this._pending[scriptUrl] = scriptData;
-          this._order.push(scriptData);
-
-          jQuery.ajax({
-                url: scriptUrl,
-                dataType: "text",
-                success: function(response){
-                  _successCallback.call(this, response, callback);
-                },
-                error : function(){
-                  throw new Error('Could not load script: ' + scriptUrl);
-                }
-          });
-        }
-      };
-      
-      /**
-       * @Public
-       */
-      this.execute = function(useEval){
-	        if('' === this._buffer){
-	          return false;
-	        }
-	        var returnValue = null;
-	        if( true === useEval ){
-	          returnValue = eval.call(window, this._buffer);
-	        }
-	        else{
-	          returnValue = (new Function(this._buffer))(); //.call(window);
-	        }
-	        this._buffer = '';
-	
-	        return returnValue;
-      };
-  };
-
-  /*
-  * -------
-  *
-  * Require
-  *
-  * -------
-  */
-
-  /*
-  var _callbackStack = [],
-    _callbackTimer = null,
-    _requiredModules = {},
-    _checkModules = function(_this){
-	    jQuerySap.log.debug('[LIBRARY] _checkModules');
-	    
-	    var i = 0;
-	    while(i < _callbackStack.length){
-		      var request = _callbackStack[i],
-		      	  modulesExecuted = true;
-		      
-		      for(var j = 0; j < request.modules.length; j++){
-			        if(!jQuerySap.getObject(request.modules[j])){
-			        	modulesExecuted = false;
-				        request.attempts ++ ;
-				        if(request.attempts === 10){
-				            throw new Error("Could not find module '" + request.modules[j] + "'");
-				        }
-				        
-				        break;
-			        }
-		      }
-		
-		      //Run the callback
-		      if(modulesExecuted){
-		          jQuerySap.log.debug('[LIBRARY] _checkModules: Modules loaded.');
-		
-		          var callee = _callbackStack.shift();
-		          callee.callback();
-		      }
-		      else{
-		          jQuerySap.log.debug('[LIBRARY] _checkModules: Some modules are still loading.');
-		          break;
-		      }
-	    }
-	    
-	    //Callback stack empty, remove the timer
-	    if(0 === _callbackStack.length){
-	    	_callbackTimer = null;
-	    }
-	    else{
-	    	_callbackTimer = window.setTimeout(function(){ 
-	             _checkModules(_this);
-	        }, 200);
-	    }
-	};
-  */
-
-  /*
-  * Require one or more JavaScript Module, evaluated as one large script block.
-  */
-  ui5strap.require = function(modules, callback){
-	    var _this = this;
-	
-	    if(typeof modules === 'string'){
-	    	modules = [modules];
-	    }
-	
-	    jQuerySap.log.debug('[LIBRARY] require ' + modules.join(', '));
-	    
-	    var loadModules = [];
-	    	//loadModuleNames = [];
-	    for(var i = 0; i < modules.length; i++){
-	    	  var moduleName = modules[i],
-		      	  scriptUrl = jQuerySap.getModulePath(moduleName) + '.js';
-		      
-	    	  if( !jQuerySap.getObject(moduleName) ){ //&& !_requiredModules[scriptUrl] 
-		          loadModules.push(scriptUrl);
-		          //loadModuleNames.push(moduleName);
-		      }
-		      
-	    	  //_requiredModules[scriptUrl] = true;
-	    }
-	    
-	    if(loadModules.length === 0){
-	    	callback && callback();
-	    }
-	    else{ 
-	    	/*
-	    	_callbackStack.unshift({
-		      "attempts" : 0,
-		      "modules" : loadModuleNames,
-		      "callback" : callback
-		    });
-		    */
-	    	
-		    var scriptBlock = new ui5strap.ScriptBlock();
-		    scriptBlock.load(loadModules, function(){
-		        scriptBlock.execute();
-		        
-		        /*
-		        if(null === _callbackTimer){
-			    	_checkModules(_this);
-			    }
-			    */
-		        callback && callback();
-		    });
-	    } 
-    
-  };
-  
-  /*
-   * ----------
-   *
-   * Read Files
-   *
-   * ----------
-   */
-  
-  /**
-   * Read a text file via GET
-   */
-  ui5strap.readTextFile = function(url, dataType, success, error){
-	  jQuery.ajax({
-			"dataType": "json",
-			"url": url,
-			"success": success,
-			"error" : error
-	  });
-  };
-  
-  jQuery.sap.require("ui5strap.ControlBase");
-  
-  _addTimeMark("LIBRARY", "ui5strap", "LOAD_END");
-  
-  //End of library
-
-}());
-
-/* ========================================================================
- * Bootstrap: transition.js v3.1.1
- * http://getbootstrap.com/javascript/#transitions
- * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * ======================================================================== */
-
-
-(function ($) {
-  'use strict';
-
-  // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
-  // ============================================================
-
-  function transitionEnd() {
-    var el = document.createElement('bootstrap')
-
-    var transEndEventNames = {
-      'WebkitTransition' : 'webkitTransitionEnd',
-      'MozTransition'    : 'transitionend',
-      'OTransition'      : 'oTransitionEnd otransitionend',
-      'transition'       : 'transitionend'
-    }
-
-    for (var name in transEndEventNames) {
-      if (el.style[name] !== undefined) {
-        return { end: transEndEventNames[name] }
-      }
-    }
-
-    return false // explicit for ie8 (  ._.)
-  }
-
-  // http://blog.alexmaccaw.com/css-transitions
-  $.fn.emulateTransitionEnd = function (duration) {
-    var called = false, $el = this
-    $(this).one($.support.transition.end, function () { called = true })
-    var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
-    setTimeout(callback, duration)
-    return this
-  }
-
-  $(function () {
-    $.support.transition = transitionEnd()
-  })
-
-}(jQuery));;/*
+sap.ui
+		.define(
+				[ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
+						'jquery.sap.mobile' // referenced here in case the Core
+				// decides to throw it out.
+				],
+				function(jQuery, Device) {
+
+					/**
+					 * 
+					 * Test system requirements
+					 * 
+					 * @Private
+					 * @Static
+					 */
+					var _testRequirements = function() {
+						if (!Object.keys) {
+							jQuery.sap.log
+									.error('Object.keys is not supported by the browser!');
+							return false;
+						}
+
+						return true;
+					};
+
+					if (!_testRequirements()) {
+						throw new Error(
+								"<h4>We are sorry!</h4>"
+										+ "<p>You're browser / device is not supported by Ui5Strap yet.</p>"
+										+ "<p>Please use one of following browsers:</p>"
+										+ "<ul>" + "<li>Chrome 26+</li>"
+										+ "<li>Firefox 10+</li>"
+										+ "<li>Safari 5+</li>"
+										+ "<li>Internet Explorer 9+</li>"
+										+ "</ul>");
+					}
+
+					/*
+					 * ---------------
+					 * 
+					 * Declare Library
+					 * 
+					 * ---------------
+					 */
+
+					// Register Ui5Strap as library
+					sap.ui.getCore().initLibrary(
+							{
+								name : "ui5strap",
+
+								version : "0.10.1-SNAPSHOT",
+
+								dependencies : [ "sap.ui.core" ],
+
+								types : [ "ui5strap.Size", "ui5strap.Severity",
+										"ui5strap.Visibility",
+										"ui5strap.TriggerMode",
+										"ui5strap.TrailHtml",
+										"ui5strap.ContentPlacement",
+										"ui5strap.Placement",
+										"ui5strap.Alignment",
+										"ui5strap.TextAlignment",
+										"ui5strap.TextType",
+										"ui5strap.ListType",
+										"ui5strap.LinkType",
+										"ui5strap.HeadingType",
+										"ui5strap.ButtonType",
+										"ui5strap.ButtonGroupType",
+										"ui5strap.IconType",
+										"ui5strap.IconSize",
+										"ui5strap.IconTransform",
+										"ui5strap.BsAction",
+										"ui5strap.FormSeverity",
+										"ui5strap.FormType",
+										"ui5strap.TextInputType",
+										"ui5strap.SelectBoxType",
+										"ui5strap.TextInputFormat",
+										"ui5strap.CheckboxType",
+										"ui5strap.RadioButtonType",
+										"ui5strap.FormMethod",
+										"ui5strap.NavBarType",
+										"ui5strap.NavBarPosition",
+										"ui5strap.NavType",
+										"ui5strap.SelectionMode",
+										"ui5strap.ContainerType",
+										"ui5strap.ImageShape" ],
+
+								interfaces : [ "ui5strap.IColumn",
+										"ui5strap.IBar" ],
+
+								controls : [ "ui5strap.Alert",
+										"ui5strap.Badge",
+										"ui5strap.Breadcrumb",
+										"ui5strap.Break", "ui5strap.Button",
+										"ui5strap.ButtonDropdown",
+										"ui5strap.ButtonGroup",
+										"ui5strap.ButtonToolbar",
+										"ui5strap.Carousel",
+										"ui5strap.Checkbox",
+										"ui5strap.Clearfix", "ui5strap.Col",
+										"ui5strap.Container", "ui5strap.Form",
+										"ui5strap.FormGroup",
+										"ui5strap.Heading", "ui5strap.Icon",
+										"ui5strap.Image",
+										"ui5strap.InputGroup",
+										"ui5strap.Jumbotron", "ui5strap.Label",
+										"ui5strap.Line", "ui5strap.Link",
+										"ui5strap.List", "ui5strap.ListBase",
+										"ui5strap.ListDropdownItem",
+										"ui5strap.ListDropdownMenu",
+										"ui5strap.ListGroup",
+										"ui5strap.ListGroupItem",
+										"ui5strap.ListItem",
+										"ui5strap.ListLinkItem",
+										"ui5strap.ListMedia",
+										"ui5strap.ListMediaItem",
+										"ui5strap.ListNavItem",
+										"ui5strap.Modal", "ui5strap.Nav",
+										"ui5strap.NavBar",
+										"ui5strap.NavContainer",
+										"ui5strap.NavContainerStandard",
+										"ui5strap.PageHeader",
+										"ui5strap.Pager",
+										"ui5strap.Pagination",
+										"ui5strap.Panel",
+										"ui5strap.PanelGroup",
+										"ui5strap.Paragraph",
+										"ui5strap.Popover",
+										"ui5strap.Progress",
+										"ui5strap.ProgressBar",
+										"ui5strap.RadioButton", "ui5strap.Row",
+										"ui5strap.ScrollContainer",
+										"ui5strap.SelectBox",
+										"ui5strap.Sidebar",
+										"ui5strap.TabContainer",
+										"ui5strap.Table", "ui5strap.Text",
+										"ui5strap.TextInput",
+										"ui5strap.Thumbnail",
+										"ui5strap.Tooltip", "ui5strap.Well" ],
+
+								elements : [ "ui5strap.Item",
+										"ui5strap.TableColumn",
+										"ui5strap.TableRow" ]
+							});
+
+					/*
+					 * -------
+					 * 
+					 * Options
+					 * 
+					 * -------
+					 */
+
+					// @deprecated
+					var tapSupport = sap.ui.Device.support.touch;
+
+					ui5strap.options = {
+						enableTapEvents : tapSupport,
+						enableClickEvents : !tapSupport,
+						transitionTimeout : 2000,
+						layerTimeout : 1000
+					};
+
+					/*
+					 * -------
+					 * 
+					 * Support
+					 * 
+					 * -------
+					 */
+
+					ui5strap.support = {
+						"touch" : sap.ui.Device.support.touch
+					};
+
+					var _transitionEndEvents = {
+						'transition' : 'transitionend',
+						'WebkitTransition' : 'webkitTransitionEnd',
+						'MozTransition' : 'transitionend',
+						'OTransition' : 'otransitionend'
+					}, elem = document.createElement('div');
+
+					for ( var t in _transitionEndEvents) {
+						if (typeof elem.style[t] !== 'undefined') {
+							ui5strap.support.transitionEndEvent = _transitionEndEvents[t];
+							break;
+						}
+					}
+
+					/*
+					 * Bootstrap Transition End Legacy
+					 */
+
+					// CSS TRANSITION SUPPORT (Shoutout:
+					// http://www.modernizr.com/)
+					// ============================================================
+					var _bootstrapTransitionEnd = function() {
+						var el = document.createElement('bootstrap');
+
+						var transEndEventNames = {
+							'WebkitTransition' : 'webkitTransitionEnd',
+							'MozTransition' : 'transitionend',
+							'OTransition' : 'oTransitionEnd otransitionend',
+							'transition' : 'transitionend'
+						};
+
+						for ( var name in transEndEventNames) {
+							if (el.style[name] !== undefined) {
+								return {
+									end : transEndEventNames[name]
+								};
+							}
+						}
+
+						return false; // explicit for ie8 ( ._.)
+					};
+
+					ui5strap.support.transition = _bootstrapTransitionEnd();
+
+					// http://blog.alexmaccaw.com/css-transitions
+					jQuery.fn.emulateTransitionEnd = function(duration) {
+						var called = false, $el = this;
+						jQuery(this).one(ui5strap.support.transition.end,
+								function() {
+									called = true
+								});
+
+						var callback = function() {
+							if (!called)
+								jQuery($el).trigger(
+										ui5strap.support.transition.end);
+						};
+
+						setTimeout(callback, duration);
+
+						return this;
+					};
+
+					/*
+					 * END Bootstrap Transition End Legacy
+					 */
+
+					/*
+					 * -------
+					 * 
+					 * Polyfill
+					 * 
+					 * -------
+					 */
+					ui5strap.polyfill = {};
+
+					var _requestAnimFrame = (function() {
+						return window.requestAnimationFrame
+								|| window.webkitRequestAnimationFrame
+								|| window.mozRequestAnimationFrame
+								|| function(callback) {
+									// For Browsers that do not support
+									// requestAnimationFrame
+									window.setTimeout(callback, 1000 / 30);
+								};
+					})();
+
+					ui5strap.polyfill.requestAnimationFrame = function(callback) {
+						_requestAnimFrame.call(window, callback);
+					};
+
+					/*
+					 * -----
+					 * 
+					 * Types
+					 * 
+					 * -----
+					 */
+
+					/*
+					 * Size
+					 */
+					ui5strap.Size = {
+						ExtraSmall : "ExtraSmall",
+						Small : "Small",
+						Medium : "Medium",
+						Large : "Large",
+						Default : "Default"
+					};
+
+					ui5strap.BSSize = {
+						ExtraSmall : "xs",
+						Small : "sm",
+						Medium : "md",
+						Large : "lg"
+					};
+
+					/*
+					 * TransitionSpeed
+					 */
+					ui5strap.TransitionSpeed = {
+						Slow : "Slow",
+						Normal : "Normal",
+						Fast : "Fast"
+					};
+
+					/*
+					 * Severity
+					 */
+					ui5strap.Severity = {
+						Default : "Default",
+						Primary : "Primary",
+						Success : "Success",
+						Warning : "Warning",
+						Info : "Info",
+						Danger : "Danger",
+						None : "None"
+					};
+
+					ui5strap.BSSeverity = {
+						Default : "default",
+						Primary : "primary",
+						Success : "success",
+						Warning : "warning",
+						Info : "info",
+						Danger : "danger"
+					};
+
+					/*
+					 * Visibility
+					 */
+					ui5strap.Visibility = {
+						Default : "Default",
+						Visible : "Visible",
+						Hidden : "Hidden"
+					};
+
+					/**
+					 * CarouselOverflow defines how you see overflowing content
+					 * in Carousel controls.
+					 */
+					ui5strap.CarouselOverflow = {
+						Default : "Default",
+						Visible : "Visible",
+						Hidden : "Hidden",
+						Covered : "Covered"
+					};
+
+					/*
+					 * TriggerMode Used by Popovers
+					 */
+					ui5strap.TriggerMode = {
+						Click : "Click",
+						Hover : "Hover",
+						Focus : "Focus",
+						Manual : "Manual"
+					};
+
+					ui5strap.BSTriggerMode = {
+						Click : "click",
+						Hover : "hover",
+						Focus : "focus",
+						Manual : "manual"
+					};
+
+					/*
+					 * TrailHtml Used by inline Controls
+					 */
+					ui5strap.TrailHtml = {
+						"None" : "None",
+						"Space" : "Space",
+						"DoubleSpace" : "DoubleSpace",
+						"Break" : "Break"
+					};
+
+					/*
+					 * ContentPlacement Defines where to place the rendering of
+					 * the content aggregation. Used when there are both
+					 * properties and aggregation that produces output.
+					 */
+					ui5strap.ContentPlacement = {
+						Start : "Start",
+						End : "End"
+					};
+
+					/*
+					 * Placement Used by Popover and Tooltip controls
+					 */
+					ui5strap.Placement = {
+						None : "None",
+						Default : "Default",
+
+						Top : "Top",
+						Left : "Left",
+						Bottom : "Bottom",
+						Right : "Right",
+
+						AutoTop : "AutoTop",
+						AutoLeft : "AutoLeft",
+						AutoBottom : "AutoBottom",
+						AutoRight : "AutoRight"
+					};
+
+					// Bootstrap CSS mapping
+					ui5strap.BSPlacement = {
+						Top : "top",
+						Left : "left",
+						Bottom : "bottom",
+						Right : "right",
+
+						AutoTop : "auto top",
+						AutoLeft : "auto left",
+						AutoBottom : "auto bottom",
+						AutoRight : "auto right"
+					};
+
+					/*
+					 * Alignment Used for align block elements
+					 */
+					ui5strap.Alignment = {
+						Default : "Default",
+						PullLeft : "PullLeft",
+						PullRight : "PullRight",
+						CenterBlock : "CenterBlock",
+
+						// Deprecated
+						NavBar : "NavBar",
+						NavBarLeft : "NavBarLeft",
+						NavBarRight : "NavBarRight",
+						Sidebar : "Sidebar"
+					};
+
+					// Bootstrap CSS mapping
+					ui5strap.BSAlignment = {
+						PullLeft : "pull-left",
+						PullRight : "pull-right",
+						CenterBlock : "center-block",
+
+						// Deprecated
+						NavBarLeft : "navbar-left",
+						NavBarRight : "navbar-right"
+					};
+
+					/*
+					 * TextType
+					 */
+					ui5strap.TextType = {
+						Default : "Default",
+						Phrasing : "Phrasing",
+						Strong : "Strong",
+						Blockquote : "Blockquote",
+						Quote : "Quote",
+						Preformatted : "Preformatted",
+						Emphasized : "Emphasized",
+						Code : "Code",
+						Paragraph : "Paragraph",
+						HelpBlock : "HelpBlock",
+						FormStatic : "FormStatic",
+						Small : "Small",
+						Lead : "Lead",
+						Abbreviation : "Abbreviation",
+						Label : "Label",
+						Badge : "Badge"
+					};
+
+					/*
+					 * TextAlignment
+					 */
+					ui5strap.TextAlignment = {
+						Default : "Default",
+
+						Left : "Left",
+						Right : "Right",
+						Center : "Center",
+						Justify : "Justify"
+					};
+
+					/*
+					 * ListType
+					 */
+					ui5strap.ListType = {
+						Unordered : "Unordered",
+						Ordered : "Ordered"
+					};
+
+					ui5strap.ListGroupMode = {
+						Default : "Default",
+						Navigation : "Navigation"
+					};
+
+					/*
+					 * LinkType
+					 */
+					ui5strap.LinkType = {
+						Default : "Default",
+
+						// Deprecated
+						Thumbnail : "Thumbnail"
+					};
+
+					/*
+					 * HeadingType TODO check this
+					 */
+					ui5strap.HeadingType = {
+						Default : "Default",
+						PageHeader : "PageHeader",
+						ListGroupItemHeading : "ListGroupItemHeading",
+						MediaHeading : "MediaHeading"
+					};
+
+					/*
+					 * ButtonType TODO check this
+					 */
+					ui5strap.ButtonType = {
+						Default : "Default",
+						Button : "Button",
+						Block : "Block",
+						Link : "Link",
+
+						// @deprecated
+						Close : "Close",
+						Icon : "Icon"
+					};
+
+					/*
+					 * ButtonGroupType Used by ButtonGroup
+					 */
+					ui5strap.ButtonGroupType = {
+						Default : "Default",
+						Justified : "Justified",
+						Vertical : "Vertical"
+					};
+
+					/*
+					 * IconType Only used by ui5strap.Icon
+					 */
+					ui5strap.IconType = {
+						Default : "Default",
+						FormFeedback : "FormFeedback"
+					};
+
+					/*
+					 * IconSize Only used by ui5strap.Icon
+					 */
+					ui5strap.IconSize = {
+						Default : "Default",
+						Large : "Large",
+						X2 : "X2",
+						X3 : "X3",
+						X4 : "X4",
+						X5 : "X5"
+					};
+
+					/*
+					 * IconTransform Only used by ui5strap.Icon
+					 */
+					ui5strap.IconTransform = {
+						Default : "Default",
+						Rotate90 : "Rotate90",
+						Rotate180 : "Rotate180",
+						Rotate270 : "Rotate270",
+						FlipHorizontal : "FlipHorizontal",
+						FlipVertical : "FlipVertical"
+					};
+
+					/*
+					 * BsAction adds a special class to a control that is used
+					 * by Bootstrap's JavaScript. This is the most bad way to
+					 * create dynamic behaviour. Use Actions instead.
+					 * 
+					 * @deprecated Will be removed in future releases.
+					 */
+					ui5strap.BsAction = {
+						None : "None",
+						DismissModal : "DismissModal",
+						ToggleNavbar : "ToggleNavbar",
+						ToggleSidenav : "ToggleSidenav"
+					};
+
+					/*
+					 * FormSeverity Only used by ui5strap.Form
+					 */
+					ui5strap.FormSeverity = {
+						Success : "Success",
+						Warning : "Warning",
+						Error : "Error",
+						None : "None"
+					};
+
+					/*
+					 * FormType Only used by ui5strap.Form
+					 */
+					ui5strap.FormType = {
+						Default : "Default",
+						Horizontal : "Horizontal",
+						Inline : "Inline"
+					};
+
+					/*
+					 * TextInputType Only used by ui5strap.TextInput
+					 */
+					ui5strap.TextInputType = {
+						Default : "Default",
+						FormControl : "FormControl"
+					};
+
+					/*
+					 * TextInputFormat Only used by ui5strap.TextInput
+					 */
+					ui5strap.TextInputFormat = {
+						Default : "Default",
+						Plain : "Plain",
+						Html : "Html",
+						Email : "Email",
+						Date : "Date"
+					}
+
+					/*
+					 * SelectBoxType Only used by ui5strap.SelectBox
+					 */
+					ui5strap.SelectBoxType = {
+						Default : "Default",
+						FormControl : "FormControl"
+					};
+
+					/*
+					 * CheckboxType Only used by ui5strap.Checkbox
+					 */
+					ui5strap.CheckboxType = {
+						Default : "Default",
+						Block : "Block",
+						Inline : "Inline"
+					};
+
+					/*
+					 * RadioButtonType Only used by ui5strap.RadioButton
+					 */
+					ui5strap.RadioButtonType = {
+						Default : "Default",
+						Block : "Block",
+						Inline : "Inline"
+					};
+
+					/*
+					 * FormMethod Only used by ui5strap.Form
+					 */
+					ui5strap.FormMethod = {
+						None : "None",
+						Default : "Default",
+						POST : "POST",
+						GET : "GET",
+						PUT : "PUT"
+					};
+
+					/*
+					 * NavBarType Only used by ui5strap.NavBar
+					 */
+					ui5strap.NavBarType = {
+						Default : "Default",
+						None : "None"
+					};
+
+					/*
+					 * NavBarPosition Only used by ui5strap.NavBar
+					 */
+					ui5strap.NavBarPosition = {
+						Default : "Default",
+						FixedTop : "FixedTop",
+						FixedBottom : "FixedBottom",
+						StaticTop : "StaticTop"
+					};
+
+					/*
+					 * NavType Only used by ui5strap.Nav
+					 */
+					ui5strap.NavType = {
+						Tabs : "Tabs",
+						Pills : "Pills",
+						PillsStacked : "PillsStacked",
+						PillsJustified : "PillsJustified",
+						TabsJustified : "TabsJustified",
+						Default : "Default"
+					};
+
+					/*
+					 * BarNavContainerMode
+					 */
+					ui5strap.BarNavContainerMode = {
+						Intrude : "Intrude",
+						Extrude : "Extrude",
+						Overlay : "Overlay",
+						IntrudeFixed : "IntrudeFixed",
+						ExtrudeFixed : "ExtrudeFixed",
+						OverlayFixed : "OverlayFixed"
+					};
+
+					/*
+					 * BarNavContainerPlacement
+					 */
+					ui5strap.BarNavContainerPlacement = {
+						Left : "Left",
+						Top : "Top",
+						Right : "Right",
+						Bottom : "Bottom"
+					};
+
+					/*
+					 * BarMenuType
+					 */
+					ui5strap.BarMenuType = {
+						Default : "Default",
+						ListHorizontal : "ListHorizontal",
+						ListVertical : "ListVertical",
+						ButtonsHorizontal : "ButtonsHorizontal",
+						ButtonsVertical : "ButtonsVertical"
+					}
+
+					/*
+					 * BarMenuType
+					 */
+					ui5strap.BarType = {
+						Default : "Default",
+						Fluid : "Fluid"
+					}
+
+					/*
+					 * SelectionMode Used by ui5strap.ListBase
+					 */
+					ui5strap.SelectionMode = {
+						None : "None",
+						Single : "Single",
+						SingleToggle : "SingleToggle",
+						Multiple : "Multiple",
+
+						// Deprecated
+						SingleMaster : "SingleMaster",
+						Master : "Master"
+
+					};
+
+					/*
+					 * ContainerType Only used by ui5strap.Container
+					 */
+					ui5strap.ContainerType = {
+						// Plain HTML <div>
+						Default : "Default",
+
+						// Plain HTML <span>
+						Text : "Text",
+
+						// Bootstrap "container" & "container-fluid"
+						Fluid : "Fluid",
+
+						// Bootstrap styles
+						Website : "Website",
+						Jumbotron : "Jumbotron",
+						Well : "Well",
+						WellLarge : "WellLarge",
+						PageHeader : "PageHeader",
+
+						// Deprecated
+						FluidInset : "FluidInset"
+					};
+
+					/*
+					 * ImageShape Only used by ui5strap.Image
+					 */
+					ui5strap.ImageShape = {
+						Default : "Default",
+						Rounded : "Rounded",
+						Circle : "Circle",
+						Thumbnail : "Thumbnail"
+					};
+
+					ui5strap.ImageType = {
+						Default : "Default",
+						MediaObject : "MediaObject",
+						Responsive : "Responsive"
+					};
+
+					/*
+					 * ---------
+					 * 
+					 * Shorthand
+					 * 
+					 * ---------
+					 */
+
+					/**
+					 * Create a Controller instance with Action support. TODO
+					 * remove ui5strap.App dependency from here?
+					 * 
+					 * @Public
+					 * @Static
+					 * @deprecated
+					 */
+					ui5strap.controller = function(controllerName,
+							controllerImpl) {
+						jQuery.sap.log
+								.warning("ui5strap.controller is deprecated. Please extend ui5strap.ActionController instead.");
+
+						jQuery.sap.require('ui5strap.AppBase');
+
+						ui5strap.AppBase.blessController(controllerImpl);
+
+						return sap.ui
+								.controller(controllerName, controllerImpl);
+					};
+
+					/*
+					 * -----------
+					 * 
+					 * Transitions
+					 * 
+					 * -----------
+					 */
+
+					/**
+					 * Constructs a Transition
+					 * 
+					 * @Constructor
+					 * @deprecated use ui5strap.ResponsiveTransition instead.
+					 */
+					ui5strap.Transition = function(transitionName,
+							$currentRoot, $nextRoot, transitionId) {
+						jQuery.sap.log
+								.warning("ui5strap.Transition is deprecated. Please use ui5strap.ResponsiveTransition instead.");
+						this.$current = $currentRoot;
+						this.$next = $nextRoot;
+
+						this._prepared = false;
+						this._executed = false;
+
+						var transitionClass = transitionName, transitionTimeout = ui5strap.options.transitionTimeout, transitionEndEvent = ui5strap.support.transitionEndEvent;
+
+						/**
+						 * Should always be surrounded by a RAF.
+						 */
+						this.prepare = function() {
+							if (this._prepared || this._executed) {
+								throw new Error(
+										'Cannot prepare transition: already prepared or executed!');
+							}
+
+							this._prepared = true;
+
+							if (!transitionName) {
+								return;
+							}
+
+							this.$current
+									&& this.$current.addClass(transitionClass
+											+ ' ' + transitionClass
+											+ '-current');
+							this.$next
+									&& this.$next
+											.addClass(
+													transitionClass + ' '
+															+ transitionClass
+															+ '-next')
+											.removeClass('ui5strap-hidden');
+						};
+
+						/**
+						 * Should always be surrounded by a RAF.
+						 */
+						this.execute = function(currentRootCallback,
+								nextRootCallback) {
+							var _this = this;
+
+							if (!this._prepared) {
+								throw new Error(
+										'Cannot execute transition: not prepared!');
+							}
+
+							if (this._executed) {
+								throw new Error(
+										'Cannot execute transition: already executed!');
+							}
+
+							this._executed = true;
+							this._neca = false;
+							this._cuca = false;
+
+							if (transitionName && transitionEndEvent) {
+								jQuery.sap.log.debug('[TRANSITION#'
+										+ transitionId + '] ' + transitionName);
+
+								if (currentRootCallback && this.$current) {
+									var _currentTimout = window
+											.setTimeout(
+													function() {
+														if (_this._cuca) {
+															return;
+														}
+														_this._cuca = true;
+														jQuery.sap.log
+																.warning('[TRANSITION#'
+																		+ transitionId
+																		+ '] Transition "'
+																		+ transitionName
+																		+ '" of hiding page caused a timeout.');
+														currentRootCallback
+																.call(_this);
+													}, transitionTimeout);
+
+									this.$current
+											.one(
+													transitionEndEvent,
+													function() {
+														if (_this._cuca) {
+															return;
+														}
+														_this._cuca = true;
+														window
+																.clearTimeout(_currentTimout);
+														currentRootCallback
+																.call(_this);
+													});
+								}
+
+								if (nextRootCallback && this.$next) {
+									var _nextTimout = window
+											.setTimeout(
+													function() {
+														if (_this._neca) {
+															return;
+														}
+														_this._neca = true;
+														jQuery.sap.log
+																.warning('[TRANSITION#'
+																		+ transitionId
+																		+ '] Transition "'
+																		+ transitionName
+																		+ '" of showing page caused a timeout.');
+														nextRootCallback
+																.call(_this);
+													}, transitionTimeout);
+
+									this.$next
+											.one(
+													transitionEndEvent,
+													function() {
+														if (_this._neca) {
+															return;
+														}
+														_this._neca = true;
+														window
+																.clearTimeout(_nextTimout);
+														nextRootCallback
+																.call(_this);
+													});
+								}
+
+								this.$current
+										&& this.$current
+												.addClass(transitionClass
+														+ '-current-out');
+								this.$next
+										&& this.$next
+												.removeClass(transitionClass
+														+ '-next');
+							} else {
+								jQuery.sap.log
+										.debug('[TRANSITION#'
+												+ transitionId
+												+ '] No Transition ('
+												+ transitionName
+												+ ') or transition end event not supported.');
+
+								// TODO is it needed to remove ui5strap-hidden
+								// class here and make a RAF?
+								this.$next
+										&& this.$next
+												.removeClass('ui5strap-hidden');
+
+								ui5strap.polyfill
+										.requestAnimationFrame(function() {
+											currentRootCallback
+													&& currentRootCallback
+															.call(_this);
+											nextRootCallback
+													&& nextRootCallback
+															.call(_this);
+										});
+							}
+
+						};
+
+					};
+
+					/**
+					 * Converts old transition strings into new ones.
+					 * 
+					 * @deprecated
+					 * @Private
+					 */
+					var _deprecatedTransitionsConvert = function($trans) {
+						var $newTrans = "";
+						if ($trans === 'transition-zoom')
+							$newTrans = 'zoom-in';
+						else if ($trans === 'transition-zoom2')
+							$newTrans = 'zoom-out';
+
+						else if ($trans === 'transition-flip')
+							$newTrans = 'flip-horizontal-ccw';
+						else if ($trans === 'transition-slide')
+							$newTrans = 'slide-rtl';
+						else
+							$newTrans = $trans.substring(11);
+
+						jQuery.sap.log.warning("Transition deprecated: '"
+								+ $trans + "'. Please use instead: "
+								+ $newTrans);
+						return $newTrans;
+					};
+
+					/**
+					 * Constructs a responsive Transition (experimental)
+					 * 
+					 * @Constructor
+					 * @Public
+					 */
+					ui5strap.ResponsiveTransition = function(data) {
+						this._data = data;
+
+						var transString = "", transSpeed = data.transitionSpeed;
+
+						if (data.transitionAll) {
+							if (data.transitionAll.indexOf("transition-") === 0) {
+
+								data.transitionAll = _deprecatedTransitionsConvert(data.transitionAll);
+							}
+							transString = "ui5strap-trans-all-type-"
+									+ data.transitionAll;
+						} else {
+							transString += data.transitionExtraSmall ? "ui5strap-trans-xs-type-"
+									+ data.transitionExtraSmall
+									: "ui5strap-trans-xs-type-none";
+							transString += data.transitionSmall ? " ui5strap-trans-sm-type-"
+									+ data.transitionSmall
+									: " ui5strap-trans-sm-type-none";
+							transString += data.transitionMedium ? " ui5strap-trans-md-type-"
+									+ data.transitionMedium
+									: " ui5strap-trans-md-type-none";
+							transString += data.transitionLarge ? " ui5strap-trans-lg-type-"
+									+ data.transitionLarge
+									: " ui5strap-trans-lg-type-none";
+
+							if (transString === "ui5strap-trans-xs-type-none ui5strap-trans-sm-type-none ui5strap-trans-md-type-none ui5strap-trans-lg-type-none") {
+								transString = "ui5strap-trans-all-type-none";
+							}
+						}
+
+						this._skip = transString === "ui5strap-trans-all-type-none";
+
+						this._transitions = transString;
+
+						if (transSpeed && transitionSpeed !== "normal") {
+							this._transitions += " ui5strap-transition-speed-"
+									+ transSpeed;
+						}
+
+						this._prepared = false;
+						this._executed = false;
+
+						/**
+						 * Should always be surrounded by a RAF.
+						 * 
+						 * @Public
+						 */
+						this.prepare = function() {
+							if (this._prepared || this._executed) {
+								throw new Error(
+										'Cannot prepare transition: already prepared or executed!');
+							}
+
+							this._prepared = true;
+
+							if (!ui5strap.support.transitionEndEvent
+									|| this._skip) {
+								this._data.$next
+										&& this._data.$next
+												.removeClass('ui5strap-hidden');
+
+								return;
+							}
+
+							this._data.$current
+									&& this._data.$current
+											.addClass(this._transitions
+													+ ' '
+													+ 'ui5strap-transition-current');
+							this._data.$next
+									&& this._data.$next
+											.addClass(
+													this._transitions
+															+ ' '
+															+ 'ui5strap-transition-next')
+											.removeClass('ui5strap-hidden');
+						};
+
+						/**
+						 * Should always be surrounded by a RAF.
+						 * 
+						 * @Public
+						 */
+						this.execute = function(callbackCurrent, callbackNext) {
+							var _this = this;
+
+							if (!this._prepared) {
+								throw new Error(
+										'Cannot execute responsive transition: not prepared!');
+							}
+
+							if (this._executed) {
+								throw new Error(
+										'Cannot execute responsive transition: already executed!');
+							}
+
+							this._executed = true;
+							this._neca = false;
+							this._cuca = false;
+
+							if (ui5strap.support.transitionEndEvent
+									&& !this._skip) {
+								jQuery.sap.log.debug("[TRANS#" + this._data.id
+										+ "] Executing '" + _this._transitions
+										+ "'");
+
+								if (callbackCurrent && this._data.$current) {
+									var _currentTimout = window
+											.setTimeout(
+													function() {
+														if (_this._cuca) {
+															return;
+														}
+														_this._cuca = true;
+														jQuery.sap.log
+																.warning('[TRANS#'
+																		+ _this._data.id
+																		+ ' ('
+																		+ _this._transitions
+																		+ ')] Hiding page caused a timeout.');
+														callbackCurrent
+																.call(_this);
+													},
+													ui5strap.options.transitionTimeout);
+
+									this._data.$current
+											.one(
+													ui5strap.support.transitionEndEvent,
+													function() {
+														if (_this._cuca) {
+															return;
+														}
+														_this._cuca = true;
+														window
+																.clearTimeout(_currentTimout);
+														callbackCurrent
+																.call(_this);
+													});
+								}
+
+								if (callbackNext && this._data.$next) {
+									var _nextTimout = window
+											.setTimeout(
+													function() {
+														if (_this._neca) {
+															return;
+														}
+														_this._neca = true;
+														jQuery.sap.log
+																.warning('[TRANS#'
+																		+ _this._data.id
+																		+ ' ('
+																		+ _this._transitions
+																		+ ')] Showing page caused a timeout.');
+														callbackNext
+																.call(_this);
+													},
+													ui5strap.options.transitionTimeout);
+
+									this._data.$next
+											.one(
+													ui5strap.support.transitionEndEvent,
+													function() {
+														if (_this._neca) {
+															return;
+														}
+														_this._neca = true;
+														window
+																.clearTimeout(_nextTimout);
+														callbackNext
+																.call(_this);
+													});
+								}
+
+								this._data.$current
+										&& this._data.$current
+												.addClass('ui5strap-transition-current-out');
+								this._data.$next
+										&& this._data.$next
+												.removeClass('ui5strap-transition-next');
+							} else {
+								jQuery.sap.log.debug("[TRANS#" + _this._data.id
+										+ "] Transition skipped: '"
+										+ _this._transitions + "'");
+
+								callbackCurrent && callbackCurrent.call(_this);
+								callbackNext && callbackNext.call(_this);
+							}
+
+						};
+
+					};
+
+					/*
+					 * -------
+					 * 
+					 * Wrapper
+					 * 
+					 * -------
+					 */
+
+					// Object
+					ui5strap.Object = sap.ui.base.Object;
+
+					// Managed Object
+					ui5strap.ManagedObject = sap.ui.base.ManagedObject;
+
+					// Element
+					ui5strap.Element = sap.ui.core.Element;
+
+					// Control
+					ui5strap.Control = sap.ui.core.Control;
+
+					// JSONModel
+					ui5strap.JSONModel = sap.ui.model.json.JSONModel;
+
+					// View
+					ui5strap.View = sap.ui.core.mvc.View;
+
+					/*
+					 * -----
+					 * 
+					 * Layer
+					 * 
+					 * -----
+					 */
+
+					/**
+					 * @Package
+					 * @Public
+					 */
+					ui5strap.Layer = {
+						layers : {}
+					};
+
+					/**
+					 * Registers a new layer
+					 * 
+					 * @Public
+					 */
+					ui5strap.Layer.register = function(layerId, $layer) {
+						if (this.layers[layerId]) {
+							throw new Error('Layer ' + layerId
+									+ ' already registered.');
+						}
+
+						$layer = $layer || jQuery('#' + layerId);
+						if ($layer.length === 0) {
+							jQuery.sap.log.error("Layer " + layerId
+									+ " does not exist.");
+
+							return false;
+						}
+
+						if (!$layer.hasClass('ui5strap-layer')) {
+							throw new Error(
+									"Cannot register layer '"
+											+ layerId
+											+ "': layers must have the css class 'ui5strap-layer'.");
+						}
+
+						this.layers[layerId] = {
+							id : layerId,
+							visible : !$layer.hasClass('ui5strap-hidden'),
+							$domElement : $layer
+						}
+
+						return true;
+					};
+
+					/**
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.Layer.get = function(layerId) {
+						return this.layers[layerId];
+					};
+
+					/**
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.Layer.unregister = function(layerId) {
+						delete this.layers[layerId];
+					};
+
+					/**
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.Layer.isVisible = function(layerId) {
+						return this.layers[layerId]
+								&& this.layers[layerId].visible;
+					};
+
+					/**
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.Layer.setVisible = function(layerId, visible,
+							callback) {
+
+						var layer = this.layers[layerId], $layer = layer.$domElement;
+
+						if (!layer || visible == layer.visible) {
+							// If the layer is not defined or its already
+							// visible/invisible, just call the callback
+							callback && callback();
+							return;
+						}
+
+						layer.visible = visible;
+
+						if (layer.busy) {
+							// Apply Css immediately if the layer is busy but a
+							// new request comes in
+							$layer.css({
+								display : visible ? 'block' : 'none',
+								opacity : visible ? 1 : 0
+							});
+
+							// Call the existing callback
+							layer.busy(null);
+
+							callback && callback();
+
+							return;
+						}
+
+						if (visible) {
+							$layer.css({
+								display : 'block',
+								opacity : 0
+							});
+						}
+
+						var triggered = false, transTimeout = null, transCallback = function(
+								ev) {
+							if (triggered) {
+								return;
+							}
+
+							window.clearTimeout(transTimeout);
+
+							triggered = true;
+
+							if (null === ev) {
+								// Callack executed by another instance
+								jQuery.sap.log
+										.warning("Transition of layer "
+												+ layer.id
+												+ " has been canceled by another instance.");
+							} else {
+								// Callback executed either by transition end
+								// event or timout
+
+								if (!visible) {
+									$layer.css('display', 'none');
+								}
+
+								if (!ev) {
+									jQuery.sap.log
+											.warning("Layer '"
+													+ layerId
+													+ "' transition-end event failed - timeout triggered.");
+								}
+							}
+
+							delete layer.busy;
+
+							callback && callback();
+						};
+
+						layer.busy = transCallback;
+
+						// Start Transition
+						ui5strap.polyfill.requestAnimationFrame(function() {
+							// Transition end event
+							$layer.one(ui5strap.support.transitionEndEvent,
+									transCallback);
+
+							// Start transition
+							ui5strap.polyfill.requestAnimationFrame(function() {
+								// Transition timeout
+								transTimeout = window.setTimeout(transCallback,
+										ui5strap.options.layerTimeout);
+								$layer.css('opacity', visible ? 1 : 0);
+							});
+						});
+					};
+
+					/*
+					 * -----
+					 * 
+					 * Utils
+					 * 
+					 * -----
+					 */
+
+					/*
+					 * @Package
+					 */
+					ui5strap.Utils = {};
+
+					// @deprecated
+					ui5strap.Utils.dynamicAttributes = function(controlProto,
+							attributeNames) {
+						for (var i = 0; i < attributeNames.length; i++) {
+							ui5strap.Utils.dynamicAttribute(controlProto,
+									attributeNames[i]);
+						}
+					};
+
+					// @deprecated
+					ui5strap.Utils.dynamicAttribute = function(controlProto,
+							attributeName) {
+						controlProto['set'
+								+ jQuery.sap.charToUpperCase(attributeName, 0)] = function(
+								newValue) {
+							ui5strap.Utils.updateAttribute(this, attributeName,
+									newValue);
+						};
+					};
+
+					// @deprecated
+					ui5strap.Utils.updateAttribute = function(oControl,
+							attributeName, newValue) {
+						if (oControl.getDomRef()) {
+							oControl.$().attr(attributeName, newValue);
+							oControl.setProperty(attributeName, newValue, true);
+						} else {
+							oControl.setProperty(attributeName, newValue);
+						}
+					};
+
+					// @deprecated
+					ui5strap.Utils.dynamicClass = function(controlProto,
+							propertyName, valueMapping) {
+						controlProto['set'
+								+ jQuery.sap.charToUpperCase(propertyName, 0)] = function(
+								newValue, suppressInvalidate) {
+							ui5strap.Utils.updateClass(this, this.$(),
+									propertyName, newValue, valueMapping,
+									suppressInvalidate);
+						};
+					};
+
+					// @deprecated
+					ui5strap.Utils.updateClass = function(oControl, $target,
+							propertyName, newValue, valueMapping,
+							suppressInvalidate) {
+						if (oControl.getDomRef()) {
+							var oldValue = oControl['get'
+									+ jQuery.sap.charToUpperCase(propertyName,
+											0)]();
+							if (oldValue in valueMapping) {
+								$target.removeClass(valueMapping[oldValue]);
+							}
+							if (newValue in valueMapping) {
+								$target.addClass(valueMapping[newValue]);
+							}
+
+							oControl.setProperty(propertyName, newValue, true);
+						} else {
+							oControl.setProperty(propertyName, newValue,
+									suppressInvalidate);
+						}
+					};
+
+					// @deprecated
+					ui5strap.Utils.dynamicText = function(controlProto) {
+						controlProto.setText = function(newText,
+								suppressInvalidate) {
+							// console.log(newText, suppressInvalidate);
+							ui5strap.Utils.updateText(this, this.$(), newText,
+									suppressInvalidate);
+						};
+					};
+
+					// @deprecated
+					ui5strap.Utils.updateText = function(oControl, $target,
+							newText, suppressInvalidate) {
+						if (oControl.getDomRef()
+								&& oControl.getContent().length === 0) {
+							$target.text(newText);
+							oControl.setProperty('text', newText, true);
+						} else {
+							oControl.setProperty('text', newText,
+									suppressInvalidate);
+						}
+					};
+
+					/**
+					 * @Static
+					 * @Public
+					 * @deprecated Use jQuery.sap.getObject instead.
+					 */
+					ui5strap.Utils.getObject = function(packageString, levelsUp) {
+						if (!levelsUp) {
+							levelsUp = 0;
+						}
+
+						var classParts = packageString.split('.');
+						if (!(classParts[0] in window)) {
+							return;
+						}
+
+						var constructor = window[classParts[0]];
+
+						for (var i = 1; i < classParts.length - levelsUp; i++) {
+							if (!(classParts[i] in constructor)) {
+								return;
+							}
+							constructor = constructor[classParts[i]];
+						}
+
+						return constructor;
+					};
+
+					/**
+					 * @Static
+					 * @Public
+					 */
+					ui5strap.Utils.createObject = function(packageString) {
+						var Constructor = this.getObject(packageString);
+						return new Constructor();
+					};
+
+					/**
+					 * @Static
+					 * @Public
+					 */
+					ui5strap.Utils.queryToObject = function(query) {
+						var vars = query.split('&'), obj = {};
+
+						for (var i = 0; i < vars.length; i++) {
+							var pair = vars[i].split('=');
+							obj[pair[0]] = pair[1];
+						}
+
+						return obj;
+					};
+
+					/**
+					 * @Static
+					 * @Public
+					 */
+					ui5strap.Utils.parseIContent = function(iContent) {
+						var iContentType = typeof iContent;
+
+						if (iContentType === 'string') {
+							if (jQuery.sap.startsWith(iContent, "?")) {
+								return ui5strap.Utils.queryToObject(iContent
+										.slice(1));
+							}
+						}
+
+						return iContent;
+					};
+
+					/**
+					 * @Static
+					 * @Public
+					 */
+					ui5strap.Utils.qualifyURL = function(url) {
+						var a = document.createElement('a');
+						a.href = url;
+						return a.href;
+					};
+
+					/**
+					 * @Static
+					 * @Public
+					 */
+					ui5strap.Utils.urlOrigin = function(url) {
+						var a = document.createElement('a');
+						a.href = url;
+
+						var origin = a.protocol + "//" + a.host;
+					};
+
+					/**
+					 * Transfers a property propagation from one to an other
+					 * control.
+					 * 
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.Utils.addPropertyPropagation = function(
+							fromControl, toControl) {
+						toControl.oPropagatedProperties = fromControl
+								._getPropertiesToPropagate();
+
+						if (toControl.hasModel()) {
+							toControl.updateBindingContext(false, true,
+									undefined, true);
+							toControl.updateBindings(true, null); // TODO
+							// could be
+							// restricted
+							// to models
+							// that
+							// changed
+							toControl.propagateProperties(true);
+						}
+					};
+
+					/**
+					 * Finds the closest parent control of type TargetType.
+					 * 
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.Utils.findClosestParentControl = function(control,
+							TargetType) {
+						var parentControl = control, maxDepth = 20, i = 0;
+						while (!(parentControl instanceof TargetType)) {
+							parentControl = parentControl.getParent()
+							i++;
+							if (i >= maxDepth) {
+								jQuery.sap.log
+										.warning("Cannot find parent control: max depth reached.");
+								parentControl = null;
+							}
+						}
+
+						return parentControl;
+					};
+
+					/*
+					 * ---------
+					 * 
+					 * Rendering
+					 * 
+					 * ---------
+					 */
+
+					/**
+					 * @Package
+					 * @Public
+					 */
+					ui5strap.RenderUtils = {};
+
+					/**
+					 * Renders title content, used in Panel
+					 * 
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.RenderUtils.renderTitleContent = function(rm,
+							oControl, text) {
+						var content = oControl.getTitleContent(), contentPlacement = oControl
+								.getTitleContentPlacement(), text = text
+								|| oControl.getTitle();
+
+						if (contentPlacement === ui5strap.ContentPlacement.End) {
+							rm.writeEscaped(text);
+						}
+
+						for (var i = 0; i < content.length; i++) {
+							rm.renderControl(content[i]);
+						}
+
+						if (contentPlacement === ui5strap.ContentPlacement.Start) {
+							rm.writeEscaped(text);
+						}
+					};
+
+					/**
+					 * parse map
+					 */
+					ui5strap.RenderUtils.parseMap = {
+						'[strong]' : '<strong>',
+						'[/strong]' : '</strong>',
+						'[em]' : '<em>',
+						'[/em]' : '</em>',
+						'[small]' : '<small>',
+						'[/small]' : '</small>',
+						'[span]' : '<span>',
+						'[/span]' : '</span>'
+					};
+
+					/**
+					 * Parses BBCode inside text
+					 * 
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.RenderUtils.parseText = function(text) {
+						return text
+								.replace(
+										/\[\/?strong\]|\[\/?em\]|\[\/?small\]|\[\/?span\]/gi,
+										function(matched) {
+											return ui5strap.RenderUtils.parseMap[matched];
+										});
+					};
+
+					/**
+					 * Default rendering for controls that have both text
+					 * property and content aggregation
+					 * 
+					 * @Public
+					 * @Static
+					 */
+					ui5strap.RenderUtils.renderContent = function(rm, oControl,
+							text, dontEscape) {
+						var content = oControl.getContent(), contentPlacement = oControl
+								.getContentPlacement(), text = text
+								|| oControl.getText();
+
+						if (contentPlacement === ui5strap.ContentPlacement.End) {
+							if (dontEscape) {
+								rm.write(text);
+							} else {
+								rm.writeEscaped(text);
+							}
+						}
+
+						for (var i = 0; i < content.length; i++) {
+							rm.renderControl(content[i]);
+						}
+
+						if (contentPlacement === ui5strap.ContentPlacement.Start) {
+							if (dontEscape) {
+								rm.write(text);
+							} else {
+								rm.writeEscaped(text);
+							}
+						}
+					};
+
+					/**
+					 * Trail mapping
+					 */
+					ui5strap.RenderUtils.trailHtml = {
+						Space : ' ',
+						DoubleSpace : '&nbsp; ',
+						Break : '<br />'
+					};
+
+					/**
+					 * Renders the trail after inline controls
+					 */
+					ui5strap.RenderUtils.renderTrail = function(rm, oControl,
+							text) {
+						var trail = oControl.getTrail();
+
+						if (trail !== ui5strap.TrailHtml.None) {
+							rm.write(this.trailHtml[trail]);
+						}
+					};
+
+					/**
+					 * @deprecated
+					 */
+					ui5strap.RenderUtils.alignment = function(rm, oControl,
+							navbarClass, sidebarClass) {
+						var align = oControl.getAlign(), Alignment = ui5strap.Alignment;
+
+						if (align !== Alignment.Default) {
+							rm.addClass(ui5strap.BSAlignment[align]);
+						}
+
+						/*
+						 * This are special options for Button, ButtonGroup, Nav
+						 * and Form to show properly inside NavBar controls
+						 * 
+						 * @deprecated
+						 */
+						if (typeof navbarClass === 'string') {
+							if (align === Alignment.NavBar
+									|| align === Alignment.NavBarLeft
+									|| align === Alignment.NavBarRight) {
+								jQuery.sap.log
+										.warning("Using Alignment.NavBar* options is deprecated.");
+								rm.addClass(navbarClass);
+							}
+						}
+
+						/*
+						 * This are special options for Nav controls to show
+						 * properly inside Sidebar controls
+						 * 
+						 * @deprecated
+						 */
+						if (typeof sidebarClass === 'string') {
+							if (align === Alignment.Sidebar) {
+								jQuery.sap.log
+										.warning("Using Alignment.Sidebar options is deprecated.");
+								rm.addClass(sidebarClass);
+							}
+						}
+					};
+
+					/**
+					 * Responsive visibility
+					 * 
+					 * @Public
+					 */
+					ui5strap.RenderUtils.visibility = function(rm, oControl) {
+						var visibility = oControl.getVisibility(), visibilityExtraSmall = oControl
+								.getVisibilityExtraSmall(), visibilitySmall = oControl
+								.getVisibilitySmall(), visibilityMedium = oControl
+								.getVisibilityMedium(), visibilityLarge = oControl
+								.getVisibilityLarge(), Visibility = ui5strap.Visibility;
+
+						var resultHidden = [ "", "", "", "" ], inheritHide = false;
+
+						// Generic visibility
+						// TODO check if necccessary and working at all
+						if (visibility !== Visibility.Default) {
+
+							if (visibility === Visibility.Hidden) {
+								resultHidden = [ "ui5strap-hide-xs",
+										"ui5strap-hide-sm", "ui5strap-hide-md",
+										"ui5strap-hide-lg" ];
+								inheritHide = true;
+							}
+						}
+
+						// Visibility for EXTRA_SMALL screens
+						if (visibilityExtraSmall === Visibility.Visible) {
+							// Visible on EXTRA_SMALL
+							resultHidden[0] = "";
+							inheritHide = false;
+						} else if (inheritHide
+								|| visibilityExtraSmall === Visibility.Hidden) {
+							// Hidden on EXTRA_SMALL
+							resultHidden[0] = "ui5strap-hide-xs";
+							inheritHide = true;
+						}
+
+						// Visibility for SMALL screens
+						if (visibilitySmall === Visibility.Visible) {
+							// Visible on SMALL
+							resultHidden[1] = "";
+							inheritHide = false;
+						} else if (inheritHide
+								|| visibilitySmall === Visibility.Hidden) {
+							// Hidden on SMALL
+							resultHidden[1] = "ui5strap-hide-sm";
+							inheritHide = true;
+						}
+
+						// Visibility for MEDIUM screens
+						if (visibilityMedium === Visibility.Visible) {
+							// Visible on MEDIUM
+							resultHidden[2] = "";
+							inheritHide = false;
+						} else if (inheritHide
+								|| visibilityMedium === Visibility.Hidden) {
+							// Hidden on MEDIUM
+							resultHidden[2] = "ui5strap-hide-md";
+							inheritHide = true;
+						}
+
+						// Visibility for LARGE screens
+						if (visibilityLarge === Visibility.Visible) {
+							// Visible on LARGE
+							resultHidden[3] = "";
+						} else if (inheritHide
+								|| visibilityLarge === Visibility.Hidden) {
+							// Hidden on LARGE
+							resultHidden[3] = "ui5strap-hide-lg";
+						}
+
+						resultHidden = resultHidden.join(" ");
+						rm.addClass(resultHidden);
+
+					};
+
+					/*
+					 * ------
+					 * 
+					 * Script
+					 * 
+					 * ------
+					 */
+					ui5strap.ScriptBlock = function() {
+						this._pending = {};
+						this._order = [];
+						this._pendingRequests = 0;
+						this._buffer = '';
+
+						var _this = this;
+
+						/**
+						 * @Private
+						 */
+						var _successCallback = function(response, callback) {
+							_this._pending[this.url]["script"] = response;
+
+							_this._pendingRequests--;
+
+							if (0 === _this._pendingRequests) {
+								for (var i = 0; i < _this._order.length; i++) {
+									if (!_this._order[i].script) {
+										throw new Error(
+												'Could not append script to buffer: '
+														+ _this._order[i].url);
+									}
+									_this._buffer = _this._buffer.concat(
+											"\n;\n", _this._order[i].script);
+								}
+
+								_this._pending = {};
+								_this._order = [];
+
+								callback && callback();
+							}
+						};
+
+						/**
+						 * @Public
+						 */
+						this.load = function(scripts, callback) {
+							if (0 < this._pendingRequests
+									|| this._order.length > 0) {
+								throw new Error(
+										'Could not load scripts: requests still pending.');
+							}
+
+							this._pendingRequests = scripts.length;
+
+							for (var i = 0; i < this._pendingRequests; i++) {
+								var scriptUrl = scripts[i], scriptData = {
+									"index" : i,
+									"url" : scriptUrl,
+									"script" : null
+								};
+
+								this._pending[scriptUrl] = scriptData;
+								this._order.push(scriptData);
+
+								jQuery.ajax({
+									url : scriptUrl,
+									dataType : "text",
+									success : function(response) {
+										_successCallback.call(this, response,
+												callback);
+									},
+									error : function() {
+										throw new Error(
+												'Could not load script: '
+														+ scriptUrl);
+									}
+								});
+							}
+						};
+
+						/**
+						 * @Public
+						 */
+						this.execute = function(useEval) {
+							if ('' === this._buffer) {
+								return false;
+							}
+							var returnValue = null;
+							if (true === useEval) {
+								returnValue = eval.call(window, this._buffer);
+							} else {
+								returnValue = (new Function(this._buffer))(); // .call(window);
+							}
+							this._buffer = '';
+
+							return returnValue;
+						};
+					};
+
+					/*
+					 * -------
+					 * 
+					 * Require
+					 * 
+					 * -------
+					 */
+
+					/**
+					 * Require one or more JavaScript Module, evaluated as one
+					 * large script block.
+					 * 
+					 * @deprecated
+					 */
+					ui5strap.require = function(modules, callback) {
+						var _this = this;
+
+						if (typeof modules === 'string') {
+							modules = [ modules ];
+						}
+
+						jQuery.sap.log.debug('[LIBRARY] require '
+								+ modules.join(', '));
+
+						var loadModules = [];
+						for (var i = 0; i < modules.length; i++) {
+							var moduleName = modules[i], scriptUrl = jQuery.sap
+									.getModulePath(moduleName)
+									+ '.js';
+
+							if (!jQuery.sap.getObject(moduleName)) {
+								loadModules.push(scriptUrl);
+							}
+						}
+
+						if (loadModules.length === 0) {
+							callback && callback();
+						} else {
+							var scriptBlock = new ui5strap.ScriptBlock();
+							scriptBlock.load(loadModules, function() {
+								scriptBlock.execute();
+
+								callback && callback();
+							});
+						}
+
+					};
+
+					/*
+					 * ----------
+					 * 
+					 * Read Files
+					 * 
+					 * ----------
+					 */
+
+					/**
+					 * Read a text file via GET
+					 */
+					ui5strap.readTextFile = function(url, dataType, success,
+							error) {
+						jQuery.ajax({
+							"dataType" : "json",
+							"url" : url,
+							"success" : success,
+							"error" : error
+						});
+					};
+
+					// End of library
+					return ui5strap;
+
+				});
+
+/*
+ * var _timeMarks = {}, _addTimeMark = function(scope, group, markName){ var
+ * label = scope + "--" + group, tm = _timeMarks[label];
+ * 
+ * if(!tm){ tm = []; _timeMarks[label] = tm; }
+ * 
+ * if(window.performance && performance.now){ tm.push([markName,
+ * performance.now()]); } else{ tm.push([markName, (new Date()).getTime()]); }
+ * 
+ * if(tm.length > 1){ var l1 = tm[tm.length-2], l2 = tm[tm.length-1];
+ * jQuery.sap.log.info( label + " [" + l1[0] + "] -> [" + l2[0] + "] : " +
+ * (l2[1] - l1[1]) + " millies." ); } };
+ */;/*
  * 
  * UI5Strap
  *
@@ -5483,14 +5445,30 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this,
-			overlayControl = this.overlayControl,
+			navControl = this.overlayControl,
+			target = "content",
 			transitionName = transitionName || 'slide-ttb';
 		
+		//Set target busy
+		navControl.setTargetBusy(target, true);
+		
+		if(!(viewDataOrControl instanceof ui5strap.Control)){
+			var viewParameters = viewDataOrControl.parameters;
+			viewDataOrControl = _this.createView(_this.config.getViewConfig(viewDataOrControl));
+			
+			//Trigger onUpdate events
+			navControl.updateTarget(target, viewDataOrControl, viewParameters);
+		}
+		
 		ui5strap.Layer.setVisible(this.overlayId, true, function(){
-			if(!(viewDataOrControl instanceof ui5strap.Control)){
-				viewDataOrControl = _this.createView(_this.config.getViewConfig(viewDataOrControl));
-			}
-			overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
+			navControl.toPage(viewDataOrControl, target, transitionName, function toPage_complete(){
+				
+				//Set target available
+				navControl.setTargetBusy(target, false);
+				
+				//Trigger callback
+				callback && callback();
+			});
 		});
 	};
 
@@ -6387,6 +6365,12 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	
 	OptionsSupport.bless(ControlBaseProto);
 	
+	ControlBaseProto.getBindingContextData = function(modelName){
+		var bindingContext = this.getBindingContext(modelName);
+		
+		return bindingContext.getModel().getProperty(bindingContext.getPath());
+	};
+	
 	return ControlBase;
 });;/*
  * 
@@ -6415,12 +6399,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
  
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.NavContainer");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.NavContainer", {
+	var NavContainer = ControlBase.extend("ui5strap.NavContainer", {
 		metadata : {
 			library : "ui5strap",
 			
@@ -6455,13 +6436,13 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 				}
 			}
 		}
-	});
-
-	var NavContainerBase = ui5strap.NavContainer,
-		NavContainerBaseProto = NavContainerBase.prototype,
-		domAttachTimeout = 50;
+	}),
+	NavContainerProto = NavContainer.prototype,
+	domAttachTimeout = 50;
 	
-	NavContainerBaseProto._stylePrefix = "navcontainer";
+	NavContainerProto._getStyleClassPrefix = function(){
+		return "navcontainer";
+	};
 	
 	/*
 	*
@@ -6800,7 +6781,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	* @Public
 	* @PostConstruct
 	*/
-	NavContainerBaseProto.init = function(){
+	NavContainerProto.init = function(){
 		//ui5strap.tm("APP", "NC", "INIT");
 		
 		this._pendingTransitions = [];
@@ -6819,7 +6800,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	* @Override
 	* @Protected
 	*/
-	NavContainerBaseProto._initNavContainer = function(){
+	NavContainerProto._initNavContainer = function(){
 		//ui5strap.tm("APP", "NC", "INIT_NC");
 		
 		//NavContainer type string. Should only contain letters, numbers and hyphens.
@@ -6838,7 +6819,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	* Creates a dom id for a given target and page
 	* @Public
 	*/
-	NavContainerBaseProto.createPageDomId = function(target, page){
+	NavContainerProto.createPageDomId = function(target, page){
 		if(page === null){
 			return 'navcontainer-page---' + this._targetPagesCount[target];
 		}
@@ -6850,7 +6831,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	* Registers a new dom id for a given target and page
 	* @Public
 	*/
-	NavContainerBaseProto.pageDomId = function(target, page){
+	NavContainerProto.pageDomId = function(target, page){
 		if(!(target in this._targetPagesCount)){
 			this._targetPagesCount[target] = 0;
 		}
@@ -6869,7 +6850,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	/**
 	* @Override
 	*/
-	NavContainerBaseProto.propagateProperties = function(vName){
+	NavContainerProto.propagateProperties = function(vName){
 		var oProperties = this._getPropertiesToPropagate(),
 			bUpdateAll = vName === true, // update all bindings when no model name parameter has been specified
 			sName = bUpdateAll ? undefined : vName,
@@ -6884,7 +6865,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		
 	};
 	
-	NavContainerBaseProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
+	NavContainerProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
 		jQuery.sap.log.debug("UBC");
 		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
 		
@@ -6937,7 +6918,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	 * Destroys targets before the current control is destroyed.
 	* @Override
 	*/
-	NavContainerBaseProto.exit = function(){
+	NavContainerProto.exit = function(){
 		for(var target in this.targets){
 			if(this.targets[target]){
 				var oldTarget = this.targets[target];
@@ -6955,7 +6936,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	 * @Protected
 	 * @Override
 	 */
-	NavContainerBaseProto._getStyleClassRoot = function(){
+	NavContainerProto._getStyleClassRoot = function(){
 		return "navcontainer navcontainer-type-" + this.ncType;
 	};
 	
@@ -6963,7 +6944,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	 * @Public
 	 * TODO Improve component ID syntax
 	 */
-	NavContainerBaseProto.targetDomId = function(target){
+	NavContainerProto.targetDomId = function(target){
 		return 'navcontainer-target-' + target + '---' + this.getId();
 	};
 	
@@ -6971,7 +6952,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	 * @Public
 	 * TODO Improve component ID syntax
 	 */
-	NavContainerBaseProto.targetPagesDomId = function(target){
+	NavContainerProto.targetPagesDomId = function(target){
 		return 'navcontainer-pages-' + target + '---' + this.getId();
 	};
 
@@ -6979,21 +6960,21 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	 * @Public
 	 * TODO Improve component ID syntax
 	 */
-	NavContainerBaseProto.targetLayersDomId = function(target){
+	NavContainerProto.targetLayersDomId = function(target){
 		return 'navcontainer-layers-' + target + '---' + this.getId();
 	};
 	
 	/**
 	 * @Protected
 	 */
-	NavContainerBaseProto._getTargetClassString = function(target){
+	NavContainerProto._getTargetClassString = function(target){
 		return "navcontainer-target navcontainer-target-" + target;
 	};
 	
 	/**
 	* @Public
 	*/
-	NavContainerBaseProto.updateTarget = function(target, oPage, eventParameters){
+	NavContainerProto.updateTarget = function(target, oPage, eventParameters){
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
@@ -7017,28 +6998,28 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	/**
 	 * @Public
 	 */
-	NavContainerBaseProto.hasTarget = function(target){
+	NavContainerProto.hasTarget = function(target){
 		return target in this.targets;
 	};
 	
 	/**
 	 * @Public
 	 */
-	NavContainerBaseProto.getTarget = function(target){
+	NavContainerProto.getTarget = function(target){
 		return this.targets[target];
 	};
 	
 	/**
 	 * @Public
 	 */
-	NavContainerBaseProto.isTargetBusy = function(target){
+	NavContainerProto.isTargetBusy = function(target){
 		return this._targetStatus[target];
 	};
 	
 	/**
 	 * @Public
 	 */
-	NavContainerBaseProto.setTargetBusy = function(target, targetBusy){
+	NavContainerProto.setTargetBusy = function(target, targetBusy){
 		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
 		this._targetStatus[target] = targetBusy;
 	};
@@ -7046,7 +7027,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	/**
 	* @Public
 	*/
-	NavContainerBaseProto.toPage = function(page, target, transitionName, callback){
+	NavContainerProto.toPage = function(page, target, transitionName, callback){
 		//ui5strap.tm("APP", "NC", "TO_PAGE");
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
@@ -7140,7 +7121,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	* @Override
 	* @Public
 	*/
-	NavContainerBaseProto.onBeforeRendering = function(){
+	NavContainerProto.onBeforeRendering = function(){
 		//ui5strap.tm("APP", "NC", "BEFORE_RENDERING");
 
 		for(var target in this.targets){
@@ -7166,7 +7147,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	* @Override
 	* @Public
 	*/
-	NavContainerBaseProto.onAfterRendering = function(){ 
+	NavContainerProto.onAfterRendering = function(){ 
 		//ui5strap.tm("APP", "NC", "AFTER_RENDERING");
 		
 		var _pendingTransitions = this._pendingTransitions,
@@ -7194,7 +7175,8 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		
 	};
 
-}());;/*
+	return NavContainer;
+});;/*
  * 
  * UI5Strap
  *
@@ -8276,8 +8258,14 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 
 sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
-	var RestClient = AppComponent.extend("ui5strap.RestClient"),
-		RestClientProto = RestClient.prototype;
+	var RestClient = AppComponent.extend("ui5strap.RestClient", {
+		"constructor" : function(app, options){
+			AppComponent.call(this, app, options);
+			
+			this._createMethods();
+		}
+	}),
+	RestClientProto = RestClient.prototype;
 
     RestClient.CONTENT_TYPE_TEXT = 'text/plain';
     RestClient.CONTENT_TYPE_XML = 'application/xml';
@@ -8293,6 +8281,101 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     RestClient.RESPONSE_DATA_TYPE_JSON = 'json';
     RestClient.RESPONSE_DATA_TYPE_JSONP = 'jsonp';
     RestClient.RESPONSE_DATA_TYPE_XML = 'xml';
+    
+    RestClientProto._createMethods = function(){
+    	var methodsSettings = this.options.methods;
+    	if(!methodsSettings){
+    		return;
+    	}
+    	
+    	var _this = this,
+    		methods = Object.keys(methodsSettings),
+    		methodsLength = methods.length;
+    	
+    	for(var i = 0; i < methodsLength; i++){
+    		(function(){
+	    		var methodName = methods[i],
+	    			methodData = methodsSettings[methodName],
+	    			methodType = methodData.type,
+	    			path = methodData.path;
+	    		
+	    		if(!methodType){
+	    			return;
+	    		}
+	    		
+	    		if(!path){
+	    			throw new Error("Path is required!");
+	    		}
+	    		
+	    		var param = jQuery.extend({}, methodData);
+	    		
+	    		//Delete provided type
+	    		delete param.type;
+	    		
+	    		if(methodType === "get"){
+	    			_this[methodName] = function(){
+	    				return this._get(this._buildParam(param, arguments));
+	    			};
+	    		}
+	    		else if(methodType === "postWithPayload"){
+	    			_this[methodName] = function(){
+	    				return this._postWithPayload(this._buildParam(param, arguments));
+	    			};
+	    		}
+	    		else if(methodType === "postUrlEncoded"){
+	    			_this[methodName] = function(){
+	    				return this._postUrlEncoded(this._buildParam(param, arguments));
+	    			};
+	    		}
+	    		
+    		}());
+    	}
+    	
+    };
+    
+    /**
+     * @Protected
+     */
+    RestClientProto._buildParam = function(param, args){
+    	if(!param.arguments){
+    		return param;
+    	}
+    	
+    	for(var j=0; j<param.arguments.length; j++){
+			var p = param.arguments[j].split("."),
+				key = p[0];
+    		
+    		if(key === "path"){
+    			if(!param.pathParameters){
+    				param.pathParameters = {};
+    			}
+    			param.pathParameters[p[1]] = args[j];
+    		}
+    		else if(key === "query"){
+    			if(!param.queryParameters){
+    				param.queryParameters = {};
+    			}
+    			param.queryParameters[p[1]] = args[j];
+    		}
+    		else if(key === "post"){
+    			if(!param.postParameters){
+    				param.postParameters = {};
+    			}
+    			param.postParameters[p[1]] = args[j];
+    		}
+    		else if(key === "payload"){
+    			param.payload = args[j];
+    		}
+    		else if(key === "success"){
+    			param.success = args[j];
+    		}
+    		else if(key === "error"){
+    			param.error = args[j];
+    		}
+		}
+    	
+    	return param;
+    };
     
     /**
     * Parses a path and replaces {placeholder} with values of pathParam directory, if present.
@@ -8322,6 +8405,13 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     };
     
     /**
+     * Global request headers
+     */
+    RestClientProto._requestHeaders = function(options){
+    	return {};
+    };
+    
+    /**
     * GET Request with Query Parameters
     * @protected 
     */
@@ -8332,7 +8422,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
         
-        var requestHeaders = {};
+        var requestHeaders = this._requestHeaders(options);
         
         if(options.requestHeaders){
         	jQuery.extend(requestHeaders, options.requestHeaders);
@@ -8364,7 +8454,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
         
-        var requestHeaders = {};
+        var requestHeaders = this._requestHeaders(options);
         
         if(options.requestHeaders){
         	jQuery.extend(requestHeaders, options.requestHeaders);
@@ -8406,10 +8496,16 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             options.responseDataType = RestClient.RESPONSE_DATA_TYPE_JSON;
         }
         
-        var requestHeaders = {};
+        var requestHeaders = this._requestHeaders(options);
         
         if(options.requestHeaders){
         	jQuery.extend(requestHeaders, options.requestHeaders);
+        }
+        
+        var postUrl = this._determineRequestURL(options);
+
+        if(options.queryParameters){
+            postUrl += '?' + (-1 === postUrl.indexOf('?') ? '?' : '&') + jQuery.param(options.queryParameters);
         }
 
         jQuery.ajax({
@@ -8418,7 +8514,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             dataType: options.responseDataType,
             processData: false,
             type: 'POST',
-            url: this._determineRequestURL(options),
+            url: postUrl,
             headers : requestHeaders,
             beforeSend: function (xhr) {
             	_this._beforeSend(xhr, options);
@@ -8457,12 +8553,9 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Button");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Button", {
+	var Button = ControlBase.extend("ui5strap.Button", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectableItem"],
 			
@@ -8535,28 +8628,78 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		    }
 
 		}
-	});
-
-	var ButtonPrototype = ui5strap.Button.prototype;
+	}),
+	ButtonProto = Button.prototype;
 	
-	ButtonPrototype._stylePrefix = 'ui5strapButton';
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonProto._getStyleClassRoot = function(){
+		var type = this.getType(),
+			classAdd = "";
+		if(ui5strap.ButtonType.Default !== type){
+			classAdd = " " + this._getStyleClassType(type);
+		}
+		
+		//Bootstrap classes
+		if(type === ui5strap.ButtonType.Button || ui5strap.ButtonType.Block === type){
+			classAdd += " btn";
+			classAdd += " btn-" + ui5strap.BSSeverity[this.getSeverity()];
+		    
+			var size = this.getSize();
+			if(ui5strap.Size.Default !== size){
+				classAdd += ' btn-' + ui5strap.BSSize[size];
+		    }
+
+		    if(ui5strap.ButtonType.Block === type){
+		    	classAdd += " btn-block";
+			}
+		}
+		else if(type === ui5strap.ButtonType.Link){
+			classAdd += " btn btn-link";
+		}
+		else if(type === ui5strap.ButtonType.Close || type === ui5strap.ButtonType.Icon){
+			classAdd += " close";
+		}
+		
+		//Selected
+		if(this.getSelected()){
+			classAdd + " active";
+		}
+		
+		//Bootstrap Actions (deprecated)
+		var action = this.getBsAction();
+		//Navbar toggle
+		//@deprecated
+		if(action === ui5strap.BsAction.ToggleNavbar){
+			classAdd + " btn-toggle-navbar";
+		}
+		//Sidenav toggle
+		//@deprecated
+		else if(action === ui5strap.BsAction.ToggleSidenav){
+			classAdd + " btn-toggle-sidenav";
+		}
+		
+		return this._getStyleClassPrefix() + classAdd;
+	};
 	
 	ui5strap.Utils.dynamicAttributes(
-		ButtonPrototype, 
+		ButtonProto, 
 		[
 			"title"
 		]
 	);
 
-	ui5strap.Utils.dynamicText(ButtonPrototype);
+	ui5strap.Utils.dynamicText(ButtonProto);
 
-	ui5strap.Utils.dynamicClass(ButtonPrototype, 'selected', { 'true' : 'active' });
+	ui5strap.Utils.dynamicClass(ButtonProto, 'selected', { 'true' : 'active' });
 	
 	/**
 	 * Handler for Tap / Click Events
 	 * @Protected
 	 */
-	ButtonPrototype._handlePress = function(oEvent) {
+	ButtonProto._handlePress = function(oEvent) {
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		
@@ -8566,13 +8709,14 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	};
 	
 	if(ui5strap.support.touch){	
-		ButtonPrototype.ontap = ButtonPrototype._handlePress;
+		ButtonProto.ontap = ButtonProto._handlePress;
 	}
 	else{
-		ButtonPrototype.onclick = ButtonPrototype._handlePress;
+		ButtonProto.onclick = ButtonProto._handlePress;
 	}
-
-}());;/*
+	
+	return Button;
+});;/*
  * 
  * UI5Strap
  *
@@ -8599,112 +8743,56 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ButtonRenderer");
+	var ButtonRenderer = {};
 
-	ui5strap.ButtonRenderer = {};
+	ButtonRenderer.render = function(rm, oControl) {
+		this.startRender(rm, oControl);
 
-	ui5strap.ButtonRenderer.render = function(rm, oControl) {
-		this.startRender(rm, oControl, {});
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 
-	    this.renderContent(rm, oControl);
-
-	    this.endRender(rm, oControl);
+		rm.write("</button>");
 
 	    ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-	ui5strap.ButtonRenderer.renderContent = function(rm, oControl) {
-		ui5strap.RenderUtils.renderContent(rm, oControl);
-	};
-
-	ui5strap.ButtonRenderer.startRender = function(rm, oControl, options) {
+	ButtonRenderer.startRender = function(rm, oControl) {
 		var size = oControl.getSize(),
 			action = oControl.getBsAction(),
-			type = oControl.getType(),
-			severity = oControl.getSeverity(),
 			title = oControl.getTitle();
 
 		rm.write("<button");
 	    
-	    //Modal close button
-		if(action === ui5strap.BsAction.DismissModal){
-			rm.writeAttribute('data-dismiss', 'modal');	
-		}
-		
-		//Navbar toggle
-		else if(action === ui5strap.BsAction.ToggleNavbar){
-			rm.addClass("btn-toggle-navbar");
-		}
-		//Sidenav toggle
-		else if(action === ui5strap.BsAction.ToggleSidenav){
-			rm.addClass("btn-toggle-sidenav");
-		}
-
-		//Button is used as dropdown toggle within a ButtonDropdown
-	    if('toggleDropdown' in options){
-	    	rm.writeAttribute('id', oControl.getId() + '---' + ( options.toggleDropdown ? 'toggle' : 'button') );
-
-	    	if(true === options.toggleDropdown){
-		    	if(action !== ui5strap.BsAction.ToggleDropdown){ 
-		    		//rm.writeAttribute("data-toggle", "dropdown");
-		    		rm.addClass("dropdown-toggle");
-		    	}
-		    }
-	    }
-	    else{
-	    	
-	    	rm.writeControlData(oControl);
+	    rm.writeControlData(oControl);
 	    
-	    }
+	    rm.addClass(oControl._getStyleClass());
+	
+	    //@deprecated
+	    ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
 
+	    rm.writeClasses();
+	    
 	    if('' !== title){
 	    	rm.writeAttribute('title', title);
 	    }
 	    
-	    rm.addClass("ui5strapButton");
-
-	    if(type === ui5strap.ButtonType.Button || ui5strap.ButtonType.Block === type){
-		    rm.addClass("btn");
-		    rm.addClass("btn-" + ui5strap.BSSeverity[severity]);
-		    
-			if(ui5strap.Size.Default !== size){
-		    	rm.addClass('btn-' + ui5strap.BSSize[size]);
-		    }
-
-		    if(ui5strap.ButtonType.Block === type){
-				rm.addClass("btn-block");
-			}
-		}
-		else if(type === ui5strap.ButtonType.Link){
-			rm.addClass("btn btn-link");
-		}
-		else if(type === ui5strap.ButtonType.Close || type === ui5strap.ButtonType.Icon){
-			rm.addClass("close");
-		}
-
-	    if(oControl.getSelected()){
-			rm.addClass("active");
-		}
-	    
-	    rm.addClass(oControl._getStyleClassOptions());
-	
 		if(!oControl.getEnabled()){
 			rm.writeAttribute("disabled", "disabled");
 		}
-
-		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
-
-	    rm.writeClasses();
+		
+		//Modal close button
+		//@deprecated
+		if(action === ui5strap.BsAction.DismissModal){
+			rm.writeAttribute('data-dismiss', 'modal');	
+		}
+		
 	    rm.write(">");
 	};
 
-	ui5strap.ButtonRenderer.endRender = function(rm, oControl){
-		rm.write("</button>");
-	};
+	return ButtonRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -8732,12 +8820,9 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Console");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Console", {
+	var Console = ControlBase.extend("ui5strap.Console", {
 		metadata : {
 
 			library : "ui5strap",
@@ -8749,10 +8834,8 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 			},
 
 		}
-	});
-
-	var Console = ui5strap.Console,
-		ConsolePrototype = Console.prototype;
+	}),
+	ConsolePrototype = Console.prototype;
 
 	Console.LOG_DEFAULT = '__DEFAULT_LOG';
 	Console.MAX_SIZE = 200;
@@ -8990,7 +9073,9 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             this.flush();
         }
     };
-}());;/*
+    
+    return Console;
+});;/*
  * 
  * UI5Strap
  *
@@ -9017,13 +9102,9 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.ConsoleRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	var ConsoleRenderer = {};
-
-	ui5strap.ConsoleRenderer = ConsoleRenderer;
 
 	ConsoleRenderer.render = function(rm, oControl) {
 		rm.write("<div");
@@ -9048,7 +9129,8 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		rm.write("</div>");
 	};
 
-}());;/*
+	return ConsoleRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -9075,12 +9157,9 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
  * 
  */
 
-(function ui5osControlSandbox(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Sandbox");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Sandbox", {
+	var Sandbox = ControlBase.extend("ui5strap.Sandbox", {
 		metadata : {
 
 			library : "ui5strap",
@@ -9097,9 +9176,8 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 			}
 
 		}
-	});
-
-	var SandboxProto = ui5strap.Sandbox.prototype;
+	}),
+	SandboxProto = Sandbox.prototype;
 
 	SandboxProto.init = function(){
 		var iframe = document.createElement('iframe');
@@ -9145,7 +9223,9 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	SandboxProto.sendMessage = function(appMessage, targetOrigin){
 		this.$iframe[0].contentWindow.postMessage(appMessage, targetOrigin);
 	};
-}());;/*
+	
+	return Sandbox;
+});;/*
  * 
  * UI5Strap
  *
@@ -9172,13 +9252,11 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
  * 
  */
 
-(function ui5osControlSandboxRenderer(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.SandboxRenderer");
+	var SandboxRenderer = {};
 
-	ui5strap.SandboxRenderer = {};
-
-	ui5strap.SandboxRenderer.render = function(rm, oControl) {
+	SandboxRenderer.render = function(rm, oControl) {
 		 rm.write("<div");
 		 rm.writeControlData(oControl);
 		 rm.addClass("sandbox");
@@ -9186,8 +9264,10 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		 rm.write(">");
 		 rm.write("</div>");
 	};
+	
+	return SandboxRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -9214,12 +9294,9 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Icon");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Icon", {
+	var Icon = ControlBase.extend("ui5strap.Icon", {
 		metadata : {
 
 			library : "ui5strap",
@@ -9276,8 +9353,9 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 			}
 		}
 	});
-
-}());;/*
+	
+	return Icon;
+});;/*
  * 
  * UI5Strap
  *
@@ -9304,11 +9382,9 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.IconRenderer");
-
-	ui5strap.IconRenderer = {
+	var IconRenderer = {
 
 		sizeToClass : {
 		    Large : "lg",
@@ -9327,7 +9403,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		  }
 	};
 
-	ui5strap.IconRenderer.render = function(rm, oControl) {
+	IconRenderer.render = function(rm, oControl) {
 		var iconGroup = oControl.getIconSet(),
 			size = oControl.getSize(),
 			transform = oControl.getTransform(),
@@ -9381,7 +9457,8 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-}());;/*
+	return IconRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -9480,8 +9557,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	LinkProto = Link.prototype;
 	
-	LinkProto._stylePrefix = "ui5strapLink";
-
 	ui5strap.Utils.dynamicAttributes(
 		LinkProto, 
 		[
@@ -9635,12 +9710,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Text");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Text", {
+	var Text = ControlBase.extend("ui5strap.Text", {
 		metadata : {
 
 			// ---- object ----
@@ -9688,9 +9760,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 
 		}
-	});
-
-	var TextProto = ui5strap.Text.prototype;
+	}),
+	TextProto = Text.prototype;
 
 	TextProto.setText = function(newText, suppressInvalidate){
 		ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
@@ -9700,7 +9771,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		ui5strap.Utils.updateAttribute(this, 'title', newTitle);
 	};
 
-}());;/*
+	return Text;
+});;/*
  * 
  * UI5Strap
  *
@@ -9727,12 +9799,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.TextRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 
-	ui5strap.TextRenderer = {
+	var TextRenderer = {
 		typeToTag : {
 			Default : { 
 				tagName : "span",
@@ -9782,6 +9852,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 				tagName : "p",
 				className : "help-block"
 			},
+			FormStatic : {
+				tagName : "p",
+				className : "form-static"
+			},
 			Label : {
 				tagName : "span",
 				className : "label"
@@ -9801,7 +9875,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	};
 
-	ui5strap.TextRenderer.render = function(rm, oControl) {
+	TextRenderer.render = function(rm, oControl) {
 		var severity = oControl.getSeverity(),
 			type = oControl.getType(),
 			text = oControl.getText(),
@@ -9857,7 +9931,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-}());
+	return TextRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -9885,12 +9960,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.TextInput");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.TextInput", {
+	var TextInput = ControlBase.extend("ui5strap.TextInput", {
 		metadata : {
 
 			library : "ui5strap",
@@ -9935,9 +10007,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 
 		}
-	});
-	
-	var TextInputProto = ui5strap.TextInput.prototype;
+	}),
+	TextInputProto = TextInput.prototype;
 	
 	TextInputProto.onAfterRendering = function(){
 		var _this = this;
@@ -9977,8 +10048,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 	};
 
-
-}());;/*
+	return TextInput;
+});;/*
  * 
  * UI5Strap
  *
@@ -10005,13 +10076,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.TextInputRenderer");
+	var TextInputRenderer = {};
 
-	ui5strap.TextInputRenderer = {};
-
-	ui5strap.TextInputRenderer.render = function(rm, oControl) {
+	TextInputRenderer.render = function(rm, oControl) {
 		var rows = oControl.getRows(),
 			type = oControl.getType();
 
@@ -10070,7 +10139,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-}());
+	return TextInputRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -10098,12 +10168,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.RadioButton");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.RadioButton", {
+	var RadioButton = ControlBase.extend("ui5strap.RadioButton", {
 		metadata : {
 
 			library : "ui5strap",
@@ -10132,7 +10199,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 
 		}
-	});
+	}),
+	RadioButtonProto = RadioButton.prototype;
 
 	var _onChange = function(_this){
 		return function(ev){
@@ -10145,19 +10213,19 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 	};
 
-	ui5strap.RadioButton.prototype.onAfterRendering = function(){
+	RadioButtonProto.onAfterRendering = function(){
 		this.$checkbox = this.$().find('#' + 'ui5strap-radio---' + this.getId());
 		this.$checkbox.on('change', _onChange(this));
 	};
 
-	ui5strap.RadioButton.prototype.onBeforeRendering = function() {
+	RadioButtonProto.onBeforeRendering = function() {
 		if (this.getDomRef()) {
 			this.$checkbox.off();
 			//this._curpos = this._$input.cursorPos();
 		}
 	};
 
-	ui5strap.RadioButton.prototype.updateGroup = function() {
+	RadioButtonProto.updateGroup = function() {
 		var radio = this;
 		jQuery('.ui5strap-radio-' + this.getGroupName()).each(function(i, o){
 			var controlId = o.id.substr(17);
@@ -10167,7 +10235,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		});
 	};
 
-	ui5strap.RadioButton.prototype.setSelected = function(sValue) {
+	RadioButtonProto.setSelected = function(sValue) {
 		var checkbox = this;
 		sValue = this.validateProperty("selected", sValue);
 		
@@ -10184,8 +10252,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		return this;
 	};
-
-}());;/*
+	
+	return RadioButton;
+});;/*
  * 
  * UI5Strap
  *
@@ -10212,13 +10281,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.RadioButtonRenderer");
+	var RadioButtonRenderer = {};
 
-	ui5strap.RadioButtonRenderer = {};
-
-	ui5strap.RadioButtonRenderer.render = function(rm, oControl) {
+	RadioButtonRenderer.render = function(rm, oControl) {
 		var groupName = oControl.getGroupName(),
 			type = oControl.getType(),
 			typeBlock = ui5strap.RadioButtonType.Block;
@@ -10264,8 +10331,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.write("</div>");
 		}
 	};
+	
+	return RadioButtonRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -10293,12 +10362,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.SelectBox");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.SelectBox", {
+	var SelectBox = ControlBase.extend("ui5strap.SelectBox", {
 		metadata : {
 
 			defaultAggregation : "items",
@@ -10340,7 +10406,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 
 		}
-	});
+	}),
+	SelectBoxProto = SelectBox.prototype;
 	
 	var _getInputValue = function(_this){
 		return _this.$().val();
@@ -10355,18 +10422,18 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 	};
 
-	ui5strap.SelectBox.prototype.onAfterRendering = function(){
+	SelectBoxProto.onAfterRendering = function(){
 		this.$().on('change', _onChange(this));
 	};
 
-	ui5strap.SelectBox.prototype.onBeforeRendering = function() {
+	SelectBoxProto.onBeforeRendering = function() {
 		if (this.getDomRef()) {
 			this.$().off();
 			//this._curpos = this._$input.cursorPos();
 		}
 	};
 
-	ui5strap.SelectBox.prototype.setValue = function(sValue) {
+	SelectBoxProto.setValue = function(sValue) {
 		sValue = this.validateProperty("value", sValue);
 		
 		if (sValue != this.getValue()) {
@@ -10379,8 +10446,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		return this;
 	};
 
-
-}());;/*
+	return SelectBox;
+});;/*
  * 
  * UI5Strap
  *
@@ -10407,13 +10474,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.SelectBoxRenderer");
+	var SelectBoxRenderer = {};
 
-	ui5strap.SelectBoxRenderer = {};
-
-	ui5strap.SelectBoxRenderer.render = function(rm, oControl) {
+	SelectBoxRenderer.render = function(rm, oControl) {
 		var size = oControl.getSize(),
 			type = oControl.getType(),
 			items = oControl.getItems();
@@ -10443,7 +10508,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
-	ui5strap.SelectBoxRenderer.renderOption = function(rm, oControl, item) {
+	SelectBoxRenderer.renderOption = function(rm, oControl, item) {
 		var itemValue = item.getValue();
 
 			rm.write("<option");
@@ -10456,7 +10521,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.write("</option>");
 	};
 
-}());
+	return SelectBoxRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -10484,12 +10550,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.ListItem");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.ListItem", {
+	var ListItem = ControlBase.extend("ui5strap.ListItem", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectableItem"],
 			
@@ -10538,9 +10601,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 
 		}
-	});
-
-	var ListItemPrototype = ui5strap.ListItem.prototype;
+	}),
+	ListItemPrototype = ListItem.prototype;
 
 	ui5strap.Utils.dynamicText(ListItemPrototype);
 
@@ -10562,7 +10624,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
               this.setProperty("selected", newSelected, suppressInvalidate);
           }
 	};
-}());;/*
+	
+	return ListItem;
+});;/*
  * 
  * UI5Strap
  *
@@ -10589,14 +10653,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ListItemRenderer");
+	var ListItemRenderer = {};
 
-	ui5strap.ListItemRenderer = {
-	};
-
-	ui5strap.ListItemRenderer.render = function(rm, oControl) {
+	ListItemRenderer.render = function(rm, oControl) {
 		var text = oControl.getText(),
 			parse = oControl.getParse();
 
@@ -10623,8 +10684,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("</li>");
 	};
+	
+	return ListItemRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -10651,13 +10714,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ControlBase.extend("ui5strap.ListBase", {
+	var ListBase = ControlBase.extend("ui5strap.ListBase", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectionProvider"],
 
@@ -10699,10 +10758,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 			}
 		}
-	});
-
-	var ListBaseProto = ui5strap.ListBase.prototype,
-		_defaultSelectionGroup = "selectionGroup";
+	}),
+	ListBaseProto = ListBase.prototype,
+	_defaultSelectionGroup = "selectionGroup";
 	
 	/**
 	 * @Private
@@ -11143,16 +11201,40 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	 * Gets one or multiple selected items that have the given value in the specified custom data field.
 	 * @Public
 	 */
-	ListBaseProto.getItemsByCustomData = function(dataKey){
-		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByCustomData");
+	ListBaseProto.getItemsByCustomData = function(dataKey, value){
+		var items = this._getItems(),
+			returnItems = [];
+		for(var i = 0; i < items.length; i++){
+			if(items[i].data(dataKey) === value){
+				returnItems.push(items[i]);
+			}
+		}
+		
+		return returnItems;
 	};
 	
 	/**
 	 * Gets one or multiple selected items that have the given value in the specified property.
 	 * @Public
 	 */
-	ListBaseProto.getItemsByProperty = function(propertyName){
-		throw new Error("Please implement ui5strap.ListBase.prototype.getItemsByProperty");
+	ListBaseProto.getItemsByProperty = function(propertyName, value){
+		var items = this._getItems(),
+			getter = "get" + jQuery.sap.charToUpper(propertyName, 0),
+			returnItems = [];
+		
+		for(var i = 0; i < items.length; i++){
+			var item = items[i];
+			
+			if(!item[getter]){
+				throw new Error("Item " + i + ": no such getter: " + getter);
+			}
+			
+			if(item[getter]() === value){
+				returnItems.push(items[i]);
+			}
+		}
+		
+		return returnItems;
 	};
 	
 	/**
@@ -11280,9 +11362,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
 			//Item is enabled
 			
-			//TODO Rename 'tap' event to 'press' sometimes
-			this.fireTap(eventOptions);
-			
 			//Process selection
 			var selectionMode = this.getSelectionMode();
 			if(ui5strap.SelectionMode.None !== selectionMode 
@@ -11319,6 +11398,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			else{
 				jQuery.sap.log.debug("[LIST#" + this.getId() + "] Did not select list item: List item not selectable.");
 			}
+			
+			//TODO Rename 'tap' event to 'press' sometimes
+			this.fireTap(eventOptions);
 		}
 		else{
 			jQuery.sap.log.warning("Could not select list item: List item not found or disabled.");
@@ -11389,8 +11471,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		return this.setSelectionByCustomData(dataKey, value);
 	};
-
-}());;/*
+	
+	return ListBase;
+});;/*
  * 
  * UI5Strap
  *
@@ -11417,14 +11500,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.ListLinkItem");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListItem");
-	jQuery.sap.require("ui5strap.Link");
-
-	ui5strap.ListItem.extend("ui5strap.ListLinkItem", {
+	var ListLinkItem = ListItem.extend("ui5strap.ListLinkItem", {
 		metadata : {
 			library : "ui5strap",
 			
@@ -11456,13 +11534,15 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 				}			
 			}
 		}
-	});
+	}),
+	ListLinkItemProto = ListLinkItem.prototype;
 
-	ui5strap.ListLinkItem.prototype.setText = function(newText){
+	ListLinkItemProto.setText = function(newText){
 		ui5strap.Utils.updateText(this, jQuery('#' + this.getId() + '---link'), newText);
 	};
-
-}());;/*
+	
+	return ListLinkItem;
+});;/*
  * 
  * UI5Strap
  *
@@ -11489,14 +11569,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.ListLinkItemRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	ui5strap.ListLinkItemRenderer = {
-	};
+	var ListLinkItemRenderer = {};
 
-	ui5strap.ListLinkItemRenderer.render = function(rm, oControl) {
+	ListLinkItemRenderer.render = function(rm, oControl) {
 		this.startRender(rm, oControl, {});
 
 		var text = oControl.getText(),
@@ -11511,7 +11588,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		this.endRender(rm, oControl);
 	};
 
-	ui5strap.ListLinkItemRenderer.startRender = function(rm, oControl){
+	ListLinkItemRenderer.startRender = function(rm, oControl){
 		rm.write("<li");
 		rm.writeControlData(oControl);
 		if(oControl.getSelected()){
@@ -11526,13 +11603,13 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		this.startRenderLink(rm, oControl);
 	};
 
-	ui5strap.ListLinkItemRenderer.endRender = function(rm, oControl){
+	ListLinkItemRenderer.endRender = function(rm, oControl){
 		rm.write('</a>');
 		    
 		rm.write("</li>");
 	};
 	
-	ui5strap.ListLinkItemRenderer.startRenderLink = function(rm, oControl) {
+	ListLinkItemRenderer.startRenderLink = function(rm, oControl) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			target = oControl.getTarget();
@@ -11556,8 +11633,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write(">");
 	};
+	
+	return ListLinkItemRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -11585,12 +11664,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.ListGroupItem");
-	jQuery.sap.require("ui5strap.ListItem");
-
-	ui5strap.ListItem.extend("ui5strap.ListGroupItem", {
+	var ListGroupItem = ListItem.extend("ui5strap.ListGroupItem", {
 		metadata : {
 
 			// ---- object ----
@@ -11614,8 +11690,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 		}
 	});
-
-}());;/*
+	
+	return ListGroupItem;
+});;/*
  * 
  * UI5Strap
  *
@@ -11642,14 +11719,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ListGroupItemRenderer");
+	var ListGroupItemRenderer = {};
 
-	ui5strap.ListGroupItemRenderer = {
-	};
-
-	ui5strap.ListGroupItemRenderer.render = function(rm, oControl) {
+	ListGroupItemRenderer.render = function(rm, oControl) {
 		var badge = oControl.getBadge(),
 			icon = oControl.getIcon(),
 			parent = oControl.getParent(),
@@ -11691,8 +11765,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		    
 		rm.write("</"+ tag + ">");
 	};
+	
+	return ListGroupItemRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -11720,12 +11796,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.ListMediaItem");
-		jQuery.sap.require("ui5strap.ListItem");
-
-	ui5strap.ListItem.extend("ui5strap.ListMediaItem", {
+	var ListMediaItem = ListItem.extend("ui5strap.ListMediaItem", {
 		metadata : {
 
 			// ---- object ----
@@ -11750,16 +11823,19 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 				}
 			}
 		}
-	});
+	}),
+	ListMediaItemProto = ListMediaItem.prototype;
 	
 	/**
 	 * TODO More efficient rerendering
 	 */
-	ui5strap.ListMediaItem.prototype.setText = function(newText, suppressInvalidate){
+	ListMediaItemProto.setText = function(newText, suppressInvalidate){
 		this.setProperty('text', newText, suppressInvalidate);
 	};
+	
+	return ListMediaItem;
 
-}());;/*
+});;/*
  * 
  * UI5Strap
  *
@@ -11786,14 +11862,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ListMediaItemRenderer");
+	var ListMediaItemRenderer = {};
 
-	ui5strap.ListMediaItemRenderer = {
-	};
-
-	ui5strap.ListMediaItemRenderer.render = function(rm, oControl) {
+	ListMediaItemRenderer.render = function(rm, oControl) {
 		var parent = oControl.getParent(),
 			media = oControl.getMedia(),
 			heading = oControl.getHeading(),
@@ -11834,8 +11907,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		    
 		rm.write("</"+ tag + ">");
 	};
+	
+	return ListMediaItemRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -11863,68 +11938,63 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-  jQuery.sap.declare("ui5strap.Tooltip");
-  jQuery.sap.require("ui5strap.library");
-
-  ui5strap.ControlBase.extend("ui5strap.Tooltip", {
-    metadata : {
-
-      // ---- object ----
-      defaultAggregation : "titleContent",
-      // ---- control specific ----
-      library : "ui5strap",
-      
-      properties : { 
-        
-        title : {
-          type:"string", 
-          defaultValue:""
-        },
-        
-        titleContentPlacement : {
-          type:"ui5strap.ContentPlacement",
-          defaultValue : ui5strap.ContentPlacement.Start
-        },
-
-        placement : {
-          type: "ui5strap.Placement", 
-          defaultValue: ui5strap.Placement.Right
-        },
-
-        trigger : {
-          type: "ui5strap.TriggerMode", 
-          defaultValue: ui5strap.TriggerMode.Hover
-        },
-
-        animate : {
-          type:"boolean", 
-          defaultValue:true
-        }
-
-      },
-      
-      aggregations : { 
-        titleContent : {
-          singularName: "titleContent"
-        },
-      },
-      
-      associations : {
-        source : {
-            multiple : false
-        }
-      },
-      events : {
-         shown : {},
-         hidden : {}
-      }
-
-    }
+	var Tooltip = ControlBase.extend("ui5strap.Tooltip", {
+	    metadata : {
+	
+	      // ---- object ----
+	      defaultAggregation : "titleContent",
+	      // ---- control specific ----
+	      library : "ui5strap",
+	      
+	      properties : { 
+	        
+	        title : {
+	          type:"string", 
+	          defaultValue:""
+	        },
+	        
+	        titleContentPlacement : {
+	          type:"ui5strap.ContentPlacement",
+	          defaultValue : ui5strap.ContentPlacement.Start
+	        },
+	
+	        placement : {
+	          type: "ui5strap.Placement", 
+	          defaultValue: ui5strap.Placement.Right
+	        },
+	
+	        trigger : {
+	          type: "ui5strap.TriggerMode", 
+	          defaultValue: ui5strap.TriggerMode.Hover
+	        },
+	
+	        animate : {
+	          type:"boolean", 
+	          defaultValue:true
+	        }
+	
+	      },
+	      
+	      aggregations : { 
+	        titleContent : {
+	          singularName: "titleContent"
+	        },
+	      },
+	      
+	      associations : {
+	        source : {
+	            multiple : false
+	        }
+	      },
+	      events : {
+	         shown : {},
+	         hidden : {}
+	      }
+	
+	    }
   });
-
-  var Tooltip = ui5strap.Tooltip;
 
   Tooltip.prototype.init = function(){
       this.sourceControl = null;
@@ -11991,7 +12061,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
       this.getSourceDomRef().tooltip('toggle');
   };
   
-}());
+  return Tooltip;
+  
+});
 
 /* ========================================================================
  * Bootstrap: tooltip.js v3.1.1
@@ -12418,13 +12490,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.TooltipRenderer");
+	var TooltipRenderer = {};
 
-	ui5strap.TooltipRenderer = {};
-
-	ui5strap.TooltipRenderer.render = function(rm, oControl) {
+	TooltipRenderer.render = function(rm, oControl) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -12446,7 +12516,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		    
 	};
 
-}());;/*
+	return TooltipRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -14494,14 +14565,9 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Alert");
-	jQuery.sap.require("ui5strap.library");
-  jQuery.sap.require("ui5strap.Button");
-  jQuery.sap.require("ui5strap.Icon");
-	
-	ui5strap.ControlBase.extend("ui5strap.Alert", {
+	var Alert = ControlBase.extend("ui5strap.Alert", {
 		metadata : {
 
 			// ---- object ----
@@ -14551,9 +14617,8 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
       }
 
 		}
-	});
-
-  var AlertProto = ui5strap.Alert.prototype;
+	}),
+	AlertProto = Alert.prototype;
 
   ui5strap.Utils.dynamicText(AlertProto);
 
@@ -14617,8 +14682,10 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
         .emulateTransitionEnd(150) :
       removeElement()
   };
+  
+  return Alert;
 
-}());;/*
+});;/*
  * 
  * UI5Strap
  *
@@ -14645,13 +14712,11 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.AlertRenderer");
+	var AlertRenderer = {};
 
-	ui5strap.AlertRenderer = {};
-
-	ui5strap.AlertRenderer.render = function(rm, oControl) {
+	AlertRenderer.render = function(rm, oControl) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -14669,8 +14734,10 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 		rm.write("</div>");
 
 	};
-
-}());;/*
+	
+	return AlertRenderer;
+	
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -14935,11 +15002,9 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Badge");
-	
-	ui5strap.ControlBase.extend("ui5strap.Badge", {
+	var Badge = ControlBase.extend("ui5strap.Badge", {
 		metadata : {
 			deprecated : true,
 			library : "ui5strap",
@@ -14952,8 +15017,9 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 			}
 		}
 	});
-
-}());;/*
+	
+	return Badge;
+});;/*
  * 
  * UI5Strap
  *
@@ -14980,13 +15046,11 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.BadgeRenderer");
+	var BadgeRenderer = {};
 
-	ui5strap.BadgeRenderer = {};
-
-	ui5strap.BadgeRenderer.render = function(rm, oControl) {
+	BadgeRenderer.render = function(rm, oControl) {
 		rm.write("<span");
 		rm.writeControlData(oControl);
 		rm.addClass("badge");
@@ -14999,7 +15063,8 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
 
 	};
 
-}());;/*
+	return BadgeRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -15074,8 +15139,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	BarProto = Bar.prototype; 
 
-	BarProto._stylePrefix = "ui5strapBar";
-	
 	/**
 	 * @Protected
 	 * @Override
@@ -15126,13 +15189,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.BarMenu");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.BarMenuItem");
-
-	ui5strap.ListBase.extend("ui5strap.BarMenu", {
+	var BarMenu = ListBase.extend("ui5strap.BarMenu", {
 		metadata : {
 
 			library : "ui5strap",
@@ -15206,11 +15265,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}),
+	BarMenuProto = BarMenu.prototype;
 	
-	var BarMenuProto = ui5strap.BarMenu.prototype;
-	
-}());;/*
+	return BarMenu;
+});;/*
  * 
  * UI5Strap
  *
@@ -15237,12 +15296,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.BarMenuItem");
-	jQuery.sap.require("ui5strap.ListItem");
-
-	ui5strap.ListItem.extend("ui5strap.BarMenuItem", {
+	var BarMenuItem = ListItem.extend("ui5strap.BarMenuItem", {
 		metadata : {
 
 			library : "ui5strap",
@@ -15256,16 +15312,18 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			
 			defaultAggregation : "content"
 		}
-	});
+	}),
+	BarMenuItemProto = BarMenuItem.prototype;
 	
 	/**
 	 * TODO More efficient rerendering
 	 */
-	ui5strap.BarMenuItem.prototype.setText = function(newText, suppressInvalidate){
+	BarMenuItemProto.setText = function(newText, suppressInvalidate){
 		this.setProperty('text', newText, suppressInvalidate);
 	};
-
-}());;/*
+	
+	return BarMenuItem;
+});;/*
  * 
  * UI5Strap
  *
@@ -15292,14 +15350,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.BarMenuItemRenderer");
+	var BarMenuItemRenderer = {};
 
-	ui5strap.BarMenuItemRenderer = {
-	};
-
-	ui5strap.BarMenuItemRenderer.render = function(rm, oControl) {
+	BarMenuItemRenderer.render = function(rm, oControl) {
 		var icon = oControl.getIcon(),
 			text = oControl.getText(),
 			parse = oControl.getParse(),
@@ -15344,7 +15399,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		rm.write("</li>");
 	};
 	
-}());
+	return BarMenuItemRenderer;
+	
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -15372,14 +15429,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.BarMenuRenderer");
+	var BarMenuRenderer = {};
 
-	ui5strap.BarMenuRenderer = {
-	};
-
-	ui5strap.BarMenuRenderer.render = function(rm, oControl) {
+	BarMenuRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
 			zoomExtraSmall = oControl.getZoomExtraSmall(),
 			zoomSmall = oControl.getZoomSmall(),
@@ -15430,8 +15484,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		    
 		rm.write("</ul>");
 	};
-
-}());
+	
+	return BarMenuRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -15459,12 +15514,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 
-	jQuery.sap.declare("ui5strap.BarNavContainer");
-	jQuery.sap.require("ui5strap.NavContainer");
-	
-	ui5strap.NavContainer.extend("ui5strap.BarNavContainer", {
+	var BarNavContainer = NavContainer.extend("ui5strap.BarNavContainer", {
 		metadata : {
 
 			library : "ui5strap",
@@ -15576,9 +15628,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 		//Use default NavContainerRenderer
 		renderer : "ui5strap.NavContainerRenderer"
-	});
-
-	var BarNavContainerProto = ui5strap.BarNavContainer.prototype;
+	}),
+	BarNavContainerProto = BarNavContainer.prototype;
+	
 	/**
 	* @Override
 	* @Protected
@@ -15835,8 +15887,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		
 		return ui5strap.NavContainer.prototype._getTargetClassString.call(this, target);
 	}
-
-}());;/*
+	
+	return BarNavContainer;
+});;/*
  * 
  * UI5Strap
  *
@@ -15980,14 +16033,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.Breadcrumb");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ListBase.extend("ui5strap.Breadcrumb", {
+	var Breadcrumb = ListBase.extend("ui5strap.Breadcrumb", {
 		metadata : {
 
 			library : "ui5strap",
@@ -16002,11 +16050,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 			
 		}
-	});
+	}),
+	BreadcrumbProto = Breadcrumb.prototype;
 	
-	var BreadcrumbProto = ui5strap.Breadcrumb.prototype;
-	
-}());;/*
+	return Breadcrumb;
+});;/*
  * 
  * UI5Strap
  *
@@ -16033,30 +16081,28 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-jQuery.sap.declare("ui5strap.BreadcrumbRenderer");
-
-ui5strap.BreadcrumbRenderer = {
-};
-
-ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
-	var items = oControl.getItems();
-
-	rm.write("<ol");
-	rm.writeControlData(oControl);
-	rm.addClass('breadcrumb');
-	rm.writeClasses();
-	rm.write(">");
+	var BreadcrumbRenderer = {};
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
+	BreadcrumbRenderer.render = function(rm, oControl) {
+		var items = oControl.getItems();
 	
-	rm.write("</ol>");
-};
+		rm.write("<ol");
+		rm.writeControlData(oControl);
+		rm.addClass('breadcrumb');
+		rm.writeClasses();
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</ol>");
+	};
 
-}());
+	return BreadcrumbRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -16084,20 +16130,18 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Break");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Break", {
+	var Break = ControlBase.extend("ui5strap.Break", {
 		metadata : {
 
 			library : "ui5strap",
 			
 		}
 	});
-
-}());;/*
+	
+	return Break;
+});;/*
  * 
  * UI5Strap
  *
@@ -16124,17 +16168,16 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.BreakRenderer");
+	var BreakRenderer = {};
 
-	ui5strap.BreakRenderer = {};
-
-	ui5strap.BreakRenderer.render = function(rm, oControl) {
+	BreakRenderer.render = function(rm, oControl) {
 		rm.write("<br />");
 	};
-
-}());;/*
+	
+	return BreakRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -16161,13 +16204,9 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './Button'], function(library, Button){
 
-	jQuery.sap.declare("ui5strap.ButtonDropdown");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.Button");
-	
-	ui5strap.Button.extend("ui5strap.ButtonDropdown", {
+	var ButtonDropdown = Button.extend("ui5strap.ButtonDropdown", {
 		metadata : {
 
 			// ---- object ----
@@ -16195,9 +16234,8 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 			}
 
 		}
-	});
-
-	var ButtonDropdownProto = ui5strap.ButtonDropdown.prototype;
+	}),
+	ButtonDropdownProto = ui5strap.ButtonDropdown.prototype;
 
 	ButtonDropdownProto.setText = function(newText){
 		if(this.getMenu() === null){
@@ -16250,8 +16288,9 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 			this.fireTap();
 		}
 	};
-
-}());;/*
+	
+	return ButtonDropdown;
+});;/*
  * 
  * UI5Strap
  *
@@ -16278,18 +16317,13 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ButtonDropdownRenderer");
-	jQuery.sap.require("ui5strap.ButtonRenderer");
+	var ButtonDropdownRenderer = {};
 
-	ui5strap.ButtonDropdownRenderer = {
-	};
-
-	ui5strap.ButtonDropdownRenderer.render = function(rm, oControl) {
+	ButtonDropdownRenderer.render = function(rm, oControl) {
 		var menu = oControl.getMenu(),
-			split = oControl.getSplit(),
-			buttonRenderer = ui5strap.ButtonRenderer;
+			split = oControl.getSplit();
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -16300,18 +16334,18 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 		rm.writeClasses();
 		rm.write(">");
 
-		buttonRenderer.startRender(rm, oControl, { toggleDropdown : !split });
+		this.startRender(rm, oControl, !split);
 
 	    this.renderContent(rm, oControl);
 
-	    buttonRenderer.endRender(rm, oControl);
+	    rm.write("</button>");
 
 	    if(split){
-		    buttonRenderer.startRender(rm, oControl, { toggleDropdown : true });
+		    this.startRender(rm, oControl, true);
 
 		    rm.write(' <span class="caret"></span>');
 
-		    buttonRenderer.endRender(rm, oControl);
+		    rm.write("</button>");
 		}
 
 	    if(null !== menu){
@@ -16322,16 +16356,55 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
+	
+	ButtonDropdownRenderer.startRender = function(rm, oControl, tog) {
+		var size = oControl.getSize(),
+			action = oControl.getBsAction(),
+			title = oControl.getTitle();
 
-	ui5strap.ButtonDropdownRenderer.renderContent = function(rm, oControl) {
+		rm.write("<button");
+	    
+	    rm.writeAttribute('id', oControl.getId() + '---' + ( tog ? 'toggle' : 'button') );
+
+    	if(tog && action !== ui5strap.BsAction.ToggleDropdown){ 
+	    	rm.addClass("dropdown-toggle");
+	    }
+	    
+	    rm.addClass(oControl._getStyleClass());
+	
+	    //@deprecated
+	    ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
+
+	    rm.writeClasses();
+	    
+	    if('' !== title){
+	    	rm.writeAttribute('title', title);
+	    }
+	    
+		if(!oControl.getEnabled()){
+			rm.writeAttribute("disabled", "disabled");
+		}
+		
+		//Modal close button
+		//@deprecated
+		if(action === ui5strap.BsAction.DismissModal){
+			rm.writeAttribute('data-dismiss', 'modal');	
+		}
+		
+	    rm.write(">");
+	};
+
+	ButtonDropdownRenderer.renderContent = function(rm, oControl) {
 		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		if(!oControl.getSplit()){
 			rm.write(' <span class="caret"></span>');
 		}
 	};
+	
+	return ButtonDropdownRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -16358,13 +16431,9 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.ButtonGroup");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	
-	ui5strap.ListBase.extend("ui5strap.ButtonGroup", {
+	var ButtonGroup = ListBase.extend("ui5strap.ButtonGroup", {
 		metadata : {
 
 			defaultAggregation : "buttons",
@@ -16409,9 +16478,8 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 				}
 		    }
 		}
-	});
-
-	var ButtonGroupProto = ui5strap.ButtonGroup.prototype;
+	}),
+	ButtonGroupProto = ButtonGroup.prototype;
 	
 	/**
 	 * @Protected
@@ -16446,8 +16514,9 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
 		//@deprecated
 		eventOptions.button = eventOptions.srcItem;
 	};
-
-}());;/*
+	
+	return ButtonGroup;
+});;/*
  * 
  * UI5Strap
  *
@@ -16474,54 +16543,54 @@ ui5strap.BreadcrumbRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 
-jQuery.sap.declare("ui5strap.ButtonGroupRenderer");
-
-ui5strap.ButtonGroupRenderer = {
-	typeToClass : {
-		Default : "btn-group",
-		Justified : "btn-group btn-group-justified",
-		Vertical : "btn-group-vertical"
-	}
-};
-
-ui5strap.ButtonGroupRenderer.render = function(rm, oControl) {
-	var size = oControl.getSize(),
-		type = oControl.getType(),
-		buttons = oControl.getButtons();
-
-	rm.write("<div");
-	rm.writeControlData(oControl);
-
-	rm.addClass(this.typeToClass[type]);
-	
-	if(ui5strap.Size.Default !== size){
-		rm.addClass('btn-group-' + ui5strap.BSSize[size]);
-	}
-
-	ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
-
-	rm.writeClasses();
-	rm.write(">");
-	
-	for(var i = 0; i < buttons.length; i++){
-		var button = buttons[i];
-		if(type === ui5strap.ButtonGroupType.Justified && button instanceof ui5strap.Button){
-			rm.write('<div class="btn-group">');
-			rm.renderControl(button);
-			rm.write("</div>");
+	var ButtonGroupRenderer = {
+		typeToClass : {
+			Default : "btn-group",
+			Justified : "btn-group btn-group-justified",
+			Vertical : "btn-group-vertical"
 		}
-		else{
-			rm.renderControl(button);
-		}
-	}
+	};
 	
-	rm.write("</div>");
+	ButtonGroupRenderer.render = function(rm, oControl) {
+		var size = oControl.getSize(),
+			type = oControl.getType(),
+			buttons = oControl.getButtons();
+	
+		rm.write("<div");
+		rm.writeControlData(oControl);
+	
+		rm.addClass(this.typeToClass[type]);
+		
+		if(ui5strap.Size.Default !== size){
+			rm.addClass('btn-group-' + ui5strap.BSSize[size]);
+		}
+	
+		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
+	
+		rm.writeClasses();
+		rm.write(">");
+		
+		for(var i = 0; i < buttons.length; i++){
+			var button = buttons[i];
+			if(type === ui5strap.ButtonGroupType.Justified && button instanceof Button){
+				rm.write('<div class="btn-group">');
+				rm.renderControl(button);
+				rm.write("</div>");
+			}
+			else{
+				rm.renderControl(button);
+			}
+		}
+		
+		rm.write("</div>");
+	
+	};
+	
+	return ButtonGroupRenderer;
 
-};
-
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -16549,12 +16618,9 @@ ui5strap.ButtonGroupRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.ButtonToolbar");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.ButtonToolbar", {
+	var ButtonToolbar = ControlBase.extend("ui5strap.ButtonToolbar", {
 		metadata : {
 
 			// ---- object ----
@@ -16575,8 +16641,9 @@ ui5strap.ButtonGroupRenderer.render = function(rm, oControl) {
 			}
 		}
 	});
-
-}());;/*
+	
+	return ButtonToolbar;
+});;/*
  * 
  * UI5Strap
  *
@@ -16603,31 +16670,30 @@ ui5strap.ButtonGroupRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
-
-jQuery.sap.declare("ui5strap.ButtonToolbarRenderer");
-
-ui5strap.ButtonToolbarRenderer = {
-};
-
-ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
-	var buttons = oControl.getButtonGroups();
-
-	rm.write("<div");
-	rm.writeControlData(oControl);
-
-	rm.addClass('btn-toolbar');
-	rm.writeClasses();
-	rm.write(">");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	for(var i = 0; i < buttons.length; i++){
-		rm.renderControl(buttons[i]);
-	}
+	var ButtonToolbarRenderer = {};
 	
-	rm.write("</div>");
-};
+	ButtonToolbarRenderer.render = function(rm, oControl) {
+		var buttons = oControl.getButtonGroups();
+	
+		rm.write("<div");
+		rm.writeControlData(oControl);
+	
+		rm.addClass('btn-toolbar');
+		rm.writeClasses();
+		rm.write(">");
+		
+		for(var i = 0; i < buttons.length; i++){
+			rm.renderControl(buttons[i]);
+		}
+		
+		rm.write("</div>");
+	};
+	
+	return ButtonToolbarRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -16655,12 +16721,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Carousel");
-    jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Carousel", {
+	var Carousel = ControlBase.extend("ui5strap.Carousel", {
 		metadata : {
 
 			defaultAggregation : "items",
@@ -16741,9 +16804,8 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 			}
 
 		}
-	});
-
-  var CarouselProto = ui5strap.Carousel.prototype;
+	}),
+	CarouselProto = Carousel.prototype;
 
   /**
    * @Private
@@ -17017,7 +17079,8 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		CarouselProto.onclick = CarouselProto._handlePress;
 	}
 
-}());;/*
+  return Carousel;
+});;/*
  * 
  * UI5Strap
  *
@@ -17044,14 +17107,11 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.CarouselRenderer");
+	var CarouselRenderer = {};
 
-	ui5strap.CarouselRenderer = {
-	};
-
-	ui5strap.CarouselRenderer.render = function(rm, oControl) {
+	CarouselRenderer.render = function(rm, oControl) {
 		var speed = oControl.getSpeed(),
 			items = oControl.getItems(),
 			itemsLength = items.length,
@@ -17162,8 +17222,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		}
 		rm.write("</div>");
 	};
+	
+	return CarouselRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -17191,12 +17253,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Checkbox");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Checkbox", {
+	var Checkbox = ControlBase.extend("ui5strap.Checkbox", {
 		metadata : {
 
 			library : "ui5strap",
@@ -17221,7 +17280,8 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 			}
 
 		}
-	});
+	}),
+	CheckboxProto = Checkbox.prototype;
 
 	var _onChange = function(_this){
 		return function(ev){
@@ -17232,19 +17292,19 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		}
 	};
 
-	ui5strap.Checkbox.prototype.onAfterRendering = function(){
+	CheckboxProto.onAfterRendering = function(){
 		this.$checkbox = this.$().find('#' + this.getId() + '---checkbox');
 		this.$checkbox.on('change', _onChange(this));
 	};
 
-	ui5strap.Checkbox.prototype.onBeforeRendering = function() {
+	CheckboxProto.onBeforeRendering = function() {
 		if (this.getDomRef()) {
 			this.$checkbox.off();
 			//this._curpos = this._$input.cursorPos();
 		}
 	};
 
-	ui5strap.Checkbox.prototype.setSelected = function(sValue) {
+	CheckboxProto.setSelected = function(sValue) {
 		sValue = this.validateProperty("selected", sValue);
 		
 		if (sValue != this.getSelected()) {
@@ -17255,8 +17315,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		}
 		return this;
 	};
-
-}());;/*
+	
+	return Checkbox;
+});;/*
  * 
  * UI5Strap
  *
@@ -17283,13 +17344,11 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.CheckboxRenderer");
+	var CheckboxRenderer = {};
 
-	ui5strap.CheckboxRenderer = {};
-
-	ui5strap.CheckboxRenderer.render = function(rm, oControl) {
+	CheckboxRenderer.render = function(rm, oControl) {
 		var type = oControl.getType(),
 			typeBlock = ui5strap.CheckboxType.Block;
 
@@ -17333,8 +17392,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 			rm.write("</div>");
 		}
 	};
+	
+	return CheckboxRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -17362,12 +17423,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Clearfix");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Clearfix", {
+	return ControlBase.extend("ui5strap.Clearfix", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
 			library : "ui5strap",
@@ -17395,7 +17453,7 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		}
 	});
 
-}());;/*
+});;/*
  * 
  * UI5Strap
  *
@@ -17422,13 +17480,11 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ClearfixRenderer");
+	var ClearfixRenderer = {};
 
-	ui5strap.ClearfixRenderer = {};
-
-	ui5strap.ClearfixRenderer.render = function(rm, oControl) {
+	var ClearfixRenderer.render = function(rm, oControl) {
 		rm.write("<div");
 		
 		rm.writeControlData(oControl);
@@ -17482,7 +17538,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		rm.write("</div>");
 	};
 
-}());
+	return ClearfixRenderer;
+	
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -17510,12 +17568,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Col");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Col", {
+	var Col = ControlBase.extend("ui5strap.Col", {
 		metadata : {
 			interfaces : ["ui5strap.IColumn"],
 			
@@ -17609,8 +17664,9 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 
 		} // END metadata
 	});
-
-}());;/*
+	
+	return Col;
+});;/*
  * 
  * UI5Strap
  *
@@ -17637,13 +17693,11 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ColRenderer");
+	var ColRenderer = {};
 
-	ui5strap.ColRenderer = {};
-
-	ui5strap.ColRenderer.render = function(rm, oControl) {
+	ColRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent();
 
 		rm.write("<div");
@@ -17729,9 +17783,10 @@ ui5strap.ButtonToolbarRenderer.render = function(rm, oControl) {
 		
 		rm.write("</div>");
 	};
+	
+	return ColRenderer;
 
-
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -17830,8 +17885,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ContainerProto = Container.prototype;
 	
-	ContainerProto._stylePrefix = "ui5strapContainer";
-	
 	ContainerProto._typeData = {
 		Default : {
 			tagName : "div",
@@ -17882,7 +17935,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	ContainerProto._getStyleClassRoot = function(){
-		var styleClass = this._stylePrefix + " " + this._getStyleClassType(this.getType()),
+		var type = this.getType(),
+			styleClass = this._getStyleClassPrefix() 
+						+ " " + this._getStyleClassType(type)
+						+ " " + this._typeData[type].className,
+			
 			severity = this.getSeverity();
 		
 		if(ui5strap.Severity.None !== severity){
@@ -17934,12 +17991,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<" + tagData.tagName);
 		rm.writeControlData(oControl);
 		
-		rm.addClass(oControl._getStyleClassRoot());
+		rm.addClass(oControl._getStyleClass());
 		
-		rm.addClass(tagData.className);
-
-		
-
 		ui5strap.RenderUtils.visibility(rm, oControl);
 
 		ui5strap.RenderUtils.alignment(rm, oControl);
@@ -17962,6 +18015,42 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	return ContainerRenderer;
 	
 }, true);;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.Controller
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function(library, AppBase, Controller){
+
+	var controllerImpl = {};
+	
+	AppBase.blessController(controllerImpl);
+
+	//Return Module Constructor
+	return Controller.extend("ui5strap.Controller", controllerImpl);
+
+});;/*
  * 
  * UI5Strap
  *
@@ -18007,6 +18096,12 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	
 	OptionsSupport.bless(ElementBaseProto);
 	
+	ElementBaseProto.getBindingContextData = function(modelName){
+		var bindingContext = this.getBindingContext(modelName);
+		
+		return bindingContext.getModel().getProperty(bindingContext.getPath());
+	};
+	
 	return ElementBase;
 });;/*
  * 
@@ -18035,12 +18130,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Form");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Form", {
+	var Form = ControlBase.extend("ui5strap.Form", {
 		metadata : {
 
 			defaultAggregation : "content",
@@ -18077,9 +18169,10 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 			}
 
 		}
-	});
+	}),
+	FormProto = Form.prototype;
 
-	ui5strap.Form.prototype.onAfterRendering = function(){
+	FormProto.onAfterRendering = function(){
 		var _this = this;
 		this.$().on('submit', function(){
 			_this.fireSubmit({});
@@ -18088,8 +18181,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 			}
 		});
 	};
-
-}());;/*
+	
+	return Form;
+});;/*
  * 
  * UI5Strap
  *
@@ -18116,12 +18210,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.FormGroup");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.FormGroup", {
+	var FormGroup = ControlBase.extend("ui5strap.FormGroup", {
 		metadata : {
 
 			defaultAggregation : "controls",
@@ -18164,7 +18255,8 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		}
 	});
 
-}());;/*
+	return FormGroup;
+});;/*
  * 
  * UI5Strap
  *
@@ -18191,11 +18283,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.FormGroupRenderer");
-
-	ui5strap.FormGroupRenderer = {
+	var FormGroupRenderer = {
 
 		severityToClass : {
 			Success : "success",
@@ -18204,7 +18294,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		}
 	};
 
-	ui5strap.FormGroupRenderer.render = function(rm, oControl) {
+	FormGroupRenderer.render = function(rm, oControl) {
 		var severity = oControl.getSeverity(),
 			hasFeedback = oControl.getFeedback(),
 			label = oControl.getLabel(),
@@ -18269,8 +18359,10 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		
 		rm.write("</div> ");
 	};
+	
+	return FormGroupRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -18298,11 +18390,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.FormRenderer");
-
-	ui5strap.FormRenderer = {
+	var FormRenderer = {
 
 		typeToClass : {
 			"Horizontal" : 'form-horizontal',
@@ -18310,7 +18400,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		}
 	};
 
-	ui5strap.FormRenderer.render = function(rm, oControl) {
+	FormRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			action = oControl.getAction(),
 			method = oControl.getMethod(),
@@ -18341,8 +18431,10 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		
 		rm.write("</form>");
 	};
+	
+	return FormRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -18370,12 +18462,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Heading");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Heading", {
+	var Heading = ControlBase.extend("ui5strap.Heading", {
 		metadata : {
 
 			// ---- object ----
@@ -18403,7 +18492,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 				type : {
 					deprecated : true,
 					type: "ui5strap.HeadingType", 
-					defaultValue: ""
+					defaultValue: ui5strap.HeadingType.Default
 				}
 				
 			},
@@ -18414,13 +18503,33 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 			}
 
 		}
-	});
+	}),
+	HeadingProto = Heading.prototype;
 	
-	ui5strap.Heading.prototype._stylePrefix = 'ui5strapHeading';
-
-	ui5strap.Utils.dynamicText(ui5strap.Heading.prototype);
-
-}());;/*
+	Heading._typeToClass = {
+		"PageHeader" : 'page-header',
+		'ListGroupItemHeading' : 'list-group-item-heading',
+		'MediaHeading' : 'media-heading'
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	HeadingProto._getStyleClassRoot = function(){
+		var type = this.getType(),
+			classAdd = "";
+		if(ui5strap.HeadingType.Default !== type){
+			classAdd = " " + Heading._typeToClass[type] + " " + this._getStyleClassType(type);
+		}
+		
+		return this._getStyleClassPrefix() + classAdd;
+	};
+	
+	ui5strap.Utils.dynamicText(HeadingProto);
+	
+	return Heading;
+});;/*
  * 
  * UI5Strap
  *
@@ -18447,20 +18556,11 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.HeadingRenderer");
+	var HeadingRenderer = {};
 
-	ui5strap.HeadingRenderer = {
-
-		typeToClass : {
-			"PageHeader" : 'page-header',
-			'ListGroupItemHeading' : 'list-group-item-heading',
-			'MediaHeading' : 'media-heading'
-		}
-	};
-
-	ui5strap.HeadingRenderer.render = function(rm, oControl) {
+	HeadingRenderer.render = function(rm, oControl) {
 		var level = oControl.getLevel(),
 			type = oControl.getType(),
 			text = oControl.getText(),
@@ -18470,30 +18570,18 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 			
-
-		rm.write("<h" + level);
+		rm.write("<h" + level + ' class="' + oControl._getStyleClass() + '"');
 		rm.writeControlData(oControl);
-		
-		//Base Classes
-		rm.addClass("ui5strapHeading");
-		
-		//@deprecated Heading type is deprecated
-		if(ui5strap.HeadingType.Default !== type){
-			rm.addClass(this.typeToClass[type]);
-		}
-		
-		//Options classes
-		rm.addClass(oControl._getStyleClassOptions());
-		
-		rm.writeClasses();
 		rm.write(">");
 		    
 		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
 		    
 		rm.write("</h" + level + ">");
 	};
+	
+	return HeadingRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -18520,12 +18608,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Image");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Image", {
+	var Image = ControlBase.extend("ui5strap.Image", {
 		metadata : {
 
 			library : "ui5strap",
@@ -18582,8 +18667,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 
 		}
 	});
-
-}());;/*
+	
+	return Image;
+});;/*
  * 
  * UI5Strap
  *
@@ -18610,11 +18696,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ImageRenderer");
-
-	ui5strap.ImageRenderer = {
+	var ImageRenderer = {
 		shapeToClass : {
 			Rounded : 'img-rounded',
 			Circle : 'img-circle',
@@ -18626,7 +18710,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		}
 	};
 
-	ui5strap.ImageRenderer.render = function(rm, oControl) {
+	ImageRenderer.render = function(rm, oControl) {
 		var src = oControl.getSrc(),
 			mpath = oControl.getMpath(),
 			mext = oControl.getExt(),
@@ -18673,8 +18757,10 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
+	
+	return ImageRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -18702,18 +18788,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.InputGroup");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.Text");
-	jQuery.sap.require("ui5strap.Button");
-	jQuery.sap.require("ui5strap.TextInput");
-	jQuery.sap.require("ui5strap.Checkbox");
-	jQuery.sap.require("ui5strap.RadioButton");
-	jQuery.sap.require("ui5strap.SelectBox");
-	
-	ui5strap.ControlBase.extend("ui5strap.InputGroup", {
+	var InputGroup = ControlBase.extend("ui5strap.InputGroup", {
 		metadata : {
 
 			// ---- object ----
@@ -18735,8 +18812,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 
 		}
 	});
-
-}());;/*
+	
+	return InputGroup;
+});;/*
  * 
  * UI5Strap
  *
@@ -18763,14 +18841,11 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.InputGroupRenderer");
+	var InputGroupRenderer = {};
 
-	ui5strap.InputGroupRenderer = {
-	};
-
-	ui5strap.InputGroupRenderer.render = function(rm, oControl) {
+	InputGroupRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			size = oControl.getSize();
 		
@@ -18828,8 +18903,10 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		    
 		rm.write("</div>");
 	};
+	
+	return InputGroupRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -18857,11 +18934,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Item");
-
-	sap.ui.core.Element.extend("ui5strap.Item", {
+	var Item = ui5strap.Element.extend("ui5strap.Item", {
 		metadata : {
 
 			// ---- control specific ----
@@ -18880,8 +18955,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 
 		}
 	});
-
-}());;/*
+	
+	return Item;
+});;/*
  * 
  * UI5Strap
  *
@@ -18908,12 +18984,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Jumbotron");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Jumbotron", {
+	var Jumbotron = ControlBase.extend("ui5strap.Jumbotron", {
 		metadata : {
 
 			// ---- object ----
@@ -18934,8 +19007,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 
 		}
 	});
-
-}());;/*
+	
+	return Jumbotron;
+});;/*
  * 
  * UI5Strap
  *
@@ -18962,14 +19036,11 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.JumbotronRenderer");
+	var JumbotronRenderer = {};
 
-	ui5strap.JumbotronRenderer = {
-	};
-
-	ui5strap.JumbotronRenderer.render = function(rm, oControl) {
+	JumbotronRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent();
 
 		rm.write("<div");
@@ -18985,8 +19056,10 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 
 		rm.write("</div>");
 	};
+	
+	return JumbotronRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -19013,12 +19086,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Label");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Label", {
+	var Label = ControlBase.extend("ui5strap.Label", {
 		metadata : {
 			deprecated : true,
 			// ---- object ----
@@ -19042,8 +19112,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 			}
 		}
 	});
-
-}());;/*
+	
+	return Label;
+});;/*
  * 
  * UI5Strap
  *
@@ -19070,13 +19141,11 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.LabelRenderer");
+	var LabelRenderer = {};
 
-	ui5strap.LabelRenderer = {};
-
-	ui5strap.LabelRenderer.render = function(rm, oControl) {
+	LabelRenderer.render = function(rm, oControl) {
 		rm.write("<span");
 		rm.writeControlData(oControl);
 		rm.addClass("label label-" + ui5strap.BSSeverity[oControl.getSeverity()] );
@@ -19089,8 +19158,10 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
+	
+	return LabelRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -19117,12 +19188,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Line");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Line", {
+	return ControlBase.extend("ui5strap.Line", {
 		metadata : {
 
 			library : "ui5strap",
@@ -19130,7 +19198,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		}
 	});
 
-}());;/*
+});;/*
  * 
  * UI5Strap
  *
@@ -19157,20 +19225,20 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.LineRenderer");
+	var LineRenderer = {};
 
-	ui5strap.LineRenderer = {};
-
-	ui5strap.LineRenderer.render = function(rm, oControl) {
+	LineRenderer.render = function(rm, oControl) {
 		rm.write("<hr");
 		rm.writeControlData(oControl);
 		rm.writeClasses();
 		rm.write(" />");
 	};
+	
+	return LineRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -19197,14 +19265,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.List");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ListBase.extend("ui5strap.List", {
+	var List = ListBase.extend("ui5strap.List", {
 		metadata : {
 
 			library : "ui5strap",
@@ -19226,11 +19289,11 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 			}
 
 		}
-	});
-
-	var ListProto = ui5strap.List.prototype;
+	}),
+	ListProto = List.prototype;
 	
-}());;/*
+	return List;
+});;/*
  * 
  * UI5Strap
  *
@@ -19257,13 +19320,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListLinkItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.ListDropdownItem");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListLinkItem");
-	
-	ui5strap.ListLinkItem.extend("ui5strap.ListDropdownItem", {
+	var ListDropdownItem = ListLinkItem.extend("ui5strap.ListDropdownItem", {
 		metadata : {
 			library : "ui5strap",
 
@@ -19283,9 +19342,8 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 				}
 			}
 		}
-	});
-
-	var ListDropdownItemProto = ui5strap.ListDropdownItem.prototype;
+	}),
+	ListDropdownItemProto = ListDropdownItem.prototype;
 
 	ListDropdownItemProto.setText = function(newText){
 		if(this.getMenu() === null){
@@ -19328,8 +19386,8 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		ListDropdownItemProto.onclick = ListDropdownItemProto._handlePress;
 	}
 	
-
-}());;/*
+	return ListDropdownItem;
+});;/*
  * 
  * UI5Strap
  *
@@ -19356,15 +19414,11 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.ListDropdownItemRenderer");
-	jQuery.sap.require("ui5strap.library");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	ui5strap.ListDropdownItemRenderer = {
-	};
+	var ListDropdownItemRenderer = {};
 
-	ui5strap.ListDropdownItemRenderer.render = function(rm, oControl) {
+	ListDropdownItemRenderer.render = function(rm, oControl) {
 		var menu = oControl.getMenu();
 
 		rm.write("<li");
@@ -19392,7 +19446,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		rm.write("</li>");
 	};
 
-	ui5strap.ListDropdownItemRenderer.renderContent = function(rm, oControl){
+	ListDropdownItemRenderer.renderContent = function(rm, oControl){
 		var text = oControl.getText(),
 			parse = oControl.getParse();
 	
@@ -19404,7 +19458,7 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 		rm.write(' <span class="caret"></span>');
 	};
 	
-	ui5strap.ListDropdownItemRenderer.startRenderLink = function(rm, oControl) {
+	ListDropdownItemRenderer.startRenderLink = function(rm, oControl) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			target = oControl.getTarget();
@@ -19430,8 +19484,10 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 
 		rm.write(">");
 	};
+	
+	return ListDropdownItemRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -19459,14 +19515,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.ListDropdownMenu");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ListBase.extend("ui5strap.ListDropdownMenu", {
+	var ListDropdownMenu = ListBase.extend("ui5strap.ListDropdownMenu", {
 		metadata : {
 
 			library : "ui5strap",
@@ -19488,9 +19539,8 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 			}
 
 		}
-	});
-
-	var ListDropdownMenuProto = ui5strap.ListDropdownMenu.prototype;
+	}),
+	ListDropdownMenuProto = ListDropdownMenu.prototype;
 	
 	ListDropdownMenuProto.setMasterSelected = function(listItem){ 
 		ui5strap.ListBase.prototype.setMasterSelected.call(this, listItem);
@@ -19551,8 +19601,9 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
 	else{
 		ListDropdownMenuProto.onclick = ListDropdownMenuProto._handlePress;
 	}
-
-}());;/*
+	
+	return ListDropdownMenu;
+});;/*
  * 
  * UI5Strap
  *
@@ -19579,31 +19630,30 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-jQuery.sap.declare("ui5strap.ListDropdownMenuRenderer");
-
-ui5strap.ListDropdownMenuRenderer = {
-};
-
-ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
-	var items = oControl.getItems();
-
-	rm.write("<ul");
-	rm.writeControlData(oControl);
-	rm.addClass("dropdown-menu");
-	rm.writeClasses();
-	rm.writeAttribute("role", "menu");
-	rm.write(">");
+	var ListDropdownMenuRenderer = {};
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
+	ListDropdownMenuRenderer.render = function(rm, oControl) {
+		var items = oControl.getItems();
 	
-	rm.write("</ul>");
-};
+		rm.write("<ul");
+		rm.writeControlData(oControl);
+		rm.addClass("dropdown-menu");
+		rm.writeClasses();
+		rm.writeAttribute("role", "menu");
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</ul>");
+	};
+	
+	return ListDropdownMenuRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -19631,13 +19681,9 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.ListGroup");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListGroupItem");
-
-	ui5strap.ListBase.extend("ui5strap.ListGroup", {
+	var ListGroup = ListBase.extend("ui5strap.ListGroup", {
 		metadata : {
 
 			library : "ui5strap",
@@ -19659,11 +19705,11 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 			}
 
 		}
-	});
+	}),
+	ListGroupProto = ui5strap.ListGroup.prototype;
 	
-	var ListGroupProto = ui5strap.ListGroup.prototype;
-	
-}());;/*
+	return ListGroup;
+});;/*
  * 
  * UI5Strap
  *
@@ -19690,14 +19736,11 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ListGroupRenderer");
+	var ListGroupRenderer = {};
 
-	ui5strap.ListGroupRenderer = {
-	};
-
-	ui5strap.ListGroupRenderer.render = function(rm, oControl) {
+	ListGroupRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
 			tag = oControl.getListMode() === ui5strap.ListGroupMode.Default ? 'ul' : 'div';
 		
@@ -19714,8 +19757,10 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 		    
 		rm.write("</" + tag + ">");
 	};
+	
+	return ListGroupRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -19743,13 +19788,9 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.ListMedia");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListMediaItem");
-
-	ui5strap.ListBase.extend("ui5strap.ListMedia", {
+	var ListMedia = ListBase.extend("ui5strap.ListMedia", {
 		metadata : {
 
 			library : "ui5strap",
@@ -19771,11 +19812,11 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 			}
 
 		}
-	});
+	}),
+	ListMediaProto = ListMedia.prototype;
 	
-	var ListMediaProto = ui5strap.ListMedia.prototype;
-	
-}());;/*
+	return ListMedia;
+});;/*
  * 
  * UI5Strap
  *
@@ -19802,14 +19843,11 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ListMediaRenderer");
+	var ListMediaRenderer = {};
 
-	ui5strap.ListMediaRenderer = {
-	};
-
-	ui5strap.ListMediaRenderer.render = function(rm, oControl) {
+	ListMediaRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
 			tag = oControl.getContainer() ? 'div' : 'ul';
 		
@@ -19825,8 +19863,10 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 		    
 		rm.write("</" + tag + ">");
 	};
+	
+	return ListMediaRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -19854,12 +19894,9 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListLinkItem'], function(library, ListItem){
 
-	jQuery.sap.declare("ui5strap.ListNavItem");
-	jQuery.sap.require("ui5strap.ListLinkItem");
-
-	ui5strap.ListLinkItem.extend("ui5strap.ListNavItem", {
+	var ListNavItem = ListLinkItem.extend("ui5strap.ListNavItem", {
 		metadata : {
 
 			// ---- object ----
@@ -19875,8 +19912,9 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 			}
 		}
 	});
-
-}());;/*
+	
+	return ListNavItem;
+});;/*
  * 
  * UI5Strap
  *
@@ -19903,14 +19941,11 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.ListNavItemRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	ui5strap.ListNavItemRenderer = {
-	};
+	var ListNavItemRenderer = {};
 
-	ui5strap.ListNavItemRenderer.render = function(rm, oControl) {
+	ListNavItemRenderer.render = function(rm, oControl) {
 		var badge = oControl.getBadge();
 
 		rm.write("<li");
@@ -19946,7 +19981,7 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 		rm.write("</li>");
 	};
 	
-	ui5strap.ListNavItemRenderer.startRenderLink = function(rm, oControl, options) {
+	ListNavItemRenderer.startRenderLink = function(rm, oControl, options) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			target = oControl.getTarget();
@@ -19972,8 +20007,10 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
 
 		rm.write(">");
 	};
+	
+	return ListNavItemRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -20001,34 +20038,33 @@ ui5strap.ListDropdownMenuRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
-
-jQuery.sap.declare("ui5strap.ListRenderer");
-
-ui5strap.ListRenderer = {
-};
-
-ui5strap.ListRenderer.render = function(rm, oControl) {
-	var items = oControl.getItems();
-
-	var tagName = 'ul';
-	if(oControl.getType() === ui5strap.ListType.Ordered){
-		tagName = 'ol';
-	}
-
-	rm.write("<" + tagName);
-	rm.writeControlData(oControl);
-	rm.writeClasses();
-	rm.write(">");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
+	var ListRenderer = {};
 	
-	rm.write("</" + tagName + ">");
-};
+	ListRenderer.render = function(rm, oControl) {
+		var items = oControl.getItems();
+	
+		var tagName = 'ul';
+		if(oControl.getType() === ui5strap.ListType.Ordered){
+			tagName = 'ol';
+		}
+	
+		rm.write("<" + tagName);
+		rm.writeControlData(oControl);
+		rm.writeClasses();
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</" + tagName + ">");
+	};
+	
+	return ListRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -20056,12 +20092,9 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Modal");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Modal", {
+	var Modal = ControlBase.extend("ui5strap.Modal", {
 		metadata : {
 			deprecated : true,
 			// ---- object ----
@@ -20131,7 +20164,8 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
     this.$().modal('toggle');
   };
 
-}());
+  return Modal;
+});
 
 /* ========================================================================
  * Bootstrap: modal.js v3.1.1
@@ -20402,13 +20436,11 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ModalRenderer");
+	var ModalRenderer = {};
 
-	ui5strap.ModalRenderer = {};
-
-	ui5strap.ModalRenderer.render = function(rm, oControl) {
+	ModalRenderer.render = function(rm, oControl) {
 		var header = oControl.getHeader(),
 			body = oControl.getBody(),
 			footer = oControl.getFooter();
@@ -20450,8 +20482,10 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 			rm.write("</div>");
 		rm.write("</div>");
 	};
+	
+	return ModalRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -20479,14 +20513,9 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.Nav");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ListBase.extend("ui5strap.Nav", {
+	var Nav = ListBase.extend("ui5strap.Nav", {
 		metadata : {
 
 			library : "ui5strap",
@@ -20515,12 +20544,15 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 			}
 
 		}
-	});
-
-	var NavProto = ui5strap.Nav.prototype;
+	}),
+	NavProto = ui5strap.Nav.prototype;
 	
-	NavProto._stylePrefix = "nav";
-}());;/*
+	NavProto._getStyleClassPrefix = function(){
+		return "nav";
+	};
+
+	return Nav;
+});;/*
  * 
  * UI5Strap
  *
@@ -20547,12 +20579,9 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.NavBar");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.NavBar", {
+	var NavBar = ControlBase.extend("ui5strap.NavBar", {
 		metadata : {
 			deprecated : true,
 			
@@ -20610,9 +20639,8 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 			}
 
 		}
-	});
-
-	var NavBarProto = ui5strap.NavBar.prototype;
+	}),
+	NavBarProto = ui5strap.NavBar.prototype;
 
 	NavBarProto.getCollapseId = function(){
 		return this.getId() + '---collapse';
@@ -20688,8 +20716,9 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 	NavBarProto.toggle = function(){
 		this.setCollapsed(!this.getCollapsed());
 	};
-
-}());;/*
+	
+	return NavBar;
+});;/*
  * 
  * UI5Strap
  *
@@ -20716,11 +20745,9 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.NavBarRenderer");
-
-	ui5strap.NavBarRenderer = {
+	var NavBarRenderer = {
 
 		positionToClass : {
 			FixedTop : "navbar-fixed-top",
@@ -20734,7 +20761,7 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 
 	};
 
-	ui5strap.NavBarRenderer.render = function(rm, oControl) {
+	NavBarRenderer.render = function(rm, oControl) {
 		var brand = oControl.getBrand(),
 			contentLeft = oControl.getContentLeft(),
 			content = oControl.getContent(),
@@ -20854,8 +20881,10 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 		//End control
 		rm.write("</div>");
 	};
+	
+	return NavBarRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -20883,13 +20912,9 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
-
-	jQuery.sap.declare("ui5strap.NavContainerRenderer");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	var NavContainerRenderer = {};
-
-	ui5strap.NavContainerRenderer = NavContainerRenderer;
 
 	NavContainerRenderer.render = function(rm, oControl) {
 		this.startRender(rm, oControl);
@@ -20963,8 +20988,8 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 		 	rm.write("<!-- NavContainer END -->");
 	};
 
-
-}());
+	return NavContainerRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -20992,12 +21017,9 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 
-	jQuery.sap.declare("ui5strap.NavContainerStandard");
-	jQuery.sap.require("ui5strap.NavContainer");
-	
-	ui5strap.NavContainer.extend("ui5strap.NavContainerStandard", {
+	var NavContainerStandard = NavContainer.extend("ui5strap.NavContainerStandard", {
 		metadata : {
 
 			library : "ui5strap",
@@ -21006,13 +21028,14 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 
 		//Use default NavContainerRenderer
 		renderer : "ui5strap.NavContainerRenderer"
-	});
+	}),
+	NavContainerStandardProto = NavContainerStandard.prototype;
 
 	/**
 	* @Override
 	* @Protected
 	*/
-	ui5strap.NavContainerStandard.prototype._initNavContainer = function(){
+	NavContainerStandardProto._initNavContainer = function(){
 		//NavContainer type string
 		//Resulting css class is "navcontainer navcontainer-standard"
 		this.ncType = "standard";
@@ -21027,8 +21050,9 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
 			"navbar" : null
 		};
 	};
-
-}());;/*
+	
+	return NavContainerStandard;
+});;/*
  * 
  * UI5Strap
  *
@@ -21055,47 +21079,47 @@ ui5strap.ListRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
-
-jQuery.sap.declare("ui5strap.NavRenderer");
-
-ui5strap.NavRenderer = {
-	typeToClass : {
-		Default : "nav-default",
-		Tabs : "nav-tabs",
-		Pills : "nav-pills",
-		PillsStacked : "nav-pills nav-stacked",
-		PillsJustified : "nav-pills nav-justified",
-		TabsJustified : "nav-tabs nav-justified"
-	}
-
-};
-
-ui5strap.NavRenderer.render = function(rm, oControl) {
-	var type = oControl.getType(),
-		items = oControl.getItems();
-
-	rm.write("<ul");
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	rm.writeControlData(oControl);
-
-	rm.addClass('nav');
-	rm.addClass(this.typeToClass[type]);
-	rm.addClass(oControl._getStyleClassOptions());
-	ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
-
-	rm.writeClasses();
+	var NavRenderer = {
+		typeToClass : {
+			Default : "nav-default",
+			Tabs : "nav-tabs",
+			Pills : "nav-pills",
+			PillsStacked : "nav-pills nav-stacked",
+			PillsJustified : "nav-pills nav-justified",
+			TabsJustified : "nav-tabs nav-justified"
+		}
 	
-	rm.write(">");
+	};
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
+	NavRenderer.render = function(rm, oControl) {
+		var type = oControl.getType(),
+			items = oControl.getItems();
 	
-	rm.write("</ul>");
-};
+		rm.write("<ul");
+		
+		rm.writeControlData(oControl);
+	
+		rm.addClass('nav');
+		rm.addClass(this.typeToClass[type]);
+		rm.addClass(oControl._getStyleClassOptions());
+		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
+	
+		rm.writeClasses();
+		
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</ul>");
+	};
+	
+	return NavRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -21227,34 +21251,39 @@ sap.ui.define(['./library'], function(library){
 			return jQuery('#' + this._getIdPart.apply(this, arguments));
 		};
 		
-		obj._stylePrefix = 'ui5strapControlBase';
+		/**
+		 * @Protected
+		 */
+		obj._getStyleClassPrefix = function(){
+			return this.getMetadata().getElementName().replace(/\./g, '');
+		};
 		
 		/**
 		 * @Protected
 		 */
 		obj._getStyleClassRoot = function(){
-			return this._stylePrefix;
+			return this._getStyleClassPrefix();
 		};
 		
 		/**
 		 * @Protected
 		 */
 		obj._getStyleClassPart = function(partName){
-			return this._stylePrefix + "-" + partName;
+			return this._getStyleClassPrefix() + "-" + partName;
 		};
 		
 		/**
 		* @Protected
 		*/
-		obj._getStyleClassType = function(type){
-			return 	this._stylePrefix + "-type-" + type;
+		obj._getStyleClassType = function(type, typeKey){
+			return 	this._getStyleClassPrefix() + "-" + (typeKey || "type") + "-" + type;
 		};
 		
 		/**
 		* @Protected
 		*/
 		obj._getStyleClassFlag = function(flag){
-			return 	this._stylePrefix + "-flag-" + flag;
+			return 	this._getStyleClassPrefix() + "-flag-" + flag;
 		};
 		
 		/**
@@ -21282,11 +21311,15 @@ sap.ui.define(['./library'], function(library){
 			if(options){
 		    	options = options.split(' ');
 		    	for(var i = 0; i < options.length; i++){
-		    		classes += ' ' + this._stylePrefix + '-option-' + options[i];
+		    		classes += ' ' + this._getStyleClassPrefix() + '-option-' + options[i];
 		    	}
 		    }
 			
 			return classes;
+		};
+		
+		obj._getStyleClass = function(){
+			return this._getStyleClassRoot() + " " + this._getStyleClassOptions();	
 		};
 		
 		/**
@@ -21299,7 +21332,7 @@ sap.ui.define(['./library'], function(library){
 			var classes = this.$().attr('class').split(' ');
 			for(var i = 0; i < classes.length; i++){
 				var cClass = classes[i];
-				if(cClass && cClass.indexOf(this._stylePrefix + '-option-') !== 0){
+				if(cClass && cClass.indexOf(this._getStyleClassPrefix() + '-option-') !== 0){
 					currentClassesString += ' ' + cClass;
 				}
 				
@@ -21308,7 +21341,7 @@ sap.ui.define(['./library'], function(library){
 			if(options){
 		    	options = options.split(' ');
 		    	for(var i = 0; i < options.length; i++){
-		    		currentClassesString += ' ' + this._stylePrefix + '-option-' + options[i];
+		    		currentClassesString += ' ' + this._getStyleClassPrefix() + '-option-' + options[i];
 		    	}
 		    }
 		
@@ -21434,8 +21467,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	PageProto = Page.prototype;
 
-	PageProto._stylePrefix = "ui5strapPage";
-	
 	return Page;
 });;/*
  * 
@@ -21464,12 +21495,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.PageHeader");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.PageHeader", {metadata : {
+	var PageHeader = ControlBase.extend("ui5strap.PageHeader", {metadata : {
 		deprecated : true,
 		library : "ui5strap",
 		
@@ -21491,8 +21519,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		aggregations : {}
 
 	}});
-
-}());;/*
+	
+	return PageHeader;
+});;/*
  * 
  * UI5Strap
  *
@@ -21519,13 +21548,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-    jQuery.sap.declare("ui5strap.PageHeaderRenderer");
+    var PageHeaderRenderer = {};
 
-    ui5strap.PageHeaderRenderer = {};
-
-    ui5strap.PageHeaderRenderer.render = function(rm, oControl) {
+    PageHeaderRenderer.render = function(rm, oControl) {
         var lead = oControl.getLead();
 
         rm.write("<div");
@@ -21558,7 +21585,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
         
     };
 
-}());;/*
+    return PageHeaderRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -21585,13 +21613,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.PageRenderer");
+	var PageRenderer = {};
 
-	ui5strap.PageRenderer = {};
-
-	ui5strap.PageRenderer.render = function(rm, oControl) {
+	PageRenderer.render = function(rm, oControl) {
 		var head = oControl.getHead(),
 			content = oControl.getBody(),
 			footer = oControl.getFooter();
@@ -21628,8 +21654,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 		rm.write("</div>");
 	};
+	
+	return PageRenderer;
 
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -21657,12 +21685,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Pager");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Pager", {
+	var Pager = ControlBase.extend("ui5strap.Pager", {
 		metadata : {
 
 			// ---- control specific ----
@@ -21696,8 +21721,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 		}
 	});
-
-}());;/*
+	
+	return Pager;
+});;/*
  * 
  * UI5Strap
  *
@@ -21724,13 +21750,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.PagerRenderer");
+	var PagerRenderer = {};
 
-	ui5strap.PagerRenderer = {};
-
-	ui5strap.PagerRenderer.render = function(rm, oControl) {
+	PagerRenderer.render = function(rm, oControl) {
 		var previous = oControl.getPrevious(),
 			next = oControl.getNext(),
 			spread = oControl.getAligned();
@@ -21768,8 +21792,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		rm.write("</ul>");
 
 	};
+	
+	return PagerRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -21796,14 +21822,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
-	jQuery.sap.declare("ui5strap.Pagination");
-	jQuery.sap.require("ui5strap.library");
-	jQuery.sap.require("ui5strap.ListBase");
-	jQuery.sap.require("ui5strap.ListItem");
-	
-	ui5strap.ListBase.extend("ui5strap.Pagination", {
+	var Pagination = ListBase.extend("ui5strap.Pagination", {
 		metadata : {
 
 			library : "ui5strap",
@@ -21821,11 +21842,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				} 
 			}
 		}
-	});
+	}),
+	PaginationProto = Pagination.prototype;
 	
-	var PaginationProto = ui5strap.Pagination.prototype;
-	
-}());;/*
+	return Pagination;
+});;/*
  * 
  * UI5Strap
  *
@@ -21852,30 +21873,28 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-jQuery.sap.declare("ui5strap.PaginationRenderer");
+	var PaginationRenderer = {};
 
-ui5strap.PaginationRenderer = {
-};
-
-ui5strap.PaginationRenderer.render = function(rm, oControl) {
-	var items = oControl.getItems();
-
-	rm.write("<ul");
-	rm.writeControlData(oControl);
-	rm.addClass('pagination');
-	rm.writeClasses();
-	rm.write(">");
+	PaginationRenderer.render = function(rm, oControl) {
+		var items = oControl.getItems();
 	
-	for(var i = 0; i < items.length; i++){
-		rm.renderControl(items[i]);
-	}
-	
-	rm.write("</ul>");
-};
+		rm.write("<ul");
+		rm.writeControlData(oControl);
+		rm.addClass('pagination');
+		rm.writeClasses();
+		rm.write(">");
+		
+		for(var i = 0; i < items.length; i++){
+			rm.renderControl(items[i]);
+		}
+		
+		rm.write("</ul>");
+	};
 
-}());
+	return PaginationRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -21903,12 +21922,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Panel");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Panel", {
+	var Panel = ControlBase.extend("ui5strap.Panel", {
 		metadata : {
 
 			// ---- object ----
@@ -21958,9 +21974,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 			}
 
 		}
-	});
-
-	var PanelProto = ui5strap.Panel.prototype;
+	}),
+	PanelProto = ui5strap.Panel.prototype;
 
 	PanelProto.setCollapsed = function(newCollapsed){
 		if(!this.getCollapse() || newCollapsed === this.getCollapsed()){
@@ -22061,8 +22076,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 	else{
 		PanelProto.onclick = PanelProto._handlePress;
 	}
-
-}());;/*
+	
+	return Panel;
+});;/*
  * 
  * UI5Strap
  *
@@ -22089,12 +22105,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.PanelGroup");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.PanelGroup", {
+	var PanelGroup = ControlBase.extend("ui5strap.PanelGroup", {
 		metadata : {
 
 			// ---- object ----
@@ -22117,7 +22130,7 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		}
 	});
 
-	ui5strap.PanelGroup.prototype.setSelectedControl = function(panel){
+	PanelGroup.prototype.setSelectedControl = function(panel){
 		var panels = this.getPanels();
 		for(var i = 0; i < panels.length; i++){
 			var panelI = panels[i];
@@ -22131,8 +22144,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 			}
 		}
 	};
-
-}());;/*
+	
+	return PanelGroup;
+});;/*
  * 
  * UI5Strap
  *
@@ -22159,14 +22173,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.PanelGroupRenderer");
+	var PanelGroupRenderer = {};
 
-	ui5strap.PanelGroupRenderer = {
-	};
-
-	ui5strap.PanelGroupRenderer.render = function(rm, oControl) {
+	PanelGroupRenderer.render = function(rm, oControl) {
 		var panels = oControl.getPanels();
 
 		rm.write("<div");
@@ -22183,7 +22194,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		rm.write("</div>");
 	};
 
-}());;/*
+	return PanelGroupRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -22210,13 +22222,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.PanelRenderer");
+	var PanelRenderer = {};
 
-	ui5strap.PanelRenderer = {};
-
-	ui5strap.PanelRenderer.render = function(rm, oControl) {
+	PanelRenderer.render = function(rm, oControl) {
 		var severity = oControl.getSeverity(),
 			collapse = oControl.getCollapse();
 
@@ -22272,7 +22282,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		rm.write("</div>");
 	};
 
-}());;/*
+	return PanelRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -22299,12 +22310,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Paragraph");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Paragraph", {
+	var Paragraph = ControlBase.extend("ui5strap.Paragraph", {
 		metadata : {
 
 			// ---- object ----
@@ -22346,9 +22354,10 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		}
 	});
 
-	ui5strap.Utils.dynamicText(ui5strap.Paragraph.prototype);
-
-}());;/*
+	ui5strap.Utils.dynamicText(Paragraph.prototype);
+	
+	return Paragraph;
+});;/*
  * 
  * UI5Strap
  *
@@ -22375,13 +22384,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ParagraphRenderer");
+	var ParagraphRenderer = {};
 
-	ui5strap.ParagraphRenderer = {};
-
-	ui5strap.ParagraphRenderer.render = function(rm, oControl) {
+	ParagraphRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			severity = oControl.getSeverity(),
 			text = oControl.getText(),
@@ -22412,7 +22419,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		rm.write("</p>");
 	};
 
-}());
+	return ParagraphRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -22440,13 +22448,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './Tooltip'], function(library, Tooltip){
 
-  jQuery.sap.declare("ui5strap.Popover");
-  jQuery.sap.require("ui5strap.library");
-  jQuery.sap.require("ui5strap.Tooltip");
-
-  ui5strap.Tooltip.extend("ui5strap.Popover", {
+	var Popover = Tooltip.extend("ui5strap.Popover", {
     metadata : {
 
       // ---- object ----
@@ -22474,8 +22478,6 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 
     }
   });
-
-  var Popover = ui5strap.Popover;
 
   Popover.lastShownInstance = null;
 
@@ -22529,8 +22531,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
   Popover.prototype.toggle = function(){
       this.getSourceDomRef().popover('toggle');
   };
-  
-}());
+ 
+  return Popover;
+});
 
 /* ========================================================================
  * Bootstrap: popover.js v3.1.1
@@ -22668,13 +22671,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.PopoverRenderer");
+	var PopoverRenderer = {};
 
-	ui5strap.PopoverRenderer = {};
-
-	ui5strap.PopoverRenderer.render = function(rm, oControl) {
+	PopoverRenderer.render = function(rm, oControl) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -22708,7 +22709,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		    
 	};
 
-}());;/*
+	return PopoverRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -22735,12 +22737,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Progress");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Progress", {
+	var Progress = ControlBase.extend("ui5strap.Progress", {
 		metadata : {
 
 			// ---- object ----
@@ -22767,9 +22766,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 				} 
 			}
 		}
-	});
-
-	var ProgressProto = ui5strap.Progress.prototype;
+	}),
+	ProgressProto = Progress.prototype;
 
 	ProgressProto.getFirstBar = function(){
 		var bars = this.getBars();
@@ -22779,7 +22777,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		return bars[0];
 	};
 
-}());;/*
+	return Progress;
+});;/*
  * 
  * UI5Strap
  *
@@ -22806,12 +22805,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.ProgressBar");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.ProgressBar", {
+	var ProgressBar = ControlBase.extend("ui5strap.ProgressBar", {
 		metadata : {
 
 			// ---- object ----
@@ -22843,9 +22839,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 				}
 			}
 		}
-	});
-
-	var ProgressBarProto = ui5strap.ProgressBar.prototype;
+	}),
+	ProgressBarProto = ui5strap.ProgressBar.prototype;
 
 	ProgressBarProto.setValue = function(newValue){
 		if(this.getDomRef()){
@@ -22866,8 +22861,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		var percentage = ( this.getValue() - this.getMinValue() ) / ( this.getMaxValue() - this.getMinValue() ) * 100;
 		return Math.round(percentage * 100) / 100;
 	};
-
-}());;/*
+	
+	return ProgressBar;
+});;/*
  * 
  * UI5Strap
  *
@@ -22894,14 +22890,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ProgressBarRenderer");
+	var ProgressBarRenderer = {};
 
-	ui5strap.ProgressBarRenderer = {
-	};
-
-	ui5strap.ProgressBarRenderer.render = function(rm, oControl) {
+	ProgressBarRenderer.render = function(rm, oControl) {
 		var type = oControl.getSeverity(),
 			labelFormat = oControl.getLabelFormat(),
 			value = oControl.getValue(),
@@ -22935,7 +22928,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		rm.write("</div>");
 	};
 
-}());;/*
+	return ProgressBarRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -22962,14 +22956,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ProgressRenderer");
+	var ProgressRenderer = {};
 
-	ui5strap.ProgressRenderer = {
-	};
-
-	ui5strap.ProgressRenderer.render = function(rm, oControl) {
+	ProgressRenderer.render = function(rm, oControl) {
 		var items = oControl.getBars();
 
 		rm.write("<div");
@@ -22994,7 +22985,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		rm.write("</div>");
 	};
 
-}());
+	return ProgressRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -23022,11 +23014,9 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Row");
-
-	ui5strap.ControlBase.extend("ui5strap.Row", {
+	var Row = ControlBase.extend("ui5strap.Row", {
 		metadata : {
 
 			// ---- object ----
@@ -23049,8 +23039,8 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		}
 	});
 
-
-}());;/*
+	return Row;
+});;/*
  * 
  * UI5Strap
  *
@@ -23077,14 +23067,11 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.RowRenderer");
+	var RowRenderer = {};
 
-	ui5strap.RowRenderer = {
-	};
-
-	ui5strap.RowRenderer.render = function(rm, oControl) {
+	RowRenderer.render = function(rm, oControl) {
 		var content = oControl.getColumns();
 		rm.write("<div");
 		rm.writeControlData(oControl);
@@ -23098,9 +23085,10 @@ ui5strap.PaginationRenderer.render = function(rm, oControl) {
 		
 		rm.write("</div>");
 	};
+	
+	return RowRenderer;
 
-
-}());
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -23159,11 +23147,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ScrollContainerProto = ScrollContainer.prototype;
 	
-	/*
-	 * Style Prefix
-	 */
-	ScrollContainerProto._stylePrefix = "ui5strapScrollContainer";
-
 	/**
 	 * @Override
 	 */
@@ -23275,12 +23258,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Sidebar");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Sidebar", {
+	var Sidebar = ControlBase.extend("ui5strap.Sidebar", {
 		metadata : {
 			deprecated : true,
 			// ---- object ----
@@ -23308,8 +23288,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		}
 	});
-
-}());;/*
+	
+	return Sidebar;
+});;/*
  * 
  * UI5Strap
  *
@@ -23336,14 +23317,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.SidebarRenderer");
+	var SidebarRenderer = {};
 
-	ui5strap.SidebarRenderer = {
-	};
-
-	ui5strap.SidebarRenderer.render = function(rm, oControl) {
+	SidebarRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			inverse = oControl.getInverse();
 
@@ -23371,7 +23349,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("</div>");
 	};
 
-}());;/*
+	return SidebarRenderer;
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -23427,8 +23406,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	}),
 	StaticOverlayProto = StaticOverlay.prototype;
-	
-	StaticOverlayProto._stylePrefix = "ui5strapStaticOverlay";
 	
 	StaticOverlayProto.onBeforeRendering = function(oEvent){
 		if(this.getBackdrop()){
@@ -23533,12 +23510,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.TabContainer");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.TabContainer", {
+	var TabContainer = ControlBase.extend("ui5strap.TabContainer", {
 		metadata : {
 			interfaces : ["ui5strap.ISelectionProvider"],
 
@@ -23594,9 +23568,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 
 		}
-	});
-
-	var TabContainerProto = ui5strap.TabContainer.prototype;
+	}),
+	TabContainerProto = ui5strap.TabContainer.prototype;
 	
 	/**
 	 * @Public
@@ -23707,36 +23680,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	 * @Public
 	 * @deprecated
 	 */
-	TabContainerProto.setSelectedPane = function($pane){
-		var $active = this.$().find('> .active'),
-			_this = this;
-
-		if($active.attr('data-pane-index') === $pane.attr('data-pane-index') || $pane.length === 0){
-			return;
-		}
-		
-		//this.$().find('.tab-pane').attr('class', 'tab-pane fade');
-		var transition = $.support.transition
-      					&& $active.hasClass('fade');
-
-		var next = function(){
-			$pane.addClass('active' + (_this.getAnimate() ? ' fade in' : ''));
-			$active.removeClass('active');
-		};
-
-		transition ?
-		      $active
-		        .one($.support.transition.end, next)
-		        .emulateTransitionEnd(150) :
-		      next();
-
-        $active.removeClass('in');
-	};
-	
-	/**
-	 * @Public
-	 * @deprecated
-	 */
 	TabContainerProto.getSelectedControl = function(){
 		return this.getPanes()[this.getSelectedIndex()];
 	};
@@ -23756,7 +23699,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 	};
 
-}());;/*
+	return TabContainer;
+});;/*
  * 
  * UI5Strap
  *
@@ -23783,14 +23727,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.TabContainerRenderer");
+	var TabContainerRenderer = {};
 
-	ui5strap.TabContainerRenderer = {
-	};
-
-	ui5strap.TabContainerRenderer.render = function(rm, oControl) {
+	TabContainerRenderer.render = function(rm, oControl) {
 		var content = oControl.getPanes(),
 			selectedIndex = oControl.getSelectedIndex(),
 			customAssociation = oControl.getCustomAssociation();
@@ -23827,8 +23768,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("</div>");
 	};
+	
+	return TabContainerRenderer;
 
-}());;/*
+}, true);;/*
  * 
  * UI5Strap
  *
@@ -23855,12 +23798,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Table");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.Control.extend("ui5strap.Table", {
+	var Table = ControlBase.extend("ui5strap.Table", {
 		metadata : {
 
 			// ---- object ----
@@ -23897,12 +23837,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		}
 	});
+	
+	return Table;
 
-	ui5strap.Table.prototype.init = function(){
-
-	};
-
-}());;/*
+});;/*
  * 
  * UI5Strap
  *
@@ -23929,12 +23867,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
 
-	jQuery.sap.declare("ui5strap.TableColumn");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.Element.extend("ui5strap.TableColumn", {
+	var TableColumn = ElementBase.extend("ui5strap.TableColumn", {
 		metadata : {
 
 			// ---- object ----
@@ -23958,11 +23893,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 	});
 
-	ui5strap.TableColumn.prototype.init = function(){
-
-	};
-
-}());;/*
+	return TableColumn;
+});;/*
  * 
  * UI5Strap
  *
@@ -23989,48 +23921,45 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
+	
+	var TableRenderer = {};
+	
+	TableRenderer.render = function(rm, oControl) {
+		 rm.write("<table");
+		    rm.writeControlData(oControl);
+		    rm.addClass("table");
+		    if(oControl.getCondensed()){
+		    	rm.addClass('table-condensed');
+		    }
+		    if(oControl.getBordered()){
+		    	rm.addClass('table-bordered');
+		    }
+		    if(oControl.getStriped()){
+		    	rm.addClass('table-striped');
+		    }
+		    if(oControl.getHover()){
+		    	rm.addClass('table-hover');
+		    }
+		    rm.writeClasses();
+		    rm.write(">");
+		    
+		    var head = oControl.getHead();
+	
+		    if(null !== head){
+		    	this.renderRow(rm, oControl, head, true);
+		    }
+	
+		   	var rows = oControl.getBody();
+	
+		    for(var i = 0; i < rows.length; i++){
+		    	this.renderRow(rm, oControl, rows[i]);
+		    }
+	
+		rm.write("</table>");
+	};
 
-jQuery.sap.declare("ui5strap.TableRenderer");
-
-ui5strap.TableRenderer = {
-};
-
-ui5strap.TableRenderer.render = function(rm, oControl) {
-	 rm.write("<table");
-	    rm.writeControlData(oControl);
-	    rm.addClass("table");
-	    if(oControl.getCondensed()){
-	    	rm.addClass('table-condensed');
-	    }
-	    if(oControl.getBordered()){
-	    	rm.addClass('table-bordered');
-	    }
-	    if(oControl.getStriped()){
-	    	rm.addClass('table-striped');
-	    }
-	    if(oControl.getHover()){
-	    	rm.addClass('table-hover');
-	    }
-	    rm.writeClasses();
-	    rm.write(">");
-	    
-	    var head = oControl.getHead();
-
-	    if(null !== head){
-	    	this.renderRow(rm, oControl, head, true);
-	    }
-
-	   	var rows = oControl.getBody();
-
-	    for(var i = 0; i < rows.length; i++){
-	    	this.renderRow(rm, oControl, rows[i]);
-	    }
-
-	rm.write("</table>");
-};
-
-ui5strap.TableRenderer.renderRow = function(rm, oControl, row, isHeader) {
+	TableRenderer.renderRow = function(rm, oControl, row, isHeader) {
 
 		var columns = row.getColumns(),
 			columnsLength = columns.length,
@@ -24049,27 +23978,28 @@ ui5strap.TableRenderer.renderRow = function(rm, oControl, row, isHeader) {
 
 	    rm.write("</tr>");
 
-};
+	};
 
-ui5strap.TableRenderer.renderColumn = function(rm, oControl, col, i, isHeader) {
-	var tagName = isHeader ? 'th' : 'td';
-	rm.write("<" + tagName);
-	    
-	    rm.writeClasses();
-	    rm.write(">");
-	    
-	    var text = col.getText();
-	    rm.writeEscaped(text);
+	TableRenderer.renderColumn = function(rm, oControl, col, i, isHeader) {
+		var tagName = isHeader ? 'th' : 'td';
+		rm.write("<" + tagName);
+		    
+		    rm.writeClasses();
+		    rm.write(">");
+		    
+		    var text = col.getText();
+		    rm.writeEscaped(text);
+	
+		    var content = col.getContent();
+	
+		    for(var i = 0; i < content.length; i++){
+		    	rm.renderControl(content[i]);
+		    }
+		rm.write("</" + tagName + ">");
+	}
 
-	    var content = col.getContent();
-
-	    for(var i = 0; i < content.length; i++){
-	    	rm.renderControl(content[i]);
-	    }
-	rm.write("</" + tagName + ">");
-}
-
-}());
+	return TableRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -24097,41 +24027,35 @@ ui5strap.TableRenderer.renderColumn = function(rm, oControl, col, i, isHeader) {
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
 
-jQuery.sap.declare("ui5strap.TableRow");
-jQuery.sap.require("sap.ui.core.Element");
-
-
-sap.ui.core.Element.extend("ui5strap.TableRow", {
-	metadata : {
-
-		// ---- object ----
-		defaultAggregation : "columns",
-		// ---- control specific ----
-		library : "ui5strap",
-
-		properties : {
-			severity : {
-				type: "ui5strap.Severity", 
-				defaultValue: ui5strap.Severity.None
+	var TableRow = ElementBase.extend("ui5strap.TableRow", {
+		metadata : {
+	
+			// ---- object ----
+			defaultAggregation : "columns",
+			// ---- control specific ----
+			library : "ui5strap",
+	
+			properties : {
+				severity : {
+					type: "ui5strap.Severity", 
+					defaultValue: ui5strap.Severity.None
+				}
+			},
+	
+			aggregations : { 
+				"columns" : {
+					type : "ui5strap.TableColumn"
+				} 
 			}
-		},
-
-		aggregations : { 
-			"columns" : {
-				type : "ui5strap.TableColumn"
-			} 
+	
 		}
+	});
+	
+	return TableRow;
 
-	}
-});
-
-ui5strap.TableRow.prototype.init = function(){
-
-};
-
-}());;/*
+});;/*
  * 
  * UI5Strap
  *
@@ -24158,12 +24082,9 @@ ui5strap.TableRow.prototype.init = function(){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Thumbnail");
-	jQuery.sap.require("ui5strap.library");
-	
-	ui5strap.ControlBase.extend("ui5strap.Thumbnail", {
+	var Thumbnail = ControlBase.extend("ui5strap.Thumbnail", {
 		metadata : {
 
 			// ---- object ----
@@ -24185,8 +24106,9 @@ ui5strap.TableRow.prototype.init = function(){
 
 		}
 	});
-
-}());;/*
+	
+	return Thumbnail;
+});;/*
  * 
  * UI5Strap
  *
@@ -24213,13 +24135,11 @@ ui5strap.TableRow.prototype.init = function(){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.ThumbnailRenderer");
+	var ThumbnailRenderer = {};
 
-	ui5strap.ThumbnailRenderer = {};
-
-	ui5strap.ThumbnailRenderer.render = function(rm, oControl) {
+	ThumbnailRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			image = oControl.getImage();
 
@@ -24246,7 +24166,8 @@ ui5strap.TableRow.prototype.init = function(){
 		rm.write("</div></div>");
 	};
 
-}());
+	return ThumbnailRenderer;
+}, true);
 ;/*
  * 
  * UI5Strap
@@ -24274,12 +24195,9 @@ ui5strap.TableRow.prototype.init = function(){
  * 
  */
 
-(function(){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	jQuery.sap.declare("ui5strap.Well");
-	jQuery.sap.require("ui5strap.library");
-
-	ui5strap.ControlBase.extend("ui5strap.Well", {
+	var Well = ControlBase.extend("ui5strap.Well", {
 		metadata : {
 
 			// ---- object ----
@@ -24308,9 +24226,10 @@ ui5strap.TableRow.prototype.init = function(){
 		}
 	});
 
-	ui5strap.Utils.dynamicText(ui5strap.Well.prototype);
-
-}());;/*
+	ui5strap.Utils.dynamicText(Well.prototype);
+	
+	return Well;
+});;/*
  * 
  * UI5Strap
  *
@@ -24337,13 +24256,11 @@ ui5strap.TableRow.prototype.init = function(){
  * 
  */
 
-(function(){
+sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	jQuery.sap.declare("ui5strap.WellRenderer");
+	var WellRenderer = {};
 
-	ui5strap.WellRenderer = {};
-
-	ui5strap.WellRenderer.render = function(rm, oControl) {
+	WellRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			size = oControl.getSize();
 
@@ -24357,10 +24274,9 @@ ui5strap.TableRow.prototype.init = function(){
 		rm.writeClasses();
 		rm.write(">");
 		
-		var subText = oControl.getText();
-		if('' !== subText){
-			rm.writeEscaped(subText);
-		}
+		var text = oControl.getText();
+		text && rm.writeEscaped(text);
+		
 		
 		for(var i = 0; i < content.length; i++){ 
 			rm.renderControl(content[i]);
@@ -24369,4 +24285,5 @@ ui5strap.TableRow.prototype.init = function(){
 		rm.write("</div>");
 	};
 
-}());
+	return WellRenderer;
+}, true);

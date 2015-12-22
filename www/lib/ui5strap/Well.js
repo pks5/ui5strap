@@ -54,9 +54,23 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
-
-	ui5strap.Utils.dynamicText(Well.prototype);
+	}),
+	WellProto = Well.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	WellProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " well";
+		var size = this.getSize();
+		if(ui5strap.Size.Default !== size){
+			styleClass += " well-" + ui5strap.BSSize[size];
+		}
+		return styleClass;
+	};
+	
+	ui5strap.Utils.dynamicText(WellProto);
 	
 	return Well;
 });

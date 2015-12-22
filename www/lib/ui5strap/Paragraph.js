@@ -67,7 +67,30 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}),
+	ParagraphProto = Paragraph.prototype;
+	
+	ParagraphProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix(),
+			severity = this.getSeverity(),
+			textAlign = this.getTextAlign();
+		
+		//CSS Classes
+		if(ui5strap.Severity.None !== severity){
+			//Severity for general text
+			styleClass += " text-" + ui5strap.BSSeverity[severity];
+		}
+		
+		if(ui5strap.TextAlignment.Default !== textAlign){
+			styleClass += " ui5strap-text-align-" + textAlign.toLowerCase();
+		}
+		
+		if(this.getFormStatic()){
+			styleClass += " form-control-static";
+		}
+		
+		return styleClass;
+	};
 
 	ui5strap.Utils.dynamicText(Paragraph.prototype);
 	

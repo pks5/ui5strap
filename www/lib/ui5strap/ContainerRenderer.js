@@ -39,8 +39,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.addClass(oControl._getStyleClass());
 		
+		//@deprecated
 		ui5strap.RenderUtils.visibility(rm, oControl);
-
+		//@deprecated
 		ui5strap.RenderUtils.alignment(rm, oControl);
 
 		rm.writeClasses();

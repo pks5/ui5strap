@@ -63,7 +63,6 @@ module.exports = function(grunt) {
           '<%= ui5strapLib %>ListGroupItemRenderer.js',
           '<%= ui5strapLib %>ListMediaItem.js',
           '<%= ui5strapLib %>ListMediaItemRenderer.js',
-          '<%= ui5strapLib %>RowContent.js',
           '<%= ui5strapLib %>Tooltip.js',
           '<%= ui5strapLib %>TooltipRenderer.js',
           

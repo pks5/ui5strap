@@ -27,7 +27,7 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	var Image = ControlBase.extend("ui5strap.Image", {
+	var ImageControl = ControlBase.extend("ui5strap.Image", {
 		metadata : {
 
 			library : "ui5strap",
@@ -83,7 +83,37 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}),
+	ImageProto = ImageControl.prototype;
 	
-	return Image;
+	ImageProto._shapeToClass = {
+		Rounded : 'img-rounded',
+		Circle : 'img-circle',
+		Thumbnail : 'img-thumbnail'
+	};
+	
+	ImageProto._typeToClass = {
+		MediaObject : "media-object",
+		Responsive : "img-responsive"
+	};
+	
+	ImageProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix(),
+			shape = this.getShape(),
+			type = this.getType();
+		
+		if(this.getResponsive()){
+			styleClass += " img-responsive";
+		}
+		if(this._shapeToClass[shape]){
+			styleClass += " " + this._shapeToClass[shape];
+		}
+		if(this._typeToClass[type]){
+			styleClass += " " + this._typeToClass[type];
+		}
+		
+		return styleClass;
+	};
+	
+	return ImageControl;
 });

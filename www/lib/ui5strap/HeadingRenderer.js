@@ -31,7 +31,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	HeadingRenderer.render = function(rm, oControl) {
 		var level = oControl.getLevel(),
-			type = oControl.getType(),
 			text = oControl.getText(),
 			parse = oControl.getParse();
 
@@ -39,8 +38,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 			
-		rm.write("<h" + level + ' class="' + oControl._getStyleClass() + '"');
+		rm.write("<h" + level);
 		rm.writeControlData(oControl);
+		rm.addClass(oControl._getStyleClass());
+		rm.writeClasses();
 		rm.write(">");
 		    
 		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);

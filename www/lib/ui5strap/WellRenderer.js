@@ -31,23 +31,17 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	WellRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
-			size = oControl.getSize();
+			text = oControl.getText();
 
-		rm.write("<div");
-		
+		rm.write('<div');
 		rm.writeControlData(oControl);
-		rm.addClass("well");
-		if(ui5strap.Size.Default !== size){
-			rm.addClass("well-" + ui5strap.BSSize[size]);
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
-		var subText = oControl.getText();
-		if('' !== subText){
-			rm.writeEscaped(subText);
-		}
+		text && rm.writeEscaped(text);
 		
+		//Content
 		for(var i = 0; i < content.length; i++){ 
 			rm.renderControl(content[i]);
 		}

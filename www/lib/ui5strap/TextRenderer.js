@@ -28,115 +28,23 @@
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 
-	var TextRenderer = {
-		typeToTag : {
-			Default : { 
-				tagName : "span",
-				className : null
-			},
-			Strong : {
-				tagName : "strong",
-				className : null
-			},
-			Emphasized : {
-				tagName : "em",
-				className : null
-			},
-			Paragraph : {
-				tagName : "p",
-				className : null
-			},
-			Blockquote : {
-				tagName : "blockquote",
-				className : null
-			},
-			Quote : {
-				tagName : "q",
-				className : null
-			},
-			Preformatted : {
-				tagName : "pre",
-				className : null
-			},
-			Code : {
-				tagName : "code",
-				className : null
-			},
-			Small : {
-				tagName : "small",
-				className : null
-			},
-			Lead : {
-				tagName : "p",
-				className : "lead"
-			},
-			Abbreviation : {
-				tagName : "abbr",
-				className : null
-			},
-			HelpBlock : {
-				tagName : "p",
-				className : "help-block"
-			},
-			FormStatic : {
-				tagName : "p",
-				className : "form-static"
-			},
-			Label : {
-				tagName : "span",
-				className : "label"
-			},
-			Badge : {
-				tagName : "span",
-				className : "badge"
-			},
-			
-			//Deprecated
-			Phrasing : {
-				tagName : "span",
-				className : null
-			}
-			
- 		}
-
-	};
+	var TextRenderer = {};
 
 	TextRenderer.render = function(rm, oControl) {
-		var severity = oControl.getSeverity(),
-			type = oControl.getType(),
+		var type = oControl.getType(),
+			tagData = oControl._typeToTag[type],
 			text = oControl.getText(),
 			parse = oControl.getParse(),
-			title = oControl.getTitle(),
-			textAlign = oControl.getTextAlign();
+			title = oControl.getTitle();
 
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 
 		//Text with tag
-		var tagData = this.typeToTag[type];
-
 		rm.write("<" + tagData.tagName);
 		rm.writeControlData(oControl);
-		
-		//CSS Classes
-		if(ui5strap.TextType.Label === type){
-			//Severity for labels
-			rm.addClass("label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity]);
-		}
-		else if(ui5strap.Severity.None !== severity){
-			//Severity for general text
-			rm.addClass("text-" + ui5strap.BSSeverity[severity]);
-		}
-		
-		if(ui5strap.TextAlignment.Default !== textAlign){
-			rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
-		}
-		
-		if(tagData.className){
-			rm.addClass(tagData.className);
-		}
-		
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		
 		//Title
@@ -151,8 +59,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write("</" + tagData.tagName + ">");
 
-		
-		
 		//Trail
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};

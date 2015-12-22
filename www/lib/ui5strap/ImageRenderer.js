@@ -27,17 +27,7 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var ImageRenderer = {
-		shapeToClass : {
-			Rounded : 'img-rounded',
-			Circle : 'img-circle',
-			Thumbnail : 'img-thumbnail'
-		},
-		typeToClass : {
-			MediaObject : "media-object",
-			Responsive : "img-responsive"
-		}
-	};
+	var ImageRenderer = {};
 
 	ImageRenderer.render = function(rm, oControl) {
 		var src = oControl.getSrc(),
@@ -46,8 +36,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 			width = oControl.getWidth(),
 			height = oControl.getHeight(),
-			shape = oControl.getShape(),
-			type = oControl.getType(),
+			
 			title = oControl.getTitle();
 
 		if(mpath){
@@ -56,30 +45,21 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<img");
 		rm.writeControlData(oControl);
-		if(oControl.getResponsive()){
-			jQuery.sap.log.debug("The property 'reponsive' is deprecated. Please use 'type' with 'Responsive' instead.");
-			rm.addClass('img-responsive');
-		}
-		if(this.shapeToClass[shape]){
-			rm.addClass(this.shapeToClass[shape]);
-		}
-		if(this.typeToClass[type]){
-			rm.addClass(this.typeToClass[type]);
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		
-		if('' !== src){
-			rm.writeAttribute('src', src);
-		}
-		if('' !== title){
-			rm.writeAttribute('title', title);
-		}
+		src && rm.writeAttribute('src', src);
+		
+		title && rm.writeAttribute('title', title);
+		
 		if(-1 !== width){
 			rm.writeAttribute('width', width);
 		}
+		
 		if(-1 !== height){
 			rm.writeAttribute('height', height);
 		}
+		
 		rm.writeAttribute('alt', oControl.getAlt());
 		
 		rm.write("/>");
