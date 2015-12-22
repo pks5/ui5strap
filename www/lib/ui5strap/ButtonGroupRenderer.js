@@ -49,8 +49,6 @@ sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 			rm.addClass('btn-group-' + ui5strap.BSSize[size]);
 		}
 	
-		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
-	
 		rm.writeClasses();
 		rm.write(">");
 		

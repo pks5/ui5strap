@@ -80,9 +80,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	    
 	    rm.addClass(oControl._getStyleClass());
 	
-	    //@deprecated
-	    ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
-
 	    rm.writeClasses();
 	    
 	    if('' !== title){

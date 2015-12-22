@@ -68,15 +68,28 @@ sap.ui.define(['./library'], function(library){
 		 * 
 		 * @deprecated
 		 */
-		if (typeof navbarClass === 'string') {
-			if (align === Alignment.NavBar
-					|| align === Alignment.NavBarLeft
-					|| align === Alignment.NavBarRight) {
-				jQuery.sap.log
-						.warning("Using Alignment.NavBar* options is deprecated.");
-				styleClass += " " + navbarClass;
+		
+		if (align === Alignment.NavBar
+				|| align === Alignment.NavBarLeft
+				|| align === Alignment.NavBarRight) {
+			jQuery.sap.log
+					.warning("Using Alignment.NavBar* options is deprecated.");
+			var elName = oControl.getMetadata().getElementName();
+			if(elName === "ui5strap.Button" 
+				|| elName === "ui5strap.ButtonGroup"
+				|| elName === "ui5strap.ButtonDropdown"){
+				styleClass += " navbar-btn";
 			}
+			else if(elName === "ui5strap.Form"){
+				styleClass += " navbar-form";
+			}
+			else if(elName === "ui5strap.Nav"){
+				styleClass += " navbar-nav";
+			}
+			
+			styleClass += " " + navbarClass;
 		}
+		
 
 		/*
 		 * This are special options for Nav controls to show
@@ -84,12 +97,10 @@ sap.ui.define(['./library'], function(library){
 		 * 
 		 * @deprecated
 		 */
-		if (typeof sidebarClass === 'string') {
-			if (align === Alignment.Sidebar) {
-				jQuery.sap.log
-						.warning("Using Alignment.Sidebar options is deprecated.");
-				styleClass += " " + sidebarClass;
-			}
+		if (align === Alignment.Sidebar) {
+			jQuery.sap.log
+					.warning("Using Alignment.Sidebar options is deprecated.");
+			styleClass += " sidebar-nav";
 		}
 		
 		return styleClass;

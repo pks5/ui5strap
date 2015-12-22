@@ -55,8 +55,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.addClass(this.typeToClass[type]);
 		}
 		
-		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-form');
-
 		rm.writeClasses();
 		rm.write(">");
 		
