@@ -29,7 +29,7 @@
 			"label" : "PAGE4_TITLE",
 			"viewName" : "ui5strap.demoapp.views.Controls",
 			"pageId" : "controls",
-			"icon" : "button",
+			"icon" : "toggle-on",
 			"severity" : "Success",
 			"type" : "HTML"
 		}
