@@ -1800,6 +1800,8 @@ sap.ui
 					 */
 					ui5strap.RenderUtils.alignment = function(rm, oControl,
 							navbarClass, sidebarClass) {
+						jQuery.sap.log.warning("ui5strap.RenderUtils.alignment is deprecated. Use AlignmentSupport instead.");
+						
 						var align = oControl.getAlign(), Alignment = ui5strap.Alignment;
 
 						if (align !== Alignment.Default) {
