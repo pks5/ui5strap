@@ -27,7 +27,7 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	var Tooltip = ControlBase.extend("ui5strap.Tooltip", {
+	var TooltipControl = ControlBase.extend("ui5strap.Tooltip", {
 	    metadata : {
 	
 	      // ---- object ----
@@ -81,13 +81,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	      }
 	
 	    }
-  });
+  }),
+  TooltipProto = TooltipControl.prototype;
 
-  Tooltip.prototype.init = function(){
+  TooltipProto.init = function(){
       this.sourceControl = null;
   };
 
-  Tooltip.prototype.getSourceControl = function(){
+  TooltipProto.getSourceControl = function(){
       if(null === this.sourceControl){
         this.sourceControl = sap.ui.getCore().byId(this.getSource());
         
@@ -96,11 +97,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
       return this.sourceControl;
   };
 
-  Tooltip.prototype.getSourceDomRef = function(){
+  TooltipProto.getSourceDomRef = function(){
       return this.getSourceControl().$();
   };
 
-  Tooltip.prototype.onAfterRendering = function(){
+  TooltipProto.onAfterRendering = function(){
     var $this = this.$(),
         _this = this;
 
@@ -136,19 +137,19 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
     });
   };
 
-  Tooltip.prototype.show = function(){
+  TooltipProto.show = function(){
       this.getSourceDomRef().tooltip('show');
   };
 
-  Tooltip.prototype.hide = function(){
+  TooltipProto.hide = function(){
       this.getSourceDomRef().tooltip('hide');
   };
 
-  Tooltip.prototype.toggle = function(){
+  TooltipProto.toggle = function(){
       this.getSourceDomRef().tooltip('toggle');
   };
   
-  return Tooltip;
+  return TooltipControl;
   
 });
 
