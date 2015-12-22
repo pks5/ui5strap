@@ -115,11 +115,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			        .addClass('collapse')
 			    }
 
-			    if (!$.support.transition) return complete.call(this)
+			    if (!ui5strap.support.transition) return complete.call(this)
 
 			    $collapse
 			      .height(0)
-			      .one($.support.transition.end, complete)
+			      .one(ui5strap.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 
 			}
@@ -139,10 +139,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			    	//fire event collapse completed
 			    }
 
-    			if (!$.support.transition) return complete.call(this)
+    			if (!ui5strap.support.transition) return complete.call(this)
 
     			$collapse
-			      .one($.support.transition.end, complete)
+			      .one(ui5strap.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 			      
 			      .height($collapse[0]["scrollHeight"])

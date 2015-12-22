@@ -136,9 +136,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
       _this.destroy();
     }
 
-    $.support.transition && $alert.hasClass('fade') ?
+    ui5strap.support.transition && $alert.hasClass('fade') ?
       $alert
-        .one($.support.transition.end, removeElement)
+        .one(ui5strap.support.transition.end, removeElement)
         .emulateTransitionEnd(150) :
       removeElement()
   };

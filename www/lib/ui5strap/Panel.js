@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './PanelGroup'], function(library, ControlBase, PanelGroup){
 
 	var Panel = ControlBase.extend("ui5strap.Panel", {
 		metadata : {
@@ -80,7 +80,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	PanelProto = ui5strap.Panel.prototype;
 
-	PanelProto.setCollapsed = function(newCollapsed){
+	PanelProto.setCollapsed = function(newCollapsed, suppressInvalidate){
 		if(!this.getCollapse() || newCollapsed === this.getCollapsed()){
 			return this;
 		}
@@ -103,11 +103,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			        .addClass('collapse')
 			    }
 
-			    if (!$.support.transition) return complete.call(this)
+			    if (!ui5strap.support.transition) return complete.call(this)
 
 			    $collapse
 			      .height(0)
-			      .one($.support.transition.end, complete)
+			      .one(ui5strap.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 
 			}
@@ -127,21 +127,19 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			    	//fire event collapse completed
 			    }
 
-    			if (!$.support.transition) return complete.call(this)
+    			if (!ui5strap.support.transition) return complete.call(this)
 
     			$collapse
-			      .one($.support.transition.end, complete)
+			      .one(ui5strap.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 			      
 			      .height($collapse[0]["scrollHeight"])
-
 			}
-
 
 			this.setProperty('collapsed', newCollapsed, true);
 		}
 		else{
-			this.setProperty('collapsed', newCollapsed);
+			this.setProperty('collapsed', newCollapsed, suppressInvalidate);
 		}
 
 		return this;
@@ -149,6 +147,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	PanelProto.toggle = function(){
 		this.setCollapsed(!this.getCollapsed());
+		
+		return this;
 	};
 	
 	/**
@@ -162,7 +162,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		var $target = jQuery(oEvent.target);
 		if($target.hasClass('panel-heading') || $target.parent().hasClass('panel-heading')){
 			var parent = this.getParent();
-			if(parent instanceof ui5strap.PanelGroup){
+			if(parent instanceof PanelGroup){
 				parent.setSelectedControl(this);
 			}
 			else{ 

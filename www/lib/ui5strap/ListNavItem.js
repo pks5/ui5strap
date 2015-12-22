@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListLinkItem'], function(library, ListItem){
+sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 
 	var ListNavItem = ListLinkItem.extend("ui5strap.ListNavItem", {
 		metadata : {

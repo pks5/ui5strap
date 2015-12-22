@@ -339,9 +339,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
         that.$element.trigger('shown.bs.' + that.type)
       }
 
-      $.support.transition && this.$tip.hasClass('fade') ?
+      ui5strap.support.transition && this.$tip.hasClass('fade') ?
         $tip
-          .one($.support.transition.end, complete)
+          .one(ui5strap.support.transition.end, complete)
           .emulateTransitionEnd(150) :
         complete()
     }
@@ -435,9 +435,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
     $tip.removeClass('in')
 
-    $.support.transition && this.$tip.hasClass('fade') ?
+    ui5strap.support.transition && this.$tip.hasClass('fade') ?
       $tip
-        .one($.support.transition.end, complete)
+        .one(ui5strap.support.transition.end, complete)
         .emulateTransitionEnd(150) :
       complete()
 

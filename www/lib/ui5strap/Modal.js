@@ -155,7 +155,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
     this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
 
     this.backdrop(function () {
-      var transition = $.support.transition && that.$element.hasClass('fade')
+      var transition = ui5strap.support.transition && that.$element.hasClass('fade')
 
       if (!that.$element.parent().length) {
         that.$element.appendTo(document.body) // don't move modals dom position
@@ -179,7 +179,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
       transition ?
         that.$element.find('.modal-dialog') // wait for modal to slide in
-          .one($.support.transition.end, function () {
+          .one(ui5strap.support.transition.end, function () {
             that.$element.focus().trigger(e)
           })
           .emulateTransitionEnd(300) :
@@ -207,9 +207,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
       .attr('aria-hidden', true)
       .off('click.dismiss.bs.modal')
 
-    $.support.transition && this.$element.hasClass('fade') ?
+    ui5strap.support.transition && this.$element.hasClass('fade') ?
       this.$element
-        .one($.support.transition.end, $.proxy(this.hideModal, this))
+        .one(ui5strap.support.transition.end, $.proxy(this.hideModal, this))
         .emulateTransitionEnd(300) :
       this.hideModal()
   }
@@ -252,7 +252,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
     var animate = this.$element.hasClass('fade') ? 'fade' : ''
 
     if (this.isShown && this.options.backdrop) {
-      var doAnimate = $.support.transition && animate
+      var doAnimate = ui5strap.support.transition && animate
 
       this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
         .appendTo(document.body)
@@ -272,16 +272,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
       doAnimate ?
         this.$backdrop
-          .one($.support.transition.end, callback)
+          .one(ui5strap.support.transition.end, callback)
           .emulateTransitionEnd(150) :
         callback()
 
     } else if (!this.isShown && this.$backdrop) {
       this.$backdrop.removeClass('in')
 
-      $.support.transition && this.$element.hasClass('fade') ?
+      ui5strap.support.transition && this.$element.hasClass('fade') ?
         this.$backdrop
-          .one($.support.transition.end, callback)
+          .one(ui5strap.support.transition.end, callback)
           .emulateTransitionEnd(150) :
         callback()
 

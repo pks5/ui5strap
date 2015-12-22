@@ -119,7 +119,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			var panes = this.getPanes();
 			
 			for(var i = 0; i < panes.length; i++){
-				if(this.sourceControl.getSelection().data(customAssociation) === panes[i].data(customAssociation)){
+				if(this.sourceControl.getSelection(0).data(customAssociation) === panes[i].data(customAssociation)){
 					this.setSelectedIndex(i, true);
 					break;
 				}
