@@ -661,6 +661,7 @@ sap.ui.define(['./library'], function(library){
 						this.fireSelect(eventOptions);
 					}
 					else{
+						//No changes
 						jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
 					}
 				}

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button'], function(library, ControlBase, ListSelectionSupport, Button){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button', './ListItem'], function(library, ControlBase, ListSelectionSupport, Button, ListItem){
 
 	var _meta = {
 			
@@ -106,9 +106,16 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		
-		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, Button);
-			
-		this.pressItem(oEvent.srcControl, item, this, item);
+		var button = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, Button),
+			selectionProvider = this,
+			providerItem = button;
+		
+		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
+			providerItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem);
+			selectionProvider = providerItem.getParent();
+		}
+		
+		this.pressItem(oEvent.srcControl, button, selectionProvider, providerItem);
 		
 	};
 	

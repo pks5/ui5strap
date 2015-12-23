@@ -36,7 +36,10 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 			defaultAggregation : "menu",
 			
 			properties : {
-				
+				update : {
+					type : "ui5strap.DropdownMenuHostUpdate",
+					defaultValue : ui5strap.DropdownMenuHostUpdate.None
+				}
 			},
 
 			aggregations : { 
@@ -86,7 +89,29 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		
-		this.toggle();
+		if(this.getEnabled()){
+			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
+				this.close();
+				
+				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem),
+					hostUpdate = this.getUpdate();
+				
+				if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+					|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
+					
+					this.setText(menuListItem.getText());
+				}
+				
+				if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+					|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Data){
+					
+					this.data(menuListItem.data());
+				}
+			}
+			else{
+				this.toggle();
+			}
+		}
 	};
 
 	//Registering Event Handler

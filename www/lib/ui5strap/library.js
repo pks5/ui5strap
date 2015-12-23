@@ -514,7 +514,7 @@ sap.ui
 							None : "None",
 							Text : "Text",
 							Data : "Data",
-							All : "All"
+							TextAndData : "TextAndData"
 					};
 
 					/*

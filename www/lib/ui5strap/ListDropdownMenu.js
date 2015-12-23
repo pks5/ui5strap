@@ -35,10 +35,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 			defaultAggregation : "items",
 			
 			properties : {
-				hostUpdate : {
-					type : "ui5strap.DropdownMenuHostUpdate",
-					defaultValue : ui5strap.DropdownMenuHostUpdate.None
-				}
+				
 			},
 	
 			aggregations : { 
@@ -52,54 +49,21 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	ListDropdownMenuProto = ListDropdownMenu.prototype;
 	
-	var _updateParentTap = function(oEvent, data){
-		var hostUpdate = this.getHostUpdate(),
-			parent = this.getParent(),
-			grandParent = parent.getParent(),
-			listItem = oEvent.getParameter("srcItem");
-		
-		if(!parent.getMetadata().isInstanceOf("ui5strap.IDropdownMenuHost")){
-			throw new Error("Cannot update host: not an instance of 'ui5strap.IDropdownMenuHost'");
-		}
-		
-		if(hostUpdate === ui5strap.DropdownMenuHostUpdate.All
-			|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
-			
-			parent.setText && parent.setText(listItem.getText());
-		}
-		
-		if(hostUpdate === ui5strap.DropdownMenuHostUpdate.All
-			|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Data){
-			
-			parent.data(listItem.data());
-		}
-		
-		if(grandParent.getMetadata().isInstanceOf("ui5strap.ISelectionProvider")){
-			grandParent.pressItem(oEvent.srcControl, parent, this, listItem);
-		}
-	};
-	
-	
-	
-	ListDropdownMenuProto.init = function(){
-		this.attachEvent("tap", {}, _updateParentTap);
-	};
-	
 	/**
 	 * Handler for Tap / Click Events
 	 * @Protected
 	 * @Override
 	 */
 	ListDropdownMenuProto._handlePress = function(oEvent){
-		ui5strap.ListBase.prototype._handlePress.call(this, oEvent);
+		//oEvent.stopPropagation();
 		
-		oEvent.stopPropagation();
+		//Find the closest item. Should be an item from the dropdown menu.
+		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem);
 		
-		//Close ButtonDropdown or ListDropdownItem
-		var parent = this.getParent();
-		if("close" in parent){
-			parent.close();
-		}
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked("ui5strap.ListDropdownMenu");
+		
+		this.pressItem(oEvent.srcControl, item, this, item);
 	};
 
 	if(ui5strap.support.touch){

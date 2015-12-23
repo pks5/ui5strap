@@ -36,6 +36,10 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 			library : "ui5strap",
 
 			properties : { 
+				update : {
+					type : "ui5strap.DropdownMenuHostUpdate",
+					defaultValue : ui5strap.DropdownMenuHostUpdate.None
+				},
 				dropup : {
 					type:"boolean", 
 					defaultValue:false
@@ -96,18 +100,38 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 		oEvent.setMarked();
 		
 		if (this.getEnabled()) {
-			var $target = jQuery(oEvent.target);
-			if(this.getSplit()){
-				if($target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
-					this.$().toggleClass('open');
+			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
+				this.close();
+				
+				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem),
+					hostUpdate = this.getUpdate();
+				console.log(menuListItem, hostUpdate);
+				if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+					|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
+					
+					this.setText(menuListItem.getText());
 				}
-				else{
-					this.fireTap();
+				
+				if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+					|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Data){
+					
+					this.data(menuListItem.data());
 				}
 			}
 			else{
-				this.$().toggleClass('open');
-				this.fireTap();
+				var $target = jQuery(oEvent.target);
+				if(this.getSplit()){
+					if($target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
+						this.$().toggleClass('open');
+					}
+					else{
+						this.fireTap();
+					}
+				}
+				else{
+					this.$().toggleClass('open');
+					this.fireTap();
+				}
 			}
 		}
 	};

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ListSelectionSupport'], function(library, ControlBase, ListSelectionSupport){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListItem'], function(library, ControlBase, ListSelectionSupport, ListItem){
 
 	var _meta = {
 			interfaces : [],
@@ -70,10 +70,17 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport'], function
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		
-		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem);
-			
-		this.pressItem(oEvent.srcControl, item, this, item);
+		//TODO find the right list item! (dropdown menu)
+		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem),
+			selectionProvider = this,
+			listItem = item;
 		
+		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
+			selectionProvider = item.getParent();
+			listItem = ui5strap.Utils.findClosestParentControl(selectionProvider, ListItem);
+		}
+		
+		this.pressItem(oEvent.srcControl, listItem, selectionProvider, item);
 	};
 	
 	//Touchscreen
