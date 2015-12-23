@@ -163,6 +163,8 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 	ButtonProto._handlePress = function(oEvent) {
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("ui5strap.Button");
 		
 		if (this.getEnabled()) {
 			this.fireTap({});

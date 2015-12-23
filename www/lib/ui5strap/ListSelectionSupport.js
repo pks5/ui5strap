@@ -36,7 +36,7 @@ sap.ui.define(['./library'], function(library){
 	ListSelectionSupport.meta = function(meta){
 		//Interfaces
 		
-		meta.interfaces.push("ui5strap.IItemsProvider", "ui5strap.ISelectionProvider", "ui5strap.IPressable");
+		meta.interfaces.push("ui5strap.IItemsProvider", "ui5strap.ISelectionProvider");
 		
 		//Properties
 		

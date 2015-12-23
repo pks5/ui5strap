@@ -98,6 +98,8 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	 */
 	ButtonDropdownProto._handlePress = function(oEvent){
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("ui5strap.ButtonDropdown");
 		
 		if (this.getEnabled()) {
 			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){

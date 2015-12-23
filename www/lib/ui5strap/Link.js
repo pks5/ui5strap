@@ -135,6 +135,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		//if (this.getEnabled()) {
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.Link");
 
 			if (!this.fireTap() || !this.getHref()) {
 				oEvent.preventDefault();

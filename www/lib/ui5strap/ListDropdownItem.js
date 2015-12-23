@@ -88,6 +88,8 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 	ListDropdownItemProto._handlePress = function(oEvent){
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("ui5strap.ListDropdownItem");
 		
 		if(this.getEnabled()){
 			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
@@ -107,6 +109,10 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 					
 					this.data(menuListItem.data());
 				}
+				
+				//if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
+				//	oEvent.setMarked("ui5strap.ListDropdownItem.update");
+				//}
 			}
 			else{
 				this.toggle();

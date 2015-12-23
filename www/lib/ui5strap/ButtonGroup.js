@@ -105,6 +105,9 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 		
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectionProvider");
+		oEvent.setMarked("ui5strap.IItemsProvider");
+		oEvent.setMarked("ui5strap.ButtonGroup");
 		
 		var button = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, Button),
 			selectionProvider = this,

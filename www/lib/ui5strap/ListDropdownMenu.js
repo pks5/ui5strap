@@ -55,13 +55,14 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Override
 	 */
 	ListDropdownMenuProto._handlePress = function(oEvent){
-		//oEvent.stopPropagation();
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectionProvider");
+		oEvent.setMarked("ui5strap.IItemsProvider");
+		oEvent.setMarked("ui5strap.ListDropdownMenu");
 		
 		//Find the closest item. Should be an item from the dropdown menu.
 		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem);
-		
-		//Mark the event so parent Controls know that event has been handled already
-		oEvent.setMarked("ui5strap.ListDropdownMenu");
 		
 		this.pressItem(oEvent.srcControl, item, this, item);
 	};

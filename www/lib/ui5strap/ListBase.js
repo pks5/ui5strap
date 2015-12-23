@@ -69,6 +69,9 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 		
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectionProvider");
+		oEvent.setMarked("ui5strap.IItemsProvider");
+		oEvent.setMarked("ui5strap.ListBase");
 		
 		//TODO find the right list item! (dropdown menu)
 		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem),
