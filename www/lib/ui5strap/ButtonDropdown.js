@@ -61,18 +61,18 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	}),
 	ButtonDropdownProto = ui5strap.ButtonDropdown.prototype;
 
-	ButtonDropdownProto.setText = function(newText){
+	ButtonDropdownProto.setText = function(newText, suppressInvalidate){
 		if(this.getMenu() === null){
 			if(this.getDomRef() && this.getContent().length === 0){
               jQuery('#' + this.getId() + '---' + (this.getSplit() ? 'button' : 'toggle')).text(newText);
               this.setProperty('text', newText, true);
           	}
-	          else{
-	              this.setProperty('text', newText);
-	          }
+            else{
+                 this.setProperty('text', newText, suppressInvalidate);
+            }
 		}
 		else{
-			this.setProperty('text', newText);
+			this.setProperty('text', newText, suppressInvalidate);
 		}
 	};
 
@@ -110,7 +110,6 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 				console.log(menuListItem, hostUpdate);
 				if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
 					|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
-					
 					this.setText(menuListItem.getText());
 				}
 				
