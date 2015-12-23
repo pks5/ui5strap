@@ -57,7 +57,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				"listenTo" : {
 					deprecated : true,
 					type : "string",
-					defaultValue : "select",
+					defaultValue : "tap",
 					bindable : false
 				},
 				"customAssociation" : {
@@ -120,9 +120,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
   			jQuery.sap.log.warning("Usage of ui5strap.TabContainer.prototype.getSource is deprecated. Please use actions instead.")
 			this.sourceControl = sap.ui.getCore().byId(this.getSource());
 		    
-			this.sourceControl.attachEvent(this.getListenTo(), {}, function(oEvent){
-				
-				_this.synchronize();
+			this.sourceControl.attachEvent("tap", {}, function(oEvent){
+				if(oEvent.getParameter("updates")){
+					_this.synchronize();
+				}
 				
 			});
 

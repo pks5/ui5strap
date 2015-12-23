@@ -119,6 +119,10 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 					
 					this.data(menuListItem.data());
 				}
+				
+				if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
+					oEvent.setMarked("ui5strap.ISelectableItem.update");
+				}
 			}
 			else{
 				var $target = jQuery(oEvent.target);

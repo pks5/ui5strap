@@ -76,14 +76,20 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 		//TODO find the right list item! (dropdown menu)
 		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem),
 			selectionProvider = this,
-			listItem = item;
+			listItem = item,
+			listItemUpdated = false;
 		
 		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 			selectionProvider = item.getParent();
+			//TODO search for selectable item instead
 			listItem = ui5strap.Utils.findClosestParentControl(selectionProvider, ListItem);
+			
+			if(oEvent.isMarked("ui5strap.ISelectableItem.update")){
+				listItemUpdated = true;
+			}
 		}
 		
-		this.pressItem(oEvent.srcControl, listItem, selectionProvider, item);
+		this.pressItem(oEvent.srcControl, listItem, listItemUpdated, selectionProvider, item);
 	};
 	
 	//Touchscreen

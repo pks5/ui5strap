@@ -64,7 +64,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 		//Find the closest item. Should be an item from the dropdown menu.
 		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem);
 		
-		this.pressItem(oEvent.srcControl, item, this, item);
+		this.pressItem(oEvent.srcControl, item, false, this, item);
 	};
 
 	if(ui5strap.support.touch){

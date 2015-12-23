@@ -111,14 +111,20 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 		
 		var button = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, Button),
 			selectionProvider = this,
-			providerItem = button;
+			providerItem = button,
+			buttonUpdated = false;
 		
 		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
+			//TODO search for selectable item instead
 			providerItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem);
 			selectionProvider = providerItem.getParent();
+			
+			if(oEvent.isMarked("ui5strap.ISelectableItem.update")){
+				buttonUpdated = true;
+			}
 		}
 		
-		this.pressItem(oEvent.srcControl, button, selectionProvider, providerItem);
+		this.pressItem(oEvent.srcControl, button, buttonUpdated, selectionProvider, providerItem);
 		
 	};
 	

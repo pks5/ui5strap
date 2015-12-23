@@ -618,7 +618,7 @@ sap.ui.define(['./library'], function(library){
 		 * Performs a press on an item.
 		 * @Public
 		 */
-		oControl.pressItem = function(srcControl, item, selectionProvider, providerItem){
+		oControl.pressItem = function(srcControl, item, itemUpdated, selectionProvider, providerItem){
 			if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
 				//Item is enabled
 				
@@ -656,16 +656,28 @@ sap.ui.define(['./library'], function(library){
 					//Check if something has changed
 					if(changes && changes.changed.length){
 						eventOptions.selectionChanges = changes;
+						eventOptions.updates = jQuery.merge([], changes.changed);
+						
+						if(-1 === jQuery.inArray(item, eventOptions.updates)){
+							eventOptions.updates.push(item);
+						}
 						
 						//Select event is deprecated
 						this.fireSelect(eventOptions);
 					}
 					else{
+						if(itemUpdated){
+							eventOptions.updates = [item];
+						}
+						
 						//No changes
 						jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
 					}
 				}
 				else{
+					if(itemUpdated){
+						eventOptions.updates = [item];
+					}
 					jQuery.sap.log.debug("[LIST#" + this.getId() + "] Did not select list item: List item not selectable.");
 				}
 				

@@ -110,9 +110,9 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 					this.data(menuListItem.data());
 				}
 				
-				//if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
-				//	oEvent.setMarked("ui5strap.ListDropdownItem.update");
-				//}
+				if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
+					oEvent.setMarked("ui5strap.ISelectableItem.update");
+				}
 			}
 			else{
 				this.toggle();
