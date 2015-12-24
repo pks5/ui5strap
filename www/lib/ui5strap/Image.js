@@ -29,7 +29,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var ImageControl = ControlBase.extend("ui5strap.Image", {
 		metadata : {
-
+			interfaces : ["ui5strap.IText"],
+			
 			library : "ui5strap",
 			properties : { 
 				src : {

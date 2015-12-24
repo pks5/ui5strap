@@ -29,6 +29,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var Badge = ControlBase.extend("ui5strap.Badge", {
 		metadata : {
+			interfaces : ["ui5strap.IText"],
 			deprecated : true,
 			library : "ui5strap",
 			

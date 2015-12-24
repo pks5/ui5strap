@@ -49,23 +49,17 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					defaultValue : "fade"
 				},
 				
-				animate : {
-					deprecated : true,
-			        type:"boolean", 
-			        defaultValue:true
-			    },
-				"listenTo" : {
-					deprecated : true,
-					type : "string",
-					defaultValue : "tap",
-					bindable : false
-				},
 				"customAssociation" : {
 					deprecated : true,
 					type : "string",
 					defaultValue : "",
 					bindable : false
-				}
+				},
+				
+				fullHeight : {
+					type:"boolean", 
+			        defaultValue:false
+			    }
 			},
 			
 			aggregations : { 
@@ -93,6 +87,9 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	TabContainerProto._getStyleClassRoot = function(){
 		var styleClass = this._getStyleClassPrefix() + " tab-content";
 		
+		if(this.getFullHeight()){
+			styleClass += " " + this._getStyleClassFlag("FullHeight");
+		}
 		return styleClass;
 	};
 	

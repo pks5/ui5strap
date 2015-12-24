@@ -29,6 +29,7 @@ sap.ui.define(['./library'], function(library){
 
 	var Break = ui5strap.Control.extend("ui5strap.Break", {
 		metadata : {
+			interfaces : ["ui5strap.IText"],
 			deprecated : true,
 			library : "ui5strap"
 		}

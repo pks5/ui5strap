@@ -62,7 +62,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			},
 			aggregations : { 
 				content : {
-					singularName: "content"
+					singularName: "content",
+					type:"ui5strap.IText"
 				}
 			}
 

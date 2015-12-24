@@ -29,7 +29,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var Text = ControlBase.extend("ui5strap.Text", {
 		metadata : {
-
+			interfaces : ["ui5strap.IText"],
 			// ---- object ----
 			defaultAggregation : "content",
 			// ---- control specific ----

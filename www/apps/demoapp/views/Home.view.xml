@@ -20,17 +20,6 @@
 						<Text type="Label" severity="Success" text="New" />
 					</Heading>
 					
-					<Container align="PullLeft">
-						<Nav options="BarNav" selectionMode="Single">
-							<ListItem selected="true">
-								<Link text="Theme" />
-							</ListItem>
-							<ListItem>
-								<Link text="Navigation" />
-							</ListItem>
-						</Nav>
-					</Container>
-					
 					<!-- Toggle Menu Button (only for small screens) -->
 					<Container  align="PullLeft" type="Text" visibilityExtraSmall="Hidden" visibilitySmall="Visible" visibilityMedium="Hidden">
 						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 

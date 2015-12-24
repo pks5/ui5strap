@@ -29,7 +29,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var Clearfix = ControlBase.extend("ui5strap.Clearfix", {
 		metadata : {
-			interfaces : ["ui5strap.IColumn"],
+			interfaces : ["ui5strap.IText", "ui5strap.IColumn"],
 			library : "ui5strap"
 		}
 	}),

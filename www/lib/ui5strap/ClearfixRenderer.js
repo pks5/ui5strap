@@ -30,14 +30,14 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var ClearfixRenderer = {};
 
 	ClearfixRenderer.render = function(rm, oControl) {
-		rm.write("<div");
+		rm.write("<span");
 		
 		rm.writeControlData(oControl);
 		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
-		rm.write("</div>");
+		rm.write("</span>");
 	};
 
 	return ClearfixRenderer;

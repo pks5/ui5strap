@@ -30,6 +30,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	var Label = ControlBase.extend("ui5strap.Label", {
 		metadata : {
 			deprecated : true,
+			
+			interfaces : ["ui5strap.IText"],
+			
 			// ---- object ----
 			defaultAggregation : "content",
 			// ---- control specific ----

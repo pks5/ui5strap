@@ -30,6 +30,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	var Link = ControlBase.extend("ui5strap.Link", {
 		metadata : {
 
+			interfaces : ["ui5strap.IText"],
+			
 			library : "ui5strap",
 
 			properties : { 
