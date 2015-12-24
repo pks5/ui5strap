@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
+sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], function(library, NavContainer, ResponsiveTransition){
 
 	var BarNavContainer = NavContainer.extend("ui5strap.BarNavContainer", {
 		metadata : {
@@ -265,7 +265,7 @@ sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 				
 				var _this = this,
 					$target = jQuery('#' + this.targetDomId('bar')),
-					transition = new ui5strap.ResponsiveTransition(
+					transition = new ResponsiveTransition(
 						{
 							"transitionExtraSmall" : this._getBarTransition(this._getBarTransitionExtraSmall(), newBarVisible),
 							"transitionSmall" : this._getBarTransition(this._getBarTransitionSmall(), newBarVisible),

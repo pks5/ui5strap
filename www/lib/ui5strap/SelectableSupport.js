@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.PositionSupport
+ * ui5strap.SelectableSupport
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 

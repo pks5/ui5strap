@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function(library, ControlBase, ResponsiveTransition){
 
 	var TabContainer = ControlBase.extend("ui5strap.TabContainer", {
 		metadata : {
@@ -152,29 +152,34 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	};
 	
-	
-
-	
-	
 	/**
 	 * @Public
 	 */
-	TabContainerProto.showSelectedPane = function($next){
+	TabContainerProto._showSelectedPane = function(){
 		var _this = this,
 			$current = this.$().find('> .active'),
-			transition = new ui5strap.ResponsiveTransition(
+			$next = this.$().find('.tab-pane').eq(this.getSelectedIndex());
+		
+		var transition = new ResponsiveTransition(
 				{
 					"$current" : $current, 
 					"$next" : $next, 
 					"id" : 'tab-container-page-change',
 					"transitionAll" : this.getTransition()
 				}
-			),
-			transitionNextComplete = function (){
-				$next.attr("class", _this._getStyleClassPart("pane") + " active");
+			);
+		
+		this._transition = transition;
+			
+		var transitionNextComplete = function (){
+				if(transition.madeChanges() && $next.data("paneIndex") === _this.getSelectedIndex()){
+					$next.attr("class", _this._getStyleClassPart("pane") + " active");
+				}
 			},
 			transitionCurrentComplete = function (){
-				$current.attr("class", _this._getStyleClassPart("pane") + " ui5strap-hidden");
+				if(transition.madeChanges() && $current.data("paneIndex") !== _this.getSelectedIndex()){
+					$current.attr("class", _this._getStyleClassPart("pane") + " ui5strap-hidden");
+				}
 			};
 		
 		//RAF start
@@ -193,7 +198,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
 		});
 	};
-
+	
 	/**
 	 * @Public
 	 * @Override
@@ -203,7 +208,17 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			
 			this.setProperty('selectedIndex', newIndex, true);
 
-			this.showSelectedPane(this.$().find('.tab-pane').eq(newIndex));
+			if(this._transition){
+				var _this = this;
+				this._transition.cancel();
+				this._transition.on("last", function(){
+					_this._transition = null;
+					_this._showSelectedPane();
+				});
+			}
+			else{
+				this._showSelectedPane();
+			}
 		}
 		else{
 			this.setProperty('selectedIndex', newIndex, suppressInvalidate);

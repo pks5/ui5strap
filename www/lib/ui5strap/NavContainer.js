@@ -25,7 +25,7 @@
  * 
  */
  
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function(library, ControlBase, ResponsiveTransition){
 
 	var NavContainer = ControlBase.extend("ui5strap.NavContainer", {
 		metadata : {
@@ -123,7 +123,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				changeTransitionName = null;
 			}
 			
-			var transition = new ui5strap.ResponsiveTransition({
+			var transition = new ResponsiveTransition({
 					"transitionAll" : changeTransitionName, 
 					"$current" : pageChange.$current, 
 					"$next" : pageChange.$next, 

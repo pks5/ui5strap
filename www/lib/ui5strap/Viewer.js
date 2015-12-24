@@ -25,8 +25,8 @@
  * 
  */
 
-sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer'], 
-				function(library, ViewerBase, App, AppConfig, NavContainer){
+sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition'], 
+				function(library, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition){
 	
 	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", {
 		"constructor" : function(options){
@@ -532,7 +532,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			appInstance.attach(viewer._dom.$root[0]);
 			
 			//Create new Transition
-			var transition = new ui5strap.ResponsiveTransition(
+			var transition = new ResponsiveTransition(
 					{
 					"transitionAll" : transitionName || appInstance.config.data.app.transition, 
 					"$current" : $currentRoot, 
