@@ -14,12 +14,10 @@
 							<Icon icon="home" />
 						</Button>
 						<!-- Toggle Menu Button (except for small screens) -->
-						<Container type="Text" visibilitySmall="Hidden">
-							<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
-								options="BarButton">
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+								options="BarButton" visibilitySmall="Hidden" visibilityMedium="Visible">
 								<Icon icon="columns" />
-							</Button>
-						</Container>
+						</Button>
 						
 						<Heading text="{i18n>PAGE4_TITLE}" options="BarHeading" />
 					</Container>
@@ -28,12 +26,11 @@
 					
 					<Container align="PullRight">
 						<!-- Toggle Menu Button (only for small screens) -->
-						<Container type="Text" visibilityExtraSmall="Hidden" visibilityMedium="Hidden" visibilityLarge="Hidden">
-							<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
-								options="BarButton">
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+								options="BarButton" visibilityExtraSmall="Hidden" visibilitySmall="Visible" visibilityMedium="Hidden">
 								<Icon icon="columns" />
-							</Button>
-						</Container>
+						</Button>
+						
 					</Container>
 				</Bar>
 			</head>
@@ -41,9 +38,9 @@
 			<!-- Body area with page content -->
 			<body>
 				<BarNavContainer
-				id="subNav"
+				id="subNavControls"
 					barVisible="true" 
-					pageChange="ui5strap.demoapp.actions.SetSelectedMenuSub1" 
+					pageChange="ui5strap.demoapp.actions.SetSelectedMenuControls" 
 					></BarNavContainer>
 			</body>
 			

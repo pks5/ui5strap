@@ -21,7 +21,7 @@
 					</Heading>
 					
 					<!-- Toggle Menu Button (only for small screens) -->
-					<Container  align="PullLeft" type="Text" visibilityExtraSmall="Hidden" visibilitySmall="Visible" visibilityMedium="Hidden">
+					<Container  align="PullRight" type="Text" visibilityExtraSmall="Hidden" visibilitySmall="Visible" visibilityMedium="Hidden">
 						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
 							options="BarButton">
 							<Icon icon="columns" />

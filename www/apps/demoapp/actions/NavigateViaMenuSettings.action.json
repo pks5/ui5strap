@@ -15,8 +15,8 @@
 			"navContainer" : {
 				"TYPE" : "ui5strap.NavContainer",
 				"SOURCE" : "View",
-				"CONTROL_ID" : "subNav",
-				"VIEW_ID" : "my-app-page4"
+				"CONTROL_ID" : "navContainerSettings",
+				"VIEW_ID" : "settings"
 			}
 		},
 		

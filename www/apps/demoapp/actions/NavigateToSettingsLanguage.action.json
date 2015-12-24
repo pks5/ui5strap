@@ -9,14 +9,14 @@
 			"navContainer" : {
 				"TYPE" : "ui5strap.NavContainer",
 				"SOURCE" : "View",
-				"CONTROL_ID" : "subNav",
-				"VIEW_ID" : "my-app-page4"
+				"CONTROL_ID" : "navContainerSettings",
+				"VIEW_ID" : "settings"
 			}
 		},
 		
 		"VIEWS" : {
 			"page5" : {
-				"viewName" : "ui5strap.demoapp.views.MyPage5",
+				"viewName" : "ui5strap.demoapp.views.settings.Language",
 				"transition" : "zoom-in",
 				"writeHistory" : true,
 				"target" : "content"

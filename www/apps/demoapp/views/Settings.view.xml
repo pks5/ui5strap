@@ -1,0 +1,49 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!-- The page control -->
+	<Page>
+			<!-- Head area with horizontal bar -->
+			<head>
+				<!-- Bar on top of page -->
+				<Bar inverse="true">
+					<!-- Left area of bar -->
+					<Container align="PullLeft">
+						<!-- Back Button -->
+						<Button tap="ui5strap.demoapp.actions.NavigateToHome" 
+							options="BarButton">
+							<Icon icon="home" />
+						</Button>
+						<!-- Toggle Menu Button (except for small screens) -->
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+								options="BarButton" visibilitySmall="Hidden" visibilityMedium="Visible">
+								<Icon icon="columns" />
+						</Button>
+						
+						<Heading text="{i18n>PAGE_SETTINGS_TITLE}" options="BarHeading" />
+					</Container>
+					
+					<Heading text="{i18n>PAGE_SETTINGS_TITLE}" options="BarHeadingCenter" />
+					
+					<Container align="PullRight">
+						<!-- Toggle Menu Button (only for small screens) -->
+						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+								options="BarButton" visibilityExtraSmall="Hidden" visibilitySmall="Visible" visibilityMedium="Hidden">
+								<Icon icon="columns" />
+						</Button>
+						
+					</Container>
+				</Bar>
+			</head>
+			
+			<!-- Body area with page content -->
+			<body>
+				<BarNavContainer
+				id="navContainerSettings"
+					barVisible="true" 
+					pageChange="ui5strap.demoapp.actions.SetSelectedMenuSettings" 
+					></BarNavContainer>
+			</body>
+			
+	</Page>
+
+</View>

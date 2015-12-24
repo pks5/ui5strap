@@ -14,8 +14,8 @@
 			"barMenu" : {
 				"SOURCE" : "View",
 				"TYPE" : "ui5strap.BarMenu",
-				"CONTROL_ID" : "mySubMenu",
-				"VIEW_ID" : "my-app-bar-sub-menu"
+				"CONTROL_ID" : "mySubMenuControls",
+				"VIEW_ID" : "menuControls"
 			}
 		},
 		

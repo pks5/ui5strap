@@ -33,12 +33,10 @@
 
 				<TabContainer class="tabContainer1" source="tabContainer1Tabs">
 					<Container>
-						<Paragraph>
-							<ButtonGroup id="languageSelect" select="ui5strap.demoapp.actions.SelectLanguage" selectionMode="Single">
+						<ButtonGroup id="languageSelect" select="ui5strap.demoapp.actions.SelectLanguage" selectionMode="Single">
 								<Button text="EN" data:language="en-US" />
 								<Button text="DE" data:language="de-DE"  />
-							</ButtonGroup>
-						</Paragraph>
+						</ButtonGroup>
 					</Container>
 					<Container>
 						<demoapp:EventTest/>

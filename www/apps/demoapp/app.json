@@ -55,38 +55,33 @@
                 "id" : "my-app-page3"
             },
 
-            "ui5strap.demoapp.views.MyPage4" : {
+            "ui5strap.demoapp.views.Settings" : {
                 "type" : "XML",
                 
-                "id" : "my-app-page4",
+                "id" : "settings",
                 
                 "events" : {
                 	"controller" : {
                 		"update" : [
-                			"ui5strap.demoapp.actions.LoadMenuSub1",
-                			"ui5strap.demoapp.actions.NavigateToPage5"
+                			"ui5strap.demoapp.actions.LoadMenuSettings",
+                			"ui5strap.demoapp.actions.NavigateToSettingsLanguage"
                 		]
                 	}
                 }
             },
             
-            "ui5strap.demoapp.views.Controls" :{
-            	"id" : "controls",
-            	"type" : "HTML"
-            },
-			
-			"ui5strap.demoapp.views.MenuSub1" : {
+            "ui5strap.demoapp.views.MenuSettings" : {
                 "type" : "XML",
                 
-                "id" : "my-app-bar-sub-menu",
+                "id" : "menuSettings",
                 
                 "target" : "bar"
             },
             
-            "ui5strap.demoapp.views.MyPage5" : {
+            "ui5strap.demoapp.views.settings.Language" : {
                 "type" : "XML",
                 
-                "id" : "my-app-page5",
+                "id" : "settingsLanguage",
                 
                 "events" : {
                 	"controller" : {
@@ -95,11 +90,56 @@
                 }
             },
             
-            "ui5strap.demoapp.views.MyPage6" : {
+            "ui5strap.demoapp.views.settings.Theme" : {
                 "type" : "XML",
                 
-                "id" : "my-app-page6"
+                "id" : "settingsTheme"
             },
+            
+            
+            "ui5strap.demoapp.views.Controls" :{
+            	"id" : "controls",
+            	"type" : "XML",
+                
+                "events" : {
+                	"controller" : {
+                		"update" : [
+                			"ui5strap.demoapp.actions.LoadMenuControls",
+                			"ui5strap.demoapp.actions.NavigateToControlsButtons"
+                		]
+                	}
+                }
+            },
+            
+            "ui5strap.demoapp.views.MenuControls" : {
+                "type" : "XML",
+                
+                "id" : "menuControls",
+                
+                "target" : "bar"
+            },
+            
+            "ui5strap.demoapp.views.controls.Buttons" :{
+            	"id" : "controlsButtons",
+            	"type" : "HTML"
+            },
+            
+            "ui5strap.demoapp.views.controls.Containers" :{
+            	"id" : "controlsContainers",
+            	"type" : "HTML"
+            },
+            
+            "ui5strap.demoapp.views.controls.Icons" :{
+            	"id" : "controlsIcons",
+            	"type" : "HTML"
+            },
+            
+            "ui5strap.demoapp.views.controls.Typography" :{
+            	"id" : "controlsTypography",
+            	"type" : "HTML"
+            },
+			
+			
             
             "ui5strap.demoapp.views.NewPost" : {
                 "type" : "XML",
@@ -112,16 +152,23 @@
 		"ui5strap.demoapp.actions.NavigateToHome",
 		"ui5strap.demoapp.actions.NavigateToPage2",
 		"ui5strap.demoapp.actions.NavigateToPage3",
-		"ui5strap.demoapp.actions.NavigateToPage5",
+		
 		
 		"ui5strap.demoapp.actions.ToggleBarMenuRoot",
 		"ui5strap.demoapp.actions.NavigateViaMenuRoot",
 		"ui5strap.demoapp.actions.SetSelectedMenuRoot",
 		
-		"ui5strap.demoapp.actions.LoadMenuSub1",
-		"ui5strap.demoapp.actions.ToggleBarMenuSub1",
-		"ui5strap.demoapp.actions.NavigateViaMenuSub1", 
-		"ui5strap.demoapp.actions.SetSelectedMenuSub1",
+		"ui5strap.demoapp.actions.LoadMenuSettings",
+		"ui5strap.demoapp.actions.ToggleBarMenuSettings",
+		"ui5strap.demoapp.actions.NavigateViaMenuSettings", 
+		"ui5strap.demoapp.actions.SetSelectedMenuSettings",
+		"ui5strap.demoapp.actions.NavigateToSettingsLanguage",
+		
+		"ui5strap.demoapp.actions.LoadMenuControls",
+		"ui5strap.demoapp.actions.ToggleBarMenuControls",
+		"ui5strap.demoapp.actions.NavigateViaMenuControls", 
+		"ui5strap.demoapp.actions.SetSelectedMenuControls",
+		"ui5strap.demoapp.actions.NavigateToControlsButtons",
 		
 		"ui5strap.demoapp.actions.AppendFeed",
 		"ui5strap.demoapp.actions.RemovePost",

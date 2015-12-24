@@ -88,6 +88,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		//Original function parameters
 		viewConfig.viewData.__ui5strap.viewDef = viewDef;
+		
+		if(!viewConfig.type){
+			viewConfig.type = "XML";
+		}
 
 		return viewConfig;
 	};

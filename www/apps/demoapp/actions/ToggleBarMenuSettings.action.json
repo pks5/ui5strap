@@ -8,8 +8,8 @@
 			"navContainer" : {
 				"SOURCE" : "View",
 				"TYPE" : "ui5strap.NavContainer",
-				"CONTROL_ID" : "subNav",
-				"VIEW_ID" : "my-app-page4"
+				"CONTROL_ID" : "navContainerSettings",
+				"VIEW_ID" : "settings"
 			}
 		},
 		

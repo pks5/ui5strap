@@ -26,12 +26,12 @@
 			<Container type="FluidInset">
 				<Container type="Well">
 					<Paragraph text="{i18n>PAGE6_THEME_INTRO}" />
-					<Paragraph>
+					<Container>
 						<ButtonGroup select="ui5strap.demoapp.actions.ChangeTheme" selectionMode="Single">
 							<Button text="base" data:theme="base" selected="true"  />
 							<Button id="defaultThemeButton" severity="Primary" text="ui5strap_default" data:theme="ui5strap_default"  />
 						</ButtonGroup>
-					</Paragraph>
+					</Container>
 					<Paragraph text="{i18n>PAGE6_BACK_NOTICE}" />
 					<Paragraph>
 						<Button 

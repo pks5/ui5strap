@@ -769,9 +769,6 @@ sap.ui
 						// Plain HTML <div>
 						Default : "Default",
 
-						// Plain HTML <span>
-						Text : "Text",
-
 						// Bootstrap "container" & "container-fluid"
 						Fluid : "Fluid",
 

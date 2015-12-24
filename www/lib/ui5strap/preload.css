@@ -3,6 +3,8 @@
  * UI5Strap
  *
  * Preload Stylesheet
+ *
+ * Include this Stylesheet into your index.html file.
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,6 +27,286 @@
  * 
  */
 
+/*
+* ROOT STRUCTURE
+*/
+
+/*
+* HTML Skeleton
+*/
+html, body{
+	width:100%;
+	height:100%;
+	
+	padding:0;
+	margin:0;
+
+	overflow:hidden;
+}
+
+/*
+* Root Container
+*/
+#ui5strap-container{
+	position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+
+  min-width:320px;
+  overflow: hidden;
+
+  transition: top .4s ease-in, bottom .4s ease-in;
+	-webkit-transition: top .4s ease-in, bottom .4s ease-in;
+	-moz-transition: top .4s ease-in, bottom .4s ease-in;
+}
+
+/*
+* Global Overlay
+* Z-Index 200K
+*/
+#ui5strap-overlay{
+  z-index:200000;
+}
+
+.ui5strap-overlay-default #ui5strap-overlay-content{
+	top:20%;
+	bottom:20%;
+	left:0;
+	right:0;
+}
+
+/*
+* Global Loader
+* Z-Index 300K
+*/
+#ui5strap-loader{
+	z-index:300000;
+}
+
+/*
+* Fatal Error Screen
+* Z-Index 400K
+*/
+#ui5strap-fatal{
+	z-index:400000;
+	display:none;
+	padding:20px;
+	color:white;
+	background-color: rgba(0,0,0,0.9);
+}
+
+/*
+* Fatal Error Screen Message
+*/
+#ui5strap-fatal-message{
+
+}
+
+/*
+* No Script Screen
+* Only visible when JavaScript is deactivated.
+*/
+#ui5strap-noscript{
+	z-index:400010;
+	padding:20px;
+	color:white;
+	background-color: rgba(0,0,0,0.9);
+}
+
+/*
+* APP
+*/
+
+/*
+* App Container
+*/
+.ui5strap-app{
+  position:absolute;
+  
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  
+  
+  overflow:hidden;
+}
+
+.ui5strap-app-standard{
+	background-color:white;
+}
+
+/*
+* Container for App Content
+*/
+.ui5strap-app-content{
+  position:absolute;
+  
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+
+  overflow:hidden;
+}
+
+/*
+* App Overlays
+* Z-Index: 20K
+*/
+.ui5strap-app-overlay{
+	z-index:20000;
+}
+
+/*
+* App Loaders
+* Z-Index: 20K
+*/
+.ui5strap-app-loader{
+	z-index:30000;
+}
+
+/*
+* Next App Container in Transitions
+*/
+.ui5strap-app-next{
+  position:absolute;
+  
+  left:0;
+  top:0;
+  right:auto;
+  bottom:auto;
+
+  width:100%;
+  height:100%;
+}
+
+/*
+* LAYERS
+*/
+
+/*
+* Base class for all kind of Layers such as Loaders, Overlays and Error Screens.
+*/
+.ui5strap-layer{
+	position: absolute;
+
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	
+	transition: opacity .25s ease;
+	-webkit-transition: opacity .25s ease;
+	-moz-transition: opacity .25s ease;
+
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+/*
+* Base class for global and app dedicated Loading Screens.
+*/
+.ui5strap-loader{
+	background-color:rgba(0,0,0,0.8); 
+}
+
+/*
+* Spinner for the loader.
+*/
+.ui5strap-loader:after{
+	content:'';
+	position:absolute;
+	background-image:url('img/spinner-white.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size:cover;
+	width:24px;
+	height:24px;
+
+	left:50%;
+	top:50%;
+
+	margin-left:-12px;
+	margin-top:-12px;
+
+	color:white;
+
+	-webkit-animation: spin 2s infinite linear;
+	-moz-animation: spin 2s infinite linear;
+	-o-animation: spin 2s infinite linear;
+	animation: spin 2s infinite linear;
+
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+/*
+* Base class for global and app dedicated Overlays.
+*/
+.ui5strap-overlay{
+	
+}
+
+/*
+* Content of the Overlay. Lays over the Backdrop.
+*/
+.ui5strap-overlay-content{
+	position:absolute; 
+   top:0; 
+   left:0; 
+   bottom:0;
+   right:0;
+}
+
+/*
+* Backdrop for Overlay
+*/
+.ui5strap-overlay-backdrop{
+   position:absolute; 
+   top:0; 
+   left:0; 
+   bottom:0;
+   right:0;
+}
+
+/*
+* TODO
+*/
+.ui5strap-overlay-backdrop{
+	background-color:rgba(0,0,0,0.8); 
+    cursor:pointer;
+
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+
+/*
+* HELPERS
+*/
+
+/*
+* Hidden Class
+*/
+.ui5strap-hidden{
+	display:none;
+}
+
+/*
+* ANIMATIONS
+* Can be used for spinners on the splash screen.
+*/
 @-moz-keyframes spin {
     from { -moz-transform: rotate(0deg); }
     to { -moz-transform: rotate(360deg); }
@@ -70,255 +352,4 @@
     0% { -webkit-transform: translate(12px, 0); }
     50% { -webkit-transform: translate(-12px, 0); }
     100% { -webkit-transform: translate(0, 0); }
-}
-
-
-/*
-* HTML Skeleton
-*/
-html, body{
-	width:100%;
-	height:100%;
-	
-	padding:0;
-	margin:0;
-
-	overflow:hidden;
-}
-
-
-/*
-* Root Container
-*/
-#ui5strap-container{
-	position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-
-  min-width:320px;
-  overflow: hidden;
-
-  transition: top .4s ease-in, bottom .4s ease-in;
-	-webkit-transition: top .4s ease-in, bottom .4s ease-in;
-	-moz-transition: top .4s ease-in, bottom .4s ease-in;
-}
-
-/*
-* Global Overlay
-*/
-#ui5strap-overlay{
-  z-index:200000;
-}
-
-/*
-* Global Loader
-*/
-#ui5strap-loader{
-	z-index:300000;
-}
-
-/*
-* Fatal Error Screen
-* Shown when a fatal error occurs.
-*/
-#ui5strap-fatal{
-	z-index:400000;
-	display:none;
-	padding:20px;
-	color:white;
-	background-color: rgba(0,0,0,0.9);
-}
-
-/*
-* Fatal Error Screen Message
-*/
-#ui5strap-fatal-message{
-
-}
-
-/*
-* No Script Screen
-* Only visible when JavaScript is deactivated.
-*/
-#ui5strap-noscript{
-	z-index:500000;
-	padding:20px;
-	color:white;
-	background-color: rgba(0,0,0,0.9);
-}
-
-/*
-*
-*
-*
-*/
-
-
-/*
-* App Container
-*/
-.ui5strap-app{
-  position:absolute;
-  
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  
-  
-  overflow:hidden;
-}
-
-.ui5strap-app-standard{
-	background-color:white;
-}
-
-/*
-* Container for App Content
-*/
-.ui5strap-app-content{
-  position:absolute;
-  
-  left:0;
-  top:0;
-  right:0;
-  bottom:0;
-
-  overflow:hidden;
-}
-
-.ui5strap-app-overlay{
-	z-index:20000;
-}
-
-.ui5strap-app-loader{
-	z-index:30000;
-}
-
-/*
-* Next App Container in Transitions
-*/
-.ui5strap-app-next{
-  position:absolute;
-  
-  left:0;
-  top:0;
-  right:auto;
-  bottom:auto;
-
-  width:100%;
-  height:100%;
-}
-
-
-/*
-* Generic Layer
-*/
-.ui5strap-layer{
-	position: absolute;
-
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	
-	transition: opacity .25s ease;
-	-webkit-transition: opacity .25s ease;
-	-moz-transition: opacity .25s ease;
-
-	-webkit-transform: translate3d(0,0,0);
-	-moz-transform: translate3d(0,0,0);
-	-ms-transform: translate3d(0,0,0);
-	-o-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
-}
-
-/*
-* Hidden Class
-*/
-.ui5strap-hidden{
-	display:none;
-}
-
-
-/*
-* Loading Screen
-*/
-
-
-.ui5strap-loader{
-	background-color:rgba(0,0,0,0.8); 
-}
-
-.ui5strap-loader:after{
-	content:'';
-	position:absolute;
-	background-image:url('img/spinner-white.png');
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size:cover;
-	width:24px;
-	height:24px;
-
-	left:50%;
-	top:50%;
-
-	margin-left:-12px;
-	margin-top:-12px;
-
-	color:white;
-
-	-webkit-animation: spin 2s infinite linear;
-	-moz-animation: spin 2s infinite linear;
-	-o-animation: spin 2s infinite linear;
-	animation: spin 2s infinite linear;
-
-	-webkit-transform: translate3d(0,0,0);
-	-moz-transform: translate3d(0,0,0);
-	-ms-transform: translate3d(0,0,0);
-	-o-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
-}
-
-
-/*
-* Overlay sub elements
-*/
-.ui5strap-overlay-backdrop{
-   position:absolute; 
-   top:0; 
-   left:0; 
-   bottom:0;
-   right:0;
-}
-
-.ui5strap-overlay-content{
-	position:absolute; 
-   top:0; 
-   left:0; 
-   bottom:0;
-   right:0;
-}
-
-.ui5strap-overlay-default #ui5strap-overlay-content{
-	top:20%;
-	bottom:20%;
-	left:0;
-	right:0;
-}
-
-/*
-* Backdrop for Overlay
-*/
-.ui5strap-overlay-backdrop{
-  background-color:rgba(0,0,0,0.8); 
-  cursor:pointer;
-
-  -webkit-transform: translate3d(0,0,0);
-  -moz-transform: translate3d(0,0,0);
-  -ms-transform: translate3d(0,0,0);
-  -o-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
 }

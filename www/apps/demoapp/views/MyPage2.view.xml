@@ -7,7 +7,7 @@
 			<!-- Bar on top of page -->
 			<Bar inverse="true">
 				<!-- Left area of bar -->
-				<Container align="PullLeft">
+				<Text align="PullLeft">
 					<!-- Back Button -->
 					<Button tap="ui5strap.demoapp.actions.NavigateToHome"
 						options="BarButton">
@@ -15,27 +15,23 @@
 					</Button>
 
 					<!-- Toggle Menu Button (except for small screens) -->
-					<Container type="Text" visibilitySmall="Hidden"
+					<Button options="BarButton"
+							tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" visibilitySmall="Hidden"
 						visibilityMedium="Visible">
-						<Button options="BarButton"
-							tap="ui5strap.demoapp.actions.ToggleBarMenuRoot">
 							<Icon icon="columns" />
-						</Button>
-					</Container>
-				</Container>
-
+					</Button>
+				</Text>
+				
 				<!-- Middle area of bar -->
 				<Heading text="{i18n>PAGE2_TITLE}" options="BarHeadingCenter" />
 
 				<!-- Toggle Menu Button (only for small screens) -->
-				<Container type="Text" align="PullRight"
+				<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot"
+						options="BarButton" align="PullRight"
 					visibilityExtraSmall="Hidden" visibilitySmall="Visible"
 					visibilityMedium="Hidden">
-					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot"
-						options="BarButton">
 						<Icon icon="columns" />
-					</Button>
-				</Container>
+				</Button>
 			</Bar>
 		</head>
 
@@ -48,11 +44,9 @@
 
 						<titleContent>
 							<Text text="{i18n>PAGE2_PANEL_RIGHT_TITLE}" />
-							<Container type="Text" align="PullRight">
-								<Button tap="ui5strap.demoapp.actions.ShowNewPostOverlay">
-									<Icon icon="plus" />
-								</Button>
-							</Container>
+							<Button tap="ui5strap.demoapp.actions.ShowNewPostOverlay" align="PullRight">
+								<Icon icon="plus" />
+							</Button>
 						</titleContent>
 						<content>
 							<ListMedia id="feeds" tap="ui5strap.demoapp.actions.Debug"

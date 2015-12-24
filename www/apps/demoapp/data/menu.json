@@ -19,14 +19,14 @@
 			"severity" : "Warning"
 		},
 		{
-			"label" : "PAGE4_TITLE",
-			"viewName" : "ui5strap.demoapp.views.MyPage4",
-			"pageId" : "my-app-page4",
+			"label" : "PAGE_SETTINGS_TITLE",
+			"viewName" : "ui5strap.demoapp.views.Settings",
+			"pageId" : "settings",
 			"icon" : "cog",
 			"severity" : "Success"
 		},
 		{
-			"label" : "PAGE4_TITLE",
+			"label" : "PAGE_CONTROLS_TITLE",
 			"viewName" : "ui5strap.demoapp.views.Controls",
 			"pageId" : "controls",
 			"icon" : "toggle-on",
@@ -36,20 +36,49 @@
 		
 	],
 	
-	"sub1" : [
+	"subMenuSettings" : [
 	
 		{
 			"label" : "PAGE5_TITLE",
-			"viewName" : "ui5strap.demoapp.views.MyPage5",
-			"pageId" : "my-app-page5",
+			"viewName" : "ui5strap.demoapp.views.settings.Language",
+			"pageId" : "settingsLanguage",
 			"icon" : "language"
 		},
 		{
 			"label" : "PAGE6_TITLE",
-			"viewName" : "ui5strap.demoapp.views.MyPage6",
-			"pageId" : "my-app-page6",
+			"viewName" : "ui5strap.demoapp.views.settings.Theme",
+			"pageId" : "settingsTheme",
 			"icon" : "paint-brush"
 		}		
+	
+	],
+	
+	"subMenuControls" :[
+	
+		{
+			"label" : "PAGE_CONTROLS_BUTTONS_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.Buttons",
+			"pageId" : "controlsButtons",
+			"icon" : "language"
+		},
+		{
+			"label" : "PAGE_CONTROLS_CONTAINERS_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.Containers",
+			"pageId" : "controlsContainers",
+			"icon" : "paint-brush"
+		},
+		{
+			"label" : "PAGE_CONTROLS_ICONS_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.Icons",
+			"pageId" : "controlsIcons",
+			"icon" : "paint-brush"
+		},
+		{
+			"label" : "PAGE_CONTROLS_TYPOGRAPHY_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.Typography",
+			"pageId" : "controlsTypography",
+			"icon" : "paint-brush"
+		}				
 	
 	]
 
