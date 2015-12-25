@@ -202,20 +202,26 @@ RestController.prototype._install = function(){
 		};
 	}
 	
-	this._init();
+	this.onInit();
 };
 
-RestController.prototype._init = function(){
-};
+RestController.prototype.onInit = function(){};
 
 module.exports = {
 	"Server" : Server,
 	"RestController" : RestController,
 	"Utils" : Utils,
-	"controller" : function(){
+	"restController" : function(controllerImpl){
 		var Controller = function(options, configLocation){
 			this.configLocation = configLocation;
 			this.options = options;
+			
+			if(controllerImpl){ 
+				var implKeys = Object.keys(controllerImpl);
+				for(var i = 0; i < implKeys.length; i++){
+					this[implKeys[i]] = controllerImpl[implKeys[i]];
+				}
+			}
 		};
 		Controller.prototype = new RestController();
 		return Controller;
