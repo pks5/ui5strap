@@ -3,7 +3,8 @@ var Library = require("../../../lib/ui5strap/library.js");
 /*
  * Construct
  */
-var Feed = function(options){
+var Feed = function(options, configLocation){
+	this.configLocation = configLocation;
 	this.options = options;
 };
 module.exports = Feed;

@@ -3,7 +3,15 @@
 	        "id" : "ui5strap.demoapp",
 	        "package" : "ui5strap.demoapp",
 	        "name" : "Ui5Strap Demo",
-	        "logLevel" : 5
+	        "logLevel" : 5,
+	        "environment" : "local"
+	},
+	
+	"environments" : {
+		"local" : {
+			"url" : "./",
+			"name" : "Local Environment"
+		}
 	},
 	
 	"css" : [
@@ -258,7 +266,7 @@
 	             
 	             "id" : "feedClient",
 	             "module" : "ui5strap.RestClient",
-	             "url" : "/apps/demoapp/server/feed",
+	             "url" : "server/feed",
 	             "controller" : "ui5strap.demoapp.server.controllers.Feed",
 	             "methods" : {
 	             	"info" : {

@@ -123,6 +123,24 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 		return eventList;
 	};
+	
+	AppConfigProto.getEnvironment = function(){
+		var currentEnv = this.data.app.environment || "local",
+			envData = this.data.environments[currentEnv];
+		
+		if(!envData){
+			if(currentEnv === "local"){
+				return {
+					"name" : "Local Environment",
+					"url" : this.options.pathToServletRoot
+				}
+			}
+			
+			throw new Error("No such environment: " + currentEnv);
+		}
+		
+		return envData;
+	};
 
 	/*
 	* Processes a given option
@@ -214,7 +232,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 		if(jQuery.sap.startsWith(path, '/')){
 			//Return path relative to servlet root (context)
-			return this.options.pathToServletRoot + path;
+			var envUrl = this.getEnvironment().url;
+			if(envUrl.charAt(envUrl.length-1) === "/"){
+				envUrl = envUrl.substr(0, envUrl.length-1);
+			}
+			return envUrl + path;
 		}
 		else if(
 			jQuery.sap.startsWith(path, './')
