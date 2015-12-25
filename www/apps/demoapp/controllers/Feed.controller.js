@@ -1,8 +1,8 @@
 /*
  * 
- * UI5Strap
+ * UI5Strap Demo App
  *
- * ui5strap.ActionController
+ * ui5strap.demoapp.controllers.Feed
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -28,11 +28,16 @@
 sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
+			onInit : function(){
+				this.getApp().getMain().setFeedListControl(this.getView().byId("feed"));
+			},
+			
 			onUpdate : function(oEvent){
-				var _this = this;
-				this.getApp().getFeedClient().info(function(feedInfo){
-					_this.getView().setModel(new ui5strap.JSONModel(feedInfo), "FEED_INFO");
-				});
+				this.getApp().getMain().refreshFeed();
+			},
+			
+			handleFeedTap : function(oEvent){
+				this.getApp().getMain().deletePost(oEvent.getParameter("srcItem").data("postId"));
 			}
 	};
 	

@@ -49,11 +49,11 @@
 							</Button>
 						</titleContent>
 						<content>
-							<ListMedia id="feeds" tap="ui5strap.demoapp.actions.Debug"
+							<ListMedia id="feed" tap="handleFeedTap"
 								items="{FEED_INFO>/feed}">
 
 								<!-- Media Item 1 -->
-								<ListMediaItem>
+								<ListMediaItem data:postId="{FEED_INFO>id}">
 									<media>
 										<Image options="MediaObject" mpath="{FEED_INFO>image}" ext="png"
 											alt="Image" width="64" />

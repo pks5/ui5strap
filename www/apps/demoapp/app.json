@@ -265,8 +265,20 @@
 	             		"path" : "info",
 	             		"type" : "get",
 	             		"arguments" : ["success", "error"]
+	             	},
+	             	
+	             	"deletePost" : {
+	             		"path" : "delete-post",
+	             		"type" : "postUrlEncoded",
+	             		"arguments" : ["post.id", "success", "error"]
 	             	}
 	             }
-	         }
+	         },
+	         
+	         {
+	             
+	             "id" : "main",
+	             "module" : "ui5strap.demoapp.modules.Main"
+	        }
     ]
 }
