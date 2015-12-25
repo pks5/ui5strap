@@ -159,6 +159,21 @@
             	"type" : "HTML"
             },
             
+            "ui5strap.demoapp.views.controls.Indicators" :{
+            	"id" : "controlsIndicators",
+            	"type" : "HTML"
+            },
+            
+            "ui5strap.demoapp.views.controls.MediaList" :{
+            	"id" : "controlsMediaList",
+            	"type" : "HTML"
+            },
+            
+            "ui5strap.demoapp.views.controls.Dialogs" :{
+            	"id" : "controlsDialogs",
+            	"type" : "HTML"
+            },
+            
             "ui5strap.demoapp.views.NewPost" : {
                 "type" : "XML",
                 

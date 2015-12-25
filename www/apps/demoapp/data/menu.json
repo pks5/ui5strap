@@ -89,7 +89,7 @@
 			"label" : "PAGE_CONTROLS_GRID_SYSTEM_TITLE",
 			"viewName" : "ui5strap.demoapp.views.controls.GridSystem",
 			"pageId" : "controlsGridSystem",
-			"icon" : "columns"
+			"icon" : "table"
 		},
 		{
 			"label" : "PAGE_CONTROLS_PROGRESS_TITLE",
@@ -102,6 +102,24 @@
 			"viewName" : "ui5strap.demoapp.views.controls.Form",
 			"pageId" : "controlsForm",
 			"icon" : "columns"
+		},
+		{
+			"label" : "PAGE_CONTROLS_INDICATORS_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.Indicators",
+			"pageId" : "controlsIndicators",
+			"icon" : "bell-o"
+		},
+		{
+			"label" : "PAGE_CONTROLS_MEDIA_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.MediaList",
+			"pageId" : "controlsMediaList",
+			"icon" : "picture-o"
+		},
+		{
+			"label" : "PAGE_CONTROLS_DIALOGS_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.Dialogs",
+			"pageId" : "controlsDialogs",
+			"icon" : "clone"
 		}							
 	
 	]
