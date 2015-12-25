@@ -2,10 +2,20 @@
 var http = require('http'),
 	nodeUrl = require('url'),
 	nodeFs = require('fs'),
-	nodeMime = require('mime');
+	nodeMime = require('mime'),
+	Library = require("./lib/Library.js");
 
 //Lets define a port we want to listen to
 const PORT=8282; 
+
+var controllers = { 
+	"testService" : require("./apps/demoapp/controllers/TestService.js")
+};
+
+var errorListener = function(request, response) {
+	response.writeHead(404);
+	response.end('Not found');
+};
 
 //Lets use our dispatcher
 function handleRequest(request, response){
@@ -17,11 +27,15 @@ function handleRequest(request, response){
 	
 	var url = nodeUrl.parse(requestUrl, true);
 	
+	
+	if(Library.RestController.handleRequest(url, request, response)){
+		return;
+	}
+	
+	
+	
 	var filename = "../www" + url.pathname;//require('path').join(this.staticDirname, url.pathname);
-	var errorListener = function(req, res) {
-		res.writeHead(404);
-		res.end('Not found');
-	};
+	
 	
 	nodeFs.readFile(filename, function(err, file) {
 		if(err) {
