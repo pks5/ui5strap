@@ -1,0 +1,18 @@
+{
+	"server" : {
+	        "name" : "Ui5Strap Demo Server",
+	        "port" : 8282,
+	        "pathToPublic" : "../www"
+	},
+	
+	"apps" : [
+		
+		{
+			"config" : "apps/demoapp/app.json"
+		}
+	
+	
+	]
+
+
+}

@@ -1,4 +1,4 @@
-var Library = require("../../../lib/Library.js");
+var Library = require("../../../lib/ui5strap/library.js");
 
 /*
  * Construct
