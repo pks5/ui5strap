@@ -258,7 +258,7 @@
 	             
 	             "id" : "feedClient",
 	             "module" : "ui5strap.RestClient",
-	             "url" : "./apps/demoapp/server/feed",
+	             "url" : "/apps/demoapp/server/feed",
 	             "methods" : {
 	             	"info" : {
 	             		"path" : "info",

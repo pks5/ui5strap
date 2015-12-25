@@ -13,8 +13,6 @@ var RestController = function(){
 	
 };
 
-var base = "/apps/demoapp/server/";
-
 RestController.controllers = {
 		
 };
@@ -31,7 +29,12 @@ RestController.handleRequest = function(url, request, response){
 				"Content-Type": "application/json"
 			});
 			
+			//TODO beforeRequest handler
+			
 			response.end(JSON.stringify(routing.controller[routing.method]()));
+			
+			//TODO afterRequest handler
+			
 			return true;
 		}
 	
@@ -39,8 +42,17 @@ RestController.handleRequest = function(url, request, response){
 	return false;
 };
 
-RestController.prototype.install = function(){
-	this.configure();
+/**
+ * Configure
+ */
+RestController.prototype._configure = function(){
+	
+};
+
+
+
+RestController.prototype._install = function(){
+	this._configure();
 	
 	var methods = this.options.methods;
 	var methodKeys = Object.keys(methods);
@@ -48,13 +60,18 @@ RestController.prototype.install = function(){
 	for(var i = 0; i < methodKeys.length; i++){
 		var methodName = methodKeys[i],
 			method = methods[methodName],
-			path = base + this.options.url + "/" + (method.path || Utils.hyphenize(methodName));
+			path = this.options.url + "/" + (method.path || Utils.hyphenize(methodName));
 		
 		RestController.routing[path] = {
 				"controller" : this,
 				"method" : methodName
 		};
 	}
+	
+	this._init();
+};
+
+RestController.prototype._init = function(){
 };
 
 module.exports = {

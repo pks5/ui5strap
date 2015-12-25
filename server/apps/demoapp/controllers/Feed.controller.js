@@ -3,59 +3,58 @@ var Library = require("../../../lib/Library.js");
 /*
  * Construct
  */
-var Feed = function(){};
+var Feed = function(file){
+	console.log(file);
+	this.options = file.components[1];
+};
 module.exports = Feed;
 Feed.prototype = new Library.RestController();
 var FeedProto = Feed.prototype;
 
 /**
- * Configure
+ * Initialize Controller
  */
-FeedProto.configure = function(){
-	this.options.url = "feed";
-	
-	this.options.methods.info = {
-			path : "info"
-			
+FeedProto._init = function(){
+	this._db = {
+			feeds : {
+				"default" : 
+					
+					{ feed: [
+				    		       {
+				    		    	   id : 1,
+				    		    	   title : "John Doe",
+				    		    	   message : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+				    		    	   image : "ui5strap.demoapp.img.awesome"
+				    		       },
+				    		       {
+				    		    	   id : 2,
+				    		    	   title : "Michael Smith",
+				    		    	   message : "At vero eos et accusam et justo duo dolores et ea rebum.",
+				    		    	   image : "ui5strap.demoapp.img.awesome"
+				    		       },
+				    		       {
+				    		    	   id : 3,
+				    		    	   title : "James Mayer",
+				    		    	   message : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+				    		    	   image : "ui5strap.demoapp.img.awesome"
+				    		       },
+				    		       {
+				    		    	   id : 4,
+				    		    	   title : "Christine Peters",
+				    		    	   message : "At vero eos et accusam et justo duo dolores et ea rebum.",
+				    		    	   image : "ui5strap.demoapp.img.awesome"
+				    		       }
+				    		]
+					}
+			}
 	};
-	
-	this.options.methods.goodBye = {
-			
-	};
-};
+}
 
 /**
  * 
  */
 FeedProto.info = function(){
-	return { 
-		feed: [
-		       {
-		    	   id : 1,
-		    	   title : "John Doe",
-		    	   message : "Hello World!",
-		    	   image : "ui5strap.demoapp.img.awesome"
-		       },
-		       {
-		    	   id : 2,
-		    	   title : "Michael Smith",
-		    	   message : "Hello World!",
-		    	   image : "ui5strap.demoapp.img.awesome"
-		       },
-		       {
-		    	   id : 3,
-		    	   title : "James Mayer",
-		    	   message : "Hello World!",
-		    	   image : "ui5strap.demoapp.img.awesome"
-		       },
-		       {
-		    	   id : 4,
-		    	   title : "Christine Peters",
-		    	   message : "Hello World!",
-		    	   image : "ui5strap.demoapp.img.awesome"
-		       }
-		]
-	};
+	return this._db.feeds.default;
 };
 
 FeedProto.goodBye = function(){
