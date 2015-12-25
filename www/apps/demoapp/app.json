@@ -3,15 +3,7 @@
 	        "id" : "ui5strap.demoapp",
 	        "package" : "ui5strap.demoapp",
 	        "name" : "Ui5Strap Demo",
-	        "logLevel" : 5,
-	        "environment" : "local"
-	},
-	
-	"environments" : {
-		"local" : {
-			"url" : "./",
-			"name" : "Local Environment"
-		}
+	        "logLevel" : 5
 	},
 	
 	"css" : [

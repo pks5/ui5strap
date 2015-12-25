@@ -1,15 +1,11 @@
-var Library = require("../../../lib/ui5strap/library.js");
+var ui5strap = require("../../../lib/ui5strap/library.js");
 
 /*
  * Construct
  */
-var Feed = function(options, configLocation){
-	this.configLocation = configLocation;
-	this.options = options;
-};
+var Feed = ui5strap.controller(),
+	FeedProto = Feed.prototype;
 module.exports = Feed;
-Feed.prototype = new Library.RestController();
-var FeedProto = Feed.prototype;
 
 /**
  * Initialize Controller

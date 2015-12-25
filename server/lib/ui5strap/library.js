@@ -211,5 +211,13 @@ RestController.prototype._init = function(){
 module.exports = {
 	"Server" : Server,
 	"RestController" : RestController,
-	"Utils" : Utils
+	"Utils" : Utils,
+	"controller" : function(){
+		var Controller = function(options, configLocation){
+			this.configLocation = configLocation;
+			this.options = options;
+		};
+		Controller.prototype = new RestController();
+		return Controller;
+	}
 };
