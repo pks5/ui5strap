@@ -31,29 +31,31 @@ ServerProto.start = function(){
 		_this.config = serverConfig;
 		_this._pathToWWW = serverConfig.server.pathToPublic;
 		_this._port = serverConfig.server.port;
+		_this._pathToApps = "../../apps/";
 		
 		var apps = serverConfig.apps,
 			cnr = apps.length;
 
 		for(var i = 0; i < apps.length; i++){
-			var config = nodePath.join(serverConfig.server.pathToPublic,
+			var pathToAppConfig = nodePath.join(serverConfig.server.pathToPublic,
 					apps[i].config);
-			nodeFs.readFile(config, 'utf8', function(err, file) {
+			nodeFs.readFile(pathToAppConfig, 'utf8', function(err, file) {
 				if (err) {
-					console.error("Could not load app.json!");
+					console.error("Could not load app config from '" + pathToAppConfig + "'!");
 					return;
 				}
 				
 				cnr --;
 	
-				var appConfig = JSON.parse(file);
+				var appConfig = JSON.parse(file),
+					appServerId = appConfig.app.id + ".server";
+				
+				console.log("Loaded '" + appServerId + "' from '" + pathToAppConfig + "'.");
 	
-				var controllers = {
-					"Feed" : require("../../apps/demoapp/controllers/Feed.controller.js")
-				};
-	
-				var Feed = new controllers.Feed(appConfig);
-				Feed._install();
+				var Controller = require(nodePath.join(_this._pathToApps, "demoapp/" + "controllers/Feed.controller.js"));
+				//ui5strap.demoapp.server
+				var controller = new Controller(appConfig.components[1]);
+				controller._install();
 	
 				if(cnr === 0){
 					_this.startUp();
@@ -61,7 +63,7 @@ ServerProto.start = function(){
 			});
 		}
 	});
-},
+};
 
 ServerProto.startUp = function(){
 	var _this = this;
