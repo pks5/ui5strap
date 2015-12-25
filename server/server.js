@@ -9,8 +9,11 @@ var http = require('http'),
 const PORT=8282; 
 
 var controllers = { 
-	"testService" : require("./apps/demoapp/controllers/TestService.js")
+	"Feed" : require("./apps/demoapp/controllers/Feed.controller.js")
 };
+
+var Feed = new controllers.Feed();
+Feed.install();
 
 var errorListener = function(request, response) {
 	response.writeHead(404);

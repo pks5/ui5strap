@@ -20,11 +20,6 @@
                 "src" : "data/menu.json",
                 "type" : "JSON",
                 "modelName" : "menu" 
-            },
-            {
-                "src" : "data/posts.json",
-                "type" : "JSON",
-                "modelName" : "posts" 
             }
     ],
     
@@ -261,13 +256,14 @@
 	         
 	         {
 	             
-	             "id" : "restClient",
+	             "id" : "feedClient",
 	             "module" : "ui5strap.RestClient",
-	             "url" : "./apps/demoapp/server/test-service",
+	             "url" : "./apps/demoapp/server/feed",
 	             "methods" : {
-	             	"loadPosts" : {
-	             		"path" : "say-hello/abcd",
-	             		"type" : "get"
+	             	"info" : {
+	             		"path" : "info",
+	             		"type" : "get",
+	             		"arguments" : ["success", "error"]
 	             	}
 	             }
 	         }

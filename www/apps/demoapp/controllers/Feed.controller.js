@@ -29,7 +29,10 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
 			onUpdate : function(oEvent){
-				this.getApp().getRestClient().loadPosts();
+				var _this = this;
+				this.getApp().getFeedClient().info(function(feedInfo){
+					_this.getView().setModel(new ui5strap.JSONModel(feedInfo), "FEED_INFO");
+				});
 			}
 	};
 	
