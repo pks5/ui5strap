@@ -10,6 +10,12 @@ cd "$(dirname "$0")"
 
 npm install
 
+echo Installing node modules for server...
+
+cd ../server
+
+npm install
+
 echo Installing node modules for theme-builder...
 
 cd ../tools/theme-builder/bootstrap-3.3.5
