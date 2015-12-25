@@ -227,7 +227,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 	*/
 	Action.runTasks = function(context, actionModulesList){
 		if(!actionModulesList){
-			jQuery.sap.log.debug("[ACTION] Tried to run empty task list.");
+			//jQuery.sap.log.debug("[ACTION] Tried to run empty task list.");
 			return;
 		}
 		
@@ -263,6 +263,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 		if(typeof actionName === 'string'){
 			Action.loadFromFile(actionName, function loadFromFileSuccess(actionJSON){
 				action.parameters = actionJSON;
+				action.name = actionName;
 				var context = new ActionContext(action);
 				_execute(context);
 			});

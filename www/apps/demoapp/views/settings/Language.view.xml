@@ -8,7 +8,7 @@
 			<Bar>
 				<!-- Left area of bar -->
 				<Container align="PullLeft">
-					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuSub1" 
+					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuSettings" 
 						options="BarButton">
 						<Icon icon="columns" />
 					</Button>

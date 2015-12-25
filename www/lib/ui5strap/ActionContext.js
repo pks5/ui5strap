@@ -110,10 +110,6 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 		//@deprecated
 		_this.parameters = _this.action;
 		
-		if(_this.action.DEBUG && console){
-			console.log(_this);
-		}
-		
 		//Event Source
 		if(action.eventSource){
 			_this.eventSource = action.eventSource;
@@ -155,7 +151,7 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 		
 		//Number
 		ActionContext.NUMBER ++;
-		_this._actionNumber = ActionContext.NUMBER;
+		_this._name = "[" + (action.name || "ACTION#" + ActionContext.NUMBER) + "]";
 
 		//Call stack
 		_this._callStack = [];
@@ -164,7 +160,24 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 
 		//Init Log
 		_initLog(_this);
+		
+		if(_this.action.DEBUG && console){
+			console.log(_this._name, _this);
+		}
 	};
+	
+	/**
+	* Returns String representation of this context.
+	* 
+	* @Public
+	*/
+	ActionContextProto.toString = function(){
+		return this._name;
+	};
+	
+	/*
+	 * START build pool
+	 */
 	
 	/**
 	 * @Constructor
@@ -381,14 +394,9 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 		}
 	};
 	
-	/**
-	* Returns String representation of this context.
-	* 
-	* @Public
-	*/
-	ActionContextProto.toString = function(){
-		return '[ACTION#' + this._actionNumber + ']';
-	};
+	/*
+	 * END build pool
+	 */
 	
 	/**
 	 * @Public
@@ -536,7 +544,7 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 					
 					if(null !== fPart){
 						if("function" === pointerType){
-							jQuery.sap.log.info("Executing function '" + kPart + "' with arguments (" + fPart + ")");
+							jQuery.sap.log.debug("Executing function '" + kPart + "' with arguments (" + fPart + ")");
 							pointer = _callParamFunction(
 										this, 
 										prevPointer, 

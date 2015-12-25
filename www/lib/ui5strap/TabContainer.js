@@ -49,7 +49,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					defaultValue : "fade"
 				},
 				
-				"customAssociation" : {
+				customAssociation : {
 					deprecated : true,
 					type : "string",
 					defaultValue : "",
@@ -68,10 +68,9 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				}
 			},
 			
-			"associations" : {
+			associations : {
 				"source" : {
-					"deprecated" : true,
-					"type" : "ui5strap.ISelectionProvider",
+					type : "ui5strap.ISelectionProvider",
 					multiple : false
 				}
 			}
@@ -114,8 +113,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
   		var _this = this;
   		
   		if(!this.sourceControl){
-  			jQuery.sap.log.warning("Usage of ui5strap.TabContainer.prototype.getSource is deprecated. Please use actions instead.")
-			this.sourceControl = sap.ui.getCore().byId(this.getSource());
+  			this.sourceControl = sap.ui.getCore().byId(this.getSource());
 		    
 			this.sourceControl.attachEvent("tap", {}, function(oEvent){
 				if(oEvent.getParameter("updates")){
