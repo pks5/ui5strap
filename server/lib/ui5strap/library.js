@@ -50,12 +50,18 @@ ServerProto.start = function(){
 				var appConfig = JSON.parse(file),
 					appServerId = appConfig.app.id + ".server";
 				
-				console.log("Loaded '" + appServerId + "' from '" + pathToAppConfig + "'.");
-	
-				var Controller = require(nodePath.join(_this._pathToApps, "demoapp/" + "controllers/Feed.controller.js"));
-				//ui5strap.demoapp.server
-				var controller = new Controller(appConfig.components[1]);
-				controller._install();
+				for(var j=0; j < appConfig.components.length; j++){
+					var component = appConfig.components[j];
+					if(component.controller && 0 === component.controller.indexOf(appServerId)){
+						var rest = component.controller.substring(appServerId.length).replace(/\./g, "/") + ".controller.js";
+						console.log("Loaded Controller '" + component.controller + "' from '" + pathToAppConfig + "'.");
+			
+						var Controller = require(nodePath.join(_this._pathToApps, "demoapp/" + rest));
+						//ui5strap.demoapp.server
+						var controller = new Controller(component);
+						controller._install();
+					}
+				}
 	
 				if(cnr === 0){
 					_this.startUp();
