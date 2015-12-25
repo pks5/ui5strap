@@ -18,11 +18,9 @@
 								options="BarButton" visibilitySmall="Hidden" visibilityMedium="Visible">
 								<Icon icon="columns" />
 						</Button>
-						
-						<Heading text="{i18n>PAGE4_TITLE}" options="BarHeading" />
 					</Container>
 					
-					<Heading text="{i18n>PAGE4_TITLE}" options="BarHeadingCenter" />
+					<Heading text="{i18n>PAGE_CONTROLS_TITLE}" options="BarHeadingCenter" />
 					
 					<Container align="PullRight">
 						<!-- Toggle Menu Button (only for small screens) -->

@@ -51,7 +51,7 @@
 									text="{formatter:'.formatters.localeString', path:'menu>label'}" 
 									badge="{menu>badge}"
 									icon="chevron-right"
-									severity="{menu>severity}"
+									
 								>
 								</ListGroupItem>
 							</ListGroup>

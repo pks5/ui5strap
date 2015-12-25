@@ -1,4 +1,4 @@
-<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+<View controllerName="ui5strap.demoapp.controllers.Feed" xmlns="ui5strap"
 	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<!-- The page control -->
 	<Page>
@@ -23,7 +23,7 @@
 				</Text>
 				
 				<!-- Middle area of bar -->
-				<Heading text="{i18n>PAGE2_TITLE}" options="BarHeadingCenter" />
+				<Heading text="{i18n>PAGE_FEED_TITLE}" options="BarHeadingCenter" />
 
 				<!-- Toggle Menu Button (only for small screens) -->
 				<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot"
@@ -66,22 +66,7 @@
 											<Icon data:command="MORE" icon="arrow-right" />
 										</Button>
 
-										<ListMedia id="feedsA" tap="ui5strap.demoapp.actions.RemovePost">
-											<!-- Media Item 2 (nested) -->
-											<ListMediaItem>
-												<media>
-													<Image options="MediaObject" mpath="ui5strap.demoapp.img.awesome"
-														ext="png" alt="Image" width="64" />
-												</media>
-												<content>
-													<Icon icon="times" align="PullRight" />
-													<Heading level="4" options="MediaHeading" text="Test Comment" />
-													<Text
-														text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." />
-												</content>
-											</ListMediaItem>
-
-										</ListMedia>
+										
 									</content>
 								</ListMediaItem>
 

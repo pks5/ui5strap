@@ -3,16 +3,16 @@
 	"root" : [
 	
 		{
-			"label" : "PAGE2_TITLE",
-			"viewName" : "ui5strap.demoapp.views.MyPage2",
-			"pageId" : "my-app-page2",
+			"label" : "PAGE_FEED_TITLE",
+			"viewName" : "ui5strap.demoapp.views.Feed",
+			"pageId" : "feed",
 			"badge" : "1",
 			"icon" : "feed",
 			"severity" : "Danger"
 		},
 		
 		{
-			"label" : "PAGE3_TITLE",
+			"label" : "PAGE_STATISTICS_TITLE",
 			"viewName" : "ui5strap.demoapp.views.MyPage3",
 			"pageId" : "my-app-page3",
 			"icon" : "bar-chart",
@@ -59,26 +59,50 @@
 			"label" : "PAGE_CONTROLS_BUTTONS_TITLE",
 			"viewName" : "ui5strap.demoapp.views.controls.Buttons",
 			"pageId" : "controlsButtons",
-			"icon" : "language"
+			"icon" : "square-o"
 		},
 		{
 			"label" : "PAGE_CONTROLS_CONTAINERS_TITLE",
 			"viewName" : "ui5strap.demoapp.views.controls.Containers",
 			"pageId" : "controlsContainers",
-			"icon" : "paint-brush"
+			"icon" : "list-alt"
 		},
 		{
 			"label" : "PAGE_CONTROLS_ICONS_TITLE",
 			"viewName" : "ui5strap.demoapp.views.controls.Icons",
 			"pageId" : "controlsIcons",
-			"icon" : "paint-brush"
+			"icon" : "soccer-ball-o"
 		},
 		{
 			"label" : "PAGE_CONTROLS_TYPOGRAPHY_TITLE",
 			"viewName" : "ui5strap.demoapp.views.controls.Typography",
 			"pageId" : "controlsTypography",
-			"icon" : "paint-brush"
-		}				
+			"icon" : "font"
+		},
+		{
+			"label" : "PAGE_CONTROLS_NAVS_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.Navs",
+			"pageId" : "controlsNavs",
+			"icon" : "exchange"
+		},
+		{
+			"label" : "PAGE_CONTROLS_GRID_SYSTEM_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.GridSystem",
+			"pageId" : "controlsGridSystem",
+			"icon" : "columns"
+		},
+		{
+			"label" : "PAGE_CONTROLS_PROGRESS_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.Progress",
+			"pageId" : "controlsProgress",
+			"icon" : "spinner"
+		},
+		{
+			"label" : "PAGE_CONTROLS_FORM_TITLE",
+			"viewName" : "ui5strap.demoapp.views.controls.Form",
+			"pageId" : "controlsForm",
+			"icon" : "columns"
+		}							
 	
 	]
 

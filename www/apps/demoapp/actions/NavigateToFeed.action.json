@@ -8,7 +8,7 @@
 		
 		"VIEWS" : {
 			"page2" : {
-				"viewName" : "ui5strap.demoapp.views.MyPage2",
+				"viewName" : "ui5strap.demoapp.views.Feed",
 				"transition" : "slide-rtl",
 				"writeHistory" : true,
 				"bookmarkable" : false

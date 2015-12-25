@@ -43,7 +43,7 @@
 					
 						<Button 
 							text="{i18n>PAGE5_BUTTON}"
-							tap="ui5strap.demoapp.actions.NavigateToPage2"
+							tap="ui5strap.demoapp.actions.NavigateToFeed"
 							></Button>
 					</Container>
 				</TabContainer>

@@ -13,12 +13,30 @@ var RestController = function(){
 	
 };
 
+var base = "/apps/demoapp/server/";
+
 RestController.controllers = {
 		
 };
 
 RestController.routing = {
 		
+};
+
+RestController.handleRequest = function(url, request, response){
+	var routing = this.routing[url.pathname];
+		
+		if(routing){
+			response.writeHeader(200, {
+				"Content-Type": "application/json"
+			});
+			
+			response.end(JSON.stringify(routing.controller[routing.method]()));
+			return true;
+		}
+	
+	
+	return false;
 };
 
 RestController.prototype.install = function(){
@@ -30,32 +48,13 @@ RestController.prototype.install = function(){
 	for(var i = 0; i < methodKeys.length; i++){
 		var methodName = methodKeys[i],
 			method = methods[methodName],
-			path = this.options.url + "/" + (method.path || Utils.hyphenize(methodName));
+			path = base + this.options.url + "/" + (method.path || Utils.hyphenize(methodName));
 		
 		RestController.routing[path] = {
 				"controller" : this,
 				"method" : methodName
 		};
 	}
-};
-
-RestController.handleRequest = function(url, request, response){
-	var urlParts = url.pathname.split("/");
-	if(urlParts[2] === "demoapp" && urlParts[4] === "test-service"){
-		console.log(url);
-		var routing = this.routing[urlParts[4] + "/" + urlParts[5]];
-		
-		if(routing){
-			response.writeHeader(200, {
-				"Content-Type": "application/json"
-			});
-			
-			response.end(JSON.stringify(routing.controller[routing.method]()));
-			return true;
-		}
-	}
-	
-	return false;
 };
 
 module.exports = {

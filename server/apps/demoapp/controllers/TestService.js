@@ -13,7 +13,7 @@ TestServer.prototype.configure = function(){
 	this.options.url = "test-service";
 	
 	this.options.methods.sayHello = {
-			path : "say-hello"
+			path : "say-hello/abcd"
 			
 	};
 	

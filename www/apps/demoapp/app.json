@@ -43,10 +43,10 @@
                 "id" : "home"
             },
 
-            "ui5strap.demoapp.views.MyPage2" : {
+            "ui5strap.demoapp.views.Feed" : {
                 "type" : "XML",
                 
-                "id" : "my-app-page2"
+                "id" : "feed"
             },
 
             "ui5strap.demoapp.views.MyPage3" : {
@@ -139,7 +139,25 @@
             	"type" : "HTML"
             },
 			
-			
+			"ui5strap.demoapp.views.controls.Navs" :{
+            	"id" : "controlsNavs",
+            	"type" : "HTML"
+            },
+            
+            "ui5strap.demoapp.views.controls.GridSystem" :{
+            	"id" : "controlsGridSystem",
+            	"type" : "HTML"
+            },
+            
+            "ui5strap.demoapp.views.controls.Progress" :{
+            	"id" : "controlsProgress",
+            	"type" : "HTML"
+            },
+            
+            "ui5strap.demoapp.views.controls.Form" :{
+            	"id" : "controlsForm",
+            	"type" : "HTML"
+            },
             
             "ui5strap.demoapp.views.NewPost" : {
                 "type" : "XML",
@@ -150,7 +168,7 @@
 	
 	"actions" : [
 		"ui5strap.demoapp.actions.NavigateToHome",
-		"ui5strap.demoapp.actions.NavigateToPage2",
+		"ui5strap.demoapp.actions.NavigateToFeed",
 		"ui5strap.demoapp.actions.NavigateToPage3",
 		
 		
@@ -224,6 +242,19 @@
 	                 }
 	             ]
 	
+	         },
+	         
+	         {
+	             
+	             "id" : "restClient",
+	             "module" : "ui5strap.RestClient",
+	             "url" : "./apps/demoapp/server/test-service",
+	             "methods" : {
+	             	"loadPosts" : {
+	             		"path" : "say-hello/abcd",
+	             		"type" : "get"
+	             	}
+	             }
 	         }
     ]
 }
