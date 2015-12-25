@@ -1,0 +1,7 @@
+{
+  "name": "ui5strap-server",
+  "version": "0.0.1",
+  "devDependencies": {
+    "mime": "^1.3.4"
+  }
+}

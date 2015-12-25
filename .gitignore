@@ -43,7 +43,6 @@ Thumbs.db
 node_modules
 
 *.dev
-server
 /old
 
 # Cordova #

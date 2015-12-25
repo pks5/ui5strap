@@ -4,7 +4,8 @@
   "author": "Jan Philipp Knoeller",
   "license": "Apache2",
   "scripts": {
-    "run-web": "http-server -a localhost -p 8282 ../www",
+    "run-web-old": "http-server -a localhost -p 8282 ../www",
+    "run-web" : "node ../server/server.js",
     "run-desktop": "nwbuild -r ../www -v0.12.3",
     "run-android": "cd .. && cordova emulate android",
     "build-ui5strap-library" : "grunt --gruntfile build-ui5strap-library.js"
