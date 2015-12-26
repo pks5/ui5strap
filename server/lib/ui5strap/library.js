@@ -145,27 +145,90 @@ RestController.controllers = {
 		
 };
 
-RestController.routing = {
+RestController._routing = [];
+
+var _buildArguments = function(param){
+	var args = [];
+	if(!param.arguments){
+		return args;
+	}
+	
+	for(var j=0; j<param.arguments.length; j++){
+		var p = param.arguments[j].split("."),
+			key = p[0];
 		
+		if(key === "path"){
+			if(!param.pathParameters){
+				param.pathParameters = {};
+			}
+			args.push(param.pathParameters[p[1]]);
+		}
+		else if(key === "query"){
+			if(!param.queryParameters){
+				param.queryParameters = {};
+			}
+			args.push(param.queryParameters[p[1]]);
+		}
+		else if(key === "post"){
+			if(!param.postParameters){
+				param.postParameters = {};
+			}
+			args.push(param.postParameters[p[1]]);
+		}
+		else if(key === "payload"){
+			args.push(param.payload);
+		}
+		else if(key === "success"){
+			args.push(null);
+		}
+		else if(key === "error"){
+			args.push(null);
+		}
+	}
+	
+	return args;
 };
 
 RestController.handleRequest = function(url, request, response){
-	var routing = this.routing[url.pathname];
+	for(var i = 0; i < this._routing.length; i++){
+		var routing = this._routing[i];
+		var pathParameters = [];
+		var route = routing.route.replace(/\{([a-zA-Z_0-9]+)\}/g, function(s, parameterName, x, y){
+			//console.log(s, q, x, y);
+			pathParameters.push(parameterName);
+			return "([a-zA-Z_0-9]+)";
+		});
 		
-		if(routing){
+		var matches = url.pathname.match(route);
+		
+		console.log("ROUTE", route, matches);
+		if(matches && matches.length){
+			var pathParam = {};
+			if(matches.length > 1){
+				for(var j = 0; j < pathParameters.length; j++){
+					pathParam[pathParameters[j]] = matches[1 + j];
+				}
+			}
 			response.writeHeader(200, {
 				"Content-Type": "application/json"
 			});
 			
 			//TODO beforeRequest handler
+			var execMethod = routing.controller[routing.methodName];
 			
-			response.end(JSON.stringify(routing.controller[routing.method]()));
+			var args = _buildArguments({ 
+					"arguments" : routing.methodOptions.arguments,
+					"pathParameters" : pathParam
+					
+			});
+			
+			response.end(JSON.stringify(execMethod.apply(routing.controller, args)));
 			
 			//TODO afterRequest handler
 			
 			return true;
 		}
-	
+	}
 	
 	return false;
 };
@@ -196,10 +259,12 @@ RestController.prototype._install = function(){
 			path = "/" + path;
 		}
 		console.log("Registered method '" + methodName + "' on path '" + path + "'");
-		RestController.routing[path] = {
+		RestController._routing.push({
+				"route" : path,
 				"controller" : this,
-				"method" : methodName
-		};
+				"methodName" : methodName,
+				"methodOptions" : method
+		});
 	}
 	
 	this.onInit();

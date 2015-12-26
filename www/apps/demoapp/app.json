@@ -268,9 +268,9 @@
 	             	},
 	             	
 	             	"deletePost" : {
-	             		"path" : "delete-post",
+	             		"path" : "delete-post/{postId}",
 	             		"type" : "postUrlEncoded",
-	             		"arguments" : ["post.id", "success", "error"]
+	             		"arguments" : ["path.postId", "success", "error"]
 	             	}
 	             }
 	         },
