@@ -58,10 +58,11 @@ ServerProto.start = function(){
 					var appConfigLocation = sappUrlParts.join('/');
 					
 					for(var j=0; j < appConfig.components.length; j++){
-						var component = appConfig.components[j];
-						if(component.controller && 0 === component.controller.indexOf(appServerId)){
-							var rest = component.controller.substring(appServerId.length).replace(/\./g, "/") + ".controller.js";
-							console.log("Loaded Controller '" + component.controller + "' from '" + pathToAppConfig + "'.");
+						var component = appConfig.components[j],
+							controllerDef = component.restController;
+						if(controllerDef && 0 === controllerDef.indexOf(appServerId)){
+							var rest = controllerDef.substring(appServerId.length).replace(/\./g, "/") + ".controller.js";
+							console.log("Loaded Controller '" + controllerDef + "' from '" + pathToAppConfig + "'.");
 				
 							var Controller = require(nodePath.join(_this._pathToApps, "demoapp/" + rest));
 							//ui5strap.demoapp.server
