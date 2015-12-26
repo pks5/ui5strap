@@ -235,7 +235,7 @@ RestController.handleRequest = function(url, request, response){
 			response.writeHeader(200, {
 				"Content-Type": "application/json"
 			});
-			console.log(request);
+			
 			//TODO beforeRequest handler
 			var execMethod = routing.controller[routing.methodName];
 			
@@ -286,6 +286,7 @@ RestController.prototype._install = function(){
 			method = methods[methodName],
 			path = nodePath.join(this._resolvePath(this.options.url), (method.path || Utils.hyphenize(methodName)));
 		
+		//if(method.type){
 		if(path.charAt(0) !== "/"){
 			path = "/" + path;
 		}
@@ -296,6 +297,7 @@ RestController.prototype._install = function(){
 				"methodName" : methodName,
 				"methodOptions" : method
 		});
+		//}
 	}
 	
 	this.onInit();
