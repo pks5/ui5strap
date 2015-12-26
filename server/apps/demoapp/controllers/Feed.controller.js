@@ -58,6 +58,19 @@ module.exports = ui5strap.restController({
 		return returnText;
 	},
 	
+	readPost : function(postId){
+		var feed = this._db.feeds.default.feed;
+		var returnPost = null;
+		for(var i = 0; i < feed.length; i++){
+			if(feed[i].id == postId){
+				returnPost = feed[i];
+				break;
+			}
+		}
+		return returnPost;
+		
+	},
+	
 	newPost : function(payload){
 		payload.id = this._db.feeds.default.feed.length;
 		this._db.feeds.default.feed.push(payload);

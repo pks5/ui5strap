@@ -21,6 +21,13 @@ sap.ui.define(['ui5strap/library', 'ui5strap/AppComponent'], function(library, A
 		});
 	};
 	
+	MainProto.readPost = function(postId, callback){
+		var _this = this;
+		this.app.getFeedClient().readPost(postId, function(postData){
+			callback && callback(postData);
+		});
+	};
+	
 	MainProto.newPost = function(title, message){
 		var _this = this;
 		this.app.getFeedClient().newPost(
