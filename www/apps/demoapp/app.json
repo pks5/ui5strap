@@ -269,8 +269,8 @@
 	             	
 	             	"deletePost" : {
 	             		"path" : "delete-post",
-	             		"type" : "get",
-	             		"arguments" : ["query.postId", "success", "error"]
+	             		"type" : "postUrlEncoded",
+	             		"arguments" : ["post.postId", "success", "error"]
 	             	},
 	             	
 	             	"readPost" : {

@@ -1,4 +1,4 @@
-var nodeHttp = require('http'),
+var nodeHttp = require('http'), nodeQuery = require('querystring'),
 	nodeUrl = require('url'), nodeFs = require('fs'), nodePath = require('path'), nodeMime = require('mime');
 
 
@@ -189,6 +189,29 @@ var _buildArguments = function(param){
 	return args;
 };
 
+
+function processPost(request, response, callback) {
+    var queryData = "";
+    if(request.method == 'POST') {
+        request.on('data', function(data) {
+            queryData += data;
+            if(queryData.length > 1e6) {
+                queryData = "";
+                response.writeHead(413, {'Content-Type': 'text/plain'}).end();
+                request.connection.destroy();
+            }
+        });
+
+        request.on('end', function() {
+            
+            callback && callback(queryData);
+        });
+
+    } else {
+        callback && callback(null);
+    }
+}
+
 RestController.handleRequest = function(url, request, response){
 	for(var i = 0; i < this._routing.length; i++){
 		var routing = this._routing[i];
@@ -212,19 +235,26 @@ RestController.handleRequest = function(url, request, response){
 			response.writeHeader(200, {
 				"Content-Type": "application/json"
 			});
-			
+			console.log(request);
 			//TODO beforeRequest handler
 			var execMethod = routing.controller[routing.methodName];
 			
-			var args = _buildArguments({ 
-					"arguments" : routing.methodOptions.arguments,
-					"pathParameters" : pathParam,
-					"queryParameters" : url.query
-					
+			processPost(request, response, function(body){
+				var param = { 
+						"arguments" : routing.methodOptions.arguments,
+						"pathParameters" : pathParam,
+						"queryParameters" : url.query
+				};
+				
+				if(body){
+					param.postParameters = nodeQuery.parse(body);
+				}
+				
+				var args = _buildArguments(param);
+				
+				response.end(JSON.stringify(execMethod.apply(routing.controller, args)));
+			
 			});
-			
-			response.end(JSON.stringify(execMethod.apply(routing.controller, args)));
-			
 			//TODO afterRequest handler
 			
 			return true;
