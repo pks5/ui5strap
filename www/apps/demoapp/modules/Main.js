@@ -21,5 +21,18 @@ sap.ui.define(['ui5strap/library', 'ui5strap/AppComponent'], function(library, A
 		});
 	};
 	
+	MainProto.newPost = function(title, message){
+		var _this = this;
+		this.app.getFeedClient().newPost(
+			{
+				title : title,
+				message : message
+			}, 
+			function(){
+				_this.refreshFeed();
+			}
+		);
+	};
+	
 	return Main;
 });

@@ -56,5 +56,11 @@ module.exports = ui5strap.restController({
 		}
 		console.log(returnText);
 		return returnText;
+	},
+	
+	newPost : function(payload){
+		payload.id = this._db.feeds.default.feed.length;
+		this._db.feeds.default.feed.push(payload);
+		return "OK";
 	}
 });

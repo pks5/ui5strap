@@ -277,6 +277,12 @@
 	             		"path" : "read-post/{postId}",
 	             		"type" : "get",
 	             		"arguments" : ["path.postId", "success", "error"]
+	             	},
+	             	
+	             	"newPost" : {
+	             		"path" : "new-post",
+	             		"type" : "postWithPayload",
+	             		"arguments" : ["payload", "success", "error"]
 	             	}
 	             }
 	         },
