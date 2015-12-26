@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AppComponent
+ * ui5strap.MainComponent
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,34 +25,29 @@
  * 
  */
  
-sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
+sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
-	var AppComponent = ObjectBase.extend("ui5strap.AppComponent", {
+	var MainComponent = AppComponent.extend("ui5strap.MainComponent", {
 		"constructor" : function(app, options){
-			ObjectBase.apply(this);
+			AppComponent.call(this, app, options);
 			
-			this.app = app;
-			this.options = options;
+			this.controls = {};
 		}
 	}),
-	AppComponentProto = AppComponent.prototype;
+	MainComponentProto = MainComponent.prototype;
 
-	AppComponentProto.init = function(){};
+	MainComponentProto.registerControls = function(controls){
+		var keys = Object.keys(controls);
+		for(var i = 0; i < keys.length; i++){
+			var key = keys[i];
+			this.controls[key] = controls[key];
+		}
+	};
 	
-	/**
-	 * TODO Should we keep this getter?
-	 */
-	AppComponentProto.getApp = function(){
-		return this.app;
+	MainComponentProto.getControl = function(controlKey){
+		return this.controls[controlKey];
 	};
-
-	/*
-	 * TODO Should we enable this getter?
-	AppComponentProto.getOptions = function(){
-		return this.options;
-	};
-	*/
 
 	//Return Module Constructor
-	return AppComponent;
+	return MainComponent;
 });

@@ -1,6 +1,6 @@
-sap.ui.define(['ui5strap/library', 'ui5strap/AppComponent'], function(library, AppComponent){
+sap.ui.define(['ui5strap/library', 'ui5strap/MainComponent'], function(library, MainComponent){
 
-	var Main = AppComponent.extend("ui5strap.demoapp.modules.Main"),
+	var Main = MainComponent.extend("ui5strap.demoapp.modules.Main"),
 		MainProto = Main.prototype;
 	
 	MainProto.refreshFeed = function(){
