@@ -49,6 +49,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 		}
 	});
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	Row.prototype._getStyleClassRoot = function(){
+		return this._getStyleClassPrefix() + " row";
+	};
 
 	return Row;
 });

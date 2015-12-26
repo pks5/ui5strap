@@ -33,7 +33,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		var content = oControl.getColumns();
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("row");
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
