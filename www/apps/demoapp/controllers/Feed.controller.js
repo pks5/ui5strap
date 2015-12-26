@@ -29,14 +29,14 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
 			onInit : function(){
-				this._main = this.getApp().getMain();
-				this._main.registerControls({ 
+				this._feedManager = this.getApp().getFeedManager();
+				this._feedManager.registerControls({ 
 					"feedList" : this.getView().byId("feed") 
 				});
 			},
 			
 			onUpdate : function(oEvent){
-				this._main.refreshFeed();
+				this._feedManager.refreshFeed();
 			},
 			
 			handleFeedTap : function(oEvent){
@@ -45,10 +45,10 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 				var postData = oEvent.getParameter("srcItem").getBindingContextData("FEED_INFO");
 				
 				if(command === "DELETE"){
-					this._main.deletePost(postData.id);
+					this._feedManager.deletePost(postData.id);
 				}
 				else{
-					this._main.postDetail(postData.id);
+					this._feedManager.postDetail(postData.id);
 				}
 			}
 	};

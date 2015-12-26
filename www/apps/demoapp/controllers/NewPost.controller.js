@@ -32,7 +32,7 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 				var view = this.getView(),
 					title = view.byId("titleInput").getValue(),
 					message = view.byId("messageInput").getValue();
-				this.getApp().getMain().newPost(title, message);
+				this.getApp().getFeedManager().newPost(title, message);
 				this.getApp().hideOverlay();
 			}
 	};

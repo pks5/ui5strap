@@ -294,8 +294,8 @@
 	         
 	         {
 	             
-	             "id" : "main",
-	             "module" : "ui5strap.demoapp.modules.Main"
+	             "id" : "feedManager",
+	             "module" : "ui5strap.demoapp.modules.FeedManager"
 	        }
     ]
 }
