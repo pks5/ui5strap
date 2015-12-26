@@ -377,7 +377,7 @@ module.exports = {
 	"Server" : Server,
 	"RestController" : RestController,
 	"Utils" : Utils,
-	"restController" : function(controllerImpl){
+	"restController" : function(controllerName, controllerImpl){
 		var Controller = function(options, configLocation){
 			this.configLocation = configLocation;
 			this.options = options;
