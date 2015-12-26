@@ -29,32 +29,26 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
 			onInit : function(){
-				this.getApp().getMain().registerControls({ 
+				this._main = this.getApp().getMain();
+				this._main.registerControls({ 
 					"feedList" : this.getView().byId("feed") 
 				});
 			},
 			
 			onUpdate : function(oEvent){
-				this.getApp().getMain().refreshFeed();
+				this._main.refreshFeed();
 			},
 			
 			handleFeedTap : function(oEvent){
 				var _this = this;
 				var command = oEvent.getParameter("srcControl").data("command");
+				var postData = oEvent.getParameter("srcItem").getBindingContextData("FEED_INFO");
+				
 				if(command === "DELETE"){
-					this.getApp().getMain().deletePost(oEvent.getParameter("srcItem").data("postId"));
+					this._main.deletePost(postData.id);
 				}
 				else{
-					var postData = oEvent.getParameter("srcItem").getBindingContextData("FEED_INFO");
-					this.getApp().getMain().readPost(postData.id, function(postDataDetail){
-						_this.getApp().getFrame().navigateTo(_this.getApp().getFrame().getRootControl(), {
-							"viewName" : "ui5strap.demoapp.views.PostDetail",
-							"parameters" : {
-								"post" : postDataDetail
-							}
-						});
-					});
-					
+					this._main.postDetail(postData.id);
 				}
 			}
 	};

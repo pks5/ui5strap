@@ -37,5 +37,17 @@ sap.ui.define(['ui5strap/library', 'ui5strap/MainComponent'], function(library, 
 		);
 	};
 	
+	MainProto.postDetail = function(postId){
+		var frame = this.getApp().getFrame();
+		this.readPost(postId, function(postDataDetail){
+			frame.navigateTo(frame.getRootControl(), {
+				"viewName" : "ui5strap.demoapp.views.PostDetail",
+				"parameters" : {
+					"post" : postDataDetail
+				}
+			});
+		});
+	};
+	
 	return Main;
 });
