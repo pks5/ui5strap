@@ -33,19 +33,34 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 			
 			this.app = app;
 			this.options = options;
+			this.controls = {};
 		}
 	}),
 	AppComponentProto = AppComponent.prototype;
 
-	AppComponentProto.init = function(){
-
+	AppComponentProto.init = function(){};
+	
+	AppComponentProto.registerControls = function(controls){
+		var keys = Object.keys(controls);
+		for(var i = 0; i < keys.length; i++){
+			var key = keys[i];
+			this.controls[key] = controls[key];
+		}
+	};
+	
+	AppComponentProto.getControl = function(controlKey){
+		return this.controls[controlKey];
 	};
 
+	/**
+	 * TODO Should we keep this getter?
+	 */
 	AppComponentProto.getApp = function(){
 		return this.app;
 	};
 
 	/*
+	 * TODO Should we enable this getter?
 	AppComponentProto.getOptions = function(){
 		return this.options;
 	};

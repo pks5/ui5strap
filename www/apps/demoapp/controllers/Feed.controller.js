@@ -29,7 +29,9 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
 			onInit : function(){
-				this.getApp().getMain().setFeedListControl(this.getView().byId("feed"));
+				this.getApp().getMain().registerControls({ 
+					"feedList" : this.getView().byId("feed") 
+				});
 			},
 			
 			onUpdate : function(oEvent){

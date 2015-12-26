@@ -3,14 +3,10 @@ sap.ui.define(['ui5strap/library', 'ui5strap/AppComponent'], function(library, A
 	var Main = AppComponent.extend("ui5strap.demoapp.modules.Main"),
 		MainProto = Main.prototype;
 	
-	MainProto.setFeedListControl = function(feedList){
-		this._feedList = feedList;
-	};
-	
 	MainProto.refreshFeed = function(){
 		var _this = this;
 		this.app.getFeedClient().info(function(feedInfo){
-			_this._feedList.setModel(new ui5strap.JSONModel(feedInfo), "FEED_INFO");
+			_this.controls.feedList.setModel(new ui5strap.JSONModel(feedInfo), "FEED_INFO");
 		});
 	};
 	
