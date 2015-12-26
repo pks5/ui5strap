@@ -2,7 +2,7 @@
  * 
  * UI5Strap Demo App
  *
- * ui5strap.demoapp.controllers.Feed
+ * ui5strap.demoapp.controllers.NewPost
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -28,14 +28,6 @@
 sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
-			onInit : function(){
-				
-			},
-			
-			onUpdate : function(oEvent){
-			
-			},
-			
 			handleSubmitPost : function(oEvent){
 				var view = this.getView(),
 					title = view.byId("titleInput").getValue(),

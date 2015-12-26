@@ -62,10 +62,6 @@
 										<Icon icon="times" align="PullRight" data:command="DELETE" />
 										<Heading level="4" options="MediaHeading" text="{FEED_INFO>title}" />
 										<Text text="{FEED_INFO>message}" />
-										<Button data:command="MORE" text="Submit" severity="Success">
-											<Icon data:command="MORE" icon="arrow-right" />
-										</Button>
-
 										
 									</content>
 								</ListMediaItem>
