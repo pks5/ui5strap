@@ -1,3 +1,30 @@
+/*
+ * 
+ * UI5Strap Server Library
+ *
+ * library.js
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
 var nodeHttp = require('http'), nodeQuery = require('querystring'),
 	nodeUrl = require('url'), nodeFs = require('fs'), nodePath = require('path'), nodeMime = require('mime');
 
@@ -6,17 +33,14 @@ var nodeHttp = require('http'), nodeQuery = require('querystring'),
 /*
  * Server
  */
-
-var errorListener = function(request, response) {
-	response.writeHead(404);
-	response.end('Not found');
-};
-
 var Server = function(pathToConfig){
 	this._pathToConfig = pathToConfig;
 },
 ServerProto = Server.prototype;
 
+/**
+ * @Public
+ */
 ServerProto.start = function(){
 	var _this = this;
 	
@@ -80,6 +104,9 @@ ServerProto.start = function(){
 	});
 };
 
+/**
+ * @Public
+ */
 ServerProto.startUp = function(){
 	var _this = this;
 	// Create a server
@@ -100,7 +127,9 @@ ServerProto.startUp = function(){
 
 		nodeFs.readFile(filename, function(err, file) {
 			if (err) {
-				errorListener(request, response);
+				response.writeHead(404);
+				response.end('Not found');
+				
 				return;
 			}
 			response.writeHeader(200, {
@@ -127,6 +156,10 @@ var Utils = function(){
 	
 };
 
+/**
+ * @Public
+ * @Static
+ */
 Utils.hyphenize = function(str){
 	return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
@@ -135,17 +168,18 @@ Utils.hyphenize = function(str){
  * RestController
  */
 
-var RestController = function(){
-	this.options = {
-			methods : {}
-	};
-	
-};
+var RestController = function(){};
 
-RestController.controllers = {
-		
-};
+/**
+ * @Protected
+ * @Static
+ */
+RestController.controllers = {};
 
+/**
+ * @Protected
+ * @Static
+ */
 RestController._routing = [];
 
 var _buildArguments = function(param){
@@ -223,6 +257,10 @@ function processPost(request, response, callback) {
     }
 }
 
+/**
+ * @Public
+ * @Static
+ */
 RestController.handleRequest = function(url, request, response){
 	for(var i = 0; i < this._routing.length; i++){
 		var routing = this._routing[i],
@@ -276,15 +314,20 @@ RestController.handleRequest = function(url, request, response){
 
 /**
  * Configure
+ * @Protected
  */
-RestController.prototype._configure = function(){
-	
-};
+RestController.prototype._configure = function(){};
 
+/**
+ * @Protected
+ */
 RestController.prototype._resolvePath = function(path){
 	return nodePath.join(this.configLocation, path);
 };
 
+/**
+ * @Protected
+ */
 RestController.prototype._install = function(){
 	this._configure();
 	
@@ -322,8 +365,14 @@ RestController.prototype._install = function(){
 	this.onInit();
 };
 
+/**
+ * @Public
+ */
 RestController.prototype.onInit = function(){};
 
+/*
+ * Node Module Exports
+ */
 module.exports = {
 	"Server" : Server,
 	"RestController" : RestController,
