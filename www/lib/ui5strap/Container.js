@@ -136,6 +136,10 @@ sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library,
 			styleClass += " bg-" + ui5strap.BSSeverity[severity];
 		}
 		
+		if(this.getFullHeight()){
+			styleClass += " " + this._getStyleClassFlag("FullHeight");
+		}
+		
 		return styleClass;
 	};
 	

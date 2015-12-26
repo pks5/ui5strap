@@ -36,7 +36,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<" + tag);
 		rm.writeControlData(oControl);
-		rm.addClass('list-group');
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		    

@@ -52,5 +52,14 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	ListGroupProto = ui5strap.ListGroup.prototype;
 	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ListGroupProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " list-group";
+		return styleClass;
+	};
+	
 	return ListGroup;
 });
