@@ -218,7 +218,8 @@ RestController.handleRequest = function(url, request, response){
 			
 			var args = _buildArguments({ 
 					"arguments" : routing.methodOptions.arguments,
-					"pathParameters" : pathParam
+					"pathParameters" : pathParam,
+					"queryParameters" : url.query
 					
 			});
 			

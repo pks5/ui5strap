@@ -46,13 +46,15 @@ module.exports = ui5strap.restController({
 	
 	deletePost : function(postId){
 		var feed = this._db.feeds.default.feed;
+		var returnText = "ERROR";
 		for(var i = 0; i < feed.length; i++){
 			if(feed[i].id == postId){
 				feed.splice(i, 1);
+				returnText = "Deleted post #" + postId;
 				break;
 			}
 		}
-		console.log(feed);
-		return "Deleted post #" + postId;
+		console.log(returnText);
+		return returnText;
 	}
 });

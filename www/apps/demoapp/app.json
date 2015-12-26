@@ -268,8 +268,14 @@
 	             	},
 	             	
 	             	"deletePost" : {
-	             		"path" : "delete-post/{postId}",
-	             		"type" : "postUrlEncoded",
+	             		"path" : "delete-post",
+	             		"type" : "get",
+	             		"arguments" : ["query.postId", "success", "error"]
+	             	},
+	             	
+	             	"readPost" : {
+	             		"path" : "read-post/{postId}",
+	             		"type" : "get",
 	             		"arguments" : ["path.postId", "success", "error"]
 	             	}
 	             }
