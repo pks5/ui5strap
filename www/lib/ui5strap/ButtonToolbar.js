@@ -47,7 +47,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				} 
 			}
 		}
-	});
+	}), ButtonToolbarProto = ButtonToolbar.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonToolbarProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " btn-toolbar";
+		return styleClass;
+	};
 	
 	return ButtonToolbar;
 });

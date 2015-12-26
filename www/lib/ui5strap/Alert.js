@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define([ './library', './ControlBase' ], function(library, ControlBase) {
 
 	var Alert = ControlBase.extend("ui5strap.Alert", {
 		metadata : {
@@ -34,115 +34,123 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			defaultAggregation : "content",
 			// ---- control specific ----
 			library : "ui5strap",
-			
-			properties : { 
+
+			properties : {
 				text : {
-					type:"string", 
-					defaultValue:""
-				}, 
-        animate : {
-          type:"boolean", 
-          defaultValue:true
-        }, 
-        visible : {
-          type:"boolean", 
-          defaultValue:true
-        },
-        closable : {
-          type : "boolean",
-          defaultValue : false
-        },
-        contentPlacement : {
-          type:"ui5strap.ContentPlacement",
-          defaultValue : ui5strap.ContentPlacement.Start
-        },
+					type : "string",
+					defaultValue : ""
+				},
+				animate : {
+					type : "boolean",
+					defaultValue : true
+				},
+				visible : {
+					type : "boolean",
+					defaultValue : true
+				},
+				closable : {
+					type : "boolean",
+					defaultValue : false
+				},
+				contentPlacement : {
+					type : "ui5strap.ContentPlacement",
+					defaultValue : ui5strap.ContentPlacement.Start
+				},
 				severity : {
-					type:"ui5strap.Severity", 
-					defaultValue:ui5strap.Severity.Info
+					type : "ui5strap.Severity",
+					defaultValue : ui5strap.Severity.Info
 				}
 			},
-			aggregations : { 
-        closeButton : {
-          type : "ui5strap.Button",
-          multiple : false
-        },
+			aggregations : {
+				closeButton : {
+					type : "ui5strap.Button",
+					multiple : false
+				},
 				content : {
-					singularName: "content"
-				} 
+					singularName : "content"
+				}
 			},
-      events : {
-        closed : {
+			events : {
+				closed : {
 
-        }
-      }
+				}
+			}
 
 		}
-	}),
-	AlertProto = Alert.prototype;
+	}), AlertProto = Alert.prototype;
 
-  ui5strap.Utils.dynamicText(AlertProto);
+	ui5strap.Utils.dynamicText(AlertProto);
 
-  AlertProto.init = function(){
-  
-  }
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	AlertProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " alert";
+		
+		styleClass += " alert-" + ui5strap.BSSeverity[this.getSeverity()] + (this.getAnimate() ? " fade" : '');
+		
+		return styleClass;
+	};
 
-  var _setCloseButton = AlertProto.setCloseButton;
+	var _setCloseButton = AlertProto.setCloseButton;
 
-  AlertProto.setCloseButton = function(closeButton, suppressInvalidate){
-      var _this = this;
-      if(null !== closeButton){
-        closeButton.attachEvent('tap', {}, function(oEvent){
-          _this.close();
-        });
-      }
+	AlertProto.setCloseButton = function(closeButton, suppressInvalidate) {
+		var _this = this;
+		if (null !== closeButton) {
+			closeButton.attachEvent('tap', {}, function(oEvent) {
+				_this.close();
+			});
+		}
 
-      _setCloseButton.call(this, closeButton, suppressInvalidate);
-  };
+		_setCloseButton.call(this, closeButton, suppressInvalidate);
+	};
 
-  AlertProto.onBeforeRendering = function(){
-      if(this.getClosable() && this.getCloseButton() === null){
-          this.setCloseButton(new ui5strap.Button({ type : ui5strap.ButtonType.Close, content : [ new ui5strap.Icon({ icon : "times", iconSet : "fa" }) ] }));
-      }
-  };
+	AlertProto.onBeforeRendering = function() {
+		if (this.getClosable() && this.getCloseButton() === null) {
+			this.setCloseButton(new ui5strap.Button({
+				type : ui5strap.ButtonType.Close,
+				content : [ new ui5strap.Icon({
+					icon : "times",
+					iconSet : "fa"
+				}) ]
+			}));
+		}
+	};
 
-  AlertProto.onAfterRendering = function(){
-        if(this.getVisible()){
-              this.$().addClass('in');
-        }
-  };
+	AlertProto.onAfterRendering = function() {
+		if (this.getVisible()) {
+			this.$().addClass('in');
+		}
+	};
 
-  AlertProto.setVisible = function(visible){
-      if(this.getDomRef()){
-          if(visible){
-              this.$().addClass('in');
-          }
-          else{
-              this.$().removeClass('in');
-          }
-          this.setProperty('visible', visible, true);
-      }
-      else{
-         this.setProperty('visible', visible);
-      }
-  };
+	AlertProto.setVisible = function(visible) {
+		if (this.getDomRef()) {
+			if (visible) {
+				this.$().addClass('in');
+			} else {
+				this.$().removeClass('in');
+			}
+			this.setProperty('visible', visible, true);
+		} else {
+			this.setProperty('visible', visible);
+		}
+	};
 
-  AlertProto.close = function(){
-    var $alert = this.$(),
-      _this = this;
-    $alert.removeClass('in')
+	AlertProto.close = function() {
+		var $alert = this.$(), _this = this;
+		$alert.removeClass('in')
 
-    function removeElement() {
-      _this.fireClosed({});
-      _this.destroy();
-    }
+		function removeElement() {
+			_this.fireClosed({});
+			_this.destroy();
+		}
 
-    ui5strap.support.transition && $alert.hasClass('fade') ?
-      $alert
-        .one(ui5strap.support.transition.end, removeElement)
-        .emulateTransitionEnd(150) :
-      removeElement()
-  };
-  
-  return Alert;
+		ui5strap.support.transition && $alert.hasClass('fade') ? $alert.one(
+				ui5strap.support.transition.end, removeElement)
+				.emulateTransitionEnd(150) : removeElement()
+	};
+
+	return Alert;
 
 });

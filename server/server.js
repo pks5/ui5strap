@@ -25,8 +25,8 @@
  * 
  */
 
-var ui5strap = require("./lib/ui5strap/library.js"),
-	server = new ui5strap.Server(__dirname + "/server.json");
+var library = require("./lib/ui5strap/library.js"),
+	server = new library.Server(__dirname + "/server.json");
 	
 server.start();
 

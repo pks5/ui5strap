@@ -27,28 +27,15 @@
 
 sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 
-	var ButtonGroupRenderer = {
-		typeToClass : {
-			Default : "btn-group",
-			Justified : "btn-group btn-group-justified",
-			Vertical : "btn-group-vertical"
-		}
-	};
+	var ButtonGroupRenderer = {};
 	
 	ButtonGroupRenderer.render = function(rm, oControl) {
-		var size = oControl.getSize(),
-			type = oControl.getType(),
-			buttons = oControl.getButtons();
+		var buttons = oControl.getButtons(),
+			type = oControl.getType();
 	
 		rm.write("<div");
 		rm.writeControlData(oControl);
-	
-		rm.addClass(this.typeToClass[type]);
-		
-		if(ui5strap.Size.Default !== size){
-			rm.addClass('btn-group-' + ui5strap.BSSize[size]);
-		}
-	
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		

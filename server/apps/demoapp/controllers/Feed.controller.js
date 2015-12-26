@@ -25,12 +25,12 @@
  * 
  */
 
-var ui5strap = require("../../../lib/ui5strap/library.js");
+var library = require("../../../lib/ui5strap/library.js");
 
 /*
  * Construct
  */
-module.exports = ui5strap.restController("ui5strap.demoapp.server.controllers.Feed", {
+module.exports = library.restController("ui5strap.demoapp.server.controllers.Feed", {
 	onInit : function(){
 		this._db = {
 				feeds : {

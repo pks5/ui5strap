@@ -33,7 +33,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("alert alert-" + ui5strap.BSSeverity[oControl.getSeverity()] + (oControl.getAnimate() ? " fade" : ''));
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 

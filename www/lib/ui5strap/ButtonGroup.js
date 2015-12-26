@@ -66,9 +66,30 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	var ButtonGroup = ControlBase.extend("ui5strap.ButtonGroup", {
 		metadata : _meta
 	}),
-	ButtonGroupProto = ButtonGroup.prototype;
+	ButtonGroupProto = ButtonGroup.prototype,
+	_typeToClass = {
+		Default : "btn-group",
+		Justified : "btn-group btn-group-justified",
+		Vertical : "btn-group-vertical"
+	};
 	
 	ListSelectionSupport.proto(ButtonGroupProto);
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonGroupProto._getStyleClassRoot = function(){
+		var size = this.getSize(),
+			type = this.getType(),
+			styleClass = this._getStyleClassPrefix() + " " + _typeToClass[type];
+		
+		if(ui5strap.Size.Default !== size){
+			styleClass += ' btn-group-' + ui5strap.BSSize[size];
+		}
+		
+		return styleClass;
+	};
 	
 	/**
 	 * @Protected

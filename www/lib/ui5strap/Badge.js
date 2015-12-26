@@ -40,7 +40,15 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 		}
-	});
+	}), BadgeProto = Badge.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	BadgeProto._getStyleClassRoot = function(){
+		return this._getStyleClassPrefix() + " badge";
+	};
 	
 	return Badge;
 });

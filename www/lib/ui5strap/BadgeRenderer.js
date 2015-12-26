@@ -32,7 +32,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	BadgeRenderer.render = function(rm, oControl) {
 		rm.write("<span");
 		rm.writeControlData(oControl);
-		rm.addClass("badge");
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
