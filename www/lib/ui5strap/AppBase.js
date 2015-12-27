@@ -1128,9 +1128,56 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		return sap.ui.getCore().byId(this.createControlId(controlId, viewId));
 	};
 
+	AppBaseProto._buildRootControl = function(){
+		
+		alert("Please inherit ui5strap.AppBase._buildRootControl");
+	};
+	
+	/**
+	 * @Protected
+	 */
+	AppBaseProto._buildSingleViewRootControl = function(viewConfig){
+		var viewConfig = this.config.getViewConfig(viewConfig),
+			oPage = this.createView(viewConfig),
+			oController = oPage.getController();
+		
+		oController.onpageUpdateSingle && oController.onPageUpdateSingle(new sap.ui.base.Event("ui5strap.controller.pageUpdateSingle", this, viewConfig.parameters));
+		
+		jQuery.sap.require("ui5strap.Container");
+		var container = new ui5strap.Container();
+		container.addContent(oPage);
+		
+		return container;
+	};
+	
+	/**
+	 * @Abstract
+	 * @Public
+	 */
 	AppBaseProto.getRootControl = function(){
 		
-		alert("Please inherit ui5strap.AppBase.getRootControl");
+		if(!this._rootControl){
+			var rootControl = null;
+			if(this.config.data.app.mode === "Devel"){
+				var viewName = jQuery.sap.getUriParameters().get("_view");
+				if(viewName){
+					rootControl = this._buildSingleViewRootControl({ 
+						viewName : viewName,
+						parameters : {}
+					});
+				}
+				else{
+					rootControl = this._buildRootControl();
+				}
+			}
+			else{
+				rootControl = this._buildRootControl();
+			}
+			
+			this._rootControl = rootControl;
+		}
+		
+		return this._rootControl;
 	};
 
 	/*
@@ -1435,7 +1482,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		};
 		
 		//Update
+		//TODO rename to pageUpdate
 		_createActionEventHandler(controllerImpl, 'update');
+		
+		//Update
+		_createActionEventHandler(controllerImpl, 'pageUpdateSingle');
 
 		//PageHide
 		_createActionEventHandler(controllerImpl, 'pageHide');

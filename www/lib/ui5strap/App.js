@@ -32,8 +32,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		"constructor" : function(config, viewer){
 			AppBase.call(this, config, viewer);
 			
-			if(!config.data.rootNavigator){
-				config.data.rootNavigator = {};
+			if(!config.data.rootNavigation){
+				config.data.rootNavigation = {};
 			}
 			
 			//Init local vars
@@ -264,7 +264,12 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var _this = this;
 		AppBase.prototype.show.call(this, function(firstTime){
 			if(firstTime){
-				_this.showInitialContent(callback);
+				if(_this.config.data.app.mode === "Devel" && jQuery.sap.getUriParameters().get("_view")){
+					callback && callback(firstTime);
+				}
+				else{
+					_this.showInitialContent(callback);
+				}
 			}
 			else{
 				callback && callback(firstTime);
@@ -273,12 +278,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	};
 	
 	AppProto.showInitialContent = function(callback){
-		if(this.config.data.app.editMode){
-			callback && callback();
-		}
-		else{
+		
 			var _this = this,
-				initialViews = this.config.data.rootNavigator.initialViews,
+				initialViews = this.config.data.rootNavigation.initialViews,
 				callI = 0;
 		
 			var complete = function(){
@@ -307,75 +309,57 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				}
 				this.navigateTo(this.getRootControl(), initialViewData, complete);
 			}
-		}
+		
 	};
 	
 	/**
-	 * @Abstract
-	 * @Public
+	 * @Protected
 	 */
-	AppProto.getRootControl = function(){
+	AppProto._buildRootControl = function(){
+		var _this = this;
+		var navigatorOptions = this.config.data.rootNavigation;
 		
-		if(!this._rootControl){
-			if(this.config.data.app.editMode){
-				var viewName = jQuery.sap.getUriParameters().get("_view");
-				if(!viewName){
-					throw new Error("Cannot open view '" + viewName + "'");
-				}
-				var viewConfig = this.config.getViewConfig({ viewName : viewName });
-				var oPage = this.createView(viewConfig);
-				jQuery.sap.require("ui5strap.Container");
-				var container = new ui5strap.Container();
-				container.addContent(oPage);
-				this._rootControl = container;
-			}
-			else{
-				var _this = this;
-				var navigatorOptions = this.config.data.rootNavigator;
+		//Init default NavContainer
+		var navContainerModule = navigatorOptions.module || "ui5strap.NavContainer";
+		
+		jQuery.sap.require(navContainerModule);
+		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
+		if(!NavContainerConstructor){
+			throw new Error('Invalid NavContainer: ' + navContainerModule);
+		}
+		
+		var navContainerOptions = navigatorOptions.settings || {};
+		if(navContainerOptions.id){
+			navContainerOptions.id = this.createControlId(navContainerOptions.id);
+		}
+		
+		var rootControl = new NavContainerConstructor(navContainerOptions);
+		
+		if(navigatorOptions.events && navigatorOptions.events.control){
+			var eKeys = Object.keys(navigatorOptions.events.control),
+				eKeysLength = eKeys.length;
+			for(var i = 0; i < eKeysLength; i++){
+				var evs = navigatorOptions.events.control[eKeys[i]];
 				
-				//Init default NavContainer
-				var navContainerModule = navigatorOptions.module || "ui5strap.NavContainer";
-				
-				jQuery.sap.require(navContainerModule);
-				var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
-				if(!NavContainerConstructor){
-					throw new Error('Invalid NavContainer: ' + navContainerModule);
-				}
-				
-				var navContainerOptions = navigatorOptions.settings || {};
-				if(navContainerOptions.id){
-					navContainerOptions.id = this.createControlId(navContainerOptions.id);
-				}
-				
-				var rootControl = new NavContainerConstructor(navContainerOptions);
-				
-				if(navigatorOptions.events && navigatorOptions.events.control){
-					var eKeys = Object.keys(navigatorOptions.events.control),
-						eKeysLength = eKeys.length;
-					for(var i = 0; i < eKeysLength; i++){
-						var evs = navigatorOptions.events.control[eKeys[i]];
-						
-						rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
-							
-							for(var j = 0; j < data.actions.length; j ++){
-								_this.runAction({
-									"parameters" : data.actions[j], 
-									"eventSource" : oEvent.getSource(),
-									"eventParameters" : oEvent.getParameters()
-								});
-							}
-							
-							//console.log(data);
+				rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
+					
+					for(var j = 0; j < data.actions.length; j ++){
+						_this.runAction({
+							"parameters" : data.actions[j], 
+							"eventSource" : oEvent.getSource(),
+							"eventParameters" : oEvent.getParameters()
 						});
 					}
-				}
-				
-				this._rootControl = rootControl;
+					
+					//console.log(data);
+				});
 			}
 		}
 		
-		return this._rootControl;
+		return rootControl;
 	};
+	
+	
 	
 	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
 		jQuery.sap.log.debug("AppBaseProto.navigateTo");

@@ -4,7 +4,7 @@
 	        "package" : "ui5strap.demoapp",
 	        "name" : "Ui5Strap Demo",
 	        "logLevel" : 5,
-	        "editMode" : true
+	        "mode" : "Devel"
 	},
 	
 	"css" : [
@@ -215,7 +215,7 @@
 		"ui5strap.demoapp.actions.Debug"
 	],
 	
-	"rootNavigator" : {
+	"rootNavigation" : {
 	     "module" : "ui5strap.BarNavContainer",
          "settings" : {
          	"barSizeExtraSmall" : 1,
