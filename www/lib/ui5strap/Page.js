@@ -53,5 +53,20 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	PageProto = Page.prototype;
 
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	PageProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " ui5strapPage";
+		if(this.getHead()){
+			styleClass += " ui5strapPage-flag-WithHead";
+		}
+		if(this.getFooter()){
+			styleClass += " ui5strapPage-flag-WithFooter";
+		}
+		return styleClass;
+	};
+	
 	return Page;
 });

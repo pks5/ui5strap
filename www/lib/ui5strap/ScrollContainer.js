@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(library, ControlBase, CommonRenderers){
 
 	var ScrollContainer = ControlBase.extend("ui5strap.ScrollContainer", {
 		
@@ -51,10 +51,29 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			},
 			
 			defaultAggregation : "content"
-		}
+		},
+		
+		renderer : "ui5strap.CommonRenderers.DivWithContent"
 	
 	}),
 	ScrollContainerProto = ScrollContainer.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ScrollContainerProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix();
+		if(this.getHorizontal()){
+			styleClass += " " + this._getStyleClassFlag("Horizontal");
+		}
+		
+		if(this.getVertical()){
+			styleClass += " " + this._getStyleClassFlag("Vertical");
+		}
+		
+		return styleClass;
+	};
 	
 	/**
 	 * @Override

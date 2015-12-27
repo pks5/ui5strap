@@ -79,8 +79,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 */
 	BarProto._getStyleClassRoot = function(){
 		return "ui5strapBar ui5strapBar-type-" + this.getType() 
-				+ (this.getInverse() ? ' ui5strapBar-flag-styleInverse' : ' ui5strapBar-flag-styleDefault')
-				+ (this.getFullHeight() ? ' ui5strapBar-flag-fullHeight' : '');
+				+ (this.getInverse() ? ' ui5strapBar-style-Inverse' : ' ui5strapBar-style-Default')
+				+ (this.getFullHeight() ? ' ui5strapBar-flag-FullHeight' : '');
 	};
 	
 	/**

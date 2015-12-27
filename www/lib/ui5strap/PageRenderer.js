@@ -35,14 +35,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			footer = oControl.getFooter();
 
 		rm.write("<div");
-		
-		rm.addClass('ui5strapPage');
-		if(head){
-			rm.addClass('ui5strapPage-flag-withHead');
-		}
-		if(footer){
-			rm.addClass('ui5strapPage-flag-withFooter');
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		

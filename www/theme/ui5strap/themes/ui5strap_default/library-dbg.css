@@ -12170,20 +12170,17 @@ a {
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .5);
           box-shadow: 0 0 3px rgba(0, 0, 0, .5);
 }
-.ui5strapBar-flag-fullHeight {
-  height: 100%;
-}
-.ui5strapBar-flag-styleDefault {
+.ui5strapBar-style-Default {
   color: #777;
   background-color: #f8f8f8;
   border-color: #e7e7e7;
 }
-.ui5strapBar-flag-styleInverse {
+.ui5strapBar-style-Inverse {
   color: #eee;
   background-color: #025d8c;
   border-color: #013c5a;
 }
-.ui5strapBar-flag-fullHeight {
+.ui5strapBar-flag-FullHeight {
   height: 100%;
   overflow: hidden;
 }
@@ -12253,10 +12250,10 @@ a {
   bottom: 0;
   left: 0;
 }
-.ui5strapPage-flag-withHead > .ui5strapPage-body {
+.ui5strapPage-flag-WithHead > .ui5strapPage-body {
   top: 44px;
 }
-.ui5strapPage-flag-withFooter > .ui5strapPage-body {
+.ui5strapPage-flag-WithFooter > .ui5strapPage-body {
   bottom: 44px;
 }
 .ui5strapPage-footer {
@@ -13084,16 +13081,16 @@ a {
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
-.ui5strapScrollContainer-flag-horizontal {
+.ui5strapScrollContainer-flag-Horizontal {
   overflow-x: scroll;
 }
-.ui5strapScrollContainer-flag-vertical {
+.ui5strapScrollContainer-flag-Vertical {
   overflow-y: scroll;
 }
-.sapUiMedia-Std-Desktop .ui5strapScrollContainer-flag-horizontal {
+.sapUiMedia-Std-Desktop .ui5strapScrollContainer-flag-Horizontal {
   overflow-x: auto;
 }
-.sapUiMedia-Std-Desktop .ui5strapScrollContainer-flag-vertical {
+.sapUiMedia-Std-Desktop .ui5strapScrollContainer-flag-Vertical {
   overflow-y: auto;
 }
 /*
