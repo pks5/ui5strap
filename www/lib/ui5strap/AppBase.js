@@ -1141,7 +1141,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			oPage = this.createView(viewConfig),
 			oController = oPage.getController();
 		
-		oController.onpageUpdateSingle && oController.onPageUpdateSingle(new sap.ui.base.Event("ui5strap.controller.pageUpdateSingle", this, viewConfig.parameters));
+		oController.onpageUpdateSingle && oController.onPageUpdateSingle(new sap.ui.base.Event("ui5strap.controller.pageUpdateSingle", this, viewConfig.parameters || {}));
 		
 		jQuery.sap.require("ui5strap.Container");
 		var container = new ui5strap.Container();
@@ -1159,15 +1159,22 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		if(!this._rootControl){
 			var rootControl = null;
 			if(this.config.data.app.mode === "Devel"){
-				var viewName = jQuery.sap.getUriParameters().get("_view");
+				var uriParameters = jQuery.sap.getUriParameters(),
+					viewName = uriParameters.get("_viewName");
 				if(viewName){
 					if(jQuery.sap.startsWith(viewName, ".")){
-						viewName = this.config.data.app.package + viewName;
+						viewName = this.config.data.app["package"] + viewName;
 					}
-					rootControl = this._buildSingleViewRootControl({ 
+					var viewParameters = uriParameters.get("_viewParameters");
+					if(viewParameters){
+						viewParameters = JSON.parse(viewParameters);
+					}
+					var viewConfig = { 
+						type : uriParameters.get("_viewType"),
 						viewName : viewName,
-						parameters : {}
-					});
+						parameters : viewParameters
+					};
+					rootControl = this._buildSingleViewRootControl(viewConfig);
 				}
 				else{
 					rootControl = this._buildRootControl();

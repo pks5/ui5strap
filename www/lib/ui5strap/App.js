@@ -264,7 +264,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var _this = this;
 		AppBase.prototype.show.call(this, function(firstTime){
 			if(firstTime){
-				if(_this.config.data.app.mode === "Devel" && jQuery.sap.getUriParameters().get("_view")){
+				if(_this.config.data.app.mode === "Devel" && jQuery.sap.getUriParameters().get("_viewName")){
 					callback && callback(firstTime);
 				}
 				else{
