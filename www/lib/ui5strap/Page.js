@@ -58,7 +58,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	PageProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " ui5strapPage";
+		var styleClass = "";
 		if(this.getHead()){
 			styleClass += " ui5strapPage-flag-WithHead";
 		}

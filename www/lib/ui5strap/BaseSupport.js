@@ -91,14 +91,17 @@ sap.ui.define(['./library'], function(library){
 		 * @Protected
 		 */
 		oControl._getStyleClassRoot = function(){
-			return this._getStyleClassPrefix();
+			return "";
 		};
 		
 		/**
 		* @Protected
 		*/
 		oControl._getStyleClass = function(){
-			return this._getStyleClassRoot() + " " + this._getStyleClassDesign() + " " + BaseSupport.getStyleClass(this);	
+			return this._getStyleClassPrefix() 
+					+ " " + this._getStyleClassRoot()
+					+ " " + this._getStyleClassDesign() 
+					+ " " + BaseSupport.getStyleClass(this);	
 		};
 		
 		//Class Name Builders

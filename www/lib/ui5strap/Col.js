@@ -115,8 +115,8 @@ sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(libr
 	 * @Protected
 	 * @Override
 	 */
-	ColProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix(),
+	ColProto._getStyleClassDesign = function(){
+		var styleClass = "",
 			//Size
 			//TODO rename to size*
 			columsMedium = this.getColumnsMedium(),

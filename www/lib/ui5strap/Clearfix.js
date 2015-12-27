@@ -35,8 +35,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ClearFixProto = Clearfix.prototype;
 	
-	ClearFixProto._getStyleClassRoot = function(){
-		return this._getStyleClassPrefix() + " clearfix";
+	ClearFixProto._getStyleClassDesign = function(){
+		return "clearfix";
 	};
 
 });

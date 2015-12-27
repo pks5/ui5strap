@@ -56,9 +56,8 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Protected
 	 * @Override
 	 */
-	ListMediaProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " media-list";
-		return styleClass;
+	ListMediaProto._getStyleClassDesign = function(){
+		return "media-list";
 	};
 	
 	return ListMedia;

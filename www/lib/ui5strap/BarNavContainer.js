@@ -327,7 +327,7 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 	 * @Override
 	 */
 	BarNavContainerProto._getStyleClassRoot = function(){
-		var classes = "navcontainer navcontainer-type-" + this.ncType,
+		var classes = "navcontainer-type-" + this.ncType,
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
 			modeMedium = this.getBarModeMedium(),

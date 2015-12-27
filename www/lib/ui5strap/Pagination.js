@@ -52,8 +52,8 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Protected
 	 * @Override
 	 */
-	PaginationProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " pagination";
+	PaginationProto._getStyleClassDesign = function(){
+		var styleClass = "pagination";
 		return styleClass;
 	};
 	

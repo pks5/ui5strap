@@ -72,8 +72,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		"Inline" : 'form-inline',
 	};
 	
-	FormProto._getStyleClassRoot = function(){
-		return  this._getStyleClassPrefix() + " " + _typeToClass[this.getType()];
+	FormProto._getStyleClassDesign = function(){
+		return  _typeToClass[this.getType()];
 	};
 	
 	FormProto.onAfterRendering = function(){

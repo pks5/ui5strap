@@ -56,8 +56,8 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 	 * @Protected
 	 * @Override
 	 */
-	ListDropdownItemProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " dropdown";
+	ListDropdownItemProto._getStyleClassDesign = function(){
+		var styleClass = "dropdown";
 		if(this.getSelected()){
 			styleClass += " active";
 		}

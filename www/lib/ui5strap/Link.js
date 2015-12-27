@@ -107,8 +107,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Protected
 	 * @Override
 	 */
-	LinkProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix();
+	LinkProto._getStyleClassDesign = function(){
+		var styleClass = "";
 		
 		var type = this.getType();
 		if(ui5strap.LinkType.Default !== type){

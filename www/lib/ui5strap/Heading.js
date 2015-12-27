@@ -86,7 +86,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			classAdd = " " + Heading._typeToClass[type] + " " + this._getStyleClassType(type);
 		}
 		
-		return this._getStyleClassPrefix() + classAdd;
+		return classAdd;
 	};
 	
 	ui5strap.Utils.dynamicText(HeadingProto);

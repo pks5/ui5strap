@@ -144,7 +144,7 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 	 */
 	ButtonProto._getStyleClassRoot = function(){
 		var type = this.getType(),
-			styleClass = this._getStyleClassPrefix();
+			styleClass = "";
 		if(ui5strap.ButtonType.Default !== type){
 			styleClass = " " + this._getStyleClassType(type);
 		}

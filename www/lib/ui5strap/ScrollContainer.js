@@ -63,7 +63,7 @@ sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(libr
 	 * @Override
 	 */
 	ScrollContainerProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix();
+		var styleClass = "";
 		if(this.getHorizontal()){
 			styleClass += " " + this._getStyleClassFlag("Horizontal");
 		}

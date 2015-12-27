@@ -153,7 +153,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	TextProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix(),
+		var styleClass = "",
 			severity = this.getSeverity(),
 			textAlign = this.getTextAlign(),
 			type = this.getType(),

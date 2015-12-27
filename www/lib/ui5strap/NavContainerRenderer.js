@@ -48,11 +48,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.write("<!-- NavContainer START -->");
 			rm.write('<div');
 		    rm.writeControlData(oControl);
-		    
-		    rm.addClass(oControl._getStyleClassRoot());
-		    rm.addClass(oControl._getStyleClassOptions());
+		    rm.addClass(oControl._getStyleClass());
 		    rm.writeClasses();
-		    
 		    rm.write(">");
 	};
 

@@ -82,7 +82,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	ButtonGroupProto._getStyleClassRoot = function(){
 		var size = this.getSize(),
 			type = this.getType(),
-			styleClass = this._getStyleClassPrefix() + " " + _typeToClass[type];
+			styleClass = _typeToClass[type];
 		
 		if(ui5strap.Size.Default !== size){
 			styleClass += ' btn-group-' + ui5strap.BSSize[size];

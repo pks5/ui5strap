@@ -61,8 +61,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Protected
 	 * @Override
 	 */
-	WellProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " well";
+	WellProto._getStyleClassDesign = function(){
+		var styleClass = "well";
 		var size = this.getSize();
 		if(ui5strap.Size.Default !== size){
 			styleClass += " well-" + ui5strap.BSSize[size];

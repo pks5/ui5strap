@@ -85,8 +85,8 @@ sap.ui.define([ './library', './ControlBase' ], function(library, ControlBase) {
 	 * @Protected
 	 * @Override
 	 */
-	AlertProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " alert";
+	AlertProto._getStyleClassDesign = function(){
+		var styleClass = "alert";
 		
 		styleClass += " alert-" + ui5strap.BSSeverity[this.getSeverity()] + (this.getAnimate() ? " fade" : '');
 		

@@ -76,8 +76,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		Error : "error"
 	};
 	
-	FormGroupProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " form-group",
+	FormGroupProto._getStyleClassDesign = function(){
+		var styleClass = "form-group",
 			severity = this.getSeverity();
 		
 		

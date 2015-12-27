@@ -65,8 +65,8 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Protected
 	 * @Override
 	 */
-	NavProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " nav " + _typeToClass[this.getType()];
+	NavProto._getStyleClassDesign = function(){
+		var styleClass = "nav " + _typeToClass[this.getType()];
 		return styleClass;
 	};
 	

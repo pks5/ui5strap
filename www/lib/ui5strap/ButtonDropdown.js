@@ -78,7 +78,7 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	 * @Override
 	 */
 	ButtonDropdownProto._getStyleClassRoot = function(){
-		return this._getStyleClassPrefix();
+		return "";
 	};
 	
 	ButtonDropdownProto.setText = function(newText, suppressInvalidate){

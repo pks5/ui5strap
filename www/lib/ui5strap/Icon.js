@@ -104,15 +104,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Protected
 	 * @Override
 	 */
-	IconProto._getStyleClassRoot = function(){
+	IconProto._getStyleClassDesign = function(){
 		var iconGroup = this.getIconSet(),
 			size = this.getSize(),
 			transform = this.getTransform(),
 			severity = this.getSeverity(),
 			prefix = iconGroup + '-',
 			modPrefix = 'fa-',
-			styleClass = this._getStyleClassPrefix() 
-				+ " " + iconGroup
+			styleClass = iconGroup
 				+ " " + prefix + this.getIcon();
 		
 		//Font Awesome only

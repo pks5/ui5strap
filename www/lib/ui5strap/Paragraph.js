@@ -71,8 +71,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ParagraphProto = Paragraph.prototype;
 	
-	ParagraphProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix(),
+	ParagraphProto._getStyleClassDesign = function(){
+		var styleClass = "",
 			severity = this.getSeverity(),
 			textAlign = this.getTextAlign();
 		

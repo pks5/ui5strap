@@ -53,9 +53,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Protected
 	 * @Override
 	 */
-	ButtonToolbarProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix() + " btn-toolbar";
-		return styleClass;
+	ButtonToolbarProto._getStyleClassDesign = function(){
+		return "btn-toolbar";
 	};
 	
 	return ButtonToolbar;

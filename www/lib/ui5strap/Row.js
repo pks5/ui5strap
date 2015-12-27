@@ -54,8 +54,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Protected
 	 * @Override
 	 */
-	Row.prototype._getStyleClassRoot = function(){
-		return this._getStyleClassPrefix() + " row";
+	Row.prototype._getStyleClassDesign = function(){
+		return "row";
 	};
 
 	return Row;

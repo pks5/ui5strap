@@ -98,8 +98,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		Responsive : "img-responsive"
 	};
 	
-	ImageProto._getStyleClassRoot = function(){
-		var styleClass = this._getStyleClassPrefix(),
+	ImageProto._getStyleClassDesign = function(){
+		var styleClass = "",
 			shape = this.getShape(),
 			type = this.getType();
 		
