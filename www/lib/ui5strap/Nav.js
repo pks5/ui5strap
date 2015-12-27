@@ -61,12 +61,13 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 		TabsJustified : "nav-tabs nav-justified"
 	};
 	
-	NavProto._getStyleClassPrefix = function(){
-		return "nav";
-	};
-	
+	/**
+	 * @Protected
+	 * @Override
+	 */
 	NavProto._getStyleClassRoot = function(){
-		return  this._getStyleClassPrefix() + " " + _typeToClass[this.getType()];
+		var styleClass = this._getStyleClassPrefix() + " nav " + _typeToClass[this.getType()];
+		return styleClass;
 	};
 	
 	return Nav;

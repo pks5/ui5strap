@@ -35,7 +35,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write("<" + tag);
 		rm.writeControlData(oControl);
-		rm.addClass('media-list');
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		    

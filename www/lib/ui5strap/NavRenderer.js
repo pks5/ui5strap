@@ -35,8 +35,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<ul");
 		
 		rm.writeControlData(oControl);
-	
-		rm.addClass('nav');
 		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		

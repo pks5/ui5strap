@@ -52,5 +52,14 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	ListMediaProto = ListMedia.prototype;
 	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ListMediaProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " media-list";
+		return styleClass;
+	};
+	
 	return ListMedia;
 });

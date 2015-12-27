@@ -60,7 +60,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}), PagerProto = Pager.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	PagerProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " pager";
+		return styleClass;
+	};
 	
 	return Pager;
 });

@@ -52,6 +52,21 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 	}),
 	ListDropdownItemProto = ListDropdownItem.prototype;
 
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ListDropdownItemProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " dropdown";
+		if(this.getSelected()){
+			styleClass += " active";
+		}
+		if(!this.getEnabled()){
+			styleClass += " disabled";
+		}
+		return styleClass;
+	};
+	
 	ListDropdownItemProto.setText = function(newText){
 		if(this.getMenu() === null){
 			ui5strap.Utils.updateText(this, jQuery('#' + this.getId() + '---link'), newText);

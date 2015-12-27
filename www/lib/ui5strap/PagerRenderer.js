@@ -34,8 +34,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			next = oControl.getNext(),
 			spread = oControl.getAligned();
 
-		rm.write('<ul class="pager"');
+		rm.write('<ul');
 		rm.writeControlData(oControl);
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
