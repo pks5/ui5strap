@@ -83,10 +83,25 @@ sap.ui.define(['./library'], function(library){
 		/**
 		 * @Protected
 		 */
+		oControl._getStyleClassDesign = function(){
+			return "";
+		};
+		
+		/**
+		 * @Protected
+		 */
 		oControl._getStyleClassRoot = function(){
 			return this._getStyleClassPrefix();
 		};
 		
+		/**
+		* @Protected
+		*/
+		oControl._getStyleClass = function(){
+			return this._getStyleClassRoot() + " " + this._getStyleClassDesign() + " " + BaseSupport.getStyleClass(this);	
+		};
+		
+		//Class Name Builders
 		/**
 		 * @Protected
 		 */
@@ -108,13 +123,7 @@ sap.ui.define(['./library'], function(library){
 			return 	this._getStyleClassPrefix() + "-flag-" + flag;
 		};
 		
-		/**
-		* @Protected
-		*/
-		oControl._getStyleClass = function(){
-			return this._getStyleClassRoot() + " " + BaseSupport.getStyleClass(this);	
-		};
-		
+		//Binding Context
 		oControl.getBindingContextData = function(modelName){
 			var bindingContext = this.getBindingContext(modelName);
 			

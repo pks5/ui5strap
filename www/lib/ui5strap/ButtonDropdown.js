@@ -61,6 +61,26 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	}),
 	ButtonDropdownProto = ui5strap.ButtonDropdown.prototype;
 
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonDropdownProto._getStyleClassDesign = function(){
+		var styleClass = "btn-group";
+		if(this.getDropup()){
+			styleClass += " dropup";
+		}
+		return styleClass;
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonDropdownProto._getStyleClassRoot = function(){
+		return this._getStyleClassPrefix();
+	};
+	
 	ButtonDropdownProto.setText = function(newText, suppressInvalidate){
 		if(this.getMenu() === null){
 			if(this.getDomRef() && this.getContent().length === 0){

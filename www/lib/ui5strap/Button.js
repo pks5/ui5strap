@@ -97,32 +97,29 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 	 * @Protected
 	 * @Override
 	 */
-	ButtonProto._getStyleClassRoot = function(){
+	ButtonProto._getStyleClassDesign = function(){
 		var type = this.getType(),
-			classAdd = "";
-		if(ui5strap.ButtonType.Default !== type){
-			classAdd = " " + this._getStyleClassType(type);
-		}
+			styleClass = "";
 		
 		//Bootstrap classes
 		if(type === ui5strap.ButtonType.Button || ui5strap.ButtonType.Block === type){
-			classAdd += " btn";
-			classAdd += " btn-" + ui5strap.BSSeverity[this.getSeverity()];
+			styleClass += " btn";
+			styleClass += " btn-" + ui5strap.BSSeverity[this.getSeverity()];
 		    
 			var size = this.getSize();
 			if(ui5strap.Size.Default !== size){
-				classAdd += ' btn-' + ui5strap.BSSize[size];
+				styleClass += ' btn-' + ui5strap.BSSize[size];
 		    }
 
 		    if(ui5strap.ButtonType.Block === type){
-		    	classAdd += " btn-block";
+		    	styleClass += " btn-block";
 			}
 		}
 		else if(type === ui5strap.ButtonType.Link){
-			classAdd += " btn btn-link";
+			styleClass += " btn btn-link";
 		}
 		else if(type === ui5strap.ButtonType.Close || type === ui5strap.ButtonType.Icon){
-			classAdd += " close";
+			styleClass += " close";
 		}
 		
 		//Bootstrap Actions (deprecated)
@@ -130,15 +127,28 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 		//Navbar toggle
 		//@deprecated
 		if(action === ui5strap.BsAction.ToggleNavbar){
-			classAdd + " btn-toggle-navbar";
+			styleClass + " btn-toggle-navbar";
 		}
 		//Sidenav toggle
 		//@deprecated
 		else if(action === ui5strap.BsAction.ToggleSidenav){
-			classAdd + " btn-toggle-sidenav";
+			styleClass + " btn-toggle-sidenav";
 		}
 		
-		return this._getStyleClassPrefix() + classAdd;
+		return styleClass;
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonProto._getStyleClassRoot = function(){
+		var type = this.getType(),
+			styleClass = this._getStyleClassPrefix();
+		if(ui5strap.ButtonType.Default !== type){
+			styleClass = " " + this._getStyleClassType(type);
+		}
+		return styleClass;
 	};
 	
 	/**

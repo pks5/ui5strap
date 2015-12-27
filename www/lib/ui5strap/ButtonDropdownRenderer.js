@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 
 	var ButtonDropdownRenderer = {};
 
@@ -35,10 +35,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("btn-group");
-		if(oControl.getDropup()){
-			rm.addClass('dropup');
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 
@@ -78,7 +75,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	    	rm.addClass("dropdown-toggle");
 	    }
 	    
-	    rm.addClass(oControl._getStyleClass());
+	    rm.addClass(Button.prototype._getStyleClassDesign.call(oControl));
 	
 	    rm.writeClasses();
 	    
