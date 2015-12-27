@@ -27,43 +27,23 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var FormGroupRenderer = {
-
-		severityToClass : {
-			Success : "success",
-			Warning : "warning",
-			Error : "error"
-		}
-	};
+	var FormGroupRenderer = {};
 
 	FormGroupRenderer.render = function(rm, oControl) {
-		var severity = oControl.getSeverity(),
-			hasFeedback = oControl.getFeedback(),
-			label = oControl.getLabel(),
+		var label = oControl.getLabel(),
 			formControls = oControl.getControls();
 
-			if(formControls.length === 0){
-				throw new Error('You need to define at least one formControl.');
-			}
+		if(formControls.length === 0){
+			throw new Error('You need to define at least one formControl.');
+		}
 
 		rm.write("<div");
-		
 		rm.writeControlData(oControl);
-
-		rm.addClass('form-group');
-		
-		if(ui5strap.FormSeverity.None !== severity){
-			rm.addClass('has-' + this.severityToClass[severity]);
-		}
-		
-		if(hasFeedback){
-			rm.addClass('has-feedback');
-		}
-
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
-		if('' !== label){
+		if(label){
 			rm.write("<label");
 			rm.addClass("control-label");
 			rm.writeAttribute('for', formControls[0].getId());
@@ -97,7 +77,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			var formControl = formControls[i];
 			rm.renderControl(formControl);
 		}
-		
 		
 		rm.write("</div> ");
 	};

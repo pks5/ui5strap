@@ -77,41 +77,28 @@ sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library,
 	
 	ContainerProto._typeData = {
 		Default : {
-			tagName : "div",
-			className : ""
-		},
-		Text : {
-			tagName : "span",
 			className : ""
 		},
 		
 		//Bootstrap Components
 		Fluid : {
-			tagName : "div",
 			className : "container-fluid"
 		},
 		Website : {
-			tagName : "div",
 			className : "container"
 		},
 		Jumbotron : {
-			tagName : "div",
 			className : "jumbotron"
 		},
 		Well : {
-			tagName : "div",
 			className : "well"
 		},
 		WellLarge : {
-			tagName : "div",
 			className : "well well-lg"
 		},
 		PageHeader : {
-			tagName : "div",
 			className : "page-header"
 		},
-		
-		
 		
 		//Deprecated
 		FluidInset : {

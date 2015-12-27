@@ -31,10 +31,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	ContainerRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
-			tagData = oControl._typeData[oControl.getType()],
 			html = oControl.getHtml();
 
-		rm.write("<" + tagData.tagName);
+		rm.write("<div");
 		rm.writeControlData(oControl);
 		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
@@ -48,7 +47,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.renderControl(content[i]);
 		}
 		
-		rm.write("</" + tagData.tagName + ">");
+		rm.write("</div>");
 	};
 
 	//Return Module Constructor

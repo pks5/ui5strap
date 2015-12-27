@@ -68,7 +68,29 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}),FormGroupProto = FormGroup.prototype;
+	
+	var _severityToClass = {
+		Success : "success",
+		Warning : "warning",
+		Error : "error"
+	};
+	
+	FormGroupProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " form-group",
+			severity = this.getSeverity();
+		
+		
+		if(ui5strap.FormSeverity.None !== severity){
+			styleClass += " has-" + _severityToClass[severity];
+		}
+		
+		if(this.getFeedback()){
+			styleClass += " has-feedback";
+		}
+		
+		return styleClass;
+	};
 
 	return FormGroup;
 });

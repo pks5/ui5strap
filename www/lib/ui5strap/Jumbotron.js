@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(library, ControlBase, CommonRenderers){
 
 	var Jumbotron = ControlBase.extend("ui5strap.Jumbotron", {
 		metadata : {
@@ -46,7 +46,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
-		}
+		},
+		
+		renderer : "ui5strap.CommonRenderers.DivWithContent"
 	}),
 	JumbotronProto = Jumbotron.prototype;
 	

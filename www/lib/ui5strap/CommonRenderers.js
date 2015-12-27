@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.JumbotronRenderer
+ * ui5strap.TagRenderer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,9 +27,11 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var JumbotronRenderer = {};
+	var CommonRenderers = {};
 
-	JumbotronRenderer.render = function(rm, oControl) {
+	CommonRenderers.DivWithContent = {};
+	
+	CommonRenderers.DivWithContent.render = function(rm, oControl) {
 		var content = oControl.getContent();
 
 		rm.write("<div");
@@ -39,12 +41,12 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write(">");
 		
 		for(var i = 0; i < content.length; i++){ 
-			rm.renderControl(content[i]);
-		};
-
+				rm.renderControl(content[i]);
+		}
+		
 		rm.write("</div>");
 	};
 	
-	return JumbotronRenderer;
+	return CommonRenderers;
 
 }, true);

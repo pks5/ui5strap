@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(library, ControlBase, CommonRenderers){
 
 	var Col = ControlBase.extend("ui5strap.Col", {
 		metadata : {
@@ -106,9 +106,96 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			},
 			
 			defaultAggregation : "content"
-
-		} // END metadata
-	});
+		},
+		
+		renderer : "ui5strap.CommonRenderers.DivWithContent"
+	}), ColProto = Col.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ColProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix(),
+			//Size
+			//TODO rename to size*
+			columsMedium = this.getColumnsMedium(),
+			columsLarge = this.getColumnsLarge(),
+			columsSmall = this.getColumnsSmall(),
+			columsExtraSmall = this.getColumnsExtraSmall(),
+			//Offset
+			offsetMedium = this.getOffsetMedium(),
+			offsetLarge = this.getOffsetLarge(),
+			offsetSmall = this.getOffsetSmall(),
+			offsetExtraSmall = this.getOffsetExtraSmall(),
+			//Pull
+			pullMedium = this.getPullMedium(),
+			pullLarge = this.getPullLarge(),
+			pullSmall = this.getPullSmall(),
+			pullExtraSmall = this.getPullExtraSmall(),
+			//Push
+			pushMedium = this.getPushMedium(),
+			pushLarge = this.getPushLarge(),
+			pushSmall = this.getPushSmall(),
+			pushExtraSmall = this.getPushExtraSmall();
+	
+		//Size
+		if(0 < columsMedium){
+			styleClass += " col-md-" + columsMedium;
+		}
+		if(0 < columsLarge){
+			styleClass += " col-lg-" + columsLarge;
+		}
+		if(0 < columsSmall){
+			styleClass += " col-sm-" + columsSmall;
+		}
+		if(0 < columsExtraSmall){
+			styleClass += " col-xs-" + columsExtraSmall;
+		}
+	
+		//Offset
+		if(0 < offsetMedium){
+			styleClass += " col-md-offset-" + offsetMedium;
+		}
+		if(0 < offsetLarge){
+			styleClass += " col-lg-offset-" + offsetLarge;
+		}
+		if(0 < offsetSmall){
+			styleClass += " col-sm-offset-" + offsetSmall;
+		}
+		if(0 < offsetExtraSmall){
+			styleClass += " col-xs-offset-" + offsetExtraSmall;
+		}
+	
+		//Pull
+		if(0 < pullMedium){
+			styleClass += " col-md-pull-" + pullMedium;
+		}
+		if(0 < pullLarge){
+			styleClass += " col-lg-pull-" + pullLarge;
+		}
+		if(0 < pullSmall){
+			styleClass += " col-sm-pull-" + pullSmall;
+		}
+		if(0 < pullExtraSmall){
+			styleClass += " col-xs-pull-" + pullExtraSmall;
+		}
+	
+		//Push
+		if(0 < pushMedium){
+			styleClass += " col-md-push-" + pushMedium;
+		}
+		if(0 < pushLarge){
+			styleClass += " col-lg-push-" + pushLarge;
+		}
+		if(0 < pushSmall){
+			styleClass += " col-sm-push-" + pushSmall;
+		}
+		if(0 < pushExtraSmall){
+			styleClass += " col-xs-push-" + pushExtraSmall;
+		}
+		return styleClass;
+	};
 	
 	return Col;
 });
