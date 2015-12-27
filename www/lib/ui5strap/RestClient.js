@@ -31,9 +31,6 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);
 			
-			var urlBase = this.options.url;
-			this._urlBase = app.config.resolvePath(jQuery.sap.endsWith(urlBase, "/") ? urlBase : urlBase + '/');
-			
 			this._createMethods();
 		}
 	}),
@@ -165,8 +162,10 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     * @protected
     */
     RestClientProto._determineRequestURL = function(options){
+    	var urlBase = this.options.url;
+		urlBase = this.app.config.resolvePath(jQuery.sap.endsWith(urlBase, "/") ? urlBase : urlBase + '/');
         
-        return this._urlBase + this._parsePath(options.path, options.pathParameters);
+		return urlBase + this._parsePath(options.path, options.pathParameters);
     };
     
     /**
