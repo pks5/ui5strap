@@ -25,6 +25,10 @@
  * 
  */
 
+/*
+ * TODO Refactor to "ui5strap.SandboxApp"
+ */
+
  sap.ui.define(['./library', './AppBase', './Sandbox'], function(library, AppBase, Sandbox){
 
 	 var AppSandbox = AppBase.extend("ui5strap.AppSandbox", {

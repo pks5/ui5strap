@@ -31,10 +31,6 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);
 			
-			this.vTargets = {};
-
-			this.oTargets = {};
-
 			this.initialized = false;
 		}
 	}),
@@ -50,21 +46,6 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		
 		var rootControl = this._createControl();
 		
-		this._initHistory();
-
-		var oldAppShow = this.app.show;
-		this.app.show = function(callback){
-			oldAppShow.call(_this.app, function(firstTime){
-				if(firstTime){
-					_this.showInitialContent(callback);
-				}
-				else{
-					callback && callback(firstTime);
-				}
-			});
-			
-		};
-		
 		this.getRootControl = function(){
 			return rootControl;
 		};
@@ -72,22 +53,12 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		this.app.getRootControl = function(){
 			return rootControl;
 		};
-	};
-
-	/*
-	 * @deprecated
-	 */
-	AppFrameProto.getControl = function(){
-		jQuery.sap.log.warning("AppFrameProto.getControl is deprecated. Use getRootControl instead.");
-		return this.getRootControl();
-	};
-
-	/*
-	* @deprecated
-	*/
-	AppFrameProto.getConfig = function(){
-		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.getConfig is deprecated and will be removed soon.");
-		return this.app.config;
+		
+		this.app.showInitialContent = function(callback){
+			_this.showInitialContent(callback);
+		};
+		
+		this._initHistory();
 	};
 
 	/*
@@ -146,7 +117,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
 	};
 
-	/*
+	/**
 	* Shows the initial content defined in app configuration
 	* @Public
 	*/
@@ -185,49 +156,69 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		}
 
 	};
-
+	
 	/*
+	 * DEPRECATED METHODS 
+	 */
+
+	/**
+	 * @deprecated
+	 */
+	AppFrameProto.getControl = function(){
+		jQuery.sap.log.warning("AppFrameProto.getControl is deprecated. Use AppFrameProto.getRootControl instead.");
+		return this.getRootControl();
+	};
+
+	/**
+	* @deprecated
+	*/
+	AppFrameProto.getConfig = function(){
+		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.getConfig is deprecated and will be removed soon. Use ui5strap.AppFrame.prototype.getApp().getConfig() instead.");
+		return this.app.config;
+	};
+
+	/**
 	* Returns the currently shown page within the NavContainer's target
 	* @Public
 	* @deprecated
 	*/
 	AppFrameProto.getCurrentPage = function (target) {
-		jQuery.sap.log.warning("AppFrameProto.getCurrentPage is deprecated!");
+		jQuery.sap.log.warning("AppFrameProto.getCurrentPage is deprecated!  Use INavigator.getTarget instead.");
 		return this.getRootControl().getTarget(target);
 	};
 
-	/*
+	/**
 	* Returns whether the frame supports the specified target
 	* @Public
 	* @deprecated
 	*/
 	AppFrameProto.hasTarget = function(target) {
-		jQuery.sap.log.warning("AppFrameProto.hasTarget is deprecated!");
+		jQuery.sap.log.warning("AppFrameProto.hasTarget is deprecated! Use INavigator.hasTarget instead.");
 		return this.getRootControl().hasTarget(target);
 	}
 	
-	/*
+	/**
 	* Returns whether a target is busy
 	* @Public
 	* @deprecated
 	*/
 	AppFrameProto.isBusy = function(target){
-		jQuery.sap.log.warning("AppFrameProto.isBusy is deprecated!");
+		jQuery.sap.log.warning("AppFrameProto.isBusy is deprecated! Use INavigator.isTargetBusy instead.");
 		
 		return this.getRootControl().isTargetBusy(target);
 	};
 
-	/*
+	/**
 	 * Shows a page defined by given data
 	 * @Public
 	 * @deprecated
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
-		jQuery.sap.log.warning("AppFrameProto.toPage is deprecated! Use navigateTo instead!");
-		return this.navigateTo(this.getRootControl(), viewConfig, callback, true);
+		jQuery.sap.log.warning("AppFrameProto.toPage is deprecated! Use AppBaseProto.navigateTo instead!");
+		return this.getApp.navigateTo(this.getRootControl(), viewConfig, callback, true);
 	};
 
-	/*
+	/**
 	* Get the viewConfig based on a definition object. Def object must contain "viewName" attribute!
 	* @deprecated
 	*/
@@ -240,109 +231,47 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 			viewConfig.target = this.getRootControl().defaultTarget;
 		}
 
-		//Override targets
-		var target = viewConfig.target;
-		if(target in this.oTargets){
-			var overrideTarget = this.oTargets[target];
-			delete this.oTargets[target];
-			viewConfig = this.app.config.getViewConfig(overrideTarget);
-		}
-
 		return viewConfig;
 	};
 	
-	/*
+	/**
 	* Resolve the viewConfig based on a definition object. Def object must contain "viewName" attribute!
+	* @deprecated
 	*/
 	AppFrameProto.resolveViewConfig = function(navControl, viewDef){
+		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.resolveViewConfig is deprecated. Use AppConfigProto.getViewConfig instead.");
 		var viewConfig = this.app.config.getViewConfig(viewDef);
-
-		//TODO use default target here...
-		if(!viewConfig.target){
-			viewConfig.target = navControl.defaultTarget;
-		}
-
-		//Override targets
-		var target = viewConfig.target;
-		if(target in this.oTargets){
-			var overrideTarget = this.oTargets[target];
-			delete this.oTargets[target];
-			viewConfig = this.app.config.getViewConfig(overrideTarget);
-		}
 
 		return viewConfig;
 	};
 
-	/*
+	/**
 	 * @deprecated
 	 */
 	AppFrameProto.validatePage = function(viewDef){
 		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.validatePage is deprecated and will be removed soon! Use getViewConfig instead.");
+		
 		return this.getViewConfig(viewDef);
 	};
 
-	/*
+	/**
 	* @Public
 	* @deprecated
 	*/
 	AppFrameProto.gotoPage = function (viewDef, callback) {
-		jQuery.sap.log.warning("AppFrameProto.gotoPage is deprecated! Use navigateTo instead!");
+		jQuery.sap.log.warning("AppFrameProto.gotoPage is deprecated! Use AppBaseProto.navigateTo instead!");
 		
-		return this.navigateTo(this.getRootControl(), viewDef, callback);
+		return this.getApp().navigateTo(this.getRootControl(), viewDef, callback);
 	};
 	
+	/**
+	* @Public
+	* @deprecated
+	*/
 	AppFrameProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
-		jQuery.sap.log.debug("AppFrameProto.toPage");
+		jQuery.sap.log.warning("AppFrameProto.navigateTo is deprecated! Use AppBaseProto.navigateTo instead.");
 		
-		if(!suppressResolve){
-			viewConfig = this.resolveViewConfig(navControl, viewConfig);
-		}
-		
-		if(!viewConfig.target){
-			throw new Error('Cannot navigate to page: no "target" specified!');
-		}
-		
-		if(navControl.isBusy(viewConfig.target)){
-			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
-
-			return false;
-		}
-
-		var _this = this,
-			target = viewConfig.target,
-			oPage = this.app.createView(viewConfig);
-
-		//Only add this page to a vTarget. Pages in vTargets are not seen by the user.
-		//TODO Why???
-		if(viewConfig.vTarget){
-			jQuery.sap.log.debug('[APP_FRAME] VIRTUALLY NAVIGATE {' + target + '}');
-			this.vTargets[target] = oPage;
-		
-			return;
-		}
-
-		//Set target busy
-		navControl.setTargetBusy(target, true);
-
-		//Trigger onUpdate events
-		navControl.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
-
-		//Change NavContainer to page
-		navControl.toPage(
-			oPage, 
-			target, 
-			viewConfig.transition,
-			function toPage_complete(){
-				
-				//Set target available
-				navControl.setTargetBusy(target, false);
-				
-				//Trigger callback
-				callback && callback();
-			}
-		);
-		
-		return oPage;
+		return this.getApp().navigateTo(navControl, viewConfig, callback, suppressResolve);
 	};
 
 	//Return Module Constructor

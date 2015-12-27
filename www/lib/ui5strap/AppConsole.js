@@ -25,6 +25,10 @@
  * 
  */
 
+/*
+ * TODO Refactor to "ui5strap.ConsoleApp"
+ */
+
  sap.ui.define(['./library', './AppBase', './Console'], function(library, AppBase, Console){
 
 	 var AppConsole = AppBase.extend("ui5strap.AppConsole"),

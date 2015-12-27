@@ -29,6 +29,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 
 	var NavContainer = ControlBase.extend("ui5strap.NavContainer", {
 		metadata : {
+			interfaces : ["ui5strap.INavigator"],
+			
 			library : "ui5strap",
 			
 			properties : {
@@ -66,9 +68,86 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	NavContainerProto = NavContainer.prototype,
 	domAttachTimeout = 50;
 	
+	/**
+	 * @Protected
+	 * @Override
+	 */
 	NavContainerProto._getStyleClassPrefix = function(){
 		return "navcontainer";
 	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	NavContainerProto._getStyleClassRoot = function(){
+		return "navcontainer navcontainer-type-" + this.ncType;
+	};
+	
+	/*
+	 * START CUSTOM Ids and Classes
+	 */
+	
+	/**
+	* Creates a dom id for a given target and page
+	* @Public
+	*/
+	NavContainerProto.createPageDomId = function(target, page){
+		if(page === null){
+			return 'navcontainer-page---' + this._targetPagesCount[target];
+		}
+
+		return 'navcontainer-page---' + page.getId();
+	};
+
+	/**
+	* Registers a new dom id for a given target and page
+	* @Public
+	*/
+	NavContainerProto.pageDomId = function(target, page){
+		if(!(target in this._targetPagesCount)){
+			this._targetPagesCount[target] = 0;
+		}
+		
+		this._targetPagesCount[target]++;
+
+		return this.createPageDomId(target, page);
+	};
+	
+	/**
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
+	NavContainerProto.targetDomId = function(target){
+		return 'navcontainer-target-' + target + '---' + this.getId();
+	};
+	
+	/**
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
+	NavContainerProto.targetPagesDomId = function(target){
+		return 'navcontainer-pages-' + target + '---' + this.getId();
+	};
+
+	/**
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
+	NavContainerProto.targetLayersDomId = function(target){
+		return 'navcontainer-layers-' + target + '---' + this.getId();
+	};
+	
+	/**
+	 * @Protected
+	 */
+	NavContainerProto._getTargetClassString = function(target){
+		return "navcontainer-target navcontainer-target-" + target;
+	};
+	
+	/*
+	 * END CUSTOM Ids and Classes
+	 */
 	
 	/*
 	*
@@ -441,164 +520,19 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		};
 	};
 
-	/**
-	* Creates a dom id for a given target and page
-	* @Public
-	*/
-	NavContainerProto.createPageDomId = function(target, page){
-		if(page === null){
-			return 'navcontainer-page---' + this._targetPagesCount[target];
-		}
-
-		return 'navcontainer-page---' + page.getId();
-	};
-
-	/**
-	* Registers a new dom id for a given target and page
-	* @Public
-	*/
-	NavContainerProto.pageDomId = function(target, page){
-		if(!(target in this._targetPagesCount)){
-			this._targetPagesCount[target] = 0;
-		}
-		
-		this._targetPagesCount[target]++;
-
-		return this.createPageDomId(target, page);
-	};
-
-	/*
-	 * START OpenUi5 MOD
-	 * Since we do not use aggregations in NavContainer, we have to care about propagation and destroying ourselves.
-	 * Usually, this happens in ManagedObject.prototype.propagateProperties and ManagedObject.prototype.destroy.
-	 */
 	
-	/**
-	* @Override
-	*/
-	NavContainerProto.propagateProperties = function(vName){
-		var oProperties = this._getPropertiesToPropagate(),
-			bUpdateAll = vName === true, // update all bindings when no model name parameter has been specified
-			sName = bUpdateAll ? undefined : vName,
-			sTarget, oTarget, i;
+
 	
-		for (sTarget in this.targets) {
-			oTarget = this.targets[sTarget];
-			if (oTarget instanceof sap.ui.base.ManagedObject) {
-				this._propagateProperties(vName, oTarget, oProperties, bUpdateAll, sName);
-			}
-		}
-		
-	};
-	
-	NavContainerProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
-		jQuery.sap.log.debug("UBC");
-		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
-		
-		var oModelNames = {},
-			sModelName,
-			oContext;
-
-		// find models that need an context update
-		if (bUpdateAll) {
-			for (sModelName in this.oModels) {
-				if ( this.oModels.hasOwnProperty(sModelName) ) {
-					oModelNames[sModelName] = sModelName;
-				}
-			}
-			for (sModelName in this.oPropagatedProperties.oModels) {
-				if ( this.oPropagatedProperties.oModels.hasOwnProperty(sModelName) ) {
-					oModelNames[sModelName] = sModelName;
-				}
-			}
-		} else {
-			oModelNames[sFixedModelName] = sFixedModelName;
-		}
-
-		/*eslint-disable no-loop-func */
-		for (sModelName in oModelNames ) {
-			if ( oModelNames.hasOwnProperty(sModelName) ) {
-				sModelName = sModelName === "undefined" ? undefined : sModelName;
-
-				if (!bSkipChildren) {
-					var oContext = this.getBindingContext(sModelName);
-					// also update context in all child elements
-					for (sTarget in this.targets) {
-						var oTarget = this.targets[sTarget];
-						if (oTarget instanceof sap.ui.base.ManagedObject) {
-							oTarget.oPropagatedProperties.oBindingContexts[sModelName] = oContext;
-							oTarget.updateBindingContext(false,false,sModelName);
-						}
-					}
-				}
-			}
-		}
-		/*eslint-enable no-loop-func */
-	};
 	
 	/*
-	 * END OpenUi5 MOD
+	 *
+	 * START Implement ui5strap.INavigator
+	 * 
 	 */
-	
-	/**
-	 * Destroys targets before the current control is destroyed.
-	* @Override
-	*/
-	NavContainerProto.exit = function(){
-		for(var target in this.targets){
-			if(this.targets[target]){
-				var oldTarget = this.targets[target];
-				this.targets[target] = null;
-				
-				oldTarget.destroy();
-				
-				delete oldTarget;
-			}
-		}
-		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
-	};
-	
-	/**
-	 * @Protected
-	 * @Override
-	 */
-	NavContainerProto._getStyleClassRoot = function(){
-		return "navcontainer navcontainer-type-" + this.ncType;
-	};
-	
-	/**
-	 * @Public
-	 * TODO Improve component ID syntax
-	 */
-	NavContainerProto.targetDomId = function(target){
-		return 'navcontainer-target-' + target + '---' + this.getId();
-	};
-	
-	/**
-	 * @Public
-	 * TODO Improve component ID syntax
-	 */
-	NavContainerProto.targetPagesDomId = function(target){
-		return 'navcontainer-pages-' + target + '---' + this.getId();
-	};
-
-	/**
-	 * @Public
-	 * TODO Improve component ID syntax
-	 */
-	NavContainerProto.targetLayersDomId = function(target){
-		return 'navcontainer-layers-' + target + '---' + this.getId();
-	};
-	
-	/**
-	 * @Protected
-	 */
-	NavContainerProto._getTargetClassString = function(target){
-		return "navcontainer-target navcontainer-target-" + target;
-	};
 	
 	/**
 	* @Public
+	* @Override
 	*/
 	NavContainerProto.updateTarget = function(target, oPage, eventParameters){
 		if(!(target in this.targets)){
@@ -623,6 +557,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	
 	/**
 	 * @Public
+	 * @Override
 	 */
 	NavContainerProto.hasTarget = function(target){
 		return target in this.targets;
@@ -630,6 +565,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	
 	/**
 	 * @Public
+	 * @Override
 	 */
 	NavContainerProto.getTarget = function(target){
 		return this.targets[target];
@@ -637,6 +573,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	
 	/**
 	 * @Public
+	 * @Override
 	 */
 	NavContainerProto.isTargetBusy = function(target){
 		return this._targetStatus[target];
@@ -644,6 +581,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	
 	/**
 	 * @Public
+	 * @Override
 	 */
 	NavContainerProto.setTargetBusy = function(target, targetBusy){
 		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
@@ -652,6 +590,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	
 	/**
 	* @Public
+	* @Override
 	*/
 	NavContainerProto.toPage = function(page, target, transitionName, callback){
 		//ui5strap.tm("APP", "NC", "TO_PAGE");
@@ -742,6 +681,85 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 
 		return true;
 	};
+	
+	/*
+	 *
+	 * END Implement ui5strap.INavigator
+	 * 
+	 */
+	
+	/*
+	 * START OpenUi5 MOD
+	 * Since we do not use aggregations in NavContainer, we have to care about propagation and destroying ourselves.
+	 * Usually, this happens in ManagedObject.prototype.propagateProperties and ManagedObject.prototype.destroy.
+	 */
+	
+	/**
+	* @Override
+	*/
+	NavContainerProto.propagateProperties = function(vName){
+		var oProperties = this._getPropertiesToPropagate(),
+			bUpdateAll = vName === true, // update all bindings when no model name parameter has been specified
+			sName = bUpdateAll ? undefined : vName,
+			sTarget, oTarget, i;
+	
+		for (sTarget in this.targets) {
+			oTarget = this.targets[sTarget];
+			if (oTarget instanceof sap.ui.base.ManagedObject) {
+				this._propagateProperties(vName, oTarget, oProperties, bUpdateAll, sName);
+			}
+		}
+		
+	};
+	
+	NavContainerProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
+		jQuery.sap.log.debug("UBC");
+		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
+		
+		var oModelNames = {},
+			sModelName,
+			oContext;
+
+		// find models that need an context update
+		if (bUpdateAll) {
+			for (sModelName in this.oModels) {
+				if ( this.oModels.hasOwnProperty(sModelName) ) {
+					oModelNames[sModelName] = sModelName;
+				}
+			}
+			for (sModelName in this.oPropagatedProperties.oModels) {
+				if ( this.oPropagatedProperties.oModels.hasOwnProperty(sModelName) ) {
+					oModelNames[sModelName] = sModelName;
+				}
+			}
+		} else {
+			oModelNames[sFixedModelName] = sFixedModelName;
+		}
+
+		/*eslint-disable no-loop-func */
+		for (sModelName in oModelNames ) {
+			if ( oModelNames.hasOwnProperty(sModelName) ) {
+				sModelName = sModelName === "undefined" ? undefined : sModelName;
+
+				if (!bSkipChildren) {
+					var oContext = this.getBindingContext(sModelName);
+					// also update context in all child elements
+					for (sTarget in this.targets) {
+						var oTarget = this.targets[sTarget];
+						if (oTarget instanceof sap.ui.base.ManagedObject) {
+							oTarget.oPropagatedProperties.oBindingContexts[sModelName] = oContext;
+							oTarget.updateBindingContext(false,false,sModelName);
+						}
+					}
+				}
+			}
+		}
+		/*eslint-enable no-loop-func */
+	};
+	
+	/*
+	 * END OpenUi5 MOD
+	 */
 
 	/**
 	* @Override
@@ -799,6 +817,24 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			_handlePendingTransitions(_this);	
 		}, domAttachTimeout);
 		
+	};
+	
+	/**
+	 * Destroys targets before the current control is destroyed.
+	* @Override
+	*/
+	NavContainerProto.exit = function(){
+		for(var target in this.targets){
+			if(this.targets[target]){
+				var oldTarget = this.targets[target];
+				this.targets[target] = null;
+				
+				oldTarget.destroy();
+				
+				delete oldTarget;
+			}
+		}
+		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
 	};
 
 	return NavContainer;

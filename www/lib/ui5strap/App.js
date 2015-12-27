@@ -253,11 +253,149 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	*/
 	
 	/**
+	 * @Public
+	 * @Override
+	 */
+	AppProto.show = function(callback){
+		var _this = this;
+		AppBase.prototype.show.call(this, function(firstTime){
+			if(firstTime){
+				_this.showInitialContent(callback);
+			}
+			else{
+				callback && callback(firstTime);
+			}
+		});
+	};
+	
+	AppProto.showInitialContent = function(callback){
+		var _this = this,
+			initialViews = this.navigator.initialViews,
+			callI = 0;
+	
+		var complete = function(){
+			callI--;
+			if(callI === 0){
+				if(!_this.initialized){
+					_this.initialized = true;
+				}
+	
+				callback && callback();
+			}
+		}
+	
+		if(!initialViews || initialViews.length === 0){
+			callI = 1;
+			complete();
+			return;
+		}
+	
+		callI = initialViews.length;
+	
+		for(var i = 0; i < initialViews.length; i++){
+			var initialViewData = jQuery.extend({}, initialViews[i]);
+			if(!_this.initialized){
+				initialViewData.transition = 'transition-none';
+			}
+			this.navigateTo(this.getRootControl(), initialViewData, complete);
+		}
+	};
+	
+	/**
 	 * @Abstract
 	 * @Public
 	 */
 	AppProto.getRootControl = function(){
-		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');
+		var navigatorOptions = this.config.data.navigator || {};
+		
+		//Init default NavContainer
+		var navContainerModule = navigatorOptions.module || "ui5strap.Container";
+		
+		jQuery.sap.require(navContainerModule);
+		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
+		if(!NavContainerConstructor){
+			throw new Error('Invalid NavContainer: ' + navContainerModule);
+		}
+		
+		var navContainerOptions = navigatorOptions.settings || {};
+		if(navContainerOptions.id){
+			navContainerOptions.id = this.createControlId(navContainerOptions.id);
+		}
+		
+		var rootControl = new NavContainerConstructor(navContainerOptions);
+		
+		if(navigatorOptions.events && navigatorOptions.events.control){
+			var eKeys = Object.keys(navigatorOptions.events.control),
+				eKeysLength = eKeys.length;
+			for(var i = 0; i < eKeysLength; i++){
+				var evs = navigatorOptions.events.control[eKeys[i]];
+				
+				rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
+					
+					for(var j = 0; j < data.actions.length; j ++){
+						app.runAction({
+							"parameters" : data.actions[j], 
+							"eventSource" : oEvent.getSource(),
+							"eventParameters" : oEvent.getParameters()
+						});
+					}
+					
+					//console.log(data);
+				});
+			}
+		}
+		
+		return rootControl;
+	};
+	
+	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
+		jQuery.sap.log.debug("AppBaseProto.navigateTo");
+		
+		if(!suppressResolve){
+			viewConfig = this.config.getViewConfig(viewConfig);
+		}
+		
+		//TODO use default target here...
+		if(!viewConfig.target){
+			viewConfig.target = navControl.defaultTarget;
+		}
+		
+		if(!viewConfig.target){
+			throw new Error('Cannot navigate to page: no "target" specified!');
+		}
+		
+		if(navControl.isBusy(viewConfig.target)){
+			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
+
+			return false;
+		}
+
+		var _this = this,
+			target = viewConfig.target,
+			oPage = this.createView(viewConfig);
+
+		//Set target busy
+		navControl.setTargetBusy(target, true);
+
+		//Trigger onUpdate events
+		navControl.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
+
+		//Change NavContainer to page
+		navControl.toPage(
+			oPage, 
+			target, 
+			viewConfig.transition,
+			function toPage_complete(){
+				
+				//Set target available
+				navControl.setTargetBusy(target, false);
+				
+				//Trigger callback
+				callback && callback();
+			}
+		);
+		
+		return oPage;
 	};
 
 	//Return Module Constructor
