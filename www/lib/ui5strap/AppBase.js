@@ -1161,6 +1161,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			if(this.config.data.app.mode === "Devel"){
 				var viewName = jQuery.sap.getUriParameters().get("_view");
 				if(viewName){
+					if(jQuery.sap.startsWith(viewName, ".")){
+						viewName = this.config.data.app.package + viewName;
+					}
 					rootControl = this._buildSingleViewRootControl({ 
 						viewName : viewName,
 						parameters : {}
