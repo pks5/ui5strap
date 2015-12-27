@@ -127,20 +127,22 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 				
 				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem),
 					hostUpdate = this.getUpdate();
-				console.log(menuListItem, hostUpdate);
-				if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
-					|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
-					this.setText(menuListItem.getText());
-				}
 				
-				if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
-					|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Data){
+				if(menuListItem){
+					if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+						|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
+						this.setText(menuListItem.getText());
+					}
 					
-					this.data(menuListItem.data());
-				}
-				
-				if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
-					oEvent.setMarked("ui5strap.ISelectableItem.update");
+					if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+						|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Data){
+						
+						this.data(menuListItem.data());
+					}
+					
+					if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
+						oEvent.setMarked("ui5strap.ISelectableItem.update");
+					}
 				}
 			}
 			else{

@@ -3,7 +3,8 @@
 	        "id" : "ui5strap.demoapp",
 	        "package" : "ui5strap.demoapp",
 	        "name" : "Ui5Strap Demo",
-	        "logLevel" : 5
+	        "logLevel" : 5,
+	        "editMode" : true
 	},
 	
 	"css" : [

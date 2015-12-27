@@ -84,8 +84,10 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 			//TODO search for selectable item instead
 			listItem = ui5strap.Utils.findClosestParentControl(selectionProvider, ListItem);
 			
-			if(oEvent.isMarked("ui5strap.ISelectableItem.update")){
-				listItemUpdated = true;
+			if(listItem){
+				if(oEvent.isMarked("ui5strap.ISelectableItem.update")){
+					listItemUpdated = true;
+				}
 			}
 		}
 		

@@ -112,9 +112,10 @@ ServerProto.startUp = function(){
 	// Create a server
 	this._nodeHttpServer = nodeHttp.createServer(function handleRequest(request, response) {
 		var requestUrl = request.url;
-
-		if (requestUrl === "/") {
-			requestUrl = "/index.html";
+		console.log("Request: %s", requestUrl);
+		if (requestUrl.charAt(0) === "/" && (requestUrl.length === 1 || requestUrl.charAt(1) === "?")) {
+			
+			requestUrl = "/index.html" + requestUrl.substring(1);
 		}
 
 		var url = nodeUrl.parse(requestUrl, true);
@@ -124,7 +125,7 @@ ServerProto.startUp = function(){
 		}
 
 		var filename = nodePath.join(_this._pathToWWW, url.pathname);
-
+		console.log("Serving static file %", filename);
 		nodeFs.readFile(filename, function(err, file) {
 			if (err) {
 				response.writeHead(404);

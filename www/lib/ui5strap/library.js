@@ -1443,7 +1443,7 @@ sap.ui
 					ui5strap.Utils.findClosestParentControl = function(control,
 							TargetType) {
 						var parentControl = control, maxDepth = 20, i = 0;
-						while (!(parentControl instanceof TargetType)) {
+						while (parentControl && !(parentControl instanceof TargetType)) {
 							parentControl = parentControl.getParent()
 							i++;
 							if (i >= maxDepth) {
