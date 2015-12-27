@@ -35,16 +35,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("panel");
-		
-		if(collapse){
-			rm.addClass('panel-collapsible');
-		}
-		
-		if(ui5strap.Severity.None !== severity){
-			rm.addClass("panel-" + ui5strap.BSSeverity[severity]);
-		}
-		
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		

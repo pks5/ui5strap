@@ -80,6 +80,25 @@ sap.ui.define(['./library', './ControlBase', './PanelGroup'], function(library, 
 	}),
 	PanelProto = ui5strap.Panel.prototype;
 
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	PanelProto._getStyleClassRoot = function(){
+		var styleClass = this._getStyleClassPrefix() + " panel",
+			severity = this.getSeverity();
+		
+		if(ui5strap.Severity.None !== severity){
+			styleClass += " panel-" + ui5strap.BSSeverity[severity];
+		}
+		
+		if(this.getCollapse()){
+			styleClass += " panel-collapsible";
+		}
+		
+		return styleClass;
+	};
+	
 	PanelProto.setCollapsed = function(newCollapsed, suppressInvalidate){
 		if(!this.getCollapse() || newCollapsed === this.getCollapsed()){
 			return this;
