@@ -32,6 +32,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		"constructor" : function(config, viewer){
 			AppBase.call(this, config, viewer);
 			
+			if(!config.data.rootNavigator){
+				config.data.rootNavigator = {};
+			}
+			
 			//Init local vars
 			this._runtimeData = {
 				"theme" : null,
@@ -270,7 +274,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	
 	AppProto.showInitialContent = function(callback){
 		var _this = this,
-			initialViews = this.navigator.initialViews,
+			initialViews = this.config.data.rootNavigator.initialViews,
 			callI = 0;
 	
 		var complete = function(){
@@ -294,7 +298,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	
 		for(var i = 0; i < initialViews.length; i++){
 			var initialViewData = jQuery.extend({}, initialViews[i]);
-			if(!_this.initialized){
+			if(!this.initialized){
 				initialViewData.transition = 'transition-none';
 			}
 			this.navigateTo(this.getRootControl(), initialViewData, complete);
@@ -306,46 +310,51 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @Public
 	 */
 	AppProto.getRootControl = function(){
-		var navigatorOptions = this.config.data.navigator || {};
-		
-		//Init default NavContainer
-		var navContainerModule = navigatorOptions.module || "ui5strap.Container";
-		
-		jQuery.sap.require(navContainerModule);
-		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
-		if(!NavContainerConstructor){
-			throw new Error('Invalid NavContainer: ' + navContainerModule);
-		}
-		
-		var navContainerOptions = navigatorOptions.settings || {};
-		if(navContainerOptions.id){
-			navContainerOptions.id = this.createControlId(navContainerOptions.id);
-		}
-		
-		var rootControl = new NavContainerConstructor(navContainerOptions);
-		
-		if(navigatorOptions.events && navigatorOptions.events.control){
-			var eKeys = Object.keys(navigatorOptions.events.control),
-				eKeysLength = eKeys.length;
-			for(var i = 0; i < eKeysLength; i++){
-				var evs = navigatorOptions.events.control[eKeys[i]];
-				
-				rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
-					
-					for(var j = 0; j < data.actions.length; j ++){
-						app.runAction({
-							"parameters" : data.actions[j], 
-							"eventSource" : oEvent.getSource(),
-							"eventParameters" : oEvent.getParameters()
-						});
-					}
-					
-					//console.log(data);
-				});
+		if(!this._rootControl){
+			var _this = this;
+			var navigatorOptions = this.config.data.rootNavigator;
+			
+			//Init default NavContainer
+			var navContainerModule = navigatorOptions.module || "ui5strap.NavContainer";
+			
+			jQuery.sap.require(navContainerModule);
+			var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
+			if(!NavContainerConstructor){
+				throw new Error('Invalid NavContainer: ' + navContainerModule);
 			}
+			
+			var navContainerOptions = navigatorOptions.settings || {};
+			if(navContainerOptions.id){
+				navContainerOptions.id = this.createControlId(navContainerOptions.id);
+			}
+			
+			var rootControl = new NavContainerConstructor(navContainerOptions);
+			
+			if(navigatorOptions.events && navigatorOptions.events.control){
+				var eKeys = Object.keys(navigatorOptions.events.control),
+					eKeysLength = eKeys.length;
+				for(var i = 0; i < eKeysLength; i++){
+					var evs = navigatorOptions.events.control[eKeys[i]];
+					
+					rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
+						
+						for(var j = 0; j < data.actions.length; j ++){
+							_this.runAction({
+								"parameters" : data.actions[j], 
+								"eventSource" : oEvent.getSource(),
+								"eventParameters" : oEvent.getParameters()
+							});
+						}
+						
+						//console.log(data);
+					});
+				}
+			}
+			
+			this._rootControl = rootControl;
 		}
 		
-		return rootControl;
+		return this._rootControl;
 	};
 	
 	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {

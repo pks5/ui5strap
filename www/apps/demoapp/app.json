@@ -214,53 +214,48 @@
 		"ui5strap.demoapp.actions.Debug"
 	],
 	
-	"components" : [
-	         {
-	             
-	             "id" : "frame",
-	             "module" : "ui5strap.AppFrame",
-	             "navContainer" : "ui5strap.BarNavContainer",
-	             "navContainerOptions" : {
-	             	"barSizeExtraSmall" : 1,
-	             	"barPlacementExtraSmall" : "Top",
-	             	
-	             
-	             	"barSizeSmall" : 2,
-	             	"barPlacementSmall" : "Right",
-	             	
-	             	"barSizeMedium" : 1,
-	             	"barPlacementMedium" : "Bottom",
-	             	"barTransitionMedigum" : "none",
-	             	
-	             	"barSizeLarge" : 2,
-	             	"barPlacementLarge" : "Left",
-	             	"barModeLarge" : "IntrudeFixed",
-	             	
-	             	"barVisible" : false
-	             	
-	             },
-	             
-	             "events" : {
-	             	"control" : {
-	             		"pageChange" : [
-	             			"ui5strap.demoapp.actions.SetSelectedMenuRoot"
-	             		]
-	             	}
-	             },
-	             
-	             "initialViews" : [
-	                 { 
-	                     "viewName" : "ui5strap.demoapp.views.Home"
-	                 },
-	                 { 
-	                     "viewName" : "ui5strap.demoapp.views.MenuRoot"
-	                 }
-	             ]
+	"rootNavigator" : {
+	     "module" : "ui5strap.BarNavContainer",
+         "settings" : {
+         	"barSizeExtraSmall" : 1,
+         	"barPlacementExtraSmall" : "Top",
+         	
+         
+         	"barSizeSmall" : 2,
+         	"barPlacementSmall" : "Right",
+         	
+         	"barSizeMedium" : 1,
+         	"barPlacementMedium" : "Bottom",
+         	"barTransitionMedigum" : "none",
+         	
+         	"barSizeLarge" : 2,
+         	"barPlacementLarge" : "Left",
+         	"barModeLarge" : "IntrudeFixed",
+         	
+         	"barVisible" : false
+         	
+         },
+         
+         "events" : {
+         	"control" : {
+         		"pageChange" : [
+         			"ui5strap.demoapp.actions.SetSelectedMenuRoot"
+         		]
+         	}
+         },
+         
+         "initialViews" : [
+             { 
+                 "viewName" : "ui5strap.demoapp.views.Home"
+             },
+             { 
+                 "viewName" : "ui5strap.demoapp.views.MenuRoot"
+             }
+         ]
+	},
 	
-	         },
-	         
-	         {
-	             
+	"components" : [
+	        {
 	             "id" : "feedClient",
 	             "module" : "ui5strap.RestClient",
 	             "url" : "server/feed",
@@ -293,7 +288,6 @@
 	         },
 	         
 	         {
-	             
 	             "id" : "feedManager",
 	             "module" : "ui5strap.demoapp.modules.FeedManager"
 	        }

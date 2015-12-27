@@ -38,31 +38,13 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 	/**
 	* @Override
 	*/
-	NavigateProto.parameters = {
-		
-		"FRAME_CONTROLLER" : {
-			"required" : false,
-			"type" : ["string", "object"],
-			"defaultValue" : "frame"
-		}
-
-	};
+	NavigateProto.parameters = {};
 
 	/**
 	* Run the ActionModule
 	* @override
 	*/
 	NavigateProto.run = function(){
-			var frameController = this.getParameter("FRAME_CONTROLLER");
-			
-			if("string" === typeof frameController){
-				frameController = this.context.app.components[frameController];
-			}
-			
-			if(!(frameController instanceof ui5strap.AppFrame)){
-				throw new Error("Cannot goto page: .FRAME_CONTROLLER must be an instance of ui5strap.AppFrame!");
-			}
-			
 			var navContainer = this.context.app.getRootControl(),
 				CONTROLS = this.context.action[this.namespace]["CONTROLS"];
 			
@@ -77,7 +59,7 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 			var VIEWS = this.context.action[this.namespace]["VIEWS"],
 				viewsKeys = Object.keys(VIEWS);
 			for(var i = 0; i < viewsKeys.length; i++){
-				frameController.navigateTo(navContainer, this.context.resolve(this, VIEWS[viewsKeys[i]]));
+				this.context.app.navigateTo(navContainer, this.context.resolve(this, VIEWS[viewsKeys[i]]));
 			}
 	};
 
