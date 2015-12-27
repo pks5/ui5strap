@@ -300,6 +300,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			configDataJSON.app.styleClass = 'ui5strap-app-standard';
 		}
 		
+		if(!configDataJSON.environments){
+			configDataJSON.environments = {};
+		}
+		
 		//App Icons
 		if(!('icons' in configDataJSON)){
 			configDataJSON.icons = {};
