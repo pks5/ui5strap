@@ -31,6 +31,8 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);
 			
+			this.app.setRootComponent(this);
+			
 			this.initialized = false;
 		}
 	}),
@@ -42,26 +44,22 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
-		var _this = this;
-		
-		var rootControl = this._createControl();
-		
-		this.getRootControl = function(){
-			return rootControl;
-		};
-		
-		this.app.getRootControl = function(){
-			return rootControl;
-		};
-		
-		this.app.showInitialContent = function(callback){
-			_this.showInitialContent(callback);
-		};
-		
 		this._initHistory();
 	};
 
-	/*
+	AppFrameProto.getRootControl = function(){
+		return this.app.getRootControl();
+	};
+	
+	/**
+	 * Creates the control that represents this AppFrame
+	 * @Protected
+	 */
+	AppFrameProto._buildRootControl = function(){
+		return this._createControl();
+	};
+	
+	/**
 	 * Creates the control that represents this AppFrame
 	 * @Protected
 	 */
@@ -110,18 +108,11 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		return rootControl;
 	};
 
-	/*
-	* Inits History for navigation handling in browsers.
-	*/
-	AppFrameProto._initHistory = function(){
-
-	};
-
 	/**
 	* Shows the initial content defined in app configuration
 	* @Public
 	*/
-	AppFrameProto.showInitialContent = function(callback){
+	AppFrameProto._showInitialContent = function(callback){
 		jQuery.sap.log.debug("AppFrameProto.showInitialContent");
 
 		var _this = this,
@@ -157,9 +148,24 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
 	};
 	
+	/**
+	* Inits History for navigation handling in browsers.
+	* @Protected
+	*/
+	AppFrameProto._initHistory = function(){
+
+	};
+	
 	/*
 	 * DEPRECATED METHODS 
 	 */
+	/**
+	 * @deprecated
+	 */
+	AppFrameProto.showInitialContent = function(callback){
+		jQuery.sap.log.warning("AppFrameProto.showInitialContent is deprecated. Use AppFrameProto._showInitialContent instead.");
+		return this._showInitialContent(callback);
+	}
 
 	/**
 	 * @deprecated

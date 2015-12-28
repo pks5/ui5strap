@@ -34,6 +34,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			this.config = config;
 
 			this.components = {};
+			this._rootComponent = this;
 
 			this._pageCache = {};
 			this._events = {};
@@ -1129,8 +1130,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	AppBaseProto._buildRootControl = function(){
-		
-		alert("Please inherit ui5strap.AppBase._buildRootControl");
+		  alert("Please inherit ui5strap.AppBase._buildRootControl");
 	};
 	
 	/**
@@ -1151,7 +1151,20 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
-	 * @Abstract
+	 * @Public
+	 */
+	AppBaseProto.getRootComponent = function(){
+		return this._rootComponent;
+	};
+	
+	/**
+	 * @Public
+	 */
+	AppBaseProto.setRootComponent = function(rootComponent){
+		this._rootComponent = rootComponent;
+	};
+	
+	/**
 	 * @Public
 	 */
 	AppBaseProto.getRootControl = function(){
@@ -1177,11 +1190,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 					rootControl = this._buildSingleViewRootControl(viewConfig);
 				}
 				else{
-					rootControl = this._buildRootControl();
+					rootControl = this._rootComponent._buildRootControl();
 				}
 			}
 			else{
-				rootControl = this._buildRootControl();
+				rootControl = this._rootComponent._buildRootControl();
 			}
 			
 			this._rootControl = rootControl;

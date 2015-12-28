@@ -268,7 +268,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					callback && callback(firstTime);
 				}
 				else{
-					_this.showInitialContent(callback);
+					_this._rootComponent._showInitialContent(callback);
 				}
 			}
 			else{
@@ -277,7 +277,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		});
 	};
 	
-	AppProto.showInitialContent = function(callback){
+	/**
+	 * @Protected
+	 */
+	AppProto._showInitialContent = function(callback){
 		
 			var _this = this,
 				initialViews = this.config.data.rootNavigation.initialViews,
