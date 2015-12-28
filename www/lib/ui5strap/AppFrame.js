@@ -107,12 +107,21 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		
 		return rootControl;
 	};
+	
+	/**
+	 * @Protected
+	 * 
+	 */
+	AppFrameProto._showInitialContent = function(callback){
+		return this.showInitialContent(callback);
+	}
 
 	/**
 	* Shows the initial content defined in app configuration
 	* @Public
+	* @deprecated
 	*/
-	AppFrameProto._showInitialContent = function(callback){
+	AppFrameProto.showInitialContent = function(callback){
 		jQuery.sap.log.debug("AppFrameProto.showInitialContent");
 
 		var _this = this,
@@ -159,13 +168,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	/*
 	 * DEPRECATED METHODS 
 	 */
-	/**
-	 * @deprecated
-	 */
-	AppFrameProto.showInitialContent = function(callback){
-		jQuery.sap.log.warning("AppFrameProto.showInitialContent is deprecated. Use AppFrameProto._showInitialContent instead.");
-		return this._showInitialContent(callback);
-	}
+	
 
 	/**
 	 * @deprecated
@@ -221,7 +224,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
 		jQuery.sap.log.warning("AppFrameProto.toPage is deprecated! Use AppBaseProto.navigateTo instead!");
-		return this.getApp.navigateTo(this.getRootControl(), viewConfig, callback, true);
+		return this.getApp().navigateTo(this.getRootControl(), viewConfig, callback, true);
 	};
 
 	/**
