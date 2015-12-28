@@ -47,6 +47,10 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 				align : {
 					type:"ui5strap.Alignment",
 					defaultValue:ui5strap.Alignment.Default
+				},
+				trail : {
+					type:"ui5strap.TrailHtml", 
+					defaultValue:ui5strap.TrailHtml.Space
 				}
 			},
 					

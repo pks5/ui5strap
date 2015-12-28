@@ -53,6 +53,7 @@ sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 		
 		rm.write("</div>");
 	
+		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 	
 	return ButtonGroupRenderer;
