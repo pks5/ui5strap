@@ -115,7 +115,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	ListBaseProto.setSelectedIndex = function(itemIndex){
 		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
 		
-		return this.setSelectionIndices(itemIndex);
+		return this.setSelectionIndex(itemIndex);
 	};
  
 	/**
@@ -125,7 +125,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	ListBaseProto.getSelectedIndex = function(){
 		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
 		
-		return this.getSelectionIndices();
+		return this.getSelectionIndex();
 	};
 
 	

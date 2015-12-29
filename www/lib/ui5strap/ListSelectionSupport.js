@@ -164,7 +164,7 @@ sap.ui.define(['./library'], function(library){
 	 * @Private
 	 */
 	var _changeSelectionIndices = function(_this, indices, mode, selectionGroup){
-		var items = this._getItems();
+		var items = _this._getItems();
 		
 		if(!jQuery.isArray(indices)){
 			//Single value

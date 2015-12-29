@@ -152,7 +152,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 			if(!_this.initialized){
 				initialViewData.transition = 'transition-none';
 			}
-			this.navigateTo(this.getRootControl(), initialViewData, complete);
+			this.gotoPage(initialViewData, complete);
 		}
 
 	};
