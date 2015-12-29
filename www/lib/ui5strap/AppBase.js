@@ -944,7 +944,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//}
 		
 		viewConfig.afterInit = function(oEvent){
-			alert("Event 'afterInit' called from view '" + viewConfig.viewName + "'");
+			jQuery.log.info("Event 'afterInit' called from view '" + viewConfig.viewName + "'");
 		};
 
 		//Will crash if "viewName" or "type" attribute is missing!

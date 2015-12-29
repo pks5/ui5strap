@@ -40,9 +40,9 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 			},
 			
 			handleFeedTap : function(oEvent){
-				var _this = this;
-				var command = oEvent.getParameter("srcControl").data("command");
-				var postData = oEvent.getParameter("srcItem").getBindingContextData("FEED_INFO");
+				var _this = this,
+					command = oEvent.getParameter("srcControl").data("command"),
+					postData = oEvent.getParameter("srcItem").getBindingContextData("FEED_INFO");
 				
 				if(command === "DELETE"){
 					this._feedManager.deletePost(postData.id);

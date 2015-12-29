@@ -225,7 +225,7 @@ sap.ui
 								// Clear timeout for current page, if any
 								window.clearTimeout(_this._currentTimout);
 
-								if (event === _this._firstFinished) {
+								if ("current" === _this._firstFinished) {
 									_runEvent(_this, "first");
 								}
 
@@ -261,7 +261,7 @@ sap.ui
 								// Clear timeout for next page, if any
 								window.clearTimeout(_this._nextTimout);
 
-								if (event === _this._firstFinished) {
+								if ("next" === _this._firstFinished) {
 									_runEvent(_this, "first");
 								}
 

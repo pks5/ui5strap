@@ -105,7 +105,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 
 		}
-//alert('test');
 		
 		return this;
 	};

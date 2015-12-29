@@ -90,9 +90,9 @@ sap.ui.define(['ui5strap/library', 'ui5strap/MainComponent'], function(library, 
 	 * @Public
 	 */
 	FeedManagerProto.postDetail = function(postId){
-		var frame = this.getApp().getFrame();
+		var _this = this;
 		this.readPost(postId, function(postDataDetail){
-			frame.navigateTo(frame.getRootControl(), {
+			_this.getApp().navigateTo(_this.getApp().getRootControl(), {
 				"viewName" : "ui5strap.demoapp.views.PostDetail",
 				"parameters" : {
 					"post" : postDataDetail
