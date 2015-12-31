@@ -95,14 +95,14 @@ sap.ui.define(['./library'], function(library){
 		 */
 		var oldGetStyleClass = oControl._getStyleClass;
 		oControl._getStyleClass = function(){
-			return oldGetStyleClass.call(this) + " " + SelectableSupport.getStyleClass(this);	
+			return oldGetStyleClass.call(this) + SelectableSupport.getStyleClass(this);	
 		};
 	};
 	
 	SelectableSupport.getStyleClass = function(oControl){
 		var styleClass = "";
 		if(oControl.getSelected()){
-			styleClass += "active";
+			styleClass += " active";
 		}
 		
 		if(!oControl.getEnabled()){

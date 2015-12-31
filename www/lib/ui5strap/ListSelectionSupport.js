@@ -233,7 +233,7 @@ sap.ui.define(['./library'], function(library){
 		 */
 		var oldGetStyleClass = oControl._getStyleClass;
 		oControl._getStyleClass = function(){
-			return oldGetStyleClass.call(this) + " " + ListSelectionSupport.getStyleClass(this);	
+			return oldGetStyleClass.call(this) + ListSelectionSupport.getStyleClass(this);	
 		};
 		
 		/*

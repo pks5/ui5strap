@@ -101,7 +101,7 @@ sap.ui.define(['./library'], function(library){
 			return this._getStyleClassPrefix() 
 					+ " " + this._getStyleClassRoot()
 					+ " " + this._getStyleClassDesign() 
-					+ " " + BaseSupport.getStyleClass(this);	
+					+ BaseSupport.getStyleClass(this);	
 		};
 		
 		//Class Name Builders
@@ -141,7 +141,7 @@ sap.ui.define(['./library'], function(library){
 				.getVisibilityMedium(), visibilityLarge = oControl
 				.getVisibilityLarge(), Visibility = ui5strap.Visibility;
 		
-		var resultHidden = [ "", "", "", "" ], inheritHide = false;
+		var resultHidden = [ "", "", "", "" ], styleClass = "", inheritHide = false;
 		
 		// Visibility for EXTRA_SMALL screens
 		if (visibilityExtraSmall === Visibility.Visible) {
@@ -152,6 +152,7 @@ sap.ui.define(['./library'], function(library){
 				|| visibilityExtraSmall === Visibility.Hidden) {
 			// Hidden on EXTRA_SMALL
 			resultHidden[0] = "ui5strap-hide-xs";
+			styleClass += " ui5strap-hide-xs";
 			inheritHide = true;
 		}
 		
@@ -164,6 +165,7 @@ sap.ui.define(['./library'], function(library){
 				|| visibilitySmall === Visibility.Hidden) {
 			// Hidden on SMALL
 			resultHidden[1] = "ui5strap-hide-sm";
+			styleClass += " ui5strap-hide-sm";
 			inheritHide = true;
 		}
 		
@@ -176,6 +178,7 @@ sap.ui.define(['./library'], function(library){
 				|| visibilityMedium === Visibility.Hidden) {
 			// Hidden on MEDIUM
 			resultHidden[2] = "ui5strap-hide-md";
+			styleClass += " ui5strap-hide-md";
 			inheritHide = true;
 		}
 		
@@ -187,9 +190,10 @@ sap.ui.define(['./library'], function(library){
 				|| visibilityLarge === Visibility.Hidden) {
 			// Hidden on LARGE
 			resultHidden[3] = "ui5strap-hide-lg";
+			styleClass += " ui5strap-hide-lg";
 		}
 		
-		return resultHidden.join(" ");
+		return styleClass;
 	};
 	
 	return BaseSupport;
