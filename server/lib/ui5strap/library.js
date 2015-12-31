@@ -322,8 +322,20 @@ RestController.prototype._configure = function(){};
 /**
  * @Protected
  */
-RestController.prototype._resolvePath = function(path){
-	return nodePath.join(this.configLocation, path);
+RestController.prototype._createMethodPath = function(method){
+    var path = this.configLocation;
+    if(path.charAt(0) !== "/"){
+            path = "/" + path;
+    }
+    if(path.charAt(path.length - 1) !== "/"){
+            path = path + "/";
+    }
+    path += this.options.url;
+    if(path.charAt(path.length - 1) !== "/"){
+            path = path + "/";
+    }
+    path += method.path || Utils.hyphenize(methodName);
+    return path;
 };
 
 /**
@@ -338,12 +350,9 @@ RestController.prototype._install = function(){
 	for(var i = 0; i < methodKeys.length; i++){
 		var methodName = methodKeys[i],
 			method = methods[methodName],
-			path = nodePath.join(this._resolvePath(this.options.url), (method.path || Utils.hyphenize(methodName)));
+			path = this._createMethodPath(method);
 		
 		//if(method.type){
-		if(path.charAt(0) !== "/"){
-			path = "/" + path;
-		}
 		
 		var pathParameters = [];
 		var route = path.replace(/\{([a-zA-Z_0-9]+)\}/g, function(s, parameterName, x, y){
