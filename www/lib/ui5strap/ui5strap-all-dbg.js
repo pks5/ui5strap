@@ -509,6 +509,13 @@ sap.ui
 						Default : "Default",
 						Navigation : "Navigation"
 					};
+					
+					ui5strap.DropdownMenuHostUpdate = {
+							None : "None",
+							Text : "Text",
+							Data : "Data",
+							TextAndData : "TextAndData"
+					};
 
 					/*
 					 * LinkType
@@ -752,12 +759,7 @@ sap.ui
 						None : "None",
 						Single : "Single",
 						SingleToggle : "SingleToggle",
-						Multiple : "Multiple",
-
-						// Deprecated
-						SingleMaster : "SingleMaster",
-						Master : "Master"
-
+						Multiple : "Multiple"
 					};
 
 					/*
@@ -766,9 +768,6 @@ sap.ui
 					ui5strap.ContainerType = {
 						// Plain HTML <div>
 						Default : "Default",
-
-						// Plain HTML <span>
-						Text : "Text",
 
 						// Bootstrap "container" & "container-fluid"
 						Fluid : "Fluid",
@@ -1011,231 +1010,7 @@ sap.ui
 
 					};
 
-					/**
-					 * Converts old transition strings into new ones.
-					 * 
-					 * @deprecated
-					 * @Private
-					 */
-					var _deprecatedTransitionsConvert = function($trans) {
-						var $newTrans = "";
-						if ($trans === 'transition-zoom')
-							$newTrans = 'zoom-in';
-						else if ($trans === 'transition-zoom2')
-							$newTrans = 'zoom-out';
-
-						else if ($trans === 'transition-flip')
-							$newTrans = 'flip-horizontal-ccw';
-						else if ($trans === 'transition-slide')
-							$newTrans = 'slide-rtl';
-						else
-							$newTrans = $trans.substring(11);
-
-						jQuery.sap.log.warning("Transition deprecated: '"
-								+ $trans + "'. Please use instead: "
-								+ $newTrans);
-						return $newTrans;
-					};
-
-					/**
-					 * Constructs a responsive Transition (experimental)
-					 * 
-					 * @Constructor
-					 * @Public
-					 */
-					ui5strap.ResponsiveTransition = function(data) {
-						this._data = data;
-
-						var transString = "", transSpeed = data.transitionSpeed;
-
-						if (data.transitionAll) {
-							if (data.transitionAll.indexOf("transition-") === 0) {
-
-								data.transitionAll = _deprecatedTransitionsConvert(data.transitionAll);
-							}
-							transString = "ui5strap-trans-all-type-"
-									+ data.transitionAll;
-						} else {
-							transString += data.transitionExtraSmall ? "ui5strap-trans-xs-type-"
-									+ data.transitionExtraSmall
-									: "ui5strap-trans-xs-type-none";
-							transString += data.transitionSmall ? " ui5strap-trans-sm-type-"
-									+ data.transitionSmall
-									: " ui5strap-trans-sm-type-none";
-							transString += data.transitionMedium ? " ui5strap-trans-md-type-"
-									+ data.transitionMedium
-									: " ui5strap-trans-md-type-none";
-							transString += data.transitionLarge ? " ui5strap-trans-lg-type-"
-									+ data.transitionLarge
-									: " ui5strap-trans-lg-type-none";
-
-							if (transString === "ui5strap-trans-xs-type-none ui5strap-trans-sm-type-none ui5strap-trans-md-type-none ui5strap-trans-lg-type-none") {
-								transString = "ui5strap-trans-all-type-none";
-							}
-						}
-
-						this._skip = transString === "ui5strap-trans-all-type-none";
-
-						this._transitions = transString;
-
-						if (transSpeed && transitionSpeed !== "normal") {
-							this._transitions += " ui5strap-transition-speed-"
-									+ transSpeed;
-						}
-
-						this._prepared = false;
-						this._executed = false;
-
-						/**
-						 * Should always be surrounded by a RAF.
-						 * 
-						 * @Public
-						 */
-						this.prepare = function() {
-							if (this._prepared || this._executed) {
-								throw new Error(
-										'Cannot prepare transition: already prepared or executed!');
-							}
-
-							this._prepared = true;
-
-							if (!ui5strap.support.transitionEndEvent
-									|| this._skip) {
-								this._data.$next
-										&& this._data.$next
-												.removeClass('ui5strap-hidden');
-
-								return;
-							}
-
-							this._data.$current
-									&& this._data.$current
-											.addClass(this._transitions
-													+ ' '
-													+ 'ui5strap-transition-current');
-							this._data.$next
-									&& this._data.$next
-											.addClass(
-													this._transitions
-															+ ' '
-															+ 'ui5strap-transition-next')
-											.removeClass('ui5strap-hidden');
-						};
-
-						/**
-						 * Should always be surrounded by a RAF.
-						 * 
-						 * @Public
-						 */
-						this.execute = function(callbackCurrent, callbackNext) {
-							var _this = this;
-
-							if (!this._prepared) {
-								throw new Error(
-										'Cannot execute responsive transition: not prepared!');
-							}
-
-							if (this._executed) {
-								throw new Error(
-										'Cannot execute responsive transition: already executed!');
-							}
-
-							this._executed = true;
-							this._neca = false;
-							this._cuca = false;
-
-							if (ui5strap.support.transitionEndEvent
-									&& !this._skip) {
-								jQuery.sap.log.debug("[TRANS#" + this._data.id
-										+ "] Executing '" + _this._transitions
-										+ "'");
-
-								if (callbackCurrent && this._data.$current) {
-									var _currentTimout = window
-											.setTimeout(
-													function() {
-														if (_this._cuca) {
-															return;
-														}
-														_this._cuca = true;
-														jQuery.sap.log
-																.warning('[TRANS#'
-																		+ _this._data.id
-																		+ ' ('
-																		+ _this._transitions
-																		+ ')] Hiding page caused a timeout.');
-														callbackCurrent
-																.call(_this);
-													},
-													ui5strap.options.transitionTimeout);
-
-									this._data.$current
-											.one(
-													ui5strap.support.transitionEndEvent,
-													function() {
-														if (_this._cuca) {
-															return;
-														}
-														_this._cuca = true;
-														window
-																.clearTimeout(_currentTimout);
-														callbackCurrent
-																.call(_this);
-													});
-								}
-
-								if (callbackNext && this._data.$next) {
-									var _nextTimout = window
-											.setTimeout(
-													function() {
-														if (_this._neca) {
-															return;
-														}
-														_this._neca = true;
-														jQuery.sap.log
-																.warning('[TRANS#'
-																		+ _this._data.id
-																		+ ' ('
-																		+ _this._transitions
-																		+ ')] Showing page caused a timeout.');
-														callbackNext
-																.call(_this);
-													},
-													ui5strap.options.transitionTimeout);
-
-									this._data.$next
-											.one(
-													ui5strap.support.transitionEndEvent,
-													function() {
-														if (_this._neca) {
-															return;
-														}
-														_this._neca = true;
-														window
-																.clearTimeout(_nextTimout);
-														callbackNext
-																.call(_this);
-													});
-								}
-
-								this._data.$current
-										&& this._data.$current
-												.addClass('ui5strap-transition-current-out');
-								this._data.$next
-										&& this._data.$next
-												.removeClass('ui5strap-transition-next');
-							} else {
-								jQuery.sap.log.debug("[TRANS#" + _this._data.id
-										+ "] Transition skipped: '"
-										+ _this._transitions + "'");
-
-								callbackCurrent && callbackCurrent.call(_this);
-								callbackNext && callbackNext.call(_this);
-							}
-
-						};
-
-					};
+					
 
 					/*
 					 * -------
@@ -1443,12 +1218,15 @@ sap.ui
 					 * -----
 					 */
 
-					/*
+					/**
 					 * @Package
 					 */
 					ui5strap.Utils = {};
 
-					// @deprecated
+					/**
+					 * Builds dynamic setters from a list of html tag attributes.
+					 * @Public
+					 */
 					ui5strap.Utils.dynamicAttributes = function(controlProto,
 							attributeNames) {
 						for (var i = 0; i < attributeNames.length; i++) {
@@ -1457,25 +1235,31 @@ sap.ui
 						}
 					};
 
-					// @deprecated
+					/**
+					 * Builds a dynamic setter from a html tag attribute.
+					 * @Public
+					 */
 					ui5strap.Utils.dynamicAttribute = function(controlProto,
 							attributeName) {
 						controlProto['set'
 								+ jQuery.sap.charToUpperCase(attributeName, 0)] = function(
-								newValue) {
+								newValue, suppressInvalidate) {
 							ui5strap.Utils.updateAttribute(this, attributeName,
-									newValue);
+									newValue, suppressInvalidate);
 						};
 					};
 
-					// @deprecated
+					/**
+					 * Builds dynamic setters from a list of html tag attributes.
+					 * @Public
+					 */
 					ui5strap.Utils.updateAttribute = function(oControl,
-							attributeName, newValue) {
+							attributeName, newValue, suppressInvalidate) {
 						if (oControl.getDomRef()) {
 							oControl.$().attr(attributeName, newValue);
 							oControl.setProperty(attributeName, newValue, true);
 						} else {
-							oControl.setProperty(attributeName, newValue);
+							oControl.setProperty(attributeName, newValue, suppressInvalidate);
 						}
 					};
 
@@ -1659,7 +1443,7 @@ sap.ui
 					ui5strap.Utils.findClosestParentControl = function(control,
 							TargetType) {
 						var parentControl = control, maxDepth = 20, i = 0;
-						while (!(parentControl instanceof TargetType)) {
+						while (parentControl && !(parentControl instanceof TargetType)) {
 							parentControl = parentControl.getParent()
 							i++;
 							if (i >= maxDepth) {
@@ -1800,6 +1584,8 @@ sap.ui
 					 */
 					ui5strap.RenderUtils.alignment = function(rm, oControl,
 							navbarClass, sidebarClass) {
+						jQuery.sap.log.warning("ui5strap.RenderUtils.alignment is deprecated. Use PositionSupport instead.");
+						
 						var align = oControl.getAlign(), Alignment = ui5strap.Alignment;
 
 						if (align !== Alignment.Default) {
@@ -1841,27 +1627,18 @@ sap.ui
 					 * Responsive visibility
 					 * 
 					 * @Public
+					 * @deprecated
 					 */
 					ui5strap.RenderUtils.visibility = function(rm, oControl) {
-						var visibility = oControl.getVisibility(), visibilityExtraSmall = oControl
+						jQuery.sap.log.warning("ui5strap.RenderUtils.visibility is deprecated! Use BaseSupport instead.");
+						
+						var visibility = visibilityExtraSmall = oControl
 								.getVisibilityExtraSmall(), visibilitySmall = oControl
 								.getVisibilitySmall(), visibilityMedium = oControl
 								.getVisibilityMedium(), visibilityLarge = oControl
 								.getVisibilityLarge(), Visibility = ui5strap.Visibility;
 
 						var resultHidden = [ "", "", "", "" ], inheritHide = false;
-
-						// Generic visibility
-						// TODO check if necccessary and working at all
-						if (visibility !== Visibility.Default) {
-
-							if (visibility === Visibility.Hidden) {
-								resultHidden = [ "ui5strap-hide-xs",
-										"ui5strap-hide-sm", "ui5strap-hide-md",
-										"ui5strap-hide-lg" ];
-								inheritHide = true;
-							}
-						}
 
 						// Visibility for EXTRA_SMALL screens
 						if (visibilityExtraSmall === Visibility.Visible) {
@@ -2432,10 +2209,6 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 		//@deprecated
 		_this.parameters = _this.action;
 		
-		if(_this.action.DEBUG && console){
-			console.log(_this);
-		}
-		
 		//Event Source
 		if(action.eventSource){
 			_this.eventSource = action.eventSource;
@@ -2477,7 +2250,7 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 		
 		//Number
 		ActionContext.NUMBER ++;
-		_this._actionNumber = ActionContext.NUMBER;
+		_this._name = "[" + (action.name || "ACTION#" + ActionContext.NUMBER) + "]";
 
 		//Call stack
 		_this._callStack = [];
@@ -2486,7 +2259,24 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 
 		//Init Log
 		_initLog(_this);
+		
+		if(_this.action.DEBUG && console){
+			console.log(_this._name, _this);
+		}
 	};
+	
+	/**
+	* Returns String representation of this context.
+	* 
+	* @Public
+	*/
+	ActionContextProto.toString = function(){
+		return this._name;
+	};
+	
+	/*
+	 * START build pool
+	 */
 	
 	/**
 	 * @Constructor
@@ -2703,14 +2493,9 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 		}
 	};
 	
-	/**
-	* Returns String representation of this context.
-	* 
-	* @Public
-	*/
-	ActionContextProto.toString = function(){
-		return '[ACTION#' + this._actionNumber + ']';
-	};
+	/*
+	 * END build pool
+	 */
 	
 	/**
 	 * @Public
@@ -2858,7 +2643,7 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 					
 					if(null !== fPart){
 						if("function" === pointerType){
-							jQuery.sap.log.info("Executing function '" + kPart + "' with arguments (" + fPart + ")");
+							jQuery.sap.log.debug("Executing function '" + kPart + "' with arguments (" + fPart + ")");
 							pointer = _callParamFunction(
 										this, 
 										prevPointer, 
@@ -3776,7 +3561,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 	*/
 	Action.runTasks = function(context, actionModulesList){
 		if(!actionModulesList){
-			jQuery.sap.log.debug("[ACTION] Tried to run empty task list.");
+			//jQuery.sap.log.debug("[ACTION] Tried to run empty task list.");
 			return;
 		}
 		
@@ -3812,6 +3597,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 		if(typeof actionName === 'string'){
 			Action.loadFromFile(actionName, function loadFromFileSuccess(actionJSON){
 				action.parameters = actionJSON;
+				action.name = actionName;
 				var context = new ActionContext(action);
 				_execute(context);
 			});
@@ -3914,6 +3700,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		//Original function parameters
 		viewConfig.viewData.__ui5strap.viewDef = viewDef;
+		
+		if(!viewConfig.type){
+			viewConfig.type = "XML";
+		}
 
 		return viewConfig;
 	};
@@ -3944,6 +3734,24 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 
 		return eventList;
+	};
+	
+	AppConfigProto.getEnvironment = function(){
+		var currentEnv = this.data.app.environment || "local",
+			envData = this.data.environments[currentEnv];
+		
+		if(!envData){
+			if(currentEnv === "local"){
+				return {
+					"name" : "Local Environment",
+					"url" : this.options.pathToServletRoot
+				}
+			}
+			
+			throw new Error("No such environment: " + currentEnv);
+		}
+		
+		return envData;
 	};
 
 	/*
@@ -4036,7 +3844,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 		if(jQuery.sap.startsWith(path, '/')){
 			//Return path relative to servlet root (context)
-			return this.options.pathToServletRoot + path;
+			var envUrl = this.getEnvironment().url;
+			if(envUrl.charAt(envUrl.length-1) === "/"){
+				envUrl = envUrl.substr(0, envUrl.length-1);
+			}
+			return envUrl + path;
 		}
 		else if(
 			jQuery.sap.startsWith(path, './')
@@ -4098,6 +3910,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		if(!('styleClass' in configDataJSON.app)){
 			configDataJSON.app.styleClass = 'ui5strap-app-standard';
+		}
+		
+		if(!configDataJSON.environments){
+			configDataJSON.environments = {};
 		}
 		
 		//App Icons
@@ -4234,15 +4050,17 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 	}),
 	AppComponentProto = AppComponent.prototype;
 
-	AppComponentProto.init = function(){
-
-	};
-
+	AppComponentProto.init = function(){};
+	
+	/**
+	 * TODO Should we keep this getter?
+	 */
 	AppComponentProto.getApp = function(){
 		return this.app;
 	};
 
 	/*
+	 * TODO Should we enable this getter?
 	AppComponentProto.getOptions = function(){
 		return this.options;
 	};
@@ -4283,10 +4101,8 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);
 			
-			this.vTargets = {};
-
-			this.oTargets = {};
-
+			this.app.setRootComponent(this);
+			
 			this.initialized = false;
 		}
 	}),
@@ -4298,51 +4114,22 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
-		var _this = this;
-		
-		var rootControl = this._createControl();
-		
 		this._initHistory();
-
-		var oldAppShow = this.app.show;
-		this.app.show = function(callback){
-			oldAppShow.call(_this.app, function(firstTime){
-				if(firstTime){
-					_this.showInitialContent(callback);
-				}
-				else{
-					callback && callback(firstTime);
-				}
-			});
-			
-		};
-		
-		this.getRootControl = function(){
-			return rootControl;
-		};
-		
-		this.app.getRootControl = function(){
-			return rootControl;
-		};
 	};
 
-	/*
-	 * @deprecated
+	AppFrameProto.getRootControl = function(){
+		return this.app.getRootControl();
+	};
+	
+	/**
+	 * Creates the control that represents this AppFrame
+	 * @Protected
 	 */
-	AppFrameProto.getControl = function(){
-		jQuery.sap.log.warning("AppFrameProto.getControl is deprecated. Use getRootControl instead.");
-		return this.getRootControl();
+	AppFrameProto._buildRootControl = function(){
+		return this._createControl();
 	};
-
-	/*
-	* @deprecated
-	*/
-	AppFrameProto.getConfig = function(){
-		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.getConfig is deprecated and will be removed soon.");
-		return this.app.config;
-	};
-
-	/*
+	
+	/**
 	 * Creates the control that represents this AppFrame
 	 * @Protected
 	 */
@@ -4390,17 +4177,19 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		
 		return rootControl;
 	};
+	
+	/**
+	 * @Protected
+	 * 
+	 */
+	AppFrameProto._showInitialContent = function(callback){
+		return this.showInitialContent(callback);
+	}
 
-	/*
-	* Inits History for navigation handling in browsers.
-	*/
-	AppFrameProto._initHistory = function(){
-
-	};
-
-	/*
+	/**
 	* Shows the initial content defined in app configuration
 	* @Public
+	* @deprecated
 	*/
 	AppFrameProto.showInitialContent = function(callback){
 		jQuery.sap.log.debug("AppFrameProto.showInitialContent");
@@ -4433,53 +4222,82 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 			if(!_this.initialized){
 				initialViewData.transition = 'transition-none';
 			}
-			this.navigateTo(this.getRootControl(), initialViewData, complete);
+			this.gotoPage(initialViewData, complete);
 		}
 
 	};
+	
+	/**
+	* Inits History for navigation handling in browsers.
+	* @Protected
+	*/
+	AppFrameProto._initHistory = function(){
 
+	};
+	
 	/*
+	 * DEPRECATED METHODS 
+	 */
+	
+
+	/**
+	 * @deprecated
+	 */
+	AppFrameProto.getControl = function(){
+		jQuery.sap.log.warning("AppFrameProto.getControl is deprecated. Use AppFrameProto.getRootControl instead.");
+		return this.getRootControl();
+	};
+
+	/**
+	* @deprecated
+	*/
+	AppFrameProto.getConfig = function(){
+		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.getConfig is deprecated and will be removed soon. Use ui5strap.AppFrame.prototype.getApp().getConfig() instead.");
+		return this.app.config;
+	};
+
+	/**
 	* Returns the currently shown page within the NavContainer's target
 	* @Public
 	* @deprecated
 	*/
 	AppFrameProto.getCurrentPage = function (target) {
-		jQuery.sap.log.warning("AppFrameProto.getCurrentPage is deprecated!");
+		jQuery.sap.log.warning("AppFrameProto.getCurrentPage is deprecated!  Use INavigator.getTarget instead.");
 		return this.getRootControl().getTarget(target);
 	};
 
-	/*
+	/**
 	* Returns whether the frame supports the specified target
 	* @Public
 	* @deprecated
 	*/
 	AppFrameProto.hasTarget = function(target) {
-		jQuery.sap.log.warning("AppFrameProto.hasTarget is deprecated!");
+		jQuery.sap.log.warning("AppFrameProto.hasTarget is deprecated! Use INavigator.hasTarget instead.");
 		return this.getRootControl().hasTarget(target);
 	}
 	
-	/*
+	/**
 	* Returns whether a target is busy
 	* @Public
 	* @deprecated
 	*/
 	AppFrameProto.isBusy = function(target){
-		jQuery.sap.log.warning("AppFrameProto.isBusy is deprecated!");
+		jQuery.sap.log.warning("AppFrameProto.isBusy is deprecated! Use INavigator.isTargetBusy instead.");
 		
 		return this.getRootControl().isTargetBusy(target);
 	};
 
-	/*
+	/**
 	 * Shows a page defined by given data
 	 * @Public
 	 * @deprecated
 	 */
 	AppFrameProto.toPage = function (viewConfig, callback) {
-		jQuery.sap.log.warning("AppFrameProto.toPage is deprecated! Use navigateTo instead!");
-		return this.navigateTo(this.getRootControl(), viewConfig, callback, true);
+		jQuery.sap.log.warning("AppFrameProto.toPage is deprecated! Use AppBaseProto.navigateTo instead!");
+		return this.getApp().navigateTo(this.getRootControl(), viewConfig, callback, true);
 	};
 
-	/*
+	/**
 	* Get the viewConfig based on a definition object. Def object must contain "viewName" attribute!
 	* @deprecated
 	*/
@@ -4492,109 +4310,47 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 			viewConfig.target = this.getRootControl().defaultTarget;
 		}
 
-		//Override targets
-		var target = viewConfig.target;
-		if(target in this.oTargets){
-			var overrideTarget = this.oTargets[target];
-			delete this.oTargets[target];
-			viewConfig = this.app.config.getViewConfig(overrideTarget);
-		}
-
 		return viewConfig;
 	};
 	
-	/*
+	/**
 	* Resolve the viewConfig based on a definition object. Def object must contain "viewName" attribute!
+	* @deprecated
 	*/
 	AppFrameProto.resolveViewConfig = function(navControl, viewDef){
+		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.resolveViewConfig is deprecated. Use AppConfigProto.getViewConfig instead.");
 		var viewConfig = this.app.config.getViewConfig(viewDef);
-
-		//TODO use default target here...
-		if(!viewConfig.target){
-			viewConfig.target = navControl.defaultTarget;
-		}
-
-		//Override targets
-		var target = viewConfig.target;
-		if(target in this.oTargets){
-			var overrideTarget = this.oTargets[target];
-			delete this.oTargets[target];
-			viewConfig = this.app.config.getViewConfig(overrideTarget);
-		}
 
 		return viewConfig;
 	};
 
-	/*
+	/**
 	 * @deprecated
 	 */
 	AppFrameProto.validatePage = function(viewDef){
 		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.validatePage is deprecated and will be removed soon! Use getViewConfig instead.");
+		
 		return this.getViewConfig(viewDef);
 	};
 
-	/*
+	/**
 	* @Public
 	* @deprecated
 	*/
 	AppFrameProto.gotoPage = function (viewDef, callback) {
-		jQuery.sap.log.warning("AppFrameProto.gotoPage is deprecated! Use navigateTo instead!");
+		jQuery.sap.log.warning("AppFrameProto.gotoPage is deprecated! Use AppBaseProto.navigateTo instead!");
 		
-		return this.navigateTo(this.getRootControl(), viewDef, callback);
+		return this.getApp().navigateTo(this.getRootControl(), viewDef, callback);
 	};
 	
+	/**
+	* @Public
+	* @deprecated
+	*/
 	AppFrameProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
-		jQuery.sap.log.debug("AppFrameProto.toPage");
+		jQuery.sap.log.warning("AppFrameProto.navigateTo is deprecated! Use AppBaseProto.navigateTo instead.");
 		
-		if(!suppressResolve){
-			viewConfig = this.resolveViewConfig(navControl, viewConfig);
-		}
-		
-		if(!viewConfig.target){
-			throw new Error('Cannot navigate to page: no "target" specified!');
-		}
-		
-		if(navControl.isBusy(viewConfig.target)){
-			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
-
-			return false;
-		}
-
-		var _this = this,
-			target = viewConfig.target,
-			oPage = this.app.createView(viewConfig);
-
-		//Only add this page to a vTarget. Pages in vTargets are not seen by the user.
-		//TODO Why???
-		if(viewConfig.vTarget){
-			jQuery.sap.log.debug('[APP_FRAME] VIRTUALLY NAVIGATE {' + target + '}');
-			this.vTargets[target] = oPage;
-		
-			return;
-		}
-
-		//Set target busy
-		navControl.setTargetBusy(target, true);
-
-		//Trigger onUpdate events
-		navControl.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
-
-		//Change NavContainer to page
-		navControl.toPage(
-			oPage, 
-			target, 
-			viewConfig.transition,
-			function toPage_complete(){
-				
-				//Set target available
-				navControl.setTargetBusy(target, false);
-				
-				//Trigger callback
-				callback && callback();
-			}
-		);
-		
-		return oPage;
+		return this.getApp().navigateTo(navControl, viewConfig, callback, suppressResolve);
 	};
 
 	//Return Module Constructor
@@ -4635,6 +4391,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			this.config = config;
 
 			this.components = {};
+			this._rootComponent = this;
 
 			this._pageCache = {};
 			this._events = {};
@@ -5544,7 +5301,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//}
 		
 		viewConfig.afterInit = function(oEvent){
-			alert("Event 'afterInit' called from view '" + viewConfig.viewName + "'");
+			jQuery.log.info("Event 'afterInit' called from view '" + viewConfig.viewName + "'");
 		};
 
 		//Will crash if "viewName" or "type" attribute is missing!
@@ -5729,9 +5486,78 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		return sap.ui.getCore().byId(this.createControlId(controlId, viewId));
 	};
 
+	AppBaseProto._buildRootControl = function(){
+		  alert("Please inherit ui5strap.AppBase._buildRootControl");
+	};
+	
+	/**
+	 * @Protected
+	 */
+	AppBaseProto._buildSingleViewRootControl = function(viewConfig){
+		var viewConfig = this.config.getViewConfig(viewConfig),
+			oPage = this.createView(viewConfig),
+			oController = oPage.getController();
+		
+		oController.onpageUpdateSingle && oController.onPageUpdateSingle(new sap.ui.base.Event("ui5strap.controller.pageUpdateSingle", this, viewConfig.parameters || {}));
+		
+		jQuery.sap.require("ui5strap.Container");
+		var container = new ui5strap.Container();
+		container.addContent(oPage);
+		
+		return container;
+	};
+	
+	/**
+	 * @Public
+	 */
+	AppBaseProto.getRootComponent = function(){
+		return this._rootComponent;
+	};
+	
+	/**
+	 * @Public
+	 */
+	AppBaseProto.setRootComponent = function(rootComponent){
+		this._rootComponent = rootComponent;
+	};
+	
+	/**
+	 * @Public
+	 */
 	AppBaseProto.getRootControl = function(){
 		
-		alert("Please inherit ui5strap.AppBase.getRootControl");
+		if(!this._rootControl){
+			var rootControl = null;
+			if(this.config.data.app.mode === "Devel"){
+				var uriParameters = jQuery.sap.getUriParameters(),
+					viewName = uriParameters.get("_viewName");
+				if(viewName){
+					if(jQuery.sap.startsWith(viewName, ".")){
+						viewName = this.config.data.app["package"] + viewName;
+					}
+					var viewParameters = uriParameters.get("_viewParameters");
+					if(viewParameters){
+						viewParameters = JSON.parse(viewParameters);
+					}
+					var viewConfig = { 
+						type : uriParameters.get("_viewType"),
+						viewName : viewName,
+						parameters : viewParameters
+					};
+					rootControl = this._buildSingleViewRootControl(viewConfig);
+				}
+				else{
+					rootControl = this._rootComponent._buildRootControl();
+				}
+			}
+			else{
+				rootControl = this._rootComponent._buildRootControl();
+			}
+			
+			this._rootControl = rootControl;
+		}
+		
+		return this._rootControl;
 	};
 
 	/*
@@ -6036,7 +5862,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		};
 		
 		//Update
+		//TODO rename to pageUpdate
 		_createActionEventHandler(controllerImpl, 'update');
+		
+		//Update
+		_createActionEventHandler(controllerImpl, 'pageUpdateSingle');
 
 		//PageHide
 		_createActionEventHandler(controllerImpl, 'pageHide');
@@ -6087,6 +5917,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	var App = AppBase.extend('ui5strap.App', {
 		"constructor" : function(config, viewer){
 			AppBase.call(this, config, viewer);
+			
+			if(!config.data.rootNavigation){
+				config.data.rootNavigation = {};
+			}
 			
 			//Init local vars
 			this._runtimeData = {
@@ -6309,11 +6143,161 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	*/
 	
 	/**
-	 * @Abstract
 	 * @Public
+	 * @Override
 	 */
-	AppProto.getRootControl = function(){
-		throw new Error('Cannot determine Root Control! Please include at least one Component that provides a Root Control.');
+	AppProto.show = function(callback){
+		var _this = this;
+		AppBase.prototype.show.call(this, function(firstTime){
+			if(firstTime){
+				if(_this.config.data.app.mode === "Devel" && jQuery.sap.getUriParameters().get("_viewName")){
+					callback && callback(firstTime);
+				}
+				else{
+					_this._rootComponent._showInitialContent(callback);
+				}
+			}
+			else{
+				callback && callback(firstTime);
+			}
+		});
+	};
+	
+	/**
+	 * @Protected
+	 */
+	AppProto._showInitialContent = function(callback){
+		
+			var _this = this,
+				initialViews = this.config.data.rootNavigation.initialViews,
+				callI = 0;
+		
+			var complete = function(){
+				callI--;
+				if(callI === 0){
+					if(!_this.initialized){
+						_this.initialized = true;
+					}
+		
+					callback && callback();
+				}
+			}
+		
+			if(!initialViews || initialViews.length === 0){
+				callI = 1;
+				complete();
+				return;
+			}
+		
+			callI = initialViews.length;
+		
+			for(var i = 0; i < initialViews.length; i++){
+				var initialViewData = jQuery.extend({}, initialViews[i]);
+				if(!this.initialized){
+					initialViewData.transition = 'transition-none';
+				}
+				this.navigateTo(this.getRootControl(), initialViewData, complete);
+			}
+		
+	};
+	
+	/**
+	 * @Protected
+	 */
+	AppProto._buildRootControl = function(){
+		var _this = this;
+		var navigatorOptions = this.config.data.rootNavigation;
+		
+		//Init default NavContainer
+		var navContainerModule = navigatorOptions.module || "ui5strap.NavContainer";
+		
+		jQuery.sap.require(navContainerModule);
+		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
+		if(!NavContainerConstructor){
+			throw new Error('Invalid NavContainer: ' + navContainerModule);
+		}
+		
+		var navContainerOptions = navigatorOptions.settings || {};
+		if(navContainerOptions.id){
+			navContainerOptions.id = this.createControlId(navContainerOptions.id);
+		}
+		
+		var rootControl = new NavContainerConstructor(navContainerOptions);
+		
+		if(navigatorOptions.events && navigatorOptions.events.control){
+			var eKeys = Object.keys(navigatorOptions.events.control),
+				eKeysLength = eKeys.length;
+			for(var i = 0; i < eKeysLength; i++){
+				var evs = navigatorOptions.events.control[eKeys[i]];
+				
+				rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
+					
+					for(var j = 0; j < data.actions.length; j ++){
+						_this.runAction({
+							"parameters" : data.actions[j], 
+							"eventSource" : oEvent.getSource(),
+							"eventParameters" : oEvent.getParameters()
+						});
+					}
+					
+					//console.log(data);
+				});
+			}
+		}
+		
+		return rootControl;
+	};
+	
+	
+	
+	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
+		jQuery.sap.log.debug("AppBaseProto.navigateTo");
+		
+		if(!suppressResolve){
+			viewConfig = this.config.getViewConfig(viewConfig);
+		}
+		
+		//TODO use default target here...
+		if(!viewConfig.target){
+			viewConfig.target = navControl.defaultTarget;
+		}
+		
+		if(!viewConfig.target){
+			throw new Error('Cannot navigate to page: no "target" specified!');
+		}
+		
+		if(navControl.isBusy(viewConfig.target)){
+			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
+
+			return false;
+		}
+
+		var _this = this,
+			target = viewConfig.target,
+			oPage = this.createView(viewConfig);
+
+		//Set target busy
+		navControl.setTargetBusy(target, true);
+
+		//Trigger onUpdate events
+		navControl.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
+
+		//Change NavContainer to page
+		navControl.toPage(
+			oPage, 
+			target, 
+			viewConfig.transition,
+			function toPage_complete(){
+				
+				//Set target available
+				navControl.setTargetBusy(target, false);
+				
+				//Trigger callback
+				callback && callback();
+			}
+		);
+		
+		return oPage;
 	};
 
 	//Return Module Constructor
@@ -6346,30 +6330,28 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
  * 
  */
 
-sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSupport){
+sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupport'], function(library, BaseSupport, PositionSupport, OptionsSupport){
 
-	var ControlBase = ui5strap.Control.extend("ui5strap.ControlBase", {
-		metadata : {
-
-			library : "ui5strap",
+	var _meta = {
+		library : "ui5strap",
+		
+		properties : {
 			
-			properties : {
-				options : {
-					type : "string",
-					defaultValue : ""
-				}
-			}
 		}
+	};
+	
+	BaseSupport.meta(_meta);
+	PositionSupport.meta(_meta);
+	OptionsSupport.meta(_meta);
+	
+	var ControlBase = ui5strap.Control.extend("ui5strap.ControlBase", {
+		metadata : _meta
 	}),
 	ControlBaseProto = ControlBase.prototype;
 	
-	OptionsSupport.bless(ControlBaseProto);
-	
-	ControlBaseProto.getBindingContextData = function(modelName){
-		var bindingContext = this.getBindingContext(modelName);
-		
-		return bindingContext.getModel().getProperty(bindingContext.getPath());
-	};
+	BaseSupport.proto(ControlBaseProto);
+	PositionSupport.proto(ControlBaseProto);
+	OptionsSupport.proto(ControlBaseProto);
 	
 	return ControlBase;
 });;/*
@@ -6399,10 +6381,12 @@ sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSuppor
  * 
  */
  
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function(library, ControlBase, ResponsiveTransition){
 
 	var NavContainer = ControlBase.extend("ui5strap.NavContainer", {
 		metadata : {
+			interfaces : ["ui5strap.INavigator"],
+			
 			library : "ui5strap",
 			
 			properties : {
@@ -6440,9 +6424,86 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	NavContainerProto = NavContainer.prototype,
 	domAttachTimeout = 50;
 	
+	/**
+	 * @Protected
+	 * @Override
+	 */
 	NavContainerProto._getStyleClassPrefix = function(){
 		return "navcontainer";
 	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	NavContainerProto._getStyleClassRoot = function(){
+		return "navcontainer navcontainer-type-" + this.ncType;
+	};
+	
+	/*
+	 * START CUSTOM Ids and Classes
+	 */
+	
+	/**
+	* Creates a dom id for a given target and page
+	* @Public
+	*/
+	NavContainerProto.createPageDomId = function(target, page){
+		if(page === null){
+			return 'navcontainer-page---' + this._targetPagesCount[target];
+		}
+
+		return 'navcontainer-page---' + page.getId();
+	};
+
+	/**
+	* Registers a new dom id for a given target and page
+	* @Public
+	*/
+	NavContainerProto.pageDomId = function(target, page){
+		if(!(target in this._targetPagesCount)){
+			this._targetPagesCount[target] = 0;
+		}
+		
+		this._targetPagesCount[target]++;
+
+		return this.createPageDomId(target, page);
+	};
+	
+	/**
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
+	NavContainerProto.targetDomId = function(target){
+		return 'navcontainer-target-' + target + '---' + this.getId();
+	};
+	
+	/**
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
+	NavContainerProto.targetPagesDomId = function(target){
+		return 'navcontainer-pages-' + target + '---' + this.getId();
+	};
+
+	/**
+	 * @Public
+	 * TODO Improve component ID syntax
+	 */
+	NavContainerProto.targetLayersDomId = function(target){
+		return 'navcontainer-layers-' + target + '---' + this.getId();
+	};
+	
+	/**
+	 * @Protected
+	 */
+	NavContainerProto._getTargetClassString = function(target){
+		return "navcontainer-target navcontainer-target-" + target;
+	};
+	
+	/*
+	 * END CUSTOM Ids and Classes
+	 */
 	
 	/*
 	*
@@ -6497,7 +6558,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				changeTransitionName = null;
 			}
 			
-			var transition = new ui5strap.ResponsiveTransition({
+			var transition = new ResponsiveTransition({
 					"transitionAll" : changeTransitionName, 
 					"$current" : pageChange.$current, 
 					"$next" : pageChange.$next, 
@@ -6815,164 +6876,19 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		};
 	};
 
-	/**
-	* Creates a dom id for a given target and page
-	* @Public
-	*/
-	NavContainerProto.createPageDomId = function(target, page){
-		if(page === null){
-			return 'navcontainer-page---' + this._targetPagesCount[target];
-		}
-
-		return 'navcontainer-page---' + page.getId();
-	};
-
-	/**
-	* Registers a new dom id for a given target and page
-	* @Public
-	*/
-	NavContainerProto.pageDomId = function(target, page){
-		if(!(target in this._targetPagesCount)){
-			this._targetPagesCount[target] = 0;
-		}
-		
-		this._targetPagesCount[target]++;
-
-		return this.createPageDomId(target, page);
-	};
-
-	/*
-	 * START OpenUi5 MOD
-	 * Since we do not use aggregations in NavContainer, we have to care about propagation and destroying ourselves.
-	 * Usually, this happens in ManagedObject.prototype.propagateProperties and ManagedObject.prototype.destroy.
-	 */
 	
-	/**
-	* @Override
-	*/
-	NavContainerProto.propagateProperties = function(vName){
-		var oProperties = this._getPropertiesToPropagate(),
-			bUpdateAll = vName === true, // update all bindings when no model name parameter has been specified
-			sName = bUpdateAll ? undefined : vName,
-			sTarget, oTarget, i;
+
 	
-		for (sTarget in this.targets) {
-			oTarget = this.targets[sTarget];
-			if (oTarget instanceof sap.ui.base.ManagedObject) {
-				this._propagateProperties(vName, oTarget, oProperties, bUpdateAll, sName);
-			}
-		}
-		
-	};
-	
-	NavContainerProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
-		jQuery.sap.log.debug("UBC");
-		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
-		
-		var oModelNames = {},
-			sModelName,
-			oContext;
-
-		// find models that need an context update
-		if (bUpdateAll) {
-			for (sModelName in this.oModels) {
-				if ( this.oModels.hasOwnProperty(sModelName) ) {
-					oModelNames[sModelName] = sModelName;
-				}
-			}
-			for (sModelName in this.oPropagatedProperties.oModels) {
-				if ( this.oPropagatedProperties.oModels.hasOwnProperty(sModelName) ) {
-					oModelNames[sModelName] = sModelName;
-				}
-			}
-		} else {
-			oModelNames[sFixedModelName] = sFixedModelName;
-		}
-
-		/*eslint-disable no-loop-func */
-		for (sModelName in oModelNames ) {
-			if ( oModelNames.hasOwnProperty(sModelName) ) {
-				sModelName = sModelName === "undefined" ? undefined : sModelName;
-
-				if (!bSkipChildren) {
-					var oContext = this.getBindingContext(sModelName);
-					// also update context in all child elements
-					for (sTarget in this.targets) {
-						var oTarget = this.targets[sTarget];
-						if (oTarget instanceof sap.ui.base.ManagedObject) {
-							oTarget.oPropagatedProperties.oBindingContexts[sModelName] = oContext;
-							oTarget.updateBindingContext(false,false,sModelName);
-						}
-					}
-				}
-			}
-		}
-		/*eslint-enable no-loop-func */
-	};
 	
 	/*
-	 * END OpenUi5 MOD
+	 *
+	 * START Implement ui5strap.INavigator
+	 * 
 	 */
-	
-	/**
-	 * Destroys targets before the current control is destroyed.
-	* @Override
-	*/
-	NavContainerProto.exit = function(){
-		for(var target in this.targets){
-			if(this.targets[target]){
-				var oldTarget = this.targets[target];
-				this.targets[target] = null;
-				
-				oldTarget.destroy();
-				
-				delete oldTarget;
-			}
-		}
-		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
-	};
-	
-	/**
-	 * @Protected
-	 * @Override
-	 */
-	NavContainerProto._getStyleClassRoot = function(){
-		return "navcontainer navcontainer-type-" + this.ncType;
-	};
-	
-	/**
-	 * @Public
-	 * TODO Improve component ID syntax
-	 */
-	NavContainerProto.targetDomId = function(target){
-		return 'navcontainer-target-' + target + '---' + this.getId();
-	};
-	
-	/**
-	 * @Public
-	 * TODO Improve component ID syntax
-	 */
-	NavContainerProto.targetPagesDomId = function(target){
-		return 'navcontainer-pages-' + target + '---' + this.getId();
-	};
-
-	/**
-	 * @Public
-	 * TODO Improve component ID syntax
-	 */
-	NavContainerProto.targetLayersDomId = function(target){
-		return 'navcontainer-layers-' + target + '---' + this.getId();
-	};
-	
-	/**
-	 * @Protected
-	 */
-	NavContainerProto._getTargetClassString = function(target){
-		return "navcontainer-target navcontainer-target-" + target;
-	};
 	
 	/**
 	* @Public
+	* @Override
 	*/
 	NavContainerProto.updateTarget = function(target, oPage, eventParameters){
 		if(!(target in this.targets)){
@@ -6997,6 +6913,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
 	/**
 	 * @Public
+	 * @Override
 	 */
 	NavContainerProto.hasTarget = function(target){
 		return target in this.targets;
@@ -7004,6 +6921,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
 	/**
 	 * @Public
+	 * @Override
 	 */
 	NavContainerProto.getTarget = function(target){
 		return this.targets[target];
@@ -7011,6 +6929,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
 	/**
 	 * @Public
+	 * @Override
 	 */
 	NavContainerProto.isTargetBusy = function(target){
 		return this._targetStatus[target];
@@ -7018,6 +6937,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
 	/**
 	 * @Public
+	 * @Override
 	 */
 	NavContainerProto.setTargetBusy = function(target, targetBusy){
 		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
@@ -7026,6 +6946,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
 	/**
 	* @Public
+	* @Override
 	*/
 	NavContainerProto.toPage = function(page, target, transitionName, callback){
 		//ui5strap.tm("APP", "NC", "TO_PAGE");
@@ -7116,6 +7037,85 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 		return true;
 	};
+	
+	/*
+	 *
+	 * END Implement ui5strap.INavigator
+	 * 
+	 */
+	
+	/*
+	 * START OpenUi5 MOD
+	 * Since we do not use aggregations in NavContainer, we have to care about propagation and destroying ourselves.
+	 * Usually, this happens in ManagedObject.prototype.propagateProperties and ManagedObject.prototype.destroy.
+	 */
+	
+	/**
+	* @Override
+	*/
+	NavContainerProto.propagateProperties = function(vName){
+		var oProperties = this._getPropertiesToPropagate(),
+			bUpdateAll = vName === true, // update all bindings when no model name parameter has been specified
+			sName = bUpdateAll ? undefined : vName,
+			sTarget, oTarget, i;
+	
+		for (sTarget in this.targets) {
+			oTarget = this.targets[sTarget];
+			if (oTarget instanceof sap.ui.base.ManagedObject) {
+				this._propagateProperties(vName, oTarget, oProperties, bUpdateAll, sName);
+			}
+		}
+		
+	};
+	
+	NavContainerProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
+		jQuery.sap.log.debug("UBC");
+		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
+		
+		var oModelNames = {},
+			sModelName,
+			oContext;
+
+		// find models that need an context update
+		if (bUpdateAll) {
+			for (sModelName in this.oModels) {
+				if ( this.oModels.hasOwnProperty(sModelName) ) {
+					oModelNames[sModelName] = sModelName;
+				}
+			}
+			for (sModelName in this.oPropagatedProperties.oModels) {
+				if ( this.oPropagatedProperties.oModels.hasOwnProperty(sModelName) ) {
+					oModelNames[sModelName] = sModelName;
+				}
+			}
+		} else {
+			oModelNames[sFixedModelName] = sFixedModelName;
+		}
+
+		/*eslint-disable no-loop-func */
+		for (sModelName in oModelNames ) {
+			if ( oModelNames.hasOwnProperty(sModelName) ) {
+				sModelName = sModelName === "undefined" ? undefined : sModelName;
+
+				if (!bSkipChildren) {
+					var oContext = this.getBindingContext(sModelName);
+					// also update context in all child elements
+					for (sTarget in this.targets) {
+						var oTarget = this.targets[sTarget];
+						if (oTarget instanceof sap.ui.base.ManagedObject) {
+							oTarget.oPropagatedProperties.oBindingContexts[sModelName] = oContext;
+							oTarget.updateBindingContext(false,false,sModelName);
+						}
+					}
+				}
+			}
+		}
+		/*eslint-enable no-loop-func */
+	};
+	
+	/*
+	 * END OpenUi5 MOD
+	 */
 
 	/**
 	* @Override
@@ -7173,6 +7173,24 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			_handlePendingTransitions(_this);	
 		}, domAttachTimeout);
 		
+	};
+	
+	/**
+	 * Destroys targets before the current control is destroyed.
+	* @Override
+	*/
+	NavContainerProto.exit = function(){
+		for(var target in this.targets){
+			if(this.targets[target]){
+				var oldTarget = this.targets[target];
+				this.targets[target] = null;
+				
+				oldTarget.destroy();
+				
+				delete oldTarget;
+			}
+		}
+		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
 	};
 
 	return NavContainer;
@@ -7451,8 +7469,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
  * 
  */
 
-sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer'], 
-				function(library, ViewerBase, App, AppConfig, NavContainer){
+sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition'], 
+				function(library, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition){
 	
 	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", {
 		"constructor" : function(options){
@@ -7958,7 +7976,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			appInstance.attach(viewer._dom.$root[0]);
 			
 			//Create new Transition
-			var transition = new ui5strap.ResponsiveTransition(
+			var transition = new ResponsiveTransition(
 					{
 					"transitionAll" : transitionName || appInstance.config.data.app.transition, 
 					"$current" : $currentRoot, 
@@ -8393,8 +8411,10 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     * @protected
     */
     RestClientProto._determineRequestURL = function(options){
-        var urlBase = this.options.url;
-        return (jQuery.sap.endsWith(urlBase, "/") ? urlBase : urlBase + '/') + this._parsePath(options.path, options.pathParameters);
+    	var urlBase = this.options.url;
+		urlBase = this.app.config.resolvePath(jQuery.sap.endsWith(urlBase, "/") ? urlBase : urlBase + '/');
+        
+		return urlBase + this._parsePath(options.path, options.pathParameters);
     };
     
     /**
@@ -8553,11 +8573,10 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
 
-	var Button = ControlBase.extend("ui5strap.Button", {
-		metadata : {
-			interfaces : ["ui5strap.ISelectableItem"],
+	var _meta =  {
+			interfaces : ["ui5strap.IText", "ui5strap.ISelectableItem"],
 			
 			defaultAggregation : "content",
 			library : "ui5strap",
@@ -8583,18 +8602,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					type: "ui5strap.Size", 
 					defaultValue: ui5strap.Size.Default
 				},
-				selectable : {
-					type : "boolean",
-					defaultValue : true
-				},
-				selected : {
-					type:"boolean", 
-					defaultValue:false
-				}, 
-				enabled : {
-					type:"boolean", 
-					defaultValue:true
-				},
+				
 				trail : {
 					type:"ui5strap.TrailHtml", 
 					defaultValue:ui5strap.TrailHtml.Space
@@ -8609,11 +8617,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					deprecated : true,
 					type: "ui5strap.BsAction", 
 					defaultValue: ui5strap.BsAction.None
-				},
-				align : {
-					deprecated : true,
-					type:"ui5strap.Alignment",
-					defaultValue:ui5strap.Alignment.Default
 				}
 			},
 			aggregations : { 
@@ -8627,45 +8630,44 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		        "tap":{}
 		    }
 
-		}
+		};
+	
+	SelectableSupport.meta(_meta);
+	
+	var Button = ControlBase.extend("ui5strap.Button", {
+		metadata : _meta
 	}),
 	ButtonProto = Button.prototype;
+	
+	SelectableSupport.proto(ButtonProto);
 	
 	/**
 	 * @Protected
 	 * @Override
 	 */
-	ButtonProto._getStyleClassRoot = function(){
+	ButtonProto._getStyleClassDesign = function(){
 		var type = this.getType(),
-			classAdd = "";
-		if(ui5strap.ButtonType.Default !== type){
-			classAdd = " " + this._getStyleClassType(type);
-		}
+			styleClass = "";
 		
 		//Bootstrap classes
 		if(type === ui5strap.ButtonType.Button || ui5strap.ButtonType.Block === type){
-			classAdd += " btn";
-			classAdd += " btn-" + ui5strap.BSSeverity[this.getSeverity()];
+			styleClass += " btn";
+			styleClass += " btn-" + ui5strap.BSSeverity[this.getSeverity()];
 		    
 			var size = this.getSize();
 			if(ui5strap.Size.Default !== size){
-				classAdd += ' btn-' + ui5strap.BSSize[size];
+				styleClass += ' btn-' + ui5strap.BSSize[size];
 		    }
 
 		    if(ui5strap.ButtonType.Block === type){
-		    	classAdd += " btn-block";
+		    	styleClass += " btn-block";
 			}
 		}
 		else if(type === ui5strap.ButtonType.Link){
-			classAdd += " btn btn-link";
+			styleClass += " btn btn-link";
 		}
 		else if(type === ui5strap.ButtonType.Close || type === ui5strap.ButtonType.Icon){
-			classAdd += " close";
-		}
-		
-		//Selected
-		if(this.getSelected()){
-			classAdd + " active";
+			styleClass += " close";
 		}
 		
 		//Bootstrap Actions (deprecated)
@@ -8673,17 +8675,33 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		//Navbar toggle
 		//@deprecated
 		if(action === ui5strap.BsAction.ToggleNavbar){
-			classAdd + " btn-toggle-navbar";
+			styleClass + " btn-toggle-navbar";
 		}
 		//Sidenav toggle
 		//@deprecated
 		else if(action === ui5strap.BsAction.ToggleSidenav){
-			classAdd + " btn-toggle-sidenav";
+			styleClass + " btn-toggle-sidenav";
 		}
 		
-		return this._getStyleClassPrefix() + classAdd;
+		return styleClass;
 	};
 	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonProto._getStyleClassRoot = function(){
+		var type = this.getType(),
+			styleClass = "";
+		if(ui5strap.ButtonType.Default !== type){
+			styleClass = " " + this._getStyleClassType(type);
+		}
+		return styleClass;
+	};
+	
+	/**
+	 * Setter for dynamic html tag attributes.
+	 */
 	ui5strap.Utils.dynamicAttributes(
 		ButtonProto, 
 		[
@@ -8691,10 +8709,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		]
 	);
 
+	/**
+	 * Setter for dynamic text.
+	 */
 	ui5strap.Utils.dynamicText(ButtonProto);
 
-	ui5strap.Utils.dynamicClass(ButtonProto, 'selected', { 'true' : 'active' });
-	
 	/**
 	 * Handler for Tap / Click Events
 	 * @Protected
@@ -8702,6 +8721,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	ButtonProto._handlePress = function(oEvent) {
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("ui5strap.Button");
 		
 		if (this.getEnabled()) {
 			this.fireTap({});
@@ -8748,29 +8769,16 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var ButtonRenderer = {};
 
 	ButtonRenderer.render = function(rm, oControl) {
-		this.startRender(rm, oControl);
-
-		ui5strap.RenderUtils.renderContent(rm, oControl);
-
-		rm.write("</button>");
-
-	    ui5strap.RenderUtils.renderTrail(rm, oControl);
-	};
-
-	ButtonRenderer.startRender = function(rm, oControl) {
 		var size = oControl.getSize(),
 			action = oControl.getBsAction(),
 			title = oControl.getTitle();
-
+	
 		rm.write("<button");
 	    
 	    rm.writeControlData(oControl);
 	    
 	    rm.addClass(oControl._getStyleClass());
 	
-	    //@deprecated
-	    ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
-
 	    rm.writeClasses();
 	    
 	    if('' !== title){
@@ -8788,6 +8796,12 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 		
 	    rm.write(">");
+
+		ui5strap.RenderUtils.renderContent(rm, oControl);
+
+		rm.write("</button>");
+
+	    ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 
 	return ButtonRenderer;
@@ -9301,6 +9315,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 			library : "ui5strap",
 			
+			interfaces : ["ui5strap.IText"],
+			
 			properties : { 
 				iconSet : {
 					type:"string", 
@@ -9334,10 +9350,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					type : "ui5strap.IconSize",
 					defaultValue : ui5strap.IconSize.Default
 				},
-				align : {
-					type : "ui5strap.Alignment",
-					defaultValue : ui5strap.Alignment.Default
-				},
 				transform : {
 					type : "ui5strap.IconTransform",
 					defaultValue : ui5strap.IconTransform.Default
@@ -9352,7 +9364,76 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 		}
-	});
+	}),
+	IconProto = Icon.prototype;
+	
+	IconProto._sizeToClass = {
+	    Large : "lg",
+	    X2 : "2x",
+	    X3 : "3x",
+	    X4 : "4x",
+	    X5 : "5x"
+	 };
+
+	IconProto._transformToClass = {
+	    Rotate90 : "rotate-90",
+	    Rotate180 : "rotate-180",
+	    Rotate270 : "rotate-270",
+	    FlipHorizontal : "flip-horizontal",
+	    FlipVertical : "flip-vertical"
+	  };
+	  
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	IconProto._getStyleClassDesign = function(){
+		var iconGroup = this.getIconSet(),
+			size = this.getSize(),
+			transform = this.getTransform(),
+			severity = this.getSeverity(),
+			prefix = iconGroup + '-',
+			modPrefix = 'fa-',
+			styleClass = iconGroup
+				+ " " + prefix + this.getIcon();
+		
+		//Font Awesome only
+		if(prefix === modPrefix){
+			if(size !== ui5strap.IconSize.Default){
+				styleClass += " " + modPrefix + this._sizeToClass[size];
+			}
+	
+			if(transform !== ui5strap.IconTransform.Default){
+				styleClass += " " + modPrefix + this._transformToClass[transform];
+			}
+	
+			if(this.getFixedWidth()){
+				styleClass += " " + modPrefix + 'fw';
+			}
+	
+			if(this.getSpin()){
+				styleClass += " " + modPrefix + 'spin';
+			}
+	
+			if(this.getInverse()){
+				styleClass += " " + modPrefix + 'inverse';
+			}
+	
+			if(this.getBorder()){
+				styleClass += " " + modPrefix + 'border';
+			}
+		}
+		
+		if(ui5strap.IconType.FormFeedback === this.getType()){
+			styleClass += " form-control-feedback";
+		}
+
+		if(ui5strap.Severity.None !== severity){
+			styleClass += " text-" + ui5strap.BSSeverity[severity];
+		}
+		
+		return styleClass;
+	};
 	
 	return Icon;
 });;/*
@@ -9384,72 +9465,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var IconRenderer = {
-
-		sizeToClass : {
-		    Large : "lg",
-		    X2 : "2x",
-		    X3 : "3x",
-		    X4 : "4x",
-		    X5 : "5x"
-		  },
-
-		 transformToClass : {
-		    Rotate90 : "rotate-90",
-		    Rotate180 : "rotate-180",
-		    Rotate270 : "rotate-270",
-		    FlipHorizontal : "flip-horizontal",
-		    FlipVertical : "flip-vertical"
-		  }
-	};
+	var IconRenderer = {};
 
 	IconRenderer.render = function(rm, oControl) {
-		var iconGroup = oControl.getIconSet(),
-			size = oControl.getSize(),
-			transform = oControl.getTransform(),
-			severity = oControl.getSeverity(),
-			prefix = iconGroup+'-',
-			modPrefix = 'fa-';
-
-
 		rm.write("<span");
 		rm.writeControlData(oControl);
-		rm.addClass("ui5strap-icon " + iconGroup);
-		rm.addClass(prefix+oControl.getIcon());
-
-		if(size !== ui5strap.IconSize.Default){
-			rm.addClass(modPrefix+this.sizeToClass[size]);
-		}
-
-		if(transform !== ui5strap.IconTransform.Default){
-			rm.addClass(modPrefix+this.transformToClass[transform]);
-		}
-
-		ui5strap.RenderUtils.alignment(rm, oControl);
-
-		if(oControl.getFixedWidth()){
-			rm.addClass(modPrefix+'fw')
-		}
-
-		if(oControl.getSpin()){
-			rm.addClass(modPrefix+'spin')
-		}
-
-		if(oControl.getInverse()){
-			rm.addClass(modPrefix+'inverse')
-		}
-
-		if(oControl.getBorder()){
-			rm.addClass(modPrefix+'border')
-		}
-
-		if(ui5strap.IconType.FormFeedback === oControl.getType()){
-			rm.addClass('form-control-feedback');
-		}
-
-		if(ui5strap.Severity.None !== severity){
-			rm.addClass("text-" + ui5strap.BSSeverity[severity]);
-		}
+		
+		rm.addClass(oControl._getStyleClass());
+		
 		rm.writeClasses();
 		rm.write(">");
 		rm.write("</span>");
@@ -9458,6 +9481,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	};
 
 	return IconRenderer;
+	
 }, true);;/*
  * 
  * UI5Strap
@@ -9490,6 +9514,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	var Link = ControlBase.extend("ui5strap.Link", {
 		metadata : {
 
+			interfaces : ["ui5strap.IText"],
+			
 			library : "ui5strap",
 
 			properties : { 
@@ -9557,6 +9583,25 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	LinkProto = Link.prototype;
 	
+	LinkProto._typeToClass = {
+		Thumbnail : "thumbnail"
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	LinkProto._getStyleClassDesign = function(){
+		var styleClass = "";
+		
+		var type = this.getType();
+		if(ui5strap.LinkType.Default !== type){
+			styleClass += " " + this._typeToClass[type];
+		}
+		
+		return styleClass;
+	};
+	
 	ui5strap.Utils.dynamicAttributes(
 		LinkProto, 
 		[
@@ -9576,6 +9621,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		//if (this.getEnabled()) {
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.Link");
 
 			if (!this.fireTap() || !this.getHref()) {
 				oEvent.preventDefault();
@@ -9623,36 +9669,23 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var LinkRenderer = {
-
-		typeToClass : {
-			Thumbnail : "thumbnail"
-		}
-	};
+	var LinkRenderer = {};
 
 	LinkRenderer.render = function(rm, oControl) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			action = oControl.getBsAction(),
-			target = oControl.getTarget();
+			target = oControl.getTarget(),
+			text = oControl.getText(),
+			parse = oControl.getParse();
 	
 		rm.write("<a");
-	
-		if(action === ui5strap.BsAction.DismissModal){
-			rm.writeAttribute('data-dismiss', 'modal');	
-		}
-	
 		rm.writeControlData(oControl);
-		
-		rm.addClass(oControl._getStyleClassRoot());
-		
-		var type = oControl.getType();
-		if(ui5strap.LinkType.Default !== type){
-			rm.addClass(this.typeToClass[type]);
-		}
-		
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		    
+		//Attributes
+		
 		if('' !== href){
 			rm.writeAttribute('href', href);
 		}
@@ -9665,19 +9698,23 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	    	rm.writeAttribute('title', title);
 	    }
 	
+		//@deprecated
+		if(action === ui5strap.BsAction.DismissModal){
+			rm.writeAttribute('data-dismiss', 'modal');	
+		}
+		
 		rm.write(">");
 		
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-	
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 	
+		//Content
 		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
 		
 		rm.write("</a>");
 
+		//Trail
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 	
@@ -9714,7 +9751,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var Text = ControlBase.extend("ui5strap.Text", {
 		metadata : {
-
+			interfaces : ["ui5strap.IText"],
 			// ---- object ----
 			defaultAggregation : "content",
 			// ---- control specific ----
@@ -9762,13 +9799,125 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	}),
 	TextProto = Text.prototype;
+	
+	TextProto._typeToTag = {
+		Default : { 
+			tagName : "span",
+			className : null
+		},
+		Strong : {
+			tagName : "strong",
+			className : null
+		},
+		Emphasized : {
+			tagName : "em",
+			className : null
+		},
+		Paragraph : {
+			tagName : "p",
+			className : null
+		},
+		Blockquote : {
+			tagName : "blockquote",
+			className : null
+		},
+		Quote : {
+			tagName : "q",
+			className : null
+		},
+		Preformatted : {
+			tagName : "pre",
+			className : null
+		},
+		Code : {
+			tagName : "code",
+			className : null
+		},
+		Small : {
+			tagName : "small",
+			className : null
+		},
+		Lead : {
+			tagName : "p",
+			className : "lead"
+		},
+		Abbreviation : {
+			tagName : "abbr",
+			className : null
+		},
+		HelpBlock : {
+			tagName : "p",
+			className : "help-block"
+		},
+		FormStatic : {
+			tagName : "p",
+			className : "form-static"
+		},
+		Label : {
+			tagName : "span",
+			className : "label"
+		},
+		Badge : {
+			tagName : "span",
+			className : "badge"
+		},
+		
+		//Deprecated
+		Phrasing : {
+			tagName : "span",
+			className : null
+		}
+		
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	TextProto._getStyleClassRoot = function(){
+		var styleClass = "",
+			severity = this.getSeverity(),
+			textAlign = this.getTextAlign(),
+			type = this.getType(),
+			tagData = this._typeToTag[type];
+		
+		//CSS Classes
+		if(ui5strap.TextType.Label === type){
+			//Severity for labels
+			styleClass += " label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity];
+		}
+		else if(ui5strap.Severity.None !== severity){
+			//Severity for general text
+			styleClass += " text-" + ui5strap.BSSeverity[severity];
+		}
+		
+		if(ui5strap.TextAlignment.Default !== textAlign){
+			styleClass += " ui5strap-text-align-" + textAlign.toLowerCase();
+		}
+		
+		if(tagData.className){
+			styleClass += " " + tagData.className;
+		}
+		
+		return styleClass;
+	};
 
+	/**
+	 * Dynamic text
+	 * @Override
+	 * @Public
+	 */
 	TextProto.setText = function(newText, suppressInvalidate){
 		ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
 	};
 
-	TextProto.setTitle = function(newTitle){
-		ui5strap.Utils.updateAttribute(this, 'title', newTitle);
+	/**
+	 * Dynamic title
+	 * @Override
+	 * @Public
+	 */
+	TextProto.setTitle = function(newTitle, suppressInvalidate){
+		ui5strap.Utils.updateAttribute(this, 'title', newTitle, suppressInvalidate);
 	};
 
 	return Text;
@@ -9802,116 +9951,26 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 
-	var TextRenderer = {
-		typeToTag : {
-			Default : { 
-				tagName : "span",
-				className : null
-			},
-			Strong : {
-				tagName : "strong",
-				className : null
-			},
-			Emphasized : {
-				tagName : "em",
-				className : null
-			},
-			Paragraph : {
-				tagName : "p",
-				className : null
-			},
-			Blockquote : {
-				tagName : "blockquote",
-				className : null
-			},
-			Quote : {
-				tagName : "q",
-				className : null
-			},
-			Preformatted : {
-				tagName : "pre",
-				className : null
-			},
-			Code : {
-				tagName : "code",
-				className : null
-			},
-			Small : {
-				tagName : "small",
-				className : null
-			},
-			Lead : {
-				tagName : "p",
-				className : "lead"
-			},
-			Abbreviation : {
-				tagName : "abbr",
-				className : null
-			},
-			HelpBlock : {
-				tagName : "p",
-				className : "help-block"
-			},
-			FormStatic : {
-				tagName : "p",
-				className : "form-static"
-			},
-			Label : {
-				tagName : "span",
-				className : "label"
-			},
-			Badge : {
-				tagName : "span",
-				className : "badge"
-			},
-			
-			//Deprecated
-			Phrasing : {
-				tagName : "span",
-				className : null
-			}
-			
- 		}
-
-	};
+	var TextRenderer = {};
 
 	TextRenderer.render = function(rm, oControl) {
-		var severity = oControl.getSeverity(),
-			type = oControl.getType(),
+		var type = oControl.getType(),
+			tagData = oControl._typeToTag[type],
 			text = oControl.getText(),
 			parse = oControl.getParse(),
-			title = oControl.getTitle(),
-			textAlign = oControl.getTextAlign();
+			title = oControl.getTitle();
 
 		if(parse){
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 
 		//Text with tag
-		var tagData = this.typeToTag[type];
-
 		rm.write("<" + tagData.tagName);
 		rm.writeControlData(oControl);
-		
-		//CSS Classes
-		if(ui5strap.TextType.Label === type){
-			//Severity for labels
-			rm.addClass("label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity]);
-		}
-		else if(ui5strap.Severity.None !== severity){
-			//Severity for general text
-			rm.addClass("text-" + ui5strap.BSSeverity[severity]);
-		}
-		
-		if(ui5strap.TextAlignment.Default !== textAlign){
-			rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
-		}
-		
-		if(tagData.className){
-			rm.addClass(tagData.className);
-		}
-		
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
+		
+		//Attributes
 		
 		//Title
 		if('' !== title){
@@ -9925,8 +9984,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write("</" + tagData.tagName + ">");
 
-		
-		
 		//Trail
 		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
@@ -9964,7 +10021,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var TextInput = ControlBase.extend("ui5strap.TextInput", {
 		metadata : {
-
+			interfaces : ["ui5strap.IText"],
 			library : "ui5strap",
 			
 			properties : { 
@@ -10248,7 +10305,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 
 		}
-//alert('test');
 		
 		return this;
 	};
@@ -10366,7 +10422,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var SelectBox = ControlBase.extend("ui5strap.SelectBox", {
 		metadata : {
-
+			interfaces : ["ui5strap.IText"],
 			defaultAggregation : "items",
 
 			library : "ui5strap",
@@ -10550,29 +10606,16 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
 
-	var ListItem = ControlBase.extend("ui5strap.ListItem", {
-		metadata : {
-			interfaces : ["ui5strap.ISelectableItem"],
+	var _meta = {
+			interfaces : [],
 			
 			defaultAggregation : "content",
 			
 			library : "ui5strap",
 
 			properties : { 
-				selected : {
-					type:"boolean", 
-					defaultValue:false
-				}, 
-				enabled : {
-					type:"boolean", 
-					defaultValue:true
-				},
-				selectable : {
-					type : "boolean",
-					defaultValue : true
-				},
 				text : {
 					type:"string",
 					defaultValue:""
@@ -10600,31 +10643,19 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
-		}
+		};
+	
+	SelectableSupport.meta(_meta);
+	
+	var ListItem = ControlBase.extend("ui5strap.ListItem", {
+		metadata : _meta
 	}),
-	ListItemPrototype = ListItem.prototype;
+	ListItemProto = ListItem.prototype;
 
-	ui5strap.Utils.dynamicText(ListItemPrototype);
-
-	//ui5strap.Utils.dynamicClass(ListItemPrototype, 'selected', { 'true' : 'active' });
+	SelectableSupport.proto(ListItemProto);
 	
-	ListItemPrototype.setSelected = function(newSelected, suppressInvalidate){
-		if(this.getDomRef()){
-              if(newSelected){
-                  this.$().addClass("active");
-              }
-              else{
-                  this.$().removeClass("active");
-              }
-              
+	ui5strap.Utils.dynamicText(ListItemProto);
 
-              this.setProperty("selected", newSelected, true);
-          }
-          else{
-              this.setProperty("selected", newSelected, suppressInvalidate);
-          }
-	};
-	
 	return ListItem;
 });;/*
  * 
@@ -10668,13 +10699,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<li");
 		rm.writeControlData(oControl);
 		
-		if(oControl.getSelected()){
-			rm.addClass("active");
-		}
-		
-		if(!oControl.getEnabled()){
-			rm.addClass("disabled");
-		}
+		rm.addClass(oControl._getStyleClass());
 
 		rm.writeClasses();
 
@@ -10714,631 +10739,40 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListItem'], function(library, ControlBase, ListSelectionSupport, ListItem){
 
-	var ListBase = ControlBase.extend("ui5strap.ListBase", {
-		metadata : {
-			interfaces : ["ui5strap.ISelectionProvider"],
+	var _meta = {
+			interfaces : [],
 
 			library : "ui5strap",
 			
 			properties : {
-				selectionMode : {
-					"type" : "ui5strap.SelectionMode",
-					"defaultValue" : ui5strap.SelectionMode.None
-				}
+				
 			},
 			
-			events:{
-				selectionChange : {
-					parameters : {
-						listItem : {type : "ui5strap.ListItem"}
-					}
-				},
-				selectionChanged : {
-					parameters : {
-						listItem : {type : "ui5strap.ListItem"}
-					}
-				},
-
-				select : {
-					parameters : {
-						listItem : {type : "ui5strap.ListItem"},
-						srcControl : {type : "ui5strap.Control"}
-					}
-				},
+			events : {
 				
-				//TODO Rename 'tap' event to 'press' sometimes
-				tap : {
-					parameters : {
-						listItem : {type : "ui5strap.ListItem"},
-						srcControl : {type : "ui5strap.Control"}
-					}
-				}
-
 			}
-		}
+		};
+	
+	ListSelectionSupport.meta(_meta);
+	
+	var ListBase = ControlBase.extend("ui5strap.ListBase", {
+		metadata : _meta
 	}),
-	ListBaseProto = ListBase.prototype,
-	_defaultSelectionGroup = "selectionGroup";
+	ListBaseProto = ListBase.prototype;
 	
-	/**
-	 * @Private
-	 */
-	var _changeSelection = function(_this, itemsToSelect, mode, selectionGroup){
-		var items = _this._getItems(),
-			changes = {
-				"selected" : [],
-				"deselected" : [],
-				"changed" : [],
-				"unchanged" : [],
-			};
-		
-		if(!jQuery.isArray(itemsToSelect)){
-			itemsToSelect = [itemsToSelect];
-		}
-		
-		if(!selectionGroup){
-			selectionGroup = _defaultSelectionGroup;
-		}
-		
-		for(var i = 0; i < items.length; i++){
-			var item = items[i];
-			if(-1 !== jQuery.inArray(item, itemsToSelect)){
-				//Item is subject to select / deselect
-				if("replace" === mode || "add" === mode){
-					if(!_this._isItemSelected(item, selectionGroup)){
-						changes.selected.push(item);
-						changes.changed.push(item);
-						
-						_this._setItemSelected(item, true, selectionGroup);
-					}
-					else{
-						changes.unchanged.push(item);
-					}
-				}
-				else if("remove" === mode){
-					if(_this._isItemSelected(item, selectionGroup)){
-						changes.deselected.push(item);
-						changes.changed.push(item);
-						
-						_this._setItemSelected(item, false, selectionGroup);
-					}
-					else{
-						changes.unchanged.push(item);
-					}
-				}
-				else if("toggle" === mode){
-					var selected = _this._isItemSelected(item, selectionGroup);
-						
-						if(!selected){
-							changes.selected.push(item);
-						}
-						else{
-							changes.deselected.push(item);
-						}
-						
-						changes.changed.push(item);
-						
-						_this._setItemSelected(item, !selected, selectionGroup);
-				}
-			}
-			else{
-				//Item is no subject to select / deselect
-				if("replace" === mode){
-					if(_this._isItemSelected(item, selectionGroup)){
-						changes.deselected.push(item);
-						changes.changed.push(item);
-						
-						_this._setItemSelected(item, false, selectionGroup);
-					}
-					else{
-						changes.unchanged.push(item);
-					}
-				}
-				else if("add" === mode || "remove" === mode || "toggle" === mode){
-					changes.unchanged.push(item);
-				}
-			}
-		}
-		
-		if(changes.changed.length){
-			_this.fireSelectionChange({ selectionChanges: changes });
-		
-			_this.fireSelectionChanged({ selectionChanges: changes });
-		}
-		
-		return changes;
-	};
-	
-	/**
-	 * @Private
-	 */
-	var _changeSelectionIndices = function(_this, indices, mode, selectionGroup){
-		var items = this._getItems();
-		
-		if(!jQuery.isArray(indices)){
-			//Single value
-			if(indices < 0 || indices >= items.length){
-				throw new Error("Array out of bounds!");
-			}
-			
-			return _changeSelection(_this, items[indices], mode, selectionGroup);
-		}
-		else{
-			//1 dimensional array
-			var itemsToSelect = [];
-			for(var i=0; i<indices.length; i++){
-				var index = indices[i];
-				if(index < 0 || index >= items.length){
-					throw new Error("Array out of bounds!");
-				}
-				itemsToSelect.push(items[index]);
-			}
-			
-			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
-		}
-	};
-	
-	/**
-	 * @Private
-	 */
-	var _changeSelectionByCustomData = function(_this, dataKey, values, mode, selectionGroup){
-		var items = _this._getItems();
-		
-		if(!jQuery.isArray(values)){
-			var selectedItem = null;
-			
-			for(var i = 0; i < items.length; i++){
-				if(items[i].data(dataKey) === values){
-					selectedItem = items[i];
-					
-					break;
-				}
-			}
-			
-			return _changeSelection(_this, selectedItem, mode, selectionGroup);
-		}
-		else{
-			var itemsToSelect = [];
-			
-			for(var i = 0; i < items.length; i++){
-				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
-					itemsToSelect.push(items[i]);
-				}
-			}
-			
-			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
-		}
-	};
-	
-	/*
-	 * --------------------
-	 * START implementation of ISelectionProvider interface
-	 * --------------------
-	 */
-	
-	/**
-	 * Gets one or multiple selected items
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.getSelection = function(dimension, selectionGroup){
-		var selection = this._getListSelection(selectionGroup);
-		if(typeof dimension === "undefined"){
-			return selection.items;
-		}
-		else if(0 === dimension){
-			//Single value
-			return selection.items.length ? selection.items[0] : null;
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			return selection.items;
-		}
-		else if(2 === dimension){
-			//2 dimensional array
-			return [selection.items];
-		}
-		else if(3 === dimension){
-			//3 dimensional array
-			return [[selection.items]];
-		}
-		else{
-			throw new Error("Only 3 dimensions are supported by this Control.");
-		}
-	};
-	
-	/**
-	 * Returns whether one or multiple items are currently part of selection.
-	 * @Public
-	 */
-	ListBaseProto.isInSelection = function(itemsToCheck, selectionGroup){
-		var inSelection = true;
-		
-		if(!jQuery.isArray(itemsToCheck)){
-			itemsToCheck = [itemsToCheck];
-		}
-		
-		for(var i = 0; i < itemsToCheck.length; i++){
-			if(!this._isItemSelected(itemsToCheck[i], selectionGroup)){
-				inSelection = false;
-				break;
-			}
-		}
-		
-		return inSelection;
-	};
-	
-	/**
-	 * Tries to select one or multiple items and returns all changes.
-	 * 
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.setSelection = function(itemsToSelect, selectionGroup){
-		return _changeSelection(this, itemsToSelect, "replace", selectionGroup);
-	};
-	
-	/**
-	 * Adds one or multiple items to selection
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.addSelection = function(itemsToSelect, selectionGroup){
-		return _changeSelection(this, itemsToSelect, "add", selectionGroup);
-	};
-	
-	/**
-	 * Removes one or multiple items from selection
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.removeSelection = function(itemsToSelect, selectionGroup){
-		return _changeSelection(this, itemsToSelect, "remove", selectionGroup);
-	};
-	
-	/**
-	 * Toggles one or multiple items from selection
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.toggleSelection = function(itemsToSelect, selectionGroup){
-		return _changeSelection(this, itemsToSelect, "toggle", selectionGroup);
-	};
-	
-	/*
-	 * Index
-	 */
-	
-	/**
-	 * Gets one or multiple indices of selected items
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.getSelectionIndex = function(dimension, selectionGroup){
-		var selection = this._getListSelection(selectionGroup);
-		if(typeof dimension === "undefined"){
-			return selection.indices;
-		}
-		else if(0 === dimension){
-			//single value
-			return selection.indices.length ? selection.indices[0] : undefined;
-		}
-		else if(1 === dimension){
-			//1 dimensional array
-			return selection.indices;
-		}
-		else if(2 === dimension){
-			//2 dimensional array
-			return [selection.indices];
-		}
-		else if(3 === dimension){
-			//3 dimensional array
-			return [[selection.indices]];
-		}
-		else{
-			throw new Error("Only 3 dimensions are supported by this Control.");
-		}
-	};
-	
-	/**
-	 * Returns whether one or multiple item indices are currently part of selection.
-	 * @Public
-	 */
-	ListBaseProto.isInSelectionIndex = function(indices, selectionGroup){
-		var items = _this._getItems();
-		if(!jQuery.isArray(indices)){
-			//Single value
-			if(indices < 0 || indices >= items.length){
-				throw new Error("Array out of bounds!");
-			}
-			
-			return this.isInSelection(items[indices], selectionGroup);
-		}
-		else{
-			var itemsToCheck = [];
-			for(var i=0; i<indices.length; i++){
-				var index = indices[i];
-				if(index < 0 || index >= items.length){
-					throw new Error("Array out of bounds!");
-				}
-				itemsToCheck.push(items[index]);
-			}
-			
-			return this.isInSelection(itemsToCheck, selectionGroup);
-		}
-	};
-	
-	/**
-	 * Selects one or multiple items by indices
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.setSelectionIndex = function(indices, selectionGroup){
-		return _changeSelectionIndices(this, indices, "replace", selectionGroup);
-	};
-	
-	/**
-	 * Adds one or multiple items to selection by indices
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.addSelectionIndex = function(indices, selectionGroup){
-		return _changeSelectionIndices(this, indices, "add", selectionGroup);
-	};
-	
-	/**
-	 * Removes one or multiple items from selection by indices
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.removeSelectionIndex = function(indices, selectionGroup){
-		return _changeSelectionIndices(this, indices, "remove", selectionGroup);
-	};
-	
-	/**
-	 * Toggles one or multiple items from selection by indices
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.toggleSelectionIndex = function(indices, selectionGroup){
-		return _changeSelectionIndices(this, indices, "toggle", selectionGroup);
-	};
-	
-	/*
-	 * CustomData 
-	 */
-	
-	/**
-	 * Returns whether one or multiple items are currently part of selection. Items are selected by custom data key and possible values.
-	 * @Public
-	 */
-	ListBaseProto.isInSelectionByCustomData = function(dataKey, values, selectionGroup){
-		var items = _this._getItems();
-		
-		if(!jQuery.isArray(values)){
-			for(var i = 0; i < items.length; i++){
-				if(items[i].data(dataKey) === values){
-					selectedItem = items[i];
-					
-					return this.isInSelection(selectedItem, selectionGroup);
-				}
-			}
-		}
-		else{
-			var itemsToCheck = [];
-			for(var i = 0; i < items.length; i++){
-				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
-					itemsToCheck.push(items[i]);
-				}
-			}
-			return this.isInSelection(itemsToCheck, selectionGroup);
-		}
-	};
-	
-	/**
-	 * Selects one or multiple items that have the given value in the specified custom data field.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.setSelectionByCustomData = function(dataKey, values, selectionGroup){
-		_changeSelectionByCustomData(this, dataKey, values, "replace", selectionGroup);
-	};
-	
-	/**
-	 * Selects one or multiple items that have the given value in the specified custom data field.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.addSelectionByCustomData = function(dataKey, values, selectionGroup){
-		_changeSelectionByCustomData(this, dataKey, values, "add", selectionGroup);
-	};
-	
-	/**
-	 * Selects one or multiple items that have the given value in the specified custom data field.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.removeSelectionByCustomData = function(dataKey, values, selectionGroup){
-		_changeSelectionByCustomData(this, dataKey, values, "remove", selectionGroup);
-	};
-	
-	/**
-	 * Toggles one or multiple items that have the given value in the specified custom data field.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.toggleSelectionByCustomData = function(dataKey, values, selectionGroup){
-		_changeSelectionByCustomData(this, dataKey, values, "toggle", selectionGroup);
-	};
-	
-	/*
-	 * Property
-	 */
-	
-	/**
-	 * Selects one or multiple items that have the given value in the specified property.
-	 * @Public
-	 * @Override
-	 */
-	ListBaseProto.setSelectionByProperty = function(propertyName, values, selectionGroup){
-		throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
-	};
-	
-	/*
-	 * ------------------
-	 * END implementation of ISelectionProvider interface
-	 * ------------------
-	 */
-	
-	/*
-	 * --------------------
-	 * START implementation of IList interface
-	 * --------------------
-	 */
-	/**
-	 * Gets one or multiple selected items that have the given value in the specified custom data field.
-	 * @Public
-	 */
-	ListBaseProto.getItemsByCustomData = function(dataKey, value){
-		var items = this._getItems(),
-			returnItems = [];
-		for(var i = 0; i < items.length; i++){
-			if(items[i].data(dataKey) === value){
-				returnItems.push(items[i]);
-			}
-		}
-		
-		return returnItems;
-	};
-	
-	/**
-	 * Gets one or multiple selected items that have the given value in the specified property.
-	 * @Public
-	 */
-	ListBaseProto.getItemsByProperty = function(propertyName, value){
-		var items = this._getItems(),
-			getter = "get" + jQuery.sap.charToUpper(propertyName, 0),
-			returnItems = [];
-		
-		for(var i = 0; i < items.length; i++){
-			var item = items[i];
-			
-			if(!item[getter]){
-				throw new Error("Item " + i + ": no such getter: " + getter);
-			}
-			
-			if(item[getter]() === value){
-				returnItems.push(items[i]);
-			}
-		}
-		
-		return returnItems;
-	};
-	
-	/**
-	 * @Public
-	 */
-	ListBaseProto.getItemIndex = function(item){
-		return this.indexOfAggregation("items", item);
-	};
-	
-	/*
-	 * ------------------
-	 * END implementation of IList interface
-	 * ------------------
-	 */
-	
-	/**
-	 * Returns an array of selected items and their indices.
-	 * 
-	 * @Protected
-	 */
-	ListBaseProto._getListSelection = function(selectionGroup){
-		if(!selectionGroup){
-			selectionGroup = _defaultSelectionGroup;
-		}
-		
-		var items = this._getItems(),
-			selection = {
-				indices : [],
-				items : []
-			};
-		
-		for(var i = 0; i < items.length; i++){
-			if(this._isItemSelected(items[i], selectionGroup)){
-				selection.items.push(items[i]);
-				selection.indices.push(i);
-			}
-		}
-		
-		return selection;
-	};
-	
-	/**
-	 * Defines how to decide whether an item is selected within a selectionGroup.
-	 * @Protected
-	 */
-	ListBaseProto._isItemSelected = function(item, selectionGroup){
-		return item.getSelected();
-	};
-	
-	/**
-	 * Defines how to decide whether an item is enabled within a selectionGroup.
-	 * @Protected
-	 */
-	ListBaseProto._isItemEnabled = function(item, selectionGroup){
-		return item.getEnabled();
-	};
-	
-	/**
-	 * Defines how to decide whether an item is selectable within a selectionGroup.
-	 * @Protected
-	 */
-	ListBaseProto._isItemSelectable = function(item, selectionGroup){
-		return item.getSelectable();
-	};
-	
-	/**
-	 * Defines how to select an item within a selectionGroup.
-	 * @Protected
-	 */
-	ListBaseProto._setItemSelected = function(item, selected, selectionGroup){
-		item.setSelected(selected);
-	};
-	
-	/**
-	 * Gets the list of items. This depends on the available aggregations.
-	 * @Protected
-	 */
-	ListBaseProto._getItems = function(){
-		return this.getItems();
-	};
-	
-	/**
-	 * Defines how to find the closest item starting at any control within the item.
-	 * For example, if you click a button somewhere within the list, this method finds the corresponding list item.
-	 * @Protected
-	 */
-	ListBaseProto._findClosestItem = function(srcControl){
-		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.ListItem);
-	};
+	ListSelectionSupport.proto(ListBaseProto);
 	
 	/**
 	 * Adds additional event options.
 	 * @Protected
+	 * @Override
 	 */
-	ListBaseProto._addEventOptions = function(eventOptions, oEvent){
+	ListBaseProto._addEventOptions = function(eventOptions){
 		//@deprecated
 		eventOptions.listItem = eventOptions.srcItem;
 	};
-	
-	/*
-	 * ----------------
-	 * HANDLE UI EVENTS
-	 * ----------------
-	 */
 	
 	/**
 	 * Handler for Tap / Click Events
@@ -11349,62 +10783,29 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectionProvider");
+		oEvent.setMarked("ui5strap.IItemsProvider");
+		oEvent.setMarked("ui5strap.ListBase");
 		
-		var item = this._findClosestItem(oEvent.srcControl),
-			eventOptions = {
-				srcControl : oEvent.srcControl,
-				srcItem : item,
-				srcItems : [item],
-			};
-				
-		this._addEventOptions(eventOptions, oEvent);
+		//TODO find the right list item! (dropdown menu)
+		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem),
+			selectionProvider = this,
+			listItem = item,
+			listItemUpdated = false;
 		
-		if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
-			//Item is enabled
+		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
+			selectionProvider = item.getParent();
+			//TODO search for selectable item instead
+			listItem = ui5strap.Utils.findClosestParentControl(selectionProvider, ListItem);
 			
-			//Process selection
-			var selectionMode = this.getSelectionMode();
-			if(ui5strap.SelectionMode.None !== selectionMode 
-					&& this._isItemSelectable(item, _defaultSelectionGroup)){
-				//List allows selections and item is selectable
-				
-				var changes = null;
-				
-				if(selectionMode === ui5strap.SelectionMode.Single){
-					changes = this.setSelection(item, _defaultSelectionGroup);
-				}
-				else if(selectionMode === ui5strap.SelectionMode.SingleToggle){
-					if(this.isInSelection(item)){
-						changes = this.removeSelection(item, _defaultSelectionGroup);
-					}
-					else{
-						changes = this.setSelection(item, _defaultSelectionGroup);
-					}
-				}
-				else if(selectionMode === ui5strap.SelectionMode.Multiple){
-					changes = this.toggleSelection(item, _defaultSelectionGroup);
-				}
-				
-				if(changes && changes.changed.length){
-					eventOptions.selectionChanges = changes;
-					
-					//Select event is deprecated
-					this.fireSelect(eventOptions);
-				}
-				else{
-					jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
+			if(listItem){
+				if(oEvent.isMarked("ui5strap.ISelectableItem.update")){
+					listItemUpdated = true;
 				}
 			}
-			else{
-				jQuery.sap.log.debug("[LIST#" + this.getId() + "] Did not select list item: List item not selectable.");
-			}
-			
-			//TODO Rename 'tap' event to 'press' sometimes
-			this.fireTap(eventOptions);
 		}
-		else{
-			jQuery.sap.log.warning("Could not select list item: List item not found or disabled.");
-		}
+		
+		this.pressItem(oEvent.srcControl, listItem, listItemUpdated, selectionProvider, item);
 	};
 	
 	//Touchscreen
@@ -11428,7 +10829,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	ListBaseProto.setSelectedIndex = function(itemIndex){
 		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
 		
-		return this.setSelectionIndices(itemIndex);
+		return this.setSelectionIndex(itemIndex);
 	};
  
 	/**
@@ -11438,7 +10839,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	ListBaseProto.getSelectedIndex = function(){
 		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
 		
-		return this.getSelectionIndices();
+		return this.getSelectionIndex();
 	};
 
 	
@@ -11940,7 +11341,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	var Tooltip = ControlBase.extend("ui5strap.Tooltip", {
+	var TooltipControl = ControlBase.extend("ui5strap.Tooltip", {
 	    metadata : {
 	
 	      // ---- object ----
@@ -11994,13 +11395,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	      }
 	
 	    }
-  });
+  }),
+  TooltipProto = TooltipControl.prototype;
 
-  Tooltip.prototype.init = function(){
+  TooltipProto.init = function(){
       this.sourceControl = null;
   };
 
-  Tooltip.prototype.getSourceControl = function(){
+  TooltipProto.getSourceControl = function(){
       if(null === this.sourceControl){
         this.sourceControl = sap.ui.getCore().byId(this.getSource());
         
@@ -12009,11 +11411,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
       return this.sourceControl;
   };
 
-  Tooltip.prototype.getSourceDomRef = function(){
+  TooltipProto.getSourceDomRef = function(){
       return this.getSourceControl().$();
   };
 
-  Tooltip.prototype.onAfterRendering = function(){
+  TooltipProto.onAfterRendering = function(){
     var $this = this.$(),
         _this = this;
 
@@ -12049,19 +11451,19 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
     });
   };
 
-  Tooltip.prototype.show = function(){
+  TooltipProto.show = function(){
       this.getSourceDomRef().tooltip('show');
   };
 
-  Tooltip.prototype.hide = function(){
+  TooltipProto.hide = function(){
       this.getSourceDomRef().tooltip('hide');
   };
 
-  Tooltip.prototype.toggle = function(){
+  TooltipProto.toggle = function(){
       this.getSourceDomRef().tooltip('toggle');
   };
   
-  return Tooltip;
+  return TooltipControl;
   
 });
 
@@ -12252,9 +11654,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
         that.$element.trigger('shown.bs.' + that.type)
       }
 
-      $.support.transition && this.$tip.hasClass('fade') ?
+      ui5strap.support.transition && this.$tip.hasClass('fade') ?
         $tip
-          .one($.support.transition.end, complete)
+          .one(ui5strap.support.transition.end, complete)
           .emulateTransitionEnd(150) :
         complete()
     }
@@ -12348,9 +11750,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
     $tip.removeClass('in')
 
-    $.support.transition && this.$tip.hasClass('fade') ?
+    ui5strap.support.transition && this.$tip.hasClass('fade') ?
       $tip
-        .one($.support.transition.end, complete)
+        .one(ui5strap.support.transition.end, complete)
         .emulateTransitionEnd(150) :
       complete()
 
@@ -14565,7 +13967,7 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define([ './library', './ControlBase' ], function(library, ControlBase) {
 
 	var Alert = ControlBase.extend("ui5strap.Alert", {
 		metadata : {
@@ -14574,116 +13976,124 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			defaultAggregation : "content",
 			// ---- control specific ----
 			library : "ui5strap",
-			
-			properties : { 
+
+			properties : {
 				text : {
-					type:"string", 
-					defaultValue:""
-				}, 
-        animate : {
-          type:"boolean", 
-          defaultValue:true
-        }, 
-        visible : {
-          type:"boolean", 
-          defaultValue:true
-        },
-        closable : {
-          type : "boolean",
-          defaultValue : false
-        },
-        contentPlacement : {
-          type:"ui5strap.ContentPlacement",
-          defaultValue : ui5strap.ContentPlacement.Start
-        },
+					type : "string",
+					defaultValue : ""
+				},
+				animate : {
+					type : "boolean",
+					defaultValue : true
+				},
+				visible : {
+					type : "boolean",
+					defaultValue : true
+				},
+				closable : {
+					type : "boolean",
+					defaultValue : false
+				},
+				contentPlacement : {
+					type : "ui5strap.ContentPlacement",
+					defaultValue : ui5strap.ContentPlacement.Start
+				},
 				severity : {
-					type:"ui5strap.Severity", 
-					defaultValue:ui5strap.Severity.Info
+					type : "ui5strap.Severity",
+					defaultValue : ui5strap.Severity.Info
 				}
 			},
-			aggregations : { 
-        closeButton : {
-          type : "ui5strap.Button",
-          multiple : false
-        },
+			aggregations : {
+				closeButton : {
+					type : "ui5strap.Button",
+					multiple : false
+				},
 				content : {
-					singularName: "content"
-				} 
+					singularName : "content"
+				}
 			},
-      events : {
-        closed : {
+			events : {
+				closed : {
 
-        }
-      }
+				}
+			}
 
 		}
-	}),
-	AlertProto = Alert.prototype;
+	}), AlertProto = Alert.prototype;
 
-  ui5strap.Utils.dynamicText(AlertProto);
+	ui5strap.Utils.dynamicText(AlertProto);
 
-  AlertProto.init = function(){
-  
-  }
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	AlertProto._getStyleClassDesign = function(){
+		var styleClass = "alert";
+		
+		styleClass += " alert-" + ui5strap.BSSeverity[this.getSeverity()] + (this.getAnimate() ? " fade" : '');
+		
+		return styleClass;
+	};
 
-  var _setCloseButton = AlertProto.setCloseButton;
+	var _setCloseButton = AlertProto.setCloseButton;
 
-  AlertProto.setCloseButton = function(closeButton, suppressInvalidate){
-      var _this = this;
-      if(null !== closeButton){
-        closeButton.attachEvent('tap', {}, function(oEvent){
-          _this.close();
-        });
-      }
+	AlertProto.setCloseButton = function(closeButton, suppressInvalidate) {
+		var _this = this;
+		if (null !== closeButton) {
+			closeButton.attachEvent('tap', {}, function(oEvent) {
+				_this.close();
+			});
+		}
 
-      _setCloseButton.call(this, closeButton, suppressInvalidate);
-  };
+		_setCloseButton.call(this, closeButton, suppressInvalidate);
+	};
 
-  AlertProto.onBeforeRendering = function(){
-      if(this.getClosable() && this.getCloseButton() === null){
-          this.setCloseButton(new ui5strap.Button({ type : ui5strap.ButtonType.Close, content : [ new ui5strap.Icon({ icon : "times", iconSet : "fa" }) ] }));
-      }
-  };
+	AlertProto.onBeforeRendering = function() {
+		if (this.getClosable() && this.getCloseButton() === null) {
+			this.setCloseButton(new ui5strap.Button({
+				type : ui5strap.ButtonType.Close,
+				content : [ new ui5strap.Icon({
+					icon : "times",
+					iconSet : "fa"
+				}) ]
+			}));
+		}
+	};
 
-  AlertProto.onAfterRendering = function(){
-        if(this.getVisible()){
-              this.$().addClass('in');
-        }
-  };
+	AlertProto.onAfterRendering = function() {
+		if (this.getVisible()) {
+			this.$().addClass('in');
+		}
+	};
 
-  AlertProto.setVisible = function(visible){
-      if(this.getDomRef()){
-          if(visible){
-              this.$().addClass('in');
-          }
-          else{
-              this.$().removeClass('in');
-          }
-          this.setProperty('visible', visible, true);
-      }
-      else{
-         this.setProperty('visible', visible);
-      }
-  };
+	AlertProto.setVisible = function(visible) {
+		if (this.getDomRef()) {
+			if (visible) {
+				this.$().addClass('in');
+			} else {
+				this.$().removeClass('in');
+			}
+			this.setProperty('visible', visible, true);
+		} else {
+			this.setProperty('visible', visible);
+		}
+	};
 
-  AlertProto.close = function(){
-    var $alert = this.$(),
-      _this = this;
-    $alert.removeClass('in')
+	AlertProto.close = function() {
+		var $alert = this.$(), _this = this;
+		$alert.removeClass('in')
 
-    function removeElement() {
-      _this.fireClosed({});
-      _this.destroy();
-    }
+		function removeElement() {
+			_this.fireClosed({});
+			_this.destroy();
+		}
 
-    $.support.transition && $alert.hasClass('fade') ?
-      $alert
-        .one($.support.transition.end, removeElement)
-        .emulateTransitionEnd(150) :
-      removeElement()
-  };
-  
-  return Alert;
+		ui5strap.support.transition && $alert.hasClass('fade') ? $alert.one(
+				ui5strap.support.transition.end, removeElement)
+				.emulateTransitionEnd(150) : removeElement()
+	};
+
+	return Alert;
 
 });;/*
  * 
@@ -14720,7 +14130,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("alert alert-" + ui5strap.BSSeverity[oControl.getSeverity()] + (oControl.getAnimate() ? " fade" : ''));
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 
@@ -14762,6 +14172,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * limitations under the License.
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
+ */
+
+/*
+ * TODO Refactor to "ui5strap.ConsoleApp"
  */
 
  sap.ui.define(['./library', './AppBase', './Console'], function(library, AppBase, Console){
@@ -14883,6 +14297,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
+/*
+ * TODO Refactor to "ui5strap.SandboxApp"
+ */
+
  sap.ui.define(['./library', './AppBase', './Sandbox'], function(library, AppBase, Sandbox){
 
 	 var AppSandbox = AppBase.extend("ui5strap.AppSandbox", {
@@ -14947,18 +14365,33 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	return AppSandbox;
 });;/*
  * 
- * Ui5OS
- * 
- * AppSystem
- * 
- * Author: Jan Philipp Knöller
- * 
- * Copyright (c) 2013 Philipp Knöller Software
- * 
- * http://pksoftware.de
+ * UI5Strap
  *
- * ALL RIGHTS RESERVED
+ * ui5strap.AppSystem
  * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+/*
+ * TODO Refactor to "ui5strap.SystemApp"
  */
 
  sap.ui.define(['./library', './App'], function(library, App){
@@ -15006,6 +14439,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var Badge = ControlBase.extend("ui5strap.Badge", {
 		metadata : {
+			interfaces : ["ui5strap.IText"],
 			deprecated : true,
 			library : "ui5strap",
 			
@@ -15016,7 +14450,15 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 		}
-	});
+	}), BadgeProto = Badge.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	BadgeProto._getStyleClassDesign = function(){
+		return "badge";
+	};
 	
 	return Badge;
 });;/*
@@ -15053,7 +14495,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	BadgeRenderer.render = function(rm, oControl) {
 		rm.write("<span");
 		rm.writeControlData(oControl);
-		rm.addClass("badge");
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -15144,9 +14586,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	BarProto._getStyleClassRoot = function(){
-		return "ui5strapBar ui5strapBar-type-" + this.getType() 
-				+ (this.getInverse() ? ' ui5strapBar-flag-styleInverse' : ' ui5strapBar-flag-styleDefault')
-				+ (this.getFullHeight() ? ' ui5strapBar-flag-fullHeight' : '');
+		return "ui5strapBar-type-" + this.getType() 
+				+ (this.getInverse() ? ' ui5strapBar-style-Inverse' : ' ui5strapBar-style-Default')
+				+ (this.getFullHeight() ? ' ui5strapBar-flag-FullHeight' : '');
 	};
 	
 	/**
@@ -15514,7 +14956,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
+sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], function(library, NavContainer, ResponsiveTransition){
 
 	var BarNavContainer = NavContainer.extend("ui5strap.BarNavContainer", {
 		metadata : {
@@ -15754,7 +15196,7 @@ sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 				
 				var _this = this,
 					$target = jQuery('#' + this.targetDomId('bar')),
-					transition = new ui5strap.ResponsiveTransition(
+					transition = new ResponsiveTransition(
 						{
 							"transitionExtraSmall" : this._getBarTransition(this._getBarTransitionExtraSmall(), newBarVisible),
 							"transitionSmall" : this._getBarTransition(this._getBarTransitionSmall(), newBarVisible),
@@ -15816,7 +15258,7 @@ sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 	 * @Override
 	 */
 	BarNavContainerProto._getStyleClassRoot = function(){
-		var classes = "navcontainer navcontainer-type-" + this.ncType,
+		var classes = "navcontainer-type-" + this.ncType,
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
 			modeMedium = this.getBarModeMedium(),
@@ -15942,10 +15384,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		
-		rm.addClass(oControl._getStyleClassRoot());
-		rm.addClass(oControl._getStyleClassOptions());
-		
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 
@@ -16007,6 +15446,201 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	return BarRenderer;
 	
 }, true);;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.OptionsSupport
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+sap.ui.define(['./library'], function(library){
+	
+	var BaseSupport = {};
+	
+	BaseSupport.meta = function(meta){
+		//Visibility DOES inherit from smaller sizes
+		meta.properties.visibilityExtraSmall = {
+			type : "ui5strap.Visibility",
+			defaultValue : ui5strap.Visibility.Default
+		};
+		meta.properties.visibilitySmall = {
+			type : "ui5strap.Visibility",
+			defaultValue : ui5strap.Visibility.Default
+		};
+		meta.properties.visibilityMedium = {
+			type : "ui5strap.Visibility",
+			defaultValue : ui5strap.Visibility.Default
+		};
+		meta.properties.visibilityLarge = {
+			type : "ui5strap.Visibility",
+			defaultValue : ui5strap.Visibility.Default
+		};
+		//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
+	};
+	
+	/**
+	 * General enhancements
+	 * @Public
+	 */
+	BaseSupport.proto = function(oControl){
+		/**
+		 * @Protected
+		 */
+		oControl._getIdPart = function(){
+			if(arguments.legnth === 0){
+				throw new Error("Please provide at least one argument for ui5strap.ControlBase.prototype._getIdPart!");
+			}
+			var args = jQuery.makeArray(arguments);
+			return this.getId() + "___" + args.join('-');
+		};
+		
+		/**
+		 * @Protected
+		 */
+		oControl._$getPart = function(){
+			return jQuery('#' + this._getIdPart.apply(this, arguments));
+		};
+		
+		/**
+		 * @Protected
+		 */
+		oControl._getStyleClassPrefix = function(){
+			return this.getMetadata().getElementName().replace(/\./g, '');
+		};
+		
+		/**
+		 * @Protected
+		 */
+		oControl._getStyleClassDesign = function(){
+			return "";
+		};
+		
+		/**
+		 * @Protected
+		 */
+		oControl._getStyleClassRoot = function(){
+			return "";
+		};
+		
+		/**
+		* @Protected
+		*/
+		oControl._getStyleClass = function(){
+			return this._getStyleClassPrefix() 
+					+ " " + this._getStyleClassRoot()
+					+ " " + this._getStyleClassDesign() 
+					+ " " + BaseSupport.getStyleClass(this);	
+		};
+		
+		//Class Name Builders
+		/**
+		 * @Protected
+		 */
+		oControl._getStyleClassPart = function(partName){
+			return this._getStyleClassPrefix() + "-" + partName;
+		};
+		
+		/**
+		* @Protected
+		*/
+		oControl._getStyleClassType = function(type, typeKey){
+			return 	this._getStyleClassPrefix() + "-" + (typeKey || "type") + "-" + type;
+		};
+		
+		/**
+		* @Protected
+		*/
+		oControl._getStyleClassFlag = function(flag){
+			return 	this._getStyleClassPrefix() + "-flag-" + flag;
+		};
+		
+		//Binding Context
+		oControl.getBindingContextData = function(modelName){
+			var bindingContext = this.getBindingContext(modelName);
+			
+			return bindingContext.getModel().getProperty(bindingContext.getPath());
+		};
+	};
+	
+	BaseSupport.getStyleClass = function(oControl){
+		var visibility = visibilityExtraSmall = oControl
+				.getVisibilityExtraSmall(), visibilitySmall = oControl
+				.getVisibilitySmall(), visibilityMedium = oControl
+				.getVisibilityMedium(), visibilityLarge = oControl
+				.getVisibilityLarge(), Visibility = ui5strap.Visibility;
+		
+		var resultHidden = [ "", "", "", "" ], inheritHide = false;
+		
+		// Visibility for EXTRA_SMALL screens
+		if (visibilityExtraSmall === Visibility.Visible) {
+			// Visible on EXTRA_SMALL
+			resultHidden[0] = "";
+			inheritHide = false;
+		} else if (inheritHide
+				|| visibilityExtraSmall === Visibility.Hidden) {
+			// Hidden on EXTRA_SMALL
+			resultHidden[0] = "ui5strap-hide-xs";
+			inheritHide = true;
+		}
+		
+		// Visibility for SMALL screens
+		if (visibilitySmall === Visibility.Visible) {
+			// Visible on SMALL
+			resultHidden[1] = "";
+			inheritHide = false;
+		} else if (inheritHide
+				|| visibilitySmall === Visibility.Hidden) {
+			// Hidden on SMALL
+			resultHidden[1] = "ui5strap-hide-sm";
+			inheritHide = true;
+		}
+		
+		// Visibility for MEDIUM screens
+		if (visibilityMedium === Visibility.Visible) {
+			// Visible on MEDIUM
+			resultHidden[2] = "";
+			inheritHide = false;
+		} else if (inheritHide
+				|| visibilityMedium === Visibility.Hidden) {
+			// Hidden on MEDIUM
+			resultHidden[2] = "ui5strap-hide-md";
+			inheritHide = true;
+		}
+		
+		// Visibility for LARGE screens
+		if (visibilityLarge === Visibility.Visible) {
+			// Visible on LARGE
+			resultHidden[3] = "";
+		} else if (inheritHide
+				|| visibilityLarge === Visibility.Hidden) {
+			// Hidden on LARGE
+			resultHidden[3] = "ui5strap-hide-lg";
+		}
+		
+		return resultHidden.join(" ");
+	};
+	
+	return BaseSupport;
+});;/*
  * 
  * UI5Strap
  *
@@ -16130,13 +15764,13 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library'], function(library){
 
-	var Break = ControlBase.extend("ui5strap.Break", {
+	var Break = ui5strap.Control.extend("ui5strap.Break", {
 		metadata : {
-
-			library : "ui5strap",
-			
+			interfaces : ["ui5strap.IText"],
+			deprecated : true,
+			library : "ui5strap"
 		}
 	});
 	
@@ -16208,14 +15842,17 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 
 	var ButtonDropdown = Button.extend("ui5strap.ButtonDropdown", {
 		metadata : {
-
-			// ---- object ----
+			interfaces : ["ui5strap.IDropdownMenuHost"],
+			
 			defaultAggregation : "menu",
 				
-			// ---- control specific ----
 			library : "ui5strap",
 
 			properties : { 
+				update : {
+					type : "ui5strap.DropdownMenuHostUpdate",
+					defaultValue : ui5strap.DropdownMenuHostUpdate.None
+				},
 				dropup : {
 					type:"boolean", 
 					defaultValue:false
@@ -16237,29 +15874,44 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	}),
 	ButtonDropdownProto = ui5strap.ButtonDropdown.prototype;
 
-	ButtonDropdownProto.setText = function(newText){
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonDropdownProto._getStyleClassDesign = function(){
+		var styleClass = "btn-group";
+		if(this.getDropup()){
+			styleClass += " dropup";
+		}
+		return styleClass;
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonDropdownProto._getStyleClassRoot = function(){
+		return "";
+	};
+	
+	ButtonDropdownProto.setText = function(newText, suppressInvalidate){
 		if(this.getMenu() === null){
 			if(this.getDomRef() && this.getContent().length === 0){
               jQuery('#' + this.getId() + '---' + (this.getSplit() ? 'button' : 'toggle')).text(newText);
               this.setProperty('text', newText, true);
           	}
-	          else{
-	              this.setProperty('text', newText);
-	          }
+            else{
+                 this.setProperty('text', newText, suppressInvalidate);
+            }
 		}
 		else{
-			this.setProperty('text', newText);
+			this.setProperty('text', newText, suppressInvalidate);
 		}
 	};
 
 	ButtonDropdownProto.setSelected = function(newValue){ 
         ui5strap.Utils.updateClass(this, jQuery('#' + this.getId() + '---' + (this.getSplit() ? 'button' : 'toggle')), "selected", newValue, { 'true' : 'active' });
     };
-/*
-	ButtonDropdownProto.onAfterRendering = function(){
-		this.$().dropdown();
-	};	
-*/
 	
 	ButtonDropdownProto.open = function(){
 		this.$().addClass('open');
@@ -16279,15 +15931,57 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	 */
 	ButtonDropdownProto._handlePress = function(oEvent){
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("ui5strap.ButtonDropdown");
 		
-		var $target = jQuery(oEvent.target);
-		if(!this.getSplit() || $target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
-			this.$().toggleClass('open');
-		}
-		else{
-			this.fireTap();
+		if (this.getEnabled()) {
+			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
+				this.close();
+				
+				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem),
+					hostUpdate = this.getUpdate();
+				
+				if(menuListItem){
+					if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+						|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
+						this.setText(menuListItem.getText());
+					}
+					
+					if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+						|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Data){
+						
+						this.data(menuListItem.data());
+					}
+					
+					if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
+						oEvent.setMarked("ui5strap.ISelectableItem.update");
+					}
+				}
+			}
+			else{
+				var $target = jQuery(oEvent.target);
+				if(this.getSplit()){
+					if($target.hasClass('dropdown-toggle') || $target.hasClass('caret')){
+						this.$().toggleClass('open');
+					}
+					else{
+						this.fireTap();
+					}
+				}
+				else{
+					this.$().toggleClass('open');
+					this.fireTap();
+				}
+			}
 		}
 	};
+	
+	if(ui5strap.support.touch){	
+		ButtonDropdownProto.ontap = ButtonDropdownProto._handlePress;
+	}
+	else{
+		ButtonDropdownProto.onclick = ButtonDropdownProto._handlePress;
+	}
 	
 	return ButtonDropdown;
 });;/*
@@ -16317,7 +16011,7 @@ sap.ui.define(['./library', './Button'], function(library, Button){
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 
 	var ButtonDropdownRenderer = {};
 
@@ -16327,10 +16021,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("btn-group");
-		if(oControl.getDropup()){
-			rm.addClass('dropup');
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 
@@ -16370,11 +16061,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	    	rm.addClass("dropdown-toggle");
 	    }
 	    
-	    rm.addClass(oControl._getStyleClass());
+	    rm.addClass(Button.prototype._getStyleClassDesign.call(oControl));
 	
-	    //@deprecated
-	    ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
-
 	    rm.writeClasses();
 	    
 	    if('' !== title){
@@ -16431,11 +16119,12 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ListBase'], function(library, ListBase){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button', './ListItem'], function(library, ControlBase, ListSelectionSupport, Button, ListItem){
 
-	var ButtonGroup = ListBase.extend("ui5strap.ButtonGroup", {
-		metadata : {
-
+	var _meta = {
+			
+			interfaces : [],
+			
 			defaultAggregation : "buttons",
 				
 			library : "ui5strap",
@@ -16452,6 +16141,10 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 				align : {
 					type:"ui5strap.Alignment",
 					defaultValue:ui5strap.Alignment.Default
+				},
+				trail : {
+					type:"ui5strap.TrailHtml", 
+					defaultValue:ui5strap.TrailHtml.Space
 				}
 			},
 					
@@ -16462,24 +16155,39 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 			},
 
 			events:{
-				select : {
-					parameters : {
-						listItem : {type : "ui5strap.Button"},
-						button : {type : "ui5strap.Button"},
-						srcControl : {type : "ui5strap.Control"}
-					}
-				},
-				tap : {
-					parameters : {
-						listItem : {type : "ui5strap.Button"},
-						button : {type : "ui5strap.Button"},
-						srcControl : {type : "ui5strap.Control"}
-					}
-				}
+				
 		    }
-		}
+		};
+	
+	ListSelectionSupport.meta(_meta);
+	
+	var ButtonGroup = ControlBase.extend("ui5strap.ButtonGroup", {
+		metadata : _meta
 	}),
-	ButtonGroupProto = ButtonGroup.prototype;
+	ButtonGroupProto = ButtonGroup.prototype,
+	_typeToClass = {
+		Default : "btn-group",
+		Justified : "btn-group btn-group-justified",
+		Vertical : "btn-group-vertical"
+	};
+	
+	ListSelectionSupport.proto(ButtonGroupProto);
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonGroupProto._getStyleClassRoot = function(){
+		var size = this.getSize(),
+			type = this.getType(),
+			styleClass = _typeToClass[type];
+		
+		if(ui5strap.Size.Default !== size){
+			styleClass += ' btn-group-' + ui5strap.BSSize[size];
+		}
+		
+		return styleClass;
+	};
 	
 	/**
 	 * @Protected
@@ -16487,14 +16195,6 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 */
 	ButtonGroupProto._getItems = function(){
 		return this.getButtons();
-	};
-	
-	/**
-	 * @Protected
-	 * @Override
-	 */
-	ButtonGroupProto._findClosestItem = function(srcControl){
-		return ui5strap.Utils.findClosestParentControl(srcControl, ui5strap.Button);
 	};
 	
 	/**
@@ -16514,6 +16214,48 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 		//@deprecated
 		eventOptions.button = eventOptions.srcItem;
 	};
+	
+	/**
+	 * Handler for Tap / Click Events
+	 * @Protected
+	 */
+	ButtonGroupProto._handlePress = function(oEvent){
+		//console.log(oEvent.isMarked());
+		
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectionProvider");
+		oEvent.setMarked("ui5strap.IItemsProvider");
+		oEvent.setMarked("ui5strap.ButtonGroup");
+		
+		var button = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, Button),
+			selectionProvider = this,
+			providerItem = button,
+			buttonUpdated = false;
+		
+		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
+			//TODO search for selectable item instead
+			providerItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem);
+			if(providerItem){
+				selectionProvider = providerItem.getParent();
+				
+				if(oEvent.isMarked("ui5strap.ISelectableItem.update")){
+					buttonUpdated = true;
+				}
+			}
+		}
+		
+		this.pressItem(oEvent.srcControl, button, buttonUpdated, selectionProvider, providerItem);
+		
+	};
+	
+	//Touchscreen
+	if(ui5strap.support.touch){
+		ButtonGroupProto.ontap = ButtonGroupProto._handlePress;
+	}
+	else{
+		ButtonGroupProto.onclick = ButtonGroupProto._handlePress;
+	}
 	
 	return ButtonGroup;
 });;/*
@@ -16545,30 +16287,15 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
 sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 
-	var ButtonGroupRenderer = {
-		typeToClass : {
-			Default : "btn-group",
-			Justified : "btn-group btn-group-justified",
-			Vertical : "btn-group-vertical"
-		}
-	};
+	var ButtonGroupRenderer = {};
 	
 	ButtonGroupRenderer.render = function(rm, oControl) {
-		var size = oControl.getSize(),
-			type = oControl.getType(),
-			buttons = oControl.getButtons();
+		var buttons = oControl.getButtons(),
+			type = oControl.getType();
 	
 		rm.write("<div");
 		rm.writeControlData(oControl);
-	
-		rm.addClass(this.typeToClass[type]);
-		
-		if(ui5strap.Size.Default !== size){
-			rm.addClass('btn-group-' + ui5strap.BSSize[size]);
-		}
-	
-		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-btn');
-	
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -16586,6 +16313,7 @@ sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 		
 		rm.write("</div>");
 	
+		ui5strap.RenderUtils.renderTrail(rm, oControl);
 	};
 	
 	return ButtonGroupRenderer;
@@ -16640,7 +16368,15 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				} 
 			}
 		}
-	});
+	}), ButtonToolbarProto = ButtonToolbar.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ButtonToolbarProto._getStyleClassDesign = function(){
+		return "btn-toolbar";
+	};
 	
 	return ButtonToolbar;
 });;/*
@@ -16680,7 +16416,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<div");
 		rm.writeControlData(oControl);
 	
-		rm.addClass('btn-toolbar');
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -17425,33 +17161,17 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	return ControlBase.extend("ui5strap.Clearfix", {
+	var Clearfix = ControlBase.extend("ui5strap.Clearfix", {
 		metadata : {
-			interfaces : ["ui5strap.IColumn"],
-			library : "ui5strap",
-			
-			properties : { 
-				visibilityExtraSmall : {
-					type : "ui5strap.Visibility", 
-					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilitySmall : {
-					type : "ui5strap.Visibility", 
-					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilityMedium : {
-					type : "ui5strap.Visibility", 
-					defaultValue : ui5strap.Visibility.Default
-				},
-				visibilityLarge : {
-					type : "ui5strap.Visibility", 
-					defaultValue : ui5strap.Visibility.Default
-				}
-				
-			}
-
+			interfaces : ["ui5strap.IText", "ui5strap.IColumn"],
+			library : "ui5strap"
 		}
-	});
+	}),
+	ClearFixProto = Clearfix.prototype;
+	
+	ClearFixProto._getStyleClassDesign = function(){
+		return "clearfix";
+	};
 
 });;/*
  * 
@@ -17484,58 +17204,15 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	var ClearfixRenderer = {};
 
-	var ClearfixRenderer.render = function(rm, oControl) {
-		rm.write("<div");
+	ClearfixRenderer.render = function(rm, oControl) {
+		rm.write("<span");
 		
 		rm.writeControlData(oControl);
-		rm.addClass('clearfix');
-		
-		var visibilityMedium = oControl.getVisibilityMedium(),
-			visibilityLarge = oControl.getVisibilityLarge(),
-			visibilitySmall = oControl.getVisibilitySmall(),
-			visibilityExtraSmall = oControl.getVisibilityExtraSmall(),
-			defaultVisibility = ui5strap.Visibility.Default,
-			visible = ui5strap.Visibility.Visible,
-			hidden = ui5strap.Visibility.Hidden;
-
-
-		if(defaultVisibility !== visibilityMedium){
-			if(visibilityMedium === visible){
-				rm.addClass('visible-md');
-			}
-			if(visibilityMedium === hidden){
-				rm.addClass('hidden-md');
-			}
-		}
-		if(defaultVisibility !== visibilityLarge){
-			if(visibilityLarge === visible){
-				rm.addClass('visible-lg');
-			}
-			if(visibilityLarge === hidden){
-				rm.addClass('hidden-lg');
-			}
-		}
-		if(defaultVisibility !== visibilitySmall){
-			if(visibilitySmall === visible){
-				rm.addClass('visible-sm');
-			}
-			if(visibilitySmall === hidden){
-				rm.addClass('hidden-sm');
-			}
-		}
-		if(defaultVisibility !== visibilityExtraSmall){
-			if(visibilityExtraSmall === visible){
-				rm.addClass('visible-xs');
-			}
-			if(visibilityExtraSmall === hidden){
-				rm.addClass('hidden-xs');
-			}
-		}
-
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
-		rm.write("</div>");
+		rm.write("</span>");
 	};
 
 	return ClearfixRenderer;
@@ -17568,7 +17245,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(library, ControlBase, CommonRenderers){
 
 	var Col = ControlBase.extend("ui5strap.Col", {
 		metadata : {
@@ -17578,76 +17255,64 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			
 			properties : { 
 				//Size DOES inherit from smaller sizes
-				//TODO rename to size
+				//TODO rename to sizeExtraSmall
 				columnsExtraSmall : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to sizeSmallUp
+				//TODO rename to sizeSmall
 				columnsSmall : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to sizeMediumUp
+				//TODO rename to sizeMedium
 				columnsMedium : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to sizeLargeUp
+				//TODO rename to sizeLarge
 				columnsLarge : {
 					type:"int", defaultValue:-1
 				},
 				//TODO add sizeExtraLarge on Bootstrap 4 Upgrade
 				
 				//Offset DOES inherit from smaller sizes
-				//TODO rename to offset
 				offsetExtraSmall : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to offsetSmallUp
 				offsetSmall : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to offsetMediumUp
 				offsetMedium : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to offsetLargeUp
 				offsetLarge : {
 					type:"int", defaultValue:-1
 				},
 				//TODO add offsetExtraLarge on Bootstrap 4 Upgrade
 				
 				//Pull DOES inherit from smaller sizes
-				//TODO rename to pull
 				pullExtraSmall : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to pullSmallUp
 				pullSmall : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to pullMediumUp
 				pullMedium : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to pullLargeUp
 				pullLarge : {
 					type:"int", defaultValue:-1
 				},
 				//TODO add pullExtraLarge on Bootstrap 4 Upgrade
 				
 				//Push DOES inherit from smaller sizes
-				//TODO rename to push
 				pushExtraSmall : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to pushSmallUp
 				pushSmall : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to pushMediumUp
 				pushMedium : {
 					type:"int", defaultValue:-1
 				},
-				//TODO rename to pushLargeUp
 				pushLarge : {
 					type:"int", defaultValue:-1
 				}
@@ -17661,16 +17326,103 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			},
 			
 			defaultAggregation : "content"
-
-		} // END metadata
-	});
+		},
+		
+		renderer : "ui5strap.CommonRenderers.DivWithContent"
+	}), ColProto = Col.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ColProto._getStyleClassDesign = function(){
+		var styleClass = "",
+			//Size
+			//TODO rename to size*
+			columsMedium = this.getColumnsMedium(),
+			columsLarge = this.getColumnsLarge(),
+			columsSmall = this.getColumnsSmall(),
+			columsExtraSmall = this.getColumnsExtraSmall(),
+			//Offset
+			offsetMedium = this.getOffsetMedium(),
+			offsetLarge = this.getOffsetLarge(),
+			offsetSmall = this.getOffsetSmall(),
+			offsetExtraSmall = this.getOffsetExtraSmall(),
+			//Pull
+			pullMedium = this.getPullMedium(),
+			pullLarge = this.getPullLarge(),
+			pullSmall = this.getPullSmall(),
+			pullExtraSmall = this.getPullExtraSmall(),
+			//Push
+			pushMedium = this.getPushMedium(),
+			pushLarge = this.getPushLarge(),
+			pushSmall = this.getPushSmall(),
+			pushExtraSmall = this.getPushExtraSmall();
+	
+		//Size
+		if(0 < columsMedium){
+			styleClass += " col-md-" + columsMedium;
+		}
+		if(0 < columsLarge){
+			styleClass += " col-lg-" + columsLarge;
+		}
+		if(0 < columsSmall){
+			styleClass += " col-sm-" + columsSmall;
+		}
+		if(0 < columsExtraSmall){
+			styleClass += " col-xs-" + columsExtraSmall;
+		}
+	
+		//Offset
+		if(0 < offsetMedium){
+			styleClass += " col-md-offset-" + offsetMedium;
+		}
+		if(0 < offsetLarge){
+			styleClass += " col-lg-offset-" + offsetLarge;
+		}
+		if(0 < offsetSmall){
+			styleClass += " col-sm-offset-" + offsetSmall;
+		}
+		if(0 < offsetExtraSmall){
+			styleClass += " col-xs-offset-" + offsetExtraSmall;
+		}
+	
+		//Pull
+		if(0 < pullMedium){
+			styleClass += " col-md-pull-" + pullMedium;
+		}
+		if(0 < pullLarge){
+			styleClass += " col-lg-pull-" + pullLarge;
+		}
+		if(0 < pullSmall){
+			styleClass += " col-sm-pull-" + pullSmall;
+		}
+		if(0 < pullExtraSmall){
+			styleClass += " col-xs-pull-" + pullExtraSmall;
+		}
+	
+		//Push
+		if(0 < pushMedium){
+			styleClass += " col-md-push-" + pushMedium;
+		}
+		if(0 < pushLarge){
+			styleClass += " col-lg-push-" + pushLarge;
+		}
+		if(0 < pushSmall){
+			styleClass += " col-sm-push-" + pushSmall;
+		}
+		if(0 < pushExtraSmall){
+			styleClass += " col-xs-push-" + pushExtraSmall;
+		}
+		return styleClass;
+	};
 	
 	return Col;
 });;/*
  * 
  * UI5Strap
  *
- * ui5strap.ColRenderer
+ * ui5strap.TagRenderer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -17695,85 +17447,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var ColRenderer = {};
+	var CommonRenderers = {};
 
-	ColRenderer.render = function(rm, oControl) {
+	CommonRenderers.DivWithContent = {};
+	
+	CommonRenderers.DivWithContent.render = function(rm, oControl) {
 		var content = oControl.getContent();
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		var columsMedium = oControl.getColumnsMedium(),
-			columsLarge = oControl.getColumnsLarge(),
-			columsSmall = oControl.getColumnsSmall(),
-			columsExtraSmall = oControl.getColumnsExtraSmall();
-
-		if(0 < columsMedium){
-			rm.addClass("col-md-" + columsMedium);
-		}
-		if(0 < columsLarge){
-			rm.addClass("col-lg-" + columsLarge);
-		}
-		if(0 < columsSmall){
-			rm.addClass("col-sm-" + columsSmall);
-		}
-		if(0 < columsExtraSmall){
-			rm.addClass("col-xs-" + columsExtraSmall);
-		}
-
-		var offsetMedium = oControl.getOffsetMedium(),
-			offsetLarge = oControl.getOffsetLarge(),
-			offsetSmall = oControl.getOffsetSmall(),
-			offsetExtraSmall = oControl.getOffsetExtraSmall();
-
-		if(0 < offsetMedium){
-			rm.addClass("col-md-offset-" + offsetMedium);
-		}
-		if(0 < offsetLarge){
-			rm.addClass("col-lg-offset-" + offsetLarge);
-		}
-		if(0 < offsetSmall){
-			rm.addClass("col-sm-offset-" + offsetSmall);
-		}
-		if(0 < offsetExtraSmall){
-			rm.addClass("col-xs-offset-" + offsetExtraSmall);
-		}
-
-		var pullMedium = oControl.getPullMedium(),
-			pullLarge = oControl.getPullLarge(),
-			pullSmall = oControl.getPullSmall(),
-			pullExtraSmall = oControl.getPullExtraSmall();
-
-		if(0 < pullMedium){
-			rm.addClass("col-md-pull-" + pullMedium);
-		}
-		if(0 < pullLarge){
-			rm.addClass("col-lg-pull-" + pullLarge);
-		}
-		if(0 < pullSmall){
-			rm.addClass("col-sm-pull-" + pullSmall);
-		}
-		if(0 < pullExtraSmall){
-			rm.addClass("col-xs-pull-" + pullExtraSmall);
-		}
-
-		var pushMedium = oControl.getPushMedium(),
-			pushLarge = oControl.getPushLarge(),
-			pushSmall = oControl.getPushSmall(),
-			pushExtraSmall = oControl.getPushExtraSmall();
-
-		if(0 < pushMedium){
-			rm.addClass("col-md-push-" + pushMedium);
-		}
-		if(0 < pushLarge){
-			rm.addClass("col-lg-push-" + pushLarge);
-		}
-		if(0 < pushSmall){
-			rm.addClass("col-sm-push-" + pushSmall);
-		}
-		if(0 < pushExtraSmall){
-			rm.addClass("col-xs-push-" + pushExtraSmall);
-		}
-
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -17784,7 +17467,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("</div>");
 	};
 	
-	return ColRenderer;
+	return CommonRenderers;
 
 }, true);
 ;/*
@@ -17814,114 +17497,80 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library, ControlBase, BaseSupport){
 
-	var Container = ControlBase.extend("ui5strap.Container", {
-		metadata : {
+	var _meta = {
 
-			library : "ui5strap",
-			
-			properties : { 
-					type : {
-						type:"ui5strap.ContainerType", 
-						defaultValue: ui5strap.ContainerType.Default
-					},
-					
-					severity : {
-						type: "ui5strap.Severity", 
-						defaultValue: ui5strap.Severity.None
-					},
-					
-					align : {
-						type : "ui5strap.Alignment",
-						defaultValue : ui5strap.Alignment.Default
-					},
-					
-					html : {
-						type : "string",
-						defaultValue : ""
-					},
-					
-					fullHeight : {
-						type : "boolean",
-						defaultValue : false
-					},
-					
-					//Visibility DOES inherit from smaller sizes
-					//TODO remove visibility since it does same as visibilityExtraSmall
-					visibility : {
-						deprecated : true,
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
-					visibilityExtraSmall : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
-					visibilitySmall : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
-					visibilityMedium : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					},
-					visibilityLarge : {
-						type : "ui5strap.Visibility",
-						defaultValue : ui5strap.Visibility.Default
-					}
-					//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
-			},
-			
-			aggregations : { 
-				content : {
-					singularName: "content"
+		library : "ui5strap",
+		
+		properties : { 
+				type : {
+					type:"ui5strap.ContainerType", 
+					defaultValue: ui5strap.ContainerType.Default
+				},
+				
+				severity : {
+					type: "ui5strap.Severity", 
+					defaultValue: ui5strap.Severity.None
+				},
+				
+				html : {
+					type : "string",
+					defaultValue : ""
+				},
+				
+				fullHeight : {
+					type : "boolean",
+					defaultValue : false
+				},
+				
+				//@deprecated
+				visibility : {
+					deprecated : true,
+					type : "ui5strap.Visibility",
+					defaultValue : ui5strap.Visibility.Default
 				}
-			},
-			
-			defaultAggregation : "content"
-			
-		} //END metadata
+		},
+		
+		aggregations : { 
+			content : {
+				singularName: "content"
+			}
+		},
+		
+		defaultAggregation : "content"
+		
+	};
+	
+	var Container = ControlBase.extend("ui5strap.Container", {
+		metadata : _meta
 	}),
 	ContainerProto = Container.prototype;
 	
 	ContainerProto._typeData = {
 		Default : {
-			tagName : "div",
-			className : ""
-		},
-		Text : {
-			tagName : "span",
 			className : ""
 		},
 		
 		//Bootstrap Components
 		Fluid : {
-			tagName : "div",
 			className : "container-fluid"
 		},
 		Website : {
-			tagName : "div",
 			className : "container"
 		},
 		Jumbotron : {
-			tagName : "div",
 			className : "jumbotron"
 		},
 		Well : {
-			tagName : "div",
 			className : "well"
 		},
 		WellLarge : {
-			tagName : "div",
 			className : "well well-lg"
 		},
 		PageHeader : {
-			tagName : "div",
 			className : "page-header"
 		},
-		
-		
 		
 		//Deprecated
 		FluidInset : {
@@ -17936,8 +17585,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 */
 	ContainerProto._getStyleClassRoot = function(){
 		var type = this.getType(),
-			styleClass = this._getStyleClassPrefix() 
-						+ " " + this._getStyleClassType(type)
+			styleClass = this._getStyleClassType(type)
 						+ " " + this._typeData[type].className,
 			
 			severity = this.getSeverity();
@@ -17946,8 +17594,21 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			styleClass += " bg-" + ui5strap.BSSeverity[severity];
 		}
 		
+		if(this.getFullHeight()){
+			styleClass += " " + this._getStyleClassFlag("FullHeight");
+		}
+		
 		return styleClass;
 	};
+	
+	/**
+	 * @deprecated
+	 */
+	ContainerProto.setVisibility = function(newVisibility, suppressInvalidate){
+		this.setProperty("visibility", newVisibility, true);
+		this.setVisibilityExtraSmall(newVisibility, suppressInvalidate);
+		return this;
+	}
 	
 	//Return Module Constructor
 	return Container;
@@ -17985,18 +17646,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	ContainerRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
-			tagData = oControl._typeData[oControl.getType()],
 			html = oControl.getHtml();
 
-		rm.write("<" + tagData.tagName);
+		rm.write("<div");
 		rm.writeControlData(oControl);
-		
 		rm.addClass(oControl._getStyleClass());
-		
-		ui5strap.RenderUtils.visibility(rm, oControl);
-
-		ui5strap.RenderUtils.alignment(rm, oControl);
-
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -18008,7 +17662,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.renderControl(content[i]);
 		}
 		
-		rm.write("</" + tagData.tagName + ">");
+		rm.write("</div>");
 	};
 
 	//Return Module Constructor
@@ -18077,30 +17731,26 @@ sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function
  * 
  */
 
-sap.ui.define(['./library', './OptionsSupport'], function(library, OptionsSupport){
+sap.ui.define(['./library', './BaseSupport', './OptionsSupport'], function(library, BaseSupport, OptionsSupport){
 
-	var ElementBase = ui5strap.Element.extend("ui5strap.ElementBase", {
-		metadata : {
-
-			library : "ui5strap",
+	var _meta = {
+		library : "ui5strap",
+		
+		properties : {
 			
-			properties : {
-				options : {
-					type : "string",
-					defaultValue : ""
-				}
-			}
 		}
+	};
+	
+	BaseSupport.meta(_meta);
+	OptionsSupport.meta(_meta);
+		
+	var ElementBase = ui5strap.Element.extend("ui5strap.ElementBase", {
+		metadata : _meta
 	}),
 	ElementBaseProto = ElementBase.prototype;
 	
-	OptionsSupport.bless(ElementBaseProto);
-	
-	ElementBaseProto.getBindingContextData = function(modelName){
-		var bindingContext = this.getBindingContext(modelName);
-		
-		return bindingContext.getModel().getProperty(bindingContext.getPath());
-	};
+	BaseSupport.proto(ElementBaseProto);
+	OptionsSupport.proto(ElementBaseProto);
 	
 	return ElementBase;
 });;/*
@@ -18171,7 +17821,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	}),
 	FormProto = Form.prototype;
-
+	
+	var _typeToClass = {
+		"Horizontal" : 'form-horizontal',
+		"Inline" : 'form-inline',
+	};
+	
+	FormProto._getStyleClassDesign = function(){
+		return  _typeToClass[this.getType()];
+	};
+	
 	FormProto.onAfterRendering = function(){
 		var _this = this;
 		this.$().on('submit', function(){
@@ -18253,7 +17912,29 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}),FormGroupProto = FormGroup.prototype;
+	
+	var _severityToClass = {
+		Success : "success",
+		Warning : "warning",
+		Error : "error"
+	};
+	
+	FormGroupProto._getStyleClassDesign = function(){
+		var styleClass = "form-group",
+			severity = this.getSeverity();
+		
+		
+		if(ui5strap.FormSeverity.None !== severity){
+			styleClass += " has-" + _severityToClass[severity];
+		}
+		
+		if(this.getFeedback()){
+			styleClass += " has-feedback";
+		}
+		
+		return styleClass;
+	};
 
 	return FormGroup;
 });;/*
@@ -18285,43 +17966,23 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var FormGroupRenderer = {
-
-		severityToClass : {
-			Success : "success",
-			Warning : "warning",
-			Error : "error"
-		}
-	};
+	var FormGroupRenderer = {};
 
 	FormGroupRenderer.render = function(rm, oControl) {
-		var severity = oControl.getSeverity(),
-			hasFeedback = oControl.getFeedback(),
-			label = oControl.getLabel(),
+		var label = oControl.getLabel(),
 			formControls = oControl.getControls();
 
-			if(formControls.length === 0){
-				throw new Error('You need to define at least one formControl.');
-			}
+		if(formControls.length === 0){
+			throw new Error('You need to define at least one formControl.');
+		}
 
 		rm.write("<div");
-		
 		rm.writeControlData(oControl);
-
-		rm.addClass('form-group');
-		
-		if(ui5strap.FormSeverity.None !== severity){
-			rm.addClass('has-' + this.severityToClass[severity]);
-		}
-		
-		if(hasFeedback){
-			rm.addClass('has-feedback');
-		}
-
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
-		if('' !== label){
+		if(label){
 			rm.write("<label");
 			rm.addClass("control-label");
 			rm.writeAttribute('for', formControls[0].getId());
@@ -18355,7 +18016,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			var formControl = formControls[i];
 			rm.renderControl(formControl);
 		}
-		
 		
 		rm.write("</div> ");
 	};
@@ -18392,37 +18052,30 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var FormRenderer = {
-
-		typeToClass : {
-			"Horizontal" : 'form-horizontal',
-			"Inline" : 'form-inline',
-		}
-	};
+	var FormRenderer = {};
 
 	FormRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			action = oControl.getAction(),
-			method = oControl.getMethod(),
-			type = oControl.getType();
+			method = oControl.getMethod();
 
 		rm.write("<form");
 		
 		rm.writeControlData(oControl);
+		
+		rm.addClass(oControl._getStyleClass());
+		
+		rm.writeClasses();
+		
+		//Attributes
 		rm.writeAttribute('role', 'form');
-		if('' !== action){
-			rm.writeAttribute('action', action);
-		}
+		
+		action && rm.writeAttribute('action', action);
+		
 		if(ui5strap.FormMethod.Default !== method && ui5strap.FormMethod.None !== method){
 			rm.writeAttribute('method', method);
 		}
-		if(ui5strap.FormType.Default !== type){
-			rm.addClass(this.typeToClass[type]);
-		}
 		
-		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-form');
-
-		rm.writeClasses();
 		rm.write(">");
 		
 		for(var i = 0; i < content.length; i++){ 
@@ -18523,7 +18176,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			classAdd = " " + Heading._typeToClass[type] + " " + this._getStyleClassType(type);
 		}
 		
-		return this._getStyleClassPrefix() + classAdd;
+		return classAdd;
 	};
 	
 	ui5strap.Utils.dynamicText(HeadingProto);
@@ -18562,7 +18215,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	HeadingRenderer.render = function(rm, oControl) {
 		var level = oControl.getLevel(),
-			type = oControl.getType(),
 			text = oControl.getText(),
 			parse = oControl.getParse();
 
@@ -18570,8 +18222,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			text = ui5strap.RenderUtils.parseText(text);
 		}
 			
-		rm.write("<h" + level + ' class="' + oControl._getStyleClass() + '"');
+		rm.write("<h" + level);
 		rm.writeControlData(oControl);
+		rm.addClass(oControl._getStyleClass());
+		rm.writeClasses();
 		rm.write(">");
 		    
 		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
@@ -18610,9 +18264,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	var Image = ControlBase.extend("ui5strap.Image", {
+	var ImageControl = ControlBase.extend("ui5strap.Image", {
 		metadata : {
-
+			interfaces : ["ui5strap.IText"],
+			
 			library : "ui5strap",
 			properties : { 
 				src : {
@@ -18666,9 +18321,39 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}),
+	ImageProto = ImageControl.prototype;
 	
-	return Image;
+	ImageProto._shapeToClass = {
+		Rounded : 'img-rounded',
+		Circle : 'img-circle',
+		Thumbnail : 'img-thumbnail'
+	};
+	
+	ImageProto._typeToClass = {
+		MediaObject : "media-object",
+		Responsive : "img-responsive"
+	};
+	
+	ImageProto._getStyleClassDesign = function(){
+		var styleClass = "",
+			shape = this.getShape(),
+			type = this.getType();
+		
+		if(this.getResponsive()){
+			styleClass += " img-responsive";
+		}
+		if(this._shapeToClass[shape]){
+			styleClass += " " + this._shapeToClass[shape];
+		}
+		if(this._typeToClass[type]){
+			styleClass += " " + this._typeToClass[type];
+		}
+		
+		return styleClass;
+	};
+	
+	return ImageControl;
 });;/*
  * 
  * UI5Strap
@@ -18698,17 +18383,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
-	var ImageRenderer = {
-		shapeToClass : {
-			Rounded : 'img-rounded',
-			Circle : 'img-circle',
-			Thumbnail : 'img-thumbnail'
-		},
-		typeToClass : {
-			MediaObject : "media-object",
-			Responsive : "img-responsive"
-		}
-	};
+	var ImageRenderer = {};
 
 	ImageRenderer.render = function(rm, oControl) {
 		var src = oControl.getSrc(),
@@ -18717,8 +18392,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 			width = oControl.getWidth(),
 			height = oControl.getHeight(),
-			shape = oControl.getShape(),
-			type = oControl.getType(),
+			
 			title = oControl.getTitle();
 
 		if(mpath){
@@ -18727,30 +18401,21 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<img");
 		rm.writeControlData(oControl);
-		if(oControl.getResponsive()){
-			jQuery.sap.log.debug("The property 'reponsive' is deprecated. Please use 'type' with 'Responsive' instead.");
-			rm.addClass('img-responsive');
-		}
-		if(this.shapeToClass[shape]){
-			rm.addClass(this.shapeToClass[shape]);
-		}
-		if(this.typeToClass[type]){
-			rm.addClass(this.typeToClass[type]);
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		
-		if('' !== src){
-			rm.writeAttribute('src', src);
-		}
-		if('' !== title){
-			rm.writeAttribute('title', title);
-		}
+		src && rm.writeAttribute('src', src);
+		
+		title && rm.writeAttribute('title', title);
+		
 		if(-1 !== width){
 			rm.writeAttribute('width', width);
 		}
+		
 		if(-1 !== height){
 			rm.writeAttribute('height', height);
 		}
+		
 		rm.writeAttribute('alt', oControl.getAlt());
 		
 		rm.write("/>");
@@ -18934,7 +18599,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library'], function(library){
 
 	var Item = ui5strap.Element.extend("ui5strap.Item", {
 		metadata : {
@@ -18984,7 +18649,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(library, ControlBase, CommonRenderers){
 
 	var Jumbotron = ControlBase.extend("ui5strap.Jumbotron", {
 		metadata : {
@@ -19005,61 +18670,22 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
-		}
-	});
+		},
+		
+		renderer : "ui5strap.CommonRenderers.DivWithContent"
+	}),
+	JumbotronProto = Jumbotron.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	JumbotronProto._getStyleClassDesign = function(){
+		return "jumbotron";
+	};
 	
 	return Jumbotron;
 });;/*
- * 
- * UI5Strap
- *
- * ui5strap.JumbotronRenderer
- * 
- * @author Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Homepage: http://ui5strap.com
- *
- * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
- * 
- */
-
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
-
-	var JumbotronRenderer = {};
-
-	JumbotronRenderer.render = function(rm, oControl) {
-		var content = oControl.getContent();
-
-		rm.write("<div");
-
-		rm.writeControlData(oControl);
-		rm.addClass('jumbotron')
-		rm.writeClasses();
-		rm.write(">");
-		
-		for(var i = 0; i < content.length; i++){ 
-			rm.renderControl(content[i]);
-		};
-
-		rm.write("</div>");
-	};
-	
-	return JumbotronRenderer;
-
-}, true);;/*
  * 
  * UI5Strap
  *
@@ -19091,6 +18717,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	var Label = ControlBase.extend("ui5strap.Label", {
 		metadata : {
 			deprecated : true,
+			
+			interfaces : ["ui5strap.IText"],
+			
 			// ---- object ----
 			defaultAggregation : "content",
 			// ---- control specific ----
@@ -19320,18 +18949,20 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
  * 
  */
 
-sap.ui.define(['./library', './ListLinkItem'], function(library, ListItem){
+sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 
 	var ListDropdownItem = ListLinkItem.extend("ui5strap.ListDropdownItem", {
 		metadata : {
+			interfaces : ["ui5strap.IDropdownMenuHost"],
+			
 			library : "ui5strap",
 
 			defaultAggregation : "menu",
 			
 			properties : {
-				selectable : {
-					type : "boolean",
-					defaultValue : false
+				update : {
+					type : "ui5strap.DropdownMenuHostUpdate",
+					defaultValue : ui5strap.DropdownMenuHostUpdate.None
 				}
 			},
 
@@ -19345,6 +18976,21 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListItem){
 	}),
 	ListDropdownItemProto = ListDropdownItem.prototype;
 
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ListDropdownItemProto._getStyleClassDesign = function(){
+		var styleClass = "dropdown";
+		if(this.getSelected()){
+			styleClass += " active";
+		}
+		if(!this.getEnabled()){
+			styleClass += " disabled";
+		}
+		return styleClass;
+	};
+	
 	ListDropdownItemProto.setText = function(newText){
 		if(this.getMenu() === null){
 			ui5strap.Utils.updateText(this, jQuery('#' + this.getId() + '---link'), newText);
@@ -19352,6 +18998,14 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListItem){
 		else{
 			this.setProperty('text', newText);
 		}
+	};
+	
+	/**
+	 * @Public
+	 * @Override
+	 */
+	ListDropdownItemProto.isSelectable = function(selectionProvider){
+		return this.getSelectable() && selectionProvider === this.getMenu();
 	};
 
 	ListDropdownItemProto.open = function(){
@@ -19373,8 +19027,38 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListItem){
 	ListDropdownItemProto._handlePress = function(oEvent){
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("ui5strap.ListDropdownItem");
 		
-		this.$().toggleClass('open');
+		if(this.getEnabled()){
+			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
+				this.close();
+				
+				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem),
+					hostUpdate = this.getUpdate();
+				
+				if(menuListItem){
+					if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+						|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
+						
+						this.setText(menuListItem.getText());
+					}
+					
+					if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
+						|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Data){
+						
+						this.data(menuListItem.data());
+					}
+					
+					if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
+						oEvent.setMarked("ui5strap.ISelectableItem.update");
+					}
+				}
+			}
+			else{
+				this.toggle();
+			}
+		}
 	};
 
 	//Registering Event Handler
@@ -19423,13 +19107,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<li");
 		rm.writeControlData(oControl);
-		if(oControl.getSelected()){
-			rm.addClass('active');
-		}
-		if(!oControl.getEnabled()){
-			rm.addClass('disabled');
-		}
-		rm.addClass('dropdown');
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 
@@ -19525,10 +19203,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 			defaultAggregation : "items",
 			
 			properties : {
-				updateMasterText : {
-					type : "boolean",
-					defaultValue : false
-				}
+				
 			},
 	
 			aggregations : { 
@@ -19542,57 +19217,22 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	ListDropdownMenuProto = ListDropdownMenu.prototype;
 	
-	ListDropdownMenuProto.setMasterSelected = function(listItem){ 
-		ui5strap.ListBase.prototype.setMasterSelected.call(this, listItem);
-		
-		var parent = this.getParent(),
-			grandParent = parent.getParent(),
-			updateText = false;
-
-		if(grandParent instanceof ui5strap.ButtonGroup){
-			grandParent.setSelectedControl(parent, this);
-
-			updateText = this.getUpdateMasterText();
-		}
-		else if(parent instanceof ui5strap.ButtonDropdown){
-			parent.setSelected(true);
-
-			updateText = this.getUpdateMasterText();
-		}
-		else if(grandParent instanceof ui5strap.ListBase){
-			updateText = this.getUpdateMasterText();
-		}
-		
-		if(updateText){
-				var selectedText = listItem.getText();
-				if(selectedText === ''){
-					var listItemContent = listItem.getContent();
-					if(listItemContent.length > 0){
-						//TODO define "textual" interface
-						if('getText' in listItemContent[0]){
-							selectedText = listItemContent[0].getText();
-						}
-					}
-				}
-
-				if(selectedText !== ''){
-					parent.setText(selectedText);
-				}
-			}
-	};
-	
 	/**
 	 * Handler for Tap / Click Events
 	 * @Protected
 	 * @Override
 	 */
 	ListDropdownMenuProto._handlePress = function(oEvent){
-		ui5strap.ListBase.prototype._handlePress.call(this, oEvent);
-
-		var parent = this.getParent();
-		if("close" in parent){
-			parent.close();
-		}
+		//Mark the event so parent Controls know that event has been handled already
+		oEvent.setMarked();
+		oEvent.setMarked("ui5strap.ISelectionProvider");
+		oEvent.setMarked("ui5strap.IItemsProvider");
+		oEvent.setMarked("ui5strap.ListDropdownMenu");
+		
+		//Find the closest item. Should be an item from the dropdown menu.
+		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem);
+		
+		this.pressItem(oEvent.srcControl, item, false, this, item);
 	};
 
 	if(ui5strap.support.touch){
@@ -19708,6 +19348,14 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	ListGroupProto = ui5strap.ListGroup.prototype;
 	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ListGroupProto._getStyleClassDesign = function(){
+		return "list-group";
+	};
+	
 	return ListGroup;
 });;/*
  * 
@@ -19747,7 +19395,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<" + tag);
 		rm.writeControlData(oControl);
-		rm.addClass('list-group');
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		    
@@ -19815,6 +19463,14 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	ListMediaProto = ListMedia.prototype;
 	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ListMediaProto._getStyleClassDesign = function(){
+		return "media-list";
+	};
+	
 	return ListMedia;
 });;/*
  * 
@@ -19853,7 +19509,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write("<" + tag);
 		rm.writeControlData(oControl);
-		rm.addClass('media-list');
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		    
@@ -19894,7 +19550,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ListLinkItem'], function(library, ListItem){
+sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 
 	var ListNavItem = ListLinkItem.extend("ui5strap.ListNavItem", {
 		metadata : {
@@ -19946,7 +19602,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var ListNavItemRenderer = {};
 
 	ListNavItemRenderer.render = function(rm, oControl) {
-		var badge = oControl.getBadge();
+		var badge = oControl.getBadge(),
+			href = oControl.getHref(),
+			title = oControl.getTitle(),
+			target = oControl.getTarget();
 
 		rm.write("<li");
 		rm.writeControlData(oControl);
@@ -19959,7 +19618,26 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.writeClasses();
 		rm.write(">");
 
-		this.startRenderLink(rm, oControl);
+		rm.write("<a");
+	
+		rm.writeAttribute('id', oControl.getId() + '---link');
+		
+	
+		rm.writeClasses();
+		    
+		if('' !== href){
+			rm.writeAttribute('href', href);
+		}
+	
+		if('' !== target){
+			rm.writeAttribute('target', target);
+		}
+	
+		if('' !== title){
+	    	rm.writeAttribute('title', title);
+	    }
+	
+		rm.write(">");
 		
 		var text = oControl.getText(),
 			parse = oControl.getParse();
@@ -19979,33 +19657,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write('</a>');
 		    
 		rm.write("</li>");
-	};
-	
-	ListNavItemRenderer.startRenderLink = function(rm, oControl, options) {
-		var href = oControl.getHref(),
-			title = oControl.getTitle(),
-			target = oControl.getTarget();
-
-		rm.write("<a");
-
-		rm.writeAttribute('id', oControl.getId() + '---link');
-		
-
-		rm.writeClasses();
-		    
-		if('' !== href){
-			rm.writeAttribute('href', href);
-		}
-
-		if('' !== target){
-			rm.writeAttribute('target', target);
-		}
-
-		if('' !== title){
-	    	rm.writeAttribute('title', title);
-	    }
-
-		rm.write(">");
 	};
 	
 	return ListNavItemRenderer;
@@ -20052,6 +19703,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
 		rm.write("<" + tagName);
 		rm.writeControlData(oControl);
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -20066,6 +19718,765 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 }, true);
 ;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.PositionSupport
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+sap.ui.define(['./library'], function(library){
+	
+	var ListSelectionSupport = {};
+	
+	/**
+	 * Adds the required properties to the Meta Data definition.
+	 * @Public
+	 */
+	ListSelectionSupport.meta = function(meta){
+		//Interfaces
+		
+		meta.interfaces.push("ui5strap.IItemsProvider", "ui5strap.ISelectionProvider");
+		
+		//Properties
+		
+		meta.properties.selectionMode = {
+			"type" : "ui5strap.SelectionMode",
+			"defaultValue" : ui5strap.SelectionMode.None
+		};
+		
+		//Events
+		
+		meta.events.selectionChange = {
+			parameters : {
+			
+			}
+		};
+			
+		meta.events.select = {
+			parameters : {
+				srcItem : {type : "ui5strap.ISelectableItem"},
+				srcControl : {type : "ui5strap.Control"}
+			}
+		};
+		
+		//TODO Rename 'tap' event to 'press' sometimes
+		meta.events.tap = {
+			parameters : {
+				srcItem : {type : "ui5strap.ISelectableItem"},
+				srcControl : {type : "ui5strap.Control"}
+			}
+		};
+
+		
+	};
+	
+	var _defaultSelectionGroup = "selectionGroup";
+	
+	/**
+	 * @Private
+	 */
+	var _changeSelection = function(_this, itemsToSelect, mode, selectionGroup){
+		var items = _this._getItems(),
+			changes = {
+				"selected" : [],
+				"deselected" : [],
+				"changed" : [],
+				"unchanged" : [],
+			};
+		
+		if(!jQuery.isArray(itemsToSelect)){
+			itemsToSelect = [itemsToSelect];
+		}
+		
+		if(!selectionGroup){
+			selectionGroup = _defaultSelectionGroup;
+		}
+		
+		for(var i = 0; i < items.length; i++){
+			var item = items[i];
+			if(-1 !== jQuery.inArray(item, itemsToSelect)){
+				//Item is subject to select / deselect
+				if("replace" === mode || "add" === mode){
+					if(!_this._isItemSelected(item, selectionGroup)){
+						changes.selected.push(item);
+						changes.changed.push(item);
+						
+						_this._setItemSelected(item, true, selectionGroup);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("remove" === mode){
+					if(_this._isItemSelected(item, selectionGroup)){
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						_this._setItemSelected(item, false, selectionGroup);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("toggle" === mode){
+					var selected = _this._isItemSelected(item, selectionGroup);
+						
+						if(!selected){
+							changes.selected.push(item);
+						}
+						else{
+							changes.deselected.push(item);
+						}
+						
+						changes.changed.push(item);
+						
+						_this._setItemSelected(item, !selected, selectionGroup);
+				}
+			}
+			else{
+				//Item is no subject to select / deselect
+				if("replace" === mode){
+					if(_this._isItemSelected(item, selectionGroup)){
+						changes.deselected.push(item);
+						changes.changed.push(item);
+						
+						_this._setItemSelected(item, false, selectionGroup);
+					}
+					else{
+						changes.unchanged.push(item);
+					}
+				}
+				else if("add" === mode || "remove" === mode || "toggle" === mode){
+					changes.unchanged.push(item);
+				}
+			}
+		}
+		
+		if(changes.changed.length){
+			_this.fireSelectionChange({ selectionChanges: changes });
+		}
+		
+		return changes;
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _changeSelectionIndices = function(_this, indices, mode, selectionGroup){
+		var items = _this._getItems();
+		
+		if(!jQuery.isArray(indices)){
+			//Single value
+			if(indices < 0 || indices >= items.length){
+				throw new Error("Array out of bounds!");
+			}
+			
+			return _changeSelection(_this, items[indices], mode, selectionGroup);
+		}
+		else{
+			//array
+			var itemsToSelect = [];
+			for(var i=0; i<indices.length; i++){
+				var index = indices[i];
+				if(index < 0 || index >= items.length){
+					throw new Error("Array out of bounds!");
+				}
+				itemsToSelect.push(items[index]);
+			}
+			
+			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
+		}
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _changeSelectionByCustomData = function(_this, dataKey, values, mode, selectionGroup){
+		var items = _this._getItems();
+		
+		if(!jQuery.isArray(values)){
+			var selectedItem = null;
+			
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === values){
+					selectedItem = items[i];
+					
+					break;
+				}
+			}
+			
+			return _changeSelection(_this, selectedItem, mode, selectionGroup);
+		}
+		else{
+			var itemsToSelect = [];
+			
+			for(var i = 0; i < items.length; i++){
+				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+					itemsToSelect.push(items[i]);
+				}
+			}
+			
+			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
+		}
+	};
+	
+	/**
+	 * Adds Support for Options to an prototype or object
+	 * @Public
+	 */
+	ListSelectionSupport.proto = function(oControl){
+		
+		/**
+		 * @Protected
+		 * @Override
+		 */
+		var oldGetStyleClass = oControl._getStyleClass;
+		oControl._getStyleClass = function(){
+			return oldGetStyleClass.call(this) + " " + ListSelectionSupport.getStyleClass(this);	
+		};
+		
+		/*
+		 * --------------------
+		 * START implementation of IItemsProvider interface
+		 * --------------------
+		 */
+		
+		/**
+		 * Gets the list of items. This depends on the available aggregations.
+		 * @Protected
+		 */
+		oControl._getItems = function(){
+			return this.getItems();
+		};
+		
+		/**
+		 * @Public
+		 */
+		oControl.getItemIndex = function(item){
+			return this.indexOfAggregation("items", item);
+		};
+		
+		/**
+		 * Gets one or multiple selected items that have the given value in the specified custom data field.
+		 * @Public
+		 */
+		oControl.getItemsByCustomData = function(dataKey, value){
+			var items = this._getItems(),
+				returnItems = [];
+			for(var i = 0; i < items.length; i++){
+				if(items[i].data(dataKey) === value){
+					returnItems.push(items[i]);
+				}
+			}
+			
+			return returnItems;
+		};
+		
+		/**
+		 * Gets one or multiple selected items that have the given value in the specified property.
+		 * @Public
+		 */
+		oControl.getItemsByProperty = function(propertyName, value){
+			var items = this._getItems(),
+				getter = "get" + jQuery.sap.charToUpper(propertyName, 0),
+				returnItems = [];
+			
+			for(var i = 0; i < items.length; i++){
+				var item = items[i];
+				
+				if(!item[getter]){
+					throw new Error("Item " + i + ": no such getter: " + getter);
+				}
+				
+				if(item[getter]() === value){
+					returnItems.push(items[i]);
+				}
+			}
+			
+			return returnItems;
+		};
+		
+		
+		
+		/*
+		 * ------------------
+		 * END implementation of IItemsProvider interface
+		 * ------------------
+		 */
+		
+		/*
+		 * --------------------
+		 * START implementation of ISelectionProvider interface
+		 * --------------------
+		 */
+		
+		/**
+		 * Returns an array of selected items and their indices.
+		 * 
+		 * @Protected
+		 */
+		oControl._getSelection = function(selectionGroup){
+			if(!selectionGroup){
+				selectionGroup = _defaultSelectionGroup;
+			}
+			
+			var items = this._getItems(),
+				selection = {
+					indices : [],
+					items : []
+				};
+			
+			for(var i = 0; i < items.length; i++){
+				if(this._isItemSelected(items[i], selectionGroup)){
+					selection.items.push(items[i]);
+					selection.indices.push(i);
+				}
+			}
+			
+			return selection;
+		};
+		
+		/**
+		 * Gets one or multiple selected items
+		 * @Public
+		 * @Override
+		 */
+		oControl.getSelection = function(selectionGroup){
+			var selection = this._getSelection(selectionGroup);
+			
+			return selection.items;
+		};
+		
+		/**
+		 * Returns whether one or multiple items are currently part of selection.
+		 * @Public
+		 */
+		oControl.isInSelection = function(itemsToCheck, selectionGroup){
+			var inSelection = true;
+			
+			if(!jQuery.isArray(itemsToCheck)){
+				itemsToCheck = [itemsToCheck];
+			}
+			
+			for(var i = 0; i < itemsToCheck.length; i++){
+				if(!this._isItemSelected(itemsToCheck[i], selectionGroup)){
+					inSelection = false;
+					break;
+				}
+			}
+			
+			return inSelection;
+		};
+		
+		/**
+		 * Tries to select one or multiple items and returns all changes.
+		 * 
+		 * @Public
+		 * @Override
+		 */
+		oControl.setSelection = function(itemsToSelect, selectionGroup){
+			return _changeSelection(this, itemsToSelect, "replace", selectionGroup);
+		};
+		
+		/**
+		 * Adds one or multiple items to selection
+		 * @Public
+		 * @Override
+		 */
+		oControl.addSelection = function(itemsToSelect, selectionGroup){
+			return _changeSelection(this, itemsToSelect, "add", selectionGroup);
+		};
+		
+		/**
+		 * Removes one or multiple items from selection
+		 * @Public
+		 * @Override
+		 */
+		oControl.removeSelection = function(itemsToSelect, selectionGroup){
+			return _changeSelection(this, itemsToSelect, "remove", selectionGroup);
+		};
+		
+		/**
+		 * Toggles one or multiple items from selection
+		 * @Public
+		 * @Override
+		 */
+		oControl.toggleSelection = function(itemsToSelect, selectionGroup){
+			return _changeSelection(this, itemsToSelect, "toggle", selectionGroup);
+		};
+		
+		/*
+		 * Index
+		 */
+		
+		/**
+		 * Gets one or multiple indices of selected items
+		 * @Public
+		 * @Override
+		 */
+		oControl.getSelectionIndex = function(selectionGroup){
+			var selection = this._getSelection(selectionGroup);
+			
+			return selection.indices;
+		};
+		
+		/**
+		 * Returns whether one or multiple item indices are currently part of selection.
+		 * @Public
+		 */
+		oControl.isInSelectionIndex = function(indices, selectionGroup){
+			var items = _this._getItems();
+			if(!jQuery.isArray(indices)){
+				//Single value
+				if(indices < 0 || indices >= items.length){
+					throw new Error("Array out of bounds!");
+				}
+				
+				return this.isInSelection(items[indices], selectionGroup);
+			}
+			else{
+				var itemsToCheck = [];
+				for(var i=0; i<indices.length; i++){
+					var index = indices[i];
+					if(index < 0 || index >= items.length){
+						throw new Error("Array out of bounds!");
+					}
+					itemsToCheck.push(items[index]);
+				}
+				
+				return this.isInSelection(itemsToCheck, selectionGroup);
+			}
+		};
+		
+		/**
+		 * Selects one or multiple items by indices
+		 * @Public
+		 * @Override
+		 */
+		oControl.setSelectionIndex = function(indices, selectionGroup){
+			return _changeSelectionIndices(this, indices, "replace", selectionGroup);
+		};
+		
+		/**
+		 * Adds one or multiple items to selection by indices
+		 * @Public
+		 * @Override
+		 */
+		oControl.addSelectionIndex = function(indices, selectionGroup){
+			return _changeSelectionIndices(this, indices, "add", selectionGroup);
+		};
+		
+		/**
+		 * Removes one or multiple items from selection by indices
+		 * @Public
+		 * @Override
+		 */
+		oControl.removeSelectionIndex = function(indices, selectionGroup){
+			return _changeSelectionIndices(this, indices, "remove", selectionGroup);
+		};
+		
+		/**
+		 * Toggles one or multiple items from selection by indices
+		 * @Public
+		 * @Override
+		 */
+		oControl.toggleSelectionIndex = function(indices, selectionGroup){
+			return _changeSelectionIndices(this, indices, "toggle", selectionGroup);
+		};
+		
+		/*
+		 * CustomData 
+		 */
+		
+		/**
+		 * Returns whether one or multiple items are currently part of selection. Items are selected by custom data key and possible values.
+		 * @Public
+		 */
+		oControl.isInSelectionByCustomData = function(dataKey, values, selectionGroup){
+			var items = _this._getItems();
+			
+			if(!jQuery.isArray(values)){
+				for(var i = 0; i < items.length; i++){
+					if(items[i].data(dataKey) === values){
+						selectedItem = items[i];
+						
+						return this.isInSelection(selectedItem, selectionGroup);
+					}
+				}
+			}
+			else{
+				var itemsToCheck = [];
+				for(var i = 0; i < items.length; i++){
+					if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+						itemsToCheck.push(items[i]);
+					}
+				}
+				return this.isInSelection(itemsToCheck, selectionGroup);
+			}
+		};
+		
+		/**
+		 * Selects one or multiple items that have the given value in the specified custom data field.
+		 * @Public
+		 * @Override
+		 */
+		oControl.setSelectionByCustomData = function(dataKey, values, selectionGroup){
+			_changeSelectionByCustomData(this, dataKey, values, "replace", selectionGroup);
+		};
+		
+		/**
+		 * Selects one or multiple items that have the given value in the specified custom data field.
+		 * @Public
+		 * @Override
+		 */
+		oControl.addSelectionByCustomData = function(dataKey, values, selectionGroup){
+			_changeSelectionByCustomData(this, dataKey, values, "add", selectionGroup);
+		};
+		
+		/**
+		 * Selects one or multiple items that have the given value in the specified custom data field.
+		 * @Public
+		 * @Override
+		 */
+		oControl.removeSelectionByCustomData = function(dataKey, values, selectionGroup){
+			_changeSelectionByCustomData(this, dataKey, values, "remove", selectionGroup);
+		};
+		
+		/**
+		 * Toggles one or multiple items that have the given value in the specified custom data field.
+		 * @Public
+		 * @Override
+		 */
+		oControl.toggleSelectionByCustomData = function(dataKey, values, selectionGroup){
+			_changeSelectionByCustomData(this, dataKey, values, "toggle", selectionGroup);
+		};
+		
+		/*
+		 * Property
+		 */
+		
+		/**
+		 * Selects one or multiple items that have the given value in the specified property.
+		 * @Public
+		 * @Override
+		 */
+		oControl.setSelectionByProperty = function(propertyName, values, selectionGroup){
+			throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
+		};
+		
+		/*
+		 * Methods to override 
+		 */
+		
+		/**
+		 * Defines how to decide whether an item is selected within a selectionGroup.
+		 * @Protected
+		 */
+		oControl._isItemSelected = function(item, selectionGroup){
+			return item.getSelected();
+		};
+		
+		/**
+		 * Defines how to decide whether an item is enabled within a selectionGroup.
+		 * @Protected
+		 */
+		oControl._isItemEnabled = function(item, selectionGroup){
+			return item.getEnabled();
+		};
+		
+		/**
+		 * Defines how to decide whether an item is selectable within a selectionGroup.
+		 * @Protected
+		 */
+		oControl._isItemSelectable = function(item, selectionGroup, selectionProvider){
+			return item.isSelectable(selectionProvider);
+		};
+		
+		/**
+		 * Defines how to select an item within a selectionGroup.
+		 * @Protected
+		 */
+		oControl._setItemSelected = function(item, selected, selectionGroup){
+			item.setSelected(selected);
+		};
+		
+		/**
+		 * Adds additional event options.
+		 * @Protected
+		 * @Override
+		 */
+		oControl._addEventOptions = function(eventOptions){
+			//To be overwritten by inheritants
+		};
+		
+		/*
+		 * 
+		 */
+		
+		/**
+		 * Performs a press on an item.
+		 * @Public
+		 */
+		oControl.pressItem = function(srcControl, item, itemUpdated, selectionProvider, providerItem){
+			if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
+				//Item is enabled
+				
+				var eventOptions = {
+						srcControl : srcControl,
+						srcItem : item,
+						selectionProvider : selectionProvider
+					};
+						
+				this._addEventOptions(eventOptions);
+				
+				//Process selection
+				var selectionMode = this.getSelectionMode();
+				if(ui5strap.SelectionMode.None !== selectionMode 
+						&& this._isItemSelectable(item, _defaultSelectionGroup, selectionProvider)){
+					//List allows selections and item is selectable
+					
+					var changes = null;
+					
+					if(selectionMode === ui5strap.SelectionMode.Single){
+						changes = this.setSelection(item, _defaultSelectionGroup);
+					}
+					else if(selectionMode === ui5strap.SelectionMode.SingleToggle){
+						if(this.isInSelection(item)){
+							changes = this.removeSelection(item, _defaultSelectionGroup);
+						}
+						else{
+							changes = this.setSelection(item, _defaultSelectionGroup);
+						}
+					}
+					else if(selectionMode === ui5strap.SelectionMode.Multiple){
+						changes = this.toggleSelection(item, _defaultSelectionGroup);
+					}
+					
+					//Check if something has changed
+					if(changes && changes.changed.length){
+						eventOptions.selectionChanges = changes;
+						eventOptions.updates = jQuery.merge([], changes.changed);
+						
+						if(-1 === jQuery.inArray(item, eventOptions.updates)){
+							eventOptions.updates.push(item);
+						}
+						
+						//Select event is deprecated
+						this.fireSelect(eventOptions);
+					}
+					else{
+						if(itemUpdated){
+							eventOptions.updates = [item];
+						}
+						
+						//No changes
+						jQuery.sap.log.debug("Event 'select' not fired: no changes in selection.");
+					}
+				}
+				else{
+					if(itemUpdated){
+						eventOptions.updates = [item];
+					}
+					jQuery.sap.log.debug("[LIST#" + this.getId() + "] Did not select list item: List item not selectable.");
+				}
+				
+				//TODO Rename 'tap' event to 'press' sometimes
+				this.fireTap(eventOptions);
+			}
+			else{
+				jQuery.sap.log.warning("Could not select list item: List item not found or disabled.");
+			}
+		};
+		
+		/*
+		 * ------------------
+		 * END implementation of ISelectionProvider interface
+		 * ------------------
+		 */
+	};
+	
+	ListSelectionSupport.getStyleClass = function(oControl){
+		var styleClass = "";
+		
+		
+		return styleClass;
+	};
+	
+	return ListSelectionSupport;
+
+});;/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.MainComponent
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+ 
+sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
+
+	var MainComponent = AppComponent.extend("ui5strap.MainComponent", {
+		"constructor" : function(app, options){
+			AppComponent.call(this, app, options);
+			
+			this.controls = {};
+		}
+	}),
+	MainComponentProto = MainComponent.prototype;
+
+	MainComponentProto.registerControls = function(controls){
+		var keys = Object.keys(controls);
+		for(var i = 0; i < keys.length; i++){
+			var key = keys[i];
+			this.controls[key] = controls[key];
+		}
+	};
+	
+	MainComponentProto.getControl = function(controlKey){
+		return this.controls[controlKey];
+	};
+
+	//Return Module Constructor
+	return MainComponent;
+});;/*
  * 
  * UI5Strap
  *
@@ -20222,7 +20633,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
     this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
 
     this.backdrop(function () {
-      var transition = $.support.transition && that.$element.hasClass('fade')
+      var transition = ui5strap.support.transition && that.$element.hasClass('fade')
 
       if (!that.$element.parent().length) {
         that.$element.appendTo(document.body) // don't move modals dom position
@@ -20246,7 +20657,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
       transition ?
         that.$element.find('.modal-dialog') // wait for modal to slide in
-          .one($.support.transition.end, function () {
+          .one(ui5strap.support.transition.end, function () {
             that.$element.focus().trigger(e)
           })
           .emulateTransitionEnd(300) :
@@ -20274,9 +20685,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
       .attr('aria-hidden', true)
       .off('click.dismiss.bs.modal')
 
-    $.support.transition && this.$element.hasClass('fade') ?
+    ui5strap.support.transition && this.$element.hasClass('fade') ?
       this.$element
-        .one($.support.transition.end, $.proxy(this.hideModal, this))
+        .one(ui5strap.support.transition.end, $.proxy(this.hideModal, this))
         .emulateTransitionEnd(300) :
       this.hideModal()
   }
@@ -20319,7 +20730,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
     var animate = this.$element.hasClass('fade') ? 'fade' : ''
 
     if (this.isShown && this.options.backdrop) {
-      var doAnimate = $.support.transition && animate
+      var doAnimate = ui5strap.support.transition && animate
 
       this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
         .appendTo(document.body)
@@ -20339,16 +20750,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
       doAnimate ?
         this.$backdrop
-          .one($.support.transition.end, callback)
+          .one(ui5strap.support.transition.end, callback)
           .emulateTransitionEnd(150) :
         callback()
 
     } else if (!this.isShown && this.$backdrop) {
       this.$backdrop.removeClass('in')
 
-      $.support.transition && this.$element.hasClass('fade') ?
+      ui5strap.support.transition && this.$element.hasClass('fade') ?
         this.$backdrop
-          .one($.support.transition.end, callback)
+          .one(ui5strap.support.transition.end, callback)
           .emulateTransitionEnd(150) :
         callback()
 
@@ -20526,13 +20937,6 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 				type : {
 					type:"ui5strap.NavType", 
 					defaultValue:ui5strap.NavType.Default
-				},
-				
-				//@deprecated
-				align : {
-					deprecated : true,
-					type:"ui5strap.Alignment",
-					defaultValue:ui5strap.Alignment.Default
 				}
 			},
 			
@@ -20547,10 +20951,24 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	NavProto = ui5strap.Nav.prototype;
 	
-	NavProto._getStyleClassPrefix = function(){
-		return "nav";
+	var _typeToClass = {
+		Default : "nav-default",
+		Tabs : "nav-tabs",
+		Pills : "nav-pills",
+		PillsStacked : "nav-pills nav-stacked",
+		PillsJustified : "nav-pills nav-justified",
+		TabsJustified : "nav-tabs nav-justified"
 	};
-
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	NavProto._getStyleClassDesign = function(){
+		var styleClass = "nav " + _typeToClass[this.getType()];
+		return styleClass;
+	};
+	
 	return Nav;
 });;/*
  * 
@@ -20669,11 +21087,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			        .addClass('collapse')
 			    }
 
-			    if (!$.support.transition) return complete.call(this)
+			    if (!ui5strap.support.transition) return complete.call(this)
 
 			    $collapse
 			      .height(0)
-			      .one($.support.transition.end, complete)
+			      .one(ui5strap.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 
 			}
@@ -20693,10 +21111,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			    	//fire event collapse completed
 			    }
 
-    			if (!$.support.transition) return complete.call(this)
+    			if (!ui5strap.support.transition) return complete.call(this)
 
     			$collapse
-			      .one($.support.transition.end, complete)
+			      .one(ui5strap.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 			      
 			      .height($collapse[0]["scrollHeight"])
@@ -20935,11 +21353,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.write("<!-- NavContainer START -->");
 			rm.write('<div');
 		    rm.writeControlData(oControl);
-		    
-		    rm.addClass(oControl._getStyleClassRoot());
-		    rm.addClass(oControl._getStyleClassOptions());
+		    rm.addClass(oControl._getStyleClass());
 		    rm.writeClasses();
-		    
 		    rm.write(">");
 	};
 
@@ -21081,31 +21496,15 @@ sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
-	var NavRenderer = {
-		typeToClass : {
-			Default : "nav-default",
-			Tabs : "nav-tabs",
-			Pills : "nav-pills",
-			PillsStacked : "nav-pills nav-stacked",
-			PillsJustified : "nav-pills nav-justified",
-			TabsJustified : "nav-tabs nav-justified"
-		}
-	
-	};
+	var NavRenderer = {};
 	
 	NavRenderer.render = function(rm, oControl) {
-		var type = oControl.getType(),
-			items = oControl.getItems();
+		var items = oControl.getItems();
 	
 		rm.write("<ul");
 		
 		rm.writeControlData(oControl);
-	
-		rm.addClass('nav');
-		rm.addClass(this.typeToClass[type]);
-		rm.addClass(oControl._getStyleClassOptions());
-		ui5strap.RenderUtils.alignment(rm, oControl, 'navbar-nav', 'sidebar-nav');
-	
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		
 		rm.write(">");
@@ -21232,58 +21631,29 @@ sap.ui.define(['./library'], function(library){
 	
 	var OptionsSupport = {};
 	
-	OptionsSupport.bless = function(obj){
+	/**
+	 * Adds the required properties to the Meta Data definition.
+	 * @Public
+	 */
+	OptionsSupport.meta = function(meta){
+		meta.properties.options = {
+			type : "string",
+			defaultValue : ""
+		};
+	};
+	
+	/**
+	 * Adds Support for Options to an prototype or object
+	 * @Public
+	 */
+	OptionsSupport.proto = function(oControl){
 		/**
 		 * @Protected
+		 * @Override
 		 */
-		obj._getIdPart = function(){
-			if(arguments.legnth === 0){
-				throw new Error("Please provide at least one argument for ui5strap.ControlBase.prototype._getIdPart!");
-			}
-			var args = jQuery.makeArray(arguments);
-			return this.getId() + "___" + args.join('-');
-		};
-		
-		/**
-		 * @Protected
-		 */
-		obj._$getPart = function(){
-			return jQuery('#' + this._getIdPart.apply(this, arguments));
-		};
-		
-		/**
-		 * @Protected
-		 */
-		obj._getStyleClassPrefix = function(){
-			return this.getMetadata().getElementName().replace(/\./g, '');
-		};
-		
-		/**
-		 * @Protected
-		 */
-		obj._getStyleClassRoot = function(){
-			return this._getStyleClassPrefix();
-		};
-		
-		/**
-		 * @Protected
-		 */
-		obj._getStyleClassPart = function(partName){
-			return this._getStyleClassPrefix() + "-" + partName;
-		};
-		
-		/**
-		* @Protected
-		*/
-		obj._getStyleClassType = function(type, typeKey){
-			return 	this._getStyleClassPrefix() + "-" + (typeKey || "type") + "-" + type;
-		};
-		
-		/**
-		* @Protected
-		*/
-		obj._getStyleClassFlag = function(flag){
-			return 	this._getStyleClassPrefix() + "-flag-" + flag;
+		var oldGetStyleClass = oControl._getStyleClass;
+		oControl._getStyleClass = function(){
+			return oldGetStyleClass.call(this) + " " + this._getStyleClassOptions();	
 		};
 		
 		/**
@@ -21291,7 +21661,7 @@ sap.ui.define(['./library'], function(library){
 		* @Override
 		* TODO avoid overriding of user provided css classes
 		*/
-		obj.setOptions = function(newOptions){
+		oControl.setOptions = function(newOptions){
 			if(this.getDomRef()){
 				this.setProperty('options', newOptions, true);
 				this._updateStyleClass();
@@ -21304,7 +21674,7 @@ sap.ui.define(['./library'], function(library){
 		/**
 		* @Protected
 		*/
-		obj._getStyleClassOptions = function(){
+		oControl._getStyleClassOptions = function(){
 			var options = this.getOptions(),
 				classes = '';
 		    
@@ -21318,14 +21688,10 @@ sap.ui.define(['./library'], function(library){
 			return classes;
 		};
 		
-		obj._getStyleClass = function(){
-			return this._getStyleClassRoot() + " " + this._getStyleClassOptions();	
-		};
-		
 		/**
 		* @Protected
 		*/
-		obj._updateStyleClass = function(){
+		oControl._updateStyleClass = function(){
 			var currentClassesString = '',
 				options = this.getOptions();
 			
@@ -21353,7 +21719,7 @@ sap.ui.define(['./library'], function(library){
 		/**
 		* @Public
 		*/
-		obj.setOptionsEnabled = function(options){
+		oControl.setOptionsEnabled = function(options){
 			var currentOptions = [],
 				cOptions = this.getOptions();
 			
@@ -21384,11 +21750,11 @@ sap.ui.define(['./library'], function(library){
 		/**
 		* @Public
 		*/
-		obj.isOptionEnabled = function(optionName){
+		oControl.isOptionEnabled = function(optionName){
 			return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
 		};
 		
-		obj.setOptionEnabled = function(optionName, optionEnabled){
+		oControl.setOptionEnabled = function(optionName, optionEnabled){
 			var options = {};
 			
 			options[optionName] = optionEnabled;
@@ -21399,19 +21765,19 @@ sap.ui.define(['./library'], function(library){
 		/**
 		* @Public
 		*/
-		obj.toggleOption = function(optionName){
+		oControl.toggleOption = function(optionName){
 			this.setOptionEnabled(optionName, !this.isOptionEnabled(optionName));
 		};
 		
 		/**
 		* @Public
 		*/
-		obj.onOptionChange = function(optionName, optionEnabled){};
+		oControl.onOptionChange = function(optionName, optionEnabled){};
 	};
 	
 	return OptionsSupport;
 	
-}, true);
+});
 	;/*
  * 
  * UI5Strap
@@ -21467,6 +21833,21 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	PageProto = Page.prototype;
 
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	PageProto._getStyleClassRoot = function(){
+		var styleClass = "";
+		if(this.getHead()){
+			styleClass += " ui5strapPage-flag-WithHead";
+		}
+		if(this.getFooter()){
+			styleClass += " ui5strapPage-flag-WithFooter";
+		}
+		return styleClass;
+	};
+	
 	return Page;
 });;/*
  * 
@@ -21623,14 +22004,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			footer = oControl.getFooter();
 
 		rm.write("<div");
-		
-		rm.addClass('ui5strapPage');
-		if(head){
-			rm.addClass('ui5strapPage-flag-withHead');
-		}
-		if(footer){
-			rm.addClass('ui5strapPage-flag-withFooter');
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -21720,7 +22094,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}), PagerProto = Pager.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	PagerProto._getStyleClassDesign = function(){
+		var styleClass = "pager";
+		return styleClass;
+	};
 	
 	return Pager;
 });;/*
@@ -21759,8 +22142,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			next = oControl.getNext(),
 			spread = oControl.getAligned();
 
-		rm.write('<ul class="pager"');
+		rm.write('<ul');
 		rm.writeControlData(oControl);
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -21845,6 +22229,15 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	}),
 	PaginationProto = Pagination.prototype;
 	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	PaginationProto._getStyleClassDesign = function(){
+		var styleClass = "pagination";
+		return styleClass;
+	};
+	
 	return Pagination;
 });;/*
  * 
@@ -21882,7 +22275,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
 		rm.write("<ul");
 		rm.writeControlData(oControl);
-		rm.addClass('pagination');
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -21922,7 +22315,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './PanelGroup'], function(library, ControlBase, PanelGroup){
 
 	var Panel = ControlBase.extend("ui5strap.Panel", {
 		metadata : {
@@ -21977,7 +22370,26 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	PanelProto = ui5strap.Panel.prototype;
 
-	PanelProto.setCollapsed = function(newCollapsed){
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	PanelProto._getStyleClassDesign = function(){
+		var styleClass = "panel",
+			severity = this.getSeverity();
+		
+		if(ui5strap.Severity.None !== severity){
+			styleClass += " panel-" + ui5strap.BSSeverity[severity];
+		}
+		
+		if(this.getCollapse()){
+			styleClass += " panel-collapsible";
+		}
+		
+		return styleClass;
+	};
+	
+	PanelProto.setCollapsed = function(newCollapsed, suppressInvalidate){
 		if(!this.getCollapse() || newCollapsed === this.getCollapsed()){
 			return this;
 		}
@@ -22000,11 +22412,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			        .addClass('collapse')
 			    }
 
-			    if (!$.support.transition) return complete.call(this)
+			    if (!ui5strap.support.transition) return complete.call(this)
 
 			    $collapse
 			      .height(0)
-			      .one($.support.transition.end, complete)
+			      .one(ui5strap.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 
 			}
@@ -22024,21 +22436,19 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			    	//fire event collapse completed
 			    }
 
-    			if (!$.support.transition) return complete.call(this)
+    			if (!ui5strap.support.transition) return complete.call(this)
 
     			$collapse
-			      .one($.support.transition.end, complete)
+			      .one(ui5strap.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 			      
 			      .height($collapse[0]["scrollHeight"])
-
 			}
-
 
 			this.setProperty('collapsed', newCollapsed, true);
 		}
 		else{
-			this.setProperty('collapsed', newCollapsed);
+			this.setProperty('collapsed', newCollapsed, suppressInvalidate);
 		}
 
 		return this;
@@ -22046,6 +22456,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	PanelProto.toggle = function(){
 		this.setCollapsed(!this.getCollapsed());
+		
+		return this;
 	};
 	
 	/**
@@ -22059,7 +22471,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		var $target = jQuery(oEvent.target);
 		if($target.hasClass('panel-heading') || $target.parent().hasClass('panel-heading')){
 			var parent = this.getParent();
-			if(parent instanceof ui5strap.PanelGroup){
+			if(parent instanceof PanelGroup){
 				parent.setSelectedControl(this);
 			}
 			else{ 
@@ -22232,16 +22644,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("panel");
-		
-		if(collapse){
-			rm.addClass('panel-collapsible');
-		}
-		
-		if(ui5strap.Severity.None !== severity){
-			rm.addClass("panel-" + ui5strap.BSSeverity[severity]);
-		}
-		
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -22347,12 +22750,36 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			},
 			aggregations : { 
 				content : {
-					singularName: "content"
+					singularName: "content",
+					type:"ui5strap.IText"
 				}
 			}
 
 		}
-	});
+	}),
+	ParagraphProto = Paragraph.prototype;
+	
+	ParagraphProto._getStyleClassDesign = function(){
+		var styleClass = "",
+			severity = this.getSeverity(),
+			textAlign = this.getTextAlign();
+		
+		//CSS Classes
+		if(ui5strap.Severity.None !== severity){
+			//Severity for general text
+			styleClass += " text-" + ui5strap.BSSeverity[severity];
+		}
+		
+		if(ui5strap.TextAlignment.Default !== textAlign){
+			styleClass += " ui5strap-text-align-" + textAlign.toLowerCase();
+		}
+		
+		if(this.getFormStatic()){
+			styleClass += " form-control-static";
+		}
+		
+		return styleClass;
+	};
 
 	ui5strap.Utils.dynamicText(Paragraph.prototype);
 	
@@ -22400,17 +22827,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 
 		rm.write("<p");
-		
 		rm.writeControlData(oControl);
-		if(oControl.getFormStatic()){
-			rm.addClass('form-control-static');
-		}
-		if(ui5strap.Severity.None !== severity){
-			rm.addClass("text-" + ui5strap.BSSeverity[severity]);
-		}
-		if(ui5strap.TextAlignment.Default !== textAlign){
-			rm.addClass("ui5strap-text-align-" + textAlign.toLowerCase());
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -22714,6 +23132,114 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  * UI5Strap
  *
+ * ui5strap.PositionSupport
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+sap.ui.define(['./library'], function(library){
+	
+	var PositionSupport = {};
+	
+	/**
+	 * Adds the required properties to the Meta Data definition.
+	 * @Public
+	 */
+	PositionSupport.meta = function(meta){
+		meta.properties.align = {
+			type : "ui5strap.Alignment",
+			defaultValue : ui5strap.Alignment.Default
+		};
+	};
+	
+	/**
+	 * Adds Support for Options to an prototype or object
+	 * @Public
+	 */
+	PositionSupport.proto = function(oControl){
+		/**
+		 * @Protected
+		 * @Override
+		 */
+		var oldGetStyleClass = oControl._getStyleClass;
+		oControl._getStyleClass = function(){
+			return oldGetStyleClass.call(this) + " " + PositionSupport.getStyleClass(this);	
+		};
+	};
+	
+	PositionSupport.getStyleClass = function(oControl){
+		var align = oControl.getAlign(), Alignment = ui5strap.Alignment, styleClass = "";
+
+		if (align !== Alignment.Default && align !== Alignment.NavBar && align !== Alignment.Sidebar) {
+			styleClass += ui5strap.BSAlignment[align];
+		}
+
+		/*
+		 * This are special options for Button, ButtonGroup, Nav
+		 * and Form to show properly inside NavBar controls
+		 * 
+		 * @deprecated
+		 */
+		
+		if (align === Alignment.NavBar
+				|| align === Alignment.NavBarLeft
+				|| align === Alignment.NavBarRight) {
+			jQuery.sap.log
+					.warning("Using Alignment.NavBar* options is deprecated.");
+			var elName = oControl.getMetadata().getElementName();
+			if(elName === "ui5strap.Button" 
+				|| elName === "ui5strap.ButtonGroup"
+				|| elName === "ui5strap.ButtonDropdown"){
+				styleClass += " navbar-btn";
+			}
+			else if(elName === "ui5strap.Form"){
+				styleClass += " navbar-form";
+			}
+			else if(elName === "ui5strap.Nav"){
+				styleClass += " navbar-nav";
+			}
+		}
+		
+
+		/*
+		 * This are special options for Nav controls to show
+		 * properly inside Sidebar controls
+		 * 
+		 * @deprecated
+		 */
+		if (align === Alignment.Sidebar) {
+			jQuery.sap.log
+					.warning("Using Alignment.Sidebar options is deprecated.");
+			styleClass += " sidebar-nav";
+		}
+		
+		return styleClass;
+	};
+	
+	return PositionSupport;
+
+});;/*
+ * 
+ * UI5Strap
+ *
  * ui5strap.Progress
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
@@ -22991,6 +23517,340 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  * UI5Strap
  *
+ * ui5strap.ResponsiveTransition
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+sap.ui
+		.define(
+				[ './library' ],
+				function(library) {
+
+					/**
+					 * Converts old transition strings into new ones.
+					 * 
+					 * @deprecated
+					 * @Private
+					 */
+					var _deprecatedTransitionsConvert = function($trans) {
+						var $newTrans = "";
+						if ($trans === 'transition-zoom')
+							$newTrans = 'zoom-in';
+						else if ($trans === 'transition-zoom2')
+							$newTrans = 'zoom-out';
+
+						else if ($trans === 'transition-flip')
+							$newTrans = 'flip-horizontal-ccw';
+						else if ($trans === 'transition-slide')
+							$newTrans = 'slide-rtl';
+						else
+							$newTrans = $trans.substring(11);
+
+						jQuery.sap.log.warning("Transition deprecated: '"
+								+ $trans + "'. Please use instead: "
+								+ $newTrans);
+						return $newTrans;
+					};
+
+					/**
+					 * Constructs a responsive Transition (experimental)
+					 * 
+					 * @Constructor
+					 * @Public
+					 */
+					var ResponsiveTransition = function(data) {
+						this._data = data;
+
+						var transString = "", transSpeed = data.transitionSpeed;
+
+						if (data.transitionAll) {
+							if (data.transitionAll.indexOf("transition-") === 0) {
+
+								data.transitionAll = _deprecatedTransitionsConvert(data.transitionAll);
+							}
+							transString = "ui5strap-trans-all-type-"
+									+ data.transitionAll;
+						} else {
+							transString += data.transitionExtraSmall ? "ui5strap-trans-xs-type-"
+									+ data.transitionExtraSmall
+									: "ui5strap-trans-xs-type-none";
+							transString += data.transitionSmall ? " ui5strap-trans-sm-type-"
+									+ data.transitionSmall
+									: " ui5strap-trans-sm-type-none";
+							transString += data.transitionMedium ? " ui5strap-trans-md-type-"
+									+ data.transitionMedium
+									: " ui5strap-trans-md-type-none";
+							transString += data.transitionLarge ? " ui5strap-trans-lg-type-"
+									+ data.transitionLarge
+									: " ui5strap-trans-lg-type-none";
+
+							if (transString === "ui5strap-trans-xs-type-none ui5strap-trans-sm-type-none ui5strap-trans-md-type-none ui5strap-trans-lg-type-none") {
+								transString = "ui5strap-trans-all-type-none";
+							}
+						}
+
+						this._skip = !ui5strap.support.transitionEndEvent
+								|| transString === "ui5strap-trans-all-type-none";
+
+						this._transitions = transString;
+
+						if (transSpeed && transitionSpeed !== "normal") {
+							this._transitions += " ui5strap-transition-speed-"
+									+ transSpeed;
+						}
+
+						this._prepared = false;
+						this._executed = false;
+						this._canceled = false;
+
+						this._finished = false;
+						this._nextFinished = false;
+						this._currentFinished = false;
+						this._firstFinished = null;
+
+						this._events = {
+							current : [],
+							next : [],
+							first : [],
+							last : []
+						};
+
+						this.on = function(event, callback) {
+							if (("current" === event && this._currentFinished)
+									|| ("next" === event && this._nextFinished)
+									|| ("first" === event && this._firstFinished)
+									|| ("last" === event && this._finished)) {
+								callback();
+							}
+
+							this._events[event].push(callback);
+						};
+
+						var _runEvent = function(_this, event) {
+							for (var i = 0; i < _this._events[event].length; i++) {
+								_this._events[event][i]();
+							}
+							_this._events[event] = [];
+						};
+
+						/**
+						 * Should always be surrounded by a RAF.
+						 * 
+						 * @Public
+						 */
+						this.prepare = function() {
+							if (this._prepared || this._executed) {
+								throw new Error(
+										'Cannot prepare transition: already prepared or executed!');
+							}
+
+							if (this._canceled) {
+								return;
+							}
+
+							this._prepared = true;
+
+							if (this._skip) {
+								// Transition skipped
+								// We still need to remove the hidden flag from
+								// the next dom element.
+								this._data.$next
+										&& this._data.$next
+												.removeClass('ui5strap-hidden');
+
+								return;
+							}
+
+							// Prepare DOM elements
+							this._data.$current
+									&& this._data.$current
+											.addClass(this._transitions
+													+ ' '
+													+ 'ui5strap-transition-current');
+							this._data.$next
+									&& this._data.$next
+											.addClass(
+													this._transitions
+															+ ' '
+															+ 'ui5strap-transition-next')
+											.removeClass('ui5strap-hidden');
+						};
+						
+						this.madeChanges = function(){
+							return this._prepared;
+						};
+
+						/**
+						 * Should always be surrounded by a RAF.
+						 * 
+						 * @Public
+						 */
+						this.execute = function(callbackCurrent, callbackNext) {
+							var _this = this;
+
+							if (this._executed) {
+								throw new Error(
+										'Cannot execute responsive transition: already executed!');
+							}
+
+							this._executed = true;
+
+							var _finallyCurrent = function() {
+								if (_this._currentFinished) {
+									jQuery.sap.log
+											.warning('[TRANS#'
+													+ _this._data.id
+													+ ' ('
+													+ _this._transitions
+													+ ')] Hiding page caused a timeout.');
+
+									return;
+								}
+
+								_this._currentFinished = true;
+
+								if (_this._nextFinished
+										|| !_this._events.next.length) {
+									_this._finished = true;
+								}
+
+								if (!_this._firstFinished) {
+									_this._firstFinished = "current";
+								}
+
+								// Clear timeout for current page, if any
+								window.clearTimeout(_this._currentTimout);
+
+								if ("current" === _this._firstFinished) {
+									_runEvent(_this, "first");
+								}
+
+								// Callback for current page
+								callbackCurrent && callbackCurrent.call(_this);
+
+								_runEvent(_this, "current");
+
+								if (_this._finished) {
+									_runEvent(_this, "last");
+								}
+							}, _finallyNext = function() {
+								if (_this._nextFinished) {
+									jQuery.sap.log
+											.warning('[TRANS#'
+													+ _this._data.id
+													+ ' ('
+													+ _this._transitions
+													+ ')] Showing page caused a timeout.');
+
+									return;
+								}
+								_this._nextFinished = true;
+								if (_this._currentFinished
+										|| !_this._events.current.length) {
+									_this._finished = true;
+								}
+
+								if (!_this._firstFinished) {
+									_this._firstFinished = "next";
+								}
+
+								// Clear timeout for next page, if any
+								window.clearTimeout(_this._nextTimout);
+
+								if ("next" === _this._firstFinished) {
+									_runEvent(_this, "first");
+								}
+
+								// Callback for next page
+								callbackNext && callbackNext.call(_this);
+
+								_runEvent(_this, "next");
+
+								if (_this._finished) {
+									_runEvent(_this, "last");
+								}
+							};
+
+							// Check if transition is skipped or canceled.
+							if (this._skip || this._canceled || !this._prepared) {
+								// Transition skipped
+								jQuery.sap.log.debug("[TRANS#" + _this._data.id
+										+ "] Transition skipped: '"
+										+ _this._transitions + "'");
+
+								_finallyCurrent();
+								_finallyNext();
+							} else {
+								// Execute transition
+								jQuery.sap.log.debug("[TRANS#" + this._data.id
+										+ "] Executing '" + _this._transitions
+										+ "'");
+
+								// Current DOM element
+								if (this._data.$current) {
+									this._currentTimout = window.setTimeout(
+											_finallyCurrent,
+											ui5strap.options.transitionTimeout);
+
+									this._data.$current
+											.one(
+													ui5strap.support.transitionEndEvent,
+													_finallyCurrent);
+								}
+
+								// Next DOM element
+								if (this._data.$next) {
+									this._nextTimout = window.setTimeout(
+											_finallyNext,
+											ui5strap.options.transitionTimeout);
+
+									this._data.$next
+											.one(
+													ui5strap.support.transitionEndEvent,
+													_finallyNext);
+								}
+
+								// Now set the classes to start the transitions
+								this._data.$current
+										&& this._data.$current
+												.addClass('ui5strap-transition-current-out');
+								this._data.$next
+										&& this._data.$next
+												.removeClass('ui5strap-transition-next');
+							}
+
+						};
+
+						this.cancel = function() {
+							this._canceled = true;
+						};
+
+					};
+
+					return ResponsiveTransition;
+				});;/*
+ * 
+ * UI5Strap
+ *
  * ui5strap.Row
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
@@ -23038,6 +23898,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 		}
 	});
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	Row.prototype._getStyleClassDesign = function(){
+		return "row";
+	};
 
 	return Row;
 });;/*
@@ -23075,7 +23943,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		var content = oControl.getColumns();
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass("row");
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -23116,7 +23984,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(library, ControlBase, CommonRenderers){
 
 	var ScrollContainer = ControlBase.extend("ui5strap.ScrollContainer", {
 		
@@ -23142,10 +24010,29 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			},
 			
 			defaultAggregation : "content"
-		}
+		},
+		
+		renderer : "ui5strap.CommonRenderers.DivWithContent"
 	
 	}),
 	ScrollContainerProto = ScrollContainer.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	ScrollContainerProto._getStyleClassRoot = function(){
+		var styleClass = "";
+		if(this.getHorizontal()){
+			styleClass += " " + this._getStyleClassFlag("Horizontal");
+		}
+		
+		if(this.getVertical()){
+			styleClass += " " + this._getStyleClassFlag("Vertical");
+		}
+		
+		return styleClass;
+	};
 	
 	/**
 	 * @Override
@@ -23174,7 +24061,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  * UI5Strap
  *
- * ui5strap.ScrollContainerRenderer
+ * ui5strap.SelectableSupport
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -23197,41 +24084,96 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
-
-	var ScrollContainerRenderer = {};
-
-	ScrollContainerRenderer.render = function(rm, oControl) {
+sap.ui.define(['./library'], function(library){
+	
+	var SelectableSupport = {};
+	
+	/**
+	 * Adds the required properties to the Meta Data definition.
+	 * @Public
+	 */
+	SelectableSupport.meta = function(meta){
 		
-		rm.write("<div");
-		rm.writeControlData(oControl);
+		//Interfaces
 		
-		rm.addClass(oControl._getStyleClassRoot());
+		meta.interfaces.push("ui5strap.ISelectableItem");
 		
-		if(oControl.getHorizontal()){
-			rm.addClass(oControl._getStyleClassFlag("horizontal"));
-		}
+		//Properties
 		
-		if(oControl.getVertical()){
-			rm.addClass(oControl._getStyleClassFlag("vertical"));
-		}
+		meta.properties.selected = {
+			type:"boolean", 
+			defaultValue:false
+		};
 		
-		rm.writeClasses();
-		rm.write(">");
+		meta.properties.enabled = {
+			type:"boolean", 
+			defaultValue:true
+		};
 		
-		var content = oControl.getContent();
-		for(var i = 0; i < content.length; i++){ 
-			rm.renderControl(content[i]);
-		}
-		
-		rm.write("</div>");
-
+		meta.properties.selectable = {
+			type : "boolean",
+			defaultValue : true
+		};
 	};
 	
-	//Return Module Constructor
-	return ScrollContainerRenderer;
+	/**
+	 * Adds Support for Options to an prototype or object
+	 * @Public
+	 */
+	SelectableSupport.proto = function(oControl){
+		/**
+		 * @Public
+		 */
+		oControl.isSelectable = function(selectionProvider){
+			return this.getSelectable();
+		};
+		
+		/**
+		 * @Public
+		 */
+		oControl.setSelected = function(newSelected, suppressInvalidate){
+			if(this.getDomRef()){
+	              if(newSelected){
+	                  this.$().addClass("active");
+	              }
+	              else{
+	                  this.$().removeClass("active");
+	              }
+	              
 
-}, true);;/*
+	              this.setProperty("selected", newSelected, true);
+	          }
+	          else{
+	              this.setProperty("selected", newSelected, suppressInvalidate);
+	          }
+		};
+		
+		/**
+		 * @Protected
+		 * @Override
+		 */
+		var oldGetStyleClass = oControl._getStyleClass;
+		oControl._getStyleClass = function(){
+			return oldGetStyleClass.call(this) + " " + SelectableSupport.getStyleClass(this);	
+		};
+	};
+	
+	SelectableSupport.getStyleClass = function(oControl){
+		var styleClass = "";
+		if(oControl.getSelected()){
+			styleClass += "active";
+		}
+		
+		if(!oControl.getEnabled()){
+			styleClass += " disabled";
+		}
+		
+		return styleClass;
+	};
+	
+	return SelectableSupport;
+
+});;/*
  * 
  * UI5Strap
  *
@@ -23465,7 +24407,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass(oControl._getStyleClassRoot());
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -23510,7 +24452,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function(library, ControlBase, ResponsiveTransition){
 
 	var TabContainer = ControlBase.extend("ui5strap.TabContainer", {
 		metadata : {
@@ -23534,23 +24476,17 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					defaultValue : "fade"
 				},
 				
-				animate : {
-					deprecated : true,
-			        type:"boolean", 
-			        defaultValue:true
-			    },
-				"listenTo" : {
-					deprecated : true,
-					type : "string",
-					defaultValue : "select",
-					bindable : false
-				},
-				"customAssociation" : {
+				customAssociation : {
 					deprecated : true,
 					type : "string",
 					defaultValue : "",
 					bindable : false
-				}
+				},
+				
+				fullHeight : {
+					type:"boolean", 
+			        defaultValue:false
+			    }
 			},
 			
 			aggregations : { 
@@ -23559,10 +24495,9 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			},
 			
-			"associations" : {
+			associations : {
 				"source" : {
-					"deprecated" : true,
-					"type" : "ui5strap.ISelectionProvider",
+					type : "ui5strap.ISelectionProvider",
 					multiple : false
 				}
 			}
@@ -23572,18 +24507,45 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	TabContainerProto = ui5strap.TabContainer.prototype;
 	
 	/**
+	 * @Protected
+	 * @Override
+	 */
+	TabContainerProto._getStyleClassRoot = function(){
+		var styleClass = "tab-content";
+		
+		if(this.getFullHeight()){
+			styleClass += " " + this._getStyleClassFlag("FullHeight");
+		}
+		return styleClass;
+	};
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	TabContainerProto._getStyleClassPart = function(partName){
+		var classPart = ControlBase.prototype._getStyleClassPart.call(this, partName);
+		
+		if("pane" === partName){
+			classPart += " tab-pane";
+		}
+		
+		return classPart;
+	};
+	
+	/**
 	 * @Public
 	 */
 	TabContainerProto.onBeforeRendering= function(){
   		var _this = this;
   		
   		if(!this.sourceControl){
-  			jQuery.sap.log.warning("Usage of ui5strap.TabContainer.prototype.getSource is deprecated. Please use actions instead.")
-			this.sourceControl = sap.ui.getCore().byId(this.getSource());
+  			this.sourceControl = sap.ui.getCore().byId(this.getSource());
 		    
-			this.sourceControl.attachEvent(this.getListenTo(), {}, function(oEvent){
-				
-				_this.synchronize();
+			this.sourceControl.attachEvent("tap", {}, function(oEvent){
+				if(oEvent.getParameter("updates")){
+					_this.synchronize();
+				}
 				
 			});
 
@@ -23598,13 +24560,13 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	TabContainerProto.synchronize = function(){
   		var customAssociation = this.getCustomAssociation();
   		if(!customAssociation){
-			this.setSelectedIndex(this.sourceControl.getSelectionIndex(0), true);
+			this.setSelectedIndex(this.sourceControl.getSelectionIndex()[0], true);
 		}
 		else{
 			var panes = this.getPanes();
 			
 			for(var i = 0; i < panes.length; i++){
-				if(this.sourceControl.getSelection().data(customAssociation) === panes[i].data(customAssociation)){
+				if(this.sourceControl.getSelection()[0].data(customAssociation) === panes[i].data(customAssociation)){
 					this.setSelectedIndex(i, true);
 					break;
 				}
@@ -23612,29 +24574,34 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	};
 	
-	
-
-	
-	
 	/**
 	 * @Public
 	 */
-	TabContainerProto.showSelectedPane = function($next){
+	TabContainerProto._showSelectedPane = function(){
 		var _this = this,
 			$current = this.$().find('> .active'),
-			transition = new ui5strap.ResponsiveTransition(
+			$next = this.$().find('.tab-pane').eq(this.getSelectedIndex());
+		
+		var transition = new ResponsiveTransition(
 				{
 					"$current" : $current, 
 					"$next" : $next, 
 					"id" : 'tab-container-page-change',
 					"transitionAll" : this.getTransition()
 				}
-			),
-			transitionNextComplete = function (){
-				$next.attr("class", "tab-pane active");
+			);
+		
+		this._transition = transition;
+			
+		var transitionNextComplete = function (){
+				if(transition.madeChanges() && $next.data("paneIndex") === _this.getSelectedIndex()){
+					$next.attr("class", _this._getStyleClassPart("pane") + " active");
+				}
 			},
 			transitionCurrentComplete = function (){
-				$current.attr("class", "tab-pane ui5strap-hidden");
+				if(transition.madeChanges() && $current.data("paneIndex") !== _this.getSelectedIndex()){
+					$current.attr("class", _this._getStyleClassPart("pane") + " ui5strap-hidden");
+				}
 			};
 		
 		//RAF start
@@ -23653,7 +24620,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
 		});
 	};
-
+	
 	/**
 	 * @Public
 	 * @Override
@@ -23663,7 +24630,17 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			
 			this.setProperty('selectedIndex', newIndex, true);
 
-			this.showSelectedPane(this.$().find('.tab-pane').eq(newIndex));
+			if(this._transition){
+				var _this = this;
+				this._transition.cancel();
+				this._transition.on("last", function(){
+					_this._transition = null;
+					_this._showSelectedPane();
+				});
+			}
+			else{
+				this._showSelectedPane();
+			}
 		}
 		else{
 			this.setProperty('selectedIndex', newIndex, suppressInvalidate);
@@ -23738,7 +24715,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('tab-content u5sl-tab-content')
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -23751,7 +24728,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			if(customAssociation){
 				rm.writeAttribute('data-pane-key', item.data(customAssociation));
 			}
-			rm.addClass('tab-pane');
+			rm.addClass(oControl._getStyleClassPart("pane"));
 			if(selectedIndex > -1 && i === selectedIndex){
 				rm.addClass('active');
 			}
@@ -24224,9 +25201,23 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
-
-	ui5strap.Utils.dynamicText(Well.prototype);
+	}),
+	WellProto = Well.prototype;
+	
+	/**
+	 * @Protected
+	 * @Override
+	 */
+	WellProto._getStyleClassDesign = function(){
+		var styleClass = "well";
+		var size = this.getSize();
+		if(ui5strap.Size.Default !== size){
+			styleClass += " well-" + ui5strap.BSSize[size];
+		}
+		return styleClass;
+	};
+	
+	ui5strap.Utils.dynamicText(WellProto);
 	
 	return Well;
 });;/*
@@ -24262,22 +25253,17 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	WellRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
-			size = oControl.getSize();
+			text = oControl.getText();
 
-		rm.write("<div");
-		
+		rm.write('<div');
 		rm.writeControlData(oControl);
-		rm.addClass("well");
-		if(ui5strap.Size.Default !== size){
-			rm.addClass("well-" + ui5strap.BSSize[size]);
-		}
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
-		var text = oControl.getText();
 		text && rm.writeEscaped(text);
 		
-		
+		//Content
 		for(var i = 0; i < content.length; i++){ 
 			rm.renderControl(content[i]);
 		}
