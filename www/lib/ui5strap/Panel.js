@@ -85,7 +85,7 @@ sap.ui.define(['./library', './ControlBase', './PanelGroup'], function(library, 
 	 * @Override
 	 */
 	PanelProto._getStyleClassDesign = function(){
-		var styleClass = "panel",
+		var styleClass = " panel",
 			severity = this.getSeverity();
 		
 		if(ui5strap.Severity.None !== severity){

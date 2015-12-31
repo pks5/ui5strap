@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	BadgeProto._getStyleClassDesign = function(){
-		return "badge";
+		return " badge";
 	};
 	
 	return Badge;

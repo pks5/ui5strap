@@ -77,7 +77,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	};
 	
 	FormGroupProto._getStyleClassDesign = function(){
-		var styleClass = "form-group",
+		var styleClass = " form-group",
 			severity = this.getSeverity();
 		
 		

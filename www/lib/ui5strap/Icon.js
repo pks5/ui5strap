@@ -111,7 +111,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			severity = this.getSeverity(),
 			prefix = iconGroup + '-',
 			modPrefix = 'fa-',
-			styleClass = iconGroup
+			styleClass = " " + iconGroup
 				+ " " + prefix + this.getIcon();
 		
 		//Font Awesome only

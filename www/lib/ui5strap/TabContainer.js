@@ -84,7 +84,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	 * @Override
 	 */
 	TabContainerProto._getStyleClassRoot = function(){
-		var styleClass = "tab-content";
+		var styleClass = " tab-content";
 		
 		if(this.getFullHeight()){
 			styleClass += " " + this._getStyleClassFlag("FullHeight");

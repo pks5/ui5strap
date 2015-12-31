@@ -67,7 +67,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	PagerProto._getStyleClassDesign = function(){
-		var styleClass = "pager";
+		var styleClass = " pager";
 		return styleClass;
 	};
 	

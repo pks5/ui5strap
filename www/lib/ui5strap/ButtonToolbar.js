@@ -54,7 +54,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	ButtonToolbarProto._getStyleClassDesign = function(){
-		return "btn-toolbar";
+		return " btn-toolbar";
 	};
 	
 	return ButtonToolbar;

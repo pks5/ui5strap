@@ -113,7 +113,7 @@ sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library,
 	 */
 	ContainerProto._getStyleClassRoot = function(){
 		var type = this.getType(),
-			styleClass = this._getStyleClassType(type)
+			styleClass = " " + this._getStyleClassType(type)
 						+ " " + this._typeData[type].className,
 			
 			severity = this.getSeverity();

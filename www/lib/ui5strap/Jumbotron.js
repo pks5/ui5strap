@@ -57,7 +57,7 @@ sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(libr
 	 * @Override
 	 */
 	JumbotronProto._getStyleClassDesign = function(){
-		return "jumbotron";
+		return " jumbotron";
 	};
 	
 	return Jumbotron;

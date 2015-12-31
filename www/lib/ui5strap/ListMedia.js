@@ -57,7 +57,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Override
 	 */
 	ListMediaProto._getStyleClassDesign = function(){
-		return "media-list";
+		return " edia-list";
 	};
 	
 	return ListMedia;

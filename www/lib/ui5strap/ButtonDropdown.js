@@ -66,7 +66,7 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	 * @Override
 	 */
 	ButtonDropdownProto._getStyleClassDesign = function(){
-		var styleClass = "btn-group";
+		var styleClass = " btn-group";
 		if(this.getDropup()){
 			styleClass += " dropup";
 		}

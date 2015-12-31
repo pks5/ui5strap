@@ -55,7 +55,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	Row.prototype._getStyleClassDesign = function(){
-		return "row";
+		return " row";
 	};
 
 	return Row;

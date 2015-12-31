@@ -73,7 +73,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	};
 	
 	FormProto._getStyleClassDesign = function(){
-		return  _typeToClass[this.getType()];
+		return  " " + _typeToClass[this.getType()];
 	};
 	
 	FormProto.onAfterRendering = function(){

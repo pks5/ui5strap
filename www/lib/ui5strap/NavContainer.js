@@ -81,7 +81,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	 * @Override
 	 */
 	NavContainerProto._getStyleClassRoot = function(){
-		return "navcontainer navcontainer-type-" + this.ncType;
+		return " navcontainer navcontainer-type-" + this.ncType;
 	};
 	
 	/*

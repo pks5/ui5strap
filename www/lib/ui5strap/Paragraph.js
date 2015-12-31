@@ -83,7 +83,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 		
 		if(ui5strap.TextAlignment.Default !== textAlign){
-			styleClass += " ui5strap-text-align-" + textAlign.toLowerCase();
+			styleClass += " ui5strap-textAlign-" + textAlign;
 		}
 		
 		if(this.getFormStatic()){

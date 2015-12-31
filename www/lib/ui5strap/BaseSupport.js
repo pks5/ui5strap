@@ -99,8 +99,8 @@ sap.ui.define(['./library'], function(library){
 		*/
 		oControl._getStyleClass = function(){
 			return this._getStyleClassPrefix() 
-					+ " " + this._getStyleClassRoot()
-					+ " " + this._getStyleClassDesign() 
+					+ this._getStyleClassRoot()
+					+ this._getStyleClassDesign() 
 					+ BaseSupport.getStyleClass(this);	
 		};
 		

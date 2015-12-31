@@ -57,7 +57,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Override
 	 */
 	ListGroupProto._getStyleClassDesign = function(){
-		return "list-group";
+		return " list-group";
 	};
 	
 	return ListGroup;
