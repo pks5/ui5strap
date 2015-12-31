@@ -56,10 +56,10 @@ sap.ui.define(['./library'], function(library){
 	};
 	
 	PositionSupport.getStyleClass = function(oControl){
-		var align = oControl.getAlign(), Alignment = ui5strap.Alignment, styleClass = " ";
+		var align = oControl.getAlign(), Alignment = ui5strap.Alignment, styleClass = "";
 
 		if (align !== Alignment.Default && align !== Alignment.NavBar && align !== Alignment.Sidebar) {
-			styleClass += ui5strap.BSAlignment[align];
+			styleClass += " " + ui5strap.BSAlignment[align];
 		}
 
 		/*
@@ -100,7 +100,6 @@ sap.ui.define(['./library'], function(library){
 					.warning("Using Alignment.Sidebar options is deprecated.");
 			styleClass += " sidebar-nav";
 		}
-		
 		return styleClass;
 	};
 	

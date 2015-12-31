@@ -45,9 +45,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.addClass('progress-bar-' + ui5strap.BSSeverity[type]);
 		}
 
-		rm.writeAttribute('style', 'width:' + percentage + '%');
-
 		rm.writeClasses();
+		rm.writeAttribute('style', 'width:' + percentage + '%');
 		rm.write(">");
 		
 			if('' !== labelFormat){

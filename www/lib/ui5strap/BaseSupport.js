@@ -201,6 +201,7 @@ sap.ui.define(['./library'], function(library){
 		
 		//TODO Add ExtraLarge on BS4 Update
 		
+		
 		return styleClass;
 	};
 	
