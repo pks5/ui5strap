@@ -16,8 +16,8 @@
 
 					<!-- Toggle Menu Button (except for small screens) -->
 					<Button options="BarButton"
-							tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" visibilitySmall="Hidden"
-						visibilityMedium="Visible">
+							tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" visibilitySmall="HiddenUp"
+						visibilityMedium="VisibleUp">
 							<Icon icon="columns" />
 					</Button>
 				</Text>
@@ -28,8 +28,8 @@
 				<!-- Toggle Menu Button (only for small screens) -->
 				<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot"
 						options="BarButton" align="PullRight"
-					visibilityExtraSmall="Hidden" visibilitySmall="Visible"
-					visibilityMedium="Hidden">
+					visibilityExtraSmall="HiddenUp" visibilitySmall="VisibleUp"
+					visibilityMedium="HiddenUp">
 						<Icon icon="columns" />
 				</Button>
 			</Bar>

@@ -354,7 +354,9 @@ sap.ui
 					ui5strap.Visibility = {
 						Default : "Default",
 						Visible : "Visible",
-						Hidden : "Hidden"
+						VisibleUp : "VisibleUp",
+						Hidden : "Hidden",
+						HiddenUp : "HiddenUp"
 					};
 
 					/**

@@ -8,7 +8,7 @@
 			<Bar inverse="true">
 				
 				<!-- Toggle Menu Button (except for small screens) -->
-				<Container align="PullLeft" visibilitySmall="Hidden" visibilityMedium="Visible">
+				<Container align="PullLeft" visibilitySmall="Hidden">
 					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
 						options="BarButton">
 						<Icon icon="columns" />
@@ -21,7 +21,7 @@
 					</Heading>
 					
 					<!-- Toggle Menu Button (only for small screens) -->
-					<Container  align="PullRight" type="Text" visibilityExtraSmall="Hidden" visibilitySmall="Visible" visibilityMedium="Hidden">
+					<Container  align="PullRight" type="Text" visibilityExtraSmall="Hidden" visibilityMedium="HiddenUp">
 						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
 							options="BarButton">
 							<Icon icon="columns" />

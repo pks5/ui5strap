@@ -141,57 +141,65 @@ sap.ui.define(['./library'], function(library){
 				.getVisibilityMedium(), visibilityLarge = oControl
 				.getVisibilityLarge(), Visibility = ui5strap.Visibility;
 		
-		var resultHidden = [ "", "", "", "" ], styleClass = "", inheritHide = false;
+		var styleClass = "", inheritHide = false;
 		
 		// Visibility for EXTRA_SMALL screens
-		if (visibilityExtraSmall === Visibility.Visible) {
+		if (visibilityExtraSmall === Visibility.VisibleUp) {
 			// Visible on EXTRA_SMALL
-			resultHidden[0] = "";
 			inheritHide = false;
 		} else if (inheritHide
-				|| visibilityExtraSmall === Visibility.Hidden) {
+				|| visibilityExtraSmall === Visibility.Hidden
+				|| visibilityExtraSmall === Visibility.HiddenUp) {
 			// Hidden on EXTRA_SMALL
-			resultHidden[0] = "ui5strap-hide-xs";
 			styleClass += " ui5strap-hide-xs";
-			inheritHide = true;
+			if(visibilityExtraSmall === Visibility.HiddenUp){
+				inheritHide = true;
+			}
 		}
 		
 		// Visibility for SMALL screens
-		if (visibilitySmall === Visibility.Visible) {
+		if (visibilitySmall === Visibility.VisibleUp) {
 			// Visible on SMALL
-			resultHidden[1] = "";
 			inheritHide = false;
 		} else if (inheritHide
-				|| visibilitySmall === Visibility.Hidden) {
+				|| visibilitySmall === Visibility.Hidden
+				|| visibilitySmall === Visibility.HiddenUp) {
 			// Hidden on SMALL
-			resultHidden[1] = "ui5strap-hide-sm";
 			styleClass += " ui5strap-hide-sm";
-			inheritHide = true;
+			if(visibilitySmall === Visibility.HiddenUp){
+				inheritHide = true;
+			}
 		}
 		
 		// Visibility for MEDIUM screens
-		if (visibilityMedium === Visibility.Visible) {
+		if (visibilityMedium === Visibility.VisibleUp) {
 			// Visible on MEDIUM
-			resultHidden[2] = "";
 			inheritHide = false;
 		} else if (inheritHide
-				|| visibilityMedium === Visibility.Hidden) {
+				|| visibilityMedium === Visibility.Hidden
+				|| visibilityMedium === Visibility.HiddenUp) {
 			// Hidden on MEDIUM
-			resultHidden[2] = "ui5strap-hide-md";
 			styleClass += " ui5strap-hide-md";
-			inheritHide = true;
+			if(visibilityMedium === Visibility.HiddenUp){
+				inheritHide = true;
+			}
 		}
 		
 		// Visibility for LARGE screens
-		if (visibilityLarge === Visibility.Visible) {
+		if (visibilityLarge === Visibility.VisibleUp) {
 			// Visible on LARGE
-			resultHidden[3] = "";
+			inheritHide = false;
 		} else if (inheritHide
-				|| visibilityLarge === Visibility.Hidden) {
+				|| visibilityLarge === Visibility.Hidden
+				|| visibilityLarge === Visibility.HiddenUp) {
 			// Hidden on LARGE
-			resultHidden[3] = "ui5strap-hide-lg";
 			styleClass += " ui5strap-hide-lg";
+			if(visibilityLarge === Visibility.HiddenUp){ 
+				inheritHide = true;
+			}
 		}
+		
+		//TODO Add ExtraLarge on BS4 Update
 		
 		return styleClass;
 	};
