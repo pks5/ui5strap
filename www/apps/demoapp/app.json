@@ -28,7 +28,7 @@
     		"MenuRoot" : {
                 "type" : "XML",
                 
-                "id" : "my-app-bar-menu",
+                "id" : "menuRoot",
                 
                 "target" : "bar"
             },
@@ -45,10 +45,10 @@
                 "id" : "feed"
             },
 
-            "MyPage3" : {
+            "Statistics" : {
                 "type" : "XML",
                 
-                "id" : "my-app-page3"
+                "id" : "statistics"
             },
 
             "Settings" : {
@@ -173,7 +173,7 @@
             "NewPost" : {
                 "type" : "XML",
                 
-                "id" : "my-app-new-post"
+                "id" : "newPost"
             },
             "PostDetail" : {
                 "type" : "XML",

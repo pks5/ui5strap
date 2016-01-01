@@ -13,8 +13,8 @@
 		
 		{
 			"label" : "PAGE_STATISTICS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.MyPage3",
-			"pageId" : "my-app-page3",
+			"viewName" : "ui5strap.demoapp.views.Statistics",
+			"pageId" : "statistics",
 			"icon" : "bar-chart",
 			"severity" : "Warning"
 		},

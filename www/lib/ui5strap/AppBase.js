@@ -1401,10 +1401,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	AppBase.blessController = function(controllerImpl){
 		
 		if(!controllerImpl.actionEventHandler){
-			controllerImpl.actionEventHandler = "execute";
+			controllerImpl.actionEventHandler = "__execute";
 		}
 		if(!controllerImpl.actionAttribute){
-			controllerImpl.actionAttribute = "action";
+			controllerImpl.actionAttribute = "__action";
 		}
 		
 		//Add getApp method if not already exists
@@ -1457,20 +1457,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		};
 
 		/*
-		 * Old action event handler
-		 * @deprecated
-		 */
-		controllerImpl["__execute"] = function(oEvent){
-			this.getApp().runAction({
-				"eventSource" : oEvent.getSource(),
-				"eventParameters" : oEvent.getParameters(),
-				"controller" : this,
-				"parameters" : _getActionFromEvent(oEvent, "__action")
-			});
-		};
-		
-		/*
-		 * New action event handler
+		 * Action event handler
 		 */
 		controllerImpl[controllerImpl.actionEventHandler] = function(oEvent){
 			this.getApp().runAction({
