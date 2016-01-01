@@ -273,12 +273,23 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	/*
 	* Resolves a package relative to app package
 	*/
-	AppConfigProto.resolvePackage = function (packageString, defaultFolder){
+	AppConfigProto.resolvePackage = function (packageString, defaultFolder, baseRelative){
 		if(-1 === packageString.indexOf(".")){
+			if(!defaultFolder){
+				throw new Exception("Please provide a default folder for resolving '" + packageString + "'");
+			}
 			packageString = this.data.app.package + "." + defaultFolder.replace(/\//g, ".") + "." + packageString;
 		}
 		else if(jQuery.sap.startsWith(packageString, ".")){
-			packageString = this.data.app.package + packageString;
+			if(baseRelative){
+				packageString = this.data.app.package + packageString;
+			}
+			else if(!defaultFolder){
+				throw new Exception("Please provide a default folder for resolving '" + packageString + "'");
+			}
+			else{
+				packageString = this.data.app.package + "." + defaultFolder.replace(/\//g, ".") + packageString;
+			}
 		}
 		return packageString;
 	};

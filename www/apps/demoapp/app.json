@@ -74,7 +74,7 @@
                 "target" : "bar"
             },
             
-            ".views.settings.Language" : {
+            ".settings.Language" : {
                 "type" : "XML",
                 
                 "id" : "settingsLanguage",
@@ -86,7 +86,7 @@
                 }
             },
             
-            ".views.settings.Theme" : {
+            ".settings.Theme" : {
                 "type" : "XML",
                 
                 "id" : "settingsTheme"
@@ -115,57 +115,57 @@
                 "target" : "bar"
             },
             
-            ".views.controls.Buttons" :{
+            ".controls.Buttons" :{
             	"id" : "controlsButtons",
             	"type" : "HTML"
             },
             
-            ".views.controls.Containers" :{
+            ".controls.Containers" :{
             	"id" : "controlsContainers",
             	"type" : "HTML"
             },
             
-            ".views.controls.Icons" :{
+            ".controls.Icons" :{
             	"id" : "controlsIcons",
             	"type" : "HTML"
             },
             
-            ".views.controls.Typography" :{
+            ".controls.Typography" :{
             	"id" : "controlsTypography",
             	"type" : "HTML"
             },
 			
-			".views.controls.Navs" :{
+			".controls.Navs" :{
             	"id" : "controlsNavs",
             	"type" : "HTML"
             },
             
-            ".views.controls.GridSystem" :{
+            ".controls.GridSystem" :{
             	"id" : "controlsGridSystem",
             	"type" : "HTML"
             },
             
-            ".views.controls.Progress" :{
+            ".controls.Progress" :{
             	"id" : "controlsProgress",
             	"type" : "HTML"
             },
             
-            ".views.controls.Form" :{
+            ".controls.Form" :{
             	"id" : "controlsForm",
             	"type" : "HTML"
             },
             
-            ".views.controls.Indicators" :{
+            ".controls.Indicators" :{
             	"id" : "controlsIndicators",
             	"type" : "HTML"
             },
             
-            ".views.controls.MediaList" :{
+            ".controls.MediaList" :{
             	"id" : "controlsMediaList",
             	"type" : "HTML"
             },
             
-            ".views.controls.Dialogs" :{
+            ".controls.Dialogs" :{
             	"id" : "controlsDialogs",
             	"type" : "HTML"
             },
