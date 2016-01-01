@@ -69,8 +69,7 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 		}
 		
 		if(theAction){
-			ui5strap.Action.run({
-				app : this.context.app,
+			this.context.app.runAction({
 				controller : this.context.controller,
 				eventSource : this.context.eventSource,
 				eventParameters : this.context.eventParameters,

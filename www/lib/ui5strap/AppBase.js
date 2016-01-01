@@ -355,7 +355,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		};
 		
 		for(var i = 0; i < actions.length; i++){
-			Action.loadFromFile(actions[i], successCallback, true);
+			Action.loadFromFile(_this.config.resolvePackage(actions[i], "actions"), successCallback, true);
 		}
 	};
 	
@@ -978,7 +978,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 	AppBaseProto.runAction = function(action){
 		action.app = this;
-
+		
+		var actionName = action.parameters;
+		if(typeof actionName === 'string'){
+			actionName = this.config.resolvePackage(actionName, "actions");
+			action.parameters = actionName;
+		}
 		Action.run(action);
 	};
 

@@ -65,11 +65,10 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
 				var actionParameters = {
 					"parameters" : e.data.message, 
-					"app" : app,
 					"controller" : controller  
 				};
 				
-				ui5strap.Action.run(actionParameters);
+				app.runAction(actionParameters);
 			}
 
 		}, false);

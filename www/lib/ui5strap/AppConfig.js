@@ -192,7 +192,21 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		var configDataJSON = this.data,
 			viewerOptions = this.options,
 			appId = this.data.app.id;
-
+		
+		//Views
+		var viewNames = Object.keys(configDataJSON.views),
+			viewNamesLength = viewNames.length;
+		for(var i = 0; i < viewNamesLength; i++){
+			var viewName = viewNames[i],
+				viewNameResolved = this.resolvePackage(viewName, "views");
+			
+			if(viewName !== viewNameResolved){
+				configDataJSON.views[viewNameResolved] = configDataJSON.views[viewName];
+				delete configDataJSON.views[viewName];
+			}
+		}
+		
+		//Icons
 		configDataJSON.iconsResolved = {};
 		var iconKeys = Object.keys(configDataJSON.icons),
 			iconKeysLength = iconKeys.length;
@@ -200,6 +214,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			configDataJSON.iconsResolved[iconKeys[i]] = this.resolvePath(configDataJSON.icons[iconKeys[i]]);
 		}
 
+		//Options
 		configDataJSON.optionsResolved = jQuery.extend({}, configDataJSON.options);
 		if("override" in viewerOptions && appId in viewerOptions.override){
 			jQuery.extend(configDataJSON.optionsResolved, viewerOptions.override[appId]);

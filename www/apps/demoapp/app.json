@@ -25,7 +25,7 @@
     ],
     
     "views" : {
-    		"ui5strap.demoapp.views.MenuRoot" : {
+    		"MenuRoot" : {
                 "type" : "XML",
                 
                 "id" : "my-app-bar-menu",
@@ -33,25 +33,25 @@
                 "target" : "bar"
             },
             
-            "ui5strap.demoapp.views.Home" : {
+            "Home" : {
                 "type" : "XML",
                 
                 "id" : "home"
             },
 
-            "ui5strap.demoapp.views.Feed" : {
+            "Feed" : {
                 "type" : "XML",
                 
                 "id" : "feed"
             },
 
-            "ui5strap.demoapp.views.MyPage3" : {
+            "MyPage3" : {
                 "type" : "XML",
                 
                 "id" : "my-app-page3"
             },
 
-            "ui5strap.demoapp.views.Settings" : {
+            "Settings" : {
                 "type" : "XML",
                 
                 "id" : "settings",
@@ -59,14 +59,14 @@
                 "events" : {
                 	"controller" : {
                 		"update" : [
-                			"ui5strap.demoapp.actions.LoadMenuSettings",
-                			"ui5strap.demoapp.actions.NavigateToSettingsLanguage"
+                			"LoadMenuSettings",
+                			"NavigateToSettingsLanguage"
                 		]
                 	}
                 }
             },
             
-            "ui5strap.demoapp.views.MenuSettings" : {
+            "MenuSettings" : {
                 "type" : "XML",
                 
                 "id" : "menuSettings",
@@ -74,40 +74,40 @@
                 "target" : "bar"
             },
             
-            "ui5strap.demoapp.views.settings.Language" : {
+            ".views.settings.Language" : {
                 "type" : "XML",
                 
                 "id" : "settingsLanguage",
                 
                 "events" : {
                 	"controller" : {
-                		"update" : "ui5strap.demoapp.actions.SetCurrentLanguage"	
+                		"update" : "SetCurrentLanguage"	
                 	}
                 }
             },
             
-            "ui5strap.demoapp.views.settings.Theme" : {
+            ".views.settings.Theme" : {
                 "type" : "XML",
                 
                 "id" : "settingsTheme"
             },
             
             
-            "ui5strap.demoapp.views.Controls" :{
+            "Controls" :{
             	"id" : "controls",
             	"type" : "XML",
                 
                 "events" : {
                 	"controller" : {
                 		"update" : [
-                			"ui5strap.demoapp.actions.LoadMenuControls",
-                			"ui5strap.demoapp.actions.NavigateToControlsButtons"
+                			"LoadMenuControls",
+                			"NavigateToControlsButtons"
                 		]
                 	}
                 }
             },
             
-            "ui5strap.demoapp.views.MenuControls" : {
+            "MenuControls" : {
                 "type" : "XML",
                 
                 "id" : "menuControls",
@@ -115,67 +115,67 @@
                 "target" : "bar"
             },
             
-            "ui5strap.demoapp.views.controls.Buttons" :{
+            ".views.controls.Buttons" :{
             	"id" : "controlsButtons",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.controls.Containers" :{
+            ".views.controls.Containers" :{
             	"id" : "controlsContainers",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.controls.Icons" :{
+            ".views.controls.Icons" :{
             	"id" : "controlsIcons",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.controls.Typography" :{
+            ".views.controls.Typography" :{
             	"id" : "controlsTypography",
             	"type" : "HTML"
             },
 			
-			"ui5strap.demoapp.views.controls.Navs" :{
+			".views.controls.Navs" :{
             	"id" : "controlsNavs",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.controls.GridSystem" :{
+            ".views.controls.GridSystem" :{
             	"id" : "controlsGridSystem",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.controls.Progress" :{
+            ".views.controls.Progress" :{
             	"id" : "controlsProgress",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.controls.Form" :{
+            ".views.controls.Form" :{
             	"id" : "controlsForm",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.controls.Indicators" :{
+            ".views.controls.Indicators" :{
             	"id" : "controlsIndicators",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.controls.MediaList" :{
+            ".views.controls.MediaList" :{
             	"id" : "controlsMediaList",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.controls.Dialogs" :{
+            ".views.controls.Dialogs" :{
             	"id" : "controlsDialogs",
             	"type" : "HTML"
             },
             
-            "ui5strap.demoapp.views.NewPost" : {
+            "NewPost" : {
                 "type" : "XML",
                 
                 "id" : "my-app-new-post"
             },
-            "ui5strap.demoapp.views.PostDetail" : {
+            "PostDetail" : {
                 "type" : "XML",
                 
                 "id" : "postDetail"
@@ -183,36 +183,36 @@
       },
 	
 	"actions" : [
-		"ui5strap.demoapp.actions.NavigateToHome",
-		"ui5strap.demoapp.actions.NavigateToFeed",
-		"ui5strap.demoapp.actions.NavigateToPage3",
+		"NavigateToHome",
+		"NavigateToFeed",
+		"NavigateToPage3",
 		
 		
-		"ui5strap.demoapp.actions.ToggleBarMenuRoot",
-		"ui5strap.demoapp.actions.NavigateViaMenuRoot",
-		"ui5strap.demoapp.actions.SetSelectedMenuRoot",
+		"ToggleBarMenuRoot",
+		"NavigateViaMenuRoot",
+		"SetSelectedMenuRoot",
 		
-		"ui5strap.demoapp.actions.LoadMenuSettings",
-		"ui5strap.demoapp.actions.ToggleBarMenuSettings",
-		"ui5strap.demoapp.actions.NavigateViaMenuSettings", 
-		"ui5strap.demoapp.actions.SetSelectedMenuSettings",
-		"ui5strap.demoapp.actions.NavigateToSettingsLanguage",
+		"LoadMenuSettings",
+		"ToggleBarMenuSettings",
+		"NavigateViaMenuSettings", 
+		"SetSelectedMenuSettings",
+		"NavigateToSettingsLanguage",
 		
-		"ui5strap.demoapp.actions.LoadMenuControls",
-		"ui5strap.demoapp.actions.ToggleBarMenuControls",
-		"ui5strap.demoapp.actions.NavigateViaMenuControls", 
-		"ui5strap.demoapp.actions.SetSelectedMenuControls",
-		"ui5strap.demoapp.actions.NavigateToControlsButtons",
+		"LoadMenuControls",
+		"ToggleBarMenuControls",
+		"NavigateViaMenuControls", 
+		"SetSelectedMenuControls",
+		"NavigateToControlsButtons",
 		
-		"ui5strap.demoapp.actions.AppendFeed",
-		"ui5strap.demoapp.actions.RemovePost",
-		"ui5strap.demoapp.actions.ShowNewPostOverlay",
-		"ui5strap.demoapp.actions.CloseOverlay",
+		"AppendFeed",
+		"RemovePost",
+		"ShowNewPostOverlay",
+		"CloseOverlay",
 		
-		"ui5strap.demoapp.actions.ChangeTheme",
-		"ui5strap.demoapp.actions.SelectLanguage",
+		"ChangeTheme",
+		"SelectLanguage",
 		
-		"ui5strap.demoapp.actions.Debug"
+		"Debug"
 	],
 	
 	"rootNavigation" : {
@@ -240,7 +240,7 @@
          "events" : {
          	"control" : {
          		"pageChange" : [
-         			"ui5strap.demoapp.actions.SetSelectedMenuRoot"
+         			"SetSelectedMenuRoot"
          		]
          	}
          },
