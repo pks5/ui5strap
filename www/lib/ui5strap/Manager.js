@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.MainComponent
+ * ui5strap.Manager
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,16 +27,16 @@
  
 sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
-	var MainComponent = AppComponent.extend("ui5strap.MainComponent", {
+	var Manager = AppComponent.extend("ui5strap.Manager", {
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);
 			
 			this.controls = {};
 		}
 	}),
-	MainComponentProto = MainComponent.prototype;
+	ManagerProto = Manager.prototype;
 
-	MainComponentProto.registerControls = function(controls){
+	ManagerProto.registerControls = function(controls){
 		var keys = Object.keys(controls);
 		for(var i = 0; i < keys.length; i++){
 			var key = keys[i];
@@ -44,10 +44,10 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		}
 	};
 	
-	MainComponentProto.getControl = function(controlKey){
+	ManagerProto.getControl = function(controlKey){
 		return this.controls[controlKey];
 	};
 
 	//Return Module Constructor
-	return MainComponent;
+	return Manager;
 });
