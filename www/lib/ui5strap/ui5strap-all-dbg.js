@@ -3669,6 +3669,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			viewConfigOrg = {},
 			viewOptions = {};
 		
+		viewName = this.resolvePackage(viewName, "views");
+		
+		
 		if(viewName in this.data.views){
 			viewConfigOrg = jQuery.extend({
 				viewName : viewName
@@ -3706,6 +3709,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		if(!viewConfig.type){
 			viewConfig.type = "XML";
 		}
+		
+		viewConfig.viewName = viewName;
 
 		return viewConfig;
 	};
@@ -3801,7 +3806,21 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		var configDataJSON = this.data,
 			viewerOptions = this.options,
 			appId = this.data.app.id;
-
+		
+		//Views
+		var viewNames = Object.keys(configDataJSON.views),
+			viewNamesLength = viewNames.length;
+		for(var i = 0; i < viewNamesLength; i++){
+			var viewName = viewNames[i],
+				viewNameResolved = this.resolvePackage(viewName, "views");
+			
+			if(viewName !== viewNameResolved){
+				configDataJSON.views[viewNameResolved] = configDataJSON.views[viewName];
+				delete configDataJSON.views[viewName];
+			}
+		}
+		
+		//Icons
 		configDataJSON.iconsResolved = {};
 		var iconKeys = Object.keys(configDataJSON.icons),
 			iconKeysLength = iconKeys.length;
@@ -3809,6 +3828,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			configDataJSON.iconsResolved[iconKeys[i]] = this.resolvePath(configDataJSON.icons[iconKeys[i]]);
 		}
 
+		//Options
 		configDataJSON.optionsResolved = jQuery.extend({}, configDataJSON.options);
 		if("override" in viewerOptions && appId in viewerOptions.override){
 			jQuery.extend(configDataJSON.optionsResolved, viewerOptions.override[appId]);
@@ -3864,11 +3884,33 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		return location + path;
 	};
 
-	
-	
 	/*
+	* Resolves a package relative to app package
+	*/
+	AppConfigProto.resolvePackage = function (packageString, defaultFolder, baseRelative){
+		if(-1 === packageString.indexOf(".")){
+			if(!defaultFolder){
+				throw new Exception("Please provide a default folder for resolving '" + packageString + "'");
+			}
+			packageString = this.data.app.package + "." + defaultFolder.replace(/\//g, ".") + "." + packageString;
+		}
+		else if(jQuery.sap.startsWith(packageString, ".")){
+			if(baseRelative){
+				packageString = this.data.app.package + packageString;
+			}
+			else if(!defaultFolder){
+				throw new Exception("Please provide a default folder for resolving '" + packageString + "'");
+			}
+			else{
+				packageString = this.data.app.package + "." + defaultFolder.replace(/\//g, ".") + packageString;
+			}
+		}
+		return packageString;
+	};
+	
+	/**
 	* Validates the configuration JSON data. If mandatory properties are missing, empty ones will created.
-	* @static
+	* @Static
 	*/
 	AppConfig.validate = function(configDataJSON){
 		if(!('app' in configDataJSON)){
@@ -3877,23 +3919,31 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 		//Populate deprecated sapplication attribute
 		configDataJSON.sapplication = configDataJSON.app;
+		
+		//ID
+		if(!('id' in configDataJSON.app)){
+			throw new Error("Invalid app config: attribute 'app.id' is missing.");
+		}
+		
+		if(!configDataJSON.app["id"].match(/^[a-zA-Z0-9_\.]+$/)){
+			throw new Error('Invalid app id "' + configDataJSON.app["id"] + '": may only contain letters, digits, dots and underscores.');
+		}
 
+		//Package
 		if(!('package' in configDataJSON.app)){
-			throw new Error("Invalid app config: attribute 'app/package' is missing.");
+			configDataJSON.app["package"] = configDataJSON.app["id"];
 		}
 
 		if(!configDataJSON.app["package"].match(/(^[a-zA-Z0-9_]+)(\.[a-zA-Z0-9_]+)+$/)){
 			throw new Error('Package name may only contain letters and digits and the underscore char, separated by a ".", and must have at least one sub package.');
 		}
+		
+		//jQuery.sap.declare(configDataJSON.app["package"] + ".actions");
+		//var rootPackage = jQuery.sap.getObject(configDataJSON.app["package"]);
+		//rootPackage.actions = {};
 
-		if(!('id' in configDataJSON.app)){
-			configDataJSON.app["id"] = configDataJSON.app["package"];
-		}	
-
-		if(!configDataJSON.app["id"].match(/^[a-zA-Z0-9_\.]+$/)){
-			throw new Error('Invalid app id "' + configDataJSON.app["id"] + '": may only contain letters, digits, dots and underscores.');
-		}
-
+		//Namespace
+		//TODO What's this?
 		if(!('namespace' in configDataJSON.app)){
 			configDataJSON.app["namespace"] = configDataJSON.app["package"];
 		}	
@@ -3902,18 +3952,22 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			throw new Error('Invalid app namespace "' + configDataJSON.app["namespace"] + '": may only contain letters, digits, dots and underscores.');
 		}
 
+		//Type
 		if(!('type' in configDataJSON.app)){
 			configDataJSON.app.type = 'STANDARD';
 		}
 		
+		//Module
 		if(!("module" in configDataJSON.app)){
 			configDataJSON.app.module = "ui5strap.App";
 		}
 		
+		//Style Class
 		if(!('styleClass' in configDataJSON.app)){
 			configDataJSON.app.styleClass = 'ui5strap-app-standard';
 		}
 		
+		//Environments
 		if(!configDataJSON.environments){
 			configDataJSON.environments = {};
 		}
@@ -3943,12 +3997,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			configDataJSON.views = {};
 		}
 		
-		//Frames
-		//@deprecated
-		if(!("frames" in configDataJSON)){
-			configDataJSON.frames = {};
-		}
-
 		//App Components
 		if(!("components" in configDataJSON)){
 			configDataJSON.components = [];
@@ -4677,7 +4725,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				throw new Error("Cannot load component #" + i + ": module or id attribute missing!");
 			}
 			else if(false !== compConfig.enabled){
-				jQuery.sap.require(compConfig.module);
+				var moduleName = _this.config.resolvePackage(compConfig.module, "modules");
+				compConfig.module = moduleName;
+				
+				//TODO async!!!
+				jQuery.sap.require(moduleName);
 				_initComponent(_this, compConfig);
 			}
 		}
@@ -4710,7 +4762,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		};
 		
 		for(var i = 0; i < actions.length; i++){
-			Action.loadFromFile(actions[i], successCallback, true);
+			Action.loadFromFile(_this.config.resolvePackage(actions[i], "actions"), successCallback, true);
 		}
 	};
 	
@@ -5333,7 +5385,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 	AppBaseProto.runAction = function(action){
 		action.app = this;
-
+		
+		var actionName = action.parameters;
+		if(typeof actionName === 'string'){
+			actionName = this.config.resolvePackage(actionName, "actions");
+			action.parameters = actionName;
+		}
 		Action.run(action);
 	};
 
@@ -5751,10 +5808,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	AppBase.blessController = function(controllerImpl){
 		
 		if(!controllerImpl.actionEventHandler){
-			controllerImpl.actionEventHandler = "execute";
+			controllerImpl.actionEventHandler = "__execute";
 		}
 		if(!controllerImpl.actionAttribute){
-			controllerImpl.actionAttribute = "action";
+			controllerImpl.actionAttribute = "__action";
 		}
 		
 		//Add getApp method if not already exists
@@ -5807,20 +5864,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		};
 
 		/*
-		 * Old action event handler
-		 * @deprecated
-		 */
-		controllerImpl["__execute"] = function(oEvent){
-			this.getApp().runAction({
-				"eventSource" : oEvent.getSource(),
-				"eventParameters" : oEvent.getParameters(),
-				"controller" : this,
-				"parameters" : _getActionFromEvent(oEvent, "__action")
-			});
-		};
-		
-		/*
-		 * New action event handler
+		 * Action event handler
 		 */
 		controllerImpl[controllerImpl.actionEventHandler] = function(oEvent){
 			this.getApp().runAction({
@@ -5837,6 +5881,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			var app = this.getApp();
 
 			if(app){
+				//if(!this.actions){
+				//	this.actions = jQuery.sap.getObject(app.config.data.app["package"] + ".actions");
+				//	console.log("AC", this.actions);
+				//}
+				
 				//TODO find out if view.sViewName is reliable
 				var view = this.getView(),
 					initEvents = app.config.getEvents('controller', 'init', view.sViewName),
@@ -5854,7 +5903,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 						"eventParameters" : oEvent.getParameters(),
 						"controller" : this
 					});
-				} 
+				}
 			}
 
 			//Call old onInit function
@@ -13893,11 +13942,10 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
 				var actionParameters = {
 					"parameters" : e.data.message, 
-					"app" : app,
 					"controller" : controller  
 				};
 				
-				ui5strap.Action.run(actionParameters);
+				app.runAction(actionParameters);
 			}
 
 		}, false);
@@ -20443,7 +20491,7 @@ sap.ui.define(['./library'], function(library){
  * 
  * UI5Strap
  *
- * ui5strap.MainComponent
+ * ui5strap.Manager
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -20468,16 +20516,16 @@ sap.ui.define(['./library'], function(library){
  
 sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
-	var MainComponent = AppComponent.extend("ui5strap.MainComponent", {
+	var Manager = AppComponent.extend("ui5strap.Manager", {
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);
 			
 			this.controls = {};
 		}
 	}),
-	MainComponentProto = MainComponent.prototype;
+	ManagerProto = Manager.prototype;
 
-	MainComponentProto.registerControls = function(controls){
+	ManagerProto.registerControls = function(controls){
 		var keys = Object.keys(controls);
 		for(var i = 0; i < keys.length; i++){
 			var key = keys[i];
@@ -20485,12 +20533,12 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		}
 	};
 	
-	MainComponentProto.getControl = function(controlKey){
+	ManagerProto.getControl = function(controlKey){
 		return this.controls[controlKey];
 	};
 
 	//Return Module Constructor
-	return MainComponent;
+	return Manager;
 });;/*
  * 
  * UI5Strap
