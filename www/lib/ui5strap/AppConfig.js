@@ -294,9 +294,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		return packageString;
 	};
 	
-	/*
+	/**
 	* Validates the configuration JSON data. If mandatory properties are missing, empty ones will created.
-	* @static
+	* @Static
 	*/
 	AppConfig.validate = function(configDataJSON){
 		if(!('app' in configDataJSON)){
@@ -305,23 +305,31 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 		//Populate deprecated sapplication attribute
 		configDataJSON.sapplication = configDataJSON.app;
+		
+		//ID
+		if(!('id' in configDataJSON.app)){
+			throw new Error("Invalid app config: attribute 'app.id' is missing.");
+		}
+		
+		if(!configDataJSON.app["id"].match(/^[a-zA-Z0-9_\.]+$/)){
+			throw new Error('Invalid app id "' + configDataJSON.app["id"] + '": may only contain letters, digits, dots and underscores.');
+		}
 
+		//Package
 		if(!('package' in configDataJSON.app)){
-			throw new Error("Invalid app config: attribute 'app/package' is missing.");
+			configDataJSON.app["package"] = configDataJSON.app["id"];
 		}
 
 		if(!configDataJSON.app["package"].match(/(^[a-zA-Z0-9_]+)(\.[a-zA-Z0-9_]+)+$/)){
 			throw new Error('Package name may only contain letters and digits and the underscore char, separated by a ".", and must have at least one sub package.');
 		}
+		
+		//jQuery.sap.declare(configDataJSON.app["package"] + ".actions");
+		//var rootPackage = jQuery.sap.getObject(configDataJSON.app["package"]);
+		//rootPackage.actions = {};
 
-		if(!('id' in configDataJSON.app)){
-			configDataJSON.app["id"] = configDataJSON.app["package"];
-		}	
-
-		if(!configDataJSON.app["id"].match(/^[a-zA-Z0-9_\.]+$/)){
-			throw new Error('Invalid app id "' + configDataJSON.app["id"] + '": may only contain letters, digits, dots and underscores.');
-		}
-
+		//Namespace
+		//TODO What's this?
 		if(!('namespace' in configDataJSON.app)){
 			configDataJSON.app["namespace"] = configDataJSON.app["package"];
 		}	
@@ -330,18 +338,22 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			throw new Error('Invalid app namespace "' + configDataJSON.app["namespace"] + '": may only contain letters, digits, dots and underscores.');
 		}
 
+		//Type
 		if(!('type' in configDataJSON.app)){
 			configDataJSON.app.type = 'STANDARD';
 		}
 		
+		//Module
 		if(!("module" in configDataJSON.app)){
 			configDataJSON.app.module = "ui5strap.App";
 		}
 		
+		//Style Class
 		if(!('styleClass' in configDataJSON.app)){
 			configDataJSON.app.styleClass = 'ui5strap-app-standard';
 		}
 		
+		//Environments
 		if(!configDataJSON.environments){
 			configDataJSON.environments = {};
 		}
@@ -371,12 +383,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			configDataJSON.views = {};
 		}
 		
-		//Frames
-		//@deprecated
-		if(!("frames" in configDataJSON)){
-			configDataJSON.frames = {};
-		}
-
 		//App Components
 		if(!("components" in configDataJSON)){
 			configDataJSON.components = [];

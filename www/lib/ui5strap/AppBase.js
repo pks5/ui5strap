@@ -1474,6 +1474,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			var app = this.getApp();
 
 			if(app){
+				//if(!this.actions){
+				//	this.actions = jQuery.sap.getObject(app.config.data.app["package"] + ".actions");
+				//	console.log("AC", this.actions);
+				//}
+				
 				//TODO find out if view.sViewName is reliable
 				var view = this.getView(),
 					initEvents = app.config.getEvents('controller', 'init', view.sViewName),
@@ -1491,7 +1496,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 						"eventParameters" : oEvent.getParameters(),
 						"controller" : this
 					});
-				} 
+				}
 			}
 
 			//Call old onInit function
