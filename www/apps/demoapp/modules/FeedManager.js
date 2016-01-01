@@ -25,9 +25,9 @@
  * 
  */
 
-sap.ui.define(['ui5strap/library', 'ui5strap/MainComponent'], function(library, MainComponent){
+sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manager){
 
-	var FeedManager = MainComponent.extend("ui5strap.demoapp.modules.FeedManager"),
+	var FeedManager = Manager.extend("ui5strap.demoapp.modules.FeedManager"),
 		FeedManagerProto = FeedManager.prototype;
 	
 	/**
