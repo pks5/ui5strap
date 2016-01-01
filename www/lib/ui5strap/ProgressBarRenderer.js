@@ -30,8 +30,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var ProgressBarRenderer = {};
 
 	ProgressBarRenderer.render = function(rm, oControl) {
-		var type = oControl.getSeverity(),
-			labelFormat = oControl.getLabelFormat(),
+		var labelFormat = oControl.getLabelFormat(),
 			value = oControl.getValue(),
 			maxValue = oControl.getMaxValue(),
 			minValue = oControl.getMinValue(),
@@ -39,12 +38,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('progress-bar')
-		
-		if(ui5strap.Severity.None !== type){
-			rm.addClass('progress-bar-' + ui5strap.BSSeverity[type]);
-		}
-
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.writeAttribute('style', 'width:' + percentage + '%');
 		rm.write(">");

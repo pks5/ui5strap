@@ -57,6 +57,18 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ProgressProto = Progress.prototype;
 
+	ProgressProto._getStyleClassDesign = function(){
+		var styleClass = " progress";
+		
+		if(this.getAnimate()){
+			styleClass += " active";
+		}
+		if(this.getStriped()){
+			styleClass += " progress-striped";
+		}
+		return styleClass;
+	};
+	
 	ProgressProto.getFirstBar = function(){
 		var bars = this.getBars();
 		if(bars.length === 0){

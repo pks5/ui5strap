@@ -62,6 +62,17 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ProgressBarProto = ui5strap.ProgressBar.prototype;
 
+	ProgressBarProto._getStyleClassDesign = function(){
+		var styleClass = " progress-bar",
+			type = this.getSeverity();
+		
+		if(ui5strap.Severity.None !== type){
+			styleClass += " progress-bar-" + ui5strap.BSSeverity[type];
+		}
+
+		return styleClass;
+	};
+	
 	ProgressBarProto.setValue = function(newValue){
 		if(this.getDomRef()){
 			if(newValue > this.getMaxValue() || newValue < this.getMinValue()){

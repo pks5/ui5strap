@@ -48,7 +48,12 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}),
+	PanelGroupProto = PanelGroup.prototype;
+	
+	PanelGroupProto._getStyleClassDesign = function(){
+		return " panel-group";
+	};
 
 	PanelGroup.prototype.setSelectedControl = function(panel){
 		var panels = this.getPanels();

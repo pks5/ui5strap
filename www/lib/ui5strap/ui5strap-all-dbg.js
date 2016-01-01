@@ -354,7 +354,9 @@ sap.ui
 					ui5strap.Visibility = {
 						Default : "Default",
 						Visible : "Visible",
-						Hidden : "Hidden"
+						VisibleUp : "VisibleUp",
+						Hidden : "Hidden",
+						HiddenUp : "HiddenUp"
 					};
 
 					/**
@@ -6437,7 +6439,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	 * @Override
 	 */
 	NavContainerProto._getStyleClassRoot = function(){
-		return "navcontainer navcontainer-type-" + this.ncType;
+		return " navcontainer navcontainer-type-" + this.ncType;
 	};
 	
 	/*
@@ -9394,7 +9396,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			severity = this.getSeverity(),
 			prefix = iconGroup + '-',
 			modPrefix = 'fa-',
-			styleClass = iconGroup
+			styleClass = " " + iconGroup
 				+ " " + prefix + this.getIcon();
 		
 		//Font Awesome only
@@ -9892,7 +9894,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 		
 		if(ui5strap.TextAlignment.Default !== textAlign){
-			styleClass += " ui5strap-text-align-" + textAlign.toLowerCase();
+			styleClass += " ui5strap-textAlign-" + textAlign;
 		}
 		
 		if(tagData.className){
@@ -14028,7 +14030,7 @@ sap.ui.define([ './library', './ControlBase' ], function(library, ControlBase) {
 	 * @Override
 	 */
 	AlertProto._getStyleClassDesign = function(){
-		var styleClass = "alert";
+		var styleClass = " alert";
 		
 		styleClass += " alert-" + ui5strap.BSSeverity[this.getSeverity()] + (this.getAnimate() ? " fade" : '');
 		
@@ -14457,7 +14459,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	BadgeProto._getStyleClassDesign = function(){
-		return "badge";
+		return " badge";
 	};
 	
 	return Badge;
@@ -14586,7 +14588,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	BarProto._getStyleClassRoot = function(){
-		return "ui5strapBar-type-" + this.getType() 
+		return " ui5strapBar-type-" + this.getType() 
 				+ (this.getInverse() ? ' ui5strapBar-style-Inverse' : ' ui5strapBar-style-Default')
 				+ (this.getFullHeight() ? ' ui5strapBar-flag-FullHeight' : '');
 	};
@@ -15258,7 +15260,7 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 	 * @Override
 	 */
 	BarNavContainerProto._getStyleClassRoot = function(){
-		var classes = "navcontainer-type-" + this.ncType,
+		var classes = " navcontainer-type-" + this.ncType,
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
 			modeMedium = this.getBarModeMedium(),
@@ -15546,9 +15548,9 @@ sap.ui.define(['./library'], function(library){
 		*/
 		oControl._getStyleClass = function(){
 			return this._getStyleClassPrefix() 
-					+ " " + this._getStyleClassRoot()
-					+ " " + this._getStyleClassDesign() 
-					+ " " + BaseSupport.getStyleClass(this);	
+					+ this._getStyleClassRoot()
+					+ this._getStyleClassDesign() 
+					+ BaseSupport.getStyleClass(this);	
 		};
 		
 		//Class Name Builders
@@ -15588,55 +15590,68 @@ sap.ui.define(['./library'], function(library){
 				.getVisibilityMedium(), visibilityLarge = oControl
 				.getVisibilityLarge(), Visibility = ui5strap.Visibility;
 		
-		var resultHidden = [ "", "", "", "" ], inheritHide = false;
+		var styleClass = "", inheritHide = false;
 		
 		// Visibility for EXTRA_SMALL screens
-		if (visibilityExtraSmall === Visibility.Visible) {
+		if (visibilityExtraSmall === Visibility.VisibleUp) {
 			// Visible on EXTRA_SMALL
-			resultHidden[0] = "";
 			inheritHide = false;
 		} else if (inheritHide
-				|| visibilityExtraSmall === Visibility.Hidden) {
+				|| visibilityExtraSmall === Visibility.Hidden
+				|| visibilityExtraSmall === Visibility.HiddenUp) {
 			// Hidden on EXTRA_SMALL
-			resultHidden[0] = "ui5strap-hide-xs";
-			inheritHide = true;
+			styleClass += " ui5strap-hide-xs";
+			if(visibilityExtraSmall === Visibility.HiddenUp){
+				inheritHide = true;
+			}
 		}
 		
 		// Visibility for SMALL screens
-		if (visibilitySmall === Visibility.Visible) {
+		if (visibilitySmall === Visibility.VisibleUp) {
 			// Visible on SMALL
-			resultHidden[1] = "";
 			inheritHide = false;
 		} else if (inheritHide
-				|| visibilitySmall === Visibility.Hidden) {
+				|| visibilitySmall === Visibility.Hidden
+				|| visibilitySmall === Visibility.HiddenUp) {
 			// Hidden on SMALL
-			resultHidden[1] = "ui5strap-hide-sm";
-			inheritHide = true;
+			styleClass += " ui5strap-hide-sm";
+			if(visibilitySmall === Visibility.HiddenUp){
+				inheritHide = true;
+			}
 		}
 		
 		// Visibility for MEDIUM screens
-		if (visibilityMedium === Visibility.Visible) {
+		if (visibilityMedium === Visibility.VisibleUp) {
 			// Visible on MEDIUM
-			resultHidden[2] = "";
 			inheritHide = false;
 		} else if (inheritHide
-				|| visibilityMedium === Visibility.Hidden) {
+				|| visibilityMedium === Visibility.Hidden
+				|| visibilityMedium === Visibility.HiddenUp) {
 			// Hidden on MEDIUM
-			resultHidden[2] = "ui5strap-hide-md";
-			inheritHide = true;
+			styleClass += " ui5strap-hide-md";
+			if(visibilityMedium === Visibility.HiddenUp){
+				inheritHide = true;
+			}
 		}
 		
 		// Visibility for LARGE screens
-		if (visibilityLarge === Visibility.Visible) {
+		if (visibilityLarge === Visibility.VisibleUp) {
 			// Visible on LARGE
-			resultHidden[3] = "";
+			inheritHide = false;
 		} else if (inheritHide
-				|| visibilityLarge === Visibility.Hidden) {
+				|| visibilityLarge === Visibility.Hidden
+				|| visibilityLarge === Visibility.HiddenUp) {
 			// Hidden on LARGE
-			resultHidden[3] = "ui5strap-hide-lg";
+			styleClass += " ui5strap-hide-lg";
+			if(visibilityLarge === Visibility.HiddenUp){ 
+				inheritHide = true;
+			}
 		}
 		
-		return resultHidden.join(" ");
+		//TODO Add ExtraLarge on BS4 Update
+		
+		
+		return styleClass;
 	};
 	
 	return BaseSupport;
@@ -15879,7 +15894,7 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	 * @Override
 	 */
 	ButtonDropdownProto._getStyleClassDesign = function(){
-		var styleClass = "btn-group";
+		var styleClass = " btn-group";
 		if(this.getDropup()){
 			styleClass += " dropup";
 		}
@@ -16180,7 +16195,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	ButtonGroupProto._getStyleClassRoot = function(){
 		var size = this.getSize(),
 			type = this.getType(),
-			styleClass = _typeToClass[type];
+			styleClass = " " + _typeToClass[type];
 		
 		if(ui5strap.Size.Default !== size){
 			styleClass += ' btn-group-' + ui5strap.BSSize[size];
@@ -16375,7 +16390,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	ButtonToolbarProto._getStyleClassDesign = function(){
-		return "btn-toolbar";
+		return " btn-toolbar";
 	};
 	
 	return ButtonToolbar;
@@ -17170,7 +17185,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	ClearFixProto = Clearfix.prototype;
 	
 	ClearFixProto._getStyleClassDesign = function(){
-		return "clearfix";
+		return " clearfix";
 	};
 
 });;/*
@@ -17585,7 +17600,7 @@ sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library,
 	 */
 	ContainerProto._getStyleClassRoot = function(){
 		var type = this.getType(),
-			styleClass = this._getStyleClassType(type)
+			styleClass = " " + this._getStyleClassType(type)
 						+ " " + this._typeData[type].className,
 			
 			severity = this.getSeverity();
@@ -17828,7 +17843,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	};
 	
 	FormProto._getStyleClassDesign = function(){
-		return  _typeToClass[this.getType()];
+		return  " " + _typeToClass[this.getType()];
 	};
 	
 	FormProto.onAfterRendering = function(){
@@ -17921,7 +17936,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	};
 	
 	FormGroupProto._getStyleClassDesign = function(){
-		var styleClass = "form-group",
+		var styleClass = " form-group",
 			severity = this.getSeverity();
 		
 		
@@ -18681,7 +18696,7 @@ sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(libr
 	 * @Override
 	 */
 	JumbotronProto._getStyleClassDesign = function(){
-		return "jumbotron";
+		return " jumbotron";
 	};
 	
 	return Jumbotron;
@@ -18981,7 +18996,7 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 	 * @Override
 	 */
 	ListDropdownItemProto._getStyleClassDesign = function(){
-		var styleClass = "dropdown";
+		var styleClass = " dropdown";
 		if(this.getSelected()){
 			styleClass += " active";
 		}
@@ -19353,7 +19368,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Override
 	 */
 	ListGroupProto._getStyleClassDesign = function(){
-		return "list-group";
+		return " list-group";
 	};
 	
 	return ListGroup;
@@ -19468,7 +19483,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Override
 	 */
 	ListMediaProto._getStyleClassDesign = function(){
-		return "media-list";
+		return " edia-list";
 	};
 	
 	return ListMedia;
@@ -19952,7 +19967,7 @@ sap.ui.define(['./library'], function(library){
 		 */
 		var oldGetStyleClass = oControl._getStyleClass;
 		oControl._getStyleClass = function(){
-			return oldGetStyleClass.call(this) + " " + ListSelectionSupport.getStyleClass(this);	
+			return oldGetStyleClass.call(this) + ListSelectionSupport.getStyleClass(this);	
 		};
 		
 		/*
@@ -20965,7 +20980,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Override
 	 */
 	NavProto._getStyleClassDesign = function(){
-		var styleClass = "nav " + _typeToClass[this.getType()];
+		var styleClass = " nav " + _typeToClass[this.getType()];
 		return styleClass;
 	};
 	
@@ -21653,7 +21668,7 @@ sap.ui.define(['./library'], function(library){
 		 */
 		var oldGetStyleClass = oControl._getStyleClass;
 		oControl._getStyleClass = function(){
-			return oldGetStyleClass.call(this) + " " + this._getStyleClassOptions();	
+			return oldGetStyleClass.call(this) + this._getStyleClassOptions();	
 		};
 		
 		/**
@@ -22101,7 +22116,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	PagerProto._getStyleClassDesign = function(){
-		var styleClass = "pager";
+		var styleClass = " pager";
 		return styleClass;
 	};
 	
@@ -22234,7 +22249,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Override
 	 */
 	PaginationProto._getStyleClassDesign = function(){
-		var styleClass = "pagination";
+		var styleClass = " pagination";
 		return styleClass;
 	};
 	
@@ -22375,7 +22390,7 @@ sap.ui.define(['./library', './ControlBase', './PanelGroup'], function(library, 
 	 * @Override
 	 */
 	PanelProto._getStyleClassDesign = function(){
-		var styleClass = "panel",
+		var styleClass = " panel",
 			severity = this.getSeverity();
 		
 		if(ui5strap.Severity.None !== severity){
@@ -22771,7 +22786,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 		
 		if(ui5strap.TextAlignment.Default !== textAlign){
-			styleClass += " ui5strap-text-align-" + textAlign.toLowerCase();
+			styleClass += " ui5strap-textAlign-" + textAlign;
 		}
 		
 		if(this.getFormStatic()){
@@ -23181,7 +23196,7 @@ sap.ui.define(['./library'], function(library){
 		 */
 		var oldGetStyleClass = oControl._getStyleClass;
 		oControl._getStyleClass = function(){
-			return oldGetStyleClass.call(this) + " " + PositionSupport.getStyleClass(this);	
+			return oldGetStyleClass.call(this) + PositionSupport.getStyleClass(this);	
 		};
 	};
 	
@@ -23189,7 +23204,7 @@ sap.ui.define(['./library'], function(library){
 		var align = oControl.getAlign(), Alignment = ui5strap.Alignment, styleClass = "";
 
 		if (align !== Alignment.Default && align !== Alignment.NavBar && align !== Alignment.Sidebar) {
-			styleClass += ui5strap.BSAlignment[align];
+			styleClass += " " + ui5strap.BSAlignment[align];
 		}
 
 		/*
@@ -23230,7 +23245,6 @@ sap.ui.define(['./library'], function(library){
 					.warning("Using Alignment.Sidebar options is deprecated.");
 			styleClass += " sidebar-nav";
 		}
-		
 		return styleClass;
 	};
 	
@@ -23436,9 +23450,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.addClass('progress-bar-' + ui5strap.BSSeverity[type]);
 		}
 
-		rm.writeAttribute('style', 'width:' + percentage + '%');
-
 		rm.writeClasses();
+		rm.writeAttribute('style', 'width:' + percentage + '%');
 		rm.write(">");
 		
 			if('' !== labelFormat){
@@ -23904,7 +23917,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	Row.prototype._getStyleClassDesign = function(){
-		return "row";
+		return " row";
 	};
 
 	return Row;
@@ -24154,14 +24167,14 @@ sap.ui.define(['./library'], function(library){
 		 */
 		var oldGetStyleClass = oControl._getStyleClass;
 		oControl._getStyleClass = function(){
-			return oldGetStyleClass.call(this) + " " + SelectableSupport.getStyleClass(this);	
+			return oldGetStyleClass.call(this) + SelectableSupport.getStyleClass(this);	
 		};
 	};
 	
 	SelectableSupport.getStyleClass = function(oControl){
 		var styleClass = "";
 		if(oControl.getSelected()){
-			styleClass += "active";
+			styleClass += " active";
 		}
 		
 		if(!oControl.getEnabled()){
@@ -24511,7 +24524,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	 * @Override
 	 */
 	TabContainerProto._getStyleClassRoot = function(){
-		var styleClass = "tab-content";
+		var styleClass = " tab-content";
 		
 		if(this.getFullHeight()){
 			styleClass += " " + this._getStyleClassFlag("FullHeight");
