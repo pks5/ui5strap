@@ -55,6 +55,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			viewConfigOrg = {},
 			viewOptions = {};
 		
+		viewName = this.resolvePackage(viewName, "views");
+		
+		
 		if(viewName in this.data.views){
 			viewConfigOrg = jQuery.extend({
 				viewName : viewName
@@ -92,6 +95,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		if(!viewConfig.type){
 			viewConfig.type = "XML";
 		}
+		
+		viewConfig.viewName = viewName;
 
 		return viewConfig;
 	};
@@ -250,7 +255,18 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		return location + path;
 	};
 
-	
+	/*
+	* Resolves a package relative to app package
+	*/
+	AppConfigProto.resolvePackage = function (packageString, defaultFolder){
+		if(-1 === packageString.indexOf(".")){
+			packageString = this.data.app.package + "." + defaultFolder.replace(/\//g, ".") + "." + packageString;
+		}
+		else if(jQuery.sap.startsWith(packageString, ".")){
+			packageString = this.data.app.package + packageString;
+		}
+		return packageString;
+	};
 	
 	/*
 	* Validates the configuration JSON data. If mandatory properties are missing, empty ones will created.

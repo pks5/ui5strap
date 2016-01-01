@@ -247,10 +247,10 @@
          
          "initialViews" : [
              { 
-                 "viewName" : "ui5strap.demoapp.views.Home"
+                 "viewName" : "Home"
              },
              { 
-                 "viewName" : "ui5strap.demoapp.views.MenuRoot"
+                 "viewName" : "MenuRoot"
              }
          ]
 	},
@@ -290,7 +290,7 @@
 	         
 	         {
 	             "id" : "feedManager",
-	             "module" : "ui5strap.demoapp.modules.FeedManager"
+	             "module" : "FeedManager"
 	        }
     ]
 }

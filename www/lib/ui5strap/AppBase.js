@@ -318,7 +318,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				throw new Error("Cannot load component #" + i + ": module or id attribute missing!");
 			}
 			else if(false !== compConfig.enabled){
-				jQuery.sap.require(compConfig.module);
+				var moduleName = _this.config.resolvePackage(compConfig.module, "modules");
+				compConfig.module = moduleName;
+				
+				//TODO async!!!
+				jQuery.sap.require(moduleName);
 				_initComponent(_this, compConfig);
 			}
 		}
