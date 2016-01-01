@@ -22555,7 +22555,12 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			}
 
 		}
-	});
+	}),
+	PanelGroupProto = PanelGroup.prototype;
+	
+	PanelGroupProto._getStyleClassDesign = function(){
+		return " panel-group";
+	};
 
 	PanelGroup.prototype.setSelectedControl = function(panel){
 		var panels = this.getPanels();
@@ -22610,7 +22615,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("<div");
 
 		rm.writeControlData(oControl);
-		rm.addClass('panel-group')
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -23309,6 +23314,18 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ProgressProto = Progress.prototype;
 
+	ProgressProto._getStyleClassDesign = function(){
+		var styleClass = " progress";
+		
+		if(this.getAnimate()){
+			styleClass += " active";
+		}
+		if(this.getStriped()){
+			styleClass += " progress-striped";
+		}
+		return styleClass;
+	};
+	
 	ProgressProto.getFirstBar = function(){
 		var bars = this.getBars();
 		if(bars.length === 0){
@@ -23382,6 +23399,17 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ProgressBarProto = ui5strap.ProgressBar.prototype;
 
+	ProgressBarProto._getStyleClassDesign = function(){
+		var styleClass = " progress-bar",
+			type = this.getSeverity();
+		
+		if(ui5strap.Severity.None !== type){
+			styleClass += " progress-bar-" + ui5strap.BSSeverity[type];
+		}
+
+		return styleClass;
+	};
+	
 	ProgressBarProto.setValue = function(newValue){
 		if(this.getDomRef()){
 			if(newValue > this.getMaxValue() || newValue < this.getMinValue()){
@@ -23435,8 +23463,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var ProgressBarRenderer = {};
 
 	ProgressBarRenderer.render = function(rm, oControl) {
-		var type = oControl.getSeverity(),
-			labelFormat = oControl.getLabelFormat(),
+		var labelFormat = oControl.getLabelFormat(),
 			value = oControl.getValue(),
 			maxValue = oControl.getMaxValue(),
 			minValue = oControl.getMinValue(),
@@ -23444,12 +23471,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write("<div");
 		rm.writeControlData(oControl);
-		rm.addClass('progress-bar')
-		
-		if(ui5strap.Severity.None !== type){
-			rm.addClass('progress-bar-' + ui5strap.BSSeverity[type]);
-		}
-
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.writeAttribute('style', 'width:' + percentage + '%');
 		rm.write(">");
@@ -23504,16 +23526,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("<div");
 		rm.writeControlData(oControl);
-
-		rm.addClass('progress');
-		
-		if(oControl.getAnimate()){
-			rm.addClass('active');
-		}
-		if(oControl.getStriped()){
-			rm.addClass('progress-striped');
-		}
-		
+		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
 		
@@ -25222,7 +25235,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Override
 	 */
 	WellProto._getStyleClassDesign = function(){
-		var styleClass = "well";
+		var styleClass = " well";
 		var size = this.getSize();
 		if(ui5strap.Size.Default !== size){
 			styleClass += " well-" + ui5strap.BSSize[size];
