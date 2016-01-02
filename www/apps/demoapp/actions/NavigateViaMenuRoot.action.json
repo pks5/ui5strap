@@ -1,21 +1,15 @@
 {
 	"//" : "Makes the root NavContainer navigate to the view that is specified in the list item context of the specified model.",
 	
-	"__modules" : ["ui5strap.AMGetContextData", "ui5strap.task.Navigate"],
-	
-	"getContextData" : {
-		"scope" : "PARAMETER",
-		"tgtParam" : "action.menuItem",
-		"modelName" : "menu",
-		"parameterKey" : "listItem"
-	},
-	
-	
+	"TASKS" : "navigate",
 	
 	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		"modelName" : "menu",
+		"contextData" : "= event.parameters.listItem.getBindingContextData(.modelName)",
 		"VIEWS" : {
 			"menuTarget" : {
-				"id" : "= action.menuItem.id",
+				"id" : "= .contextData.id",
 				"transition" : "flip-horizontal-ccw",
 				"writeHistory" : true
 			}

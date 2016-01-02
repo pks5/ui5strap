@@ -110,14 +110,22 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 		//@deprecated
 		_this.parameters = _this.action;
 		
+		_this.event = {};
+		
 		//Event Source
 		if(action.eventSource){
+			//@deprecated
 			_this.eventSource = action.eventSource;
+			
+			_this.event.source = action.eventSource;
 		}
 		
 		//Event Parameters
 		if(action.eventParameters){
+			//@deprecated
 			_this.eventParameters = action.eventParameters;
+		
+			_this.event.parameters = action.eventParameters;
 		}
 		
 		//OpenUI5 Standard Controller
