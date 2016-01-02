@@ -26,8 +26,7 @@
 			"label" : "PAGE_CONTROLS_TITLE",
 			"id" : "controls",
 			"icon" : "toggle-on",
-			"severity" : "Success",
-			"type" : "HTML"
+			"severity" : "Success"
 		}
 		
 	],
