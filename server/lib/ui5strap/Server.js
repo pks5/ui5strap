@@ -1,5 +1,5 @@
 var nodeFs = require('fs'), nodePath = require('path'), nodeHttp = require('http'), nodeUrl = require('url'),
-nodeMime = require('mime'),
+	nodeMime = require('mime'), pathToRoot = "../../",
 	RestController = require("./RestController");
 
 /*
@@ -25,9 +25,9 @@ ServerProto.start = function(){
 		var serverConfig = JSON.parse(file);
 		
 		_this.config = serverConfig;
+		
 		_this._pathToWWW = serverConfig.server.pathToPublic;
 		_this._port = serverConfig.server.port;
-		_this._pathToApps = "../../apps/";
 		
 		
 		var apps = serverConfig.apps,
@@ -44,11 +44,10 @@ ServerProto.start = function(){
 						return;
 					}
 					
-					cnr --;
-		
 					var appConfig = JSON.parse(file),
 						appServerId = appConfig.app.id + ".server";
 					
+					//Extract location of app.json
 					var sappUrlParts = appConfigUrl.split('/');
 					sappUrlParts[sappUrlParts.length - 1] = '';
 					var appConfigLocation = sappUrlParts.join('/');
@@ -60,13 +59,16 @@ ServerProto.start = function(){
 							var rest = controllerDef.substring(appServerId.length).replace(/\./g, "/") + ".js";
 							console.log("Loaded Controller '" + controllerDef + "' from '" + pathToAppConfig + "'.");
 				
-							var Controller = require(nodePath.join(_this._pathToApps, "demoapp/" + rest));
+							var Controller = require(nodePath.join(pathToRoot, "apps/demoapp/" + rest));
 							//ui5strap.demoapp.server
+							
+							//Install Controller
 							var controller = new Controller(component, appConfigLocation);
 							controller._install();
 						}
 					}
 		
+					cnr --;
 					if(cnr === 0){
 						_this.startUp();
 					}
