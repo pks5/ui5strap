@@ -1,9 +1,10 @@
 {
 	"//" : "Loads the view for the sub-menu layout into the NavContainer target 'bar'.",
 	
-	"__modules" : "ui5strap.task.Navigate",
+	"TASKS" : "navigate",
 	
 	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
 		"CONTROLS" : {
 			"navContainer" : {
 				"TYPE" : "ui5strap.NavContainer",

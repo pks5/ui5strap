@@ -1,9 +1,10 @@
 {
 	"//" : "Shows a alert window with the content of the specified custom data field.",
 	
-	"__modules" : "ui5strap.task.Switch",
+	"TASKS" : "switch",
 	
 	"switch" : {
+		"TYPE" : "ui5strap.task.Switch",
 		"customDataKey" : "command", 
 		"expression" : "= eventParameters.srcControl.data(.customDataKey)",
 		"actions" : {
