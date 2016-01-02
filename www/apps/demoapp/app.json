@@ -260,16 +260,14 @@
 	             "id" : "feedClient",
 	             "module" : "ui5strap.RestClient",
 	             "url" : "server/feed",
-	             "restController" : "ui5strap.demoapp.server.controllers.Feed",
+	             "restController" : "ui5strap.demoapp.server.rest.FeedController",
 	             "methods" : {
 	             	"info" : {
-	             		"path" : "info",
 	             		"type" : "get",
 	             		"arguments" : ["success", "error"]
 	             	},
 	             	
 	             	"deletePost" : {
-	             		"path" : "delete-post",
 	             		"type" : "postUrlEncoded",
 	             		"arguments" : ["post.postId", "success", "error"]
 	             	},
@@ -281,7 +279,6 @@
 	             	},
 	             	
 	             	"newPost" : {
-	             		"path" : "new-post",
 	             		"type" : "postWithPayload",
 	             		"arguments" : ["payload", "success", "error"]
 	             	}

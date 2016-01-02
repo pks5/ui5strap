@@ -35,6 +35,6 @@
 	"//errorHandler" : "The error handler if the menu selection failed.",
 	"errorHandler" : {
 		"errorMessage" : "Could not select main menu item!",
-		"DO" : "= jQuery.sap.log.error(.errorMessage)"
+		"DO" : "= jQuery.sap.log.warning(.errorMessage)"
 	}
 }

@@ -65,6 +65,8 @@ module.exports = library.restController("ui5strap.demoapp.server.controllers.Fee
 						}
 				}
 		};
+		
+		this._autoInc = this._db.feeds.default.feed.length + 1;
 	},
 	
 	info : function(){
@@ -99,7 +101,9 @@ module.exports = library.restController("ui5strap.demoapp.server.controllers.Fee
 	},
 	
 	newPost : function(payload){
-		payload.id = this._db.feeds.default.feed.length;
+		payload.id = this._autoInc;
+		this._autoInc++;
+		payload.image = "ui5strap.demoapp.img.awesome";
 		this._db.feeds.default.feed.push(payload);
 		return "OK";
 	}

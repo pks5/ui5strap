@@ -24,7 +24,14 @@
 		"pageId" : "= .page.getId()",
 		"relativePageId" : "= app.extractRelativeControlId(.pageId)",
 		"customDataKey" : "pageId",
-		
-		"DO" : "= .CONTROLS.barMenu.setSelectionByCustomData(.customDataKey, .relativePageId)"
+		"setMenuSelected" : "= .CONTROLS.barMenu.setSelectionByCustomData(.customDataKey, .relativePageId)",
+		"DO" : "= .setMenuSelected",
+		"ERROR" : "errorHandler"
+	},
+	
+	"//errorHandler" : "The error handler if the menu selection failed.",
+	"errorHandler" : {
+		"errorMessage" : "Could not select controls menu item!",
+		"DO" : "= jQuery.sap.log.error(.errorMessage)"
 	}
 }
