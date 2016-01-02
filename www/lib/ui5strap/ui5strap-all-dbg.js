@@ -2211,14 +2211,22 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 		//@deprecated
 		_this.parameters = _this.action;
 		
+		_this.event = {};
+		
 		//Event Source
 		if(action.eventSource){
+			//@deprecated
 			_this.eventSource = action.eventSource;
+			
+			_this.event.source = action.eventSource;
 		}
 		
 		//Event Parameters
 		if(action.eventParameters){
+			//@deprecated
 			_this.eventParameters = action.eventParameters;
+		
+			_this.event.parameters = action.eventParameters;
 		}
 		
 		//OpenUI5 Standard Controller
@@ -8394,15 +8402,14 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     		(function(){
 	    		var methodName = methods[i],
 	    			methodData = methodsSettings[methodName],
-	    			methodType = methodData.type,
-	    			path = methodData.path;
+	    			methodType = methodData.type;
+	    		
+	    		if(!methodData.path){
+	    			methodData.path = jQuery.sap.hyphen(methodName);
+	    		}
 	    		
 	    		if(!methodType){
 	    			return;
-	    		}
-	    		
-	    		if(!path){
-	    			throw new Error("Path is required!");
 	    		}
 	    		
 	    		var param = jQuery.extend({}, methodData);
