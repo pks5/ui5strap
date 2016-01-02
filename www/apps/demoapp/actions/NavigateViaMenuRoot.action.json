@@ -15,7 +15,7 @@
 	"navigate" : {
 		"VIEWS" : {
 			"menuTarget" : {
-				"viewName" : "= action.menuItem.viewName",
+				"id" : "= action.menuItem.id",
 				"transition" : "flip-horizontal-ccw",
 				"writeHistory" : true
 			}

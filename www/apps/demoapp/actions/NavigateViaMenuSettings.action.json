@@ -24,7 +24,7 @@
 			"menuTarget" : {
 				"transition" : "zoom-out",
 				"writeHistory" : true,
-				"viewName" : "= parameters.menuItem.viewName",
+				"id" : "= parameters.menuItem.id",
 				"target" : "content"
 			}
 		}

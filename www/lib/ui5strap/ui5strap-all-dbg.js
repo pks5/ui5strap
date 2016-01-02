@@ -3666,20 +3666,42 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	*/
 	AppConfigProto.getViewConfig = function(viewDef){
 		var viewName = viewDef.viewName,
-			viewConfigOrg = {},
-			viewOptions = {};
+			viewId = viewDef.id,
+			viewConfigOrg = null,
+			viewOptions = {},
+			foundById = false;
 		
-		viewName = this.resolvePackage(viewName, "views");
-		
-		
-		if(viewName in this.data.views){
-			viewConfigOrg = jQuery.extend({
-				viewName : viewName
-			}, this.data.views[viewName]);
+		//First check if a view ID is given
+		if(viewId){
+			if(this.data.viewsById[viewId]){
+				delete viewDef.viewName;
+				viewConfigOrg = this.data.viewsById[viewId];
+				foundById = true;
+			}
 		}
-
-		//The "viewOptions" contain the mix of original config and definition
-		jQuery.extend(viewOptions, viewConfigOrg, viewDef);
+		
+		if(viewName){
+			viewName = this.resolvePackage(viewName, "views");
+			
+			if(!foundById && this.data.viewsByName[viewName]){
+				delete viewDef.viewName;
+				viewConfigOrg = this.data.viewsByName[viewName];
+			}
+		}
+		
+		if(viewConfigOrg){
+			//The "viewOptions" contain the mix of original config and definition
+			jQuery.extend(viewOptions, viewConfigOrg, viewDef);
+		}
+		else{
+			//No view config for the given ID and Name.
+			if(viewName){
+				viewDef.viewName = viewName;
+			}
+			
+			jQuery.extend(viewOptions, viewDef);
+		}
+		
 
 		//The final view constructor object
 		var viewConfig = {
@@ -3710,8 +3732,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			viewConfig.type = "XML";
 		}
 		
-		viewConfig.viewName = viewName;
-
 		return viewConfig;
 	};
 
@@ -3808,6 +3828,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			appId = this.data.app.id;
 		
 		//Views
+		configDataJSON.viewsById = {};
+		configDataJSON.viewsByName = configDataJSON.views; //TODO switch to viewsByName
+		
 		var viewNames = Object.keys(configDataJSON.views),
 			viewNamesLength = viewNames.length;
 		for(var i = 0; i < viewNamesLength; i++){
@@ -3817,6 +3840,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			if(viewName !== viewNameResolved){
 				configDataJSON.views[viewNameResolved] = configDataJSON.views[viewName];
 				delete configDataJSON.views[viewName];
+			}
+			
+			var viewData = configDataJSON.views[viewNameResolved];
+			viewData.viewName = viewNameResolved;
+			if(viewData.id){
+				configDataJSON.viewsById[viewData.id] = viewData;
 			}
 		}
 		

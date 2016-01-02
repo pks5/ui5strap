@@ -4,8 +4,7 @@
 	
 		{
 			"label" : "PAGE_FEED_TITLE",
-			"viewName" : "ui5strap.demoapp.views.Feed",
-			"pageId" : "feed",
+			"id" : "feed",
 			"badge" : "1",
 			"icon" : "feed",
 			"severity" : "Danger"
@@ -13,22 +12,19 @@
 		
 		{
 			"label" : "PAGE_STATISTICS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.Statistics",
-			"pageId" : "statistics",
+			"id" : "statistics",
 			"icon" : "bar-chart",
 			"severity" : "Warning"
 		},
 		{
 			"label" : "PAGE_SETTINGS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.Settings",
-			"pageId" : "settings",
+			"id" : "settings",
 			"icon" : "cog",
 			"severity" : "Success"
 		},
 		{
 			"label" : "PAGE_CONTROLS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.Controls",
-			"pageId" : "controls",
+			"id" : "controls",
 			"icon" : "toggle-on",
 			"severity" : "Success",
 			"type" : "HTML"
@@ -40,14 +36,12 @@
 	
 		{
 			"label" : "PAGE5_TITLE",
-			"viewName" : "ui5strap.demoapp.views.settings.Language",
-			"pageId" : "settingsLanguage",
+			"id" : "settingsLanguage",
 			"icon" : "language"
 		},
 		{
 			"label" : "PAGE6_TITLE",
-			"viewName" : "ui5strap.demoapp.views.settings.Theme",
-			"pageId" : "settingsTheme",
+			"id" : "settingsTheme",
 			"icon" : "paint-brush"
 		}		
 	
@@ -57,68 +51,57 @@
 	
 		{
 			"label" : "PAGE_CONTROLS_BUTTONS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.Buttons",
-			"pageId" : "controlsButtons",
+			"id" : "controlsButtons",
 			"icon" : "square-o"
 		},
 		{
 			"label" : "PAGE_CONTROLS_CONTAINERS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.Containers",
-			"pageId" : "controlsContainers",
+			"id" : "controlsContainers",
 			"icon" : "list-alt"
 		},
 		{
 			"label" : "PAGE_CONTROLS_ICONS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.Icons",
-			"pageId" : "controlsIcons",
+			"id" : "controlsIcons",
 			"icon" : "soccer-ball-o"
 		},
 		{
 			"label" : "PAGE_CONTROLS_TYPOGRAPHY_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.Typography",
-			"pageId" : "controlsTypography",
+			"id" : "controlsTypography",
 			"icon" : "font"
 		},
 		{
 			"label" : "PAGE_CONTROLS_NAVS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.Navs",
-			"pageId" : "controlsNavs",
+			"id" : "controlsNavs",
 			"icon" : "exchange"
 		},
 		{
 			"label" : "PAGE_CONTROLS_GRID_SYSTEM_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.GridSystem",
-			"pageId" : "controlsGridSystem",
+			"id" : "controlsGridSystem",
 			"icon" : "table"
 		},
 		{
 			"label" : "PAGE_CONTROLS_PROGRESS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.Progress",
-			"pageId" : "controlsProgress",
+			"id" : "controlsProgress",
 			"icon" : "spinner"
 		},
 		{
 			"label" : "PAGE_CONTROLS_FORM_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.Form",
-			"pageId" : "controlsForm",
+			"id" : "controlsForm",
 			"icon" : "columns"
 		},
 		{
 			"label" : "PAGE_CONTROLS_INDICATORS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.Indicators",
-			"pageId" : "controlsIndicators",
+			"id" : "controlsIndicators",
 			"icon" : "bell-o"
 		},
 		{
 			"label" : "PAGE_CONTROLS_MEDIA_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.MediaList",
-			"pageId" : "controlsMediaList",
+			"id" : "controlsMediaList",
 			"icon" : "picture-o"
 		},
 		{
 			"label" : "PAGE_CONTROLS_DIALOGS_TITLE",
-			"viewName" : "ui5strap.demoapp.views.controls.Dialogs",
-			"pageId" : "controlsDialogs",
+			"id" : "controlsDialogs",
 			"icon" : "clone"
 		}							
 	
