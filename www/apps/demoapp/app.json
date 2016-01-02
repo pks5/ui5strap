@@ -1,7 +1,6 @@
 {
 	"app" : {
 	        "id" : "ui5strap.demoapp",
-	        "package" : "ui5strap.demoapp",
 	        "name" : "Ui5Strap Demo",
 	        "logLevel" : 5,
 	        "mode" : "Devel"
@@ -26,34 +25,23 @@
     
     "views" : {
     		"MenuRoot" : {
-                "type" : "XML",
-                
                 "id" : "menuRoot",
-                
                 "target" : "bar"
             },
             
             "Home" : {
-                "type" : "XML",
-                
                 "id" : "home"
             },
 
             "Feed" : {
-                "type" : "XML",
-                
                 "id" : "feed"
             },
 
             "Statistics" : {
-                "type" : "XML",
-                
                 "id" : "statistics"
             },
 
             "Settings" : {
-                "type" : "XML",
-                
                 "id" : "settings",
                 
                 "events" : {
@@ -67,18 +55,12 @@
             },
             
             "MenuSettings" : {
-                "type" : "XML",
-                
                 "id" : "menuSettings",
-                
                 "target" : "bar"
             },
             
             ".settings.Language" : {
-                "type" : "XML",
-                
                 "id" : "settingsLanguage",
-                
                 "events" : {
                 	"controller" : {
                 		"update" : "SetCurrentLanguage"	
@@ -87,17 +69,13 @@
             },
             
             ".settings.Theme" : {
-                "type" : "XML",
-                
                 "id" : "settingsTheme"
             },
             
             
             "Controls" :{
             	"id" : "controls",
-            	"type" : "XML",
-                
-                "events" : {
+            	"events" : {
                 	"controller" : {
                 		"update" : [
                 			"LoadMenuControls",
@@ -108,10 +86,7 @@
             },
             
             "MenuControls" : {
-                "type" : "XML",
-                
                 "id" : "menuControls",
-                
                 "target" : "bar"
             },
             
@@ -171,13 +146,9 @@
             },
             
             "NewPost" : {
-                "type" : "XML",
-                
                 "id" : "newPost"
             },
             "PostDetail" : {
-                "type" : "XML",
-                
                 "id" : "postDetail"
             }
       },
@@ -256,6 +227,11 @@
 	},
 	
 	"components" : [
+			{
+	             "id" : "feedManager",
+	             "module" : "FeedManager"
+	        },
+	        
 	        {
 	             "id" : "feedClient",
 	             "module" : "ui5strap.RestClient",
@@ -283,11 +259,6 @@
 	             		"arguments" : ["payload", "success", "error"]
 	             	}
 	             }
-	         },
-	         
-	         {
-	             "id" : "feedManager",
-	             "module" : "FeedManager"
-	        }
-    ]
+	         }
+	]
 }

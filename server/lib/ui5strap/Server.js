@@ -28,7 +28,7 @@ ServerProto.start = function(){
 		_this._pathToWWW = serverConfig.server.pathToPublic;
 		_this._port = serverConfig.server.port;
 		_this._pathToApps = "../../apps/";
-		_this._pathToAppsPublic = "/apps/";
+		
 		
 		var apps = serverConfig.apps,
 			cnr = apps.length;
