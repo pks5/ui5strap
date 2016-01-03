@@ -45,21 +45,22 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 	* @override
 	*/
 	NavigateProto.run = function(){
-			var navContainer = this.context.app.getRootControl(),
+			var navigator = this.context.app.getRootControl(),
 				CONTROLS = this.context.action[this.namespace]["CONTROLS"];
 			
-			if(CONTROLS && ("navContainer" in CONTROLS)){
-				navContainer = this.context.resolve(this, CONTROLS.navContainer, true);
+			if(CONTROLS && ("NAVIGATOR" in CONTROLS)){
+				
+				navigator = this.context.resolve(this, CONTROLS.NAVIGATOR, true);
 			}
 			
-			if(!navContainer || !(navContainer instanceof ui5strap.NavContainer)){
-				throw new Error("[ui5strap.Task.Navigate] Please provide a valid NavContainer instance in .CONTROLS.navContainer!");
+			if(!navigator || !(navigator instanceof ui5strap.NavContainer)){
+				throw new Error("[ui5strap.Task.Navigate] Please provide a valid INavigator instance in .CONTROLS.navigator!");
 			}
 			
 			var VIEWS = this.context.action[this.namespace]["VIEWS"],
 				viewsKeys = Object.keys(VIEWS);
 			for(var i = 0; i < viewsKeys.length; i++){
-				this.context.app.navigateTo(navContainer, this.context.resolve(this, VIEWS[viewsKeys[i]]));
+				this.context.app.navigateTo(navigator, this.context.resolve(this, VIEWS[viewsKeys[i]]));
 			}
 	};
 

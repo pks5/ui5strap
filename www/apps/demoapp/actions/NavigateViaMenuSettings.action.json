@@ -9,7 +9,7 @@
 		"contextData" : "= event.parameters.listItem.getBindingContextData(.modelName)",
 		
 		"CONTROLS" : {
-			"navContainer" : {
+			"NAVIGATOR" : {
 				"TYPE" : "ui5strap.NavContainer",
 				"SOURCE" : "View",
 				"CONTROL_ID" : "navContainerSettings",
