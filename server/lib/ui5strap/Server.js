@@ -72,7 +72,7 @@ ServerProto.start = function(){
 					}
 					
 					var appConfig = JSON.parse(file),
-						appServerId = appConfig.app.id + ".server";
+						appServerId = appConfig.app.id + ".api";
 					
 					//Extract location of app.json
 					var sappUrlParts = appConfigUrl.split('/');

@@ -235,7 +235,7 @@
 	        {
 	             "id" : "feedClient",
 	             "module" : "ui5strap.RestClient",
-	             "url" : "server/feed",
+	             "url" : "api/feed",
 	             "restController" : "FeedController",
 	             "methods" : {
 	             	"info" : {
