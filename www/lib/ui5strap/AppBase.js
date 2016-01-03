@@ -127,7 +127,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 		var files = [];
 		for(var i = 0; i < scripts.length; i++){
-			var jsPath = _this.config.resolvePath(scripts[i]);
+			var jsPath = _this.config.resolvePath(scripts[i], true);
 
 			var jsKey = 'js---' + _this.getId() + '--' + jsPath;
 
@@ -196,7 +196,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				oModel = null,
 				modelType = model['type'],
 				modelName = model['modelName'],
-				modelSrc = _this.config.resolvePath(model);
+				modelSrc = _this.config.resolvePath(model, true);
 
 			
 			if(modelType === 'RESOURCE'){

@@ -323,7 +323,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			var dependencyLib = configDataJSON.libraries[i];
 			libraries.push({
 				"package" : dependencyLib["package"],
-				"location" : appConfig.resolvePath(dependencyLib["location"]),
+				"location" : appConfig.resolvePath(dependencyLib["location"], true),
 				"preload" : dependencyLib.preload
 			});
 			

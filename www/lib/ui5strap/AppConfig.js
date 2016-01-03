@@ -150,18 +150,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	};
 	
 	AppConfigProto.getEnvironment = function(){
-		var currentEnv = this.data.app.environment || "local",
+		var currentEnv = this.data.app.environment,
 			envData = this.data.environments[currentEnv];
-		
+		console.log("test");
 		if(!envData){
-			if(currentEnv === "local"){
-				return {
-					"name" : "Local Environment",
-					"url" : this.options.pathToServletRoot
-				}
-			}
-			
 			throw new Error("No such environment: " + currentEnv);
+		}
+		
+		if(!(envData.pathToServerRoot && envData.pathToStaticRoot && envData.pathToThemeRoot)){
+			throw new Error("Environment definition must contain 'pathToServerRoot', 'pathToStaticRoot' and 'pathToThemeRoot'!");
 		}
 		
 		return envData;
@@ -240,7 +237,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		var iconKeys = Object.keys(configDataJSON.icons),
 			iconKeysLength = iconKeys.length;
 		for(var i = 0; i < iconKeysLength; i++){
-			configDataJSON.iconsResolved[iconKeys[i]] = this.resolvePath(configDataJSON.icons[iconKeys[i]]);
+			configDataJSON.iconsResolved[iconKeys[i]] = this.resolvePath(configDataJSON.icons[iconKeys[i]], true);
 		}
 
 		//Options
@@ -265,10 +262,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	/*
 	* Resolves a path relative to app location
 	*/
-	AppConfigProto.resolvePath = function (path){
+	AppConfigProto.resolvePath = function (path, isStatic){
 		//Folder that contains app.json - must end with /
 		var location = this.data.app.location;
-
+			
 		if(typeof path === 'object'){
 			//If path is an object, it should contain a "src" attribute and can contain a "package" attribute
 			
@@ -280,17 +277,22 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 
 		if(jQuery.sap.startsWith(path, '/')){
-			//Return path relative to servlet root (context)
-			var envUrl = this.getEnvironment().url;
-			if(envUrl.charAt(envUrl.length-1) === "/"){
-				envUrl = envUrl.substr(0, envUrl.length-1);
+			var env = this.getEnvironment(),
+				envRoot = isStatic ? env.pathToStaticRoot : env.pathToServerRoot;
+			
+			if(envRoot.charAt(envRoot.length-1) === "/"){
+				envRoot = envRoot.substr(0, envRoot.length-1);
 			}
-			return envUrl + path;
+			
+			return envRoot + path;
 		}
 		else if(
+			/*
 			jQuery.sap.startsWith(path, './')
 			|| jQuery.sap.startsWith(path, '../')
-			|| jQuery.sap.startsWith(path, 'http')
+			||
+			*/ 
+			jQuery.sap.startsWith(path, 'http')
 		){
 			//Return relative (to html file) path unchanged
 			return path;
@@ -327,13 +329,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* Validates the configuration JSON data. If mandatory properties are missing, empty ones will created.
 	* @Static
 	*/
-	AppConfig.validate = function(configDataJSON){
+	AppConfigProto.validate = function(configDataJSON){
 		if(!('app' in configDataJSON)){
 			throw new Error("Invalid app configuration: attribute 'app' is missing.");
 		}
 
 		//Populate deprecated sapplication attribute
 		configDataJSON.sapplication = configDataJSON.app;
+		
+		var appSection = configDataJSON.app;
 		
 		//ID
 		if(!('id' in configDataJSON.app)){
@@ -384,7 +388,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		//Environments
 		if(!configDataJSON.environments){
-			configDataJSON.environments = {};
+			configDataJSON.environments = this.options.environments;
+		}
+		else{
+			configDataJSON.environments = jQuery.extend({}, this.options.environments, configDataJSON.environments);
+		}
+		
+		if(!appSection.environment){
+			appSection.environment = "local";
 		}
 		
 		//App Icons
@@ -451,23 +462,30 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		if(!("events" in configDataJSON)){
 			configDataJSON.events = {};
 		}
-
-		//Add the location of the sapp if its not specified
-		//Location always should end with a slash
-		if(!("location" in configDataJSON.app)){
-			var sappUrlParts = configDataJSON.app.url.split('/');
-			sappUrlParts[sappUrlParts.length - 1] = '';
-			configDataJSON.app["location"] = sappUrlParts.join('/');
-		}
 	};
 
 	/*
 	* Sets the configuration data after validating.
 	*/
 	AppConfigProto.setData = function(newData){
-		AppConfig.validate(newData);
+		this.validate(newData);
 		
 		this.data = newData;
+	
+		var staticRoot = this.getEnvironment().pathToStaticRoot,
+			sappUrlParts = newData.app.url.split('/');
+			sappUrlParts[sappUrlParts.length - 1] = '',
+			appLocation = sappUrlParts.join('/');
+		
+		if(!jQuery.sap.startsWith(appLocation, "http")){
+			if(staticRoot.charAt(staticRoot.length - 1) !== "/" && appLocation.charAt(0) !== "/"){
+				staticRoot += "/";
+			}
+			appLocation = staticRoot + appLocation;
+		}
+		
+		//Always has a slash at the end
+		newData.app["location"] = appLocation;
 	};
 
 	AppConfigProto.getModel = function(){

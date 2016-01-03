@@ -193,7 +193,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 
 		for(var i = 0; i < callbackCount; i++){
 			var cssKey = cssKeys[i],
-				cssPath = this.config.resolvePath(configData.css[cssKey]);
+				cssPath = this.config.resolvePath(configData.css[cssKey], true);
 
 			cssKey = 'css--' + this.getId() + '--' + cssKey;
 
@@ -245,7 +245,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			return;
 		}
 		//sap.ui.getCore().setThemeRoot(themeName, );
-		sap.ui.getCore().applyTheme(themeName, this.config.options.pathToThemeRoot);
+		sap.ui.getCore().applyTheme(themeName, this.config.getEnvironment().pathToThemeRoot);
 
 		this.log.debug("Theme '" + themeName + "' set.");
 	};

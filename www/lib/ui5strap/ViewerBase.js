@@ -32,40 +32,45 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);
 			
-			this.options = options || {};
-
+			if(!options.app){
+				throw new Error("Please specify the default app in the Viewer Options!");
+			}
+			
 			//Device Log Level
-			if(!this.options.logLevel){
-				this.options.logLevel = 0;
+			if(!options.logLevel){
+				options.logLevel = 0;
 			}
 
 			//Error to Browser
-			if(!this.options.errorToBrowser){
-				this.options.errorToBrowser = false;
+			if(!options.errorToBrowser){
+				options.errorToBrowser = false;
 			}
-
-			if(!this.options.pathToServletRoot){
-				this.options.pathToServletRoot = '.';
-			}
-
-			if(!this.options.pathToThemeRoot){
-				this.options.pathToThemeRoot = './theme';
-			}
-
-			if(!this.options.container){
+			
+			if(!options.container){
 				//Default container dom id
-				this.options.container = "ui5strap-container";
+				options.container = "ui5strap-container";
 			}
 
-			if(!this.options.overlay){
+			if(!options.overlay){
 				//Default overlay dom id
-				this.options.overlay = "ui5strap-overlay";
+				options.overlay = "ui5strap-overlay";
+			}
+			
+			if(!options.environments){
+				options.environments = {
+						local : {
+							pathToServerRoot : ".",
+							pathToStaticRoot : ".",
+							pathToThemeRoot : "./theme"
+						}
+				}
 			}
 
-			if(!this.options.app){
-				//Default app config location
-				this.options.app = "./app/app.json";
+			if(!options.environment){
+				options.environment = "local";
 			}
+			
+			this.options = options;
 		}
 	}),
 	ViewerBaseProto = ViewerBase.prototype;

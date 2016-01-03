@@ -118,7 +118,7 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 	*/
 	AMLoadModelProto.run = function(){ 
 			var _this = this,
-				modelUrl = this.context.app.config.resolvePath(this.getParameter("src"));
+				modelUrl = this.context.app.config.resolvePath(this.getParameter("src"), false);
 
 			var serviceMapping = this.getParameter("paramMapping");
 			if(null !== serviceMapping){

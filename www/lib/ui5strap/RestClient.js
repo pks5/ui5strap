@@ -161,10 +161,18 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     * @protected
     */
     RestClientProto._determineRequestURL = function(options){
-    	var urlBase = this.options.url;
-		urlBase = this.app.config.resolvePath(jQuery.sap.endsWith(urlBase, "/") ? urlBase : urlBase + '/');
-        
-		return urlBase + this._parsePath(options.path, options.pathParameters);
+    	var urlBase = this.options.url,
+    		requestUrl = this._parsePath(options.path, options.pathParameters);
+    	
+    	if(urlBase){
+    		if(urlBase.charAt(urlBase.length - 1) !== "/" && requestUrl.charAt(0) !== "/"){
+    			urlBase += "/";
+    		}
+    		
+    		requestUrl = urlBase + requestUrl;
+    	}
+    	
+		return this.app.config.resolvePath(requestUrl, false);
     };
     
     /**
