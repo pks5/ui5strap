@@ -37,8 +37,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	}),
 	AppConfigProto = AppConfig.prototype;
 
-	/*
+	/**
 	* @deprecated
+	* @Public
 	*/
 	AppConfigProto.getMenuData = function(menuId){
 		if(!(menuId in this.data.menus)){
@@ -47,8 +48,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		return this.data.menus[menuId];
 	};
 
-	/*
-	* Returns config information about a view
+	/**
+	* Returns config information about a view.
+	* @Public
 	*/
 	AppConfigProto.getViewConfig = function(viewDef){
 		var viewName = viewDef.viewName,
@@ -121,8 +123,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		return viewConfig;
 	};
 
-	/*
-	* Returns a list of events / actions for given scope, eventName and viewName
+	/**
+	* Returns a list of events / actions for given scope, eventName and viewName.
+	* @Public
 	*/
 	AppConfigProto.getEvents = function(eventGroup, eventName, viewName){
 		var eventList = [],
@@ -149,6 +152,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		return eventList;
 	};
 	
+	/**
+	 * Returns the current environment settings.
+	 * @Public
+	 */
 	AppConfigProto.getEnvironment = function(){
 		var currentEnv = this.data.app.environment,
 			envData = this.data.environments[currentEnv];
@@ -164,9 +171,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		return envData;
 	};
 
-	/*
+	/**
 	* Processes a given option
-	* @static
+	* @Static
+	* @Public
 	*/
 	AppConfig.processOption = function(optionKey, option){
 		if(typeof option === 'string'){
@@ -202,8 +210,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		return option;
 	};
 
-	/*
-	* Resolves the raw information
+	/**
+	* Resolves the raw information.
+	* @Public
 	*/
 	AppConfigProto.resolve = function(){
 		var configDataJSON = this.data,
@@ -259,29 +268,36 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 	};
 	
-	/*
+	/**
 	* Resolves a path relative to app location
+	* @Public
 	*/
 	AppConfigProto.resolvePath = function (path, isStatic){
 		//Folder that contains app.json - must end with /
-		var location = this.data.app.location;
-			
+		var appLocation = this.data.app.location,
+			env = this.getEnvironment(),
+			envRoot = isStatic ? env.pathToStaticRoot : env.pathToServerRoot;
+		
+		if(!jQuery.sap.startsWith(appLocation, "http")){
+			if(envRoot.charAt(envRoot.length - 1) !== "/" && appLocation.charAt(0) !== "/"){
+				envRoot += "/";
+			}
+			appLocation = envRoot + appLocation;
+		}
+		
 		if(typeof path === 'object'){
 			//If path is an object, it should contain a "src" attribute and can contain a "package" attribute
 			
-			if("package" in path){
-				location = jQuery.sap.getModulePath(path["package"]) + "/";
+			if(path["package"]){
+				appLocation = jQuery.sap.getModulePath(path["package"]) + "/";
 			}
 
 			path = path["src"];
 		}
-
+		
 		if(jQuery.sap.startsWith(path, '/')){
-			var env = this.getEnvironment(),
-				envRoot = isStatic ? env.pathToStaticRoot : env.pathToServerRoot;
-			
-			if(envRoot.charAt(envRoot.length-1) === "/"){
-				envRoot = envRoot.substr(0, envRoot.length-1);
+			if(envRoot.charAt(envRoot.length - 1) === "/"){
+				envRoot = envRoot.substr(0, envRoot.length - 1);
 			}
 			
 			return envRoot + path;
@@ -298,11 +314,16 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			return path;
 		}
 		
-		return location + path;
+		if(appLocation.charAt(appLocation.length - 1) !== "/" && path.charAt(0) !== "/"){
+			appLocation += "/";
+		}
+		
+		return appLocation + path;
 	};
 
-	/*
-	* Resolves a package relative to app package
+	/**
+	* Resolves a package relative to app package.
+	* @Public
 	*/
 	AppConfigProto.resolvePackage = function (packageString, defaultFolder, baseRelative){
 		if(-1 === packageString.indexOf(".")){
@@ -327,34 +348,43 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	
 	/**
 	* Validates the configuration JSON data. If mandatory properties are missing, empty ones will created.
-	* @Static
+	* @Protected
 	*/
-	AppConfigProto.validate = function(configDataJSON){
-		if(!('app' in configDataJSON)){
+	AppConfigProto._validate = function(configDataJSON){
+		if(!configDataJSON.app){
 			throw new Error("Invalid app configuration: attribute 'app' is missing.");
 		}
 
 		//Populate deprecated sapplication attribute
+		//@deprecated
 		configDataJSON.sapplication = configDataJSON.app;
 		
 		var appSection = configDataJSON.app;
 		
 		//ID
-		if(!('id' in configDataJSON.app)){
+		if(!appSection.id){
 			throw new Error("Invalid app config: attribute 'app.id' is missing.");
 		}
 		
-		if(!configDataJSON.app["id"].match(/^[a-zA-Z0-9_\.]+$/)){
-			throw new Error('Invalid app id "' + configDataJSON.app["id"] + '": may only contain letters, digits, dots and underscores.');
+		if(!appSection.id.match(/^[a-zA-Z0-9_\.]+$/)){
+			throw new Error('Invalid app id "' + appSection["id"] + '": may only contain letters, digits, dots and underscores.');
 		}
 
 		//Package
-		if(!('package' in configDataJSON.app)){
-			configDataJSON.app["package"] = configDataJSON.app["id"];
+		if(!appSection["package"]){
+			appSection["package"] = appSection["id"];
 		}
 
-		if(!configDataJSON.app["package"].match(/(^[a-zA-Z0-9_]+)(\.[a-zA-Z0-9_]+)+$/)){
+		if(!appSection["package"].match(/(^[a-zA-Z0-9_]+)(\.[a-zA-Z0-9_]+)+$/)){
 			throw new Error('Package name may only contain letters and digits and the underscore char, separated by a ".", and must have at least one sub package.');
+		}
+		
+		//Location of the app.
+		//Can be either absolute (not recommended!) or relative to index.html
+		if(!appSection["location"]){
+			var appUrlParts = appSection.url.split('/');
+			appUrlParts[appUrlParts.length - 1] = '',
+			appSection["location"] = appUrlParts.join('/');
 		}
 		
 		//jQuery.sap.declare(configDataJSON.app["package"] + ".actions");
@@ -363,27 +393,27 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 		//Namespace
 		//TODO What's this?
-		if(!('namespace' in configDataJSON.app)){
-			configDataJSON.app["namespace"] = configDataJSON.app["package"];
+		if(!appSection["namespace"]){
+			appSection["namespace"] = appSection["package"];
 		}	
 
-		if(!configDataJSON.app["namespace"].match(/^[a-zA-Z0-9_\.]+$/)){
-			throw new Error('Invalid app namespace "' + configDataJSON.app["namespace"] + '": may only contain letters, digits, dots and underscores.');
+		if(!appSection["namespace"].match(/^[a-zA-Z0-9_\.]+$/)){
+			throw new Error('Invalid app namespace "' + appSection["namespace"] + '": may only contain letters, digits, dots and underscores.');
 		}
 
 		//Type
-		if(!('type' in configDataJSON.app)){
-			configDataJSON.app.type = 'STANDARD';
+		if(!appSection.type){
+			appSection.type = 'STANDARD';
 		}
 		
 		//Module
-		if(!("module" in configDataJSON.app)){
-			configDataJSON.app.module = "ui5strap.App";
+		if(!appSection.module){
+			appSection.module = "ui5strap.App";
 		}
 		
 		//Style Class
-		if(!('styleClass' in configDataJSON.app)){
-			configDataJSON.app.styleClass = 'ui5strap-app-standard';
+		if(!appSection.styleClass){
+			appSection.styleClass = 'ui5strap-app-standard';
 		}
 		
 		//Environments
@@ -398,96 +428,88 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			appSection.environment = "local";
 		}
 		
+		//Default App Transition
+		if(!appSection.transition){
+			appSection.transition = 'zoom-in';
+		}
+		
 		//App Icons
-		if(!('icons' in configDataJSON)){
+		if(!configDataJSON.icons){
 			configDataJSON.icons = {};
 		}
 		
 		//App Options
-		if(!('options' in configDataJSON)){
+		if(!configDataJSON.options){
 			configDataJSON.options = {};
 		}
 		
-		//Default App Transition
-		if(!('transition' in configDataJSON.app)){
-			configDataJSON.app.transition = 'zoom-in';
-		}
-		
 		//Libraries
-		if(!("libraries" in configDataJSON)){
+		if(!configDataJSON.libraries){
 			configDataJSON.libraries = {};
 		}
 		
 		//Views directory
-		if(!("views" in configDataJSON)){
+		if(!configDataJSON.views){
 			configDataJSON.views = {};
 		}
 		
 		//App Components
-		if(!("components" in configDataJSON)){
+		if(!configDataJSON.components){
 			configDataJSON.components = [];
 		}
 
 		//UI5 Modules to be preloaded
-		if(!("modules" in configDataJSON)){
+		//TODO Is this used somewhere?
+		if(!configDataJSON.modules){
 			configDataJSON.modules = [];
 		}
 		
 		//Actions to be preloaded
-		if(!("actions" in configDataJSON)){
+		if(!configDataJSON.actions){
 			configDataJSON.actions = [];
 		}
 		
 		//Models
-		if(!("models" in configDataJSON)){
+		if(!configDataJSON.models){
 			configDataJSON.models = [];
 		}
 		
 		//Custom css files
-		if(!("css" in configDataJSON)){
+		if(!configDataJSON.css){
 			configDataJSON.css = [];
 		}
 
 		//Custom JavaScript libraries
-		if(!("js" in configDataJSON)){
+		if(!configDataJSON.js){
 			configDataJSON.js = [];
 		}
 		
 		//Any kind of file to be preloaded
-		if(!("resources" in configDataJSON)){
+		//TODO Is this used somewhere?
+		if(!configDataJSON.resources){
 			configDataJSON.resources = [];
 		}
 		
 		//App Events
-		if(!("events" in configDataJSON)){
+		if(!configDataJSON.events){
 			configDataJSON.events = {};
 		}
 	};
 
-	/*
+	/**
 	* Sets the configuration data after validating.
+	* @Public
 	*/
 	AppConfigProto.setData = function(newData){
-		this.validate(newData);
+		this._validate(newData);
 		
 		this.data = newData;
-	
-		var staticRoot = this.getEnvironment().pathToStaticRoot,
-			sappUrlParts = newData.app.url.split('/');
-			sappUrlParts[sappUrlParts.length - 1] = '',
-			appLocation = sappUrlParts.join('/');
-		
-		if(!jQuery.sap.startsWith(appLocation, "http")){
-			if(staticRoot.charAt(staticRoot.length - 1) !== "/" && appLocation.charAt(0) !== "/"){
-				staticRoot += "/";
-			}
-			appLocation = staticRoot + appLocation;
-		}
-		
-		//Always has a slash at the end
-		newData.app["location"] = appLocation;
 	};
 
+	/**
+	 * Gets a Model based on Configuration Data.
+	 * @Public
+	 */
 	AppConfigProto.getModel = function(){
 		return new JSONModel(this.data);
 	};
