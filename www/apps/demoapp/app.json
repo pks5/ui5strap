@@ -239,12 +239,8 @@
          },
          
          "initialViews" : [
-             { 
-                 "viewName" : "Home"
-             },
-             { 
-                 "viewName" : "MenuRoot"
-             }
+             "home",
+             "menuRoot"
          ]
 	},
 	

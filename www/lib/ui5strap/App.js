@@ -306,11 +306,20 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			callI = initialViews.length;
 		
 			for(var i = 0; i < initialViews.length; i++){
-				var initialViewData = jQuery.extend({}, initialViews[i]);
-				if(!this.initialized){
-					initialViewData.transition = 'transition-none';
+				var initialView = initialViews[i];
+				if(typeof initialView === "string"){
+					initialView = {
+						id : initialView	
+					};
 				}
-				this.navigateTo(this.getRootControl(), initialViewData, complete);
+				else{
+					initialView = jQuery.extend({}, initialView);
+				}
+				
+				if(!this.initialized){
+					initialView.transition = 'transition-none';
+				}
+				this.navigateTo(this.getRootControl(), initialView, complete);
 			}
 		
 	};

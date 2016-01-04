@@ -148,11 +148,21 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		callI = initialViews.length;
 
 		for(var i = 0; i < initialViews.length; i++){
-			var initialViewData = jQuery.extend({}, initialViews[i]);
-			if(!_this.initialized){
-				initialViewData.transition = 'transition-none';
+			var initialView = initialViews[i];
+			if(typeof initialView === "string"){
+				initialView = {
+					id : initialView	
+				};
 			}
-			this.gotoPage(initialViewData, complete);
+			else{
+				initialView = jQuery.extend({}, initialView);
+			}
+			
+			if(!_this.initialized){
+				//Skip transition if frame has not been initialized yet
+				initialView.transition = 'transition-none';
+			}
+			this.gotoPage(initialView, complete);
 		}
 
 	};
