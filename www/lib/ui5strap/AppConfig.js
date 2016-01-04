@@ -268,8 +268,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			
 			jQuery.sap.log.warning("Declaring views as object is deprecated. Please use an array instead.");
 			
-			configDataJSON.viewsByName = configDataJSON.views; //TODO switch to viewsByName
-			
 			var viewNames = Object.keys(configDataJSON.views),
 				viewNamesLength = viewNames.length;
 			for(var i = 0; i < viewNamesLength; i++){
