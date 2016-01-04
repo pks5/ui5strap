@@ -3675,6 +3675,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* @Public
 	*/
 	AppConfigProto.getViewConfig = function(viewDef){
+		//If viewDef is a string, use it as id.
+		if(typeof viewDef === "string"){
+			viewDef = {
+				id : viewDef
+			};
+		}
+		
 		var viewName = viewDef.viewName,
 			viewId = viewDef.id,
 			viewConfigOrg = null,
@@ -3684,6 +3691,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		//First check if a view ID is given
 		if(viewId){
 			if(this.data.viewsById[viewId]){
+				//Delete viewName that is inside the provided view definition since we will use the viewName from config.
 				delete viewDef.viewName;
 				viewConfigOrg = this.data.viewsById[viewId];
 				foundById = true;
@@ -3692,10 +3700,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		if(viewName){
 			viewName = this.resolvePackage(viewName, "views");
-			
-			if(!foundById && this.data.viewsByName[viewName]){
+			var viewsByName = this.data.viewsByName[viewName];
+			if(!foundById && viewsByName){
+				if(viewsByName.length > 1){
+					throw new Error("Cannot determine view configuration by viewName: more than one view defined with that name!");
+				}
+				//Delete viewName that is inside the provided view definition since we will use the resolved name.
 				delete viewDef.viewName;
-				viewConfigOrg = this.data.viewsByName[viewName];
+				viewConfigOrg = viewsByName[0];
 			}
 		}
 		
@@ -3706,6 +3718,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		else{
 			//No view config for the given ID and Name.
 			if(viewName){
+				//Set the viewName in def again since it might be resolved now.
 				viewDef.viewName = viewName;
 			}
 			
@@ -3781,7 +3794,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	AppConfigProto.getEnvironment = function(){
 		var currentEnv = this.data.app.environment,
 			envData = this.data.environments[currentEnv];
-		console.log("test");
+		
 		if(!envData){
 			throw new Error("No such environment: " + currentEnv);
 		}
@@ -3841,7 +3854,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			viewerOptions = this.options,
 			appId = this.data.app.id;
 		
-		//Views
+		//START read Views
 		configDataJSON.viewsById = {};
 		configDataJSON.viewsByName = {};
 		
@@ -3860,19 +3873,22 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				}
 				
 				var viewNameResolved = this.resolvePackage(viewName, "views");
-				
-				configDataJSON.viewsByName[viewNameResolved] = viewData;
+				viewData.viewName = viewNameResolved;
+				if(!configDataJSON.viewsByName[viewNameResolved]){
+					configDataJSON.viewsByName[viewNameResolved] = [];
+				}
+				configDataJSON.viewsByName[viewNameResolved].push(viewData);
 				
 				if(viewData.id){
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
-			}
+			}console.log(configDataJSON);
 		}
 		else{
 			//Old format
 			//@deprecated
 			
-			jQuery.sap.log.warning("Declaring views in configuration as object is deprecated. Please use an array instead.");
+			jQuery.sap.log.warning("Declaring views as object is deprecated. Please use an array instead.");
 			
 			configDataJSON.viewsByName = configDataJSON.views; //TODO switch to viewsByName
 			
@@ -3884,13 +3900,17 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				
 				var viewData = configDataJSON.views[viewName];
 				viewData.viewName = viewNameResolved;
-				configDataJSON.viewsByName[viewNameResolved] = viewData;
+				if(!configDataJSON.viewsByName[viewNameResolved]){
+					configDataJSON.viewsByName[viewNameResolved] = [];
+				}
+				configDataJSON.viewsByName[viewNameResolved].push(viewData);
 				
 				if(viewData.id){
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
 			}
 		}
+		//END read Views
 		
 		//Icons
 		configDataJSON.iconsResolved = {};
@@ -4374,11 +4394,21 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		callI = initialViews.length;
 
 		for(var i = 0; i < initialViews.length; i++){
-			var initialViewData = jQuery.extend({}, initialViews[i]);
-			if(!_this.initialized){
-				initialViewData.transition = 'transition-none';
+			var initialView = initialViews[i];
+			if(typeof initialView === "string"){
+				initialView = {
+					id : initialView	
+				};
 			}
-			this.gotoPage(initialViewData, complete);
+			else{
+				initialView = jQuery.extend({}, initialView);
+			}
+			
+			if(!_this.initialized){
+				//Skip transition if frame has not been initialized yet
+				initialView.transition = 'transition-none';
+			}
+			this.gotoPage(initialView, complete);
 		}
 
 	};
@@ -6349,11 +6379,20 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			callI = initialViews.length;
 		
 			for(var i = 0; i < initialViews.length; i++){
-				var initialViewData = jQuery.extend({}, initialViews[i]);
-				if(!this.initialized){
-					initialViewData.transition = 'transition-none';
+				var initialView = initialViews[i];
+				if(typeof initialView === "string"){
+					initialView = {
+						id : initialView	
+					};
 				}
-				this.navigateTo(this.getRootControl(), initialViewData, complete);
+				else{
+					initialView = jQuery.extend({}, initialView);
+				}
+				
+				if(!this.initialized){
+					initialView.transition = 'transition-none';
+				}
+				this.navigateTo(this.getRootControl(), initialView, complete);
 			}
 		
 	};
