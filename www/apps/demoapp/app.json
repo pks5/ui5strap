@@ -23,27 +23,31 @@
             }
     ],
     
-    "views" : {
-    		"MenuRoot" : {
+    "views" : [
+    		{
                 "id" : "menuRoot",
+                "viewName" : "MenuRoot",
                 "target" : "bar"
             },
             
-            "Home" : {
-                "id" : "home"
+            {
+                "id" : "home",
+                "viewName" : "Home"
             },
 
-            "Feed" : {
-                "id" : "feed"
+            {
+                "id" : "feed",
+                "viewName" : "Feed"
             },
 
-            "Statistics" : {
-                "id" : "statistics"
+            {
+                "id" : "statistics",
+                "viewName" : "Statistics"
             },
 
-            "Settings" : {
+            {
                 "id" : "settings",
-                
+                "viewName" : "Settings",
                 "events" : {
                 	"controller" : {
                 		"update" : [
@@ -54,13 +58,15 @@
                 }
             },
             
-            "MenuSettings" : {
+            {
                 "id" : "menuSettings",
+                "viewName" : "MenuSettings",
                 "target" : "bar"
             },
             
-            ".settings.Language" : {
+            {
                 "id" : "settingsLanguage",
+                "viewName" : ".settings.Language",
                 "events" : {
                 	"controller" : {
                 		"update" : "SetCurrentLanguage"	
@@ -68,13 +74,15 @@
                 }
             },
             
-            ".settings.Theme" : {
-                "id" : "settingsTheme"
+            {
+                "id" : "settingsTheme",
+                "viewName" : ".settings.Theme"
             },
             
             
-            "Controls" :{
+            {
             	"id" : "controls",
+            	"viewName" : "Controls",
             	"events" : {
                 	"controller" : {
                 		"update" : [
@@ -85,73 +93,87 @@
                 }
             },
             
-            "MenuControls" : {
+            {
                 "id" : "menuControls",
+                "viewName" : "MenuControls",
                 "target" : "bar"
             },
             
-            ".controls.Buttons" :{
+            {
             	"id" : "controlsButtons",
+            	"viewName" : ".controls.Buttons",
             	"type" : "HTML"
             },
             
-            ".controls.Containers" :{
+            {
             	"id" : "controlsContainers",
+            	"viewName" : ".controls.Containers",
             	"type" : "HTML"
             },
             
-            ".controls.Icons" :{
+            {
             	"id" : "controlsIcons",
+            	"viewName" : ".controls.Icons",
             	"type" : "HTML"
             },
             
-            ".controls.Typography" :{
+            {
             	"id" : "controlsTypography",
+            	"viewName" : ".controls.Typography",
             	"type" : "HTML"
             },
 			
-			".controls.Navs" :{
+			{
             	"id" : "controlsNavs",
+            	"viewName" : ".controls.Navs",
             	"type" : "HTML"
             },
             
-            ".controls.GridSystem" :{
+            {
             	"id" : "controlsGridSystem",
+            	"viewName" : ".controls.GridSystem",
             	"type" : "HTML"
             },
             
-            ".controls.Progress" :{
+            {
             	"id" : "controlsProgress",
+            	"viewName" : ".controls.Progress",
             	"type" : "HTML"
             },
             
-            ".controls.Form" :{
+            {
             	"id" : "controlsForm",
+            	"viewName" : ".controls.Form",
             	"type" : "HTML"
             },
             
-            ".controls.Indicators" :{
+            {
             	"id" : "controlsIndicators",
+            	"viewName" : ".controls.Indicators",
             	"type" : "HTML"
             },
             
-            ".controls.MediaList" :{
+            {
             	"id" : "controlsMediaList",
+            	"viewName" : ".controls.MediaList",
             	"type" : "HTML"
             },
             
-            ".controls.Dialogs" :{
+            {
             	"id" : "controlsDialogs",
+            	"viewName" : ".controls.Dialogs",
             	"type" : "HTML"
             },
             
-            "NewPost" : {
-                "id" : "newPost"
+            {
+                "id" : "newPost",
+                "viewName" : "NewPost"
             },
-            "PostDetail" : {
-                "id" : "postDetail"
+            {
+                "id" : "postDetail",
+                "viewName" : "PostDetail"
             }
-      },
+      ],
 	
 	"actions" : [
 		"NavigateToHome",

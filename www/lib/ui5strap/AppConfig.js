@@ -53,6 +53,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* @Public
 	*/
 	AppConfigProto.getViewConfig = function(viewDef){
+		//If viewDef is a string, use it as id.
+		if(typeof viewDef === "string"){
+			viewDef = {
+				id : viewDef
+			};
+		}
+		
 		var viewName = viewDef.viewName,
 			viewId = viewDef.id,
 			viewConfigOrg = null,
@@ -62,6 +69,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		//First check if a view ID is given
 		if(viewId){
 			if(this.data.viewsById[viewId]){
+				//Delete viewName that is inside the provided view definition since we will use the viewName from config.
 				delete viewDef.viewName;
 				viewConfigOrg = this.data.viewsById[viewId];
 				foundById = true;
@@ -70,10 +78,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		if(viewName){
 			viewName = this.resolvePackage(viewName, "views");
-			
-			if(!foundById && this.data.viewsByName[viewName]){
+			var viewsByName = this.data.viewsByName[viewName];
+			if(!foundById && viewsByName){
+				if(viewsByName.length > 1){
+					throw new Error("Cannot determine view configuration by viewName: more than one view defined with that name!");
+				}
+				//Delete viewName that is inside the provided view definition since we will use the resolved name.
 				delete viewDef.viewName;
-				viewConfigOrg = this.data.viewsByName[viewName];
+				viewConfigOrg = viewsByName[0];
 			}
 		}
 		
@@ -84,6 +96,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		else{
 			//No view config for the given ID and Name.
 			if(viewName){
+				//Set the viewName in def again since it might be resolved now.
 				viewDef.viewName = viewName;
 			}
 			
@@ -159,7 +172,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	AppConfigProto.getEnvironment = function(){
 		var currentEnv = this.data.app.environment,
 			envData = this.data.environments[currentEnv];
-		console.log("test");
+		
 		if(!envData){
 			throw new Error("No such environment: " + currentEnv);
 		}
@@ -219,27 +232,63 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			viewerOptions = this.options,
 			appId = this.data.app.id;
 		
-		//Views
+		//START read Views
 		configDataJSON.viewsById = {};
-		configDataJSON.viewsByName = configDataJSON.views; //TODO switch to viewsByName
+		configDataJSON.viewsByName = {};
 		
-		var viewNames = Object.keys(configDataJSON.views),
-			viewNamesLength = viewNames.length;
-		for(var i = 0; i < viewNamesLength; i++){
-			var viewName = viewNames[i],
-				viewNameResolved = this.resolvePackage(viewName, "views");
+		if(jQuery.isArray(configDataJSON.views)){
+			//New format as array
+			var views = configDataJSON.views,
+				viewsLength = views.length;
 			
-			if(viewName !== viewNameResolved){
-				configDataJSON.views[viewNameResolved] = configDataJSON.views[viewName];
-				delete configDataJSON.views[viewName];
-			}
+			for(var i = 0; i < viewsLength; i++){
+				var viewData = views[i],
+					viewName = viewData.viewName;
+				
+				if(!viewName){
+					jQuery.sap.log.warning("Skipped view definition because attribute 'viewName' is missing.");
+					continue;
+				}
+				
+				var viewNameResolved = this.resolvePackage(viewName, "views");
+				viewData.viewName = viewNameResolved;
+				if(!configDataJSON.viewsByName[viewNameResolved]){
+					configDataJSON.viewsByName[viewNameResolved] = [];
+				}
+				configDataJSON.viewsByName[viewNameResolved].push(viewData);
+				
+				if(viewData.id){
+					configDataJSON.viewsById[viewData.id] = viewData;
+				}
+			}console.log(configDataJSON);
+		}
+		else{
+			//Old format
+			//@deprecated
 			
-			var viewData = configDataJSON.views[viewNameResolved];
-			viewData.viewName = viewNameResolved;
-			if(viewData.id){
-				configDataJSON.viewsById[viewData.id] = viewData;
+			jQuery.sap.log.warning("Declaring views as object is deprecated. Please use an array instead.");
+			
+			configDataJSON.viewsByName = configDataJSON.views; //TODO switch to viewsByName
+			
+			var viewNames = Object.keys(configDataJSON.views),
+				viewNamesLength = viewNames.length;
+			for(var i = 0; i < viewNamesLength; i++){
+				var viewName = viewNames[i],
+					viewNameResolved = this.resolvePackage(viewName, "views");
+				
+				var viewData = configDataJSON.views[viewName];
+				viewData.viewName = viewNameResolved;
+				if(!configDataJSON.viewsByName[viewNameResolved]){
+					configDataJSON.viewsByName[viewNameResolved] = [];
+				}
+				configDataJSON.viewsByName[viewNameResolved].push(viewData);
+				
+				if(viewData.id){
+					configDataJSON.viewsById[viewData.id] = viewData;
+				}
 			}
 		}
+		//END read Views
 		
 		//Icons
 		configDataJSON.iconsResolved = {};
@@ -450,7 +499,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		//Views directory
 		if(!configDataJSON.views){
-			configDataJSON.views = {};
+			configDataJSON.views = [];
 		}
 		
 		//App Components

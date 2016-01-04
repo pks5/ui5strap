@@ -3843,23 +3843,52 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		//Views
 		configDataJSON.viewsById = {};
-		configDataJSON.viewsByName = configDataJSON.views; //TODO switch to viewsByName
+		configDataJSON.viewsByName = {};
 		
-		var viewNames = Object.keys(configDataJSON.views),
-			viewNamesLength = viewNames.length;
-		for(var i = 0; i < viewNamesLength; i++){
-			var viewName = viewNames[i],
-				viewNameResolved = this.resolvePackage(viewName, "views");
+		if(jQuery.isArray(configDataJSON.views)){
+			//New format as array
+			var views = configDataJSON.views,
+				viewsLength = views.length;
 			
-			if(viewName !== viewNameResolved){
-				configDataJSON.views[viewNameResolved] = configDataJSON.views[viewName];
-				delete configDataJSON.views[viewName];
+			for(var i = 0; i < viewsLength; i++){
+				var viewData = views[i],
+					viewName = viewData.viewName;
+				
+				if(!viewName){
+					jQuery.sap.log.warning("Skipped view definition because attribute 'viewName' is missing.");
+					continue;
+				}
+				
+				var viewNameResolved = this.resolvePackage(viewName, "views");
+				
+				configDataJSON.viewsByName[viewNameResolved] = viewData;
+				
+				if(viewData.id){
+					configDataJSON.viewsById[viewData.id] = viewData;
+				}
 			}
+		}
+		else{
+			//Old format
+			//@deprecated
 			
-			var viewData = configDataJSON.views[viewNameResolved];
-			viewData.viewName = viewNameResolved;
-			if(viewData.id){
-				configDataJSON.viewsById[viewData.id] = viewData;
+			jQuery.sap.log.warning("Declaring views in configuration as object is deprecated. Please use an array instead.");
+			
+			configDataJSON.viewsByName = configDataJSON.views; //TODO switch to viewsByName
+			
+			var viewNames = Object.keys(configDataJSON.views),
+				viewNamesLength = viewNames.length;
+			for(var i = 0; i < viewNamesLength; i++){
+				var viewName = viewNames[i],
+					viewNameResolved = this.resolvePackage(viewName, "views");
+				
+				var viewData = configDataJSON.views[viewName];
+				viewData.viewName = viewNameResolved;
+				configDataJSON.viewsByName[viewNameResolved] = viewData;
+				
+				if(viewData.id){
+					configDataJSON.viewsById[viewData.id] = viewData;
+				}
 			}
 		}
 		
@@ -4072,7 +4101,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		//Views directory
 		if(!configDataJSON.views){
-			configDataJSON.views = {};
+			configDataJSON.views = [];
 		}
 		
 		//App Components
@@ -6137,7 +6166,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			_this.includeStyle(function includeStyle_complete(){
 				_this.log.debug("PRELOADING VIEWS...");
 				
-				_preloadViews(_this.config.data.views, callback);
+				_preloadViews(_this.config.data.viewsByName, callback);
 			});
 		});
 	};

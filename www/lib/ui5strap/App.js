@@ -123,7 +123,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			_this.includeStyle(function includeStyle_complete(){
 				_this.log.debug("PRELOADING VIEWS...");
 				
-				_preloadViews(_this.config.data.views, callback);
+				_preloadViews(_this.config.data.viewsByName, callback);
 			});
 		});
 	};
