@@ -125,7 +125,7 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 				this.close();
 				
-				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem),
+				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItemBase),
 					hostUpdate = this.getUpdate();
 				
 				if(menuListItem){

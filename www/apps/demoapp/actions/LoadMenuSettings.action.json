@@ -6,7 +6,7 @@
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",
 		"CONTROLS" : {
-			"navContainer" : {
+			"NAVIGATOR" : {
 				"TYPE" : "ui5strap.NavContainer",
 				"SOURCE" : "View",
 				"CONTROL_ID" : "navContainerSettings",

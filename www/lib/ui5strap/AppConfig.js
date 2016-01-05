@@ -47,7 +47,46 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		return this.data.menus[menuId];
 	};
+	
+	/**
+	* Returns the Dom ID of the App
+	*/
+	AppConfigProto.getAppDomId = function(subElement){
+		return this.data.app.id.replace(/\./g, '-') + (subElement ? '---' + subElement : '');
+	};
 
+	/**
+	 * Creates a globally unique Control ID.
+	 */
+	AppConfigProto.createControlId = function(controlId, viewId){
+		var appPrefix = this.getAppDomId() + '---';
+		if(jQuery.sap.startsWith(controlId, appPrefix)){
+			if(viewId){
+				throw new Error("Cannot create absolute control id: controlId is already absolute but viewId is given!");
+			}
+			
+			//ControlID already has a app prefix, just return it.
+			jQuery.sap.log.debug("Control ID '" + controlId + "' already have an app prefix.");
+			
+			return controlId;
+		}
+		
+		if(viewId){
+			if(jQuery.sap.startsWith(viewId, appPrefix)){
+				controlId = viewId + "--" + controlId;
+			}
+			else{
+				controlId = appPrefix + viewId + "--" + controlId;
+			}
+		}
+		else{
+			controlId = appPrefix + controlId;
+		}
+		
+		return controlId;
+	
+	};
+	
 	/**
 	* Returns config information about a view.
 	* @Public
@@ -66,29 +105,49 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			viewOptions = {},
 			foundById = false;
 		
-		//First check if a view ID is given
+		//Resolve View ID
 		if(viewId){
+			viewId = this.createControlId(viewId);
+			
+			//Search View by ID
 			if(this.data.viewsById[viewId]){
 				//Delete viewName that is inside the provided view definition since we will use the viewName from config.
 				delete viewDef.viewName;
+				//Delete id that is inside the provided view definition since it might be unresolved.
+				delete viewDef.id;
+				
 				viewConfigOrg = this.data.viewsById[viewId];
 				foundById = true;
 			}
 		}
 		
+		//Resolve View Name
 		if(viewName){
 			viewName = this.resolvePackage(viewName, "views");
 			var viewsByName = this.data.viewsByName[viewName];
+			
+			//Search by View Name if not found by ID
 			if(!foundById && viewsByName){
-				if(viewsByName.length > 1){
-					throw new Error("Cannot determine view configuration by viewName: more than one view defined with that name!");
+				for(var j = 0; j < viewsByName.length; j++){
+					if(viewId && viewsByName[j].id){
+						//We skip all views that are found by viewName but have an id - if also a search id is specified
+						continue;
+					}
+					if(viewConfigOrg){
+						throw new Error("Cannot determine view configuration by viewName: more than one view is defined with that name!");
+					}
+					//Delete viewName that is inside the provided view definition since we will use the resolved name.
+					delete viewDef.viewName;
+					if(viewId){
+						//Set the resolved view ID.
+						viewDef.id = viewId;
+					}
+					viewConfigOrg = viewsByName[j];
 				}
-				//Delete viewName that is inside the provided view definition since we will use the resolved name.
-				delete viewDef.viewName;
-				viewConfigOrg = viewsByName[0];
 			}
 		}
 		
+		//Test if view configuration has been found
 		if(viewConfigOrg){
 			//The "viewOptions" contain the mix of original config and definition
 			jQuery.extend(viewOptions, viewConfigOrg, viewDef);
@@ -96,8 +155,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		else{
 			//No view config for the given ID and Name.
 			if(viewName){
-				//Set the viewName in def again since it might be resolved now.
+				//Set the resolved viewName.
 				viewDef.viewName = viewName;
+			}
+			if(viewId){
+				//Set the resolved view ID.
+				viewDef.id = viewId;
 			}
 			
 			jQuery.extend(viewOptions, viewDef);
@@ -140,26 +203,25 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* Returns a list of events / actions for given scope, eventName and viewName.
 	* @Public
 	*/
-	AppConfigProto.getEvents = function(eventGroup, eventName, viewName){
+	AppConfigProto.getEvents = function(eventGroup, eventName, viewDef){
 		var eventList = [],
-			_configData = this.data;
-
+			_configData = this.data,
+			viewData = this.getViewConfig(viewDef);
+		
+		//Add global events to event list.
 		if(_configData.events 
 			&& _configData.events[eventGroup] 
 			&& _configData.events[eventGroup][eventName]){
 			eventList = eventList.concat(_configData.events[eventGroup][eventName]);
 		}
 		
-		if(viewName){
-			var viewData = this.data.views[viewName];
-			if(viewData
+		//Add view events to event list.
+		if(viewData
 				&& viewData.events 
 				&& viewData.events[eventGroup] 
 				&& viewData.events[eventGroup][eventName]){
-				
-				eventList = eventList.concat(viewData.events[eventGroup][eventName]);
 			
-			}
+			eventList = eventList.concat(viewData.events[eventGroup][eventName]);
 		}
 
 		return eventList;
@@ -258,6 +320,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				configDataJSON.viewsByName[viewNameResolved].push(viewData);
 				
 				if(viewData.id){
+					viewData.id = this.createControlId(viewData.id);
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
 			}console.log(configDataJSON);
@@ -282,6 +345,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				configDataJSON.viewsByName[viewNameResolved].push(viewData);
 				
 				if(viewData.id){
+					viewData.id = this.createControlId(viewData.id);
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
 			}

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button', './ListItem'], function(library, ControlBase, ListSelectionSupport, Button, ListItem){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button', './ListItemBase'], function(library, ControlBase, ListSelectionSupport, Button, ListItemBase){
 
 	var _meta = {
 			
@@ -141,7 +141,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 		
 		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 			//TODO search for selectable item instead
-			providerItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem);
+			providerItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase);
 			if(providerItem){
 				selectionProvider = providerItem.getParent();
 				

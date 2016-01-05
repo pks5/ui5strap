@@ -1077,31 +1077,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* Create an control id with app namespace. If viewId is given, the controlId must be local.
 	*/ 
 	AppBaseProto.createControlId = function(controlId, viewId){
-		var appPrefix = this.getDomId() + '---';
-		if(jQuery.sap.startsWith(controlId, appPrefix)){
-			if(viewId){
-				throw new Error("Cannot create absolute control id: controlId is already absolute but viewId is given!");
-			}
-			
-			//ControlID already has a app prefix, just return it.
-			jQuery.sap.log.warning("Control ID '" + controlId + "' already have an app prefix.");
-			
-			return controlId;
-		}
-		
-		if(viewId){
-			if(jQuery.sap.startsWith(viewId, appPrefix)){
-				controlId = viewId + "--" + controlId;
-			}
-			else{
-				controlId = appPrefix + viewId + "--" + controlId;
-			}
-		}
-		else{
-			controlId = appPrefix + controlId;
-		}
-		
-		return controlId;
+		jQuery.sap.log.warning("ui5strap.AppBase.prototype.createControlId is deprecated! Use ui5strap.AppConfig.prototype.createControlId instead!");
+		return this.config.createControlId(controlId, viewId);
 	
 	};
 	
@@ -1135,7 +1112,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* Returns the Control with the given controlId. Depending if a viewId is specified, the controlId must be global or local.
 	*/
 	AppBaseProto.getControl = function(controlId, viewId){
-		return sap.ui.getCore().byId(this.createControlId(controlId, viewId));
+		return sap.ui.getCore().byId(this.config.createControlId(controlId, viewId));
 	};
 
 	AppBaseProto._buildRootControl = function(){
@@ -1249,7 +1226,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* Returns the Dom ID of the App
 	*/
 	AppBaseProto.getDomId = function(subElement){
-		return this.config.data.app.id.replace(/\./g, '-') + (subElement ? '---' + subElement : '');
+		jQuery.sap.log.warning("ui5strap.App.prototype.getDomId is deprecated! Use ui5strap.AppConfig.prototype.getAppDomId instead!");
+		return this.config.getAppDomId(subElement);
 	};
 
 	/**
@@ -1371,9 +1349,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				
 			if(app){
 				var view = this.getView(),
-					updateEvents = app.config.getEvents('controller', eventName, view.getViewName()),
-					updateEventsLength = updateEvents.length,
-					viewId = view.getId();
+					viewId = view.getId(),
+					updateEvents = app.config.getEvents('controller', eventName, viewId),
+					updateEventsLength = updateEvents.length;
 
 				for(var i = 0; i < updateEventsLength; i++){
 				 	var actionName = updateEvents[i];
@@ -1481,9 +1459,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				
 				//TODO find out if view.sViewName is reliable
 				var view = this.getView(),
-					initEvents = app.config.getEvents('controller', 'init', view.sViewName),
-					initEventsLength = initEvents.length,
-					viewId = view.getId();
+					viewId = view.getId(),
+					initEvents = app.config.getEvents('controller', 'init', viewId),
+					initEventsLength = initEvents.length;
 
 				for(var i = 0; i < initEventsLength; i++){
 					var actionName = initEvents[i];

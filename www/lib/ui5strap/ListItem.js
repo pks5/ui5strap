@@ -25,12 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
+sap.ui.define(['./library', './ListItemBase', './SelectableSupport'], function(library, ListItemBase, SelectableSupport){
 
 	var _meta = {
 			interfaces : [],
-			
-			defaultAggregation : "content",
 			
 			library : "ui5strap",
 
@@ -54,19 +52,13 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 					type:"string",
 					defaultValue : ""
 				}
-			},
-			
-			aggregations : { 
-				content : {
-					singularName: "content"
-				}
 			}
 
 		};
 	
 	SelectableSupport.meta(_meta);
 	
-	var ListItem = ControlBase.extend("ui5strap.ListItem", {
+	var ListItem = ListItemBase.extend("ui5strap.ListItem", {
 		metadata : _meta
 	}),
 	ListItemProto = ListItem.prototype;

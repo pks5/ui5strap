@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
+sap.ui.define(['./library', './ListItemBase', './ListLinkItem'], function(library, ListItemBase, ListLinkItem){
 
 	var ListDropdownItem = ListLinkItem.extend("ui5strap.ListDropdownItem", {
 		metadata : {
@@ -110,7 +110,7 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 				this.close();
 				
-				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem),
+				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase),
 					hostUpdate = this.getUpdate();
 				
 				if(menuListItem){

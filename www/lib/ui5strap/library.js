@@ -137,6 +137,7 @@ sap.ui
 										"ui5strap.ListDropdownMenu",
 										"ui5strap.ListGroup",
 										"ui5strap.ListGroupItem",
+										"ui5strap.ListItemBase",
 										"ui5strap.ListItem",
 										"ui5strap.ListLinkItem",
 										"ui5strap.ListMedia",
