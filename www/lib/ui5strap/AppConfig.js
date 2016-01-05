@@ -88,7 +88,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	};
 	
 	/**
-	* Returns config information about a view.
+	* Returns config information about a view. If only an ID is provided, the view with that ID is returned. 
+	* If an ID and viewName is provided, it first looks for a view with that ID - if there is no view with the ID but ONE with the provided viewName without any ID, that view is returned.
+	* If only a viewName is provided, it looks if there is ONE view with that viewName or throws an error.
 	* @Public
 	*/
 	AppConfigProto.getViewConfig = function(viewDef){
