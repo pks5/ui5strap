@@ -137,6 +137,7 @@ sap.ui
 										"ui5strap.ListDropdownMenu",
 										"ui5strap.ListGroup",
 										"ui5strap.ListGroupItem",
+										"ui5strap.ListItemBase",
 										"ui5strap.ListItem",
 										"ui5strap.ListLinkItem",
 										"ui5strap.ListMedia",
@@ -3669,9 +3670,50 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		return this.data.menus[menuId];
 	};
+	
+	/**
+	* Returns the Dom ID of the App
+	*/
+	AppConfigProto.getAppDomId = function(subElement){
+		return this.data.app.id.replace(/\./g, '-') + (subElement ? '---' + subElement : '');
+	};
 
 	/**
-	* Returns config information about a view.
+	 * Creates a globally unique Control ID.
+	 */
+	AppConfigProto.createControlId = function(controlId, viewId){
+		var appPrefix = this.getAppDomId() + '---';
+		if(jQuery.sap.startsWith(controlId, appPrefix)){
+			if(viewId){
+				throw new Error("Cannot create absolute control id: controlId is already absolute but viewId is given!");
+			}
+			
+			//ControlID already has a app prefix, just return it.
+			jQuery.sap.log.debug("Control ID '" + controlId + "' already have an app prefix.");
+			
+			return controlId;
+		}
+		
+		if(viewId){
+			if(jQuery.sap.startsWith(viewId, appPrefix)){
+				controlId = viewId + "--" + controlId;
+			}
+			else{
+				controlId = appPrefix + viewId + "--" + controlId;
+			}
+		}
+		else{
+			controlId = appPrefix + controlId;
+		}
+		
+		return controlId;
+	
+	};
+	
+	/**
+	* Returns config information about a view. If only an ID is provided, the view with that ID is returned. 
+	* If an ID and viewName is provided, it first looks for a view with that ID - if there is no view with the ID but ONE with the provided viewName without any ID, that view is returned.
+	* If only a viewName is provided, it looks if there is ONE view with that viewName or throws an error.
 	* @Public
 	*/
 	AppConfigProto.getViewConfig = function(viewDef){
@@ -3688,29 +3730,49 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			viewOptions = {},
 			foundById = false;
 		
-		//First check if a view ID is given
+		//Resolve View ID
 		if(viewId){
+			viewId = this.createControlId(viewId);
+			
+			//Search View by ID
 			if(this.data.viewsById[viewId]){
 				//Delete viewName that is inside the provided view definition since we will use the viewName from config.
 				delete viewDef.viewName;
+				//Delete id that is inside the provided view definition since it might be unresolved.
+				delete viewDef.id;
+				
 				viewConfigOrg = this.data.viewsById[viewId];
 				foundById = true;
 			}
 		}
 		
+		//Resolve View Name
 		if(viewName){
 			viewName = this.resolvePackage(viewName, "views");
 			var viewsByName = this.data.viewsByName[viewName];
+			
+			//Search by View Name if not found by ID
 			if(!foundById && viewsByName){
-				if(viewsByName.length > 1){
-					throw new Error("Cannot determine view configuration by viewName: more than one view defined with that name!");
+				for(var j = 0; j < viewsByName.length; j++){
+					if(viewId && viewsByName[j].id){
+						//We skip all views that are found by viewName but have an id - if also a search id is specified
+						continue;
+					}
+					if(viewConfigOrg){
+						throw new Error("Cannot determine view configuration by viewName: more than one view is defined with that name!");
+					}
+					//Delete viewName that is inside the provided view definition since we will use the resolved name.
+					delete viewDef.viewName;
+					if(viewId){
+						//Set the resolved view ID.
+						viewDef.id = viewId;
+					}
+					viewConfigOrg = viewsByName[j];
 				}
-				//Delete viewName that is inside the provided view definition since we will use the resolved name.
-				delete viewDef.viewName;
-				viewConfigOrg = viewsByName[0];
 			}
 		}
 		
+		//Test if view configuration has been found
 		if(viewConfigOrg){
 			//The "viewOptions" contain the mix of original config and definition
 			jQuery.extend(viewOptions, viewConfigOrg, viewDef);
@@ -3718,8 +3780,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		else{
 			//No view config for the given ID and Name.
 			if(viewName){
-				//Set the viewName in def again since it might be resolved now.
+				//Set the resolved viewName.
 				viewDef.viewName = viewName;
+			}
+			if(viewId){
+				//Set the resolved view ID.
+				viewDef.id = viewId;
 			}
 			
 			jQuery.extend(viewOptions, viewDef);
@@ -3762,26 +3828,25 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* Returns a list of events / actions for given scope, eventName and viewName.
 	* @Public
 	*/
-	AppConfigProto.getEvents = function(eventGroup, eventName, viewName){
+	AppConfigProto.getEvents = function(eventGroup, eventName, viewDef){
 		var eventList = [],
-			_configData = this.data;
-
+			_configData = this.data,
+			viewData = this.getViewConfig(viewDef);
+		
+		//Add global events to event list.
 		if(_configData.events 
 			&& _configData.events[eventGroup] 
 			&& _configData.events[eventGroup][eventName]){
 			eventList = eventList.concat(_configData.events[eventGroup][eventName]);
 		}
 		
-		if(viewName){
-			var viewData = this.data.views[viewName];
-			if(viewData
+		//Add view events to event list.
+		if(viewData
 				&& viewData.events 
 				&& viewData.events[eventGroup] 
 				&& viewData.events[eventGroup][eventName]){
-				
-				eventList = eventList.concat(viewData.events[eventGroup][eventName]);
 			
-			}
+			eventList = eventList.concat(viewData.events[eventGroup][eventName]);
 		}
 
 		return eventList;
@@ -3880,6 +3945,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				configDataJSON.viewsByName[viewNameResolved].push(viewData);
 				
 				if(viewData.id){
+					viewData.id = this.createControlId(viewData.id);
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
 			}console.log(configDataJSON);
@@ -3904,6 +3970,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				configDataJSON.viewsByName[viewNameResolved].push(viewData);
 				
 				if(viewData.id){
+					viewData.id = this.createControlId(viewData.id);
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
 			}
@@ -5618,31 +5685,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* Create an control id with app namespace. If viewId is given, the controlId must be local.
 	*/ 
 	AppBaseProto.createControlId = function(controlId, viewId){
-		var appPrefix = this.getDomId() + '---';
-		if(jQuery.sap.startsWith(controlId, appPrefix)){
-			if(viewId){
-				throw new Error("Cannot create absolute control id: controlId is already absolute but viewId is given!");
-			}
-			
-			//ControlID already has a app prefix, just return it.
-			jQuery.sap.log.warning("Control ID '" + controlId + "' already have an app prefix.");
-			
-			return controlId;
-		}
-		
-		if(viewId){
-			if(jQuery.sap.startsWith(viewId, appPrefix)){
-				controlId = viewId + "--" + controlId;
-			}
-			else{
-				controlId = appPrefix + viewId + "--" + controlId;
-			}
-		}
-		else{
-			controlId = appPrefix + controlId;
-		}
-		
-		return controlId;
+		jQuery.sap.log.warning("ui5strap.AppBase.prototype.createControlId is deprecated! Use ui5strap.AppConfig.prototype.createControlId instead!");
+		return this.config.createControlId(controlId, viewId);
 	
 	};
 	
@@ -5676,7 +5720,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* Returns the Control with the given controlId. Depending if a viewId is specified, the controlId must be global or local.
 	*/
 	AppBaseProto.getControl = function(controlId, viewId){
-		return sap.ui.getCore().byId(this.createControlId(controlId, viewId));
+		return sap.ui.getCore().byId(this.config.createControlId(controlId, viewId));
 	};
 
 	AppBaseProto._buildRootControl = function(){
@@ -5790,7 +5834,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* Returns the Dom ID of the App
 	*/
 	AppBaseProto.getDomId = function(subElement){
-		return this.config.data.app.id.replace(/\./g, '-') + (subElement ? '---' + subElement : '');
+		jQuery.sap.log.warning("ui5strap.App.prototype.getDomId is deprecated! Use ui5strap.AppConfig.prototype.getAppDomId instead!");
+		return this.config.getAppDomId(subElement);
 	};
 
 	/**
@@ -5912,9 +5957,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				
 			if(app){
 				var view = this.getView(),
-					updateEvents = app.config.getEvents('controller', eventName, view.getViewName()),
-					updateEventsLength = updateEvents.length,
-					viewId = view.getId();
+					viewId = view.getId(),
+					updateEvents = app.config.getEvents('controller', eventName, viewId),
+					updateEventsLength = updateEvents.length;
 
 				for(var i = 0; i < updateEventsLength; i++){
 				 	var actionName = updateEvents[i];
@@ -6022,9 +6067,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				
 				//TODO find out if view.sViewName is reliable
 				var view = this.getView(),
-					initEvents = app.config.getEvents('controller', 'init', view.sViewName),
-					initEventsLength = initEvents.length,
-					viewId = view.getId();
+					viewId = view.getId(),
+					initEvents = app.config.getEvents('controller', 'init', viewId),
+					initEventsLength = initEvents.length;
 
 				for(var i = 0; i < initEventsLength; i++){
 					var actionName = initEvents[i];
@@ -10812,12 +10857,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
+sap.ui.define(['./library', './ListItemBase', './SelectableSupport'], function(library, ListItemBase, SelectableSupport){
 
 	var _meta = {
 			interfaces : [],
-			
-			defaultAggregation : "content",
 			
 			library : "ui5strap",
 
@@ -10841,19 +10884,13 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 					type:"string",
 					defaultValue : ""
 				}
-			},
-			
-			aggregations : { 
-				content : {
-					singularName: "content"
-				}
 			}
 
 		};
 	
 	SelectableSupport.meta(_meta);
 	
-	var ListItem = ControlBase.extend("ui5strap.ListItem", {
+	var ListItem = ListItemBase.extend("ui5strap.ListItem", {
 		metadata : _meta
 	}),
 	ListItemProto = ListItem.prototype;
@@ -10945,7 +10982,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListItem'], function(library, ControlBase, ListSelectionSupport, ListItem){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListItemBase'], function(library, ControlBase, ListSelectionSupport, ListItemBase){
 
 	var _meta = {
 			interfaces : [],
@@ -10994,7 +11031,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 		oEvent.setMarked("ui5strap.ListBase");
 		
 		//TODO find the right list item! (dropdown menu)
-		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem),
+		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase),
 			selectionProvider = this,
 			listItem = item,
 			listItemUpdated = false;
@@ -11002,7 +11039,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 			selectionProvider = item.getParent();
 			//TODO search for selectable item instead
-			listItem = ui5strap.Utils.findClosestParentControl(selectionProvider, ListItem);
+			listItem = ui5strap.Utils.findClosestParentControl(selectionProvider, ListItemBase);
 			
 			if(listItem){
 				if(oEvent.isMarked("ui5strap.ISelectableItem.update")){
@@ -16156,7 +16193,7 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 				this.close();
 				
-				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem),
+				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItemBase),
 					hostUpdate = this.getUpdate();
 				
 				if(menuListItem){
@@ -16337,7 +16374,7 @@ sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button', './ListItem'], function(library, ControlBase, ListSelectionSupport, Button, ListItem){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button', './ListItemBase'], function(library, ControlBase, ListSelectionSupport, Button, ListItemBase){
 
 	var _meta = {
 			
@@ -16453,7 +16490,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 		
 		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 			//TODO search for selectable item instead
-			providerItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItem);
+			providerItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase);
 			if(providerItem){
 				selectionProvider = providerItem.getParent();
 				
@@ -19167,7 +19204,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
  * 
  */
 
-sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
+sap.ui.define(['./library', './ListItemBase', './ListLinkItem'], function(library, ListItemBase, ListLinkItem){
 
 	var ListDropdownItem = ListLinkItem.extend("ui5strap.ListDropdownItem", {
 		metadata : {
@@ -19252,7 +19289,7 @@ sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 				this.close();
 				
-				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem),
+				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase),
 					hostUpdate = this.getUpdate();
 				
 				if(menuListItem){
@@ -19411,7 +19448,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
  * 
  */
 
-sap.ui.define(['./library', './ListBase'], function(library, ListBase){
+sap.ui.define(['./library', './ListBase', './ListItemBase'], function(library, ListBase, ListItemBase){
 
 	var ListDropdownMenu = ListBase.extend("ui5strap.ListDropdownMenu", {
 		metadata : {
@@ -19448,7 +19485,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 		oEvent.setMarked("ui5strap.ListDropdownMenu");
 		
 		//Find the closest item. Should be an item from the dropdown menu.
-		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItem);
+		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase);
 		
 		this.pressItem(oEvent.srcControl, item, false, this, item);
 	};
@@ -19744,7 +19781,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @Override
 	 */
 	ListMediaProto._getStyleClassDesign = function(){
-		return " edia-list";
+		return " media-list";
 	};
 	
 	return ListMedia;
