@@ -123,7 +123,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 				throw new Error("Cannot goto page: No such frame with component id: " + frameId);
 			}
 			
-			this.context.app[frameGetter]().navigateTo(control, this.context.parameters[this.namespace]);
+			if(control === this.context.app.getRootControl()){
+				this.context.app[frameGetter]().gotoPage(this.context.parameters[this.namespace]);
+			}
+			else{
+				this.context.app[frameGetter]().navigateTo(control, this.context.parameters[this.namespace]);
+			}
 	}
 	
 	return AMGotoPage;

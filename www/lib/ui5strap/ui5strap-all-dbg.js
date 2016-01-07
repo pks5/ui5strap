@@ -1534,15 +1534,14 @@ sap.ui
 					 * @Public
 					 * @Static
 					 */
-					ui5strap.RenderUtils.renderContent = function(rm, oControl,
-							text, dontEscape) {
+					ui5strap.RenderUtils.renderContent = function(rm, oControl) {
 						var content = oControl.getContent(), contentPlacement = oControl
-								.getContentPlacement(), text = text
-								|| oControl.getText();
+								.getContentPlacement(), text = oControl.getText
+								&& oControl.getText(), parse = oControl.getParse && oControl.getParse();
 
 						if (contentPlacement === ui5strap.ContentPlacement.End) {
-							if (dontEscape) {
-								rm.write(text);
+							if (parse) {
+								rm.write(ui5strap.RenderUtils.parseText(text));
 							} else {
 								rm.writeEscaped(text);
 							}
@@ -1553,8 +1552,8 @@ sap.ui
 						}
 
 						if (contentPlacement === ui5strap.ContentPlacement.Start) {
-							if (dontEscape) {
-								rm.write(text);
+							if (parse) {
+								rm.write(ui5strap.RenderUtils.parseText(text));
 							} else {
 								rm.writeEscaped(text);
 							}
@@ -3948,7 +3947,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 					viewData.id = this.createControlId(viewData.id);
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
-			}console.log(configDataJSON);
+			}
 		}
 		else{
 			//Old format
@@ -4390,7 +4389,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		
 		var navContainerOptions = frameConfig.navContainerOptions || {};
 		if(navContainerOptions.id){
-			navContainerOptions.id = this.app.createControlId(navContainerOptions.id);
+			navContainerOptions.id = this.app.config.createControlId(navContainerOptions.id);
 		}
 		
 		var rootControl = new NavContainerConstructor(navContainerOptions);
@@ -5131,7 +5130,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		jQuery.sap.log.debug("AppBaseProto.unload");
 		
 		ui5strap.Layer.unregister(this.overlayId);
-		ui5strap.Layer.unregister(this.getDomId('loader'));
+		ui5strap.Layer.unregister(this.config.getAppDomId('loader'));
 
 		this.onUnload(new sap.ui.base.Event("ui5strap.app.unload", this, {}));
 
@@ -5398,7 +5397,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 	AppBaseProto.setLoaderVisible = function(visible, callback){
 		//ui5strap.Layer.setVisible('ui5strap-loader', visible, callback, option);
-		ui5strap.Layer.setVisible(this.getDomId('loader'), visible, callback);
+		ui5strap.Layer.setVisible(this.config.getAppDomId('loader'), visible, callback);
 	};
 
 	/**
@@ -5418,7 +5417,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	AppBaseProto.registerOverlay = function(){
 		var _this = this;
 		
-		this.overlayId = this.getDomId('overlay');
+		this.overlayId = this.config.getAppDomId('overlay');
 
 		if(ui5strap.Layer.get(this.overlayId)){
 			this._log.warning("Layer already registered: " + this.overlayId);
@@ -5538,7 +5537,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				}
 			}
 
-			viewConfig.id = this.createControlId(pageId);
+			viewConfig.id = this.config.createControlId(pageId);
 		}
 
 		if(!viewConfig.viewData){
@@ -5691,7 +5690,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	AppBaseProto.extractRelativeControlId = function(controlId, viewId){
-		var prefix = this.getDomId() + '---';
+		var prefix = this.config.getAppDomId() + '---';
 		
 		if(viewId){
 			if(jQuery.sap.startsWith(controlId, prefix)){
@@ -5852,22 +5851,22 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//App Container
 		var appContainer = document.createElement('div');
 		appContainer.className = _createAppClass(this, 'ui5strap-app ui5strap-app-prepared ui5strap-hidden');
-		appContainer.id = this.getDomId();
+		appContainer.id = this.config.getAppDomId();
 		
 		//App Content
 		var appContent = document.createElement('div');
 		appContent.className = 'ui5strap-app-content';
-		appContent.id = this.getDomId('content');
+		appContent.id = this.config.getAppDomId('content');
 		appContainer.appendChild(appContent);
 
 		//App Overlay
 		var appOverlay = document.createElement('div');
 		appOverlay.className = 'ui5strap-app-overlay ui5strap-overlay ui5strap-layer ui5strap-hidden';
-		appOverlay.id = this.getDomId('overlay');
+		appOverlay.id = this.config.getAppDomId('overlay');
 
 		//var appOverlayBackdrop = document.createElement('div');
 		//appOverlayBackdrop.className = 'ui5strap-overlay-backdrop';
-		//appOverlayBackdrop.id = this.getDomId('overlay-backdrop');
+		//appOverlayBackdrop.id = this.config.getAppDomId('overlay-backdrop');
 		/*
 		appOverlayBackdrop.onclick = function(){
 			_this.hideOverlay();
@@ -5877,7 +5876,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 		var appOverlayContent = document.createElement('div');
 		appOverlayContent.className = 'ui5strap-overlay-content';
-		appOverlayContent.id = this.getDomId('overlay-content');
+		appOverlayContent.id = this.config.getAppDomId('overlay-content');
 		appOverlay.appendChild(appOverlayContent);
 
 		appContainer.appendChild(appOverlay);
@@ -5885,7 +5884,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//App Loader
 		var appLoader = document.createElement('div');
 		appLoader.className = 'ui5strap-app-loader ui5strap-loader ui5strap-layer ui5strap-hidden';
-		appLoader.id = this.getDomId('loader');
+		appLoader.id = this.config.getAppDomId('loader');
 		appContainer.appendChild(appLoader);
 
 		ui5strap.Layer.register(appLoader.id, jQuery(appLoader));
@@ -5893,7 +5892,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//App Splash
 		var appSplash = document.createElement('div');
 		appSplash.className = 'ui5strap-app-splash ui5strap-layer ui5strap-hidden';
-		appSplash.id = this.getDomId('splash');
+		appSplash.id = this.config.getAppDomId('splash');
 		appContainer.appendChild(appSplash);
 
 		//Cache DOM Ref
@@ -6458,7 +6457,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		
 		var navContainerOptions = navigatorOptions.settings || {};
 		if(navContainerOptions.id){
-			navContainerOptions.id = this.createControlId(navContainerOptions.id);
+			navContainerOptions.id = this.config.createControlId(navContainerOptions.id);
 		}
 		
 		var rootControl = new NavContainerConstructor(navContainerOptions);
@@ -6505,7 +6504,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			throw new Error('Cannot navigate to page: no "target" specified!');
 		}
 		
-		if(navControl.isBusy(viewConfig.target)){
+		if(navControl.isTargetBusy(viewConfig.target)){
 			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
 			return false;
@@ -6519,7 +6518,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		navControl.setTargetBusy(target, true);
 
 		//Trigger onUpdate events
-		navControl.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
+		navControl.updateTarget(target, oPage, viewConfig.parameters);
 
 		//Change NavContainer to page
 		navControl.toPage(
@@ -6527,9 +6526,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			target, 
 			viewConfig.transition,
 			function toPage_complete(){
-				
-				//Set target available
-				navControl.setTargetBusy(target, false);
+				window.setTimeout(function(){
+					//Set target available
+					navControl.setTargetBusy(target, false);
+				}, 50);
 				
 				//Trigger callback
 				callback && callback();
@@ -6631,7 +6631,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			properties : {
 				defaultTransition : {
 					type : "string",
-					defaultValue : "transition-slide"
+					defaultValue : "slide-rtl"
 				}
 			},
 			
@@ -7179,8 +7179,11 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	 * @Override
 	 */
 	NavContainerProto.setTargetBusy = function(target, targetBusy){
-		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
+		if(this._targetStatus[target] && targetBusy){
+			throw new Error("Cannot set target busy: already busy!");
+		}
 		this._targetStatus[target] = targetBusy;
+		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
 	};
 	
 	/**
@@ -9926,9 +9929,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			action = oControl.getBsAction(),
-			target = oControl.getTarget(),
-			text = oControl.getText(),
-			parse = oControl.getParse();
+			target = oControl.getTarget();
 	
 		rm.write("<a");
 		rm.writeControlData(oControl);
@@ -9956,12 +9957,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write(">");
 		
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-	
 		//Content
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		rm.write("</a>");
 
@@ -10207,13 +10204,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	TextRenderer.render = function(rm, oControl) {
 		var type = oControl.getType(),
 			tagData = oControl._typeToTag[type],
-			text = oControl.getText(),
-			parse = oControl.getParse(),
 			title = oControl.getTitle();
-
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
 
 		//Text with tag
 		rm.write("<" + tagData.tagName);
@@ -10229,9 +10220,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
     	}
 		
 		rm.write(">");
-			
-			//Content
-			ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		
+		//Content
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		rm.write("</" + tagData.tagName + ">");
 
@@ -10932,13 +10923,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var ListItemRenderer = {};
 
 	ListItemRenderer.render = function(rm, oControl) {
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-
 		rm.write("<li");
 		rm.writeControlData(oControl);
 		
@@ -10948,7 +10932,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write(">");
 
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 
 		rm.write("</li>");
 	};
@@ -11220,14 +11204,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	ListLinkItemRenderer.render = function(rm, oControl) {
 		this.startRender(rm, oControl, {});
 
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-	
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-	
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 
 		this.endRender(rm, oControl);
 	};
@@ -11372,14 +11349,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			icon = oControl.getIcon(),
 			parent = oControl.getParent(),
 			tag = parent.getListMode() === ui5strap.ListGroupMode.Default ? 'li' : 'a',
-			text = oControl.getText(),
-			parse = oControl.getParse(),
 			severity = oControl.getSeverity();
 
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-		
 		rm.write("<" + tag);
 		rm.writeControlData(oControl);
 		rm.addClass('list-group-item');
@@ -11402,8 +11373,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.writeEscaped(badge);
 			rm.write('</span>');
 		}
-		
-		
 		
 		ui5strap.RenderUtils.renderContent(rm, oControl);
 		    
@@ -11514,14 +11483,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		var parent = oControl.getParent(),
 			media = oControl.getMedia(),
 			heading = oControl.getHeading(),
-			tag = !(parent instanceof ui5strap.ListMedia) || parent.getContainer() ? 'div' : 'li',
-			text = oControl.getText(),
-			parse = oControl.getParse();
+			tag = !(parent instanceof ui5strap.ListMedia) || parent.getContainer() ? 'div' : 'li';
 
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-		
 		rm.write("<" + tag);
 		rm.writeControlData(oControl);
 		rm.addClass('media');
@@ -11545,7 +11508,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.write('</h4>');
 		}
 		
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		rm.write('</div>');
 		    
@@ -13470,7 +13433,7 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			selectedItem = null;
 		
 		for(var i = 0; i < items.length; i++){
-			if(this.context.app.createControlId(itemId) === this.context.app.createControlId(items[i].getItemId())){
+			if(this.context.app.config.createControlId(itemId) === this.context.app.config.createControlId(items[i].getItemId())){
 				selectedItem = items[i];
 				break;
 			}
@@ -15045,10 +15008,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			content = oControl.getContent(),
 	        contentPlacement = oControl.getContentPlacement();
 
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-		
 		rm.write("<li");
 		rm.writeControlData(oControl);
 		rm.addClass('u5sl-barmenu-item');
@@ -15069,8 +15028,17 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 		
 		if(text){
+			if(parse){
+				text = ui5strap.RenderUtils.parseText(text);
+			}
+			
 			rm.write('<span class="u5sl-barmenu-item-text">');
-			rm.writeEscaped(text);
+			if(parse){
+				rm.write(text);
+			}
+			else{
+				rm.writeEscaped(text);
+			}
 			rm.write('</span>');
 		}
 		
@@ -18469,21 +18437,15 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var HeadingRenderer = {};
 
 	HeadingRenderer.render = function(rm, oControl) {
-		var level = oControl.getLevel(),
-			text = oControl.getText(),
-			parse = oControl.getParse();
+		var level = oControl.getLevel();
 
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-			
 		rm.write("<h" + level);
 		rm.writeControlData(oControl);
 		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
-		    
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		    
 		rm.write("</h" + level + ">");
 	};
@@ -19368,7 +19330,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		this.startRenderLink(rm, oControl);
 		
-		this.renderContent(rm, oControl);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
+		rm.write(' <span class="caret"></span>');
 
 		rm.write('</a>');
 		
@@ -19379,18 +19342,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("</li>");
 	};
 
-	ListDropdownItemRenderer.renderContent = function(rm, oControl){
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-	
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-	
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
-		rm.write(' <span class="caret"></span>');
-	};
-	
 	ListDropdownItemRenderer.startRenderLink = function(rm, oControl) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
@@ -19403,18 +19354,15 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	    
 		rm.writeClasses();
 		    
-		if('' !== href){
-			rm.writeAttribute('href', href);
-		}
-
-		if('' !== target){
-			rm.writeAttribute('target', target);
-		}
-
-		if('' !== title){
-	    	rm.writeAttribute('title', title);
-	    }
-
+		//href Attribute
+		href && rm.writeAttribute('href', href);
+		
+		//Target Attribute
+		target && rm.writeAttribute('target', target);
+		
+		//Title Attribute
+		title && rm.writeAttribute('title', title);
+	    
 		rm.write(">");
 	};
 	
@@ -19952,14 +19900,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
 		rm.write(">");
 		
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-	
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-	
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 
 		if('' !== badge){
 			rm.write('<span class="badge">');
@@ -23136,13 +23077,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	ParagraphRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			severity = oControl.getSeverity(),
-			text = oControl.getText(),
-			parse = oControl.getParse(),
 			textAlign = oControl.getTextAlign();
-
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
 
 		rm.write("<p");
 		rm.writeControlData(oControl);
@@ -23150,7 +23085,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.writeClasses();
 		rm.write(">");
 		
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		rm.write("</p>");
 	};

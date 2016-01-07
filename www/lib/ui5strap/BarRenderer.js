@@ -77,7 +77,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			//@deprecated
 			if(contentLeft.length > 0){     
 				rm.write("<div");
-				rm.addClass("uui5strapBar-contentLeft");
+				rm.addClass("ui5strapBar-contentLeft");
 				rm.writeClasses();
 				rm.write(">");
 				for(var i = 0; i < contentLeft.length; i++){ 

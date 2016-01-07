@@ -127,12 +127,12 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 		//Navbar toggle
 		//@deprecated
 		if(action === ui5strap.BsAction.ToggleNavbar){
-			styleClass + " btn-toggle-navbar";
+			styleClass += " btn-toggle-navbar";
 		}
 		//Sidenav toggle
 		//@deprecated
 		else if(action === ui5strap.BsAction.ToggleSidenav){
-			styleClass + " btn-toggle-sidenav";
+			styleClass += " btn-toggle-sidenav";
 		}
 		
 		return styleClass;

@@ -163,5 +163,64 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 		ButtonGroupProto.onclick = ButtonGroupProto._handlePress;
 	}
 	
+	/*
+	 * ----------
+	 * DEPRECATED
+	 * ----------
+	 */
+	
+	/**
+	 * Set list item selected by index
+	 * @deprecated
+	 */
+	ButtonGroupProto.setSelectedIndex = function(itemIndex){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
+		
+		return this.setSelectionIndex(itemIndex);
+	};
+ 
+	/**
+	 * Get index of selected index
+	 * @deprecated
+	 */
+	ButtonGroupProto.getSelectedIndex = function(){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
+		
+		var selection = this.getSelectionIndex();
+		return selection && selection.length ? selection[0] : null;
+	};
+
+	
+	/**
+	 * Set control selected by reference
+	 * @deprecated
+	 */
+	ButtonGroupProto.setSelectedControl = function(item){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedControl is deprecated! Use .setSelection instead.");
+	
+		return this.setSelection(item);
+	};
+	
+	/**
+	 * Get selected list item control
+	 * @deprecated
+	 */
+	ButtonGroupProto.getSelectedControl = function(){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedControl is deprecated! Use .getSelection instead.");
+		
+		var selection = this.getSelection();
+		return selection && selection.length ? selection[0] : null;
+	};
+	
+	/**
+	 * Select by custom data value
+	 * @deprecated
+	 */
+	ButtonGroupProto.setSelectedCustom = function(dataKey, value){
+		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedCustom is deprecated! Use .setSelectionByCustomData instead.");
+		
+		return this.setSelectionByCustomData(dataKey, value);
+	};
+	
 	return ButtonGroup;
 });
