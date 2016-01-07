@@ -585,6 +585,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	 */
 	NavContainerProto.setTargetBusy = function(target, targetBusy){
 		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
+		
+		if(this._targetStatus[target] && targetBusy){
+			throw new Error("Cannot set target busy: already busy!");
+		}
 		this._targetStatus[target] = targetBusy;
 	};
 	

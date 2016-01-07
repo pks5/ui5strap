@@ -389,7 +389,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			throw new Error('Cannot navigate to page: no "target" specified!');
 		}
 		
-		if(navControl.isBusy(viewConfig.target)){
+		if(navControl.isTargetBusy(viewConfig.target)){
 			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
 			return false;
@@ -403,7 +403,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		navControl.setTargetBusy(target, true);
 
 		//Trigger onUpdate events
-		navControl.updateTarget(viewConfig.target, oPage, viewConfig.parameters);
+		navControl.updateTarget(target, oPage, viewConfig.parameters);
 
 		//Change NavContainer to page
 		navControl.toPage(

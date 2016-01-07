@@ -325,7 +325,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 					viewData.id = this.createControlId(viewData.id);
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
-			}console.log(configDataJSON);
+			}
 		}
 		else{
 			//Old format
