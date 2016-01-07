@@ -1,6 +1,6 @@
 <View controllerName="ui5strap.ActionController" xmlns="ui5strap"
 	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-	<Bar type="Full">
+	<Bar type="Default">
 		<BarMenu id="barMenuSettings" typeExtraSmall="ButtonsVertical"
 			tap="ui5strap.demoapp.actions.NavigateViaMenuSettings" items="{menu>/subMenuSettings}">
 			<BarMenuItem
