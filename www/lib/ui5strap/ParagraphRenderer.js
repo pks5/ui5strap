@@ -32,13 +32,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	ParagraphRenderer.render = function(rm, oControl) {
 		var content = oControl.getContent(),
 			severity = oControl.getSeverity(),
-			text = oControl.getText(),
-			parse = oControl.getParse(),
 			textAlign = oControl.getTextAlign();
-
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
 
 		rm.write("<p");
 		rm.writeControlData(oControl);
@@ -46,7 +40,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.writeClasses();
 		rm.write(">");
 		
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		rm.write("</p>");
 	};

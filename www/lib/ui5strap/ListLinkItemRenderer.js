@@ -32,14 +32,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	ListLinkItemRenderer.render = function(rm, oControl) {
 		this.startRender(rm, oControl, {});
 
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-	
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-	
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 
 		this.endRender(rm, oControl);
 	};

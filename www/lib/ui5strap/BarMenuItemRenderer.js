@@ -36,10 +36,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			content = oControl.getContent(),
 	        contentPlacement = oControl.getContentPlacement();
 
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-		
 		rm.write("<li");
 		rm.writeControlData(oControl);
 		rm.addClass('u5sl-barmenu-item');
@@ -60,8 +56,17 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 		
 		if(text){
+			if(parse){
+				text = ui5strap.RenderUtils.parseText(text);
+			}
+			
 			rm.write('<span class="u5sl-barmenu-item-text">');
-			rm.writeEscaped(text);
+			if(parse){
+				rm.write(text);
+			}
+			else{
+				rm.writeEscaped(text);
+			}
 			rm.write('</span>');
 		}
 		

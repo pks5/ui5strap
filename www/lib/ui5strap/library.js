@@ -1534,15 +1534,14 @@ sap.ui
 					 * @Public
 					 * @Static
 					 */
-					ui5strap.RenderUtils.renderContent = function(rm, oControl,
-							text, dontEscape) {
+					ui5strap.RenderUtils.renderContent = function(rm, oControl) {
 						var content = oControl.getContent(), contentPlacement = oControl
-								.getContentPlacement(), text = text
-								|| oControl.getText();
+								.getContentPlacement(), text = oControl.getText
+								&& oControl.getText(), parse = oControl.getParse && oControl.getParse();
 
 						if (contentPlacement === ui5strap.ContentPlacement.End) {
-							if (dontEscape) {
-								rm.write(text);
+							if (parse) {
+								rm.write(ui5strap.RenderUtils.parseText(text));
 							} else {
 								rm.writeEscaped(text);
 							}
@@ -1553,8 +1552,8 @@ sap.ui
 						}
 
 						if (contentPlacement === ui5strap.ContentPlacement.Start) {
-							if (dontEscape) {
-								rm.write(text);
+							if (parse) {
+								rm.write(ui5strap.RenderUtils.parseText(text));
 							} else {
 								rm.writeEscaped(text);
 							}

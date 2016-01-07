@@ -34,14 +34,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			icon = oControl.getIcon(),
 			parent = oControl.getParent(),
 			tag = parent.getListMode() === ui5strap.ListGroupMode.Default ? 'li' : 'a',
-			text = oControl.getText(),
-			parse = oControl.getParse(),
 			severity = oControl.getSeverity();
 
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-		
 		rm.write("<" + tag);
 		rm.writeControlData(oControl);
 		rm.addClass('list-group-item');
@@ -64,8 +58,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.writeEscaped(badge);
 			rm.write('</span>');
 		}
-		
-		
 		
 		ui5strap.RenderUtils.renderContent(rm, oControl);
 		    

@@ -79,7 +79,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		
 		var navContainerOptions = frameConfig.navContainerOptions || {};
 		if(navContainerOptions.id){
-			navContainerOptions.id = this.app.createControlId(navContainerOptions.id);
+			navContainerOptions.id = this.app.config.createControlId(navContainerOptions.id);
 		}
 		
 		var rootControl = new NavContainerConstructor(navContainerOptions);

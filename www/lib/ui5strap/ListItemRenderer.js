@@ -30,13 +30,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var ListItemRenderer = {};
 
 	ListItemRenderer.render = function(rm, oControl) {
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-
 		rm.write("<li");
 		rm.writeControlData(oControl);
 		
@@ -46,7 +39,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write(">");
 
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 
 		rm.write("</li>");
 	};

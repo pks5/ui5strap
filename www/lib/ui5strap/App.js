@@ -342,7 +342,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		
 		var navContainerOptions = navigatorOptions.settings || {};
 		if(navContainerOptions.id){
-			navContainerOptions.id = this.createControlId(navContainerOptions.id);
+			navContainerOptions.id = this.config.createControlId(navContainerOptions.id);
 		}
 		
 		var rootControl = new NavContainerConstructor(navContainerOptions);

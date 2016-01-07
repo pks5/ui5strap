@@ -33,14 +33,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		var parent = oControl.getParent(),
 			media = oControl.getMedia(),
 			heading = oControl.getHeading(),
-			tag = !(parent instanceof ui5strap.ListMedia) || parent.getContainer() ? 'div' : 'li',
-			text = oControl.getText(),
-			parse = oControl.getParse();
+			tag = !(parent instanceof ui5strap.ListMedia) || parent.getContainer() ? 'div' : 'li';
 
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-		
 		rm.write("<" + tag);
 		rm.writeControlData(oControl);
 		rm.addClass('media');
@@ -64,7 +58,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.write('</h4>');
 		}
 		
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		rm.write('</div>');
 		    

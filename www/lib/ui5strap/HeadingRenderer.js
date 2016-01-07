@@ -30,21 +30,15 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var HeadingRenderer = {};
 
 	HeadingRenderer.render = function(rm, oControl) {
-		var level = oControl.getLevel(),
-			text = oControl.getText(),
-			parse = oControl.getParse();
+		var level = oControl.getLevel();
 
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-			
 		rm.write("<h" + level);
 		rm.writeControlData(oControl);
 		rm.addClass(oControl._getStyleClass());
 		rm.writeClasses();
 		rm.write(">");
-		    
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		    
 		rm.write("</h" + level + ">");
 	};

@@ -84,7 +84,7 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			selectedItem = null;
 		
 		for(var i = 0; i < items.length; i++){
-			if(this.context.app.createControlId(itemId) === this.context.app.createControlId(items[i].getItemId())){
+			if(this.context.app.config.createControlId(itemId) === this.context.app.config.createControlId(items[i].getItemId())){
 				selectedItem = items[i];
 				break;
 			}

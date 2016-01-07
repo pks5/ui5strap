@@ -33,9 +33,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
 			action = oControl.getBsAction(),
-			target = oControl.getTarget(),
-			text = oControl.getText(),
-			parse = oControl.getParse();
+			target = oControl.getTarget();
 	
 		rm.write("<a");
 		rm.writeControlData(oControl);
@@ -63,12 +61,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 		rm.write(">");
 		
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-	
 		//Content
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		rm.write("</a>");
 

@@ -33,13 +33,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	TextRenderer.render = function(rm, oControl) {
 		var type = oControl.getType(),
 			tagData = oControl._typeToTag[type],
-			text = oControl.getText(),
-			parse = oControl.getParse(),
 			title = oControl.getTitle();
-
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
 
 		//Text with tag
 		rm.write("<" + tagData.tagName);
@@ -55,9 +49,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
     	}
 		
 		rm.write(">");
-			
-			//Content
-			ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		
+		//Content
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 		
 		rm.write("</" + tagData.tagName + ">");
 

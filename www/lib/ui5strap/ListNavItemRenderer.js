@@ -67,14 +67,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
 		rm.write(">");
 		
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-	
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-	
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
 
 		if('' !== badge){
 			rm.write('<span class="badge">');

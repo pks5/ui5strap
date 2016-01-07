@@ -40,7 +40,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		this.startRenderLink(rm, oControl);
 		
-		this.renderContent(rm, oControl);
+		ui5strap.RenderUtils.renderContent(rm, oControl);
+		rm.write(' <span class="caret"></span>');
 
 		rm.write('</a>');
 		
@@ -51,18 +52,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("</li>");
 	};
 
-	ListDropdownItemRenderer.renderContent = function(rm, oControl){
-		var text = oControl.getText(),
-			parse = oControl.getParse();
-	
-		if(parse){
-			text = ui5strap.RenderUtils.parseText(text);
-		}
-	
-		ui5strap.RenderUtils.renderContent(rm, oControl, text, parse);
-		rm.write(' <span class="caret"></span>');
-	};
-	
 	ListDropdownItemRenderer.startRenderLink = function(rm, oControl) {
 		var href = oControl.getHref(),
 			title = oControl.getTitle(),
@@ -75,18 +64,15 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	    
 		rm.writeClasses();
 		    
-		if('' !== href){
-			rm.writeAttribute('href', href);
-		}
-
-		if('' !== target){
-			rm.writeAttribute('target', target);
-		}
-
-		if('' !== title){
-	    	rm.writeAttribute('title', title);
-	    }
-
+		//href Attribute
+		href && rm.writeAttribute('href', href);
+		
+		//Target Attribute
+		target && rm.writeAttribute('target', target);
+		
+		//Title Attribute
+		title && rm.writeAttribute('title', title);
+	    
 		rm.write(">");
 	};
 	

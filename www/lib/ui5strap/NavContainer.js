@@ -36,7 +36,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			properties : {
 				defaultTransition : {
 					type : "string",
-					defaultValue : "transition-slide"
+					defaultValue : "slide-rtl"
 				}
 			},
 			

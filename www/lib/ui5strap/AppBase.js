@@ -523,7 +523,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		jQuery.sap.log.debug("AppBaseProto.unload");
 		
 		ui5strap.Layer.unregister(this.overlayId);
-		ui5strap.Layer.unregister(this.getDomId('loader'));
+		ui5strap.Layer.unregister(this.config.getAppDomId('loader'));
 
 		this.onUnload(new sap.ui.base.Event("ui5strap.app.unload", this, {}));
 
@@ -790,7 +790,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 	AppBaseProto.setLoaderVisible = function(visible, callback){
 		//ui5strap.Layer.setVisible('ui5strap-loader', visible, callback, option);
-		ui5strap.Layer.setVisible(this.getDomId('loader'), visible, callback);
+		ui5strap.Layer.setVisible(this.config.getAppDomId('loader'), visible, callback);
 	};
 
 	/**
@@ -810,7 +810,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	AppBaseProto.registerOverlay = function(){
 		var _this = this;
 		
-		this.overlayId = this.getDomId('overlay');
+		this.overlayId = this.config.getAppDomId('overlay');
 
 		if(ui5strap.Layer.get(this.overlayId)){
 			this._log.warning("Layer already registered: " + this.overlayId);
@@ -930,7 +930,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				}
 			}
 
-			viewConfig.id = this.createControlId(pageId);
+			viewConfig.id = this.config.createControlId(pageId);
 		}
 
 		if(!viewConfig.viewData){
@@ -1083,7 +1083,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	AppBaseProto.extractRelativeControlId = function(controlId, viewId){
-		var prefix = this.getDomId() + '---';
+		var prefix = this.config.getAppDomId() + '---';
 		
 		if(viewId){
 			if(jQuery.sap.startsWith(controlId, prefix)){
@@ -1244,22 +1244,22 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//App Container
 		var appContainer = document.createElement('div');
 		appContainer.className = _createAppClass(this, 'ui5strap-app ui5strap-app-prepared ui5strap-hidden');
-		appContainer.id = this.getDomId();
+		appContainer.id = this.config.getAppDomId();
 		
 		//App Content
 		var appContent = document.createElement('div');
 		appContent.className = 'ui5strap-app-content';
-		appContent.id = this.getDomId('content');
+		appContent.id = this.config.getAppDomId('content');
 		appContainer.appendChild(appContent);
 
 		//App Overlay
 		var appOverlay = document.createElement('div');
 		appOverlay.className = 'ui5strap-app-overlay ui5strap-overlay ui5strap-layer ui5strap-hidden';
-		appOverlay.id = this.getDomId('overlay');
+		appOverlay.id = this.config.getAppDomId('overlay');
 
 		//var appOverlayBackdrop = document.createElement('div');
 		//appOverlayBackdrop.className = 'ui5strap-overlay-backdrop';
-		//appOverlayBackdrop.id = this.getDomId('overlay-backdrop');
+		//appOverlayBackdrop.id = this.config.getAppDomId('overlay-backdrop');
 		/*
 		appOverlayBackdrop.onclick = function(){
 			_this.hideOverlay();
@@ -1269,7 +1269,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 		var appOverlayContent = document.createElement('div');
 		appOverlayContent.className = 'ui5strap-overlay-content';
-		appOverlayContent.id = this.getDomId('overlay-content');
+		appOverlayContent.id = this.config.getAppDomId('overlay-content');
 		appOverlay.appendChild(appOverlayContent);
 
 		appContainer.appendChild(appOverlay);
@@ -1277,7 +1277,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//App Loader
 		var appLoader = document.createElement('div');
 		appLoader.className = 'ui5strap-app-loader ui5strap-loader ui5strap-layer ui5strap-hidden';
-		appLoader.id = this.getDomId('loader');
+		appLoader.id = this.config.getAppDomId('loader');
 		appContainer.appendChild(appLoader);
 
 		ui5strap.Layer.register(appLoader.id, jQuery(appLoader));
@@ -1285,7 +1285,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//App Splash
 		var appSplash = document.createElement('div');
 		appSplash.className = 'ui5strap-app-splash ui5strap-layer ui5strap-hidden';
-		appSplash.id = this.getDomId('splash');
+		appSplash.id = this.config.getAppDomId('splash');
 		appContainer.appendChild(appSplash);
 
 		//Cache DOM Ref
