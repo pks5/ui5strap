@@ -9,7 +9,6 @@
 				<!-- Left area of bar -->
 				<left>
 					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuSettings" 
-						size="Large"
 						options="BarButton">
 						<Icon icon="columns" />
 					</Button>
@@ -36,7 +35,7 @@
 					<Paragraph>
 						<Button 
 						text="{i18n>PAGE6_BUTTON}"
-						tap="ui5strap.demoapp.actions.NavigateToPage3"
+						tap="ui5strap.demoapp.actions.NavigateToStatistics"
 									></Button>
 					</Paragraph>
 				</Container>

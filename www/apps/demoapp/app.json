@@ -178,7 +178,7 @@
 	"actions" : [
 		"NavigateToHome",
 		"NavigateToFeed",
-		"NavigateToPage3",
+		"NavigateToStatistics",
 		
 		
 		"ToggleBarMenuRoot",

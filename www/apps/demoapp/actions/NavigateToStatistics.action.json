@@ -8,7 +8,7 @@
 		
 		"VIEWS" : { 
 			"page3" : {
-				"viewName" : "ui5strap.demoapp.views.MyPage3",
+				"viewName" : "ui5strap.demoapp.views.Statistics",
 				"transition" : "fade",
 				"writeHistory" : true,
 				"bookmarkable" : false

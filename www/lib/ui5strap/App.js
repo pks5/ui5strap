@@ -411,9 +411,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			target, 
 			viewConfig.transition,
 			function toPage_complete(){
-				
-				//Set target available
-				navControl.setTargetBusy(target, false);
+				window.setTimeout(function(){
+					//Set target available
+					navControl.setTargetBusy(target, false);
+				}, 50);
 				
 				//Trigger callback
 				callback && callback();
