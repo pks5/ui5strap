@@ -27,7 +27,8 @@
 
 sap.ui
 		.define(
-				[ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
+				[ 'jquery.sap.global', 'sap/ui/Device', 
+				  'sap/ui/core/library',
 						'jquery.sap.mobile' // referenced here in case the Core
 				// decides to throw it out.
 				],
@@ -75,7 +76,7 @@ sap.ui
 							{
 								name : "ui5strap",
 
-								version : "0.10.1-SNAPSHOT",
+								version : "0.10.2",
 
 								dependencies : [ "sap.ui.core" ],
 

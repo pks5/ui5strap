@@ -179,24 +179,15 @@
 		<!-- 
 			Minimized OpenUI5 library without sap.m and sap.ui.core.commons Controls. 
 		-->
-		<script id="sap-ui-bootstrap" src="lib/openui5/sap-ui-core.js" data-sap-ui-xx-test-mobile="false" data-sap-ui-compatVersion="edge" data-sap-ui-preload="async"></script>
+		<script 
+			id="sap-ui-bootstrap" 
+			src="lib/sap-ui-core.js" 
+			data-sap-ui-xx-test-mobile="false" 
+			data-sap-ui-compatVersion="edge" 
+			data-sap-ui-preload="async"
+			data-sap-ui-libs="ui5strap"
+		></script>
 		
-		
-		<!-- 
-			Full OpenUI5 library from CDN. You can download the library from http://openui5.org/ if needed. 
-		-->
-		<!-- 
-		<script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/1.32.8/resources/sap-ui-core.js" data-sap-ui-compatVersion="edge" data-sap-ui-preload="async"></script>
-		-->
-		
-		<!-- Set Ui5Strap Library location. -->
-		<script>
-			jQuery.sap.registerModulePath("ui5strap", "lib/ui5strap/");
-		</script>
-
-		<!-- Include complete, minified Ui5Strap library at startup (optional) -->
-		<!-- <script id="ui5strap-bootstrap" src="lib/ui5strap/ui5strap-all.js"></script> -->
-
 		<!-- App Start -->
 		<script>
 			//Wrap the start function with a callback function
