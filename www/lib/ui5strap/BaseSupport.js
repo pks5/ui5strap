@@ -147,11 +147,17 @@ sap.ui.define(['./library'], function(library){
 		if (visibilityExtraSmall === Visibility.VisibleUp) {
 			// Visible on EXTRA_SMALL
 			inheritHide = false;
-		} else if (inheritHide
+		}
+		else if (visibilityExtraSmall === Visibility.Visible) {
+			//
+		} 
+		else if (inheritHide
 				|| visibilityExtraSmall === Visibility.Hidden
 				|| visibilityExtraSmall === Visibility.HiddenUp) {
+			
 			// Hidden on EXTRA_SMALL
 			styleClass += " ui5strap-hide-xs";
+			
 			if(visibilityExtraSmall === Visibility.HiddenUp){
 				inheritHide = true;
 			}
@@ -161,11 +167,17 @@ sap.ui.define(['./library'], function(library){
 		if (visibilitySmall === Visibility.VisibleUp) {
 			// Visible on SMALL
 			inheritHide = false;
-		} else if (inheritHide
+		} 
+		else if (visibilitySmall === Visibility.Visible) {
+			//
+		}
+		else if (inheritHide
 				|| visibilitySmall === Visibility.Hidden
 				|| visibilitySmall === Visibility.HiddenUp) {
+			
 			// Hidden on SMALL
 			styleClass += " ui5strap-hide-sm";
+			
 			if(visibilitySmall === Visibility.HiddenUp){
 				inheritHide = true;
 			}
@@ -175,11 +187,17 @@ sap.ui.define(['./library'], function(library){
 		if (visibilityMedium === Visibility.VisibleUp) {
 			// Visible on MEDIUM
 			inheritHide = false;
-		} else if (inheritHide
+		} 
+		else if (visibilityMedium === Visibility.Visible) {
+			//
+		}
+		else if (inheritHide
 				|| visibilityMedium === Visibility.Hidden
 				|| visibilityMedium === Visibility.HiddenUp) {
+			
 			// Hidden on MEDIUM
 			styleClass += " ui5strap-hide-md";
+			
 			if(visibilityMedium === Visibility.HiddenUp){
 				inheritHide = true;
 			}
@@ -189,11 +207,17 @@ sap.ui.define(['./library'], function(library){
 		if (visibilityLarge === Visibility.VisibleUp) {
 			// Visible on LARGE
 			inheritHide = false;
-		} else if (inheritHide
+		} 
+		else if (visibilityLarge === Visibility.Visible) {
+			//
+		} 
+		else if (inheritHide
 				|| visibilityLarge === Visibility.Hidden
 				|| visibilityLarge === Visibility.HiddenUp) {
+			
 			// Hidden on LARGE
 			styleClass += " ui5strap-hide-lg";
+			
 			if(visibilityLarge === Visibility.HiddenUp){ 
 				inheritHide = true;
 			}
