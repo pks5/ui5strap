@@ -51,6 +51,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			if(!oControl.getEnabled()){
 				rm.writeAttribute('disabled', 'disabled');
 			}
+			
+			if(!oControl.getAutocomplete()){
+				rm.writeAttribute('autocomplete', 'off');
+			}
 
 			var size = oControl.getSize();
 			if(ui5strap.Size.Default !== size){
@@ -75,6 +79,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			
 			if(!oControl.getEnabled()){
 				rm.writeAttribute('disabled', 'disabled');
+			}
+			
+			if(!oControl.getAutocomplete()){
+				rm.writeAttribute('autocomplete', 'off');
 			}
 
 			rm.writeClasses();

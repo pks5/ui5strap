@@ -219,7 +219,20 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 	* --------------------- Browser Flow  ----------------------------------
 	* ----------------------------------------------------------------------
 	*/
+	
+	/**
+	*	Replaces the current browser content and opens a app defined in viewer config
+	* @param sappId Sapplication ID
+	* TODO Remove?
+	* @deprecated
+	*/
+	ViewerBaseProto.openSapplication = function(appUrl){
+		var currentUrl = [location.protocol, '//', location.host, location.pathname].join('');
+		var appUrl = currentUrl + '?sapp=' + encodeURIComponent(appUrl) + '&rand=' + Math.random();
 
+		this.exitViewer(appUrl);
+	};
+	
 	/**
 	* Changes the browser URL to an (external) url
 	* @param url The URL to browse to

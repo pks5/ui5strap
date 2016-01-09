@@ -61,6 +61,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					type:"boolean", 
 					defaultValue:true
 				},
+				autocomplete : {
+					type:"boolean", 
+					defaultValue:true
+				},
 				trail : {
 					type:"ui5strap.TrailHtml", 
 					defaultValue:ui5strap.TrailHtml.Space

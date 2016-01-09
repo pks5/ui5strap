@@ -68,7 +68,8 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	};
 
 	/**
-	* Executes a app by given sapp-url from a get parameter
+	* Executes the the default app defined by configuration.
+	* If the GET parameter "app" is specified with an url to an app config file, that app is loaded.
 	* @Public
 	*/
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
@@ -119,42 +120,11 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		return _m_loadedSapplicationsById;
 	};
 
-	/**
-	*	Replaces the current browser content and opens a app defined in viewer config
-	* @param sappId Sapplication ID
-	* TODO Remove?
-	*/
-	ViewerMultiProto.openSapplication = function(appUrl){
-		var currentUrl = [location.protocol, '//', location.host, location.pathname].join('');
-		var appUrl = currentUrl + '?sapp=' + encodeURIComponent(appUrl) + '&rand=' + Math.random();
-
-		this.exitViewer(appUrl);
-	};
+	/*
+	 * EXECUTE APP
+	 * This is the starting point when opening an app.
+	 */
 	
-	/**
-	* Loads the configuration from an URL. URL must point to a JSON file.
-	* @Private
-	*/
-	var _loadAppConfig = function(_this, configUrl, callback){
-		jQuery.ajax({
-	  		"dataType": "json",
-	  		"url": configUrl,
-	  		"data": {},
-	  		"success": function ajax_complete(configDataJSON){
-	  			if(!configDataJSON.app){
-					throw new Error("Invalid app configuration: attribute 'app' is missing.");
-				}
-	  			
-	  			
-	  			
-	  			callback && callback(configDataJSON);
-	  		},
-	  		"error" : function ajax_error(){
-	  			throw new Error('Could not load app config from url: ' + configUrl);
-	  		}
-		});
-	};
-
 	/**
 	* Load, start and show an App. The appUrl must point to a valid app.json file.
 	* @Public
@@ -169,11 +139,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			appType = "HTML5";
 		}
 		
-		var ls = function loadAppConfigComplete(configDataJSON){
-			configDataJSON.app.url = appDefinition.url;
-			
+		var _loadApp = function loadAppConfigComplete(oConfigData){
 			_this.loadApp(
-				configDataJSON, 
+				appDefinition.url,
+				oConfigData, 
 				appDefinition.parameters,
 				function loadAppComplete(appInstance){
 				    loadCallback && loadCallback();
@@ -207,7 +176,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				throw new Error("Cannot execute HTML5 App: at least one of required attributes missing in definition.");
 			}
 			
-			ls({
+			_loadApp({
 		        "app" : {
 		        	"name" : appDefinition.name,
 		            "id" : appDefinition.id,
@@ -224,8 +193,15 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		else if("UI5STRAP" === appType){
 			if(appDefinition.internal){
 				
-				//Config URL provided, so load config data from there
-				_loadAppConfig(this, appDefinition.url, ls);
+				//Config URL provided, so load config data from the app.json file.
+				ui5strap.readTextFile(
+					appDefinition.url, 
+					"json", 
+					_loadApp, 
+					function(err){
+						throw new Error("Could not load app configuration from '" + appDefinition.url + "'!");
+					}
+				);
 			}
 			else{
 				if(!appDefinition.name || !appDefinition.id || !appDefinition.package || !appDefinition.url){
@@ -238,7 +214,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 					launcher = "index.html";
 				}
 				
-				ls({
+				_loadApp({
 			        "app" : {
 			            "name" : appDefinition.name,
 			            "id" : appDefinition.id,
@@ -257,6 +233,52 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			throw new Error("Cannot execute App: Invalid Type!");
 		}
 	};
+	
+	/*
+	 * LOAD APP
+	 * Called by EXECUTE APP.
+	 */
+	
+	/**
+	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
+	* @Public
+	*/
+	ViewerMultiProto.loadApp = function(configURL, oConfigData, parameters, callback){
+		jQuery.sap.log.debug("ViewerProto.loadApp");
+		
+		var _this = this,
+			configAppSection = oConfigData.app;
+		
+		if(!configAppSection){
+			throw new Error("Invalid app configuration: attribute 'app' is missing.");
+		}
+		
+		if(_m_loadedSapplicationsById[configAppSection.id]){
+			return callback(_m_loadedSapplicationsById[configAppSection.id]);
+		}
+		
+		var appConfig = new AppConfig(this.options, parameters);
+		
+		configAppSection.url = configURL;
+		
+		appConfig.setData(oConfigData);
+		
+		//Create App Instance
+		_this.createApp(appConfig, function createAppComplete(appInstance){
+			appInstance.init();
+
+			_m_loadedSapplicationsById[appInstance.getId()] = appInstance;
+
+			appInstance.load(function loadAppComplete(){
+				callback && callback.call(_this, appInstance);
+			});
+		});
+	};
+
+	/*
+	 * CREATE APP
+	 * Called by LOAD APP if the app has not been loaded yet.
+	 */
 	
 	/**
 	 * @Private
@@ -313,14 +335,15 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	ViewerMultiProto.createApp = function(appConfig, callback){
 		jQuery.sap.log.debug("ViewerProto.createApp");
 		
-		var configDataJSON = appConfig.data,
-			appModuleName = configDataJSON.app.module,
+		var oConfigData = appConfig.data,
+			configAppSection = oConfigData.app,
+			appModuleName = configAppSection.module,
 			libraries = [],
 			_this = this;
 
 		//register the libraries
-		for(var i = 0; i < configDataJSON.libraries.length; i++){
-			var dependencyLib = configDataJSON.libraries[i];
+		for(var i = 0; i < oConfigData.libraries.length; i++){
+			var dependencyLib = oConfigData.libraries[i];
 			libraries.push({
 				"package" : dependencyLib["package"],
 				"location" : appConfig.resolvePath(dependencyLib["location"], true),
@@ -330,8 +353,8 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		} 
 
 		libraries.push({ 
-			"package" : configDataJSON.app["package"],
-			"location" : configDataJSON.app["location"]
+			"package" : configAppSection["package"],
+			"location" : configAppSection["location"]
 		});
 
 		_preloadLibraries(this, libraries, function(){
@@ -341,62 +364,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		});
 	};
 	
-	/**
-	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
-	* @Public
-	*/
-	ViewerMultiProto.loadApp = function(configDataJSON, parameters, callback){
-		jQuery.sap.log.debug("ViewerProto.loadApp");
-
-		var _this = this,
-			appConfig = new AppConfig(this.options, parameters);
-		
-		appConfig.setData(configDataJSON);
-
-		//TODO log level should only affect on app level
-		if("logLevel" in configDataJSON.app){
-			jQuery.sap.log.setLevel(configDataJSON.app.logLevel);
-		}
-		
-		if(_m_loadedSapplicationsById[configDataJSON.app.id]){
-			return callback(_m_loadedSapplicationsById[configDataJSON.app.id]);
-		}
-
-		//Create App Instance
-		_this.createApp(appConfig, function createAppComplete(appInstance){
-			appInstance.init();
-
-			_m_loadedSapplicationsById[appInstance.getId()] = appInstance;
-
-			appInstance.load(function loadAppComplete(){
-				callback && callback.call(_this, appInstance);
-			});
-		});
-	};
-
-	/**
-	* Unloads an app
-	* @Public
-	*/
-	ViewerMultiProto.unloadApp = function(sappId){
-		jQuery.sap.log.debug("ViewerProto.unloadApp");
-		
-		var appInstance = this.getApp(sappId);
-
-		if(null === appInstance){
-			throw new Error('Cannot unload app "' + sappId + '" - app not loaded.');
-		}
-
-		if(appInstance.isRunning){
-			throw new Error('Cannot stop app "' + sappId + '" - app still running.');
-		}
-		
-		appInstance.unload();
-		
-		delete _m_loadedSapplicationsById[sappId];
-
-		return appInstance;
-	};
+	/*
+	 * START APP
+	 * Called by EXECUTE APP if app has not been started yet.
+	 */
 
 	/**
 	* Starts a previously loaded app.
@@ -420,27 +391,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		return appInstance;
 	};
 
-	/**
-	* Stops a previously started app.
-	* @Public
-	*/
-	ViewerMultiProto.stopApp = function(sappId){
-		jQuery.sap.log.debug("ViewerProto.stopApp");
-		
-		var appInstance = this.getApp(sappId);
-
-		if(null === appInstance){
-			throw new Error('Cannot stop app "' + sappId + '" - app not loaded.');
-		}
-
-		if ( this.getApp() === appInstance ) {
-			throw new Error('Cannot stop app "' + sappId + '" - app is currently visible.');
-		}
-		
-		appInstance.stop();
-		
-		return appInstance;
-	};
+	/*
+	 * START APP
+	 * Called by EXECUTE APP if app has not been shown yet.
+	 */
 
 	/**
 	* Shows a previously started app, means bringing the app to foreground.
@@ -475,9 +429,14 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			return;
 		}
 		
+		var configAppSection = appInstance.config.data.app;
+		
 		//Set Browser Title
 		//TODO Is this good here?
-		document.title = appInstance.config.data.app.name;
+		document.title = configAppSection.name;
+		
+		//TODO log level should only affect on app level
+		configAppSection.logLevel && jQuery.sap.log.setLevel(configAppSection.logLevel);
 		
 		//Store Previous App
 		var previousSapplication = this.getApp();
@@ -534,7 +493,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			//Create new Transition
 			var transition = new ResponsiveTransition(
 					{
-					"transitionAll" : transitionName || appInstance.config.data.app.transition, 
+					"transitionAll" : transitionName || configAppSection.transition, 
 					"$current" : $currentRoot, 
 					"$next" : appInstance.$(), 
 					id : appInstance.getId()
@@ -578,6 +537,61 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			//</DOM_ATTACH_TIMEOUT>
 
 		});	
+	};
+	
+	/*
+	 * STOP APP
+	 */
+	
+	/**
+	* Stops a previously started app.
+	* @Public
+	*/
+	ViewerMultiProto.stopApp = function(sappId){
+		jQuery.sap.log.debug("ViewerProto.stopApp");
+		
+		var appInstance = this.getApp(sappId);
+
+		if(null === appInstance){
+			throw new Error('Cannot stop app "' + sappId + '" - app not loaded.');
+		}
+
+		if ( this.getApp() === appInstance ) {
+			throw new Error('Cannot stop app "' + sappId + '" - app is currently visible.');
+		}
+		
+		appInstance.stop();
+		
+		return appInstance;
+	};
+	
+	/*
+	 * UNLOAD APP
+	 * Destroys everything that has been previously loaded by the app.
+	 */
+	
+	/**
+	* Unloads an app
+	* @Public
+	*/
+	ViewerMultiProto.unloadApp = function(sappId){
+		jQuery.sap.log.debug("ViewerProto.unloadApp");
+		
+		var appInstance = this.getApp(sappId);
+
+		if(null === appInstance){
+			throw new Error('Cannot unload app "' + sappId + '" - app not loaded.');
+		}
+
+		if(appInstance.isRunning){
+			throw new Error('Cannot stop app "' + sappId + '" - app still running.');
+		}
+		
+		appInstance.unload();
+		
+		delete _m_loadedSapplicationsById[sappId];
+
+		return appInstance;
 	};
 
 	/**
@@ -699,7 +713,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	
 
 	/**
-	+ Initializes the console
+	* Initializes the console
 	* @Protected
 	*/
 	ViewerMultiProto._initConsole = function(){
