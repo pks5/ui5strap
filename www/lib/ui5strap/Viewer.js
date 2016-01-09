@@ -133,49 +133,62 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		jQuery.sap.log.debug("ViewerProto.executeApp");
 		
 		var _this = this,
-			appType = appDefinition.type;
+			appType = appDefinition.type || "HTML5",
 		
-		if(!appType){
-			appType = "HTML5";
-		}
-		
-		var _loadApp = function loadAppConfigComplete(oConfigData){
-			_this.loadApp(
-				appDefinition.url,
-				oConfigData, 
-				appDefinition.parameters,
-				function loadAppComplete(appInstance){
-				    loadCallback && loadCallback();
-	
-				    var startedCallback = function(){
-						if(!doNotShow){
-							_this.showApp(appInstance.getId(), null, callback);
-						}
-						else{
-							//_this.hideLoader(callback);
-							callback && callback(appInstance);
-						}
-					};
+			/*
+			 * 
+			 */
+			_loadAppComplete = function loadAppComplete(appInstance){
+			    loadCallback && loadCallback();
 				
-				//_this.showLoader(function(){
-					if(!appInstance.isRunning){
-						_this.startApp(appInstance.getId(), startedCallback);
+			    var startedCallback = function(){
+					if(!doNotShow){
+						_this.showApp(appInstance.getId(), null, callback);
 					}
 					else{
-						startedCallback();
+						//_this.hideLoader(callback);
+						callback && callback(appInstance);
 					}
-				//});
-	
+				};
+			
+			//_this.showLoader(function(){
+				if(!appInstance.isRunning){
+					_this.startApp(appInstance.getId(), startedCallback);
 				}
-			);
-		};
+				else{
+					startedCallback();
+				}
+			//});
+	
+			},
+			
+			/*
+			 * 
+			 */
+			_loadApp = function loadAppConfigComplete(oConfigData){
+				_this.loadApp(
+					appDefinition.url,
+					oConfigData, 
+					appDefinition.parameters,
+					_loadAppComplete
+				);
+			};
 		
-		
+		//Process App Type
+		//Valid App Types: "HTML5" and "UI5STRAP"
 		if("HTML5" === appType){
-			if(!appDefinition.name || !appDefinition.id || !appDefinition.package || !appDefinition.url){
+			//HTML5 App: ordinary webapp that is executed within a Sandbox.
+			
+			if(
+				!appDefinition.name 
+				|| !appDefinition.id 
+				|| !appDefinition.package 
+				|| !appDefinition.url
+			){
 				throw new Error("Cannot execute HTML5 App: at least one of required attributes missing in definition.");
 			}
 			
+			//Now load the App
 			_loadApp({
 		        "app" : {
 		        	"name" : appDefinition.name,
@@ -191,7 +204,18 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			});
 		}
 		else if("UI5STRAP" === appType){
+			//Ui5Strap App
+			
 			if(appDefinition.internal){
+				//Internal Ui5Strap App: Executed within same context like current app.
+				
+				if(appDefinition.id){
+					//An ID is provided, so we can check whether app has been loaded already.
+					if(_m_loadedSapplicationsById[appDefinition.id]){
+						_loadAppComplete(_m_loadedSapplicationsById[appDefinition.id]);
+						return;
+					}
+				}
 				
 				//Config URL provided, so load config data from the app.json file.
 				ui5strap.readTextFile(
@@ -204,16 +228,21 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				);
 			}
 			else{
-				if(!appDefinition.name || !appDefinition.id || !appDefinition.package || !appDefinition.url){
+				//External Ui5Strap App: Executed within a Sandbox.
+				
+				if(
+					!appDefinition.name 
+					|| !appDefinition.id 
+					|| !appDefinition.package 
+					|| !appDefinition.url
+				){
 					throw new Error("Cannot execute external UI5STRAP App: at least one of required attributes missing in definition.");
 				}
 				
-				var launcher = appDefinition.launcher;
+				//The Launcher is the HTML file which is executing the App.
+				var launcher = appDefinition.launcher || "index.html";
 				
-				if(!launcher){
-					launcher = "index.html";
-				}
-				
+				//Now load the App
 				_loadApp({
 			        "app" : {
 			            "name" : appDefinition.name,
@@ -230,7 +259,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			}
 		}
 		else{
-			throw new Error("Cannot execute App: Invalid Type!");
+			throw new Error("Cannot execute App: Invalid Type: '" + appType + "'");
 		}
 	};
 	
