@@ -919,7 +919,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			var cachedPage = this._pageCache[pageId];
 			if(viewConfig.cache){
 				if(cachedPage){
-
+					_this.log.debug("Returning cached page '" + page + "'.");
+					
 					//This is not very good
 					//Replace cached viewDef with new viewDef 
 					cachedPage.getViewData().__ui5strap.viewDef = viewConfig.viewData.__ui5strap.viewDef;
@@ -1325,19 +1326,20 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	AppBaseProto.destroy = function(){
 		this.log.debug("Destroying app...");
 		
-		//Destroy the root control first
-		var rootControl = this.getRootControl();
-		if(rootControl){
-			rootControl.destroy();
-		}
-		
 		var cacheKeys = Object.keys(this._pageCache);
 		
 		for(var i = 0; i < cacheKeys.length; i++){
-			this._pageCache[cacheKeys[i]].destroy();
+			this.log.debug("Destroying view: " + cacheKeys[i]);
+			this._pageCache[cacheKeys[i]].destroy(true);
 			delete this._pageCache[cacheKeys[i]];
 		}
-
+		
+		//Destroy the root control first
+		var rootControl = this.getRootControl();
+		if(rootControl){
+			rootControl.destroy(true);
+		}
+		
 		//Finally, destroy the app object
 		sap.ui.base.Object.prototype.destroy.call(this);
 	};

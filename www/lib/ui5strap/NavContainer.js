@@ -449,7 +449,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		
 			//Page is already present in DOM, return parent jQuery reference
 			if(page.getDomRef()){
-				return page.$().parent();
+				var $parent = page.$().parent();
+				if($parent.hasClass('navcontainer-page')){
+					return $parent;
+				}
 			}
 			
 			//Create dom element and jQuery wrapper
@@ -826,21 +829,13 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	 * Destroys targets before the current control is destroyed.
 	* @Override
 	*/
-	/*
+	
 	NavContainerProto.exit = function(){
 		for(var target in this.targets){
-			if(this.targets[target]){
-				var oldTarget = this.targets[target];
-				this.targets[target] = null;
-				
-				oldTarget.destroy();
-				
-				delete oldTarget;
-			}
+			this.targets[target] = null;
 		}
-		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
 	};
-	*/
+	
 
 	return NavContainer;
 });
