@@ -492,8 +492,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 		var _this = this;
 		ui5strap.polyfill.requestAnimationFrame(function(){
-			_this.domRef.className = _createAppClass(_this, 'ui5strap-app ui5strap-app-inactive ui5strap-hidden');
-				
+			if(null === _this.domRef){
+				jQuery.sap.log.warning("AppBaseProto.stop seemed to be executed before AppBaseProto.hidden. This seems to be a bug.");
+			}
+			else{
+				_this.domRef.className = _createAppClass(_this, 'ui5strap-app ui5strap-app-inactive ui5strap-hidden');
+			}	
+			
 			_this.onHidden(new sap.ui.base.Event("ui5strap.app.hidden", _this, {}));
 
 			callback && ui5strap.polyfill.requestAnimationFrame(callback);
@@ -926,7 +931,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				if(cachedPage){
 					delete this._pageCache[pageId];
 					cachedPage.destroy();
-					delete cachedPage;
 				}
 			}
 
@@ -1319,10 +1323,19 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* @Override
 	*/
 	AppBaseProto.destroy = function(){
+		this.log.debug("Destroying app...");
+		
 		//Destroy the root control first
 		var rootControl = this.getRootControl();
 		if(rootControl){
 			rootControl.destroy();
+		}
+		
+		var cacheKeys = Object.keys(this._pageCache);
+		
+		for(var i = 0; i < cacheKeys.length; i++){
+			this._pageCache[cacheKeys[i]].destroy();
+			delete this._pageCache[cacheKeys[i]];
 		}
 
 		//Finally, destroy the app object

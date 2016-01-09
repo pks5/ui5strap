@@ -826,6 +826,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	 * Destroys targets before the current control is destroyed.
 	* @Override
 	*/
+	/*
 	NavContainerProto.exit = function(){
 		for(var target in this.targets){
 			if(this.targets[target]){
@@ -839,6 +840,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		}
 		//ui5strap.ControlBase.prototype.destroy.call(this, bSuppressInvalidate);
 	};
+	*/
 
 	return NavContainer;
 });

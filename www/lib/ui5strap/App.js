@@ -281,7 +281,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @Protected
 	 */
 	AppProto._showInitialContent = function(callback){
-		
+			jQuery.sap.log.debug("Showing initial content...");
 			var _this = this,
 				initialViews = this.config.data.rootNavigation.initialViews,
 				callI = 0;
