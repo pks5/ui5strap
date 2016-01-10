@@ -182,7 +182,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 		var _this = this,
 			overlayControl = this.overlayControl,
 			page = overlayControl.targets["content"],
-			transitionName = transitionName || 'transition-slide-btt';
+			transitionName = transitionName || 'slide-btt';
 		
 		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
 			ui5strap.Layer.setVisible(_this.options.overlay, false, function(){

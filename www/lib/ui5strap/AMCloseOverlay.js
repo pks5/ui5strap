@@ -42,7 +42,7 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			
 			"transition" : {
 				"required" : false, 
-				"defaultValue" : "transition-slide-btt", 
+				"defaultValue" : "slide-btt", 
 				"type" : "string"
 			},
 			"scope" : {
