@@ -294,11 +294,11 @@ sap.ui
 					};
 
 					/*
-					 * -----
+					 * -----------
 					 * 
-					 * Types
+					 * START Types
 					 * 
-					 * -----
+					 * -----------
 					 */
 
 					/*
@@ -802,6 +802,12 @@ sap.ui
 						MediaObject : "MediaObject",
 						Responsive : "Responsive"
 					};
+					
+					/*
+					 * ---------
+					 * END Types
+					 * ---------
+					 */
 
 					/*
 					 * ---------
