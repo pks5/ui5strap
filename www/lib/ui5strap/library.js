@@ -76,7 +76,7 @@ sap.ui
 							{
 								name : "ui5strap",
 
-								version : "0.10.2",
+								version : "0.10.3",
 
 								dependencies : [ "sap.ui.core" ],
 
@@ -1145,10 +1145,12 @@ sap.ui
 						if (layer.busy) {
 							// Apply Css immediately if the layer is busy but a
 							// new request comes in
-							$layer.css({
-								display : visible ? 'block' : 'none',
-								opacity : visible ? 1 : 0
-							});
+							if(visible){
+								$layer.removeClass("ui5strap-invisible ui5strap-hidden");
+							}
+							else{
+								$layer.addClass("ui5strap-invisible ui5strap-hidden");
+							}
 
 							// Call the existing callback
 							layer.busy(null);
@@ -1158,11 +1160,13 @@ sap.ui
 							return;
 						}
 
+						//Prepare Layer for transition
 						if (visible) {
-							$layer.css({
-								display : 'block',
-								opacity : 0
-							});
+							$layer.removeClass("ui5strap-hidden").addClass("ui5strap-invisible");
+						}
+						else{
+							//TODO Should we enable this?
+							$layer.removeClass("ui5strap-hidden ui5strap-invisible");
 						}
 
 						var triggered = false, transTimeout = null, transCallback = function(
@@ -1186,7 +1190,7 @@ sap.ui
 								// event or timout
 
 								if (!visible) {
-									$layer.css('display', 'none');
+									$layer.addClass("ui5strap-hidden").removeClass("ui5strap-invisible");
 								}
 
 								if (!ev) {
@@ -1215,7 +1219,9 @@ sap.ui
 								// Transition timeout
 								transTimeout = window.setTimeout(transCallback,
 										ui5strap.options.layerTimeout);
-								$layer.css('opacity', visible ? 1 : 0);
+								
+								$layer.toggleClass("ui5strap-invisible", !visible);
+								
 							});
 						});
 					};

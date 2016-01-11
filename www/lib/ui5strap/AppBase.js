@@ -906,7 +906,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 
 	/**
-	 * Create a new page
+	 * Create a new View based on configuration object.
 	 */
 	AppBaseProto.createView = function(viewConfig){
 		
@@ -938,6 +938,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			viewConfig.id = this.config.createControlId(pageId);
 		}
 
+		//START Build ViewData
+		//The View Data holds the app reference.
 		if(!viewConfig.viewData){
 			viewConfig.viewData = {};
 		}
@@ -947,17 +949,17 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		}
 
 		viewConfig.viewData.__ui5strap.app = this;
-
-		//if(!viewConfig.viewName){
-		//	throw new Error('Cannot obtain view configuration: no "viewName" specified.');
-		//}
+		//END Build ViewData
 		
-		viewConfig.afterInit = function(oEvent){
-			jQuery.log.info("Event 'afterInit' called from view '" + viewConfig.viewName + "'");
-		};
-
+		//Create View
 		//Will crash if "viewName" or "type" attribute is missing!
 		var page = new sap.ui.view(viewConfig);
+		
+		/*
+		page.attachAfterInit(null, function(){
+			jQuery.sap.log.info("Created page has been initialized.");
+		});
+		*/
 		
 		//Add css style class
 		if(viewConfig.styleClass){

@@ -9075,6 +9075,9 @@ a {
 .ui5strap-hidden {
   display: none !important;
 }
+.ui5strap-invisible {
+  opacity: 0 !important;
+}
 @media (max-width: 480px) {
   .ui5strap-hide-xs-down {
     display: none !important;

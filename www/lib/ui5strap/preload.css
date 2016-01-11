@@ -207,6 +207,8 @@ html, body{
 	-ms-transform: translate3d(0,0,0);
 	-o-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
+	
+	opacity:1;
 }
 
 /*
@@ -300,7 +302,11 @@ html, body{
 * Hidden Class
 */
 .ui5strap-hidden{
-	display:none;
+	display:none !important;
+}
+
+.ui5strap-invisible{
+	opacity:0 !important;
 }
 
 /*
