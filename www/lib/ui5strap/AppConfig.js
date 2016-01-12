@@ -101,10 +101,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			};
 		}
 		
-		var viewName = viewDef.viewName,
-			viewId = viewDef.id,
+		var viewOptions = jQuery.extend({}, viewDef),
+			viewName = viewOptions.viewName,
+			viewId = viewOptions.id,
+			viewConfig = {},
 			viewConfigOrg = null,
-			viewOptions = {},
 			foundById = false;
 		
 		//Resolve View ID
@@ -114,9 +115,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			//Search View by ID
 			if(this.data.viewsById[viewId]){
 				//Delete viewName that is inside the provided view definition since we will use the viewName from config.
-				delete viewDef.viewName;
+				delete viewOptions.viewName;
 				//Delete id that is inside the provided view definition since it might be unresolved.
-				delete viewDef.id;
+				delete viewOptions.id;
 				
 				viewConfigOrg = this.data.viewsById[viewId];
 				foundById = true;
@@ -135,15 +136,20 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 						//We skip all views that are found by viewName but have an id - if also a search id is specified
 						continue;
 					}
+					
+					//Check if there are multiple candidates
 					if(viewConfigOrg){
 						throw new Error("Cannot determine view configuration by viewName: more than one view is defined with that name!");
 					}
+					
 					//Delete viewName that is inside the provided view definition since we will use the resolved name.
-					delete viewDef.viewName;
+					delete viewOptions.viewName;
+					
 					if(viewId){
 						//Set the resolved view ID.
-						viewDef.id = viewId;
+						viewOptions.id = viewId;
 					}
+					
 					viewConfigOrg = viewsByName[j];
 				}
 			}
@@ -151,51 +157,20 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		//Test if view configuration has been found
 		if(viewConfigOrg){
-			//The "viewOptions" contain the mix of original config and definition
-			jQuery.extend(viewOptions, viewConfigOrg, viewDef);
+			jQuery.extend(viewConfig, viewConfigOrg, viewOptions);
 		}
 		else{
 			//No view config for the given ID and Name.
 			if(viewName){
 				//Set the resolved viewName.
-				viewDef.viewName = viewName;
+				viewOptions.viewName = viewName;
 			}
 			if(viewId){
 				//Set the resolved view ID.
-				viewDef.id = viewId;
+				viewOptions.id = viewId;
 			}
 			
-			jQuery.extend(viewOptions, viewDef);
-		}
-		
-
-		//The final view constructor object
-		var viewConfig = {
-			cache : true
-		};
-
-		jQuery.extend(viewConfig, viewOptions);
-
-		if(!viewConfig.viewData){
-			viewConfig.viewData = {};
-		}
-
-		if(!viewConfig.viewData.__ui5strap){
-			viewConfig.viewData.__ui5strap = {};
-		}
-
-		//Resulting view options (= viewConfigOrg + viewDef)
-		viewConfig.viewData.__ui5strap.viewOptions = viewOptions;
-		
-		//@deprecated
-		//View configuration from app.json
-		viewConfig.viewData.__ui5strap.viewConfigOrg = viewConfigOrg;
-		
-		//Original function parameters
-		viewConfig.viewData.__ui5strap.viewDef = viewDef;
-		
-		if(!viewConfig.type){
-			viewConfig.type = "XML";
+			viewConfig = viewOptions;
 		}
 		
 		return viewConfig;
@@ -314,6 +289,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 					continue;
 				}
 				
+				if(!viewData.type){
+					viewData.type = "XML";
+				}
+				
+				if(!viewData.cache){
+					viewData.cache = true;
+				}
+				
 				var viewNameResolved = this.resolvePackage(viewName, "views");
 				viewData.viewName = viewNameResolved;
 				if(!configDataJSON.viewsByName[viewNameResolved]){
@@ -337,9 +320,17 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				viewNamesLength = viewNames.length;
 			for(var i = 0; i < viewNamesLength; i++){
 				var viewName = viewNames[i],
-					viewNameResolved = this.resolvePackage(viewName, "views");
+					viewNameResolved = this.resolvePackage(viewName, "views"),
+					viewData = configDataJSON.views[viewName];
 				
-				var viewData = configDataJSON.views[viewName];
+				if(!viewData.type){
+					viewData.type = "XML";
+				}
+				
+				if(!viewData.cache){
+					viewData.cache = true;
+				}
+				
 				viewData.viewName = viewNameResolved;
 				if(!configDataJSON.viewsByName[viewNameResolved]){
 					configDataJSON.viewsByName[viewNameResolved] = [];

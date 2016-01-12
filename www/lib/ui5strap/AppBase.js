@@ -908,35 +908,39 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	/**
 	 * Create a new View based on configuration object.
 	 */
-	AppBaseProto.createView = function(viewConfig){
-		
+	AppBaseProto.createView = function(viewDef){
 		var _this = this,
-			pageId = viewConfig.id;
+			pageId = viewDef.id;
 
 		//If id specified check for cache
 		//Also create a new valid control id for the view
 		if(pageId){
 			var cachedPage = this._pageCache[pageId];
-			if(viewConfig.cache){
+			if(viewDef.cache){
 				if(cachedPage){
 					_this.log.debug("Returning cached page '" + page + "'.");
-					
-					//This is not very good
-					//Replace cached viewDef with new viewDef 
-					cachedPage.getViewData().__ui5strap.viewDef = viewConfig.viewData.__ui5strap.viewDef;
 					
 					return cachedPage;
 				}
 			}
 			else{
+				//View is NOT cached
 				if(cachedPage){
+					//View already have been created before
+					//Delete cache entry and destroy existing view
 					delete this._pageCache[pageId];
 					cachedPage.destroy();
 				}
 			}
-
-			viewConfig.id = this.config.createControlId(pageId);
 		}
+		
+		var viewConfig = {};
+		jQuery.extend(viewConfig, viewDef);
+		
+		viewConfig.id = this.config.createControlId(pageId);
+		
+		var viewSettings = {};
+		jQuery.extend(viewSettings, viewConfig);
 
 		//START Build ViewData
 		//The View Data holds the app reference.
@@ -949,6 +953,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		}
 
 		viewConfig.viewData.__ui5strap.app = this;
+		viewConfig.viewData.__ui5strap.settings = viewSettings;
+		
 		//END Build ViewData
 		
 		//Create View

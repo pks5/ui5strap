@@ -58,60 +58,19 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	* @Private
 	* @Static
 	*/
-	var _preloadViews = function(views, callback){
-		//TODO use Object.keys
-		var viewsLeft = 0;
-		for(var viewSrc in views){
-			viewsLeft++;
+	var _preloadViews = function(_this, callback){
+		var views = _this.config.data.viewsById,
+			viewKeys = Object.keys(views);
+		for(var i = 0; i < viewKeys.length; i++){
+			var viewConfig = _this.config.getViewConfig(views[viewKeys[i]].id);
+			if(viewConfig.preload && viewConfig.cache){
+				jQuery.sap.log.debug("Caching view: " + viewConfig.id);
+				_this.createView(viewConfig);
+			}
 		}
-
-		if(!views || 0 === viewsLeft){
-			callback && callback();
-		}
-
-		var consoleOutput = '';
-
-		var viewCallback = function(){
-			viewsLeft -- ;
-			if(viewsLeft === 0){
-				callback && callback();
-			}
-		};
-
-		for(var viewSrc in views){
-			var viewConfig = views[viewSrc];
-			if(viewConfig.preload && 'HTML' === viewConfig.type){
-				//We are currently only able to cache HTML views
-				var viewUrl = HTMLView._getViewUrl(viewSrc);
-
-				if(viewUrl in HTMLView._mTemplates){
-					viewCallback();
-				}
-				else{ 
-					jQuery.ajax({
-							"url" : viewUrl,
-							"viewSrc" : viewSrc,
-							"cache" : true,
-							"dataType" : "text",
-							"success" : function(text){
-								consoleOutput += '"' + this.viewSrc + '" ';
-								
-								//TODO
-								//Find a better way to preload HTML views!
-								HTMLView._mTemplates[this.url] = text;
-								
-								viewCallback();
-							},
-								
-							"error" : viewCallback
-					});	
-				}
-				
-			}
-			else{
-				viewCallback();
-			}
-		} 
+		
+		//used for future async
+		callback && callback();
 	};
 
 	/**
@@ -123,7 +82,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			_this.includeStyle(function includeStyle_complete(){
 				_this.log.debug("PRELOADING VIEWS...");
 				
-				_preloadViews(_this.config.data.viewsByName, callback);
+				_preloadViews(_this, callback);
 			});
 		});
 	};

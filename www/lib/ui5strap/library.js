@@ -33,7 +33,9 @@ sap.ui
 				// decides to throw it out.
 				],
 				function(jQuery, Device) {
-
+					
+					"use strict";
+					
 					/**
 					 * 
 					 * Test system requirements
@@ -181,7 +183,7 @@ sap.ui
 					 */
 
 					// @deprecated
-					var tapSupport = sap.ui.Device.support.touch;
+					var tapSupport = Device.support.touch;
 
 					ui5strap.options = {
 						enableTapEvents : tapSupport,
