@@ -937,7 +937,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		var viewConfig = {};
 		jQuery.extend(viewConfig, viewDef);
 		
-		viewConfig.id = this.config.createControlId(pageId);
+		if(pageId){
+			viewConfig.id = this.config.createControlId(pageId);
+		}
 		
 		var viewSettings = {};
 		jQuery.extend(viewSettings, viewConfig);

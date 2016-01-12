@@ -14,7 +14,7 @@
 					</Button>
 				</Container>
 				
-				<Heading options="BarHeadingRight" text="{i18n>PAGE5_TITLE}" />
+				<Heading options="BarHeadingCenter" text="{i18n>PAGE_SETTINGS_LANGUAGE_TITLE}" />
 				
 			</Bar>
 		</head>

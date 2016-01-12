@@ -34,12 +34,12 @@
 	"subMenuSettings" : [
 	
 		{
-			"label" : "PAGE5_TITLE",
+			"label" : "PAGE_SETTINGS_LANGUAGE_TITLE",
 			"id" : "settingsLanguage",
 			"icon" : "language"
 		},
 		{
-			"label" : "PAGE6_TITLE",
+			"label" : "PAGE_SETTINGS_THEME_TITLE",
 			"id" : "settingsTheme",
 			"icon" : "paint-brush"
 		}		

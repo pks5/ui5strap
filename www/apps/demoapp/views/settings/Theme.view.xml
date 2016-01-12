@@ -15,7 +15,7 @@
 				</left>
 				<!-- Middle area of bar -->
 				<middle>
-					<Heading text="{i18n>PAGE6_TITLE}" options="BarHeadingCenter" />
+					<Heading text="{i18n>PAGE_SETTINGS_THEME_TITLE}" options="BarHeadingCenter" />
 				</middle>
 			</Bar>
 		</head>
