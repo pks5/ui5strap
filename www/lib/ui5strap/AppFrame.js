@@ -228,16 +228,6 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	};
 
 	/**
-	 * Shows a page defined by given data
-	 * @Public
-	 * @deprecated
-	 */
-	AppFrameProto.toPage = function (viewConfig, callback) {
-		jQuery.sap.log.warning("AppFrameProto.toPage is deprecated! Use AppBaseProto.navigateTo instead!");
-		return this.getApp().navigateTo(this.getRootControl(), viewConfig, callback, true);
-	};
-
-	/**
 	* Get the viewConfig based on a definition object. Def object must contain "viewName" attribute!
 	* @deprecated
 	*/
@@ -280,9 +270,19 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	AppFrameProto.gotoPage = function (viewDef, callback) {
 		jQuery.sap.log.warning("AppFrameProto.gotoPage is deprecated! Use AppBaseProto.navigateTo instead!");
 		
-		return this.getApp().navigateTo(this.getRootControl(), viewDef, callback);
+		return this._navigateTo(this.getRootControl(), viewDef, callback);
 	};
 	
+	/**
+	 * Shows a page defined by given data
+	 * @Public
+	 * @deprecated
+	 */
+	AppFrameProto.toPage = function (viewConfig, callback) {
+		jQuery.sap.log.warning("AppFrameProto.toPage is deprecated! Use AppBaseProto.navigateTo instead!");
+		return this._navigateTo(this.getRootControl(), viewConfig, callback, true);
+	};
+
 	/**
 	* @Public
 	* @deprecated
@@ -290,7 +290,14 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	AppFrameProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
 		jQuery.sap.log.warning("AppFrameProto.navigateTo is deprecated! Use AppBaseProto.navigateTo instead.");
 		
-		return this.getApp().navigateTo(navControl, viewConfig, callback, suppressResolve);
+		return this._navigateTo(navControl, viewConfig, callback, suppressResolve);
+	};
+	
+	/**
+	* @Public
+	*/
+	AppFrameProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
+		return this.getApp()._navigateTo(navControl, viewConfig, callback, suppressResolve);
 	};
 
 	//Return Module Constructor

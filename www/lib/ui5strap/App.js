@@ -330,9 +330,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		return rootControl;
 	};
 	
-	
-	
 	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
+		this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve);
+	};
+	
+	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
 		jQuery.sap.log.debug("AppBaseProto.navigateTo");
 		
 		if(!suppressResolve){
