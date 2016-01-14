@@ -78,7 +78,7 @@ sap.ui
 							{
 								name : "ui5strap",
 
-								version : "0.10.3",
+								version : "0.10.4-SNAPSHOT",
 
 								dependencies : [ "sap.ui.core" ],
 
@@ -1034,6 +1034,8 @@ sap.ui
 
 					// Object
 					ui5strap.Object = sap.ui.base.Object;
+					
+					ui5strap.EventProvider = sap.ui.base.EventProvider;
 
 					// Managed Object
 					ui5strap.ManagedObject = sap.ui.base.ManagedObject;
