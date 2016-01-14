@@ -28,10 +28,6 @@
 sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
 	var AppFrame = AppComponent.extend("ui5strap.AppFrame", {
-		metadata : {
-			deprecated : true
-		},
-		
 		constructor : function(app, options){
 			AppComponent.call(this, app, options);
 			
@@ -48,6 +44,8 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
+		jQuery.sap.log.warning("ui5strap.AppFrame is deprecated.");
+		
 		this._initHistory();
 	};
 
