@@ -59,10 +59,6 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		return this._createControl();
 	};
 	
-	AppFrameProto.getRootControl = function(){
-		return this.app.getRootControl();
-	};
-	
 	/**
 	* @Public
 	*/
@@ -84,6 +80,10 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	 * DEPRECATED
 	 * ----------
 	 */
+	
+	AppFrameProto.getRootControl = function(){
+		return this.app.getRootControl();
+	};
 	
 	/**
 	 * Creates the control that represents this AppFrame
