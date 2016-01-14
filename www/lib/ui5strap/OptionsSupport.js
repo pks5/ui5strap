@@ -35,8 +35,7 @@ sap.ui.define(['./library'], function(library){
 	 */
 	OptionsSupport.meta = function(meta){
 		meta.properties.options = {
-			type : "string[]",
-			defaultValue : null
+			type : "string[]"
 		};
 	};
 	
@@ -63,8 +62,9 @@ sap.ui.define(['./library'], function(library){
 			
 			if("string" === typeof newOptions){
 				newOptions = newOptions.trim().split(" ");
-				jQuery.sap.log.warning("Please use a comma to separate options!");
+				jQuery.sap.log.warning("Space-separated options are deprecated! Please use a string[] instead!");
 			}
+			
 			if(this.getDomRef()){
 				this.setProperty('options', newOptions, true);
 				this._updateStyleClass();

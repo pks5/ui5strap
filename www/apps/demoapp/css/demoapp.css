@@ -6,3 +6,11 @@
     margin-left: -75px;
     width: 100%;
 }
+
+.ui5strapContainer-option-RedBox{
+	background-color:red;
+}
+
+.ui5strapContainer-option-BorderBox{
+    border:solid 2px black;
+}

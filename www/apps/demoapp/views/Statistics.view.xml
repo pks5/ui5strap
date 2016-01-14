@@ -1,4 +1,4 @@
-<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+<View controllerName="ui5strap.demoapp.controllers.Statistics" xmlns="ui5strap"
 	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<!-- The page control -->
 	<Page>
@@ -43,9 +43,12 @@
 					<Row>
 						<!-- Left Column -->
 						<Col columnsExtraSmall="12" columnsSmall="6">
-							<Container type="Well"> 
+							<Container type="Well" options="dd" id="testContainer"> 
 								<Heading level="1" text="{i18n>PAGE3_HEADING1_TITLE}" />
 								<Text type="Lead" text="{i18n>PAGE3_HEADING1_TEXT}" />
+								<Paragraph>
+								    <Button tap=".handleTap" text="Test" />
+								</Paragraph>
 							</Container>
 						</Col>
 						
