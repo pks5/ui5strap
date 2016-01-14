@@ -28,7 +28,11 @@
 sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
 	var AppFrame = AppComponent.extend("ui5strap.AppFrame", {
-		"constructor" : function(app, options){
+		metadata : {
+			deprecated : true
+		},
+		
+		constructor : function(app, options){
 			AppComponent.call(this, app, options);
 			
 			this.app.setRootComponent(this);
@@ -47,10 +51,6 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		this._initHistory();
 	};
 
-	AppFrameProto.getRootControl = function(){
-		return this.app.getRootControl();
-	};
-	
 	/**
 	 * Creates the control that represents this AppFrame
 	 * @Protected
@@ -58,6 +58,32 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	AppFrameProto._buildRootControl = function(){
 		return this._createControl();
 	};
+	
+	AppFrameProto.getRootControl = function(){
+		return this.app.getRootControl();
+	};
+	
+	/**
+	* @Public
+	*/
+	AppFrameProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
+		return this.getApp()._navigateTo(navControl, viewConfig, callback, suppressResolve);
+	};
+
+	/**
+	 * @Protected
+	 * 
+	 */
+	AppFrameProto._showInitialContent = function(callback){
+		return this.showInitialContent(callback);
+	}
+
+	
+	/* 
+	 * ----------
+	 * DEPRECATED
+	 * ----------
+	 */
 	
 	/**
 	 * Creates the control that represents this AppFrame
@@ -108,14 +134,6 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		return rootControl;
 	};
 	
-	/**
-	 * @Protected
-	 * 
-	 */
-	AppFrameProto._showInitialContent = function(callback){
-		return this.showInitialContent(callback);
-	}
-
 	/**
 	* Shows the initial content defined in app configuration
 	* @Public
@@ -293,13 +311,6 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		return this._navigateTo(navControl, viewConfig, callback, suppressResolve);
 	};
 	
-	/**
-	* @Public
-	*/
-	AppFrameProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
-		return this.getApp()._navigateTo(navControl, viewConfig, callback, suppressResolve);
-	};
-
 	//Return Module Constructor
 	return AppFrame;
 });
