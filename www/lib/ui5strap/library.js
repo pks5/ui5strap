@@ -27,12 +27,31 @@
 
 sap.ui
 		.define(
-				[ 'jquery.sap.global', 'sap/ui/Device', 
+				[ 'jquery.sap.global', 
+				  'sap/ui/Device', 
 				  'sap/ui/core/library',
-						'jquery.sap.mobile' // referenced here in case the Core
-				// decides to throw it out.
+				  'jquery.sap.mobile',
+				  "sap/ui/base/Object",
+				  "sap/ui/base/EventProvider",
+				  "sap/ui/base/ManagedObject",
+				  "sap/ui/core/Element",
+				  "sap/ui/core/Control",
+				  "sap/ui/model/json/JSONModel",
+				  "sap/ui/core/mvc/View"
 				],
-				function(jQuery, Device) {
+				function(
+					jQuery, 
+					Device, 
+					coreLib, 
+					jqm,
+					BaseObject,
+					EventProvider,
+					ManagedObject,
+					BaseElement,
+					BaseControl,
+					JSONModel,
+					BaseView
+				) {
 					
 					"use strict";
 					
@@ -173,7 +192,41 @@ sap.ui
 										"ui5strap.TableColumn",
 										"ui5strap.TableRow" ]
 							});
+					
+					/*
+					 * -------
+					 * 
+					 * Wrapper
+					 * 
+					 * -------
+					 */
+					
+					//JQuery
+					ui5strap.$ = jQuery;
+					
+					//Device
+					ui5strap.Device = Device;
+					
+					// Object
+					ui5strap.Object = BaseObject;
+					
+					ui5strap.EventProvider = EventProvider;
 
+					// Managed Object
+					ui5strap.ManagedObject = ManagedObject;
+
+					// Element
+					ui5strap.Element = BaseElement;
+
+					// Control
+					ui5strap.Control = BaseControl;
+
+					// JSONModel
+					ui5strap.JSONModel = JSONModel;
+
+					// View
+					ui5strap.View = BaseView;
+					
 					/*
 					 * -------
 					 * 
@@ -1024,33 +1077,7 @@ sap.ui
 
 					
 
-					/*
-					 * -------
-					 * 
-					 * Wrapper
-					 * 
-					 * -------
-					 */
-
-					// Object
-					ui5strap.Object = sap.ui.base.Object;
 					
-					ui5strap.EventProvider = sap.ui.base.EventProvider;
-
-					// Managed Object
-					ui5strap.ManagedObject = sap.ui.base.ManagedObject;
-
-					// Element
-					ui5strap.Element = sap.ui.core.Element;
-
-					// Control
-					ui5strap.Control = sap.ui.core.Control;
-
-					// JSONModel
-					ui5strap.JSONModel = sap.ui.model.json.JSONModel;
-
-					// View
-					ui5strap.View = sap.ui.core.mvc.View;
 
 					/*
 					 * -----

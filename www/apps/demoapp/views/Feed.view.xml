@@ -49,7 +49,7 @@
 							</Button>
 						</titleContent>
 						<content>
-							<ListMedia id="feed" tap="handleFeedTap"
+							<ListMedia id="feedList" tap="handleFeedTap"
 								items="{FEED_INFO>/feed}">
 
 								<!-- Media Item 1 -->

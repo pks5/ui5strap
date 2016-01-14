@@ -36,11 +36,22 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	}),
 	ManagerProto = Manager.prototype;
 
-	ManagerProto.registerControls = function(controls){
-		var keys = Object.keys(controls);
-		for(var i = 0; i < keys.length; i++){
-			var key = keys[i];
-			this.controls[key] = controls[key];
+	ManagerProto.registerControls = function(){
+		if(1 === arguments.length){
+			var controls = arguments[0],
+				ids = Object.keys(controls);
+			for(var i = 0; i < ids.length; i++){
+				var controlId = ids[i];
+				this.controls[controlId] = controls[controlId];
+			}
+	    }
+		else{
+			var view = arguments[0].getView(),
+				ids = arguments[1];
+			for(var i = 0; i < ids.length; i++){
+				var controlId = ids[i];
+				this.controls[controlId] = view.byId(controlId);
+			}
 		}
 	};
 	

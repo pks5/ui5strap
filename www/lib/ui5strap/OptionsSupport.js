@@ -35,8 +35,8 @@ sap.ui.define(['./library'], function(library){
 	 */
 	OptionsSupport.meta = function(meta){
 		meta.properties.options = {
-			type : "string",
-			defaultValue : ""
+			type : "string[]",
+			defaultValue : null
 		};
 	};
 	
@@ -60,6 +60,11 @@ sap.ui.define(['./library'], function(library){
 		* TODO avoid overriding of user provided css classes
 		*/
 		oControl.setOptions = function(newOptions){
+			
+			if("string" === typeof newOptions){
+				newOptions = newOptions.trim().split(" ");
+				jQuery.sap.log.warning("Please use a comma to separate options!");
+			}
 			if(this.getDomRef()){
 				this.setProperty('options', newOptions, true);
 				this._updateStyleClass();
@@ -77,7 +82,7 @@ sap.ui.define(['./library'], function(library){
 				classes = '';
 		    
 			if(options){
-		    	options = options.split(' ');
+		    	//options = options.split(' ');
 		    	for(var i = 0; i < options.length; i++){
 		    		classes += ' ' + this._getStyleClassPrefix() + '-option-' + options[i];
 		    	}
@@ -103,7 +108,7 @@ sap.ui.define(['./library'], function(library){
 			}
 			
 			if(options){
-		    	options = options.split(' ');
+		    	//options = options.split(' ');
 		    	for(var i = 0; i < options.length; i++){
 		    		currentClassesString += ' ' + this._getStyleClassPrefix() + '-option-' + options[i];
 		    	}
@@ -118,12 +123,13 @@ sap.ui.define(['./library'], function(library){
 		* @Public
 		*/
 		oControl.setOptionsEnabled = function(options){
-			var currentOptions = [],
-				cOptions = this.getOptions();
+			var currentOptions = this.getOptions();
 			
-			if(cOptions){
-				currentOptions = cOptions.split(' ');
+			if(!currentOptions){
+				currentOptions = [];
 			}
+			
+			//currentOptions = currentOptions.split(' ');
 			
 			for(var optionName in options){
 				var optionIndex = jQuery.inArray(optionName, currentOptions),
@@ -142,14 +148,15 @@ sap.ui.define(['./library'], function(library){
 					this.onOptionChange(optionName, optionEnabled);
 				}
 			}
-			this.setOptions(currentOptions.join(' '));
+			
+			this.setOptions(currentOptions); //.join(' ')
 		};
 
 		/**
 		* @Public
 		*/
 		oControl.isOptionEnabled = function(optionName){
-			return -1 !== jQuery.inArray(optionName, this.getOptions().split(' '));
+			return -1 !== jQuery.inArray(optionName, this.getOptions()); //.split(' ')
 		};
 		
 		oControl.setOptionEnabled = function(optionName, optionEnabled){
