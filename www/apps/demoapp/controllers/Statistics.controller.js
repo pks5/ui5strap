@@ -31,6 +31,10 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 			handleTap : function(oEvent){
 				var con = this.getView().byId("testContainer");
 				con.setOptions("RedBox BorderBox");
+			},
+			
+			onAfterRendering : function(){
+				console.log("RENDER");
 			}
 	};
 	
