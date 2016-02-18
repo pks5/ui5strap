@@ -67,44 +67,44 @@ ServerProto.start = function(){
 						appConfigUrl);
 				nodeFs.readFile(pathToAppConfig, 'utf8', function(err, file) {
 					if (err) {
-						console.error("Could not load app config from '" + pathToAppConfig + "'!");
-						return;
+						console.warn("Could not load app config from '" + pathToAppConfig + "'!");
 					}
-					
-					var appConfig = JSON.parse(file),
-						appServerId = appConfig.app.id + ".api";
-					
-					//Extract location of app.json
-					var sappUrlParts = appConfigUrl.split('/');
-					sappUrlParts[sappUrlParts.length - 1] = '';
-					var appConfigLocation = sappUrlParts.join('/');
-					
-					for(var j=0; j < appConfig.components.length; j++){
-						var component = appConfig.components[j],
-							controllerDef = component.restController;
-						if(controllerDef){
-							if(-1 === controllerDef.indexOf(".")){
-								controllerDef = appServerId + ".rest." + controllerDef;
-							}
-							else if("." === controllerDef.charAt(0)){
-								controllerDef = appServerId + ".rest." + controllerDef;
-							}
-							
-							if(0 === controllerDef.indexOf(appServerId)){
-								var rest = controllerDef.substring(appServerId.length).replace(/\./g, "/") + ".js";
-								console.log("Loaded Controller '" + controllerDef + "' from '" + pathToAppConfig + "'.");
-					
-								var Controller = require(nodePath.join(pathToRoot, "apps/demoapp/" + rest));
-								//ui5strap.demoapp.server
+					else{
+						var appConfig = JSON.parse(file),
+							appServerId = appConfig.app.id + ".api";
+						
+						//Extract location of app.json
+						var sappUrlParts = appConfigUrl.split('/');
+						sappUrlParts[sappUrlParts.length - 1] = '';
+						var appConfigLocation = sappUrlParts.join('/');
+						
+						for(var j=0; j < appConfig.components.length; j++){
+							var component = appConfig.components[j],
+								controllerDef = component.restController;
+							if(controllerDef){
+								if(-1 === controllerDef.indexOf(".")){
+									controllerDef = appServerId + ".rest." + controllerDef;
+								}
+								else if("." === controllerDef.charAt(0)){
+									controllerDef = appServerId + ".rest." + controllerDef;
+								}
 								
-								//Install Controller
-								var controller = new Controller(component, appConfigLocation);
-								controller._install();
+								if(0 === controllerDef.indexOf(appServerId)){
+									var rest = controllerDef.substring(appServerId.length).replace(/\./g, "/") + ".js";
+									console.log("Loaded Controller '" + controllerDef + "' from '" + pathToAppConfig + "'.");
+						
+									var Controller = require(nodePath.join(pathToRoot, "apps/demoapp/" + rest));
+									//ui5strap.demoapp.server
+									
+									//Install Controller
+									var controller = new Controller(component, appConfigLocation);
+									controller._install();
+								}
 							}
 						}
 					}
-		
 					cnr --;
+					
 					if(cnr === 0){
 						_this.listen();
 					}
