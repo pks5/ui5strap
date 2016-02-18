@@ -16,7 +16,7 @@
 				</Container>
 					
 					<Heading level="1" options="BarHeadingCenter">
-						<Text text="{i18n>PAGE1_TITLE}" />
+						<Text text="{i18n>PAGE_HOME_TITLE}" />
 						<Text type="Label" severity="Success" text="New" />
 					</Heading>
 					
@@ -35,7 +35,7 @@
 		<body>
 			<ScrollContainer vertical="true">
 				<Container type="FluidInset">
-					<Text type="Lead" textAlign="Center" text="{i18n>HOME_INTRO}" />
+					<Text type="Lead" textAlign="Center" text="{i18n>PAGE_HOME_INTRO}" />
 					
 					<Paragraph textAlign="Center">
 						<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="256" height="256" />

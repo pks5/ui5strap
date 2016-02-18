@@ -24,17 +24,17 @@
 		<body>
 			<Container type="FluidInset">
 				<Container type="Well">
-					<Paragraph text="{i18n>PAGE6_THEME_INTRO}" />
+					<Paragraph text="{i18n>PAGE_SETTINGS_THEME_INTRO}" />
 					<Container>
 						<ButtonGroup select="ui5strap.demoapp.actions.ChangeTheme" selectionMode="Single">
 							<Button text="base" data:theme="base" selected="true"  />
 							<Button id="defaultThemeButton" severity="Primary" text="ui5strap_default" data:theme="ui5strap_default"  />
 						</ButtonGroup>
 					</Container>
-					<Paragraph text="{i18n>PAGE6_BACK_NOTICE}" />
+					<Paragraph text="{i18n>PAGE_SETTINGS_THEME_BACK_NOTICE}" />
 					<Paragraph>
 						<Button 
-						text="{i18n>PAGE6_BUTTON}"
+						text="{i18n>PAGE_SETTINGS_THEME_BACK_BUTTON}"
 						tap="ui5strap.demoapp.actions.NavigateToStatistics"
 									></Button>
 					</Paragraph>

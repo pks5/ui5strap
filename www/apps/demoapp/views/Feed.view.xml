@@ -43,7 +43,7 @@
 					<Panel>
 
 						<titleContent>
-							<Text text="{i18n>PAGE2_PANEL_RIGHT_TITLE}" />
+							<Text text="{i18n>PAGE_FEED_PANEL_POSTS_TITLE}" />
 							<Button tap="ui5strap.demoapp.actions.ShowNewPostOverlay" align="PullRight">
 								<Icon icon="plus" />
 							</Button>

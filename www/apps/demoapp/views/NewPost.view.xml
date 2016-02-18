@@ -1,22 +1,22 @@
 <View controllerName="ui5strap.demoapp.controllers.NewPost" xmlns="ui5strap" xmlns:demoapp="ui5strap.demoapp.controls"
 	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<StaticOverlay backdrop="true" close="ui5strap.demoapp.actions.CloseOverlay">
-		<Panel title="{i18n>PAGE2_PANEL_LEFT_TITLE}">
+		<Panel title="{i18n>PAGE_FEED_PANEL_NEW_TITLE}">
 				<Form>
-						<FormGroup label="Your Name" feedback="true">
-							<TextInput id="titleInput" placeholder="Enter your name here ..." />
+						<FormGroup label="{i18n>PAGE_FEED_LABEL_NAME}" feedback="true">
+							<TextInput id="titleInput" placeholder="{i18n>PAGE_FEED_PLACEHOLDER_NAME}" />
 							<Icon icon="remove" type="FormFeedback" />
 						</FormGroup>
-						<FormGroup label="Message">
-							<TextInput id="messageInput" rows="3" placeholder="Write something ..." />
+						<FormGroup label="{i18n>PAGE_FEED_LABEL_MESSAGE}">
+							<TextInput id="messageInput" rows="3" placeholder="{i18n>PAGE_FEED_PLACEHOLDER_MESSAGE}" />
 						</FormGroup>
 						
 						<Button 
-								text="Submit" 
+								text="{i18n>PAGE_FEED_BUTTON_SUBMIT}" 
 								severity="Success"
 								tap=".handleSubmitPost"></Button>
 						<Button 
-								text="Cancel" 
+								text="{i18n>PAGE_FEED_BUTTON_CANCEL}" 
 								tap="ui5strap.demoapp.actions.CloseOverlay"></Button>
 						
 				</Form>
