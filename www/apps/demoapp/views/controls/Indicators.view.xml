@@ -1,0 +1,79 @@
+<View controllerName="ui5strap.demoapp.controllers.Controls" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Container type="Fluid" options="PictureFrame">
+
+			<Heading level="1" text="Indicators" />
+
+			<!-- Alerts -->
+			<Paragraph>
+				<Button text="New Alert" tap="newAlert" severity="Danger">
+					<Icon icon="bell" />
+				</Button>
+			</Paragraph>
+
+			<Container id="alerts"> 
+			
+				
+				<Alert severity="Warning"  closed="alertClosed" closable="true" text="Best check yo self, you're not looking too good.">
+						<Text type="Strong" text="Warning!" />
+					</Alert>
+			</Container>
+
+			<Row>
+				<Col columnsSmall="4">
+					<Alert id="otherAlertId" text="This alert needs your attention, but it's not super important." />
+				</Col>
+				<Col columnsSmall="4">
+					<Alert severity="Success" text="You successfully read this important alert message.">
+						<Text type="Strong" text="Well done!" />
+					</Alert>
+				</Col>
+				<Col columnsSmall="4">
+					<Alert severity="Danger" closable="true" closed="alertClosed">
+						<closeButton>
+							<Button type="Close">
+								<Icon icon="paw" />
+							</Button>
+						</closeButton>
+						<content>
+						
+							<Heading level="4" text="Oh snap!" />
+							<Paragraph text="Change a few things up and try submitting again." />
+							<Paragraph>
+								<Button tap="closeOtherAlert" severity="Danger" text="Retry" />
+							</Paragraph>
+
+						</content>
+					</Alert>
+				</Col>
+			</Row>
+
+			<!-- Labels & Badges -->
+			<Row>
+				<Col columnsSmall="4">
+					<Heading text="Labels" />
+
+					<Text type="Label" text="Default" />
+					<Text type="Label" text="Primary" severity="Primary" />
+					<Text type="Label" text="Success" severity="Success" />
+					<Text type="Label" text="Warning" severity="Warning" />
+					<Text type="Label" text="Danger" severity="Danger" />
+					<Text type="Label" text="Info" severity="Info" />
+				</Col>
+				<Col columnsSmall="4">
+					<Heading text="Badges" />
+
+					<Nav type="Pills" selectionMode="Single">
+						<ListNavItem text="Home" badge="12" selected="true" />
+						<ListNavItem text="Profile" />
+						<ListNavItem text="Messages" badge="3" />
+					</Nav>
+				</Col>
+				<Col columnsSmall="4">
+					
+				</Col>
+			</Row>
+
+	</Container>
+</View>

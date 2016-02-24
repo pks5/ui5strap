@@ -1,0 +1,73 @@
+<View controllerName="ui5strap.demoapp.controllers.Controls" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Container type="Fluid" options="PictureFrame">
+			<!-- Modals -->
+			<Heading level="1" text="Dialogs" />
+			
+			<Heading text="Modal" />
+			<Button size="Large" text="Launch Modal" severity="Info" tap="showModal" />
+			
+			<Heading text="Modal" />
+			<Button size="Large" text="Launch Modal" severity="Info" tap="showModal" />
+			
+
+			<Heading text="Popovers" />
+
+			<Text type="Strong" text="Click a button to see the popover status here!" id="popoverEventIndicator" />
+
+			<Container>
+				<Button id="popLeft" size="Small" text="AutoLeft" severity="Warning" />
+				<Button id="popTop" size="Small" text="Top" severity="Primary" />
+				<Button id="popBottom" size="Small" text="Bottom" severity="Primary" />
+				<Button id="popRight" size="Small" text="Right" severity="Primary" />
+				<Button id="popRightOutside" tap="popoverFromOutside" size="Small" text="&lt;- From other source" severity="Success" />
+				
+				<Popover shown="popoverShown" hidden="popoverHidden" source="popLeft" placement="AutoLeft" title="Popover with title">
+					<Text text="This popover is set to AutoLeft. Since on the left side is no space, it will show on other side." />
+				</Popover>
+				<Popover shown="popoverShown" hidden="popoverHidden" source="popTop" placement="Top" title="Popover with title">
+					<Text text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." />
+				</Popover>
+				<Popover id="popoverBottom" shown="popoverShown" hidden="popoverHidden" source="popBottom" placement="Bottom" animate="false">
+					<Text text="This popover is placed on bottom has no animation." />
+				</Popover>
+				<Popover id="popoverRight" shown="popoverShown" hidden="popoverHidden" source="popRight" placement="Right">
+					<Text text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." />
+				</Popover>
+			</Container>
+
+			<Heading text="Tooltips" />
+			<Text type="Strong" trail="Break" text="Hover a button to see the tooltip status here!" id="tooltipEventIndicator" />
+			<Container>
+				<Button id="tooltipLeft" size="Small" text="Left" severity="Primary" title="Tooltip on left" />
+				<Button id="tooltipTop" size="Small" text="Top" severity="Primary" title="Tooltip on top" />
+				<Button id="tooltipBottom" size="Small" text="Bottom" severity="Primary" title="Tooltip on bottom" />
+				<Button id="tooltipRight" size="Small" text="Right" severity="Primary" title="Tooltip on right" />
+				<Button id="tooltipRightOutside" tap="tooltipFromOutside" size="Small" text="&lt;- From other source" severity="Success" title="Tooltip on right" />
+				
+				<Tooltip  shown="tooltipShown" hidden="tooltipHidden" source="tooltipLeft" placement="Left" />
+				<Tooltip  id="tipTop" shown="tooltipShown" hidden="tooltipHidden" source="tooltipTop" placement="Top" />
+				<Tooltip  shown="tooltipShown" hidden="tooltipHidden" source="tooltipBottom" placement="Bottom" />
+				<Tooltip  shown="tooltipShown" hidden="tooltipHidden" source="tooltipRight" placement="Right" />
+			</Container>
+
+	</Container>
+
+	<Modal id="myModal" backdrop="true" shown="modalShown" hidden="modalHidden">
+				<header>
+					<Button type="Close" bsAction="DismissModal">
+						<Icon icon="times" />
+					</Button>
+					<Heading text="Modal heading" />
+
+				</header>
+				<body>
+					<Paragraph text="Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros." />
+				</body>
+				<footer>
+					<Button text="OK" bsAction="DismissModal" severity="Primary" />
+					<Button text="Cancel" bsAction="DismissModal" severity="Default" />
+				</footer>
+	</Modal>
+</View>

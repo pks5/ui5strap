@@ -1,0 +1,233 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<ScrollContainer vertical="true">
+	<Container type="Fluid" fullHeight="true">
+	
+			<!-- Navs -->
+			<Heading level="1" text="Navigation" />
+
+			<Heading text="Navbar" />
+
+			<NavBar fluid="true">
+				<brand>
+					<Link text="Brand" />
+				</brand>
+				<collapse>
+					<Nav align="NavBar" selectionMode="Single">
+						<ListItem>
+							<Link text="Home" />
+						</ListItem>
+						<ListItem selected="true">
+							<Link text="Library" />
+						</ListItem>
+					</Nav>
+					<Form align="NavBarLeft">
+						<FormGroup>
+							<TextInput placeholder="Name" />
+						</FormGroup>
+						<Button text="Submit" severity="Success" />
+					</Form>
+				</collapse>
+			</NavBar>
+
+			<NavBar inverse="true" fluid="true">
+				<collapse>
+					<Nav align="NavBar" selectionMode="Single">
+						<ListItem>
+							<Link text="Home" />
+						</ListItem>
+						<ListItem  text="Library" />
+						<ListDropdownItem text="Data" update="TextAndData">
+							<ListDropdownMenu>
+								<ListLinkItem text="Cras justo odio" />
+								<ListLinkItem text="Dapibus ac facilisis in" />
+								<ListLinkItem text="Morbi leo risus" />
+								<ListLinkItem text="Porta ac consectetur ac" />
+								<ListLinkItem text="Vestibulum at eros" />
+							</ListDropdownMenu>
+						</ListDropdownItem>
+						<ListItem>
+							<Link text="Contact" />
+						</ListItem>
+					</Nav>
+				</collapse>
+			</NavBar>
+			
+			<Heading text="Navs" />
+
+			<Row>
+				<Col columns-small="4">
+
+					<Nav selectionMode="Single">
+						<ListItem>
+							<Link text="Home" />
+						</ListItem>
+						<ListItem selected="true">
+							<Link text="Library" />
+						</ListItem>
+						<ListItem>
+							<Link text="Data" />
+						</ListItem>
+						<ListItem>
+							<Link text="Contact" />
+						</ListItem>
+					</Nav>
+
+				</Col>
+
+				<Col columns-small="4">
+
+					<Nav type="Pills" selectionMode="Single">
+						<ListItem>
+							<Link text="Home" />
+						</ListItem>
+						<ListItem selected="true">
+							<Link text="Library" />
+						</ListItem>
+						<ListItem>
+							<Link text="Data" />
+						</ListItem>
+						<ListItem>
+							<Link text="Contact" />
+						</ListItem>
+					</Nav>
+
+				</Col>
+				<Col columns-small="4">
+
+					<Nav type="PillsStacked" selectionMode="Single">
+						<ListItem>
+							<Link text="Home">
+								<Icon icon="home" fixed-width="true" />
+							</Link>
+						</ListItem>
+						<ListItem selected="true">
+							<Link text="Library">
+								<Icon icon="book" fixed-width="true" />
+							</Link>
+						</ListItem>
+						<ListItem>
+							<Link text="Data" />
+						</ListItem>
+						<ListItem>
+							<Link text="Contact" />
+						</ListItem>
+					</Nav>
+
+				</Col>
+			</Row>
+
+			<Heading level="4" text="Ordered TabContainer" />
+
+			<Nav id="tabContainer2Pills" type="PillsJustified" selectionMode="Single">
+				<ListNavItem text="Home" />
+				<ListNavItem selected="true" text="Library" />
+				<ListNavItem text="Data" badge="9" />
+				<ListNavItem text="Contact" badge="3" />
+			</Nav>
+
+			<TabContainer class="tabContainer2" source="tabContainer2Pills">
+				<Container type="Fluid">
+					<Heading level="5" text="Home" />
+					<Paragraph text="Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui." />
+				</Container>
+				<Container type="Fluid">
+					<Heading level="5" text="Library" />
+					<Paragraph text="Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit." />
+				</Container>
+				<Container type="Fluid">
+					<Heading level="5" text="Data" />
+					<Paragraph text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork." />
+				</Container>
+				<Container type="Fluid">
+					<Heading level="5" text="Contact" />
+					<Paragraph text="Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater." />
+				</Container>
+			</TabContainer>
+
+			<Nav type="Tabs" id="tabContainer1Tabs" selectionMode="Single">
+				<ListItem>
+					<Link text="Home" />
+				</ListItem>
+				<ListItem>
+					<Link text="Library" />
+				</ListItem>
+				<ListItem selected="true">
+					<Link text="Data" />
+				</ListItem>
+				<ListItem>
+					<Link text="Contact" />
+				</ListItem>
+			</Nav>
+
+			<TabContainer class="tabContainer1" source="tabContainer1Tabs" transition="zoom-in">
+				<Container type="Fluid">
+					<Heading level="5" text="Home" />
+					<Paragraph text="Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui." />
+				</Container>
+				<Container type="Fluid">
+					<Heading level="5" text="Library" />
+					<Paragraph text="Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit." />
+				</Container>
+				<Container type="Fluid">
+					<Heading level="5" text="Data" />
+					<Paragraph text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork." />
+				</Container>
+				<Container type="Fluid">
+					<Heading level="5" text="Contact" />
+					<Paragraph text="Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater." />
+				</Container>
+			</TabContainer>
+
+			<Heading level="4" text="Custom association" />
+
+			<Nav type="TabsJustified" id="tabContainer3Tabs" selectionMode="Single" >
+				<ListItem panelId="home">
+					<Link text="Home" />
+				</ListItem>
+				<ListItem selected="true" panelId="library">
+					<Link text="Library" />
+				</ListItem>
+				<ListDropdownItem text="Data"  update="TextAndData">
+					<ListDropdownMenu selectionMode="Single">
+							<ListLinkItem text="Cras justo odio" panelId="d1" />
+							<ListLinkItem text="Dapibus ac facilisis in" panelId="d2" />
+							<ListLinkItem text="Morbi leo risus" panelId="d3" />
+					</ListDropdownMenu>
+				</ListDropdownItem>
+				<ListItem panelId="contact">
+					<Link text="Contact" />
+				</ListItem>
+			</Nav>
+
+			<TabContainer class="tabContainer2" source="tabContainer3Tabs" customAssociation="panelId" transition="flip-horizontal-cw">
+				<Container type="Fluid" panelId="home">
+					<Heading level="5" text="Home" />
+					<Paragraph text="Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui." />
+				</Container>
+				<Container type="Fluid" panelId="library">
+					<Heading level="5" text="Library" />
+					<Paragraph text="Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit." />
+				</Container>
+				<Container type="Fluid" panelId="d1">
+					<Heading level="5" text="Data 1" />
+					<Paragraph text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork." />
+				</Container>
+				<Container type="Fluid" panelId="d2">
+					<Heading level="5" text="Data 2" />
+					<Paragraph text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork." />
+				</Container>
+				<Container type="Fluid" panelId="d3">
+					<Heading level="5" text="Data 3" />
+					<Paragraph text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork." />
+				</Container>
+				<Container type="Fluid" panelId="contact">
+					<Heading level="5" text="Contact" />
+					<Paragraph text="Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater." />
+				</Container>
+			</TabContainer>
+
+	</Container>
+	</ScrollContainer>
+</View>

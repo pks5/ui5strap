@@ -1,0 +1,107 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	
+	<ScrollContainer vertical="true">
+		<Container type="Fluid" full-height="true">
+			<!-- Panels -->
+			<Heading level="1" text="Containers" />
+
+			<Jumbotron>
+				<Heading level="1" text="Jumbotron" />
+				<Paragraph text="This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information." />
+				<Paragraph>
+					<Button size="Large" text="Learn more" severity="Primary" />
+					
+				</Paragraph>
+			</Jumbotron>
+
+			<Heading text="Panels" />
+			<Row>
+				<Col columnsSmall="4">
+					<Panel title="Panel title" text="Panel content">
+						<titleContent>
+							<Icon icon="info-circle" fixed-width="true" />
+						</titleContent>
+					</Panel>
+					<Panel severity="Success" title="Panel title" text="Panel content">
+						<Icon icon="info-circle" fixed-width="true" />
+					</Panel>
+				</Col>
+				<Col columnsSmall="4">
+					<Panel severity="Warning" text="Panel without title" />
+					<Panel severity="Primary" title="Panel title" text="Panel content" />
+				</Col>
+				<Col columnsSmall="4">
+					<Panel collapse="true" severity="Info" title="Collapsible Panel" text="Panel content" />
+					<Panel collapse="true" collapsed="false" severity="Danger" title="Another collapsible Panel" text="Panel content" />
+				</Col>
+			</Row>
+
+			<Heading text="Panel Groups" />
+			<PanelGroup>
+				<Panel collapse="true" collapsed="false" severity="Warning" title="Panel title" text="Panel content" />
+				<Panel collapse="true" severity="Primary" title="Panel title" text="Panel content" />
+				<Panel collapse="true" severity="Info" title="Panel title" text="Panel content" />
+				<Panel collapse="true" severity="Danger" title="Panel title" text="Panel content" />
+			</PanelGroup>
+
+			<Heading text="List groups" />
+			<Row>
+				<Col columnsSmall="4">
+					<ListGroup selectionMode="Single">
+						<ListGroupItem text="Cras justo odio" badge="3">
+							<Icon icon="home" fixed-width="true" trail="DoubleSpace" />
+						</ListGroupItem>
+						<ListGroupItem text="Dapibus ac facilisis in" badge="9">
+							<Icon icon="book" fixed-width="true" trail="DoubleSpace" />
+						</ListGroupItem>
+						<ListGroupItem text="Morbi leo risus" badge="8">
+							<Icon icon="pencil" fixed-width="true" trail="DoubleSpace" />
+						</ListGroupItem>
+						<ListGroupItem text="Porta ac consectetur ac" badge="2">
+							<Icon icon="cog" fixed-width="true" trail="DoubleSpace" />
+						</ListGroupItem>
+						<ListGroupItem text="Vestibulum at eros" badge="1">
+							<Icon icon="institution" fixed-width="true" trail="DoubleSpace" />
+						</ListGroupItem>
+					</ListGroup>
+				</Col>
+				<Col columnsSmall="4">
+					<ListGroup container="true" selectionMode="Single">
+						<ListGroupItem selected="true" text="Cras justo odio" />
+						<ListGroupItem text="Dapibus ac facilisis in" />
+						<ListGroupItem text="Morbi leo risus" />
+						<ListGroupItem text="Porta ac consectetur ac" />
+						<ListGroupItem text="Vestibulum at eros" />
+					</ListGroup>
+				</Col>
+				<Col columnsSmall="4">
+					<ListGroup container="true" selectionMode="Single">
+						<ListGroupItem selected="true">
+							<Heading type="ListGroupItemHeading" level="4" text="List group item heading" />
+							<Paragraph text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." />
+						</ListGroupItem>
+						<ListGroupItem>
+							<Heading type="ListGroupItemHeading" level="4" text="List group item heading" />
+							<Paragraph text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." />
+						</ListGroupItem>
+						<ListGroupItem>
+							<Heading type="ListGroupItemHeading" level="4" text="List group item heading" />
+							<Paragraph text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." />
+						</ListGroupItem>
+						
+					</ListGroup>
+				</Col>
+			</Row>
+
+			<!-- Wells -->
+			<Heading text="Wells" />
+			<Well text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur." />
+
+			<Well size="Large" text="Look, I'm in a large well!" />
+			<Well size="Small" text="Look, I'm in a small well!" />
+
+</Container>
+</ScrollContainer>
+</View>

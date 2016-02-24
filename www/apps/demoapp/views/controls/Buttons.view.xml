@@ -1,0 +1,233 @@
+<View controllerName="ui5strap.demoapp.controllers.Controls" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Container type="Fluid" options="PictureFrame">
+
+			
+
+			<!-- Buttons -->
+			<Heading level="1" text="Buttons" />
+
+			<Row>
+			<Col columnsSmall="6">
+
+			<Heading level="4" text="Default" />
+			
+			<!-- Normal buttons -->
+			<Paragraph>
+					<Button tap="buttonTap" text="Default" severity="Default" />
+					<Button tap="buttonTap" text="Primary" severity="Primary" />
+					<Button tap="buttonTap" text="Success" severity="Success" />
+					<Button tap="buttonTap" text="Info" severity="Info" />
+					<Button tap="buttonTap" severity="Warning">
+						<Icon icon="exclamation-circle" />
+					</Button>
+					<Button tap="buttonTap" text="Danger" severity="Danger">
+						<Icon icon="exclamation-triangle" />
+					</Button>
+					<Button tap="buttonTap" type="Link" text="Link" />
+			</Paragraph>
+	
+			<Heading level="4" text="Disabled" />
+			
+			<!-- Disabled buttons -->
+			<Paragraph>
+					<Button enabled="false" text="Default" severity="Default" />
+					<Button enabled="false" text="Primary" severity="Primary" />
+					<Button enabled="false" text="Success" severity="Success" />
+					<Button enabled="false" text="Info" severity="Info" />
+					<Button enabled="false" text="Warning" severity="Warning" />
+					<Button enabled="false" text="Danger" severity="Danger" />
+					<Button enabled="false" type="Link" text="Link" />
+			</Paragraph>
+			
+			<Heading level="4" text="Sizing" />
+			
+			<!-- Large buttons -->
+			<Paragraph>
+					<Button tap="buttonTap" size="Large" text="Large Button" severity="Primary" />
+					<Button tap="buttonTap" size="Medium" text="Medium Button" severity="Primary" />
+					<Button tap="buttonTap" size="Small" text="Small Button" severity="Primary" />
+					<Button tap="buttonTap" size="ExtraSmall" text="Extra Small Button" severity="Primary" />
+					
+			</Paragraph>
+			
+			<Heading level="4" text="Dropdown" />
+			
+			<!-- Dropdown buttons -->
+			<Paragraph>
+					<ButtonDropdown tap="buttonDropdownTap" text="Default" severity="Success" size="ExtraSmall">
+						<ListDropdownMenu tap="listDropdownMenuTap" >
+							<ListLinkItem text="Cras justo odio" />
+							<ListLinkItem text="Dapibus ac facilisis in" />
+							<ListLinkItem text="Morbi leo risus" />
+							<ListLinkItem text="Porta ac consectetur ac" />
+							<ListLinkItem text="Vestibulum at eros" />
+						</ListDropdownMenu>
+					</ButtonDropdown>
+					<ButtonDropdown tap="buttonDropdownTap" text="Primary" severity="Success" size="Small">
+						<ListDropdownMenu tap="listDropdownMenuTap" >
+							<ListLinkItem text="Cras justo odio" />
+							<ListLinkItem text="Dapibus ac facilisis in" />
+							<ListLinkItem text="Morbi leo risus" />
+							<ListLinkItem text="Porta ac consectetur ac" />
+							<ListLinkItem text="Vestibulum at eros" />
+						</ListDropdownMenu>
+					</ButtonDropdown>
+					<ButtonDropdown tap="buttonDropdownTap" text="Success" severity="Success" size="Medium" dropup="true" >
+						<ListDropdownMenu tap="listDropdownMenuTap" >
+							<ListLinkItem text="Cras justo odio" />
+							<ListLinkItem text="Dapibus ac facilisis in" />
+							<ListLinkItem text="Morbi leo risus" />
+							<ListLinkItem text="Porta ac consectetur ac" />
+							<ListLinkItem text="Vestibulum at eros" />
+						</ListDropdownMenu>
+					</ButtonDropdown>
+					<ButtonDropdown tap="buttonDropdownTap" text="Success" severity="Success" size="Large" dropup="true" >
+						<ListDropdownMenu tap="listDropdownMenuTap" >
+							<ListLinkItem text="Cras justo odio" />
+							<ListLinkItem text="Dapibus ac facilisis in" />
+							<ListLinkItem text="Morbi leo risus" />
+							<ListLinkItem text="Porta ac consectetur ac" />
+							<ListLinkItem text="Vestibulum at eros" />
+						</ListDropdownMenu>
+					</ButtonDropdown>
+			</Paragraph>
+			
+			<Heading level="4" text="Split" />
+			
+			<!--Split buttons -->
+			<Paragraph>
+					<ButtonDropdown size="ExtraSmall" tap="buttonTap" split="true" text="Single" severity="Info">
+						<ListDropdownMenu tap="listDropdownMenuTap" selectionMode="Single">
+							<ListLinkItem text="Cras justo odio" />
+							<ListLinkItem text="Dapibus ac facilisis in" />
+							<ListLinkItem text="Morbi leo risus" />
+							<ListLinkItem text="Porta ac consectetur ac" />
+							<ListLinkItem text="Vestibulum at eros" />
+						</ListDropdownMenu>
+					</ButtonDropdown>
+					
+					<ButtonDropdown size="Small" tap="buttonTap" split="true" text="Single" severity="Info">
+						<ListDropdownMenu tap="listDropdownMenuTap" selectionMode="Single">
+							<ListLinkItem text="Cras justo odio" />
+							<ListLinkItem text="Dapibus ac facilisis in" />
+							<ListLinkItem text="Morbi leo risus" />
+							<ListLinkItem text="Porta ac consectetur ac" />
+							<ListLinkItem text="Vestibulum at eros" />
+						</ListDropdownMenu>
+					</ButtonDropdown>
+					
+					<ButtonDropdown size="Medium" tap="buttonTap" split="true" text="SingleToggle" dropup="true" severity="Info">
+						<ListDropdownMenu tap="listDropdownMenuTap" selectionMode="SingleToggle" >
+							<ListLinkItem text="Cras justo odio" />
+							<ListLinkItem text="Dapibus ac facilisis in" />
+							<ListLinkItem text="Morbi leo risus" />
+							<ListLinkItem text="Porta ac consectetur ac" />
+							<ListLinkItem text="Vestibulum at eros" />
+						</ListDropdownMenu>
+					</ButtonDropdown>
+					<ButtonDropdown size="Large" tap="buttonTap"  split="true" text="Multiple" dropup="true" severity="Info" update="Text">
+						<ListDropdownMenu tap="listDropdownMenuTap"  selectionMode="Multiple" >
+							<ListLinkItem text="Cras justo odio" />
+							<ListLinkItem text="Dapibus ac facilisis in" />
+							<ListLinkItem text="Morbi leo risus" />
+							<ListLinkItem text="Porta ac consectetur ac" />
+							<ListLinkItem text="Vestibulum at eros" />
+						</ListDropdownMenu>
+					</ButtonDropdown>
+			</Paragraph>
+			
+			
+
+		</Col>
+		
+		<Col columnsSmall="6">
+			<Heading level="4" text="Block Buttons" />
+			<Paragraph>
+				<Button tap="buttonTap" type="Block" severity="Default" text="Block" />
+			</Paragraph>
+			<Container>
+				<ButtonGroup type="Justified" size="Large">
+					<Button tap="buttonTap" severity="Default" text="Left" />
+					<Button tap="buttonTap" severity="Default" text="Middle" />
+					<Button tap="buttonTap" severity="Default" text="Right" />
+				</ButtonGroup>
+			</Container>
+			
+			<Heading level="4" text="Button Toolbar" />
+			
+			<Container>
+				<ButtonToolbar>
+
+				
+					<ButtonGroup>
+						<Button tap="buttonTap" text="1" />
+						<Button tap="buttonTap" text="2" />
+						<Button tap="buttonTap" text="3" />
+						<Button tap="buttonTap" text="4" />
+					</ButtonGroup>
+				
+				
+					<ButtonGroup>
+						<Button tap="buttonTap" >
+							<Icon icon="file" />
+						</Button>
+						<Button tap="buttonTap" >
+							<Icon icon="folder-open" />
+						</Button>
+					</ButtonGroup>
+				
+				
+					<ButtonGroup>
+						<Button tap="buttonTap" text="5" />
+						<ButtonDropdown text="Dropdown" update="TextAndData">
+							<ListDropdownMenu tap="buttonDropdownTap"  selectionMode="Single" >
+								<ListLinkItem text="Cras justo odio" />
+								<ListLinkItem text="Dapibus ac facilisis in" />
+								<ListLinkItem text="Morbi leo risus" />
+								<ListLinkItem text="Porta ac consectetur ac" />
+								<ListLinkItem text="Vestibulum at eros" />
+							</ListDropdownMenu>
+						</ButtonDropdown>
+					</ButtonGroup>
+				
+				</ButtonToolbar>
+			</Container>
+
+			<Heading level="4" text="Button navigation" />
+
+			<Container>
+				<Container align="PullLeft">
+					<ButtonGroup id="vButtons" type="Vertical" selectionMode="Single">
+						<Button text="Home" selected="true" />
+						<Button text="Library" />
+						<Button text="Data" />
+						<Button text="Contact" />
+					</ButtonGroup>
+				</Container>
+				<Container options="FloatingContainer">
+					<TabContainer source="vButtons" animate="false">
+						<Container> 
+							<Heading level="4" text="Home" /> 
+							<Text text="Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui." />
+						</Container>
+						<Container>
+							<Heading level="4" text="Library" />
+							<Text text="Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit." />
+						</Container>
+						<Container>
+							<Heading level="4" text="Data" />
+							<Text text="Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork." />
+						</Container>
+						<Container>
+							<Heading level="4" text="Contact" />
+							<Text text="Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater." />
+						</Container>
+					</TabContainer>
+				</Container>
+			</Container>
+		</Col>
+	</Row>
+	</Container>
+</View>

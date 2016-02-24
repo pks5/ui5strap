@@ -1,0 +1,96 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Container type="Fluid" options="PictureFrame">
+			<!-- Headings -->
+			<Heading level="1" text="Grid System" />
+
+			<Paragraph text="The Grid System allows you to create flexible layouts depending on the current screen size. If you are using a desktop computer, resize the browser window to see the dynamic behaviour." />
+
+			<Paragraph>
+				<Text type="Phrasing" text="Your screen is " />
+				<Text visibilitySmall="HiddenUp" type="Strong" text="ExtraSmall (XS)" />
+				<Text visibilityExtraSmall="HiddenUp" visibilitySmall="VisibleUp" visibilityMedium="HiddenUp" type="Strong" text="Small (SM)" />
+				<Text type="Strong" text="Medium (MD)" visibilityExtraSmall="HiddenUp" visibilityMedium="VisibleUp" visibilityLarge="HiddenUp" />
+				<Text visibilityExtraSmall="HiddenUp" visibilityLarge="VisibleUp" type="Strong" text="Large (LG)" />
+			</Paragraph>
+
+			<Container type="Fluid" class="show-grid">
+				<Row>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+					<Col columnsExtraSmall="1">
+						<Paragraph text="&lt;1>" />
+					</Col>
+				</Row>
+				<Row>
+					<Col columnsExtraSmall="12" columnsSmall="8" columnsMedium="4" columnsLarge="2">
+						<Paragraph text="(1) XS &lt;12>, SM &lt;6>, MD &lt;4>, LG &lt;2>" />
+					</Col>
+					<Col columnsExtraSmall="12" columnsSmall="4" columnsMedium="2" columnsLarge="1">
+						<Paragraph text="(2) XS &lt;12>, SM &lt;4>, MD &lt;2>, LG &lt;1>" />
+					</Col>
+				</Row>
+				<Row>
+					<Col columnsSmall="4" columnsMedium="2" columnsLarge="4">
+						<Paragraph text="(1) SM &lt;4>, MD &lt;2>, LG &lt;4>" />
+					</Col>
+					<Col columnsSmall="4" columnsMedium="8" columnsLarge="4">
+						<Paragraph text="(2) SM &lt;4>, MD &lt;6>, LG &lt;4>" />
+					</Col>
+					<Col columnsSmall="4" columnsMedium="2" columnsLarge="4">
+						<Paragraph text="(3) SM &lt;4>, MD &lt;2>, LG &lt;4>" />
+					</Col>
+				</Row>
+				<Row>
+					<Col columnsSmall="3" offsetSmall="3" columnsMedium="5" offsetMedium="1" >
+						<Paragraph text="(1) SM |3|&lt;3>, MD |1|&lt;5>" />
+					</Col>
+					<Col columnsSmall="5" offsetSmall="1" columnsMedium="4" offsetMedium="2">
+						<Paragraph text="(2) SM |1|&lt;5>, MD |2|&lt;4>" />
+					</Col>
+				</Row>
+				<Row>
+					<Col columnsSmall="3" pushSmall="7" columnsMedium="5" pushMedium="5" >
+						<Paragraph text="(1) SM &lt;3> 7->, MD &lt;5> 5->" />
+					</Col>
+					<Col columnsSmall="5" pullSmall="2" columnsMedium="4" pullMedium="5">
+						<Paragraph text="(2) SM &lt;-2 &lt;5>, MD &lt;-5 &lt;4>" />
+					</Col>
+				</Row>
+			</Container>
+
+			
+		</Container>
+</View>

@@ -1,0 +1,83 @@
+<View controllerName="ui5strap.demoapp.controllers.Controls" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Container type="Fluid" options="PictureFrame">
+
+			<!-- Progress -->
+			<Heading level="1" text="Icons" />
+
+			<Heading text="Basic Icons" />
+
+			<Icon icon="camera-retro" />
+
+			<Heading text="Larger Icons" />
+
+			<Paragraph>
+				<Icon icon="camera-retro" size="Large" />
+				<Text text=" Large" />
+			</Paragraph>
+			<Paragraph>
+				<Icon icon="camera-retro" size="X2" />
+				<Text text=" X2" />
+			</Paragraph>
+			<Paragraph>
+				<Icon icon="camera-retro" size="X3" />
+				<Text text=" X3" />
+			</Paragraph>
+			<Paragraph>
+				<Icon icon="camera-retro" size="X4" />
+				<Text text=" X4" />
+			</Paragraph>
+			<Paragraph>
+				<Icon icon="camera-retro" size="X5" />
+				<Text text=" X5" />
+			</Paragraph>
+
+			<Heading text="Bordered &amp; Pulled Icons" />
+
+			<Paragraph>
+				<Icon icon="quote-left" border="true" align="PullLeft" size="X3" />
+				<Text text=" …tomorrow we will run faster, stretch out our arms farther… And then one fine morning— So we beat on, boats against the current, borne back ceaselessly into the past. " />
+				<Clearfix />
+			</Paragraph>
+
+			<Heading text="Spinning Icons" />
+
+			<Paragraph>
+				<Button tap="buttonTap" size="Large" severity="Default">
+					<Icon icon="spinner" spin="true" severity="Primary" />
+				</Button>
+				<Button tap="buttonTap" size="Large" severity="Primary">
+					<Icon icon="circle-o-notch" spin="true" />
+				</Button>
+				<Button tap="buttonTap" size="Large" severity="Success">
+					<Icon icon="refresh" spin="true" />
+				</Button>
+				<Button tap="buttonTap" size="Large" severity="Danger">
+					<Icon icon="cog" spin="true" />
+				</Button>
+			</Paragraph>
+
+			<Heading text="Transformed Icons" />
+
+			<Paragraph>
+				<Icon icon="shield" />
+				<Text text=" Default" trail="Break" />
+				
+				<Icon icon="shield" transform="Rotate90" />
+				<Text text=" Rotate90" trail="Break" />
+				
+				<Icon icon="shield" transform="Rotate180" />
+				<Text text=" Rotate180" trail="Break" />
+				
+				<Icon icon="shield" transform="Rotate270" />
+				<Text text=" Rotate270" trail="Break" />
+				
+				<Icon icon="shield" transform="FlipHorizontal" />
+				<Text text=" FlipHorizontal" trail="Break" />
+				
+				<Icon icon="shield" transform="FlipVertical" />
+				<Text text=" FlipVertical" trail="Break" />
+			</Paragraph>
+	</Container>
+</View>

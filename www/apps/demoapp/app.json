@@ -101,68 +101,57 @@
             
             {
             	"id" : "controlsButtons",
-            	"viewName" : ".controls.Buttons",
-            	"type" : "HTML"
+            	"viewName" : ".controls.Buttons"
             },
             
             {
             	"id" : "controlsContainers",
-            	"viewName" : ".controls.Containers",
-            	"type" : "HTML"
+            	"viewName" : ".controls.Containers"
             },
             
             {
             	"id" : "controlsIcons",
-            	"viewName" : ".controls.Icons",
-            	"type" : "HTML"
+            	"viewName" : ".controls.Icons"
             },
             
             {
             	"id" : "controlsTypography",
-            	"viewName" : ".controls.Typography",
-            	"type" : "HTML"
+            	"viewName" : ".controls.Typography"
             },
 			
 			{
             	"id" : "controlsNavs",
-            	"viewName" : ".controls.Navs",
-            	"type" : "HTML"
+            	"viewName" : ".controls.Navs"
             },
             
             {
             	"id" : "controlsGridSystem",
-            	"viewName" : ".controls.GridSystem",
-            	"type" : "HTML"
+            	"viewName" : ".controls.GridSystem"
             },
             
             {
             	"id" : "controlsProgress",
-            	"viewName" : ".controls.Progress",
-            	"type" : "HTML"
+            	"viewName" : ".controls.Progress"
             },
             
             {
             	"id" : "controlsForm",
-            	"viewName" : ".controls.Form",
-            	"type" : "HTML"
+            	"viewName" : ".controls.Form"
             },
             
             {
             	"id" : "controlsIndicators",
-            	"viewName" : ".controls.Indicators",
-            	"type" : "HTML"
+            	"viewName" : ".controls.Indicators"
             },
             
             {
             	"id" : "controlsMediaList",
-            	"viewName" : ".controls.MediaList",
-            	"type" : "HTML"
+            	"viewName" : ".controls.MediaList"
             },
             
             {
             	"id" : "controlsDialogs",
-            	"viewName" : ".controls.Dialogs",
-            	"type" : "HTML"
+            	"viewName" : ".controls.Dialogs"
             },
             
             {

@@ -1,0 +1,95 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Container type="Fluid" options="PictureFrame">
+			<!-- Media List -->
+			<Heading level="1" text="Media" />
+
+			<Heading text="Media List" />
+			<ListMedia>
+						
+						<ListMediaItem>
+							<media>
+								
+								<Link>
+									<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
+								</Link>
+							
+							</media>
+							<content>
+								
+								<Heading level="4" options="MediaHeading" text="Media Heading" />
+								<Text text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." />
+
+
+								<ListMediaItem>
+									<media>
+										<Link>
+											<Image mpath="ui5strap.demoapp.img.awesome" ext="png"  alt="Image" width="64" height="64" />
+										</Link>
+									</media>
+									<content>
+										
+										<Heading level="4" options="MediaHeading" text="Media Heading" />
+										<Text text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." />
+										
+
+										<ListMediaItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
+											<Link>
+												<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
+											</Link>
+										</ListMediaItem>
+									
+
+									</content>
+								</ListMediaItem>
+								
+							</content>
+						</ListMediaItem>
+						<ListMediaItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
+							<Link>
+								<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
+							</Link>
+						</ListMediaItem>
+						
+						<ListMediaItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
+							<Link>
+								<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
+							</Link>
+						</ListMediaItem>
+		</ListMedia>
+
+		<Heading text="Thumbnails" />
+			<Row>
+				
+				<Col columnsSmall="4">
+					<Link type="Thumbnail">
+						<Image title="Awesome, isn't it?" tooltipPlacement="Top" mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" />
+					</Link>
+				</Col>
+				
+				<Col columnsSmall="4">
+					<Link type="Thumbnail">
+						<Image title="Awesome, isn't it?" tooltipPlacement="Top" mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" />
+					</Link>
+				</Col>
+
+				<Col columnsSmall="4">
+					<Thumbnail>
+						<image>
+							<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" />
+						</image>
+						<content>
+							<Heading text="Thumbnail label" />
+							<Paragraph text="Cras justo odio, dapibus ac facilisis in, egestas eget quam." />
+							<Paragraph>
+								<Button text="Button" severity="Primary" />
+								<Button text="Button" />
+							</Paragraph>
+						</content>
+					</Thumbnail>
+				</Col>
+
+			</Row>
+</Container>
+</View>

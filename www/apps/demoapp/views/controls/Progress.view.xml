@@ -1,0 +1,86 @@
+<View controllerName="ui5strap.demoapp.controllers.Controls" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Container type="Fluid" options="PictureFrame">
+
+			<!-- Progress -->
+			<Heading level="1" text="Progress bars" />
+
+			<Button id="progressButton" text="Start Progress" tap="startProgress" severity="Success">
+				<Icon icon="play" />
+			</Button>
+
+			<Heading text="Basic" />
+
+			<Progress id="progress1">
+				<ProgressBar value="30" />
+			</Progress>
+
+			<Heading text="Contextual alternatives" />
+
+			<Progress id="progress2">
+				<ProgressBar value="20" severity="Info" />
+			</Progress>
+
+			<Progress id="progress3">
+				<ProgressBar value="40" severity="Success" />
+			</Progress>
+
+			<Progress id="progress4">
+				<ProgressBar value="60" severity="Warning" />
+			</Progress>
+
+			<Progress id="progress5">
+				<ProgressBar value="80" severity="Danger" />
+			</Progress>
+
+			<Heading text="Striped" />
+
+			<Progress striped="true">
+				<ProgressBar value="20" severity="Info" />
+			</Progress>
+
+			<Progress striped="true">
+				<ProgressBar value="40" severity="Success" />
+			</Progress>
+
+			<Progress striped="true">
+				<ProgressBar value="60" severity="Warning" />
+			</Progress>
+
+			<Progress striped="true">
+				<ProgressBar value="80" severity="Danger" />
+			</Progress>
+
+			<Heading text="Animated" />
+
+			<Progress striped="true" animate="true">
+				<ProgressBar value="50" />
+			</Progress>
+
+			<Heading text="With labels" />
+
+			<Progress>
+				<ProgressBar labelFormat="[progress]%" severity="Info" value="20" />
+			</Progress>
+
+			<Progress>
+				<ProgressBar labelFormat="[val]/[max]" severity="Success" value="400" maxValue="1000" />
+			</Progress>
+
+			<Progress>
+				<ProgressBar labelFormat="[left] items left" severity="Warning" value="60000" maxValue="100000" />
+			</Progress>
+
+			<Progress striped="true">
+				<ProgressBar severity="Danger" minValue="100" maxValue="200" labelFormat="[val]/[max] (Min value: [min], Progress: [progress]%)" value="180" />
+			</Progress>
+
+			<Heading text="Stacked" />
+			<Progress>
+				<ProgressBar severity="Success" value="20" />
+				<ProgressBar severity="Warning" value="40" />
+				<ProgressBar severity="Danger" value="10" />
+			</Progress>
+	</Container>
+</View>

@@ -1,0 +1,149 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Container type="Fluid" options="PictureFrame">
+
+			<!-- Forms -->
+			<Heading level="1" text="Forms" />
+
+			<Heading level="4" text="Vertical forms" />
+
+			<Form>
+				<FormGroup label="Name" feedback="true">
+					<TextInput placeholder="Name" />
+					<Icon icon="times" type="FormFeedback" />
+				</FormGroup>
+				<FormGroup label="Email" severity="Error">
+					<InputGroup>
+						<Text text="@" />
+						<TextInput placeholder="Email" />
+						<Icon icon="times" />
+					</InputGroup>
+					
+				</FormGroup>
+				
+				<FormGroup label="Address">
+					<TextInput rows="3" placeholder="Address" />
+				</FormGroup>
+				<FormGroup label="Some Things">
+					<Row> 
+						<Col columnsSmall="3">
+							<InputGroup>
+								<RadioButton type="Default" />
+								<TextInput placeholder="Name" />
+							</InputGroup>
+						</Col>
+						<Col columnsSmall="3">
+							<InputGroup>
+								<SelectBox>
+									<Item text="Option 1" value="option1" />
+									<Item text="Option 2" value="option2" />
+									<Item text="Option 3" value="option3" />
+									<Item text="Option 4" value="option4" />
+								</SelectBox>
+								<Checkbox type="Default" />
+							</InputGroup>
+						</Col>
+						<Col columnsSmall="3">
+							<InputGroup>
+								<TextInput placeholder="Name" />
+								<Checkbox type="Default" />
+							</InputGroup>
+						</Col>
+					</Row>
+				</FormGroup>
+				<FormGroup label="Some option">
+					<Checkbox label="Option 1" />
+				</FormGroup>
+				<FormGroup>
+					<RadioButton label="Option A" />
+				</FormGroup>
+				<FormGroup>
+					<RadioButton label="Option B" />
+				</FormGroup>
+				<Button text="Submit" severity="Success" />
+			</Form>
+
+			<Heading level="4" text="Horizontal forms" />
+
+			<Form type="Horizontal">
+				<FormGroup label="Name" labelSmall="2">
+					<Col columnsSmall="10">
+						<InputGroup>
+							<Icon icon="pencil" />
+							<TextInput placeholder="Name" />
+							<Button text="Check" severity="Success" />
+						</InputGroup>
+					</Col>
+				</FormGroup>
+				<FormGroup label="Number" labelSmall="2">
+					<Col columnsSmall="10">
+							<Paragraph form-static="true" text="ABV323GDBS223" />
+					</Col>
+				</FormGroup>
+				<FormGroup label="Email" labelSmall="2" severity="Error" feedback="true">
+					<Col columnsSmall="10">
+							<TextInput placeholder="Email" value="no@valid@email" />
+							<Icon icon="times" type="FormFeedback" />
+							<Text type="HelpBlock" text="A block of help text that breaks onto a new line and may extend beyond one line." />
+					</Col>
+				</FormGroup>
+				<FormGroup label="Address" labelSmall="2" severity="Success" feedback="true">
+					<Col columnsSmall="5">
+						<TextInput value="Some Street" placeholder="Address" />
+						<Icon icon="check" type="FormFeedback" />
+					</Col>
+					<Col columnsSmall="5">
+						<TextInput value="25a" placeholder="Address" />
+						<Icon icon="check" type="FormFeedback" />
+					</Col>
+				</FormGroup>
+				<FormGroup label="Category" labelSmall="3">
+					<Col columnsSmall="3">
+						<SelectBox>
+							<Item text="Option 1" value="option1" />
+							<Item text="Option 2" value="option2" />
+							<Item text="Option 3" value="option3" />
+							<Item text="Option 4" value="option4" />
+						</SelectBox>
+					</Col>
+					<Col columnsSmall="3">
+						<SelectBox>
+							<Item text="Option 1" value="option1" />
+							<Item text="Option 2" value="option2" />
+							<Item text="Option 3" value="option3" />
+							<Item text="Option 4" value="option4" />
+						</SelectBox>
+					</Col>
+					<Col columnsSmall="3">
+						<SelectBox>
+							<Item text="Option 1" value="option1" />
+							<Item text="Option 2" value="option2" />
+							<Item text="Option 3" value="option3" />
+							<Item text="Option 4" value="option4" />
+						</SelectBox>
+					</Col>
+				</FormGroup>
+				<FormGroup>
+					<Col offsetSmall="2" columnsSmall="10">
+						<Checkbox label="Option 1" />
+					</Col>
+				</FormGroup>
+				<FormGroup>
+					<Col offsetSmall="2" columnsSmall="10">
+						<RadioButton label="Option A" />
+					</Col>
+				</FormGroup>
+				<FormGroup>
+					<Col offsetSmall="2" columnsSmall="10">
+						<RadioButton label="Option B" />
+					</Col>
+				</FormGroup>
+				<Col offsetSmall="2" columsSmall="10">
+					<Button text="Submit" severity="Success" />
+				</Col>
+			</Form>
+
+			
+	</Container>
+</View>

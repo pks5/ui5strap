@@ -1,0 +1,40 @@
+<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Container type="Fluid" options="PictureFrame">
+			<!-- Headings -->
+			<Heading level="1" text="Typography" />
+
+			<Heading level="1" text="Heading 1" />
+			<Heading level="2" text="Heading 2" />
+			<Heading level="3" text="Heading 3" />
+			<Heading level="4" text="Heading 4" />
+			<Heading level="5" text="Heading 5" />
+			<Heading level="6" text="Heading 6" />
+
+			<Text type="Lead" text="Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor." />
+
+			<Heading level="2" text="Example body text" />
+
+			<Paragraph text="Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula." />
+
+			<Paragraph>
+				<Text type="Small" text="This line of text is meant to be treated as fine print." />
+			</Paragraph>
+
+			<Paragraph>
+				<Text text="The following snippet of text is rendered as [strong]bold text[/strong]." parse="true" />
+			</Paragraph>
+
+			<Paragraph>
+				<Text text="The following snippet of text is rendered as [em]emphasized text[/em]." parse="true" />
+			</Paragraph>
+
+			<Text type="Blockquote">
+				 <Text type="Paragraph" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante." />
+				 <Text type="Small" text="Someone famous in Source Title" />
+			</Text>
+
+	</Container>
+
+</View>
