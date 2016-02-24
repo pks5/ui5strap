@@ -24,10 +24,10 @@
 			<Container type="FluidInset">
 				<Nav type="Tabs" id="tabContainer1Tabs" selectionMode="Single">
 					<ListItem selected="true">
-						<Link text="Theme" />
+						<Link text="{i18n>PAGE_SETTINGS_TAB_SET}" />
 					</ListItem>
 					<ListItem>
-						<Link text="Navigation" />
+						<Link text="{i18n>PAGE_SETTINGS_TAB_MORE}" />
 					</ListItem>
 				</Nav>
 

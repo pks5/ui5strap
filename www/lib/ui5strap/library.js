@@ -1359,9 +1359,17 @@ sap.ui
 							newText, suppressInvalidate) {
 						if (oControl.getDomRef()
 								&& oControl.getContent().length === 0) {
-							$target.text(newText);
+							//Check if text needs to be parsed
+							if(oControl.getParse && oControl.getParse()){
+								$target.html(ui5strap.RenderUtils.parseText(newText));
+							}
+							else{
+								$target.text(newText);
+							}
+							//Set property value without rerendering
 							oControl.setProperty('text', newText, true);
 						} else {
+							//Default setter behaviour
 							oControl.setProperty('text', newText,
 									suppressInvalidate);
 						}
