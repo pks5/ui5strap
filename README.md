@@ -1,4 +1,4 @@
-ui5strap 0.10.4
+ui5strap 0.10.5
 ===============
 
 The independent SAPUI5 / OpenUI5 App Development Toolkit based on Bootstrap.
@@ -23,7 +23,7 @@ UI5Strap is released under Apache2 license: http://www.apache.org/licenses/LICEN
 THIRD PARTY COMPONENTS
 ----------------------
 
-OpenUi5 1.32.9 (Apache 2 License) [modified]
+OpenUi5 1.34.8 (Apache 2 License) [modified]
 Copyright (c) 2009-2015 SAP SE or an SAP affiliate company.
 
 Bootstrap 3.3.5 (MIT License) [modified]

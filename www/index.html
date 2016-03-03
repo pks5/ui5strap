@@ -177,7 +177,8 @@
 		<!-- <script type="text/javascript" src="cordova.js"></script> -->
 		
 		<!-- 
-			Minimized OpenUI5 library without sap.m and sap.ui.core.commons Controls. 
+			Minimized OpenUI5 library. If you need the full OpenUI5 Library, you can get it at http://openui5.org
+			Please note that preloading of the Ui5Strap library is disabled by default. Remove "_preload-disabled" to activate preloading. 
 		-->
 		<script 
 			id="sap-ui-bootstrap" 
@@ -185,7 +186,7 @@
 			data-sap-ui-xx-test-mobile="false" 
 			data-sap-ui-compatVersion="edge" 
 			data-sap-ui-preload="async"
-			data-sap-ui-libsa="ui5strap"
+			data-sap-ui-libs_preload-disabled="ui5strap"
 		></script>
 		
 		<!-- App Start -->
