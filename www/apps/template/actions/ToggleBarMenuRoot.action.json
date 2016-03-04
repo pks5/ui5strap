@@ -1,0 +1,14 @@
+{
+	"//" : "Toggles the visibility of the menu bar of the root NavContainer.",
+	
+	"TASKS" : "toggleBarMenuRoot",
+	
+	"toggleBarMenuRoot" : {
+		"navContainer" : "= app.getRootControl()",
+		"currentValue" : "= .navContainer.getBarVisible()",
+		"oppositeValue" : "= lang.not(.currentValue)",
+		
+		"DO" : "= .navContainer.setBarVisible(.oppositeValue)"
+	}
+
+}

@@ -9,7 +9,7 @@
 				
 				<!-- Toggle Menu Button (except for small screens) -->
 				<Container align="PullLeft" visibilitySmall="Hidden">
-					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+					<Button tap="com.ui5strap.apps.template.actions.ToggleBarMenuRoot" 
 						options="BarButton">
 						<Icon icon="columns" />
 					</Button>
@@ -17,12 +17,11 @@
 					
 					<Heading level="1" options="BarHeadingCenter">
 						<Text text="{i18n>PAGE_HOME_TITLE}" />
-						<Text type="Label" severity="Success" text="New" />
 					</Heading>
 					
 					<!-- Toggle Menu Button (only for small screens) -->
 					<Container  align="PullRight" type="Text" visibilityExtraSmall="Hidden" visibilityMedium="HiddenUp">
-						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+						<Button tap="com.ui5strap.apps.template.actions.ToggleBarMenuRoot" 
 							options="BarButton">
 							<Icon icon="columns" />
 						</Button>
@@ -38,25 +37,9 @@
 					<Text type="Lead" textAlign="Center" text="{i18n>PAGE_HOME_INTRO}" />
 					
 					<Paragraph textAlign="Center">
-						<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="256" height="256" />
+						<Image mpath="com.ui5strap.apps.template.img.awesome" ext="png" alt="Image" width="256" height="256" />
 					</Paragraph>
-					<Row>
-						<Col columnsSmall="6" offsetSmall="3" columnsMedium="6" offsetMedium="3" >
-							<ListGroup 
-								tap="ui5strap.demoapp.actions.NavigateViaMenuRoot" 
-								items="{menu>/root}"
-								listMode="Navigation"
-							>
-								<ListGroupItem 
-									text="{formatter:'.formatters.localeString', path:'menu>label'}" 
-									badge="{menu>badge}"
-									icon="chevron-right"
-									
-								>
-								</ListGroupItem>
-							</ListGroup>
-						</Col>
-					</Row>
+					
 				</Container>
 			</ScrollContainer>
 		</body>

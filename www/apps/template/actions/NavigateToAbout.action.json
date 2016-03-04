@@ -1,0 +1,17 @@
+{
+	"//" : "Makes the root NavContainer navigate to the 'About' view.",
+	
+	"TASKS" : "navigateToAbout",
+	
+	"navigateToAbout" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		
+		"VIEWS" : {
+			"homePage" : {
+				"viewName" : "ui5strap.demoapp.views.About",
+				"transition" : "slide-ltr"
+			}
+		}
+	}
+
+}

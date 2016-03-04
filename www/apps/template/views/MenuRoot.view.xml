@@ -4,10 +4,13 @@
 		<BarMenu id="myMenu" inverse="true" zoomExtraSmall="-3"
 			zoomSmall="3" typeExtraSmall="ButtonsHorizontal" typeSmall="ButtonsVertical"
 			typeMedium="ListHorizontal" typeLarge="ListVertical"
-			tap="ui5strap.demoapp.actions.NavigateViaMenuRoot" items="{menu>/root}">
+			tap="com.ui5strap.apps.template.actions.NavigateViaMenuRoot">
 			<BarMenuItem
-				text="{formatter:'.formatters.localeString', path:'menu>label'}"
-				icon="{menu>icon}" data:pageId="{menu>id}"></BarMenuItem>
+				text="Home"
+				icon="home" data:pageId="home"></BarMenuItem>
+			<BarMenuItem
+                text="About"
+                icon="info-circle" data:pageId="about"></BarMenuItem>
 		</BarMenu>
 	</Bar>
 </sapUiCoreMvc:View>

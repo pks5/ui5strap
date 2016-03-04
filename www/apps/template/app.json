@@ -1,0 +1,85 @@
+{
+	"app" : {
+	        "id" : "com.ui5strap.apps.template",
+	        "name" : "Ui5Strap App Template",
+	        "logLevel" : 5,
+	        "mode" : "Devel"
+	},
+	
+	"css" : [
+		"css/app.css"
+	],
+	
+	"models" : [
+            {
+                "src" : "i18n/i18n.properties",
+                "type" : "RESOURCE",
+                "modelName" : "i18n" 
+            }
+    ],
+    
+    "views" : [
+    		{
+                "id" : "menuRoot",
+                "viewName" : "MenuRoot",
+                "target" : "bar"
+            },
+            
+            {
+                "id" : "home",
+                "viewName" : "Home"
+            },
+
+            {
+                "id" : "about",
+                "viewName" : "About"
+            }
+      ],
+	
+	"actions" : [
+		"NavigateToHome",
+		"NavigateToAbout",
+		
+		"ToggleBarMenuRoot",
+		"NavigateViaMenuRoot",
+		"SetSelectedMenuRoot"
+	],
+	
+	"rootNavigation" : {
+	     "module" : "ui5strap.BarNavContainer",
+         "settings" : {
+         	"barSizeExtraSmall" : 1,
+         	"barPlacementExtraSmall" : "Top",
+         	
+         
+         	"barSizeSmall" : 2,
+         	"barPlacementSmall" : "Right",
+         	
+         	"barSizeMedium" : 1,
+         	"barPlacementMedium" : "Bottom",
+         	"barTransitionMedigum" : "none",
+         	
+         	"barSizeLarge" : 2,
+         	"barPlacementLarge" : "Left",
+         	"barModeLarge" : "IntrudeFixed",
+         	
+         	"barVisible" : false
+         	
+         },
+         
+         "events" : {
+         	"control" : {
+         		"pageChange" : [
+         			"SetSelectedMenuRoot"
+         		]
+         	}
+         },
+         
+         "initialViews" : [
+             "home",
+             "menuRoot"
+         ]
+	},
+	
+	"components" : []
+}

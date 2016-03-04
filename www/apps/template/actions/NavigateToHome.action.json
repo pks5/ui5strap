@@ -1,0 +1,18 @@
+{
+	"//" : "Makes the root NavContainer navigate to the 'Home' view.",
+	
+	"TASKS" : "navigateToHome",
+	
+	"navigateToHome" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		
+		"VIEWS" : {
+			"homePage" : {
+				"viewName" : "ui5strap.demoapp.views.Home",
+				"transition" : "slide-ltr",
+				"writeHistory" : true
+			}
+		}
+	}
+
+}

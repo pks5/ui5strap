@@ -1,0 +1,40 @@
+{
+	"//" : "Set the main-menu item selected that has the same id as specified NavContainer's current page.",
+	
+	"TASKS" : "setListItemSelected",
+	"DEBUG" : true,
+	
+	"setListItemSelected" : {
+		"targetName" : "content",
+		"customDataKey" : "pageId",
+		
+		"IF" : "= lang.equal(eventParameters.target, .targetName)",
+		
+		"CONTROLS" : {
+			"navContainer" : {
+				"SOURCE" : "Event",
+				"TYPE" : "ui5strap.NavContainer"
+			},
+			"barMenu" : {
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.BarMenu",
+				"CONTROL_ID" : "myMenu",
+				"VIEW_ID" : "menuRoot"
+			}
+		},
+		
+		"page" : "= .CONTROLS.navContainer.getTarget(.targetName)",
+		"pageId" : "= .page.getId()",
+		"relativePageId" : "= app.extractRelativeControlId(.pageId)",
+		
+		"DO" : "= .CONTROLS.barMenu.setSelectionByCustomData(.customDataKey, .relativePageId)",
+		
+		"ERROR" : "errorHandler"
+	},
+	
+	"//errorHandler" : "The error handler if the menu selection failed.",
+	"errorHandler" : {
+		"errorMessage" : "Could not select main menu item!",
+		"DO" : "= jQuery.sap.log.warning(.errorMessage)"
+	}
+}
