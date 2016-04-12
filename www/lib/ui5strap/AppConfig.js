@@ -289,6 +289,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 					continue;
 				}
 				
+				//TODO Move this to getViewConfig to add these default value also for non configured views?
+				//Currenty, if a view is not defined in views, you get a no view type specified if you refer the View.
 				if(!viewData.type){
 					viewData.type = "XML";
 				}

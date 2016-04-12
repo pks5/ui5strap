@@ -32,6 +32,20 @@
 						</ButtonGroup>
 					</Container>
 					<Paragraph text="{i18n>PAGE_SETTINGS_THEME_BACK_NOTICE}" />
+					
+					<ToggleButton></ToggleButton>
+					
+					<ToggleButton vertical="true"></ToggleButton>
+					
+					<ToggleButton textSelected="Enabled" textDeselected="Disabled"></ToggleButton>
+                    
+                    <ToggleButton vertical="true" textSelected="On" textDeselected="Off"></ToggleButton>
+					
+					<ToggleButton enabled="false"></ToggleButton>
+					
+					<PickerWheel></PickerWheel>
+					
+					<PickerWheel horizontal="true"></PickerWheel>
 					<Paragraph>
 						<Button 
 						text="{i18n>PAGE_SETTINGS_THEME_BACK_BUTTON}"

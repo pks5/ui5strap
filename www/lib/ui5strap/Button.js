@@ -28,7 +28,7 @@
 sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
 
 	var _meta =  {
-			interfaces : ["ui5strap.IText", "ui5strap.ISelectableItem"],
+			interfaces : ["ui5strap.IText"],
 			
 			defaultAggregation : "content",
 			library : "ui5strap",
@@ -177,6 +177,14 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 		oEvent.setMarked("ui5strap.Button");
 		
 		if (this.getEnabled()) {
+			//TODO
+			/*
+			if(this.getToggeable() && this.getSelectable()){
+				this.setSelected(!this.getSelected());
+				//TODO fire "toggle" event?
+			}
+			*/
+			
 			this.fireTap({});
 		}
 	};

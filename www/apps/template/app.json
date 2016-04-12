@@ -21,28 +21,28 @@
     "views" : [
     		{
                 "id" : "menuRoot",
-                "viewName" : "MenuRoot",
+                "viewName" : ".MenuRoot",
                 "target" : "bar"
             },
             
             {
                 "id" : "home",
-                "viewName" : "Home"
+                "viewName" : ".Home"
             },
 
             {
                 "id" : "about",
-                "viewName" : "About"
+                "viewName" : ".About"
             }
       ],
 	
 	"actions" : [
-		"NavigateToHome",
-		"NavigateToAbout",
+		".NavigateToHome",
+		".NavigateToAbout",
 		
-		"ToggleBarMenuRoot",
-		"NavigateViaMenuRoot",
-		"SetSelectedMenuRoot"
+		".ToggleBarMenuRoot",
+		".NavigateViaMenuRoot",
+		".SetSelectedMenuRoot"
 	],
 	
 	"rootNavigation" : {
@@ -70,7 +70,7 @@
          "events" : {
          	"control" : {
          		"pageChange" : [
-         			"SetSelectedMenuRoot"
+         			".SetSelectedMenuRoot"
          		]
          	}
          },
