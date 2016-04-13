@@ -1,5 +1,6 @@
-<View controllerName="ui5strap.demoapp.controllers.Controls" xmlns="ui5strap"
-	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<sapUiCoreMvc:View controllerName="ui5strap.demoapp.controllers.Controls" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
 
 	<Container type="Fluid" options="PictureFrame">
 			<!-- Modals -->
@@ -70,4 +71,4 @@
 					<Button text="Cancel" bsAction="DismissModal" severity="Default" />
 				</footer>
 	</Modal>
-</View>
+</sapUiCoreMvc:View>
