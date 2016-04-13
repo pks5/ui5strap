@@ -1,5 +1,5 @@
-<View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:demoapp="ui5strap.demoapp.controls"
-	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<!-- The page control -->
 	<Page>
 		<!-- Head area with horizontal bar -->
@@ -33,81 +33,6 @@
 					</Container>
 					<Paragraph text="{i18n>PAGE_SETTINGS_THEME_BACK_NOTICE}" />
 					
-					<ToggleButton></ToggleButton>
-					
-					<ToggleButton vertical="true"></ToggleButton>
-					
-					<ToggleButton textSelected="Enabled" textDeselected="Disabled"></ToggleButton>
-                    
-                    <ToggleButton vertical="true" textSelected="On" textDeselected="Off"></ToggleButton>
-					
-					<ToggleButton enabled="false"></ToggleButton>
-					
-					<PickerWheel mode="Mode2D">
-					   <Text text="0.0" />
-					   <Text text="0.5" />
-					   <Text text="1.0" />
-					   <Text text="1.5" />
-					   <Text text="2.0" />
-					   <Text text="2.5" />
-					   <Text text="3.0" />
-					   <Text text="3.5" />
-					   <Text text="4.0" />
-					   <Text text="4.5" />
-					   <Text text="5.0" />
-					   <Text text="5.5" />
-					   <Text text="6.0" />
-					   <Text text="6.5" />
-					   <Text text="7.0" />
-					   <Text text="7.5" />
-					   <Text text="8.0" />
-					   <Text text="8.5" />
-					   <Text text="9.0" />
-					   <Text text="9.5" />
-					   <Text text="10" />
-                    </PickerWheel>
-					
-					<PickerWheel mode="Mode3D" selectedIndex="2">
-					   <Icon icon="plane" />
-					   <Icon icon="rocket" />
-					   <Icon icon="car" />
-					   <Icon icon="building" />
-					   <Icon icon="star" />
-					   <Icon icon="pencil" />
-					   <Icon icon="smile-o" />
-					   <Icon icon="child" />
-					</PickerWheel>
-					
-					<PickerWheel mode="Mode2D" horizontal="true">
-					   <Text text="A" />
-                       <Text text="B" />
-                       <Text text="C" />
-                       <Text text="D" />
-                       <Text text="E" />
-                       <Text text="F" />
-                       <Text text="G" />
-                       <Text text="H" />
-                       <Text text="I" />
-                       <Text text="J" />
-                       <Text text="K" />
-                       <Text text="L" />
-					
-					</PickerWheel>
-					<PickerWheel mode="Mode3D" horizontal="true">
-					   <Text text="A" />
-                       <Text text="B" />
-                       <Text text="C" />
-                       <Text text="D" />
-                       <Text text="E" />
-                       <Text text="F" />
-                       <Text text="G" />
-                       <Text text="H" />
-                       <Text text="I" />
-                       <Text text="J" />
-                       <Text text="K" />
-                       <Text text="L" />
-					</PickerWheel>
-					
 					<Paragraph>
 						<Button 
 						text="{i18n>PAGE_SETTINGS_THEME_BACK_BUTTON}"
@@ -123,4 +48,4 @@
 			</footer>	
 	</Page>
 
-</View>
+</sapUiCoreMvc:View>

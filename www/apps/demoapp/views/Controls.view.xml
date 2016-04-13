@@ -1,5 +1,5 @@
-<View controllerName="ui5strap.ActionController" xmlns="ui5strap"
-	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<!-- The page control -->
 	<Page>
 			<!-- Head area with horizontal bar -->
@@ -44,4 +44,4 @@
 			
 	</Page>
 
-</View>
+</sapUiCoreMvc:View>

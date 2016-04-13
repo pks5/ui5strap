@@ -140,6 +140,11 @@
             },
             
             {
+                "id" : "controlsWheels",
+                "viewName" : ".controls.Wheels"
+            },
+            
+            {
             	"id" : "controlsIndicators",
             	"viewName" : ".controls.Indicators"
             },

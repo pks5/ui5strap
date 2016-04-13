@@ -89,6 +89,11 @@
 			"icon" : "columns"
 		},
 		{
+            "label" : "PAGE_CONTROLS_WHEELS_TITLE",
+            "id" : "controlsWheels",
+            "icon" : "cogs"
+        },
+		{
 			"label" : "PAGE_CONTROLS_INDICATORS_TITLE",
 			"id" : "controlsIndicators",
 			"icon" : "bell-o"

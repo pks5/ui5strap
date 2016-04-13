@@ -138,7 +138,17 @@
 					</ButtonDropdown>
 			</Paragraph>
 			
-			
+			<ToggleButton></ToggleButton>
+                    
+                    <ToggleButton vertical="true"></ToggleButton>
+                    
+                    <ToggleButton textSelected="Enabled" textDeselected="Disabled"></ToggleButton>
+                    
+                    <ToggleButton vertical="true" textSelected="On" textDeselected="Off"></ToggleButton>
+                    
+                    <ToggleButton enabled="false"></ToggleButton>
+                    
+                    
 
 		</Col>
 		
