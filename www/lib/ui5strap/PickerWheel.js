@@ -587,40 +587,35 @@ sap.ui
 							var _this = this,
 								mode = this.getMode();
 							
-							if(mode === ulib.PickerWheelMode.Mode3D && ui5strap.support.transition){
+							if(ui5strap.support.transition){
 								this._isSpinning = true;
 								this.$().addClass(
 								'ui5strapPickerWheel-flag-Spinning');
 								
-								this._$wheelContainer.one(
-										ui5strap.support.transition.end, function(){
-											_this._isSpinning = false;
-											_this.$().removeClass(
-											'ui5strapPickerWheel-flag-Spinning');
-											
-											_this._setSelectedPanelActive();
-										})
-										.emulateTransitionEnd(600);
-							}
-							
-							this._carousel.toIndex(newIndex);
-							
-							if(!ui5strap.support.transition){
-								this._setSelectedPanelActive();
-							}
-							else if(mode === ulib.PickerWheelMode.Mode2D){
-								this._isSpinning = true;
-								this.$().addClass(
-								'ui5strapPickerWheel-flag-Spinning');
-								
-								window.setTimeout(function(){
+								var setSelectedPane = function(){
 									_this._isSpinning = false;
 									_this.$().removeClass(
 									'ui5strapPickerWheel-flag-Spinning');
 									
 									_this._setSelectedPanelActive();
-								}, 600);
+								};
+								
+								if(mode === ulib.PickerWheelMode.Mode3D){
+									this._$wheelContainer.one(
+											ui5strap.support.transition.end, setSelectedPane)
+											.emulateTransitionEnd(600);
+								}
+								else if(mode === ulib.PickerWheelMode.Mode2D){
+									window.setTimeout(setSelectedPane, 600);
+								}
+								
+								this._carousel.toIndex(newIndex);
 							}
+							else{
+								this._carousel.toIndex(newIndex);
+								this._setSelectedPanelActive();
+							}
+							
 						}
 					};
 
