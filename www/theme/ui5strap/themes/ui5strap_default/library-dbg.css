@@ -13166,10 +13166,34 @@ a {
   color: #025d8c;
 }
 /*
-* Picker Wheel
-*/
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.PickerWheel
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 .ui5strapPickerWheel {
   position: relative;
+  display: inline-block;
   overflow: hidden;
   cursor: all-scroll;
   -webkit-user-select: none;
@@ -13198,13 +13222,6 @@ a {
 }
 .ui5strapPickerWheel-inner {
   position: absolute;
-  -webkit-transform: translate3d(0, 0, 0);
-      -ms-transform: translate3d(0, 0, 0);
-       -o-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
-
-  -webkit-perspective: 700px;
-          perspective: 700px;
 }
 .ui5strapPickerWheel-hor .ui5strapPickerWheel-inner {
   left: 50%;
@@ -13228,53 +13245,73 @@ a {
   height: 100%;
 }
 .ui5strapPickerWheel-hor .ui5strapPickerWheel-pointer {
-  background-color: #d3daed;
-  border-right: solid 1px #888;
-  border-left: solid 1px #888;
+  border-right-style: solid;
+  border-left-style: solid;
 }
 .ui5strapPickerWheel-ver .ui5strapPickerWheel-pointer {
-  background-color: #d3daed;
-  border-top: solid 1px #888;
-  border-bottom: solid 1px #888;
+  border-top-style: solid;
+  border-bottom-style: solid;
 }
-.ui5strapPickerWheel-carousel {
+.ui5strapPickerWheel-wheel {
   position: absolute;
   width: 100%;
   height: 100%;
-
+}
+.ui5strapPickerWheel-mode-Mode3D .ui5strapPickerWheel-wheel {
   -webkit-transform-style: preserve-3d;
       -ms-transform-style: preserve-3d;
        -o-transform-style: preserve-3d;
           transform-style: preserve-3d;
 }
-.ui5strapPickerWheel.ui5strapPickerWheel-transitional .ui5strapPickerWheel-carousel {
+.ui5strapPickerWheel-mode-Mode3D.ui5strapPickerWheel-flag-Spinning .ui5strapPickerWheel-wheel {
   -webkit-transition: -webkit-transform .6s ease-out;
        -o-transition:      -o-transform .6s ease-out;
           transition:         transform .6s ease-out;
 }
-.ui5strapPickerWheel.ui5strapPickerWheel-backface-invisible figure {
-  -webkit-backface-visibility: hidden;
-      -ms-backface-visibility: hidden;
-       -o-backface-visibility: hidden;
-          backface-visibility: hidden;
-}
-.ui5strapPickerWheel-digit {
+.ui5strapPickerWheel-panel {
   position: absolute;
   display: block;
   width: 100%;
   height: 100%;
   text-align: center;
+
+  -webkit-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
-.ui5strapPickerWheel-hor .ui5strapPickerWheel-digit {
+.ui5strapPickerWheel-hor .ui5strapPickerWheel-panel {
   font-size: 48px;
   line-height: 80px;
 }
-.ui5strapPickerWheel-ver .ui5strapPickerWheel-digit {
+.ui5strapPickerWheel-ver .ui5strapPickerWheel-panel {
   font-size: 48px;
   line-height: 90px;
 }
-.ui5strapPickerWheel-inactive .ui5strapPickerWheel-digit {
-  color: #888;
+.ui5strapPickerWheel-mode-Mode2D.ui5strapPickerWheel-flag-Spinning .ui5strapPickerWheel-panel {
+  -webkit-transition: -webkit-transform .6s ease-out;
+       -o-transition:      -o-transform .6s ease-out;
+          transition:         transform .6s ease-out;
+}
+/*
+ * Perspective
+ */
+.ui5strapPickerWheel-mode-Mode3D .ui5strapPickerWheel-inner {
+  -webkit-perspective: 700px;
+          perspective: 700px;
+}
+/*
+ * Colors
+ */
+.ui5strapPickerWheel-pointer {
+  background-color: #eee;
+  border-color: #333;
+}
+.ui5strapPickerWheel-inactive .ui5strapPickerWheel-panel {
+  color: #333;
+}
+.ui5strapPickerWheel-panel-active {
+  color: #025d8c;
 }
 /*
  * 

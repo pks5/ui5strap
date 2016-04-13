@@ -36,9 +36,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			
 			//Properties
 			properties : { 
+				//TODO Rename to selectedIndex
 				index : {
 					type:"int", defaultValue : 0
 				},
+				
 		        swipe : {
 		            type:"boolean", defaultValue : true
 		        },
@@ -48,7 +50,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				pagination : {
 					type:"boolean", defaultValue : true
 				},
-		        innerAlign : {
+		        
+				innerAlign : {
 			        type: "ui5strap.Alignment",
 			        defaultValue : ui5strap.Alignment.CenterBlock
 		        },
@@ -56,6 +59,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		            type: "ui5strap.CarouselOverflow",
 		            defaultValue : ui5strap.CarouselOverflow.Visible
 		        },
+		        
 		        label : {
 		            type:"string", defaultValue : ""
 		        },
