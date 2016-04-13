@@ -97,7 +97,7 @@ sap.ui
 							{
 								name : "ui5strap",
 
-								version : "0.10.5",
+								version : "0.10.6-SNAPSHOT",
 
 								dependencies : [ "sap.ui.core" ],
 
@@ -175,6 +175,7 @@ sap.ui
 										"ui5strap.Panel",
 										"ui5strap.PanelGroup",
 										"ui5strap.Paragraph",
+										"ui5strap.PickerWheel",
 										"ui5strap.Popover",
 										"ui5strap.Progress",
 										"ui5strap.ProgressBar",
@@ -186,7 +187,9 @@ sap.ui
 										"ui5strap.Table", "ui5strap.Text",
 										"ui5strap.TextInput",
 										"ui5strap.Thumbnail",
-										"ui5strap.Tooltip", "ui5strap.Well" ],
+										"ui5strap.ToggleButton",
+										"ui5strap.Tooltip", 
+										"ui5strap.Well" ],
 
 								elements : [ "ui5strap.Item",
 										"ui5strap.TableColumn",
