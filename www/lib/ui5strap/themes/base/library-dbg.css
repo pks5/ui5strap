@@ -13198,12 +13198,15 @@ a {
   cursor: all-scroll;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   -webkit-transform: translate3d(0, 0, 0);
       -ms-transform: translate3d(0, 0, 0);
        -o-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 
-  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+   -khtml-user-select: none;
 }
 .ui5strapPickerWheel-hor {
   width: 500px;
