@@ -13310,10 +13310,10 @@ a {
   background-color: #eee;
   border-color: #333;
 }
-.ui5strapPickerWheel-inactive .ui5strapPickerWheel-panel {
+.ui5strapPickerWheel.disabled .ui5strapPickerWheel-panel {
   color: #333;
 }
-.ui5strapPickerWheel-panel-active {
+.ui5strapPickerWheel-panel.active {
   color: #337ab7;
 }
 /*

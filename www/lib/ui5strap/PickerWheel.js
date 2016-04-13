@@ -42,6 +42,11 @@ sap.ui
 											defaultValue : 0
 										},
 										
+										enabled : {
+											type : 'boolean',
+											defaultValue : true
+										},
+										
 										horizontal : {
 											type : "boolean",
 											defaultValue : false
@@ -242,10 +247,12 @@ sap.ui
 					 * 
 					 */
 					PickerWheelProto.init = function() {
-
-						this._$currentItem = null;
-						this._$currentItems = null;
-
+						this._$currentSelectedPanel = null;
+						this._inactive = false;
+						this._isSpinning = false;
+						
+						this._rotations = [];
+						this._times = [];
 					};
 					
 					PickerWheelProto._getStyleClassRoot = function(){
@@ -255,8 +262,9 @@ sap.ui
 						styleClass += " ui5strapPickerWheel-mode-" + this.getMode();
 						
 						
-					    if(-1 === this.getSelectedIndex()){ 
-					    	styleClass += ' ui5strapPickerWheel-inactive';
+					    if(-1 === this.getSelectedIndex() || !this.getEnabled()){ 
+					    	styleClass += ' disabled';
+					    	this._inactive = true;
 					    }
 					    
 					    return styleClass;
@@ -350,20 +358,17 @@ sap.ui
 							_this.$().find('.ui5strapPickerWheel-inner')
 									.removeClass('ui5strap-hidden');
 
-							var $carouselContainer = _this.$().find(
-									'.ui5strapPickerWheel-wheel');
-							
-							_this._$currentItems = $carouselContainer
-									.children();
-							if (_this._$currentItems.size() === 0) {
+							if(_this.getPanels().length == 0){
 								return;
 							}
 							
+							_this._$wheelContainer = _this.$().find('.ui5strapPickerWheel-wheel');
+							
 							if(mode === ulib.PickerWheelMode.Mode3D){
-								_this._carousel = new Wheel3D($carouselContainer[0]);
+								_this._carousel = new Wheel3D(_this._$wheelContainer[0]);
 							}
 							else if(mode === ulib.PickerWheelMode.Mode2D){
-								_this._carousel = new Wheel2D($carouselContainer[0]);
+								_this._carousel = new Wheel2D(_this._$wheelContainer[0]);
 							}
 							
 							_this.refresh();
@@ -381,12 +386,14 @@ sap.ui
 								'.ui5strapPickerWheel-inner').width() : this.$().find(
 								'.ui5strapPickerWheel-inner').height();
 
-						this._carousel.modify(this.getHorizontal(), this._$currentItems.length, this._segmentWidth);
+						this._carousel.modify(this.getHorizontal(), this.getPanels().length, this._segmentWidth);
 
 						if(0 !== this.getSelectedIndex()){
 							this._carousel.toIndex(this.getSelectedIndex());
 						}
-						this._highlightSelectedPanel();
+						
+						//Highlight selected panel
+						this._setSelectedPanelActive();
 					};
 					
 					/*
@@ -437,12 +444,16 @@ sap.ui
 						this._rotations = [this._touchStartRotation];
 						this._times = [this._touchStartTime];
 
-						this.$()
+						if(this._isSpinning){
+							this._isSpinning = false;
+							this.$()
 								.removeClass('ui5strapPickerWheel-flag-Spinning');
+						}
 						
-						if (null !== this._$currentItem) {
-							this._$currentItem
-									.removeClass('ui5strapPickerWheel-panel-active');
+						if (null !== this._$currentSelectedPanel) {
+							this._$currentSelectedPanel
+									.removeClass('active');
+							this._$currentSelectedPanel = null;
 						}
 					};
 
@@ -573,13 +584,43 @@ sap.ui
 						this.setProperty('selectedIndex', newIndex, true);
 
 						if (this.getDomRef()) {
-
-							this._highlightSelectedPanel();
-
-							this.$().addClass(
-									'ui5strapPickerWheel-flag-Spinning');
+							var _this = this,
+								mode = this.getMode();
+							
+							if(mode === ulib.PickerWheelMode.Mode3D && ui5strap.support.transition){
+								this._isSpinning = true;
+								this.$().addClass(
+								'ui5strapPickerWheel-flag-Spinning');
+								
+								this._$wheelContainer.one(
+										ui5strap.support.transition.end, function(){
+											_this._isSpinning = false;
+											_this.$().removeClass(
+											'ui5strapPickerWheel-flag-Spinning');
+											
+											_this._setSelectedPanelActive();
+										})
+										.emulateTransitionEnd(600);
+							}
 							
 							this._carousel.toIndex(newIndex);
+							
+							if(!ui5strap.support.transition){
+								this._setSelectedPanelActive();
+							}
+							else if(mode === ulib.PickerWheelMode.Mode2D){
+								this._isSpinning = true;
+								this.$().addClass(
+								'ui5strapPickerWheel-flag-Spinning');
+								
+								window.setTimeout(function(){
+									_this._isSpinning = false;
+									_this.$().removeClass(
+									'ui5strapPickerWheel-flag-Spinning');
+									
+									_this._setSelectedPanelActive();
+								}, 600);
+							}
 						}
 					};
 
@@ -588,8 +629,11 @@ sap.ui
 					 */
 					PickerWheelProto._onSelectionChange = function(oldIndex) {
 						
-						this.$().removeClass('ui5strapPickerWheel-inactive');
-
+						if(this._inactive){
+							this.$().removeClass('disabled');
+							this._inactive = false;
+						}
+						
 						if (oldIndex !== this.getSelectedIndex()) {
 							this.fireSelectionChange({
 								"oldIndex" : oldIndex
@@ -619,7 +663,7 @@ sap.ui
 					/**
 					 * 
 					 */
-					PickerWheelProto.$getPanel = function(wheelIndex) {
+					PickerWheelProto._$getPanel = function(wheelIndex) {
 						wheelIndex = wheelIndex
 								% (this._carousel.panelCount);
 
@@ -635,18 +679,19 @@ sap.ui
 					/**
 					 * 
 					 */
-					PickerWheelProto._highlightSelectedPanel = function() {
-						var $oldItem = this._$currentItem, 
-							$newItem = this.$getPanel(this.getSelectedIndex());
+					PickerWheelProto._setSelectedPanelActive = function() {
+						var $oldPanel = this._$currentSelectedPanel, 
+							$newPanel = this._$getPanel(this.getSelectedIndex());
 
-						if (null !== $oldItem) {
-							$oldItem
-									.removeClass('ui5strapPickerWheel-panel-active');
+						if (null !== $oldPanel) {
+							$oldPanel
+									.removeClass('active');
 						}
 
-						$newItem.addClass('ui5strapPickerWheel-panel-active');
-
-						this._$currentItem = $newItem;
+						if($newPanel !== this._$currentSelectedPanel){
+							$newPanel.addClass('active');
+							this._$currentSelectedPanel = $newPanel;
+						}
 					};
 					
 					/*
