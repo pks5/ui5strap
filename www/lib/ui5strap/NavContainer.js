@@ -258,6 +258,39 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		//ui5strap.tm("APP", "NC", "EXEC_TRANS");
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
+		pageChange.transition.on("last", function(){
+			var $current = pageChange.transition._data.$current;
+			if($current){
+				$current.remove();
+			}
+			
+			_this.firePageChanged({
+				target : pageChange.target,
+				oldPage : pageChange.currentPage
+			});
+			
+			//Transition callback
+			_transitionCallback(_this, pageChange, transList);
+			
+			if(pageChange.currentPage){
+				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
+					target : pageChange.target,
+					newPage : pageChange.page
+				});
+			}
+			
+			if(pageChange.page){
+				_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShown', {
+					target : pageChange.target,
+					oldPage : pageChange.currentPage
+				});
+			}
+		});
+		
+		pageChange.transition.execute();
+		
+		
+		/*
 		pageChange.transition.execute(
 			function anon_transitionCurrentComplete(){
 				var $current = this._data.$current;
@@ -299,7 +332,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				});
 			}
 		);
-
+		*/
 	};
 
 	/**
@@ -638,6 +671,11 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				"page" : page,
 				"currentPage" : currentPage
 			};
+		
+		_this.firePageChange({
+			target : target,
+			oldPage : currentPage
+		});
 
 		if(currentPage){
 			_triggerControllerEvent(_this, target, currentPage, 'pageHide', {
@@ -663,11 +701,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			});
 		}
 		
-		_this.firePageChange({
-			target : target,
-			oldPage : currentPage
-		});
-
 		if(this.getDomRef()){
 			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
 			//NavContainer is already attached to DOM

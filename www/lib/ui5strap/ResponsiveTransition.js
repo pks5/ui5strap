@@ -213,8 +213,7 @@ sap.ui
 
 								_this._currentFinished = true;
 
-								if (_this._nextFinished
-										|| !_this._events.next.length) {
+								if (_this._nextFinished || !_this._data.$next) {
 									_this._finished = true;
 								}
 
@@ -249,8 +248,7 @@ sap.ui
 									return;
 								}
 								_this._nextFinished = true;
-								if (_this._currentFinished
-										|| !_this._events.current.length) {
+								if (_this._currentFinished || !_this._data.$current) {
 									_this._finished = true;
 								}
 
@@ -270,7 +268,7 @@ sap.ui
 
 								_runEvent(_this, "next");
 
-								if (_this._finished) {
+								if (_this._finished) {// alert(_this._currentFinished + "-" + _this._events.current.length);
 									_runEvent(_this, "last");
 								}
 							};

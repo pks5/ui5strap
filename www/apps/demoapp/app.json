@@ -50,7 +50,7 @@
                 "viewName" : "Settings",
                 "events" : {
                 	"controller" : {
-                		"update" : [
+                		"pageShow" : [
                 			"LoadMenuSettings",
                 			"NavigateToSettingsLanguage"
                 		]
@@ -85,10 +85,10 @@
             	"viewName" : "Controls",
             	"events" : {
                 	"controller" : {
-                		"update" : [
-                			"LoadMenuControls",
-                			"NavigateToControlsButtons"
-                		]
+                	   "pageShow" : [
+                	       "LoadMenuControls",
+                	       "NavigateToControlsButtons"
+                	   ]
                 	}
                 }
             },
