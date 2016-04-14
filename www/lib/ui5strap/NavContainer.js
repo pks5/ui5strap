@@ -259,11 +259,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
 		pageChange.transition.on("last", function(){
-			var $current = pageChange.transition._data.$current;
-			if($current){
-				$current.remove();
-			}
-			
 			_this.firePageChanged({
 				target : pageChange.target,
 				oldPage : pageChange.currentPage
@@ -277,6 +272,16 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					target : pageChange.target,
 					newPage : pageChange.page
 				});
+			}
+			
+			var $current = pageChange.transition._data.$current;
+			if($current){
+				$current.remove();
+			}
+			
+			var $next = pageChange.transition._data.$next;
+			if($next){
+				$next.attr('class', 'navcontainer-page navcontainer-page-current');
 			}
 			
 			if(pageChange.page){

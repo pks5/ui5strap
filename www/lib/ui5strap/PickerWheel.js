@@ -246,7 +246,7 @@ sap.ui
 					
 					
 					PickerWheel.C_SPEED_HIGH = 10;
-					PickerWheel.C_SPEED_LOW = 5;
+					PickerWheel.C_SPEED_LOW = 10;
 
 					PickerWheelProto.modern = window.requestAnimationFrame;
 
@@ -615,15 +615,29 @@ sap.ui
 								targetRotation = _getRotationFromIndex(this._carousel, newIndex),
 								rotationDelta = targetRotation - this._carousel.rotation,
 								s0 = _this._carousel.rotation,
-								tr = PickerWheel.TIME_RES * this._cSpeed,
-								v0 = rotationDelta / tr,
-								t = 0;
+								v0 = rotationDelta / (PickerWheel.TIME_RES * (this._cSpeed - 1.25)),
+								t = 0,
+								i = 0;
 							
 							this._timer && window.clearInterval(this._timer);
-							this._timer = window.setInterval(function() {
-								t += PickerWheel.TIME_RES;
+							
+							if(Math.abs(rotationDelta) < PickerWheel.STOP_TH ){
+								_this._carousel.rotation = targetRotation; 
+								_this._carousel.transform();
+								_this._setSelectedPanelActive();
 								
-								if (t >= tr) {
+								return;
+							}
+							
+							this._timer = window.setInterval(function() {
+								var tAdd = PickerWheel.TIME_RES;
+								if(i === _this._cSpeed - 2){
+									tAdd *= 0.5;
+								}
+								
+								t += tAdd;
+								
+								if (i === _this._cSpeed - 1) {
 									_this._carousel.rotation = targetRotation; 
 									_this._carousel.transform();
 									
@@ -631,11 +645,15 @@ sap.ui
 									_this._timer = null;
 									
 									_this._setSelectedPanelActive();
+									
+									return;
 								}
 								else{
 									_this._carousel.rotation = v0 * t + s0 
 									_this._carousel.transform();
 								}
+								
+								i++;
 							}, PickerWheel.TIME_RES);
 						}
 					};
