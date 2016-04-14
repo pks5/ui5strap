@@ -96,6 +96,18 @@ sap.ui
 					/*
 					 * Wheel3D
 					 */
+						
+					var _getRotationFromIndex = function(_wheel, newIndex){
+						var oldRotation = _wheel.rotation,
+							newRotation = -newIndex * _wheel.theta,
+							dif = (newRotation - oldRotation) % 360,
+							difAlt = dif > 0 ? dif - 360 : dif + 360,
+									targetAdd = Math.abs(dif) > Math
+										.abs(difAlt) ? difAlt : dif;
+									
+							return oldRotation + targetAdd;
+					};	
+						
 					var Wheel3D = function(el) {
 						this.element = el;
 						
@@ -139,15 +151,7 @@ sap.ui
 					};
 					
 					Wheel3D.prototype.toIndex = function(newIndex){
-						var oldRotation = this.rotation,
-							newRotation = -newIndex * this.theta,
-							dif = (newRotation - oldRotation) % 360,
-							difAlt = dif > 0 ? dif - 360 : dif + 360,
-							targetAdd = Math.abs(dif) > Math
-								.abs(difAlt) ? difAlt : dif;
-
-						this.rotation += targetAdd;
-						
+						this.rotation = _getRotationFromIndex(this, newIndex);
 						this.transform();
 					};
 
@@ -189,36 +193,33 @@ sap.ui
 							panel = this.element.children[i];
 							angle = this.theta * i;
 							
-							var ang = (angle + 90 + this.rotation)  / 180;
+							var ang = (angle + 90 + this.rotation)  / 180,
+								vis = (ang < 0 ? Math.floor(ang) % 2 === 0 : Math.ceil(ang) % 2 === 1);
 							
-							var cos = Math.cos(ang * Math.PI);
+							panel.style.visibility =  vis ? 'visible' : 'hidden';
 							
-							panel.style.visibility = (ang < 0 ? Math.floor(ang) % 2 === 0 : Math.ceil(ang) % 2 === 1) ? 'visible' : 'hidden';
-							
-							if(this.hor){
-								cos = cos * -1;
+							if(vis){
+								var cos = Math.cos(ang * Math.PI);
+								
+								//panel.style.zIndex 
+								
+								if(this.hor){
+									cos = cos * -1;
+								}
+								
+								var newTransform = this.rotateFn + "("
+								+ ( cos * this.radius)   + "px)";
+								
+								newTransform += " scale(" + (1 - Math.abs(cos) * 0.33) + ")";
+								
+								panel.style[_transformProperty] = newTransform;
 							}
-							
-							var newTransform = this.rotateFn + "("
-							+ ( cos * this.radius)   + "px)";
-							
-							newTransform += " scale(" + (1 - Math.abs(cos) * 0.33) + ")";
-							
-							panel.style[_transformProperty] = newTransform;
 						}
 						
 					};
 					
 					Wheel2D.prototype.toIndex = function(newIndex){
-						var oldRotation = this.rotation,
-							newRotation = -newIndex * this.theta,
-							dif = (newRotation - oldRotation) % 360,
-							difAlt = dif > 0 ? dif - 360 : dif + 360,
-							targetAdd = Math.abs(dif) > Math
-								.abs(difAlt) ? difAlt : dif;
-
-						this.rotation += targetAdd;
-						
+						this.rotation = _getRotationFromIndex(this, newIndex);
 						this.transform();
 					};
 					
@@ -237,9 +238,15 @@ sap.ui
 					//Minimum rotation in degrees to trigger acceleration
 					PickerWheel.MIN_ACCEL_ROTATION = 1.7;
 					
-					PickerWheel.STOP_TH = 0.01;
+					PickerWheel.STOP_TH = 0.05;
 					
 					PickerWheel.TIME_RES = 35;
+					
+					PickerWheel.THRES = 0.5;
+					
+					
+					PickerWheel.C_SPEED_HIGH = 10;
+					PickerWheel.C_SPEED_LOW = 5;
 
 					PickerWheelProto.modern = window.requestAnimationFrame;
 
@@ -249,10 +256,10 @@ sap.ui
 					PickerWheelProto.init = function() {
 						this._$currentSelectedPanel = null;
 						this._inactive = false;
-						this._isSpinning = false;
+						//this._isSpinning = false;
+						this._cSpeed = PickerWheel.C_SPEED_HIGH;
 						
-						this._rotations = [];
-						this._times = [];
+						this._timer = null;
 					};
 					
 					PickerWheelProto._getStyleClassRoot = function(){
@@ -431,7 +438,7 @@ sap.ui
 					PickerWheelProto.ontouchstart = function(ev) {
 						this._touchStartTime = Date.now();
 						
-						window.clearInterval(this._timer);
+						this._timer && window.clearInterval(this._timer);
 
 						this._mouseXStart = this.getHorizontal() ? this.getMouseX(ev)
 								: -this.getMouseY(ev);
@@ -444,11 +451,13 @@ sap.ui
 						this._rotations = [this._touchStartRotation];
 						this._times = [this._touchStartTime];
 
+						/*
 						if(this._isSpinning){
 							this._isSpinning = false;
 							this.$()
 								.removeClass('ui5strapPickerWheel-flag-Spinning');
 						}
+						*/
 						
 						if (null !== this._$currentSelectedPanel) {
 							this._$currentSelectedPanel
@@ -504,6 +513,12 @@ sap.ui
 					 * 
 					 */
 					PickerWheelProto.ontouchend = function(ev) {
+						if (!this._mouseXStart)
+							return;
+						
+						//Set MouseXStart again to null to prevent false events
+						this._mouseXStart = null;
+						
 						var touchEndTime = Date.now(),
 							_this = this,
 							timeDelta = this._times[this._times.length-1] - this._times[Math.max(0, this._times.length- PickerWheel.TIME_STEPS)],
@@ -523,7 +538,8 @@ sap.ui
 									
 									if (Math.abs(velocity) < PickerWheel.STOP_TH) {
 										window.clearInterval(_this._timer);
-										_this._stopDragging(rotationDelta);
+										_this._timer = null;
+										_this._stopDragging(_this._carousel.rotation, rotationDelta);
 									}
 								}, PickerWheel.TIME_RES);
 
@@ -554,22 +570,25 @@ sap.ui
 							}
 						}
 
-						this._stopDragging(rotationDelta);
+						this._stopDragging(this._carousel.rotation, rotationDelta);
 					};
 
 					/**
 					 * 
 					 */
 					PickerWheelProto.ontouchcancel = function(ev) {
-						this._stopDragging(0);
+						this._stopDragging(this._carousel.rotation, 0);
 					};
 					
 					/**
 					 * 
 					 */
-					PickerWheelProto._stopDragging = function(dir) {
+					PickerWheelProto._stopDragging = function(rotation, dir) {
 						var oldIndex = this.getSelectedIndex();
-						this.setSelectedIndex(this.getWheelIndex(dir));
+						var oldSpeed = this._cSpeed;
+						this._cSpeed = PickerWheel.C_SPEED_LOW;
+						this.setSelectedIndex(this._getWheelIndex(rotation, dir));
+						this._cSpeed = oldSpeed;
 						this._onSelectionChange(oldIndex);
 					};
 
@@ -585,37 +604,31 @@ sap.ui
 
 						if (this.getDomRef()) {
 							var _this = this,
-								mode = this.getMode();
+								targetRotation = _getRotationFromIndex(this._carousel, newIndex),
+								rotationDelta = targetRotation - this._carousel.rotation,
+								s0 = _this._carousel.rotation,
+								tr = PickerWheel.TIME_RES * this._cSpeed,
+								v0 = rotationDelta / tr,
+								t = 0;
 							
-							if(ui5strap.support.transition){
-								this._isSpinning = true;
-								this.$().addClass(
-								'ui5strapPickerWheel-flag-Spinning');
+							this._timer && window.clearInterval(this._timer);
+							this._timer = window.setInterval(function() {
+								t += PickerWheel.TIME_RES;
 								
-								var setSelectedPane = function(){
-									_this._isSpinning = false;
-									_this.$().removeClass(
-									'ui5strapPickerWheel-flag-Spinning');
+								if (t >= tr) {
+									_this._carousel.rotation = targetRotation; 
+									_this._carousel.transform();
+									
+									window.clearInterval(_this._timer);
+									_this._timer = null;
 									
 									_this._setSelectedPanelActive();
-								};
-								
-								if(mode === ulib.PickerWheelMode.Mode3D){
-									this._$wheelContainer.one(
-											ui5strap.support.transition.end, setSelectedPane)
-											.emulateTransitionEnd(600);
 								}
-								else if(mode === ulib.PickerWheelMode.Mode2D){
-									window.setTimeout(setSelectedPane, 600);
+								else{
+									_this._carousel.rotation = v0 * t + s0 
+									_this._carousel.transform();
 								}
-								
-								this._carousel.toIndex(newIndex);
-							}
-							else{
-								this._carousel.toIndex(newIndex);
-								this._setSelectedPanelActive();
-							}
-							
+							}, PickerWheel.TIME_RES);
 						}
 					};
 
@@ -640,17 +653,17 @@ sap.ui
 					/**
 					 * 
 					 */
-					PickerWheelProto.getWheelIndex = function(dir) {
-						var index = this._carousel.rotation
+					PickerWheelProto._getWheelIndex = function(rotation, dir) {
+						var index = rotation
 								/ this._carousel.theta, th = Math.abs(index);
 
 						th = th - Math.floor(th);
 
 						if (dir < 0) {
-							return th > 0.5 ? -Math.floor(index) : -Math
+							return th > PickerWheel.THRES ? -Math.floor(index) : -Math
 									.ceil(index);
 						} else {
-							return th < 0.5 ? -Math.ceil(index) : -Math
+							return th < 1 - PickerWheel.THRES ? -Math.ceil(index) : -Math
 									.floor(index);
 						}
 					};

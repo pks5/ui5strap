@@ -13034,6 +13034,282 @@ a {
  * 
  * UI5Strap
  *
+ * LESS for ui5strap.ToggleButton
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+.ui5strapToggleButton {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.ui5strapToggleButton.disabled {
+  cursor: auto;
+}
+.ui5strapToggleButton-type-Horizontal {
+  line-height: 32px;
+}
+/*
+ * Hole
+ */
+.ui5strapToggleButton-hole {
+  position: relative;
+  border-radius: 16px;
+}
+.ui5strapToggleButton-type-Vertical .ui5strapToggleButton-hole {
+  display: block;
+  width: 32px;
+  height: 54px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.ui5strapToggleButton-type-Horizontal .ui5strapToggleButton-hole {
+  display: inline-block;
+  width: 54px;
+  height: 32px;
+  vertical-align: middle;
+}
+/*
+ * Pin
+ */
+.ui5strapToggleButton-pin {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 2px #888;
+          box-shadow: 0 0 2px #888;
+}
+.ui5strapToggleButton-type-Vertical .ui5strapToggleButton-pin {
+  top: 2px;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  -webkit-transition: top .1s ease-out;
+       -o-transition: top .1s ease-out;
+          transition: top .1s ease-out;
+}
+.ui5strapToggleButton-type-Vertical.active .ui5strapToggleButton-pin {
+  top: 24px;
+}
+.ui5strapToggleButton-type-Horizontal .ui5strapToggleButton-pin {
+  top: 50%;
+  left: 2px;
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+  -webkit-transition: left .1s ease-out;
+       -o-transition: left .1s ease-out;
+          transition: left .1s ease-out;
+}
+.ui5strapToggleButton-type-Horizontal.active .ui5strapToggleButton-pin {
+  left: 24px;
+}
+/*
+ * Text
+ */
+.ui5strapToggleButton-type-Vertical .ui5strapToggleButton-text {
+  display: block;
+  padding: 5px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  /*
+    max-width:64px;
+    */
+}
+.ui5strapToggleButton-type-Horizontal .ui5strapToggleButton-text {
+  display: inline-block;
+  padding: 5px;
+  vertical-align: middle;
+  /*
+    max-width:54px;
+    */
+}
+/*
+ * Colors
+ */
+.ui5strapToggleButton-pin {
+  background-color: white;
+}
+.ui5strapToggleButton-text {
+  color: gray;
+}
+.ui5strapToggleButton-hole {
+  background-color: gray;
+}
+.ui5strapToggleButton.disabled .ui5strapToggleButton-pin {
+  background-color: darkgray;
+}
+.active .ui5strapToggleButton-hole {
+  background-color: #025d8c;
+}
+.active .ui5strapToggleButton-text-Selected {
+  color: #025d8c;
+}
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for ui5strap.PickerWheel
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+.ui5strapPickerWheel {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  cursor: all-scroll;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+       -o-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+
+  -webkit-touch-callout: none;
+   -khtml-user-select: none;
+}
+.ui5strapPickerWheel-hor {
+  width: 500px;
+  height: 80px;
+}
+.ui5strapPickerWheel-ver {
+  width: 120px;
+  height: 360px;
+}
+.ui5strap-trans-all-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-xs-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-sm-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-md-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-lg-type-flip-horizontal-ccw .ui5strapPickerWheel {
+  visibility: hidden;
+}
+.ui5strapPickerWheel-inner {
+  position: absolute;
+}
+.ui5strapPickerWheel-hor .ui5strapPickerWheel-inner {
+  left: 50%;
+  /* 20% of total width */
+  width: 100px;
+  height: 100%;
+  margin-left: -50px;
+}
+.ui5strapPickerWheel-ver .ui5strapPickerWheel-inner {
+  top: 50%;
+  width: 100%;
+  /*
+     * 20% of total height
+     */
+  height: 90px;
+  margin-top: -45px;
+}
+.ui5strapPickerWheel-pointer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.ui5strapPickerWheel-hor .ui5strapPickerWheel-pointer {
+  border-right-style: solid;
+  border-left-style: solid;
+}
+.ui5strapPickerWheel-ver .ui5strapPickerWheel-pointer {
+  border-top-style: solid;
+  border-bottom-style: solid;
+}
+.ui5strapPickerWheel-wheel {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.ui5strapPickerWheel-mode-Mode3D .ui5strapPickerWheel-wheel {
+  -webkit-transform-style: preserve-3d;
+      -ms-transform-style: preserve-3d;
+       -o-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+.ui5strapPickerWheel-panel {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+
+  -webkit-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+.ui5strapPickerWheel-hor .ui5strapPickerWheel-panel {
+  font-size: 48px;
+  line-height: 80px;
+}
+.ui5strapPickerWheel-ver .ui5strapPickerWheel-panel {
+  font-size: 48px;
+  line-height: 90px;
+}
+/*
+ * Perspective
+ */
+.ui5strapPickerWheel-mode-Mode3D .ui5strapPickerWheel-inner {
+  -webkit-perspective: 700px;
+          perspective: 700px;
+}
+/*
+ * Colors
+ */
+.ui5strapPickerWheel-pointer {
+  background-color: #eee;
+  border-color: #333;
+}
+.ui5strapPickerWheel.disabled .ui5strapPickerWheel-panel {
+  color: #333;
+}
+.ui5strapPickerWheel-panel.active {
+  color: #025d8c;
+}
+/*
+ * 
+ * UI5Strap
+ *
  * LESS for ui5strap.ScrollContainer controls
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>

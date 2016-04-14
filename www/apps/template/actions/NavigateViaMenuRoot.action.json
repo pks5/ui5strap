@@ -9,7 +9,7 @@
 		"VIEWS" : {
 			"menuTarget" : {
 				"id" : "= .customData.pageId",
-				"transition" : "flip-horizontal-ccw",
+				"transition" : "slide-rtl",
 				"writeHistory" : true
 			}
 		}

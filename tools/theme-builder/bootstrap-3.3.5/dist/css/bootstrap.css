@@ -13266,11 +13266,6 @@ a {
        -o-transform-style: preserve-3d;
           transform-style: preserve-3d;
 }
-.ui5strapPickerWheel-mode-Mode3D.ui5strapPickerWheel-flag-Spinning .ui5strapPickerWheel-wheel {
-  -webkit-transition: -webkit-transform .6s ease-out;
-       -o-transition:      -o-transform .6s ease-out;
-          transition:         transform .6s ease-out;
-}
 .ui5strapPickerWheel-panel {
   position: absolute;
   display: block;
@@ -13290,11 +13285,6 @@ a {
 .ui5strapPickerWheel-ver .ui5strapPickerWheel-panel {
   font-size: 48px;
   line-height: 90px;
-}
-.ui5strapPickerWheel-mode-Mode2D.ui5strapPickerWheel-flag-Spinning .ui5strapPickerWheel-panel {
-  -webkit-transition: -webkit-transform .6s ease-out;
-       -o-transition:      -o-transform .6s ease-out;
-          transition:         transform .6s ease-out;
 }
 /*
  * Perspective
