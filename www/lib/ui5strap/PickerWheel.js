@@ -596,10 +596,18 @@ sap.ui
 					 * END Touch handling
 					 */
 					
+					PickerWheelProto.setMode = function(newMode, suppress) {
+						if(sap.ui.Device.browser.msie){
+							newMode = ulib.PickerWheelMode.Mode2D;
+						}
+						
+						this.setProperty('mode', newMode, suppress);
+					};
+					
 					/**
 					 * 
 					 */
-					PickerWheelProto.setSelectedIndex = function(newIndex) {
+					PickerWheelProto.setSelectedIndex = function(newIndex, suppress) {
 						this.setProperty('selectedIndex', newIndex, true);
 
 						if (this.getDomRef()) {
@@ -689,8 +697,8 @@ sap.ui
 					 */
 					PickerWheelProto._setSelectedPanelActive = function() {
 						var $oldPanel = this._$currentSelectedPanel, 
-							$newPanel = this._$getPanel(this.getSelectedIndex());
-
+								$newPanel = this._$getPanel(this.getSelectedIndex());
+	
 						if (null !== $oldPanel) {
 							$oldPanel
 									.removeClass('active');
@@ -698,8 +706,17 @@ sap.ui
 
 						if($newPanel !== this._$currentSelectedPanel){
 							$newPanel.addClass('active');
+							
+							//WebKit Bugfix "Hanging Active Panel"
+							if(this.getMode() === ulib.PickerWheelMode.Mode2D){
+								this._carousel.rotation += 0.0001;
+								this._carousel.transform();
+							}
+							
 							this._$currentSelectedPanel = $newPanel;
 						}
+						
+						
 					};
 					
 					/*
