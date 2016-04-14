@@ -38,6 +38,7 @@
 				<BarNavContainer
 				id="subNavControls"
 					barVisible="true" 
+					barSizeExtraSmall="2"
 					pageChange="ui5strap.demoapp.actions.SetSelectedMenuControls" 
 					></BarNavContainer>
 			</body>

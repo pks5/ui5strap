@@ -259,14 +259,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
 		pageChange.transition.on("last", function(){
-			_this.firePageChanged({
-				target : pageChange.target,
-				oldPage : pageChange.currentPage
-			});
-			
-			//Transition callback
-			_transitionCallback(_this, pageChange, transList);
-			
 			if(pageChange.currentPage){
 				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
 					target : pageChange.target,
@@ -290,6 +282,14 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					oldPage : pageChange.currentPage
 				});
 			}
+			
+			_this.firePageChanged({
+				target : pageChange.target,
+				oldPage : pageChange.currentPage
+			});
+			
+			//Transition callback
+			_transitionCallback(_this, pageChange, transList);
 		});
 		
 		pageChange.transition.execute();

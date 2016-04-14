@@ -39,6 +39,7 @@
 				<BarNavContainer
 				id="navContainerSettings"
 					barVisible="true" 
+					barSizeExtraSmall="2"
 					pageChange="ui5strap.demoapp.actions.SetSelectedMenuSettings" 
 					></BarNavContainer>
 			</body>
