@@ -641,7 +641,6 @@ sap.ui
 								
 								
 								if (i === cSpeed) {
-									console.log(v0* i * PickerWheel.TIME_RES + s0, targetRotation, _this._cSpeed);
 									_this._carousel.rotation = targetRotation; 
 									_this._carousel.transform();
 									
