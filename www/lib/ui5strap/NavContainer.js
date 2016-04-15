@@ -677,11 +677,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				"currentPage" : currentPage
 			};
 		
-		_this.firePageChange({
-			target : target,
-			oldPage : currentPage
-		});
-
 		if(currentPage){
 			_triggerControllerEvent(_this, target, currentPage, 'pageHide', {
 				target : target,
@@ -706,6 +701,11 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			});
 		}
 		
+		_this.firePageChange({
+			target : target,
+			oldPage : currentPage
+		});
+
 		if(this.getDomRef()){
 			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
 			//NavContainer is already attached to DOM

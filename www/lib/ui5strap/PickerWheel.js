@@ -233,20 +233,20 @@ sap.ui
 					
 					PickerWheel.TIME_STEPS = 3;
 					
-					PickerWheel.DECCEL = 0.9;
+					PickerWheel.DECCEL = 0.96;
 					
 					//Minimum rotation in degrees to trigger acceleration
 					PickerWheel.MIN_ACCEL_ROTATION = 1.7;
 					
-					PickerWheel.STOP_TH = 0.05;
+					PickerWheel.STOP_TH = 0.03;
 					
-					PickerWheel.TIME_RES = 35;
+					PickerWheel.TIME_RES = 20;
 					
 					PickerWheel.THRES = 0.5;
 					
 					
-					PickerWheel.C_SPEED_HIGH = 10;
-					PickerWheel.C_SPEED_LOW = 10;
+					PickerWheel.C_SPEED_HIGH = 20;
+					PickerWheel.C_SPEED_LOW = 15;
 
 					PickerWheelProto.modern = window.requestAnimationFrame;
 
@@ -526,21 +526,28 @@ sap.ui
 							
 							releaseTime = touchEndTime - this._touchMoveTime;
 						
+						//rotationDelta = Math.round((_this._carousel.rotation + rotationDelta) / _this._carousel.theta) * _this._carousel.theta - _this._carousel.rotation;
+						
+						var t = 0;
 						if (releaseTime < PickerWheel.RELEASE_LIMIT
 								&& Math.abs(rotationDelta) >= PickerWheel.MIN_ACCEL_ROTATION) {
 								var velocity = rotationDelta / timeDelta;
-								
 								this._timer = window.setInterval(function() {
-									velocity = velocity * PickerWheel.DECCEL;
+									t += PickerWheel.TIME_RES;
 									
 									_this._carousel.rotation += velocity * PickerWheel.TIME_RES;
 									_this._carousel.transform();
 									
-									if (Math.abs(velocity) < PickerWheel.STOP_TH) {
+									if (Math.abs(velocity) <= PickerWheel.STOP_TH) {
 										window.clearInterval(_this._timer);
 										_this._timer = null;
 										_this._stopDragging(_this._carousel.rotation, rotationDelta);
+										
+										return;
 									}
+									
+									velocity = velocity * PickerWheel.DECCEL;
+									
 								}, PickerWheel.TIME_RES);
 
 								return;
@@ -615,13 +622,14 @@ sap.ui
 								targetRotation = _getRotationFromIndex(this._carousel, newIndex),
 								rotationDelta = targetRotation - this._carousel.rotation,
 								s0 = _this._carousel.rotation,
-								v0 = rotationDelta / (PickerWheel.TIME_RES * (this._cSpeed - 1.25)),
+								cSpeed = this._cSpeed,
+								v0 = rotationDelta / (PickerWheel.TIME_RES * (cSpeed - 2.125)),
 								t = 0,
-								i = 0;
+								i = 1;
 							
 							this._timer && window.clearInterval(this._timer);
 							
-							if(Math.abs(rotationDelta) < PickerWheel.STOP_TH ){
+							if(Math.abs(rotationDelta) < 1 ){
 								_this._carousel.rotation = targetRotation; 
 								_this._carousel.transform();
 								_this._setSelectedPanelActive();
@@ -630,14 +638,10 @@ sap.ui
 							}
 							
 							this._timer = window.setInterval(function() {
-								var tAdd = PickerWheel.TIME_RES;
-								if(i === _this._cSpeed - 2){
-									tAdd *= 0.5;
-								}
 								
-								t += tAdd;
 								
-								if (i === _this._cSpeed - 1) {
+								if (i === cSpeed) {
+									console.log(v0* i * PickerWheel.TIME_RES + s0, targetRotation, _this._cSpeed);
 									_this._carousel.rotation = targetRotation; 
 									_this._carousel.transform();
 									
@@ -649,8 +653,19 @@ sap.ui
 									return;
 								}
 								else{
-									_this._carousel.rotation = v0 * t + s0 
+									
+									var tAdd = PickerWheel.TIME_RES;
+									if(i == _this._cSpeed - 2){
+										tAdd *= 0.5;
+									}
+									else if(i== _this._cSpeed - 1){
+										tAdd *= 0.25;
+									}
+									
+									_this._carousel.rotation += v0 * tAdd;
 									_this._carousel.transform();
+									
+									
 								}
 								
 								i++;
