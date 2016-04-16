@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.ui5strap</groupId>
+	<artifactId>com.ui5strap.library</artifactId>
+	<version>0.10.6-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Ui5Strap Library</name>
+
+	<organization>
+		<name>Philipp Knoeller Software</name>
+		<url>http://pksoftware.de</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>PKS internal</name>
+			<url>http://www.pksoftware.de</url>
+			<distribution>manually</distribution>
+			<comments>PKSoftware internal use only</comments>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Jan Philipp Knoeller</name>
+			<email>info@pksoftware.de</email>
+			<timezone>-1</timezone>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- Java Min Version -->
+        <java.min.version>1.7</java.min.version>
+        
+        <!-- Maven Compiler -->
+        <maven.compiler.version>3.1</maven.compiler.version>
+	</properties>
+
+	<dependencies>
+    </dependencies>
+
+
+    <!-- Build -->
+	<build>
+		<resources>
+		    <resource>
+		        <directory>src/main/web</directory>
+		    </resource>
+        </resources>
+		<plugins>
+			
+			<plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/ui5strap/www/lib</outputDirectory>
+                            <includeEmptyDirs>true</includeEmptyDirs>
+                            <resources>
+                                <resource>
+						            <directory>${basedir}/www/lib</directory>
+						            <filtering>false</filtering>
+						        </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+			
+			<!-- Maven Compiler Plugin -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.version}</version>
+				<configuration>
+					<source>${java.min.version}</source>
+					<target>${java.min.version}</target>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

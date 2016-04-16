@@ -51,6 +51,8 @@ hooks
 platforms
 plugins
 
+target
+
 # Tools   #
 ###########
 /tools/theme-builder/*/dist
