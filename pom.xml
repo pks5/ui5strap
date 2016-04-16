@@ -9,18 +9,16 @@
 	<name>Ui5Strap Library</name>
 
 	<organization>
-		<name>Philipp Knoeller Software</name>
+		<name>PKSoftware - Jan Philipp Knoeller</name>
 		<url>http://pksoftware.de</url>
 	</organization>
 
 	<licenses>
-		<license>
-			<name>PKS internal</name>
-			<url>http://www.pksoftware.de</url>
-			<distribution>manually</distribution>
-			<comments>PKSoftware internal use only</comments>
-		</license>
-	</licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
 	<developers>
 		<developer>
@@ -35,51 +33,56 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
-        <!-- Java Min Version -->
-        <java.min.version>1.7</java.min.version>
-        
-        <!-- Maven Compiler -->
-        <maven.compiler.version>3.1</maven.compiler.version>
+
+		<!-- Java Min Version -->
+		<java.min.version>1.7</java.min.version>
+
+		<!-- Maven Compiler -->
+		<maven.compiler.version>3.1</maven.compiler.version>
+
+		
 	</properties>
 
 	<dependencies>
-    </dependencies>
+
+		
+	</dependencies>
 
 
-    <!-- Build -->
+	<!-- Build -->
 	<build>
 		<resources>
-		    <resource>
-		        <directory>src/main/web</directory>
-		    </resource>
-        </resources>
+			<resource>
+				<directory>src/main/web</directory>
+			</resource>
+		</resources>
 		<plugins>
-			
+
+            <!-- Create Library Jar -->
 			<plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/classes/ui5strap/www/lib</outputDirectory>
-                            <includeEmptyDirs>true</includeEmptyDirs>
-                            <resources>
-                                <resource>
-						            <directory>${basedir}/www/lib</directory>
-						            <filtering>false</filtering>
-						        </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-			
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes/springstrap/ui5strap/www/lib/</outputDirectory>
+							<includeEmptyDirs>true</includeEmptyDirs>
+							<resources>
+								<resource>
+									<directory>${basedir}/www/lib/</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- Maven Compiler Plugin -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
