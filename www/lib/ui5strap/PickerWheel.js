@@ -238,7 +238,7 @@ sap.ui
 					//Minimum rotation in degrees to trigger acceleration
 					PickerWheel.MIN_ACCEL_ROTATION = 1.7;
 					
-					PickerWheel.STOP_TH = 0.03;
+					PickerWheel.STOP_TH = 0.01;
 					
 					PickerWheel.TIME_RES = 20;
 					
