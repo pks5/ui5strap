@@ -595,6 +595,7 @@ sap.ui
 						var oldIndex = this.getSelectedIndex();
 						var oldSpeed = this._cSpeed;
 						this._cSpeed = PickerWheel.C_SPEED_LOW;
+						console.log(this._getWheelIndex(rotation, dir));
 						this.setSelectedIndex(this._getWheelIndex(rotation, dir));
 						this._cSpeed = oldSpeed;
 						this._onSelectionChange(oldIndex);
@@ -700,12 +701,12 @@ sap.ui
 
 						th = th - Math.floor(th);
 
-						if (dir < 0) {
-							return th > PickerWheel.THRES ? -Math.floor(index) : -Math
-									.ceil(index);
+						if (index < 0) {
+							return th > PickerWheel.THRES ? -Math
+									.floor(index) : -Math.ceil(index);
 						} else {
-							return th < 1 - PickerWheel.THRES ? -Math.ceil(index) : -Math
-									.floor(index);
+							return th < PickerWheel.THRES ? -Math
+									.floor(index) : -Math.ceil(index);
 						}
 					};
 
