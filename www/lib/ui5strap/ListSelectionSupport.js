@@ -278,6 +278,55 @@ sap.ui.define(['./library'], function(library){
 		};
 		
 		/*
+		 * Methods to override 
+		 */
+		
+		/**
+		 * Defines how to decide whether an item is selected within a selectionGroup.
+		 * @Protected
+		 */
+		oControl._isItemSelected = function(item, selectionGroup){
+			return item.getSelected();
+		};
+		
+		/**
+		 * Defines how to decide whether an item is enabled within a selectionGroup.
+		 * @Protected
+		 */
+		oControl._isItemEnabled = function(item, selectionGroup){
+			return item.getEnabled();
+		};
+		
+		/**
+		 * Defines how to decide whether an item is selectable within a selectionGroup.
+		 * @Protected
+		 */
+		oControl._isItemSelectable = function(item, selectionGroup, selectionProvider){
+			return item.isSelectable(selectionProvider);
+		};
+		
+		/**
+		 * Defines how to select an item within a selectionGroup.
+		 * @Protected
+		 */
+		oControl._setItemSelected = function(item, selected, selectionGroup){
+			item.setSelected(selected);
+		};
+		
+		/**
+		 * Adds additional event options.
+		 * @Protected
+		 * @Override
+		 */
+		oControl._addEventOptions = function(eventOptions){
+			//To be overwritten by inheritants
+		};
+		
+		/*
+		 * 
+		 */
+		
+		/*
 		 * --------------------
 		 * START implementation of IItemsProvider interface
 		 * --------------------
@@ -285,6 +334,7 @@ sap.ui.define(['./library'], function(library){
 		
 		/**
 		 * Gets the list of items. This depends on the available aggregations.
+		 * TODO Replace with getItems (without leading _)?
 		 * @Protected
 		 */
 		oControl._getItems = function(){
@@ -703,58 +753,12 @@ sap.ui.define(['./library'], function(library){
 			_changeSelectionByProperty(this, propertyName, values, "toggle", selectionGroup);
 		};
 		
-		/*
-		 * Methods to override 
-		 */
 		
-		/**
-		 * Defines how to decide whether an item is selected within a selectionGroup.
-		 * @Protected
-		 */
-		oControl._isItemSelected = function(item, selectionGroup){
-			return item.getSelected();
-		};
-		
-		/**
-		 * Defines how to decide whether an item is enabled within a selectionGroup.
-		 * @Protected
-		 */
-		oControl._isItemEnabled = function(item, selectionGroup){
-			return item.getEnabled();
-		};
-		
-		/**
-		 * Defines how to decide whether an item is selectable within a selectionGroup.
-		 * @Protected
-		 */
-		oControl._isItemSelectable = function(item, selectionGroup, selectionProvider){
-			return item.isSelectable(selectionProvider);
-		};
-		
-		/**
-		 * Defines how to select an item within a selectionGroup.
-		 * @Protected
-		 */
-		oControl._setItemSelected = function(item, selected, selectionGroup){
-			item.setSelected(selected);
-		};
-		
-		/**
-		 * Adds additional event options.
-		 * @Protected
-		 * @Override
-		 */
-		oControl._addEventOptions = function(eventOptions){
-			//To be overwritten by inheritants
-		};
-		
-		/*
-		 * 
-		 */
 		
 		/**
 		 * Performs a press on an item.
 		 * @Public
+		 * TODO is this really part of ISelectionProvider?
 		 */
 		oControl.pressItem = function(srcControl, item, itemUpdated, selectionProvider, providerItem){
 			if(item && this._isItemEnabled(item, _defaultSelectionGroup)){
