@@ -595,7 +595,6 @@ sap.ui
 						var oldIndex = this.getSelectedIndex();
 						var oldSpeed = this._cSpeed;
 						this._cSpeed = PickerWheel.C_SPEED_LOW;
-						console.log(this._getWheelIndex(rotation, dir));
 						this.setSelectedIndex(this._getWheelIndex(rotation, dir));
 						this._cSpeed = oldSpeed;
 						this._onSelectionChange(oldIndex);
@@ -709,21 +708,29 @@ sap.ui
 									.floor(index) : -Math.ceil(index);
 						}
 					};
+					
+					PickerWheelProto._getRealIndex = function(wheelIndex){
+						wheelIndex = wheelIndex
+								% (this._carousel.panelCount);
+		
+						if (wheelIndex < 0) {
+							wheelIndex = this._carousel.panelCount
+									+ wheelIndex;
+						}
+						
+						return wheelIndex;
+					};
 
 					/**
 					 * 
 					 */
 					PickerWheelProto._$getPanel = function(wheelIndex) {
-						wheelIndex = wheelIndex
-								% (this._carousel.panelCount);
-
-						if (wheelIndex < 0) {
-							wheelIndex = this._carousel.panelCount
-									+ wheelIndex;
-						}
-
 						return jQuery('#' + this.getId() + '---panel-'
-								+ wheelIndex);
+								+ this._getRealIndex(wheelIndex));
+					};
+					
+					PickerWheelProto._getPanel = function(wheelIndex){
+						return this.getPanels()[this._getRealIndex(wheelIndex)];
 					};
 					
 					/**
@@ -759,6 +766,8 @@ sap.ui
 					 * --------------------
 					 */
 					
+					
+					
 					/*
 					 * Index
 					 */
@@ -767,11 +776,11 @@ sap.ui
 						var selectedIndex = this.getSelectedIndex(),
 							panels = this.getPanels();
 						
-						if(-1 == selectedIndex || 0 === panels.length){
+						if(0 === panels.length){
 							return [];
 						}
 						
-						return [panels[selectedIndex]];
+						return [panels[this._getRealIndex(selectedIndex)]];
 					};
 					
 					PickerWheelProto.isInSelection = function(itemsToSelect, selectionGroup){
@@ -782,11 +791,11 @@ sap.ui
 						var selectedIndex = this.getSelectedIndex(),
 							panels = this.getPanels();
 						
-						if(-1 == selectedIndex || 0 === panels.length){
+						if(0 === panels.length){
 							return false;
 						}
 						
-						return itemsToSelect === panels[itemsToSelect]; 
+						return itemsToSelect === panels[this._getRealIndex(selectedIndex)]; 
 					};
 					
 					PickerWheelProto.setSelection = function(itemsToSelect, selectionGroup){
@@ -820,24 +829,12 @@ sap.ui
 					 */
 					
 					PickerWheelProto.getSelectionIndex = function(selectionGroup){
-						var selectedIndex = this.getSelectedIndex();
-						
-						if(-1 === selectedIndex){
-							return [];
-						}
-						
-						return [selectedIndex];
+						return [this.getSelectedIndex()];
 					};
 					
 					PickerWheelProto.isInSelectionIndex = function(indices, selectionGroup){
 						if(jQuery.isArray(indices)){
 							indices = indices[0];
-						}
-						
-						var selectedIndex = this.getSelectedIndex();
-						
-						if(-1 === selectedIndex){
-							return false;
 						}
 						
 						return indices === this.getSelectedIndex(); 
@@ -871,11 +868,11 @@ sap.ui
 						var selectedIndex = this.getSelectedIndex(),
 							panels = this.getPanels();
 						
-						if(-1 == selectedIndex || 0 === panels.length){
+						if(0 === panels.length){
 							return [];
 						}
 						
-						return [panels[selectedIndex].data(dataKey)];
+						return [panels[this._getRealIndex(selectedIndex)].data(dataKey)];
 					};
 					
 					PickerWheelProto.isInSelectionByCustomData = function(dataKey, values, selectionGroup){
@@ -886,13 +883,13 @@ sap.ui
 						var selectedIndex = this.getSelectedIndex(),
 							panels = this.getPanels();
 						
-						if(-1 == selectedIndex || 0 === panels.length){
+						if(0 === panels.length){
 							return false;
 						}
 						
 						//TODO use == here? How to handle null/undefined?
 						//Currently values must be a string if the data value is defined in the view.
-						return values === panels[itemsToSelect].data(dataKey); 
+						return values === panels[this._getRealIndex(selectedIndex)].data(dataKey); 
 					};
 					
 					PickerWheelProto.setSelectionByCustomData = function(dataKey, values, selectionGroup){
@@ -932,11 +929,11 @@ sap.ui
 							panels = this.getPanels(),
 							methodName = 'get' + jQuery.sap.charToUpperCase(propertyName);
 						
-						if(-1 == selectedIndex || 0 === panels.length){
+						if(0 === panels.length){
 							return [];
 						}
 						
-						return [panels[selectedIndex][methodName]()];
+						return [panels[this._getRealIndex(selectedIndex)][methodName]()];
 					};
 					
 					PickerWheelProto.isInSelectionByProperty = function(propertyName, values, selectionGroup){
@@ -948,13 +945,13 @@ sap.ui
 							panels = this.getPanels(),
 							methodName = 'get' + jQuery.sap.charToUpperCase(propertyName);
 						
-						if(-1 == selectedIndex || 0 === panels.length){
+						if(0 === panels.length){
 							return false;
 						}
 						
 						//TODO use == here? How to handle null/undefined?
 						//Currently values must be a string if the data value is defined in the view.
-						return values === panels[itemsToSelect][methodName](); 
+						return values === panels[this._getRealIndex(selectedIndex)][methodName](); 
 					};
 					
 					PickerWheelProto.setSelectionByProperty = function(propertyName, values, selectionGroup){

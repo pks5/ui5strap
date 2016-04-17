@@ -174,6 +174,10 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 		
 		selectWheelWithIcons : function(){
 			this.getView().byId("wheelWithNumbers").setSelectionByProperty("text", "2.5");
+		},
+		
+		alertWheelValue : function(oEvent){
+			console.log(oEvent.getSource().getSelectionCustomData("value")[0]);
 		}
 	};
 	
