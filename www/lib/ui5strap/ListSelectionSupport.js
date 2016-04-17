@@ -199,6 +199,8 @@ sap.ui.define(['./library'], function(library){
 			var selectedItem = null;
 			
 			for(var i = 0; i < items.length; i++){
+				//TODO use == here? How to handle null/undefined?
+				//Currently values must be a string if the data value is defined in the view.
 				if(items[i].data(dataKey) === values){
 					selectedItem = items[i];
 					
@@ -212,7 +214,46 @@ sap.ui.define(['./library'], function(library){
 			var itemsToSelect = [];
 			
 			for(var i = 0; i < items.length; i++){
+				//TODO How to handle null/undefined?
+				//Check whether jQuery.inArray uses === or == for comparison.
 				if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
+					itemsToSelect.push(items[i]);
+				}
+			}
+			
+			return _changeSelection(_this, itemsToSelect, mode, selectionGroup);
+		}
+	};
+	
+	/**
+	 * @Private
+	 */
+	var _changeSelectionByProperty = function(_this, propertyName, values, mode, selectionGroup){
+		var items = _this._getItems(),
+			methodName = 'get' + jQuery.sap.charToUpperCase(propertyName);
+		
+		if(!jQuery.isArray(values)){
+			var selectedItem = null;
+			
+			for(var i = 0; i < items.length; i++){
+				//TODO use == here? How to handle null/undefined?
+				//Currently values must be a string if the data value is defined in the view.
+				if(items[i][methodName]() === values){
+					selectedItem = items[i];
+					
+					break;
+				}
+			}
+			
+			return _changeSelection(_this, selectedItem, mode, selectionGroup);
+		}
+		else{
+			var itemsToSelect = [];
+			
+			for(var i = 0; i < items.length; i++){
+				//TODO How to handle null/undefined?
+				//Check whether jQuery.inArray uses === or == for comparison.
+				if(-1 !== jQuery.inArray(items[i][methodName](), values)){
 					itemsToSelect.push(items[i]);
 				}
 			}
@@ -490,6 +531,23 @@ sap.ui.define(['./library'], function(library){
 		 */
 		
 		/**
+		 * Gets the data value of one or multiple selected items
+		 * @Public
+		 * @Override
+		 */
+		oControl.getSelectionCustomData = function(dataKey, selectionGroup){
+			var selection = this._getSelection(selectionGroup);
+			
+			var returnData = [];
+			
+			for(var i = 0; i < selection.items.length; i++){
+				returnData.push(selection.items[i].data(dataKey));
+			}
+			
+			return returnData;
+		};
+		
+		/**
 		 * Returns whether one or multiple items are currently part of selection. Items are selected by custom data key and possible values.
 		 * @Public
 		 */
@@ -498,6 +556,8 @@ sap.ui.define(['./library'], function(library){
 			
 			if(!jQuery.isArray(values)){
 				for(var i = 0; i < items.length; i++){
+					//TODO use == here? How to handle null/undefined?
+					//Currently values must be a string if the data value is defined in the view.
 					if(items[i].data(dataKey) === values){
 						selectedItem = items[i];
 						
@@ -508,6 +568,8 @@ sap.ui.define(['./library'], function(library){
 			else{
 				var itemsToCheck = [];
 				for(var i = 0; i < items.length; i++){
+					//TODO How to handle null/undefined?
+					//Check whether jQuery.inArray uses === or == for comparison.
 					if(-1 !== jQuery.inArray(items[i].data(dataKey), values)){
 						itemsToCheck.push(items[i]);
 					}
@@ -557,12 +619,88 @@ sap.ui.define(['./library'], function(library){
 		 */
 		
 		/**
-		 * Selects one or multiple items that have the given value in the specified property.
+		 * Gets the data value of one or multiple selected items
+		 * @Public
+		 * @Override
+		 */
+		oControl.getSelectionProperty = function(propertyName, selectionGroup){
+			var selection = this._getSelection(selectionGroup),
+				methodName = 'get' + jQuery.sap.charToUpperCase(propertyName),
+				returnData = [];
+			
+			for(var i = 0; i < selection.items.length; i++){
+				returnData.push(selection.items[i][methodName]());
+			}
+			
+			return returnData;
+		};
+		
+		/**
+		 * Returns whether one or multiple items are currently part of selection. Items are selected by custom data key and possible values.
+		 * @Public
+		 */
+		oControl.isInSelectionByProperty = function(propertyName, values, selectionGroup){
+			var items = _this._getItems()
+				methodName = 'get' + jQuery.sap.charToUpperCase(propertyName);
+			
+			if(!jQuery.isArray(values)){
+				for(var i = 0; i < items.length; i++){
+					//TODO use == here? How to handle null/undefined?
+					//Currently values must be a string if the data value is defined in the view.
+					if(items[i][methodName]() === values){
+						selectedItem = items[i];
+						
+						return this.isInSelection(selectedItem, selectionGroup);
+					}
+				}
+			}
+			else{
+				var itemsToCheck = [];
+				for(var i = 0; i < items.length; i++){
+					//TODO How to handle null/undefined?
+					//Check whether jQuery.inArray uses === or == for comparison.
+					if(-1 !== jQuery.inArray(items[i][methodName](), values)){
+						itemsToCheck.push(items[i]);
+					}
+				}
+				return this.isInSelection(itemsToCheck, selectionGroup);
+			}
+		};
+		
+		/**
+		 * Selects one or multiple items that have the given value in the specified custom data field.
 		 * @Public
 		 * @Override
 		 */
 		oControl.setSelectionByProperty = function(propertyName, values, selectionGroup){
-			throw new Error("Please implement ui5strap.ListBase.prototype.setSelectionByProperty");
+			_changeSelectionByProperty(this, propertyName, values, "replace", selectionGroup);
+		};
+		
+		/**
+		 * Selects one or multiple items that have the given value in the specified custom data field.
+		 * @Public
+		 * @Override
+		 */
+		oControl.addSelectionByProperty = function(propertyName, values, selectionGroup){
+			_changeSelectionByProperty(this, propertyName, values, "add", selectionGroup);
+		};
+		
+		/**
+		 * Selects one or multiple items that have the given value in the specified custom data field.
+		 * @Public
+		 * @Override
+		 */
+		oControl.removeSelectionByProperty = function(propertyName, values, selectionGroup){
+			_changeSelectionByProperty(this, propertyName, values, "remove", selectionGroup);
+		};
+		
+		/**
+		 * Toggles one or multiple items that have the given value in the specified custom data field.
+		 * @Public
+		 * @Override
+		 */
+		oControl.toggleSelectionByProperty = function(propertyName, values, selectionGroup){
+			_changeSelectionByProperty(this, propertyName, values, "toggle", selectionGroup);
 		};
 		
 		/*

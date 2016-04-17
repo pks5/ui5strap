@@ -26,33 +26,33 @@
     "views" : [
     		{
                 "id" : "menuRoot",
-                "viewName" : "MenuRoot",
+                "viewName" : ".MenuRoot",
                 "target" : "bar"
             },
             
             {
                 "id" : "home",
-                "viewName" : "Home"
+                "viewName" : ".Home"
             },
 
             {
                 "id" : "feed",
-                "viewName" : "Feed"
+                "viewName" : ".Feed"
             },
 
             {
                 "id" : "statistics",
-                "viewName" : "Statistics"
+                "viewName" : ".Statistics"
             },
 
             {
                 "id" : "settings",
-                "viewName" : "Settings",
+                "viewName" : ".Settings",
                 "events" : {
                 	"controller" : {
                 		"pageShow" : [
-                			"LoadMenuSettings",
-                			"NavigateToSettingsLanguage"
+                			".LoadMenuSettings",
+                			".NavigateToSettingsLanguage"
                 		]
                 	}
                 }
@@ -60,7 +60,7 @@
             
             {
                 "id" : "menuSettings",
-                "viewName" : "MenuSettings",
+                "viewName" : ".MenuSettings",
                 "target" : "bar"
             },
             
@@ -69,7 +69,7 @@
                 "viewName" : ".settings.Language",
                 "events" : {
                 	"controller" : {
-                		"update" : "SetCurrentLanguage"	
+                		"update" : ".SetCurrentLanguage"	
                 	}
                 }
             },
@@ -82,7 +82,7 @@
             
             {
             	"id" : "controls",
-            	"viewName" : "Controls",
+            	"viewName" : ".Controls",
             	"events" : {
                 	"controller" : {
                 	   "pageShow" : [
@@ -95,7 +95,7 @@
             
             {
                 "id" : "menuControls",
-                "viewName" : "MenuControls",
+                "viewName" : ".MenuControls",
                 "target" : "bar"
             },
             
@@ -161,45 +161,45 @@
             
             {
                 "id" : "newPost",
-                "viewName" : "NewPost"
+                "viewName" : ".NewPost"
             },
             {
                 "id" : "postDetail",
-                "viewName" : "PostDetail"
+                "viewName" : ".PostDetail"
             }
       ],
 	
 	"actions" : [
-		"NavigateToHome",
-		"NavigateToFeed",
-		"NavigateToStatistics",
+		".NavigateToHome",
+		".NavigateToFeed",
+		".NavigateToStatistics",
 		
 		
-		"ToggleBarMenuRoot",
-		"NavigateViaMenuRoot",
-		"SetSelectedMenuRoot",
+		".ToggleBarMenuRoot",
+		".NavigateViaMenuRoot",
+		".SetSelectedMenuRoot",
 		
-		"LoadMenuSettings",
-		"ToggleBarMenuSettings",
-		"NavigateViaMenuSettings", 
-		"SetSelectedMenuSettings",
-		"NavigateToSettingsLanguage",
+		".LoadMenuSettings",
+		".ToggleBarMenuSettings",
+		".NavigateViaMenuSettings", 
+		".SetSelectedMenuSettings",
+		".NavigateToSettingsLanguage",
 		
-		"LoadMenuControls",
-		"ToggleBarMenuControls",
-		"NavigateViaMenuControls", 
-		"SetSelectedMenuControls",
-		"NavigateToControlsButtons",
+		".LoadMenuControls",
+		".ToggleBarMenuControls",
+		".NavigateViaMenuControls", 
+		".SetSelectedMenuControls",
+		".NavigateToControlsButtons",
 		
-		"AppendFeed",
-		"RemovePost",
-		"ShowNewPostOverlay",
-		"CloseOverlay",
+		".AppendFeed",
+		".RemovePost",
+		".ShowNewPostOverlay",
+		".CloseOverlay",
 		
-		"ChangeTheme",
-		"SelectLanguage",
+		".ChangeTheme",
+		".SelectLanguage",
 		
-		"Debug"
+		".Debug"
 	],
 	
 	"rootNavigation" : {
@@ -227,7 +227,7 @@
          "events" : {
          	"control" : {
          		"pageChange" : [
-         			"SetSelectedMenuRoot"
+         			".SetSelectedMenuRoot"
          		]
          	}
          },
@@ -241,7 +241,7 @@
 	"components" : [
 			{
 	             "id" : "feedManager",
-	             "module" : "FeedManager"
+	             "module" : ".FeedManager"
 	        },
 	        
 	        {

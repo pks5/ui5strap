@@ -757,13 +757,85 @@ sap.ui
 					 * --------------------
 					 */
 					
+					/*
+					 * Index
+					 */
+					
+					PickerWheelProto.getSelection = function(selectionGroup){
+						var selectedIndex = this.getSelectedIndex(),
+							panels = this.getPanels();
+						
+						if(-1 == selectedIndex || 0 === panels.length){
+							return [];
+						}
+						
+						return [panels[selectedIndex]];
+					};
+					
+					PickerWheelProto.isInSelection = function(itemsToSelect, selectionGroup){
+						if(jQuery.isArray(itemsToSelect)){
+							itemsToSelect = itemsToSelect[0];
+						}
+						
+						var selectedIndex = this.getSelectedIndex(),
+							panels = this.getPanels();
+						
+						if(-1 == selectedIndex || 0 === panels.length){
+							return false;
+						}
+						
+						return itemsToSelect === panels[itemsToSelect]; 
+					};
+					
+					PickerWheelProto.setSelection = function(itemsToSelect, selectionGroup){
+						if(jQuery.isArray(itemsToSelect)){
+							itemsToSelect = itemsToSelect[0];
+						}
+						
+						var panels = this.getPanels();
+						for(var i=0; i < panels.length; i++){
+							if(panels[i] === itemsToSelect){
+								this.setSelectedIndex(i);
+								break;
+							}
+						}
+					};
+					
+					PickerWheelProto.addSelection = function(itemsToSelect, selectionGroup){
+						throw new Error('This Control does not support multiple selections!');
+					};
+					
+					PickerWheelProto.removeSelection = function(itemsToSelect, selectionGroup){
+						throw new Error('This Control does not support multiple selections!');
+					};
+					
+					PickerWheelProto.toggleSelection = function(itemsToSelect, selectionGroup){
+						throw new Error('This Control does not support multiple selections!');
+					};
+					
+					/*
+					 * Index
+					 */
+					
 					PickerWheelProto.getSelectionIndex = function(selectionGroup){
-						return [this.getSelectedIndex()];
+						var selectedIndex = this.getSelectedIndex();
+						
+						if(-1 === selectedIndex){
+							return [];
+						}
+						
+						return [selectedIndex];
 					};
 					
 					PickerWheelProto.isInSelectionIndex = function(indices, selectionGroup){
 						if(jQuery.isArray(indices)){
-							throw new Error('This Control does not support multiple selections!');
+							indices = indices[0];
+						}
+						
+						var selectedIndex = this.getSelectedIndex();
+						
+						if(-1 === selectedIndex){
+							return false;
 						}
 						
 						return indices === this.getSelectedIndex(); 
@@ -771,7 +843,7 @@ sap.ui
 					
 					PickerWheelProto.setSelectionIndex = function(indices, selectionGroup){
 						if(jQuery.isArray(indices)){
-							throw new Error('This Control does not support multiple selections!');
+							indices = indices[0];
 						}
 						
 						this.setSelectedIndex(indices);
@@ -789,7 +861,128 @@ sap.ui
 						throw new Error('This Control does not support multiple selections!');
 					};
 					
-					//TODO finalize
+					/*
+					 * Custom Data
+					 */
+					
+					PickerWheelProto.getSelectionCustomData = function(dataKey, selectionGroup){
+						var selectedIndex = this.getSelectedIndex(),
+							panels = this.getPanels();
+						
+						if(-1 == selectedIndex || 0 === panels.length){
+							return [];
+						}
+						
+						return [panels[selectedIndex].data(dataKey)];
+					};
+					
+					PickerWheelProto.isInSelectionByCustomData = function(dataKey, values, selectionGroup){
+						if(jQuery.isArray(values)){
+							values = values[0];
+						}
+						
+						var selectedIndex = this.getSelectedIndex(),
+							panels = this.getPanels();
+						
+						if(-1 == selectedIndex || 0 === panels.length){
+							return false;
+						}
+						
+						//TODO use == here? How to handle null/undefined?
+						//Currently values must be a string if the data value is defined in the view.
+						return values === panels[itemsToSelect].data(dataKey); 
+					};
+					
+					PickerWheelProto.setSelectionByCustomData = function(dataKey, values, selectionGroup){
+						if(jQuery.isArray(values)){
+							values = values[0];
+						}
+						
+						var panels = this.getPanels();
+						for(var i=0; i < panels.length; i++){
+							//TODO use == here? How to handle null/undefined?
+							//Currently values must be a string if the data value is defined in the view.
+							if(panels[i].data(dataKey) === values){
+								this.setSelectedIndex(i);
+								break;
+							}
+						}
+					};
+					
+					PickerWheelProto.addSelectionByCustomData = function(dataKey, values, selectionGroup){
+						throw new Error('This Control does not support multiple selections!');
+					};
+					
+					PickerWheelProto.removeSelectionByCustomData = function(dataKey, values, selectionGroup){
+						throw new Error('This Control does not support multiple selections!');
+					};
+					
+					PickerWheelProto.toggleSelectionByCustomData = function(dataKey, values, selectionGroup){
+						throw new Error('This Control does not support multiple selections!');
+					};
+					
+					/*
+					 * Property
+					 */
+					
+					PickerWheelProto.getSelectionProperty = function(propertyName, selectionGroup){
+						var selectedIndex = this.getSelectedIndex(),
+							panels = this.getPanels(),
+							methodName = 'get' + jQuery.sap.charToUpperCase(propertyName);
+						
+						if(-1 == selectedIndex || 0 === panels.length){
+							return [];
+						}
+						
+						return [panels[selectedIndex][methodName]()];
+					};
+					
+					PickerWheelProto.isInSelectionByProperty = function(propertyName, values, selectionGroup){
+						if(jQuery.isArray(values)){
+							values = values[0];
+						}
+						
+						var selectedIndex = this.getSelectedIndex(),
+							panels = this.getPanels(),
+							methodName = 'get' + jQuery.sap.charToUpperCase(propertyName);
+						
+						if(-1 == selectedIndex || 0 === panels.length){
+							return false;
+						}
+						
+						//TODO use == here? How to handle null/undefined?
+						//Currently values must be a string if the data value is defined in the view.
+						return values === panels[itemsToSelect][methodName](); 
+					};
+					
+					PickerWheelProto.setSelectionByProperty = function(propertyName, values, selectionGroup){
+						if(jQuery.isArray(values)){
+							values = values[0];
+						}
+						
+						var panels = this.getPanels(),
+							methodName = 'get' + jQuery.sap.charToUpperCase(propertyName);
+						for(var i=0; i < panels.length; i++){
+							//TODO use == here? How to handle null/undefined?
+							//Currently values must be a string if the data value is defined in the view.
+							if(panels[i][methodName]() === values){
+								this.setSelectedIndex(i);
+								break;
+							}
+						}
+					};
+					
+					PickerWheelProto.addSelectionByProperty = function(propertyName, values, selectionGroup){
+						throw new Error('This Control does not support multiple selections!');
+					};
+					
+					PickerWheelProto.removeSelectionByProperty = function(propertyName, values, selectionGroup){
+						throw new Error('This Control does not support multiple selections!');
+					};
+					
+					PickerWheelProto.toggleSelectionByProperty = function(propertyName, values, selectionGroup){
+						throw new Error('This Control does not support multiple selections!');
+					};
 					
 					/*
 					 * --------------------

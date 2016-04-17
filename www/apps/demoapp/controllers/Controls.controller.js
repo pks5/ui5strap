@@ -166,6 +166,14 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 				this.resetBars(button);
 			}
 	
+		},
+		
+		/*
+		 * Wheels
+		 */
+		
+		selectWheelWithIcons : function(){
+			this.getView().byId("wheelWithNumbers").setSelectionByProperty("text", "2.5");
 		}
 	};
 	

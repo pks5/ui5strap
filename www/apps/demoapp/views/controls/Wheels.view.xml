@@ -1,7 +1,7 @@
 <sapUiCoreMvc:View controllerName="ui5strap.demoapp.controllers.Controls" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
-    <PickerWheel mode="Mode2D">
+    <PickerWheel mode="Mode2D" id="wheelWithNumbers" >
                        <Text text="0.0" />
                        <Text text="0.5" />
                        <Text text="1.0" />
@@ -25,18 +25,20 @@
                        <Text text="10" />
                     </PickerWheel>
                     
-                    <PickerWheel mode="Mode3D" selectedIndex="2">
-                       <Icon icon="plane" />
-                       <Icon icon="rocket" />
-                       <Icon icon="car" />
-                       <Icon icon="building" />
-                       <Icon icon="star" />
-                       <Icon icon="pencil" />
-                       <Icon icon="smile-o" />
-                       <Icon icon="child" />
+                    <PickerWheel id="wheelWithIcons" mode="Mode3D" selectedIndex="2">
+                       <Icon icon="plane" data:value="10" />
+                       <Icon icon="rocket" data:value="20" />
+                       <Icon icon="car" data:value="30" />
+                       <Icon icon="building" data:value="40" />
+                       <Icon icon="star" data:value="50" />
+                       <Icon icon="pencil" data:value="60" />
+                       <Icon icon="smile-o" data:value="70" />
+                       <Icon icon="child" data:value="80" />
                     </PickerWheel>
                     
-                    <PickerWheel mode="Mode2D" horizontal="true">
+                    <Button text="Select 50" tap=".selectWheelWithIcons" />
+                    
+                    <PickerWheel mode="Mode2D" horizontal="true" id="wheelWithLetters" >
                        <Text text="A" />
                        <Text text="B" />
                        <Text text="C" />
