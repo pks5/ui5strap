@@ -25,7 +25,7 @@
                        <Text text="10" />
                     </PickerWheel>
                     
-                    <PickerWheel id="wheelWithIcons" mode="Mode3D" selectedIndex="2" selectionChange=".alertWheelValue">
+                    <PickerWheel active="true" id="wheelWithIcons" mode="Mode3D" selectedIndex="2" selectionChange=".alertWheelValue">
                        <Icon icon="plane" data:value="10" />
                        <Icon icon="rocket" data:value="20" />
                        <Icon icon="car" data:value="30" />
@@ -53,7 +53,7 @@
                        <Text text="L" />
                     
                     </PickerWheel>
-                    <PickerWheel mode="Mode3D" vertical="true">
+                    <PickerWheel mode="Mode3D" vertical="true" active="true">
                        <Text text="A" />
                        <Text text="B" />
                        <Text text="C" />

@@ -568,12 +568,16 @@ sap.ui
 							if ($srcElement && $srcElement.length > 0) {
 
 								var oldIndex = this.getSelectedIndex();
+								this.setActive(true);
 								this.setSelectedIndex($srcElement.data('index'));
 								
-								this._onSelectionChange(oldIndex);
+								this._onSelectionChange(oldIndex, this.getActive());
 							}
 							else{
+								var oldActive = this.getActive();
+								
 								this.setActive(true);
+								this._onSelectionChange(this.getSelectedIndex(), oldActive);
 							}
 							
 							return;
@@ -593,13 +597,17 @@ sap.ui
 					 * 
 					 */
 					PickerWheelProto._stopDragging = function(rotation, dir) {
-						var oldIndex = this.getSelectedIndex();
-						var oldSpeed = this._cSpeed;
+						var oldIndex = this.getSelectedIndex(),
+							oldActive = this.getActive(),
+							oldSpeed = this._cSpeed;
+						
 						this._cSpeed = PickerWheel.C_SPEED_LOW;
+						this.setActive(true);
 						this.setSelectedIndex(this._getWheelIndex(rotation, dir));
+						
 						this._cSpeed = oldSpeed;
 						
-						this._onSelectionChange(oldIndex);
+						this._onSelectionChange(oldIndex, oldActive);
 					};
 
 					/*
@@ -702,12 +710,12 @@ sap.ui
 					/**
 					 * 
 					 */
-					PickerWheelProto._onSelectionChange = function(oldIndex) {
-						this.setActive(true);
+					PickerWheelProto._onSelectionChange = function(oldIndex, oldActive) {
 						
-						if (oldIndex !== this.getSelectedIndex()) {
+						if (oldIndex !== this.getSelectedIndex() || oldActive !== this.getActive()) {
 							this.fireSelectionChange({
-								"oldIndex" : oldIndex
+								oldIndex : oldIndex,
+								oldActive : oldActive
 							});
 						}
 						
