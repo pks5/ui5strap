@@ -47,7 +47,7 @@ sap.ui
 											defaultValue : true
 										},
 										
-										horizontal : {
+										vertical : {
 											type : "boolean",
 											defaultValue : false
 										},
@@ -117,13 +117,13 @@ sap.ui
 						this.panelCount = 0;
 					};
 
-					Wheel3D.prototype.modify = function(hor, newPanelCount, newPanelSize) {
+					Wheel3D.prototype.modify = function(isVertical, newPanelCount, newPanelSize) {
 						this.panelCount = newPanelCount;
 						this.theta = 360 / this.panelCount;
 						this.panelSize = newPanelSize;
 						
 						
-						this.rotateFn = hor ? 'rotateY' : 'rotateX';
+						this.rotateFn = isVertical ? 'rotateX' : 'rotateY';
 						
 						this.radius = Math.round((this.panelSize / 2)
 								/ Math.tan(Math.PI / this.panelCount));
@@ -169,18 +169,18 @@ sap.ui
 						this.panelCount = 0;
 					};
 
-					Wheel2D.prototype.modify = function(hor, newPanelCount, newPanelSize) {
+					Wheel2D.prototype.modify = function(isVertical, newPanelCount, newPanelSize) {
 						this.panelCount = newPanelCount;
 						this.panelSize = newPanelSize;
 						this.theta = 360 / this.panelCount;
 						
-						this.hor = hor;
+						this.isVertical = isVertical;
 						
 						
 						this.radius = Math.round((this.panelSize / 2)
 								/ Math.tan(Math.PI / this.panelCount));
 						
-						this.rotateFn = hor ? 'translateX' : 'translateY';
+						this.rotateFn = isVertical ? 'translateY' : 'translateX';
 						
 						this.rotation = Math.round(this.rotation / this.theta)
 						* this.theta;
@@ -203,7 +203,7 @@ sap.ui
 								
 								//panel.style.zIndex 
 								
-								if(this.hor){
+								if(!this.isVertical){
 									cos = cos * -1;
 								}
 								
@@ -263,8 +263,9 @@ sap.ui
 					};
 					
 					PickerWheelProto._getStyleClassRoot = function(){
+						//TODO Adapt style classes according to flag
 						var styleClass = " " 
-					    		+ (this.getHorizontal() ? 'ui5strapPickerWheel-hor' : 'ui5strapPickerWheel-ver');
+					    		+ (this.getVertical() ? 'ui5strapPickerWheel-ver' : 'ui5strapPickerWheel-hor');
 					    
 						styleClass += " ui5strapPickerWheel-mode-" + this.getMode();
 						
@@ -314,7 +315,7 @@ sap.ui
 						if (!_this.getDomRef()) {
 							throw new Error("Cannot update graph.");
 						}
-						var width = _this.getComputedStyle(_this.getHorizontal() ? 'width' : 'height');
+						var width = _this.getComputedStyle(_this.getVertical() ? 'height' : 'width');
 						// We want to find out whether we can get the width of
 						// container in pixels.
 						// This is needed if the width of the container is
@@ -389,11 +390,13 @@ sap.ui
 					PickerWheelProto.refresh = function() {
 						jQuery.sap.log.debug('Refreshing picker width...');
 						
-						this._segmentWidth = this.getHorizontal() ? this.$().find(
-								'.ui5strapPickerWheel-inner').width() : this.$().find(
-								'.ui5strapPickerWheel-inner').height();
+						var isVertical = this.getVertical();
+						
+						this._segmentWidth = isVertical ? this.$().find(
+						'.ui5strapPickerWheel-inner').height() : this.$().find(
+								'.ui5strapPickerWheel-inner').width();
 
-						this._carousel.modify(this.getHorizontal(), this.getPanels().length, this._segmentWidth);
+						this._carousel.modify(isVertical, this.getPanels().length, this._segmentWidth);
 
 						if(0 !== this.getSelectedIndex()){
 							this._carousel.toIndex(this.getSelectedIndex());
@@ -440,8 +443,7 @@ sap.ui
 						
 						this._timer && window.clearInterval(this._timer);
 
-						this._mouseXStart = this.getHorizontal() ? this.getMouseX(ev)
-								: -this.getMouseY(ev);
+						this._mouseXStart = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev);
 						
 						this._mouseXMove = null;
 						this._rotationDirection = null;
@@ -475,11 +477,10 @@ sap.ui
 						
 						this._touchMoveTime = Date.now();
 						
-						var mouseXMove = this.getHorizontal() ? this.getMouseX(ev)
-								: -this.getMouseY(ev),
+						var mouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev),
 						newRotationDirection = null,
 						newRotation = this._touchStartRotation
-						- 1
+						- 1 // TODO 
 						* ((this._mouseXStart - mouseXMove) / this._segmentWidth * this._carousel.theta);
 
 						

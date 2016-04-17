@@ -38,7 +38,7 @@
                     
                     <Button text="Select 50" tap=".selectWheelWithIcons" />
                     
-                    <PickerWheel mode="Mode2D" horizontal="true" id="wheelWithLetters" >
+                    <PickerWheel mode="Mode2D" vertical="true" id="wheelWithLetters" >
                        <Text text="A" />
                        <Text text="B" />
                        <Text text="C" />
@@ -53,7 +53,7 @@
                        <Text text="L" />
                     
                     </PickerWheel>
-                    <PickerWheel mode="Mode3D" horizontal="true">
+                    <PickerWheel mode="Mode3D" vertical="true">
                        <Text text="A" />
                        <Text text="B" />
                        <Text text="C" />
