@@ -13208,11 +13208,11 @@ a {
   -webkit-touch-callout: none;
    -khtml-user-select: none;
 }
-.ui5strapPickerWheel-hor {
+.ui5strapPickerWheel-flag-Horizontal {
   width: 500px;
   height: 80px;
 }
-.ui5strapPickerWheel-ver {
+.ui5strapPickerWheel-flag-Vertical {
   width: 120px;
   height: 360px;
 }
@@ -13226,14 +13226,14 @@ a {
 .ui5strapPickerWheel-inner {
   position: absolute;
 }
-.ui5strapPickerWheel-hor .ui5strapPickerWheel-inner {
+.ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-inner {
   left: 50%;
   /* 20% of total width */
   width: 100px;
   height: 100%;
   margin-left: -50px;
 }
-.ui5strapPickerWheel-ver .ui5strapPickerWheel-inner {
+.ui5strapPickerWheel-flag-Vertical .ui5strapPickerWheel-inner {
   top: 50%;
   width: 100%;
   /*
@@ -13247,11 +13247,11 @@ a {
   width: 100%;
   height: 100%;
 }
-.ui5strapPickerWheel-hor .ui5strapPickerWheel-pointer {
+.ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-pointer {
   border-right-style: solid;
   border-left-style: solid;
 }
-.ui5strapPickerWheel-ver .ui5strapPickerWheel-pointer {
+.ui5strapPickerWheel-flag-Vertical .ui5strapPickerWheel-pointer {
   border-top-style: solid;
   border-bottom-style: solid;
 }
@@ -13278,11 +13278,11 @@ a {
        -o-backface-visibility: hidden;
           backface-visibility: hidden;
 }
-.ui5strapPickerWheel-hor .ui5strapPickerWheel-panel {
+.ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-panel {
   font-size: 48px;
   line-height: 80px;
 }
-.ui5strapPickerWheel-ver .ui5strapPickerWheel-panel {
+.ui5strapPickerWheel-flag-Vertical .ui5strapPickerWheel-panel {
   font-size: 48px;
   line-height: 90px;
 }
@@ -13303,7 +13303,7 @@ a {
 .ui5strapPickerWheel.disabled .ui5strapPickerWheel-panel {
   color: #333;
 }
-.ui5strapPickerWheel-panel.active {
+.ui5strapPickerWheel.active .ui5strapPickerWheel-panel.active {
   color: #337ab7;
 }
 /*

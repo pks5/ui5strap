@@ -47,6 +47,11 @@ sap.ui
 											defaultValue : true
 										},
 										
+										active : {
+											type : 'boolean',
+											defaultValue : false
+										},
+										
 										vertical : {
 											type : "boolean",
 											defaultValue : false
@@ -255,24 +260,23 @@ sap.ui
 					 */
 					PickerWheelProto.init = function() {
 						this._$currentSelectedPanel = null;
-						this._inactive = false;
-						//this._isSpinning = false;
 						this._cSpeed = PickerWheel.C_SPEED_HIGH;
 						
 						this._timer = null;
 					};
 					
 					PickerWheelProto._getStyleClassRoot = function(){
-						//TODO Adapt style classes according to flag
 						var styleClass = " " 
-					    		+ (this.getVertical() ? 'ui5strapPickerWheel-ver' : 'ui5strapPickerWheel-hor');
+					    		+ (this.getVertical() ? 'ui5strapPickerWheel-flag-Vertical' : 'ui5strapPickerWheel-flag-Horizontal');
 					    
 						styleClass += " ui5strapPickerWheel-mode-" + this.getMode();
 						
 						
-					    if(-1 === this.getSelectedIndex() || !this.getEnabled()){ 
+					    if(!this.getEnabled()){ 
 					    	styleClass += ' disabled';
-					    	this._inactive = true;
+					    }
+					    else if(this.getActive()){ 
+					    	styleClass += ' active';
 					    }
 					    
 					    return styleClass;
@@ -439,6 +443,10 @@ sap.ui
 					 * 
 					 */
 					PickerWheelProto.ontouchstart = function(ev) {
+						if(!this.getEnabled()){
+							return;
+						}
+						
 						this._touchStartTime = Date.now();
 						
 						this._timer && window.clearInterval(this._timer);
@@ -555,27 +563,20 @@ sap.ui
 						}
 						
 						if (touchEndTime - this._touchStartTime < PickerWheel.TAP_LIMIT) {
-							var $srcElement = jQuery(ev.target);
-							if ($srcElement
-									.hasClass('.ui5strapPickerWheel-pointer')) {
-								this._onSelectionChange(this.getSelectedIndex());
-								
-								return;
-
-							} else{ 
-								
-								$srcElement = $srcElement
+							var $srcElement = jQuery(ev.target)
 								.closest('.ui5strapPickerWheel-panel');
-								if ($srcElement && $srcElement.length > 0) {
+							if ($srcElement && $srcElement.length > 0) {
 
-									var oldIndex = this.getSelectedIndex();
-									this.setSelectedIndex($srcElement.data('index'));
-									
-									this._onSelectionChange(oldIndex);
-	
-									return;
-								}
+								var oldIndex = this.getSelectedIndex();
+								this.setSelectedIndex($srcElement.data('index'));
+								
+								this._onSelectionChange(oldIndex);
 							}
+							else{
+								this.setActive(true);
+							}
+							
+							return;
 						}
 
 						this._stopDragging(this._carousel.rotation, rotationDelta);
@@ -597,6 +598,7 @@ sap.ui
 						this._cSpeed = PickerWheel.C_SPEED_LOW;
 						this.setSelectedIndex(this._getWheelIndex(rotation, dir));
 						this._cSpeed = oldSpeed;
+						
 						this._onSelectionChange(oldIndex);
 					};
 
@@ -616,9 +618,8 @@ sap.ui
 					 * 
 					 */
 					PickerWheelProto.setSelectedIndex = function(newIndex, suppress) {
-						this.setProperty('selectedIndex', newIndex, true);
-
 						if (this.getDomRef()) {
+							this.setProperty('selectedIndex', newIndex, true);
 							var _this = this,
 								targetRotation = _getRotationFromIndex(this._carousel, newIndex),
 								rotationDelta = targetRotation - this._carousel.rotation,
@@ -671,17 +672,38 @@ sap.ui
 								i++;
 							}, PickerWheel.TIME_RES);
 						}
+						else{
+							this.setProperty('selectedIndex', newIndex, suppress);
+						}
 					};
-
+					
+					PickerWheelProto.setActive = function(newActive, suppress) {
+						if (this.getDomRef()) {
+							this.setProperty('active', newActive, true);
+							
+							this.$().toggleClass('active', this.getEnabled() && this.getActive());
+						}
+						else{
+							this.setProperty('active', newActive, suppress);
+						}
+					};
+					
+					PickerWheelProto.setEnabled = function(newEnabled, suppress) {
+						if (this.getDomRef()) {
+							this.setProperty('enabled', newEnabled, true);
+							
+							this.$().toggleClass('disabled', !this.getEnabled());
+						}
+						else{
+							this.setProperty('enabled', newEnabled, suppress);
+						}
+					};
+					
 					/**
 					 * 
 					 */
 					PickerWheelProto._onSelectionChange = function(oldIndex) {
-						
-						if(this._inactive){
-							this.$().removeClass('disabled');
-							this._inactive = false;
-						}
+						this.setActive(true);
 						
 						if (oldIndex !== this.getSelectedIndex()) {
 							this.fireSelectionChange({
@@ -829,6 +851,10 @@ sap.ui
 					 */
 					
 					PickerWheelProto.getSelectionIndex = function(selectionGroup){
+						if(0 === panels.length){
+							return [];
+						}
+						
 						return [this.getSelectedIndex()];
 					};
 					
