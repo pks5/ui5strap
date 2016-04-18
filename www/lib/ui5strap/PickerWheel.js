@@ -567,11 +567,13 @@ sap.ui
 								.closest('.ui5strapPickerWheel-panel');
 							if ($srcElement && $srcElement.length > 0) {
 
-								var oldIndex = this.getSelectedIndex();
+								var oldIndex = this.getSelectedIndex(),
+									oldActive = this.getActive();
+								
 								this.setActive(true);
 								this.setSelectedIndex($srcElement.data('index'));
 								
-								this._onSelectionChange(oldIndex, this.getActive());
+								this._onSelectionChange(oldIndex, oldActive);
 							}
 							else{
 								var oldActive = this.getActive();
@@ -711,7 +713,6 @@ sap.ui
 					 * 
 					 */
 					PickerWheelProto._onSelectionChange = function(oldIndex, oldActive) {
-						
 						if (oldIndex !== this.getSelectedIndex() || oldActive !== this.getActive()) {
 							this.fireSelectionChange({
 								oldIndex : oldIndex,
