@@ -59,7 +59,7 @@ sap.ui
 										
 										mode : {
 											type : "ui5strap.PickerWheelMode",
-											defaultValue : ui5strap.PickerWheelMode.Mode3D
+											defaultValue : sap.ui.Device.browser.msie ? ulib.PickerWheelMode.Mode2D : ulib.PickerWheelMode.Mode3D
 										}
 										
 										
