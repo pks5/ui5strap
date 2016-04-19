@@ -421,36 +421,38 @@ sap.ui
 						
 						this._touchMoveTime = this._tmpTouchMoveTime;
 						
-						this._tmpMouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev),
-						newRotationDirection = null,
-						newRotation = this._touchStartRotation
+						this._tmpMouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev);
+						this._tmpNewRotationDirection = null;
+						
+						this._tmpNewRotation = this._touchStartRotation
 						- 1 // TODO 
 						* ((this._mouseXStart - this._tmpMouseXMove) / this._segmentWidth * this._carousel.theta);
 
 						
 						if(null !== this._mouseXMove){
-							var dx2 = this._tmpMouseXMove - this._mouseXMove;
-							if(dx2 !== 0){
-								newRotationDirection = dx2 / Math.abs(dx2);
+							this._tmpMoveDelta = this._tmpMouseXMove - this._mouseXMove;
+							
+							if(this._tmpMoveDelta !== 0){
+								this._tmpNewRotationDirection = this._tmpMoveDelta / Math.abs(this._tmpMoveDelta);
 							}
 						}
 						
 						this._mouseXMove = this._tmpMouseXMove;
 						
-						if(null !== newRotationDirection){
-							if (null !== this._rotationDirection && newRotationDirection !== this._rotationDirection) {
+						if(null !== this._tmpNewRotationDirection){
+							if (null !== this._rotationDirection && this._tmpNewRotationDirection !== this._rotationDirection) {
 								this._rotations = [];
 								this._times = [];
 								this._touchStartTime = this._touchMoveTime;
 							}
 	
-							this._rotationDirection = newRotationDirection;
+							this._rotationDirection = this._tmpNewRotationDirection;
 						}
 						
-						this._rotations.push(newRotation);
+						this._rotations.push(this._tmpNewRotation);
 						this._times.push(this._touchMoveTime);
 						
-						this._carousel.rotation = newRotation;
+						this._carousel.rotation = this._tmpNewRotation;
 						this._carousel.transform();
 					};
 
