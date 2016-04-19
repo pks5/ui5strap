@@ -412,48 +412,48 @@ sap.ui
 						if (!this._mouseXStart)
 							return;
 						
-						this._tmpTouchMoveTime = Date.now();
+						var tmpTouchMoveTime = Date.now();
 						
-						if(this._tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RES / 2){
+						if(tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RES / 2){
 							//jQuery.sap.log.info("Skipped");
 							return;
 						}
 						
-						this._touchMoveTime = this._tmpTouchMoveTime;
+						this._touchMoveTime = tmpTouchMoveTime;
 						
-						this._tmpMouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev);
-						this._tmpNewRotationDirection = null;
-						
-						this._tmpNewRotation = this._touchStartRotation
+						var wheel = this._carousel,
+							tmpMouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev),
+							tmpNewRotationDirection = null,
+							tmpNewRotation = this._touchStartRotation
 						- 1 // TODO 
-						* ((this._mouseXStart - this._tmpMouseXMove) / this._segmentWidth * this._carousel.theta);
+						* ((this._mouseXStart - tmpMouseXMove) / this._segmentWidth * wheel.theta);
 
 						
 						if(null !== this._mouseXMove){
-							this._tmpMoveDelta = this._tmpMouseXMove - this._mouseXMove;
+							var tmpMoveDelta = tmpMouseXMove - this._mouseXMove;
 							
-							if(this._tmpMoveDelta !== 0){
-								this._tmpNewRotationDirection = this._tmpMoveDelta / Math.abs(this._tmpMoveDelta);
+							if(tmpMoveDelta !== 0){
+								tmpNewRotationDirection = tmpMoveDelta / Math.abs(tmpMoveDelta);
 							}
 						}
 						
-						this._mouseXMove = this._tmpMouseXMove;
+						this._mouseXMove = tmpMouseXMove;
 						
-						if(null !== this._tmpNewRotationDirection){
-							if (null !== this._rotationDirection && this._tmpNewRotationDirection !== this._rotationDirection) {
+						if(null !== tmpNewRotationDirection){
+							if (null !== this._rotationDirection && tmpNewRotationDirection !== this._rotationDirection) {
 								this._rotations = [];
 								this._times = [];
-								this._touchStartTime = this._touchMoveTime;
+								this._touchStartTime = tmpTouchMoveTime;
 							}
 	
-							this._rotationDirection = this._tmpNewRotationDirection;
+							this._rotationDirection = tmpNewRotationDirection;
 						}
 						
-						this._rotations.push(this._tmpNewRotation);
-						this._times.push(this._touchMoveTime);
+						this._rotations.push(tmpNewRotation);
+						this._times.push(tmpTouchMoveTime);
 						
-						this._carousel.rotation = this._tmpNewRotation;
-						this._carousel.transform();
+						wheel.rotation = tmpNewRotation;
+						wheel.transform();
 					};
 
 					/**
