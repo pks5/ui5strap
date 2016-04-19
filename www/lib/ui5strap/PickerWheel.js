@@ -228,35 +228,42 @@ sap.ui
 					 * Configuration
 					 */
 					
+					//Milliseconds to recognize a tap
 					PickerWheel.TAP_LIMIT = 200;
 
+					//Milliseconds to recognize an acceleration
 					PickerWheel.RELEASE_LIMIT = 75;
 					
+					//Steps to be used to calculate acceleration
 					PickerWheel.TIME_STEPS = 5;
 					
-					PickerWheel.DECCEL = 0.96; //Decceleration
+					//Minimum movement in pixels to trigger acceleration
+					PickerWheel.MIN_PIXEL_ROTATION = 3;
 					
-					//Minimum rotation in degrees to trigger acceleration
-					PickerWheel.MIN_ACCEL_ROTATION = 1.7;
+					//50 Frames per second
+					PickerWheel.TIME_RESOLUTION = 20;
 					
-					PickerWheel.STOP_TH = 0.01; //Stop Speed
+					//Threshold for panel selection relative to panel size
+					PickerWheel.THRESHOLD = 0.5;
 					
-					PickerWheel.TIME_RES = 20; //50 Frames per second
+					//Deceleration of the wheel
+					PickerWheel.DECELERATION = 0.96;
 					
-					PickerWheel.THRES = 0.5;
+					//Wheel stops when reaching this speed
+					PickerWheel.STOP_SPEED = 0.01;
 					
+					//Frames to use when tapping the wheel (slower is faster)
+					PickerWheel.TARGET_FRAMES_TAP = 20;
 					
-					PickerWheel.C_SPEED_HIGH = 20;
-					PickerWheel.C_SPEED_LOW = 15;
-
-					PickerWheelProto.modern = window.requestAnimationFrame;
+					//Frames to use when the wheel is stopping (slower is faster)
+					PickerWheel.TARGET_FRAMES_STOP = 15;
 
 					/**
 					 * 
 					 */
 					PickerWheelProto.init = function() {
 						this._$currentSelectedPanel = null;
-						this._cSpeed = PickerWheel.C_SPEED_HIGH;
+						this._targetFrames = PickerWheel.TARGET_FRAMES_TAP;
 						
 						this._timer = null;
 					};
@@ -361,9 +368,9 @@ sap.ui
 						
 						this._timer && window.clearInterval(this._timer);
 
-						this._mouseXStart = _getMousePosition(this, ev);
+						this._mousePosStart = _getMousePosition(this, ev);
 						
-						this._mouseXMove = null;
+						this._mousePosMove = null;
 						this._rotationDirection = null;
 						this._lastRecPos = 0;
 						
@@ -391,12 +398,12 @@ sap.ui
 					 * 
 					 */
 					PickerWheelProto.ontouchmove = function(ev) {
-						if (!this._mouseXStart)
+						if (!this._mousePosStart)
 							return;
 						
 						var tmpTouchMoveTime = Date.now();
 						
-						if(tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RES / 2){
+						if(tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RESOLUTION / 2){
 							//jQuery.sap.log.info("Skipped");
 							return;
 						}
@@ -409,18 +416,18 @@ sap.ui
 							tmpNewRotationDirection = null,
 							tmpNewRotation = this._touchStartRotation
 						- 1 // TODO 
-						* ((this._mouseXStart - tmpMouseXMove) / this._segmentWidth * wheel.theta);
+						* ((this._mousePosStart - tmpMouseXMove) / this._segmentWidth * wheel.theta);
 
 						
-						if(null !== this._mouseXMove){
-							var tmpMoveDelta = tmpMouseXMove - this._mouseXMove;
+						if(null !== this._mousePosMove){
+							var tmpMoveDelta = tmpMouseXMove - this._mousePosMove;
 							
 							if(tmpMoveDelta !== 0){
 								tmpNewRotationDirection = tmpMoveDelta / Math.abs(tmpMoveDelta);
 							}
 						}
 						
-						this._mouseXMove = tmpMouseXMove;
+						this._mousePosMove = tmpMouseXMove;
 						
 						if(null !== tmpNewRotationDirection){
 							if (null !== this._rotationDirection && tmpNewRotationDirection !== this._rotationDirection) {
@@ -445,32 +452,33 @@ sap.ui
 					 * 
 					 */
 					PickerWheelProto.ontouchend = function(ev) {
-						if (!this._mouseXStart)
+						if (!this._mousePosStart)
 							return;
 						
 						var _this = this,
 							touchEndTime = Date.now(),
-							mouseXEnd = _getMousePosition(this, ev);
+							mousePosEnd = _getMousePosition(this, ev),
+							moveDelta = Math.abs(mousePosEnd - this._mousePosStart);
 						
 						//Set MouseXStart again to null to prevent false events
-						this._mouseXStart = null;
+						this._mousePosStart = null;
 						
-						if(this._mouseXMove){
+						if(this._mousePosMove){
 							
 							var moveLength = this._rotations.length,
 								rotationDelta = this._rotations[moveLength - 1] - this._rotations[Math.max(0, moveLength - PickerWheel.TIME_STEPS)],
 								releaseTime = touchEndTime - this._touchMoveTime;
 							
 							if (releaseTime < PickerWheel.RELEASE_LIMIT
-									&& Math.abs(rotationDelta) >= PickerWheel.MIN_ACCEL_ROTATION) {
+									&& moveDelta >= PickerWheel.MIN_PIXEL_ROTATION) {
 									
 									var timeDelta = this._times[moveLength - 1] - this._times[Math.max(0, moveLength - PickerWheel.TIME_STEPS)],
 										velocity = rotationDelta / timeDelta;
 									
 									this._timer = window.setInterval(function() {
-										_this._wheel.rotate(_this._wheel.rotation + velocity * PickerWheel.TIME_RES);
+										_this._wheel.rotate(_this._wheel.rotation + velocity * PickerWheel.TIME_RESOLUTION);
 										
-										if (Math.abs(velocity) <= PickerWheel.STOP_TH) {
+										if (Math.abs(velocity) <= PickerWheel.STOP_SPEED) {
 											window.clearInterval(_this._timer);
 											_this._timer = null;
 											_this._stopDragging();
@@ -478,9 +486,9 @@ sap.ui
 											return;
 										}
 										
-										velocity = velocity * PickerWheel.DECCEL;
+										velocity = velocity * PickerWheel.DECELERATION;
 										
-									}, PickerWheel.TIME_RES);
+									}, PickerWheel.TIME_RESOLUTION);
 	
 									return;
 							}
@@ -489,7 +497,7 @@ sap.ui
 						}
 						
 						if (touchEndTime - this._touchStartTime < PickerWheel.TAP_LIMIT 
-								&& (!this._mouseXMove || Math.abs(mouseXEnd - this._mouseXStart) < 3)) {
+								&& (!this._mousePosMove || moveDelta < PickerWheel.MIN_PIXEL_ROTATION)) {
 							var $srcElement = jQuery(ev.target)
 								.closest('.ui5strapPickerWheel-panel');
 							if ($srcElement && $srcElement.length > 0) {
@@ -527,14 +535,14 @@ sap.ui
 					 */
 					PickerWheelProto._stopDragging = function() {
 						var oldIndex = this.getSelectedIndex(),
-							oldActive = this.getActive(),
-							oldSpeed = this._cSpeed;
+							oldActive = this.getActive();
 						
-						this._cSpeed = PickerWheel.C_SPEED_LOW;
+						this._targetFrames = PickerWheel.TARGET_FRAMES_STOP;
+						
 						this.setActive(true);
 						this.setSelectedIndex(this._getWheelIndex(this._wheel.rotation));
 						
-						this._cSpeed = oldSpeed;
+						this._targetFrames = PickerWheel.TARGET_FRAMES_TAP;
 						
 						this._onSelectionChange(oldIndex, oldActive);
 					};
@@ -561,8 +569,8 @@ sap.ui
 								targetRotation = _getRotationFromIndex(this._wheel, newIndex),
 								rotationDelta = targetRotation - this._wheel.rotation,
 								s0 = _this._wheel.rotation,
-								cSpeed = this._cSpeed,
-								v0 = rotationDelta / (PickerWheel.TIME_RES * (cSpeed - 2.125)),
+								targetFrames = this._targetFrames,
+								v0 = rotationDelta / (PickerWheel.TIME_RESOLUTION * (targetFrames - 2.125)),
 								t = 0,
 								i = 1;
 							
@@ -580,7 +588,7 @@ sap.ui
 							this._timer = window.setInterval(function() {
 								
 								
-								if (i === cSpeed) {
+								if (i === targetFrames) {
 									_this._wheel.rotate(targetRotation);
 									
 									window.clearInterval(_this._timer);
@@ -592,11 +600,11 @@ sap.ui
 								}
 								else{
 									
-									var tAdd = PickerWheel.TIME_RES;
-									if(i == _this._cSpeed - 2){
+									var tAdd = PickerWheel.TIME_RESOLUTION;
+									if(i == targetFrames - 2){
 										tAdd *= 0.5;
 									}
-									else if(i== _this._cSpeed - 1){
+									else if(i== targetFrames - 1){
 										tAdd *= 0.25;
 									}
 									
@@ -606,7 +614,7 @@ sap.ui
 								}
 								
 								i++;
-							}, PickerWheel.TIME_RES);
+							}, PickerWheel.TIME_RESOLUTION);
 						}
 						else{
 							this.setProperty('selectedIndex', newIndex, suppress);
@@ -658,10 +666,10 @@ sap.ui
 						th = th - Math.floor(th);
 
 						if (index < 0) {
-							return th > PickerWheel.THRES ? -Math
+							return th > PickerWheel.THRESHOLD ? -Math
 									.floor(index) : -Math.ceil(index);
 						} else {
-							return th < PickerWheel.THRES ? -Math
+							return th < PickerWheel.THRESHOLD ? -Math
 									.floor(index) : -Math.ceil(index);
 						}
 					};
