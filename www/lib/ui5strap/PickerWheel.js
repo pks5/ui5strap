@@ -412,12 +412,14 @@ sap.ui
 						if (!this._mouseXStart)
 							return;
 						
-						this._touchMoveTime = Date.now();
+						var touchMoveTime = Date.now();
 						
-						if(this._touchMoveTime - this._touchStartTime < PickerWheel.TIME_RES / 2){
+						if(touchMoveTime - this._touchStartTime < PickerWheel.TIME_RES / 2){
 							//jQuery.sap.log.info("Skipped");
 							return;
 						}
+						
+						this._touchMoveTime = touchMoveTime;
 						
 						var mouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev),
 						newRotationDirection = null,
