@@ -461,14 +461,15 @@ sap.ui
 						if (!this._mouseXStart)
 							return;
 						
-						//Set MouseXStart again to null to prevent false events
-						this._mouseXStart = null;
-						
 						var touchEndTime = Date.now(),
 							_this = this,
 							timeDelta = this._times[this._times.length-1] - this._times[Math.max(0, this._times.length- PickerWheel.TIME_STEPS)],
 							rotationDelta = this._rotations[this._rotations.length - 1] - this._rotations[Math.max(0, this._rotations.length - PickerWheel.TIME_STEPS)],
 							releaseTime = touchEndTime - this._touchMoveTime;
+						
+						//Set MouseXStart again to null to prevent false events
+						this._mouseXStart = null;
+						
 						
 						//jQuery.sap.log.info(releaseTime + "-" + Math.abs(rotationDelta));
 						
@@ -497,7 +498,7 @@ sap.ui
 								return;
 						}
 						
-						if (touchEndTime - this._touchStartTime < PickerWheel.TAP_LIMIT) {
+						if (touchEndTime - this._touchStartTime < PickerWheel.TAP_LIMIT && Math.abs(rotationDelta) < PickerWheel.MIN_ACCEL_ROTATION) {
 							var $srcElement = jQuery(ev.target)
 								.closest('.ui5strapPickerWheel-panel');
 							if ($srcElement && $srcElement.length > 0) {
