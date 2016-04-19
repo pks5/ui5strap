@@ -348,24 +348,9 @@ sap.ui
 					 */
 					
 
-					/**
-					 * 
-					 */
-					PickerWheelProto.getMouseX = function(ev) {
-						if ("changedTouches" in ev) {
-							return ev.changedTouches[0].pageX;
-						}
-						return ev.pageX;
-					};
-
-					/**
-					 * 
-					 */
-					PickerWheelProto.getMouseY = function(ev) {
-						if ("changedTouches" in ev) {
-							return ev.changedTouches[0].pageY;
-						}
-						return ev.pageY;
+					var _getMousePosition = function(_this, ev){
+						return _this.getVertical() ? (ev.changedTouches ? -ev.changedTouches[0].pageY : -ev.pageY) : 
+								(ev.changedTouches ? ev.changedTouches[0].pageX : ev.pageX);
 					};
 
 					/**
@@ -380,7 +365,7 @@ sap.ui
 						
 						this._timer && window.clearInterval(this._timer);
 
-						this._mouseXStart = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev);
+						this._mouseXStart = _getMousePosition(this, ev);
 						
 						this._mouseXMove = null;
 						this._rotationDirection = null;
@@ -422,7 +407,7 @@ sap.ui
 						this._touchMoveTime = tmpTouchMoveTime;
 						
 						var wheel = this._carousel,
-							tmpMouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev),
+							tmpMouseXMove = _getMousePosition(this, ev),
 							tmpNewRotationDirection = null,
 							tmpNewRotation = this._touchStartRotation
 						- 1 // TODO 
@@ -465,7 +450,7 @@ sap.ui
 						
 						var _this = this,
 							touchEndTime = Date.now(),
-							mouseXEnd = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev);
+							mouseXEnd = _getMousePosition(this, ev);
 						
 						//Set MouseXStart again to null to prevent false events
 						this._mouseXStart = null;
