@@ -234,18 +234,18 @@ sap.ui
 					
 					PickerWheel.TAP_LIMIT = 200;
 
-					PickerWheel.RELEASE_LIMIT = 100;
+					PickerWheel.RELEASE_LIMIT = 75;
 					
-					PickerWheel.TIME_STEPS = 3;
+					PickerWheel.TIME_STEPS = 5;
 					
-					PickerWheel.DECCEL = 0.96;
+					PickerWheel.DECCEL = 0.96; //Decceleration
 					
 					//Minimum rotation in degrees to trigger acceleration
 					PickerWheel.MIN_ACCEL_ROTATION = 1.7;
 					
-					PickerWheel.STOP_TH = 0.01;
+					PickerWheel.STOP_TH = 0.01; //Stop Speed
 					
-					PickerWheel.TIME_RES = 20;
+					PickerWheel.TIME_RES = 20; //50 Frames per second
 					
 					PickerWheel.THRES = 0.5;
 					
@@ -414,6 +414,11 @@ sap.ui
 						
 						this._touchMoveTime = Date.now();
 						
+						if(this._touchMoveTime - this._touchStartTime < PickerWheel.TIME_RES / 2){
+							//jQuery.sap.log.info("Skipped");
+							return;
+						}
+						
 						var mouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev),
 						newRotationDirection = null,
 						newRotation = this._touchStartRotation
@@ -461,10 +466,9 @@ sap.ui
 							_this = this,
 							timeDelta = this._times[this._times.length-1] - this._times[Math.max(0, this._times.length- PickerWheel.TIME_STEPS)],
 							rotationDelta = this._rotations[this._rotations.length - 1] - this._rotations[Math.max(0, this._rotations.length - PickerWheel.TIME_STEPS)],
-							
 							releaseTime = touchEndTime - this._touchMoveTime;
 						
-						//rotationDelta = Math.round((_this._carousel.rotation + rotationDelta) / _this._carousel.theta) * _this._carousel.theta - _this._carousel.rotation;
+						//jQuery.sap.log.info(releaseTime + "-" + Math.abs(rotationDelta));
 						
 						var t = 0;
 						if (releaseTime < PickerWheel.RELEASE_LIMIT
@@ -570,6 +574,7 @@ sap.ui
 							
 							this._timer && window.clearInterval(this._timer);
 							
+							/*
 							if(Math.abs(rotationDelta) < 1 ){
 								_this._carousel.rotation = targetRotation; 
 								_this._carousel.transform();
@@ -577,6 +582,7 @@ sap.ui
 								
 								return;
 							}
+							*/
 							
 							this._timer = window.setInterval(function() {
 								
