@@ -79,7 +79,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 */
 	var _checkVisibility = function(_this, cssProperty, callback) {
 		if (!_this.getDomRef()) {
-			throw new Error("Cannot update graph.");
+			throw new Error("Cannot check CSS completion: control not rendered!");
 		}
 		var width = _this.getComputedStyle(cssProperty);
 		// We want to find out whether we can get the width of
@@ -88,18 +88,24 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 		// specified in percent.
 		// Its takes a short moment until the CSS is rendered.
 		if (-1 !== width.indexOf('px')) {
+			window.clearTimeout(_this._checkVisibilityTimeout);
+			_this._checkVisibilityTimeout = null;
+			
 			callback && callback();
 		} else {
 			_this._checkVisibilityCounter++;
 
 			if (_this._checkVisibilityCounter > 5) {
+				window.clearTimeout(_this._checkVisibilityTimeout);
+				_this._checkVisibilityTimeout = null;
+				
 				jQuery.sap.log
 						.error("Cannot update graph: container width could not be obtained.");
 				return;
 			}
 
 			jQuery.sap.log
-					.debug("Graph container is not visible yet...");
+					.debug("Control CSS is not rendered yet...");
 
 			_this._checkVisibilityTimeout = window.setTimeout(
 					function() {
@@ -116,9 +122,12 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 */
 	ControlBaseProto._waitForRendering = function(cssProperty, callback) {
 		this._checkVisibilityCounter = 0;
-		window.clearTimeout(this._checkVisibilityTimeout);
-
-		_checkVisibility(this, cssProperty, callback);
+		
+		jQuery.sap.log.info("Waiting for CSS beeing rendered: " + this.getId());
+		
+		if(!this._checkVisibilityTimeout){
+			_checkVisibility(this, cssProperty, callback);
+		}
 	};
 	
 	return ControlBase;

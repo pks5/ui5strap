@@ -381,8 +381,12 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		//jQuery.sap.log.debug(' + [NC] PREPARE ' + pendingTransitionsLength + ' PENDING TRANSITIONS'); 
 		
 		for(var i = 0; i < pendingTransitionsLength; i++){
-			var pageChanges = _this._targetTransitions[_this._pendingTransitions[i]];
-			successAll = _prepareTransition(_this, pageChanges[pageChanges.length-1]) && successAll;
+			var pageChanges = _this._targetTransitions[_this._pendingTransitions[i]],
+				pageChange = pageChanges[pageChanges.length-1]; //Only show the last pageChange
+			
+			_onPageChange(_this, pageChange);
+			
+			successAll = _prepareTransition(_this, pageChange) && successAll;
 		}
 
 		return successAll;
@@ -417,12 +421,39 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		});
 		//RAF end
 	};
+	
+	var _onPageChange = function(_this, pageChange){
+		var page = pageChange.page,
+			currentPage = pageChange.currentPage,
+			target = pageChange.target;
+		
+		if(currentPage){
+			_triggerControllerEvent(_this, target, currentPage, 'pageHide', {
+				target : target,
+				newPage : page
+			});
+		}
+
+		if(page){
+			_triggerControllerEvent(_this, target, page, 'pageShow', {
+				target : target,
+				oldPage : currentPage
+			});
+		}
+		
+		_this.firePageChange({
+			target : target,
+			oldPage : currentPage
+		});
+	};
 
 	/**
 	* @Private
 	*/
 	var _pageChange = function(_this, pageChange){
 		//ui5strap.tm("APP", "NC", "PAGE_CHANGE");
+		
+		_onPageChange(_this, pageChange);
 		
 		var transList = {
 			callI : 1,
@@ -677,13 +708,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				"currentPage" : currentPage
 			};
 		
-		if(currentPage){
-			_triggerControllerEvent(_this, target, currentPage, 'pageHide', {
-				target : target,
-				newPage : page
-			});
-		}
-
 		if(page){
 			/*
 			 * START OpenUi5 MOD
@@ -694,18 +718,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			/*
 			 * END OpenUi5 MOD
 			 */
-			
-			_triggerControllerEvent(_this, target, page, 'pageShow', {
-				target : target,
-				oldPage : currentPage
-			});
 		}
 		
-		_this.firePageChange({
-			target : target,
-			oldPage : currentPage
-		});
-
 		if(this.getDomRef()){
 			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
 			//NavContainer is already attached to DOM
