@@ -143,21 +143,19 @@ sap.ui
 									+ 'px)';
 						}
 
-						this.rotation = Math.round(this.rotation / this.theta)
-								* this.theta;
-
-						this.transform();
+						this.rotate(Math.round(this.rotation / this.theta)
+								* this.theta);
 					};
 
-					Wheel3D.prototype.transform = function() {
+					Wheel3D.prototype.rotate = function(newRotation) {
+						this.rotation = newRotation;
 						this.element.style[_transformProperty] = 'translateZ(-'
 								+ this.radius + 'px) ' + this.rotateFn + '('
-								+ this.rotation + 'deg)';
+								+ newRotation + 'deg)';
 					};
 					
 					Wheel3D.prototype.toIndex = function(newIndex){
-						this.rotation = _getRotationFromIndex(this, newIndex);
-						this.transform();
+						this.rotate(_getRotationFromIndex(this, newIndex));
 					};
 
 					
@@ -187,18 +185,17 @@ sap.ui
 						
 						this.rotateFn = isVertical ? 'translateY' : 'translateX';
 						
-						this.rotation = Math.round(this.rotation / this.theta)
-						* this.theta;
-
-						this.transform();
+						this.rotate(Math.round(this.rotation / this.theta)
+								* this.theta);
 					};
 
-					Wheel2D.prototype.transform = function() {
+					Wheel2D.prototype.rotate = function(newRotation) {
+						this.rotation = newRotation;
 						for (i = 0; i < this.panelCount; i++) {
 							panel = this.element.children[i];
 							angle = this.theta * i;
 							
-							var ang = (angle + 90 + this.rotation)  / 180,
+							var ang = (angle + 90 + newRotation)  / 180,
 								vis = (ang < 0 ? Math.floor(ang) % 2 === 0 : Math.ceil(ang) % 2 === 1);
 							
 							panel.style.visibility =  vis ? 'visible' : 'hidden';
@@ -224,8 +221,7 @@ sap.ui
 					};
 					
 					Wheel2D.prototype.toIndex = function(newIndex){
-						this.rotation = _getRotationFromIndex(this, newIndex);
-						this.transform();
+						this.rotate(_getRotationFromIndex(this, newIndex));
 					};
 					
 					/*
@@ -306,10 +302,10 @@ sap.ui
 							_this._$wheelContainer = _this.$().find('.ui5strapPickerWheel-wheel');
 							
 							if(mode === ulib.PickerWheelMode.Mode3D){
-								_this._carousel = new Wheel3D(_this._$wheelContainer[0]);
+								_this._wheel = new Wheel3D(_this._$wheelContainer[0]);
 							}
 							else if(mode === ulib.PickerWheelMode.Mode2D){
-								_this._carousel = new Wheel2D(_this._$wheelContainer[0]);
+								_this._wheel = new Wheel2D(_this._$wheelContainer[0]);
 							}
 							
 							_this.refresh();
@@ -329,10 +325,10 @@ sap.ui
 						'.ui5strapPickerWheel-inner').height() : this.$().find(
 								'.ui5strapPickerWheel-inner').width();
 
-						this._carousel.modify(isVertical, this.getPanels().length, this._segmentWidth);
+						this._wheel.modify(isVertical, this.getPanels().length, this._segmentWidth);
 
 						if(0 !== this.getSelectedIndex()){
-							this._carousel.toIndex(this.getSelectedIndex());
+							this._wheel.toIndex(this.getSelectedIndex());
 						}
 						
 						//Highlight selected panel
@@ -369,8 +365,9 @@ sap.ui
 						
 						this._mouseXMove = null;
 						this._rotationDirection = null;
+						this._lastRecPos = 0;
 						
-						this._touchStartRotation = this._carousel.rotation;
+						this._touchStartRotation = this._wheel.rotation;
 
 						this._rotations = [this._touchStartRotation];
 						this._times = [this._touchStartTime];
@@ -406,7 +403,8 @@ sap.ui
 						
 						this._touchMoveTime = tmpTouchMoveTime;
 						
-						var wheel = this._carousel,
+						var wheel = this._wheel,
+							
 							tmpMouseXMove = _getMousePosition(this, ev),
 							tmpNewRotationDirection = null,
 							tmpNewRotation = this._touchStartRotation
@@ -428,17 +426,19 @@ sap.ui
 							if (null !== this._rotationDirection && tmpNewRotationDirection !== this._rotationDirection) {
 								this._rotations = [];
 								this._times = [];
+								this._lastRecPos = 0;
 								this._touchStartTime = tmpTouchMoveTime;
 							}
 	
 							this._rotationDirection = tmpNewRotationDirection;
 						}
 						
-						this._rotations.push(tmpNewRotation);
-						this._times.push(tmpTouchMoveTime);
+						this._rotations[this._lastRecPos] = tmpNewRotation;
+						this._times[this._lastRecPos] = tmpTouchMoveTime;
 						
-						wheel.rotation = tmpNewRotation;
-						wheel.transform();
+						this._lastRecPos++;
+						
+						wheel.rotate(tmpNewRotation);
 					};
 
 					/**
@@ -468,8 +468,7 @@ sap.ui
 										velocity = rotationDelta / timeDelta;
 									
 									this._timer = window.setInterval(function() {
-										_this._carousel.rotation += velocity * PickerWheel.TIME_RES;
-										_this._carousel.transform();
+										_this._wheel.rotate(_this._wheel.rotation + velocity * PickerWheel.TIME_RES);
 										
 										if (Math.abs(velocity) <= PickerWheel.STOP_TH) {
 											window.clearInterval(_this._timer);
@@ -533,7 +532,7 @@ sap.ui
 						
 						this._cSpeed = PickerWheel.C_SPEED_LOW;
 						this.setActive(true);
-						this.setSelectedIndex(this._getWheelIndex(this._carousel.rotation));
+						this.setSelectedIndex(this._getWheelIndex(this._wheel.rotation));
 						
 						this._cSpeed = oldSpeed;
 						
@@ -559,9 +558,9 @@ sap.ui
 						if (this.getDomRef()) {
 							this.setProperty('selectedIndex', newIndex, true);
 							var _this = this,
-								targetRotation = _getRotationFromIndex(this._carousel, newIndex),
-								rotationDelta = targetRotation - this._carousel.rotation,
-								s0 = _this._carousel.rotation,
+								targetRotation = _getRotationFromIndex(this._wheel, newIndex),
+								rotationDelta = targetRotation - this._wheel.rotation,
+								s0 = _this._wheel.rotation,
 								cSpeed = this._cSpeed,
 								v0 = rotationDelta / (PickerWheel.TIME_RES * (cSpeed - 2.125)),
 								t = 0,
@@ -571,8 +570,7 @@ sap.ui
 							
 							/*
 							if(Math.abs(rotationDelta) < 1 ){
-								_this._carousel.rotation = targetRotation; 
-								_this._carousel.transform();
+								_this._wheel.rotate(targetRotation);
 								_this._setSelectedPanelActive();
 								
 								return;
@@ -583,8 +581,7 @@ sap.ui
 								
 								
 								if (i === cSpeed) {
-									_this._carousel.rotation = targetRotation; 
-									_this._carousel.transform();
+									_this._wheel.rotate(targetRotation);
 									
 									window.clearInterval(_this._timer);
 									_this._timer = null;
@@ -603,8 +600,7 @@ sap.ui
 										tAdd *= 0.25;
 									}
 									
-									_this._carousel.rotation += v0 * tAdd;
-									_this._carousel.transform();
+									_this._wheel.rotate(_this._wheel.rotation + v0 * tAdd);
 									
 									
 								}
@@ -657,7 +653,7 @@ sap.ui
 					 */
 					PickerWheelProto._getWheelIndex = function(rotation) {
 						var index = rotation
-								/ this._carousel.theta, th = Math.abs(index);
+								/ this._wheel.theta, th = Math.abs(index);
 
 						th = th - Math.floor(th);
 
@@ -672,10 +668,10 @@ sap.ui
 					
 					PickerWheelProto._getRealIndex = function(wheelIndex){
 						wheelIndex = wheelIndex
-								% (this._carousel.panelCount);
+								% (this._wheel.panelCount);
 		
 						if (wheelIndex < 0) {
-							wheelIndex = this._carousel.panelCount
+							wheelIndex = this._wheel.panelCount
 									+ wheelIndex;
 						}
 						
@@ -711,8 +707,7 @@ sap.ui
 							
 							//WebKit Bugfix "Hanging Active Panel"
 							if(this.getMode() === ulib.PickerWheelMode.Mode2D){
-								this._carousel.rotation += 0.0001;
-								this._carousel.transform();
+								this._wheel.rotate(this._wheel.rotation + 0.0001);
 							}
 							
 							this._$currentSelectedPanel = $newPanel;
