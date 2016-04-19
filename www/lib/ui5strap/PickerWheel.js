@@ -412,30 +412,30 @@ sap.ui
 						if (!this._mouseXStart)
 							return;
 						
-						var touchMoveTime = Date.now();
+						this._tmpTouchMoveTime = Date.now();
 						
-						if(touchMoveTime - this._touchStartTime < PickerWheel.TIME_RES / 2){
+						if(this._tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RES / 2){
 							//jQuery.sap.log.info("Skipped");
 							return;
 						}
 						
-						this._touchMoveTime = touchMoveTime;
+						this._touchMoveTime = this._tmpTouchMoveTime;
 						
-						var mouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev),
+						this._tmpMouseXMove = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev),
 						newRotationDirection = null,
 						newRotation = this._touchStartRotation
 						- 1 // TODO 
-						* ((this._mouseXStart - mouseXMove) / this._segmentWidth * this._carousel.theta);
+						* ((this._mouseXStart - this._tmpMouseXMove) / this._segmentWidth * this._carousel.theta);
 
 						
 						if(null !== this._mouseXMove){
-							var dx2 = mouseXMove - this._mouseXMove;
+							var dx2 = this._tmpMouseXMove - this._mouseXMove;
 							if(dx2 !== 0){
 								newRotationDirection = dx2 / Math.abs(dx2);
 							}
 						}
 						
-						this._mouseXMove = mouseXMove;
+						this._mouseXMove = this._tmpMouseXMove;
 						
 						if(null !== newRotationDirection){
 							if (null !== this._rotationDirection && newRotationDirection !== this._rotationDirection) {
@@ -461,45 +461,49 @@ sap.ui
 						if (!this._mouseXStart)
 							return;
 						
-						var touchEndTime = Date.now(),
-							_this = this,
-							timeDelta = this._times[this._times.length-1] - this._times[Math.max(0, this._times.length- PickerWheel.TIME_STEPS)],
-							rotationDelta = this._rotations[this._rotations.length - 1] - this._rotations[Math.max(0, this._rotations.length - PickerWheel.TIME_STEPS)],
-							releaseTime = touchEndTime - this._touchMoveTime,
+						var _this = this,
+							touchEndTime = Date.now(),
 							mouseXEnd = this.getVertical() ? -this.getMouseY(ev) : this.getMouseX(ev);
 						
 						//Set MouseXStart again to null to prevent false events
 						this._mouseXStart = null;
 						
-						
-						//jQuery.sap.log.info(releaseTime + "-" + Math.abs(rotationDelta));
-						
-						var t = 0;
-						if (releaseTime < PickerWheel.RELEASE_LIMIT
-								&& Math.abs(rotationDelta) >= PickerWheel.MIN_ACCEL_ROTATION) {
-								var velocity = rotationDelta / timeDelta;
-								this._timer = window.setInterval(function() {
-									t += PickerWheel.TIME_RES;
+						if(this._mouseXMove){
+							
+							var moveLength = this._rotations.length,
+								rotationDelta = this._rotations[moveLength - 1] - this._rotations[Math.max(0, moveLength - PickerWheel.TIME_STEPS)],
+								releaseTime = touchEndTime - this._touchMoveTime;
+							
+							if (releaseTime < PickerWheel.RELEASE_LIMIT
+									&& Math.abs(rotationDelta) >= PickerWheel.MIN_ACCEL_ROTATION) {
 									
-									_this._carousel.rotation += velocity * PickerWheel.TIME_RES;
-									_this._carousel.transform();
+									var timeDelta = this._times[moveLength - 1] - this._times[Math.max(0, moveLength - PickerWheel.TIME_STEPS)],
+										velocity = rotationDelta / timeDelta;
 									
-									if (Math.abs(velocity) <= PickerWheel.STOP_TH) {
-										window.clearInterval(_this._timer);
-										_this._timer = null;
-										_this._stopDragging(_this._carousel.rotation, rotationDelta);
+									this._timer = window.setInterval(function() {
+										_this._carousel.rotation += velocity * PickerWheel.TIME_RES;
+										_this._carousel.transform();
 										
-										return;
-									}
-									
-									velocity = velocity * PickerWheel.DECCEL;
-									
-								}, PickerWheel.TIME_RES);
-
-								return;
+										if (Math.abs(velocity) <= PickerWheel.STOP_TH) {
+											window.clearInterval(_this._timer);
+											_this._timer = null;
+											_this._stopDragging();
+											
+											return;
+										}
+										
+										velocity = velocity * PickerWheel.DECCEL;
+										
+									}, PickerWheel.TIME_RES);
+	
+									return;
+							}
+						
+						
 						}
 						
-						if (touchEndTime - this._touchStartTime < PickerWheel.TAP_LIMIT && (!this._mouseXMove || (Math.abs(mouseXEnd - this._mouseXStart) < 3))) {
+						if (touchEndTime - this._touchStartTime < PickerWheel.TAP_LIMIT 
+								&& (!this._mouseXMove || Math.abs(mouseXEnd - this._mouseXStart) < 3)) {
 							var $srcElement = jQuery(ev.target)
 								.closest('.ui5strapPickerWheel-panel');
 							if ($srcElement && $srcElement.length > 0) {
@@ -522,27 +526,27 @@ sap.ui
 							return;
 						}
 
-						this._stopDragging(this._carousel.rotation, rotationDelta);
+						this._stopDragging();
 					};
 
 					/**
 					 * 
 					 */
 					PickerWheelProto.ontouchcancel = function(ev) {
-						this._stopDragging(this._carousel.rotation, 0);
+						this._stopDragging();
 					};
 					
 					/**
 					 * 
 					 */
-					PickerWheelProto._stopDragging = function(rotation, dir) {
+					PickerWheelProto._stopDragging = function() {
 						var oldIndex = this.getSelectedIndex(),
 							oldActive = this.getActive(),
 							oldSpeed = this._cSpeed;
 						
 						this._cSpeed = PickerWheel.C_SPEED_LOW;
 						this.setActive(true);
-						this.setSelectedIndex(this._getWheelIndex(rotation, dir));
+						this.setSelectedIndex(this._getWheelIndex(this._carousel.rotation));
 						
 						this._cSpeed = oldSpeed;
 						
@@ -664,7 +668,7 @@ sap.ui
 					/**
 					 * 
 					 */
-					PickerWheelProto._getWheelIndex = function(rotation, dir) {
+					PickerWheelProto._getWheelIndex = function(rotation) {
 						var index = rotation
 								/ this._carousel.theta, th = Math.abs(index);
 
