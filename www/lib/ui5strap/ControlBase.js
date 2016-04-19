@@ -48,5 +48,78 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	PositionSupport.proto(ControlBaseProto);
 	OptionsSupport.proto(ControlBaseProto);
 	
+	/**
+	 * Returns the computed value for a css property.
+	 * 
+	 * @Public
+	 */
+	ControlBaseProto.getComputedStyle = function(strCssRule) {
+		var oElm = this.$()[0], strValue = "";
+
+		if (document.defaultView
+				&& document.defaultView.getComputedStyle) {
+			strValue = document.defaultView.getComputedStyle(
+					oElm, "").getPropertyValue(strCssRule);
+		} else if (oElm.currentStyle) {
+			strCssRule = strCssRule.replace(/\-(\w)/g,
+					function(strMatch, p1) {
+						return p1.toUpperCase();
+					});
+			strValue = oElm.currentStyle[strCssRule];
+		}
+
+		return strValue;
+	};
+	
+	/**
+	 * Checks whether the pixel value for the container width is
+	 * already available.
+	 * 
+	 * @Private
+	 */
+	var _checkVisibility = function(_this, cssProperty, callback) {
+		if (!_this.getDomRef()) {
+			throw new Error("Cannot update graph.");
+		}
+		var width = _this.getComputedStyle(cssProperty);
+		// We want to find out whether we can get the width of
+		// container in pixels.
+		// This is needed if the width of the container is
+		// specified in percent.
+		// Its takes a short moment until the CSS is rendered.
+		if (-1 !== width.indexOf('px')) {
+			callback && callback();
+		} else {
+			_this._checkVisibilityCounter++;
+
+			if (_this._checkVisibilityCounter > 5) {
+				jQuery.sap.log
+						.error("Cannot update graph: container width could not be obtained.");
+				return;
+			}
+
+			jQuery.sap.log
+					.debug("Graph container is not visible yet...");
+
+			_this._checkVisibilityTimeout = window.setTimeout(
+					function() {
+						_checkVisibility(_this, cssProperty, callback);
+					}, 100);
+		}
+	};
+
+	/**
+	 * Waits until the pixel value for the container width is
+	 * available.
+	 * 
+	 * @Protected
+	 */
+	ControlBaseProto._waitForRendering = function(cssProperty, callback) {
+		this._checkVisibilityCounter = 0;
+		window.clearTimeout(this._checkVisibilityTimeout);
+
+		_checkVisibility(this, cssProperty, callback);
+	};
+	
 	return ControlBase;
 });

@@ -287,86 +287,15 @@ sap.ui
 					 */
 
 					/**
-					 * Returns the computed value for a css property.
-					 * 
-					 * @Public
-					 */
-					PickerWheelProto.getComputedStyle = function(strCssRule) {
-						var oElm = this.$()[0], strValue = "";
-
-						if (document.defaultView
-								&& document.defaultView.getComputedStyle) {
-							strValue = document.defaultView.getComputedStyle(
-									oElm, "").getPropertyValue(strCssRule);
-						} else if (oElm.currentStyle) {
-							strCssRule = strCssRule.replace(/\-(\w)/g,
-									function(strMatch, p1) {
-										return p1.toUpperCase();
-									});
-							strValue = oElm.currentStyle[strCssRule];
-						}
-
-						return strValue;
-					};
-
-					/**
-					 * Checks whether the pixel value for the container width is
-					 * already available.
-					 * 
-					 * @Private
-					 */
-					var _checkVisibility = function(_this, callback) {
-						if (!_this.getDomRef()) {
-							throw new Error("Cannot update graph.");
-						}
-						var width = _this.getComputedStyle(_this.getVertical() ? 'height' : 'width');
-						// We want to find out whether we can get the width of
-						// container in pixels.
-						// This is needed if the width of the container is
-						// specified in percent.
-						// Its takes a short moment until the CSS is rendered.
-						if (-1 !== width.indexOf('px')) {
-							callback && callback();
-						} else {
-							_this._checkVisibilityCounter++;
-
-							if (_this._checkVisibilityCounter > 5) {
-								jQuery.sap.log
-										.error("Cannot update graph: container width could not be obtained.");
-								return;
-							}
-
-							jQuery.sap.log
-									.debug("Graph container is not visible yet...");
-
-							_this._checkVisibilityTimeout = window.setTimeout(
-									function() {
-										_checkVisibility(_this, callback);
-									}, 100);
-						}
-					};
-
-					/**
-					 * Waits until the pixel value for the container width is
-					 * available.
-					 * 
-					 * @Protected
-					 */
-					PickerWheelProto._waitForRendering = function(callback) {
-						this._checkVisibilityCounter = 0;
-						window.clearTimeout(this._checkVisibilityTimeout);
-
-						_checkVisibility(this, callback);
-					};
-
-					/**
 					 * 
 					 */
 					PickerWheelProto.onAfterRendering = function() {
 						var _this = this,
 							mode = this.getMode();
 						
-						this._waitForRendering(function() {
+						this._waitForRendering(
+								this.getVertical() ? 'height' : 'width',
+								function() {
 							_this.$().find('.ui5strapPickerWheel-inner')
 									.removeClass('ui5strap-hidden');
 
