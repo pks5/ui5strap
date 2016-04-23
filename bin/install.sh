@@ -18,7 +18,7 @@ npm install
 
 echo Installing node modules for theme-builder...
 
-cd ../tools/theme-builder/bootstrap-3.3.5
+cd ../tools/theme-builder/bootstrap-3.3.6
 
 npm install
 
