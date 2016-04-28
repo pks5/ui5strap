@@ -295,7 +295,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 					viewData.type = "XML";
 				}
 				
-				if(!viewData.cache){
+				if(!("cache" in viewData)){
 					viewData.cache = true;
 				}
 				
@@ -329,7 +329,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 					viewData.type = "XML";
 				}
 				
-				if(!viewData.cache){
+				if(!("cache" in viewData)){
 					viewData.cache = true;
 				}
 				
