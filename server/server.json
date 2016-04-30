@@ -8,8 +8,14 @@
 	"apps" : [
 		
 		{
+		    "id" : "ui5strap.demoapp",
 			"config" : "apps/demoapp/app.json"
-		}
+		},
+		
+		{
+		    "id" : "pks.jcp",
+            "config" : "apps/jcp/app.json"
+        }
 	
 	
 	]

@@ -45,55 +45,60 @@ RestController.controllers = {};
 RestController._routing = [];
 
 var _buildArguments = function(param){
-	var args = [];
-	if(!param.arguments){
-		return args;
-	}
-	var postFormat = null;
-	for(var j=0; j<param.arguments.length; j++){
-		var p = param.arguments[j].split("."),
-			key = p[0];
-		
-		if(key === "path"){
-			if(!param.pathParameters){
-				param.pathParameters = {};
-			}
-			args.push(param.pathParameters[p[1]]);
-		}
-		else if(key === "query"){
-			if(!param.queryParameters){
-				param.queryParameters = {};
-			}
-			args.push(param.queryParameters[p[1]]);
-		}
-		else if(key === "post"){
-			if(postFormat === "payload"){
-				throw new Error("Cannot read payload: post body has been interpreted as json!");
-			}
-			if(!param.postParameters){
-				param.postParameters = nodeQuery.parse(param.postBody);
-			}
-			args.push(param.postParameters[p[1]]);
+	var status = {},
+		args = [];
+	
+	status.args = args;
+	
+	if(param.arguments){
+		var postFormat = null;
+		for(var j=0; j<param.arguments.length; j++){
+			var p = param.arguments[j].split("."),
+				key = p[0];
 			
-			postFormat = key;
-		}
-		else if(key === "payload"){
-			if(postFormat === "post"){
-				throw new Error("Cannot read payload: post body has been interpreted as url encoded!");
+			if(key === "path"){
+				if(!param.pathParameters){
+					param.pathParameters = {};
+				}
+				args.push(param.pathParameters[p[1]]);
 			}
-			args.push(JSON.parse(param.postBody));
-			
-			postFormat = key;
-		}
-		else if(key === "success"){
-			args.push(null);
-		}
-		else if(key === "error"){
-			args.push(null);
+			else if(key === "query"){
+				if(!param.queryParameters){
+					param.queryParameters = {};
+				}
+				args.push(param.queryParameters[p[1]]);
+			}
+			else if(key === "post"){
+				if(postFormat === "payload"){
+					throw new Error("Cannot read payload: post body has been interpreted as json!");
+				}
+				if(!param.postParameters){
+					param.postParameters = nodeQuery.parse(param.postBody);
+				}
+				args.push(param.postParameters[p[1]]);
+				
+				postFormat = key;
+			}
+			else if(key === "payload"){
+				if(postFormat === "post"){
+					throw new Error("Cannot read payload: post body has been interpreted as url encoded!");
+				}
+				args.push(JSON.parse(param.postBody));
+				
+				postFormat = key;
+			}
+			else if(key === "success"){
+				args.push(param.successHandler);
+				status.successHandler = param.successHandler;
+			}
+			else if(key === "error"){
+				args.push(param.errorHandler);
+				status.errorHandler = param.errorHandler;
+			}
 		}
 	}
 	
-	return args;
+	return status;
 };
 
 
@@ -156,10 +161,20 @@ RestController.handleRequest = function(url, request, response){
 						param.postBody = body;
 					}
 					
-					var args = _buildArguments(param);
+					param.successHandler = function(result){
+						response.end(JSON.stringify(result));
+					};
 					
-					response.end(JSON.stringify(execMethod.apply(routing.controller, args)));
-				
+					var status = _buildArguments(param);
+					
+					if(status.successHandler){
+						//Async
+						execMethod.apply(routing.controller, status.args);
+					}
+					else{
+						//Sync
+						param.successHandler(execMethod.apply(routing.controller, status.args));
+					}
 				});
 				//TODO afterRequest handler
 				

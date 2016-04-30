@@ -30,7 +30,7 @@ var library = require("../../../lib/ui5strap/library.js");
 /*
  * Construct
  */
-module.exports = library.restController("ui5strap.demoapp.server.controllers.Feed", {
+module.exports = library.restController("ui5strap.demoapp.server.controllers.FeedController", {
 	onInit : function(){
 		this._db = {
 				feeds : {
@@ -69,11 +69,11 @@ module.exports = library.restController("ui5strap.demoapp.server.controllers.Fee
 		this._autoInc = this._db.feeds.default.feed.length + 1;
 	},
 	
-	info : function(){
-		return this._db.feeds.default;
+	info : function(success){
+		success(this._db.feeds.default);
 	},
 	
-	deletePost : function(postId){
+	deletePost : function(postId, success, error){
 		var feed = this._db.feeds.default.feed;
 		var returnText = "ERROR";
 		for(var i = 0; i < feed.length; i++){
@@ -84,10 +84,10 @@ module.exports = library.restController("ui5strap.demoapp.server.controllers.Fee
 			}
 		}
 		console.log(returnText);
-		return returnText;
+		success(returnText);
 	},
 	
-	readPost : function(postId){
+	readPost : function(postId, success, error){
 		var feed = this._db.feeds.default.feed;
 		var returnPost = null;
 		for(var i = 0; i < feed.length; i++){
@@ -96,15 +96,16 @@ module.exports = library.restController("ui5strap.demoapp.server.controllers.Fee
 				break;
 			}
 		}
-		return returnPost;
+		success(returnPost);
 		
 	},
 	
-	newPost : function(payload){
+	newPost : function(payload, success, error){
 		payload.id = this._autoInc;
 		this._autoInc++;
 		payload.image = "ui5strap.demoapp.img.awesome";
 		this._db.feeds.default.feed.push(payload);
-		return "OK";
+		
+		success("OK");
 	}
 });

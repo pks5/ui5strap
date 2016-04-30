@@ -65,6 +65,7 @@ ServerProto.start = function(){
 				var appConfigUrl = apps[i].config,
 					pathToAppConfig = nodePath.join(serverConfig.server.pathToPublic,
 						appConfigUrl);
+				console.log("Loading configuration from " + appConfigUrl);
 				nodeFs.readFile(pathToAppConfig, 'utf8', function(err, file) {
 					if (err) {
 						console.warn("Could not load app config from '" + pathToAppConfig + "'!");
@@ -77,23 +78,23 @@ ServerProto.start = function(){
 						var sappUrlParts = appConfigUrl.split('/');
 						sappUrlParts[sappUrlParts.length - 1] = '';
 						var appConfigLocation = sappUrlParts.join('/');
-						
+						console.log("Base path is " + appConfigLocation);
 						for(var j=0; j < appConfig.components.length; j++){
 							var component = appConfig.components[j],
 								controllerDef = component.restController;
 							if(controllerDef){
 								if(-1 === controllerDef.indexOf(".")){
-									controllerDef = appServerId + ".rest." + controllerDef;
+									controllerDef = appServerId + ".controller." + controllerDef;
 								}
 								else if("." === controllerDef.charAt(0)){
-									controllerDef = appServerId + ".rest." + controllerDef;
+									controllerDef = appServerId + ".controller" + controllerDef;
 								}
 								
 								if(0 === controllerDef.indexOf(appServerId)){
 									var rest = controllerDef.substring(appServerId.length).replace(/\./g, "/") + ".js";
 									console.log("Loaded Controller '" + controllerDef + "' from '" + pathToAppConfig + "'.");
 						
-									var Controller = require(nodePath.join(pathToRoot, "apps/demoapp/" + rest));
+									var Controller = require(nodePath.join(pathToRoot, appConfigLocation + rest));
 									//ui5strap.demoapp.server
 									
 									//Install Controller
