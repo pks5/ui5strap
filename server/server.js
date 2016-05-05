@@ -25,7 +25,7 @@
  * 
  */
 
-var Server = require("./lib/ui5strap/Server.js"),
+var Server = require("./lib/nodestrap/Server.js"),
 	server = new Server(__dirname + "/server.json");
 	
 server.start();

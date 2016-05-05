@@ -31,7 +31,7 @@ var RestController = require("./RestController");
  * Node Module Exports
  */
 module.exports = {
-	"restController" : function(controllerName, controllerImpl){
+	"restController" : function(controllerImpl){
 		var Controller = function(options, configLocation){
 			this.configLocation = configLocation;
 			this.options = options;

@@ -24,7 +24,7 @@
  * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
  * 
  */
-var nodeQuery = require('querystring'), Utils = require("./Utils");
+var nodeQuery = require('querystring'), Utils = require("./Utils"), formidable = require('formidable'),util = require('util'),fs = require('fs-extra');
 
 /*
  * RestController
@@ -95,6 +95,15 @@ var _buildArguments = function(param){
 				args.push(param.errorHandler);
 				status.errorHandler = param.errorHandler;
 			}
+			else if(key === "request"){
+				args.push(param.request);
+			}
+			else if(key === "response"){
+				args.push(param.response);
+			}
+			else if(key === "form"){
+				args.push(new formidable.IncomingForm());
+			}
 		}
 	}
 	
@@ -102,9 +111,14 @@ var _buildArguments = function(param){
 };
 
 
-function processPost(request, response, callback) {
-    var queryData = "";
-    if(request.method == 'POST') {
+
+
+function processPost(request, response, routing, callback) {
+    var queryData = "",
+    	requestType = routing.methodOptions.type;
+    
+    //TODO Use formidable for url encoded posts.
+    if(requestType === 'postWithPayload' || requestType === 'postUrlEncoded') {
         request.on('data', function(data) {
             queryData += data;
             if(queryData.length > 1e6) {
@@ -119,7 +133,7 @@ function processPost(request, response, callback) {
             callback && callback(queryData);
         });
 
-    } else {
+    } else{
         callback && callback(null);
     }
 }
@@ -150,11 +164,13 @@ RestController.handleRequest = function(url, request, response){
 			var execMethod = routing.controller[routing.methodName];
 			
 			if(execMethod){
-				processPost(request, response, function(body){
+				processPost(request, response, routing, function(body){
 					var param = { 
 							"arguments" : routing.methodOptions.arguments,
 							"pathParameters" : pathParam,
-							"queryParameters" : url.query
+							"queryParameters" : url.query,
+							"request" : request,
+							"response" : response
 					};
 					
 					if(body){

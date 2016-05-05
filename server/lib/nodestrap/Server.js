@@ -29,6 +29,7 @@ var nodeFs = require('fs'), nodePath = require('path'), nodeHttp = require('http
 	nodeMime = require('mime'), pathToRoot = "../../",
 	RestController = require("./RestController");
 
+
 /*
  * Server
  */
@@ -115,6 +116,8 @@ ServerProto.start = function(){
 	});
 };
 
+
+
 /**
  * @Public
  */
@@ -130,7 +133,7 @@ ServerProto.listen = function(){
 		}
 
 		var url = nodeUrl.parse(requestUrl, true);
-
+		
 		if (RestController.handleRequest(url, request, response)) {
 			return;
 		}
