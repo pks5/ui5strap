@@ -407,7 +407,9 @@ sap.ui
 						if (!this._mousePosStart)
 							return;
 						
-						var tmpTouchMoveTime = Date.now();
+						var tmpTouchMoveTime = Date.now(),
+							tmpMouseXMove = _getMousePosition(this, ev),
+							lastMousePosMove = this._mousePosMove;
 						
 						/*
 						if(tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RESOLUTION){
@@ -417,43 +419,42 @@ sap.ui
 						*/
 						
 						
-						this._touchMoveTime = tmpTouchMoveTime;
+						if(tmpMouseXMove !== lastMousePosMove){
+							var wheel = this._wheel,
+								lastRecPos = this._lastRecPos,
+								tmpNewRotation = this._touchStartRotation
+									- (this._mousePosStart - tmpMouseXMove) / this._segmentWidth * wheel.theta;
 						
-						var wheel = this._wheel,
-							lastRecPos = this._lastRecPos,
-							tmpMouseXMove = _getMousePosition(this, ev),
-							tmpNewRotation = this._touchStartRotation
-						- (this._mousePosStart - tmpMouseXMove) / this._segmentWidth * wheel.theta;
-
-						
-						if(null !== this._mousePosMove){
-							var tmpMoveDelta = tmpMouseXMove - this._mousePosMove;
-							
-							if(tmpMoveDelta !== 0){
-								var tmpNewRotationDirection = tmpMoveDelta / Math.abs(tmpMoveDelta),
-									currentRotationDirection = this._rotationDirection; 
+							if(null !== lastMousePosMove){
+								var tmpMoveDelta = tmpMouseXMove - lastMousePosMove;
 								
-								if (null !== currentRotationDirection  
-										&& tmpNewRotationDirection !== currentRotationDirection) {
-									this._rotations = [];
-									this._times = [];
-									lastRecPos = 0;
+								if(tmpMoveDelta !== 0){
+									var tmpNewRotationDirection = tmpMoveDelta / Math.abs(tmpMoveDelta),
+										currentRotationDirection = this._rotationDirection; 
 									
-									this._touchStartTime = tmpTouchMoveTime;
+									if (null !== currentRotationDirection  
+											&& tmpNewRotationDirection !== currentRotationDirection) {
+										this._rotations = [];
+										this._times = [];
+										lastRecPos = 0;
+										
+										this._touchStartTime = tmpTouchMoveTime;
+									}
+			
+									this._rotationDirection = tmpNewRotationDirection;
 								}
-		
-								this._rotationDirection = tmpNewRotationDirection;
 							}
+							
+							this._touchMoveTime = tmpTouchMoveTime;
+							this._mousePosMove = tmpMouseXMove;
+							
+							this._rotations[lastRecPos] = tmpNewRotation;
+							this._times[lastRecPos] = tmpTouchMoveTime;
+							
+							this._lastRecPos = lastRecPos + 1;
+							//console.log(tmpNewRotation, this._touchStartRotation, this._wheel.rotation);
+							wheel.rotate(tmpNewRotation);
 						}
-						
-						this._mousePosMove = tmpMouseXMove;
-						
-						this._rotations[lastRecPos] = tmpNewRotation;
-						this._times[lastRecPos] = tmpTouchMoveTime;
-						
-						this._lastRecPos = lastRecPos + 1;
-						//console.log(tmpNewRotation, this._touchStartRotation, this._wheel.rotation);
-						wheel.rotate(tmpNewRotation);
 					};
 
 					/**
