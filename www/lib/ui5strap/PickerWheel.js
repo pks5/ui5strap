@@ -482,7 +482,7 @@ sap.ui
 						//Set MouseXStart again to null to prevent false events
 						this._mousePosStart = null;
 						
-						if(this._mousePosMove && moveLength >= PickerWheel.TIME_STEPS){
+						if(this._mousePosMove && moveLength > 1){
 							
 							var rotationDelta = this._rotations[moveLength - 1] - this._rotations[Math.max(0, moveLength - PickerWheel.TIME_STEPS)],
 								releaseTime = touchEndTime - this._touchMoveTime;
