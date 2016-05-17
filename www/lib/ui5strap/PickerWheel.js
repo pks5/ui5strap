@@ -103,6 +103,11 @@ sap.ui
 					 */
 						
 					var _getRotationFromIndex = function(_wheel, newIndex){
+						if(isNaN(newIndex)){
+							jQuery.sap.log.error("Invalid index!");
+							return _wheel.rotation;
+						}
+						
 						var oldRotation = _wheel.rotation,
 							newRotation = -newIndex * _wheel.theta,
 							dif = (newRotation - oldRotation) % 360,
@@ -148,6 +153,11 @@ sap.ui
 					};
 
 					Wheel3D.prototype.rotate = function(newRotation) {
+						if(isNaN(newRotation)){
+							jQuery.sap.log.error("Invalid rotation!");
+							return;
+						}
+						
 						this.rotation = newRotation;
 						this.element.style[_transformProperty] = 'translateZ(-'
 								+ this.radius + 'px) ' + this.rotateFn + '('
@@ -190,6 +200,12 @@ sap.ui
 					};
 
 					Wheel2D.prototype.rotate = function(newRotation) {
+						if(isNaN(newRotation)){
+							jQuery.sap.log.error("Invalid rotation!");
+							return;
+						}
+						
+						
 						this.rotation = newRotation;
 						for (i = 0; i < this.panelCount; i++) {
 							panel = this.element.children[i];
@@ -405,7 +421,7 @@ sap.ui
 						
 						if(tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RESOLUTION / 2){
 							//jQuery.sap.log.info("Skipped");
-							return;
+							//return;
 						}
 						
 						this._touchMoveTime = tmpTouchMoveTime;
@@ -444,7 +460,7 @@ sap.ui
 						this._times[this._lastRecPos] = tmpTouchMoveTime;
 						
 						this._lastRecPos++;
-						
+						//console.log(tmpNewRotation, this._touchStartRotation, this._wheel.rotation);
 						wheel.rotate(tmpNewRotation);
 					};
 
@@ -458,15 +474,15 @@ sap.ui
 						var _this = this,
 							touchEndTime = Date.now(),
 							mousePosEnd = _getMousePosition(this, ev),
-							moveDelta = Math.abs(mousePosEnd - this._mousePosStart);
+							moveDelta = Math.abs(mousePosEnd - this._mousePosStart),
+							moveLength = this._rotations.length;
 						
 						//Set MouseXStart again to null to prevent false events
 						this._mousePosStart = null;
 						
-						if(this._mousePosMove){
+						if(this._mousePosMove && moveLength >= PickerWheel.TIME_STEPS){
 							
-							var moveLength = this._rotations.length,
-								rotationDelta = this._rotations[moveLength - 1] - this._rotations[Math.max(0, moveLength - PickerWheel.TIME_STEPS)],
+							var rotationDelta = this._rotations[moveLength - 1] - this._rotations[Math.max(0, moveLength - PickerWheel.TIME_STEPS)],
 								releaseTime = touchEndTime - this._touchMoveTime;
 							
 							if (releaseTime < PickerWheel.RELEASE_LIMIT
@@ -563,6 +579,9 @@ sap.ui
 					 * 
 					 */
 					PickerWheelProto.setSelectedIndex = function(newIndex, suppress) {
+						if(isNaN(newIndex))
+							jQuery.sap.log.error("Invalid index!");
+						
 						if (this.getDomRef()) {
 							this.setProperty('selectedIndex', newIndex, true);
 							var _this = this,
