@@ -420,12 +420,12 @@ sap.ui
 						
 						var tmpTouchMoveTime = Date.now();
 						
-						/*
-						if(tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RESOLUTION / 2){
-							//jQuery.sap.log.info("Skipped");
+						
+						if(tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RESOLUTION){
+							console.log("SKIP");
 							return;
 						}
-						*/
+						
 						
 						this._touchMoveTime = tmpTouchMoveTime;
 						
