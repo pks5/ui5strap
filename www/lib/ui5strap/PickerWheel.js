@@ -154,9 +154,6 @@ sap.ui
 					};
 
 					Wheel3D.prototype.rotate = function(newRotation) {
-						if(newRotation === this.rotation)
-							return;
-						
 						this.rotation = newRotation;
 						this.element.style[_transformProperty] = 'translateZ(-'
 								+ this.radius + 'px) ' + this.rotateFn + '('
@@ -199,9 +196,6 @@ sap.ui
 					};
 
 					Wheel2D.prototype.rotate = function(newRotation) {
-						if(newRotation === this.rotation)
-							return;
-						
 						this.rotation = newRotation;
 						
 						var isVertical = this.isVertical,
@@ -210,30 +204,23 @@ sap.ui
 							panels = this.element.children,
 							panelCount = this.panelCount,
 							rotateFn = this.rotateFn,
-							i, panel, ang, vis, cos, newTransform;
+							transProperty = _transformProperty,
+							i, panel, ang, vis, cos, panelStyle;
 						
 						for (i = 0; i < panelCount; i++) {
-							panel = panels[i];
+							panelStyle = panels[i].style;
 							
 							ang = (theta * i + 90 + newRotation)  / 180;
 							
 							vis = (ang < 0 ? Math.floor(ang) % 2 === 0 : Math.ceil(ang) % 2 === 1);
 							
-							panel.style.visibility =  vis ? 'visible' : 'hidden';
+							panelStyle.visibility =  vis ? 'visible' : 'hidden';
 							
 							if(vis){
-								cos = Math.cos(ang * Math.PI);
+								cos = Math.cos(ang * Math.PI) * (isVertical ? 1 : -1);
 								
-								if(!isVertical){
-									cos = cos * -1;
-								}
-								
-								newTransform = rotateFn + "("
-								+ ( cos * radius) + "px)";
-								
-								newTransform += " scale(" + (1 - Math.abs(cos) * 0.33) + ")";
-								
-								panel.style[_transformProperty] = newTransform;
+								panelStyle[transProperty] = rotateFn + "("
+								+ ( cos * radius) + "px) scale(" + (1 - Math.abs(cos) * 0.33333) + ")";
 							}
 						}
 					};
