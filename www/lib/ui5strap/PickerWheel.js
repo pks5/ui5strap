@@ -29,7 +29,8 @@ sap.ui
 		.define(
 				[ "ui5strap/library", "ui5strap/ControlBase" ],
 				function(ulib, ControlBase) {
-
+					"use strict";
+					
 					var PickerWheel = ControlBase.extend(
 							"ui5strap.PickerWheel", {
 								metadata : {
@@ -153,10 +154,8 @@ sap.ui
 					};
 
 					Wheel3D.prototype.rotate = function(newRotation) {
-						if(isNaN(newRotation)){
-							jQuery.sap.log.error("Invalid rotation!");
+						if(newRotation === this.rotation)
 							return;
-						}
 						
 						this.rotation = newRotation;
 						this.element.style[_transformProperty] = 'translateZ(-'
@@ -200,40 +199,43 @@ sap.ui
 					};
 
 					Wheel2D.prototype.rotate = function(newRotation) {
-						if(isNaN(newRotation)){
-							jQuery.sap.log.error("Invalid rotation!");
+						if(newRotation === this.rotation)
 							return;
-						}
-						
 						
 						this.rotation = newRotation;
-						for (i = 0; i < this.panelCount; i++) {
-							panel = this.element.children[i];
-							angle = this.theta * i;
+						
+						var isVertical = this.isVertical,
+							radius = this.radius,
+							theta = this.theta,
+							panels = this.element.children,
+							panelCount = this.panelCount,
+							rotateFn = this.rotateFn,
+							i, panel, ang, vis, cos, newTransform;
+						
+						for (i = 0; i < panelCount; i++) {
+							panel = panels[i];
 							
-							var ang = (angle + 90 + newRotation)  / 180,
-								vis = (ang < 0 ? Math.floor(ang) % 2 === 0 : Math.ceil(ang) % 2 === 1);
+							ang = (theta * i + 90 + newRotation)  / 180;
+							
+							vis = (ang < 0 ? Math.floor(ang) % 2 === 0 : Math.ceil(ang) % 2 === 1);
 							
 							panel.style.visibility =  vis ? 'visible' : 'hidden';
 							
 							if(vis){
-								var cos = Math.cos(ang * Math.PI);
+								cos = Math.cos(ang * Math.PI);
 								
-								//panel.style.zIndex 
-								
-								if(!this.isVertical){
+								if(!isVertical){
 									cos = cos * -1;
 								}
 								
-								var newTransform = this.rotateFn + "("
-								+ ( cos * this.radius)   + "px)";
+								newTransform = rotateFn + "("
+								+ ( cos * radius) + "px)";
 								
 								newTransform += " scale(" + (1 - Math.abs(cos) * 0.33) + ")";
 								
 								panel.style[_transformProperty] = newTransform;
 							}
 						}
-						
 					};
 					
 					Wheel2D.prototype.toIndex = function(newIndex){
@@ -420,11 +422,12 @@ sap.ui
 						
 						var tmpTouchMoveTime = Date.now();
 						
-						
+						/*
 						if(tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RESOLUTION){
 							console.log("SKIP");
 							return;
 						}
+						*/
 						
 						
 						this._touchMoveTime = tmpTouchMoveTime;
