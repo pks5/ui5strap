@@ -419,47 +419,48 @@ sap.ui
 						
 						var tmpTouchMoveTime = Date.now();
 						
+						/*
 						if(tmpTouchMoveTime - this._touchStartTime < PickerWheel.TIME_RESOLUTION / 2){
 							//jQuery.sap.log.info("Skipped");
-							//return;
+							return;
 						}
+						*/
 						
 						this._touchMoveTime = tmpTouchMoveTime;
 						
 						var wheel = this._wheel,
-							
+							lastRecPos = this._lastRecPos,
 							tmpMouseXMove = _getMousePosition(this, ev),
-							tmpNewRotationDirection = null,
 							tmpNewRotation = this._touchStartRotation
-						- 1 // TODO 
-						* ((this._mousePosStart - tmpMouseXMove) / this._segmentWidth * wheel.theta);
+						- (this._mousePosStart - tmpMouseXMove) / this._segmentWidth * wheel.theta;
 
 						
 						if(null !== this._mousePosMove){
 							var tmpMoveDelta = tmpMouseXMove - this._mousePosMove;
 							
 							if(tmpMoveDelta !== 0){
-								tmpNewRotationDirection = tmpMoveDelta / Math.abs(tmpMoveDelta);
+								var tmpNewRotationDirection = tmpMoveDelta / Math.abs(tmpMoveDelta),
+									currentRotationDirection = this._rotationDirection; 
+								
+								if (null !== currentRotationDirection  
+										&& tmpNewRotationDirection !== currentRotationDirection) {
+									this._rotations = [];
+									this._times = [];
+									lastRecPos = 0;
+									
+									this._touchStartTime = tmpTouchMoveTime;
+								}
+		
+								this._rotationDirection = tmpNewRotationDirection;
 							}
 						}
 						
 						this._mousePosMove = tmpMouseXMove;
 						
-						if(null !== tmpNewRotationDirection){
-							if (null !== this._rotationDirection && tmpNewRotationDirection !== this._rotationDirection) {
-								this._rotations = [];
-								this._times = [];
-								this._lastRecPos = 0;
-								this._touchStartTime = tmpTouchMoveTime;
-							}
-	
-							this._rotationDirection = tmpNewRotationDirection;
-						}
+						this._rotations[lastRecPos] = tmpNewRotation;
+						this._times[lastRecPos] = tmpTouchMoveTime;
 						
-						this._rotations[this._lastRecPos] = tmpNewRotation;
-						this._times[this._lastRecPos] = tmpTouchMoveTime;
-						
-						this._lastRecPos++;
+						this._lastRecPos = lastRecPos + 1;
 						//console.log(tmpNewRotation, this._touchStartRotation, this._wheel.rotation);
 						wheel.rotate(tmpNewRotation);
 					};
