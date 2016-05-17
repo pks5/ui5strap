@@ -383,6 +383,7 @@ sap.ui
 						this._touchStartTime = Date.now();
 						
 						this._timer && window.clearInterval(this._timer);
+						this._timer = null;
 
 						this._mousePosStart = _getMousePosition(this, ev);
 						
