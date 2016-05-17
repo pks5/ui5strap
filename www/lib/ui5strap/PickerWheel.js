@@ -492,6 +492,7 @@ sap.ui
 									var timeDelta = this._times[moveLength - 1] - this._times[Math.max(0, moveLength - PickerWheel.TIME_STEPS)],
 										velocity = rotationDelta / timeDelta;
 									
+									this._timer && window.clearInterval(this._timer);
 									this._timer = window.setInterval(function() {
 										_this._wheel.rotate(_this._wheel.rotation + velocity * PickerWheel.TIME_RESOLUTION);
 										
