@@ -31,9 +31,13 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	TextInputRenderer.render = function(rm, oControl) {
 		var rows = oControl.getRows(),
-			type = oControl.getType();
-
-		if(1 === rows){
+			type = oControl.getType(),
+			maxLength = oControl.getMaxLength();
+		
+		//TODO We need a option for Input VS Textare instead of using rows to decide.
+		//If the new option is not specified, it could decide by rows.
+		if(2 > rows){
+			//Render Input Field
 			
 			rm.write("<input");
 			
@@ -55,6 +59,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			if(!oControl.getAutocomplete()){
 				rm.writeAttribute('autocomplete', 'off');
 			}
+			
+			if(maxLength > 0){
+				rm.writeAttribute('maxlength', maxLength);
+			}
 
 			var size = oControl.getSize();
 			if(ui5strap.Size.Default !== size){
@@ -65,7 +73,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.write("/>");
 
 		}
-		else if(1 < rows){
+		else{
+			//Render Textarea
 			rm.write("<textarea");
 			
 			rm.writeControlData(oControl);
@@ -83,6 +92,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			
 			if(!oControl.getAutocomplete()){
 				rm.writeAttribute('autocomplete', 'off');
+			}
+			
+			if(maxLength > 0){
+				rm.writeAttribute('maxlength', maxLength);
 			}
 
 			rm.writeClasses();

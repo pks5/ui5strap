@@ -1066,12 +1066,17 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* --------------------------------------------------
 	*/
 
-	AppBaseProto.getLocaleString = function(languageKey){
-		return this.getModelProperty(languageKey, 'i18n');
+	/**
+	 * TODO "i18n" should be configurable.
+	 */
+	AppBaseProto.getLocaleString = function(){
+		var bundle = this.getRootControl().getModel("i18n").getResourceBundle();
+		return bundle.getText.apply(bundle, arguments);
 	};
 
-	/*
+	/**
 	* Returns a property of a model that is assigned to the root control.
+	* FIXME
 	*/
 	AppBaseProto.getModelProperty = function(dataPath, modelName){
 		var ressourceModel = this.getRootControl().getModel(modelName);
@@ -1088,7 +1093,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* --------------------------------------------------
 	*/
 
-	/*
+	/**
 	* Create an control id with app namespace. If viewId is given, the controlId must be local.
 	*/ 
 	AppBaseProto.createControlId = function(controlId, viewId){

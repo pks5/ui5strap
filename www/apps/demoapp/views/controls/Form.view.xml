@@ -10,7 +10,7 @@
 
 			<Form>
 				<FormGroup label="Name" feedback="true">
-					<TextInput placeholder="Name" />
+					<TextInput placeholder="Name (max 32 chars)" maxLength="32" />
 					<Icon icon="times" type="FormFeedback" />
 				</FormGroup>
 				<FormGroup label="Email" severity="Error">
@@ -23,7 +23,7 @@
 				</FormGroup>
 				
 				<FormGroup label="Address">
-					<TextInput rows="3" placeholder="Address" />
+					<TextInput rows="3" placeholder="Address (max 120 chars)" maxLength="120" />
 				</FormGroup>
 				<FormGroup label="Some Things">
 					<Row> 

@@ -53,6 +53,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					type: "int",
 					defaultValue : 1
 				},
+				maxLength : {
+					type : "int",
+					defaultValue : -1
+				},
 				placeholder : {
 					type:"string", 
 					defaultValue:""

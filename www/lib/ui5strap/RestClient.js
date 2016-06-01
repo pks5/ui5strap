@@ -214,7 +214,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             data: options.queryParameters,
             dataType: options.responseDataType,
             processData: true,
-            type: 'GET',
+            type: options.method || "GET",
             url: this._determineRequestURL(options),
             headers : requestHeaders,
             beforeSend: function (xhr) {
@@ -252,7 +252,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             data: options.postParameters,
             dataType: options.responseDataType,
             processData: true,
-            type: 'POST',
+            type: options.method || "POST",
             url: postUrl,
             headers : requestHeaders,
             beforeSend: function (xhr) {

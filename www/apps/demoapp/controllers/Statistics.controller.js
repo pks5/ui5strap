@@ -33,7 +33,7 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 				con.setOptions("RedBox BorderBox");
 				
 				var p = this.getView().byId('testParagraph');
-				p.setText('Well lets test if [strong]text outline[/strong] still works if setter is called.');
+				p.setText(this.getApp().getLocaleString("TEST", 12));
 			},
 			
 			onAfterRendering : function(){
