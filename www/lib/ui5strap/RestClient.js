@@ -295,7 +295,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
             data: JSON.stringify(options.payload),
             dataType: options.responseDataType,
             processData: false,
-            type: 'POST',
+            type: options.method || "POST",
             url: postUrl,
             headers : requestHeaders,
             beforeSend: function (xhr) {
