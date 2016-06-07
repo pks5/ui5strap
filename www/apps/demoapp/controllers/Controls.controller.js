@@ -28,10 +28,12 @@
 sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
+		onUpdate : function(){
+			//console.log(this.getView().oPropagatedProperties);
+		},	
+			
 		onAfterRendering : function(){
-			if(this.getView().getViewName() === "ui5strap.demoapp.views.Controls"){
-				this.getApp().setLoaderVisible(false);
-			}
+			//console.log("View rendered: " + this.getView().getViewName());
 		},	
 	
 		showModal : function(){

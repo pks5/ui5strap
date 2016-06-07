@@ -1474,7 +1474,7 @@ sap.ui
 
 					/**
 					 * Transfers a property propagation from one to an other
-					 * control.
+					 * control. Taken from ManagedObject.prototype.setParent
 					 * 
 					 * @Public
 					 * @Static

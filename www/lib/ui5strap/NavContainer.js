@@ -259,16 +259,19 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
 		pageChange.transition.on("last", function(){
+			var $current = pageChange.transition._data.$current;
+			if($current){
+				$current.remove();
+			}
+			
 			if(pageChange.currentPage){
+				//Remove Propagated Properties and Bindings
+				pageChange.currentPage.setParent(null);
+				
 				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
 					target : pageChange.target,
 					newPage : pageChange.page
 				});
-			}
-			
-			var $current = pageChange.transition._data.$current;
-			if($current){
-				$current.remove();
 			}
 			
 			var $next = pageChange.transition._data.$next;
@@ -543,6 +546,11 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			//Add page to new page container
 			page.placeAt(newPageContainer);
 			
+			//Propagate Properties
+			//This must be done after the Page has attached to DOM,
+			//because it gets a new UIArea as Parent and therefore new propagated properties.
+			ui5strap.Utils.addPropertyPropagation(_this, page);
+			
 			//jQuery.sap.log.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
 
 			return $newPageContainer;
@@ -714,10 +722,21 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
 			 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
 			 */
-			ui5strap.Utils.addPropertyPropagation(this, page);
+			
+			//ui5strap.Utils.addPropertyPropagation(this, page);
+			
+			/*
+			var oldSetParent = page.setParent;
+			page.setParent = function(oParent, sAggregationName, bSuppressInvalidate){
+				oldSetParent && oldSetParent.call(this, oParent, sAggregationName, bSuppressInvalidate);
+				ui5strap.Utils.addPropertyPropagation(_this, page);
+			}
+			*/
+			
 			/*
 			 * END OpenUi5 MOD
 			 */
+			
 		}
 		
 		if(this.getDomRef()){
@@ -771,7 +790,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	};
 	
 	NavContainerProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
-		jQuery.sap.log.debug("UBC");
 		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
 		
 		var oModelNames = {},
@@ -794,7 +812,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			oModelNames[sFixedModelName] = sFixedModelName;
 		}
 
-		/*eslint-disable no-loop-func */
 		for (sModelName in oModelNames ) {
 			if ( oModelNames.hasOwnProperty(sModelName) ) {
 				sModelName = sModelName === "undefined" ? undefined : sModelName;
@@ -812,7 +829,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				}
 			}
 		}
-		/*eslint-enable no-loop-func */
 	};
 	
 	/*
