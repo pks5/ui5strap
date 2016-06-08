@@ -2,6 +2,9 @@
 	"app" : {
 	        "id" : "ui5strap.demoapp",
 	        "name" : "Ui5Strap Demo",
+	        
+	        "rootComponent" : true,
+	        
 	        "logLevel" : 5,
 	        "mode" : "Devel"
 	},
@@ -247,29 +250,31 @@
 	        {
 	             "id" : "feedClient",
 	             "module" : "ui5strap.RestClient",
-	             "url" : "api/feed",
-	             "restController" : "FeedController",
-	             "methods" : {
-	             	"info" : {
-	             		"type" : "get",
-	             		"arguments" : ["success", "error"]
-	             	},
-	             	
-	             	"deletePost" : {
-	             		"type" : "postUrlEncoded",
-	             		"arguments" : ["post.postId", "success", "error"]
-	             	},
-	             	
-	             	"readPost" : {
-	             		"path" : "read-post/{postId}",
-	             		"type" : "get",
-	             		"arguments" : ["path.postId", "success", "error"]
-	             	},
-	             	
-	             	"newPost" : {
-	             		"type" : "postWithPayload",
-	             		"arguments" : ["payload", "success", "error"]
-	             	}
+	             "settings" : {
+		             "url" : "api/feed",
+		             "restController" : "FeedController",
+		             "methods" : {
+		             	"info" : {
+		             		"type" : "get",
+		             		"arguments" : ["success", "error"]
+		             	},
+		             	
+		             	"deletePost" : {
+		             		"type" : "postUrlEncoded",
+		             		"arguments" : ["post.postId", "success", "error"]
+		             	},
+		             	
+		             	"readPost" : {
+		             		"path" : "read-post/{postId}",
+		             		"type" : "get",
+		             		"arguments" : ["path.postId", "success", "error"]
+		             	},
+		             	
+		             	"newPost" : {
+		             		"type" : "postWithPayload",
+		             		"arguments" : ["payload", "success", "error"]
+		             	}
+		             }
 	             }
 	         }
 	]

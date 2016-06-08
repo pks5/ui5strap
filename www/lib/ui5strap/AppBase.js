@@ -254,15 +254,42 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	 * @Private
 	 */
 	var _initComponent = function(_this, compConfig){
-		var ComponentConstructor = jQuery.sap.getObject(compConfig.module),
-			componentId = compConfig.id,
+		var componentId = compConfig.id,
 			compEvents = compConfig.events,
 			methodName = 'get' + jQuery.sap.charToUpperCase(componentId),
-			oComp = new ComponentConstructor(_this, compConfig);
+			oComp = null,
+			compSettings = compConfig.settings;
 		
+		if(!compSettings){
+			compSettings = compConfig;
+		}
 		//Check if magic getter conflicts with existing method
 		if(_this[methodName]){
-			throw new Error("Method already exists: " + methodName);
+			throw new Error("Name Conflict! Please choose a different ID for component " + componentId);
+		}
+		
+		compSettings.app = _this;
+		
+		if(compConfig.module){
+			//App Component
+			//Deprecated soon!
+			var ComponentConstructor = jQuery.sap.getObject(compConfig.module);
+			oComp = new ComponentConstructor(_this, compSettings);
+		}
+		else if(compConfig.name){
+			jQuery.sap.registerModulePath(compConfig.name, compConfig.uri);
+			
+			//UI5 Component
+			oComp = sap.ui.getCore().createComponent({
+		        name: compConfig.name,
+		        id: _this.config.createControlId(compConfig.id), 
+		        settings: compSettings
+		    });
+		}
+		else if(compConfig.class){
+			//Managed Object
+			var ComponentConstructor = jQuery.sap.getObject(compConfig.class);
+			oComp = new ComponentConstructor(_this.config.createControlId(compConfig.id), compSettings);
 		}
 		
 		//Register Component in App
@@ -305,6 +332,16 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	 */
 	var _preloadComponents = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadComponents");
+		
+		if(_this.config.data.app.rootComponent){
+			_this._rootComponent = sap.ui.getCore().createComponent({
+		        name: _this.config.data.app.package,
+		        id: _this.config.createControlId("rootComponent"), 
+		        settings: {
+		        	app : _this
+		        }
+		    });
+		}
 
 		//Components
 		var components = _this.config.data.components,
@@ -314,7 +351,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		for(var i = 0; i < components.length; i++){
 			var compConfig = components[i];
 			
-			if(!compConfig.module || !compConfig.id){
+			if(!compConfig.id || 
+				!(compConfig.module 
+					|| (compConfig.name && compConfig.uri) 
+					|| compConfig.class
+				)){
 				throw new Error("Cannot load component #" + i + ": module or id attribute missing!");
 			}
 			else if(false !== compConfig.enabled){

@@ -37,7 +37,7 @@
 						<ListItem>
 							<Link text="Home" />
 						</ListItem>
-						<ListItem  text="Library" />
+						<ListLinkItem  text="Library" />
 						<ListDropdownItem text="Data" update="TextAndData">
 							<ListDropdownMenu>
 								<ListLinkItem text="Cras justo odio" />

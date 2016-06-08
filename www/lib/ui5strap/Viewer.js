@@ -282,6 +282,8 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			throw new Error("Invalid app configuration: attribute 'app' is missing.");
 		}
 		
+		configAppSection.logLevel && jQuery.sap.log.setLevel(configAppSection.logLevel);
+		
 		if(_m_loadedSapplicationsById[configAppSection.id]){
 			return callback(_m_loadedSapplicationsById[configAppSection.id]);
 		}
@@ -463,9 +465,6 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		//Set Browser Title
 		//TODO Is this good here?
 		document.title = configAppSection.name;
-		
-		//TODO log level should only affect on app level
-		configAppSection.logLevel && jQuery.sap.log.setLevel(configAppSection.logLevel);
 		
 		//Store Previous App
 		var previousSapplication = this.getApp();

@@ -304,7 +304,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			navContainerOptions.id = this.config.createControlId(navContainerOptions.id);
 		}
 		
-		var rootControl = new NavContainerConstructor(navContainerOptions);
+		var rootNavigation = new NavContainerConstructor(navContainerOptions);
 		
 		if(navigatorOptions.events && navigatorOptions.events.control){
 			var eKeys = Object.keys(navigatorOptions.events.control),
@@ -312,7 +312,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			for(var i = 0; i < eKeysLength; i++){
 				var evs = navigatorOptions.events.control[eKeys[i]];
 				
-				rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
+				rootNavigation.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
 					
 					for(var j = 0; j < data.actions.length; j ++){
 						_this.runAction({
@@ -321,13 +321,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 							"eventParameters" : oEvent.getParameters()
 						});
 					}
-					
-					//console.log(data);
 				});
 			}
 		}
 		
-		return rootControl;
+		return rootNavigation;
 	};
 	
 	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
@@ -341,7 +339,6 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			viewConfig = this.config.getViewConfig(viewConfig);
 		}
 		
-		//TODO use default target here...
 		if(!viewConfig.target){
 			viewConfig.target = navControl.defaultTarget;
 		}

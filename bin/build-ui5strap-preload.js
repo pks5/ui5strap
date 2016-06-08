@@ -11,7 +11,17 @@ module.exports = function(grunt) {
 		        compress: true
 		      },
 		      libraries: 'ui5strap'
-		    }
+		    },
+		    component: {
+		        options: {
+		          resources: {
+		            cwd: '../www/apps/demoapp/',
+		            prefix: 'ui5strap/demoapp'
+		          },
+		          dest: '../www/apps/demoapp/'
+		        },
+		        components: 'ui5strap/demoapp'
+		      }
 		  }
 
 		});
