@@ -157,43 +157,37 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 			return;
 		}
 		
-		var actionUrl = jQuery.sap.getModulePath(actionName) + '.action.json';
+		var actionUrl = jQuery.sap.getResourceName(actionName, '.action.json');
+		
 		jQuery.sap.log.debug("[ACTION] Loading '" + actionName + "' from '" + actionUrl + "'" );
 		
-		ui5strap.readTextFile(
-				actionUrl, 
-				'json', 
-				function(actionParameters){
-					_actionsCache[actionName] = {
-							actionParameters : actionParameters,
-							preload : preload
-					};
-					
-					if(preload){
-						jQuery.sap.declare(actionName);
-						
-						var ActionInstance = function(oEvent){
-							this.getApp().runAction({
-								"eventSource" : oEvent.getSource(),
-								"eventParameters" : oEvent.getParameters(),
-								"controller" : this,
-								"parameters" : actionName
-							});
-						};
-						
-						//TODO Optimize performance
-						var pack = ui5strap.Utils.getObject(actionName, 1),
-							parts = actionName.split(/\./);
-						
-						pack[parts[parts.length - 1]] = ActionInstance;
-					}
-					
-					callback && callback(actionParameters);
-				},
-				function(data){
-					throw new Error('Invalid Action: "' + actionUrl + '"');
-				}
-		);
+		jQuery.sap.loadResource(actionUrl, {async : true}).then(function(actionParameters) {
+			_actionsCache[actionName] = {
+					actionParameters : actionParameters,
+					preload : preload
+			};
+			
+			if(preload){
+				jQuery.sap.declare(actionName);
+				
+				var ActionInstance = function(oEvent){
+					this.getApp().runAction({
+						"eventSource" : oEvent.getSource(),
+						"eventParameters" : oEvent.getParameters(),
+						"controller" : this,
+						"parameters" : actionName
+					});
+				};
+				
+				//TODO Optimize performance
+				var pack = ui5strap.Utils.getObject(actionName, 1),
+					parts = actionName.split(/\./);
+				
+				pack[parts[parts.length - 1]] = ActionInstance;
+			}
+			
+			callback && callback(actionParameters);
+		});
 	};
 
 	/**

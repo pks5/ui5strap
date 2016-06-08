@@ -393,7 +393,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		if(typeof path === 'object'){
 			//If path is an object, it should contain a "src" attribute and can contain a "package" attribute
-			
+			//TODO Resource Paths need to use a different funtion here to enabled caching!
 			if(path["package"]){
 				appLocation = jQuery.sap.getModulePath(path["package"]) + "/";
 			}

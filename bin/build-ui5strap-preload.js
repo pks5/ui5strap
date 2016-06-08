@@ -11,28 +11,7 @@ module.exports = function(grunt) {
 		        compress: true
 		      },
 		      libraries: 'ui5strap'
-		    },
-		    component: {
-		        options: {
-		          resources: {
-		            cwd: '../www/apps/demoapp/',
-		            prefix: 'ui5strap/demoapp',
-		            src : [
-		             '**/*.js',
-		             '**/*.fragment.html',
-		             '**/*.fragment.json',
-		             '**/*.fragment.xml',
-		             '**/*.view.html',
-		             '**/*.view.json',
-		             '**/*.action.json',
-		             '**/*.view.xml',
-		             '**/*.properties'
-		           ]
-		          },
-		          dest: '../www/apps/demoapp/'
-		        },
-		        components: 'ui5strap/demoapp'
-		      }
+		    }
 		  }
 
 		});

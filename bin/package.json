@@ -8,7 +8,8 @@
     "run-web": "node ../server/server.js",
     "run-desktop": "nwbuild -r ../www -v0.12.3",
     "run-android": "cd .. && cordova emulate android",
-    "build-ui5strap-library": "grunt --gruntfile build-ui5strap-preload.js"
+    "build-ui5strap-library": "grunt --gruntfile build-ui5strap-preload.js",
+    "build-demoapp-component": "grunt --gruntfile build-demoapp-preload.js"
   },
   "devDependencies": {
     "cordova": "^5.4.0",
