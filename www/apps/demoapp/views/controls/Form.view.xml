@@ -17,7 +17,7 @@
 					<InputGroup>
 						<Text text="@" />
 						<TextInput placeholder="Email" />
-						<Icon icon="times" />
+						<Button tap=".handleEmailSubmit"><Icon icon="times" /></Button>
 					</InputGroup>
 					
 				</FormGroup>

@@ -84,26 +84,11 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	TextInputProto = TextInput.prototype;
 	
 	TextInputProto.onAfterRendering = function(){
-		var _this = this;
-		this.$().on('change', function(){
-			var newValue = _this.$().val(),
-				oldValue = _this.getValue();
-			
-			if(newValue !== oldValue){ 
-				_this.setProperty("value", newValue, true);
-			}
-			
-			_this.fireChange({
-				"oldValue" : oldValue
-			});
-		});
+		
 	};
 
 	TextInputProto.onBeforeRendering = function() {
-		if (this.getDomRef()) {
-			this.$().off();
-			//this._curpos = this._$input.cursorPos();
-		}
+		
 	};
 
 	TextInputProto.setValue = function(sValue, bSuppressInvalidate) {
@@ -119,6 +104,31 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			this.setProperty("value", sValue, bSuppressInvalidate);
 		}
 		
+	};
+	
+	TextInputProto.onfocusin = function(oEvent){
+		//console.log("focus");
+	};
+	
+	TextInputProto._onChange = function(oEvent){
+		var newValue = this.$().val(),
+			oldValue = this.getValue();
+		
+		if(newValue !== oldValue){ 
+			this.setProperty("value", newValue, true);
+			
+			this.fireChange({
+				"oldValue" : oldValue
+			});
+		}
+	};
+	
+	TextInputProto.onsapfocusleave = function(oEvent) {
+		this._onChange(oEvent);
+	};
+	
+	TextInputProto.onsapenter = function(oEvent) {
+			this._onChange(oEvent);
 	};
 
 	return TextInput;

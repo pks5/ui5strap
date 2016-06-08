@@ -35,7 +35,15 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 		onAfterRendering : function(){
 			//console.log("View rendered: " + this.getView().getViewName());
 		},	
-	
+		
+		handleEmailChange : function(oEvent){
+			alert("Change!");
+		},
+		
+		handleEmailSubmit : function(oEvent){
+			alert("Submit!");
+		},
+		
 		showModal : function(){
 			this.getView().byId('myModal').show();
 		},
