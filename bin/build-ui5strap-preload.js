@@ -16,7 +16,18 @@ module.exports = function(grunt) {
 		        options: {
 		          resources: {
 		            cwd: '../www/apps/demoapp/',
-		            prefix: 'ui5strap/demoapp'
+		            prefix: 'ui5strap/demoapp',
+		            src : [
+		             '**/*.js',
+		             '**/*.fragment.html',
+		             '**/*.fragment.json',
+		             '**/*.fragment.xml',
+		             '**/*.view.html',
+		             '**/*.view.json',
+		             '**/*.action.json',
+		             '**/*.view.xml',
+		             '**/*.properties'
+		           ]
 		          },
 		          dest: '../www/apps/demoapp/'
 		        },

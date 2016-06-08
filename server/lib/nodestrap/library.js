@@ -34,7 +34,7 @@ module.exports = {
 	"restController" : function(controllerImpl){
 		var Controller = function(options, configLocation){
 			this.configLocation = configLocation;
-			this.options = options;
+			this.options = options.settings ? options.settings : options;
 			
 			if(controllerImpl){ 
 				var implKeys = Object.keys(controllerImpl);

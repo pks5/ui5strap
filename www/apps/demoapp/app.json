@@ -250,9 +250,10 @@
 	        {
 	             "id" : "feedClient",
 	             "module" : "ui5strap.RestClient",
+	             "restController" : "FeedController",
+                     
 	             "settings" : {
 		             "url" : "api/feed",
-		             "restController" : "FeedController",
 		             "methods" : {
 		             	"info" : {
 		             		"type" : "get",

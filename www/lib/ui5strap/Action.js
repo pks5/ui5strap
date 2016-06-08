@@ -172,14 +172,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 					if(preload){
 						jQuery.sap.declare(actionName);
 						
-						//TODO Optimize performance
-						var pack = ui5strap.Utils.getObject(actionName, 1),
-							parts = actionName.split(/\./);
-						
-						pack[parts[parts.length - 1]] = function(oEvent){
-							
-							//console.log(oEvent);
-							
+						var ActionInstance = function(oEvent){
 							this.getApp().runAction({
 								"eventSource" : oEvent.getSource(),
 								"eventParameters" : oEvent.getParameters(),
@@ -187,6 +180,12 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 								"parameters" : actionName
 							});
 						};
+						
+						//TODO Optimize performance
+						var pack = ui5strap.Utils.getObject(actionName, 1),
+							parts = actionName.split(/\./);
+						
+						pack[parts[parts.length - 1]] = ActionInstance;
 					}
 					
 					callback && callback(actionParameters);
