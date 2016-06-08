@@ -277,7 +277,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			oComp = new ComponentConstructor(_this, compSettings);
 		}
 		else if(compConfig.name){
-			jQuery.sap.registerModulePath(compConfig.name, compConfig.uri);
+			jQuery.sap.registerModulePath(compConfig.name, _this.config.resolvePath(compConfig.src, true));
 			
 			//UI5 Component
 			oComp = sap.ui.getCore().createComponent({
@@ -353,7 +353,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			
 			if(!compConfig.id || 
 				!(compConfig.module 
-					|| (compConfig.name && compConfig.uri) 
+					|| (compConfig.name && compConfig.src) 
 					|| compConfig.class
 				)){
 				throw new Error("Cannot load component #" + i + ": module or id attribute missing!");
