@@ -76,7 +76,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			},
 			
 			events : {
-				change : {}
+				change : {},
+				liveChange : {}
 			}
 
 		}
@@ -97,13 +98,14 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			
 			if (this.$().val() != sValue) {
 				this.$().val(sValue);
-				//this._curpos = this._$input.cursorPos();
 			}
 		}
 		else{
 			this.setProperty("value", sValue, bSuppressInvalidate);
 		}
 		
+		this._lastValue = sValue;
+		this._lastLiveValue = sValue;
 	};
 	
 	TextInputProto.onfocusin = function(oEvent){
@@ -111,15 +113,16 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	};
 	
 	TextInputProto._onChange = function(oEvent){
-		var newValue = this.$().val(),
-			oldValue = this.getValue();
+		var newValue = this.$().val();
 		
-		if(newValue !== oldValue){ 
+		if(newValue !== this._lastValue){ 
 			this.setProperty("value", newValue, true);
 			
 			this.fireChange({
-				"oldValue" : oldValue
+				"oldValue" : this._lastValue
 			});
+			
+			this._lastValue = newValue;
 		}
 	};
 	
@@ -127,9 +130,25 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		this._onChange(oEvent);
 	};
 	
-	TextInputProto.onsapenter = function(oEvent) {
-			this._onChange(oEvent);
+	
+	TextInputProto.oninput = function(oEvent) {
+		var newValue = this.$().val();
+		if(newValue !== this._lastLiveValue){
+			this.setProperty("value", newValue, true);
+				
+			this.fireLiveChange({
+				"oldValue" : this._lastLiveValue
+			});
+			
+			this._lastLiveValue = newValue;
+		}
 	};
-
+	
+	TextInputProto.onsapenter = function(oEvent) {
+		if(2 > this.getRows()){
+			this._onChange(oEvent);
+		}
+	};
+	
 	return TextInput;
 });

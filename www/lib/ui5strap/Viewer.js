@@ -218,14 +218,14 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				}
 				
 				//Config URL provided, so load config data from the app.json file.
-				ui5strap.readTextFile(
-					appDefinition.url, 
-					"json", 
-					_loadApp, 
-					function(err){
+				jQuery.ajax({
+					"dataType" : "json",
+					"url" : appDefinition.url,
+					"success" : _loadApp,
+					"error" : function(err){
 						throw new Error("Could not load app configuration from '" + appDefinition.url + "'!");
 					}
-				);
+				});
 			}
 			else{
 				//External Ui5Strap App: Executed within a Sandbox.
