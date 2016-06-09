@@ -282,14 +282,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			//UI5 Component
 			oComp = sap.ui.getCore().createComponent({
 		        name: compConfig.name,
-		        id: _this.config.createControlId(compConfig.id), 
 		        settings: compSettings
 		    });
 		}
 		else if(compConfig.class){
 			//Managed Object
 			var ComponentConstructor = jQuery.sap.getObject(compConfig.class);
-			oComp = new ComponentConstructor(_this.config.createControlId(compConfig.id), compSettings);
+			oComp = new ComponentConstructor(compSettings);
 		}
 		
 		//Register Component in App
@@ -336,7 +335,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		if(_this.config.data.app.rootComponent){
 			_this._rootComponent = sap.ui.getCore().createComponent({
 		        name: _this.config.data.app.package,
-		        id: _this.config.createControlId("rootComponent"), 
 		        settings: {
 		        	app : _this
 		        }
