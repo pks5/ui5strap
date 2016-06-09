@@ -30,6 +30,15 @@
 * TODO: change "navcontainer" to "navcon"
 */
 
+.ui5strapMinimize(){
+    left:0;
+    top:0;
+    bottom:auto;
+    right:auto;
+    width:auto;
+    height:auto;
+}
+
 //Snap to all sides
 .ui5strapSnapFullSize(){
 	left:0;
@@ -98,7 +107,7 @@
 	& > .navcontainer-target-bar{
 		position:absolute;
 		
-		.ui5strapSnapFullSize();
+		.ui5strapMinimize();
 	}
 	
 	//SPEED_NORMAL / Default
@@ -144,41 +153,26 @@
 /*
 * RESPONSIVE Style
 */
-.makeBarNavContainerSize(@size, @fullWidth, @i) when (@i >= 0) {
+.makeBarNavContainerSize(@size, @columnWidth, @i) when (@i >= 0) {
 	//Placement Left
 	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-left{
 		//Bar
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
-			.ui5strapBarNavContainerBarPlacementHor(0, auto, percentage((@i / @grid-columns)));
-		}
-		
-		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
-			.ui5strapBarNavContainerBarPlacementHor(0, auto, ((@i / @grid-columns) * @fullWidth));
+			.ui5strapBarNavContainerBarPlacementHor(0, auto, (@i * @columnWidth));
 		}
 		
 		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementHor(percentage((@i / @grid-columns)), 0, auto);
-		}
-		
-		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementHor(((@i / @grid-columns) * @fullWidth), 0, auto);
+			.ui5strapBarNavContainerContentPlacementHor((@i * @columnWidth), 0, auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementHor(percentage((@i / @grid-columns)), auto, 100%);
-		}
-		
-		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementHor(((@i / @grid-columns) * @fullWidth), auto, 100%);
+			.ui5strapBarNavContainerContentPlacementHor((@i * @columnWidth), auto, 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
-		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
@@ -190,34 +184,19 @@
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
-			.ui5strapBarNavContainerBarPlacementVer(0, auto, percentage((@i / @grid-columns)));
-		}
-		
-		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
-			.ui5strapBarNavContainerBarPlacementVer(0, auto, ((@i / @grid-columns) * @fullWidth));
+			.ui5strapBarNavContainerBarPlacementVer(0, auto, (@i * @columnWidth));
 		}
 		
 		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementVer(percentage((@i / @grid-columns)), 0, auto);
-		}
-		
-		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementVer(((@i / @grid-columns) * @fullWidth), 0, auto);
+			.ui5strapBarNavContainerContentPlacementVer((@i * @columnWidth), 0, auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementVer(percentage((@i / @grid-columns)), auto, 100%);
-		}
-		
-		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementVer(((@i / @grid-columns) * @fullWidth), auto, 100%);
+			.ui5strapBarNavContainerContentPlacementVer((@i * @columnWidth), auto, 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
-		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
@@ -229,34 +208,19 @@
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
-			.ui5strapBarNavContainerBarPlacementHor(auto, 0, percentage((@i / @grid-columns)));
-		}
-		
-		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
-			.ui5strapBarNavContainerBarPlacementHor(auto, 0, ((@i / @grid-columns) * @fullWidth));
+			.ui5strapBarNavContainerBarPlacementHor(auto, 0, (@i * @columnWidth));
 		}
 		
 		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementHor(0, percentage((@i / @grid-columns)), auto);
-		}
-		
-		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementHor(0, ((@i / @grid-columns) * @fullWidth), auto);
+			.ui5strapBarNavContainerContentPlacementHor(0, (@i * @columnWidth), auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementHor(auto, percentage((@i / @grid-columns)), 100%);
-		}
-		
-		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementHor(auto, ((@i / @grid-columns) * @fullWidth), 100%);
+			.ui5strapBarNavContainerContentPlacementHor(auto, (@i * @columnWidth), 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
-		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
@@ -268,56 +232,41 @@
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
-			.ui5strapBarNavContainerBarPlacementVer(auto, 0, percentage((@i / @grid-columns)));
-		}
-		
-		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-bar{
-			.ui5strapBarNavContainerBarPlacementVer(auto, 0, ((@i / @grid-columns) * @fullWidth));
+			.ui5strapBarNavContainerBarPlacementVer(auto, 0, (@i * @columnWidth));
 		}
 		
 		//Content
 		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementVer(0, percentage((@i / @grid-columns)), auto);
-		}
-		
-		&.navcontainer-flag-mode-@{size}-intrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementVer(0, ((@i / @grid-columns) * @fullWidth), auto);
+			.ui5strapBarNavContainerContentPlacementVer(0, (@i * @columnWidth), auto);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementVer(auto, percentage((@i / @grid-columns)), 100%);
-		}
-		
-		&.navcontainer-flag-mode-@{size}-extrudefixed > .navcontainer-target-content{
-			.ui5strapBarNavContainerContentPlacementVer(auto, ((@i / @grid-columns) * @fullWidth), 100%);
+			.ui5strapBarNavContainerContentPlacementVer(auto, (@i * @columnWidth), 100%);
 		}
 		
 		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
-		&.navcontainer-flag-mode-@{size}-overlayfixed > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
 	}
 	
-	.makeBarNavContainerSize(@size, @fullWidth, (@i - 1));
+	.makeBarNavContainerSize(@size, @columnWidth, (@i - 1));
 }
 
 //SIZE_EXTRA_SMALL
-.makeBarNavContainerSize(xs, @screen-sm, @grid-columns);
+.makeBarNavContainerSize(xs, @barnavcontainer-column-size, @barnavcontainer-grid-colums);
 
 //SIZE_SMALL
 @media (min-width: @screen-sm) {
-	.makeBarNavContainerSize(sm, @screen-sm, @grid-columns);
+	.makeBarNavContainerSize(sm, @barnavcontainer-column-size, @barnavcontainer-grid-colums);
 }
 
 //SIZE_MEDIUM
 @media (min-width: @screen-md) {
-	.makeBarNavContainerSize(md, @screen-md, @grid-columns);
+	.makeBarNavContainerSize(md, @barnavcontainer-column-size, @barnavcontainer-grid-colums);
 }
 
 //SIZE_LARGE
 @media (min-width: @screen-lg) {
-	.makeBarNavContainerSize(lg, @screen-lg, @grid-columns);
+	.makeBarNavContainerSize(lg, @barnavcontainer-column-size, @barnavcontainer-grid-colums);
 }

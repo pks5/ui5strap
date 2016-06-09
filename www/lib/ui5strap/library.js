@@ -779,10 +779,7 @@ sap.ui
 					ui5strap.BarNavContainerMode = {
 						Intrude : "Intrude",
 						Extrude : "Extrude",
-						Overlay : "Overlay",
-						IntrudeFixed : "IntrudeFixed",
-						ExtrudeFixed : "ExtrudeFixed",
-						OverlayFixed : "OverlayFixed"
+						Overlay : "Overlay"
 					};
 
 					/*

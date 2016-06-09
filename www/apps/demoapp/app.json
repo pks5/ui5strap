@@ -215,13 +215,13 @@
          	"barSizeSmall" : 2,
          	"barPlacementSmall" : "Right",
          	
-         	"barSizeMedium" : 1,
+         	"barSizeMedium" : 0,
          	"barPlacementMedium" : "Bottom",
          	"barTransitionMedigum" : "none",
          	
-         	"barSizeLarge" : 2,
+         	"barSizeLarge" : 5,
          	"barPlacementLarge" : "Left",
-         	"barModeLarge" : "IntrudeFixed",
+         	"barModeLarge" : "Intrude",
          	
          	"barVisible" : false
          	

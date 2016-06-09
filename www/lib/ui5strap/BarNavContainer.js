@@ -59,6 +59,11 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 				},
 				//TODO add barModeExtraLarge on Bootstrap 4 Upgrade
 				
+				barSizeMax : {
+					type : "int",
+					defaultValue : 4
+				},
+				
 				//Bar Size DOES inherit from smaller sizes
 				//TODO rename to barSize
 				barSizeExtraSmall : {
@@ -340,6 +345,7 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 			columnsSmall = this.getBarSizeSmall(),
 			columnsMedium = this.getBarSizeMedium(),
 			columnsLarge = this.getBarSizeLarge(),
+			sizeMax = this.getBarSizeMax(),
 			transitionSpeed = this.getBarTransitionSpeed();
 		
 		//Transition Speed
@@ -350,31 +356,46 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 			
 		//SIZE_EXTRA_SMALL
 		if(-1 < columnsExtraSmall){
-	      classes += " navcontainer-flag-col-xs-" + columnsExtraSmall;
-	      classes += " navcontainer-flag-placement-xs-" + placementExtraSmall.toLowerCase();
-	      classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
+			if(columnsExtraSmall > sizeMax){
+				columnsExtraSmall = sizeMax;
+			}
+			
+			classes += " navcontainer-flag-col-xs-" + columnsExtraSmall;
+			classes += " navcontainer-flag-placement-xs-" + placementExtraSmall.toLowerCase();
+			classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
 	    }
 		
 		//SIZE_SMALL
 	    if(-1 < columnsSmall){
-	      classes += " navcontainer-flag-col-sm-" + columnsSmall;
-	      classes += " navcontainer-flag-placement-sm-" + placementSmall.toLowerCase();
-	      classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
+	    	if(columnsSmall > sizeMax){
+	    		columnsSmall = sizeMax;
+			}
+		    
+	    	classes += " navcontainer-flag-col-sm-" + columnsSmall;
+		    classes += " navcontainer-flag-placement-sm-" + placementSmall.toLowerCase();
+		    classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
 	    }
 	    
 	    //SIZE_MEDIUM
 	    if(-1 < columnsMedium){
-		  classes += " navcontainer-flag-col-md-" + columnsMedium;
-		  classes += " navcontainer-flag-placement-md-" + placementMedium.toLowerCase();
-		  classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
-		  
+	    	if(columnsMedium > sizeMax){
+	    		columnsMedium = sizeMax;
+			}
+	    	
+	    	classes += " navcontainer-flag-col-md-" + columnsMedium;
+	    	classes += " navcontainer-flag-placement-md-" + placementMedium.toLowerCase();
+	    	classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
 		}
 	    
 	    //SIZE_LARGE
 	    if(-1 < columnsLarge){
-	      classes += " navcontainer-flag-col-lg-" + columnsLarge;
-	      classes += " navcontainer-flag-placement-lg-" + placementLarge.toLowerCase();
-	      classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
+	    	if(columnsLarge > sizeMax){
+	    		columnsLarge = sizeMax;
+			}
+	    	
+	    	classes += " navcontainer-flag-col-lg-" + columnsLarge;
+	    	classes += " navcontainer-flag-placement-lg-" + placementLarge.toLowerCase();
+	    	classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
 	    }
 		
 	    //TODO add columnsExtraLarge on BOOTSTRAP_4 Upgrade
