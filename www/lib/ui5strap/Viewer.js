@@ -33,7 +33,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			ViewerBase.call(this, options);
 
 			this._loadedLibraries = {};
-			this._loadingSapplication = null;
+			this._loadingApp = null;
 
 			this._dom = null;
 			
@@ -182,7 +182,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			if(
 				!appDefinition.name 
 				|| !appDefinition.id 
-				|| !appDefinition.package 
+				|| !appDefinition["package"] 
 				|| !appDefinition.url
 			){
 				throw new Error("Cannot execute HTML5 App: at least one of required attributes missing in definition.");
@@ -193,7 +193,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		        "app" : {
 		        	"name" : appDefinition.name,
 		            "id" : appDefinition.id,
-		            "package" : appDefinition.package,
+		            "package" : appDefinition["package"],
 		            "module" : "ui5strap.AppSandbox",
 		            "appURL" : appDefinition.url,
 		            "propagateMessages" : true
@@ -233,7 +233,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				if(
 					!appDefinition.name 
 					|| !appDefinition.id 
-					|| !appDefinition.package 
+					|| !appDefinition["package"] 
 					|| !appDefinition.url
 				){
 					throw new Error("Cannot execute external UI5STRAP App: at least one of required attributes missing in definition.");
@@ -247,7 +247,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			        "app" : {
 			            "name" : appDefinition.name,
 			            "id" : appDefinition.id,
-			            "package" : appDefinition.package,
+			            "package" : appDefinition["package"],
 			            "module" : "ui5strap.AppSandbox",
 			            "appURL" : launcher + "?app=" + encodeURIComponent(appDefinition.url),
 			            "propagateMessages" : true
@@ -379,8 +379,8 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
 		jQuery.sap.log.debug("ViewerProto.showApp");
 		
-		if(this._loadingSapplication){
-			jQuery.sap.log.warning("App '" + this._loadingSapplication + "' is currently loading."); 
+		if(this._loadingApp){
+			jQuery.sap.log.warning("App '" + this._loadingApp + "' is currently loading."); 
 			
 			return;
 		}
@@ -416,7 +416,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		
 		//Set the app as current foreground app				
 		_m_currentSapplication = appInstance;
-		this._loadingSapplication = appInstance;	
+		this._loadingApp = appInstance;	
 
 		//Create or Update App Container
 		appInstance.updateContainer();
@@ -497,7 +497,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 								transition.execute(currentRootCallback, preparedRootCallback);
 							
 								//Set viewer to available
-								viewer._loadingSapplication = null;
+								viewer._loadingApp = null;
 							//});
 							
 						});
