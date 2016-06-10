@@ -287,11 +287,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @Protected
 	 */
 	AppProto._buildRootControl = function(){
-		var _this = this;
-		var navigatorOptions = this.config.data.rootNavigation;
-		
-		//Init default NavContainer
-		var navContainerModule = navigatorOptions["class"] || navigatorOptions.module || "ui5strap.NavContainer";
+		var _this = this,
+			navigatorOptions = this.config.data.rootNavigation,
+			navContainerModule = navigatorOptions["class"] || navigatorOptions.module || "ui5strap.NavContainer";
 		
 		jQuery.sap.require(navContainerModule);
 		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);

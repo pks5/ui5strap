@@ -206,7 +206,7 @@
 	],
 	
 	"rootNavigation" : {
-	     "module" : "ui5strap.BarNavContainer",
+	     "class" : "ui5strap.BarNavContainer",
          "settings" : {
          	"barSizeExtraSmall" : 1,
          	"barPlacementExtraSmall" : "Top",

@@ -337,13 +337,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				
 				if(!compConfig.id || 
 					!(compConfig.module 
-						|| (compConfig.componentName && compConfig.src) 
+						|| (compConfig.componentName && compConfig["location"]) 
 						|| compConfig["class"]
 					)){
-					throw new Error("Cannot load component #" + i + ": [module, class, or componentName/src] or id attribute missing!");
+					throw new Error("Cannot load component #" + i + ": [module, class, or componentName/location] or id attribute missing!");
 				}
 				
-				var oComp = null;
 				if(compConfig.module){
 					//App Component
 					//Deprecated soon!
@@ -361,7 +360,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				else if(compConfig.componentName){
 					jQuery.sap.registerModulePath(
 							compConfig.componentName, 
-							_this.config.resolvePath(compConfig.src, true)
+							_this.config.resolvePath(compConfig["location"], true)
 					);
 					
 					var compSettings = { app : _this };
