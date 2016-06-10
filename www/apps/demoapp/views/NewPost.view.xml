@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="ui5strap.demoapp.controllers.NewPost" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
 	<StaticOverlay backdrop="true" close="ui5strap.demoapp.actions.CloseOverlay">
