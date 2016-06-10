@@ -337,7 +337,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				
 				if(!compConfig.id || 
 					!(compConfig.module 
-						|| (compConfig.componentName && compConfig["location"]) 
+						|| (compConfig["package"] && compConfig["location"]) 
 						|| compConfig["class"]
 					)){
 					throw new Error("Cannot load component #" + i + ": [module, class, or componentName/location] or id attribute missing!");
@@ -348,7 +348,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 					//Deprecated soon!
 					var moduleName = _this.config.resolvePackage(compConfig.module, "modules");
 					
-					//TODO async!!!
+					//TODO Async!
 					jQuery.sap.require(moduleName);
 					
 					var ComponentConstructor = jQuery.sap.getObject(moduleName);
@@ -357,9 +357,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 					
 					then();
 				}
-				else if(compConfig.componentName){
+				else if(compConfig["package"]){
 					jQuery.sap.registerModulePath(
-							compConfig.componentName, 
+							compConfig["package"], 
 							_this.config.resolvePath(compConfig["location"], true)
 					);
 					
@@ -369,7 +369,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 					//UI5 Component
 					//TODO Async
 					var oComp = sap.ui.getCore().createComponent({
-				        name: compConfig.componentName,
+				        name: compConfig["package"],
 				        settings: compSettings
 				    });
 					
@@ -1215,6 +1215,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		
 		oController.onpageUpdateSingle && oController.onPageUpdateSingle(new sap.ui.base.Event("ui5strap.controller.pageUpdateSingle", this, viewConfig.parameters || {}));
 		
+		//TODO Async!
 		jQuery.sap.require("ui5strap.Container");
 		var container = new ui5strap.Container();
 		container.addContent(oPage);

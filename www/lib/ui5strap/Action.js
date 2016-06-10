@@ -235,6 +235,8 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 			var actionInstanceDef = _getActionInstanceDef(context, actionModulesList[i]);
 			
 			instanceDefs.push(actionInstanceDef);
+			
+			//TODO Async!
 			jQuery.sap.require(actionInstanceDef.module);
 		}
 

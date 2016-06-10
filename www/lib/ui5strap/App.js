@@ -291,6 +291,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			navigatorOptions = this.config.data.rootNavigation,
 			navContainerModule = navigatorOptions["class"] || navigatorOptions.module || "ui5strap.NavContainer";
 		
+		//TODO Async!
 		jQuery.sap.require(navContainerModule);
 		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
 		

@@ -312,53 +312,6 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	 */
 	
 	/**
-	 * @Private
-	 */
-	var _preloadLibraries = function(_this, libs, callback){
-		jQuery.sap.log.debug("ViewerProto._preloadLibraries");
-		
-		var callI = libs.length,
-			successCallback = function(){
-				callI--;
-				if(callI === 0){
-					callback && callback();
-				}
-			};
-
-		for(var i = 0; i < libs.length; i++){
-			var lib = libs[i],
-				libPackage = lib["package"], 
-				libLocation = lib["location"];
-
-			if(libPackage === 'ui5os' ||
-				libPackage === 'ui5strap'){
-				throw new Error('Do not include the libraries "ui5strap" and "ui5os" into your libraries configuration.');
-			}
-			
-			jQuery.sap.registerModulePath(libPackage, libLocation);
-			_this._loadedLibraries[libPackage] = libLocation;
-
-			if(lib.preload){
-				//Preload Controls an Elements
-				var preloadLibs = [libPackage + '.library'],
-					libData = sap.ui.getCore().getLoadedLibraries()[libPackage];
-				
-				for(var j = 0; j < libData.elements.length; j++){
-					preloadLibs.push(libData.elements[j]);
-				}
-
-				for(var j = 0; j < libData.controls.length; j++){
-					preloadLibs.push(libData.controls[j]);
-				}
-				
-				jQuery.sap.require(preloadLibs);
-			}
-			
-			successCallback();
-		}
-	};
-
-	/**
 	* Creates a app instance
 	* @param appConfig SappConfig instance
 	* @Public
@@ -367,30 +320,22 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		jQuery.sap.log.debug("ViewerProto.createApp");
 		
 		var oConfigData = appConfig.data,
+			libs = oConfigData.libraries,
+			libCount = libs.length,
 			configAppSection = oConfigData.app,
-			appModuleName = configAppSection.module,
-			libraries = [],
-			_this = this;
+			_this = this,
+			i;
 
-		//register the libraries
-		for(var i = 0; i < oConfigData.libraries.length; i++){
-			var dependencyLib = oConfigData.libraries[i];
-			libraries.push({
-				"package" : dependencyLib["package"],
-				"location" : appConfig.resolvePath(dependencyLib["location"], true),
-				"preload" : dependencyLib.preload
-			});
-			
+		//Register Library Module Pathes
+		for(i = 0; i < libCount; i++){
+			var dependencyLib = libs[i];
+			jQuery.sap.registerModulePath(dependencyLib["package"], appConfig.resolvePath(dependencyLib["location"], true));
 		} 
+		
+		//Register App Module Path
+		jQuery.sap.registerModulePath(configAppSection["package"], configAppSection["location"]);
 
-		libraries.push({ 
-			"package" : configAppSection["package"],
-			"location" : configAppSection["location"]
-		});
-
-		_preloadLibraries(this, libraries, function(){
-			jQuery.sap.require(appModuleName);
-			var AppConstructor = jQuery.sap.getObject(appModuleName);
+		sap.ui.require([configAppSection["class"].replace(/\./g, "/")], function(AppConstructor){
 			callback && callback(new AppConstructor(appConfig, _this));
 		});
 	};
@@ -743,9 +688,12 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	/**
 	* Initializes the console
 	* @Protected
+	* TODO Where is this needed?
 	*/
 	ViewerMultiProto._initConsole = function(){
 		if(this.options.enableConsole){
+			
+			//TODO Async!
 			jQuery.sap.require("ui5strap.Console");
 			this._console = new ui5strap.Console();
 		}

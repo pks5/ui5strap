@@ -499,12 +499,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		//Module
 		//TODO Use class instead of module
-		if(appSection["class"]){
-			appSection.module = appSection["class"];
-		}
-		
-		if(!appSection.module){
-			appSection.module = "ui5strap.App";
+		if(!appSection["class"]){
+			if(appSection.module){
+				jQuery.sap.log.warning("Config setting 'app.module' is deprecated! Use 'app.class' instead.")
+				appSection["class"] = appSection.module;
+			}
+			else{
+				appSection["class"] = "ui5strap.App";
+			}
 		}
 		
 		//Style Class
