@@ -162,10 +162,6 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 		this.context._log.debug("Executing Task " + this);
 		
 		try{
-			//Apply local parameter functions
-			//@deprecated
-			this.context._process(this.getScope());
-	
 			//Prepare parameters
 			this.prepareParameters();
 	
@@ -207,9 +203,6 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	ActionModuleProto.then = function(force){console.log("THEN", force, this._suppressThen);
 		if(force || !this._suppressThen){
 			ui5strap.Action.runTasks(this.context, _expression(this, "THEN"));
-			
-			//deprecated
-			this.fireEvents(ActionModule.EVENT_COMPLETED);
 		}
 	};
 	
@@ -351,19 +344,12 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	};
 	
 	/**
-	 * @deprecated
-	 */
-	ActionModuleProto.fireEvents = function(eventName){
-		ui5strap.Action.executeEventModules(this.context, this.getScope(), eventName);
-	};
-
-	/**
 	* Called when the action module has been completed
 	* @deprecated
 	* @Protected
 	*/
 	ActionModuleProto.completed = function(){
-		this.fireEvents(ActionModule.EVENT_COMPLETED);
+		
 	};
 
 	//Return Module Constructor

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFunctions){
+sap.ui.define(['./library'], function(library){
 
 	/*
 	* @constructor
@@ -49,12 +49,6 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 	ActionContext.PARAM_MODULES = 'modules';
 	ActionContext.PARAM_TASKS = 'TASKS';
 	ActionContext.PARAM_MODULE = 'TYPE';
-	
-	//Action Events
-	ActionContext.PARAM_EVENTS = 'events';
-	
-	//Action Functions
-	ActionContext.PARAM_FUNCTIONS = 'functions';
 	
 	ActionContext.WORKPOOL = "action";
 	
@@ -801,47 +795,6 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 	 * ------------------------------------------------
 	 * 
 	 */
-	
-	/**
-	* Apply functions
-	* @deprecated
-	* @private
-	*/
-	var _applyFunctions = function(_this, parameterKey){
-		var paramFunctions = _this.get(null, parameterKey);
-
-		if(paramFunctions){ //Expected array
-			jQuery.sap.log.warning("Usage of context functions is deprecated and will be dropped.");
-			var paramFunctionsLength = paramFunctions.length,
-				availableFunctions = ActionFunctions;
-			jQuery.sap.log.debug("CALLING " + paramFunctionsLength + " FUNCTIONS OF " + parameterKey);
-				
-			for( var i = 0; i < paramFunctionsLength; i++ ){
-				var functionDef = paramFunctions[i],
-					functionName = functionDef['function'];
-
-				if(availableFunctions[functionName]){
-					jQuery.sap.log.debug("Calling parameter function '" + functionName + "'");
-					var funcResult = availableFunctions[functionName].call(_this, functionDef.args);
-					if(false === funcResult){
-						throw new Error("Parameter function '" + functionName + "' failed.");
-					}
-				}
-				else{
-					throw new Error('Invalid function: ' + functionName);
-				}
-			}
-		}	
-
-	};
-	
-	/**
-	* @Protected
-	* @deprecated
-	*/
-	ActionContextProto._process = function(parameterScope){
-		_applyFunctions(this, parameterScope + "." + ActionContext.PREFIX + ActionContext.PARAM_FUNCTIONS);
-	};
 	
 	/**
 	 * @deprecated

@@ -120,8 +120,6 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 	* FIXME
 	*/
 	var _execute = function(context){
-		context._process(ActionContext.WORKPOOL);
-		
 		var actionModuleNameParameter = ActionContext.PREFIX + ActionContext.PARAM_MODULES,
 			actionModuleName = context.parameters[actionModuleNameParameter];
 		
@@ -190,29 +188,6 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 		});
 	};
 
-	/**
-	* Run events
-	* @Public
-	* @Static
-	* @deprecated
-	*/
-	Action.executeEventModules = function(context, parameterKey, eventName){
-		var paramEvents = context.get(
-				null,
-				parameterKey
-				+ "." 
-				+ ActionContext.PREFIX 
-				+ ActionContext.PARAM_EVENTS
-		);
-
-		if(paramEvents && paramEvents[eventName]){
-			context._log.debug("Triggering event actions '" + eventName + "'...");
-
-			//Execute one or multiple AM modules that are defined in the event
-			Action.runTasks(context, paramEvents[eventName]);
-		}
-	};
-	
 	/**
 	* Executes a list of AM Modules
 	* @Public
