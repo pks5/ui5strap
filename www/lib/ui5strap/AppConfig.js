@@ -425,24 +425,21 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* Resolves a package relative to app package.
 	* @Public
 	*/
-	AppConfigProto.resolvePackage = function (packageString, defaultFolder, baseRelative){
+	AppConfigProto.resolvePackage = function (packageString, defaultFolder){
 		if(-1 === packageString.indexOf(".")){
-			if(!defaultFolder){
-				throw new Exception("Please provide a default folder for resolving '" + packageString + "'");
-			}
-			packageString = this.data.app.package + "." + defaultFolder.replace(/\//g, ".") + "." + packageString;
+			jQuery.sap.log.warning("Please add a leading dot '.' to " + packageString);
+			packageString = "." + packageString;
 		}
-		else if(jQuery.sap.startsWith(packageString, ".")){
-			if(baseRelative){
-				packageString = this.data.app.package + packageString;
-			}
-			else if(!defaultFolder){
-				throw new Exception("Please provide a default folder for resolving '" + packageString + "'");
+		
+		if(jQuery.sap.startsWith(packageString, ".")){
+			if(!defaultFolder){
+				packageString = this.data.app["package"] + packageString;
 			}
 			else{
-				packageString = this.data.app.package + "." + defaultFolder.replace(/\//g, ".") + packageString;
+				packageString = this.data.app["package"] + "." + defaultFolder.replace(/\//g, ".") + packageString;
 			}
 		}
+		
 		return packageString;
 	};
 	
@@ -451,16 +448,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* @Protected
 	*/
 	AppConfigProto._validate = function(configDataJSON){
-		if(!configDataJSON.app){
+		var appSection = configDataJSON.app;
+		
+		if(!appSection){
 			throw new Error("Invalid app configuration: attribute 'app' is missing.");
 		}
 
-		//Populate deprecated sapplication attribute
-		//@deprecated
-		configDataJSON.sapplication = configDataJSON.app;
-		
-		var appSection = configDataJSON.app;
-		
 		//ID
 		if(!appSection.id){
 			throw new Error("Invalid app config: attribute 'app.id' is missing.");
@@ -487,12 +480,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			appSection["location"] = appUrlParts.join('/');
 		}
 		
-		//jQuery.sap.declare(configDataJSON.app["package"] + ".actions");
-		//var rootPackage = jQuery.sap.getObject(configDataJSON.app["package"]);
-		//rootPackage.actions = {};
-
 		//Namespace
 		//TODO What's this?
+		/*
 		if(!appSection["namespace"]){
 			appSection["namespace"] = appSection["package"];
 		}	
@@ -500,6 +490,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		if(!appSection["namespace"].match(/^[a-zA-Z0-9_\.]+$/)){
 			throw new Error('Invalid app namespace "' + appSection["namespace"] + '": may only contain letters, digits, dots and underscores.');
 		}
+		*/
 
 		//Type
 		if(!appSection.type){
@@ -507,6 +498,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		
 		//Module
+		//TODO Use class instead of module
+		if(appSection["class"]){
+			appSection.module = appSection["class"];
+		}
+		
 		if(!appSection.module){
 			appSection.module = "ui5strap.App";
 		}
@@ -558,12 +554,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			configDataJSON.components = [];
 		}
 
-		//UI5 Modules to be preloaded
-		//TODO Is this used somewhere?
-		if(!configDataJSON.modules){
-			configDataJSON.modules = [];
-		}
-		
 		//Actions to be preloaded
 		if(!configDataJSON.actions){
 			configDataJSON.actions = [];

@@ -253,44 +253,16 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	/**
 	 * @Private
 	 */
-	var _initComponent = function(_this, compConfig){
+	var _initComponent = function(_this, compConfig, oComp){
 		var componentId = compConfig.id,
 			compEvents = compConfig.events,
-			methodName = 'get' + jQuery.sap.charToUpperCase(componentId),
-			oComp = null,
-			compSettings = compConfig.settings;
+			methodName = 'get' + jQuery.sap.charToUpperCase(componentId);
 		
-		if(!compSettings){
-			compSettings = compConfig;
-		}
 		//Check if magic getter conflicts with existing method
 		if(_this[methodName]){
 			throw new Error("Name Conflict! Please choose a different ID for component " + componentId);
 		}
-		
-		compSettings.app = _this;
-		
-		if(compConfig.module){
-			//App Component
-			//Deprecated soon!
-			var ComponentConstructor = jQuery.sap.getObject(compConfig.module);
-			oComp = new ComponentConstructor(_this, compSettings);
-		}
-		else if(compConfig.name){
-			jQuery.sap.registerModulePath(compConfig.name, _this.config.resolvePath(compConfig.src, true));
-			
-			//UI5 Component
-			oComp = sap.ui.getCore().createComponent({
-		        name: compConfig.name,
-		        settings: compSettings
-		    });
-		}
-		else if(compConfig.class){
-			//Managed Object
-			var ComponentConstructor = jQuery.sap.getObject(compConfig.class);
-			oComp = new ComponentConstructor(compSettings);
-		}
-		
+	
 		//Register Component in App
 		_this.components[componentId] = oComp;
 		
@@ -332,9 +304,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	var _preloadComponents = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadComponents");
 		
+		//TODO this must become standard
 		if(_this.config.data.app.rootComponent){
 			_this._rootComponent = sap.ui.getCore().createComponent({
-		        name: _this.config.data.app.package,
+		        name: _this.config.data.app["package"],
 		        settings: {
 		        	app : _this
 		        }
@@ -343,31 +316,86 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 		//Components
 		var components = _this.config.data.components,
-			loadModules = [],
-			compConfigs = [];
-		
-		for(var i = 0; i < components.length; i++){
-			var compConfig = components[i];
-			
-			if(!compConfig.id || 
-				!(compConfig.module 
-					|| (compConfig.name && compConfig.src) 
-					|| compConfig.class
-				)){
-				throw new Error("Cannot load component #" + i + ": module or id attribute missing!");
-			}
-			else if(false !== compConfig.enabled){
-				var moduleName = _this.config.resolvePackage(compConfig.module, "modules");
-				compConfig.module = moduleName;
+			compCount = components.length,
+			asyncHelper = compCount,
+			then = function(){
+				asyncHelper--;
 				
-				//TODO async!!!
-				jQuery.sap.require(moduleName);
-				_initComponent(_this, compConfig);
-			}
+				if(asyncHelper === 0){
+					//Trigger Callback
+					callback && callback();
+				}
+			};
+		
+		for(var i = 0; i < compCount; i++){
+			(function(){
+				var compConfig = components[i];
+				if(false === compConfig.enabled){
+					then();
+					return;
+				}
+				
+				if(!compConfig.id || 
+					!(compConfig.module 
+						|| (compConfig.componentName && compConfig.src) 
+						|| compConfig["class"]
+					)){
+					throw new Error("Cannot load component #" + i + ": [module, class, or componentName/src] or id attribute missing!");
+				}
+				
+				var oComp = null;
+				if(compConfig.module){
+					//App Component
+					//Deprecated soon!
+					var moduleName = _this.config.resolvePackage(compConfig.module, "modules");
+					
+					//TODO async!!!
+					jQuery.sap.require(moduleName);
+					
+					var ComponentConstructor = jQuery.sap.getObject(moduleName);
+					
+					_initComponent(_this, compConfig, new ComponentConstructor(_this, compConfig));
+					
+					then();
+				}
+				else if(compConfig.componentName){
+					jQuery.sap.registerModulePath(
+							compConfig.componentName, 
+							_this.config.resolvePath(compConfig.src, true)
+					);
+					
+					var compSettings = { app : _this };
+					jQuery.extend(compSettings, compConfig.settings);
+					
+					//UI5 Component
+					//TODO Async
+					var oComp = sap.ui.getCore().createComponent({
+				        name: compConfig.componentName,
+				        settings: compSettings
+				    });
+					
+					_initComponent(_this, compConfig, oComp);
+					
+					then();
+				}
+				else if(compConfig["class"]){
+					//General Class
+					//Use settings as first Parameter
+					sap.ui.require([_this.config.resolvePackage(compConfig["class"]).replace(/\./g, "/")], function(ComponentConstructor){
+						var compSettings = { app : _this };
+						
+						jQuery.extend(compSettings, compConfig.settings);
+						
+						_initComponent(_this, compConfig, new ComponentConstructor(compSettings));
+						
+						then();
+					});
+				}
+				
+			}());
 		}
 
-		//Trigger Callback
-		callback && callback();
+		
 	};
 	
 	/**

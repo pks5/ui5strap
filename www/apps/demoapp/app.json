@@ -244,12 +244,12 @@
 	"components" : [
 			{
 	             "id" : "feedManager",
-	             "module" : ".FeedManager"
+	             "class" : ".modules.FeedManager"
 	        },
 	        
 	        {
 	             "id" : "feedClient",
-	             "module" : "ui5strap.RestClient",
+	             "class" : "ui5strap.RestClient",
 	             "restController" : "FeedController",
                      
 	             "settings" : {

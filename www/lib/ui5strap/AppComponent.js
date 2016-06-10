@@ -28,11 +28,21 @@
 sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
 
 	var AppComponent = ObjectBase.extend("ui5strap.AppComponent", {
-		"constructor" : function(app, options){
+		"constructor" : function(){
 			ObjectBase.apply(this);
 			
-			this.app = app;
-			this.options = options;
+			if(arguments[1]){ 
+				this.app = arguments[0];
+				this.options = arguments[1];
+			}
+			else if(arguments[0]){
+				this.options = arguments[0];
+				this.app = this.options.app;
+			}
+			
+			if(!this.app || !this.options){
+				throw new Error("AppComponent constructor must have either 1 or 2 arguments.");
+			}
 		}
 	}),
 	AppComponentProto = AppComponent.prototype;
