@@ -53,7 +53,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 	*/
 	AMAppMessageProto.run = function(){
 		this.context.app.sendMessage(this.context.parameters[this.namespace]);
+		
+		this.then();
 	};
+	
+	//Legacy
+	AMAppMessageProto.completed = function(){};
 
 	//Return Module Constructor
 	return AMAppMessage;

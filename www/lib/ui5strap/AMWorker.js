@@ -74,7 +74,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 		}, false);
 
 		worker.postMessage('START');
+		
+		this.then();
 	};
+	
+	//Legacy
+	AMWorkerProto.completed = function(){};
 	
 	return AMWorker;
 });

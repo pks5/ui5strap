@@ -90,7 +90,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			this.setParameter("result", propertyValue);
 			
 			this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
+			
+			this.then();
 	};
+	
+	//Legacy
+	AMGetPropertyProto.completed = function(){};
 	
 	return AMGetProperty;
 });

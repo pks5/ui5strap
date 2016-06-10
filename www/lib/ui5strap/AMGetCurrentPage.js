@@ -94,7 +94,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			this.context.set(this, tgtParam, currentPage.getId());
 		}
 		this.setParameter("result", currentPage.getId());
+		
+		this.then();
 	};
+	
+	//Legacy
+	AMGetCurrentPageProto.completed = function(){};
 	
 	return AMGetCurrentPage;
 });

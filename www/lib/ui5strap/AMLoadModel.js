@@ -182,10 +182,14 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 						theControl.setModel(oModel, modelName);
 					}
 				}
-
+				
+				_this.then();
 				_this.context._log.debug(this._actionNameShort + "Model '" + modelName + "' (type: '" + modelType + "', scope: '" + _this.getParameter("scope") + "') loaded.");
 			});
 	};
+	
+	//Legacy
+	AMLoadModelProto.completed = function(){};
 	
 	return AMLoadModel;
 });

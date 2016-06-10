@@ -62,6 +62,8 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 			for(var i = 0; i < viewsKeys.length; i++){
 				this.context.app.navigateTo(navigator, this.context.resolve(this, VIEWS[viewsKeys[i]]));
 			}
+			
+			this.then();
 	};
 
 	//Return Module Constructor

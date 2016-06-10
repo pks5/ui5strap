@@ -100,9 +100,14 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			}
 			
 			control[setter](propertyValue);
+			
+			this.then();
 
 			this.context._log.debug("[AMSetProperty]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
+	
+	//Legacy
+	AMSetPropertyProto.completed = function(){};
 	
 	return AMSetProperty;
 });

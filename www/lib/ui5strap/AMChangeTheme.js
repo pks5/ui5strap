@@ -49,9 +49,9 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 	* @Override
 	*/
 	AMChangeThemeProto.run = function(){
-		var newTheme = this.getParameter('theme');
-
-		var app = this.context.app;
+		var newTheme = this.getParameter('theme'),
+			_this = this,
+			app = this.context.app;
 
 		app.setLoaderVisible(true, function(){
 
@@ -61,6 +61,8 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
 				window.setTimeout(function(){
 					app.setLoaderVisible(false);
+					
+					_this.then();
 				}, 800);
 				
 
@@ -68,6 +70,9 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 
 		}, 'opaque');
 	};
+	
+	//Legacy
+	AMChangeThemeProto.completed = function(){};
 
 	//Return Module Constructor
 	return AMChangeTheme;

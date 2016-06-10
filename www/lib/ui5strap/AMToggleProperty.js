@@ -85,9 +85,14 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			
 			var propertyValue = !control[getter]();
 			control[setter](propertyValue);
+			
+			this.then();
 
 			this.context._log.debug("[AMToggleProperty]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
+	
+	//Legacy
+	AMTogglePropertyProto.completed = function(){};
 	
 	return AMToggleProperty;
 });

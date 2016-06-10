@@ -50,7 +50,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 	*/
 	AMJsAlertProto.run = function(){
 		alert(this.getParameter('message'));
+		
+		this.then();
 	};
+	
+	//Legacy
+	AMJsAlertProto.completed = function(){};
 	
 	return AMJsAlert;
 });

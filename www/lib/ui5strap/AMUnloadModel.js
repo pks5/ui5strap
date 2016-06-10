@@ -79,8 +79,13 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			
 			theControl.setModel(null, modelName);
 			
+			this.then();
+			
 			this.context._log.debug(this._actionNameShort + "Model '" + modelName + "' (scope: '" + this.getParameter("scope") + "') unloaded.");
 	};
+	
+	//Legacy
+	AMUnloadModelProto.completed = function(){};
 	
 	return AMUnloadModel;
 });

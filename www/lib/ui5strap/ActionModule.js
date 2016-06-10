@@ -178,16 +178,12 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 			try{
 				this.run();
 				
-				this.then();
+				//Exceution complete
+				//@deprecated
+				this.completed();
 			}
 			catch(err){
-				var errorTask = _expression(this, "ERROR");
-				if(errorTask){
-					ui5strap.Action.runTasks(this.context, errorTask);
-				}
-				else{
-					throw err;
-				}
+				this.error(err);
 			}
 		}
 
@@ -200,18 +196,29 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	*/
 	ActionModuleProto.run = function(){
 		_expression(this, "DO");
+		
+		this.then();
 	};
 	
 	ActionModuleProto.then = function(){
 		ui5strap.Action.runTasks(this.context, _expression(this, "THEN"));
 		
-		//Exceution complete
-		//@deprecated
-		this.completed();
+		//deprecated
+		this.fireEvents(ActionModule.EVENT_COMPLETED);
 	};
 	
 	ActionModuleProto["else"] = function(){
 		ui5strap.Action.runTasks(this.context, _expression(this, "ELSE"));
+	};
+	
+	ActionModuleProto.error = function(err){
+		var errorTask = _expression(this, "ERROR");
+		if(errorTask){
+			ui5strap.Action.runTasks(this.context, errorTask);
+		}
+		else{
+			throw err;
+		}
 	};
 	
 	/*

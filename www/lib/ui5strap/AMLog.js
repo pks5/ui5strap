@@ -54,7 +54,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 	*/
 	AMLogProto.run = function(){
 		this.context._log[this.getParameter("logType")](this.getParameter("message"));
+		
+		this.then();
 	};
+	
+	//Legacy
+	AMLogProto.completed = function(){};
 	
 	return AMLog;
 });

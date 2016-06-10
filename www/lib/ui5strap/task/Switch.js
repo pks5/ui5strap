@@ -76,6 +76,8 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 				parameters: this.context.resolve(this, theAction)
 			});
 		}
+		
+		this.then();
 	};
 
 	//Return Module Constructor

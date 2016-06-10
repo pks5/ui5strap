@@ -91,7 +91,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 		}
 		
 		menu.setSelection(selectedItem);
+		
+		this.then();
 	};
+	
+	//Legacy
+	AMSetListItemSelectedProto.completed = function(){};
 	
 	return AMSetListItemSelected;
 });

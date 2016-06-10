@@ -68,16 +68,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 		}
 		
 		overlayParent.hideOverlay(function CloseOverlayActionComplete(){
-			_this.fireEvents(ui5strap.ActionModule.EVENT_COMPLETED);
+			_this.then();
 		}, this.getParameter('transition'));
 	};
-
-	/*
-	* @Override
-	*/
-	AMCloseOverlayProto.completed = function(){
-
-	};
 	
+	//Legacy
+	AMCloseOverlayProto.completed = function(){};
+
 	return AMCloseOverlay;
 });

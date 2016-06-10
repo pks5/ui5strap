@@ -127,20 +127,16 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 				false, 
 				function(){
 					//Notify the action module that the action is completed.
-					_this.fireEvents(ActionModule.EVENT_COMPLETED);
+					_this.then();
 				},
 				null
 			);	
 		}
 		
 	};
-
-	/*
-	* @Override
-	*/
-	OpenAppProto.completed = function(){
-		//Originally, the EVENT_COMPLETED is fired here. We have to override this method to disable this default behaviour.
-	};
 	
+	//Legacy
+	OpenAppProto.completed = function(){};
+
 	return AMOpenApp;
 });

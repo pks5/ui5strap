@@ -87,8 +87,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			var data = model.getProperty(bindingContext.getPath());
 
 			this.context.set(this, tgtParam, data);
-			//this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
+			
+			this.then();
 	};
+	
+	//Legacy
+	AMGetContextDataProto.completed = function(){};
 
 	return AMGetContextData;
 });

@@ -129,7 +129,13 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			else{
 				this.context.app[frameGetter]().navigateTo(control, this.context.parameters[this.namespace]);
 			}
+			
+			//TODO Put in nav callback
+			this.then();
 	}
+	
+	//Legacy
+	AMGotoPageProto.completed = function(){};
 	
 	return AMGotoPage;
 });

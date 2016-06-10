@@ -105,16 +105,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 		}
 		
 		overlayParent.showOverlay(viewOptions, function AMShowOverlayRunComplete(){
-			_this.fireEvents(ui5strap.ActionModule.EVENT_COMPLETED);
+			_this.then();
 		}, this.getParameter('transition'));
 	};
-
-	/*
-	* @Override
-	*/
-	AMShowOverlayProto.completed = function(){
-
-	};
 	
+	//Legacy
+	AMShowOverlayProto.completed = function(){};
+
 	return AMShowOverlay;
 });

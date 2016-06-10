@@ -99,7 +99,12 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 		}
 
 		this.context._log.debug("Calling control method '" + funcName + "' of control '" + control.getId() + "'");
+	
+		this.then();
 	};
+	
+	//Legacy
+	AMCallControlMethodProto.completed = function(){};
 
 	//Return Module Constructor
 	return AMCallControlMethod;

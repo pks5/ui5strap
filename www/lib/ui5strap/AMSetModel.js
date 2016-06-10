@@ -100,9 +100,14 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			}
 
 			theControl.setModel(new sap.ui.model.json.JSONModel(data), modelName);
-
+			
+			this.then();
+			
 			this.context._log.debug("Model '" + modelName + "' (src param: '" + srcParam + "', scope: '" + this.getParameter("scope") + "') set.");
 	};
+	
+	//Legacy
+	AMSetModelProto.completed = function(){};
 	
 	return AMSetModel;
 });
