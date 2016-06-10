@@ -15,7 +15,7 @@
 						<Button 
 								text="{i18n>PAGE_FEED_BUTTON_SUBMIT}" 
 								severity="Success"
-								tap=".handleSubmitPost"></Button>
+								tap="ui5strap.demoapp.actions.AppendFeed"></Button>
 						<Button 
 								text="{i18n>PAGE_FEED_BUTTON_CANCEL}" 
 								tap="ui5strap.demoapp.actions.CloseOverlay"></Button>

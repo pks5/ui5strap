@@ -1,61 +1,40 @@
 {
 	"//" : "Appends a new media list item to an existing media list.",
+	
 	"TASKS" : [
-		"createMediaListItem",
 		"addItemToList"
 	],
-	
-	"createMediaListItem" : {
-		"CONTROLS" : {
-			"titleInputField" : {
-				"SOURCE" : "View",
-				"TYPE" : "ui5strap.TextInput",
-				"CONTROL_ID" : "titleInput"
-			},
-			"textInputField" : {
-				"SOURCE" : "View",
-				"TYPE" : "ui5strap.TextInput",
-				"CONTROL_ID" : "messageInput"
-			},
-			"listItem" : {
-				"SOURCE" : "New",
-				"TYPE" : "ui5strap.ListMediaItem",
-				"SETTINGS" : {
-					"heading" : "= .CONTROLS.titleInputField.getValue()",
-					"text" : "= .CONTROLS.textInputField.getValue()"
-				}
-			},
-			"image" : {
-				"SOURCE" : "New",
-					
-				"TYPE" : "ui5strap.Image",
-				"SETTINGS" : {
-					"type" : "MediaObject",
-					"mpath" : "ui5strap.demoapp.img.awesome",
-					"ext" : "png",
-					"width" : 64
-				}
-			}
-		},
-		
-		"DO" : "= .CONTROLS.listItem.setMedia(.CONTROLS.image)"
-	},
 	
 	"addItemToList" : {
 		
 		"CONTROLS" : {
+		  "titleInputField" : {
+                "SOURCE" : "View",
+                "TYPE" : "ui5strap.TextInput",
+                "CONTROL_ID" : "titleInput"
+            },
+            "textInputField" : {
+                "SOURCE" : "View",
+                "TYPE" : "ui5strap.TextInput",
+                "CONTROL_ID" : "messageInput"
+            },
 			"mediaList" : {
 				"SOURCE" : "View",
 				"TYPE" : "ui5strap.ListMedia",
-				"CONTROL_ID" : "feeds",
-				"VIEW_ID" : "my-app-page2"
+				"CONTROL_ID" : "feedList",
+				"VIEW_ID" : "feed"
 			}
 		},
 		
-		"addItem" : "= .CONTROLS.mediaList.addItem( action.createMediaListItem.CONTROLS.listItem )",
 		"closeOverlay" : "= app.hideOverlay()",
+		"newPostTitle" : "= .CONTROLS.titleInputField.getValue()",
+		"newPostText" : "= .CONTROLS.textInputField.getValue()",
+		"feedManager" : "= app.getFeedManager()",
+		"thenCallback" : "= then()",
+		"newPost" : "= .feedManager.newPost(.newPostTitle, .newPostText, .thenCallback)",
 		
-		"DO" : "= (.addItem, .closeOverlay)" 
+		"DO" : "= .newPost",
+		"THEN" : "= .closeOverlay" 
 	}
 
 }

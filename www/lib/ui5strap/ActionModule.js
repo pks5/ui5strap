@@ -161,32 +161,32 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	ActionModuleProto.execute = function(){
 		this.context._log.debug("Executing Task " + this);
 		
-		//Apply local parameter functions
-		//@deprecated
-		this.context._process(this.getScope());
-
-		//Prepare parameters
-		this.prepareParameters();
-
-		//test if parameters match conditions
-		if(!_expression(this, "IF", true)){
-			this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
-			
-			this["else"]();
-		}
-		else{
-			try{
+		try{
+			//Apply local parameter functions
+			//@deprecated
+			this.context._process(this.getScope());
+	
+			//Prepare parameters
+			this.prepareParameters();
+	
+			//test if parameters match conditions
+			if(_expression(this, "IF", true)){
 				this.run();
 				
 				//Exceution complete
 				//@deprecated
 				this.completed();
 			}
-			catch(err){
-				this.error(err);
+			else{
+				this.context._log.debug("Conditions did not match. Now running else tasks..." + this);
+				
+				this["else"]();
 			}
 		}
-
+		catch(err){
+			this.fatal(err);
+		}
+		
 		this.context._log.debug("Task execution completed " + this);
 	};
 	
@@ -200,11 +200,17 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 		this.then();
 	};
 	
-	ActionModuleProto.then = function(){
-		ui5strap.Action.runTasks(this.context, _expression(this, "THEN"));
-		
-		//deprecated
-		this.fireEvents(ActionModule.EVENT_COMPLETED);
+	ActionModuleProto.suppressThen = function(){
+		this._suppressThen = true;
+	}
+	
+	ActionModuleProto.then = function(force){console.log("THEN", force, this._suppressThen);
+		if(force || !this._suppressThen){
+			ui5strap.Action.runTasks(this.context, _expression(this, "THEN"));
+			
+			//deprecated
+			this.fireEvents(ActionModule.EVENT_COMPLETED);
+		}
 	};
 	
 	ActionModuleProto["else"] = function(){
@@ -213,6 +219,16 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	
 	ActionModuleProto.error = function(err){
 		var errorTask = _expression(this, "ERROR");
+		if(errorTask){
+			ui5strap.Action.runTasks(this.context, errorTask);
+		}
+		else{
+			throw err;
+		}
+	};
+	
+	ActionModuleProto.fatal = function(err){
+		var errorTask = _expression(this, "FATAL");
 		if(errorTask){
 			ui5strap.Action.runTasks(this.context, errorTask);
 		}

@@ -30,10 +30,17 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 	var controllerImpl = {
 			handleSubmitPost : function(oEvent){
 				var view = this.getView(),
+					_this = this,
 					title = view.byId("titleInput").getValue(),
 					message = view.byId("messageInput").getValue();
-				this.getApp().getFeedManager().newPost(title, message);
-				this.getApp().hideOverlay();
+				this.getApp().getFeedManager().newPost(
+						title, 
+						message,
+						function(){
+							_this.getApp().hideOverlay();
+						}
+				);
+				
 			}
 	};
 	

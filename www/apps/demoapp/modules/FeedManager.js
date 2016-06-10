@@ -35,10 +35,11 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 	 * 
 	 * @Public
 	 */
-	FeedManagerProto.refreshFeed = function(){
+	FeedManagerProto.refreshFeed = function(callback){
 		var _this = this;
 		this.app.getFeedClient().info(function(feedInfo){
 			_this.controls.feedList.setModel(new ui5strap.JSONModel(feedInfo), "FEED_INFO");
+			callback && callback();
 		});
 	};
 	
@@ -71,7 +72,7 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 	 * 
 	 * @Public
 	 */
-	FeedManagerProto.newPost = function(title, message){
+	FeedManagerProto.newPost = function(title, message, callback){
 		var _this = this;
 		this.app.getFeedClient().newPost(
 			{
@@ -79,7 +80,7 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 				message : message
 			}, 
 			function(){
-				_this.refreshFeed();
+				_this.refreshFeed(callback);
 			}
 		);
 	};

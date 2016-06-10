@@ -674,8 +674,12 @@ sap.ui.define(['./library', './ActionFunctions'], function(library, ActionFuncti
 		return false;
 	};
 	
-	ActionContextProto["doaaa"] = function(task){
+	ActionContextProto.then = function(task){
+		task.suppressThen();
 		
+		return function(){
+			task.then(true);
+		}
 	};
 	
 	ActionContextProto.lang = {
