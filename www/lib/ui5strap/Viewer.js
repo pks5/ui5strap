@@ -63,7 +63,34 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		this._initDom();
 		this._initEvents();
 	};
+	
+	var _waitForLibraryCss = function(_this, callback){
+		var overlayNavContainerElm = _this.overlayControl.getDomRef(),
+			cssAvailable = false;
+		
+		if(overlayNavContainerElm){
+			var navContainerHeight = ui5strap.Utils.getComputedStyle(overlayNavContainerElm, 'height');
+			cssAvailable = "auto" !== navContainerHeight || _this._waitCssTime >= ui5strap.options.waitCssTimeout;
+		}
+		
+		if (cssAvailable) {
+			window.clearTimeout(_this._waitCssTimer);
+			_this._waitCssTimer = null;
+			
+			callback && callback();
+		} else {
+			jQuery.sap.log
+					.debug("Library CSS is not available yet...");
 
+			_this._waitCssTimer = window.setTimeout(
+					function() {
+						_waitForLibraryCss(_this, callback);
+					}, ui5strap.options.waitCssInterval);
+			_this._waitCssTime += ui5strap.options.waitCssInterval;
+		}
+	};
+	
+	
 	/**
 	* Executes the the default app defined by configuration.
 	* If the GET parameter "app" is specified with an url to an app config file, that app is loaded.
@@ -72,6 +99,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
 		jQuery.sap.log.debug("ViewerProto.start");
 		
+		var _this = this;
 		this.init();
 
 		var appUrl = AppConfig.processOption("app", this.options.app);
@@ -79,18 +107,22 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		if(null === appUrl){
 			throw new Error('Cannot start viewer: no app url specified.');
 		}
-
-		this.executeApp(
-			{
-				"internal" : true,
-				"type" : "UI5STRAP",
-				"url" : appUrl,
-				"parameters" : parameters
-			}, 
-			false, 
-			callback, 
-			loadCallback
-		);	
+		
+		_this._waitCssTime = 0;
+		_waitForLibraryCss(this, function(){
+			_this.executeApp(
+					{
+						"internal" : true,
+						"type" : "UI5STRAP",
+						"url" : appUrl,
+						"parameters" : parameters
+					}, 
+					false, 
+					callback, 
+					loadCallback
+				);	
+		});
+		
 	};
 
 	/*
@@ -155,34 +187,6 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				}
 			},
 			
-			_checkVisibility = function(_this, callback){
-				var navContainerHeight = ui5strap.Utils.getComputedStyle(jQuery('.navcontainer')[0], 'height');
-				
-				if ("auto" !== navContainerHeight) {
-					window.clearTimeout(_this._checkVisibilityTimeout);
-					_this._checkVisibilityTimeout = null;
-					
-					callback && callback();
-				} else {
-					_this._checkVisibilityCounter++;
-
-					if (_this._checkVisibilityCounter > 40) {
-						window.clearTimeout(_this._checkVisibilityTimeout);
-						_this._checkVisibilityTimeout = null;
-						
-						throw new Error("Cannot start App. NavContainer CSS not available.");
-					}
-
-					jQuery.sap.log
-							.debug("NavContainer CSS is not available yet...");
-
-					_this._checkVisibilityTimeout = window.setTimeout(
-							function() {
-								_checkVisibility(_this, callback);
-							}, 250);
-				}
-			},
-			
 			/*
 			 * 
 			 */
@@ -191,12 +195,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 					appDefinition.url,
 					oConfigData, 
 					appDefinition.parameters,
-					function(appInstance){
-						_this._checkVisibilityCounter = 0;
-						_checkVisibility(_this, function(){
-							_loadAppComplete(appInstance);
-						});
-					}
+					_loadAppComplete
 				);
 			};
 		

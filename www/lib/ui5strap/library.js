@@ -245,7 +245,11 @@ sap.ui
 						enableTapEvents : tapSupport,
 						enableClickEvents : !tapSupport,
 						transitionTimeout : 2000,
-						layerTimeout : 1000
+						layerTimeout : 1000,
+						waitCssInterval : 250,
+						waitCssTimeout : 10000,
+						waitRenderingInterval : 100,
+						waitRenderingTimeout : 500
 					};
 
 					/*

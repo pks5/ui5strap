@@ -64,10 +64,14 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 * 
 	 * @Private
 	 */
-	var _checkVisibility = function(_this, cssProperty, callback) {
-		if (!_this.getDomRef()) {
-			throw new Error("Cannot check CSS completion: control not rendered!");
+	var _waitForRendering = function(_this, cssProperty, callback) {
+		if (!_this.getDomRef() || _this._waitRenderingTime >= ui5strap.options.waitRenderingTimeout) {
+			window.clearTimeout(_this._waitRenderingTimer);
+			_this._waitRenderingTimer = null;
+			
+			throw new Error("Cannot render control: required CSS could not be loaded.");
 		}
+		
 		var width = _this.getComputedStyle(cssProperty);
 		// We want to find out whether we can get the width of
 		// container in pixels.
@@ -75,27 +79,20 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 		// specified in percent.
 		// Its takes a short moment until the CSS is rendered.
 		if (-1 !== width.indexOf('px')) {
-			window.clearTimeout(_this._checkVisibilityTimeout);
-			_this._checkVisibilityTimeout = null;
+			window.clearTimeout(_this._waitRenderingTimer);
+			_this._waitRenderingTimer = null;
 			
 			callback && callback();
 		} else {
-			_this._checkVisibilityCounter++;
-
-			if (_this._checkVisibilityCounter > 5) {
-				window.clearTimeout(_this._checkVisibilityTimeout);
-				_this._checkVisibilityTimeout = null;
-				
-				throw new Error("Cannot update graph: container width could not be obtained.");
-			}
-
 			jQuery.sap.log
 					.debug("Control CSS is not rendered yet...");
 
-			_this._checkVisibilityTimeout = window.setTimeout(
+			_this._waitRenderingTimer = window.setTimeout(
 					function() {
-						_checkVisibility(_this, cssProperty, callback);
-					}, 100);
+						_waitForRendering(_this, cssProperty, callback);
+					}, ui5strap.options.waitRenderingInterval);
+			
+			_this._waitRenderingTime += ui5strap.options.waitRenderingInterval;
 		}
 	};
 
@@ -106,12 +103,12 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 * @Protected
 	 */
 	ControlBaseProto._waitForRendering = function(cssProperty, callback) {
-		this._checkVisibilityCounter = 0;
+		//Reset the counter
+		this._waitRenderingTime = 0;
 		
-		jQuery.sap.log.info("Waiting for CSS beeing rendered: " + this.getId());
-		
-		if(!this._checkVisibilityTimeout){
-			_checkVisibility(this, cssProperty, callback);
+		//Check if a existing timer is running.
+		if(!this._waitRenderingTimer){
+			_waitForRendering(this, cssProperty, callback);
 		}
 	};
 	
