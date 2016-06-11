@@ -432,12 +432,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		
 		if(jQuery.sap.startsWith(packageString, ".")){
-			if(!defaultFolder){
-				packageString = this.data.app["package"] + packageString;
+			if(defaultFolder && !jQuery.sap.startsWith(packageString, "." + defaultFolder)){
+				throw new Error("Default Folders are deprecated and will be dropped. Thus '" + packageString + "' should be '" + "." + defaultFolder + packageString + "'"); 
 			}
 			else{
-				packageString = this.data.app["package"] + "." + defaultFolder.replace(/\//g, ".") + packageString;
+				packageString = this.data.app["package"] + packageString;
 			}
+			
 		}
 		
 		return packageString;
@@ -492,20 +493,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		*/
 
-		//Type
-		if(!appSection.type){
-			appSection.type = 'STANDARD';
-		}
-		
 		//Module
 		//TODO Use class instead of module
-		if(!appSection["class"]){
+		if(!appSection["type"]){
 			if(appSection.module){
-				jQuery.sap.log.warning("Config setting 'app.module' is deprecated! Use 'app.class' instead.")
-				appSection["class"] = appSection.module;
+				jQuery.sap.log.warning("Config setting 'app.module' is deprecated! Use 'app.type' instead.")
+				appSection["type"] = appSection.module;
 			}
 			else{
-				appSection["class"] = "ui5strap.App";
+				appSection["type"] = "ui5strap.App";
 			}
 		}
 		
@@ -572,15 +568,18 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 
 		//Custom JavaScript libraries
+		//Deprecated
 		if(!configDataJSON.js){
 			configDataJSON.js = [];
 		}
 		
 		//Any kind of file to be preloaded
 		//TODO Is this used somewhere?
+		/*
 		if(!configDataJSON.resources){
 			configDataJSON.resources = [];
 		}
+		*/
 		
 		//App Events
 		if(!configDataJSON.events){

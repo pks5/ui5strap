@@ -289,7 +289,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto._buildRootControl = function(){
 		var _this = this,
 			navigatorOptions = this.config.data.rootNavigation,
-			navContainerModule = navigatorOptions["class"] || navigatorOptions.module || "ui5strap.NavContainer";
+			navContainerModule = navigatorOptions["type"] || navigatorOptions.module || "ui5strap.NavContainer";
 		
 		//TODO Async!
 		jQuery.sap.require(navContainerModule);
@@ -356,28 +356,30 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var _this = this,
 			target = viewConfig.target,
 			oPage = this.createView(viewConfig);
+		
+		oPage.loaded().then(function(){
+			//Set target busy
+			navControl.setTargetBusy(target, true);
 
-		//Set target busy
-		navControl.setTargetBusy(target, true);
+			//Trigger onUpdate events
+			navControl.updateTarget(target, oPage, viewConfig.parameters);
 
-		//Trigger onUpdate events
-		navControl.updateTarget(target, oPage, viewConfig.parameters);
-
-		//Change NavContainer to page
-		navControl.toPage(
-			oPage, 
-			target, 
-			viewConfig.transition,
-			function toPage_complete(){
-				window.setTimeout(function(){
-					//Set target available
-					navControl.setTargetBusy(target, false);
-				}, 50);
-				
-				//Trigger callback
-				callback && callback();
-			}
-		);
+			//Change NavContainer to page
+			navControl.toPage(
+				oPage, 
+				target, 
+				viewConfig.transition,
+				function toPage_complete(){
+					window.setTimeout(function(){
+						//Set target available
+						navControl.setTargetBusy(target, false);
+					}, 50);
+					
+					//Trigger callback
+					callback && callback();
+				}
+			);
+		});
 		
 		return oPage;
 	};

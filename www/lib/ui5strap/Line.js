@@ -25,13 +25,20 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library'], function(library){
 
-	return ControlBase.extend("ui5strap.Line", {
+	return library.Control.extend("ui5strap.Line", {
 		metadata : {
 
 			library : "ui5strap",
 			
+		},
+		
+		renderer : function(rm, oControl) {
+			rm.write("<hr");
+			rm.writeControlData(oControl);
+			rm.writeClasses();
+			rm.write(" />");
 		}
 	});
 

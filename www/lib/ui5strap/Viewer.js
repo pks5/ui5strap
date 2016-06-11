@@ -335,7 +335,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		//Register App Module Path
 		jQuery.sap.registerModulePath(configAppSection["package"], configAppSection["location"]);
 
-		sap.ui.require([configAppSection["class"].replace(/\./g, "/")], function(AppConstructor){
+		sap.ui.require([configAppSection["type"].replace(/\./g, "/")], function(AppConstructor){
 			callback && callback(new AppConstructor(appConfig, _this));
 		});
 	};

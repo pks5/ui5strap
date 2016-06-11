@@ -32,6 +32,10 @@ sap.ui.define(['./library'], function(library){
 			interfaces : ["ui5strap.IText"],
 			deprecated : true,
 			library : "ui5strap"
+		},
+		
+		renderer : function(rm, oControl) {
+			rm.write("<br />");
 		}
 	});
 	

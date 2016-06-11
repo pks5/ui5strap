@@ -17,7 +17,12 @@
 			<Heading level="2" text="Example body text" />
 
 			<Paragraph text="Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula." />
-
+            
+            <Break />
+            
+            <Paragraph text="This line comes after a additional Break. Use Breaks sparingly." />
+            
+            
 			<Paragraph>
 				<Text type="Small" text="This line of text is meant to be treated as fine print." />
 			</Paragraph>
@@ -25,6 +30,8 @@
 			<Paragraph>
 				<Text text="The following snippet of text is rendered as [strong]bold text[/strong]." parse="true" />
 			</Paragraph>
+			
+			<Line />
 
 			<Paragraph>
 				<Text text="The following snippet of text is rendered as [em]emphasized text[/em]." parse="true" />

@@ -338,9 +338,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				if(!compConfig.id || 
 					!(compConfig.module 
 						|| (compConfig["package"] && compConfig["location"]) 
-						|| compConfig["class"]
+						|| compConfig["type"]
 					)){
-					throw new Error("Cannot load component #" + i + ": [module, class, or componentName/location] or id attribute missing!");
+					throw new Error("Cannot load component #" + i + ": [module, type, or package & location] or id attribute missing!");
 				}
 				
 				if(compConfig.module){
@@ -377,10 +377,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 					
 					then();
 				}
-				else if(compConfig["class"]){
+				else if(compConfig["type"]){
 					//General Class
 					//Use settings as first Parameter
-					sap.ui.require([_this.config.resolvePackage(compConfig["class"]).replace(/\./g, "/")], function(ComponentConstructor){
+					sap.ui.require([_this.config.resolvePackage(compConfig["type"]).replace(/\./g, "/")], function(ComponentConstructor){
 						var compSettings = { app : _this };
 						
 						jQuery.extend(compSettings, compConfig.settings);
@@ -1000,7 +1000,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			}
 		}
 		
-		var viewConfig = {};
+		var viewConfig = {
+			async : true
+		};
 		jQuery.extend(viewConfig, viewDef);
 		
 		if(pageId){

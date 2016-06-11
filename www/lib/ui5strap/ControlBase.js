@@ -29,6 +29,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 
 	var _meta = {
 		library : "ui5strap",
+		"abstract" : true,
 		
 		properties : {
 			

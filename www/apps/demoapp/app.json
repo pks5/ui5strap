@@ -29,33 +29,33 @@
     "views" : [
     		{
                 "id" : "menuRoot",
-                "viewName" : ".MenuRoot",
+                "viewName" : ".views.MenuRoot",
                 "target" : "bar"
             },
             
             {
                 "id" : "home",
-                "viewName" : ".Home"
+                "viewName" : ".views.Home"
             },
 
             {
                 "id" : "feed",
-                "viewName" : ".Feed"
+                "viewName" : ".views.Feed"
             },
 
             {
                 "id" : "statistics",
-                "viewName" : ".Statistics"
+                "viewName" : ".views.Statistics"
             },
 
             {
                 "id" : "settings",
-                "viewName" : ".Settings",
+                "viewName" : ".views.Settings",
                 "events" : {
                 	"controller" : {
                 		"pageShow" : [
-                			".LoadMenuSettings",
-                			".NavigateToSettingsLanguage"
+                			".actions.LoadMenuSettings",
+                			".actions.NavigateToSettingsLanguage"
                 		]
                 	}
                 }
@@ -63,34 +63,34 @@
             
             {
                 "id" : "menuSettings",
-                "viewName" : ".MenuSettings",
+                "viewName" : ".views.MenuSettings",
                 "target" : "bar"
             },
             
             {
                 "id" : "settingsLanguage",
-                "viewName" : ".settings.Language",
+                "viewName" : ".views.settings.Language",
                 "events" : {
                 	"controller" : {
-                		"update" : ".SetCurrentLanguage"	
+                		"update" : ".actions.SetCurrentLanguage"	
                 	}
                 }
             },
             
             {
                 "id" : "settingsTheme",
-                "viewName" : ".settings.Theme"
+                "viewName" : ".views.settings.Theme"
             },
             
             
             {
             	"id" : "controls",
-            	"viewName" : ".Controls",
+            	"viewName" : ".views.Controls",
             	"events" : {
                 	"controller" : {
                 	   "pageShow" : [
-                	       "LoadMenuControls",
-                	       "NavigateToControlsButtons"
+                	       ".actions.LoadMenuControls",
+                	       ".actions.NavigateToControlsButtons"
                 	   ]
                 	}
                 }
@@ -98,111 +98,111 @@
             
             {
                 "id" : "menuControls",
-                "viewName" : ".MenuControls",
+                "viewName" : ".views.MenuControls",
                 "target" : "bar"
             },
             
             {
             	"id" : "controlsButtons",
-            	"viewName" : ".controls.Buttons"
+            	"viewName" : ".views.controls.Buttons"
             },
             
             {
             	"id" : "controlsContainers",
-            	"viewName" : ".controls.Containers"
+            	"viewName" : ".views.controls.Containers"
             },
             
             {
             	"id" : "controlsIcons",
-            	"viewName" : ".controls.Icons"
+            	"viewName" : ".views.controls.Icons"
             },
             
             {
             	"id" : "controlsTypography",
-            	"viewName" : ".controls.Typography"
+            	"viewName" : ".views.controls.Typography"
             },
 			
 			{
             	"id" : "controlsNavs",
-            	"viewName" : ".controls.Navs"
+            	"viewName" : ".views.controls.Navs"
             },
             
             {
             	"id" : "controlsGridSystem",
-            	"viewName" : ".controls.GridSystem"
+            	"viewName" : ".views.controls.GridSystem"
             },
             
             {
             	"id" : "controlsProgress",
-            	"viewName" : ".controls.Progress"
+            	"viewName" : ".views.controls.Progress"
             },
             
             {
             	"id" : "controlsForm",
-            	"viewName" : ".controls.Form"
+            	"viewName" : ".views.controls.Form"
             },
             
             {
                 "id" : "controlsWheels",
-                "viewName" : ".controls.Wheels"
+                "viewName" : ".views.controls.Wheels"
             },
             
             {
             	"id" : "controlsIndicators",
-            	"viewName" : ".controls.Indicators"
+            	"viewName" : ".views.controls.Indicators"
             },
             
             {
             	"id" : "controlsMediaList",
-            	"viewName" : ".controls.MediaList"
+            	"viewName" : ".views.controls.MediaList"
             },
             
             {
             	"id" : "controlsDialogs",
-            	"viewName" : ".controls.Dialogs"
+            	"viewName" : ".views.controls.Dialogs"
             },
             
             {
                 "id" : "newPost",
-                "viewName" : ".NewPost"
+                "viewName" : ".views.NewPost"
             },
             {
                 "id" : "postDetail",
-                "viewName" : ".PostDetail"
+                "viewName" : ".views.PostDetail"
             }
       ],
 	
 	"actions" : [
-		".NavigateToHome",
-		".NavigateToFeed",
-		".NavigateToStatistics",
+		".actions.NavigateToHome",
+		".actions.NavigateToFeed",
+		".actions.NavigateToStatistics",
 		
 		
-		".ToggleBarMenuRoot",
-		".NavigateViaMenuRoot",
-		".SetSelectedMenuRoot",
+		".actions.ToggleBarMenuRoot",
+		".actions.NavigateViaMenuRoot",
+		".actions.SetSelectedMenuRoot",
 		
-		".LoadMenuSettings",
-		".ToggleBarMenuSettings",
-		".NavigateViaMenuSettings", 
-		".SetSelectedMenuSettings",
-		".NavigateToSettingsLanguage",
+		".actions.LoadMenuSettings",
+		".actions.ToggleBarMenuSettings",
+		".actions.NavigateViaMenuSettings", 
+		".actions.SetSelectedMenuSettings",
+		".actions.NavigateToSettingsLanguage",
 		
-		".LoadMenuControls",
-		".ToggleBarMenuControls",
-		".NavigateViaMenuControls", 
-		".SetSelectedMenuControls",
-		".NavigateToControlsButtons",
+		".actions.LoadMenuControls",
+		".actions.ToggleBarMenuControls",
+		".actions.NavigateViaMenuControls", 
+		".actions.SetSelectedMenuControls",
+		".actions.NavigateToControlsButtons",
 		
-		".AppendFeed",
-		".RemovePost",
-		".ShowNewPostOverlay",
-		".CloseOverlay",
+		".actions.AppendFeed",
+		".actions.RemovePost",
+		".actions.ShowNewPostOverlay",
+		".actions.CloseOverlay",
 		
-		".ChangeTheme",
-		".SelectLanguage",
+		".actions.ChangeTheme",
+		".actions.SelectLanguage",
 		
-		".Debug"
+		".actions.Debug"
 	],
 	
 	"rootNavigation" : {
@@ -230,7 +230,7 @@
          "events" : {
          	"control" : {
          		"pageChange" : [
-         			".SetSelectedMenuRoot"
+         			".actions.SetSelectedMenuRoot"
          		]
          	}
          },
@@ -244,12 +244,12 @@
 	"components" : [
 			{
 	             "id" : "feedManager",
-	             "class" : ".modules.FeedManager"
+	             "type" : ".modules.FeedManager"
 	        },
 	        
 	        {
 	             "id" : "feedClient",
-	             "class" : "ui5strap.RestClient",
+	             "type" : "ui5strap.RestClient",
 	             "restController" : "FeedController",
                      
 	             "settings" : {
