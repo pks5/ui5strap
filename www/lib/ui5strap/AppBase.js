@@ -299,6 +299,24 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		oComp.init();
 	};
 	
+	var _preloadRootComponent = function(_this, callback){
+		//TODO this must become standard
+		if(_this.config.data.app.rootComponent){
+			sap.ui.getCore().createComponent({
+		        name: _this.config.data.app["package"],
+		        async : true,
+		        settings: {
+		        	app : _this
+		        }
+		    }).then(function(rootComponent){
+		    	_this._rootComponent = rootComponent;
+		    	callback && callback();
+		    });
+		}
+		else{
+			callback && callback();
+		}
+	};
 	/**
 	 * @Private
 	 * 
@@ -306,16 +324,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	var _preloadComponents = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadComponents");
 		
-		//TODO this must become standard
-		if(_this.config.data.app.rootComponent){
-			_this._rootComponent = sap.ui.getCore().createComponent({
-		        name: _this.config.data.app["package"],
-		        settings: {
-		        	app : _this
-		        }
-		    });
-		}
-
 		//Components
 		var components = _this.config.data.components,
 			compCount = components.length,
@@ -369,15 +377,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 					jQuery.extend(compSettings, compConfig.settings);
 					
 					//UI5 Component
-					//TODO Async
-					var oComp = sap.ui.getCore().createComponent({
+					sap.ui.getCore().createComponent({
 				        name: compConfig["package"],
+				        async : true,
 				        settings: compSettings
+				    }).then(function(oComp){
+				    	_initComponent(_this, compConfig, oComp);
+						
+						then();
 				    });
-					
-					_initComponent(_this, compConfig, oComp);
-					
-					then();
 				}
 				else if(compConfig["type"]){
 					//General Class
@@ -445,9 +453,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		var _this = this;
 		
 		_preloadJavaScript(_this, function preloadJavaScriptComplete(){
-			_preloadComponents(_this, function _preloadComponentsComplete(){
-				_preloadModels(_this, function _preloadModelsComplete(){
-					_preloadActions(_this, callback);
+			_preloadRootComponent(_this, function _preloadRootCompComplete(){
+				_preloadComponents(_this, function _preloadComponentsComplete(){
+					_preloadModels(_this, function _preloadModelsComplete(){
+						_preloadActions(_this, callback);
+					});
 				});
 			});
 		});
