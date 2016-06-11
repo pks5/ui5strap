@@ -136,27 +136,53 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			 * 
 			 */
 			_loadAppComplete = function loadAppComplete(appInstance){
-			    loadCallback && loadCallback();
+				loadCallback && loadCallback();
 				
 			    var startedCallback = function(){
 					if(!doNotShow){
 						_this.showApp(appInstance.getId(), null, callback);
 					}
 					else{
-						//_this.hideLoader(callback);
 						callback && callback(appInstance);
 					}
 				};
 			
-			//_this.showLoader(function(){
 				if(!appInstance.isRunning){
 					_this.startApp(appInstance.getId(), startedCallback);
 				}
 				else{
 					startedCallback();
 				}
-			//});
-	
+			},
+			
+			_checkVisibility = function(_this, callback){
+				var navContainerHeight = ui5strap.Utils.getComputedStyle(jQuery('.navcontainer')[0], 'height');
+				
+				if ("auto" !== navContainerHeight) {
+					window.clearTimeout(_this._checkVisibilityTimeout);
+					_this._checkVisibilityTimeout = null;
+					
+					callback && callback();
+				} else {
+					_this._checkVisibilityCounter++;
+
+					if (_this._checkVisibilityCounter > 40) {
+						window.clearTimeout(_this._checkVisibilityTimeout);
+						_this._checkVisibilityTimeout = null;
+						
+						jQuery.sap.log
+								.error("Cannot start App. NavContainer CSS not available.");
+						return;
+					}
+
+					jQuery.sap.log
+							.debug("NavContainer CSS is not available yet...");
+
+					_this._checkVisibilityTimeout = window.setTimeout(
+							function() {
+								_checkVisibility(_this, callback);
+							}, 250);
+				}
 			},
 			
 			/*
@@ -167,7 +193,12 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 					appDefinition.url,
 					oConfigData, 
 					appDefinition.parameters,
-					_loadAppComplete
+					function(appInstance){
+						_this._checkVisibilityCounter = 0;
+						_checkVisibility(_this, function(){
+							_loadAppComplete(appInstance);
+						});
+					}
 				);
 			};
 		
