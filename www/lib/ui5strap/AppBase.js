@@ -163,6 +163,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				if(callI >= 0){
 					if(oData.oModel !== loaded[oData.modelName]){
 						_this.log.debug("Loaded model '" + oData.modelName + "'");
+						
 						_this.getRootControl().setModel(oData.oModel, oData.modelName);
 						loaded[oData.modelName] = oData.oModel;
 					}
@@ -172,15 +173,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				}
 				
 				if(callI === 0){
-					//sap.ui.getCore().setModel(oModel, model['modelName']);
 					callback && callback();
-				}
-				
-				if(callI < 0){
-					jQuery.sap.log.warning("Loaded additional model data: " + oData.modelName);
-					//_this.getRootControl().rerender();
-					//sap.ui.getCore().fireLocalizationChanged();
-					console.log(sap.ui.getCore());
 				}
 			},
 			errorCallback = function(){
@@ -202,15 +195,21 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			if(modelType === 'RESOURCE'){
 				oModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl : modelSrc,
-					async_DEACTIVATED : true
+					async : true
 				});
-				/*
+				
 				oModel.attachRequestCompleted(
 					{ 
 						modelName: modelName, 
 						oModel : oModel
 					}, 
-					successCallback
+					function(oEvent, oData){
+						var bundle = oData.oModel.getResourceBundle();
+						bundle.then(function(theBundle){
+							_this._resourceBundle = theBundle;
+							successCallback(oEvent, oData);
+						});
+					}
 				);
 				oModel.attachRequestFailed(
 					{ 
@@ -219,11 +218,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 					}, 
 					errorCallback
 				);
-				*/
+				
+				
+				/*
 				successCallback(null, { 
 					modelName: modelName, 
 					oModel : oModel
 				});
+				*/
 			}
 			else if(modelType === 'JSON'){
 				oModel = new sap.ui.model.json.JSONModel();
@@ -1138,7 +1140,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	 * TODO "i18n" should be configurable.
 	 */
 	AppBaseProto.getLocaleString = function(){
-		var bundle = this.getRootControl().getModel("i18n").getResourceBundle();
+		var bundle = this._resourceBundle;
 		return bundle.getText.apply(bundle, arguments);
 	};
 

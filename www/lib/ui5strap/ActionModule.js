@@ -200,7 +200,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 		this._suppressThen = true;
 	}
 	
-	ActionModuleProto.then = function(force){console.log("THEN", force, this._suppressThen);
+	ActionModuleProto.then = function(force){
 		if(force || !this._suppressThen){
 			ui5strap.Action.runTasks(this.context, _expression(this, "THEN"));
 		}
@@ -301,7 +301,6 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 			else{
 				//Otherwise use the root control of the view as target control in VIEW scope
 				theControl = currentView.getContent()[0];
-				console.log(theControl);
 			}
 		}
 		else if("SOURCE" === scope){
