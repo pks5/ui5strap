@@ -86,9 +86,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 				window.clearTimeout(_this._checkVisibilityTimeout);
 				_this._checkVisibilityTimeout = null;
 				
-				jQuery.sap.log
-						.error("Cannot update graph: container width could not be obtained.");
-				return;
+				throw new Error("Cannot update graph: container width could not be obtained.");
 			}
 
 			jQuery.sap.log

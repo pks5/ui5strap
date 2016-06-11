@@ -170,9 +170,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 						window.clearTimeout(_this._checkVisibilityTimeout);
 						_this._checkVisibilityTimeout = null;
 						
-						jQuery.sap.log
-								.error("Cannot start App. NavContainer CSS not available.");
-						return;
+						throw new Error("Cannot start App. NavContainer CSS not available.");
 					}
 
 					jQuery.sap.log
