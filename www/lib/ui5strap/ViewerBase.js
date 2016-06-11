@@ -40,6 +40,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 			if(!options.logLevel){
 				options.logLevel = 0;
 			}
+			
+			jQuery.sap.log.setLevel(options.logLevel);
 
 			//Error to Browser
 			if(!options.errorToBrowser){
