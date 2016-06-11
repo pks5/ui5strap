@@ -360,9 +360,9 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 				columnsExtraSmall = sizeMax;
 			}
 			
-			classes += " navcontainer-flag-col-xs-" + columnsExtraSmall;
-			classes += " navcontainer-flag-placement-xs-" + placementExtraSmall.toLowerCase();
-			classes += " navcontainer-flag-mode-xs-" + modeExtraSmall.toLowerCase();
+			classes += " navcontainer-flag-xs" + columnsExtraSmall;
+			classes += " navcontainer-flag-" + placementExtraSmall.toLowerCase() + "-xs";
+			classes += " navcontainer-flag-" + modeExtraSmall.toLowerCase() + "-xs";
 	    }
 		
 		//SIZE_SMALL
@@ -371,9 +371,9 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 	    		columnsSmall = sizeMax;
 			}
 		    
-	    	classes += " navcontainer-flag-col-sm-" + columnsSmall;
-		    classes += " navcontainer-flag-placement-sm-" + placementSmall.toLowerCase();
-		    classes += " navcontainer-flag-mode-sm-" + modeSmall.toLowerCase();
+	    	classes += " navcontainer-flag-sm" + columnsSmall;
+		    classes += " navcontainer-flag-" + placementSmall.toLowerCase() + "-sm";
+		    classes += " navcontainer-flag-" + modeSmall.toLowerCase() + "-sm";
 	    }
 	    
 	    //SIZE_MEDIUM
@@ -382,9 +382,9 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 	    		columnsMedium = sizeMax;
 			}
 	    	
-	    	classes += " navcontainer-flag-col-md-" + columnsMedium;
-	    	classes += " navcontainer-flag-placement-md-" + placementMedium.toLowerCase();
-	    	classes += " navcontainer-flag-mode-md-" + modeMedium.toLowerCase();
+	    	classes += " navcontainer-flag-md" + columnsMedium;
+	    	classes += " navcontainer-flag-" + placementMedium.toLowerCase() + "-md";
+	    	classes += " navcontainer-flag-" + modeMedium.toLowerCase() + "-md";
 		}
 	    
 	    //SIZE_LARGE
@@ -393,9 +393,9 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 	    		columnsLarge = sizeMax;
 			}
 	    	
-	    	classes += " navcontainer-flag-col-lg-" + columnsLarge;
-	    	classes += " navcontainer-flag-placement-lg-" + placementLarge.toLowerCase();
-	    	classes += " navcontainer-flag-mode-lg-" + modeLarge.toLowerCase();
+	    	classes += " navcontainer-flag-lg" + columnsLarge;
+	    	classes += " navcontainer-flag-" + placementLarge.toLowerCase() + "-lg";
+	    	classes += " navcontainer-flag-" + modeLarge.toLowerCase() + "-lg";
 	    }
 		
 	    //TODO add columnsExtraLarge on BOOTSTRAP_4 Upgrade

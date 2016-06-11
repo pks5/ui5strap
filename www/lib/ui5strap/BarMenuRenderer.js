@@ -45,14 +45,14 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			classes += " ui5sl-barmenu-flag-inverse";
 		}
 		if(typeExtraSmall === ui5strap.BarMenuType.Default){
-			classes += ' u5sl-barmenu-flag-type-xs-listvertical';
+			classes += ' u5sl-barmenu-flag-listvertical-xs';
 		}
 		else{
-			classes += ' u5sl-barmenu-flag-type-xs-' + typeExtraSmall.toLowerCase();
+			classes += ' u5sl-barmenu-flag-' + typeExtraSmall.toLowerCase() + "-xs";
 		}
-		classes += ' u5sl-barmenu-flag-type-sm-' + typeSmall.toLowerCase();
-		classes += ' u5sl-barmenu-flag-type-md-' + typeMedium.toLowerCase();
-		classes += ' u5sl-barmenu-flag-type-lg-' + typeLarge.toLowerCase();
+		classes += ' u5sl-barmenu-flag-' + typeSmall.toLowerCase() + "-sm";
+		classes += ' u5sl-barmenu-flag-' + typeMedium.toLowerCase() + "-md";
+		classes += ' u5sl-barmenu-flag-' + typeLarge.toLowerCase() + "-lg";
 		
 		//Zoom
 		if(zoomExtraSmall !== 0){

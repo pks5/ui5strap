@@ -155,96 +155,96 @@
 */
 .makeBarNavContainerSize(@size, @columnWidth, @i) when (@i >= 0) {
 	//Placement Left
-	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-left{
+	.navcontainer-type-bar.navcontainer-flag-@{size}@{i}.navcontainer-flag-left-@{size}{
 		//Bar
-		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
+		&.navcontainer-flag-intrude-@{size} > .navcontainer-target-bar,
+		&.navcontainer-flag-extrude-@{size} > .navcontainer-target-bar,
+		&.navcontainer-flag-overlay-@{size} > .navcontainer-target-bar{
 			.ui5strapBarNavContainerBarPlacementHor(0, auto, (@i * @columnWidth));
 		}
 		
 		//Content
-		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
+		&.navcontainer-flag-intrude-@{size} > .navcontainer-target-content{
 			.ui5strapBarNavContainerContentPlacementHor((@i * @columnWidth), 0, auto);
 		}
 		
-		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
+		&.navcontainer-flag-extrude-@{size} > .navcontainer-target-content{
 			.ui5strapBarNavContainerContentPlacementHor((@i * @columnWidth), auto, 100%);
 		}
 		
-		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
+		&.navcontainer-flag-overlay-@{size} > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
 	}
 	
 	//Placement Top
-	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-top{
+	.navcontainer-type-bar.navcontainer-flag-@{size}@{i}.navcontainer-flag-top-@{size}{
 		//Bar
-		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
+		&.navcontainer-flag-intrude-@{size} > .navcontainer-target-bar,
+		&.navcontainer-flag-extrude-@{size} > .navcontainer-target-bar,
+		&.navcontainer-flag-overlay-@{size} > .navcontainer-target-bar{
 			.ui5strapBarNavContainerBarPlacementVer(0, auto, (@i * @columnWidth));
 		}
 		
 		//Content
-		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
+		&.navcontainer-flag-intrude-@{size} > .navcontainer-target-content{
 			.ui5strapBarNavContainerContentPlacementVer((@i * @columnWidth), 0, auto);
 		}
 		
-		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
+		&.navcontainer-flag-extrude-@{size} > .navcontainer-target-content{
 			.ui5strapBarNavContainerContentPlacementVer((@i * @columnWidth), auto, 100%);
 		}
 		
-		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
+		&.navcontainer-flag-overlay-@{size} > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
 	}
 	
 	//Placement Right
-	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-right{
+	.navcontainer-type-bar.navcontainer-flag-@{size}@{i}.navcontainer-flag-right-@{size}{
 		//Bar
-		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
+		&.navcontainer-flag-intrude-@{size} > .navcontainer-target-bar,
+		&.navcontainer-flag-extrude-@{size} > .navcontainer-target-bar,
+		&.navcontainer-flag-overlay-@{size} > .navcontainer-target-bar{
 			.ui5strapBarNavContainerBarPlacementHor(auto, 0, (@i * @columnWidth));
 		}
 		
 		//Content
-		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
+		&.navcontainer-flag-intrude-@{size} > .navcontainer-target-content{
 			.ui5strapBarNavContainerContentPlacementHor(0, (@i * @columnWidth), auto);
 		}
 		
-		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
+		&.navcontainer-flag-extrude-@{size} > .navcontainer-target-content{
 			.ui5strapBarNavContainerContentPlacementHor(auto, (@i * @columnWidth), 100%);
 		}
 		
-		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
+		&.navcontainer-flag-overlay-@{size} > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}
 	}
 	
 	//Placement Bottom
-	.navcontainer-type-bar.navcontainer-flag-col-@{size}-@{i}.navcontainer-flag-placement-@{size}-bottom{
+	.navcontainer-type-bar.navcontainer-flag-@{size}@{i}.navcontainer-flag-bottom-@{size}{
 		//Bar
-		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-bar,
-		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-bar{
+		&.navcontainer-flag-intrude-@{size} > .navcontainer-target-bar,
+		&.navcontainer-flag-extrude-@{size} > .navcontainer-target-bar,
+		&.navcontainer-flag-overlay-@{size} > .navcontainer-target-bar{
 			.ui5strapBarNavContainerBarPlacementVer(auto, 0, (@i * @columnWidth));
 		}
 		
 		//Content
-		&.navcontainer-flag-mode-@{size}-intrude > .navcontainer-target-content{
+		&.navcontainer-flag-intrude-@{size} > .navcontainer-target-content{
 			.ui5strapBarNavContainerContentPlacementVer(0, (@i * @columnWidth), auto);
 		}
 		
-		&.navcontainer-flag-mode-@{size}-extrude > .navcontainer-target-content{
+		&.navcontainer-flag-extrude-@{size} > .navcontainer-target-content{
 			.ui5strapBarNavContainerContentPlacementVer(auto, (@i * @columnWidth), 100%);
 		}
 		
-		&.navcontainer-flag-mode-@{size}-overlay > .navcontainer-target-content,
+		&.navcontainer-flag-overlay-@{size} > .navcontainer-target-content,
 		&.navcontainer-flag-bar-hide > .navcontainer-target-content{
 			.ui5strapSnapFullSize();
 		}

@@ -81,22 +81,22 @@
 	}
 }
 
-.ui5strapMakeBarMenuZoom(@size, @i) when (@i > 0){
+.ui5strapMakeBarMenuZoom(@size, @i, @step) when (@i > 0){
 	
 	.u5sl-barmenu.u5sl-barmenu-flag-zoom-@{size}-p@{i}{
-		font-size: (1em + (@i / @grid-columns));
+		font-size: (1em + (@i * @step));
 	}
 	
 	.u5sl-barmenu.u5sl-barmenu-flag-zoom-@{size}-m@{i}{
-		font-size: (1em - (@i / @grid-columns));
+		font-size: (1em - (@i * @step));
 	}
 	
-	.ui5strapMakeBarMenuZoom(@size, (@i - 1));
+	.ui5strapMakeBarMenuZoom(@size, (@i - 1), @step);
 }
 
 .ui5strapMakeBarMenuSize(@size){
 	//Buttons Horizontal
-	.u5sl-barmenu-flag-type-@{size}-buttonshorizontal{
+	.u5sl-barmenu-flag-buttonshorizontal-@{size}{
 		&{
 			width:auto;
 			height:100%;	
@@ -134,7 +134,7 @@
 	}
 	
 	//Buttons Vertical
-	.u5sl-barmenu-flag-type-@{size}-buttonsvertical{
+	.u5sl-barmenu-flag-buttonsvertical-@{size}{
 		&{
 			width:100%;
 			height:auto;
@@ -171,7 +171,7 @@
 	}
 	
 	//List Horizontal
-	.u5sl-barmenu-flag-type-@{size}-listhorizontal{
+	.u5sl-barmenu-flag-listhorizontal-@{size}{
 		&{
 			width:auto;
 			height: auto;	
@@ -212,7 +212,7 @@
 	}
 	
 	//List Vertical
-	.u5sl-barmenu-flag-type-@{size}-listvertical{
+	.u5sl-barmenu-flag-listvertical-@{size}{
 		&{	
 			width:100%;
 			height: auto;
@@ -251,19 +251,19 @@
 }
 
 .ui5strapMakeBarMenuSize(xs);
-.ui5strapMakeBarMenuZoom(xs, @grid-columns); 
+.ui5strapMakeBarMenuZoom(xs, 4, 0.25); 
 
 @media (min-width: @screen-sm) {
 	.ui5strapMakeBarMenuSize(sm);
-	.ui5strapMakeBarMenuZoom(sm, @grid-columns);
+	.ui5strapMakeBarMenuZoom(sm, 4, 0.25);
 }
 
 @media (min-width: @screen-md) {
 	.ui5strapMakeBarMenuSize(md);
-	.ui5strapMakeBarMenuZoom(md, @grid-columns);
+	.ui5strapMakeBarMenuZoom(md, 4, 0.25);
 }
 
 @media (min-width: @screen-lg) {
 	.ui5strapMakeBarMenuSize(lg);
-	.ui5strapMakeBarMenuZoom(lg, @grid-columns);
+	.ui5strapMakeBarMenuZoom(lg, 4, 0.25);
 }
