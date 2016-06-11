@@ -337,6 +337,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				}
 			};
 		
+		//Callback immediately if compCount is 0
+		!compCount && callback && callback();	
+			
 		for(var i = 0; i < compCount; i++){
 			(function(){
 				var compConfig = components[i];
@@ -1533,12 +1536,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			var actionName = oEvent.getSource().data(customDataKey),
 				actionNamesList = ui5strap.Utils.parseIContent(actionName);
 			
-			if(typeof actionNamesList === 'object'){
+			if(actionNamesList && typeof actionNamesList === 'object'){
 				var eventId = oEvent.getId();
+				
 				//Different actions for each event
 				if(!eventId || !actionNamesList[eventId]){
-					throw new Error('Cannot execute action: no action for eventId ' + eventId);
+					jQuery.sap.log.warning('Cannot execute action: no action for eventId: ' + eventId);
+					return null;
 				}
+				
 				actionName = actionNamesList[eventId];
 			}
 			

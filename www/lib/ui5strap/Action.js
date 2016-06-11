@@ -230,7 +230,10 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 		jQuery.sap.log.debug("[ACTION] Action.run");
 
 		var actionName = action.parameters;
-		if(typeof actionName === 'string'){
+		if(!actionName){
+			jQuery.sap.log.warning("Cannot execute action: no parameters given.");
+		}
+		else if(typeof actionName === 'string'){
 			Action.loadFromFile(actionName, function loadFromFileSuccess(actionJSON){
 				action.parameters = actionJSON;
 				action.name = actionName;
