@@ -9,6 +9,11 @@
 	        "mode" : "Devel"
 	},
 	
+	"options" : {
+	   
+	
+	},
+	
 	"css" : [
 		"css/demoapp.css"
 	],

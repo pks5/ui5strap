@@ -227,7 +227,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	};
 
 	ConsolePrototype.info = function(message, logName){
-		if(this.getLogLevel() >= jQuery.sap.log.Level.INFO){
+		if(this.getLogLevel() >= jQuery.sap.log.Level.INFO){console.log(message, logName);
 			this.addLine(message, 'info', logName);
 		}
 	};

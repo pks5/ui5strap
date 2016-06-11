@@ -45,7 +45,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			this.hasFirstShow = false;
 			this.hasFirstShown = false;
 
-			this._initLog();
+			this._initLog(viewer);
 
 			this.sendMessage = function(appMessage){
 				appMessage.sender = this.getId();
@@ -60,28 +60,28 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* Init sapplication specific logging
 	* @protected
 	*/
-	AppBaseProto._initLog = function(){
+	AppBaseProto._initLog = function(viewer){
 		var _this = this;
 		this.log = {
 
 			debug : function (message) {
-				jQuery.sap.log.debug(_this + " " + message);
+				viewer.log.debug(_this + " " + message, _this.getId());
 			},
 
 			warning : function (message) {
-				jQuery.sap.log.warning(_this + " " + message);
+				viewer.log.warning(_this + " " + message, _this.getId());
 			},
 
 			error : function (message) {
-				jQuery.sap.log.error(_this + " " + message);
+				viewer.log.error(_this + " " + message, _this.getId());
 			},
 
 			info : function (message) {
-				jQuery.sap.log.info(_this + " " + message);
+				viewer.log.info(_this + " " + message, _this.getId());
 			},
 
 			fatal : function (message) {
-				jQuery.sap.log.fatal(_this + " " + message);
+				viewer.log.fatal(_this + " " + message, _this.getId());
 			}
 
 		};
@@ -116,7 +116,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* @Private
 	*/
 	var _preloadJavaScript = function(_this, callback){
-		jQuery.sap.log.debug("AppBase::_preloadJavaScript");
+		_this.log.info("AppBase::_preloadJavaScript");
 		
 		var scripts = _this.config.data.js;
 		if(scripts.length === 0){

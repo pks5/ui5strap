@@ -26,7 +26,7 @@
  */
  
 
-sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
+sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library, ObjectBase, Console){
 	
 	var ViewerBase = ObjectBase.extend('ui5strap.ViewerBase', {
 		"constructor" : function(options){
@@ -71,6 +71,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 			}
 			
 			this.options = options;
+			
+			//Initialize the Console
+			if(options.enableConsole){
+				this._console = new Console({ logLevel : options.logLevel });
+			}
 		}
 	}),
 	ViewerBaseProto = ViewerBase.prototype;
@@ -83,7 +88,66 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 		//Register Loader Layer
 		ui5strap.Layer.register('ui5strap-loader');
   		
+		this._initLog();
 		this._initOverlay();
+	};
+	
+	/*
+	* Init sapplication specific logging
+	* @protected
+	*/
+	ViewerBaseProto._initLog = function(){
+		var _this = this;
+		this.log = this._console ? 
+		
+		{
+			debug : function (message, logName) {
+				_this._console.debug(message, logName);
+				jQuery.sap.log.debug(message);
+			},
+
+			warning : function (message, logName) {
+				_this._console.warning(message, logName);
+				jQuery.sap.log.warning(message);
+			},
+
+			error : function (message, logName) {
+				_this._console.error(message, logName);
+				jQuery.sap.log.error(message);
+			},
+
+			info : function (message, logName) {
+				_this._console.info(message, logName);
+				jQuery.sap.log.info(message);
+			},
+
+			fatal : function (message, logName) {
+				_this._console.fatal(message, logName);
+				jQuery.sap.log.fatal(message);
+			}
+		} :		
+				
+		{
+			debug : function (message) {
+				jQuery.sap.log.debug(message);
+			},
+
+			warning : function (message) {
+				jQuery.sap.log.warning(message);
+			},
+
+			error : function (message) {
+				jQuery.sap.log.error(message);
+			},
+
+			info : function (message) {
+				jQuery.sap.log.info(message);
+			},
+
+			fatal : function (message) {
+				jQuery.sap.log.fatal(message);
+			}
+		};
 	};
 
 	/**
@@ -207,6 +271,25 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 	* ----------------------------------------------------------------------
 	*/
 	
+	/**
+	* Get the Viewer Console control reference.
+	* @public
+	*/
+	ViewerBaseProto.getConsole = function(){
+		return this._console;
+	};
+	
+	/**
+	 * Shows the Viewer Console.
+	 */
+	ViewerBaseProto.showConsole = function(){
+		var viewerConsole = this._console;
+		viewerConsole.setCurrentLog(this.getApp().getId());
+		this.showOverlay(viewerConsole, function(){
+				viewerConsole.flush();
+		});
+	}
+
 	/**
 	 * @Public
 	 */

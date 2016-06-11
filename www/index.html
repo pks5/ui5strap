@@ -200,12 +200,14 @@
 				*/
 				var defaultApp = "demoapp",
 					viewerOptions = {
-					"app" : {
-						type : "URI",
-						uriParam : "app",
-						defaultValue : "./apps/" + defaultApp + "/app.json"
-					}
-				};
+						"enableConsole" : true,
+						"logLevel" : 5,
+						"app" : {
+							type : "URI",
+							uriParam : "app",
+							defaultValue : "./apps/" + defaultApp + "/app.json"
+						}
+			    };
 	
 				/*
 				* Initialize Viewer

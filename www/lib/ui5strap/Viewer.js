@@ -36,8 +36,6 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			this._loadingApp = null;
 
 			this._dom = null;
-			
-			this._console = null;
 		}
 	}),
 	ViewerMultiProto = ViewerMulti.prototype,
@@ -63,7 +61,6 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		//Init methods
 		//TOOO Move to Viewer base
 		this._initDom();
-		this._initConsole();
 		this._initEvents();
 	};
 
@@ -659,14 +656,6 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	*/
 
 	/**
-	* Get the console control reference
-	* @public
-	*/
-	ViewerMultiProto.getConsole = function(){
-		return this._console;
-	};
-
-	/**
 	* Inititalizes the dom cache
 	* @Protected
 	*/
@@ -683,35 +672,19 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		}
 	};
 
-	
-
-	/**
-	* Initializes the console
-	* @Protected
-	* TODO Where is this needed?
-	*/
-	ViewerMultiProto._initConsole = function(){
-		if(this.options.enableConsole){
-			
-			//TODO Async!
-			jQuery.sap.require("ui5strap.Console");
-			this._console = new ui5strap.Console();
-		}
-	};	
-
 	/**
 	* Inititalizes the events
 	* @Protected
 	*/
 	ViewerMultiProto._initEvents = function(){
 		var _this = this;
-		/*
+		
 		jQuery(document)
 		
 		.on('keyup', function(e) {
 	      		var evtobj = window.event? window.event : e
 
-	      		sappmaker.log.debug("Key pressed: " + evtobj.keyCode);
+	      		jQuery.sap.log.debug("Key pressed: " + evtobj.keyCode);
 
 	      		if (evtobj.keyCode === 84){
 	      			var apps = _m_loadedSapplicationsById;
@@ -727,26 +700,24 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 
 	      		}
 	      		else if (evtobj.keyCode === 67){
-	      			if(viewer.options.enableConsole){
-		      			if(viewer.isOverlayVisible()){ 
-		      				viewer.hideOverlay();
+	      			//Key 'c'
+	      			if(_this.options.enableConsole){
+		      			if(_this.isOverlayVisible()){ 
+		      				_this.hideOverlay();
 		      			}
 		      			else{
-		      				var viewerConsole = viewer.getConsole();
-		      				viewerConsole.setCurrentLog(viewer.getApp().getId());
-		      				viewer.showOverlay(viewerConsole, function(){
-		      						viewerConsole.flush();
-		      				});
-		      				
+		      				_this.showConsole();
 		      			}
 	      			}		
 	      		}
 	      		else if (evtobj.keyCode === 70){
-	      			viewer.requestFullscreen();
+	      			//Key 'f'
+	      			_this.requestFullscreen();
 	      		}
 			}
-		)
+		);
 		
+		/*
 		.on('swipeupdown', function anon_eventSwipeUpDown(eventData){
 
 				var appInstances = _m_loadedSapplicationsById;
