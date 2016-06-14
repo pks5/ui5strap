@@ -21,28 +21,28 @@
     "views" : [
     		{
                 "id" : "menuRoot",
-                "viewName" : ".MenuRoot",
+                "viewName" : ".views.MenuRoot",
                 "target" : "bar"
             },
             
             {
                 "id" : "home",
-                "viewName" : ".Home"
+                "viewName" : ".views.Home"
             },
 
             {
                 "id" : "about",
-                "viewName" : ".About"
+                "viewName" : ".views.About"
             }
       ],
 	
 	"actions" : [
-		".NavigateToHome",
-		".NavigateToAbout",
+		".actions.NavigateToHome",
+		".actions.NavigateToAbout",
 		
-		".ToggleBarMenuRoot",
-		".NavigateViaMenuRoot",
-		".SetSelectedMenuRoot"
+		".actions.ToggleBarMenuRoot",
+		".actions.NavigateViaMenuRoot",
+		".actions.SetSelectedMenuRoot"
 	],
 	
 	"rootNavigation" : {
@@ -61,7 +61,7 @@
          	
          	"barSizeLarge" : 2,
          	"barPlacementLarge" : "Left",
-         	"barModeLarge" : "IntrudeFixed",
+         	"barModeLarge" : "Intrude",
          	
          	"barVisible" : false
          	
@@ -70,7 +70,7 @@
          "events" : {
          	"control" : {
          		"pageChange" : [
-         			".SetSelectedMenuRoot"
+         			".actions.SetSelectedMenuRoot"
          		]
          	}
          },
