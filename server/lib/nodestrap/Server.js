@@ -26,7 +26,7 @@
  */
 
 var nodeFs = require('fs'), nodePath = require('path'), nodeHttp = require('http'), nodeUrl = require('url'),
-	nodeMime = require('mime'), pathToRoot = "../../",
+	nodeMime = require('mime'), pathToRoot = __dirname + "/../../",
 	RestController = require("./RestController");
 
 
@@ -53,8 +53,8 @@ ServerProto.start = function(){
 		var serverConfig = JSON.parse(file);
 		
 		_this.config = serverConfig;
-		
-		_this._pathToWWW = serverConfig.server.pathToPublic;
+		console.log(pathToRoot);
+		_this._pathToWWW = pathToRoot + serverConfig.server.pathToPublic;
 		_this._port = serverConfig.server.port;
 		
 		
@@ -64,7 +64,7 @@ ServerProto.start = function(){
 		for(var i = 0; i < apps.length; i++){
 			(function(){
 				var appConfigUrl = apps[i].config,
-					pathToAppConfig = nodePath.join(serverConfig.server.pathToPublic,
+					pathToAppConfig = nodePath.join(_this._pathToWWW,
 						appConfigUrl);
 				console.log("Loading configuration from " + appConfigUrl);
 				nodeFs.readFile(pathToAppConfig, 'utf8', function(err, file) {
