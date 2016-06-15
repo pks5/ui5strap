@@ -16,10 +16,14 @@
 			    return s;
 			};
 			
-			var version = randomString(8),
-				paramName = "__v";
+			var version = document.getElementById("ui5strap-cache-control").dataset.ui5strapCacheVersion;
+			if(!version || version == "RANDOM"){
+				version = randomString(8);
+			}
 			
-			var ajaxGlobalData = {};
+			var paramName = "__v",
+				ajaxGlobalData = {};
+			
 			ajaxGlobalData[paramName] = version;
 			
 			//Ajax Requests
