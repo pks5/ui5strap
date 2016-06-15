@@ -16,7 +16,7 @@
 			    return s;
 			};
 			
-			var version = document.getElementById("ui5strap-cache-control").dataset.ui5strapCacheVersion;
+			var version = document.getElementById("ui5strap-cache-control").getAttribute("data-ui5strap-cache-version");
 			if(!version || version == "RANDOM"){
 				version = randomString(8);
 			}
