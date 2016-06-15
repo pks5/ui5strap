@@ -176,23 +176,25 @@
 		<!-- Cordova Library (optional). Only needed when building mobile apps. -->
 		<!-- <script type="text/javascript" src="cordova.js"></script> -->
 		
-		<!-- 
-			Minimized OpenUI5 library. If you need the full OpenUI5 Library, you can get it at http://openui5.org
-			Please note that preloading of the Ui5Strap library is disabled by default. Remove "_preload-disabled" to activate preloading. 
-		-->
 		
+		<!-- Cache Control (optional) -->
 		<script id="ui5strap-cache-control" 
 		  src="lib/ui5strap-cache-control.js"
 		  data-ui5strap-cache-version="1.2.3"
 		  ></script>
         
+        <!-- 
+            Minimized OpenUI5 library. If you need the full OpenUI5 Library, you can get it at http://openui5.org
+            Please note that preloading of the Ui5Strap library is disabled by default. Remove "_preload-disabled" to activate preloading. 
+        -->
        <script id="sap-ui-bootstrap" 
             src="lib/sap-ui-core.js" 
             data-sap-ui-compatVersion="edge" 
             data-sap-ui-preload="async" 
             data-sap-ui-libs_="ui5strap">
        </script>
-                    
+         
+         <!-- Main Script -->           
 		<script>
 		   
 		   (function(){
