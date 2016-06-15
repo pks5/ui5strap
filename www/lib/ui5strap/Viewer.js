@@ -729,7 +729,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	      		}
 	      		else if (evtobj.keyCode === 67){
 	      			//Key 'c'
-	      			if(_this.options.enableConsole){
+	      			if(_this._console){
 		      			if(_this.isOverlayVisible()){ 
 		      				_this.hideOverlay();
 		      			}

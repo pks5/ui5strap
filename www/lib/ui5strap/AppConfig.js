@@ -481,6 +481,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			appSection["location"] = appUrlParts.join('/');
 		}
 		
+		if(!appSection.version){
+			appSection.version = "0.0.1-SNAPSHOT";
+		}
+		
 		//Namespace
 		//TODO What's this?
 		/*

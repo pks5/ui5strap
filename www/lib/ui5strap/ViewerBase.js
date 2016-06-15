@@ -36,13 +36,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 				throw new Error("Please specify the default app in the Viewer Options!");
 			}
 			
-			//Device Log Level
-			if(!options.logLevel){
-				options.logLevel = 0;
-			}
-			
-			jQuery.sap.log.setLevel(options.logLevel);
-
 			//Error to Browser
 			if(!options.errorToBrowser){
 				options.errorToBrowser = false;
@@ -75,7 +68,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 			this.options = options;
 			
 			//Initialize the Console
-			if(options.enableConsole){
+			if(options.console){
 				this._console = new Console({ logLevel : options.logLevel });
 			}
 		}

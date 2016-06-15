@@ -180,68 +180,67 @@
 			Minimized OpenUI5 library. If you need the full OpenUI5 Library, you can get it at http://openui5.org
 			Please note that preloading of the Ui5Strap library is disabled by default. Remove "_preload-disabled" to activate preloading. 
 		-->
-		<script 
-			id="sap-ui-bootstrap" 
-			src="lib/sap-ui-core.js" 
-			data-sap-ui-compatVersion="edge" 
-			data-sap-ui-preload="async"
-			data-sap-ui-libs_="ui5strap"
-		></script>
 		
-		<!-- App Start -->
+		<script src="lib/ui5strap-disable-cache.js"></script>
+        
+       <script id="sap-ui-bootstrap" 
+            src="lib/sap-ui-core.js" 
+            data-sap-ui-compatVersion="edge" 
+            data-sap-ui-preload="async" 
+            data-sap-ui-libs_="ui5strap">
+       </script>
+                    
 		<script>
-			//Wrap the start function with a callback function
-			var onDeviceReady = function(){
-				/*
-				* Define Viewer Options
-				* Use "app.defaultValue" to set the Default App. 
-				* It is used if no "app" GET parameter is present.
-				*/
-				var defaultApp = "demoapp",
-					viewerOptions = {
-						"enableConsole" : true,
-						"logLevel" : 5,
-						"app" : {
-							type : "URI",
-							uriParam : "app",
-							defaultValue : "./apps/" + defaultApp + "/app.json"
-						}
-			    };
-	
-				/*
-				* Initialize Viewer
-				*/
-				sap.ui.require(["ui5strap/Viewer"], function(Viewer){
-			
-			
-					//The reference to the viewer instance should not be global
-					var viewer = new Viewer(viewerOptions);
-					
-					/*
-					* Viewer.prototype.start accepts two callback functions as parameters.
-					* The first callback is fired when the app has been completely started and shown.
-					* The second callback is fired when the app has been loaded but did not show yet.
-					* Both parameters are optional.
-					*/
-					viewer.start(null, function(){
-						//In this example we want to show the welcome message when the App has been loaded.
-						document.getElementById('ui5strap-splash-screen-spinner').className = 'ui5strap-hidden';
-						document.getElementById('ui5strap-splash-screen-message').className = 'ui5strap-splash-screen-message-visible';
-					});
-					
-				});
-			};
-			
-			if(window.cordova){
-				//App is executed within Cordova
-				document.addEventListener("deviceready", function(){
-					sap.ui.getCore().attachInit(onDeviceReady);
-				}, false);
-			}
-			else{
-				//Otherwise, trigger the callback immediately
-				sap.ui.getCore().attachInit(onDeviceReady);
-			}
+		   
+		   (function(){
+			   /*
+                * Define Viewer Options
+                * Use "app.defaultValue" to set the Default App. 
+                * It is used if no "app" GET parameter is present.
+                */
+                var viewerOptions = {
+                        "console" : true,
+                        "app" : {
+                            type : "URI",
+                            uriParam : "app",
+                            defaultValue : "./apps/demoapp/app.json"
+                        }
+                },
+                onDeviceReady = function(){
+                    /*
+                    * Initialize Viewer
+                    */
+                    sap.ui.require(["ui5strap/Viewer"], function(Viewer){
+                        
+                    	//The reference to the viewer instance should not be global
+                        var viewer = new Viewer(viewerOptions);
+                        
+                        /*
+                        * Viewer.prototype.start accepts two callback functions as parameters.
+                        * The first callback is fired when the app has been completely started and shown.
+                        * The second callback is fired when the app has been loaded but did not show yet.
+                        * Both parameters are optional.
+                        */
+                        viewer.start(null, function(){
+                            //In this example we want to show the welcome message when the App has been loaded.
+                            document.getElementById('ui5strap-splash-screen-spinner').className = 'ui5strap-hidden';
+                            document.getElementById('ui5strap-splash-screen-message').className = 'ui5strap-splash-screen-message-visible';
+                        });
+                        
+                    });
+                };
+    
+                if(window.cordova){
+	                //App is executed within Cordova
+	                document.addEventListener("deviceready", function(){
+	                    sap.ui.getCore().attachInit(onDeviceReady);
+	                }, false);
+	            }
+	            else{
+	                //Otherwise, trigger the callback immediately
+	                sap.ui.getCore().attachInit(onDeviceReady);
+	            }
+		    }());
 		</script>
 
 	</body>
