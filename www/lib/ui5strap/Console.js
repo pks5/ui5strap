@@ -27,7 +27,8 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	var Console = ControlBase.extend("ui5strap.Console", {
+	var defaultLogName = '__DEFAULT_LOG',
+		Console = ControlBase.extend("ui5strap.Console", {
 		metadata : {
 
 			library : "ui5strap",
@@ -35,6 +36,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				"logLevel" : {
 					type:"int", 
 					defaultValue:0
+				},
+				"currentLog" : {
+					type:"string",
+					defaultValue : defaultLogName
 				}
 			},
 
@@ -42,12 +47,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	ConsolePrototype = Console.prototype;
 
-	Console.LOG_DEFAULT = '__DEFAULT_LOG';
 	Console.MAX_SIZE = 200;
 	Console.MAX_LINES = 500;
 
 	//Object vars
-	ConsolePrototype._currentLogName = null;
 	ConsolePrototype._firstLineNr = null;
 	ConsolePrototype._scrollTimer = null;
 
@@ -56,15 +59,13 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 		this._firstLineNr = 0;
 		this._logs = {}; 
-
-		this.setCurrentLog(Console.LOG_DEFAULT);
 	};
 
 	ConsolePrototype.setCurrentLog = function(logName){
-		this._currentLogName = logName;
-
-		if(!(this._currentLogName in this._logs)){
-			this._logs[this._currentLogName] = [];
+		this.setProperty("currentLog", logName, true);
+		
+		if(this._logs[logName])){
+			this._logs[logName] = [];
 		}
 
 	};
@@ -108,7 +109,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 
 		if(typeof logName === 'undefined' || null === logName){
-			logName = Console.LOG_DEFAULT;
+			logName = defaultLogName;
 		}
 
 		if(!(logName in this._logs)){
@@ -129,7 +130,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 			
 
-			if(logName === this._currentLogName){
+			if(logName === this.getCurrentLog()){
 					this.flush();
 
 					this._scrollToBottom();
@@ -148,7 +149,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	};
 
 	ConsolePrototype.flush = function(){
-		var logName = this._currentLogName;
+		var logName = this.getCurrentLog();
 		
 		if(!(logName in this._logs)){
 			throw new Error("Cannot flush undefined log: '" + logName + "'");
@@ -159,7 +160,6 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			return;
 		}
 
-		//console.log(this._logs, this._currentLogName);
 		var $console = this.$().find('.ui5strap-console');
 		if($console.size() > 0){
 			var $consoleInner = $console.find('.ui5strap-console-inner');
