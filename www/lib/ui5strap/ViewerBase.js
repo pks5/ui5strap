@@ -69,7 +69,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 			
 			//Initialize the Console
 			if(options.console){
-				this._console = new Console({ logLevel : options.logLevel });
+				this._console = new Console({ logLevel : jQuery.sap.log.getLevel() });
 			}
 		}
 	}),

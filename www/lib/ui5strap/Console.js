@@ -35,7 +35,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			properties : { 
 				"logLevel" : {
 					type:"int", 
-					defaultValue:0
+					defaultValue:6
 				},
 				"currentLog" : {
 					type:"string",
@@ -58,13 +58,18 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		this._scrollTimer = null;
 
 		this._firstLineNr = 0;
-		this._logs = {}; 
+		this._logs = {};
+		this._logs[defaultLogName] = [];
 	};
 
 	ConsolePrototype.setCurrentLog = function(logName){
+		if(!logName){
+			logName = defaultLogName;
+		}
+		
 		this.setProperty("currentLog", logName, true);
 		
-		if(this._logs[logName])){
+		if(!this._logs[logName]){
 			this._logs[logName] = [];
 		}
 
