@@ -41,7 +41,7 @@ ServerProto = Server.prototype;
 /**
  * @Public
  */
-ServerProto.start = function(){
+ServerProto.start = function(customPort){
 	var _this = this;
 	
 	nodeFs.readFile(this._pathToConfig, 'utf8', function(err, file) {
@@ -55,8 +55,9 @@ ServerProto.start = function(){
 		_this.config = serverConfig;
 		console.log(pathToRoot);
 		_this._pathToWWW = pathToRoot + serverConfig.server.pathToPublic;
-		_this._port = serverConfig.server.port;
+		_this._port = customPort || serverConfig.server.port;
 		
+		console.log("Port is: " + _this._port);
 		
 		var apps = serverConfig.apps,
 			cnr = apps.length;

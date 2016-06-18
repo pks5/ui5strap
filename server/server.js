@@ -28,7 +28,7 @@
 var Server = require("./lib/nodestrap/Server.js"),
 	server = new Server(__dirname + "/server.json");
 	
-server.start();
+server.start(process.argv[2]);
 
 	
 

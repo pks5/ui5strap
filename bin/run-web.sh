@@ -6,8 +6,6 @@ echo Starting Http Server ...
 
 cd "$(dirname "$0")"
 
-npm run run-web
+npm run run-web -- $1
 
 cd $curDir
-
-read -p "Press any key to continue ..."

@@ -4,21 +4,20 @@
   "author": "Jan Philipp Knoeller",
   "license": "Apache2",
   "scripts": {
-    "run-web-old": "http-server -a localhost -p 8282 ../www",
     "run-web": "node ../server/server.js",
-    "run-desktop": "nwbuild -r ../www -v0.12.3",
+    "run-desktop": "nwbuild -r ../www",
     "run-android": "cd .. && cordova emulate android",
     "build-ui5strap-library": "grunt --gruntfile build-ui5strap-preload.js",
     "build-demoapp-component": "grunt --gruntfile build-demoapp-preload.js"
   },
   "devDependencies": {
-    "cordova": "^5.4.0",
+    "cordova": "^5.4.1",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-uglify": "^0.10.0",
-    "grunt-openui5": "^0.8.0",
-    "http-server": "~0.8.5",
-    "nw-builder": "^2.0.2"
+    "grunt-contrib-uglify": "^0.10.1",
+    "grunt-openui5": "^0.8.1",
+    "http-server": "^0.8.5",
+    "nw-builder": "^2.2.0"
   }
 }
