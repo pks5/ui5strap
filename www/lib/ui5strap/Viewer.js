@@ -205,9 +205,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			//HTML5 App: ordinary webapp that is executed within a Sandbox.
 			
 			if(
-				!appDefinition.name 
-				|| !appDefinition.id 
-				|| !appDefinition["package"] 
+				!appDefinition.id 
 				|| !appDefinition.url
 			){
 				throw new Error("Cannot execute HTML5 App: at least one of required attributes missing in definition.");
@@ -218,8 +216,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		        "app" : {
 		        	"name" : appDefinition.name,
 		            "id" : appDefinition.id,
-		            "package" : appDefinition["package"],
-		            "module" : "ui5strap.AppSandbox",
+		            "type" : "ui5strap.AppSandbox",
 		            "appURL" : appDefinition.url,
 		            "propagateMessages" : true
 		        },
@@ -256,25 +253,26 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				//External Ui5Strap App: Executed within a Sandbox.
 				
 				if(
-					!appDefinition.name 
-					|| !appDefinition.id 
-					|| !appDefinition["package"] 
-					|| !appDefinition.url
+					!appDefinition.id 
+					|| (!appDefinition.launcher && !appDefinition.url)
 				){
 					throw new Error("Cannot execute external UI5STRAP App: at least one of required attributes missing in definition.");
 				}
 				
 				//The Launcher is the HTML file which is executing the App.
-				var launcher = appDefinition.launcher || "index.html";
+				var appURL = appDefinition.launcher || "index.html";
+				
+				if(appDefinition.url){
+					appURL += "?app=" + encodeURIComponent(appDefinition.url);
+				}
 				
 				//Now load the App
 				_loadApp({
 			        "app" : {
 			            "name" : appDefinition.name,
 			            "id" : appDefinition.id,
-			            "package" : appDefinition["package"],
-			            "module" : "ui5strap.AppSandbox",
-			            "appURL" : launcher + "?app=" + encodeURIComponent(appDefinition.url),
+			            "type" : "ui5strap.AppSandbox",
+			            "appURL" : appURL,
 			            "propagateMessages" : true
 			        },
 		            "icons" : {
