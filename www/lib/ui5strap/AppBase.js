@@ -37,8 +37,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			
 			this._rootComponent = this;
 			this._rootControl = null;
-			this._singleView = false;
-
+			
 			this._pageCache = {};
 			this._events = {};
 			

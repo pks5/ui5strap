@@ -42,7 +42,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				"css" : {},
 				"js" : {}
 			};
-
+			
+			this._singleView = false;
 		}
 	}),
 	AppProto = App.prototype;
