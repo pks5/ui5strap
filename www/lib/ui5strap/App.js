@@ -225,22 +225,18 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			if(firstTime){
 				if(_this._singleView){
 					var uriParameters = jQuery.sap.getUriParameters(),
-						viewName = uriParameters.get("_viewName");
-				
-					if(jQuery.sap.startsWith(viewName, ".")){
-						viewName = _this.config.data.app["package"] + viewName;
-					}
-					var viewParameters = uriParameters.get("_viewParameters");
+						viewName = _this.config.resolvePackage(uriParameters.get("_viewName")),
+						viewParameters = uriParameters.get("_viewParameters");
+					
 					if(viewParameters){
 						viewParameters = JSON.parse(viewParameters);
 					}
-					var viewConfig = { 
-						type : uriParameters.get("_viewType"),
-						viewName : viewName,
-						parameters : viewParameters
-					};
 					
-					var viewConfig = _this.config.getViewConfig(viewConfig),
+					var viewConfig = _this.config.getViewConfig({ 
+							type : uriParameters.get("_viewType"),
+							viewName : viewName,
+							parameters : viewParameters
+						}),
 						oPage = _this.createView(viewConfig);
 					
 					_this.getRootControl().toPage(oPage, "content", "transition-none", callback);
