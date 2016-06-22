@@ -940,24 +940,33 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* @public
 	*/
 	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
-		var _this = this,
-			navControl = this.overlayControl,
-			target = "content",
-			transitionName = transitionName || 'slide-ttb';
+		var _this = this;
+		if(!(viewDataOrControl instanceof ui5strap.Control)){
+			var viewParameters = viewDataOrControl.parameters;
+			
+			viewDataOrControl = this.createView(this.config.getViewConfig(viewDataOrControl));
+		
+			viewDataOrControl.loaded().then(function(){
+				_this._showOverlay(viewDataOrControl, callback, transitionName, viewParameters);
+			});
+		}
+		else{
+			this._showOverlay(viewDataOrControl, callback, transitionName);
+		}
+	};
+	
+	AppBaseProto._showOverlay = function(oPage, callback, transitionName, pageUpdateParameters){
+		var navControl = this.overlayControl,
+			target = navControl.defaultTarget;
 		
 		//Set target busy
 		navControl.setTargetBusy(target, true);
 		
-		if(!(viewDataOrControl instanceof ui5strap.Control)){
-			var viewParameters = viewDataOrControl.parameters;
-			viewDataOrControl = _this.createView(_this.config.getViewConfig(viewDataOrControl));
-			
-			//Trigger onUpdate events
-			navControl.updateTarget(target, viewDataOrControl, viewParameters);
-		}
+		//Trigger onUpdate events
+		navControl.updateTarget(target, oPage, pageUpdateParameters);
 		
 		ui5strap.Layer.setVisible(this.overlayId, true, function(){
-			navControl.toPage(viewDataOrControl, target, transitionName, function toPage_complete(){
+			navControl.toPage(oPage, target, transitionName || "slide-ttb", function toPage_complete(){
 				
 				//Set target available
 				navControl.setTargetBusy(target, false);

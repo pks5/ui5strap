@@ -240,7 +240,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 						}),
 						oPage = _this.createView(viewConfig);
 					
-					_this.getRootControl().toPage(oPage, "content", "transition-none", callback);
+					oPage.loaded().then(function(){
+						_this.getRootControl().toPage(oPage, "content", "transition-none", callback);
+					});
 					
 					return;
 				}
