@@ -408,7 +408,8 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			return;
 		}
 
-		var appInstance = this.getApp(sappId);
+		var appInstance = this.getApp(sappId),
+			_this = this;
 
 		if(!appInstance){
 			throw new Error('Cannot show app "' + sappId + '" - app not loaded.');
@@ -421,15 +422,13 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 
 		//If App has no Root Control, or is already visible, return immeadiately
 		if(!appInstance.getRootControl() || appInstance.isVisible){
-			//this.hideLoader(function(){
-				callback && callback(appInstance);
-			//});
-
+			callback && callback(appInstance);
+			
 			return;
 		}
 		
 		var configAppSection = appInstance.config.data.app;
-		
+			
 		//Set Browser Title
 		//TODO Is this good here?
 		document.title = configAppSection.name;
@@ -444,8 +443,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		//Create or Update App Container
 		appInstance.updateContainer();
 
-		var viewer = this,
-			$currentRoot = previousSapplication ? previousSapplication.$() : jQuery('#ui5strap-app-initial'),
+		var $currentRoot = previousSapplication ? previousSapplication.$() : jQuery('#ui5strap-app-initial'),
 			
 			//Remove current app dom after transition
 			currentRootCallbackI = 0,
@@ -458,7 +456,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				if(previousSapplication){
 					//Previous App onHidden
 					previousSapplication.hidden(function(){
-						viewer.removeStyle(previousSapplication);
+						_this.removeStyle(previousSapplication);
 					});
 				}
 				else{
@@ -484,7 +482,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			jQuery.sap.log.debug("Attaching root to DOM...");
 			
 			//Append App to DOM is not yet
-			appInstance.attach(viewer._dom.$root[0]);
+			appInstance.attach(_this._dom.$root[0]);
 			
 			//Create new Transition
 			var transition = new ResponsiveTransition(
@@ -514,14 +512,12 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 						//RAF
 						ui5strap.polyfill.requestAnimationFrame(function RAF2(){
 							
-							//Hide the loader
-							//viewer.hideLoader(function(){
-								//Execure Transition
-								transition.execute(currentRootCallback, preparedRootCallback);
+							//Execure Transition
+							transition.execute(currentRootCallback, preparedRootCallback);
 							
-								//Set viewer to available
-								viewer._loadingApp = null;
-							//});
+							//Set viewer to available
+							_this._loadingApp = null;
+							
 							
 						});
 
@@ -533,6 +529,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			//</DOM_ATTACH_TIMEOUT>
 
 		});	
+	
 	};
 	
 	/*

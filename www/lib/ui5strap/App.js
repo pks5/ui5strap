@@ -223,12 +223,32 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var _this = this;
 		AppBase.prototype.show.call(this, function(firstTime){
 			if(firstTime){
-				if(_this.config.data.app.mode === "Devel" && jQuery.sap.getUriParameters().get("_viewName")){
-					callback && callback(firstTime);
+				if(_this._singleView){
+					var uriParameters = jQuery.sap.getUriParameters(),
+						viewName = uriParameters.get("_viewName");
+				
+					if(jQuery.sap.startsWith(viewName, ".")){
+						viewName = _this.config.data.app["package"] + viewName;
+					}
+					var viewParameters = uriParameters.get("_viewParameters");
+					if(viewParameters){
+						viewParameters = JSON.parse(viewParameters);
+					}
+					var viewConfig = { 
+						type : uriParameters.get("_viewType"),
+						viewName : viewName,
+						parameters : viewParameters
+					};
+					
+					var viewConfig = _this.config.getViewConfig(viewConfig),
+						oPage = _this.createView(viewConfig);
+					
+					_this.getRootControl().toPage(oPage, "content", "transition-none", callback);
+					
+					return;
 				}
-				else{
-					_this._rootComponent._showInitialContent(callback);
-				}
+				
+				_this._rootComponent._showInitialContent(callback);
 			}
 			else{
 				callback && callback(firstTime);
@@ -286,46 +306,69 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	/**
 	 * @Protected
 	 */
-	AppProto._buildRootControl = function(){
+	AppProto._buildSingleViewRootControl = function(callback){
+		sap.ui.require(["ui5strap/NavContainer"], function(NavContainerConstructor){
+			callback && callback(new NavContainerConstructor());
+		});
+	};
+	
+	AppProto.createRootControl = function(callback){
+		var _this = this;
+		if(this.config.data.app.mode === "Devel"){
+			var viewName = jQuery.sap.getUriParameters().get("_viewName");
+			if(viewName){
+				this._singleView = true;
+				
+				this._buildSingleViewRootControl(function(rootControl){
+					_this._rootControl = rootControl;
+					
+					callback && callback();
+				});
+				
+				return;
+			}
+		}
+		
+		AppBase.prototype.createRootControl.call(this, callback);
+	};
+	
+	/**
+	 * @Protected
+	 */
+	AppProto._createRootControl = function(callback){
 		var _this = this,
 			navigatorOptions = this.config.data.rootNavigation,
 			navContainerModule = navigatorOptions["type"] || navigatorOptions.module || "ui5strap.NavContainer";
 		
-		//TODO Async!
-		jQuery.sap.require(navContainerModule);
-		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
-		
-		if(!NavContainerConstructor){
-			throw new Error('Invalid NavContainer: ' + navContainerModule);
-		}
-		
-		var navContainerOptions = navigatorOptions.settings || {};
-		if(navContainerOptions.id){
-			navContainerOptions.id = this.config.createControlId(navContainerOptions.id);
-		}
-		
-		var rootNavigation = new NavContainerConstructor(navContainerOptions);
-		
-		if(navigatorOptions.events && navigatorOptions.events.control){
-			var eKeys = Object.keys(navigatorOptions.events.control),
-				eKeysLength = eKeys.length;
-			for(var i = 0; i < eKeysLength; i++){
-				var evs = navigatorOptions.events.control[eKeys[i]];
-				
-				rootNavigation.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
-					
-					for(var j = 0; j < data.actions.length; j ++){
-						_this.runAction({
-							"parameters" : data.actions[j], 
-							"eventSource" : oEvent.getSource(),
-							"eventParameters" : oEvent.getParameters()
-						});
-					}
-				});
+		sap.ui.require([navContainerModule.replace(/\./g, "/")], function(NavContainerConstructor){
+			var navContainerOptions = navigatorOptions.settings || {};
+			if(navContainerOptions.id){
+				navContainerOptions.id = _this.config.createControlId(navContainerOptions.id);
 			}
-		}
-		
-		return rootNavigation;
+			
+			var rootNavigation = new NavContainerConstructor(navContainerOptions);
+			
+			if(navigatorOptions.events && navigatorOptions.events.control){
+				var eKeys = Object.keys(navigatorOptions.events.control),
+					eKeysLength = eKeys.length;
+				for(var i = 0; i < eKeysLength; i++){
+					var evs = navigatorOptions.events.control[eKeys[i]];
+					
+					rootNavigation.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
+						
+						for(var j = 0; j < data.actions.length; j ++){
+							_this.runAction({
+								"parameters" : data.actions[j], 
+								"eventSource" : oEvent.getSource(),
+								"eventParameters" : oEvent.getParameters()
+							});
+						}
+					});
+				}
+			}
+			
+			callback(rootNavigation);
+		});
 	};
 	
 	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {

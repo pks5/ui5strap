@@ -13,9 +13,9 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Componen
 	}),
 	RootComponentProto = RootComponent.prototype;
 	
-	RootComponentProto._buildRootControl = function(){
-		return this.getApp()._buildRootControl();
-	}
+	RootComponentProto._createRootControl = function(callback){
+		return this.getApp()._createRootControl(callback);
+	};
 	
 	RootComponentProto._showInitialContent = function(callback){
 		return this.getApp()._showInitialContent(callback);

@@ -35,6 +35,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 			this.components = {};
 			this._rootComponent = this;
+			this._rootControl = null;
 
 			this._pageCache = {};
 			this._events = {};
@@ -458,8 +459,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		_preloadJavaScript(_this, function preloadJavaScriptComplete(){
 			_preloadRootComponent(_this, function _preloadRootCompComplete(){
 				_preloadComponents(_this, function _preloadComponentsComplete(){
+					_this.createRootControl(function(){
+						
 					_preloadModels(_this, function _preloadModelsComplete(){
 						_preloadActions(_this, callback);
+					});
+					
 					});
 				});
 			});
@@ -1218,28 +1223,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		return sap.ui.getCore().byId(this.config.createControlId(controlId, viewId));
 	};
 
-	AppBaseProto._buildRootControl = function(){
-		  alert("Please inherit ui5strap.AppBase._buildRootControl");
-	};
-	
-	/**
-	 * @Protected
-	 */
-	AppBaseProto._buildSingleViewRootControl = function(viewConfig){
-		var viewConfig = this.config.getViewConfig(viewConfig),
-			oPage = this.createView(viewConfig),
-			oController = oPage.getController();
-		
-		oController.onpageUpdateSingle && oController.onPageUpdateSingle(new sap.ui.base.Event("ui5strap.controller.pageUpdateSingle", this, viewConfig.parameters || {}));
-		
-		//TODO Async!
-		jQuery.sap.require("ui5strap.Container");
-		var container = new ui5strap.Container();
-		container.addContent(oPage);
-		
-		return container;
-	};
-	
 	/**
 	 * @Public
 	 */
@@ -1254,42 +1237,32 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		this._rootComponent = rootComponent;
 	};
 	
+	AppBaseProto.createRootControl = function(callback){
+		if(this._rootControl){
+			callback && callback();
+			
+			return;
+		}
+		
+		var rootComponent = this._rootComponent,
+			_this = this;
+		if(rootComponent._buildRootControl){
+			this._rootControl = rootComponent._buildRootControl();
+			callback && callback();
+		}
+		else{
+			rootComponent._createRootControl(function(rootControl){
+				_this._rootControl = rootControl;
+				
+				callback && callback();
+			});
+		}
+	};
+	
 	/**
 	 * @Public
 	 */
 	AppBaseProto.getRootControl = function(){
-		
-		if(!this._rootControl){
-			var rootControl = null;
-			if(this.config.data.app.mode === "Devel"){
-				var uriParameters = jQuery.sap.getUriParameters(),
-					viewName = uriParameters.get("_viewName");
-				if(viewName){
-					if(jQuery.sap.startsWith(viewName, ".")){
-						viewName = this.config.data.app["package"] + viewName;
-					}
-					var viewParameters = uriParameters.get("_viewParameters");
-					if(viewParameters){
-						viewParameters = JSON.parse(viewParameters);
-					}
-					var viewConfig = { 
-						type : uriParameters.get("_viewType"),
-						viewName : viewName,
-						parameters : viewParameters
-					};
-					rootControl = this._buildSingleViewRootControl(viewConfig);
-				}
-				else{
-					rootControl = this._rootComponent._buildRootControl();
-				}
-			}
-			else{
-				rootControl = this._rootComponent._buildRootControl();
-			}
-			
-			this._rootControl = rootControl;
-		}
-		
 		return this._rootControl;
 	};
 
