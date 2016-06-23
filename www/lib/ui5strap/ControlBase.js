@@ -69,7 +69,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 			window.clearTimeout(_this._waitRenderingTimer);
 			_this._waitRenderingTimer = null;
 			
-			throw new Error("Cannot render control: required CSS could not be loaded.");
+			throw new Error("Cannot render control '" + _this.getId() + "': css property '" + cssProperty + "' could not be resolved.");
 		}
 		
 		var width = _this.getComputedStyle(cssProperty);
