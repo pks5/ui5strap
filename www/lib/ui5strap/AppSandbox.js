@@ -46,8 +46,9 @@
 	* -------------------------------------------------------------
 	*/
 	
-	AppSandboxProto.getRootControl = function(){
-		return this._sandboxControl;
+	AppSandboxProto._createRootControl = function(callback){
+		
+		callback && callback(this._sandboxControl);
 	}; 
 
 	/*

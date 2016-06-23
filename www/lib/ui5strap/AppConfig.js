@@ -379,46 +379,53 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* @Public
 	*/
 	AppConfigProto.resolvePath = function (path, isStatic){
-		//Folder that contains app.json - must end with /
-		var appLocation = this.data.app.location,
+		var resourceLocation = null,
 			env = this.getEnvironment(),
 			envRoot = isStatic ? env.pathToStaticRoot : env.pathToServerRoot;
-		
-		if(!jQuery.sap.startsWith(appLocation, "http")){
-			if(envRoot.charAt(envRoot.length - 1) !== "/" && appLocation.charAt(0) !== "/"){
-				envRoot += "/";
-			}
-			appLocation = envRoot + appLocation;
-		}
 		
 		if(typeof path === 'object'){
 			//If path is an object, it should contain a "src" attribute and can contain a "package" attribute
 			if(path["package"]){
-				appLocation = jQuery.sap.getModulePath(path["package"]) + "/";
+				resourceLocation = jQuery.sap.getModulePath(path["package"]) + "/";
 			}
 
 			path = path["src"];
 		}
 		
-		if(jQuery.sap.startsWith(path, '/')){
+		if(jQuery.sap.startsWith(path, 'http')){
+			//Return relative (to html file) path unchanged
+			return path;
+		}
+		else if(jQuery.sap.startsWith(path, '/')){
 			if(envRoot.charAt(envRoot.length - 1) === "/"){
 				envRoot = envRoot.substr(0, envRoot.length - 1);
 			}
 			
 			return envRoot + path;
 		}
-		else if(
-			jQuery.sap.startsWith(path, 'http')
-		){
-			//Return relative (to html file) path unchanged
-			return path;
+		
+		//Relative to resource location
+		//Resource location can either be the app location, or a package location.
+		
+		if(!resourceLocation){
+			resourceLocation = this.data.app["location"];
+			if(!resourceLocation){
+				throw new Error("Cannot resolve relative path '" + path + "': no app location defined.");
+			}
 		}
 		
-		if(appLocation.charAt(appLocation.length - 1) !== "/" && path.charAt(0) !== "/"){
-			appLocation += "/";
+		if(!jQuery.sap.startsWith(resourceLocation, "http")){
+			if(envRoot.charAt(envRoot.length - 1) !== "/" && resourceLocation.charAt(0) !== "/"){
+				envRoot += "/";
+			}
+			resourceLocation = envRoot + resourceLocation;
 		}
 		
-		return appLocation + path;
+		if(resourceLocation.charAt(resourceLocation.length - 1) !== "/" && path.charAt(0) !== "/"){
+			resourceLocation += "/";
+		}
+		
+		return resourceLocation + path;
 	};
 
 	/**
@@ -473,9 +480,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			throw new Error('Package name may only contain letters and digits and the underscore char, separated by a ".", and must have at least one sub package.');
 		}
 		
-		//Location of the app.
+		//Location of the App
 		//Can be either absolute (not recommended!) or relative to index.html
-		if(!appSection["location"]){
+		if(!appSection["location"] && appSection.url){
+			//Set location of the app if config url is provided.
 			var appUrlParts = appSection.url.split('/');
 			appUrlParts[appUrlParts.length - 1] = '',
 			appSection["location"] = appUrlParts.join('/');
