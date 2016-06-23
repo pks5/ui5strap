@@ -89,26 +89,17 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 	* @Override
 	*/
 	OpenAppProto.run = function(){
-		var appUrl = this.getParameter("url");
-
-		if(!appUrl){
-			throw new Error('Invalid sapplication url: ' + appUrl);
-		}
-
 		if(!(this.context.app instanceof ui5strap.AppSystem)){
 			throw new Error('Only system apps can run ui5strap.AMOpenApp');
 		}
 
-		//TODO
-		var currentUrl = [location.protocol, '//', location.host, location.pathname].join('');
-		var sapplicationUrl = currentUrl + '?sapp=' + encodeURIComponent(appUrl) + '&rand=' + Math.random();
-		this.setParameter("frameUrl", sapplicationUrl);
-		//
+		var appUrl = this.getParameter("url"),
+			viewer = this.context.app.getViewer(),
+			target = this.getParameter("target");
 		
-		var viewer = this.context.app.getViewer();
-		var target = this.getParameter("target");
 		if("BROWSER" === target){
 			//Means to redirect
+			//TODO Rename
 			viewer.openSapplication(appUrl);
 		}
 		else if("VIEWER" === target){
