@@ -85,16 +85,17 @@
 	*/
 
 	/**
-	 * Returns the root control of this app.
+	 * Creates the root control of this app.
 	 * @Override
 	 */
-	AppConsoleProto.getRootControl = function(){
+	AppConsoleProto._createRootControl = function(callback){
 		if(!this.console){
 			this.console = new Console();
 			this.console.setCurrentLog(this.getId());
 			this.console.setLogLevel(this.config.data.app.logLevel);
 		}
-		return this.console;
+		
+		callback && callback(this.console);
 	}; 
 
 	/*

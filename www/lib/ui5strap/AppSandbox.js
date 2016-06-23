@@ -46,8 +46,10 @@
 	* -------------------------------------------------------------
 	*/
 	
+	 /**
+	  * Creates the App's Root Control.
+	  */
 	AppSandboxProto._createRootControl = function(callback){
-		
 		callback && callback(this._sandboxControl);
 	}; 
 
