@@ -26,7 +26,7 @@
  */
 
 sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition'], 
-				function(library, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition){
+				function(uLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition){
 	
 	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", {
 		"constructor" : function(options){
@@ -185,18 +185,6 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				else{
 					startedCallback();
 				}
-			},
-			
-			/*
-			 * 
-			 */
-			_loadApp = function loadAppConfigComplete(oConfigData){
-				_this.loadApp(
-					appDefinition.url,
-					oConfigData, 
-					appDefinition.parameters,
-					_loadAppComplete
-				);
 			};
 		
 		//Process App Type
@@ -212,18 +200,26 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			}
 			
 			//Now load the App
-			_loadApp({
-		        "app" : {
-		        	"name" : appDefinition.name,
-		            "id" : appDefinition.id,
-		            "type" : "ui5strap.AppSandbox",
-		            "appURL" : appDefinition.url,
-		            "propagateMessages" : true
-		        },
-	            "icons" : {
-	            	"default" : appDefinition.icon
-	            }
-			});
+			_this.loadApp(
+				{
+			        "app" : {
+			        	"name" : appDefinition.name,
+			            
+			        	"id" : appDefinition.id,
+			            "location" : appDefinition["location"] || uLib.Utils.getFileLocation(appDefinition.url),
+			            
+			            "type" : "ui5strap.AppSandbox",
+			            
+			            "appURL" : appDefinition.url,
+			            "propagateMessages" : true
+			        },
+		            "icons" : {
+		            	"default" : appDefinition.icon
+		            }
+				}, 
+				appDefinition.parameters,
+				_loadAppComplete
+			);
 		}
 		else if("UI5STRAP" === appType){
 			//Ui5Strap App
@@ -243,7 +239,15 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				jQuery.ajax({
 					"dataType" : "json",
 					"url" : appDefinition.url,
-					"success" : _loadApp,
+					"success" : function(oConfigData){
+						oConfigData.app["location"] = appDefinition["location"] || uLib.Utils.getFileLocation(appDefinition.url);
+						
+						_this.loadApp(
+							oConfigData, 
+							appDefinition.parameters,
+							_loadAppComplete
+						);
+					},
 					"error" : function(err){
 						throw new Error("Could not load app configuration from '" + appDefinition.url + "'!");
 					}
@@ -267,18 +271,26 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				}
 				
 				//Now load the App
-				_loadApp({
-			        "app" : {
-			            "name" : appDefinition.name,
-			            "id" : appDefinition.id,
-			            "type" : "ui5strap.AppSandbox",
-			            "appURL" : appURL,
-			            "propagateMessages" : true
-			        },
-		            "icons" : {
-		            	"default" : appDefinition.icon
-		            }
-				});
+				_this.loadApp(
+					{
+				        "app" : {
+				            "name" : appDefinition.name,
+				            
+				            "id" : appDefinition.id,
+				            "location" : appDefinition["location"],
+				            
+				            "type" : "ui5strap.AppSandbox",
+				            
+				            "appURL" : appURL,
+				            "propagateMessages" : true
+				        },
+			            "icons" : {
+			            	"default" : appDefinition.icon
+			            }
+					}, 
+					appDefinition.parameters,
+					_loadAppComplete
+				);
 			}
 		}
 		else{
@@ -295,7 +307,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
 	* @Public
 	*/
-	ViewerMultiProto.loadApp = function(configURL, oConfigData, parameters, callback){
+	ViewerMultiProto.loadApp = function(oConfigData, parameters, callback){
 		jQuery.sap.log.debug("ViewerProto.loadApp");
 		
 		var _this = this,
@@ -312,8 +324,6 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		}
 		
 		var appConfig = new AppConfig(this.options, parameters);
-		
-		configAppSection.url = configURL;
 		
 		appConfig.setData(oConfigData);
 		

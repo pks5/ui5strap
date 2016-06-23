@@ -1304,6 +1304,16 @@ sap.ui
 
 						var origin = a.protocol + "//" + a.host;
 					};
+					
+					/**
+					 * Returns the path of the directory of a given file url.
+					 */
+					ui5strap.Utils.getFileLocation = function(url){
+						var urlParts = url.split('/');
+						urlParts[urlParts.length - 1] = '';
+						
+						return urlParts.join('/');
+					};
 
 					/**
 					 * Transfers a property propagation from one to an other

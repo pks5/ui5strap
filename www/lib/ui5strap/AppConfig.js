@@ -480,15 +480,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			throw new Error('Package name may only contain letters and digits and the underscore char, separated by a ".", and must have at least one sub package.');
 		}
 		
-		//Location of the App
-		//Can be either absolute (not recommended!) or relative to index.html
-		if(!appSection["location"] && appSection.url){
-			//Set location of the app if config url is provided.
-			var appUrlParts = appSection.url.split('/');
-			appUrlParts[appUrlParts.length - 1] = '',
-			appSection["location"] = appUrlParts.join('/');
-		}
-		
 		if(!appSection.version){
 			appSection.version = "0.0.1-SNAPSHOT";
 		}
