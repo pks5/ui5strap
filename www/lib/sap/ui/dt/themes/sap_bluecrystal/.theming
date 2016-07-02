@@ -1,0 +1,6 @@
+{
+  "sEntity" : "Theme",
+  "sId" : "sap_bluecrystal",
+  "oExtends" : "base",
+  "sVendor" : "SAP"
+}
