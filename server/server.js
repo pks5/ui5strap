@@ -1,34 +1,20 @@
-/*
- * 
- * UI5Strap Server Main
- *
- * server.js
- * 
- * @author Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Homepage: http://ui5strap.com
- *
- * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
- * 
- */
+var express    =    require('express'),
+	bodyParser = require('body-parser');
+var app        =    express();
 
-var Server = require("./lib/nodestrap/Server.js"),
-	server = new Server(__dirname + "/server.json");
-	
-server.start(process.argv[2]);
 
-	
+app.use('/', express.static(__dirname + '/../www'));
+app.set('views',__dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
 
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+require('./router/main')(app);
+
+var server     =    app.listen(8282,function(){
+    console.log("We have started our server on port 8282");
+});

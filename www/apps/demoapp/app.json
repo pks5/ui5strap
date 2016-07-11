@@ -255,10 +255,9 @@
 	        {
 	             "id" : "feedClient",
 	             "type" : "ui5strap.RestClient",
-	             "restController" : "FeedController",
                      
 	             "settings" : {
-		             "url" : "api/feed",
+		             "url" : "/api/feed",
 		             "methods" : {
 		             	"info" : {
 		             		"type" : "get",
