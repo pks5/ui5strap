@@ -712,7 +712,9 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	ViewerMultiProto._initEvents = function(){
 		var _this = this;
 		
+		/*
 		jQuery(document)
+		
 		
 		.on('keyup', function(e) {
 	      		var evtobj = window.event? window.event : e
@@ -749,6 +751,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	      		}
 			}
 		);
+		*/
 		
 		/*
 		.on('swipeupdown', function anon_eventSwipeUpDown(eventData){
