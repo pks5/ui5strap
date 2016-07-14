@@ -1,0 +1,27 @@
+{
+	"//" : "Goto Page 5",
+	"TASKS" : "navigate",
+	
+	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		
+		"CONTROLS" : {
+			"NAVIGATOR" : {
+				"TYPE" : "ui5strap.NavContainer",
+				"SOURCE" : "View",
+				"CONTROL_ID" : "subNavCuscon",
+				"VIEW_ID" : "statistics"
+			}
+		},
+		
+		"VIEWS" : {
+			"cusconSimple" : {
+				"id" : "cusconSimple",
+				"transition" : "zoom-in",
+				"writeHistory" : true,
+				"target" : "content"
+			}
+		}
+	}
+	
+}

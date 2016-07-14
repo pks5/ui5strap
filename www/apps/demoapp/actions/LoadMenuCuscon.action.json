@@ -1,0 +1,27 @@
+{
+	"//" : "Loads the view for the sub-menu layout into the NavContainer target 'bar'.",
+	
+	"TASKS" : "navigate",
+	
+	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		"CONTROLS" : {
+			"NAVIGATOR" : {
+				"TYPE" : "ui5strap.NavContainer",
+				"SOURCE" : "View",
+				"CONTROL_ID" : "subNavCuscon",
+				"VIEW_ID" : "statistics"
+			}
+		},
+		
+		"VIEWS" : {
+			"menuCuscon" : {
+				"id" : "menuCuscon",
+				"transition" : "transition-none",
+				"writeHistory" : true,
+				"target" : "bar"
+			}
+		}
+	}
+
+}

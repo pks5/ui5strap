@@ -48,44 +48,16 @@
                 "viewName" : ".views.Feed"
             },
 
-            {
-                "id" : "statistics",
-                "viewName" : ".views.Statistics"
-            },
-
-            {
-                "id" : "settings",
-                "viewName" : ".views.Settings",
-                "events" : {
-                	"controller" : {
-                		"pageShow" : [
-                			".actions.LoadMenuSettings",
-                			".actions.NavigateToSettingsLanguage"
-                		]
-                	}
-                }
-            },
             
             {
-                "id" : "menuSettings",
-                "viewName" : ".views.MenuSettings",
-                "target" : "bar"
+                "id" : "newPost",
+                "viewName" : ".views.NewPost"
+            },
+            {
+                "id" : "postDetail",
+                "viewName" : ".views.PostDetail"
             },
             
-            {
-                "id" : "settingsLanguage",
-                "viewName" : ".views.settings.Language",
-                "events" : {
-                	"controller" : {
-                		"update" : ".actions.SetCurrentLanguage"	
-                	}
-                }
-            },
-            
-            {
-                "id" : "settingsTheme",
-                "viewName" : ".views.settings.Theme"
-            },
             
             
             {
@@ -167,13 +139,65 @@
             	"viewName" : ".views.controls.Dialogs"
             },
             
+            
+            
             {
-                "id" : "newPost",
-                "viewName" : ".views.NewPost"
+                "id" : "statistics",
+                "viewName" : ".views.Statistics",
+                "events" : {
+                    "controller" : {
+                        "pageShow" : [
+                            ".actions.LoadMenuCuscon",
+                            ".actions.NavigateToCusconSimple"
+                        ]
+                    }
+                }
             },
+            
             {
-                "id" : "postDetail",
-                "viewName" : ".views.PostDetail"
+                "id" : "menuCuscon",
+                "viewName" : ".views.MenuCuscon",
+                "target" : "bar"
+            },
+            
+            {
+                "id" : "cusconSimple",
+                "viewName" : ".views.cuscon.SimpleCustomControl"
+            },
+
+            {
+                "id" : "settings",
+                "viewName" : ".views.Settings",
+                "events" : {
+                    "controller" : {
+                        "pageShow" : [
+                            ".actions.LoadMenuSettings",
+                            ".actions.NavigateToSettingsLanguage"
+                        ]
+                    }
+                }
+            },
+            
+            
+            {
+                "id" : "menuSettings",
+                "viewName" : ".views.MenuSettings",
+                "target" : "bar"
+            },
+            
+            {
+                "id" : "settingsLanguage",
+                "viewName" : ".views.settings.Language",
+                "events" : {
+                    "controller" : {
+                        "update" : ".actions.SetCurrentLanguage"    
+                    }
+                }
+            },
+            
+            {
+                "id" : "settingsTheme",
+                "viewName" : ".views.settings.Theme"
             }
       ],
 	
@@ -182,29 +206,30 @@
 		".actions.NavigateToFeed",
 		".actions.NavigateToStatistics",
 		
-		
 		".actions.ToggleBarMenuRoot",
 		".actions.NavigateViaMenuRoot",
 		".actions.SetSelectedMenuRoot",
 		
-		".actions.LoadMenuSettings",
-		".actions.ToggleBarMenuSettings",
-		".actions.NavigateViaMenuSettings", 
-		".actions.SetSelectedMenuSettings",
-		".actions.NavigateToSettingsLanguage",
-		
-		".actions.LoadMenuControls",
+		".actions.AppendFeed",
+        ".actions.RemovePost",
+        ".actions.ShowNewPostOverlay",
+        ".actions.CloseOverlay",
+        
+        ".actions.LoadMenuControls",
 		".actions.ToggleBarMenuControls",
 		".actions.NavigateViaMenuControls", 
 		".actions.SetSelectedMenuControls",
 		".actions.NavigateToControlsButtons",
 		
-		".actions.AppendFeed",
-		".actions.RemovePost",
-		".actions.ShowNewPostOverlay",
-		".actions.CloseOverlay",
+		".actions.ToggleBarMenuCuscon",
 		
-		".actions.ChangeTheme",
+		".actions.LoadMenuSettings",
+        ".actions.ToggleBarMenuSettings",
+        ".actions.NavigateViaMenuSettings", 
+        ".actions.SetSelectedMenuSettings",
+        ".actions.NavigateToSettingsLanguage",
+        
+        ".actions.ChangeTheme",
 		".actions.SelectLanguage",
 		
 		".actions.Debug"

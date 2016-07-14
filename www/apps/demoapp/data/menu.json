@@ -9,27 +9,25 @@
 			"icon" : "feed",
 			"severity" : "Danger"
 		},
-		
-		{
-			"label" : "PAGE_STATISTICS_TITLE",
-			"id" : "statistics",
-			"icon" : "bar-chart",
-			"severity" : "Warning"
-		},
-		{
-			"label" : "PAGE_SETTINGS_TITLE",
-			"id" : "settings",
-			"icon" : "cog",
-			"severity" : "Success"
-		},
 		{
 			"label" : "PAGE_CONTROLS_TITLE",
 			"id" : "controls",
 			"icon" : "toggle-on",
 			"severity" : "Success"
-		}
-		
-	],
+		},
+		{
+            "label" : "PAGE_STATISTICS_TITLE",
+            "id" : "statistics",
+            "icon" : "bar-chart",
+            "severity" : "Warning"
+        },
+        {
+            "label" : "PAGE_SETTINGS_TITLE",
+            "id" : "settings",
+            "icon" : "cog",
+            "severity" : "Success"
+        }
+    ],
 	
 	"subMenuSettings" : [
 	
@@ -109,6 +107,15 @@
 			"icon" : "clone"
 		}							
 	
-	]
+	],
+	
+	"subMenuCuscon" :[
+    
+        {
+            "label" : "PAGE_CONTROLS_BUTTONS_TITLE",
+            "id" : "cusconSimple",
+            "icon" : "smile-o"
+        }
+     ]
 
 }

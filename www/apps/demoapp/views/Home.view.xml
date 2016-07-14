@@ -15,10 +15,7 @@
 					</Button>
 				</Container>
 					
-					<Heading level="1" options="BarHeadingCenter">
-						<Text text="{i18n>PAGE_HOME_TITLE}" />
-						<Text type="Label" severity="Success" text="New" />
-					</Heading>
+					<Heading level="1" options="BarHeadingCenter" text="{i18n>PAGE_HOME_TITLE}" />
 					
 					<!-- Toggle Menu Button (only for small screens) -->
 					<Container  align="PullRight" type="Text" visibilityExtraSmall="Hidden" visibilityMedium="HiddenUp">

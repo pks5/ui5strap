@@ -27,7 +27,7 @@
 				
 				<right>
 					<!-- Toggle Menu Button (only for small screens) -->
-					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuCuscon" 
 							options="BarButton" visibilityExtraSmall="HiddenUp" visibilityMedium="HiddenUp">
 							<Icon icon="columns" />
 					</Button>
@@ -37,75 +37,16 @@
 		
 		<!-- Body area with page content -->
 		<body>
-			<ScrollContainer vertical="true">
-			<Container type="FluidInset">
-				
-					<Row>
-						<!-- Left Column -->
-						<Col columnsExtraSmall="12" columnsSmall="6">
-							<Container type="Well" options="dd" id="testContainer"> 
-								<Heading level="1" text="{i18n>PAGE3_HEADING1_TITLE}" />
-								<Text id="testParagraph" type="Lead" parse="true" text="{i18n>PAGE3_HEADING1_TEXT}" />
-								<Paragraph>
-								    <Button tap=".handleTap" text="Test" />
-								</Paragraph>
-							</Container>
-						</Col>
-						
-						<!-- Right Column -->
-						<Col columnsExtraSmall="12" columnsSmall="6">
-						
-							<Table bordered="true" hover="true">
-								<head>
-									<TableRow>
-										<TableColumn text="" />
-										<TableColumn text="A" />
-										<TableColumn text="B" />
-										<TableColumn text="C" />
-										<TableColumn text="D" />
-										<TableColumn text="E" />
-									</TableRow>
-								</head>
-								<body>
-									<TableRow>
-										<TableColumn text="1" />
-										<TableColumn text="21" />
-										<TableColumn text="2332" />
-										<TableColumn text="2354" />
-										<TableColumn text="24" />
-										<TableColumn text="1212" />
-									</TableRow>
-									<TableRow severity="Success">
-										<TableColumn text="2" />
-										<TableColumn text="32" />
-										<TableColumn text="34332" />
-										<TableColumn text="4354" />
-										<TableColumn text="24" />
-										<TableColumn text="3232" />
-									</TableRow>
-									<TableRow>
-										<TableColumn text="3" />
-										<TableColumn text="453" />
-										<TableColumn text="3332" />
-										<TableColumn text="4254" />
-										<TableColumn text="124" />
-										<TableColumn text="232" />
-									</TableRow>
-									<TableRow>
-										<TableColumn text="4" />
-										<TableColumn text="723" />
-										<TableColumn text="82" />
-										<TableColumn text="7874" />
-										<TableColumn text="7824" />
-										<TableColumn text="652" />
-									</TableRow>
-								</body>
-							</Table>
-							
-						</Col>
-					</Row>
-				</Container>
-			</ScrollContainer>
+		      
+		    <BarNavContainer
+                id="subNavCuscon"
+                    barVisible="true" 
+                    barSizeExtraSmall="2"
+                    pageChange="ui5strap.demoapp.actions.SetSelectedMenuCuscon" 
+                    ></BarNavContainer>
+		
+		
+			
 		</body>
 		
 	</Page>
