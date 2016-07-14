@@ -17,7 +17,7 @@
 		},
 		{
             "label" : "PAGE_STATISTICS_TITLE",
-            "id" : "statistics",
+            "id" : "cuscon",
             "icon" : "bar-chart",
             "severity" : "Warning"
         },

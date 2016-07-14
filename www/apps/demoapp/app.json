@@ -146,13 +146,13 @@
             
             
             {
-                "id" : "statistics",
+                "id" : "cuscon",
                 "viewName" : ".views.cuscon.CustomControls",
                 "events" : {
                     "controller" : {
                         "pageShow" : [
-                            ".actions.LoadMenuCuscon",
-                            ".actions.NavigateToCusconSimple"
+                            ".actions.cuscon.LoadMenuCuscon",
+                            ".actions.cuscon.NavigateToCusconSimple"
                         ]
                     }
                 }
@@ -168,6 +168,8 @@
                 "id" : "cusconSimple",
                 "viewName" : ".views.cuscon.SimpleCustomControl"
             },
+
+
 
             {
                 "id" : "settings",
@@ -224,8 +226,8 @@
 		".actions.controls.SetSelectedMenuControls",
 		".actions.controls.NavigateToControlsButtons",
 		
-		".actions.NavigateToStatistics",
-		".actions.ToggleBarMenuCuscon",
+		".actions.cuscon.NavigateToCusconSimple",
+		".actions.cuscon.ToggleBarMenuCuscon",
 		
 		".actions.settings.LoadMenuSettings",
         ".actions.settings.ToggleBarMenuSettings",

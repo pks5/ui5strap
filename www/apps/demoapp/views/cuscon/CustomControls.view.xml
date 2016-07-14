@@ -27,7 +27,7 @@
 				
 				<right>
 					<!-- Toggle Menu Button (only for small screens) -->
-					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuCuscon" 
+					<Button tap="ui5strap.demoapp.actions.cuscon.ToggleBarMenuCuscon" 
 							options="BarButton" visibilityExtraSmall="HiddenUp" visibilityMedium="HiddenUp">
 							<Icon icon="columns" />
 					</Button>
@@ -42,7 +42,7 @@
                 id="subNavCuscon"
                     barVisible="true" 
                     barSizeExtraSmall="2"
-                    pageChange="ui5strap.demoapp.actions.SetSelectedMenuCuscon" 
+                    pageChange="ui5strap.demoapp.actions.cuscon.SetSelectedMenuCuscon" 
                     ></BarNavContainer>
 		
 		

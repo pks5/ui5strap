@@ -36,7 +36,7 @@
 					<Paragraph>
 						<Button 
 						text="{i18n>PAGE_SETTINGS_THEME_BACK_BUTTON}"
-						tap="ui5strap.demoapp.actions.NavigateToStatistics"
+						tap="ui5strap.demoapp.actions.NavigateToCusconSimple"
 									></Button>
 					</Paragraph>
 				</Container>

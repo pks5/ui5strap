@@ -10,7 +10,7 @@
 				"TYPE" : "ui5strap.NavContainer",
 				"SOURCE" : "View",
 				"CONTROL_ID" : "subNavCuscon",
-				"VIEW_ID" : "statistics"
+				"VIEW_ID" : "cuscon"
 			}
 		},
 		
