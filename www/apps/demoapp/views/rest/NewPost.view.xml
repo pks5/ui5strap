@@ -1,7 +1,7 @@
 <sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
-	<StaticOverlay backdrop="true" close="ui5strap.demoapp.actions.CloseOverlay">
+	<StaticOverlay backdrop="true" close="ui5strap.demoapp.actions.rest.CloseOverlay">
 		<Panel title="{i18n>PAGE_FEED_PANEL_NEW_TITLE}">
 				<Form>
 						<FormGroup label="{i18n>PAGE_FEED_LABEL_NAME}" feedback="true">
@@ -15,10 +15,10 @@
 						<Button 
 								text="{i18n>PAGE_FEED_BUTTON_SUBMIT}" 
 								severity="Success"
-								tap="ui5strap.demoapp.actions.AppendFeed"></Button>
+								tap="ui5strap.demoapp.actions.rest.AppendFeed"></Button>
 						<Button 
 								text="{i18n>PAGE_FEED_BUTTON_CANCEL}" 
-								tap="ui5strap.demoapp.actions.CloseOverlay"></Button>
+								tap="ui5strap.demoapp.actions.rest.CloseOverlay"></Button>
 						
 				</Form>
 		</Panel>

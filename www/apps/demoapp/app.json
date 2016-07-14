@@ -32,6 +32,8 @@
     ],
     
     "views" : [
+    		
+    		
     		{
                 "id" : "menuRoot",
                 "viewName" : ".views.MenuRoot",
@@ -43,31 +45,33 @@
                 "viewName" : ".views.Home"
             },
 
+            
+            
             {
                 "id" : "feed",
-                "viewName" : ".views.Feed"
+                "viewName" : ".views.rest.Feed"
             },
-
             
             {
                 "id" : "newPost",
-                "viewName" : ".views.NewPost"
+                "viewName" : ".views.rest.NewPost"
             },
+            
             {
                 "id" : "postDetail",
-                "viewName" : ".views.PostDetail"
+                "viewName" : ".views.rest.PostDetail"
             },
             
             
             
             {
             	"id" : "controls",
-            	"viewName" : ".views.Controls",
+            	"viewName" : ".views.controls.BootstrapControls",
             	"events" : {
                 	"controller" : {
                 	   "pageShow" : [
-                	       ".actions.LoadMenuControls",
-                	       ".actions.NavigateToControlsButtons"
+                	       ".actions.controls.LoadMenuControls",
+                	       ".actions.controls.NavigateToControlsButtons"
                 	   ]
                 	}
                 }
@@ -75,7 +79,7 @@
             
             {
                 "id" : "menuControls",
-                "viewName" : ".views.MenuControls",
+                "viewName" : ".views.controls.MenuControls",
                 "target" : "bar"
             },
             
@@ -179,6 +183,7 @@
             },
             
             
+            
             {
                 "id" : "menuSettings",
                 "viewName" : ".views.settings.MenuSettings",
@@ -203,24 +208,23 @@
 	
 	"actions" : [
 		".actions.NavigateToHome",
-		".actions.NavigateToFeed",
-		".actions.NavigateToStatistics",
-		
 		".actions.ToggleBarMenuRoot",
 		".actions.NavigateViaMenuRoot",
 		".actions.SetSelectedMenuRoot",
 		
-		".actions.AppendFeed",
-        ".actions.RemovePost",
-        ".actions.ShowNewPostOverlay",
-        ".actions.CloseOverlay",
+		".actions.rest.NavigateToFeed",
+		".actions.rest.AppendFeed",
+        ".actions.rest.RemovePost",
+        ".actions.rest.ShowNewPostOverlay",
+        ".actions.rest.CloseOverlay",
         
-        ".actions.LoadMenuControls",
-		".actions.ToggleBarMenuControls",
-		".actions.NavigateViaMenuControls", 
-		".actions.SetSelectedMenuControls",
-		".actions.NavigateToControlsButtons",
+        ".actions.controls.LoadMenuControls",
+		".actions.controls.ToggleBarMenuControls",
+		".actions.controls.NavigateViaMenuControls", 
+		".actions.controls.SetSelectedMenuControls",
+		".actions.controls.NavigateToControlsButtons",
 		
+		".actions.NavigateToStatistics",
 		".actions.ToggleBarMenuCuscon",
 		
 		".actions.settings.LoadMenuSettings",

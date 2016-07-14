@@ -4,7 +4,7 @@
 	"showOverlay" : {
 		
 		"page" : {
-			"viewName" : "ui5strap.demoapp.views.NewPost" 
+			"id" : "newPost" 
 		},
 		
 		"DO" : "= app.showOverlay(.page)"
