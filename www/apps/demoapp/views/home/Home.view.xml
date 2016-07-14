@@ -9,7 +9,7 @@
 				
 				<!-- Toggle Menu Button (except for small screens) -->
 				<Container align="PullLeft" visibilitySmall="Hidden">
-					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+					<Button tap="ui5strap.demoapp.actions.home.ToggleBarMenuRoot" 
 						options="BarButton">
 						<Icon icon="columns" />
 					</Button>
@@ -19,7 +19,7 @@
 					
 					<!-- Toggle Menu Button (only for small screens) -->
 					<Container  align="PullRight" type="Text" visibilityExtraSmall="Hidden" visibilityMedium="HiddenUp">
-						<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+						<Button tap="ui5strap.demoapp.actions.home.ToggleBarMenuRoot" 
 							options="BarButton">
 							<Icon icon="columns" />
 						</Button>
@@ -40,7 +40,7 @@
 					<Row>
 						<Col columnsSmall="6" offsetSmall="3" columnsMedium="6" offsetMedium="3" >
 							<ListGroup 
-								tap="ui5strap.demoapp.actions.NavigateViaMenuRoot" 
+								tap="ui5strap.demoapp.actions.home.NavigateViaMenuRoot" 
 								items="{menu>/root}"
 								listMode="Navigation"
 							>

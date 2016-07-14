@@ -36,13 +36,13 @@
     		
     		{
                 "id" : "menuRoot",
-                "viewName" : ".views.MenuRoot",
+                "viewName" : ".views.home.MenuRoot",
                 "target" : "bar"
             },
             
             {
                 "id" : "home",
-                "viewName" : ".views.Home"
+                "viewName" : ".views.home.Home"
             },
 
             
@@ -209,10 +209,10 @@
       ],
 	
 	"actions" : [
-		".actions.NavigateToHome",
-		".actions.ToggleBarMenuRoot",
-		".actions.NavigateViaMenuRoot",
-		".actions.SetSelectedMenuRoot",
+		".actions.home.NavigateToHome",
+		".actions.home.ToggleBarMenuRoot",
+		".actions.home.NavigateViaMenuRoot",
+		".actions.home.SetSelectedMenuRoot",
 		
 		".actions.rest.NavigateToFeed",
 		".actions.rest.AppendFeed",
@@ -266,7 +266,7 @@
          "events" : {
          	"control" : {
          		"pageChange" : [
-         			".actions.SetSelectedMenuRoot"
+         			".actions.home.SetSelectedMenuRoot"
          		]
          	}
          },

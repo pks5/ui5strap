@@ -8,7 +8,7 @@
 		"customDataKey" : "command", 
 		"expression" : "= eventParameters.srcControl.data(.customDataKey)",
 		"actions" : {
-			"DELETE" : "ui5strap.demoapp.actions.NavigateToHome",
+			"DELETE" : "ui5strap.demoapp.actions.home.NavigateToHome",
 			"MORE" : "ui5strap.demoapp.actions.NavigateToPage3"
 		}
 	}

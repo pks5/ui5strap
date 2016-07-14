@@ -4,7 +4,7 @@
 		<BarMenu id="myMenu" inverse="true" zoomExtraSmall="-1"
 			zoomSmall="1" zoomLarge="-2" typeExtraSmall="ButtonsHorizontal" typeSmall="ButtonsVertical"
 			typeMedium="ListHorizontal" typeLarge="ListVertical"
-			tap="ui5strap.demoapp.actions.NavigateViaMenuRoot" items="{menu>/root}">
+			tap="ui5strap.demoapp.actions.home.NavigateViaMenuRoot" items="{menu>/root}">
 			<BarMenuItem
 				text="{formatter:'.formatters.localeString', path:'menu>label'}"
 				icon="{menu>icon}" data:pageId="{menu>id}"></BarMenuItem>

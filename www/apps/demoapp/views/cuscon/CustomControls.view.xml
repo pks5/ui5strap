@@ -9,12 +9,12 @@
 				<!-- Left area of bar -->
 				<left>
 					<!-- Back Button -->
-					<Button tap="ui5strap.demoapp.actions.NavigateToHome" 
+					<Button tap="ui5strap.demoapp.actions.home.NavigateToHome" 
 						options="BarButton">
 						<Icon icon="home"/>
 					</Button>
 					<!-- Toggle Menu Button (except for small screens) -->
-					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuRoot" 
+					<Button tap="ui5strap.demoapp.actions.home.ToggleBarMenuRoot" 
 							options="BarButton" visibilitySmall="HiddenUp">
 							<Icon icon="columns" />
 					</Button>
