@@ -8,7 +8,7 @@
 			<Bar>
 				<!-- Left area of bar -->
 				<Container align="PullLeft">
-					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuSettings" 
+					<Button tap="ui5strap.demoapp.actions.settings.ToggleBarMenuSettings" 
 						options="BarButton">
 						<Icon icon="columns" />
 					</Button>
@@ -33,7 +33,7 @@
 
 				<TabContainer class="tabContainer1" source="tabContainer1Tabs">
 					<Container>
-						<ButtonGroup id="languageSelect" select="ui5strap.demoapp.actions.SelectLanguage" selectionMode="Single">
+						<ButtonGroup id="languageSelect" select="ui5strap.demoapp.actions.settings.SelectLanguage" selectionMode="Single">
 								<Button text="EN" data:language="en-US" />
 								<Button text="DE" data:language="de-DE"  />
 						</ButtonGroup>

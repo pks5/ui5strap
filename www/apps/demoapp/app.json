@@ -143,7 +143,7 @@
             
             {
                 "id" : "statistics",
-                "viewName" : ".views.Statistics",
+                "viewName" : ".views.cuscon.CustomControls",
                 "events" : {
                     "controller" : {
                         "pageShow" : [
@@ -156,7 +156,7 @@
             
             {
                 "id" : "menuCuscon",
-                "viewName" : ".views.MenuCuscon",
+                "viewName" : ".views.cuscon.MenuCuscon",
                 "target" : "bar"
             },
             
@@ -167,12 +167,12 @@
 
             {
                 "id" : "settings",
-                "viewName" : ".views.Settings",
+                "viewName" : ".views.settings.Settings",
                 "events" : {
                     "controller" : {
                         "pageShow" : [
-                            ".actions.LoadMenuSettings",
-                            ".actions.NavigateToSettingsLanguage"
+                            ".actions.settings.LoadMenuSettings",
+                            ".actions.settings.NavigateToSettingsLanguage"
                         ]
                     }
                 }
@@ -181,7 +181,7 @@
             
             {
                 "id" : "menuSettings",
-                "viewName" : ".views.MenuSettings",
+                "viewName" : ".views.settings.MenuSettings",
                 "target" : "bar"
             },
             
@@ -190,7 +190,7 @@
                 "viewName" : ".views.settings.Language",
                 "events" : {
                     "controller" : {
-                        "update" : ".actions.SetCurrentLanguage"    
+                        "update" : ".actions.settings.SetCurrentLanguage"    
                     }
                 }
             },
@@ -223,14 +223,14 @@
 		
 		".actions.ToggleBarMenuCuscon",
 		
-		".actions.LoadMenuSettings",
-        ".actions.ToggleBarMenuSettings",
-        ".actions.NavigateViaMenuSettings", 
-        ".actions.SetSelectedMenuSettings",
-        ".actions.NavigateToSettingsLanguage",
+		".actions.settings.LoadMenuSettings",
+        ".actions.settings.ToggleBarMenuSettings",
+        ".actions.settings.NavigateViaMenuSettings", 
+        ".actions.settings.SetSelectedMenuSettings",
+        ".actions.settings.NavigateToSettingsLanguage",
         
-        ".actions.ChangeTheme",
-		".actions.SelectLanguage",
+        ".actions.settings.ChangeTheme",
+		".actions.settings.SelectLanguage",
 		
 		".actions.Debug"
 	],

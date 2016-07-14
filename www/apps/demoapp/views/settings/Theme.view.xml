@@ -8,7 +8,7 @@
 			<Bar>
 				<!-- Left area of bar -->
 				<left>
-					<Button tap="ui5strap.demoapp.actions.ToggleBarMenuSettings" 
+					<Button tap="ui5strap.demoapp.actions.settings.ToggleBarMenuSettings" 
 						options="BarButton">
 						<Icon icon="columns" />
 					</Button>
@@ -26,7 +26,7 @@
 				<Container type="Well">
 					<Paragraph text="{i18n>PAGE_SETTINGS_THEME_INTRO}" />
 					<Container>
-						<ButtonGroup select="ui5strap.demoapp.actions.ChangeTheme" selectionMode="Single">
+						<ButtonGroup select="ui5strap.demoapp.actions.settings.ChangeTheme" selectionMode="Single">
 							<Button text="base" data:theme="base" selected="true"  />
 							<Button id="defaultThemeButton" severity="Primary" text="ui5strap_default" data:theme="ui5strap_default"  />
 						</ButtonGroup>

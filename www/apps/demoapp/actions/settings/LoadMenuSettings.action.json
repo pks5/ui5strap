@@ -15,8 +15,8 @@
 		},
 		
 		"VIEWS" : {
-			"menuSub" : {
-				"viewName" : "ui5strap.demoapp.views.MenuSettings",
+			"menuSettings" : {
+				"id" : "menuSettings",
 				"transition" : "transition-none",
 				"writeHistory" : true,
 				"target" : "bar"

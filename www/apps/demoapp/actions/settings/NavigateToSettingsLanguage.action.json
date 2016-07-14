@@ -15,8 +15,8 @@
 		},
 		
 		"VIEWS" : {
-			"page5" : {
-				"viewName" : "ui5strap.demoapp.views.settings.Language",
+			"settingsLanguage" : {
+				"id" : "settingsLanguage",
 				"transition" : "zoom-in",
 				"writeHistory" : true,
 				"target" : "content"

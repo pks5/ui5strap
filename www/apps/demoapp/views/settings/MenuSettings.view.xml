@@ -2,7 +2,7 @@
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<Bar type="Default">
 		<BarMenu id="barMenuSettings" typeExtraSmall="ButtonsVertical"
-			tap="ui5strap.demoapp.actions.NavigateViaMenuSettings" items="{menu>/subMenuSettings}">
+			tap="ui5strap.demoapp.actions.settings.NavigateViaMenuSettings" items="{menu>/subMenuSettings}">
 			<BarMenuItem
 				text="{formatter:'.formatters.localeString', path:'menu>label'}"
 				icon="{menu>icon}" data:pageId="{menu>id}"></BarMenuItem>
