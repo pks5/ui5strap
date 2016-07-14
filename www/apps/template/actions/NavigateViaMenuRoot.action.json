@@ -9,8 +9,7 @@
 		"VIEWS" : {
 			"menuTarget" : {
 				"id" : "= .customData.pageId",
-				"transition" : "slide-rtl",
-				"writeHistory" : true
+				"transition" : "slide-rtl"
 			}
 		}
 	}

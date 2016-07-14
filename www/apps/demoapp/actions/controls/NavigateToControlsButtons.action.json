@@ -1,5 +1,5 @@
 {
-	"//" : "Goto Page 5",
+	"//" : "Navigates the the Buttons page within section Controls.",
 	"TASKS" : "navigate",
 	
 	"navigate" : {
@@ -18,7 +18,6 @@
 			"controlsButtons" : {
 				"id" : "controlsButtons",
 				"transition" : "zoom-in",
-				"writeHistory" : true,
 				"target" : "content"
 			}
 		}

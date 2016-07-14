@@ -9,9 +9,7 @@
 		"VIEWS" : {
 			"feed" : {
 				"id" : "feed",
-				"transition" : "slide-rtl",
-				"writeHistory" : true,
-				"bookmarkable" : false
+				"transition" : "slide-rtl"
 			}
 		}
 	}

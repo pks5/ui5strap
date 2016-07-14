@@ -1,10 +1,11 @@
 {
-	"//" : "Loads the view for the sub-menu layout into the NavContainer target 'bar'.",
+	"//" : "Loads the menu for the Settings section.",
 	
 	"TASKS" : "navigate",
 	
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",
+		
 		"CONTROLS" : {
 			"NAVIGATOR" : {
 				"TYPE" : "ui5strap.NavContainer",
@@ -16,10 +17,7 @@
 		
 		"VIEWS" : {
 			"menuSettings" : {
-				"id" : "menuSettings",
-				"transition" : "transition-none",
-				"writeHistory" : true,
-				"target" : "bar"
+				"id" : "menuSettings"
 			}
 		}
 	}

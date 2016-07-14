@@ -9,8 +9,7 @@
 		"VIEWS" : {
 			"home" : {
 				"id" : "home",
-				"transition" : "slide-ltr",
-				"writeHistory" : true
+				"transition" : "slide-ltr"
 			}
 		}
 	}

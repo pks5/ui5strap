@@ -28,20 +28,13 @@
 sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
-			handleTap : function(oEvent){
-				var con = this.getView().byId("testContainer");
-				con.setOptions("RedBox BorderBox");
-				
-				var p = this.getView().byId('testParagraph');
-				p.setText(this.getApp().getLocaleString("TEST", 12));
-			},
-			
-			onAfterRendering : function(){
-				console.log("RENDER");
+			onUpdate : function(oEvent){
+				var post = oEvent.getParameter("post");
+				this.getView().setModel(new ui5strap.JSONModel(post), "POST");
 			}
 	};
 	
 	//Return Module Constructor
-	return Controller.extend("ui5strap.demoapp.controllers.Statistics", controllerImpl);
+	return Controller.extend("ui5strap.demoapp.controllers.rest.PostDetail", controllerImpl);
 
 });

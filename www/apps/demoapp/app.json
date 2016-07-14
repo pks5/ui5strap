@@ -37,7 +37,8 @@
     		{
                 "id" : "menuRoot",
                 "viewName" : ".views.home.MenuRoot",
-                "target" : "bar"
+                "target" : "bar",
+                "transition" : "transition-none"
             },
             
             {
@@ -80,7 +81,8 @@
             {
                 "id" : "menuControls",
                 "viewName" : ".views.controls.MenuControls",
-                "target" : "bar"
+                "target" : "bar",
+                "transition" : "transition-none"
             },
             
             {
@@ -161,7 +163,8 @@
             {
                 "id" : "menuCuscon",
                 "viewName" : ".views.cuscon.MenuCuscon",
-                "target" : "bar"
+                "target" : "bar",
+                "transition" : "transition-none"
             },
             
             {
@@ -189,7 +192,8 @@
             {
                 "id" : "menuSettings",
                 "viewName" : ".views.settings.MenuSettings",
-                "target" : "bar"
+                "target" : "bar",
+                "transition" : "transition-none"
             },
             
             {

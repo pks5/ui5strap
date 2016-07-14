@@ -1,5 +1,5 @@
 {
-	"//" : "Loads the view for the sub-menu layout into the NavContainer target 'bar'.",
+	"//" : "Loads the Menu for the Controls section.",
 	
 	"TASKS" : "navigate",
 	
@@ -16,10 +16,7 @@
 		
 		"VIEWS" : {
 			"menuControls" : {
-				"id" : "menuControls",
-				"transition" : "transition-none",
-				"writeHistory" : true,
-				"target" : "bar"
+				"id" : "menuControls"
 			}
 		}
 	}

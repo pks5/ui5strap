@@ -10,8 +10,7 @@
 		"VIEWS" : {
 			"menuTarget" : {
 				"id" : "= .contextData.id",
-				"transition" : "slide-rtl",
-				"writeHistory" : true
+				"transition" : "slide-rtl"
 			}
 		}
 	}

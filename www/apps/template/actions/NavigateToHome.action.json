@@ -9,8 +9,7 @@
 		"VIEWS" : {
 			"homePage" : {
 				"viewName" : "ui5strap.demoapp.views.Home",
-				"transition" : "slide-ltr",
-				"writeHistory" : true
+				"transition" : "slide-ltr"
 			}
 		}
 	}

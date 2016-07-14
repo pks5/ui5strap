@@ -18,7 +18,6 @@
 			"settingsLanguage" : {
 				"id" : "settingsLanguage",
 				"transition" : "zoom-in",
-				"writeHistory" : true,
 				"target" : "content"
 			}
 		}
