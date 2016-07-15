@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 		        options: {
 		          resources: {
 		            cwd: '../www/apps/demoapp/',
-		            prefix: 'ui5strap/demoapp',
+		            prefix: 'com/ui5strap/apps/demoapp',
 		            src : [
 		             '**/*.js',
 		             '**/*.fragment.html',
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 		          },
 		          dest: '../www/apps/demoapp/'
 		        },
-		        components: 'ui5strap/demoapp'
+		        components: 'com/ui5strap/apps/demoapp'
 		      }
 		  }
 
