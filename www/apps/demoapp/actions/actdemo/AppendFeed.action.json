@@ -17,24 +17,16 @@
                 "SOURCE" : "View",
                 "TYPE" : "ui5strap.TextInput",
                 "CONTROL_ID" : "messageInput"
-            },
-			"mediaList" : {
-				"SOURCE" : "View",
-				"TYPE" : "ui5strap.ListMedia",
-				"CONTROL_ID" : "feedList",
-				"VIEW_ID" : "feed"
-			}
+            }
 		},
 		
-		"closeOverlay" : "= app.hideOverlay()",
 		"newPostTitle" : "= .CONTROLS.titleInputField.getValue()",
 		"newPostText" : "= .CONTROLS.textInputField.getValue()",
 		"feedManager" : "= app.getFeedManager()",
 		"thenCallback" : "= then()",
-		"newPost" : "= .feedManager.newPost(.newPostTitle, .newPostText, .thenCallback)",
 		
-		"DO" : "= .newPost",
-		"THEN" : "= .closeOverlay" 
+		"DO" : "= .feedManager.newPost(.newPostTitle, .newPostText, .thenCallback)",
+		"THEN" : "= app.hideOverlay()" 
 	}
 
 }

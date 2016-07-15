@@ -49,7 +49,7 @@
             
             
             {
-                "id" : "feed",
+                "id" : "actdemoFeed",
                 "viewName" : ".views.actdemo.Feed",
                 "events" : {
                     "controller" : {
@@ -60,16 +60,16 @@
             },
             
             {
-                "id" : "newPost",
+                "id" : "actdemoNewPost",
                 "viewName" : ".views.actdemo.NewPost"
             },
             
             {
-                "id" : "actdemoDetail",
+                "id" : "actdemoPostDetail",
                 "viewName" : ".views.actdemo.PostDetail",
                 "events" : {
                     "controller" : {
-                        "update" : ".actions.actdemo.PostDetails"    
+                        "update" : ".actions.actdemo.PostDetail"    
                     }
                 }
             },

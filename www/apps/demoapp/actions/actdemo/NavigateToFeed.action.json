@@ -7,8 +7,8 @@
 		"TYPE" : "ui5strap.task.Navigate",
 		
 		"VIEWS" : {
-			"feed" : {
-				"id" : "feed",
+			"actdemoFeed" : {
+				"id" : "actdemoFeed",
 				"transition" : "slide-rtl"
 			}
 		}

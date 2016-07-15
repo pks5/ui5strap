@@ -28,9 +28,19 @@
 sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
-			onUpdate : function(oEvent){
-				
-			}
+		handleSubmit : function(oEvent){
+			var _this = this,
+				newPostTitle = this.getView().byId("titleInput").getValue(),
+				newPostText = this.getView().byId("messageInput").getValue();
+	
+			this.getApp().getFeedManager().newPost(newPostTitle, newPostText, function(){
+				_this.getApp().hideOverlay();
+			});
+		},
+		
+		handleCancel : function(oEvent){
+			this.getApp().hideOverlay();
+		}
 	};
 	
 	//Return Module Constructor

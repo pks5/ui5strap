@@ -15,10 +15,10 @@
 						<Button 
 								text="{i18n>PAGE_FEED_BUTTON_SUBMIT}" 
 								severity="Success"
-								tap="com.ui5strap.apps.demoapp.actions.actdemo.AppendFeed"></Button>
+								tap=".handleSubmit"></Button>
 						<Button 
 								text="{i18n>PAGE_FEED_BUTTON_CANCEL}" 
-								tap="com.ui5strap.apps.demoapp.actions.actdemo.CloseOverlay"></Button>
+								tap=".handleCancel"></Button>
 						
 				</Form>
 		</Panel>

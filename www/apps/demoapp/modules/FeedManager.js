@@ -94,7 +94,7 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 		var _this = this;
 		this.readPost(postId, function(postDataDetail){
 			_this.getApp().navigateTo(_this.getApp().getRootControl(), {
-				"id" : detailPageId || "actdemoDetail",
+				"id" : detailPageId || "actdemoPostDetail",
 				"parameters" : {
 					"post" : postDataDetail
 				}

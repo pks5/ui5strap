@@ -4,7 +4,7 @@
 	"showOverlay" : {
 		
 		"page" : {
-			"id" : "newPost" 
+			"id" : "actdemoNewPost" 
 		},
 		
 		"DO" : "= app.showOverlay(.page)"
