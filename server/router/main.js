@@ -84,7 +84,7 @@ module.exports = function(app)
     	 payload.id = autoInc;
  	     autoInc++;
  		
- 		payload.image = "ui5strap.demoapp.img.awesome";
+ 		payload.image = "com.ui5strap.apps.demoapp.img.awesome";
  		feedData.feed.push(payload);
  		
  		res.json("OK");

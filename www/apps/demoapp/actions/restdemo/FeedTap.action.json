@@ -1,0 +1,22 @@
+{
+    
+    "TASKS" : "postDetail",
+    
+    "postDetail" : {
+        "commandParam" : "command",
+        "modelName" : "FEED_INFO",
+        
+        "command" : "= event.parameters.srcControl.data(.commandParam)",
+        "postData" : "= event.parameters.srcItem.getBindingContextData(.modelName)",
+        
+        "deleteCommand" : "DELETE",
+        "feedManager" : "= app.getFeedManager()",
+        "thenCallback" : "= then()",
+        
+        "IF" : "= same(.command, .deleteCommand)",
+        "DO" : "= feedManager.deletePost(.postData.id, .thenCallback)",
+        "ELSE" : "= feedManager.readPost(.postData.id, .thenCallback)"
+    }
+    
+
+}

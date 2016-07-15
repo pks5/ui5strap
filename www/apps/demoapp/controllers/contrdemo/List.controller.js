@@ -2,7 +2,7 @@
  * 
  * UI5Strap Demo App
  *
- * com.ui5strap.apps.demoapp.controllers.NewPost
+ * com.ui5strap.apps.demoapp.controllers.Feed
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -28,13 +28,34 @@
 sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
+			onInit : function(){
+				this._feedManager = this.getApp().getFeedManager();
+				this._feedManager.registerControls(this, ["feedList"]);
+			},
+			
 			onUpdate : function(oEvent){
-				var post = oEvent.getParameter("post");
-				this.getView().setModel(new ui5strap.JSONModel(post), "POST");
+				this._feedManager.refreshFeed();
+			},
+			
+			handleFeedTap : function(oEvent){
+				var _this = this,
+					command = oEvent.getParameter("srcControl").data("command"),
+					postData = oEvent.getParameter("srcItem").getBindingContextData("FEED_INFO");
+				
+				if(command === "DELETE"){
+					this._feedManager.deletePost(postData.id);
+				}
+				else{
+					this._feedManager.postDetail(postData.id);
+				}
+			},
+			
+			handleNewTap : function(oEvent){
+				this.getApp().showOverlay({ id : "contrdemoNew" });
 			}
 	};
 	
 	//Return Module Constructor
-	return Controller.extend("com.ui5strap.apps.demoapp.controllers.rest.PostDetail", controllerImpl);
+	return Controller.extend("com.ui5strap.apps.demoapp.controllers.contrdemo.List", controllerImpl);
 
 });

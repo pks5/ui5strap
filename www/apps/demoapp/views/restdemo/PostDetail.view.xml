@@ -1,5 +1,6 @@
-<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.rest.Feed" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
 	<!-- The page control -->
 	<Page>
 		<!-- Head area with horizontal bar -->
@@ -37,42 +38,12 @@
 
 		<!-- Body area with page content -->
 		<body>
-			<ScrollContainer vertical="true">
-				<Container type="FluidInset" severity="Warning">
-
-					<Panel>
-
-						<titleContent>
-							<Text text="{i18n>PAGE_FEED_PANEL_POSTS_TITLE}" />
-							<Button tap="com.ui5strap.apps.demoapp.actions.rest.ShowNewPostOverlay" align="PullRight">
-								<Icon icon="plus" />
-							</Button>
-						</titleContent>
-						<content>
-							<ListMedia id="feedList" tap="handleFeedTap"
-								items="{FEED_INFO>/feed}">
-
-								<!-- Media Item 1 -->
-								<ListMediaItem data:postId="{FEED_INFO>id}">
-									<media>
-										<Image options="MediaObject" mpath="{FEED_INFO>image}" ext="png"
-											alt="Image" width="64" />
-									</media>
-									<content>
-										<Icon icon="times" align="PullRight" data:command="DELETE" />
-										<Heading level="4" options="MediaHeading" text="{FEED_INFO>title}" />
-										<Text text="{FEED_INFO>message}" />
-										
-									</content>
-								</ListMediaItem>
-
-
-							</ListMedia>
-						</content>
-
-					</Panel>
-				</Container>
-			</ScrollContainer>
+			<Container type="Fluid">
+				<Heading text="{POST>/title}" />
+				<Paragraph text="{POST>/message}" />
+				
+				<Button tap="com.ui5strap.apps.demoapp.actions.restdemo.NavigateToFeed" text="Back" />
+			</Container>
 		</body>
 
 	</Page>

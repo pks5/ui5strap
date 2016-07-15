@@ -48,10 +48,10 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 	 * 
 	 * @Public
 	 */
-	FeedManagerProto.deletePost = function(postId){
+	FeedManagerProto.deletePost = function(postId, callback){
 		var _this = this;
 		this.app.getFeedClient().deletePost(postId, function(){
-			_this.refreshFeed();
+			_this.refreshFeed(callback);
 		});
 	};
 	

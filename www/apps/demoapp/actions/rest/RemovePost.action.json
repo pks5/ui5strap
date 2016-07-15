@@ -1,9 +1,0 @@
-{
-	"DESCRIPTION" : "Removes a post from the list.",
-	"TASKS" : "removeMediaItem",
-	
-	"removeMediaItem" : {
-		"DO" : "= eventSource.removeItem(eventParameters.listItem)"
-	}
-	
-}

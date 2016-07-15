@@ -50,17 +50,40 @@
             
             {
                 "id" : "feed",
-                "viewName" : ".views.rest.Feed"
+                "viewName" : ".views.restdemo.Feed",
+                "events" : {
+                    "controller" : {
+                        "init" : ".actions.restdemo.InitFeed",
+                        "update" : ".actions.restdemo.RefreshFeed"    
+                    }
+                }
             },
             
             {
                 "id" : "newPost",
-                "viewName" : ".views.rest.NewPost"
+                "viewName" : ".views.restdemo.NewPost"
             },
             
             {
                 "id" : "postDetail",
-                "viewName" : ".views.rest.PostDetail"
+                "viewName" : ".views.restdemo.PostDetail"
+            },
+            
+            
+            
+            {
+                "id" : "contrdemoList",
+                "viewName" : ".views.contrdemo.List"
+            },
+            
+            {
+                "id" : "contrdemoNew",
+                "viewName" : ".views.contrdemo.New"
+            },
+            
+            {
+                "id" : "contrdemoDetail",
+                "viewName" : ".views.contrdemo.Detail"
             },
             
             
@@ -218,11 +241,13 @@
 		".actions.home.NavigateViaMenuRoot",
 		".actions.home.SetSelectedMenuRoot",
 		
-		".actions.rest.NavigateToFeed",
-		".actions.rest.AppendFeed",
-        ".actions.rest.RemovePost",
-        ".actions.rest.ShowNewPostOverlay",
-        ".actions.rest.CloseOverlay",
+		".actions.restdemo.NavigateToFeed",
+		".actions.restdemo.InitFeed",
+		".actions.restdemo.RefreshFeed",
+		".actions.restdemo.AppendFeed",
+        ".actions.restdemo.FeedTap",
+        ".actions.restdemo.ShowNewPostOverlay",
+        ".actions.restdemo.CloseOverlay",
         
         ".actions.bscon.LoadMenuControls",
 		".actions.bscon.ToggleBarMenuControls",
@@ -242,7 +267,7 @@
         ".actions.settings.ChangeTheme",
 		".actions.settings.SelectLanguage",
 		
-		".actions.Debug"
+		".actions.test.Debug"
 	],
 	
 	"rootNavigation" : {

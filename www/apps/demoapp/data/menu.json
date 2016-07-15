@@ -10,6 +10,13 @@
 			"severity" : "Danger"
 		},
 		{
+            "label" : "PAGE_CONTRDEMO_LIST_TITLE",
+            "id" : "contrdemoList",
+            "badge" : "3",
+            "icon" : "feed",
+            "severity" : "Danger"
+        },
+		{
 			"label" : "PAGE_CONTROLS_TITLE",
 			"id" : "controls",
 			"icon" : "toggle-on",
