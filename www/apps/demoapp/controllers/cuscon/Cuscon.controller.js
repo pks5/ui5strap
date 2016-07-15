@@ -30,7 +30,7 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 	var controllerImpl = {
 			handleTap : function(oEvent){
 				var con = this.getView().byId("testContainer");
-				con.setOptions("RedBox BorderBox");
+				con.setOptions(["RedBox", "BorderBox"]);
 				
 				var p = this.getView().byId('testParagraph');
 				p.setText(this.getApp().getLocaleString("TEST", 12));
