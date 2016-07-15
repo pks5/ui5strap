@@ -12258,6 +12258,12 @@ a {
 .u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m1 {
   font-size: .75em;
 }
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-p0 {
+  font-size: 1em;
+}
+.u5sl-barmenu.u5sl-barmenu-flag-zoom-xs-m0 {
+  font-size: 1em;
+}
 @media (min-width: 768px) {
   .u5sl-barmenu-flag-buttonshorizontal-sm {
     width: auto;
@@ -12386,6 +12392,12 @@ a {
   }
   .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m1 {
     font-size: .75em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-p0 {
+    font-size: 1em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-sm-m0 {
+    font-size: 1em;
   }
 }
 @media (min-width: 992px) {
@@ -12517,6 +12529,12 @@ a {
   .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m1 {
     font-size: .75em;
   }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-p0 {
+    font-size: 1em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-md-m0 {
+    font-size: 1em;
+  }
 }
 @media (min-width: 1200px) {
   .u5sl-barmenu-flag-buttonshorizontal-lg {
@@ -12646,6 +12664,12 @@ a {
   }
   .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m1 {
     font-size: .75em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-p0 {
+    font-size: 1em;
+  }
+  .u5sl-barmenu.u5sl-barmenu-flag-zoom-lg-m0 {
+    font-size: 1em;
   }
 }
 /*

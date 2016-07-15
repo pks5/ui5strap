@@ -81,7 +81,7 @@
 	}
 }
 
-.ui5strapMakeBarMenuZoom(@size, @i, @step) when (@i > 0){
+.ui5strapMakeBarMenuZoom(@size, @i, @step) when (@i >= 0){
 	
 	.u5sl-barmenu.u5sl-barmenu-flag-zoom-@{size}-p@{i}{
 		font-size: (1em + (@i * @step));

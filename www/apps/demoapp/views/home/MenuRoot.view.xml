@@ -2,7 +2,7 @@
 	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<Bar inverse="true" type="Full">
 		<BarMenu id="myMenu" inverse="true" zoomExtraSmall="-1"
-			zoomSmall="1" zoomLarge="-2" typeExtraSmall="ButtonsHorizontal" typeSmall="ButtonsVertical"
+			zoomSmall="1" zoomLarge="0" typeExtraSmall="ButtonsHorizontal" typeSmall="ButtonsVertical"
 			typeMedium="ListHorizontal" typeLarge="ListVertical"
 			tap="com.ui5strap.apps.demoapp.actions.home.NavigateViaMenuRoot" items="{menu>/root}">
 			<BarMenuItem

@@ -55,18 +55,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		classes += ' u5sl-barmenu-flag-' + typeLarge.toLowerCase() + "-lg";
 		
 		//Zoom
-		if(zoomExtraSmall !== 0){
-			classes += ' u5sl-barmenu-flag-zoom-xs-' + (zoomExtraSmall < 0 ? 'm' : 'p') + Math.abs(zoomExtraSmall);
-		}
-		if(zoomSmall !== 0){
-			classes += ' u5sl-barmenu-flag-zoom-sm-' + (zoomSmall < 0 ? 'm' : 'p') + Math.abs(zoomSmall);
-		}
-		if(zoomMedium !== 0){
-			classes += ' u5sl-barmenu-flag-zoom-md-' + (zoomMedium < 0 ? 'm' : 'p') + Math.abs(zoomMedium);
-		}
-		if(zoomLarge !== 0){
-			classes += ' u5sl-barmenu-flag-zoom-lg-' + (zoomLarge < 0 ? 'm' : 'p') + Math.abs(zoomLarge);
-		}
+		classes += ' u5sl-barmenu-flag-zoom-xs-' + (zoomExtraSmall < 0 ? 'm' : 'p') + Math.abs(zoomExtraSmall);
+		classes += ' u5sl-barmenu-flag-zoom-sm-' + (zoomSmall < 0 ? 'm' : 'p') + Math.abs(zoomSmall);
+		classes += ' u5sl-barmenu-flag-zoom-md-' + (zoomMedium < 0 ? 'm' : 'p') + Math.abs(zoomMedium);
+		classes += ' u5sl-barmenu-flag-zoom-lg-' + (zoomLarge < 0 ? 'm' : 'p') + Math.abs(zoomLarge);
+		
 		
 		rm.write("<ul");
 		rm.writeControlData(oControl);
