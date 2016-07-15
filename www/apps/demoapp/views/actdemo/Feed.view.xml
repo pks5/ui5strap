@@ -44,12 +44,12 @@
 
 						<titleContent>
 							<Text text="{i18n>PAGE_FEED_PANEL_POSTS_TITLE}" />
-							<Button tap="com.ui5strap.apps.demoapp.actions.restdemo.ShowNewPostOverlay" align="PullRight">
+							<Button tap="com.ui5strap.apps.demoapp.actions.actdemo.ShowNewPostOverlay" align="PullRight">
 								<Icon icon="plus" />
 							</Button>
 						</titleContent>
 						<content>
-							<ListMedia id="feedList" tap="com.ui5strap.apps.demoapp.actions.restdemo.FeedTap"
+							<ListMedia id="feedList" tap="com.ui5strap.apps.demoapp.actions.actdemo.FeedTap"
 								items="{FEED_INFO>/feed}">
 
 								<!-- Media Item 1 -->

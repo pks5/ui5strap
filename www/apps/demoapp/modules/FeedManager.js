@@ -90,11 +90,11 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 	 * 
 	 * @Public
 	 */
-	FeedManagerProto.postDetail = function(postId){
+	FeedManagerProto.postDetail = function(postId, detailPageId){
 		var _this = this;
 		this.readPost(postId, function(postDataDetail){
 			_this.getApp().navigateTo(_this.getApp().getRootControl(), {
-				"viewName" : "com.ui5strap.apps.demoapp.views.PostDetail",
+				"id" : detailPageId || "actdemoDetail",
 				"parameters" : {
 					"post" : postDataDetail
 				}

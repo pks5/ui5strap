@@ -13,9 +13,9 @@
         "feedManager" : "= app.getFeedManager()",
         "thenCallback" : "= then()",
         
-        "IF" : "= same(.command, .deleteCommand)",
-        "DO" : "= feedManager.deletePost(.postData.id, .thenCallback)",
-        "ELSE" : "= feedManager.readPost(.postData.id, .thenCallback)"
+        "IF" : "= lang.same(.command, .deleteCommand)",
+        "DO" : "= .feedManager.deletePost(.postData.id, .thenCallback)",
+        "ELSE" : "= .feedManager.postDetail(.postData.id)"
     }
     
 

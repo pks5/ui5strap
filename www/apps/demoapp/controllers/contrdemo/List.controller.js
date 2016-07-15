@@ -46,7 +46,7 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 					this._feedManager.deletePost(postData.id);
 				}
 				else{
-					this._feedManager.postDetail(postData.id);
+					this._feedManager.postDetail(postData.id, "contrdemoDetail");
 				}
 			},
 			

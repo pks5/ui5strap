@@ -50,23 +50,28 @@
             
             {
                 "id" : "feed",
-                "viewName" : ".views.restdemo.Feed",
+                "viewName" : ".views.actdemo.Feed",
                 "events" : {
                     "controller" : {
-                        "init" : ".actions.restdemo.InitFeed",
-                        "update" : ".actions.restdemo.RefreshFeed"    
+                        "init" : ".actions.actdemo.InitFeed",
+                        "update" : ".actions.actdemo.RefreshFeed"    
                     }
                 }
             },
             
             {
                 "id" : "newPost",
-                "viewName" : ".views.restdemo.NewPost"
+                "viewName" : ".views.actdemo.NewPost"
             },
             
             {
-                "id" : "postDetail",
-                "viewName" : ".views.restdemo.PostDetail"
+                "id" : "actdemoDetail",
+                "viewName" : ".views.actdemo.PostDetail",
+                "events" : {
+                    "controller" : {
+                        "update" : ".actions.actdemo.PostDetails"    
+                    }
+                }
             },
             
             
@@ -241,13 +246,13 @@
 		".actions.home.NavigateViaMenuRoot",
 		".actions.home.SetSelectedMenuRoot",
 		
-		".actions.restdemo.NavigateToFeed",
-		".actions.restdemo.InitFeed",
-		".actions.restdemo.RefreshFeed",
-		".actions.restdemo.AppendFeed",
-        ".actions.restdemo.FeedTap",
-        ".actions.restdemo.ShowNewPostOverlay",
-        ".actions.restdemo.CloseOverlay",
+		".actions.actdemo.NavigateToFeed",
+		".actions.actdemo.InitFeed",
+		".actions.actdemo.RefreshFeed",
+		".actions.actdemo.AppendFeed",
+        ".actions.actdemo.FeedTap",
+        ".actions.actdemo.ShowNewPostOverlay",
+        ".actions.actdemo.CloseOverlay",
         
         ".actions.bscon.LoadMenuControls",
 		".actions.bscon.ToggleBarMenuControls",

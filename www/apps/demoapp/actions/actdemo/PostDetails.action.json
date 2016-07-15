@@ -1,0 +1,11 @@
+{
+    "TASKS" : "postDetails",
+    
+    "postDetails" : {
+        "TYPE" : "ui5strap.AMSetModel",
+        "modelName" : "POST",
+        "data" : "= event.parameters.post"
+    }
+
+
+}

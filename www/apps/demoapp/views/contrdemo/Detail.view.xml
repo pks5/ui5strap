@@ -42,7 +42,7 @@
 				<Heading text="{POST>/title}" />
 				<Paragraph text="{POST>/message}" />
 				
-				<Button tap="com.ui5strap.apps.demoapp.actions.restdemo.NavigateToFeed" text="Back" />
+				<Button tap="com.ui5strap.apps.demoapp.actions.actdemo.NavigateToFeed" text="Back" />
 			</Container>
 		</body>
 
