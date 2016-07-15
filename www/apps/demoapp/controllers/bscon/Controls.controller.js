@@ -192,5 +192,5 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 	};
 	
 	//Return Module Constructor
-	return Controller.extend("com.ui5strap.apps.demoapp.controllers.controls.Controls", controllerImpl);
+	return Controller.extend("com.ui5strap.apps.demoapp.controllers.bscon.Controls", controllerImpl);
 });

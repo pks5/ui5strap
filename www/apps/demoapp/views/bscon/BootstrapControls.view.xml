@@ -39,7 +39,7 @@
 				id="subNavControls"
 					barVisible="true" 
 					barSizeExtraSmall="2"
-					pageChange="com.ui5strap.apps.demoapp.actions.controls.SetSelectedMenuControls" 
+					pageChange="com.ui5strap.apps.demoapp.actions.bscon.SetSelectedMenuControls" 
 					></BarNavContainer>
 			</body>
 			
