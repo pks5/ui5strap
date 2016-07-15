@@ -3,7 +3,7 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
     "use strict";
     
 	//Define the Constructor
-    var YouTubeVideoPlayer = ControlBase.extend("ui5strap.demoapp.controls.YouTubeVideoPlayer", {
+    var YouTubeVideoPlayer = ControlBase.extend("com.ui5strap.apps.demoapp.controls.YouTubeVideoPlayer", {
     
         metadata : {
 

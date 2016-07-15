@@ -1,3 +1,3 @@
 sap.ui.define(['ui5strap/RootComponent'], function(RootComponent){
-	return RootComponent.extend("ui5strap.demoapp.Component");
+	return RootComponent.extend("com.ui5strap.apps.demoapp.Component");
 });

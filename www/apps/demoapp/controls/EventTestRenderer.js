@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.demoapp.controls.EventTestRenderer
+ * com.ui5strap.apps.demoapp.controls.EventTestRenderer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 

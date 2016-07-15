@@ -2,7 +2,7 @@
  * 
  * UI5Strap Demo App
  *
- * ui5strap.demoapp.modules.FeedManager
+ * com.ui5strap.apps.demoapp.modules.FeedManager
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,7 +27,7 @@
 
 sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manager){
 
-	var FeedManager = Manager.extend("ui5strap.demoapp.modules.FeedManager"),
+	var FeedManager = Manager.extend("com.ui5strap.apps.demoapp.modules.FeedManager"),
 		FeedManagerProto = FeedManager.prototype;
 	
 	/**
@@ -94,7 +94,7 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 		var _this = this;
 		this.readPost(postId, function(postDataDetail){
 			_this.getApp().navigateTo(_this.getApp().getRootControl(), {
-				"viewName" : "ui5strap.demoapp.views.PostDetail",
+				"viewName" : "com.ui5strap.apps.demoapp.views.PostDetail",
 				"parameters" : {
 					"post" : postDataDetail
 				}

@@ -9,12 +9,12 @@
 				<!-- Left area of bar -->
 				<left>
 					<!-- Back Button -->
-					<Button tap="ui5strap.demoapp.actions.home.NavigateToHome" 
+					<Button tap="com.ui5strap.apps.demoapp.actions.home.NavigateToHome" 
 						options="BarButton">
 						<Icon icon="home"/>
 					</Button>
 					<!-- Toggle Menu Button (except for small screens) -->
-					<Button tap="ui5strap.demoapp.actions.home.ToggleBarMenuRoot" 
+					<Button tap="com.ui5strap.apps.demoapp.actions.home.ToggleBarMenuRoot" 
 							options="BarButton" visibilitySmall="HiddenUp">
 							<Icon icon="columns" />
 					</Button>
@@ -27,7 +27,7 @@
 				
 				<right>
 					<!-- Toggle Menu Button (only for small screens) -->
-					<Button tap="ui5strap.demoapp.actions.cuscon.ToggleBarMenuCuscon" 
+					<Button tap="com.ui5strap.apps.demoapp.actions.cuscon.ToggleBarMenuCuscon" 
 							options="BarButton" visibilityExtraSmall="HiddenUp" visibilityMedium="HiddenUp">
 							<Icon icon="columns" />
 					</Button>
@@ -42,7 +42,7 @@
                 id="subNavCuscon"
                     barVisible="true" 
                     barSizeExtraSmall="2"
-                    pageChange="ui5strap.demoapp.actions.cuscon.SetSelectedMenuCuscon" 
+                    pageChange="com.ui5strap.apps.demoapp.actions.cuscon.SetSelectedMenuCuscon" 
                     ></BarNavContainer>
 		
 		

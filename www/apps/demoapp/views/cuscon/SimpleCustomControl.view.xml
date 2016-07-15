@@ -1,5 +1,5 @@
-<sapUiCoreMvc:View controllerName="ui5strap.demoapp.controllers.cuscon.Cuscon"  xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
-    xmlns:demoapp="ui5strap.demoapp.controls" xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.cuscon.Cuscon"  xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+    xmlns:demoapp="com.ui5strap.apps.demoapp.controls" xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
     <!-- The page control -->
     <Page>
         <!-- Head area with horizontal bar -->
@@ -8,7 +8,7 @@
             <Bar>
                 <!-- Left area of bar -->
                 <left>
-                    <Button tap="ui5strap.demoapp.actions.cuscon.ToggleBarMenuCuscon" 
+                    <Button tap="com.ui5strap.apps.demoapp.actions.cuscon.ToggleBarMenuCuscon" 
                         options="BarButton">
                         <Icon icon="columns" />
                     </Button>

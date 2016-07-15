@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="ui5strap.demoapp.controllers.rest.PostDetail" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.rest.PostDetail" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
 	<!-- The page control -->
@@ -10,14 +10,14 @@
 				<!-- Left area of bar -->
 				<Text align="PullLeft">
 					<!-- Back Button -->
-					<Button tap="ui5strap.demoapp.actions.home.NavigateToHome"
+					<Button tap="com.ui5strap.apps.demoapp.actions.home.NavigateToHome"
 						options="BarButton">
 						<Icon icon="home" />
 					</Button>
 
 					<!-- Toggle Menu Button (except for small screens) -->
 					<Button options="BarButton"
-							tap="ui5strap.demoapp.actions.home.ToggleBarMenuRoot" visibilitySmall="HiddenUp"
+							tap="com.ui5strap.apps.demoapp.actions.home.ToggleBarMenuRoot" visibilitySmall="HiddenUp"
 						visibilityMedium="VisibleUp">
 							<Icon icon="columns" />
 					</Button>
@@ -27,7 +27,7 @@
 				<Heading text="{i18n>PAGE_FEED_TITLE}" options="BarHeadingCenter" />
 
 				<!-- Toggle Menu Button (only for small screens) -->
-				<Button tap="ui5strap.demoapp.actions.home.ToggleBarMenuRoot"
+				<Button tap="com.ui5strap.apps.demoapp.actions.home.ToggleBarMenuRoot"
 						options="BarButton" align="PullRight"
 					visibilityExtraSmall="HiddenUp" visibilitySmall="VisibleUp"
 					visibilityMedium="HiddenUp">
@@ -42,7 +42,7 @@
 				<Heading text="{POST>/title}" />
 				<Paragraph text="{POST>/message}" />
 				
-				<Button tap="ui5strap.demoapp.actions.rest.NavigateToFeed" text="Back" />
+				<Button tap="com.ui5strap.apps.demoapp.actions.rest.NavigateToFeed" text="Back" />
 			</Container>
 		</body>
 

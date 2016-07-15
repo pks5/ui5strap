@@ -2,7 +2,7 @@
  * 
  * UI5Strap Demo App
  *
- * ui5strap.demoapp.controllers.NewPost
+ * com.ui5strap.apps.demoapp.controllers.NewPost
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -42,6 +42,6 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 	};
 	
 	//Return Module Constructor
-	return Controller.extend("ui5strap.demoapp.controllers.cuscon.Cuscon", controllerImpl);
+	return Controller.extend("com.ui5strap.apps.demoapp.controllers.cuscon.Cuscon", controllerImpl);
 
 });

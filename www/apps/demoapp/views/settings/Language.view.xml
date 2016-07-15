@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc" xmlns:demoapp="ui5strap.demoapp.controls" 
+<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc" xmlns:demoapp="com.ui5strap.apps.demoapp.controls" 
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<!-- The page control -->
 	<Page>
@@ -8,7 +8,7 @@
 			<Bar>
 				<!-- Left area of bar -->
 				<Container align="PullLeft">
-					<Button tap="ui5strap.demoapp.actions.settings.ToggleBarMenuSettings" 
+					<Button tap="com.ui5strap.apps.demoapp.actions.settings.ToggleBarMenuSettings" 
 						options="BarButton">
 						<Icon icon="columns" />
 					</Button>
@@ -33,7 +33,7 @@
 
 				<TabContainer class="tabContainer1" source="tabContainer1Tabs">
 					<Container>
-						<ButtonGroup id="languageSelect" select="ui5strap.demoapp.actions.settings.SelectLanguage" selectionMode="Single">
+						<ButtonGroup id="languageSelect" select="com.ui5strap.apps.demoapp.actions.settings.SelectLanguage" selectionMode="Single">
 								<Button text="EN" data:language="en-US" />
 								<Button text="DE" data:language="de-DE"  />
 						</ButtonGroup>
@@ -43,7 +43,7 @@
 					
 						<Button 
 							text="{i18n>PAGE5_BUTTON}"
-							tap="ui5strap.demoapp.actions.NavigateToFeed"
+							tap="com.ui5strap.apps.demoapp.actions.NavigateToFeed"
 							></Button>
 					</Container>
 				</TabContainer>

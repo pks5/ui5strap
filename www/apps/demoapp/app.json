@@ -1,6 +1,6 @@
 {
 	"app" : {
-	        "id" : "ui5strap.demoapp",
+	        "id" : "com.ui5strap.apps.demoapp",
 	        "name" : "Ui5Strap Demo",
 	        
 	        "rootComponent" : true,

@@ -9,12 +9,12 @@
 					<!-- Left area of bar -->
 					<Container align="PullLeft">
 						<!-- Back Button -->
-						<Button tap="ui5strap.demoapp.actions.home.NavigateToHome" 
+						<Button tap="com.ui5strap.apps.demoapp.actions.home.NavigateToHome" 
 							options="BarButton">
 							<Icon icon="home" />
 						</Button>
 						<!-- Toggle Menu Button (except for small screens) -->
-						<Button tap="ui5strap.demoapp.actions.home.ToggleBarMenuRoot" 
+						<Button tap="com.ui5strap.apps.demoapp.actions.home.ToggleBarMenuRoot" 
 								options="BarButton" visibilitySmall="HiddenUp" visibilityMedium="VisibleUp">
 								<Icon icon="columns" />
 						</Button>
@@ -24,7 +24,7 @@
 					
 					<Container align="PullRight">
 						<!-- Toggle Menu Button (only for small screens) -->
-						<Button tap="ui5strap.demoapp.actions.home.ToggleBarMenuRoot" 
+						<Button tap="com.ui5strap.apps.demoapp.actions.home.ToggleBarMenuRoot" 
 								options="BarButton" visibilityExtraSmall="HiddenUp" visibilitySmall="VisibleUp" visibilityMedium="HiddenUp">
 								<Icon icon="columns" />
 						</Button>
@@ -39,7 +39,7 @@
 				id="subNavControls"
 					barVisible="true" 
 					barSizeExtraSmall="2"
-					pageChange="ui5strap.demoapp.actions.controls.SetSelectedMenuControls" 
+					pageChange="com.ui5strap.apps.demoapp.actions.controls.SetSelectedMenuControls" 
 					></BarNavContainer>
 			</body>
 			

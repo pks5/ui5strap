@@ -2,7 +2,7 @@
  * 
  * This control is to test all control events that are provided by OpenUI5.
  *
- * ui5strap.demoapp.controls.EventTest
+ * com.ui5strap.apps.demoapp.controls.EventTest
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,10 +27,10 @@
 
 sap.ui.define(['ui5strap/library', 'ui5strap/ControlBase'], function(library, ControlBase){
 	
-	var EventTest = ControlBase.extend("ui5strap.demoapp.controls.EventTest", {
+	var EventTest = ControlBase.extend("com.ui5strap.apps.demoapp.controls.EventTest", {
 		metadata : {
 
-			library : "ui5strap.demoapp",
+			library : "com.ui5strap.apps.demoapp",
 			
 		}
 	}),

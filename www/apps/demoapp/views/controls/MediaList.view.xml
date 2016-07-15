@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="ui5strap.demoapp.controllers.controls.Controls" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.controls.Controls" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
 	<Container type="Fluid" options="PictureFrame">
@@ -12,7 +12,7 @@
 							<media>
 								
 								<Link>
-									<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
+									<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
 								</Link>
 							
 							</media>
@@ -25,7 +25,7 @@
 								<ListMediaItem>
 									<media>
 										<Link>
-											<Image mpath="ui5strap.demoapp.img.awesome" ext="png"  alt="Image" width="64" height="64" />
+											<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png"  alt="Image" width="64" height="64" />
 										</Link>
 									</media>
 									<content>
@@ -36,7 +36,7 @@
 
 										<ListMediaItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
 											<Link>
-												<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
+												<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
 											</Link>
 										</ListMediaItem>
 									
@@ -48,13 +48,13 @@
 						</ListMediaItem>
 						<ListMediaItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
 							<Link>
-								<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
+								<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
 							</Link>
 						</ListMediaItem>
 						
 						<ListMediaItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
 							<Link>
-								<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
+								<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
 							</Link>
 						</ListMediaItem>
 		</ListMedia>
@@ -64,20 +64,20 @@
 				
 				<Col columnsSmall="4">
 					<Link type="Thumbnail">
-						<Image title="Awesome, isn't it?" tooltipPlacement="Top" mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" />
+						<Image title="Awesome, isn't it?" tooltipPlacement="Top" mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" />
 					</Link>
 				</Col>
 				
 				<Col columnsSmall="4">
 					<Link type="Thumbnail">
-						<Image title="Awesome, isn't it?" tooltipPlacement="Top" mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" />
+						<Image title="Awesome, isn't it?" tooltipPlacement="Top" mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" />
 					</Link>
 				</Col>
 
 				<Col columnsSmall="4">
 					<Thumbnail>
 						<image>
-							<Image mpath="ui5strap.demoapp.img.awesome" ext="png" alt="Image" />
+							<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" />
 						</image>
 						<content>
 							<Heading text="Thumbnail label" />
