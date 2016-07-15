@@ -199,6 +199,10 @@
                 "id" : "cusconSimple",
                 "viewName" : ".views.cuscon.SimpleCustomControl"
             },
+            {
+                "id" : "cusconJQueryPlugin",
+                "viewName" : ".views.cuscon.JQueryPlugin"
+            },
 
 
 
@@ -261,6 +265,8 @@
 		".actions.bscon.NavigateToControlsButtons",
 		
 		".actions.cuscon.NavigateToCusconSimple",
+		".actions.cuscon.NavigateViaMenuCuscon", 
+		".actions.cuscon.SetSelectedMenuCuscon",
 		".actions.cuscon.ToggleBarMenuCuscon",
 		
 		".actions.settings.LoadMenuSettings",

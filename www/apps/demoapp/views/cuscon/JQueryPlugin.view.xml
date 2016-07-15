@@ -15,7 +15,7 @@
                 </left>
                 <!-- Middle area of bar -->
                 <middle>
-                    <Heading text="{i18n>PAGE_CUSCON_SIMPLE_TITLE}" options="BarHeadingCenter" />
+                    <Heading text="{i18n>PAGE_CUSCON_JQUERY_TITLE}" options="BarHeadingCenter" />
                 </middle>
             </Bar>
         </head>
@@ -23,9 +23,13 @@
         <!-- Body area with page content -->
         <body>
             <Container type="FluidInset">
-                <Text type="Lead" text="A simple custom control for showing YouTube videos." />
-	            
-	            <demoapp:YouTubeVideoPlayer youTubeId="nfL5DXIalvI" />
+                <Text type="Lead" text="A custom control based on JQuery Knob." />
+                
+                <demoapp:Knob value="45" />
+                
+                <demoapp:Knob value="12" />
+                
+                <demoapp:Knob value="87" />
             </Container>
         </body>
         

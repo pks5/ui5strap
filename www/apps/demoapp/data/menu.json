@@ -119,9 +119,15 @@
 	"subMenuCuscon" :[
     
         {
-            "label" : "PAGE_CONTROLS_BUTTONS_TITLE",
+            "label" : "PAGE_CUSCON_SIMPLE_TITLE",
             "id" : "cusconSimple",
             "icon" : "smile-o"
+        },
+        
+        {
+            "label" : "PAGE_CUSCON_JQUERY_TITLE",
+            "id" : "cusconJQueryPlugin",
+            "icon" : "puzzle-piece"
         }
      ]
 
