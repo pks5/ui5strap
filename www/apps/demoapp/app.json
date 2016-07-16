@@ -203,6 +203,10 @@
                 "id" : "cusconJQueryPlugin",
                 "viewName" : ".views.cuscon.JQueryPlugin"
             },
+            {
+                "id" : "cusconD3",
+                "viewName" : ".views.cuscon.D3"
+            },
 
 
 
