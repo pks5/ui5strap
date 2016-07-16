@@ -31,8 +31,16 @@ sap.ui.define(['ui5strap/ControlBase', './jquery.knob.min'], function(ControlBas
         return "knob";
     };
     
+    KnobProto.onBeforeRendering = function(){
+    	this._$knob = null;
+    };
+    
     KnobProto.onAfterRendering = function(){
-    	this.$().knob();
+    	this._$knob = this._$getPart('knob').knob();
+    };
+    
+    KnobProto.exit = function(){
+    	this._$knob = null;
     };
     
     //return Constructor

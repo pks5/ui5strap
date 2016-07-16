@@ -23,7 +23,7 @@
         <!-- Body area with page content -->
         <body>
             <Container type="FluidInset">
-                <Text type="Lead" text="A custom control based on JQuery Knob." />
+                <Text type="Lead" text="A custom control based on the JQuery Plugin 'Knob'." />
                 
                 <demoapp:Knob value="45" />
                 

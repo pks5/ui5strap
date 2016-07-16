@@ -56,7 +56,8 @@
                         "init" : ".actions.actdemo.InitFeed",
                         "update" : ".actions.actdemo.RefreshFeed"    
                     }
-                }
+                },
+                "transition" : "slide-rtl"
             },
             
             {
@@ -78,7 +79,8 @@
             "//BEGIN contrdemo",
             {
                 "id" : "contrdemoList",
-                "viewName" : ".views.contrdemo.List"
+                "viewName" : ".views.contrdemo.List",
+                "transition" : "slide-rtl"
             },
             
             {
@@ -115,7 +117,8 @@
             
             {
             	"id" : "controlsButtons",
-            	"viewName" : ".views.bscon.Buttons"
+            	"viewName" : ".views.bscon.Buttons",
+                "transition" : "zoom-in"
             },
             
             {

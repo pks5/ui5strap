@@ -1,5 +1,5 @@
 {
-	"//" : "Makes the root NavContainer navigate to the specified view.",
+	"//" : "Navigate to View 'contrdemoList' via root navigation.",
 	
 	"TASKS" : "navigate",
 	
@@ -7,9 +7,8 @@
 		"TYPE" : "ui5strap.task.Navigate",
 		
 		"VIEWS" : {
-			"actdemoFeed" : {
-				"id" : "contrdemoList",
-				"transition" : "slide-rtl"
+			"contrdemoList" : {
+				"id" : "contrdemoList"
 			}
 		}
 	}

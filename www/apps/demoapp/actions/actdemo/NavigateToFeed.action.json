@@ -1,5 +1,5 @@
 {
-	"//" : "Makes the root NavContainer navigate to the specified view.",
+	"//" : "Navigate to View 'actdemoFeed' via root navigation.",
 	
 	"TASKS" : "navigate",
 	
@@ -8,8 +8,7 @@
 		
 		"VIEWS" : {
 			"actdemoFeed" : {
-				"id" : "actdemoFeed",
-				"transition" : "slide-rtl"
+				"id" : "actdemoFeed"
 			}
 		}
 	}

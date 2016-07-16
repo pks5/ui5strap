@@ -1,5 +1,5 @@
 {
-	"//" : "Navigates the the Buttons page within section Controls.",
+	"//" : "Navigate to View 'controlsButtons' via specified NAVIGATOR.",
 	"TASKS" : "navigate",
 	
 	"navigate" : {
@@ -16,9 +16,7 @@
 		
 		"VIEWS" : {
 			"controlsButtons" : {
-				"id" : "controlsButtons",
-				"transition" : "zoom-in",
-				"target" : "content"
+				"id" : "controlsButtons"
 			}
 		}
 	}

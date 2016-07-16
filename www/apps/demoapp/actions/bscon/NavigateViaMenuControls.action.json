@@ -20,9 +20,8 @@
 		
 		"VIEWS" : {
 			"menuTarget" : {
-				"transition" : "zoom-out",
 				"id" : "= .contextData.id",
-				"target" : "content"
+				"transition" : "zoom-out"
 			}
 		}
 	}

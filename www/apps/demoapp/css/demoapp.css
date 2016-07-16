@@ -15,6 +15,17 @@
     border:solid 2px black;
 }
 
+/*
+* BEGIN Knob
+*/
+
+.knob{
+	display:inline-block;
+}
+
+/*
+* END Knob
+*/
 
 /*
 * BEGIN Stock Graph
