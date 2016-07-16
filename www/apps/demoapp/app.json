@@ -33,7 +33,7 @@
     
     "views" : [
     		
-    		
+    		"//BEGIN home",
     		{
                 "id" : "menuRoot",
                 "viewName" : ".views.home.MenuRoot",
@@ -45,9 +45,9 @@
                 "id" : "home",
                 "viewName" : ".views.home.Home"
             },
-
+            "//END home",
             
-            
+            "//BEGIN actdemo",
             {
                 "id" : "actdemoFeed",
                 "viewName" : ".views.actdemo.Feed",
@@ -73,9 +73,9 @@
                     }
                 }
             },
+            "//END actdemo",
             
-            
-            
+            "//BEGIN contrdemo",
             {
                 "id" : "contrdemoList",
                 "viewName" : ".views.contrdemo.List"
@@ -90,9 +90,9 @@
                 "id" : "contrdemoDetail",
                 "viewName" : ".views.contrdemo.Detail"
             },
+            "//END contrdemo",
             
-            
-            
+            "//BEGIN bscontrols",
             {
             	"id" : "controls",
             	"viewName" : ".views.bscon.BootstrapControls",
@@ -172,9 +172,9 @@
             	"id" : "controlsDialogs",
             	"viewName" : ".views.bscon.Dialogs"
             },
+            "//END bscontrols",
             
-            
-            
+            "//BEGIN cuscon",
             {
                 "id" : "cuscon",
                 "viewName" : ".views.cuscon.CustomControls",
@@ -207,9 +207,13 @@
                 "id" : "cusconD3",
                 "viewName" : ".views.cuscon.D3"
             },
-
-
-
+            {
+                "id" : "cusconPureJS",
+                "viewName" : ".views.cuscon.PureJS"
+            },
+            "//END cuscon",
+            
+            "//BEGIN settings",
             {
                 "id" : "settings",
                 "viewName" : ".views.settings.Settings",
@@ -222,8 +226,6 @@
                     }
                 }
             },
-            
-            
             
             {
                 "id" : "menuSettings",
@@ -245,7 +247,9 @@
             {
                 "id" : "settingsTheme",
                 "viewName" : ".views.settings.Theme"
-            }
+            },
+            
+            "//END settings"
       ],
 	
 	"actions" : [

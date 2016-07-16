@@ -22,7 +22,7 @@
 				
 				<!-- Middle area of bar -->
 				<middle>
-					<Heading options="BarHeadingCenter" text="{i18n>PAGE_STATISTICS_TITLE}" />
+					<Heading options="BarHeadingCenter" text="{i18n>PAGE_CUSCON_TITLE}" />
 				</middle>
 				
 				<right>

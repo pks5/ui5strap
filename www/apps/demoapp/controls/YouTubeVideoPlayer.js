@@ -7,7 +7,7 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
     
         metadata : {
 
-            library : "tld.mydomain.myapp",
+            library : "com.ui5strap.apps.demoapp",
       
             properties : {
             	youTubeId : {

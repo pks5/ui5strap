@@ -7,7 +7,7 @@ sap.ui.define(['ui5strap/ControlBase', './jquery.knob.min'], function(ControlBas
     
         metadata : {
 
-            library : "tld.mydomain.myapp",
+            library : "com.ui5strap.apps.demoapp",
       
             properties : {
             	

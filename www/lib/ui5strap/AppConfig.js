@@ -284,6 +284,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				var viewData = views[i],
 					viewName = viewData.viewName;
 				
+				if(typeof viewData === 'string'){
+					//Comment
+					continue;
+				}
+				
 				if(!viewName){
 					jQuery.sap.log.warning("Skipped view definition because attribute 'viewName' is missing.");
 					continue;
