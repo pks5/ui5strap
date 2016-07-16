@@ -1,0 +1,17 @@
+{
+	"//" : "Makes the root NavContainer navigate to the specified view.",
+	
+	"TASKS" : "navigate",
+	
+	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		
+		"VIEWS" : {
+			"actdemoFeed" : {
+				"id" : "contrdemoList",
+				"transition" : "slide-rtl"
+			}
+		}
+	}
+
+}

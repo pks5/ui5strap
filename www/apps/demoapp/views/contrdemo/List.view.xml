@@ -39,7 +39,12 @@
 		<body>
 			<ScrollContainer vertical="true">
 				<Container type="FluidInset" severity="Warning">
-
+                    <Text type="Lead">
+                        <Text text="A simple Rest Demo with CRUD functionality using controllers." />
+                        <Link tap=".handleNavigateToActdemo" text="See" />
+                        <Text text=" the same demo using actions." />
+                    </Text>
+                    
 					<Panel>
 
 						<titleContent>

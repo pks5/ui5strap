@@ -1,18 +1,7 @@
 {
 
 	"root" : [
-	
-		{
-			"label" : "PAGE_FEED_TITLE",
-			"id" : "actdemoFeed",
-			"icon" : "feed"
-		},
-		{
-            "label" : "PAGE_CONTRDEMO_LIST_TITLE",
-            "id" : "contrdemoList",
-            "icon" : "feed"
-        },
-		{
+	    {
 			"label" : "PAGE_CONTROLS_TITLE",
 			"id" : "controls",
 			"icon" : "toggle-on"
@@ -21,6 +10,11 @@
             "label" : "PAGE_CUSCON_TITLE",
             "id" : "cuscon",
             "icon" : "bar-chart"
+        },
+        {
+            "label" : "PAGE_CONTRDEMO_LIST_TITLE",
+            "id" : "contrdemoList",
+            "icon" : "feed"
         },
         {
             "label" : "PAGE_SETTINGS_TITLE",

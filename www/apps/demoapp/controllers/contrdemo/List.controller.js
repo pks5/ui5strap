@@ -52,6 +52,10 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 			
 			handleNewTap : function(oEvent){
 				this.getApp().showOverlay({ id : "contrdemoNew" });
+			},
+			
+			handleNavigateToActdemo : function(oEvent){
+				this.getApp().navigateTo(this.getApp().getRootControl(), { "id" : "actdemoFeed" });
 			}
 	};
 	

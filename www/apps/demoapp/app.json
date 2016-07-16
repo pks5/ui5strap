@@ -259,6 +259,7 @@
 		".actions.home.SetSelectedMenuRoot",
 		
 		".actions.actdemo.NavigateToFeed",
+		".actions.actdemo.NavigateToContrdemo",
 		".actions.actdemo.InitFeed",
 		".actions.actdemo.RefreshFeed",
 		".actions.actdemo.AppendFeed",

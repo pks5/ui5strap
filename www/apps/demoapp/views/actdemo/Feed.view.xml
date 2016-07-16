@@ -38,8 +38,13 @@
 		<!-- Body area with page content -->
 		<body>
 			<ScrollContainer vertical="true">
-				<Container type="FluidInset" severity="Warning">
-
+				<Container type="FluidInset" severity="Success">
+                    <Text type="Lead">
+                        <Text text="A simple Rest Demo with CRUD functionality using actions." />
+                        <Link tap="com.ui5strap.apps.demoapp.actions.actdemo.NavigateToContrdemo" text="See" />
+                        <Text text=" the same demo using controllers." />
+                    </Text>
+                    
 					<Panel>
 
 						<titleContent>
