@@ -649,6 +649,19 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			"orgEvent" : oEvent
 		});
 	};
+	
+	/**
+	* Triggered when the window is resized
+	* @public
+	*/
+	AppBaseProto.onHashChange = function(oEvent){
+		//Fire the resize event
+		this.fireEventAction({ 
+			"scope" : "app",
+			"eventName" : "hashChange",
+			"orgEvent" : oEvent
+		});
+	};
 
 	/**
 	* Triggered when the app has been initialized

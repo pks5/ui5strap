@@ -409,7 +409,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			return;
 		
 		}
-		console.log(_this._pendingTransitions);
+		
 		//RAF start
 		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 

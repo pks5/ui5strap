@@ -112,7 +112,39 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			"orgEvent" : oEvent 
 		});
 	};
-
+	
+	/**
+	 * @Override
+	 */
+	AppProto.onHashChange = function(oEvent){
+		AppBase.prototype.onHashChange.call(this, oEvent);
+		
+		if(this._suppressHashChange){
+			jQuery.sap.log.info("Hashchange suppressed.");
+		}
+		else{
+			for(var i = 0; i < this.config.data.routing.length; i++){
+				var routeInfo = this.config.data.routing[i],
+					path = document.location.hash,
+					matches = path.match("#!" + routeInfo.route);
+				//console.log("testing", path, routeInfo.route);
+				if(matches && matches.length){
+					//console.log(matches);
+					console.log("Route '%s' matched with %s parameters.", routeInfo.route, matches.length-1);
+					
+					var viewConfig = this.config.getViewConfig({ id : routeInfo.id });
+					console.log(viewConfig);
+					this.navigateTo(this.getRootControl(), viewConfig, null, false, true);
+				}
+				else{
+					//console.log("Route '%s' NOT matched with %s parameters.", routeInfo.route, matches.length-1);
+				}
+			}
+		}
+		
+		this._suppressHashChange = false;
+	};
+	
 	/*
 	* -------------------------------------------------
 	* --------------------- STYLE ---------------------
@@ -377,18 +409,57 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	/**
 	 * Navigate
 	 */
-	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
-		this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve);
+	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange) {
+		this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange);
 	};
 	
-	AppProto.setHashPath = function(path, parameters){
+	AppProto.setHashPath = function(path, parameters, suppressHashChange){
+		this._suppressHashChange = true;
 		document.location.hash = "!" + ulib.Utils.parsePath(path, parameters);
 	};
+	
+	AppProto._changePage = function(navControl, oPage, viewConfigResolved, callback){
+		var target = viewConfigResolved.target;
+		
+		//Set target busy
+		navControl.setTargetBusy(target, true);
+
+		//Trigger onUpdate events
+		navControl.updateTarget(target, oPage, viewConfigResolved.parameters);
+		
+		var subNavConfig = viewConfigResolved.subNavigation;
+		if(subNavConfig){
+			var subNav = oPage.getController().byId(subNavConfig.id);
+			if(!subNav){
+				throw new Error("Cannot navigate: sub navigation is not available.");
+			}
+			
+			this._initNavigator(subNav, subNavConfig.initialViews);
+		}
+		
+		//Change NavContainer to page
+		navControl.toPage(
+			oPage, 
+			target, 
+			viewConfigResolved.transition,
+			function toPage_complete(){
+				
+				//TODO why the timeout here?
+				window.setTimeout(function(){
+					//Set target available
+					navControl.setTargetBusy(target, false);
+				}, 50);
+				
+				//Trigger callback
+				callback && callback();
+			}
+		);
+	}
 	
 	/**
 	 * This function is called when a navigation request occurrs.
 	 */
-	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
+	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange) {
 		jQuery.sap.log.debug("AppBaseProto.navigateTo");
 		
 		if(!suppressResolve){
@@ -409,7 +480,22 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				throw new Error("Invalid parent id: " + viewConfig.parentId);
 			}
 			
-			navControl = this.getControl(parentViewConfig.subNavigation.id, viewConfig.parentId);
+			//var parentView = this.createView(parentViewConfig);
+			
+			
+			var parentNavControl = this.getControl(parentViewConfig.subNavigation.id, viewConfig.parentId);
+			
+			/*
+			if(!parentNavControl || 
+				(parentNavControl.getTarget(parentViewConfig.target).getViewName() !== parentViewConfig.viewName)){
+				throw new Error("Cannot navigate: nav control not visible!");
+			}
+			*/
+			
+			
+			navControl = parentNavControl;
+			
+			
 		}
 		
 		if(navControl.isTargetBusy(viewConfig.target)){
@@ -418,45 +504,17 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			return false;
 		}
 		
-		if(viewConfig.path){
-			this.setHashPath(viewConfig.path, viewConfig.parameters);
-		}
-
 		var _this = this,
 			target = viewConfig.target,
 			oPage = this.createView(viewConfig);
 		
 		oPage.loaded().then(function(){
-			//Set target busy
-			navControl.setTargetBusy(target, true);
-
-			//Trigger onUpdate events
-			navControl.updateTarget(target, oPage, viewConfig.parameters);
 			
-			var subNavConfig = viewConfig.subNavigation;
-			if(subNavConfig){
-				var subNav = oPage.getController().byId(subNavConfig.id);
-				subNav && _this._initNavigator(subNav, subNavConfig.initialViews);
-				//console.log(oPage.getId());
+			_this._changePage(navControl, oPage, viewConfig, callback);
+			
+			if(viewConfig.path && !suppressHashChange){
+				_this.setHashPath(viewConfig.path, viewConfig.parameters, true);
 			}
-
-			//Change NavContainer to page
-			navControl.toPage(
-				oPage, 
-				target, 
-				viewConfig.transition,
-				function toPage_complete(){
-					
-					//TODO why the timeout here?
-					window.setTimeout(function(){
-						//Set target available
-						navControl.setTargetBusy(target, false);
-					}, 50);
-					
-					//Trigger callback
-					callback && callback();
-				}
-			);
 		});
 		
 		return oPage;

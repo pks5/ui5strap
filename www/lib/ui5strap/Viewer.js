@@ -797,6 +797,14 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			},
 			false
 		);
+		
+		//Listen to Hash Change Events
+		window.addEventListener(
+			"hashchange", 
+			function(event){
+				_this.getApp().onHashChange(new sap.ui.base.Event("ui5strap.app.hashChange", null, {}));
+			}
+		);
 	};
 	
 	return ViewerMulti;

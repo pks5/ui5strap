@@ -274,6 +274,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		//START read Views
 		configDataJSON.viewsById = {};
 		configDataJSON.viewsByName = {};
+		configDataJSON.routing = [];
 		
 		if(jQuery.isArray(configDataJSON.views)){
 			//New format as array
@@ -314,6 +315,22 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				if(viewData.id){
 					viewData.id = this.createControlId(viewData.id);
 					configDataJSON.viewsById[viewData.id] = viewData;
+				}
+				
+				if(viewData.id && viewData.path){
+					var pathParameters = [],
+						route = viewData.path.replace(/\{([\w]+[\w\.]*)\}/g, function(s, parameterName, x, y){
+							pathParameters.push(parameterName);
+							
+							//TODO more precise
+							return "([\\w\\-]+)";
+						}) + "$";
+					
+					configDataJSON.routing.push({
+						id : viewData.id,
+						route : route,
+						pathParameters : pathParameters
+					});
 				}
 			}
 		}
