@@ -111,7 +111,8 @@
                         "menuControls",
                         "controlsButtons"
                     ]
-                }
+                },
+                "path" : "/bscontrols"
             },
             
             {

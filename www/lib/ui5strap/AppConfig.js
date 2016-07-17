@@ -318,6 +318,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				}
 				
 				if(viewData.id && viewData.path){
+					/*
+					if(viewData.subNavigation){
+						throw new Error("Cannot define path for view '" + viewData.id + "': view has sub navigation.");
+					}
+					*/
 					var pathParameters = [],
 						route = viewData.path.replace(/\{([\w]+[\w\.]*)\}/g, function(s, parameterName, x, y){
 							pathParameters.push(parameterName);

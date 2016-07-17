@@ -8,7 +8,7 @@
 		},
 		{
             "label" : "PAGE_CUSCON_TITLE",
-            "id" : "cuscon",
+            "id" : "cusconSimple",
             "icon" : "bar-chart"
         },
         {

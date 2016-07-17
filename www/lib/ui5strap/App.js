@@ -119,13 +119,20 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto.onHashChange = function(oEvent){
 		AppBase.prototype.onHashChange.call(this, oEvent);
 		
+		var newHash = document.location.hash;
+		
+		if(!jQuery.sap.startsWith(newHash, '#!/')){
+			return;
+		}
+		
 		if(this._suppressHashChange){
 			jQuery.sap.log.info("Hashchange suppressed.");
 		}
 		else{
+			
 			for(var i = 0; i < this.config.data.routing.length; i++){
 				var routeInfo = this.config.data.routing[i],
-					path = document.location.hash,
+					path = newHash,
 					matches = path.match("#!" + routeInfo.route);
 				//console.log("testing", path, routeInfo.route);
 				if(matches && matches.length){
@@ -133,7 +140,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					console.log("Route '%s' matched with %s parameters.", routeInfo.route, matches.length-1);
 					
 					var viewConfig = this.config.getViewConfig({ id : routeInfo.id });
-					console.log(viewConfig);
+					
 					this.navigateTo(this.getRootControl(), viewConfig, null, false, true);
 				}
 				else{
@@ -294,11 +301,6 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var complete = function(){
 			callI--;
 			if(callI === 0){
-				//TODO Make better
-				if(!navigator.initialized){
-					navigator.initialized = true;
-				}
-	
 				callback && callback();
 			}
 		}
@@ -318,14 +320,26 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					id : initialView	
 				};
 			}
-			else{
-				initialView = jQuery.extend({}, initialView);
+			
+			initialView = this.config.getViewConfig(initialView);
+			
+			if(!initialView.target){
+				initialView.target = navigator.defaultTarget;
 			}
 			
-			//if(!navigator.initialized){
-				initialView.transition = 'transition-none';
-			//}
-			this.navigateTo(navigator, initialView, complete, false, true);
+			if(!initialView.target){
+				throw new Error('Cannot navigate to page: no "target" specified!');
+			}
+			
+			if(initialView.target === excludeTarget){
+				complete();
+				
+				continue;
+			}
+			
+			initialView.transition = 'transition-none';
+			
+			this.navigateTo(navigator, initialView, complete, true, true);
 		}
 	};
 	
@@ -334,8 +348,17 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 */
 	AppProto._showInitialContent = function(callback){
 		jQuery.sap.log.debug("Showing initial content...");
+		
+		var _this = this;
+		
+		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, null, function(){
+			var newHash = document.location.hash;
+			if(jQuery.sap.startsWith(newHash, '#!/')){
+				_this.onHashChange(new sap.ui.base.Event("ui5strap.app.hashChange", null, {}));
+			}
 			
-		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, null, callback);
+			callback && callback();
+		});
 	};
 	
 	/**
@@ -501,6 +524,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 						navControl, 
 						parentViewConfig, 
 						function(){
+							if(!parentNavControl){
+								parentNavControl = _this.getControl(parentViewConfig.subNavigation.id, viewConfig.parentId);
+							}
 							//Recall original request
 							_this._navigateTo(
 									parentNavControl, 
@@ -512,7 +538,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 							)
 						}, 
 						suppressResolve, 
-						suppressHashChange,
+						true,
 						viewConfig.target
 				);
 			
