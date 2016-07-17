@@ -186,7 +186,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		//ui5strap.tm("APP", "NC", "PREP_TRANS");
 		
 		if(pageChange.transition){
-			jQuery.sap.log.warning("NavContainer::_prepareTransition: Transition already prepared!");
+			jQuery.sap.log.warning("NavContainer::_prepareTransition: Transition already prepared for target " + pageChange.target);
 			//There is already a Transition defined
 			return false;
 		}
@@ -265,8 +265,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			}
 			
 			if(pageChange.currentPage){
-				//Remove Propagated Properties and Bindings
-				pageChange.currentPage.setParent(null);
+				//Set Propagated Properties and Bindings back to ui area
+				ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
 				
 				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
 					target : pageChange.target,
@@ -348,7 +348,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	* @Private
 	*/
 	var _executePendingTransitions = function(_this){
-		//ui5strap.tm("APP", "NC", "EXEC_PEND_TRANS");
+		//jQuery.sap.log.info("Executing pending transitions");
 		
 		var pendingTransitionsLength = _this._pendingTransitions.length,
 			transList = {
@@ -370,6 +370,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		
 		_this._pendingTransitions = [];
 		_this._targetTransitions = {};
+		
+		//jQuery.sap.log.info("Executed pending transitions");
 	};
 
 	/**
@@ -407,13 +409,13 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			return;
 		
 		}
-		
+		console.log(_this._pendingTransitions);
 		//RAF start
 		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
 
 			if(!_preparePendingTransitions(_this)){
 				//jQuery.sap.log.debug(" - [NC] CANCEL HANDLING PENDING TRANSITIONS");
-
+				jQuery.sap.log.warning("Canceled pending transitions");
 				return;
 			}
 			
@@ -548,7 +550,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			
 			//Propagate Properties
 			//This must be done after the Page has attached to DOM,
-			//because it gets a new UIArea as Parent and therefore new propagated properties.
+			//because the page might get a new UIArea as Parent and therefore new propagated properties.
 			ui5strap.Utils.addPropertyPropagation(_this, page);
 			
 			//jQuery.sap.log.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
@@ -676,7 +678,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	* @Override
 	*/
 	NavContainerProto.toPage = function(page, target, transitionName, callback){
-		//ui5strap.tm("APP", "NC", "TO_PAGE");
+		//jQuery.sap.log.info("[NC#" + this.getId() + "] to page on target " + target);
+		
 		if(!(target in this.targets)){
 			throw new Error('NavContainer does not support target: ' + target);
 		}
@@ -740,7 +743,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		}
 		
 		if(this.getDomRef()){
-			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
+			//jQuery.sap.log.info("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
 			//NavContainer is already attached to DOM
 			targetTransition.$next = _placePage(_this, target, page, true);
 			
@@ -749,7 +752,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			}, domAttachTimeout);
 		}
 		else{
-			jQuery.sap.log.debug(' + [NC] NAVIGATE {' + target + '}: NavContainer not attached to DOM yet.');
+			//jQuery.sap.log.info("[NC#" + this.getId() + "] NavContainer not attached to DOM yet.");
 
 			//NavContainer not attached to DOM yet
 			//It will override all pending transitions on this target!
@@ -866,7 +869,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	* @Public
 	*/
 	NavContainerProto.onAfterRendering = function(){ 
-		//ui5strap.tm("APP", "NC", "AFTER_RENDERING");
+		//jQuery.sap.log.info("[NC#" + this.getId() + "] after rendering...");
 		
 		var _pendingTransitions = this._pendingTransitions,
 			pendingTransitionsLength = _pendingTransitions.length,

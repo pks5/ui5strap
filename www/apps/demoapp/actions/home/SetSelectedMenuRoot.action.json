@@ -2,7 +2,7 @@
 	"//" : "Set the main-menu item selected that has the same id as specified NavContainer's current page.",
 	
 	"TASKS" : "setListItemSelected",
-	"DEBUG" : true,
+	"DEBUG" : false,
 	
 	"setListItemSelected" : {
 		"targetName" : "content",

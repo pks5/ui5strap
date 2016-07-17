@@ -1093,6 +1093,36 @@ sap.ui
 					 */
 					ui5strap.Utils = {};
 					
+					/**
+					 * Gets an object property by string regardless of depth.
+					 */
+					ui5strap.Utils.fetchFromObject = function(obj, prop) {
+
+					    if(typeof obj === 'undefined') {
+					        return obj;
+					    }
+
+					    var _index = prop.indexOf('.')
+					    if(_index > -1) {
+					        return this.fetchFromObject(obj[prop.substring(0, _index)], prop.substr(_index + 1));
+					    }
+
+					    return obj[prop];
+					};
+					
+					/**
+					 * Parses a path and replaces all {param} occurrencies by the content in the pathParam object.
+					 */
+					ui5strap.Utils.parsePath = function(path, pathParam){
+				        pathParam = pathParam || {};
+				        return path.replace(/\{([\w]+[\.\w]*)\}/g, function(m0, m1){
+				            return ui5strap.Utils.fetchFromObject(pathParam, m1);
+				        });
+				    };
+					
+					/**
+					 * Gets a computed css property
+					 */
 					ui5strap.Utils.getComputedStyle = function(oElm, strCssRule){
 						var strValue = "";
 

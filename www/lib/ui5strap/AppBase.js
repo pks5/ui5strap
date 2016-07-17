@@ -1200,6 +1200,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 	};
 	
+	/**
+	 * Extracts the ID part of a Control ID without the app namespace.
+	 */
 	AppBaseProto.extractRelativeControlId = function(controlId, viewId){
 		var prefix = this.config.getAppDomId() + '---';
 		
@@ -1226,7 +1229,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		return controlId.substring(prefix.length);
 	};
 
-	/*
+	/**
 	* Returns the Control with the given controlId. Depending if a viewId is specified, the controlId must be global or local.
 	*/
 	AppBaseProto.getControl = function(controlId, viewId){
@@ -1234,6 +1237,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
+	 * Returns the Root Component.
 	 * @Public
 	 */
 	AppBaseProto.getRootComponent = function(){
@@ -1241,12 +1245,16 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
+	 * Sets the Root Component.
 	 * @Public
 	 */
 	AppBaseProto.setRootComponent = function(rootComponent){
 		this._rootComponent = rootComponent;
 	};
 	
+	/**
+	 * Creates the Root Control asynchronously.
+	 */
 	AppBaseProto.createRootControl = function(callback){
 		if(this._rootControl){
 			callback && callback();
@@ -1270,6 +1278,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
+	 * Returns the Root Control.
 	 * @Public
 	 */
 	AppBaseProto.getRootControl = function(){
@@ -1286,7 +1295,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		return -1 !== jQuery.inArray(nature, this.config.data.app.nature);
 	};
 
-	/*
+	/**
 	* Returns the ID of the App
 	*/
 	AppBaseProto.getId = function(){

@@ -147,6 +147,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
     
     /**
     * Parses a path and replaces {placeholder} with values of pathParam directory, if present.
+    * TODO Use ui5strap.Utils.parsePath
     * @protected
     */
     RestClientProto._parsePath = function(path, pathParam){

@@ -44,7 +44,7 @@
 						<Col columnsSmall="6" offsetSmall="3" columnsMedium="6" offsetMedium="3" >
 						      <Text type="Paragraph" textAlign="Center" text="{i18n>PAGE_HOME_INTRO}" />
 							<ListGroup 
-								tap="com.ui5strap.apps.demoapp.actions.home.NavigateViaMenuRoot" 
+								tap="com.ui5strap.apps.demoapp.actions.NavigateViaMenu" 
 								items="{menu>/root}"
 								listMode="Navigation"
 							>

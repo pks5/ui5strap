@@ -26,7 +26,7 @@
  */
 
 sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui/core/mvc/HTMLView", "sap/ui/core/mvc/XMLView", "sap/ui/core/CustomData", "sap/ui/model/resource/ResourceModel", "sap/ui/model/json/JSONModel"], 
-				function(library, AppBase, AppConfig, AppComponent, HTMLView, XMLView, CustomData, ResourceModel, JSONModel){
+				function(ulib, AppBase, AppConfig, AppComponent, HTMLView, XMLView, CustomData, ResourceModel, JSONModel){
 
 	var App = AppBase.extend('ui5strap.App', {
 		"constructor" : function(config, viewer){
@@ -255,51 +255,55 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		});
 	};
 	
+	AppProto._initNavigator = function(navigator, initialViews, callback){
+		var _this = this,
+			callI = 0;
+	
+		var complete = function(){
+			callI--;
+			if(callI === 0){
+				//TODO Make better
+				if(!navigator.initialized){
+					navigator.initialized = true;
+				}
+	
+				callback && callback();
+			}
+		}
+	
+		if(!initialViews || initialViews.length === 0){
+			callI = 1;
+			complete();
+			return;
+		}
+	
+		callI = initialViews.length;
+	
+		for(var i = 0; i < initialViews.length; i++){
+			var initialView = initialViews[i];
+			if(typeof initialView === "string"){
+				initialView = {
+					id : initialView	
+				};
+			}
+			else{
+				initialView = jQuery.extend({}, initialView);
+			}
+			
+			//if(!navigator.initialized){
+				initialView.transition = 'transition-none';
+			//}
+			this.navigateTo(navigator, initialView, complete);
+		}
+	};
+	
 	/**
 	 * @Protected
 	 */
 	AppProto._showInitialContent = function(callback){
-			jQuery.sap.log.debug("Showing initial content...");
-			var _this = this,
-				initialViews = this.config.data.rootNavigation.initialViews,
-				callI = 0;
-		
-			var complete = function(){
-				callI--;
-				if(callI === 0){
-					if(!_this.initialized){
-						_this.initialized = true;
-					}
-		
-					callback && callback();
-				}
-			}
-		
-			if(!initialViews || initialViews.length === 0){
-				callI = 1;
-				complete();
-				return;
-			}
-		
-			callI = initialViews.length;
-		
-			for(var i = 0; i < initialViews.length; i++){
-				var initialView = initialViews[i];
-				if(typeof initialView === "string"){
-					initialView = {
-						id : initialView	
-					};
-				}
-				else{
-					initialView = jQuery.extend({}, initialView);
-				}
-				
-				if(!this.initialized){
-					initialView.transition = 'transition-none';
-				}
-				this.navigateTo(this.getRootControl(), initialView, complete);
-			}
-		
+		jQuery.sap.log.debug("Showing initial content...");
+			
+		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, callback);
 	};
 	
 	/**
@@ -370,10 +374,20 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		});
 	};
 	
+	/**
+	 * Navigate
+	 */
 	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
 		this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve);
 	};
 	
+	AppProto.setHashPath = function(path, parameters){
+		document.location.hash = "!" + ulib.Utils.parsePath(path, parameters);
+	};
+	
+	/**
+	 * This function is called when a navigation request occurrs.
+	 */
 	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve) {
 		jQuery.sap.log.debug("AppBaseProto.navigateTo");
 		
@@ -389,10 +403,23 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			throw new Error('Cannot navigate to page: no "target" specified!');
 		}
 		
+		if(viewConfig.parentId){
+			parentViewConfig = this.config.getViewConfig({ id : viewConfig.parentId });
+			if(!parentViewConfig || !parentViewConfig.subNavigation){
+				throw new Error("Invalid parent id: " + viewConfig.parentId);
+			}
+			
+			navControl = this.getControl(parentViewConfig.subNavigation.id, viewConfig.parentId);
+		}
+		
 		if(navControl.isTargetBusy(viewConfig.target)){
 			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
 			return false;
+		}
+		
+		if(viewConfig.path){
+			this.setHashPath(viewConfig.path, viewConfig.parameters);
 		}
 
 		var _this = this,
@@ -405,6 +432,13 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 
 			//Trigger onUpdate events
 			navControl.updateTarget(target, oPage, viewConfig.parameters);
+			
+			var subNavConfig = viewConfig.subNavigation;
+			if(subNavConfig){
+				var subNav = oPage.getController().byId(subNavConfig.id);
+				subNav && _this._initNavigator(subNav, subNavConfig.initialViews);
+				//console.log(oPage.getId());
+			}
 
 			//Change NavContainer to page
 			navControl.toPage(
@@ -412,6 +446,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				target, 
 				viewConfig.transition,
 				function toPage_complete(){
+					
+					//TODO why the timeout here?
 					window.setTimeout(function(){
 						//Set target available
 						navControl.setTargetBusy(target, false);

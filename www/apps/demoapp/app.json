@@ -43,7 +43,8 @@
             
             {
                 "id" : "home",
-                "viewName" : ".views.home.Home"
+                "viewName" : ".views.home.Home",
+                "path" : "/"
             },
             "//END home",
             
@@ -57,12 +58,14 @@
                         "update" : ".actions.actdemo.RefreshFeed"    
                     }
                 },
-                "transition" : "slide-rtl"
+                "transition" : "slide-rtl",
+                "path" : "/actdemo"
             },
             
             {
                 "id" : "actdemoNewPost",
-                "viewName" : ".views.actdemo.NewPost"
+                "viewName" : ".views.actdemo.NewPost",
+                "path" : "/actdemo/new"
             },
             
             {
@@ -72,7 +75,8 @@
                     "controller" : {
                         "update" : ".actions.actdemo.PostDetail"    
                     }
-                }
+                },
+                "path" : "/actdemo/post/{post.id}"
             },
             "//END actdemo",
             
@@ -80,17 +84,20 @@
             {
                 "id" : "contrdemoList",
                 "viewName" : ".views.contrdemo.List",
-                "transition" : "slide-rtl"
+                "transition" : "slide-rtl",
+                "path" : "/contrdemo"
             },
             
             {
                 "id" : "contrdemoNew",
-                "viewName" : ".views.contrdemo.New"
+                "viewName" : ".views.contrdemo.New",
+                "path" : "/contrdemo/new"
             },
             
             {
                 "id" : "contrdemoDetail",
-                "viewName" : ".views.contrdemo.Detail"
+                "viewName" : ".views.contrdemo.Detail",
+                "path" : "/contrdemo/post/{post.id}"
             },
             "//END contrdemo",
             
@@ -98,13 +105,12 @@
             {
             	"id" : "controls",
             	"viewName" : ".views.bscon.BootstrapControls",
-            	"events" : {
-                	"controller" : {
-                	   "pageShow" : [
-                	       ".actions.bscon.LoadMenuControls",
-                	       ".actions.bscon.NavigateToControlsButtons"
-                	   ]
-                	}
+            	"subNavigation" : {
+                    "id" : "subNavControls",
+                    "initialViews" : [
+                        "menuControls",
+                        "controlsButtons"
+                    ]
                 }
             },
             
@@ -117,63 +123,87 @@
             
             {
             	"id" : "controlsButtons",
+            	"parentId" : "controls",
             	"viewName" : ".views.bscon.Buttons",
-                "transition" : "zoom-in"
+                "transition" : "zoom-in",
+                "path" : "/bscontrols/buttons"
             },
             
             {
             	"id" : "controlsContainers",
-            	"viewName" : ".views.bscon.Containers"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.Containers",
+                "path" : "/bscontrols/containers"
             },
             
             {
             	"id" : "controlsIcons",
-            	"viewName" : ".views.bscon.Icons"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.Icons",
+                "path" : "/bscontrols/icons"
             },
             
             {
             	"id" : "controlsTypography",
-            	"viewName" : ".views.bscon.Typography"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.Typography",
+                "path" : "/bscontrols/typography"
             },
 			
 			{
             	"id" : "controlsNavs",
-            	"viewName" : ".views.bscon.Navs"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.Navs",
+                "path" : "/bscontrols/navs"
             },
             
             {
             	"id" : "controlsGridSystem",
-            	"viewName" : ".views.bscon.GridSystem"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.GridSystem",
+                "path" : "/bscontrols/grid-system"
             },
             
             {
             	"id" : "controlsProgress",
-            	"viewName" : ".views.bscon.Progress"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.Progress",
+                "path" : "/bscontrols/progress"
             },
             
             {
             	"id" : "controlsForm",
-            	"viewName" : ".views.bscon.Form"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.Form",
+                "path" : "/bscontrols/form"
             },
             
             {
                 "id" : "controlsWheels",
-                "viewName" : ".views.bscon.Wheels"
+                "parentId" : "controls",
+                "viewName" : ".views.bscon.Wheels",
+                "path" : "/bscontrols/wheels"
             },
             
             {
             	"id" : "controlsIndicators",
-            	"viewName" : ".views.bscon.Indicators"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.Indicators",
+                "path" : "/bscontrols/indicators"
             },
             
             {
             	"id" : "controlsMediaList",
-            	"viewName" : ".views.bscon.MediaList"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.MediaList",
+                "path" : "/bscontrols/media-list"
             },
             
             {
             	"id" : "controlsDialogs",
-            	"viewName" : ".views.bscon.Dialogs"
+            	"parentId" : "controls",
+            	"viewName" : ".views.bscon.Dialogs",
+                "path" : "/bscontrols/dialogs"
             },
             "//END bscontrols",
             
@@ -181,13 +211,12 @@
             {
                 "id" : "cuscon",
                 "viewName" : ".views.cuscon.CustomControls",
-                "events" : {
-                    "controller" : {
-                        "pageShow" : [
-                            ".actions.cuscon.LoadMenuCuscon",
-                            ".actions.cuscon.NavigateToCusconSimple"
-                        ]
-                    }
+                "subNavigation" : {
+                    "id" : "subNavCuscon",
+                    "initialViews" : [
+                        "menuCuscon",
+                        "cusconSimple"
+                    ]
                 }
             },
             
@@ -200,19 +229,27 @@
             
             {
                 "id" : "cusconSimple",
-                "viewName" : ".views.cuscon.SimpleCustomControl"
+                "parentId" : "cuscon",
+                "viewName" : ".views.cuscon.SimpleCustomControl",
+                "path" : "/cuscon/simple"
             },
             {
                 "id" : "cusconJQueryPlugin",
-                "viewName" : ".views.cuscon.JQueryPlugin"
+                "parentId" : "cuscon",
+                "viewName" : ".views.cuscon.JQueryPlugin",
+                "path" : "/cuscon/jquery"
             },
             {
                 "id" : "cusconD3",
-                "viewName" : ".views.cuscon.D3"
+                "parentId" : "cuscon",
+                "viewName" : ".views.cuscon.D3",
+                "path" : "/cuscon/d3"
             },
             {
                 "id" : "cusconPureJS",
-                "viewName" : ".views.cuscon.PureJS"
+                "parentId" : "cuscon",
+                "viewName" : ".views.cuscon.PureJS",
+                "path" : "/cuscon/pure-js"
             },
             "//END cuscon",
             
@@ -220,13 +257,12 @@
             {
                 "id" : "settings",
                 "viewName" : ".views.settings.Settings",
-                "events" : {
-                    "controller" : {
-                        "pageShow" : [
-                            ".actions.settings.LoadMenuSettings",
-                            ".actions.settings.NavigateToSettingsLanguage"
-                        ]
-                    }
+                "subNavigation" : {
+                    "id" : "navContainerSettings",
+                    "initialViews" : [
+                        "menuSettings",
+                        "settingsLanguage"
+                    ]
                 }
             },
             
@@ -239,26 +275,31 @@
             
             {
                 "id" : "settingsLanguage",
+                "parentId" : "settings",
                 "viewName" : ".views.settings.Language",
                 "events" : {
                     "controller" : {
                         "update" : ".actions.settings.SetCurrentLanguage"    
                     }
-                }
+                },
+                "path" : "/settings/language"
             },
             
             {
                 "id" : "settingsTheme",
-                "viewName" : ".views.settings.Theme"
+                "parentId" : "settings",
+                "viewName" : ".views.settings.Theme",
+                "path" : "/settings/theme"
             },
             
             "//END settings"
       ],
 	
 	"actions" : [
+		".actions.NavigateViaMenu",
+        
 		".actions.home.NavigateToHome",
 		".actions.home.ToggleBarMenuRoot",
-		".actions.home.NavigateViaMenuRoot",
 		".actions.home.SetSelectedMenuRoot",
 		
 		".actions.actdemo.NavigateToFeed",
@@ -270,22 +311,16 @@
         ".actions.actdemo.ShowNewPostOverlay",
         ".actions.actdemo.CloseOverlay",
         
-        ".actions.bscon.LoadMenuControls",
-		".actions.bscon.ToggleBarMenuControls",
-		".actions.bscon.NavigateViaMenuControls", 
+        ".actions.bscon.ToggleBarMenuControls",
 		".actions.bscon.SetSelectedMenuControls",
 		".actions.bscon.NavigateToControlsButtons",
 		
 		".actions.cuscon.NavigateToCusconSimple",
-		".actions.cuscon.NavigateViaMenuCuscon", 
 		".actions.cuscon.SetSelectedMenuCuscon",
 		".actions.cuscon.ToggleBarMenuCuscon",
 		
-		".actions.settings.LoadMenuSettings",
-        ".actions.settings.ToggleBarMenuSettings",
-        ".actions.settings.NavigateViaMenuSettings", 
+		".actions.settings.ToggleBarMenuSettings",
         ".actions.settings.SetSelectedMenuSettings",
-        ".actions.settings.NavigateToSettingsLanguage",
         
         ".actions.settings.ChangeTheme",
 		".actions.settings.SelectLanguage",
@@ -294,7 +329,7 @@
 	],
 	
 	"rootNavigation" : {
-	     "module" : "ui5strap.BarNavContainer",
+	     "type" : "ui5strap.BarNavContainer",
          "settings" : {
          	"barSizeExtraSmall" : 1,
          	"barPlacementExtraSmall" : "Top",
