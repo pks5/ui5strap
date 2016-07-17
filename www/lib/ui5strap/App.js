@@ -287,7 +287,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		});
 	};
 	
-	AppProto._initNavigator = function(navigator, initialViews, callback){
+	AppProto._initNavigator = function(navigator, initialViews, excludeTarget, callback){
 		var _this = this,
 			callI = 0;
 	
@@ -325,7 +325,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			//if(!navigator.initialized){
 				initialView.transition = 'transition-none';
 			//}
-			this.navigateTo(navigator, initialView, complete);
+			this.navigateTo(navigator, initialView, complete, false, true);
 		}
 	};
 	
@@ -335,7 +335,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto._showInitialContent = function(callback){
 		jQuery.sap.log.debug("Showing initial content...");
 			
-		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, callback);
+		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, null, callback);
 	};
 	
 	/**
@@ -418,14 +418,20 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		document.location.hash = "!" + ulib.Utils.parsePath(path, parameters);
 	};
 	
-	AppProto._changePage = function(navControl, oPage, viewConfigResolved, callback){
+	AppProto._changePage = function(navControl, oPage, viewConfigResolved, excludeSubNavTarget, callback){
 		var target = viewConfigResolved.target;
 		
-		//Set target busy
-		navControl.setTargetBusy(target, true);
-
 		//Trigger onUpdate events
 		navControl.updateTarget(target, oPage, viewConfigResolved.parameters);
+		
+		var ci = 1,
+			ca = function(){
+				ci --;
+				if(ci === 0){
+					//Trigger callback
+					callback && callback();
+				}
+			};
 		
 		var subNavConfig = viewConfigResolved.subNavigation;
 		if(subNavConfig){
@@ -434,8 +440,12 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				throw new Error("Cannot navigate: sub navigation is not available.");
 			}
 			
-			this._initNavigator(subNav, subNavConfig.initialViews);
+			ci = 2;
+			this._initNavigator(subNav, subNavConfig.initialViews, excludeSubNavTarget, ca);
 		}
+		
+		//Set target busy
+		navControl.setTargetBusy(target, true);
 		
 		//Change NavContainer to page
 		navControl.toPage(
@@ -448,10 +458,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				window.setTimeout(function(){
 					//Set target available
 					navControl.setTargetBusy(target, false);
+					
+					ca();
 				}, 50);
 				
-				//Trigger callback
-				callback && callback();
+				
 			}
 		);
 	}
@@ -459,7 +470,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	/**
 	 * This function is called when a navigation request occurrs.
 	 */
-	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange) {
+	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange, excludeSubNavTarget) {
 		jQuery.sap.log.debug("AppBaseProto.navigateTo");
 		
 		if(!suppressResolve){
@@ -474,16 +485,43 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			throw new Error('Cannot navigate to page: no "target" specified!');
 		}
 		
+		var _this = this;
 		if(viewConfig.parentId){
-			parentViewConfig = this.config.getViewConfig({ id : viewConfig.parentId });
+			var parentViewConfig = this.config.getViewConfig({ id : viewConfig.parentId });
 			if(!parentViewConfig || !parentViewConfig.subNavigation){
 				throw new Error("Invalid parent id: " + viewConfig.parentId);
+			}
+			
+			var parentNavControl = _this.getControl(parentViewConfig.subNavigation.id, viewConfig.parentId);
+			
+			
+			if(navControl !== parentNavControl){
+				//Assure that parent view is loaded
+				return this._navigateTo(
+						navControl, 
+						parentViewConfig, 
+						function(){
+							//Recall original request
+							_this._navigateTo(
+									parentNavControl, 
+									viewConfig, 
+									callback, 
+									suppressResolve, 
+									suppressHashChange,
+									excludeSubNavTarget
+							)
+						}, 
+						suppressResolve, 
+						suppressHashChange,
+						viewConfig.target
+				);
+			
 			}
 			
 			//var parentView = this.createView(parentViewConfig);
 			
 			
-			var parentNavControl = this.getControl(parentViewConfig.subNavigation.id, viewConfig.parentId);
+			
 			
 			/*
 			if(!parentNavControl || 
@@ -499,18 +537,17 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		}
 		
 		if(navControl.isTargetBusy(viewConfig.target)){
-			jQuery.sap.log.warning('[APP_FRAME] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
+			jQuery.sap.log.warning('[NC#' + navControl.getId() + '] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
 			return false;
 		}
 		
-		var _this = this,
-			target = viewConfig.target,
+		var target = viewConfig.target,
 			oPage = this.createView(viewConfig);
 		
 		oPage.loaded().then(function(){
 			
-			_this._changePage(navControl, oPage, viewConfig, callback);
+			_this._changePage(navControl, oPage, viewConfig, excludeSubNavTarget, callback);
 			
 			if(viewConfig.path && !suppressHashChange){
 				_this.setHashPath(viewConfig.path, viewConfig.parameters, true);
