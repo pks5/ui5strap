@@ -1,4 +1,4 @@
-/*
+/*!
  * 
  * UI5Strap
  *
@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library, ObjectBase, Action){
 
+	/**
+	 * Constructor for a new App instance.
+	 * 
+	 * @param config {ui5strap.AppConfig} App configuration.
+	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
+	 * 
+	 * @class
+	 * Bla
+	 * @extends sap.ui.base.Object
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @protected
+	 * @alias ui5strap.AppBase
+	 * 
+	 */
 	var AppBase = ObjectBase.extend('ui5strap.AppBase', {
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
@@ -58,8 +76,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	}),
 	AppBaseProto = AppBase.prototype;
 
-	/*
-	* Init sapplication specific logging
+	/**
+	* Init app specific logging
+	* 
+	* @param viewer {ui5strap.ViewerBase} The viewer that loaded this app.
 	* @protected
 	*/
 	AppBaseProto._initLog = function(viewer){
@@ -90,7 +110,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
-	 * @Private
+	 * Helper function to create the app root css class.
+	 * 
+	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param appClasses {string} Existing classes.
+	 * @private
 	 */
 	var _createAppClass = function(_this, appClasses){
 		if(_this.config.data.app.styleClass){
@@ -106,16 +130,18 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 
 	/**
-	* Initializes the App
-	* @Public
+	* Initializes the App. Usually triggered by the viewer.
 	*/
 	AppBaseProto.init = function(){
 		this.onInit(new sap.ui.base.Event("ui5strap.app.init", this, {}));
 	};
 
 	/**
-	* Preload JavaScript libraries
-	* @Private
+	* Preload JavaScript libraries defined in configuration.
+	* 
+	* @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	* @param callback {function} The callback function. 
+	* @private
 	*/
 	var _preloadJavaScript = function(_this, callback){
 		_this.log.info("AppBase::_preloadJavaScript");
@@ -150,7 +176,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
-	 * @Private
+	 * Preload models defined in configuration.
+	 * 
+	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param callback {function} The callback function. 
+	 * @private
 	 */
 	var _preloadModels = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadModels");
@@ -255,7 +285,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
-	 * @Private
+	 * Initializes an app component.
+	 * 
+	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param compConfig {object} The component configuration object.
+	 * @param oComp {object} The component instance.
+	 * @private
 	 */
 	var _initComponent = function(_this, compConfig, oComp){
 		var componentId = compConfig.id,
@@ -301,6 +336,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		oComp.init();
 	};
 	
+	/**
+	 * Preloads the root component.
+	 * 
+	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param callback {function} The callback function.
+	 */
 	var _preloadRootComponent = function(_this, callback){
 		//TODO this must become standard
 		if(_this.config.data.app.rootComponent){
@@ -319,9 +360,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			callback && callback();
 		}
 	};
+	
 	/**
-	 * @Private
+	 * Preloads components defined in configuration.
 	 * 
+	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param callback {function} The callback function. 
+	 * @private
 	 */
 	var _preloadComponents = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadComponents");
@@ -413,9 +458,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
-	* Preload Actions for faster execution
-	* @Private
-	*/
+	 * Preload actions defined in configuration.
+	 * 
+	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param callback {function} The callback function. 
+	 * @private
+	 */
 	var _preloadActions = function(_this, callback){
 		jQuery.sap.log.debug("AppBase::_preloadActions");
 		
@@ -441,14 +489,19 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
-	 * @Public
+	 * Sets the UI5 language.
+	 * 
+	 * @param language {string} The language to set.
+	 * TODO Since you cannot set the language per app, this function should be moved to the viewer.
 	 */
 	AppBaseProto.setLanguage = function(language){
 		sap.ui.getCore().getConfiguration().setLanguage(language);
 	};
 	
 	/**
-	 * @Public
+	 * Preloads the models and resources needed by this app.
+	 * 
+	 * @param callback {function} The callback function.
 	 */
 	AppBaseProto.preload = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.preload");
@@ -473,7 +526,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	 * @Public
+	 * Loads the neccessary data for this app. Typically triggered by the viewer.
+	 * 
+	 * @param callback {function} The callback function.
 	 */
 	AppBaseProto.load = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.load");
@@ -489,7 +544,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	* Start the app
+	* Starts the app. Typically triggered by the viewer.
+	* 
+	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.start = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.start");
@@ -515,8 +572,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	 * 
-	 */
+	* Marks the app as showing. Typically triggered by the viewer.
+	* 
+	* @param callback {function} The callback function.
+	*/
 	AppBaseProto.show = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.show");
 
@@ -535,8 +594,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	 * 
-	 */
+	* Marks the app as shown. Typically triggered by the viewer.
+	* 
+	* @param callback {function} The callback function.
+	*/
 	AppBaseProto.shown = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.shown");
 
@@ -559,8 +620,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
-	 * 
-	 */
+	* Marks the app as hiding. Typically triggered by the viewer.
+	* 
+	* @param callback {function} The callback function.
+	*/
 	AppBaseProto.hide = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.hide");
 		
@@ -572,8 +635,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
-	 * 
-	 */
+	* Marks the app as hidden. Typically triggered by the viewer.
+	* 
+	* @param callback {function} The callback function.
+	*/
 	AppBaseProto.hidden = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.hidden");
 
@@ -593,7 +658,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	* Stop the app
+	* Marks the app as stopped. Typically triggered by the viewer.
+	* 
+	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.stop = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.stop");
@@ -611,6 +678,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		callback && callback();
 	};
 
+	/**
+	* Marks the app as unloaded. Typically triggered by the viewer.
+	* 
+	* @param callback {function} The callback function.
+	*/
 	AppBaseProto.unload = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.unload");
 		
@@ -625,8 +697,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	* Triggered when a message is sent to this app
-	* @public
+	* Triggered when a message is sent to this app.
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onMessage = function(oEvent){
 		//Fire the message event
@@ -639,7 +712,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 	/**
 	* Triggered when the window is resized
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onResize = function(oEvent){
 		//Fire the resize event
@@ -652,7 +726,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 	/**
 	* Triggered when the window is resized
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onHashChange = function(oEvent){
 		//Fire the resize event
@@ -665,7 +740,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app has been initialized
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onInit = function(oEvent){
 		this.fireEventAction({ 
@@ -677,7 +753,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app has been (pre-)loaded
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onLoad = function(oEvent){
 		this.fireEventAction({ 
@@ -689,7 +766,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app has been unloaded
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onUnload = function(oEvent){
 		this.fireEventAction({ 
@@ -701,7 +779,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app has been started
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onStart = function(oEvent){
 		this.fireEventAction({ 
@@ -713,7 +792,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app has been stopped
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onStop = function(oEvent){
 		this.fireEventAction({ 
@@ -725,7 +805,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app is going to show
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onShow = function(oEvent){
 		this.fireEventAction({ 
@@ -737,7 +818,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app has been shown
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onShown = function(oEvent){
 		this.fireEventAction({ 
@@ -749,7 +831,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app is going to show for the first time
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onFirstShow = function(oEvent){
 		this.fireEventAction({ 
@@ -761,7 +844,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app has been shown for the first time
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onFirstShown = function(oEvent){
 		this.fireEventAction({ 
@@ -773,7 +857,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app is going to hide
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onHide = function(oEvent){
 		this.fireEventAction({ 
@@ -785,7 +870,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Triggered when the app has been hidden
-	* @public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppBaseProto.onHidden = function(oEvent){
 		this.fireEventAction({ 
@@ -797,7 +883,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Run an action that is assiged to a certain event
-	* @public
+	* 
+	* @param eventParameters {object} Information about the event.
+	* @param actionGroupId {string|object} The action name or action definition.
 	*/
 	AppBaseProto.runEventAction = function (eventParameters, actionGroupId){
 		this.log.debug("Executing event '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
@@ -823,7 +911,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	/**
 	* Fires an app event. 
 	* The event is either defined in the configuration, or attached to the app instance programatically.
-	* @public
+	* 
+	* @param eventParameters {object} Information about the event.
 	*/
 	AppBaseProto.fireEventAction = function(eventParameters){
 		if(this.config.data.events){
@@ -869,7 +958,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Registers an event action to this app instance
-	* @public
+	* 
+	* @param scope {string} The event scope.
+	* @param eventName {string} The event name.
+	* @param actionOrFunction {string|function} Either an action name or a callback function.
 	*/ 
 	AppBaseProto.registerEventAction = function(scope, eventName, actionOrFunction){
 		if(!(scope in this._events)){
@@ -891,7 +983,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 	
 	/**
-	* Loader
+	* Shows or hides the loading screen.
+	* 
+	* @param visible {boolean} Whether the loading screen is visible.
+	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.setLoaderVisible = function(visible, callback){
 		//ui5strap.Layer.setVisible('ui5strap-loader', visible, callback, option);
@@ -910,7 +1005,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 
 	/**
-	* Inititalzes the overlay
+	* Registers the overlay.
 	*/
 	AppBaseProto.registerOverlay = function(){
 		var _this = this;
@@ -942,15 +1037,19 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Returns whether the overlay layer is visible
-	* @public
+	* 
+	* @returns {boolean} Whether the overlay is visible.
 	*/
 	AppBaseProto.isOverlayVisible = function(){
 		return ui5strap.Layer.isVisible(this.overlayId);
 	};
 
 	/**
-	* Shows the overlay layer
-	* @public
+	* Shows a view or control inside the overlay.
+	* 
+	* @param viewDataOrControl {object|sap.ui.core.Control} Either a view definition or a control reference.
+	* @param callback {function} The callback function.
+	* @param transitionName {string} The transition name.
 	*/
 	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this;
@@ -968,6 +1067,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		}
 	};
 	
+	/**
+	 * Shows a control inside the overlay.
+	 * 
+	 * @param oPage {sap.ui.core.Control} The control to show.
+	 * @param callback {function} The callback function.
+	 * @param transitionName {string} The name of the transition.
+	 * @param pageUpdateParameters {object} The parameters to pass to the pageUpdate event.
+	 * @protected
+	 */
 	AppBaseProto._showOverlay = function(oPage, callback, transitionName, pageUpdateParameters){
 		var navControl = this.overlayControl,
 			target = navControl.defaultTarget;
@@ -991,8 +1099,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	* Hides the overlay layer
-	* @public
+	* Hides the overlay.
+	* 
+	* @param callback {function} The callback function.
+	* @param transitionName {string} The name of the transition.
 	*/
 	AppBaseProto.hideOverlay = function(callback, transitionName){
 		if(!this.isOverlayVisible()){
@@ -1016,6 +1126,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	 * Create a new View based on configuration object.
+	 * 
+	 * @param viewDef {object} The view definition.
+	 * @returns {sap.ui.core.mvc.View} The view reference.
 	 */
 	AppBaseProto.createView = function(viewDef){
 		var _this = this,
@@ -1100,7 +1213,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 
 	/**
-	* Execute an Action
+	* Execute an Action.
+	* 
+	* @param action {object} The action definition.
 	*/
 	AppBaseProto.runAction = function(action){
 		action.app = this;
@@ -1120,6 +1235,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 	
 	/**
+	 * Sets a local storage item.
+	 * 
+	 * @param storageKey {string} The key.
+	 * @param storageValue {object} The value as object.
 	 * @deprecated
 	 * TODO move to component
 	 */
@@ -1132,6 +1251,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
+	 * Gets a local storage item.
+	 * 
+	 * @param storageKey {string} The key.
+	 * @returns {object} The value.
 	 * @deprecated
 	 * TODO move to component
 	 */
@@ -1146,6 +1269,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
+	 * Sets a session storage item.
+	 * 
+	 * @param storageKey {string} The key.
+	 * @param storageValue {object} The value.
 	 * @deprecated
 	 * TODO move to component
 	 */
@@ -1158,6 +1285,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 	
 	/**
+	 * Gets a session storage item.
+	 * 
+	 * @param storageKey {string} The key.
+	 * @returns {object} The value.
 	 * @deprecated
 	 * TODO move to component
 	 */
@@ -1178,6 +1309,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 
 	/**
+	 * Gets a locale string from the i18n files in the current language.
+	 * The first argument is the key, any additional arguments are passed for replace variables within the string.
 	 * TODO "i18n" should be configurable.
 	 */
 	AppBaseProto.getLocaleString = function(){
@@ -1187,6 +1320,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Returns a property of a model that is assigned to the root control.
+	* 
+	* @param dataPath {string} The data path.
+	* @param modelName {string} The name of the model.
+	* @returns {mixed} The property value.
 	* FIXME
 	*/
 	AppBaseProto.getModelProperty = function(dataPath, modelName){
@@ -1206,6 +1343,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Create an control id with app namespace. If viewId is given, the controlId must be local.
+	* 
+	* @param controlId {string} The ID of the control.
+	* @param viewId {string} The ID of the view that contains the control.
+	* @returns {string} The final control id.
+	* @deprecated Use ui5strap.AppConfig.createControlId instead.
 	*/ 
 	AppBaseProto.createControlId = function(controlId, viewId){
 		jQuery.sap.log.warning("ui5strap.AppBase.prototype.createControlId is deprecated! Use ui5strap.AppConfig.prototype.createControlId instead!");
@@ -1215,6 +1357,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 	/**
 	 * Extracts the ID part of a Control ID without the app namespace.
+	 * 
+	 * @param controlId {string} The control ID.
+	 * @param viewId {string} The view ID that contains the control.
+	 * @returns {string} The relative control id.
 	 */
 	AppBaseProto.extractRelativeControlId = function(controlId, viewId){
 		var prefix = this.config.getAppDomId() + '---';
@@ -1244,6 +1390,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Returns the Control with the given controlId. Depending if a viewId is specified, the controlId must be global or local.
+	* 
+	* @param controlId {string} The ID of the control.
+	* @param viewId {string} The ID of the View.
+	* @returns {sap.ui.core.Control} The control reference.
 	*/
 	AppBaseProto.getControl = function(controlId, viewId){
 		return sap.ui.getCore().byId(this.config.createControlId(controlId, viewId));
@@ -1251,7 +1401,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	 * Returns the Root Component.
-	 * @Public
+	 * 
+	 * @returns {object} The root component.
 	 */
 	AppBaseProto.getRootComponent = function(){
 		return this._rootComponent;
@@ -1259,7 +1410,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 	/**
 	 * Sets the Root Component.
-	 * @Public
+	 * 
+	 * @param rootComponent {object} The root component to set.
 	 */
 	AppBaseProto.setRootComponent = function(rootComponent){
 		this._rootComponent = rootComponent;
@@ -1267,6 +1419,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 	/**
 	 * Creates the Root Control asynchronously.
+	 * 
+	 * @param callback {function} The callback function.
 	 */
 	AppBaseProto.createRootControl = function(callback){
 		if(this._rootControl){
@@ -1292,7 +1446,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 	/**
 	 * Returns the Root Control.
-	 * @Public
+	 * 
+	 * @returns {sap.ui.core.Control} The root control.
 	 */
 	AppBaseProto.getRootControl = function(){
 		return this._rootControl;
@@ -1303,19 +1458,30 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* --------------------- Object ---------------------
 	* --------------------------------------------------
 	*/
-
+	
+	/**
+	 * Whether this app has a certain nature.
+	 * 
+	 * @param nature {string} The ID of the nature.
+	 * @returns {boolean} Whether the app has the nature.
+	 */
 	AppBaseProto.hasNature = function(nature){
 		return -1 !== jQuery.inArray(nature, this.config.data.app.nature);
 	};
 
 	/**
-	* Returns the ID of the App
+	* Returns the ID of the App.
+	* 
+	* @returns {string} The app ID.
 	*/
 	AppBaseProto.getId = function(){
 		return this.config.data.app.id;
 	};
 	
 	/**
+	 * Returns the JQuery reference to the app root element.
+	 * 
+	 * @returns {jQuery} The jQuery reference to the app's root element.
 	 * @deprecated Will be removed!
 	 */
 	AppBaseProto.$ = function(){
@@ -1323,16 +1489,19 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	* Get the id of the app defined in the config
-	* @public
+	* Get the URL of the app defined in the config
 	* @deprecated
+	* TODO delete
 	*/
 	AppBaseProto.getUrl = function(){
 		return this.config.data.app.url;
 	};
 
 	/**
-	* Returns the Dom ID of the App
+	* Returns the Dom ID of the App.
+	* 
+	* @param subElement {string} Name of the sub element.
+	* @returns {string} The dom ID.
 	*/
 	AppBaseProto.getDomId = function(subElement){
 		jQuery.sap.log.warning("ui5strap.App.prototype.getDomId is deprecated! Use ui5strap.AppConfig.prototype.getAppDomId instead!");
@@ -1340,7 +1509,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	 * @Public
+	 * Updates the app container.
 	 */
 	AppBaseProto.updateContainer = function(){
 		if(this.domRef){
@@ -1404,6 +1573,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 	/**
 	 * Appends the App to the DOM
+	 * 
+	 * @param containerEl {HTMLElement} The container dom element.
 	 */
 	AppBaseProto.attach = function(containerEl){
 		if(!this.isAttached){
@@ -1416,8 +1587,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	* @Override
-	* @Public
+	 * Returns the string representation of this app.
+	* @override
 	*/
 	AppBaseProto.toString = function(){
 		return '[' + this.getId() + ']';
@@ -1425,7 +1596,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	* Destroys the App and all of its components
-	* @Override
+	* @override
 	*/
 	AppBaseProto.destroy = function(){
 		this.log.debug("Destroying app...");
@@ -1456,8 +1627,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	 * Creates an action event handler for the given event.
-	 * @Private
-	 * @Static
+	 * 
+	 * @param controllerImpl {object} The controller implementation.
+	 * @param eventName {string} The event name.
+	 * 
+	 * @private
+	 * @static
 	 */
 	var _createActionEventHandler = function(controllerImpl, eventName){
 		var eventFunctionName = 'on' + jQuery.sap.charToUpperCase(eventName, 0),
@@ -1492,8 +1667,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 	/**
 	 * Adds action functionality to the controller.
-	* @Static
-	* @Public
+	 * 
+	* @param controllerImpl {object} The controller implementation.
+	* @static
 	*/
 	AppBase.blessController = function(controllerImpl){
 		

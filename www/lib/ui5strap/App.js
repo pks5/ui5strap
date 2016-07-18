@@ -1,4 +1,4 @@
-/*
+/*!
  * 
  * UI5Strap
  *
@@ -27,7 +27,25 @@
 
 sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui/core/mvc/HTMLView", "sap/ui/core/mvc/XMLView", "sap/ui/core/CustomData", "sap/ui/model/resource/ResourceModel", "sap/ui/model/json/JSONModel"], 
 				function(ulib, AppBase, AppConfig, AppComponent, HTMLView, XMLView, CustomData, ResourceModel, JSONModel){
-
+	
+	/**
+	 * Constructor for a new App instance.
+	 * 
+	 * @param config {ui5strap.AppConfig} App configuration.
+	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
+	 * 
+	 * @class
+	 * Bla
+	 * @extends ui5strap.AppBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.App
+	 * 
+	 */
 	var App = AppBase.extend('ui5strap.App', {
 		"constructor" : function(config, viewer){
 			AppBase.call(this, config, viewer);
@@ -55,9 +73,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	*/
 
 	/**
-	* Preload resources e.g. images and json files
-	* @Private
-	* @Static
+	* Preloads views that can be cached.
+	* 
+	* @param _this {ui5strap.App} The reference to the app instance.
+	* @param callback {function} The callback function.
+	* @private
 	*/
 	var _preloadViews = function(_this, callback){
 		var views = _this.config.data.viewsById,
@@ -75,7 +95,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	};
 
 	/**
-	 * @Public
+	 * Preloads the required modules for this app.
+	 * 
+	 * @param callback {function} The callback function.
+	 * @override
 	 */
 	AppProto.preload = function(callback){
 		var _this = this;
@@ -90,7 +113,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 
 	/**
 	* Triggered when a view of the app is shown in the global overlay
-	* @Public
+	*
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppProto.onShowInOverlay = function(oEvent){ 
 		this.fireEventAction({ 
@@ -103,7 +127,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 
 	/**
 	* Triggered when a view of the app is hidden from the global overlay
-	* @Public
+	* 
+	* @param oEvent {sap.ui.base.Event} The event object.
 	*/
 	AppProto.onHideInOverlay = function(oEvent){
 		this.fireEventAction({ 
@@ -114,7 +139,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	};
 	
 	/**
-	 * @Override
+	 * Triggered when the browser location hash changes.
+	 *
+	 * @param oEvent {sap.ui.base.Event} The event object.
+	 * @override
 	 */
 	AppProto.onHashChange = function(oEvent){
 		AppBase.prototype.onHashChange.call(this, oEvent);
@@ -126,7 +154,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		}
 		
 		if(this._suppressHashChange){
-			jQuery.sap.log.info("Hashchange suppressed.");
+			jQuery.sap.log.debug("Hashchange suppressed.");
 		}
 		else{
 			
@@ -149,8 +177,6 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 						for(var j = 0; j < routeInfo.pathParameters.length; j++){
 							ulib.Utils.addToObject(viewConfig.parameters, routeInfo.pathParameters[j], matches[1 + j]);
 						}
-						
-						console.log(viewConfig.parameters);
 					}
 					
 					this.navigateTo(this.getRootControl(), viewConfig, null, false, true);
@@ -172,7 +198,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 
 	/**
 	* Include the style that is neccessary for this app
-	* @Public
+	*
+	* @param callback {function} The callback function.
 	*/
 	AppProto.includeStyle = function(callback){
 		var _this = this,
@@ -229,7 +256,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	};
 
 	/**
-	 * @Public
+	 * Removes the stylesheets added by this app.
 	 */
 	AppProto.removeStyle = function(){
 		for(var cssKey in this._runtimeData.css){
@@ -241,7 +268,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 
 	/**
 	* Sets the theme of the app
-	* @Public
+	* @param themeName {string} The name of the new theme.
 	*/
 	AppProto.setTheme = function(themeName){
 		this._runtimeData.theme = themeName;
@@ -268,8 +295,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	*/
 	
 	/**
-	 * @Public
-	 * @Override
+	 * Shows the app. Should only be triggered by the Viewer.
+	 * 
+	 * @param callback {function} The callback function.
+	 * @override
 	 */
 	AppProto.show = function(callback){
 		var _this = this;
@@ -306,6 +335,15 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		});
 	};
 	
+	/**
+	 * Initializes a navigator.
+	 * 
+	 * @param navigator {ui5strap.INavigator} The navigator instance.
+	 * @param intitalViews {array} An array of view definitions.
+	 * @param excludeTarget {string} If specified, this target will be skipped.
+	 * @param callback {function} The callback function.
+	 * @protected
+	 */
 	AppProto._initNavigator = function(navigator, initialViews, excludeTarget, callback){
 		var _this = this,
 			callI = 0;
@@ -356,7 +394,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	};
 	
 	/**
-	 * @Protected
+	 * Shows the initial content of this root component.
+	 * 
+	 * @param callback {function} The callback function.
+	 * @protected
 	 */
 	AppProto._showInitialContent = function(callback){
 		jQuery.sap.log.debug("Showing initial content...");
@@ -374,7 +415,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	};
 	
 	/**
-	 * @Protected
+	 * Builds a root control for showing single views (only for dev).
+	 * 
+	 * @param callback {function} The callback function.
+	 * @protected
 	 */
 	AppProto._buildSingleViewRootControl = function(callback){
 		sap.ui.require(["ui5strap/NavContainer"], function(NavContainerConstructor){
@@ -382,6 +426,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		});
 	};
 	
+	/**
+	 * Creates the root control. Should be triggered by the Viewer instance.
+	 * 
+	 * @param callback {function} The callback function.
+	 */
 	AppProto.createRootControl = function(callback){
 		var _this = this;
 		if(this.config.data.app.mode === "Devel"){
@@ -403,7 +452,10 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	};
 	
 	/**
-	 * @Protected
+	 * Creates the root control for this root component.
+	 * 
+	 * @param callback {function} The callback function.
+	 * @protected
 	 */
 	AppProto._createRootControl = function(callback){
 		var _this = this,
@@ -442,17 +494,41 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	};
 	
 	/**
-	 * Navigate
+	 * Navigate to a certain view via root component.
+	 * 
+	 * @param navControl {ui5strap.INavigator} The navigator instance.
+	 * @param viewConfig {object} The view definition.
+	 * @param callback {function} The callback function.
+	 * @param suppressResolve {boolean} Whether the view definition should not be resolved via config.
+	 * @param suppressHashChange {boolean} Whether the path should not be appended to location hash.
 	 */
 	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange) {
 		this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange);
 	};
 	
-	AppProto.setHashPath = function(path, parameters, suppressHashChange){
-		this._suppressHashChange = true;
+	/**
+	 * Sets a routing path to location hash.
+	 * 
+	 * @param path {string} The routing path.
+	 * @param parameters {array} The path parameters.
+	 * @param suppressHashChange {boolean} Whether triggering the onHashChange event should be suppressed.
+	 * @protected
+	 */
+	AppProto._setHashPath = function(path, parameters, suppressHashChange){
+		this._suppressHashChange = suppressHashChange;
 		document.location.hash = "!" + ulib.Utils.parsePath(path, parameters);
 	};
 	
+	/**
+	 * Finally changes to a page in the given navigator.
+	 * 
+	 * @param navControl {ui5strap.INavigator} The navigator instance.
+	 * @param oPage {sap.ui.core.Control} The control representing the page.
+	 * @param viewConfigResolved {object} The resolved view definition.
+	 * @param excludeSubNavTarget {string} If specified, this target is skipped when initializing a sub navigation.
+	 * @param callback {function} The callback function.
+	 * @protected
+	 */
 	AppProto._changePage = function(navControl, oPage, viewConfigResolved, excludeSubNavTarget, callback){
 		var target = viewConfigResolved.target;
 		
@@ -503,7 +579,16 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	}
 	
 	/**
-	 * This function is called when a navigation request occurrs.
+	 * Implementation of the navigateTo function for this root component.
+	 * 
+	 * @param navControl {ui5strap.INavigator} The navigator instance.
+	 * @param viewConfig {object} The view definition.
+	 * @param callback {function} The callback function.
+	 * @param suppressResolve {boolean} Whether resolving the view definition should be suppressed.
+	 * @param suppressHashChange {boolean} Whether changing the hash should be suppressed.
+	 * @param excludeSubNavTarget {string} If specified, this target is skipped when loading sub navigations.
+	 * @returns {sap.ui.core.mvc.View} The view instance that has been loaded.
+	 * @protected
 	 */
 	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange, excludeSubNavTarget) {
 		jQuery.sap.log.debug("AppBaseProto.navigateTo");
@@ -588,7 +673,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			_this._changePage(navControl, oPage, viewConfig, excludeSubNavTarget, callback);
 			
 			if(viewConfig.path && !suppressHashChange){
-				_this.setHashPath(viewConfig.path, viewConfig.parameters, true);
+				_this._setHashPath(viewConfig.path, viewConfig.parameters, true);
 			}
 		});
 		
