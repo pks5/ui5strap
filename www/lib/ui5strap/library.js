@@ -1110,6 +1110,23 @@ sap.ui
 					    return obj[prop];
 					};
 					
+					ui5strap.Utils.addToObject = function(obj, prop, value){
+						var _index = prop.indexOf('.')
+					    if(_index > -1) {
+					    	var nextProp = prop.substring(0, _index),
+					    		newObject = obj[nextProp];
+					    	
+					    	if(typeof newObject === 'undefined') {
+					    		newObject = {};
+					    		obj[nextProp] = newObject; 
+						    }
+					    	
+					        return this.addToObject(newObject, prop.substr(_index + 1), value);
+					    }
+
+					    obj[prop] = value;
+					};
+					
 					/**
 					 * Parses a path and replaces all {param} occurrencies by the content in the pathParam object.
 					 */

@@ -141,6 +141,18 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					
 					var viewConfig = this.config.getViewConfig({ id : routeInfo.id });
 					
+					if(!viewConfig.parameters){
+						viewConfig.parameters = {};
+					}
+					
+					if(matches.length > 1){
+						for(var j = 0; j < routeInfo.pathParameters.length; j++){
+							ulib.Utils.addToObject(viewConfig.parameters, routeInfo.pathParameters[j], matches[1 + j]);
+						}
+						
+						console.log(viewConfig.parameters);
+					}
+					
 					this.navigateTo(this.getRootControl(), viewConfig, null, false, true);
 				}
 				else{

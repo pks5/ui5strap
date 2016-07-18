@@ -1,10 +1,20 @@
 {
-    "TASKS" : "postDetails",
+    "TASKS" : ["readPost"],
     
-    "postDetails" : {
+    "readPost" : {
+        "thenCallback" : "= then()",
+        
+        "feedManager" : "= app.getFeedManager()",
+        
+        "DO" : "= .feedManager.readPost(event.parameters.post.id, .thenCallback)",
+        
+        "THEN" : "setModel"
+    },
+    
+    "setModel" : {
         "TYPE" : "ui5strap.AMSetModel",
         "modelName" : "POST",
-        "data" : "= event.parameters.post"
+        "data" : "= action.readPost.callbackArgs.0"
     }
 
 

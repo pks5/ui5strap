@@ -669,9 +669,12 @@ sap.ui.define(['./library'], function(library){
 	};
 	
 	ActionContextProto.then = function(task){
+		var _this = this;
 		task.suppressThen();
 		
 		return function(){
+			_this.action[task.namespace].callbackArgs = arguments;
+			//console.log(arguments);
 			task.then(true);
 		}
 	};

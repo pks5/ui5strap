@@ -29,8 +29,13 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
 			onUpdate : function(oEvent){
-				var post = oEvent.getParameter("post");
-				this.getView().setModel(new ui5strap.JSONModel(post), "POST");
+				var _this = this,
+					post = oEvent.getParameter("post");
+				
+				this.getApp().getFeedManager().readPost(post.id, function(postData){
+					_this.getView().setModel(new ui5strap.JSONModel(postData), "POST");
+				})
+				
 			},
 			
 			handleNavigateBack : function(oEvent){

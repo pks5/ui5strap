@@ -5,15 +5,6 @@
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",
 		
-		"CONTROLS" : {
-			"NAVIGATOR" : {
-				"TYPE" : "ui5strap.NavContainer",
-				"SOURCE" : "View",
-				"CONTROL_ID" : "subNavCuscon",
-				"VIEW_ID" : "cuscon"
-			}
-		},
-		
 		"VIEWS" : {
 			"cusconSimple" : {
 				"id" : "cusconSimple",
