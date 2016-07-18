@@ -4,6 +4,7 @@
 	        "name" : "Ui5Strap Demo",
 	        
 	        "rootComponent" : true,
+	        "routing" : true,
 	        
 	        "logLevel" : 5,
 	        "mode" : "Devel"

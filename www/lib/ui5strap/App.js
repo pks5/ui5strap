@@ -147,47 +147,23 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto.onHashChange = function(oEvent){
 		AppBase.prototype.onHashChange.call(this, oEvent);
 		
-		var newHash = document.location.hash;
-		
-		if(!jQuery.sap.startsWith(newHash, '#!/')){
-			return;
-		}
-		
-		if(this._suppressHashChange){
-			jQuery.sap.log.debug("Hashchange suppressed.");
-		}
-		else{
+		if(this.config.data.app.routing){
+			var newHash = document.location.hash;
 			
-			for(var i = 0; i < this.config.data.routing.length; i++){
-				var routeInfo = this.config.data.routing[i],
-					path = newHash,
-					matches = path.match("#!" + routeInfo.route);
-				//console.log("testing", path, routeInfo.route);
-				if(matches && matches.length){
-					//console.log(matches);
-					console.log("Route '%s' matched with %s parameters.", routeInfo.route, matches.length-1);
-					
-					var viewConfig = this.config.getViewConfig({ id : routeInfo.id });
-					
-					if(!viewConfig.parameters){
-						viewConfig.parameters = {};
-					}
-					
-					if(matches.length > 1){
-						for(var j = 0; j < routeInfo.pathParameters.length; j++){
-							ulib.Utils.addToObject(viewConfig.parameters, routeInfo.pathParameters[j], matches[1 + j]);
-						}
-					}
-					
-					this.navigateTo(this.getRootControl(), viewConfig, null, false, true);
-				}
-				else{
-					//console.log("Route '%s' NOT matched with %s parameters.", routeInfo.route, matches.length-1);
-				}
+			if(!jQuery.sap.startsWith(newHash, '#!/')){
+				return;
 			}
+			
+			if(this._suppressHashChange){
+				jQuery.sap.log.info("Hashchange suppressed.");
+			}
+			else{
+				
+				this.navigateByPath(newHash.substring(2), {}, false);
+			}
+			
+			this._suppressHashChange = false;
 		}
-		
-		this._suppressHashChange = false;
 	};
 	
 	/*
@@ -344,7 +320,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param callback {function} The callback function.
 	 * @protected
 	 */
-	AppProto._initNavigator = function(navigator, initialViews, excludeTarget, callback){
+	AppProto._initNavigator = function(navigator, initialViews, suppressTransitions, excludeTarget, callback){
 		var _this = this,
 			callI = 0;
 	
@@ -387,9 +363,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				continue;
 			}
 			
-			initialView.transition = 'transition-none';
+			//initialView.transition = 'transition-none';
 			
-			this.navigateTo(navigator, initialView, complete, true, true);
+			this.navigateTo(navigator, initialView, complete, true, true, suppressTransitions);
 		}
 	};
 	
@@ -404,10 +380,15 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		
 		var _this = this;
 		
-		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, null, function(){
-			var newHash = document.location.hash;
-			if(jQuery.sap.startsWith(newHash, '#!/')){
-				_this.onHashChange(new sap.ui.base.Event("ui5strap.app.hashChange", null, {}));
+		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, true, null, function(){
+			if(_this.config.data.app.routing){
+				var newHash = document.location.hash;
+				if(!newHash){
+					_this._setHashPath("/", {}, true);
+				}
+				else if(jQuery.sap.startsWith(newHash, '#!/')){
+					_this.navigateByPath(newHash.substring(2), {}, true);
+				}
 			}
 			
 			callback && callback();
@@ -502,9 +483,55 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param suppressResolve {boolean} Whether the view definition should not be resolved via config.
 	 * @param suppressHashChange {boolean} Whether the path should not be appended to location hash.
 	 */
-	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange) {
-		this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange);
+	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions) {
+		this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions);
 	};
+	
+	/**
+	 * Navigates by a given path.
+	 * 
+	 * @param path {string} the path to navigate to.
+	 * @param suppressTransitions {boolean} Whether to suppress transitions.
+	 */
+	AppProto.navigateByPath = function(path, viewParameters, suppressTransitions){
+		for(var i = 0; i < this.config.data.routing.length; i++){
+			var routeInfo = this.config.data.routing[i],
+				matches = path.match(routeInfo.route);
+			//console.log("testing", path, routeInfo.route);
+			if(matches && matches.length){
+				//console.log(matches);
+				console.log("Route '%s' matched with %s parameters.", routeInfo.route, matches.length-1);
+				
+				var viewConfig = this.config.getViewConfig({ id : routeInfo.id });
+				
+				if(!viewParameters){
+					viewParameters = {};
+				}
+				
+				if(!viewConfig.parameters){
+					viewConfig.parameters = viewParameters;
+				}
+				else{
+					jQuery.extend(true, viewConfig.parameters, viewParameters);
+				}
+				
+				if(matches.length > 1){
+					for(var j = 0; j < routeInfo.pathParameters.length; j++){
+						ulib.Utils.addToObject(viewConfig.parameters, routeInfo.pathParameters[j], matches[1 + j]);
+					}
+				}
+				
+				if(suppressTransitions){
+					viewConfig.transition = "transition-none";
+				}
+				
+				this.navigateTo(this.getRootControl(), viewConfig, null, false, true, suppressTransitions);
+			}
+			else{
+				//console.log("Route '%s' NOT matched with %s parameters.", routeInfo.route, matches.length-1);
+			}
+		}
+	}
 	
 	/**
 	 * Sets a routing path to location hash.
@@ -529,7 +556,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param callback {function} The callback function.
 	 * @protected
 	 */
-	AppProto._changePage = function(navControl, oPage, viewConfigResolved, excludeSubNavTarget, callback){
+	AppProto._changePage = function(navControl, oPage, viewConfigResolved, suppressTransitions, excludeSubNavTarget, callback){
 		var target = viewConfigResolved.target;
 		
 		//Trigger onUpdate events
@@ -552,7 +579,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			}
 			
 			ci = 2;
-			this._initNavigator(subNav, subNavConfig.initialViews, excludeSubNavTarget, ca);
+			this._initNavigator(subNav, subNavConfig.initialViews, true, excludeSubNavTarget, ca);
 		}
 		
 		//Set target busy
@@ -562,7 +589,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		navControl.toPage(
 			oPage, 
 			target, 
-			viewConfigResolved.transition,
+			suppressTransitions ? "transition-none" : viewConfigResolved.transition,
 			function toPage_complete(){
 				
 				//TODO why the timeout here?
@@ -590,7 +617,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @returns {sap.ui.core.mvc.View} The view instance that has been loaded.
 	 * @protected
 	 */
-	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange, excludeSubNavTarget) {
+	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions, excludeSubNavTarget) {
 		jQuery.sap.log.debug("AppBaseProto.navigateTo");
 		
 		if(!suppressResolve){
@@ -614,7 +641,6 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			
 			var parentNavControl = _this.getControl(parentViewConfig.subNavigation.id, viewConfig.parentId);
 			
-			
 			if(navControl !== parentNavControl){
 				//Assure that parent view is loaded
 				return this._navigateTo(
@@ -631,32 +657,19 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 									callback, 
 									suppressResolve, 
 									suppressHashChange,
+									suppressTransitions,
 									excludeSubNavTarget
 							)
 						}, 
 						suppressResolve, 
 						true,
+						suppressTransitions,
 						viewConfig.target
 				);
 			
 			}
 			
-			//var parentView = this.createView(parentViewConfig);
-			
-			
-			
-			
-			/*
-			if(!parentNavControl || 
-				(parentNavControl.getTarget(parentViewConfig.target).getViewName() !== parentViewConfig.viewName)){
-				throw new Error("Cannot navigate: nav control not visible!");
-			}
-			*/
-			
-			
 			navControl = parentNavControl;
-			
-			
 		}
 		
 		if(navControl.isTargetBusy(viewConfig.target)){
@@ -670,12 +683,13 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		
 		oPage.loaded().then(function(){
 			
-			_this._changePage(navControl, oPage, viewConfig, excludeSubNavTarget, callback);
+			_this._changePage(navControl, oPage, viewConfig, suppressTransitions, excludeSubNavTarget, callback);
 			
-			if(viewConfig.path && !suppressHashChange){
-				_this._setHashPath(viewConfig.path, viewConfig.parameters, true);
-			}
 		});
+		
+		if(this.config.data.app.routing && viewConfig.path && !suppressHashChange){
+			this._setHashPath(viewConfig.path, viewConfig.parameters, true);
+		}
 		
 		return oPage;
 	};

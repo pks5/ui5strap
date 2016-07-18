@@ -21,8 +21,8 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Componen
 		return this.getApp()._showInitialContent(callback);
 	};
 	
-	RootComponentProto._navigateTo = function(navControl, viewConfig, callback, suppressResolve, suppressHashChange){
-		return this.getApp()._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange);
+	RootComponentProto._navigateTo = function(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions){
+		return this.getApp()._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions);
 	};
 		
 	return RootComponent;
