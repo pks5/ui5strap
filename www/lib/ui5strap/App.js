@@ -579,7 +579,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			}
 			
 			ci = 2;
-			this._initNavigator(subNav, subNavConfig.initialViews, true, excludeSubNavTarget, ca);
+			this._initNavigator(subNav, subNavConfig.initialViews, suppressTransitions, excludeSubNavTarget, ca);
 		}
 		
 		//Set target busy
@@ -663,7 +663,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 						}, 
 						true, //Suppress resolve 
 						true, //Suppress HashChange
-						true, //Suppress Transitions
+						suppressTransitions, //Suppress Transitions
 						viewConfig.target
 				);
 			
