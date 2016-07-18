@@ -661,9 +661,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 									excludeSubNavTarget
 							)
 						}, 
-						suppressResolve, 
-						true,
-						suppressTransitions,
+						true, //Suppress resolve 
+						true, //Suppress HashChange
+						true, //Suppress Transitions
 						viewConfig.target
 				);
 			
