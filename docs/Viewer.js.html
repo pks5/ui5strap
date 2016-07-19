@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Viewer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Viewer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.Viewer
+ * 
+ * @author Jan Philipp Knöller &lt;info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013 Jan Philipp Knöller &lt;info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition'], 
+				function(uLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition){
+	
+	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", {
+		"constructor" : function(options){
+			ViewerBase.call(this, options);
+
+			this._loadedLibraries = {};
+			this._loadingApp = null;
+
+			this._dom = null;
+		}
+	}),
+	ViewerMultiProto = ViewerMulti.prototype,
+	domAttachTimeout = 50;
+
+	//Private properties that are linked to the scope of the anonymous self executing function around this module
+	//This prevents other apps from accessing data easily
+	//@TODO these properties must be NON-STATIC! Currently they are STATIC.
+	//@Static
+	var _m_currentSapplication = null;
+	var _m_loadedSapplicationsById = {};
+	
+
+
+	/**
+	 * Initializes the ViewerMulti instance
+	 * @param viewerConfigUrl Url to viewer configuration file
+	 * @Public
+	 */
+	ViewerMultiProto.init = function(){
+		ViewerBase.prototype.init.call(this);
+		
+		//Init methods
+		//TOOO Move to Viewer base
+		this._initDom();
+		this._initEvents();
+	};
+	
+	var _waitForLibraryCss = function(_this, callback){
+		var overlayNavContainerElm = _this.overlayControl.getDomRef(),
+			cssAvailable = false;
+		
+		if(overlayNavContainerElm){
+			var navContainerHeight = ui5strap.Utils.getComputedStyle(overlayNavContainerElm, 'height');
+			cssAvailable = "auto" !== navContainerHeight || _this._waitCssTime >= ui5strap.options.waitCssTimeout;
+		}
+		
+		if (cssAvailable) {
+			window.clearTimeout(_this._waitCssTimer);
+			_this._waitCssTimer = null;
+			
+			callback &amp;&amp; callback();
+		} else {
+			jQuery.sap.log
+					.debug("Library CSS is not available yet...");
+
+			_this._waitCssTimer = window.setTimeout(
+					function() {
+						_waitForLibraryCss(_this, callback);
+					}, ui5strap.options.waitCssInterval);
+			_this._waitCssTime += ui5strap.options.waitCssInterval;
+		}
+	};
+	
+	
+	/**
+	* Executes the the default app defined by configuration.
+	* If the GET parameter "app" is specified with an url to an app config file, that app is loaded.
+	* @Public
+	*/
+	ViewerMultiProto.start = function(callback, loadCallback, parameters){
+		jQuery.sap.log.debug("ViewerProto.start");
+		
+		var _this = this;
+		this.init();
+
+		var appUrl = AppConfig.processOption("app", this.options.app);
+
+		if(null === appUrl){
+			throw new Error('Cannot start viewer: no app url specified.');
+		}
+		
+		_this._waitCssTime = 0;
+		_waitForLibraryCss(this, function(){
+			_this.executeApp(
+					{
+						"internal" : true,
+						"type" : "UI5STRAP",
+						"url" : appUrl,
+						"parameters" : parameters
+					}, 
+					false, 
+					callback, 
+					loadCallback
+				);	
+		});
+		
+	};
+
+	/*
+	* --------
+	*
+	* App Flow
+	*
+	* --------
+	*/
+
+	/**
+	* Get the current (in foreground) running app
+	* TODO make static?
+	* @Public
+	*/
+	ViewerMultiProto.getApp = function(appId){
+		return appId ? _m_loadedSapplicationsById[appId] : _m_currentSapplication;
+	};
+
+	/**
+	 * @Public
+	 */
+	ViewerMultiProto.getLoadedApps = function(){
+		return _m_loadedSapplicationsById;
+	};
+
+	/*
+	 * EXECUTE APP
+	 * This is the starting point when opening an app.
+	 */
+	
+	/**
+	* Load, start and show an App. The appUrl must point to a valid app.json file.
+	* @Public
+	*/
+	ViewerMultiProto.executeApp = function(appDefinition, doNotShow, callback, loadCallback){
+		jQuery.sap.log.debug("ViewerProto.executeApp");
+		
+		var _this = this,
+			appType = appDefinition.type || "HTML5",
+		
+			/*
+			 * 
+			 */
+			_loadAppComplete = function loadAppComplete(appInstance){
+				loadCallback &amp;&amp; loadCallback();
+				
+			    var startedCallback = function(){
+					if(!doNotShow){
+						_this.showApp(appInstance.getId(), null, callback);
+					}
+					else{
+						callback &amp;&amp; callback(appInstance);
+					}
+				};
+			
+				if(!appInstance.isRunning){
+					_this.startApp(appInstance.getId(), startedCallback);
+				}
+				else{
+					startedCallback();
+				}
+			};
+		
+		//Process App Type
+		//Valid App Types: "HTML5" and "UI5STRAP"
+		if("HTML5" === appType){
+			//HTML5 App: ordinary webapp that is executed within a Sandbox.
+			
+			if(
+				!appDefinition.id 
+				|| !appDefinition.url
+			){
+				throw new Error("Cannot execute HTML5 App: at least one of required attributes missing in definition.");
+			}
+			
+			//Now load the App
+			_this.loadApp(
+				{
+			        "app" : {
+			        	"name" : appDefinition.name,
+			            
+			        	"id" : appDefinition.id,
+			            "location" : appDefinition["location"] || uLib.Utils.getFileLocation(appDefinition.url),
+			            
+			            "type" : "ui5strap.AppSandbox",
+			            
+			            "appURL" : appDefinition.url,
+			            "propagateMessages" : true
+			        },
+		            "icons" : {
+		            	"default" : appDefinition.icon
+		            }
+				}, 
+				appDefinition.parameters,
+				_loadAppComplete
+			);
+		}
+		else if("UI5STRAP" === appType){
+			//Ui5Strap App
+			
+			if(appDefinition.internal){
+				//Internal Ui5Strap App: Executed within same context like current app.
+				
+				if(appDefinition.id){
+					//An ID is provided, so we can check whether app has been loaded already.
+					if(_m_loadedSapplicationsById[appDefinition.id]){
+						_loadAppComplete(_m_loadedSapplicationsById[appDefinition.id]);
+						return;
+					}
+				}
+				
+				//Config URL provided, so load config data from the app.json file.
+				jQuery.ajax({
+					"dataType" : "json",
+					"url" : appDefinition.url,
+					"success" : function(oConfigData){
+						oConfigData.app["location"] = appDefinition["location"] || uLib.Utils.getFileLocation(appDefinition.url);
+						
+						_this.loadApp(
+							oConfigData, 
+							appDefinition.parameters,
+							_loadAppComplete
+						);
+					},
+					"error" : function(err){
+						throw new Error("Could not load app configuration from '" + appDefinition.url + "'!");
+					}
+				});
+			}
+			else{
+				//External Ui5Strap App: Executed within a Sandbox.
+				
+				if(
+					!appDefinition.id 
+					|| (!appDefinition.launcher &amp;&amp; !appDefinition.url)
+				){
+					throw new Error("Cannot execute external UI5STRAP App: at least one of required attributes missing in definition.");
+				}
+				
+				//The Launcher is the HTML file which is executing the App.
+				var appURL = appDefinition.launcher || "index.html";
+				
+				if(appDefinition.url){
+					appURL += "?app=" + encodeURIComponent(appDefinition.url);
+				}
+				
+				//Now load the App
+				_this.loadApp(
+					{
+				        "app" : {
+				            "name" : appDefinition.name,
+				            
+				            "id" : appDefinition.id,
+				            "location" : appDefinition["location"],
+				            
+				            "type" : "ui5strap.AppSandbox",
+				            
+				            "appURL" : appURL,
+				            "propagateMessages" : true
+				        },
+			            "icons" : {
+			            	"default" : appDefinition.icon
+			            }
+					}, 
+					appDefinition.parameters,
+					_loadAppComplete
+				);
+			}
+		}
+		else{
+			throw new Error("Cannot execute App: Invalid Type: '" + appType + "'");
+		}
+	};
+	
+	/*
+	 * LOAD APP
+	 * Called by EXECUTE APP.
+	 */
+	
+	/**
+	* Loads an App by a given appUrl. The appUrl must point to a valid app.json file.
+	* @Public
+	*/
+	ViewerMultiProto.loadApp = function(oConfigData, parameters, callback){
+		jQuery.sap.log.debug("ViewerProto.loadApp");
+		
+		var _this = this,
+			configAppSection = oConfigData.app;
+		
+		if(!configAppSection){
+			throw new Error("Invalid app configuration: attribute 'app' is missing.");
+		}
+		
+		configAppSection.logLevel &amp;&amp; jQuery.sap.log.setLevel(configAppSection.logLevel);
+		
+		if(_m_loadedSapplicationsById[configAppSection.id]){
+			return callback(_m_loadedSapplicationsById[configAppSection.id]);
+		}
+		
+		var appConfig = new AppConfig(this.options, parameters);
+		
+		appConfig.setData(oConfigData);
+		
+		//Create App Instance
+		_this.createApp(appConfig, function createAppComplete(appInstance){
+			appInstance.init();
+
+			_m_loadedSapplicationsById[appInstance.getId()] = appInstance;
+
+			appInstance.load(function loadAppComplete(){
+				callback &amp;&amp; callback.call(_this, appInstance);
+			});
+		});
+	};
+
+	/*
+	 * CREATE APP
+	 * Called by LOAD APP if the app has not been loaded yet.
+	 */
+	
+	/**
+	* Creates a app instance
+	* @param appConfig SappConfig instance
+	* @Public
+	*/
+	ViewerMultiProto.createApp = function(appConfig, callback){
+		jQuery.sap.log.debug("ViewerProto.createApp");
+		
+		var oConfigData = appConfig.data,
+			libs = oConfigData.libraries,
+			libCount = libs.length,
+			configAppSection = oConfigData.app,
+			_this = this,
+			i;
+
+		//Register Library Module Pathes
+		for(i = 0; i &lt; libCount; i++){
+			var dependencyLib = libs[i];
+			jQuery.sap.registerModulePath(dependencyLib["package"], appConfig.resolvePath(dependencyLib["location"], true));
+		} 
+		
+		//Register App Module Path if location is provided
+		configAppSection["location"] &amp;&amp; jQuery.sap.registerModulePath(configAppSection["package"], configAppSection["location"]);
+
+		sap.ui.require([configAppSection["type"].replace(/\./g, "/")], function(AppConstructor){
+			callback &amp;&amp; callback(new AppConstructor(appConfig, _this));
+		});
+	};
+	
+	/*
+	 * START APP
+	 * Called by EXECUTE APP if app has not been started yet.
+	 */
+
+	/**
+	* Starts a previously loaded app.
+	* @Public
+	*/
+	ViewerMultiProto.startApp = function(sappId, callback){
+		jQuery.sap.log.debug("ViewerProto.startApp");
+		
+		var appInstance = this.getApp(sappId);
+		
+		if(null === appInstance){
+			throw new Error('Cannot start app "' + sappId + '" - app not loaded.');
+		}
+
+		if(appInstance.isRunning){
+			return appInstance;
+		}
+
+		appInstance.start(callback);
+		
+		return appInstance;
+	};
+
+	/*
+	 * START APP
+	 * Called by EXECUTE APP if app has not been shown yet.
+	 */
+
+	/**
+	* Shows a previously started app, means bringing the app to foreground.
+	* @Public
+	*/
+	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
+		jQuery.sap.log.debug("ViewerProto.showApp");
+		
+		if(this._loadingApp){
+			jQuery.sap.log.warning("App '" + this._loadingApp + "' is currently loading."); 
+			
+			return;
+		}
+
+		var appInstance = this.getApp(sappId),
+			_this = this;
+
+		if(!appInstance){
+			throw new Error('Cannot show app "' + sappId + '" - app not loaded.');
+		}
+		
+		//Check if App is running
+		if(!appInstance.isRunning){
+			throw new Error('Cannot show a app which is not running.');
+		}
+
+		//If App has no Root Control, or is already visible, return immeadiately
+		if(!appInstance.getRootControl() || appInstance.isVisible){
+			callback &amp;&amp; callback(appInstance);
+			
+			return;
+		}
+		
+		var configAppSection = appInstance.config.data.app;
+			
+		//Set Browser Title
+		//TODO Is this good here?
+		document.title = configAppSection.name;
+		
+		//Store Previous App
+		var previousSapplication = this.getApp();
+		
+		//Set the app as current foreground app				
+		_m_currentSapplication = appInstance;
+		this._loadingApp = appInstance;	
+
+		//Create or Update App Container
+		appInstance.updateContainer();
+
+		var $currentRoot = previousSapplication ? previousSapplication.$() : jQuery('#ui5strap-app-initial'),
+			
+			//Remove current app dom after transition
+			currentRootCallbackI = 0,
+			currentRootCallback = function(){
+				currentRootCallbackI++
+				if(currentRootCallbackI &lt; 2){
+					return;
+				}
+	
+				if(previousSapplication){
+					//Previous App onHidden
+					previousSapplication.hidden(function(){
+						_this.removeStyle(previousSapplication);
+					});
+				}
+				else{
+					//Remove Initial View
+					$currentRoot.remove();
+				}
+			},
+	
+			//Introduce new app dom
+			preparedRootCallback = function(){
+				currentRootCallback();
+				
+				//Current App onShown
+				appInstance.shown(function(){
+					//Show App Completed, trigger the Callback
+					callback &amp;&amp; callback.call(appInstance);
+				});
+			};
+
+		//Load app css
+		appInstance.includeStyle(function includeStyle_complete(){
+			
+			jQuery.sap.log.debug("Attaching root to DOM...");
+			
+			//Append App to DOM is not yet
+			appInstance.attach(_this._dom.$root[0]);
+			
+			//Create new Transition
+			var transition = new ResponsiveTransition(
+					{
+					"transitionAll" : transitionName || configAppSection.transition, 
+					"$current" : $currentRoot, 
+					"$next" : appInstance.$(), 
+					id : appInstance.getId()
+					}
+			);
+			
+			//&lt;DOM_ATTACH_TIMEOUT>
+			window.setTimeout(function setTimeout_complete(){
+				
+				//Previous App onHide
+				previousSapplication &amp;&amp; previousSapplication.hide();
+				
+				//Current App onShow
+				appInstance.show(function(){
+					
+					//RAF start
+					ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+						
+						//Prepare Transition
+						transition.prepare();
+						
+						//RAF
+						ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+							
+							//Execure Transition
+							transition.execute(currentRootCallback, preparedRootCallback);
+							
+							//Set viewer to available
+							_this._loadingApp = null;
+							
+							
+						});
+
+					});
+					//RAF end
+				});
+				
+			}, domAttachTimeout);
+			//&lt;/DOM_ATTACH_TIMEOUT>
+
+		});	
+	
+	};
+	
+	/*
+	 * STOP APP
+	 */
+	
+	/**
+	* Stops a previously started app.
+	* @Public
+	*/
+	ViewerMultiProto.stopApp = function(sappId){
+		jQuery.sap.log.debug("ViewerProto.stopApp");
+		
+		var appInstance = this.getApp(sappId);
+
+		if(null === appInstance){
+			throw new Error('Cannot stop app "' + sappId + '" - app not loaded.');
+		}
+
+		if ( this.getApp() === appInstance ) {
+			throw new Error('Cannot stop app "' + sappId + '" - app is currently visible.');
+		}
+		
+		appInstance.stop();
+		
+		return appInstance;
+	};
+	
+	/*
+	 * UNLOAD APP
+	 * Destroys everything that has been previously loaded by the app.
+	 */
+	
+	/**
+	* Unloads an app
+	* @Public
+	*/
+	ViewerMultiProto.unloadApp = function(sappId){
+		jQuery.sap.log.debug("ViewerProto.unloadApp");
+		
+		var appInstance = this.getApp(sappId);
+
+		if(null === appInstance){
+			throw new Error('Cannot unload app "' + sappId + '" - app not loaded.');
+		}
+
+		if(appInstance.isRunning){
+			throw new Error('Cannot stop app "' + sappId + '" - app still running.');
+		}
+		
+		appInstance.unload();
+		
+		delete _m_loadedSapplicationsById[sappId];
+
+		return appInstance;
+	};
+
+	/**
+	* Removes app specific style from the head.
+	* @Public
+	*/
+	ViewerMultiProto.removeStyle = function(appInstance){
+		if(!appInstance.isVisible &amp;&amp; 
+			!appInstance.isVisibleInOverlay &amp;&amp; 
+			!appInstance.isVisibleEmbedded){
+			appInstance.removeStyle();
+		}
+	};
+
+	/*
+	* ------------
+	*
+	* App Messages
+	*
+	* ------------
+	*/
+	
+	/**
+	 * Sends a message to one or multiple Apps that run within this Viewer instance
+	 * @Public
+	 */
+	ViewerMultiProto.sendMessage = function(appMessage){
+		if(!appMessage 
+			|| !appMessage.receiver 
+			|| !appMessage.sender
+			|| !appMessage.message){
+			//jQuery.sap.log.error("Cannot send message: parameters are missing.");
+			return;
+		}
+		
+		var receivers = appMessage.receiver;
+		if(typeof receivers === 'string'){
+			receivers = [receivers];
+		}
+		
+		for(var i = 0; i &lt; receivers.length; i++){
+			var receiverAppId = receivers[i];
+			var app = this.getApp(receiverAppId);
+
+			if(app){
+				app.onMessage(new sap.ui.base.Event("ui5strap.app.message", null, appMessage));
+			}
+			else{
+				jQuery.sap.log.error("Cannot send message to app " + receiverAppId);
+			}
+			
+	    }
+
+	    if(appMessage.export &amp;&amp; self !== top){
+	    	//Send the Message as Html Frame Message to the Frame parent.
+	    	//TODO more precise origin control
+	    	delete appMessage.export;
+	    	parent.postMessage(appMessage, '*');
+	    }
+	};
+
+	/*
+	* -------------
+	*
+	* Global Loader
+	*
+	* -------------
+	*/
+
+	/**
+	* Shows the overlay layer
+	* @Public
+	*/
+	ViewerMultiProto.showLoader = function(callback){
+		ui5strap.Layer.setVisible('ui5strap-loader', true, callback);
+	};
+
+	/**
+	* Shows the overlay layer
+	* @Public
+	*/
+	ViewerMultiProto.hideLoader = function(callback){
+		ui5strap.Layer.setVisible('ui5strap-loader', false, callback);
+	};
+
+	/*
+	* -------------
+	*
+	* TODO
+	*
+	* -------------
+	*/
+
+	/**
+	* Inititalizes the dom cache
+	* @Protected
+	*/
+	ViewerMultiProto._initDom = function(){
+		var _this = this;
+
+		this._dom = {};
+
+		this._dom.$body = jQuery(document.body);
+		this._dom.$root = jQuery('#' + this.options.container);
+
+		if(this._dom.$root.length === 0){
+			throw new Error('Root Container not found in HTML: ' + this.options.container);
+		}
+	};
+
+	/**
+	* Inititalizes the events
+	* @Protected
+	*/
+	ViewerMultiProto._initEvents = function(){
+		var _this = this;
+		
+		/*
+		jQuery(document)
+		
+		
+		.on('keyup', function(e) {
+	      		var evtobj = window.event? window.event : e
+
+	      		jQuery.sap.log.debug("Key pressed: " + evtobj.keyCode);
+
+	      		if (evtobj.keyCode === 84){
+	      			var apps = _m_loadedSapplicationsById;
+
+	      			for(var appUrl in apps){
+	      				apps[appUrl].fireEventAction({ 
+							"scope" : "app",
+							"eventName" : "keyUp",
+							"eventData" : evtobj
+						});
+	      			};
+
+
+	      		}
+	      		else if (evtobj.keyCode === 67){
+	      			//Key 'c'
+	      			if(_this._console){
+		      			if(_this.isOverlayVisible()){ 
+		      				_this.hideOverlay();
+		      			}
+		      			else{
+		      				_this.showConsole();
+		      			}
+	      			}		
+	      		}
+	      		else if (evtobj.keyCode === 70){
+	      			//Key 'f'
+	      			_this.requestFullscreen();
+	      		}
+			}
+		);
+		*/
+		
+		/*
+		.on('swipeupdown', function anon_eventSwipeUpDown(eventData){
+
+				var appInstances = _m_loadedSapplicationsById;
+
+	      			for(var appUrl in appInstances){
+	      				appInstances[appUrl].fireEventAction({ 
+							"scope" : "app",
+							"eventName" : "swipeUpDown",
+							"eventData" : eventData
+						});
+	      			};
+		});
+		*/
+		
+		//Listen to Html Frame Messages
+		window.addEventListener(
+			"message", 
+			function(event){
+				var appMessage = event.data;
+				if(appMessage 
+					&amp;&amp; appMessage.receiver 
+					&amp;&amp; appMessage.sender
+					&amp;&amp; appMessage.message){
+					
+					appMessage.origin = event.origin;
+					
+					_this.sendMessage(appMessage);
+				}
+			}, 
+			false
+		);
+		
+		//Listen to Html Frame Messages
+		window.addEventListener(
+			"resize", 
+			function(event){
+				var appIds = Object.keys(_m_loadedSapplicationsById);
+				for(var i = 0; i &lt; appIds.length; i++){
+					_m_loadedSapplicationsById[appIds[i]].onResize(new sap.ui.base.Event("ui5strap.app.resize", null, {}));
+				}
+			},
+			false
+		);
+		
+		//Listen to Hash Change Events
+		window.addEventListener(
+			"hashchange", 
+			function(event){
+				_this.getApp().onHashChange(new sap.ui.base.Event("ui5strap.app.hashChange", null, {}));
+			}
+		);
+	};
+	
+	return ViewerMulti;
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ui5strap.App.html">App</a></li><li><a href="ui5strap.AppBase.html">AppBase</a></li><li><a href="ui5strap.Bar.html">Bar</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jul 19 2016 18:51:22 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

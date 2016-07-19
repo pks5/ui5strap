@@ -9,7 +9,7 @@
     "run-android": "cd .. && cordova emulate android",
     "build-ui5strap-library": "grunt --gruntfile build-ui5strap-preload.js",
     "build-demoapp-component": "grunt --gruntfile build-demoapp-preload.js",
-    "build-docs" : "jsdoc ../www -r -d ../docs"
+    "build-ui5strap-docs" : "jsdoc ../www/lib/ui5strap -r -d ../docs"
   },
   "devDependencies": {
     "cordova": "^5.4.1",

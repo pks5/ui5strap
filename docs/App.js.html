@@ -1,14 +1,42 @@
-/*!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*!
  * 
  * UI5Strap
  *
  * ui5strap.App
  * 
- * @author Jan Philipp Knöller <info@pksoftware.de>
+ * @author Jan Philipp Knöller &lt;info@pksoftware.de>
  * 
  * Homepage: http://ui5strap.com
  *
- * Copyright (c) 2013 Jan Philipp Knöller <info@pksoftware.de>
+ * Copyright (c) 2013 Jan Philipp Knöller &lt;info@pksoftware.de>
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,16 +113,16 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	var _preloadViews = function(_this, callback){
 		var views = _this.config.data.viewsById,
 			viewKeys = Object.keys(views);
-		for(var i = 0; i < viewKeys.length; i++){
+		for(var i = 0; i &lt; viewKeys.length; i++){
 			var viewConfig = _this.config.getViewConfig(views[viewKeys[i]].id);
-			if(viewConfig.preload && viewConfig.cache){
+			if(viewConfig.preload &amp;&amp; viewConfig.cache){
 				jQuery.sap.log.debug("Caching view: " + viewConfig.id);
 				_this.createView(viewConfig);
 			}
 		}
 		
 		//used for future async
-		callback && callback();
+		callback &amp;&amp; callback();
 	};
 
 	/**
@@ -192,7 +220,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		}
 		
 		if(callbackCount === 0){
-			callback && callback.call(this);
+			callback &amp;&amp; callback.call(this);
 
 			return;
 		}
@@ -201,7 +229,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			success = function(){
 				callbackI++;
 				if(callbackI === callbackCount){
-					callback && callback.call(_this);
+					callback &amp;&amp; callback.call(_this);
 				}
 			},
 			error = function(e){
@@ -209,7 +237,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				throw e;
 			};
 
-		for(var i = 0; i < callbackCount; i++){
+		for(var i = 0; i &lt; callbackCount; i++){
 			var cssKey = cssKeys[i],
 				cssPath = this.config.resolvePath(configData.css[cssKey], true);
 
@@ -310,7 +338,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				_this._rootComponent._showInitialContent(callback);
 			}
 			else{
-				callback && callback(firstTime);
+				callback &amp;&amp; callback(firstTime);
 			}
 		});
 	};
@@ -331,7 +359,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var complete = function(){
 			callI--;
 			if(callI === 0){
-				callback && callback();
+				callback &amp;&amp; callback();
 			}
 		}
 	
@@ -343,7 +371,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	
 		callI = initialViews.length;
 	
-		for(var i = 0; i < initialViews.length; i++){
+		for(var i = 0; i &lt; initialViews.length; i++){
 			var initialView = initialViews[i];
 			if(typeof initialView === "string"){
 				initialView = {
@@ -395,7 +423,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				}
 			}
 			
-			callback && callback();
+			callback &amp;&amp; callback();
 		});
 	};
 	
@@ -407,7 +435,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 */
 	AppProto._buildSingleViewRootControl = function(callback){
 		sap.ui.require(["ui5strap/NavContainer"], function(NavContainerConstructor){
-			callback && callback(new NavContainerConstructor());
+			callback &amp;&amp; callback(new NavContainerConstructor());
 		});
 	};
 	
@@ -426,7 +454,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				this._buildSingleViewRootControl(function(rootControl){
 					_this._rootControl = rootControl;
 					
-					callback && callback();
+					callback &amp;&amp; callback();
 				});
 				
 				return;
@@ -455,15 +483,15 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			
 			var rootNavigation = new NavContainerConstructor(navContainerOptions);
 			
-			if(navigatorOptions.events && navigatorOptions.events.control){
+			if(navigatorOptions.events &amp;&amp; navigatorOptions.events.control){
 				var eKeys = Object.keys(navigatorOptions.events.control),
 					eKeysLength = eKeys.length;
-				for(var i = 0; i < eKeysLength; i++){
+				for(var i = 0; i &lt; eKeysLength; i++){
 					var evs = navigatorOptions.events.control[eKeys[i]];
 					
 					rootNavigation.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
 						
-						for(var j = 0; j < data.actions.length; j ++){
+						for(var j = 0; j &lt; data.actions.length; j ++){
 							_this.runAction({
 								"parameters" : data.actions[j], 
 								"eventSource" : oEvent.getSource(),
@@ -498,11 +526,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param suppressTransitions {boolean} Whether to suppress transitions.
 	 */
 	AppProto.navigateByPath = function(path, viewParameters, suppressTransitions){
-		for(var i = 0; i < this.config.data.routing.length; i++){
+		for(var i = 0; i &lt; this.config.data.routing.length; i++){
 			var routeInfo = this.config.data.routing[i],
 				matches = path.match(routeInfo.route);
 			//console.log("testing", path, routeInfo.route);
-			if(matches && matches.length){
+			if(matches &amp;&amp; matches.length){
 				//console.log(matches);
 				console.log("Route '%s' matched with %s parameters.", routeInfo.route, matches.length-1);
 				
@@ -520,7 +548,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				}
 				
 				if(matches.length > 1){
-					for(var j = 0; j < routeInfo.pathParameters.length; j++){
+					for(var j = 0; j &lt; routeInfo.pathParameters.length; j++){
 						ulib.Utils.addToObject(viewConfig.parameters, routeInfo.pathParameters[j], matches[1 + j]);
 					}
 				}
@@ -571,7 +599,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				ci --;
 				if(ci === 0){
 					//Trigger callback
-					callback && callback();
+					callback &amp;&amp; callback();
 				}
 			};
 		
@@ -691,7 +719,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			
 		});
 		
-		if(this.config.data.app.routing && viewConfig.path && !suppressHashChange){
+		if(this.config.data.app.routing &amp;&amp; viewConfig.path &amp;&amp; !suppressHashChange){
 			this._setHashPath(viewConfig.path, viewConfig.parameters, true);
 		}
 		
@@ -701,4 +729,26 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	//Return Module Constructor
 	return App;
 	
-});
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ui5strap.App.html">App</a></li><li><a href="ui5strap.AppBase.html">AppBase</a></li><li><a href="ui5strap.Bar.html">Bar</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jul 19 2016 18:51:22 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
