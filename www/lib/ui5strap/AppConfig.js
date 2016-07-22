@@ -319,9 +319,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				
 				var routingPath = viewData.route;
 				if(viewData.id && routingPath){
-					if(jQuery.sap.startsWith(routingPath, "/")){
-						throw new Error("Route must not start with a /: " + routingPath);
-					}
+					//if(jQuery.sap.startsWith(routingPath, "/")){
+					//	throw new Error("Route must not start with a /: " + routingPath);
+					//}
 					
 					var pathParameters = [],
 						route = routingPath.replace(/\{([\w]+[\w\.]*)\}/g, function(s, parameterName, x, y){
