@@ -172,7 +172,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				this._suppressHashChange = false;
 			}
 			else{
-				this._x(targetPath, function(){
+				this._processHistory(targetPath, function(){
 					_this._historyWorking = false;
 				});
 			}
@@ -181,7 +181,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		}
 	};
 	
-	AppProto._x = function(targetPath, callback){
+	AppProto._processHistory = function(targetPath, callback){
 		var _this = this;
 		this._historyWorking = true; 
 		this.navigateByPath(
@@ -189,7 +189,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			{}, 
 			function(){
 				if(_this._historyQueue.length){
-					_this._x(_this._historyQueue.shift(), callback);
+					_this._processHistory(_this._historyQueue.shift(), callback);
 				}
 				else{
 					callback && callback();
