@@ -35,7 +35,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
 	 * 
 	 * @class
-	 * Bla
+	 * Base Class for ui5strap apps with navigation, views and custom stylesheets.
 	 * @extends ui5strap.AppBase
 	 * 
 	 * @author Jan Philipp Knoeller
@@ -151,10 +151,12 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto.onHashChange = function(oEvent){
 		AppBase.prototype.onHashChange.call(this, oEvent);
 		
-		if(this.config.data.app.routing){
-			var newHash = document.location.hash;
+		var routing = this.config.data.app.routing;
+		if(routing){
+			var newHash = document.location.hash,
+				hashPrefix = "#" + routing;
 			
-			if(!jQuery.sap.startsWith(newHash, '#!/')){
+			if(!jQuery.sap.startsWith(newHash, hashPrefix)){
 				return;
 			}
 			
@@ -162,8 +164,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				jQuery.sap.log.info("Hashchange suppressed.");
 			}
 			else{
-				
-				this.navigateByPath(newHash.substring(2), {}, false);
+				this.navigateByPath(newHash.substring(hashPrefix.length), {}, null, false);
 			}
 			
 			this._suppressHashChange = false;
@@ -379,23 +380,37 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param callback {function} The callback function.
 	 * @protected
 	 */
-	AppProto._showInitialContent = function(callback){
+	AppProto._showInitialContent = function(callback, useTransitions){
 		jQuery.sap.log.debug("Showing initial content...");
 		
-		var _this = this;
-		
-		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, true, null, function(){
-			if(_this.config.data.app.routing){
-				var newHash = document.location.hash;
-				if(!newHash){
-					_this._setHashPath("/", {}, true);
+		var _this = this,
+			ci = 1,
+			ca = function(){
+				ci --;
+				if(ci === 0){
+					//Trigger callback
+					callback && callback();
 				}
-				else if(jQuery.sap.startsWith(newHash, '#!/')){
-					_this.navigateByPath(newHash.substring(2), {}, true);
+			};
+		
+		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, !useTransitions, null, function(){
+			var routing = _this.config.data.app.routing;
+			if(routing){
+				var newHash = document.location.hash,
+					hashPrefix = "#" + routing;
+				if(!newHash){
+					_this._setRoute("", {}, true);
+				}
+				else if(newHash === hashPrefix){
+					//Do nothing
+				}
+				else if(jQuery.sap.startsWith(newHash, hashPrefix)){
+					ci = 2;
+					_this.navigateByPath(newHash.substring(2), {}, ca, true);
 				}
 			}
 			
-			callback && callback();
+			ca();
 		});
 	};
 	
@@ -497,7 +512,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param path {string} the path to navigate to.
 	 * @param suppressTransitions {boolean} Whether to suppress transitions.
 	 */
-	AppProto.navigateByPath = function(path, viewParameters, suppressTransitions){
+	AppProto.navigateByPath = function(path, viewParameters, callback, suppressTransitions){
+		if(!path){
+			return this._rootComponent._showInitialContent(callback, true);
+		}
+		
 		for(var i = 0; i < this.config.data.routing.length; i++){
 			var routeInfo = this.config.data.routing[i],
 				matches = path.match(routeInfo.route);
@@ -529,12 +548,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					viewConfig.transition = "transition-none";
 				}
 				
-				this.navigateTo(this.getRootControl(), viewConfig, null, false, true, suppressTransitions);
-			}
-			else{
-				//console.log("Route '%s' NOT matched with %s parameters.", routeInfo.route, matches.length-1);
+				return this.navigateTo(this.getRootControl(), viewConfig, callback, false, true, suppressTransitions);
 			}
 		}
+		
+		throw new Error("Route not found: " + path);
 	}
 	
 	/**
@@ -545,9 +563,12 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param suppressHashChange {boolean} Whether triggering the onHashChange event should be suppressed.
 	 * @protected
 	 */
-	AppProto._setHashPath = function(path, parameters, suppressHashChange){
-		this._suppressHashChange = suppressHashChange;
-		document.location.hash = "!" + ulib.Utils.parsePath(path, parameters);
+	AppProto._setRoute = function(path, parameters, suppressHashChange){
+		var routing = this.config.data.app.routing;
+		if(routing){
+			this._suppressHashChange = suppressHashChange;
+			document.location.hash = routing + ulib.Utils.parsePath(path, parameters);
+		}
 	};
 	
 	/**
@@ -575,22 +596,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				}
 			};
 		
-		var subNavConfig = viewConfigResolved.subNavigation;
-		if(subNavConfig){
-			var subNav = oPage.getController().byId(subNavConfig.id);
-			if(!subNav){
-				throw new Error("Cannot navigate: sub navigation is not available.");
-			}
-			
-			ci = 2;
-			this._initNavigator(subNav, subNavConfig.initialViews, suppressTransitions, excludeSubNavTarget, ca);
-		}
-		
 		//Set target busy
 		navControl.setTargetBusy(target, true);
 		
 		//Change NavContainer to page
-		navControl.toPage(
+		var pageChanged = navControl.toPage(
 			oPage, 
 			target, 
 			suppressTransitions ? "transition-none" : viewConfigResolved.transition,
@@ -607,6 +617,17 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				
 			}
 		);
+		
+		var subNavConfig = viewConfigResolved.subNavigation;
+		if(subNavConfig){
+			var subNav = oPage.getController().byId(subNavConfig.id);
+			if(!subNav){
+				throw new Error("Cannot navigate: sub navigation is not available.");
+			}
+			
+			ci = 2;
+			this._initNavigator(subNav, subNavConfig.initialViews, suppressTransitions || pageChanged, excludeSubNavTarget, ca);
+		}
 	}
 	
 	/**
@@ -639,8 +660,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var _this = this;
 		if(viewConfig.parentId){
 			var parentViewConfig = this.config.getViewConfig({ id : viewConfig.parentId });
-			if(!parentViewConfig || !parentViewConfig.subNavigation){
-				throw new Error("Invalid parent id: " + viewConfig.parentId);
+			if(!parentViewConfig || !parentViewConfig.subNavigation || !parentViewConfig.cache){
+				throw new Error("Parent view is not defined in config, has no subNavigation set or is not cached: " + viewConfig.parentId);
 			}
 			
 			var parentNavControl = _this.getControl(parentViewConfig.subNavigation.id, viewConfig.parentId);
@@ -691,8 +712,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			
 		});
 		
-		if(this.config.data.app.routing && viewConfig.path && !suppressHashChange){
-			this._setHashPath(viewConfig.path, viewConfig.parameters, true);
+		var viewRoute = viewConfig.route;
+		if(this.config.data.app.routing && (viewRoute || viewRoute === "") && !suppressHashChange){
+			this._setRoute(viewRoute, viewConfig.parameters, true);
 		}
 		
 		return oPage;

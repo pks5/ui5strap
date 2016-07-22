@@ -34,7 +34,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
 	 * 
 	 * @class
-	 * Bla
+	 * Base class for ui5strap Apps.
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller

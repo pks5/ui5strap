@@ -17,8 +17,8 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Componen
 		return this.getApp()._createRootControl(callback);
 	};
 	
-	RootComponentProto._showInitialContent = function(callback){
-		return this.getApp()._showInitialContent(callback);
+	RootComponentProto._showInitialContent = function(callback, useTransitions){
+		return this.getApp()._showInitialContent(callback, useTransitions);
 	};
 	
 	RootComponentProto._navigateTo = function(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions){

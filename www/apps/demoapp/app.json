@@ -4,7 +4,7 @@
 	        "name" : "Ui5Strap Demo",
 	        
 	        "rootComponent" : true,
-	        "routing" : true,
+	        "routing" : "/",
 	        
 	        "logLevel" : 5,
 	        "mode" : "Devel"
@@ -45,7 +45,7 @@
             {
                 "id" : "home",
                 "viewName" : ".views.home.Home",
-                "path" : "/"
+                "route" : ""
             },
             "//END home",
             
@@ -60,13 +60,13 @@
                     }
                 },
                 "transition" : "slide-rtl",
-                "path" : "/actdemo"
+                "route" : "actdemo"
             },
             
             {
                 "id" : "actdemoNewPost",
                 "viewName" : ".views.actdemo.NewPost",
-                "path" : "/actdemo/new"
+                "route" : "actdemo/new"
             },
             
             {
@@ -77,7 +77,7 @@
                         "update" : ".actions.actdemo.PostDetail"    
                     }
                 },
-                "path" : "/actdemo/post/{post.id}"
+                "route" : "actdemo/post/{post.id}"
             },
             "//END actdemo",
             
@@ -86,19 +86,19 @@
                 "id" : "contrdemoList",
                 "viewName" : ".views.contrdemo.List",
                 "transition" : "slide-rtl",
-                "path" : "/contrdemo"
+                "route" : "contrdemo"
             },
             
             {
                 "id" : "contrdemoNew",
                 "viewName" : ".views.contrdemo.New",
-                "path" : "/contrdemo/new"
+                "route" : "contrdemo/new"
             },
             
             {
                 "id" : "contrdemoDetail",
                 "viewName" : ".views.contrdemo.Detail",
-                "path" : "/contrdemo/post/{post.id}"
+                "route" : "contrdemo/post/{post.id}"
             },
             "//END contrdemo",
             
@@ -113,7 +113,7 @@
                         "controlsButtons"
                     ]
                 },
-                "path" : "/bscontrols"
+                "route" : "bscontrols"
             },
             
             {
@@ -128,84 +128,84 @@
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.Buttons",
                 "transition" : "zoom-in",
-                "path" : "/bscontrols/buttons"
+                "route" : "bscontrols/buttons"
             },
             
             {
             	"id" : "controlsContainers",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.Containers",
-                "path" : "/bscontrols/containers"
+                "route" : "bscontrols/containers"
             },
             
             {
             	"id" : "controlsIcons",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.Icons",
-                "path" : "/bscontrols/icons"
+                "route" : "bscontrols/icons"
             },
             
             {
             	"id" : "controlsTypography",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.Typography",
-                "path" : "/bscontrols/typography"
+                "route" : "bscontrols/typography"
             },
 			
 			{
             	"id" : "controlsNavs",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.Navs",
-                "path" : "/bscontrols/navs"
+                "route" : "bscontrols/navs"
             },
             
             {
             	"id" : "controlsGridSystem",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.GridSystem",
-                "path" : "/bscontrols/grid-system"
+                "route" : "bscontrols/grid-system"
             },
             
             {
             	"id" : "controlsProgress",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.Progress",
-                "path" : "/bscontrols/progress"
+                "route" : "bscontrols/progress"
             },
             
             {
             	"id" : "controlsForm",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.Form",
-                "path" : "/bscontrols/form"
+                "route" : "bscontrols/form"
             },
             
             {
                 "id" : "controlsWheels",
                 "parentId" : "controls",
                 "viewName" : ".views.bscon.Wheels",
-                "path" : "/bscontrols/wheels"
+                "route" : "bscontrols/wheels"
             },
             
             {
             	"id" : "controlsIndicators",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.Indicators",
-                "path" : "/bscontrols/indicators"
+                "route" : "bscontrols/indicators"
             },
             
             {
             	"id" : "controlsMediaList",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.MediaList",
-                "path" : "/bscontrols/media-list"
+                "route" : "bscontrols/media-list"
             },
             
             {
             	"id" : "controlsDialogs",
             	"parentId" : "controls",
             	"viewName" : ".views.bscon.Dialogs",
-                "path" : "/bscontrols/dialogs"
+                "route" : "bscontrols/dialogs"
             },
             "//END bscontrols",
             
@@ -219,7 +219,8 @@
                         "menuCuscon",
                         "cusconSimple"
                     ]
-                }
+                },
+                "route" : "cuscon"
             },
             
             {
@@ -233,25 +234,25 @@
                 "id" : "cusconSimple",
                 "parentId" : "cuscon",
                 "viewName" : ".views.cuscon.SimpleCustomControl",
-                "path" : "/cuscon/simple"
+                "route" : "cuscon/simple"
             },
             {
                 "id" : "cusconJQueryPlugin",
                 "parentId" : "cuscon",
                 "viewName" : ".views.cuscon.JQueryPlugin",
-                "path" : "/cuscon/jquery"
+                "route" : "cuscon/jquery"
             },
             {
                 "id" : "cusconD3",
                 "parentId" : "cuscon",
                 "viewName" : ".views.cuscon.D3",
-                "path" : "/cuscon/d3"
+                "route" : "cuscon/d3"
             },
             {
                 "id" : "cusconPureJS",
                 "parentId" : "cuscon",
                 "viewName" : ".views.cuscon.PureJS",
-                "path" : "/cuscon/pure-js"
+                "route" : "cuscon/pure-js"
             },
             "//END cuscon",
             
@@ -265,7 +266,8 @@
                         "menuSettings",
                         "settingsLanguage"
                     ]
-                }
+                },
+                "route" : "settings"
             },
             
             {
@@ -284,14 +286,14 @@
                         "update" : ".actions.settings.SetCurrentLanguage"    
                     }
                 },
-                "path" : "/settings/language"
+                "route" : "settings/language"
             },
             
             {
                 "id" : "settingsTheme",
                 "parentId" : "settings",
                 "viewName" : ".views.settings.Theme",
-                "path" : "/settings/theme"
+                "route" : "settings/theme"
             },
             
             "//END settings"

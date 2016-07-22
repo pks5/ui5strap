@@ -45,6 +45,11 @@
 							text="{i18n>PAGE5_BUTTON}"
 							tap="com.ui5strap.apps.demoapp.actions.actdemo.NavigateToFeed"
 							></Button>
+							
+						<Link 
+                            text="{i18n>PAGE5_BUTTON}"
+                            href="#/actdemo"
+                            ></Link>
 					</Container>
 				</TabContainer>
 			

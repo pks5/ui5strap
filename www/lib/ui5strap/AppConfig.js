@@ -317,14 +317,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
 				
-				if(viewData.id && viewData.path){
-					/*
-					if(viewData.subNavigation){
-						throw new Error("Cannot define path for view '" + viewData.id + "': view has sub navigation.");
+				var routingPath = viewData.route;
+				if(viewData.id && routingPath){
+					if(jQuery.sap.startsWith(routingPath, "/")){
+						throw new Error("Route must not start with a /: " + routingPath);
 					}
-					*/
+					
 					var pathParameters = [],
-						route = viewData.path.replace(/\{([\w]+[\w\.]*)\}/g, function(s, parameterName, x, y){
+						route = routingPath.replace(/\{([\w]+[\w\.]*)\}/g, function(s, parameterName, x, y){
 							pathParameters.push(parameterName);
 							
 							//TODO more precise
