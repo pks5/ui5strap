@@ -62,6 +62,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			};
 			
 			this._singleView = false;
+			this._historyQueue = [];
 		}
 	}),
 	/**
@@ -154,21 +155,48 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var routing = this.config.data.app.routing;
 		if(routing){
 			var newHash = document.location.hash,
-				hashPrefix = "#" + routing;
+				hashPrefix = "#" + routing,
+				targetPath = newHash.substring(hashPrefix.length),
+				_this = this;
 			
 			if(!jQuery.sap.startsWith(newHash, hashPrefix)){
 				return;
 			}
 			
-			if(this._suppressHashChange){
+			if(this._historyWorking){
+				jQuery.sap.log.info("History working.");
+				this._historyQueue.push(targetPath);
+			}
+			else if(this._suppressHashChange){
 				jQuery.sap.log.info("Hashchange suppressed.");
+				this._suppressHashChange = false;
 			}
 			else{
-				this.navigateByPath(newHash.substring(hashPrefix.length), {}, null, false);
+				this._x(targetPath, function(){
+					_this._historyWorking = false;
+				});
 			}
 			
-			this._suppressHashChange = false;
+			
 		}
+	};
+	
+	AppProto._x = function(targetPath, callback){
+		var _this = this;
+		this._historyWorking = true; 
+		this.navigateByPath(
+			targetPath, 
+			{}, 
+			function(){
+				if(_this._historyQueue.length){
+					_this._x(_this._historyQueue.shift(), callback);
+				}
+				else{
+					callback && callback();
+				}
+			}, 
+			false
+		);
 	};
 	
 	/*
@@ -503,7 +531,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param suppressHashChange {boolean} Whether the path should not be appended to location hash.
 	 */
 	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions) {
-		this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions);
+		return this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions);
 	};
 	
 	/**
