@@ -235,13 +235,17 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 						modelName: modelName, 
 						oModel : oModel
 					}, 
+					//TODO define somewhere which resource model is default.
+					modelName === "i18n" ?
 					function(oEvent, oData){
+						_this._i18nModel = oData.oModel;
 						var bundle = oData.oModel.getResourceBundle();
 						bundle.then(function(theBundle){
-							_this._resourceBundle = theBundle;
+							_this._i18nBundle = theBundle;
 							successCallback(oEvent, oData);
 						});
 					}
+					: successCallback
 				);
 				oModel.attachRequestFailed(
 					{ 
@@ -1314,7 +1318,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	 * TODO "i18n" should be configurable.
 	 */
 	AppBaseProto.getLocaleString = function(){
-		var bundle = this._resourceBundle;
+		var bundle = this._i18nBundle;
 		return bundle.getText.apply(bundle, arguments);
 	};
 
@@ -1705,7 +1709,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		 * @Public
 		 */
 		controllerImpl.formatters.localeString = function(localeString){
+			//FIXME
+			//If the language is changed dynamically, the methods still returns the value for previous language.
+			//It seems to be a bug in OpenUI5
+			//console.log(sap.ui.getCore().getConfiguration().getLanguage());
 			return this.getApp().getLocaleString(localeString);
+			//return this.getApp().getModelProperty(localeString, 'i18n');
 		};
 		
 		/**

@@ -6,8 +6,8 @@
 		"CONTROLS" : {
 			"languageButton" : {
 				"SOURCE" : "Event",
-				"TYPE" : "ui5strap.Button",
-				"parameter" : "button"
+				"TYPE" : "ui5strap.ListItemBase",
+				"parameter" : "listItem"
 			}
 		},
 		

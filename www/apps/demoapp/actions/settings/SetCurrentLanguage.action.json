@@ -7,7 +7,7 @@
 		"CONTROLS" : {
 			"languageButtons" : {
 				"SOURCE" : "View",
-				"TYPE" : "ui5strap.ButtonGroup",
+				"TYPE" : "ui5strap.ListBase",
 				"CONTROL_ID" : "languageSelect"
 			}
 		},

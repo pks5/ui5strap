@@ -53,7 +53,8 @@
 									icon="chevron-right"
 								>
 								<Icon icon="{menu>icon}" trail="DoubleSpace" />
-								<Text text="{formatter:'.formatters.localeString', path:'menu>label'}" />
+								<!-- BINDING_FIX is a workaround that ensures that the correct menu language is set when language changes dynamically. -->
+								<Text text="{formatter:'.formatters.localeString', parts:[{path:'menu>label'},{path:'i18n>BINDING_FIX'}]}" />
 								</ListGroupItem>
 							</ListGroup>
 						</Col>

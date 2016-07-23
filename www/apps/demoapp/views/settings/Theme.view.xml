@@ -23,23 +23,20 @@
 		<!-- Body area with page content -->
 		<body>
 			<Container type="FluidInset">
-				<Container type="Well">
-					<Paragraph text="{i18n>PAGE_SETTINGS_THEME_INTRO}" />
-					<Container>
-						<ButtonGroup select="com.ui5strap.apps.demoapp.actions.settings.ChangeTheme" selectionMode="Single">
-							<Button text="base" data:theme="base" selected="true"  />
-							<Button id="defaultThemeButton" severity="Primary" text="ui5strap_default" data:theme="ui5strap_default"  />
-						</ButtonGroup>
-					</Container>
-					<Paragraph text="{i18n>PAGE_SETTINGS_THEME_BACK_NOTICE}" />
-					
-					<Paragraph>
-						<Button 
-						text="{i18n>PAGE_SETTINGS_THEME_BACK_BUTTON}"
-						tap="com.ui5strap.apps.demoapp.actions.cuscon.NavigateToCusconSimple"
-									></Button>
-					</Paragraph>
-				</Container>
+			     <Row>
+                    <Col columnsSmall="6" offsetSmall="3" columnsMedium="6"
+                        offsetMedium="3">
+                        <Text type="Lead" textAlign="Center" text="{i18n>PAGE_SETTINGS_THEME_INTRO}" />
+                        <ListGroup id="languageSelect" listMode="Navigation"
+                            select="com.ui5strap.apps.demoapp.actions.settings.ChangeTheme"
+                            selectionMode="Single">
+                            <ListGroupItem text="Base" data:theme="base" selected="true" />
+                            <ListGroupItem text="Ui5Strap Default" data:theme="ui5strap_default" />
+                        </ListGroup>
+                    </Col>
+                </Row>
+			
+				
 			</Container>
 		</body>
 		<footer>

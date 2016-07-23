@@ -40,9 +40,9 @@
 			<ScrollContainer vertical="true">
 				<Container type="FluidInset" severity="Warning">
                     <Text type="Lead">
-                        <Text text="A simple Rest Demo with CRUD functionality using controllers." />
-                        <Link tap=".handleNavigateToActdemo" text="See" />
-                        <Text text=" the same demo using actions." />
+                        <Text text="{i18n>PAGE_CONTRDEMO_LIST_INTRO}" />
+                        <Link tap=".handleNavigateToActdemo" text="{i18n>PAGE_CONTRDEMO_LIST_SWITCH_1}" trail="Space" />
+                        <Text text="{i18n>PAGE_CONTRDEMO_LIST_SWITCH_2}" />
                     </Text>
                     
 					<Panel>

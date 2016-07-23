@@ -40,9 +40,9 @@
 			<ScrollContainer vertical="true">
 				<Container type="FluidInset" severity="Success">
                     <Text type="Lead">
-                        <Text text="A simple Rest Demo with CRUD functionality using actions." />
-                        <Link tap="com.ui5strap.apps.demoapp.actions.actdemo.NavigateToContrdemo" text="See" />
-                        <Text text=" the same demo using controllers." />
+                        <Text text="{i18n>PAGE_ACTDEMO_LIST_INTRO}" />
+                        <Link tap="com.ui5strap.apps.demoapp.actions.actdemo.NavigateToContrdemo" text="{i18n>PAGE_ACTDEMO_LIST_SWITCH_1}" trail="Space" />
+                        <Text text="{i18n>PAGE_ACTDEMO_LIST_SWITCH_2}" />
                     </Text>
                     
 					<Panel>

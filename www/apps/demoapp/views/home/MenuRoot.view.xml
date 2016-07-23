@@ -5,8 +5,9 @@
 			zoomSmall="1" zoomLarge="0" typeExtraSmall="ButtonsHorizontal" typeSmall="ButtonsVertical"
 			typeMedium="ListHorizontal" typeLarge="ListVertical"
 			tap="com.ui5strap.apps.demoapp.actions.NavigateViaMenu" items="{menu>/root}">
-			<BarMenuItem
-				text="{formatter:'.formatters.localeString', path:'menu>label'}"
+			<!-- BINDING_FIX is a workaround that ensures that the correct menu language is set when language changes dynamically. -->
+            <BarMenuItem
+				text="{formatter:'.formatters.localeString', parts:[{path:'menu>label'},{path:'i18n>BINDING_FIX'}]}"
 				icon="{menu>icon}" data:pageId="{menu>id}"></BarMenuItem>
 		</BarMenu>
 	</Bar>

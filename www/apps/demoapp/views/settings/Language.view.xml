@@ -1,5 +1,7 @@
-<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc" xmlns:demoapp="com.ui5strap.apps.demoapp.controls" 
-    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<sapUiCoreMvc:View controllerName="ui5strap.ActionController"
+	xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+	xmlns:demoapp="com.ui5strap.apps.demoapp.controls"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<!-- The page control -->
 	<Page>
 		<!-- Head area with horizontal bar -->
@@ -8,56 +10,40 @@
 			<Bar>
 				<!-- Left area of bar -->
 				<Container align="PullLeft">
-					<Button tap="com.ui5strap.apps.demoapp.actions.settings.ToggleBarMenuSettings" 
+					<Button
+						tap="com.ui5strap.apps.demoapp.actions.settings.ToggleBarMenuSettings"
 						options="BarButton">
 						<Icon icon="columns" />
 					</Button>
 				</Container>
-				
+
 				<Heading options="BarHeadingCenter" text="{i18n>PAGE_SETTINGS_LANGUAGE_TITLE}" />
-				
+
 			</Bar>
 		</head>
-		
+
 		<!-- Body area with page content -->
 		<body>
 			<Container type="FluidInset">
-				<Nav type="Tabs" id="tabContainer1Tabs" selectionMode="Single">
-					<ListItem selected="true">
-						<Link text="{i18n>PAGE_SETTINGS_TAB_SET}" />
-					</ListItem>
-					<ListItem>
-						<Link text="{i18n>PAGE_SETTINGS_TAB_MORE}" />
-					</ListItem>
-				</Nav>
+				<Row>
+					<Col columnsSmall="6" offsetSmall="3" columnsMedium="6"
+						offsetMedium="3">
+						<Text type="Lead" textAlign="Center" text="{i18n>PAGE_SETTINGS_LANGUAGE_INTRO}" />
+						<ListGroup id="languageSelect" listMode="Navigation"
+							select="com.ui5strap.apps.demoapp.actions.settings.SelectLanguage"
+							selectionMode="Single">
+							<ListGroupItem text="{i18n>LANGUAGE_EN}" data:language="en-US" />
+							<ListGroupItem text="{i18n>LANGUAGE_DE}" data:language="de-DE" />
+                            <ListGroupItem text="{i18n>LANGUAGE_FR}" data:language="fr-FR" />
+						</ListGroup>
+					</Col>
+				</Row>
 
-				<TabContainer class="tabContainer1" source="tabContainer1Tabs">
-					<Container>
-						<ButtonGroup id="languageSelect" select="com.ui5strap.apps.demoapp.actions.settings.SelectLanguage" selectionMode="Single">
-								<Button text="EN" data:language="en-US" />
-								<Button text="DE" data:language="de-DE"  />
-						</ButtonGroup>
-					</Container>
-					<Container>
-						<demoapp:EventTest/>
-					
-						<Button 
-							text="{i18n>PAGE5_BUTTON}"
-							tap="com.ui5strap.apps.demoapp.actions.actdemo.NavigateToFeed"
-							></Button>
-							
-						<Link 
-                            text="{i18n>PAGE5_BUTTON}"
-                            href="#/actdemo"
-                            ></Link>
-					</Container>
-				</TabContainer>
-			
 			</Container>
 		</body>
 		<footer>
-				<!-- Bar on top of page -->
-				<Bar></Bar>
-			</footer>		
+			<!-- Bar on top of page -->
+			<Bar></Bar>
+		</footer>
 	</Page>
 </sapUiCoreMvc:View>
