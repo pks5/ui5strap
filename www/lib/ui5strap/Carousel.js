@@ -128,7 +128,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
        }
 
        this.timer = window.setInterval(function(){
-          _this.nextPage(newIndex);
+          _this.nextPage();
        }, newInterval);
   };
 
