@@ -316,10 +316,9 @@ sap.ui.define(['./library'], function(library){
 				if(!controlOrDef){
 					throw new Error("Cannot find control '" + this._controlName + "'!");
 				}
-				//TODO check if type is instance of moduleName
-				//else if(!controlOrDef.getMetadata().isInstanceOf(moduleName)){
-				//	throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef.getMetadata().getName() + "' given!" );
-				//}
+				else if(!(controlOrDef instanceof jQuery.sap.getObject(moduleName))){
+					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef.getMetadata().getName() + "' given!" );
+				}
 				
 				return controlOrDef;
 			}
@@ -457,6 +456,21 @@ sap.ui.define(['./library'], function(library){
 		return func.apply(scope, args);
 	};
 	
+	ActionContextProto.finish = function(){
+		var endAction = this.parameters[ActionContext.PARAM_END];
+		if(endAction){
+			this.app.runAction({
+				controller : this.controller,
+				eventSource : this.eventSource,
+				eventParameters : this.eventParameters,
+				parameters: endAction,
+				callback : this.callback
+			});
+		}
+		else if(this.callback){
+			this.callback();
+		}
+	};
 	
 	/**
 	* Gets and evaluates a context parameter.

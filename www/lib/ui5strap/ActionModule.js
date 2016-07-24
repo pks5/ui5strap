@@ -206,12 +206,12 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 				thenExpr = _expression(this, "THEN");
 			
 			if(ActionContext.PARAM_END === thenExpr){
-				context.callback && context.callback();
+				context.finish();
 			}
 			else if(!ui5strap.Action.runTask(context, thenExpr)){
 				//Action has been finished
 				if(context.parameters[ActionContext.PARAM_BEGIN]){
-					context.callback && context.callback();
+					context.finish();
 				}
 			}
 		}

@@ -736,6 +736,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		if(navControl.isTargetBusy(viewConfig.target)){
 			jQuery.sap.log.warning('[NC#' + navControl.getId() + '] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
+			//TODO Should we call the callback here?
 			return false;
 		}
 		
