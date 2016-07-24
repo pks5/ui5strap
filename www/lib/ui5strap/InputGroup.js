@@ -29,7 +29,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var InputGroup = ControlBase.extend("ui5strap.InputGroup", {
 		metadata : {
-
+			interfaces : ["ui5strap.IInputGroup"],
+			
 			// ---- object ----
 			defaultAggregation : "content",
 			

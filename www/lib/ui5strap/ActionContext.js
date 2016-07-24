@@ -316,9 +316,10 @@ sap.ui.define(['./library'], function(library){
 				if(!controlOrDef){
 					throw new Error("Cannot find control '" + this._controlName + "'!");
 				}
-				else if(controlOrDef.getMetadata().isInstanceOf(moduleName)){
-					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef.getMetadata().getName() + "' given!" );
-				}
+				//TODO check if type is instance of moduleName
+				//else if(!controlOrDef.getMetadata().isInstanceOf(moduleName)){
+				//	throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef.getMetadata().getName() + "' given!" );
+				//}
 				
 				return controlOrDef;
 			}

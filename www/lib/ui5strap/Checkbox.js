@@ -29,7 +29,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var Checkbox = ControlBase.extend("ui5strap.Checkbox", {
 		metadata : {
-
+			interfaces : ["ui5strap.IInputGroupAddon"],
 			library : "ui5strap",
 			
 			properties : { 

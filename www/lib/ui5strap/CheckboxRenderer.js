@@ -31,17 +31,18 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	CheckboxRenderer.render = function(rm, oControl) {
 		var type = oControl.getType(),
-			typeBlock = ui5strap.CheckboxType.Block;
+			typeBlock = ui5strap.CheckboxType.Block,
+			inInputGroup = oControl.getParent().getMetadata().isInstanceOf("ui5strap.IInputGroup");
 
-		if(type === typeBlock){
-			rm.write("<div");
-			rm.writeControlData(oControl);
-			rm.addClass('checkbox');
-			rm.writeClasses();
-			rm.write(">");
-		}
+		if(!inInputGroup){
+			if(type === typeBlock){
+				rm.write("<div");
+				rm.writeControlData(oControl);
+				rm.addClass('checkbox');
+				rm.writeClasses();
+				rm.write(">");
+			}
 		
-
 			rm.write("<label");
 			if(type === ui5strap.CheckboxType.Inline){
 				rm.writeControlData(oControl);
@@ -49,28 +50,31 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 			rm.writeClasses();
 			rm.write(">");
+		}
+		
+		rm.write('<input')
+		if(inInputGroup || type === ui5strap.CheckboxType.Default){
+			rm.writeControlData(oControl);
+		}
+		else{
+			rm.writeAttribute('id', oControl.getId() + '---checkbox');
+		}
+		rm.writeAttribute('type', 'checkbox');
+		rm.writeAttribute('value', oControl.getValue());
+		rm.writeClasses();
+		if(oControl.getSelected()){
+			rm.writeAttribute('checked', 'checked');
+		}
+		rm.write('/>');
+		
+		rm.writeEscaped(oControl.getLabel());
 
-				rm.write('<input')
-				if(type === ui5strap.CheckboxType.Default){
-					rm.writeControlData(oControl);
-				}
-				else{
-					rm.writeAttribute('id', oControl.getId() + '---checkbox');
-				}
-				rm.writeAttribute('type', 'checkbox');
-				rm.writeAttribute('value', oControl.getValue());
-				rm.writeClasses();
-				if(oControl.getSelected()){
-					rm.writeAttribute('checked', 'checked');
-				}
-				rm.write('/>');
-				
-					rm.writeEscaped(oControl.getLabel());
-
+		if(!inInputGroup){
 			rm.write("</label>");
 
-		if(type === typeBlock){
-			rm.write("</div>");
+			if(type === typeBlock){
+				rm.write("</div>");
+			}
 		}
 	};
 	

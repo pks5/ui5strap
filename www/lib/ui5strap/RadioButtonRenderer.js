@@ -32,15 +32,17 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	RadioButtonRenderer.render = function(rm, oControl) {
 		var groupName = oControl.getGroupName(),
 			type = oControl.getType(),
-			typeBlock = ui5strap.RadioButtonType.Block;
-
-		if(type === typeBlock){ 
-			rm.write("<div");
-			rm.writeControlData(oControl);
-			rm.addClass('radio');
-			rm.writeClasses();
-			rm.write(">");
-		}
+			typeBlock = ui5strap.RadioButtonType.Block,
+			inInputGroup = oControl.getParent().getMetadata().isInstanceOf("ui5strap.IInputGroup");
+		
+		if(!inInputGroup){
+			if(type === typeBlock){ 
+				rm.write("<div");
+				rm.writeControlData(oControl);
+				rm.addClass('radio');
+				rm.writeClasses();
+				rm.write(">");
+			}
 			
 			rm.write("<label");
 			if(type === ui5strap.RadioButtonType.Inline){
@@ -49,30 +51,33 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 			rm.writeClasses();
 			rm.write(">");
-
-				rm.write('<input')
-				if(type === ui5strap.RadioButtonType.Default){
-					rm.writeControlData(oControl);
-				}
-				else{
-					rm.writeAttribute('id', 'ui5strap-radio---' + oControl.getId());
-				}
-				rm.writeAttribute('type', 'radio');
-				rm.writeAttribute('value', oControl.getValue());
-				rm.writeAttribute('name', groupName);
-				if(oControl.getSelected()){
-					rm.writeAttribute('checked', 'checked');
-				}
-				rm.addClass('ui5strap-radio-' + groupName);
-				rm.writeClasses();
-				rm.write('/>');
-					
-					rm.writeEscaped(oControl.getLabel());
+		}
 		
+		rm.write('<input')
+		if(inInputGroup || type === ui5strap.RadioButtonType.Default){
+			rm.writeControlData(oControl);
+		}
+		else{
+			rm.writeAttribute('id', 'ui5strap-radio---' + oControl.getId());
+		}
+		rm.writeAttribute('type', 'radio');
+		rm.writeAttribute('value', oControl.getValue());
+		rm.writeAttribute('name', groupName);
+		if(oControl.getSelected()){
+			rm.writeAttribute('checked', 'checked');
+		}
+		rm.addClass('ui5strap-radio-' + groupName);
+		rm.writeClasses();
+		rm.write('/>');
+			
+		rm.writeEscaped(oControl.getLabel());
+		
+		if(!inInputGroup){
 			rm.write("</label>");
 
-		if(type === typeBlock){ 
-			rm.write("</div>");
+			if(type === typeBlock){ 
+				rm.write("</div>");
+			}
 		}
 	};
 	

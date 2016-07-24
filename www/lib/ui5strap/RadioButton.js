@@ -29,7 +29,8 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var RadioButton = ControlBase.extend("ui5strap.RadioButton", {
 		metadata : {
-
+			interfaces : ["ui5strap.IInputGroupAddon"],
+			
 			library : "ui5strap",
 			
 			properties : { 

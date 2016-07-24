@@ -52,19 +52,17 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		for(var i = 0; i < contentLength; i++){ 
 			var item = content[i],
 				validAddonPosition = i === 0 || i === content.length - 1,
-				addonClass = null;
+				addonClass = null,
+				itemMeta = item.getMetadata();
 			
-			if(item instanceof ui5strap.TextInput || item instanceof ui5strap.SelectBox){
-
+			if(itemMeta.isInstanceOf("ui5strap.IInputGroupControl")){
+				//Do nothing
 			}
 			else if(validAddonPosition){
-				if(item instanceof ui5strap.Button){
+				if(itemMeta.isInstanceOf("ui5strap.IInputGroupButton")){
 					addonClass = 'input-group-btn';
 				}
-				else if(item instanceof ui5strap.Text ||
-						item instanceof ui5strap.Icon ||
-						item instanceof ui5strap.Checkbox || 
-						item instanceof ui5strap.RadioButton){
+				else if(itemMeta.isInstanceOf("ui5strap.IInputGroupAddon")){
 					addonClass = 'input-group-addon';
 				}
 				else{

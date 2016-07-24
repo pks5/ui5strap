@@ -28,7 +28,7 @@
 sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
 
 	var _meta =  {
-			interfaces : ["ui5strap.IText"],
+			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupButton"],
 			
 			defaultAggregation : "content",
 			library : "ui5strap",

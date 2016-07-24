@@ -32,7 +32,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 			library : "ui5strap",
 			
-			interfaces : ["ui5strap.IText"],
+			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupAddon"],
 			
 			properties : { 
 				iconSet : {

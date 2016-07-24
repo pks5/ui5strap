@@ -53,6 +53,25 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
+		},
+		renderer : function(rm, oControl) {
+			var content = oControl.getContent(),
+				text = oControl.getText();
+	
+			rm.write('<div');
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			text && rm.writeEscaped(text);
+			
+			//Content
+			for(var i = 0; i < content.length; i++){ 
+				rm.renderControl(content[i]);
+			}
+			
+			rm.write("</div>");
 		}
 	}),
 	WellProto = Well.prototype;

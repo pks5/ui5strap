@@ -29,7 +29,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
 	var TextInput = ControlBase.extend("ui5strap.TextInput", {
 		metadata : {
-			interfaces : ["ui5strap.IText"],
+			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupControl"],
 			library : "ui5strap",
 			
 			properties : { 

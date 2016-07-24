@@ -41,7 +41,8 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	OptionsSupport.meta(_meta);
 	
 	var ControlBase = ui5strap.Control.extend("ui5strap.ControlBase", {
-		metadata : _meta
+		metadata : _meta,
+		renderer : null
 	}),
 	ControlBaseProto = ControlBase.prototype;
 	
