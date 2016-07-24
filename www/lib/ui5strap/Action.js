@@ -76,6 +76,9 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 	/**
 	* 
 	* Executes an AM Module (ui5strap.ActionModule)
+	* This method is used to execute tasks as a list synchroneously.
+	* Will be dropped.
+	* @deprecated
 	* @Static
 	* @Private
 	*/
@@ -128,6 +131,9 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 			delete context.parameters[actionModuleNameParameter];
 			//Old format
 			Action.runTasks(context, actionModuleName);
+			
+			//TEMP
+			context.callback && context.callback();
 		}
 		else{  
 			//New format
@@ -135,9 +141,18 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 		
 			if(actionModuleName){ //Expected string
 				Action.runTasks(context, actionModuleName);
+				
+				//TEMP
+				context.callback && context.callback();
 			}
 			else{  
-				throw new Error("Invalid action '" + context + "': '" + ActionContext.PARAM_TASKS + "' attribute is missing!");
+				actionModuleName = context.parameters[ActionContext.PARAM_BEGIN];
+				if(actionModuleName){
+					Action.runTask(context, actionModuleName);
+				}
+				else{
+					throw new Error("Invalid action '" + context + "': '" + ActionContext.PARAM_TASKS + "' attribute is missing!");
+				}
 			}
 			//New format end
 		}
@@ -169,6 +184,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 				jQuery.sap.declare(actionName);
 				
 				var ActionInstance = function(oEvent){
+					//No callback needed
 					this.getApp().runAction({
 						"eventSource" : oEvent.getSource(),
 						"eventParameters" : oEvent.getParameters(),
@@ -190,6 +206,8 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 
 	/**
 	* Executes a list of AM Modules
+	* Will be dropped.
+	* @deprecated
 	* @Public
 	* @Static
 	*/
@@ -219,6 +237,41 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 		for ( var i = 0; i < instanceDefsLength; i++ ) { 
 			_runTaskInContext(context, instanceDefs[i]);
 		}
+	};
+	
+	/**
+	 * Runs a single task within the context.
+	 */
+	Action.runTask = function(context, taskId){
+		if(!taskId){
+			return false;
+		}
+		
+		var instanceDef = _getActionInstanceDef(context, taskId);
+		sap.ui.require([instanceDef.module.replace(/\./g, "/")], function(TaskConstructor){
+			//Push to callstack
+			context._callStack.push(instanceDef);
+
+			var actionModuleName = instanceDef.module;
+			
+			if(!actionModuleName){
+				throw new Error("No task module specified!");
+			}
+			
+			var oActionModule = _modulesCache[actionModuleName];
+			
+			if(!oActionModule){
+				oActionModule = new TaskConstructor();
+							
+				if(!(oActionModule instanceof ui5strap.ActionModule)){
+					throw new Error("Error in action '" + context + "':  '" + actionModuleName +  "' must be an instance of ui5strap.ActionModule!");
+				}
+			}
+
+			oActionModule.init(context, instanceDef).execute();
+		});
+		
+		return true;
 	};
 
 	/**

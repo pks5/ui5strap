@@ -1,7 +1,7 @@
 {
 	"//" : "Loads the menu for the Custom Controls section.",
 	
-	"TASKS" : "navigate",
+	"BEGIN" : "navigate",
 	
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",

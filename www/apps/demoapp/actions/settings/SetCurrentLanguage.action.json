@@ -1,6 +1,6 @@
 {
 	"//" : "Preselect the current system language on the specified ButtonGroup control.",
-	"TASKS" : "setCurrentLanguage",
+	"BEGIN" : "setCurrentLanguage",
 	
 	"setCurrentLanguage" : {
 		

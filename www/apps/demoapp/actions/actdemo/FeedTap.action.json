@@ -1,6 +1,6 @@
 {
     
-    "TASKS" : "postDetail",
+    "BEGIN" : "postDetail",
     
     "postDetail" : {
         "commandParam" : "command",

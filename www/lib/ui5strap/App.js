@@ -505,14 +505,22 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					var evs = navigatorOptions.events.control[eKeys[i]];
 					
 					rootNavigation.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
-						
-						for(var j = 0; j < data.actions.length; j ++){
+						var nextAction = function(j){
+							if(j >= data.actions.length){
+								return;
+							}
+							
 							_this.runAction({
 								"parameters" : data.actions[j], 
 								"eventSource" : oEvent.getSource(),
-								"eventParameters" : oEvent.getParameters()
+								"eventParameters" : oEvent.getParameters(),
+								callback : function(){
+									nextAction(j+1);
+								}
 							});
-						}
+						};
+						
+						nextAction(0);
 					});
 				}
 			}

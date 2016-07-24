@@ -1,6 +1,6 @@
 {
 	"//" : "Goto Page 5",
-	"TASKS" : "navigate",
+	"BEGIN" : "navigate",
 	
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",

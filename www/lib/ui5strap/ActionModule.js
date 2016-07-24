@@ -202,18 +202,30 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	
 	ActionModuleProto.then = function(force){
 		if(force || !this._suppressThen){
-			ui5strap.Action.runTasks(this.context, _expression(this, "THEN"));
+			var context = this.context,
+				thenExpr = _expression(this, "THEN");
+			
+			if(ActionContext.PARAM_END === thenExpr){
+				context.callback && context.callback();
+			}
+			else if(!ui5strap.Action.runTask(context, thenExpr)){
+				//Action has been finished
+				if(context.parameters[ActionContext.PARAM_BEGIN]){
+					context.callback && context.callback();
+				}
+			}
 		}
 	};
 	
 	ActionModuleProto["else"] = function(){
-		ui5strap.Action.runTasks(this.context, _expression(this, "ELSE"));
+		ui5strap.Action.runTask(this.context, _expression(this, "ELSE"));
 	};
 	
 	ActionModuleProto.error = function(err){
 		var errorTask = _expression(this, "ERROR");
 		if(errorTask){
-			ui5strap.Action.runTasks(this.context, errorTask);
+			//No callback needed?
+			ui5strap.Action.runTask(this.context, errorTask);
 		}
 		else{
 			throw err;
@@ -223,7 +235,8 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	ActionModuleProto.fatal = function(err){
 		var errorTask = _expression(this, "FATAL");
 		if(errorTask){
-			ui5strap.Action.runTasks(this.context, errorTask);
+			//No callback needed?
+			ui5strap.Action.runTask(this.context, errorTask);
 		}
 		else{
 			throw err;

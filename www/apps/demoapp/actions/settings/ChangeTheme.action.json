@@ -1,5 +1,5 @@
 {
-	"TASKS" : "changeTheme",
+	"BEGIN" : "changeTheme",
 
 	"changeTheme" : {
 		"TYPE" : "ui5strap.AMChangeTheme",

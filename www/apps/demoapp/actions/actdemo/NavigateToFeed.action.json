@@ -1,7 +1,7 @@
 {
 	"//" : "Navigate to View 'actdemoFeed' via root navigation.",
 	
-	"TASKS" : "navigate",
+	"BEGIN" : "navigate",
 	
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",

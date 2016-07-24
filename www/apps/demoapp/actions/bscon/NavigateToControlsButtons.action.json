@@ -1,6 +1,6 @@
 {
 	"//" : "Navigate to View 'controlsButtons' via specified NAVIGATOR.",
-	"TASKS" : "navigate",
+	"BEGIN" : "navigate",
 	
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",

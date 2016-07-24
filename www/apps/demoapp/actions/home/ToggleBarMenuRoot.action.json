@@ -1,7 +1,7 @@
 {
 	"//" : "Toggles the visibility of the menu bar of the root NavContainer.",
 	
-	"TASKS" : "toggleBarMenuRoot",
+	"BEGIN" : "toggleBarMenuRoot",
 	
 	"toggleBarMenuRoot" : {
 		"navContainer" : "= app.getRootControl()",

@@ -1,7 +1,7 @@
 {
 	"//" : "Set the sub-menu item selected that has the same id as specified NavContainer's current page.",
 	
-	"TASKS" : "setListItemSelected",
+	"BEGIN" : "setListItemSelected",
 	
 	"setListItemSelected" : {
 		"IF" : "= lang.equal(eventParameters.target, .targetName)",

@@ -1,6 +1,6 @@
 {
 
-    "TASKS" : "initFeed",
+    "BEGIN" : "initFeed",
     
     "initFeed" : {
         

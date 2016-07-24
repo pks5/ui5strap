@@ -116,15 +116,22 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 				
 				rootControl.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
 					
-					for(var j = 0; j < data.actions.length; j ++){
+					var nextAction = function(j){
+						if(j >= data.actions.length){
+							return;
+						}
+						
 						app.runAction({
 							"parameters" : data.actions[j], 
 							"eventSource" : oEvent.getSource(),
-							"eventParameters" : oEvent.getParameters()
+							"eventParameters" : oEvent.getParameters(),
+							callback : function(){
+								nextAction(j+1);
+							}
 						});
-					}
+					};
 					
-					//console.log(data);
+					nextAction(0);
 				});
 			}
 		}

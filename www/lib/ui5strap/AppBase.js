@@ -891,10 +891,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* @param eventParameters {object} Information about the event.
 	* @param actionGroupId {string|object} The action name or action definition.
 	*/
-	AppBaseProto.runEventAction = function (eventParameters, actionGroupId){
+	AppBaseProto.runEventAction = function (eventParameters, actionGroupId, callback){
 		this.log.debug("Executing event '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
 		var actionParameters = {
-			"parameters" : actionGroupId
+			"parameters" : actionGroupId,
+			callback : callback
 		};
 
 		//OpenUI5 Controller
@@ -927,12 +928,22 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				var events = appEvents[eventParameters.scope];
 
 				if(eventParameters.eventName in events){
-					var eventList = events[eventParameters.eventName];
-					//Run the list of events
-					for(var i = 0; i < eventList.length; i++){ 
-						this.runEventAction(eventParameters, eventList[i]);
-					}
-
+					var eventList = events[eventParameters.eventName],
+						nextAction = function(j){
+							if(j >= eventList.length){
+								return;
+							}
+							
+							this.runEventAction(
+								eventParameters, 
+								eventList[j], 
+								function(){
+									nextAction(j+1);
+								}
+							);
+						};
+					
+					nextAction(0);
 				}
 
 			}
@@ -942,19 +953,32 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		if(this._events && this._events[eventParameters.scope]){
 			var events = this._events[eventParameters.scope];
 			if(eventParameters.eventName in events){
-				var eventList = events[eventParameters.eventName];
-				//Run the list of events
-				for(var i = 0; i < eventList.length; i++){ 
-					var actionOrFunction = eventList[i];
-					if(typeof actionOrFunction === 'function'){
-						//Call the registered function with original event as parameter
-						this.log.debug("Executing event function '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
-						actionOrFunction.call(this, eventParameters.orgEvent);
-					}
-					else{
-						this.runEventAction(eventParameters, actionOrFunction);
-					}
-				}
+				var eventList = events[eventParameters.eventName],
+					nextAction = function(j){
+						if(j >= eventList.length){
+							return;
+						}
+						
+						var actionOrFunction = eventList[j];
+						if(typeof actionOrFunction === 'function'){
+							//Call the registered function with original event as parameter
+							this.log.debug("Executing event function '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
+							actionOrFunction.call(this, eventParameters.orgEvent);
+							
+							nextAction(j+1);
+						}
+						else{
+							//chain via callback
+							this.runEventAction(
+									eventParameters, 
+									actionOrFunction,
+									function(){
+										nextAction(j+1);
+									});
+						}
+					};
+					
+				nextAction(0);
 
 			}
 		}
@@ -1643,26 +1667,39 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			oldOnPageShow = controllerImpl[eventFunctionName];
 
 		controllerImpl[eventFunctionName] = function(oEvent){ 
-			var app = this.getApp();
+			var app = this.getApp(),
+						_this = this;
 				
 			if(app){
 				var view = this.getView(),
 					viewId = view.getId(),
 					updateEvents = app.config.getEvents('controller', eventName, viewId),
 					updateEventsLength = updateEvents.length;
-
-				for(var i = 0; i < updateEventsLength; i++){
-				 	var actionName = updateEvents[i];
+				
+				//TODO chain actions via callback
+				
+				var nextAction = function(j){
+					if(j >= updateEventsLength){
+						return;
+					}
+					
+					var actionName = updateEvents[j];
 					app.log.debug("Executing action '" + actionName + "' (view: '" + viewId + "', event: '" + eventName + "') ...");
 					app.runAction({
 						"parameters" : actionName, 
-						"controller" : this,
+						"controller" : _this,
 						"eventSource" : oEvent.getSource(),
-						"eventParameters" : oEvent.getParameters()
+						"eventParameters" : oEvent.getParameters(),
+						callback : function(){
+							nextAction(j+1);
+						}
 					});
-				}
+				};
+				
+				nextAction(0);
 			}
 			
+			//TODO this should be called before the actions?
 			if(oldOnPageShow){
 				oldOnPageShow.call(this, oEvent);
 			}
@@ -1745,6 +1782,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		 * Action event handler
 		 */
 		controllerImpl[controllerImpl.actionEventHandler] = function(oEvent){
+			//No callback needed
 			this.getApp().runAction({
 				"eventSource" : oEvent.getSource(),
 				"eventParameters" : oEvent.getParameters(),
@@ -1756,7 +1794,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		var oldOnInit = controllerImpl.onInit;
 
 		controllerImpl.onInit = function(oEvent){ 
-			var app = this.getApp();
+			var app = this.getApp(),
+					_this = this;
 
 			if(app){
 				//if(!this.actions){
@@ -1768,20 +1807,28 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 				var view = this.getView(),
 					viewId = view.getId(),
 					initEvents = app.config.getEvents('controller', 'init', viewId),
-					initEventsLength = initEvents.length;
-
-				for(var i = 0; i < initEventsLength; i++){
-					var actionName = initEvents[i];
-					
-					app.log.debug("Executing action '" + actionName + "' (view: '" + viewId + "', event: 'onInit') ...");
-					
-					app.runAction({
-						"parameters" : actionName, 
-						"eventSource" : oEvent.getSource(),
-						"eventParameters" : oEvent.getParameters(),
-						"controller" : this
-					});
-				}
+					initEventsLength = initEvents.length,
+					nextAction = function(j){
+						if(j >= initEventsLength){
+							return;
+						}
+						
+						var actionName = initEvents[j];
+						
+						app.log.debug("Executing action '" + actionName + "' (view: '" + viewId + "', event: 'onInit') ...");
+						
+						app.runAction({
+							"parameters" : actionName, 
+							"eventSource" : oEvent.getSource(),
+							"eventParameters" : oEvent.getParameters(),
+							"controller" : _this,
+							callback : function(){
+								nextAction(j+1);
+							}
+						});
+					};
+				
+				nextAction(0);
 			}
 
 			//Call old onInit function

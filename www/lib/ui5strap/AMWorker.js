@@ -68,6 +68,7 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 					"controller" : controller  
 				};
 				
+				//No callback needed
 				app.runAction(actionParameters);
 			}
 

@@ -62,7 +62,8 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 	SwitchProto.run = function(){
 		var actionKey = this.getParameter("EXPRESSION"),
 			actions = this.getParameter("ACTIONS"),
-			theAction = this.getParameter("DEFAULT_ACTION");
+			theAction = this.getParameter("DEFAULT_ACTION"),
+			_this = this;
 		
 		if(actions[actionKey]){
 			theAction = this.context.resolve(this, actions[actionKey]);
@@ -73,11 +74,14 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 				controller : this.context.controller,
 				eventSource : this.context.eventSource,
 				eventParameters : this.context.eventParameters,
-				parameters: this.context.resolve(this, theAction)
+				parameters: this.context.resolve(this, theAction),
+				callback : function(){
+					_this.then();
+				}
 			});
 		}
 		
-		this.then();
+		
 	};
 
 	//Return Module Constructor

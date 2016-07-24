@@ -1,9 +1,7 @@
 {
 	"//" : "Appends a new media list item to an existing media list.",
 	
-	"TASKS" : [
-		"addItemToList"
-	],
+	"BEGIN" : "addItemToList",
 	
 	"addItemToList" : {
 		

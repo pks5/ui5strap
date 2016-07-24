@@ -1,5 +1,5 @@
 {
-    "TASKS" : ["readPost"],
+    "BEGIN" : "readPost",
     
     "readPost" : {
         "thenCallback" : "= then()",

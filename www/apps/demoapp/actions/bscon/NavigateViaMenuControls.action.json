@@ -1,7 +1,7 @@
 {
 	"//" : "Navigates to the page selected on the Controls section menu.",
 	
-	"TASKS" : "navigate",
+	"BEGIN" : "navigate",
 	
 	"navigate" : {
 		"TYPE" : "ui5strap.task.Navigate",

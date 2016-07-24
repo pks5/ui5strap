@@ -39,16 +39,17 @@ sap.ui.define(['./library'], function(library){
 
 	ActionContext.NUMBER = 0;
 
+	//OLD Format
 	ActionContext.PREFIX = "__";
+	ActionContext.PARAM_MODULES = "modules";
+	
 	ActionContext.RESOLVE = "=";
 	
-	//Action Name
-	ActionContext.PARAM_ACTION = 'action';
-	
 	//AM Modules
-	ActionContext.PARAM_MODULES = 'modules';
-	ActionContext.PARAM_TASKS = 'TASKS';
-	ActionContext.PARAM_MODULE = 'TYPE';
+	ActionContext.PARAM_TASKS = "TASKS";
+	ActionContext.PARAM_MODULE = "TYPE";
+	ActionContext.PARAM_BEGIN = "BEGIN";
+	ActionContext.PARAM_END = "END";
 	
 	ActionContext.WORKPOOL = "action";
 	
@@ -93,6 +94,7 @@ sap.ui.define(['./library'], function(library){
 		
 		//App Reference
 		_this.app = action.app;
+		_this.callback = action.callback;
 		
 		//Default parameters
 		_this.defaultParameters = action.parameters;
@@ -258,15 +260,15 @@ sap.ui.define(['./library'], function(library){
 					throw new Error("Please provide both 'mode' and 'type' for Control '" + this._controlName + "'");
 				}
 				
-				//TODO Async!
-				jQuery.sap.require(moduleName);
-				var Constructor = jQuery.sap.getObject(moduleName);
-				
-				if(!Constructor){
-					throw new Error("'" + moduleName + "' is not a valid Control!");
-				}
-				
 				if("New" === mode){
+					//TODO Async!
+					jQuery.sap.require(moduleName);
+					var Constructor = jQuery.sap.getObject(moduleName);
+					
+					if(!Constructor){
+						throw new Error("'" + moduleName + "' is not a valid Control!");
+					}
+					
 					var moduleSettings = context.resolve(task, controlOrDef.SETTINGS);
 					controlOrDef = new Constructor(moduleSettings);
 				}
@@ -314,8 +316,8 @@ sap.ui.define(['./library'], function(library){
 				if(!controlOrDef){
 					throw new Error("Cannot find control '" + this._controlName + "'!");
 				}
-				else if(!(controlOrDef instanceof Constructor)){
-					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef + "' given!" );
+				else if(controlOrDef.getMetadata().isInstanceOf(moduleName)){
+					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef.getMetadata().getName() + "' given!" );
 				}
 				
 				return controlOrDef;

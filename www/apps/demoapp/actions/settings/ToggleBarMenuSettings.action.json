@@ -1,7 +1,7 @@
 {
 	"//" : "Toggles the visibility of the menu bar of the specified NavContainer.",
 	
-	"TASKS" : "toggleBarMenuSub1",
+	"BEGIN" : "toggleBarMenuSub1",
 	
 	"toggleBarMenuSub1" : {
 		"CONTROLS" : {
