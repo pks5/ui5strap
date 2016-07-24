@@ -3,7 +3,8 @@
 	        "id" : "com.ui5strap.apps.template",
 	        "name" : "Ui5Strap App Template",
 	        "logLevel" : 5,
-	        "mode" : "Devel"
+	        "mode" : "Devel",
+	        "routing" : "/"
 	},
 	
 	"css" : [
@@ -27,12 +28,14 @@
             
             {
                 "id" : "home",
-                "viewName" : ".views.Home"
+                "viewName" : ".views.Home",
+                "route" : ""
             },
 
             {
                 "id" : "about",
-                "viewName" : ".views.About"
+                "viewName" : ".views.About",
+                "route" : "about"
             }
       ],
 	
@@ -59,7 +62,7 @@
          	"barPlacementMedium" : "Bottom",
          	"barTransitionMedigum" : "none",
          	
-         	"barSizeLarge" : 2,
+         	"barSizeLarge" : 4,
          	"barPlacementLarge" : "Left",
          	"barModeLarge" : "Intrude",
          	

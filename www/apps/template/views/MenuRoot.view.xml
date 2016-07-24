@@ -1,8 +1,8 @@
 <sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
 	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-	<Bar inverse="true" type="Full">
-		<BarMenu id="myMenu" inverse="true" zoomExtraSmall="-3"
-			zoomSmall="3" typeExtraSmall="ButtonsHorizontal" typeSmall="ButtonsVertical"
+	<Bar inverse="true" type="Default">
+		<BarMenu id="myMenu" inverse="true" zoomExtraSmall="-1"
+			zoomSmall="1" zoomLarge="2" typeExtraSmall="ButtonsHorizontal" typeSmall="ButtonsVertical"
 			typeMedium="ListHorizontal" typeLarge="ListVertical"
 			tap="com.ui5strap.apps.template.actions.NavigateViaMenuRoot">
 			<BarMenuItem
