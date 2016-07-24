@@ -5,7 +5,7 @@
     "initFeed" : {
         
         "feedManager" : "= app.getFeedManager()",
-        "feedListId" : ["feedList"], 
+        "feedListId" : ["feedListAct"], 
         "DO" : "= .feedManager.registerControls(controller, .feedListId)"
         
     }

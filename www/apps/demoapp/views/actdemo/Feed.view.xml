@@ -54,7 +54,7 @@
 							</Button>
 						</titleContent>
 						<content>
-							<ListMedia id="feedList" tap="com.ui5strap.apps.demoapp.actions.actdemo.FeedTap"
+							<ListMedia id="feedListAct" tap="com.ui5strap.apps.demoapp.actions.actdemo.FeedTap"
 								items="{FEED_INFO>/feed}">
 
 								<!-- Media Item 1 -->

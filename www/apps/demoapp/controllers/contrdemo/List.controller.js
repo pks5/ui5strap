@@ -30,7 +30,7 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 	var controllerImpl = {
 			onInit : function(){
 				this._feedManager = this.getApp().getFeedManager();
-				this._feedManager.registerControls(this, ["feedList"]);
+				this._feedManager.registerControls(this, ["feedListContr"]);
 			},
 			
 			onUpdate : function(oEvent){

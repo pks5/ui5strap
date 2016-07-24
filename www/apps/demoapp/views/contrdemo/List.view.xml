@@ -54,7 +54,7 @@
 							</Button>
 						</titleContent>
 						<content>
-							<ListMedia id="feedList" tap=".handleFeedTap"
+							<ListMedia id="feedListContr" tap=".handleFeedTap"
 								items="{FEED_INFO>/feed}">
 
 								<!-- Media Item 1 -->

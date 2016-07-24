@@ -38,7 +38,9 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 	FeedManagerProto.refreshFeed = function(callback){
 		var _this = this;
 		this.app.getFeedClient().info(function(feedInfo){
-			_this.controls.feedList.setModel(new ui5strap.JSONModel(feedInfo), "FEED_INFO");
+			var feedInfoModel = new ui5strap.JSONModel(feedInfo);
+			_this.controls.feedListContr && _this.controls.feedListContr.setModel(feedInfoModel, "FEED_INFO");
+			_this.controls.feedListAct && _this.controls.feedListAct.setModel(feedInfoModel, "FEED_INFO");
 			callback && callback();
 		});
 	};
