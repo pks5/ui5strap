@@ -50,6 +50,7 @@ sap.ui.define(['./library'], function(library){
 	ActionContext.PARAM_MODULE = "TYPE";
 	ActionContext.PARAM_BEGIN = "BEGIN";
 	ActionContext.PARAM_END = "END";
+	ActionContext.PARAM_EXPORT = "EXPORT";
 	
 	ActionContext.WORKPOOL = "action";
 	
@@ -98,6 +99,8 @@ sap.ui.define(['./library'], function(library){
 		
 		//Default parameters
 		_this.defaultParameters = action.parameters;
+		
+		_this.import = action.import;
 			
 		//Pool
 		_this.action = _buildPool(_this.defaultParameters, [], _this);
@@ -456,14 +459,18 @@ sap.ui.define(['./library'], function(library){
 		return func.apply(scope, args);
 	};
 	
+	/**
+	 * 
+	 */
 	ActionContextProto.finish = function(){
-		var endAction = this.parameters[ActionContext.PARAM_END];
+		var endAction = this.action[ActionContext.PARAM_END];
 		if(endAction){
 			this.app.runAction({
 				controller : this.controller,
 				eventSource : this.eventSource,
 				eventParameters : this.eventParameters,
 				parameters: endAction,
+				import : this.action[ActionContext.PARAM_EXPORT] || {},
 				callback : this.callback
 			});
 		}
