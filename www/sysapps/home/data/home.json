@@ -5,16 +5,15 @@
             "internal" : false,
             "name": "Demo App",
             "type" : "UI5STRAP",
-            "icon": "./apps/demoapp/img/ui5strap-logo-7.png",
+            "icon": "/apps/demoapp/img/ui5strap-logo-7.png",
             "url": "./apps/demoapp/app.json"
         },
         {
             "type" : "HTML5",
-            "icon": "https://www.wikipedia.de/img/logo.png",
-            "url": "http://wikipedia.de",
-            "id" : "wikipedia.sandbox",
-            "package" : "wikipedia.sandbox",
-            "name" : "Wikipedia"
+            "icon": "/sysapps/home/img/ui5strap-docs-icon.jpg",
+            "url": "http://ui5strap.com/docs",
+            "id" : "com.ui5strap.docs",
+            "name" : "Manual"
         }
     
     ]
