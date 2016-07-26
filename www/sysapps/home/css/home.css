@@ -1,0 +1,429 @@
+/*
+*   Homescreen control
+*/
+
+.ui5strapHomeScreen{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+
+/*
+* Set Background of Home Screen
+* Attention: this will be later configurable by the logged in user.
+*/
+.ui5strapHomeScreen{
+    background-image: url('../img/home-bg.jpg');
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.ui5strapHomeScreen-inner{
+  position:relative;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+    width:100%; height:100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-position: center center;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:12px;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+
+    background-repeat:no-repeat;
+
+   -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+
+  transition: border-color 0.01s;
+    -webkit-transition: border-color 0.01s;
+    -moz-transition: border-color 0.01s; /* Safari */
+
+    -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+
+    border-color:green;
+}
+
+.ui5strapHomeScreen-inner:after{
+  content: url('../img/spinner-white.png');
+  display:none;
+}
+
+
+/*
+* Icon
+*/
+.ui5strapHomeScreenIcon{
+  position: absolute;
+    width:60px; 
+   height:88px;  
+
+   cursor:pointer;
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0.5);
+
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  
+}
+
+/*
+* Icon title
+*/
+.ui5strapHomeScreenIcon > .ui5strapHomeScreenIcon-title{
+    position:absolute;
+    width:100%;
+    bottom:0;
+    left:0;
+    height:28px;
+    line-height:28px;
+    text-align: center; 
+    text-shadow:0 1px 2px rgba(0,0,0,0.8);
+    color:#f0f0f0;
+}
+
+.ui5strapHomeScreen-animation-drop.ui5strapHomeScreen-flag-TransitionStart .ui5strapHomeScreenIcon,
+.ui5strapHomeScreen-animation-explode.ui5strapHomeScreen-flag-TransitionStart .ui5strapHomeScreenIcon{
+    
+    transition: transform 0.5s;
+    -webkit-transition:  -webkit-transform 0.5s;
+    -moz-transition: -moz-transform 0.5s; 
+    
+}
+
+.ui5strapHomeScreen-animation-explode.ui5strapHomeScreen-flag-TransitionStart .ui5strapHomeScreenIcon{
+   left:49%;
+   top:49%;
+}
+
+.ui5strapHomeScreen-animation-drop .ui5strapHomeScreenIcon{
+    -webkit-transform: translateZ(1000px);
+    -moz-transform: translateZ(1000px);
+    -ms-transform: translateZ(1000px);
+    -o-transform: translateZ(1000px);
+    transform: translateZ(1000px);
+}
+
+.ui5strapHomeScreen-animation-drop .ui5strapHomeScreenIcon.ui5strapHomeScreenIcon-random-1{
+       transition-delay: 0.1s;
+    -webkit-transition-delay:  0.1s; /* Safari */
+    -moz-transition-delay: 0.1s; /* Safari */
+}
+
+.ui5strapHomeScreen-animation-drop .ui5strapHomeScreenIcon.ui5strapHomeScreenIcon-random-2{
+       transition-delay: 0.2s;
+    -webkit-transition-delay:  0.2s; /* Safari */
+    -moz-transition-delay: 0.2s; /* Safari */
+}
+
+.ui5strapHomeScreen-animation-drop .ui5strapHomeScreenIcon.ui5strapHomeScreenIcon-random-3{
+      transition-delay: 0.3s;
+    -webkit-transition-delay:  0.3s; /* Safari */
+    -moz-transition-delay: 0.3s; /* Safari */
+}
+
+.ui5strapHomeScreen-animation-drop .ui5strapHomeScreenIcon.ui5strapHomeScreenIcon-random-4{
+       transition-delay: 0.4s;
+    -webkit-transition-delay:  0.4s; /* Safari */
+    -moz-transition-delay: 0.4s; /* Safari */
+}
+
+
+
+
+.ui5strapHomeScreen-animation-drop.ui5strapHomeScreen-flag-TransitionStart .ui5strapHomeScreenIcon{
+   -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/*
+* Wraps the area around the icon
+*/
+.ui5strapHomeScreenIcon-imgWrapper{
+  position: absolute;
+  width:60px;
+  height:60px;
+  
+  left:50%;
+  bottom:28px;
+  margin-left:-30px;
+}
+
+/*
+* Icon image container
+*/
+.ui5strapHomeScreenIcon-img{
+    position: absolute;
+    width:100%;
+    height:100%;
+    z-index: 10;
+    border-radius: 20%;
+}
+
+/*
+* Icon image container
+*/
+.ui5strapHomeScreenIcon-actions,
+.ui5strapHomeScreenIcon-decorators{
+  position: absolute;
+  width:100%;
+  height:100%;
+  display:none;
+}
+
+
+.ui5strapHomeScreen-flag-EditMode .ui5strapHomeScreenIcon-actions{
+  display:block;
+}
+
+.ui5strapHomeScreenIcon-decorator{
+  border-radius:50%;
+    
+    position:absolute;
+    
+    z-index: 11;
+    line-height:20px;
+    font-size:12px;
+    text-align:center;
+    font-weight:bold;
+
+    width:24px;
+    height:24px;
+
+    -webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, .6);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, .6);
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, .6);
+
+     -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+.ui5strapHomeScreenIcon-actionsClose{
+    
+
+    left:0;
+    top:0;
+    margin-left:-12px;
+    margin-top:-12px;
+
+    
+    background-color:black;
+    border:solid 2px #f0f0f0;
+    color:white;
+
+    
+  }
+
+  .ui5strapHomeScreenIcon-decoratorCounter{
+    right:0;
+    top:0;
+    
+    margin-right:-12px;
+    margin-top:-12px;
+
+    
+    background-color:red;
+    color:white;
+    border:solid 2px #f0f0f0;
+
+  }
+
+.ui5strapHomeScreenIcon-style-Precomposed .ui5strapHomeScreenIcon-img{
+    -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .6);
+    -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .6);
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .6);
+}
+
+/*
+* Icon image
+*/
+.ui5strapHomeScreenIcon .ui5strapHomeScreenIcon-img > img{
+    position:absolute;
+  width:100%; 
+  height:100%;
+    
+  z-index:5;
+
+  border-radius: inherit;
+    
+  border:none;
+}
+
+/*
+* Icon gloss
+*/
+.ui5strapHomeScreenIcon .ui5strapHomeScreenIcon-img > .ui5strapHomeScreenIcon-gloss {
+    display:none;
+    position: absolute;
+    top: 0px;
+    height: 53%;
+    width: 100%;
+    overflow: hidden;
+  
+    background: rgba(255,255,255,0.2);
+    
+    z-index: 7;
+    -webkit-box-shadow: 0px 0px 70px rgba(0,0,0, .2), inset 0px 1px 1px rgba(255,255,255,0.6);
+    -moz-box-shadow: 0px 0px 70px rgba(0,0,0, .2), inset 0px 1px 1px rgba(255,255,255,0.6);
+    box-shadow: 0px 0px 70px rgba(0,0,0, .2), inset 0px 1px 1px rgba(255,255,255,0.6); 
+
+    border-bottom-right-radius: 72px 20px;
+    border-bottom-left-radius: 72px 20px;
+    border-top-right-radius: 24px;
+    border-top-left-radius: 24px;
+
+    -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+    
+}
+
+.ui5strapHomeScreenIcon-style-Default .ui5strapHomeScreenIcon-img > .ui5strapHomeScreenIcon-gloss{
+    display:block;
+} 
+
+.ui5strapHomeScreenIcon-style-Precomposed .ui5strapHomeScreenIcon-img > .ui5strapHomeScreenIcon-gloss{
+    display:none;
+}
+
+/*
+* Icon Bevel
+*/
+.ui5strapHomeScreenIcon .ui5strapHomeScreenIcon-img > .ui5strapHomeScreenIcon-bevel {
+   display:none;
+   position:absolute;
+   overflow:hidden;
+   
+   width:100%;
+   height:100%;
+
+   z-index:6;
+
+   border-radius: inherit;
+   
+   -webkit-box-shadow: inset 0px 0px 40px rgba(0,0,0,0.2);
+    -moz-box-shadow: inset 0px 0px 40px rgba(0,0,0,0.2);
+    box-shadow: inset 0px 0px 40px rgba(0,0,0,0.2);
+
+    -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+.ui5strapHomeScreenIcon-style-Default .ui5strapHomeScreenIcon-img > .ui5strapHomeScreenIcon-bevel{
+    display:block;
+} 
+
+.ui5strapHomeScreenIcon-style-Precomposed .ui5strapHomeScreenIcon-img > .ui5strapHomeScreenIcon-bevel{
+    display:none;
+}
+
+
+/*
+* Icon top layer
+*/
+.ui5strapHomeScreenIcon .ui5strapHomeScreenIcon-topLayer {
+   
+   position:absolute;
+   
+   width:100%;
+   height:100%;
+
+   z-index:9;
+
+   border-radius : inherit;
+}
+
+.ui5strapHomeScreen-flag-EditMode .ui5strapHomeScreenIcon-topLayer {
+  display:none;
+}
+
+
+
+/*
+* Loader
+*/
+
+.ui5strapHomeScreenIcon .ui5strapHomeScreenIcon-img > .ui5strapHomeScreenIcon-loader{
+  background-color:rgba(255,255,255,0.8);
+   width:100%;
+  height:100%;
+  position:absolute;
+  z-index:8;
+  
+  display:none;
+
+  border-radius : inherit;
+
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+.ui5strapHomeScreenIcon .ui5strapHomeScreenIcon-img > .ui5strapHomeScreenIcon-loader > .ui5strapHomeScreenIcon-loaderSpinner{
+  background-image:url('../img/spinner-black.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  width:100%;
+  height:100%;
+
+  -webkit-animation: spin 2s infinite linear;
+-moz-animation: spin 2s infinite linear;
+-o-animation: spin 2s infinite linear;
+animation: spin 2s infinite linear;
+
+-webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+
+display:block;
+}
+
+.ui5strapHomeScreenIcon.ui5strapHomeScreenIcon-loader .ui5strapHomeScreenIcon-img > .ui5strapHomeScreenIcon-loader{
+  display:block;
+}
+
+
+
+.ui5strapHomeScreen-flag-EditMode .ui5strapHomeScreenIcon .ui5strapHomeScreenIcon-img{
+   -webkit-animation: shake 0.2s infinite linear;
+-moz-animation: shake 0.2s infinite linear;
+-o-animation: shake 0.2s infinite linear;
+animation: shake 0.2s infinite linear;
+
+}
+
+.ui5strapHomeScreen-flag-EditMode .ui5strapHomeScreenIcon > .ui5strapHomeScreenIcon-title{
+  display:none;
+}
+

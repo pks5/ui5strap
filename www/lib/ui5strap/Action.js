@@ -248,7 +248,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 		}
 		
 		var instanceDef = _getActionInstanceDef(context, taskId);
-		sap.ui.require([instanceDef.module.replace(/\./g, "/")], function(TaskConstructor){
+		sap.ui.require([context.app.config.resolvePackage(instanceDef.module).replace(/\./g, "/")], function(TaskConstructor){
 			//Push to callstack
 			context._callStack.push(instanceDef);
 

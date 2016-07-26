@@ -1,0 +1,26 @@
+{
+	"BEGIN" : "getContextData",
+	
+	"getContextData" : {
+	    "TYPE" : "ui5strap.AMGetContextData",
+		"modelName" : "APPS",
+		"tgtParam" : "parameters.getContextData.CONTEXT",
+		"scope" : "SOURCE",
+		"THEN" : "openApp"
+	},
+	
+	"openApp" : {
+	   "TYPE" : "ui5strap.AMOpenApp",
+		"url" : "= action.getContextData.CONTEXT.url",
+		"internal" : "= action.getContextData.CONTEXT.internal",
+		"id" : "= action.getContextData.CONTEXT.id",
+		"type" : "= action.getContextData.CONTEXT.type",
+		"package" : "= action.getContextData.CONTEXT.package",
+		"name" : "= action.getContextData.CONTEXT.name",
+		"launcher" : "= action.getContextData.CONTEXT.launcher",
+		"icon" : "= action.getContextData.CONTEXT.icon",
+		
+		"target" : "VIEWER"
+	}
+
+}

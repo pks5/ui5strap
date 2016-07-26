@@ -1,0 +1,7 @@
+{
+	"BEGIN" : "updateTaskManager",
+	
+	"updateTaskManager" : {
+	   "TYPE" : ".modules.AMUpdateTaskManager"
+	}
+}

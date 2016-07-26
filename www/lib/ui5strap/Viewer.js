@@ -277,7 +277,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				            "name" : appDefinition.name,
 				            
 				            "id" : appDefinition.id,
-				            "location" : appDefinition["location"],
+				            "location" : appDefinition["location"] || uLib.Utils.getFileLocation(appDefinition.url),
 				            
 				            "type" : "ui5strap.AppSandbox",
 				            

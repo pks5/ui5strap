@@ -359,3 +359,67 @@ html, body{
     50% { -webkit-transform: translate(-12px, 0); }
     100% { -webkit-transform: translate(0, 0); }
 }
+
+/*
+* Home bar
+*/
+#ui5strap-bar-home{
+    display:none;
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height:30px;
+    background-color:black;
+}
+
+/*
+* Home bar show trigger
+*/
+.ui5strap-with-bar-home #ui5strap-bar-home{
+    display:block;
+}
+
+/*
+* Home Button (middle)
+*/
+#ui5strap-button-home{
+    position: absolute;
+    display:block;
+    width:90px;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+    left:50%;
+    top: 0;
+    margin-left: -45px;
+    font-size: 18px;
+    cursor:pointer;
+    background-color:#202020;
+    color:#f0f0f0;
+}
+
+/*
+* TaskManager Button (right)
+*/
+#ui5strap-button-taskmanager{
+    position: absolute;
+    display:block;
+    width:90px;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+    right:0;
+    top: 0;
+    font-size: 18px;
+    cursor:pointer;
+    background-color:#202020;
+    color:#f0f0f0;
+}
+
+/*
+* Shrink the main container for home bar
+*/
+.ui5strap-with-bar-home #ui5strap-container{
+    bottom:30px; 
+}

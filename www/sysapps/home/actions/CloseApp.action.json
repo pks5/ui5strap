@@ -1,0 +1,17 @@
+{
+	"DEBUG" : true,
+	"TASKS" : ["getContextData", "closeApp"],
+	
+	"getContextData" : {
+	   "TYPE" : "ui5strap.AMGetContextData",
+		"modelName" : "tasks",
+		"tgtParam" : "parameters.getContextData.CONTEXT",
+		"scope" : "SOURCE"
+	},
+
+	"closeApp" : {
+	   "TYPE" : "ui5os.modules.AMCloseApp",
+		"appId" : "= action.getContextData.CONTEXT.app.id",
+		"THEN" : "ui5os.modules.AMUpdateTaskManager"
+	}  
+}

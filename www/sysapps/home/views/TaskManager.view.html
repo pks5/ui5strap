@@ -1,0 +1,14 @@
+<template data-controller-name="ui5strap.ActionController">
+	<div class="ui5os-taskmanager-container" data-sap-ui-type="ui5strap.Container">
+		<div id="taskManager" data-sap-ui-type="com.ui5strap.apps.home.controls.HomeScreen" data-icons="{tasks>/sapplications}">
+			<div data-sap-ui-type="com.ui5strap.apps.home.controls.HomeScreenIcon" 
+				data-closable="true" 
+				data-tap="__execute" 
+				data-close-tap="__execute" 
+				data-custom-data:__action="?tap=com.ui5strap.apps.home.actions.SwitchToApp&amp;closeTap=ui5os.actions.CloseApp" 
+				data-title="{tasks>app/name}" 
+				data-sapp-url="{tasks>app/url}" 
+				data-icon="{tasks>iconsResolved/default}"></div>
+		</div>
+	</div>
+</template>

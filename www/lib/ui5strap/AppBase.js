@@ -920,6 +920,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	* @param eventParameters {object} Information about the event.
 	*/
 	AppBaseProto.fireEventAction = function(eventParameters){
+		var _this = this;
+		
 		if(this.config.data.events){
 			var appEvents = this.config.data.events;
 			
@@ -934,7 +936,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 								return;
 							}
 							
-							this.runEventAction(
+							_this.runEventAction(
 								eventParameters, 
 								eventList[j], 
 								function(){
@@ -962,14 +964,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 						var actionOrFunction = eventList[j];
 						if(typeof actionOrFunction === 'function'){
 							//Call the registered function with original event as parameter
-							this.log.debug("Executing event function '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
+							_this.log.debug("Executing event function '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
 							actionOrFunction.call(this, eventParameters.orgEvent);
 							
 							nextAction(j+1);
 						}
 						else{
 							//chain via callback
-							this.runEventAction(
+							_this.runEventAction(
 									eventParameters, 
 									actionOrFunction,
 									function(){

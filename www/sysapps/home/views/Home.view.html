@@ -1,0 +1,15 @@
+<template data-controller-name="com.ui5strap.apps.home.controllers.HomeScreen">
+	<div id="homeScreen" data-sap-ui-type="com.ui5strap.apps.home.controls.HomeScreen" 
+		data-icon-animation="drop" 
+		data-icons="{APPS>/apps}">
+		<div data-sap-ui-type="com.ui5strap.apps.home.controls.HomeScreenIcon" 
+		
+			data-tap="com.ui5strap.apps.home.actions.OpenApp"
+			data-sandbox="{APPS>sandbox}"
+			data-title="{APPS>name}" 
+			data-app-url="{APPS>url}"  
+			data-icon="{APPS>icon}" 
+			data-closable="true"
+			data-counter="{APPS>data/counter}"></div>
+	</div>
+</template>
