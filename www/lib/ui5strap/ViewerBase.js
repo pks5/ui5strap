@@ -208,16 +208,18 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 					viewApp.includeStyle(function includeStyle_complete(){
 						var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
 							view = viewApp.createView(viewConfig);
+						
+						view.loaded().then(function(){
+							overlayControl.toPage(view, 'content', transitionName, function(){
+								viewApp.isVisibleInOverlay = true;
 
-						overlayControl.toPage(view, 'content', transitionName, function(){
-							viewApp.isVisibleInOverlay = true;
-
-							viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
-								view : view, 
-								viewConfig : viewConfig
-							}));
-							
-							callback && callback();	
+								viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
+									view : view, 
+									viewConfig : viewConfig
+								}));
+								
+								callback && callback();	
+							});
 						});
 					});
 				}

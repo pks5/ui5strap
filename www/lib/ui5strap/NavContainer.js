@@ -743,7 +743,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		}
 		
 		if(this.getDomRef()){
-			//jQuery.sap.log.info("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
+			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
 			//NavContainer is already attached to DOM
 			targetTransition.$next = _placePage(_this, target, page, true);
 			
@@ -752,7 +752,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			}, domAttachTimeout);
 		}
 		else{
-			//jQuery.sap.log.info("[NC#" + this.getId() + "] NavContainer not attached to DOM yet.");
+			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer not attached to DOM yet.");
 
 			//NavContainer not attached to DOM yet
 			//It will override all pending transitions on this target!
