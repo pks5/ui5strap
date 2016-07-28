@@ -577,6 +577,17 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			configDataJSON.views = [];
 		}
 		
+		/*
+		if(!appSection["pages"]){
+			if(appSection.views){
+				jQuery.sap.log.warning("Config setting 'app.views' is deprecated! Use 'app.pages' instead.")
+			}
+			else{
+				appSection["views"] = "ui5strap.App";
+			}
+		}
+		*/
+		
 		//App Components
 		if(!configDataJSON.components){
 			configDataJSON.components = [];

@@ -30,7 +30,7 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(uLib, Manager){
 			_this.app.getViewer().showOverlay({
 				"appId" : _this.app.getId(),
 				"target" : "content",
-		        "viewName" : _this.app.config.data.app.package + ".views.TaskManager",
+		        "viewName" : _this.app.config.data.app["package"] + ".views.TaskManager",
 		        "id" : "taskManager"
 			});
 		});
