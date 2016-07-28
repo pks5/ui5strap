@@ -14,6 +14,14 @@
             "url": "http://ui5strap.com/docs",
             "id" : "com.ui5strap.docs",
             "name" : "Manual"
+        },
+        {
+            "id" : "com.ui5strap.apps.template",
+            "internal" : false,
+            "name": "Template",
+            "type" : "UI5STRAP",
+            "icon": "/apps/demoapp/img/ui5strap-logo-7.png",
+            "url": "./apps/template/app.json"
         }
     
     ]

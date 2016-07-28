@@ -40,7 +40,7 @@
             {
                 "id" : "main",
                 "type" : ".modules.HomeMain",
-                "events" : ["app.load"]
+                "events" : ["app.load", "app.show", "app.resize"]
             
             }
         ],
