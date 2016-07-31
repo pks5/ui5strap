@@ -37,7 +37,7 @@
 					<Text type="Lead" textAlign="Center" text="{i18n>PAGE_HOME_INTRO}" />
 					
 					<Paragraph textAlign="Center">
-						<Image mpath="com.ui5strap.apps.template.img.awesome" ext="png" alt="Image" width="256" height="256" />
+						<Image mpath="com.ui5strap.apps.template.img.ui5strap-template-icon" ext="jpg" alt="Image" width="256" height="256" />
 					</Paragraph>
 					
 				</Container>
