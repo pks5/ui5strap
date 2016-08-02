@@ -444,7 +444,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		document.title = configAppSection.name;
 		
 		//Store Previous App
-		var previousSapplication = this.getApp();
+		var prevApp = this.getApp();
 		
 		//Set the app as current foreground app				
 		_m_currentSapplication = appInstance;
@@ -453,7 +453,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		//Create or Update App Container
 		appInstance.updateContainer();
 
-		var $currentRoot = previousSapplication ? previousSapplication.$() : jQuery('#ui5strap-app-initial'),
+		var $currentRoot = prevApp ? prevApp.$() : jQuery('#ui5strap-app-initial'),
 			
 			//Remove current app dom after transition
 			currentRootCallbackI = 0,
@@ -463,10 +463,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 					return;
 				}
 	
-				if(previousSapplication){
+				if(prevApp){
 					//Previous App onHidden
-					previousSapplication.hidden(function(){
-						_this.removeStyle(previousSapplication);
+					prevApp.hidden(function(){
+						_this.removeStyle(prevApp);
 					});
 				}
 				else{
@@ -492,7 +492,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			jQuery.sap.log.debug("Attaching root to DOM...");
 			
 			//Append App to DOM is not yet
-			appInstance.attach(_this._dom.$root[0]);
+			appInstance.attach(_this._dom.$root[0], prevApp);
 			
 			//Create new Transition
 			var transition = new ResponsiveTransition(
@@ -508,7 +508,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			window.setTimeout(function setTimeout_complete(){
 				
 				//Previous App onHide
-				previousSapplication && previousSapplication.hide();
+				prevApp && prevApp.hide();
 				
 				//Current App onShow
 				appInstance.show(function(){

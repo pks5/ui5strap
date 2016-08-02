@@ -427,3 +427,13 @@ animation: shake 0.2s infinite linear;
   display:none;
 }
 
+/*
+* Task Manager
+*/
+.ui5strap-taskmanager-container{
+    position:absolute;
+    left: 0;
+    right: 0;
+    top:20%;
+    bottom:20%;
+}

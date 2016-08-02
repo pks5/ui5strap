@@ -1606,13 +1606,16 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	 * 
 	 * @param containerEl {HTMLElement} The container dom element.
 	 */
-	AppBaseProto.attach = function(containerEl){
+	AppBaseProto.attach = function(containerEl, swapApp){
 		if(!this.isAttached){
 			jQuery.sap.log.debug("Attaching app '" + this.getId() + "' to DOM...");
 			this.isAttached = true;
 			containerEl.appendChild(this.domRef);
 			this.registerOverlay();
 			this.getRootControl().placeAt(this.contentDomRef);
+		}
+		else if(swapApp){
+			//containerEl.insertBefore(this.domRef, swapApp.domRef.nextSibling);
 		}
 	};
 
@@ -1648,7 +1651,55 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//Finally, destroy the app object
 		sap.ui.base.Object.prototype.destroy.call(this);
 	};
+	
+	/*
+	* -------------------------------------------------
+	* --------------------- STYLE ---------------------
+	* -------------------------------------------------
+	*/
 
+	/**
+	 * Includes the style that is needed for this app.
+	 * @override
+	 */
+	AppBaseProto.includeStyle = function(callback){
+		var themeName = this.config.data.app.theme;
+		if(themeName){ 
+			this.setTheme(themeName);
+		}
+		
+		callback && callback();
+	};
+
+	/**
+	 * Removes the style that is needed for this app.
+	 * @override
+	 */
+	AppBaseProto.removeStyle = function(){
+
+	};
+
+	/**
+	* Sets the theme of the app
+	* @param themeName {string} The name of the new theme.
+	*/
+	AppBaseProto.setTheme = function(themeName){
+		if(!themeName || "base" === themeName){
+			sap.ui.getCore().applyTheme("base");
+			return;
+		}
+
+		if(jQuery.sap.startsWith(themeName, "sap_")){
+			sap.ui.getCore().applyTheme(themeName);
+			return;
+		}
+		//sap.ui.getCore().setThemeRoot(themeName, );
+		sap.ui.getCore().applyTheme(themeName, this.config.getEnvironment().pathToThemeRoot);
+
+		this.log.debug("Theme '" + themeName + "' set.");
+	};
+
+	
 	/*
 	* --------------------------------------------------
 	* --------------------- Controller -----------------
@@ -1725,6 +1776,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		
 		//Add getApp method if not already exists
 		if(!controllerImpl.getApp){
+			/*
+			 * FIXME: Getting the app reference via view data is bad practice. Instead get it via the root component if available.
+			 */
+			
 	          controllerImpl.getApp = function(){
 	              var viewData = this.getView().getViewData();
 	            

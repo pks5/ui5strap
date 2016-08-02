@@ -9580,6 +9580,7 @@ a {
   opacity: .99;
 }
 .ui5strap-trans-all-type-zoom-in.ui5strap-transition-next {
+  z-index: 1;
   -webkit-transform: scale3d(0, 0, 0);
       -ms-transform: scale3d(0, 0, 0);
        -o-transform: scale3d(0, 0, 0);
@@ -10026,6 +10027,7 @@ a {
     opacity: .99;
   }
   .ui5strap-trans-xs-type-zoom-in.ui5strap-transition-next {
+    z-index: 1;
     -webkit-transform: scale3d(0, 0, 0);
         -ms-transform: scale3d(0, 0, 0);
          -o-transform: scale3d(0, 0, 0);
@@ -10473,6 +10475,7 @@ a {
     opacity: .99;
   }
   .ui5strap-trans-sm-type-zoom-in.ui5strap-transition-next {
+    z-index: 1;
     -webkit-transform: scale3d(0, 0, 0);
         -ms-transform: scale3d(0, 0, 0);
          -o-transform: scale3d(0, 0, 0);
@@ -10920,6 +10923,7 @@ a {
     opacity: .99;
   }
   .ui5strap-trans-md-type-zoom-in.ui5strap-transition-next {
+    z-index: 1;
     -webkit-transform: scale3d(0, 0, 0);
         -ms-transform: scale3d(0, 0, 0);
          -o-transform: scale3d(0, 0, 0);
@@ -11367,6 +11371,7 @@ a {
     opacity: .99;
   }
   .ui5strap-trans-lg-type-zoom-in.ui5strap-transition-next {
+    z-index: 1;
     -webkit-transform: scale3d(0, 0, 0);
         -ms-transform: scale3d(0, 0, 0);
          -o-transform: scale3d(0, 0, 0);

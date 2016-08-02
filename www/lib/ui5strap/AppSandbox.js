@@ -80,18 +80,6 @@
 		this._sandboxControl.setSrc(this.config.data.app.appURL);
 	};
 
-	/*
-	* -------------------------------------------------
-	* --------------------- STYLE ---------------------
-	* -------------------------------------------------
-	*/
-
-	AppSandboxProto.includeStyle = function(callback){
-		callback && callback();
-	};
-
-	AppSandboxProto.removeStyle = function(){};
-
 	//Return Module Constructor
 	return AppSandbox;
 });

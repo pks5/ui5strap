@@ -22,6 +22,14 @@
             "type" : "UI5STRAP",
             "icon": "/apps/template/img/ui5strap-template-icon.jpg",
             "url": "./apps/template/app.json"
+        },
+        {
+            "id" : "sap.ui.demo.wt",
+            "internal" : false,
+            "name": "Fiori",
+            "type" : "UI5STRAP",
+            "icon": "/apps/template/img/ui5strap-template-icon.jpg",
+            "url": "./apps/fiori/app.json"
         }
     
     ]

@@ -56,7 +56,6 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			
 			//Init local vars
 			this._runtimeData = {
-				"theme" : null,
 				"css" : {},
 				"js" : {}
 			};
@@ -216,9 +215,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			cssKeys = Object.keys(configData.css),
 			callbackCount = cssKeys.length;
 
-		if(configData.app.theme){ 
-			this.setTheme(configData.app.theme);
-		}
+		AppBase.prototype.includeStyle.call(this);
 		
 		if(callbackCount === 0){
 			callback && callback.call(this);
@@ -273,28 +270,6 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			delete this._runtimeData.css[cssKey];
 			this.log.info("Css stylesheet '" + cssKey + "' removed.");
 		}
-	};
-
-	/**
-	* Sets the theme of the app
-	* @param themeName {string} The name of the new theme.
-	*/
-	AppProto.setTheme = function(themeName){
-		this._runtimeData.theme = themeName;
-
-		if(!themeName || "base" === themeName){
-			sap.ui.getCore().applyTheme("base");
-			return;
-		}
-
-		if(jQuery.sap.startsWith(themeName, "sap_")){
-			sap.ui.getCore().applyTheme(themeName);
-			return;
-		}
-		//sap.ui.getCore().setThemeRoot(themeName, );
-		sap.ui.getCore().applyTheme(themeName, this.config.getEnvironment().pathToThemeRoot);
-
-		this.log.debug("Theme '" + themeName + "' set.");
 	};
 
 	/*

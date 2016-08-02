@@ -98,28 +98,6 @@
 		callback && callback(this.console);
 	}; 
 
-	/*
-	* -------------------------------------------------
-	* --------------------- STYLE ---------------------
-	* -------------------------------------------------
-	*/
-
-	/**
-	 * Includes the style that is needed for this app.
-	 * @Override
-	 */
-	AppConsoleProto.includeStyle = function(callback){
-		callback && callback();
-	};
-
-	/**
-	 * Removes the style that is needed for this app.
-	 * @Override
-	 */
-	AppConsoleProto.removeStyle = function(){
-
-	};
-
 	//Return Module Constructor
 	return AppConsole;
 });
