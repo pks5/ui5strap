@@ -350,7 +350,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//TODO this must become standard
 		if(_this.config.data.app.rootComponent){
 			sap.ui.getCore().createComponent({
-				id : _this.config.getAppDomId("root"),
+				//TODO Does the root component need a stable ID?
+				//id : _this.config.getAppDomId("root"),
 		        name: _this.config.data.app["package"],
 		        async : true,
 		        settings: {
@@ -1394,7 +1395,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	 * @returns {string} The relative control id.
 	 */
 	AppBaseProto.extractRelativeControlId = function(controlId, viewId){
-		var prefix = this.config.getAppDomId() + '---';
+		var prefix = this.config.getDomId() + '---';
 		
 		if(viewId){
 			if(jQuery.sap.startsWith(controlId, prefix)){
@@ -1492,6 +1493,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	
 	/**
 	 * Whether this app has a certain nature.
+	 * TODO move to app config
 	 * 
 	 * @param nature {string} The ID of the nature.
 	 * @returns {boolean} Whether the app has the nature.
@@ -1501,7 +1503,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	};
 
 	/**
-	* Returns the ID of the App.
+	* Returns the ID of the App. The ID is in Java format and contains dots.
+	* @deprecated
 	* 
 	* @returns {string} The app ID.
 	*/
@@ -1531,12 +1534,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	/**
 	* Returns the Dom ID of the App.
 	* 
+	* @deprecated
 	* @param subElement {string} Name of the sub element.
 	* @returns {string} The dom ID.
 	*/
 	AppBaseProto.getDomId = function(subElement){
 		jQuery.sap.log.warning("ui5strap.App.prototype.getDomId is deprecated! Use ui5strap.AppConfig.prototype.getAppDomId instead!");
-		return this.config.getAppDomId(subElement);
+		return this.config.createDomId(subElement);
 	};
 
 	/**
@@ -1553,7 +1557,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//App Container
 		var appContainer = document.createElement('div');
 		appContainer.className = _createAppClass(this, 'ui5strap-app ui5strap-app-prepared ui5strap-hidden');
-		appContainer.id = this.config.getAppDomId();
+		appContainer.id = this.config.getDomId();
 		
 		//App Content
 		var appContent = document.createElement('div');
@@ -1607,16 +1611,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	 * 
 	 * @param containerEl {HTMLElement} The container dom element.
 	 */
-	AppBaseProto.attach = function(containerEl, swapApp){
+	AppBaseProto.attach = function(containerEl){
 		if(!this.isAttached){
 			jQuery.sap.log.debug("Attaching app '" + this.getId() + "' to DOM...");
 			this.isAttached = true;
 			containerEl.appendChild(this.domRef);
 			this.registerOverlay();
 			this.getRootControl().placeAt(this.contentDomRef);
-		}
-		else if(swapApp){
-			//containerEl.insertBefore(this.domRef, swapApp.domRef.nextSibling);
 		}
 	};
 

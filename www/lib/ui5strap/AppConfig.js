@@ -38,22 +38,33 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	AppConfigProto = AppConfig.prototype;
 
 	/**
-	* @deprecated
-	* @Public
+	* Sets the configuration data after validating.
 	*/
-	AppConfigProto.getMenuData = function(menuId){
-		if(!(menuId in this.data.menus)){
-			return null;
-		}
-		return this.data.menus[menuId];
+	AppConfigProto.setData = function(newData){
+		this._validate(newData);
+		
+		this.data = newData;
+	};
+
+	/**
+	 * Gets a Model based on Configuration Data.
+	 */
+	AppConfigProto.getModel = function(){
+		return new JSONModel(this.data);
 	};
 	
 	/**
-	* Returns the Dom ID of the App.
-	* TODO Rename to "createId"
-	*/
-	AppConfigProto.getAppDomId = function(subElement){
-		return this.data.app.id.replace(/\./g, '-') + (subElement ? '----' + subElement : '');
+	 * Returns this app's dom id.
+	 */
+	AppConfigProto.getDomId = function(){
+		return this._domId;
+	}
+	
+	/**
+	 * Creates a global dom id based on the app's dom id.
+	 */
+	AppConfigProto.createDomId = function(newId){
+		return this._domId + "----" + newId;
 	};
 
 	/**
@@ -61,7 +72,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	 * TODO This method should not be used when root component is an UIComponent.
 	 */
 	AppConfigProto.createControlId = function(controlId, viewId){
-		var appPrefix = this.getAppDomId() + '---';
+		//TODO Should the app prefix have a subElement with ----?
+		var appPrefix = this.getDomId() + '---';
 		if(jQuery.sap.startsWith(controlId, appPrefix)){
 			if(viewId){
 				throw new Error("Cannot create absolute control id: controlId is already absolute but viewId is given!");
@@ -93,7 +105,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* Returns config information about a view. If only an ID is provided, the view with that ID is returned. 
 	* If an ID and viewName is provided, it first looks for a view with that ID - if there is no view with the ID but ONE with the provided viewName without any ID, that view is returned.
 	* If only a viewName is provided, it looks if there is ONE view with that viewName or throws an error.
-	* @Public
 	*/
 	AppConfigProto.getViewConfig = function(viewDef){
 		//If viewDef is a string, use it as id.
@@ -180,7 +191,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 	/**
 	* Returns a list of events / actions for given scope, eventName and viewName.
-	* @Public
 	*/
 	AppConfigProto.getEvents = function(eventGroup, eventName, viewDef){
 		var eventList = [],
@@ -208,7 +218,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	
 	/**
 	 * Returns the current environment settings.
-	 * @Public
 	 */
 	AppConfigProto.getEnvironment = function(){
 		var currentEnv = this.data.app.environment,
@@ -227,8 +236,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 	/**
 	* Processes a given option
-	* @Static
-	* @Public
+	* @static
 	*/
 	AppConfig.processOption = function(optionKey, option){
 		if(typeof option === 'string'){
@@ -266,7 +274,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 	/**
 	* Resolves the raw information.
-	* @Public
 	*/
 	AppConfigProto.resolve = function(){
 		var configDataJSON = this.data,
@@ -342,7 +349,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			}
 		}
 		else{
-			//Old format
+			//TODO remove
+			//START deprecated views format
 			//@deprecated
 			
 			jQuery.sap.log.warning("Declaring views as object is deprecated. Please use an array instead.");
@@ -373,6 +381,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 					configDataJSON.viewsById[viewData.id] = viewData;
 				}
 			}
+			
+			//END deprecated views format
 		}
 		//END read Views
 		
@@ -405,7 +415,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	
 	/**
 	* Resolves a path relative to app location
-	* @Public
 	*/
 	AppConfigProto.resolvePath = function (path, isStatic){
 		var resourceLocation = null,
@@ -459,7 +468,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 	/**
 	* Resolves a package relative to app package.
-	* @Public
 	*/
 	AppConfigProto.resolvePackage = function (packageString, defaultFolder){
 		if(-1 === packageString.indexOf(".")){
@@ -482,7 +490,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	
 	/**
 	* Validates the configuration JSON data. If mandatory properties are missing, empty ones will created.
-	* @Protected
+	* @protected
 	*/
 	AppConfigProto._validate = function(configDataJSON){
 		var appSection = configDataJSON.app;
@@ -492,41 +500,33 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 
 		//ID
-		if(!appSection.id){
+		var appId = appSection["id"];
+		
+		if(!appId){
 			throw new Error("Invalid app config: attribute 'app.id' is missing.");
 		}
 		
-		if(!appSection.id.match(/^[a-zA-Z0-9_\.]+$/)){
-			throw new Error('Invalid app id "' + appSection["id"] + '": may only contain letters, digits, dots and underscores.');
+		if(!appId.match(/^[a-zA-Z0-9_\.]+$/)){
+			throw new Error('Invalid app id "' + appId + '": may only contain letters, digits, dots and underscores.');
 		}
+		
+		this._domId = appId.replace(/\./g, '-');
 
 		//Package
 		if(!appSection["package"]){
-			appSection["package"] = appSection["id"];
+			appSection["package"] = appId;
 		}
 
 		if(!appSection["package"].match(/(^[a-zA-Z0-9_]+)(\.[a-zA-Z0-9_]+)+$/)){
 			throw new Error('Package name may only contain letters and digits and the underscore char, separated by a ".", and must have at least one sub package.');
 		}
 		
+		//Version
 		if(!appSection.version){
 			appSection.version = "0.0.1-SNAPSHOT";
 		}
 		
-		//Namespace
-		//TODO What's this?
-		/*
-		if(!appSection["namespace"]){
-			appSection["namespace"] = appSection["package"];
-		}	
-
-		if(!appSection["namespace"].match(/^[a-zA-Z0-9_\.]+$/)){
-			throw new Error('Invalid app namespace "' + appSection["namespace"] + '": may only contain letters, digits, dots and underscores.');
-		}
-		*/
-
-		//Module
-		//TODO Use class instead of module
+		//Type
 		if(!appSection["type"]){
 			if(appSection.module){
 				jQuery.sap.log.warning("Config setting 'app.module' is deprecated! Use 'app.type' instead.")
@@ -630,24 +630,32 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 	};
 
-	/**
-	* Sets the configuration data after validating.
-	* @Public
-	*/
-	AppConfigProto.setData = function(newData){
-		this._validate(newData);
-		
-		this.data = newData;
-	};
-
-	/**
-	 * Gets a Model based on Configuration Data.
-	 * @Public
+	/*
+	 * ----------
+	 * DEPRECATED
+	 * ----------
 	 */
-	AppConfigProto.getModel = function(){
-		return new JSONModel(this.data);
+	
+	/**
+	* @deprecated
+	*/
+	AppConfigProto.getMenuData = function(menuId){
+		if(!(menuId in this.data.menus)){
+			return null;
+		}
+		return this.data.menus[menuId];
 	};
-
-	//Return Module Constructor
+	
+	/**
+	* Returns the Dom ID of the App.
+	* @deprecated
+	*/
+	AppConfigProto.getAppDomId = function(subElement){
+		jQuery.sap.log.warning("getAppDomId is deprecated. Use createDomId instead.");
+		
+		return subElement ? this.createDomId(subElement) : this.getDomId();
+	};
+	
+	//Return Constructor
 	return AppConfig;
 });

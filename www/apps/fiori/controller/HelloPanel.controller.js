@@ -11,6 +11,8 @@ sap.ui.define([
                       var sMsg = oBundle.getText("helloMsg", [sRecipient]);
                       // show message
                       MessageToast.show(sMsg);
+                      
+                      alert(this.createId("test2"));
                   },
                   _getDialog : function () {
                      // create dialog lazily

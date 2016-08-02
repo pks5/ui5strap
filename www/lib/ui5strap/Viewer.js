@@ -497,7 +497,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			jQuery.sap.log.debug("Attaching root to DOM...");
 			
 			//Append App to DOM is not yet
-			appInstance.attach(_this._dom.$root[0], prevApp);
+			appInstance.attach(_this._dom.$root[0]);
 			
 			//Create new Transition
 			var transition = new ResponsiveTransition(
