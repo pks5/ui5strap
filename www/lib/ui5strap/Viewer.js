@@ -264,10 +264,15 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				}
 				
 				//The Launcher is the HTML file which is executing the App.
-				var appURL = appDefinition.launcher || "index.html";
+				var appURL = appDefinition.launcher || "index.html",
+					appLocation = appDefinition["location"];
 				
 				if(appDefinition.url){
 					appURL += "?app=" + encodeURIComponent(appDefinition.url);
+					
+					if(!appLocation){
+						 appLocation = uLib.Utils.getFileLocation(appDefinition.url);
+					}
 				}
 				
 				//Now load the App
@@ -277,7 +282,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				            "name" : appDefinition.name,
 				            
 				            "id" : appDefinition.id,
-				            "location" : appDefinition["location"] || uLib.Utils.getFileLocation(appDefinition.url),
+				            "location" : appLocation,
 				            
 				            "type" : "ui5strap.AppSandbox",
 				            
