@@ -350,6 +350,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		//TODO this must become standard
 		if(_this.config.data.app.rootComponent){
 			sap.ui.getCore().createComponent({
+				id : _this.config.getAppDomId("root"),
 		        name: _this.config.data.app["package"],
 		        async : true,
 		        settings: {

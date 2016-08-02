@@ -29,6 +29,7 @@ sap.ui.define([
        * Needed by Ui5Strap to show this Component.
        */
       _buildRootControl : function(){
+    	  //console.log(this.createId("test"));
     	  return new sap.m.Shell({
               app : new sap.ui.core.ComponentContainer({
             	  component : this,
