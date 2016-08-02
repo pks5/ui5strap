@@ -52,7 +52,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* Returns the Dom ID of the App
 	*/
 	AppConfigProto.getAppDomId = function(subElement){
-		return this.data.app.id.replace(/\./g, '-') + (subElement ? '---' + subElement : '');
+		return this.data.app.id.replace(/\./g, '-') + (subElement ? '----' + subElement : '');
 	};
 
 	/**
