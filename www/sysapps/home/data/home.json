@@ -28,7 +28,7 @@
             "internal" : false,
             "name": "Fiori",
             "type" : "UI5STRAP",
-            "icon": "/apps/template/img/ui5strap-template-icon.jpg",
+            "icon": "/apps/fiori/img/fiori.jpg",
             "url": "./apps/fiori/app.json"
         }
     
