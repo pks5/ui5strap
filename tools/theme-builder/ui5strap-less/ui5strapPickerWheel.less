@@ -46,44 +46,18 @@
     cursor: all-scroll;
 }
 
-.ui5strapPickerWheel-flag-Horizontal{
-    width:500px;
-    height:80px;
-}
-    
-.ui5strapPickerWheel-flag-Vertical{
-    width:120px;
-    height:360px;
-}
-
-.ui5strap-trans-all-type-flip-horizontal-ccw .ui5strapPickerWheel,
-.ui5strap-trans-xs-type-flip-horizontal-ccw .ui5strapPickerWheel,
-.ui5strap-trans-sm-type-flip-horizontal-ccw .ui5strapPickerWheel,
-.ui5strap-trans-md-type-flip-horizontal-ccw .ui5strapPickerWheel,
-.ui5strap-trans-lg-type-flip-horizontal-ccw .ui5strapPickerWheel{
-    visibility:hidden;
-}
-
 .ui5strapPickerWheel-inner{
     position:absolute;
 }
 
 .ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-inner{
-    /* 20% of total width */
-    width: 100px;
     height: 100%;
     left:50%;
-    margin-left:-50px;
 }
 
 .ui5strapPickerWheel-flag-Vertical .ui5strapPickerWheel-inner{
     width: 100%;
-    /*
-     * 20% of total height
-     */
-    height: 90px;  
     top:50%;
-    margin-top:-45px;   
 }
 
 .ui5strapPickerWheel-pointer{
@@ -91,6 +65,8 @@
     
     width:100%;
     height:100%;
+    
+    border-width: 1px;
 }
 
 .ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-pointer{
@@ -133,16 +109,42 @@
               backface-visibility: hidden;
 }
 
+/*
+* Size
+*/
 
+.ui5strapPickerWheel-flag-Horizontal{
+    width:250px;
+    height:40px;
+}
+    
+.ui5strapPickerWheel-flag-Vertical{
+    width:60px;
+    height:180px;
+}
+
+.ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-inner{
+    /* 20% of total width */
+    width: 50px;
+    margin-left:-25px;
+}
+
+.ui5strapPickerWheel-flag-Vertical .ui5strapPickerWheel-inner{
+    /*
+     * 20% of total height
+     */
+    height: 46px;  
+    margin-top:-23px;  
+}
 
 .ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-panel{
-    font-size: 48px;
-    line-height:80px;
+    font-size: 24px;
+    line-height:40px;
 }
 
 .ui5strapPickerWheel-flag-Vertical .ui5strapPickerWheel-panel{
-    font-size: 48px;
-    line-height:90px;
+    font-size: 24px;
+    line-height:46px;
 }
 
 /*
@@ -150,7 +152,7 @@
  */
  
  .ui5strapPickerWheel-mode-Mode3D .ui5strapPickerWheel-inner{
-      -webkit-perspective: 700px;
+    -webkit-perspective: 700px;
     -moz-perspective : 700px;
     perspective : 700px;
  }
@@ -171,4 +173,15 @@
 
  .ui5strapPickerWheel.active .ui5strapPickerWheel-panel.active{
     color:@brand-primary;
+}
+
+/*
+* Chrome Fix
+*/
+.ui5strap-trans-all-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-xs-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-sm-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-md-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-lg-type-flip-horizontal-ccw .ui5strapPickerWheel{
+    visibility:hidden;
 }

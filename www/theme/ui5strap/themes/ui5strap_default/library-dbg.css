@@ -11979,7 +11979,8 @@ a {
   background-color: #025d8c;
   border-color: #013c5a;
 }
-.ui5strapBar-flag-FullHeight {
+.ui5strapBar-flag-FullHeight,
+.ui5strapBar-flag-FullHeight > .ui5strapBar-inner {
   height: 100%;
   overflow: hidden;
 }
@@ -12850,44 +12851,22 @@ a {
   -webkit-touch-callout: none;
    -khtml-user-select: none;
 }
-.ui5strapPickerWheel-flag-Horizontal {
-  width: 500px;
-  height: 80px;
-}
-.ui5strapPickerWheel-flag-Vertical {
-  width: 120px;
-  height: 360px;
-}
-.ui5strap-trans-all-type-flip-horizontal-ccw .ui5strapPickerWheel,
-.ui5strap-trans-xs-type-flip-horizontal-ccw .ui5strapPickerWheel,
-.ui5strap-trans-sm-type-flip-horizontal-ccw .ui5strapPickerWheel,
-.ui5strap-trans-md-type-flip-horizontal-ccw .ui5strapPickerWheel,
-.ui5strap-trans-lg-type-flip-horizontal-ccw .ui5strapPickerWheel {
-  visibility: hidden;
-}
 .ui5strapPickerWheel-inner {
   position: absolute;
 }
 .ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-inner {
   left: 50%;
-  /* 20% of total width */
-  width: 100px;
   height: 100%;
-  margin-left: -50px;
 }
 .ui5strapPickerWheel-flag-Vertical .ui5strapPickerWheel-inner {
   top: 50%;
   width: 100%;
-  /*
-     * 20% of total height
-     */
-  height: 90px;
-  margin-top: -45px;
 }
 .ui5strapPickerWheel-pointer {
   position: absolute;
   width: 100%;
   height: 100%;
+  border-width: 1px;
 }
 .ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-pointer {
   border-right-style: solid;
@@ -12920,13 +12899,36 @@ a {
        -o-backface-visibility: hidden;
           backface-visibility: hidden;
 }
+/*
+* Size
+*/
+.ui5strapPickerWheel-flag-Horizontal {
+  width: 250px;
+  height: 40px;
+}
+.ui5strapPickerWheel-flag-Vertical {
+  width: 60px;
+  height: 180px;
+}
+.ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-inner {
+  /* 20% of total width */
+  width: 50px;
+  margin-left: -25px;
+}
+.ui5strapPickerWheel-flag-Vertical .ui5strapPickerWheel-inner {
+  /*
+     * 20% of total height
+     */
+  height: 46px;
+  margin-top: -23px;
+}
 .ui5strapPickerWheel-flag-Horizontal .ui5strapPickerWheel-panel {
-  font-size: 48px;
-  line-height: 80px;
+  font-size: 24px;
+  line-height: 40px;
 }
 .ui5strapPickerWheel-flag-Vertical .ui5strapPickerWheel-panel {
-  font-size: 48px;
-  line-height: 90px;
+  font-size: 24px;
+  line-height: 46px;
 }
 /*
  * Perspective
@@ -12947,6 +12949,16 @@ a {
 }
 .ui5strapPickerWheel.active .ui5strapPickerWheel-panel.active {
   color: #025d8c;
+}
+/*
+* Chrome Fix
+*/
+.ui5strap-trans-all-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-xs-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-sm-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-md-type-flip-horizontal-ccw .ui5strapPickerWheel,
+.ui5strap-trans-lg-type-flip-horizontal-ccw .ui5strapPickerWheel {
+  visibility: hidden;
 }
 /*
  * 
