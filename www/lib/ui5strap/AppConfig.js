@@ -49,7 +49,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	};
 	
 	/**
-	* Returns the Dom ID of the App
+	* Returns the Dom ID of the App.
+	* TODO Rename to "createId"
 	*/
 	AppConfigProto.getAppDomId = function(subElement){
 		return this.data.app.id.replace(/\./g, '-') + (subElement ? '----' + subElement : '');
@@ -57,6 +58,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 
 	/**
 	 * Creates a globally unique Control ID.
+	 * TODO This method should not be used when root component is an UIComponent.
 	 */
 	AppConfigProto.createControlId = function(controlId, viewId){
 		var appPrefix = this.getAppDomId() + '---';
