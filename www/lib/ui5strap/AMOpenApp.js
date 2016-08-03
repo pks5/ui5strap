@@ -48,7 +48,7 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			"type" : "string",
 			"defaultValue" : ""
 		},
-		"package" : {
+		"location" : {
 			"required" : false, 
 			"type" : "string",
 			"defaultValue" : ""
@@ -107,7 +107,7 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 			viewer.executeApp(
 				{
 					"id" : this.getParameter("id"),
-					"package" : this.getParameter("package"),
+					"location" : this.getParameter("location"),
 					"type" : this.getParameter("type"),
 					"url" : appUrl,
 					"internal" : this.getParameter("internal"),

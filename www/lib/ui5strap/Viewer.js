@@ -221,6 +221,28 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				_loadAppComplete
 			);
 		}
+		else if("SAPUI5" === appType){
+			//Now load the App
+			_this.loadApp(
+				{
+			        "app" : {
+			            "name" : appDefinition.name,
+			            
+			            "id" : appDefinition.id,
+			            "location" : appDefinition["location"],
+			            
+			            "type" : "ui5strap.AppBase",
+			            "rootComponent" : true,
+			            "theme" : "sap_bluecrystal"
+			        },
+		            "icons" : {
+		            	"default" : appDefinition.icon
+		            }
+				}, 
+				appDefinition.parameters,
+				_loadAppComplete
+			);
+		}
 		else if("UI5STRAP" === appType){
 			//Ui5Strap App
 			

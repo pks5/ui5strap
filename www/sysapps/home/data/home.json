@@ -25,11 +25,13 @@
         },
         {
             "id" : "sap.ui.demo.wt",
-            "internal" : false,
             "name": "Fiori",
+            
+            "location" : "./apps/fiori/",
             "type" : "UI5STRAP",
             "icon": "/apps/fiori/img/fiori.jpg",
             "url": "./apps/fiori/app.json"
+        
         }
     
     ]

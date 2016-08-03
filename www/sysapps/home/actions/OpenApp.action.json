@@ -15,7 +15,7 @@
 		"internal" : "= action.getContextData.CONTEXT.internal",
 		"id" : "= action.getContextData.CONTEXT.id",
 		"type" : "= action.getContextData.CONTEXT.type",
-		"package" : "= action.getContextData.CONTEXT.package",
+		"location" : "= action.getContextData.CONTEXT.location",
 		"name" : "= action.getContextData.CONTEXT.name",
 		"launcher" : "= action.getContextData.CONTEXT.launcher",
 		"icon" : "= action.getContextData.CONTEXT.icon",
