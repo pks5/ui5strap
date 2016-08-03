@@ -35,7 +35,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
 	 * 
 	 * @class
-	 * Base Class for ui5strap apps with navigation, views and custom stylesheets.
+	 * Base Class for ui5strap apps with root navigator.
 	 * @extends ui5strap.AppBase
 	 * 
 	 * @author Jan Philipp Knoeller
