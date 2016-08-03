@@ -1,9 +1,10 @@
 sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Component){
 
 	var RootComponent = Component.extend("ui5strap.RootComponent", {
-	
-	    metadata : {
-	    	properties : {
+		metadata : {
+	    	interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"],
+	    	
+			properties : {
 	            app: {
 	            	type : "ui5strap.AppBase"
 	            }

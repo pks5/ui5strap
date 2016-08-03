@@ -47,18 +47,15 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * 
 	 */
 	var App = AppBase.extend('ui5strap.App', /** @lends ui5strap.App.prototype */ {
+		metadata : {
+			interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"]
+		},
 		"constructor" : function(config, viewer){
 			AppBase.call(this, config, viewer);
 			
 			if(!config.data.rootNavigation){
 				config.data.rootNavigation = {};
 			}
-			
-			//Init local vars
-			this._runtimeData = {
-				"css" : {},
-				"js" : {}
-			};
 			
 			this._singleView = false;
 			this._historyQueue = [];
@@ -198,79 +195,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		);
 	};
 	
-	/*
-	* -------------------------------------------------
-	* --------------------- STYLE ---------------------
-	* -------------------------------------------------
-	*/
-
-	/**
-	* Include the style that is neccessary for this app
-	*
-	* @param callback {function} The callback function.
-	*/
-	AppProto.includeStyle = function(callback){
-		var _this = this,
-			configData = this.config.data,
-			cssKeys = Object.keys(configData.css),
-			callbackCount = cssKeys.length;
-
-		AppBase.prototype.includeStyle.call(this);
-		
-		if(callbackCount === 0){
-			callback && callback.call(this);
-
-			return;
-		}
-
-		var callbackI = 0,
-			success = function(){
-				callbackI++;
-				if(callbackI === callbackCount){
-					callback && callback.call(_this);
-				}
-			},
-			error = function(e){
-				alert('Could not load style!');
-				throw e;
-			};
-
-		for(var i = 0; i < callbackCount; i++){
-			var cssKey = cssKeys[i],
-				cssPath = this.config.resolvePath(configData.css[cssKey], true);
-
-			cssKey = 'css--' + this.getId() + '--' + cssKey;
-
-			if(! ( cssKey in this._runtimeData.css ) ){	
-				this.log.debug('LOADING CSS "' + cssPath + '"');
-					
-				this._runtimeData.css[cssKey] = cssPath;
-				
-				jQuery.sap.includeStyleSheet(
-						cssPath, 
-						cssKey, 
-						success, 
-						error
-				);
-			}
-			
-			else{
-				this.log.debug("Css stylesheet '" + cssPath + "' already included.");
-				success();
-			}
-		}
-	};
-
-	/**
-	 * Removes the stylesheets added by this app.
-	 */
-	AppProto.removeStyle = function(){
-		for(var cssKey in this._runtimeData.css){
-			jQuery('link#' + cssKey).remove();
-			delete this._runtimeData.css[cssKey];
-			this.log.info("Css stylesheet '" + cssKey + "' removed.");
-		}
-	};
+	
 
 	/*
 	* -------------------------------------------------------------

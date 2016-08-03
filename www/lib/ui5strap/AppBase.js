@@ -25,8 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library, ObjectBase, Action){
-
+sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"], function(uLib, ObjectBase, Action, NavContainer){
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new App instance.
 	 * 
@@ -50,7 +52,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			sap.ui.base.Object.apply(this);
 			
 			this.config = config;
-
+			
+			//Init local vars
+			this._runtimeData = {
+				"css" : {},
+				"js" : {}
+			};
+			
 			this.components = {};
 			
 			this._rootComponent = this;
@@ -64,7 +72,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			this.isVisible = false;
 			this.hasFirstShow = false;
 			this.hasFirstShown = false;
-
+			
+			this.overlayControl = new NavContainer();
+			
 			this._initLog(viewer);
 
 			this.sendMessage = function(appMessage){
@@ -196,7 +206,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 					if(oData.oModel !== loaded[oData.modelName]){
 						_this.log.debug("Loaded model '" + oData.modelName + "'");
 						
-						_this.getRootControl().setModel(oData.oModel, oData.modelName);
+						_this.setRootModel(oData.oModel, oData.modelName);
 						loaded[oData.modelName] = oData.oModel;
 					}
 					else{
@@ -359,6 +369,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		        }
 		    }).then(function(rootComponent){
 		    	_this._rootComponent = rootComponent;
+		    	
 		    	callback && callback();
 		    });
 		}
@@ -693,7 +704,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		jQuery.sap.log.debug("AppBaseProto.unload");
 		
 		ui5strap.Layer.unregister(this.overlayId);
-		ui5strap.Layer.unregister(this.config.getAppDomId('loader'));
+		ui5strap.Layer.unregister(this.config.createDomId('loader'));
 
 		this.onUnload(new sap.ui.base.Event("ui5strap.app.unload", this, {}));
 
@@ -1022,46 +1033,37 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 	AppBaseProto.setLoaderVisible = function(visible, callback){
 		//ui5strap.Layer.setVisible('ui5strap-loader', visible, callback, option);
-		ui5strap.Layer.setVisible(this.config.getAppDomId('loader'), visible, callback);
+		ui5strap.Layer.setVisible(this.config.createDomId('loader'), visible, callback);
 	};
-
-	/**
-	* Splash Screen
-	* @notimplemented
-	*/
-	AppBaseProto.setSplashVisible = function(visible, callback){
-		callback && callback();
-		//ui5strap.Layer.setVisible('ui5strap-splash', visible, callback);
-	};
-	
-	
 
 	/**
 	* Registers the overlay.
 	*/
 	AppBaseProto.registerOverlay = function(){
-		var _this = this;
+		var _this = this,
+			overlayId = this.config.createDomId('overlay'),
+			Layer = uLib.Layer;
 		
-		this.overlayId = this.config.getAppDomId('overlay');
+		this.overlayId = overlayId;
 
-		if(ui5strap.Layer.get(this.overlayId)){
-			this._log.warning("Layer already registered: " + this.overlayId);
+		if(Layer.get(overlayId)){
+			this._log.warning("Layer already registered: " + overlayId);
 			return;
 		}
 
-		ui5strap.Layer.register(this.overlayId);
+		Layer.register(this.overlayId);
 
-		this.overlayControl = new ui5strap.NavContainer();
-		//this.overlayControl.placeAt(this.overlayId);
-		this.overlayControl.placeAt(this.overlayId + '-content');
-
+		//TODO
+		//Check Model Propagation
+		/*
 		var oModels = this.getRootControl().oModels;
-		//var uiArea = sap.ui.getCore().createUIArea(newPage, _this);
 		for(var sName in oModels){
-			//page.setModel(oModel, sName);
-			this.overlayControl.setModel(oModels[sName], sName);
+			overlayControl.setModel(oModels[sName], sName);
 		};
-
+		*/
+		
+		this.overlayControl.placeAt(overlayId + '-content');
+		
 		//jQuery('#' + this.overlayId + '-backdrop').on('tap', function onTap(event){
 		//	_this.hideOverlay();
 		//});
@@ -1202,6 +1204,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 
 		//START Build ViewData
 		//The View Data holds the app reference.
+		//TODO This is bad practice. Once Root Component is mandatory, this will be replaced.
 		if(!viewConfig.viewData){
 			viewConfig.viewData = {};
 		}
@@ -1463,17 +1466,36 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		
 		var rootComponent = this._rootComponent,
 			_this = this;
+		
+		//TODO Instead of just checking the existance of the methods,
+		//it would be better to check whether the class implements the interface ui5strap.IRootComponent
 		if(rootComponent._buildRootControl){
 			this._rootControl = rootComponent._buildRootControl();
 			callback && callback();
 		}
-		else{
+		else if(rootComponent._createRootControl){
 			rootComponent._createRootControl(function(rootControl){
 				_this._rootControl = rootControl;
 				
 				callback && callback();
 			});
 		}
+		else{
+			//Load plain ui5 app in a Component Container
+			sap.ui.require(["sap/ui/core/ComponentContainer", "sap/ui/core/UIComponent"], function(ComponentContainer, UIComponent){
+				if(!rootComponent instanceof UIComponent){
+					throw new Error("Could not create root control!");
+				}
+				
+				_this._rootControl = new ComponentContainer({
+	            	  component : rootComponent,
+	            	  height : "100%"
+		        });
+				
+				callback && callback();
+			});
+	  	}
+		
 	};
 	
 	/**
@@ -1483,6 +1505,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	 */
 	AppBaseProto.getRootControl = function(){
 		return this._rootControl;
+	};
+	
+	/**
+	 * 
+	 */
+	AppBaseProto.setRootModel = function(oModel, modelName){
+		this.getRootControl().setModel(oModel, modelName);
+		this.overlayControl.setModel(oModel, modelName);
 	};
 
 	/*
@@ -1552,27 +1582,31 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			return;
 		}
 		
-		var _this = this;
-		
+		var _this = this,
+			appContainer = document.createElement('div'),
+			appContent = document.createElement('div'),
+			appOverlay = document.createElement('div'),
+			appOverlayContent = document.createElement('div'),
+			appLoader = document.createElement('div'),
+			appSplash = document.createElement('div');
+			
+			
 		//App Container
-		var appContainer = document.createElement('div');
 		appContainer.className = _createAppClass(this, 'ui5strap-app ui5strap-app-prepared ui5strap-hidden');
 		appContainer.id = this.config.getDomId();
 		
 		//App Content
-		var appContent = document.createElement('div');
 		appContent.className = 'ui5strap-app-content';
-		appContent.id = this.config.getAppDomId('content');
+		appContent.id = this.config.createDomId('content');
 		appContainer.appendChild(appContent);
 
 		//App Overlay
-		var appOverlay = document.createElement('div');
 		appOverlay.className = 'ui5strap-app-overlay ui5strap-overlay ui5strap-layer ui5strap-hidden';
-		appOverlay.id = this.config.getAppDomId('overlay');
+		appOverlay.id = this.config.createDomId('overlay');
 
 		//var appOverlayBackdrop = document.createElement('div');
 		//appOverlayBackdrop.className = 'ui5strap-overlay-backdrop';
-		//appOverlayBackdrop.id = this.config.getAppDomId('overlay-backdrop');
+		//appOverlayBackdrop.id = this.config.createDomId('overlay-backdrop');
 		/*
 		appOverlayBackdrop.onclick = function(){
 			_this.hideOverlay();
@@ -1580,26 +1614,26 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 		*/
 		//appOverlay.appendChild(appOverlayBackdrop);
 
-		var appOverlayContent = document.createElement('div');
 		appOverlayContent.className = 'ui5strap-overlay-content';
-		appOverlayContent.id = this.config.getAppDomId('overlay-content');
+		appOverlayContent.id = this.config.createDomId('overlay-content');
 		appOverlay.appendChild(appOverlayContent);
 
 		appContainer.appendChild(appOverlay);
 
 		//App Loader
-		var appLoader = document.createElement('div');
+		
 		appLoader.className = 'ui5strap-app-loader ui5strap-loader ui5strap-layer ui5strap-hidden';
-		appLoader.id = this.config.getAppDomId('loader');
+		appLoader.id = this.config.createDomId('loader');
 		appContainer.appendChild(appLoader);
 
 		ui5strap.Layer.register(appLoader.id, jQuery(appLoader));
 
 		//App Splash
-		var appSplash = document.createElement('div');
+		/*
 		appSplash.className = 'ui5strap-app-splash ui5strap-layer ui5strap-hidden';
-		appSplash.id = this.config.getAppDomId('splash');
+		appSplash.id = this.config.createDomId('splash');
 		appContainer.appendChild(appSplash);
+		*/
 
 		//Cache DOM Ref
 		this.domRef = appContainer;
@@ -1616,7 +1650,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 			jQuery.sap.log.debug("Attaching app '" + this.getId() + "' to DOM...");
 			this.isAttached = true;
 			containerEl.appendChild(this.domRef);
+			
+			//TODO
 			this.registerOverlay();
+			
+			//Place the Root Control
 			this.getRootControl().placeAt(this.contentDomRef);
 		}
 	};
@@ -1661,24 +1699,74 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action'], function(library,
 	*/
 
 	/**
-	 * Includes the style that is needed for this app.
-	 * @override
-	 */
+	* Include the style that is neccessary for this app
+	*
+	* @param callback {function} The callback function.
+	*/
 	AppBaseProto.includeStyle = function(callback){
+		var _this = this,
+			configData = this.config.data,
+			cssKeys = Object.keys(configData.css),
+			callbackCount = cssKeys.length;
+
 		var themeName = this.config.data.app.theme;
 		if(themeName){ 
 			this.setTheme(themeName);
 		}
 		
-		callback && callback();
+		if(callbackCount === 0){
+			callback && callback.call(this);
+
+			return;
+		}
+
+		var callbackI = 0,
+			success = function(){
+				callbackI++;
+				if(callbackI === callbackCount){
+					callback && callback.call(_this);
+				}
+			},
+			error = function(e){
+				alert('Could not load style!');
+				throw e;
+			};
+
+		for(var i = 0; i < callbackCount; i++){
+			var cssKey = cssKeys[i],
+				cssPath = this.config.resolvePath(configData.css[cssKey], true);
+
+			cssKey = 'css--' + this.getId() + '--' + cssKey;
+
+			if(! ( cssKey in this._runtimeData.css ) ){	
+				this.log.debug('LOADING CSS "' + cssPath + '"');
+					
+				this._runtimeData.css[cssKey] = cssPath;
+				
+				jQuery.sap.includeStyleSheet(
+						cssPath, 
+						cssKey, 
+						success, 
+						error
+				);
+			}
+			
+			else{
+				this.log.debug("Css stylesheet '" + cssPath + "' already included.");
+				success();
+			}
+		}
 	};
 
 	/**
-	 * Removes the style that is needed for this app.
-	 * @override
+	 * Removes the stylesheets added by this app.
 	 */
 	AppBaseProto.removeStyle = function(){
-
+		for(var cssKey in this._runtimeData.css){
+			jQuery('link#' + cssKey).remove();
+			delete this._runtimeData.css[cssKey];
+			this.log.info("Css stylesheet '" + cssKey + "' removed.");
+		}
 	};
 
 	/**
