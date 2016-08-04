@@ -1902,6 +1902,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 		};
 		
 		controllerImpl.formatters.resolvePackage = function(packageName){
+			if(!packageName){
+				return packageName;
+			}
 			return this.getApp().config.resolvePackage(packageName);
 		};
 		
