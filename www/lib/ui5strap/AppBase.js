@@ -1901,6 +1901,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 			//return this.getApp().getModelProperty(localeString, 'i18n');
 		};
 		
+		controllerImpl.formatters.resolvePackage = function(packageName){
+			return this.getApp().config.resolvePackage(packageName);
+		};
+		
 		/**
 		 * Extracts the action names for the given event.
 		 * @Private
