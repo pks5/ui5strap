@@ -1,8 +1,11 @@
 var express    =    require('express'),
 	bodyParser = require('body-parser'),
-	nodeFs = require('fs');
+	nodeFs = require('fs'),
+	proxy = require('express-http-proxy');
 
 var app        =    express();
+
+app.use('/destinations/northwind', proxy('services.odata.org/'));
 
 app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
