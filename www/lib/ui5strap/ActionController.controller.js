@@ -25,13 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', './AppBase', 'sap/ui/core/mvc/Controller'], function(library, AppBase, Controller){
-
-	var controllerImpl = {};
-	
-	AppBase.blessController(controllerImpl);
+sap.ui.define(['./library', './Controller'], function(library, Controller){
 
 	//Return Module Constructor
-	return Controller.extend("ui5strap.ActionController", controllerImpl);
+	return Controller.extend("ui5strap.ActionController");
 
 });

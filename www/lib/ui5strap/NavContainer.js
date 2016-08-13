@@ -160,7 +160,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	* @Private
 	*/
 	var _triggerControllerEvent = function(_this, target, oControl, eventId, eventParameters){
-		var eventNameCC = jQuery.sap.charToUpperCase(eventId, 0);
 		if(oControl){
 			var controller = oControl;
 			
@@ -169,12 +168,9 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				controller = oControl.getController();
 			}
 			
-			var funcName = 'on' + eventNameCC;
-			if(controller && controller[funcName]){
-				jQuery.sap.log.debug("[NC#" + _this.getId() + "] Triggering event '" + eventId + "' on target '" + target + "'");
-			
-				controller[funcName](new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}));
-			}
+			controller 
+				&& controller.firePageEvent 
+				&& controller.firePageEvent(new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}), eventId);
 		}
 	};
 
@@ -295,52 +291,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			_transitionCallback(_this, pageChange, transList);
 		});
 		
+		//Start the transition
 		pageChange.transition.execute();
-		
-		
-		/*
-		pageChange.transition.execute(
-			function anon_transitionCurrentComplete(){
-				var $current = this._data.$current;
-				if($current){
-					$current.remove();
-				}
-
-				//If next page is null, then execute the callbacks when old page has been hidden
-				if(pageChange.page === null){
-					_transitionCallback(_this, pageChange, transList);
-					
-					_this.firePageChanged({
-						target : pageChange.target,
-						oldPage : pageChange.currentPage
-					});
-				}
-
-				//onPageHidden event
-				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
-					target : pageChange.target,
-					newPage : pageChange.page
-				});
-			}, 
-			function anon_transitionPreparedComplete(){
-				this._data.$next.attr('class', 'navcontainer-page navcontainer-page-current');
-				
-				//Transition callback
-				_transitionCallback(_this, pageChange, transList);
-
-				//onPageShown event
-				_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShown', {
-					target : pageChange.target,
-					oldPage : pageChange.currentPage
-				});
-				
-				_this.firePageChanged({
-					target : pageChange.target,
-					oldPage : pageChange.currentPage
-				});
-			}
-		);
-		*/
 	};
 
 	/**
@@ -627,7 +579,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			throw new Error('Parameters must not contain a target attribute!');
 		}
 		
-		_triggerControllerEvent(this, target, oPage, 'update', eventParameters);
+		_triggerControllerEvent(this, target, oPage, 'pageUpdate', eventParameters);
 		
 		this.firePageUpdate({
 			"target" : target,

@@ -36,8 +36,12 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 				p.setText(this.getApp().getLocaleString("TEST", 12));
 			},
 			
-			onAfterRendering : function(){
-				console.log("RENDER");
+			onInit : function(oEvent){
+				console.log("View initialized: " + this.getView().getId());
+			},
+			
+			onPageUpdate : function(oEvent){
+				console.log("On page update: " + this.getView().getId());
 			}
 	};
 	

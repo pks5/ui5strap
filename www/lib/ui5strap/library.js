@@ -892,14 +892,11 @@ sap.ui
 					ui5strap.controller = function(controllerName,
 							controllerImpl) {
 						jQuery.sap.log
-								.warning("ui5strap.controller is deprecated. Please extend ui5strap.ActionController instead.");
+								.warning("ui5strap.controller is deprecated. Please extend ui5strap.Controller instead.");
 
-						jQuery.sap.require('ui5strap.AppBase');
+						jQuery.sap.require('ui5strap.Controller');
 
-						ui5strap.AppBase.blessController(controllerImpl);
-
-						return sap.ui
-								.controller(controllerName, controllerImpl);
+						return ui5strap.Controller.extend(controllerName, controllerImpl);
 					};
 
 					/*
