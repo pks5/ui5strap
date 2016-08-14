@@ -1110,10 +1110,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		navControl.updateTarget(target, oPage, pageUpdateParameters);
 		
 		ui5strap.Layer.setVisible(this._overlayId, true, function(){
-			navControl.toPage(oPage, target, transitionName || "slide-ttb", function toPage_complete(){
+			navControl.toPage(oPage, target, transitionName || "slide-ttb", function toPage_complete(param){
 				
 				//Set target available
 				navControl.setTargetBusy(target, false);
+				
+				param.oldPage && _this.detachPage(param.oldPage);
 				
 				//Trigger callback
 				callback && callback();

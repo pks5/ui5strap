@@ -207,11 +207,23 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 					//View from a app
 					viewApp.includeStyle(function includeStyle_complete(){
 						var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
-							view = viewApp.createView(viewConfig);
+							view = viewApp.createView(viewConfig),
+							target = overlayControl.defaultTarget;
+						
+						//Set target busy
+						overlayControl.setTargetBusy(target, true);
+						
+						//Trigger onUpdate events
+						overlayControl.updateTarget(target, view, {});
 						
 						view.loaded().then(function(){
-							overlayControl.toPage(view, 'content', transitionName, function(){
+							overlayControl.toPage(view, 'content', transitionName, function(param){
 								viewApp.isVisibleInOverlay = true;
+								
+								//Set target available
+								overlayControl.setTargetBusy(target, false);
+								
+								param.oldPage && viewApp.detachPage(param.oldPage);
 
 								viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
 									view : view, 
