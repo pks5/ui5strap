@@ -548,7 +548,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					//Set target available
 					navControl.setTargetBusy(target, false);
 					
-					param.oldPage && _this.dettachPage(param.oldPage);
+					param.oldPage && _this.detachPage(param.oldPage);
 					
 					//console.log(window.performance.memory);
 					

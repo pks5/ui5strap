@@ -891,7 +891,14 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	
 	NavContainerProto.exit = function(){
 		for(var target in this.targets){
-			this.targets[target] = null;
+			var oPage = this.targets[target];
+			
+			if(oPage){
+				var oUiArea = oPage.getParent();
+			
+				oUiArea.removeContent(oPage, true);
+				oUiArea.destroy();
+			}
 		}
 	};
 	

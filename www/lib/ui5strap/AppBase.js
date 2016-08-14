@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Action', "./NavContainer"], function(uLib, ObjectBase, UIArea, Action, NavContainer){
+sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Action'], function(uLib, ObjectBase, UIArea, Action){
 	
 	"use strict";
 	
@@ -54,6 +54,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
 			
+			//App Configuration
 			this.config = config;
 			
 			//Init local vars
@@ -62,24 +63,31 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 				"js" : {}
 			};
 			
+			//TODO Beans
 			this.components = {};
 			
+			//Controls & Root Component
 			this._rootComponent = this;
 			this._rootControl = null;
+			this._overlayNavigator = null;
 			
+			//Cache and App Events
 			this._pageCache = {};
 			this._events = {};
 			
+			//Runtime Flags
 			this.isAttached = false;
 			this.isRunning = false;
 			this.isVisible = false;
 			this.hasFirstShow = false;
 			this.hasFirstShown = false;
 			
-			this.overlayControl = new NavContainer();
-			
+			//Init Log
 			this._initLog(viewer);
 
+			/**
+			 * Send an App Message.
+			 */
 			this.sendMessage = function(appMessage){
 				appMessage.sender = this.getId();
 
@@ -526,19 +534,30 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	AppBaseProto.preload = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.preload");
 		
+		//Resolve Configuation
 		this.config.resolve();
 
 		var _this = this;
 		
+		//JavaScript
+		//TODO Remove
 		_preloadJavaScript(_this, function preloadJavaScriptComplete(){
+			//Root Component
 			_preloadRootComponent(_this, function _preloadRootCompComplete(){
+				//Components / Beans
 				_preloadComponents(_this, function _preloadComponentsComplete(){
-					_this.createRootControl(function(){
+					//Overlay Navigator
+					_this.createOverlayNavigator(function(){
+						//Root Control
+						_this.createRootControl(function(){
+							
+							//Preload Models
+							_preloadModels(_this, function _preloadModelsComplete(){
+								//Preload Actions
+								_preloadActions(_this, callback);
+							});
 						
-					_preloadModels(_this, function _preloadModelsComplete(){
-						_preloadActions(_this, callback);
-					});
-					
+						});
 					});
 				});
 			});
@@ -706,7 +725,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	AppBaseProto.unload = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.unload");
 		
-		ui5strap.Layer.unregister(this.overlayId);
+		ui5strap.Layer.unregister(this._overlayId);
 		ui5strap.Layer.unregister(this.config.createDomId('loader'));
 
 		this.onUnload(new sap.ui.base.Event("ui5strap.app.unload", this, {}));
@@ -1040,45 +1059,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	};
 
 	/**
-	* Registers the overlay.
-	*/
-	AppBaseProto.registerOverlay = function(){
-		var _this = this,
-			overlayId = this.config.createDomId('overlay'),
-			Layer = uLib.Layer;
-		
-		this.overlayId = overlayId;
-
-		if(Layer.get(overlayId)){
-			this._log.warning("Layer already registered: " + overlayId);
-			return;
-		}
-
-		Layer.register(this.overlayId);
-
-		//TODO
-		//Check Model Propagation
-		/*
-		var oModels = this.getRootControl().oModels;
-		for(var sName in oModels){
-			overlayControl.setModel(oModels[sName], sName);
-		};
-		*/
-		
-		this.overlayControl.placeAt(overlayId + '-content');
-		
-		//jQuery('#' + this.overlayId + '-backdrop').on('tap', function onTap(event){
-		//	_this.hideOverlay();
-		//});
-	};
-
-	/**
 	* Returns whether the overlay layer is visible
 	* 
 	* @returns {boolean} Whether the overlay is visible.
 	*/
 	AppBaseProto.isOverlayVisible = function(){
-		return ui5strap.Layer.isVisible(this.overlayId);
+		return ui5strap.Layer.isVisible(this._overlayId);
 	};
 
 	/**
@@ -1114,7 +1100,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	 * @protected
 	 */
 	AppBaseProto._showOverlay = function(oPage, callback, transitionName, pageUpdateParameters){
-		var navControl = this.overlayControl,
+		var navControl = this.getOverlayNavigator(),
 			target = navControl.defaultTarget;
 		
 		//Set target busy
@@ -1123,7 +1109,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		//Trigger onUpdate events
 		navControl.updateTarget(target, oPage, pageUpdateParameters);
 		
-		ui5strap.Layer.setVisible(this.overlayId, true, function(){
+		ui5strap.Layer.setVisible(this._overlayId, true, function(){
 			navControl.toPage(oPage, target, transitionName || "slide-ttb", function toPage_complete(){
 				
 				//Set target available
@@ -1147,11 +1133,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		}
 
 		var _this = this,
-			overlayControl = this.overlayControl,
+			navigator = this.getOverlayNavigator(),
 			transitionName = transitionName || 'slide-btt';
 		
-		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
-			ui5strap.Layer.setVisible(_this.overlayId, false, callback);
+		navigator.toPage(null, 'content', transitionName, function toPage_complete(){
+			ui5strap.Layer.setVisible(_this._overlayId, false, callback);
 		});	
 	};
 
@@ -1286,7 +1272,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	/**
 	 * Dettaches a view/page from DOM
 	 */
-	AppBaseProto.dettachPage = function(oView){
+	AppBaseProto.detachPage = function(oView){
 		var oViewData = oView.getViewData();
 		if(!oViewData.__ui5strap 
 			|| !oViewData.__ui5strap.settings.cache){
@@ -1584,6 +1570,20 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	};
 	
 	/**
+	 * Create Navigator Control for App Overlay.
+	 */
+	AppBaseProto.createOverlayNavigator = function(callback){
+		var _this = this;
+		sap.ui.require(["ui5strap/NavContainer"], function(NavContainer){
+			//TODO Build via root component
+			
+			_this._overlayNavigator = new NavContainer();
+			
+			callback && callback();
+		});
+	};
+	
+	/**
 	 * Returns the Root Control.
 	 * 
 	 * @returns {sap.ui.core.Control} The root control.
@@ -1593,11 +1593,20 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	};
 	
 	/**
+	 * Returns the Overlay Navigator.
+	 * 
+	 * @returns {sap.ui.core.Control} The root control.
+	 */
+	AppBaseProto.getOverlayNavigator = function(){
+		return this._overlayNavigator;
+	};
+	
+	/**
 	 * 
 	 */
 	AppBaseProto.setRootModel = function(oModel, modelName){
 		this.getRootControl().setModel(oModel, modelName);
-		this.overlayControl.setModel(oModel, modelName);
+		this.getOverlayNavigator().setModel(oModel, modelName);
 	};
 
 	/*
@@ -1668,6 +1677,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		}
 		
 		var _this = this,
+			Layer = uLib.Layer,
+			overlayId = this.config.createDomId("overlay"),
 			appContainer = document.createElement('div'),
 			appContent = document.createElement('div'),
 			appOverlay = document.createElement('div'),
@@ -1687,7 +1698,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 
 		//App Overlay
 		appOverlay.className = 'ui5strap-app-overlay ui5strap-overlay ui5strap-layer ui5strap-hidden';
-		appOverlay.id = this.config.createDomId('overlay');
+		appOverlay.id = overlayId;
+		
+		this._overlayId = overlayId;
 
 		//var appOverlayBackdrop = document.createElement('div');
 		//appOverlayBackdrop.className = 'ui5strap-overlay-backdrop';
@@ -1704,6 +1717,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		appOverlay.appendChild(appOverlayContent);
 
 		appContainer.appendChild(appOverlay);
+		
+		Layer.register(overlayId, jQuery(appOverlay));
 
 		//App Loader
 		
@@ -1711,7 +1726,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		appLoader.id = this.config.createDomId('loader');
 		appContainer.appendChild(appLoader);
 
-		ui5strap.Layer.register(appLoader.id, jQuery(appLoader));
+		Layer.register(appLoader.id, jQuery(appLoader));
 
 		//App Splash
 		/*
@@ -1719,10 +1734,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		appSplash.id = this.config.createDomId('splash');
 		appContainer.appendChild(appSplash);
 		*/
-
+		
 		//Cache DOM Ref
 		this.domRef = appContainer;
 		this.contentDomRef = appContent;
+		this.overlayDomRef = appOverlayContent;
 	};
 	
 	/**
@@ -1733,11 +1749,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	AppBaseProto.attach = function(containerEl){
 		if(!this.isAttached){
 			jQuery.sap.log.debug("Attaching app '" + this.getId() + "' to DOM...");
+			
 			this.isAttached = true;
+			
 			containerEl.appendChild(this.domRef);
 			
-			//TODO
-			this.registerOverlay();
+			this.getOverlayNavigator().placeAt(this.overlayDomRef);
 			
 			//Place the Root Control
 			this.getRootControl().placeAt(this.contentDomRef);
@@ -1759,18 +1776,25 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	AppBaseProto.destroy = function(){
 		this.log.debug("Destroying app...");
 		
+		//Destroy the root control first
+		var rootControl = this.getRootControl(),
+			overlayNavigator = this.getOverlayNavigator();
+		
+		//Destroy Root Control
+		if(rootControl){
+			rootControl.destroy();
+		}
+		
+		//Destroy Overlay Navigator
+		if(overlayNavigator){
+			overlayNavigator.destroy();
+		}
+		
+		//Destroy Cached Pages
 		var cacheKeys = Object.keys(this._pageCache);
 		
 		for(var i = 0; i < cacheKeys.length; i++){
-			this.log.debug("Destroying view: " + cacheKeys[i]);
-			this._pageCache[cacheKeys[i]].destroy(true);
-			delete this._pageCache[cacheKeys[i]];
-		}
-		
-		//Destroy the root control first
-		var rootControl = this.getRootControl();
-		if(rootControl){
-			rootControl.destroy(true);
+			this.destroyPage(this._pageCache[cacheKeys[i]]);
 		}
 		
 		//Finally, destroy the app object
