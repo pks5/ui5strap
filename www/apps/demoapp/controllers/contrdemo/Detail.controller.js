@@ -38,6 +38,10 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 				
 			},
 			
+			onAfterRendering : function(){
+				console.log("RERENDER DETAILS");
+			},
+			
 			handleNavigateBack : function(oEvent){
 				this.getApp().navigateTo(this.getApp().getRootControl(), { "id" : "contrdemoList" });
 			}

@@ -548,6 +548,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					//Set target available
 					navControl.setTargetBusy(target, false);
 					
+					/*
 					if(param.oldPage){
 						var oOldViewData = param.oldPage.getViewData();
 						if(oOldViewData.__ui5strap && !oOldViewData.__ui5strap.settings.cache){
@@ -556,6 +557,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 							
 						}
 					}
+					*/
 					
 					ca();
 				}, 50);

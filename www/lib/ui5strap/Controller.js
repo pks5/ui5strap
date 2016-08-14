@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/core/mvc/Controller'], function(uLib, ControllerBase){
+sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller'], function(uLib, AppBase, ControllerBase){
 
 	var Controller = ControllerBase.extend("ui5strap.Controller"),
 		ControllerProto = Controller.prototype;
@@ -132,36 +132,11 @@ sap.ui.define(['./library', 'sap/ui/core/mvc/Controller'], function(uLib, Contro
 	 * FIXME When using a standard Component, getOwnerComponent returns undefined.
 	 */
 	ControllerProto.getApp =  function(){
-		if(this._oApp){
-			return this._oApp;
+		if(!this._oApp){
+			this._oApp = AppBase.getOwnerAppFor(this);
 		}
 		
-		var oApp = null,
-			oComponent = this.getOwnerComponent(),
-			viewData = this.getView().getViewData();
-		
-		if(viewData && viewData.__ui5strap && viewData.__ui5strap.app){
-			//App reference is inside view data.
-		    oApp = viewData.__ui5strap.app;
-		}
-		/*
-		else if(oComponent && oComponent.getMetadata().isInstanceOf("ui5strap.IRootComponent")){
-			//Component implements ui5strap.IRootComponent
-			oApp = oComponent.getApp();
-		}
-		*/
-		else if(oComponent.getApp){
-			//Get app reference from Component's getApp method.
-			oApp = oComponent.getApp();
-		}
-		
-		if(!oApp || !oApp.getMetadata().isInstanceOf("ui5strap.IApp")){
-			throw new Error("Cannot determine app reference from view " + this.getView().getId());
-		}
-		
-		this._oApp = oApp;
-		
-		return oApp;
+		return this._oApp;
     };
     
     /*

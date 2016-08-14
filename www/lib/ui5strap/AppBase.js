@@ -1171,13 +1171,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 		var _this = this,
 			pageId = viewDef.id;
 
+		/*
 		if(viewDef.cache && pageId && this._pageCache[pageId]){
 			return this._pageCache[pageId];
 		}
+		*/
 		//If id specified check for cache
 		//Also create a new valid control id for the view
 		
-		/*
+		
 		if(pageId){
 			var cachedPage = this._pageCache[pageId];
 			if(viewDef.cache){
@@ -1193,11 +1195,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 					//View already have been created before
 					//Delete cache entry and destroy existing view
 					delete this._pageCache[pageId];
+					//Set Parent to null
+					cachedPage.setParent(null);
 					cachedPage.destroy();
 				}
 			}
 		}
-		*/
+		
 		
 		var viewConfig = {
 			async : true
@@ -1243,12 +1247,39 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 			page.addStyleClass(viewConfig.styleClass);
 		}
 		
-		if(viewDef.cache && pageId){
+		if(pageId){
 			//Add to page cache
 			this._pageCache[pageId] = page;
 		}
 
 		return page;
+	};
+	
+	AppBase.getOwnerAppFor = function(oController){
+		var oApp = null,
+			oComponent = oController.getOwnerComponent(),
+			viewData = oController.getView().getViewData();
+		
+		if(viewData && viewData.__ui5strap && viewData.__ui5strap.app){
+			//App reference is inside view data.
+		    oApp = viewData.__ui5strap.app;
+		}
+		/*
+		else if(oComponent && oComponent.getMetadata().isInstanceOf("ui5strap.IRootComponent")){
+			//Component implements ui5strap.IRootComponent
+			oApp = oComponent.getApp();
+		}
+		*/
+		else if(oComponent.getApp){
+			//Get app reference from Component's getApp method.
+			oApp = oComponent.getApp();
+		}
+		
+		if(!oApp || !oApp.getMetadata().isInstanceOf("ui5strap.IApp")){
+			throw new Error("Cannot determine app reference from view " + oController.getView().getId());
+		}
+		
+		return oApp;
 	};
 
 	/*

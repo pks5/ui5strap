@@ -99,7 +99,7 @@
                 "id" : "contrdemoDetail",
                 "viewName" : ".views.contrdemo.Detail",
                 "route" : "contrdemo/post/{post.id}",
-                "cache" : true
+                "cache" : false
             },
             "//END contrdemo",
             

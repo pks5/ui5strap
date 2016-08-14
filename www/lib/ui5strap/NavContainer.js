@@ -265,13 +265,14 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			}
 			
 			if(pageChange.currentPage){
-				//Set Propagated Properties and Bindings back to ui area
-				ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
-				
 				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
 					target : pageChange.target,
 					newPage : pageChange.page
 				});
+				
+				//Set Propagated Properties and Bindings back to ui area
+				ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
+				//pageChange.currentPage.setParent(null);
 			}
 			
 			var $next = pageChange.transition._data.$next;
