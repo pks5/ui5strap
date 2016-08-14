@@ -164,7 +164,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				this._historyQueue.push(targetPath);
 			}
 			else if(this._suppressHashChange){
-				jQuery.sap.log.info("Hashchange suppressed.");
+				//jQuery.sap.log.debug("Hashchange suppressed.");
 				this._suppressHashChange = false;
 			}
 			else{
@@ -548,16 +548,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					//Set target available
 					navControl.setTargetBusy(target, false);
 					
-					/*
-					if(param.oldPage){
-						var oOldViewData = param.oldPage.getViewData();
-						if(oOldViewData.__ui5strap && !oOldViewData.__ui5strap.settings.cache){
-							param.oldPage.destroy();
-							console.log("DESTROYED", _this._pageCache);
-							
-						}
-					}
-					*/
+					param.oldPage && _this.destroyPage(param.oldPage);
 					
 					ca();
 				}, 50);

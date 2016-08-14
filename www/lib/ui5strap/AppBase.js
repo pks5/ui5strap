@@ -1169,51 +1169,37 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 	 */
 	AppBaseProto.createView = function(viewDef){
 		var _this = this,
-			pageId = viewDef.id;
-
-		/*
-		if(viewDef.cache && pageId && this._pageCache[pageId]){
-			return this._pageCache[pageId];
-		}
-		*/
-		//If id specified check for cache
-		//Also create a new valid control id for the view
-		
-		
-		if(pageId){
-			var cachedPage = this._pageCache[pageId];
-			if(viewDef.cache){
-				if(cachedPage){
-					_this.log.debug("Returning cached page '" + page + "'.");
-					
-					return cachedPage;
-				}
-			}
-			else{
-				//View is NOT cached
-				if(cachedPage){
-					//View already have been created before
-					//Delete cache entry and destroy existing view
-					delete this._pageCache[pageId];
-					//Set Parent to null
-					cachedPage.setParent(null);
-					cachedPage.destroy();
-				}
-			}
-		}
-		
-		
-		var viewConfig = {
-			async : true
-		};
-		
+			pageId = viewDef.id,
+			viewConfig = {
+				async : true
+			},
+			viewSettings = {};
+			
 		jQuery.extend(viewConfig, viewDef);
 		
 		if(pageId){
-			viewConfig.id = this.config.createControlId(pageId);
+			pageId = this.config.createControlId(pageId);
+			viewConfig.id = pageId;
+			
+			var cachedPage = this._pageCache[pageId];
+			
+			if(cachedPage){
+				var oViewData = cachedPage.getViewData(),
+					oldCache = oViewData.__ui5strap.settings.cache;
+				
+				if(oldCache && viewConfig.cache){
+					_this.log.debug("Returning cached page '" + pageId + "'.");
+					return cachedPage;
+				}
+				else{
+					jQuery.sap.log.warning("Created a new page but a page with that id already exists. Destroying existing page...");
+					
+					this.destroyPage(cachedPage, true);
+				}
+			}
 		}
 		
-		var viewSettings = {};
+		
 		jQuery.extend(viewSettings, viewConfig);
 
 		//START Build ViewData
@@ -1251,10 +1237,44 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 			//Add to page cache
 			this._pageCache[pageId] = page;
 		}
+		
+		jQuery.sap.log.info("Created view " + page.getId());
 
 		return page;
 	};
 	
+	/**
+	 * Destroy a view/page
+	 */
+	AppBaseProto.destroyPage = function(oView, bForceDestroy){
+		var oViewData = oView.getViewData();
+		if(bForceDestroy 
+				|| !oViewData.__ui5strap 
+				|| !oViewData.__ui5strap.settings.cache){
+			
+			var pageId = oView.getId();
+			
+			if(this._pageCache[pageId]){
+				//View already have been created before
+				//Delete cache entry and destroy existing view
+				delete this._pageCache[pageId];
+			}
+			
+			//Set Parent to null
+			//TODO Why?
+			oView.setParent(null);
+			
+			//Destroy the Page
+			oView.destroy();
+			
+			jQuery.sap.log.info("Destroyed view " + pageId);
+		}
+	};
+	
+	/**
+	 * Returns the app that owns the Controller
+	 * TODO 
+	 */
 	AppBase.getOwnerAppFor = function(oController){
 		var oApp = null,
 			oComponent = oController.getOwnerComponent(),

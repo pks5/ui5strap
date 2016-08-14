@@ -480,6 +480,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		
 			//Page is already present in DOM, return parent jQuery reference
 			if(page.getDomRef()){
+				console.log("REAPPEND");
+				
+				ui5strap.Utils.addPropertyPropagation(_this, page);
+				
 				var $parent = page.$().parent();
 				if($parent.hasClass('navcontainer-page')){
 					return $parent;
