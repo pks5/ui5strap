@@ -87,22 +87,5 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 		);
 	};
 	
-	/**
-	 * Loads the details of the post with the given postId and navigates to the PostDetail view to show the details.
-	 * 
-	 * @Public
-	 */
-	FeedManagerProto.postDetail = function(postId, detailPageId){
-		var _this = this;
-		this.readPost(postId, function(postDataDetail){
-			_this.getApp().navigateTo(_this.getApp().getRootControl(), {
-				"id" : detailPageId || "actdemoPostDetail",
-				"parameters" : {
-					"post" : postDataDetail
-				}
-			});
-		});
-	};
-	
 	return FeedManager;
 });

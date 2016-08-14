@@ -48,6 +48,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 	 * 
 	 */
 	var AppBase = ObjectBase.extend('ui5strap.AppBase', {
+		metadata : {
+			interfaces : ["ui5strap.IApp"]
+		},
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
 			
@@ -1168,8 +1171,13 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 		var _this = this,
 			pageId = viewDef.id;
 
+		if(viewDef.cache && pageId && this._pageCache[pageId]){
+			return this._pageCache[pageId];
+		}
 		//If id specified check for cache
 		//Also create a new valid control id for the view
+		
+		/*
 		if(pageId){
 			var cachedPage = this._pageCache[pageId];
 			if(viewDef.cache){
@@ -1189,10 +1197,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 				}
 			}
 		}
+		*/
 		
 		var viewConfig = {
 			async : true
 		};
+		
 		jQuery.extend(viewConfig, viewDef);
 		
 		if(pageId){
@@ -1233,7 +1243,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 			page.addStyleClass(viewConfig.styleClass);
 		}
 		
-		if(pageId){
+		if(viewDef.cache && pageId){
 			//Add to page cache
 			this._pageCache[pageId] = page;
 		}

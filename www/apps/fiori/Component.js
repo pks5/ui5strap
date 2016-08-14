@@ -6,7 +6,11 @@ sap.ui.define([
    "use strict";
    return UIComponent.extend("sap.ui.demo.wt.Component", {
 	   metadata : {
-           manifest: "json"
+           manifest: "json",
+           
+           properties : {
+        	   app : "ui5strap.AppBase"
+           }
      },
       init : function () {
          // call the init function of the parent

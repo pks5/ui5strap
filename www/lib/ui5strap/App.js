@@ -518,7 +518,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @protected
 	 */
 	AppProto._changePage = function(navControl, oPage, viewConfigResolved, suppressTransitions, excludeSubNavTarget, callback){
-		var target = viewConfigResolved.target;
+		var target = viewConfigResolved.target,
+			_this = this;
 		
 		//Trigger onUpdate events
 		navControl.updateTarget(target, oPage, viewConfigResolved.parameters);
@@ -540,12 +541,21 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			oPage, 
 			target, 
 			suppressTransitions ? "transition-none" : viewConfigResolved.transition,
-			function toPage_complete(){
+			function toPage_complete(param){
 				
 				//TODO why the timeout here?
 				window.setTimeout(function(){
 					//Set target available
 					navControl.setTargetBusy(target, false);
+					
+					if(param.oldPage){
+						var oOldViewData = param.oldPage.getViewData();
+						if(oOldViewData.__ui5strap && !oOldViewData.__ui5strap.settings.cache){
+							param.oldPage.destroy();
+							console.log("DESTROYED", _this._pageCache);
+							
+						}
+					}
 					
 					ca();
 				}, 50);

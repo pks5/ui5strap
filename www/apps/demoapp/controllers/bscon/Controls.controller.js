@@ -28,6 +28,11 @@
 sap.ui.define(['ui5strap/Controller'], function(Controller){
 
 	var controllerImpl = {
+		onInit : function(){
+			
+			console.log("bscon", this);
+		},	
+			
 		onUpdate : function(){
 			//console.log(this.getView().oPropagatedProperties);
 		},	

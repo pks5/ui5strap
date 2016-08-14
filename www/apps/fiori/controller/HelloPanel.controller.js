@@ -4,7 +4,11 @@ sap.ui.define([
             ], function (Controller, MessageToast) {
                "use strict";
                return Controller.extend("sap.ui.demo.wt.controller.HelloPanel", {
-                  onShowHello : function () {
+            	   onInit : function(){
+               			console.log(this.getOwnerComponent().getApp());
+               		},
+            	   
+            	   onShowHello : function () {
                 	// read msg from i18n model
                       var oBundle = this.getView().getModel("i18n").getResourceBundle();
                       var sRecipient = this.getView().getModel().getProperty("/recipient/name");

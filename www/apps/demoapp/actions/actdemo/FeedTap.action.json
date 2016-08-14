@@ -1,13 +1,14 @@
 {
     
     "BEGIN" : "postDetail",
+    "DEBUG" : false,
     
     "postDetail" : {
         "commandParam" : "command",
         "modelName" : "FEED_INFO",
         
         "command" : "= event.parameters.srcControl.data(.commandParam)",
-        "postData" : "= event.parameters.srcItem.getBindingContextData(.modelName)",
+        "postData" : "= event.parameters.srcItem.getBindingContextData(action.postDetail.modelName)",
         
         "deleteCommand" : "DELETE",
         "feedManager" : "= app.getFeedManager()",
@@ -15,7 +16,22 @@
         
         "IF" : "= lang.same(.command, .deleteCommand)",
         "DO" : "= .feedManager.deletePost(.postData.id, .thenCallback)",
-        "ELSE" : "= .feedManager.postDetail(.postData.id)"
+        "ELSE" : "navigate"
+    },
+    
+    "navigate" : {
+        "TYPE" : "ui5strap.task.Navigate",
+        
+        "VIEWS" : {
+            "actdemoFeed" : {
+                "id" : "actdemoPostDetail",
+                "parameters" : {
+                    "post" : {
+                        "id" : "= parameters.postDetail.postData.id"
+                    }
+                }   
+            }
+        }
     }
     
 

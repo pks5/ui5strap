@@ -47,15 +47,11 @@ sap.ui.define(['./library', 'sap/ui/core/mvc/Controller'], function(uLib, Contro
 	 */
 	ControllerProto._runEventActions = function(oEvent, sEventName){
 		var app = this.getApp(),
-			_this = this;
-			
-		if(app){
-			var view = this.getView(),
-				viewId = view.getId(),
-				updateEvents = app.config.getEvents('controller', sEventName, viewId),
-				updateEventsLength = updateEvents.length;
-			
-			var nextAction = function(j){
+			_this = this,
+			viewId = this.getView().getId(),
+			updateEvents = app.config.getEvents('controller', sEventName, viewId),
+			updateEventsLength = updateEvents.length,
+			nextAction = function(j){
 				if(j >= updateEventsLength){
 					return;
 				}
@@ -74,8 +70,7 @@ sap.ui.define(['./library', 'sap/ui/core/mvc/Controller'], function(uLib, Contro
 				});
 			};
 			
-			nextAction(0);
-		}
+		nextAction(0);
 	};
 	
 	/**
@@ -85,12 +80,12 @@ sap.ui.define(['./library', 'sap/ui/core/mvc/Controller'], function(uLib, Contro
 		var sEventHandler = 'on' + jQuery.sap.charToUpperCase(eventId, 0);
 		
 		this._runEventActions(oEvent, eventId);
-		this[sEventHandler] && this[sEventHandler]();
+		this[sEventHandler] && this[sEventHandler](oEvent);
 		
 		//@deprecated
-		if("update" === eventId){
+		if("pageUpdate" === eventId){
 			this._runEventActions(oEvent, "update");
-			this.onUpdate && this.onUpdate();
+			this.onUpdate && this.onUpdate(oEvent);
 		}
 	};
 	
@@ -133,15 +128,40 @@ sap.ui.define(['./library', 'sap/ui/core/mvc/Controller'], function(uLib, Contro
 	
 	/**
 	 * Gets the reference to the app core module.
+	 * FIXME When using a standard UIComponent with app property, the app reference is not available in onInit methods of controllers.
+	 * FIXME When using a standard Component, getOwnerComponent returns undefined.
 	 */
 	ControllerProto.getApp =  function(){
-		  var viewData = this.getView().getViewData();
+		if(this._oApp){
+			return this._oApp;
+		}
 		
-		  if(!viewData || !viewData.__ui5strap || !viewData.__ui5strap.app){
-		      return null;
-		  }
-		  
-		  return viewData.__ui5strap.app;
+		var oApp = null,
+			oComponent = this.getOwnerComponent(),
+			viewData = this.getView().getViewData();
+		
+		if(viewData && viewData.__ui5strap && viewData.__ui5strap.app){
+			//App reference is inside view data.
+		    oApp = viewData.__ui5strap.app;
+		}
+		/*
+		else if(oComponent && oComponent.getMetadata().isInstanceOf("ui5strap.IRootComponent")){
+			//Component implements ui5strap.IRootComponent
+			oApp = oComponent.getApp();
+		}
+		*/
+		else if(oComponent.getApp){
+			//Get app reference from Component's getApp method.
+			oApp = oComponent.getApp();
+		}
+		
+		if(!oApp || !oApp.getMetadata().isInstanceOf("ui5strap.IApp")){
+			throw new Error("Cannot determine app reference from view " + this.getView().getId());
+		}
+		
+		this._oApp = oApp;
+		
+		return oApp;
     };
     
     /*

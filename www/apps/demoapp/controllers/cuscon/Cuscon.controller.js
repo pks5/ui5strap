@@ -37,11 +37,34 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 			},
 			
 			onInit : function(oEvent){
+				
 				console.log("View initialized: " + this.getView().getId());
 			},
 			
+			onAfterRendering : function(oEvent){
+				
+				console.log("View rendered: " + this.getView().getId());
+			},
+			
 			onPageUpdate : function(oEvent){
+				console.log("Owner", this.getOwnerComponent());
 				console.log("On page update: " + this.getView().getId());
+			},
+			
+			onPageShow : function(oEvent){
+				console.log("On page show: " + this.getView().getId());
+			},
+			
+			onPageHide : function(oEvent){
+				console.log("On page hide: " + this.getView().getId());
+			},
+			
+			onPageShown : function(oEvent){
+				console.log("On page shown: " + this.getView().getId());
+			},
+			
+			onPageHidden : function(oEvent){
+				console.log("On page hidden: " + this.getView().getId());
 			}
 	};
 	

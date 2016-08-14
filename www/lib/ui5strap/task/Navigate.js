@@ -59,8 +59,10 @@ sap.ui.define(['../library', '../ActionModule'], function(library, ActionModule)
 			
 			var VIEWS = this.context.action[this.namespace]["VIEWS"],
 				viewsKeys = Object.keys(VIEWS);
+			
 			for(var i = 0; i < viewsKeys.length; i++){
-				this.context.app.navigateTo(navigator, this.context.resolve(this, VIEWS[viewsKeys[i]]));
+				var viewDef = this.context.resolve(this,VIEWS[viewsKeys[i]]);
+				this.context.app.navigateTo(navigator,  viewDef);
 			}
 			
 			this.then();

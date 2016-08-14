@@ -222,7 +222,7 @@ sap.ui.define(['./library'], function(library){
 	_ActionExpressionResolveObject.prototype = new _ActionExpression();
 	
 	_ActionExpressionResolveObject.prototype.evaluate = function(context, task){
-		return context.resolve(task, this._controlDef);
+		return context.resolve(task, this._controlDef, false, true);
 	};
 	
 	
@@ -410,14 +410,14 @@ sap.ui.define(['./library'], function(library){
 	 * @Public
 	 * FIXME
 	 */
-	ActionContextProto.resolve = function(task, pointer, onlyString){
+	ActionContextProto.resolve = function(task, pointer, onlyString, recursive){
 		if(pointer instanceof _ActionExpression){
 			return pointer.evaluate(this, task);
 		}
 		else if(!onlyString && ("object" === typeof pointer)){
 			if(pointer._isActionArray){
 				for(var i = 0; i < pointer.length; i++){
-					pointer[i] = this.resolve(task, pointer[i], true);
+					pointer[i] = this.resolve(task, pointer[i], !recursive, recursive);
 				}
 			}
 			else if(pointer instanceof _ActionParameterObject){
@@ -426,7 +426,7 @@ sap.ui.define(['./library'], function(library){
 			
 				for(var i=0; i < objectKeysLength; i++){
 					//Store back the value in the context
-					pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], true);
+					pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], !recursive, recursive);
 				}
 			}
 		}

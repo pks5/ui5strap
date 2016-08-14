@@ -168,6 +168,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				controller = oControl.getController();
 			}
 			
+			//TODO firePageEvent 
 			controller 
 				&& controller.firePageEvent 
 				&& controller.firePageEvent(new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}), eventId);
@@ -236,7 +237,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			//jQuery.sap.log.debug(' + [NC] CALLBACK_0 (' + callbacksLength + ') {' + pageChange.target + '}');
 
 			for(var i = 0; i < callbacksLength; i++){
-				transList.callbacks[i]();
+				transList.callbacks[i]({
+					target : pageChange.target,
+					oldPage : pageChange.currentPage
+				});
 			}
 
 			//pageChange 
@@ -644,7 +648,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		if(this.getDomRef() && currentPage === page){
 			jQuery.sap.log.debug(' + [NC] PAGE IS CURRENT {' + target + '}');
 
-			callback && callback();
+			callback && callback({
+				target : target,
+				currentPage : page
+			});
 			
 			return false;
 		}
