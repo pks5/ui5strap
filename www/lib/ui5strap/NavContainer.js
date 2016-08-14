@@ -259,28 +259,48 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
 		
 		pageChange.transition.on("last", function(){
-			var $current = pageChange.transition._data.$current;
-			if($current){
-				$current.remove();
-			}
-			
-			if(pageChange.currentPage){
-				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
+			//Current Page
+			var oCurrentPage = pageChange.currentPage;
+			if(oCurrentPage){
+				var oUiArea = oCurrentPage.getParent();
+				if(oUiArea){
+					var $current = pageChange.transition._data.$current;
+					
+					if($current){
+						//$current.remove();
+						$current.detach();
+					}
+					else{
+						jQuery.sap.log.warning("Removed page has no DOM reference.");
+					}
+					
+					oUiArea.removeContent(oCurrentPage, true);
+					//Set Propagated Properties and Bindings back to ui area
+					//TODO verify that this is not needed anymore due removal from UiArea
+					//ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
+					
+					oUiArea.destroy();
+					jQuery.sap.log.info("Destroyed UIArea " + oUiArea.getId());
+					
+					$current && $current.remove();
+				}
+				
+				_triggerControllerEvent(_this, pageChange.target, oCurrentPage, 'pageHidden', {
 					target : pageChange.target,
 					newPage : pageChange.page
 				});
-				
-				//Set Propagated Properties and Bindings back to ui area
-				ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
-				//pageChange.currentPage.setParent(null);
 			}
 			
-			var $next = pageChange.transition._data.$next;
-			if($next){
-				$next.attr('class', 'navcontainer-page navcontainer-page-current');
-			}
-			
+			//Next Page
 			if(pageChange.page){
+				var $next = pageChange.transition._data.$next;
+				if($next){
+					$next.attr('class', 'navcontainer-page navcontainer-page-current');
+				}
+				else{
+					throw new Error("Next page has no DOM reference.");
+				}
+				
 				_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShown', {
 					target : pageChange.target,
 					oldPage : pageChange.currentPage
@@ -477,8 +497,9 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			if(!page){
 				return null;
 			}
-		
+			
 			//Page is already present in DOM, return parent jQuery reference
+			/*
 			if(page.getDomRef()){
 				console.log("REAPPEND");
 				
@@ -489,6 +510,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					return $parent;
 				}
 			}
+			*/
 			
 			//Create dom element and jQuery wrapper
 			var newPageContainer = document.createElement('div'),
@@ -501,13 +523,15 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					: 'navcontainer-page';
 			
 			//Create and set id for new page container
-			newPageContainer.id = _this.pageDomId(target, page);
+			//newPageContainer.id = _this.pageDomId(target, page);
 			
 			//Append page container to the dom
 			jQuery('#' + _this.targetPagesDomId(target)).append($newPageContainer);
 			
 			//Add page to new page container
 			page.placeAt(newPageContainer);
+			
+			jQuery.sap.log.info("Created UIArea " + page.getParent().getId());
 			
 			//Propagate Properties
 			//This must be done after the Page has attached to DOM,
@@ -670,13 +694,13 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 							+ ' ("'
 							+ transitionName + '")';
 
-		var $currentPage = jQuery('#' + this.createPageDomId(target, currentPage)),
-			targetTransition = {
+		//var $currentPage = jQuery('#' + this.createPageDomId(target, currentPage)),
+			var targetTransition = {
 				"changeName" : changeName,
 				"target" : target,
 				"transitionName" : transitionName,
 				"transition" : null,
-				"$current" : $currentPage.size() > 0 ? $currentPage : null,
+				"$current" : currentPage ? currentPage.$().parent() : null,
 				"$next" : null,
 				"callback" : callback,
 				"page" : page,

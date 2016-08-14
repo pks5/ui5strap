@@ -39,6 +39,10 @@ sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller'], function
 			this._runEventActions(oEvent, "init");
 		}, this);
 		
+		oView.attachBeforeExit(function(oEvent){
+			this._oApp = null;
+		}, this);
+		
 		ControllerBase.prototype.connectToView.call(this, oView);
 	};
 	

@@ -37,6 +37,10 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 				this._feedManager.refreshFeed();
 			},
 			
+			onAfterRendering : function(oEvent){
+				console.log("RENDERING LIST");
+			},
+			
 			handleFeedTap : function(oEvent){
 				var _this = this,
 					command = oEvent.getParameter("srcControl").data("command"),

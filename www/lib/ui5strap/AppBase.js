@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"], function(uLib, ObjectBase, Action, NavContainer){
+sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Action', "./NavContainer"], function(uLib, ObjectBase, UIArea, Action, NavContainer){
 	
 	"use strict";
 	
@@ -1194,7 +1194,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 				else{
 					jQuery.sap.log.warning("Created a new page but a page with that id already exists. Destroying existing page...");
 					
-					this.destroyPage(cachedPage, true);
+					this.destroyPage(cachedPage);
 				}
 			}
 		}
@@ -1222,6 +1222,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 		//Will crash if "viewName" or "type" attribute is missing!
 		var page = new sap.ui.view(viewConfig);
 		
+		page.attachBeforeExit(function(oEvent){
+			var viewData = this.getViewData();
+			delete viewData.__ui5strap;
+		});
+		
 		/*
 		page.attachAfterInit(null, function(){
 			jQuery.sap.log.info("Created page has been initialized.");
@@ -1244,30 +1249,49 @@ sap.ui.define(['./library', 'sap/ui/base/Object', './Action', "./NavContainer"],
 	};
 	
 	/**
-	 * Destroy a view/page
+	 * Destroys a page
 	 */
-	AppBaseProto.destroyPage = function(oView, bForceDestroy){
-		var oViewData = oView.getViewData();
-		if(bForceDestroy 
-				|| !oViewData.__ui5strap 
-				|| !oViewData.__ui5strap.settings.cache){
-			
-			var pageId = oView.getId();
-			
-			if(this._pageCache[pageId]){
-				//View already have been created before
-				//Delete cache entry and destroy existing view
-				delete this._pageCache[pageId];
+	AppBaseProto.destroyPage = function(oView){
+		var pageId = oView.getId();
+		
+		if(this._pageCache[pageId]){
+			//View already have been created before
+			//Delete cache entry and destroy existing view
+			delete this._pageCache[pageId];
+		}
+		
+		var oParent = oView.getParent();
+		if(oParent){
+			if(oParent instanceof UIArea){
+				oParent.destroy();
+				jQuery.sap.log.warning("View " + pageId + " still attached to UIArea - destroyed both.");
 			}
-			
-			//Set Parent to null
-			//TODO Why?
-			oView.setParent(null);
+			else{
+				throw new Error("Cannot destroy View: still attached to " + oParent.getId());
+			}
+		}
+		else{
+			//Set Parent to null before destroying
+			//TODO Why
+			//oView.setParent(null);
 			
 			//Destroy the Page
 			oView.destroy();
-			
 			jQuery.sap.log.info("Destroyed view " + pageId);
+		}
+		
+		
+	};
+	
+	/**
+	 * Dettaches a view/page from DOM
+	 */
+	AppBaseProto.dettachPage = function(oView){
+		var oViewData = oView.getViewData();
+		if(!oViewData.__ui5strap 
+			|| !oViewData.__ui5strap.settings.cache){
+			
+			this.destroyPage(oView);
 		}
 	};
 	
