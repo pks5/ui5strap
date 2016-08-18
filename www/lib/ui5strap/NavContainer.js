@@ -268,13 +268,15 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					
 					if($current){
 						//$current.remove();
-						$current.detach();
+						//$current.detach();
+						$current.attr("class", "ui5strap-hidden");
 					}
 					else{
 						jQuery.sap.log.warning("Removed page has no DOM reference.");
 					}
 					
 					oUiArea.removeContent(oCurrentPage, true);
+					
 					//Set Propagated Properties and Bindings back to ui area
 					//TODO verify that this is not needed anymore due removal from UiArea
 					//ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);

@@ -46,6 +46,10 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
 	}),
 	HomeScreenProto = HomeScreen.prototype;
 
+	/**
+	 * Returns the style class prefix for this control.
+	 * @override
+	 */
 	HomeScreenProto._getStyleClassPrefix = function(){
 		return "ui5strapHomeScreen";
 	};
@@ -68,7 +72,7 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
 	
 
 	/**
-	 * @Override
+	 * @override
 	 */
 	HomeScreenProto.ontouchstart = function(oEvent){
 		this._timeTouchStart = Date.now();
@@ -80,7 +84,7 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
 	};
 
 	/**
-	 * @Override
+	 * @override
 	 */
 	HomeScreenProto.ontouchend = function(){
 		if(null === this._timeTouchStart){
@@ -101,6 +105,9 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
 		}
 	};
 	
+	/**
+	 * @private
+	 */
 	var _updateGrid = function(_this){
 		var containerWidth = _this._$homeScreen.width(),
 			containerHeight = _this._$homeScreen.height();
@@ -192,7 +199,7 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
 	};
 	
 	/**
-	 * @Override
+	 * @override
 	 */
 	HomeScreenProto.onBeforeRendering = function(){
 		this._$homeScreen = null;
@@ -200,7 +207,7 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
 	}; 
 
 	/**
-	 * @Override
+	 * @override
 	 */
 	HomeScreenProto.onAfterRendering = function(){
 		jQuery.sap.log.info("HomeScreen rendered.");

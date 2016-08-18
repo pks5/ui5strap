@@ -29,6 +29,9 @@ sap.ui.define(['ui5strap/ControlBase', "./d3_min"], function(ControlBase){
 			}),
 	StockGraphProto = StockGraph.prototype;
 
+    /**
+     * 
+     */
 	StockGraphProto._parseDateString = function(dateString, addSecs) {
 		var parts = dateString.split("T");
 		var year = parts[0].substr(0, 4);
@@ -50,6 +53,9 @@ sap.ui.define(['ui5strap/ControlBase', "./d3_min"], function(ControlBase){
 		return new Date(year, month, day, dayHours, dayMinutes, daySeconds, 0);
 	};
 
+	/**
+	 * 
+	 */
 	StockGraphProto.clear = function() {
 		var graphContainer = d3.select("#" + this.getId());
 		graphContainer.append('div').attr('class', 'please-wait').text(
@@ -57,6 +63,9 @@ sap.ui.define(['ui5strap/ControlBase', "./d3_min"], function(ControlBase){
 		graphContainer.select('.root-container').remove();
 	};
 
+	/**
+	 * 
+	 */
 	StockGraphProto.prepareData = function() {
 		var data = {
 			players : []
@@ -130,44 +139,25 @@ sap.ui.define(['ui5strap/ControlBase', "./d3_min"], function(ControlBase){
 		return data;
 	}
 	
-	var _checkVisibility = function(_this){
-		if(!_this.getDomRef()){
-			throw new Error("Cannot update graph.");
-		}
-		var width = _this.$().width();
-		
-		//We want to find out whether we can get the width of container.
-		//If container not visible, then this method might return 100.
-		//This seems to be a jQuery bug.
-		if(width > 100){
-			_this.refresh();
-		}
-		else{
-			_this._checkVisibilityCounter++;
-			
-			if(_this._checkVisibilityCounter > 5){
-				jQuery.sap.log.error("Cannot update graph: container width could not be obtained.");
-				return;
+	/**
+	 * Updates the Home Screen Grid
+	 * @override
+	 */
+	StockGraphProto.onAfterRendering = function(){
+		var _this = this;
+		this._waitForRendering(
+			"width",
+			function() {
+				_this.refresh();
+				
+				callback && callback();
 			}
-			
-			jQuery.sap.log.warning("Container is not visible yet...");
-			
-			_this._checkVisibilityTimeout = window.setTimeout(function(){
-				_checkVisibility(_this);
-			}, 100);
-		}
+		);
 	};
 
 	/**
-	 * Updates the Home Screen Grid
+	 * 
 	 */
-	StockGraphProto.onAfterRendering = function(){
-		this._checkVisibilityCounter = 0;
-		window.clearTimeout(this._checkVisibilityTimeout);
-		
-		_checkVisibility(this);
-	};
-
 	StockGraphProto.refresh = function() {
 		/* implementation heavily influenced by http://bl.ocks.org/1166403 */
 
@@ -337,5 +327,6 @@ sap.ui.define(['ui5strap/ControlBase', "./d3_min"], function(ControlBase){
 		// 'total');
 	};
 
+	//Return the constructor
 	return StockGraph;
 });
