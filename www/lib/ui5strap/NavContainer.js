@@ -277,6 +277,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					//oCurrentPage.$().detach();
 					$current.detach();
 					
+					var areaId = oUiArea.getId();
+					
 					//Remove the Page from the UIArea first, since we don't want to destroy the page.
 					oUiArea.removeContent(oCurrentPage, true);
 					
@@ -288,7 +290,9 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					
 					//Destroy the UIArea
 					oUiArea.destroy();
-					jQuery.sap.log.info("Destroyed UIArea " + oUiArea.getId());
+					jQuery.sap.log.info("Destroyed UIArea " + areaId);
+					
+					$current.remove();
 				}
 				
 				_triggerControllerEvent(_this, pageChange.target, oCurrentPage, 'pageHidden', {
@@ -511,12 +515,20 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			//Page still has a valid dom reference. Reuse the dom ref.
 			if(page.getDomRef()){
 				jQuery.sap.log.info("Reusing DOM reference for page: " + page.getId() );
-				ui5strap.Utils.addPropertyPropagation(_this, page);
 				
 				var $parent = page.$().parent();
 				if($parent.hasClass('navcontainer-page')){
-					return $parent;
+					
+					newPageContainer = $parent[0];
+					$newPageContainer = $parent;
+					
+					jQuery.sap.log.info("Recreated UIArea " + newPageContainer.id);
+				
+					if($newPageContainer.attr("data-sap-ui-area")){
+						jQuery.sap.log.warning("Existing page container already has a UIArea assigned.");
+					}
 				}
+				
 			}
 			
 			//Set css class name for new page container
