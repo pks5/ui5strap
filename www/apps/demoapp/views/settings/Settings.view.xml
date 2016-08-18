@@ -21,7 +21,7 @@
 						</Button>
 					</Container>
 					
-					<Heading text="{i18n>PAGE_SETTINGS_TITLE}" options="BarHeadingCenter" />
+					<Heading text="{i18n>PAGE_SETTINGS_TITLE}" options="BarHeadingCenter" id="headingSettings" />
 					
 					<Container align="PullRight">
 						<!-- Toggle Menu Button (only for small screens) -->

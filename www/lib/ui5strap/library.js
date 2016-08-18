@@ -1251,6 +1251,14 @@ sap.ui
 							else{
 								$target.text(newText);
 							}
+							
+							/*
+							if(oControl.getId() === "com-ui5strap-apps-demoapp---settings--headingSettings"){
+								debugger;
+							}
+							*/
+							//jQuery.sap.log.info("Updated text directly for control " + oControl.getId());
+							
 							//Set property value without rerendering
 							oControl.setProperty('text', newText, true);
 						} else {
@@ -1372,6 +1380,8 @@ sap.ui
 								._getPropertiesToPropagate();
 
 						if (toControl.hasModel()) {
+							jQuery.sap.log.info("Propagated properties from " + fromControl.getId() + " to " + toControl.getId());
+							
 							toControl.updateBindingContext(false, true,
 									undefined, true);
 							toControl.updateBindings(true, null); // TODO

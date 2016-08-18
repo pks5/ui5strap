@@ -255,8 +255,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	* @Private
 	*/
 	var _executeTransition = function(_this, pageChange, transList){
-		//ui5strap.tm("APP", "NC", "EXEC_TRANS");
-		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
+		
+		if(pageChange.currentPage === pageChange.page){
+			throw new Error("Cannot execute transitions with 2 same instances: " + pageChange.page.getId());
+		}
 		
 		pageChange.transition.on("last", function(){
 			//Current Page
@@ -290,7 +292,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					
 					//Destroy the UIArea
 					oUiArea.destroy();
-					jQuery.sap.log.info("Destroyed UIArea " + areaId);
+					jQuery.sap.log.info("Destroyed UIArea " + areaId + " of page " + oCurrentPage.getId());
 					
 					$current.remove();
 				}
@@ -352,7 +354,15 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				}
 			}
 			
-			_executeTransition(_this, pageChanges[pageChanges.length-1], transList);
+			var lastPageChange = pageChanges[pageChanges.length-1];
+			
+			if(lastPageChange.page === lastPageChange.currentPage){
+				//This can happen if the navcontainer is rerendered, but page is already current.
+				_transitionCallback(_this, lastPageChange, transList);
+			}
+			else{
+				_executeTransition(_this, lastPageChange, transList);
+			}
 		}
 		
 		_this._pendingTransitions = [];
@@ -545,7 +555,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			//Add page to new page container
 			page.placeAt(newPageContainer);
 			
-			jQuery.sap.log.info("Created UIArea " + page.getParent().getId());
+			jQuery.sap.log.info("Created UIArea " + page.getParent().getId() + " for page " + page.getId());
 			
 			//Propagate Properties
 			//This must be done after the Page has attached to DOM,
@@ -689,12 +699,17 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			currentPage = this.targets[target];
 
 		if(this.getDomRef() && currentPage === page){
-			jQuery.sap.log.debug(' + [NC] PAGE IS CURRENT {' + target + '}');
-
-			callback && callback({
-				target : target,
-				currentPage : page
-			});
+			if(currentPage.getDomRef()){
+				jQuery.sap.log.info("NavContainer " + this.getId() + " already shown " + currentPage.getId() + " on target " + target);
+	
+				callback && callback({
+					target : target,
+					currentPage : page
+				});
+			}
+			else{
+				throw new Error("RRR");
+			}
 			
 			return false;
 		}
