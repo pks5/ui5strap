@@ -1,0 +1,30 @@
+/* ========================================= */
+/* CSS for control sap.m/NewsContent.control */
+/* ========================================= */
+.sapMNwCCTxt .sapMText, .sapMNwCSbh {
+	font-size: @sapMFontMediumSize;
+}
+
+.sapMNwC {
+	color: @sapHCStandardFG;
+	background-color: @sapHCStandardBG;
+}
+
+html.sap-desktop .sapMNwC:focus {
+	outline: 0.0625rem dotted @sapHCStandardFG;
+}
+
+.sapMNwC:focus:not([tabindex]) {
+	outline: none;
+}
+
+.sapMNwCSbh {
+	color: @sapHCStandardFG;
+}
+
+/* BREAKPOINT FOR SMALL PHONES */
+@media screen and (max-width: 374px) {
+	.sapMNwCCTxt .sapMText, .sapMNwCSbh{
+		font-size: @sapMFontSmallSize;
+	}
+}

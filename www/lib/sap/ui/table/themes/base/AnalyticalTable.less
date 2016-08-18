@@ -1,0 +1,57 @@
+/* ======================================================== */
+/* CSS for control sap.ui.analytics/AnalyticalTable.control */
+/* ======================================================== */
+
+.sapUiAnalyticalTable .sapUiTableColRsz {
+	z-index: 3;
+}
+
+.sapUiAnalyticalTable tr.sapUiAnalyticalTableDummy td {
+	border-right-width: 0;
+}
+
+.sapUiAnalyticalTable tr.sapUiAnalyticalTableDummy td:last-child {
+	border-right-width: 1px;
+}
+
+.sapUiAnalyticalTable .sapUiAnalyticalTableLoading {
+	margin-left: 40px;
+}
+
+.sapUiAnalyticalTable .sapUiTableRowHdr.sapUiAnalyticalTableSum {
+	border-left: 0;
+	border-right: 0;
+}
+
+.sapUiAnalyticalTable .sapUiTableTr.sapUiAnalyticalTableSum td {
+	border-left: 0;
+	border-right: 0;
+}
+
+.sapUiAnalyticalTable .sapUiTableGroupIcon,
+.sapUiAnalyticalTable .sapUiTableGroupMenuButton {
+	display: none;
+}
+
+.sapUiAnalyticalTable .sapUiTableGroupHeader > .sapUiTableGroupIcon,
+.sapUiAnalyticalTable .sapUiTableGroupHeader > .sapUiTableGroupMenuButton {
+	display: block;
+}
+
+/*******************************************************************************
+ * CHILD CONTROL STYLES
+ ******************************************************************************/
+
+.sapUiAnalyticalTable .sapUiTableCol .sapMLabel,
+.sapUiAnalyticalTable .sapUiTableCell > .sapMLabel,
+.sapUiAnalyticalTable .sapUiTableCell > .sapMText {
+	width: 100%;
+}
+
+.sapUiSizeCompact .sapUiAnalyticalTable .sapUiTableGroupIcon::before {
+	line-height: @sapUiTableRowHeight;
+}
+
+.sapUiSizeCondensed .sapUiAnalyticalTable .sapUiTableGroupIcon::before {
+	line-height: 22px;
+}

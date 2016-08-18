@@ -1,0 +1,27 @@
+/* ================================== */
+/* CSS for control sap.m/TileContent  */
+/* Belize theme                       */
+/* ================================== */
+
+/* Footer CSS */
+.sapMTileCntFtrTxt {
+	font-family: @sapUiFontFamily;
+	font-size: @sapMFontMediumSize;
+	color: @sapUiTileTextColor;
+}
+
+.sapMTileCnt.News {
+	background-color: fade(darken(@sapUiHighlight, 18), 85%);
+
+	.sapMTileCntFtrTxt {
+		color: lighten(@sapUiContentLabelColor, 45);
+		text-shadow: 0 1px 0 fade(@sapUiContentShadowColor, 50);
+	}
+}
+
+/* BREAKPOINT FOR SMALL PHONES */
+@media screen and (max-width: 374px) {
+	.sapMTileCntFtrTxt {
+		font-size: @sapMFontSmallSize;
+	}
+}

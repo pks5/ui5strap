@@ -1,0 +1,163 @@
+/* ============================================== */
+/* CSS for control sap.tnt/NavigationList.control */
+/* ============================================== */
+.sapTntNavLI {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sapTntNavLI ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sapTntNavLIItem {
+	width : 100%;
+	height: 2.5rem;
+
+	box-sizing: border-box;
+
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+
+	cursor: pointer;
+
+	& > span {
+		cursor: pointer;
+	}
+
+	&.sapTntNavLIItemDisabled {
+		cursor: auto;
+
+		& > span {
+			cursor: auto;
+		}
+	}
+}
+
+.sapTntNavLIText {
+	width: 100%;
+	display: block;
+}
+
+.sapTntNavLIGroupItem > .sapMText {
+	padding-left: 3rem;
+}
+
+.sapTntNavLIPopup .sapTntNavLIGroupItem > .sapMText {
+	padding: 0 1rem;
+}
+
+.sapTntNavLIPopup .sapTntNavLIGroup > .sapMText {
+	margin: 0 1rem 0 0;
+}
+
+.sapTntNavLI {
+  span.sapTntNavLIGroupIcon {
+	min-width: 3rem;
+	padding: 0.6875rem 0;
+
+	outline: none;
+	-webkit-user-select: none; /* Chrome all / Safari all */
+	-moz-user-select: none; /* Firefox all */
+	-ms-user-select: none; /* IE 10+ */
+	user-select: none;
+  }
+
+  img.sapTntNavLIGroupIcon {
+	height: 1.125rem;
+	width: 1.125rem;
+	padding: 0.6875rem 0.9375rem;
+  }
+}
+
+.sapTntNavLIPopup {
+  span.sapTntNavLIGroupIcon {
+	width: 1rem;
+	visibility: hidden;
+	min-width: 1rem;
+  }
+
+  img.sapTntNavLIGroupIcon {
+	width: 1rem;
+	visibility: hidden;
+	min-width: 1rem;
+	padding: 0;
+  }
+}
+
+.sapTntNavLI .sapTntNavLIExpandIcon {
+	min-width: 2rem;
+	padding: 0.6875rem 0;
+
+	outline: none;
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+	user-select: none;
+}
+
+.sapTntNavLIHiddenGroupItems {
+	display: none;
+}
+
+.sapTntNavLICollapsed {
+	width: 3rem;
+}
+
+.sapTntNavLI li,
+.sapTntNavLIItem {
+	position: relative;
+}
+
+/* Compact size */
+.sapUiSizeCompact {
+
+	.sapTntNavLIItem {
+		height: 2rem;
+	}
+
+	.sapTntNavLIGroupItem > .sapMText {
+		padding-left: 2rem;
+	}
+
+	.sapTntNavLIPopup .sapTntNavLIGroupItem > .sapMText {
+		padding: 0 0.5rem;
+	}
+
+	.sapTntNavLIPopup .sapTntNavLIGroup > .sapMText {
+		margin: 0 0.5rem 0 0;
+	}
+
+	.sapTntNavLI span.sapTntNavLIGroupIcon {
+		min-width: 2rem;
+		padding: 0.5rem 0;
+	}
+
+	.sapTntNavLI img.sapTntNavLIGroupIcon {
+	  padding: 0.5rem 0.4375rem;
+	}
+
+	.sapTntNavLIPopup span.sapTntNavLIGroupIcon {
+		width: 0.5rem;
+	  	min-width: 0.5rem;
+	}
+
+	.sapTntNavLI .sapTntNavLIExpandIcon {
+		min-width: 2rem;
+		padding: 0.5rem 0;
+	}
+
+	.sapTntNavLICollapsed {
+		width: 2rem;
+	}
+}

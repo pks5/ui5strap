@@ -149,8 +149,6 @@ sap.ui.define(['ui5strap/ControlBase', "./d3_min"], function(ControlBase){
 			"width",
 			function() {
 				_this.refresh();
-				
-				callback && callback();
 			}
 		);
 	};

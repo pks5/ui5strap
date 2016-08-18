@@ -1,0 +1,26 @@
+/* ============================================= */
+/* CSS for control sap.m/TabContainer.control    */
+/* ============================================= */
+.sapMTabContainer {
+	position: relative;
+	width: 100%;
+	.sapMTabContainerContent {
+		position: relative;
+		.sapMTabContainerInnerContent {
+			position: relative;
+		}
+	}
+}
+
+.sapUiSizeCompact {
+	.sapMTabContainer {
+		.sapMTabContainerContent {
+			.sapMTabContainerInnerContent {
+				top: 2rem;
+			}
+		}
+	}
+}
+
+/* mixin call for creating container content padding classes (arguments: rootContainer, contentSelector) */
+.sapUiContainerContentPadding(~".sapMTabContainer", ~"> .sapMTabContainerContent > .sapMTabContainerInnerContent");

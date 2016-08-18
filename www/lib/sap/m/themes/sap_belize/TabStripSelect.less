@@ -1,0 +1,51 @@
+/* ===================================== */
+/* CSS for control sap.m/TabStripSelect  */
+/* Belize theme                          */
+/* ===================================== */
+
+.sapMSltPressed .sapMSltIcon {
+	color: white;
+}
+
+.sapMSlt.sapMTSSlt {
+	background: transparent;
+}
+.sapMTSSlt.sapMSltPressed .sapMSltArrow {
+	color: white; /* ToDo: this must be variable when the styling of the button is fixed */
+	background-color: @sapUiFieldActiveBackground;
+}
+
+.sapMTSSlt { /* change this only in context of sap.m.TabStripSelect*/
+	&.sapMSltPressed.sapMSltIconOnly:not(.sapMSltDisabled) {
+				background-color: transparent;
+			&.sapMSltHoverable:hover {
+				background-color: transparent;
+			}
+			.sapMSltInner {
+				.sapMSltIcon {
+					background-color: @sapUiFieldActiveBackground;
+				}
+			}
+		}
+
+	&:not(.sapMSltPressed) {
+		&.sapMSltHoverable:hover {
+			.sapMSltInner {
+				.sapMSltIcon {
+				  background-color: @sapUiButtonLiteHoverBackground;
+				}
+			}
+		}
+	}
+}
+
+
+html.sap-phone {
+	.sapMSlt.sapMTSSlt {
+		background: @sapUiFieldBackground;
+	}
+
+	.sapMTSSlt.sapMSltPressed.sapMSltIconOnly:not(.sapMSltDisabled) {
+		background-color: @sapUiFieldBackground;
+	}
+}

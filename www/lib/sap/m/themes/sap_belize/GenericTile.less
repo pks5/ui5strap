@@ -1,0 +1,115 @@
+/* ================================== */
+/* CSS for control sap.m/GenericTile  */
+/* Belize theme                       */
+/* ================================== */
+
+.sapMGTHdrTxt > .sapMText {
+	color: @sapUiTileTitleTextColor;
+	font-weight: normal;
+	font-family: @sapUiFontFamily;
+	font-size: @sapMFontHeader5Size;
+}
+
+.sapMGTSubHdrTxt {
+	font-family: @sapUiFontFamily;
+	font-size: @sapMFontMediumSize;
+	font-weight: normal;
+	color: @sapUiTileTextColor;
+}
+
+.sapMGTHdrIconImage {
+	font-family: @sapUiFontHeaderFamily;
+	font-weight: @sapUiFontHeaderWeight;
+	color: @sapUiHighlight;
+}
+
+.sapMGT {
+	border: none;
+	box-shadow: @sapUiShadowLevel0;
+	background: @sapUiTileBackground;
+}
+
+.sapMGenericTileFtrFldTxt {
+	font-family: @sapUiFontFamily;
+	font-size: @sapMFontSmallSize;
+	color: @sapUiContentLabelColor;
+}
+
+.sapMGenericTileFtrFldIcn {
+	color: @sapUiContentLabelColor;
+}
+
+html.sap-desktop .sapMGTWithoutImageHoverOverlay,
+html.sap-desktop .sapMGTWithImageHoverOverlay {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	transition: background 0.2s;
+}
+
+html.sap-phone .sapMGTWithoutImageHoverOverlay,
+html.sap-phone .sapMGTWithImageHoverOverlay,
+html.sap-tablet .sapMGTWithoutImageHoverOverlay,
+html.sap-tablet .sapMGTWithImageHoverOverlay {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+
+html.sap-desktop .sapMGTWithoutImageHoverOverlay.sapMGTPressActive,
+html.sap-phone .sapMGTWithoutImageHoverOverlay.sapMGTPressActive,
+html.sap-tablet .sapMGTWithoutImageHoverOverlay.sapMGTPressActive {
+	background: fade(@sapUiShellActiveBackground, 8) !important;
+}
+
+html.sap-desktop .sapMGTWithImageHoverOverlay.sapMGTPressActive,
+html.sap-phone .sapMGTWithImageHoverOverlay.sapMGTPressActive,
+html.sap-tablet .sapMGTWithImageHoverOverlay.sapMGTPressActive {
+	background: fade(@sapUiShellActiveBackground, 22) !important;
+}
+
+html.sap-desktop .sapMGT:hover .sapMGTWithoutImageHoverOverlay:not(.sapMGTWithoutImagePressActive) {
+	background: fade(@sapUiShellHoverBackground, 4);
+}
+
+html.sap-desktop .sapMGT:hover .sapMGTWithImageHoverOverlay:not(.sapMGTWithImagePressActive) {
+	background: fade(@sapUiShellHoverBackground, 18);
+}
+
+html.sap-desktop .sapMGT:focus .sapMGTFocusDiv {
+	border: 1px solid @sapUiTileBackground;
+}
+
+/* This part is used to achieve dotted white black interlace border*/
+html.sap-desktop .sapMGT:focus .sapMGTFocusDiv:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-radius: 0.25rem;
+	margin: -1px;
+	border: 1px dotted @sapUiContentFocusColor;
+}
+
+html.sap-desktop .sapMGT:focus:not([tabindex]) {
+	border-color: transparent;
+}
+
+.sapMGTOverlay {
+	background-color: @sapUiTileBackground;
+}
+
+/* BREAKPOINT FOR SMALL PHONES */
+@media screen and (max-width: 374px) {
+	.sapMGTHdrTxt > .sapMText {
+		font-size: @sapMFontHeader6Size;
+	}
+}

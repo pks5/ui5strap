@@ -1,0 +1,31 @@
+/* ========================================= */
+/* CSS for control sap.m/NewsContent.control */
+/* ========================================= */
+
+.sapMNwCCTxt .sapMText {
+	font-size: @sapMFontMediumSize;
+}
+
+.sapMNwCSbh {
+	color: @sapUiLightText;
+	font-size: @sapMFontMediumSize;
+}
+
+.sapMNwC {
+	color: @sapUiDarkText;
+	background-color: fade(@sapUiLightestBG, 60);
+}
+
+html.sap-desktop .sapMNwC:focus {
+	outline: 1px dotted @sapUiFocus;
+}
+
+.sapMNwC:focus:not([tabindex]) {
+	outline: none;
+}
+
+@media screen and (max-width: 374px) {
+	.sapMNwCCTxt .sapMText, .sapMNwCSbh {
+		font-size: @sapMFontSmallSize;
+	}
+}

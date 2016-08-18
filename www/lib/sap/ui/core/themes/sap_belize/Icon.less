@@ -1,0 +1,28 @@
+
+/* ============================================= */
+/* CSS for control sap.ui.core/Icon.control      */
+/* ============================================= */
+
+.sapUiIcon {
+	cursor: default;
+	text-align: center;
+	display: inline-block;
+	vertical-align: baseline;
+}
+
+.sapUiIconPointer {
+	cursor: pointer;
+}
+
+html[dir=rtl] .sapUiIconMirrorInRTL:not(.sapUiIconSuppressMirrorInRTL) {
+	transform: scale(-1,1);
+	-ms-transform: scale(-1,1); /* IE 9 */
+	-webkit-transform: scale(-1,1); /* Safari and Chrome */
+}
+
+.sapUiIcon:before {
+	content: attr(data-sap-ui-icon-content);
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+}

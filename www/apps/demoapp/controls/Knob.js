@@ -31,20 +31,21 @@ sap.ui.define(['ui5strap/ControlBase', './jquery.knob.min'], function(ControlBas
         return "knob";
     };
     
-    KnobProto.onBeforeRendering = function(){
-    	if(this._$knob){
-	    	this._$knob.remove();
-	    	this._$knob = null;
-    	}
-    };
-    
     KnobProto.onAfterRendering = function(){
-    	this._$knob = this.$().find("." + this._getStyleClassPart("knob")).knob();
+    	var $newKnob = this.$().find("." + this._getStyleClassPart("knob")).knob();
+    	
+    	if(this._$knob && $newKnob[0] !== this._$knob[0]){
+    		this._$knob.remove();
+    	}
+    	
+    	this._$knob = $newKnob;
     };
     
     KnobProto.exit = function(){
-    	this._$knob.remove();
-    	this._$knob = null;
+    	if(this._$knob){
+    		this._$knob.remove();
+    		this._$knob = null;
+    	}
     };
     
     //return Constructor

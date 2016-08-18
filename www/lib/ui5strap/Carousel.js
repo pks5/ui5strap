@@ -115,6 +115,19 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	CarouselProto = Carousel.prototype;
 
+	/**
+	 * Destructor
+	 */
+	CarouselProto.exit = function(){
+		if(_this.timer){
+            window.clearInterval(_this.timer);
+            _this.timer = null;
+        }
+		
+		this.items = null;
+		
+	};
+	
   /**
    * @Private
    */
@@ -130,6 +143,12 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
        this.timer = window.setInterval(function(){
           _this.nextPage();
        }, newInterval);
+       
+       this.pagination = null;
+       this.items = null;
+       
+       this.$lane.destroy();
+       this.$lane = null;
   };
 
   /**

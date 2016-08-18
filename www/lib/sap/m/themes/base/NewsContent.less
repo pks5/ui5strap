@@ -1,0 +1,54 @@
+/* ========================================= */
+/* CSS for control sap.m/NewsContent.control */
+/* ========================================= */
+.sapMNwC {
+	display: inline-block;
+	outline: none;
+
+	width: 20.5rem;
+	height: 3.375rem;
+}
+
+.sapMNwCCTxt {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-family: @sapUiFontFamily;
+	font-weight: normal;
+	padding: 0.25rem 0 0 0;
+	max-width: 20.5rem;
+
+	.sapMText {
+		display: inline;
+		line-height: 1.063rem;
+	}
+}
+
+.sapMNwCSbh {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-family: @sapUiFontFamily;
+	font-weight: normal;
+	max-width: 20.5rem;
+	display: inline-block;
+
+	line-height: 1.063rem;
+}
+
+/* BREAKPOINT FOR SMALL PHONES */
+@media screen and (max-width: 374px) {
+	.sapMNwC {
+		width: 17.75rem;
+		height: 3.188rem;
+	}
+
+	.sapMNwCCTxt {
+		max-width: 17.75rem;
+		padding: 0;
+	}
+
+	.sapMNwCSbh {
+		max-width: 17.75rem;
+	}
+}

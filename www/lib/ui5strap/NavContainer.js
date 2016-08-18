@@ -271,10 +271,16 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					}
 					
 					//Hide the page container
-					$current.attr("class", "ui5strap-hidden");
+					//$current.attr("class", "ui5strap-hidden");
+					
+					//Finally remove the page container.
+					//oCurrentPage.$().detach();
+					$current.detach();
 					
 					//Remove the Page from the UIArea first, since we don't want to destroy the page.
 					oUiArea.removeContent(oCurrentPage, true);
+					
+					oUiArea.setRootNode(null);
 					
 					//Set Propagated Properties and Bindings back to ui area
 					//TODO verify that this is not needed anymore due removal from UiArea
@@ -283,12 +289,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					//Destroy the UIArea
 					oUiArea.destroy();
 					jQuery.sap.log.info("Destroyed UIArea " + oUiArea.getId());
-					
-					//Due to a UI5 bug, the dom is not cleaned up after the UIArea has been destroyed. So we have to destroy the dom of the page manually.
-					oCurrentPage.$().remove();
-					
-					//Finally remove the page container.
-					$current && $current.remove();
 				}
 				
 				_triggerControllerEvent(_this, pageChange.target, oCurrentPage, 'pageHidden', {
@@ -504,11 +504,13 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				return null;
 			}
 			
-			//Page is already present in DOM, return parent jQuery reference
-			/*
+			//Create dom element and jQuery wrapper
+			var newPageContainer = document.createElement('div');
+				$newPageContainer = jQuery(newPageContainer);
+			
+			//Page still has a valid dom reference. Reuse the dom ref.
 			if(page.getDomRef()){
-				console.log("REAPPEND");
-				
+				jQuery.sap.log.info("Reusing DOM reference for page: " + page.getId() );
 				ui5strap.Utils.addPropertyPropagation(_this, page);
 				
 				var $parent = page.$().parent();
@@ -516,12 +518,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					return $parent;
 				}
 			}
-			*/
-			
-			//Create dom element and jQuery wrapper
-			var newPageContainer = document.createElement('div'),
-				$newPageContainer = jQuery(newPageContainer),
-				oModels = _this.oModels;
 			
 			//Set css class name for new page container
 			newPageContainer.className = true === isPrepared
@@ -878,6 +874,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				targetTransition.$next = _placePage(_this, targetTransition.target, targetTransition.page, true); 
 			}
 			else{
+				//TODO When does this ever happen?
+				console.log("NAPPEND");
 				//Reappend existing reference
 				jQuery('#' + _this.targetPagesDomId(targetTransition.target)).append(targetTransition.$next);
 			}

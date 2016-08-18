@@ -1,0 +1,193 @@
+/* ==================================================== */
+/* CSS for control sap.m/IconTabBar.control             */
+/* High Contrast Black theme                            */
+
+/* Head Container */
+
+.sapMITBHead {
+	font-size: @sapMFontSmallSize;
+	padding: 0.125rem 0.125rem 0 0.125rem;
+}
+
+.sapMITBScrollContainer {
+	/* the same padding as on the sapMITBHead is needed
+	to correct the scrolling calculations*/
+	padding: 0.125rem 0.125rem 0 0.125rem;
+}
+
+/* Arrow */
+
+.sapMITBSelected > .sapMITBContentArrow {
+	border-bottom-color: @sapHCStandardFG;
+}
+
+/* Content Container */
+
+.sapMITBContent {
+	background-color: @sapHCStandardBG;
+}
+
+.sapMITBContainerContent {
+	border: 0.125rem solid @sapHCStandardFG;
+	border-top: 0.125rem solid @sapHCStandardFG;
+}
+
+/* Tab Item */
+
+.sapMITBVertical > .sapMITBTab {
+	position: relative;
+}
+
+html.sap-phone .sapMITBTextOnly .sapMITBTab {
+	padding-right: 0.25rem;
+}
+
+/* Tab Item */
+
+.sapMITBItem {
+	color: @sapHCStandardFG;
+}
+
+/* Tab Filter Item */
+
+.sapMITBFilter .sapMITBText {
+	color: @sapHCStandardFG;
+}
+
+.sapMITBTextOnly .sapMITBText {
+	font-size: @sapMFontMediumSize;
+}
+
+.sapMITBTextOnly .sapMITBFilterDefault > .sapMITBText {
+	color: @sapHCStandardFG;
+}
+
+.sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected > .sapMITBText {
+	color: @sapHCStandardFG;
+}
+
+.sapMITBFilter .sapMITBCount {
+	color: @sapHCStandardFG;
+	max-width: 2rem;
+	overflow: hidden;
+	position: absolute;
+	text-overflow: ellipsis;
+}
+
+.sapMITBTextOnly .sapMITBFilter .sapMITBCount {
+	color: @sapHCStandardFG;
+	font-size: @sapMFontMediumSize;
+	max-width: none;
+	overflow: hidden;
+	position: relative;
+	text-overflow: ellipsis;
+}
+
+.sapMITBFilterIcon {
+	background: @sapHCStandardBG;
+	border: 1px solid @sapHCStandardFG;
+}
+
+.sapMITBFilterDefault {
+	color: @sapHCStandardFG;
+}
+
+.sapMITBCount {
+	color: @sapHCStandardFG;
+}
+
+.sapMITBSelected .sapMITBFilterIcon {
+	background: @sapHCHighlightAltBG;
+	color: @sapHCStandardFG;
+}
+
+/* Tab Filter Show All Item */
+
+.sapMITBAll .sapMITBCount {
+	color: @sapHCStandardFG;
+}
+
+.sapMITBAll .sapMITBText {
+	color: @sapHCStandardFG;
+}
+
+/* Tab Separator Item */
+
+.sapMITBSepLine {
+	border: 1px solid @sapHCStandardFG;
+}
+
+.sapMITBSepIcon {
+	color: @sapHCStandardFG;
+}
+
+.sapMITBArrowScroll {
+	color: @sapHCStandardFG;
+}
+
+/* Custom focus outline */
+html.sap-desktop .sapMITBItem:focus .sapMITBFilterIcon,
+html.sap-desktop .sapMITBTextOnly .sapMITBItem:focus .sapMITBText,
+html.sap-desktop .sapMITBItem:focus.sapMITBAll {
+	outline: 0.125rem dotted @sapHCStandardFG;
+}
+
+/* HCB Additional Styles */
+
+.sapMITBFilterPositive .sapMITBText:before,
+.sapMITBFilterNegative .sapMITBText:before,
+.sapMITBFilterCritical .sapMITBText:before,
+.sapMITBVertical.sapMITBFilterPositive > .sapMITBTab:after,
+.sapMITBVertical.sapMITBFilterNegative > .sapMITBTab:after,
+.sapMITBVertical.sapMITBFilterCritical > .sapMITBTab:after {
+	font-family: 'SAP-icons';
+	font-size: 0.75rem;
+	margin-right: 0.5rem;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+.sapMITBHorizontal.sapMITBFilterPositive .sapMITBText:before,
+.sapMITBTextOnly .sapMITBFilterPositive .sapMITBText:before,
+.sapMITBVertical.sapMITBFilterPositive > .sapMITBTab:after {
+	color: @sapHCPositive;
+	content: "\e1ab";
+}
+
+.sapMITBHorizontal.sapMITBFilterNegative .sapMITBText:before,
+.sapMITBTextOnly .sapMITBFilterNegative .sapMITBText:before,
+.sapMITBVertical.sapMITBFilterNegative > .sapMITBTab:after {
+	color: @sapHCNegative;
+	content: "\e1ac";
+}
+
+.sapMITBHorizontal.sapMITBFilterCritical .sapMITBText:before,
+.sapMITBTextOnly .sapMITBFilterCritical .sapMITBText:before,
+.sapMITBVertical.sapMITBFilterCritical > .sapMITBTab:after {
+	color: @sapHCCritical;
+	content: "\e1ae";
+}
+
+.sapMITBVertical.sapMITBFilterPositive > .sapMITBTab:after,
+.sapMITBVertical.sapMITBFilterNegative > .sapMITBTab:after,
+.sapMITBVertical.sapMITBFilterCritical > .sapMITBTab:after {
+	bottom: 0;
+	margin-right: -1rem;
+	position: absolute;
+}
+
+.sapMITBTextOnly .sapMITBTab:after {
+	display: none;
+}
+
+.sapMITBTextOnly .sapMITBFilterPositive .sapMITBCount,
+.sapMITBTextOnly .sapMITBFilterNegative .sapMITBCount,
+.sapMITBTextOnly .sapMITBFilterCritical .sapMITBCount {
+	margin-left: 1.25rem;
+}
+
+.sapMITBHorizontal.sapMITBFilterPositive .sapMITBText:before,
+.sapMITBHorizontal.sapMITBFilterNegative .sapMITBText:before,
+.sapMITBHorizontal.sapMITBFilterCritical .sapMITBText:before {
+	margin-right: 0.25rem;
+}

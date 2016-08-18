@@ -1,0 +1,151 @@
+@containerPadding: 1rem;
+@bottomMargin: 0.5rem;
+
+.sapMNLG {
+  margin-bottom: @bottomMargin;
+  padding-right: 0.5rem;
+}
+
+.sapMNLG.sapMLIB {
+  padding-bottom: 0;
+}
+
+.sapMNLG .sapMLIB.sapMNLB:first-of-type {
+  margin-top: 0;
+}
+
+// Priority styles =====================================================================================================
+
+.sapMNLG-Header > .sapMNLB-Priority {
+  padding-top: @containerPadding;
+  border-radius: 0.1875rem 0 0 0;
+}
+
+.sapMNLG-Footer > .sapMNLB-Priority {
+  border-radius: 0 0 0 0.1875rem;
+}
+
+// Header styles =======================================================================================================
+
+.sapMNLG-Header {
+  padding-bottom: 0.375rem;
+}
+
+.sapMNLG-Title {
+  padding-right: 1.75rem;
+}
+
+.sapMNLG-Header > .sapMNLGTitleUnread {
+  font-weight: bold;
+}
+
+.sapMNLG-Header .sapMNLG-Details {
+  padding-top: 0.375rem;
+  font-family: @sapUiFontFamily;
+  font-weight: normal;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative
+}
+
+.sapMNLG-Details .sapMText.sapMNLI-Text {
+  display: inline;
+}
+
+.sapMNLG-Description {
+  width: 100%;
+  padding-top: 0.375rem;
+}
+
+// Body styles =========================================================================================================
+
+.sapMNLG-Body {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sapMNLG-Body .sapMNLI {
+  margin: 0;
+  box-shadow: none;
+  border-bottom: none;
+}
+
+.sapMText.sapMNLG-Datetime {
+  color: @sapUiLightText;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sapMLIB.sapMNLG-Collapsed .sapMNLG-Body{
+  display: none;
+}
+
+.sapMNLG-Body .sapMNLI {
+  border-radius: 0;
+}
+
+.sapMNLG-Body .sapMNLI .sapMNLI-Priority {
+  border-radius: 0;
+}
+
+.sapMNLG-Body > .sapMNLI .sapMNLB-Priority {
+  border-radius: 0;
+}
+
+// Footer styles =======================================================================================================
+
+.sapMNLG-Footer {
+  border-top: 1px solid @sapUiExtraLightBorder;
+  height: 3rem;
+  position: relative;
+}
+
+.sapMNLG-Footer .sapMBtn {
+  margin-left: 0.25rem;
+  padding: 0;
+}
+
+.sapMNLG-Footer > .sapMBtn {
+  margin-left: 0;
+}
+
+.sapMNLG-Footer .sapMTB {
+  height: 2.75rem;
+  padding-top: 0.1875rem;
+}
+
+/* Buttons in footer don't render correctly due to fix for IE, overwriting the fix in sap.m.Button */
+html[data-sap-ui-browser*='ie'] .sapMNLG-Footer .sapMBtnInner {
+  display: block;
+  width: auto;
+}
+
+.sapMNLG-Footer > .sapMBtn:first-of-type {
+  float: left;
+}
+
+.sapMNLG-Collapsed .sapMNLG-Footer {
+  border-top: 0;
+}
+
+// Compact mode ========================================================================================================
+
+.sapUiSizeCompact .sapMNLG-Title {
+  padding-right: 1.25rem;
+}
+
+.sapUiSizeCompact .sapMNLG-Footer {
+  padding-top: 0.25rem;
+  padding-left: 0.75rem;
+  height: 2.5625rem;
+  line-height: 2.5rem;
+  box-sizing: border-box;
+}
+
+.sapUiSizeCompact .sapMNLG-Footer .sapMBtn {
+  margin-left: 0.25rem;
+  padding: 0;
+}

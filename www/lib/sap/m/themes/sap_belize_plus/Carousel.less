@@ -1,0 +1,167 @@
+/* ============================================= */
+/* CSS for control sap.m/Carousel.control        */
+/* ============================================= */
+
+
+.sapMCrsl {
+	position: relative;
+	overflow: hidden;
+
+	/* IE Windows 8 */
+	/* This elements receives events when not panning in vertial direction */
+	touch-action: pan-y;
+	-ms-touch-action: pan-y;
+}
+
+//show the left and right arrows when the carousel is focused
+.sapMCrsl:focus .sapMCrslHud a {
+	opacity: 0.3;
+}
+
+.sapMCrsl.sapMCrslLeft {
+	text-align: left;
+}
+
+.sapMCrsl.sapMCrslCenter {
+	text-align: center;
+}
+
+.sapMCrsl.sapMCrslFluid>.sapMCrslInner>* {
+	width: 100%;
+}
+
+.sapMCrsl.sapMCrslFluid.sapMCrslCenter>.sapMCrslInner>*:first-child {
+	margin-left: 0;
+}
+
+.sapMCrslInner {
+	height: 100%;
+	position: relative;
+	white-space: nowrap;
+	text-align: begin;
+	/*  Removes  inline-block  gaps  due  to  whitespace  */
+	font-size: 0;
+	/*  Configure  animations  */
+	-webkit-transition-property: -webkit-transform;
+	transition-property: transform;
+	/*  iOS  like  slide  timings  */
+	-webkit-transition-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+	transition-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+	-webkit-transition-duration: 0.5s;
+	transition-duration: 0.5s;
+}
+
+html[data-sap-ui-animation='off'] .sapMCrslInner {
+  transition-duration: 0.01s;
+ }
+
+
+/* special handling for IE / Edge, as it does not support text-align: end */
+html[data-sap-ui-browser^="ie"] .sapMCrslInner,
+html[data-sap-ui-browser^="ed"] .sapMCrslInner {
+ 	text-align: left;
+}
+
+html[dir=rtl][data-sap-ui-browser^="ie"] .sapMCrslInner,
+html[dir=rtl][data-sap-ui-browser^="ed"] .sapMCrslInner {
+	text-align: right;
+}
+
+.sapMCrslItemTable {
+	height: 100%;
+}
+
+.sapMCrslItemTableCell {
+	height: 100%;
+}
+
+.sapMCrslImg {
+	text-align: center;
+	height: 100%;
+}
+
+.sapMCrslImg:before {
+	content: ' ';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.sapMCrslItemTableCell.sapMCrslImg img {
+	vertical-align: middle;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.sapMCrslInner.sapMCrslNoTransition {
+	-webkit-transition-duration: 0.01s;
+	transition-duration: 0.01s;
+}
+
+.sapMCrslInner.sapMCrslHideNonActive>:not(.sapMCrslActive) .sapMCrslItemTableCell {
+	visibility: hidden;
+}
+
+.sapMCrslInner>* {
+	display: inline-block;
+	vertical-align: top;
+	white-space: normal;
+	/* Comment from Mobify-Carousel: 'We  must  reset  the  font-size here'. Needs explanation! */
+	font-size: 1rem;
+}
+
+.sapMCrslFluid>.sapMCrslInner>* {
+	box-sizing: border-box;
+}
+
+.sapMCrslItemTable,
+.sapMCrslItem>.sapMScrollCont>.sapMScrollContScroll {
+	height: 100%;
+	width: 100%;
+}
+
+/* mixin call for creating container content padding classes (arguments: rootContainer, contentSelector) */
+.sapUiContainerContentPadding(~".sapMCrsl", ~"> .sapMCrslInner > .sapMCrslItem > .sapMScrollCont > .sapMScrollContScroll");
+
+/*
+  Carousel control base styling
+*/
+.sapMCrslControls {
+  padding-top: 0.625rem;
+  text-align: center;
+}
+
+.sapMCrslControls a {
+  padding: 0.3125rem;
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: -moz-none;
+  user-drag: none;
+}
+
+.sapMCrslBulleted.sapMCrslBottomOffset {
+  position: absolute;
+  padding-top: 0;
+  bottom: 0.3125rem;
+  width: 100%;
+  z-index: 10;
+}
+
+.sapMCrslBulleted.sapMCrslTopOffset {
+  position: absolute;
+  padding-bottom: 0.125rem;
+  width: 100%;
+  z-index: 10;
+  padding-top: 0.1875rem;
+}
+
+/* Styles needed for keyboard handling
+   ========================================================================== */
+.sapMCrslItem {
+  visibility: hidden;
+}
+.sapMCrslActive {
+  visibility: visible;
+}

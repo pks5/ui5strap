@@ -1,0 +1,60 @@
+.sapMWizardProgressNav {
+	background: @sapHCStandardBG;
+	font-size: @sapMFontMediumSize;
+	border-color: @sapHCStandardFG;
+}
+
+.sapMWizardProgressNavStep:hover .sapMWizardProgressNavAnchorCircle {
+	background: @sapHCHighlightBG;
+}
+
+.sapMWizardProgressNavAnchor:focus {
+	outline: 2px dotted @sapHCStandardFG;
+}
+
+.sapMWizardProgressNavAnchorCircle {
+	background: @sapHCStandardBG;
+	border-color: @sapHCStandardFG;
+	color: @sapHCStandardFG;
+}
+
+.sapMWizardProgressNavAnchorIcon {
+	font-size: @sapMFontLargeSize;
+}
+
+.sapMWizardProgressNavAnchorTitle {
+	color: @sapHCStandardFG;
+	background: @sapHCStandardBG;
+}
+
+.sapMWizardProgressNavStep::after {
+	border-bottom-color: @sapHCStandardFG;
+}
+
+.sapMWizardProgressNavStep[data-sap-ui-wpn-step-current="true"] {
+	& .sapMWizardProgressNavAnchor::after {
+		background: @sapHCStandardFG;
+		height: 0.25rem;
+	}
+
+	& .sapMWizardProgressNavAnchorCircle {
+		background: @sapHCHighlightAltBG;
+		color: @sapHCStandardFG;
+	}
+}
+
+.sapMWizardProgressNavStep[data-sap-ui-wpn-step-active="true"] {
+
+	/* anchors in all steps after the active one have inactive style */
+	& ~ .sapMWizardProgressNavStep .sapMWizardProgressNavAnchorCircle {
+		background: @sapHCReducedBG;
+		border-color: @sapHCReducedAltFG;
+		color: @sapHCReducedAltFG;
+	}
+
+	/* all separators after (and including) the active step have inactive style */
+	&::after,
+	& ~ .sapMWizardProgressNavStep::after {
+		border-bottom-color: @sapHCReducedAltFG;
+	}
+}
