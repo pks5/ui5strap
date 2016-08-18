@@ -99,7 +99,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Use {@link jQuery.sap.getUriParameters} to create an instance of jQuery.sap.util.UriParameters.
 	 *
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.UriParameters
 	 * @public
@@ -456,7 +456,7 @@ sap.ui.define(['jquery.sap.global'],
 		// If no symbol function is provided, we stringify, if it is not type string, and create a hash from it
 		fnSymbol = fnSymbol || function(vValue) {
 			if (typeof vValue !== "string") {
-				vValue = JSON.stringify(vValue);
+				vValue = JSON.stringify(vValue) || "";
 			}
 			return jQuery.sap.hashCode(vValue);
 		};

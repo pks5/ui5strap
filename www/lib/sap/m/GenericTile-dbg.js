@@ -18,7 +18,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @since 1.34
 	 *
 	 * @public
@@ -103,9 +103,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 
 	/* --- Lifecycle Handling --- */
 
-	/**
-	 * Init function for the control
-	 */
 	GenericTile.prototype.init = function() {
 		this._rb = sap.ui.getCore().getLibraryResourceBundle("sap.m");
 
@@ -136,9 +133,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 		this._oBusy.setBusyIndicatorDelay(0);
 	};
 
-	/**
-	 * Handler for beforerendering
-	 */
 	GenericTile.prototype.onBeforeRendering = function() {
 		var bSubheader = this.getSubheader() ? true : false;
 		if (this.getMode() === library.GenericTileMode.HeaderMode) {
@@ -156,24 +150,11 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 		this.$().unbind("mouseenter", this._updateAriaAndTitle);
 	};
 
-	/**
-	 * Handler for afterrendering
-	 */
 	GenericTile.prototype.onAfterRendering = function() {
-		this._checkFooter(this.getState());
-
-		if (this.getState() === sap.m.LoadState.Disabled) {
-			this._oBusy.$().bind("tap", jQuery.proxy(this._handleOverlayClick, this));
-		} else {
-			this._oBusy.$().unbind("tap", this._handleOverlayClick);
-		}
 		// attaches handler this._updateAriaAndTitle to the event mouseenter and removes attributes ARIA-label and title of all content elements
 		this.$().bind("mouseenter", this._updateAriaAndTitle.bind(this));
 	};
 
-	/**
-	 * Exit function for the control
-	 */
 	GenericTile.prototype.exit = function() {
 		this._oWarningIcon.destroy();
 		if (this._oImage) {
@@ -262,32 +243,15 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 
 	/* --- Getters and Setters --- */
 
-	/**
-	 * Returns the header
-	 *
-	 * @returns {String} The header text
-	 */
 	GenericTile.prototype.getHeader = function() {
 		return this._oTitle.getText();
 	};
 
-	/**
-	 * Sets the header
-	 *
-	 * @param {String} title to set as header
-	 * @returns {sap.m.GenericTile} this to allow method chaining
-	 */
 	GenericTile.prototype.setHeader = function(title) {
 		this._oTitle.setText(title);
 		return this;
 	};
 
-	/**
-	 * Sets the header image
-	 *
-	 * @param {sap.ui.core.URI} uri which will be set as header image
-	 * @returns {sap.m.GenericTile} this to allow method chaining
-	 */
 	GenericTile.prototype.setHeaderImage = function(uri) {
 		var bValueChanged = !jQuery.sap.equal(this.getHeaderImage(), uri);
 
@@ -307,21 +271,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 			}
 		}
 		return this.setProperty("headerImage", uri);
-	};
-
-	/**
-	 * Sets the state
-	 *
-	 * @param {sap.m.LoadState} state to set
-	 * @returns {sap.m.GenericTile} this to allow method chaining
-	 */
-	GenericTile.prototype.setState = function(state) {
-		if (this.getState() != state) {
-			this._checkFooter(state);
-			return this.setProperty("state", state);
-		} else {
-			return this;
-		}
 	};
 
 	/**
@@ -474,18 +423,17 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 	/* --- Helpers --- */
 
 	/**
-	 * Shows or hides the footer
+	 * Shows or hides the footer of the TileContent control during rendering time
 	 *
 	 * @private
-	 * @param {sap.m.LoadState} state used to control the footer visibility
+	 * @param {sap.m.TileContent} tileContent TileContent control of which the footer visibility is set
+	 * @param {sap.m.GenericTile} control current GenericTile instance
 	 */
-	GenericTile.prototype._checkFooter = function(state) {
-		var oFooter = this.$().find(".sapMTileCntFtrTxt");
-
-		if (state == sap.m.LoadState.Failed && oFooter.is(":visible")) {
-			oFooter.hide();
-		} else if (oFooter.is(":hidden")) {
-			oFooter.show();
+	GenericTile.prototype._checkFooter = function(tileContent, control) {
+		if (control.getProperty("state") === sap.m.LoadState.Failed) {
+			tileContent.setRenderFooter(false);
+		} else {
+			tileContent.setRenderFooter(true);
 		}
 	};
 

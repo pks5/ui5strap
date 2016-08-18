@@ -116,7 +116,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', '.
 	 *
 	 * @extends sap.ui.base.ManagedObject
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @param {sap.ui.core.Core} oCore internal API of the <core>Core</code> that manages this UIArea
 	 * @param {object} [oRootNode] reference to the Dom Node that should be 'hosting' the UI Area.
 	 * @public
@@ -718,12 +718,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', '.
 			return;
 		}
 
+
+		var sHandledUIAreaId = oEvent.getMark("handledByUIArea"),
+			sId = this.getId();
+
 		//if event is already handled by inner UIArea (as we use the bubbling phase now), returns.
 		//if capturing phase would be used, here means event is already handled by outer UIArea.
-		if (oEvent.isMarked("handledByUIArea")) {
-		oEvent.setMark("firstUIArea", false);
+		if (sHandledUIAreaId && sHandledUIAreaId !== sId) {
+			oEvent.setMark("firstUIArea", false);
 			return;
 		}
+
 		oEvent.setMarked("firstUIArea");
 
 		// store the element on the event (aligned with jQuery syntax)
@@ -739,7 +744,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', '.
 		// forward the control event:
 		// if the control propagation has been stopped or the default should be
 		// prevented then do not forward the control event.
-		this.oCore._handleControlEvent(oEvent, this.getId());
+		this.oCore._handleControlEvent(oEvent, sId);
 
 		// if the UIArea or the Core is locked then we do not dispatch
 		// any event to the control => but they will still be dispatched
@@ -835,7 +840,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Element', '.
 		oEvent.currentTarget = this.getRootNode();
 
 		// mark on the event that it's already handled by this UIArea
-		(oEvent.originalEvent || oEvent)._sapui_handledByUIArea = true;
+		oEvent.setMark("handledByUIArea", sId);
 
 		// TODO: rethink about logging levels!
 

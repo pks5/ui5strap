@@ -54,7 +54,7 @@ sap.ui.define(['jquery.sap.global', '../base/Object', '../base/ManagedObject', '
 	 * @class Base Class for Elements.
 	 * @extends sap.ui.base.ManagedObject
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @public
 	 * @alias sap.ui.core.Element
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
@@ -554,8 +554,11 @@ sap.ui.define(['jquery.sap.global', '../base/Object', '../base/ManagedObject', '
 
 		ManagedObject.prototype.destroy.call(this, bSuppressInvalidate);
 
-		// remove this control from DOM, e.g. if there is no parent (e.g. Dialog or already removed control) or this.sParentAggregationName is not properly set
-		if (bSuppressInvalidate !== "KeepDom") {
+		// determine whether to remove the control from the DOM or not
+		// controls that implement marker interface sap.ui.core.PopupInterface are by contract
+		// not rendered by their parent so we cannot keep the DOM of these controls
+		if (bSuppressInvalidate !== "KeepDom" ||
+			this.getMetadata().isInstanceOf("sap.ui.core.PopupInterface")) {
 			this.$().remove();
 		} else {
 			jQuery.sap.log.debug("DOM is not removed on destroy of " + this);

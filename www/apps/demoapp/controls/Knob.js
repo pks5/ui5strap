@@ -40,8 +40,6 @@ sap.ui.define(['ui5strap/ControlBase', './jquery.knob.min'], function(ControlBas
     
     KnobProto.onAfterRendering = function(){
     	this._$knob = this.$().find("." + this._getStyleClassPart("knob")).knob();
-    	
-    	console.log("AR", this.$().data("rev"));
     };
     
     KnobProto.exit = function(){

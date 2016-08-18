@@ -760,7 +760,10 @@ sap.ui.define([
 		 in that case we have to select the first visible section instead */
 		oSelectedSection = this._oFirstVisibleSection;
 		if (oSelectedSection) {
-			this.scrollToSection(oSelectedSection.getId());
+			// fixes BCP:1680125278, new sections positionTop was not ready when calling scroll
+			jQuery.sap.delayedCall(0, this, function () {
+				this.scrollToSection(oSelectedSection.getId());
+			});
 		}
 	};
 
@@ -879,7 +882,9 @@ sap.ui.define([
 
 			if (this._iCurrentScrollTimeout) {
 				clearTimeout(this._iCurrentScrollTimeout);
-				this._$contentContainer.parent().stop(true, false);
+				if (this._$contentContainer){
+					this._$contentContainer.parent().stop(true, false);
+				}
 			}
 
 			if (this._bDomElementsCached) {
@@ -1729,6 +1734,7 @@ sap.ui.define([
 
 		var oRm = sap.ui.getCore().createRenderManager();
 		this.getRenderer()._rerenderHeaderContentArea(oRm, this);
+		this._getHeaderContent().invalidate();
 		oRm.destroy();
 	};
 
@@ -1838,6 +1844,11 @@ sap.ui.define([
 	ObjectPageLayout.prototype._storeScrollLocation = function () {
 		this._iStoredScrollPosition = this._oScroller.getScrollTop();
 		this._oStoredSection = this._oCurrentTabSubSection || this._oCurrentTabSection;
+
+		if (this.getSections().indexOf(this._oStoredSection) === -1) {
+			this._oStoredSection = null;
+		}
+
 		this._oCurrentTabSection = null;
 	};
 

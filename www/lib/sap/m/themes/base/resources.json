@@ -731,6 +731,11 @@
       "name": "library.source.less",
       "designtime": true,
       "theme": "base"
+    },
+    {
+      "name": "shared.less",
+      "designtime": true,
+      "theme": "base"
     }
   ]
 }

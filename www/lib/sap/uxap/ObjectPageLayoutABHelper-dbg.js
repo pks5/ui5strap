@@ -121,8 +121,6 @@ sap.ui.define([
 			oObjectPageLayout = this.getObjectPageLayout(),
 			oButton,
 			oAnchorBar = this._getAnchorBar(),
-			oSectionBindingInfo,
-			sModelName,
 			sId,
 			aSubSections = oSectionBase.getAggregation("subSections"),
 			fnButtonKeyboardUseHandler = this._focusOnSectionWhenUsingKeyboard.bind(this),
@@ -146,28 +144,8 @@ sap.ui.define([
 				oButtonClone.addEventDelegate(oEventDelegatesForkeyBoardHandler);
 
 				//has a ux rule been applied that we need to reflect here?
-				if (oSectionBase._getInternalTitle() != "") {
-					oButtonClone.setText(oSectionBase._getInternalTitle());
-				} else {
-
-					//is the section title bound to a model? in this case we need to apply the same binding
-					oSectionBindingInfo = oSectionBase.getBindingInfo("title");
-					if (oSectionBindingInfo && oSectionBindingInfo.parts && oSectionBindingInfo.parts.length > 0) {
-
-						sModelName = oSectionBindingInfo.parts[0].model;
-
-						//handle relative binding scenarios
-						oButtonClone.setBindingContext(oSectionBase.getBindingContext(sModelName), sModelName);
-
-						//copy binding information
-						oButtonClone.bindProperty("text", {
-							path: oSectionBindingInfo.parts[0].path,
-							model: sModelName
-						});
-					} else { //otherwise just copy the plain text
-						oButtonClone.setText(oSectionBase.getTitle());
-					}
-				}
+				var sTitle = (oSectionBase._getInternalTitle() != "") ? oSectionBase._getInternalTitle() : oSectionBase.getTitle();
+				oButtonClone.setText(sTitle);
 			} else {
 				oButtonClone = oButton.clone(); //keep original button parent control hierarchy
 			}
@@ -196,16 +174,22 @@ sap.ui.define([
 			}
 
 			if (aSubSections && aSubSections.length > 1) {
-				// the anchor bar need to know if the button has submenu for accessibility rules
-				oButtonClone.addCustomData(new CustomData({
-					key: "bHasSubMenu",
-					value: true
-				}));
+				var iVisibleSubSections = aSubSections.filter(function (oSubSection) {
+					return oSubSection.getVisible();
+				}).length;
 
-				if (oObjectPageLayout.getShowAnchorBarPopover()) {
-					// Add arrow icon-down in order to indicate that on click will open popover
-					oButtonClone.setIcon(IconPool.getIconURI("slim-arrow-down"));
-					oButtonClone.setIconFirst(false);
+				if (iVisibleSubSections > 1) {
+					// the anchor bar need to know if the button has submenu for accessibility rules
+					oButtonClone.addCustomData(new CustomData({
+						key: "bHasSubMenu",
+						value: true
+					}));
+
+					if (oObjectPageLayout.getShowAnchorBarPopover()) {
+						// Add arrow icon-down in order to indicate that on click will open popover
+						oButtonClone.setIcon(IconPool.getIconURI("slim-arrow-down"));
+						oButtonClone.setIconFirst(false);
+					}
 				}
 			}
 		}

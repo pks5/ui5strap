@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * renders a MonthPicker with ItemNavigation
 	 * This is used inside the calendar. Not for stand alone usage
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public
@@ -161,6 +161,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		return this._oLocaleData;
 
+	};
+
+	MonthPicker.prototype.onsapspace = function(oEvent) {
+		oEvent.preventDefault();
 	};
 
 	MonthPicker.prototype.onsapselect = function(oEvent){

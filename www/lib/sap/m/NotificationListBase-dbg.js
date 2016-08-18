@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './ListI
          * @extends sap.m.ListItemBase
          *
          * @author SAP SE
-         * @version 1.38.4
+         * @version 1.38.7
          *
          * @constructor
          * @public
@@ -142,7 +142,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './ListI
         //================================================================================
 
         NotificationListBase.prototype.setTitle = function (title) {
-            var result = this.setProperty('title', title, true);
+            var result = this.setProperty('title', title);
 
             this._getHeaderTitle().setText(title);
 
@@ -150,7 +150,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './ListI
         };
 
         NotificationListBase.prototype.setDatetime = function (dateTime) {
-            var result = this.setProperty('datetime', dateTime, true);
+            var result = this.setProperty('datetime', dateTime);
 
             this._getDateTimeText().setText(dateTime);
 
@@ -158,7 +158,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './ListI
         };
 
         NotificationListBase.prototype.setAuthorName = function(authorName) {
-            var result = this.setProperty('authorName', authorName, true);
+            var result = this.setProperty('authorName', authorName);
 
             this._getAuthorName().setText(authorName);
 
@@ -184,7 +184,13 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './ListI
             this.fireClose();
 
             if (parent && parent instanceof sap.ui.core.Element) {
-                parent.focus();
+                var delegate = {
+                    onAfterRendering: function() {
+                        parent.getDomRef().focus();
+                        parent.removeEventDelegate(delegate);
+                    }
+                };
+                parent.addEventDelegate(delegate);
             }
         };
 

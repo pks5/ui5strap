@@ -18,7 +18,7 @@ sap.ui.define([
 	 * @class The ElementMover enables movement of UI5 elements based on aggregation types, which can be used by drag and drop or cut and paste
 	 *        behavior.
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @constructor
 	 * @private
 	 * @since 1.34
@@ -252,7 +252,7 @@ sap.ui.define([
 	 * @private
 	 */
 	ElementMover.prototype._findAfterHook = function(sHookName, oSource, oTarget) {
-			//TODO : move between two parents
+		try {
 			var oParentOverlay = OverlayRegistry.getOverlay(oSource.parent);
 			var oAggregationOverlay = oParentOverlay.getAggregationOverlay(oSource.aggregation);
 			var oAggregationDesignTimeMetadata = oAggregationOverlay.getDesignTimeMetadata();
@@ -264,8 +264,10 @@ sap.ui.define([
 					parentOverlay : oParentOverlay
 				};
 			}
-			return null;
-
+		} catch (ex) {
+			// Intensionally left blank
+		}
+		return null;
 	};
 
 	return ElementMover;

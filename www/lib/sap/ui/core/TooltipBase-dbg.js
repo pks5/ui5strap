@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './Control', './Popup', './library'],
 	 * @class
 	 * Abstract class that can be extended in order to implement any extended tooltip. For example, RichTooltip Control is based on it. It provides the opening/closing behavior and the main "text" property.
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public

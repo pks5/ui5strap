@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Notif
          * @extends sap.m.NotificationListBase
          *
          * @author SAP SE
-         * @version 1.38.4
+         * @version 1.38.7
          *
          * @constructor
          * @public
@@ -117,7 +117,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Notif
         //================================================================================
 
         NotificationListItem.prototype.setDescription = function (description) {
-            var result = this.setProperty('description', description, true);
+            var result = this.setProperty('description', description);
 
             this._getDescriptionText().setText(description);
 

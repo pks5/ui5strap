@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 		 * @extends sap.m.ComboBoxBase
 		 *
 		 * @author SAP SE
-		 * @version 1.38.4
+		 * @version 1.38.7
 		 *
 		 * @constructor
 		 * @public
@@ -434,12 +434,17 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 				var oSelectedItem = this.getSelectedItem(),
 					sValue = oEvent.target.value,
 					bEmptyValue = sValue === "",
-					oControl = oEvent.srcControl;
+					oControl = oEvent.srcControl,
+					aVisibleItems;
 
-				var aVisibleItems = this.filterItems({
-					property: "text",
-					value: sValue
-				}, this.getItems());
+				if (bEmptyValue && !this.bOpenedByKeyboardOrButton) {
+					aVisibleItems = this.getItems();
+				} else {
+					aVisibleItems = this.filterItems({
+						property: "text",
+						value: sValue
+					});
+				}
 
 				var bItemsVisible = !!aVisibleItems.length;
 				var oFirstVisibleItem = aVisibleItems[0]; // first item that matches the value
@@ -475,14 +480,14 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 					}
 				}
 
-				if (bItemsVisible || (bItemsVisible && bEmptyValue)) {
-
-					if (bToggleOpenState) {
+				if (bItemsVisible) {
+					if (bEmptyValue && !this.bOpenedByKeyboardOrButton) {
+						this.close();
+					} else if (bToggleOpenState) {
 						this.open();
 						this.scrollToItem(this.getSelectedItem());
 					}
 				} else if (this.isOpen()) {
-
 					if (bToggleOpenState) {
 						this.close();
 					}
@@ -552,6 +557,8 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 			var oItem = oControlEvent.getParameter("item");
 			this.close();
 			this.updateDomValue(oItem.getText());
+
+			this.setProperty("value", oItem.getText(), true);
 
 			// deselect the text and move the text cursor at the endmost position
 			setTimeout(this.selectText.bind(this, this.getValue().length, this.getValue().length), 0);
@@ -1091,6 +1098,9 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 
 			// remove the active state of the control's field
 			this.removeStyleClass(this.getRenderer().CSS_CLASS_COMBOBOXBASE + "Pressed");
+
+			// reset opener
+			this.bOpenedByKeyboardOrButton = false;
 		};
 
 		/**

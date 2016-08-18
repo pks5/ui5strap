@@ -47,7 +47,7 @@ sap.ui.define(['jquery.sap.global', './DatePicker', './library'],
 	 * the <code>sap.ui.unified</code> library.
 	 *
 	 * @extends sap.m.DatePicker
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public

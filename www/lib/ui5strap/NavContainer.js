@@ -266,24 +266,28 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				if(oUiArea){
 					var $current = pageChange.transition._data.$current;
 					
-					if($current){
-						//$current.remove();
-						//$current.detach();
-						$current.attr("class", "ui5strap-hidden");
-					}
-					else{
-						jQuery.sap.log.warning("Removed page has no DOM reference.");
+					if(!$current){
+						throw new Error("Removed page has no DOM reference.");
 					}
 					
+					//Hide the page container
+					$current.attr("class", "ui5strap-hidden");
+					
+					//Remove the Page from the UIArea first, since we don't want to destroy the page.
 					oUiArea.removeContent(oCurrentPage, true);
 					
 					//Set Propagated Properties and Bindings back to ui area
 					//TODO verify that this is not needed anymore due removal from UiArea
 					//ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
 					
+					//Destroy the UIArea
 					oUiArea.destroy();
 					jQuery.sap.log.info("Destroyed UIArea " + oUiArea.getId());
 					
+					//Due to a UI5 bug, the dom is not cleaned up after the UIArea has been destroyed. So we have to destroy the dom of the page manually.
+					oCurrentPage.$().remove();
+					
+					//Finally remove the page container.
 					$current && $current.remove();
 				}
 				

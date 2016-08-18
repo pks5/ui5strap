@@ -25,7 +25,7 @@ sap.ui.define(["jquery.sap.global", "./ResponsivePopover", "./Button", "./Toolba
 		 * @extends sap.ui.core.Control
 		 *
 		 * @author SAP SE
-		 * @version 1.38.4
+		 * @version 1.38.7
 		 *
 		 * @constructor
 		 * @public
@@ -326,7 +326,7 @@ sap.ui.define(["jquery.sap.global", "./ResponsivePopover", "./Button", "./Toolba
 			}
 
 			// Bind automatically to the MessageModel if no items are bound
-			if (!this.getItems().length) {
+			if (!this.getBindingInfo("items") && !this.getItems().length) {
 				this._makeAutomaticBinding();
 			}
 
@@ -354,7 +354,7 @@ sap.ui.define(["jquery.sap.global", "./ResponsivePopover", "./Button", "./Toolba
 						path: "message>/",
 						template: new MessagePopoverItem({
 							type: "{message>type}",
-							title: "{message>title}",
+							title: "{message>message}",
 							description: "{message>description}",
 							longtextUrl: "{message>longtextUrl}"
 						})

@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 	 * @extends sap.m.InputBase
 	 *
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public
@@ -1026,7 +1026,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Dialog', './InputBase', './List'
 		};
 
 		Input.prototype.getValue = function(){
-			return this.getDomRef("inner") ? this._$input.val() : this.getProperty("value");
+			return this.getDomRef("inner") && this._$input ? this._$input.val() : this.getProperty("value");
 		};
 
 		Input.prototype._refreshItemsDelayed = function() {

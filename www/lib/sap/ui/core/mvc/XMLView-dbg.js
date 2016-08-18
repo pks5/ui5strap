@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/XMLTemplateProcessor', 'sap/ui/
 	 * @class
 	 * A View defined using (P)XML and HTML markup.
 	 * @extends sap.ui.core.mvc.View
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public
@@ -379,6 +379,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/XMLTemplateProcessor', 'sap/ui/
 		 * @private
 		 */
 		var XMLAfterRenderingNotifier = Control.extend("sap.ui.core.mvc.XMLAfterRenderingNotifier", {
+			metadata: {
+				library: "sap.ui.core"
+			},
 			renderer: function(oRM, oControl) {
 				oRM.write(""); // onAfterRendering is only called if control produces output
 			}

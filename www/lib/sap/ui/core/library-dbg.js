@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', './Core'],
 	 * @namespace
 	 * @name sap.ui.core
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @public
 	 */
 
@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType', './Core'],
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.core",
-		version: "1.38.4",
+		version: "1.38.7",
 		types: [
 
 			// builtin types

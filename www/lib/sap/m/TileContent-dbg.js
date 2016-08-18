@@ -18,7 +18,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @since 1.34
 	 *
 	 * @public
@@ -66,11 +66,12 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 
 	/* --- Lifecycle methods --- */
 
-	/**
-	 * Handler for before rendering
-	 */
+	TileContent.prototype.init = function() {
+		this._bRenderFooter = true;
+	};
+
 	TileContent.prototype.onBeforeRendering = function() {
-		if (this.getContent()) {
+		if (this.getContent() && this._oDelegate) {
 			if (this.getDisabled()) {
 				this.getContent().addDelegate(this._oDelegate);
 			} else {
@@ -178,6 +179,17 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 		}
 		sAltText = this.getAltText();
 		return sAltText ? sAltText : "";
+	};
+
+	/**
+	 * Setter for protected property to enable or disable footer rendering. This function does not invalidate the control.
+	 * @param {boolean} value is used to if the footer is rendered or not
+	 * @returns {sap.m.TileContent} this to allow method chaining
+	 * @protected
+	 */
+	TileContent.prototype.setRenderFooter = function(value) {
+		this._bRenderFooter = value;
+		return this;
 	};
 
 	return TileContent;

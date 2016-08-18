@@ -26,7 +26,7 @@ sap.ui.define(['jquery.sap.global',
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public
@@ -150,11 +150,6 @@ sap.ui.define(['jquery.sap.global',
 	 * Public Methods
 	 */
 
-	/**
-	 * Setter for the selected property
-	 * @param bSelected
-	 * @returns {sap.m.CheckBox}
-	 */
 	CheckBox.prototype.setSelected = function(bSelected) {
 		bSelected = !!bSelected;
 		if (bSelected == this.getSelected()) {
@@ -171,11 +166,6 @@ sap.ui.define(['jquery.sap.global',
 		return this;
 	};
 
-	/**
-	 * Setter for the text property
-	 * @param sText
-	 * @returns {sap.m.CheckBox}
-	 */
 	CheckBox.prototype.setText = function(sText) {
 		var oLabel = this._getLabel(),
 			bHasText = !!sText;
@@ -187,11 +177,6 @@ sap.ui.define(['jquery.sap.global',
 		return this;
 	};
 
-	/**
-	 * Setter for the width property
-	 * @param sWidth
-	 * @returns {sap.m.CheckBox}
-	 */
 	CheckBox.prototype.setWidth = function (sWidth){
 		var oLabel = this._getLabel();
 
@@ -201,11 +186,6 @@ sap.ui.define(['jquery.sap.global',
 		return this;
 	};
 
-	/**
-	 * Setter for the textDirection property
-	 * @param sDirection
-	 * @returns {sap.m.CheckBox}
-	 */
 	CheckBox.prototype.setTextDirection = function(sDirection) {
 		var oLabel = this._getLabel();
 
@@ -215,11 +195,6 @@ sap.ui.define(['jquery.sap.global',
 		return this;
 	};
 
-	/**
-	 * Setter for the textAlign property
-	 * @param sAlign
-	 * @returns {sap.m.CheckBox}
-	 */
 	CheckBox.prototype.setTextAlign = function(sAlign) {
 		var oLabel = this._getLabel();
 

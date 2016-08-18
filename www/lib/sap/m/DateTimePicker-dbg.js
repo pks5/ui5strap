@@ -47,7 +47,7 @@ sap.ui.define(['jquery.sap.global', './DatePicker', 'sap/ui/model/type/Date', '.
 	 * the <code>sap.ui.unified</code> library.
 	 *
 	 * @extends sap.m.DatePicker
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public
@@ -197,6 +197,12 @@ sap.ui.define(['jquery.sap.global', './DatePicker', 'sap/ui/model/type/Date', '.
 				this._switchVisibility("Sli");
 			}
 
+		},
+
+		getSpecialDates: function() {
+
+			return this._oDateTimePicker.getSpecialDates();
+
 		}
 
 	});
@@ -216,6 +222,8 @@ sap.ui.define(['jquery.sap.global', './DatePicker', 'sap/ui/model/type/Date', '.
 			this._oSliders.destroy();
 			delete this._oSliders;
 		}
+
+		this._oPopupContent = undefined; // is destroyed via popup aggregation - just remove reference
 
 	};
 
@@ -334,6 +342,7 @@ sap.ui.define(['jquery.sap.global', './DatePicker', 'sap/ui/model/type/Date', '.
 			var sCancelButtonText = oResourceBundle.getText("TIMEPICKER_CANCEL");
 
 			this._oPopupContent = new PopupContent(this.getId() + "-PC");
+			this._oPopupContent._oDateTimePicker = this;
 
 			this._oPopup = new sap.m.ResponsivePopover(this.getId() + "-RP", {
 				showCloseButton: false,

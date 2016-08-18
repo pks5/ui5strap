@@ -30,7 +30,7 @@ sap.ui.define([
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @private
@@ -153,6 +153,7 @@ sap.ui.define([
 		}
 
 		this._cacheDomElements();
+		this._detachResizeHandlers();
 		this._attachResizeHandlers();
 		this._updateMedia(this._getHeight(this));
 
@@ -453,8 +454,11 @@ sap.ui.define([
 	 * @private
 	 */
 	DynamicPage.prototype._needsVerticalScrollBar = function () {
-		if (exists(this.$wrapper) && this._allowScroll()) {
-			return this.$wrapper[0].scrollHeight > this.$wrapper.innerHeight();
+		var $wrapperDom;
+
+		if (exists(this.$wrapper)) {
+			$wrapperDom = this.$wrapper[0];
+			return $wrapperDom.scrollHeight > Math.ceil($wrapperDom.getBoundingClientRect().height);
 		} else {
 			return false;
 		}
@@ -781,7 +785,7 @@ sap.ui.define([
 	 * @private
 	 */
 	DynamicPage.prototype._onWrapperScroll = function (oEvent) {
-		if (Device.system.phone || !this._bExpandingWithAClick) {
+		if (!Device.system.desktop || !this._bExpandingWithAClick) {
 			this._toggleHeader();
 		}
 
@@ -894,16 +898,20 @@ sap.ui.define([
 	 * @private
 	 */
 	DynamicPage.prototype._detachResizeHandlers = function () {
-		if (this._sResizeHandlerId) {
-			ResizeHandler.deregister(this._sResizeHandlerId);
-		}
+		this._deRegisterHandler("_sResizeHandlerId");
+		this._deRegisterHandler("_sTitleResizeHandlerId");
+		this._deRegisterHandler("_sContentResizeHandlerId");
+	};
 
-		if (this._sTitleResizeHandlerId) {
-			ResizeHandler.deregister(this._sTitleResizeHandlerId);
-		}
-
-		if (this._sContentResizeHandlerId) {
-			ResizeHandler.deregister(this._sContentResizeHandlerId);
+	/**
+	 * De-registers the given handler
+	 * @param {string} sHandler handler
+	 * @private
+	 */
+	DynamicPage.prototype._deRegisterHandler = function (sHandler) {
+		if (this[sHandler]) {
+			ResizeHandler.deregister(this[sHandler]);
+			this[sHandler] = null;
 		}
 	};
 

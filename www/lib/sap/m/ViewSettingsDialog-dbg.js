@@ -22,7 +22,7 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public
@@ -439,16 +439,38 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 
 
 	/**
-	 * Override the method in order to attach an event handler responsible for propagating item property changes.
+	 * Override the method in order to attach some event handlers
 	 * @override
 	 * @param {string} sAggregationName Name of the added aggregation
-	 * @param {object} oObject Intance that is going to be added
+	 * @param {object} oObject Instance that is going to be added
 	 * @param {boolean} bSuppressInvalidate Flag indicating whether invalidation should be supressed
 	 * @returns {object} This instance for chaining
 	 */
 	ViewSettingsDialog.prototype.addAggregation = function (sAggregationName, oObject, bSuppressInvalidate) {
 		sap.ui.base.ManagedObject.prototype.addAggregation.apply(this, arguments);
+		return this._attachItemEventHandlers(sAggregationName, oObject);
+	};
 
+	/**
+	 * Override the method in order to attach some event handlers
+	 * @override
+	 * @param {string} sAggregationName Name of the added aggregation
+	 * @param {object} oObject Instance that is going to be added
+	 * @param {int} iIndex the <code>0</code>-based index the managed object should be inserted
+	 * @param {boolean} bSuppressInvalidate Flag indicating whether invalidation should be supressed
+	 * @returns {sap.ui.base.ManagedObject} Returns <code>this</code> to allow method chaining
+	 */
+	ViewSettingsDialog.prototype.insertAggregation = function(sAggregationName, oObject, iIndex, bSuppressInvalidate) {
+		sap.ui.base.ManagedObject.prototype.insertAggregation.apply(this, arguments);
+		return this._attachItemEventHandlers(sAggregationName, oObject);
+	};
+
+	/**
+	 * Attaches event handlers responsible for propagating
+	 * item property changes as well as filter detail items' change
+	 * @returns {object} This instance for chaining
+	 */
+	ViewSettingsDialog.prototype._attachItemEventHandlers = function(sAggregationName, oObject) {
 		// perform the following logic only for the items aggregations, except custom tabs
 		if (sAggregationName !== 'sortItems' && sAggregationName !== 'groupItems' && sAggregationName !== 'filterItems') {
 			return this;
@@ -464,7 +486,7 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 			 * then threat it differently as filter detail item.
 			 * */
 			if (sAggregationName === 'filterItems' &&
-				oEvent.getParameter('changedItem').getMetadata().getName() === 'sap.m.ViewSettingsItem') {
+				oEvent.getParameter('changedItem').getParent().getMetadata().getName() === 'sap.m.ViewSettingsFilterItem') {
 				// handle the select differently
 				if (oEvent.getParameter('propertyKey') !== 'selected') {
 					// if on filter details page for a concrete filter item
@@ -504,6 +526,8 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 				this._initFilterDetailItems(this._oContentItem);
 			}
 		}.bind(this));
+
+		return this;
 	};
 
 	/**
@@ -1005,6 +1029,8 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 					text : this._rb.getText("VIEWSETTINGS_CANCEL")
 				}).attachPress(this._onCancel, this)
 			}).addStyleClass("sapMVSD");
+
+			this.addDependent(this._dialog);
 
 			// CSN# 3696452/2013: ESC key should also cancel dialog, not only close
 			// it

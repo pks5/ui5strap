@@ -32,7 +32,7 @@
 			 *        feature - DO NOT USE IN PRODUCTIVE SCENARIOS!!
 			 *
 			 * @author Peter Muessig
-			 * @version 1.38.4
+			 * @version 1.38.7
 			 * @private
 			 * @alias sap.ui.core.plugin.LessSupport
 			 */
@@ -80,6 +80,7 @@
 				// configure LESS (development mode + error handling)
 				window.less = window.less || {
 					env: "development",
+					relativeUrls: true,
 					errorReporting: function(sMethod, ex, sRootHref) {
 						/*eslint-disable no-console */
 						if (sMethod === "add" && window.console) {
@@ -515,7 +516,7 @@
 			LessSupport.refresh = function() {
 				oThis.refreshLess(true);
 				if (oThis.oCore.oThemeCheck) {
-					oThis.oCore.oThemeCheck.fireThemeChangedEvent(false, true);
+					oThis.oCore.oThemeCheck.fireThemeChangedEvent(false);
 				}
 			};
 

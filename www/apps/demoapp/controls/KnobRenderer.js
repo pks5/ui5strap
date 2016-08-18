@@ -3,24 +3,18 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
     "use strict";
     
 	//A renderer is an ordinary JavaScript object
-    var KnobRenderer = {
-    		rev : 0
-    };
+    var KnobRenderer = {};
 
     /*
     * A renderer needs to define a "render" method.
     */
     KnobRenderer.render = function(rm, oControl) {
-    	this.rev ++;
-    	console.log("R", this.rev);
     	rm.write("<div");
         
         rm.writeControlData(oControl);
         
         rm.addClass(oControl._getStyleClass());
         rm.writeClasses();
-        
-        rm.writeAttribute("data-rev", this.rev);
         
         rm.write(">");
         

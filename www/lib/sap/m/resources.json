@@ -913,8 +913,8 @@
         "sap/m/library.js"
       ],
       "condRequired": [
-        "sap/ui/core/Popup.js",
-        "sap/ui/unified/library.js"
+        "sap/ui/unified/library.js",
+        "sap/ui/core/Popup.js"
       ]
     },
     {
@@ -932,8 +932,8 @@
         "sap/m/library.js"
       ],
       "condRequired": [
-        "sap/ui/core/Popup.js",
-        "sap/ui/unified/library.js"
+        "sap/ui/unified/library.js",
+        "sap/ui/core/Popup.js"
       ]
     },
     {
@@ -5142,7 +5142,9 @@
       "module": "sap/m/RangeSlider.js",
       "isDebug": true,
       "required": [
-        "sap/m/Slider.js"
+        "sap/m/Slider.js",
+        "sap/m/Input.js",
+        "sap/ui/core/InvisibleText.js"
       ]
     },
     {
@@ -5153,7 +5155,9 @@
       "name": "RangeSlider.js",
       "module": "sap/m/RangeSlider.js",
       "required": [
-        "sap/m/Slider.js"
+        "sap/m/Slider.js",
+        "sap/m/Input.js",
+        "sap/ui/core/InvisibleText.js"
       ]
     },
     {
@@ -6586,6 +6590,7 @@
       "required": [
         "jquery.sap.global.js",
         "sap/m/library.js",
+        "sap/ui/core/InvisibleText.js",
         "sap/ui/core/Control.js"
       ]
     },
@@ -6599,6 +6604,7 @@
       "required": [
         "jquery.sap.global.js",
         "sap/m/library.js",
+        "sap/ui/core/InvisibleText.js",
         "sap/ui/core/Control.js"
       ]
     },
@@ -9749,6 +9755,11 @@
     },
     {
       "name": "themes/base/library.source.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "themes/base/shared.less",
       "designtime": true,
       "theme": "base"
     },

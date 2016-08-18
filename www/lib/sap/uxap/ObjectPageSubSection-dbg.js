@@ -433,7 +433,7 @@ sap.ui.define([
 			}, this);
 
 			//set block layout based on resolution and break to a new line if necessary
-			oBlock.setLayoutData(new GridData({
+			oBlock.setLayoutData(new GridData(oBlock.getId() + "-layoutData", {
 				spanS: iGridSize,
 				spanM: M.iCalculatedSize * (iGridSize / M.iColumnConfig),
 				spanL: L.iCalculatedSize * (iGridSize / L.iColumnConfig),
@@ -602,7 +602,7 @@ sap.ui.define([
 			aInternalAggregation.forEach(function (oObjectCandidate, iIndex) {
 				if (oObjectCandidate.getId() === oObject.getId()) {
 					aInternalAggregation.splice(iIndex, 1);
-					this._setAggregation(aInternalAggregation);
+					this._setAggregation(sAggregationName, aInternalAggregation);
 					bRemoved = true;
 				}
 				return !bRemoved;
@@ -766,10 +766,8 @@ sap.ui.define([
 	 */
 	ObjectPageSubSection.prototype._resetLayoutData = function (aBlocks) {
 		aBlocks.forEach(function (oBlock) {
-			if (!this._bRenderedFirstTime && oBlock.getLayoutData()) {
+			if (oBlock.getLayoutData()) {
 				oBlock.destroyLayoutData();
-				jQuery.sap.log.warning("ObjectPageSubSection :: forbidden use of layoutData for block " +
-					oBlock.getMetadata().getName(), "layout will be set by subSection");
 			}
 		}, this);
 	};

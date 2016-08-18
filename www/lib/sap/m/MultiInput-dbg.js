@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	 * @extends sap.m.Input
 	 *
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public
@@ -946,7 +946,10 @@ sap.ui.define(['jquery.sap.global', './Input', './Token', './library', 'sap/ui/c
 	 *          oEvent
 	 */
 	MultiInput.prototype.onsapenter = function(oEvent) {
-		this._validateCurrentText();
+
+		if (!this._oSuggestionPopup || !this._oSuggestionPopup.isOpen()) {
+			this._validateCurrentText();
+		}
 
 		if (Input.prototype.onsapenter) {
 			Input.prototype.onsapenter.apply(this, arguments);

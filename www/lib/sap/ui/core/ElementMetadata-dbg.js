@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 	 *
 	 * @class
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @since 0.8.6
 	 * @alias sap.ui.core.ElementMetadata
 	 */
@@ -93,6 +93,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 
 		ManagedObjectMetadata.prototype.applySettings.call(this, oClassInfo);
 
+		if (typeof oStaticInfo["designTime"] === "boolean") {
+			this._bHasDesignTime = oStaticInfo["designTime"];
+		} else if (oStaticInfo["designTime"]) {
+			this._bHasDesignTime = true;
+			this._oDesignTime = oStaticInfo["designTime"];
+		}
+
 		this._sRendererName = this.getName() + "Renderer";
 
 		if ( typeof vRenderer !== "undefined" ) {
@@ -117,14 +124,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObjectMetadata'],
 			jQuery.extend(oRenderer, vRenderer);
 			jQuery.sap.setObject(this.getRendererName(), oRenderer);
 		}
-
-		if (typeof oStaticInfo["designTime"] === "boolean") {
-			this._bHasDesignTime = oStaticInfo["designTime"];
-		} else if (oStaticInfo["designTime"]) {
-			this._bHasDesignTime = true;
-			this._oDesignTime = oStaticInfo["designTime"];
-		}
-
 	};
 
 	ElementMetadata.prototype.afterApplySettings = function() {

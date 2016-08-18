@@ -175,7 +175,7 @@ sap.ui.define([
 	 *
 	 * @extends sap.ui.base.EventProvider
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @public
 	 * @alias sap.ui.base.ManagedObject
 	 * @experimental Since 1.11.2. ManagedObject as such is public and usable. Only the support for the optional parameter
@@ -3262,7 +3262,7 @@ sap.ui.define([
 			oBinding.bWasGrouped = bGrouped;
 		} else if (oBinding instanceof TreeBinding) {
 			// Destroy all children in case a factory function is used
-			if (!oBinding.template) {
+			if (!oBindingInfo.template) {
 				this[oAggregationInfo._sDestructor]();
 			}
 			// In fnAfter call update recursively for the child nodes of the current tree node

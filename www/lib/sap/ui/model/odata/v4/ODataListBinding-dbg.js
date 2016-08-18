@@ -69,7 +69,7 @@ sap.ui.define([
 	 *   For other events, an error is thrown.
 	 * @extends sap.ui.model.ListBinding
 	 * @public
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 */
 	var ODataListBinding = ListBinding.extend("sap.ui.model.odata.v4.ODataListBinding", {
 			constructor : function (oModel, sPath, oContext, mParameters) {

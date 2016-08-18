@@ -38,7 +38,7 @@ sap.ui.define(['jquery.sap.global', '../base/ManagedObject', './Component', './l
 	 * @extends sap.ui.core.Component
 	 * @abstract
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @alias sap.ui.core.UIComponent
 	 * @since 1.9.2
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
@@ -191,7 +191,7 @@ sap.ui.define(['jquery.sap.global', '../base/ManagedObject', './Component', './l
 	 * <p>
 	 * Example usage:
 	 * <pre>
-	 * sap.ui.core.UIComponent._fnOnInstanceCreated = function(oComponent) {
+	 * sap.ui.core.UIComponent._fnOnInstanceInitialized = function(oComponent) {
 	 *   // do some logic with the Component
 	 * }
 	 * </pre>
@@ -203,6 +203,25 @@ sap.ui.define(['jquery.sap.global', '../base/ManagedObject', './Component', './l
 	 * @since 1.37.0
 	 */
 	UIComponent._fnOnInstanceInitialized = null;
+
+	/**
+	 * Callback handler which will be executed when a Component instance is
+	 * destroyed.
+	 * <p>
+	 * Example usage:
+	 * <pre>
+	 * sap.ui.core.UIComponent._fnOnInstanceDestroy = function(oComponent) {
+	 *   // do some logic with the Component
+	 * }
+	 * </pre>
+	 * <p>
+	 * <b>ATTENTION:</b> This hook must only be used by Fiori 2.0 adapter.
+	 *
+	 * @sap-restricted sap.ushell
+	 * @private
+	 * @since 1.40
+	 */
+	UIComponent._fnOnInstanceDestroy = null;
 
 	/**
 	 * Initializes the Component instance after creation.
@@ -298,6 +317,11 @@ sap.ui.define(['jquery.sap.global', '../base/ManagedObject', './Component', './l
 	 * Destruction of the UIComponent
 	 */
 	UIComponent.prototype.destroy = function() {
+
+		// notify Component destruction callback handler
+		if (typeof UIComponent._fnOnInstanceDestroy === "function") {
+			UIComponent._fnOnInstanceDestroy(this);
+		}
 		// destroy the router
 		this._destroyCreatedInstances();
 		// make sure that the component is destroyed properly

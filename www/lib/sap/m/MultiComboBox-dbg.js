@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 	 * @extends sap.m.ComboBoxBase
 	 *
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public
@@ -487,6 +487,10 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 
 			if (sValue === "") {
 				bMatch = true;
+				if (!this.bOpenedByKeyboardOrButton) {
+					// prevent filtering of the picker if it will be closed
+					return;
+				}
 			}
 
 			var oListItem = this.getListItem(oItem);
@@ -499,7 +503,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 		this._setContainerSizes();
 
 		// First do manipulations on list items and then let the list render
-		if (!this.getValue() || !bVisibleItemFound) {
+		if ((!this.getValue() || !bVisibleItemFound) && !this.bOpenedByKeyboardOrButton)  {
 			this.close();
 		} else {
 			this.open();
@@ -667,7 +671,10 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 	 *
 	 * @private
 	 */
-	MultiComboBox.prototype.onBeforeClose = function() {};
+	MultiComboBox.prototype.onBeforeClose = function() {
+		// reset opener
+		this.bOpenedByKeyboardOrButton = false;
+	};
 
 	/**
 	 * This event handler will be called after the MultiComboBox's Pop-up is closed.
@@ -675,7 +682,6 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 	 * @private
 	 */
 	MultiComboBox.prototype.onAfterClose = function() {
-
 		// remove the active state of the MultiComboBox's field
 		this.removeStyleClass(this.getRenderer().CSS_CLASS_COMBOBOXBASE + "Pressed");
 
@@ -826,10 +832,11 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 
 		// Fill Tokenizer
 		var oToken = new sap.m.Token({
-			key: mOptions.key,
-			text: mOptions.item.getText(),
-			tooltip: mOptions.item.getText()
+			key: mOptions.key
 		});
+		oToken.setText(mOptions.item.getText());
+		oToken.setTooltip(mOptions.item.getText());
+
 		mOptions.item.data(this.getRenderer().CSS_CLASS_COMBOBOXBASE + "Token", oToken);
 		this._oTokenizer.addToken(oToken);
 		this.$().toggleClass("sapMMultiComboBoxHasToken", this._hasTokens());
@@ -2146,19 +2153,20 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 		var sListItem = this.getRenderer().CSS_CLASS_MULTICOMBOBOX + "Item";
 		var sListItemSelected = (this.isItemSelected(oItem)) ? sListItem + "Selected" : "";
 		var oListItem = new sap.m.StandardListItem({
-			title: oItem.getText(),
 			type: sap.m.ListType.Active,
 			visible: oItem.getEnabled()
 		}).addStyleClass(sListItem + " " + sListItemSelected);
 		oListItem.setTooltip(oItem.getTooltip());
 		oItem.data(this.getRenderer().CSS_CLASS_COMBOBOXBASE + "ListItem", oListItem);
+		oListItem.setTitle(oItem.getText());
 
 		if (sListItemSelected) {
 			var oToken = new sap.m.Token({
-				key: oItem.getKey(),
-				text: oItem.getText(),
-				tooltip: oItem.getText()
+				key: oItem.getKey()
 			});
+			oToken.setText(oItem.getText());
+			oToken.setTooltip(oItem.getText());
+
 			oItem.data(this.getRenderer().CSS_CLASS_COMBOBOXBASE + "Token", oToken);
 			this._oTokenizer.addToken(oToken);
 		}

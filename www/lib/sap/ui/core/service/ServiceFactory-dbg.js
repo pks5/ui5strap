@@ -83,7 +83,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', 'sap/ui/core/service/S
 	 *
 	 * @extends sap.ui.base.Object
 	 * @author SAP SE
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @alias sap.ui.core.service.ServiceFactory
 	 * @private
 	 * @sap-restricted sap.ushell

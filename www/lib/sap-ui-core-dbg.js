@@ -1005,7 +1005,7 @@
  * This API is independent from any other part of the UI5 framework. This allows it to be loaded beforehand, if it is needed, to create the UI5 bootstrap
  * dynamically depending on the capabilities of the browser or device.
  *
- * @version 1.38.4
+ * @version 1.38.7
  * @namespace
  * @name sap.ui.Device
  * @public
@@ -1031,7 +1031,7 @@ if (typeof window.sap.ui !== "object") {
 
 	//Skip initialization if API is already available
 	if (typeof window.sap.ui.Device === "object" || typeof window.sap.ui.Device === "function" ) {
-		var apiVersion = "1.38.4";
+		var apiVersion = "1.38.7";
 		window.sap.ui.Device._checkAPIVersion(apiVersion);
 		return;
 	}
@@ -1089,7 +1089,7 @@ if (typeof window.sap.ui !== "object") {
 
 	//Only used internal to make clear when Device API is loaded in wrong version
 	device._checkAPIVersion = function(sVersion){
-		var v = "1.38.4";
+		var v = "1.38.7";
 		if (v != sVersion) {
 			logger.log(WARNING, "Device API version differs: " + v + " <-> " + sVersion);
 		}
@@ -15791,7 +15791,7 @@ $.ui.position = {
 	/**
 	 * Root Namespace for the jQuery plug-in provided by SAP SE.
 	 *
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 * @namespace
 	 * @public
 	 * @static

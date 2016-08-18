@@ -24,6 +24,7 @@
 	specialDates: [], // sap.ui.unified.DateTypeRange, since 1.24.0
 	disabledDates: [], // sap.ui.unified.DateRange, since 1.38.0
 	ariaLabelledBy: [], // sap.ui.core.Control, since 1.28.0
+	legend: undefined, // sap.ui.unified.CalendarLegend, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -55,6 +56,7 @@
 	minDate=""
 	maxDate=""
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	select=""
 	cancel=""
@@ -128,6 +130,7 @@
 	specialDates: [], // sap.ui.unified.DateTypeRange, since 1.24.0
 	disabledDates: [], // sap.ui.unified.DateRange, since 1.38.0
 	ariaLabelledBy: [], // sap.ui.core.Control, since 1.28.0
+	legend: undefined, // sap.ui.unified.CalendarLegend, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -163,6 +166,7 @@
 	showDayNamesLine="true"
 	pickerPopup="false"
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	select=""
 	cancel=""
@@ -246,6 +250,7 @@
 	selectedDates: [], // sap.ui.unified.DateRange
 	specialDates: [], // sap.ui.unified.DateTypeRange
 	ariaLabelledBy: [], // sap.ui.core.Control
+	legend: undefined, // sap.ui.unified.CalendarLegend, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -275,6 +280,7 @@
 	minDate=""
 	maxDate=""
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	select=""
 	cancel=""
@@ -383,6 +389,7 @@
 	selectedDates: [], // sap.ui.unified.DateRange
 	specialDates: [], // sap.ui.unified.DateTypeRange
 	ariaLabelledBy: [], // sap.ui.core.Control
+	legend: undefined, // sap.ui.unified.CalendarLegend, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -413,6 +420,7 @@
 	minDate=""
 	maxDate=""
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	select=""
 	cancel=""
@@ -1070,6 +1078,7 @@
 	specialDates: [], // sap.ui.unified.DateTypeRange
 	disabledDates: [], // sap.ui.unified.DateRange, since 1.38.0
 	ariaLabelledBy: [], // sap.ui.core.Control
+	legend: undefined, // sap.ui.unified.CalendarLegend, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -1100,6 +1109,7 @@
 	days="7"
 	showDayNamesLine="true"
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	select=""
 	focus="">
@@ -1209,6 +1219,7 @@
 	specialDates: [], // sap.ui.unified.DateTypeRange
 	disabledDates: [], // sap.ui.unified.DateRange, since 1.38.0
 	ariaLabelledBy: [], // sap.ui.core.Control
+	legend: undefined, // sap.ui.unified.CalendarLegend, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -1236,6 +1247,7 @@
 	secondaryCalendarType=""
 	width=""
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	select=""
 	focus="">
@@ -1309,6 +1321,7 @@
 	selectedDates: [], // sap.ui.unified.DateRange
 	specialDates: [], // sap.ui.unified.DateTypeRange
 	ariaLabelledBy: [], // sap.ui.core.Control
+	legend: undefined, // sap.ui.unified.CalendarLegend, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -1333,6 +1346,7 @@
 	singleSelection="true"
 	showHeader="false"
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	select=""
 	focus="">
@@ -1363,6 +1377,7 @@
 	selectedDates: [], // sap.ui.unified.DateRange
 	specialDates: [], // sap.ui.unified.DateTypeRange
 	ariaLabelledBy: [], // sap.ui.core.Control
+	legend: undefined, // sap.ui.unified.CalendarLegend, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -1388,6 +1403,7 @@
 	singleSelection="true"
 	showHeader="false"
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	select=""
 	focus="">

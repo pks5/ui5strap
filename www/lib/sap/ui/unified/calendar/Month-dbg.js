@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.4
+	 * @version 1.38.7
 	 *
 	 * @constructor
 	 * @public
@@ -118,7 +118,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			/**
 			 * Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).
 			 */
-			ariaLabelledBy: { type: "sap.ui.core.Control", multiple: true, singularName: "ariaLabelledBy" }
+			ariaLabelledBy: { type: "sap.ui.core.Control", multiple: true, singularName: "ariaLabelledBy" },
+
+			/**
+			 * Association to the <code>CalendarLegend</code> explaining the colors of the <code>specialDates</code>.
+			 *
+			 * <b>Note</b> The legend does not have to be rendered but must exist, and all required types must be assigned.
+			 * @since 1.38.5
+			 */
+			legend: { type: "sap.ui.unified.CalendarLegend", multiple: false}
 		},
 		events : {
 
@@ -540,6 +548,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		if (oParent && oParent.getAriaLabelledBy) {
 			return oParent.getAriaLabelledBy();
+		} else {
+			return this.getAssociation("ariaLabelledBy", []);
+		}
+
+	};
+
+	/*
+	 * if used inside Calendar get the value from the parent
+	 * To don't have sync issues...
+	 */
+	Month.prototype.getLegend = function(){
+
+		var oParent = this.getParent();
+
+		if (oParent && oParent.getLegend) {
+			return oParent.getLegend();
 		} else {
 			return this.getAssociation("ariaLabelledBy", []);
 		}

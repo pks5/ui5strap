@@ -108,7 +108,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 					sTabParams += 'role="separator"';
 				}
 			} else {
-				sTabParams += 'role="tab" aria-controls="' + oControl.getParent().sId + '-content" ';
+				sTabParams += 'role="tab"';
+
+				if (oIconTabBar instanceof sap.m.IconTabBar) {
+					sTabParams += ' aria-controls="' + oIconTabBar.sId + '-content" ';
+				}
 
 				//if there is tab text
 				if (oItem) {
@@ -164,6 +168,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 				if (!oItem.getEnabled()) {
 					oRM.addClass("sapMITBDisabled");
+					oRM.writeAttribute("aria-disabled", true);
 				}
 
 				var sTooltip = oItem.getTooltip_AsString();

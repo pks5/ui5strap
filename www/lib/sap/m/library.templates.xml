@@ -1009,7 +1009,9 @@
 	tooltip: undefined, // sap.ui.core.TooltipBase
 	customData: [], // sap.ui.core.CustomData
 	dependents: [], // sap.ui.core.Control, since 1.19
+	specialDates: [], // sap.ui.core.Element, since 1.38.5
 	ariaLabelledBy: [], // sap.ui.core.Control, since 1.27.0
+	legend: undefined, // sap.ui.core.Control, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -1044,10 +1046,12 @@
 	minDate=""
 	maxDate=""
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	change="">
 		<tooltip></tooltip> <!-- sap.ui.core.TooltipBase -->
 		<dependents></dependents> <!-- sap.ui.core.Control, since 1.19 -->
+		<specialDates></specialDates> <!-- sap.ui.core.Element, since 1.38.5 -->
 </DatePicker>
 ]]></xmlTemplate>
 </Template>
@@ -1084,7 +1088,9 @@
 	tooltip: undefined, // sap.ui.core.TooltipBase
 	customData: [], // sap.ui.core.CustomData
 	dependents: [], // sap.ui.core.Control, since 1.19
+	specialDates: [], // sap.ui.core.Element, since 1.38.5
 	ariaLabelledBy: [], // sap.ui.core.Control, since 1.27.0
+	legend: undefined, // sap.ui.core.Control, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -1123,10 +1129,12 @@
 	from=""
 	to=""
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	change="">
 		<tooltip></tooltip> <!-- sap.ui.core.TooltipBase -->
 		<dependents></dependents> <!-- sap.ui.core.Control, since 1.19 -->
+		<specialDates></specialDates> <!-- sap.ui.core.Element, since 1.38.5 -->
 </DateRangeSelection>
 ]]></xmlTemplate>
 </Template>
@@ -1222,7 +1230,9 @@
 	tooltip: undefined, // sap.ui.core.TooltipBase
 	customData: [], // sap.ui.core.CustomData
 	dependents: [], // sap.ui.core.Control, since 1.19
+	specialDates: [], // sap.ui.core.Element, since 1.38.5
 	ariaLabelledBy: [], // sap.ui.core.Control, since 1.27.0
+	legend: undefined, // sap.ui.core.Control, since 1.38.5
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -1257,10 +1267,12 @@
 	minDate=""
 	maxDate=""
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	change="">
 		<tooltip></tooltip> <!-- sap.ui.core.TooltipBase -->
 		<dependents></dependents> <!-- sap.ui.core.Control, since 1.19 -->
+		<specialDates></specialDates> <!-- sap.ui.core.Element, since 1.38.5 -->
 </DateTimePicker>
 ]]></xmlTemplate>
 </Template>
@@ -2517,7 +2529,7 @@
 	visible: true, // boolean
 	fieldGroupIds: [], // string[], since 1.31
 	src: undefined, // sap.ui.core.URI
-	description: undefined, // any
+	description: undefined, // string
 	tooltip: undefined, // sap.ui.core.TooltipBase
 	customData: [], // sap.ui.core.CustomData
 	dependents: [], // sap.ui.core.Control, since 1.19
@@ -4497,6 +4509,7 @@
 	tooltip: undefined, // sap.ui.core.TooltipBase
 	customData: [], // sap.ui.core.CustomData
 	dependents: [], // sap.ui.core.Control, since 1.19
+	ariaDescribedBy: [], // sap.ui.core.Control
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this]
@@ -4515,6 +4528,7 @@
 	unit=""
 	textDirection="Inherit"
 	textAlign="Begin"
+	ariaDescribedBy=""
 	validateFieldGroup="">
 		<tooltip></tooltip> <!-- sap.ui.core.TooltipBase -->
 		<dependents></dependents> <!-- sap.ui.core.Control, since 1.19 -->
@@ -6225,6 +6239,7 @@
 	value: 0, // float
 	showHandleTooltip: true, // boolean, since 1.31
 	range: [], // any
+	inputsAsTooltips: false, // boolean
 	tooltip: undefined, // sap.ui.core.TooltipBase
 	customData: [], // sap.ui.core.CustomData
 	dependents: [], // sap.ui.core.Control, since 1.19
@@ -6256,6 +6271,7 @@
 	value="0"
 	showHandleTooltip="true"
 	range="[]"
+	inputsAsTooltips="false"
 	ariaLabelledBy=""
 	validateFieldGroup=""
 	change=""

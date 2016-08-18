@@ -11,6 +11,11 @@
       "theme": "sap_belize_plus"
     },
     {
+      "name": "FeedContent.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
       "name": "FeedInput.less",
       "designtime": true,
       "theme": "sap_belize_plus"
@@ -21,7 +26,22 @@
       "theme": "sap_belize_plus"
     },
     {
+      "name": "ImageContent.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "NewsContent.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
       "name": "NotificationListItem.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "NumericContent.less",
       "designtime": true,
       "theme": "sap_belize_plus"
     },
