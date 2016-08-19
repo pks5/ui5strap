@@ -91,6 +91,7 @@
   
   "ui5strap" : {
   	"srcDirFontAwesomeFonts" : "../font-awesome-4.5.0/fonts/",
+  	"srcDirFlagIconCssImg" : "../flag-icon-css-2.4.0/flags/",
   	"srcDirTemplates" : "../templates/",
   	
   	"tgtDirCustomThemes" : "../../../www/theme/ui5strap/themes/",

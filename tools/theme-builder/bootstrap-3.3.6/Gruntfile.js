@@ -362,6 +362,13 @@ module.exports = function (grunt) {
         src : ['*'],
         dest : '<%= pkg.ui5strap.tgtDirLibraryThemes %>base/fonts/'
       },
+      //Copy font awesome fonts
+      copyThemeBaseFlagIconCssImg: {
+        expand : true,
+        cwd : '<%= pkg.ui5strap.srcDirFlagIconCssImg %>',
+        src : ['**'],
+        dest : '<%= pkg.ui5strap.tgtDirLibraryThemes %>base/img/flags/'
+      },
       
       //------------------------------------
       //------------------------------------
@@ -389,6 +396,13 @@ module.exports = function (grunt) {
         cwd : '<%= pkg.ui5strap.srcDirFontAwesomeFonts %>',
         src : ['*'],
         dest : '<%= pkg.ui5strap.tgtDirCustomThemes %><%= themeName %>/fonts/'
+      },
+      //Copy font awesome fonts
+      copyThemeCustomFlagIconCssImg: {
+        expand : true,
+        cwd : '<%= pkg.ui5strap.srcDirFlagIconCssImg %>',
+        src : ['**'],
+        dest : '<%= pkg.ui5strap.tgtDirCustomThemes %><%= themeName %>/img/flags/'
       },
       //Copy custom fonts
       copyThemeCustomMyFonts: {
@@ -460,6 +474,13 @@ module.exports = function (grunt) {
         cwd : '<%= pkg.ui5strap.srcDirFontAwesomeFonts %>',
         src : ['*'],
         dest : '<%= pkg.ui5strap.tgtDirLibraryThemes %><%= themeNameSapRef %>/fonts/'
+      },
+      //Copy font awesome fonts
+      copyThemeCustomSapFlagIconCssImg: {
+        expand : true,
+        cwd : '<%= pkg.ui5strap.srcDirFlagIconCssImg %>',
+        src : ['**'],
+        dest : '<%= pkg.ui5strap.tgtDirLibraryThemes %><%= themeNameSapRef %>/img/flags/'
       },
       //Copy custom fonts
       copyThemeCustomSapMyFonts: {
@@ -696,7 +717,9 @@ module.exports = function (grunt) {
 	[
 	 		'clean:dist', 'less:compileThemeBase', 'build-theme-bs', 
 	 		'copy:copyThemeBaseBootstrapFonts', 'copy:copyThemeBaseFontAwesomeFonts',
-	 		'copy:copyThemeBaseCssLibrary', 'copy:copyThemeBaseCssLibraryDebug'
+	 		'copy:copyThemeBaseCssLibrary', 'copy:copyThemeBaseCssLibraryDebug',
+	 		
+	 		'copy:copyThemeBaseFlagIconCssImg'
 	]
   );
   
@@ -709,7 +732,9 @@ module.exports = function (grunt) {
 		   'copy:copyThemeCustomMyFonts', 'copy:copyThemeCustomMyImages', 
 		   'copy:copyThemeCustomCssLibrary', 'copy:copyThemeCustomCssLibraryDebug', 
 		   'copy:copyThemeCustomSapUiCoreSupport', 'copy:copyThemeCustomSapUiCommonsSupport', 
-		   'copy:copyThemeCustomSapUiLayoutSupport', 'copy:copyThemeCustomSapMSupport'
+		   'copy:copyThemeCustomSapUiLayoutSupport', 'copy:copyThemeCustomSapMSupport',
+		   
+		   'copy:copyThemeCustomFlagIconCssImg'
 	]
   );
   
@@ -720,7 +745,9 @@ module.exports = function (grunt) {
 	 		'clean:dist', 'less:compileThemeCustom', 'build-theme-bs', 
 	 		'copy:copyThemeCustomSapBootstrapFonts', 'copy:copyThemeCustomSapFontAwesomeFonts', 
 	 		'copy:copyThemeCustomSapMyFonts', 'copy:copyThemeCustomSapMyImages', 
-	 		'copy:copyThemeCustomSapCssLibrary', 'copy:copyThemeCustomSapCssLibraryDebug'
+	 		'copy:copyThemeCustomSapCssLibrary', 'copy:copyThemeCustomSapCssLibraryDebug',
+	 		
+	 		'copy:copyThemeCustomSapFlagIconCssImg'
 	]
   );
   

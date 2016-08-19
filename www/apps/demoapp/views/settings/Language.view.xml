@@ -32,9 +32,15 @@
 						<ListGroup id="languageSelect" listMode="Navigation"
 							select="com.ui5strap.apps.demoapp.actions.settings.SelectLanguage"
 							selectionMode="Single">
-							<ListGroupItem text="{i18n>LANGUAGE_EN}" data:language="en-US" />
-							<ListGroupItem text="{i18n>LANGUAGE_DE}" data:language="de-DE" />
-                            <ListGroupItem text="{i18n>LANGUAGE_FR}" data:language="fr-FR" />
+							<ListGroupItem text="{i18n>LANGUAGE_EN}" data:language="en-US">
+							     <Text class="flag-icon flag-icon-gb" />
+							</ListGroupItem>
+							<ListGroupItem text="{i18n>LANGUAGE_DE}" data:language="de-DE">
+							     <Text class="flag-icon flag-icon-de" />
+							</ListGroupItem>
+                            <ListGroupItem text="{i18n>LANGUAGE_FR}" data:language="fr-FR">
+                                <Text class="flag-icon flag-icon-fr" />
+                            </ListGroupItem>
 						</ListGroup>
 					</Col>
 				</Row>

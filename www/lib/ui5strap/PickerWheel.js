@@ -264,7 +264,7 @@ sap.ui
 					PickerWheel.TARGET_FRAMES_STOP = 15;
 
 					/**
-					 * 
+					 * Initializes the PickerWheel control.
 					 */
 					PickerWheelProto.init = function() {
 						this._$currentSelectedPanel = null;
@@ -273,6 +273,26 @@ sap.ui
 						this._timer = null;
 					};
 					
+					/**
+					 * Called before destruction.
+					 */
+					PickerWheelProto.exit = function() {
+						this._$currentSelectedPanel = null;
+						
+						this._timer && window.clearInterval(this._timer);
+						this._timer = null;
+						
+						this._touchStartTime = null;
+						
+						this._rotations = null;
+						this._times = null;
+						
+						this._wheel = null;
+					};
+					
+					/**
+					 * @override
+					 */
 					PickerWheelProto._getStyleClassRoot = function(){
 						var styleClass = " " 
 					    		+ (this.getVertical() ? 'ui5strapPickerWheel-flag-Vertical' : 'ui5strapPickerWheel-flag-Horizontal');
@@ -295,7 +315,7 @@ sap.ui
 					 */
 
 					/**
-					 * 
+					 * @override
 					 */
 					PickerWheelProto.onAfterRendering = function() {
 						var _this = this,
@@ -355,14 +375,16 @@ sap.ui
 					 * START Touch handling
 					 */
 					
-
+					/**
+					 * 
+					 */
 					var _getMousePosition = function(_this, ev){
 						return _this.getVertical() ? (ev.changedTouches ? -ev.changedTouches[0].pageY : -ev.pageY) : 
 								(ev.changedTouches ? ev.changedTouches[0].pageX : ev.pageX);
 					};
 
 					/**
-					 * 
+					 * @override
 					 */
 					PickerWheelProto.ontouchstart = function(ev) {
 						if(!this.getEnabled()){
@@ -401,7 +423,7 @@ sap.ui
 					};
 
 					/**
-					 * 
+					 * @override
 					 */
 					PickerWheelProto.ontouchmove = function(ev) {
 						if (!this._mousePosStart)
@@ -561,6 +583,9 @@ sap.ui
 					 * END Touch handling
 					 */
 					
+					/**
+					 * @override
+					 */
 					PickerWheelProto.setMode = function(newMode, suppress) {
 						if(sap.ui.Device.browser.msie){
 							newMode = ulib.PickerWheelMode.Mode2D;
@@ -570,7 +595,7 @@ sap.ui
 					};
 					
 					/**
-					 * 
+					 * @override
 					 */
 					PickerWheelProto.setSelectedIndex = function(newIndex, suppress) {
 						if(isNaN(newIndex))
@@ -632,8 +657,13 @@ sap.ui
 						else{
 							this.setProperty('selectedIndex', newIndex, suppress);
 						}
+						
+						return this;
 					};
 					
+					/**
+					 * @override
+					 */
 					PickerWheelProto.setActive = function(newActive, suppress) {
 						if (this.getDomRef()) {
 							this.setProperty('active', newActive, true);
@@ -643,8 +673,13 @@ sap.ui
 						else{
 							this.setProperty('active', newActive, suppress);
 						}
+						
+						return this;
 					};
 					
+					/**
+					 * @override
+					 */
 					PickerWheelProto.setEnabled = function(newEnabled, suppress) {
 						if (this.getDomRef()) {
 							this.setProperty('enabled', newEnabled, true);
@@ -654,6 +689,8 @@ sap.ui
 						else{
 							this.setProperty('enabled', newEnabled, suppress);
 						}
+						
+						return this;
 					};
 					
 					/**
@@ -749,6 +786,9 @@ sap.ui
 					 * Index
 					 */
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.getSelection = function(selectionGroup){
 						var selectedIndex = this.getSelectedIndex(),
 							panels = this.getPanels();
@@ -760,6 +800,9 @@ sap.ui
 						return [panels[this._getRealIndex(selectedIndex)]];
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.isInSelection = function(itemsToSelect, selectionGroup){
 						if(jQuery.isArray(itemsToSelect)){
 							itemsToSelect = itemsToSelect[0];
@@ -775,6 +818,9 @@ sap.ui
 						return itemsToSelect === panels[this._getRealIndex(selectedIndex)]; 
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.setSelection = function(itemsToSelect, selectionGroup){
 						if(jQuery.isArray(itemsToSelect)){
 							itemsToSelect = itemsToSelect[0];
@@ -789,14 +835,23 @@ sap.ui
 						}
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.addSelection = function(itemsToSelect, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.removeSelection = function(itemsToSelect, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.toggleSelection = function(itemsToSelect, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
@@ -805,6 +860,9 @@ sap.ui
 					 * Index
 					 */
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.getSelectionIndex = function(selectionGroup){
 						if(0 === panels.length){
 							return [];
@@ -813,6 +871,9 @@ sap.ui
 						return [this.getSelectedIndex()];
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.isInSelectionIndex = function(indices, selectionGroup){
 						if(jQuery.isArray(indices)){
 							indices = indices[0];
@@ -821,6 +882,9 @@ sap.ui
 						return indices === this.getSelectedIndex(); 
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.setSelectionIndex = function(indices, selectionGroup){
 						if(jQuery.isArray(indices)){
 							indices = indices[0];
@@ -829,14 +893,23 @@ sap.ui
 						this.setSelectedIndex(indices);
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.addSelectionIndex = function(indices, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.removeSelectionIndex = function(indices, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.toggleSelectionIndex = function(indices, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
@@ -845,6 +918,9 @@ sap.ui
 					 * Custom Data
 					 */
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.getSelectionCustomData = function(dataKey, selectionGroup){
 						var selectedIndex = this.getSelectedIndex(),
 							panels = this.getPanels();
@@ -856,6 +932,9 @@ sap.ui
 						return [panels[this._getRealIndex(selectedIndex)].data(dataKey)];
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.isInSelectionByCustomData = function(dataKey, values, selectionGroup){
 						if(jQuery.isArray(values)){
 							values = values[0];
@@ -873,6 +952,9 @@ sap.ui
 						return values === panels[this._getRealIndex(selectedIndex)].data(dataKey); 
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.setSelectionByCustomData = function(dataKey, values, selectionGroup){
 						if(jQuery.isArray(values)){
 							values = values[0];
@@ -889,14 +971,23 @@ sap.ui
 						}
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.addSelectionByCustomData = function(dataKey, values, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.removeSelectionByCustomData = function(dataKey, values, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.toggleSelectionByCustomData = function(dataKey, values, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
@@ -905,6 +996,9 @@ sap.ui
 					 * Property
 					 */
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.getSelectionProperty = function(propertyName, selectionGroup){
 						var selectedIndex = this.getSelectedIndex(),
 							panels = this.getPanels(),
@@ -917,6 +1011,9 @@ sap.ui
 						return [panels[this._getRealIndex(selectedIndex)][methodName]()];
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.isInSelectionByProperty = function(propertyName, values, selectionGroup){
 						if(jQuery.isArray(values)){
 							values = values[0];
@@ -935,6 +1032,9 @@ sap.ui
 						return values === panels[this._getRealIndex(selectedIndex)][methodName](); 
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.setSelectionByProperty = function(propertyName, values, selectionGroup){
 						if(jQuery.isArray(values)){
 							values = values[0];
@@ -952,14 +1052,23 @@ sap.ui
 						}
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.addSelectionByProperty = function(propertyName, values, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.removeSelectionByProperty = function(propertyName, values, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};
 					
+					/**
+					 * 
+					 */
 					PickerWheelProto.toggleSelectionByProperty = function(propertyName, values, selectionGroup){
 						throw new Error('This Control does not support multiple selections!');
 					};

@@ -931,6 +931,14 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				oUiArea.destroy();
 			}
 		}
+		
+		this._pendingTransitions = null;
+		this._targetTransitions = null;
+		
+		this._targetPagesCount = null;
+		this._targetStatus = null;
+		
+		this.targets = null;
 	};
 	
 
