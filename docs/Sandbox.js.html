@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: ListMediaItem.js</title>
+    <title>JSDoc: Source: Sandbox.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: ListMediaItem.js</h1>
+    <h1 class="page-title">Source: Sandbox.js</h1>
 
     
 
@@ -30,7 +30,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ListMediaItem
+ * ui5strap.Sandbox
  * 
  * @author Jan Philipp Knöller &lt;info@pksoftware.de>
  * 
@@ -53,45 +53,112 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem'], function(library, ListItem){
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	var ListMediaItem = ListItem.extend("ui5strap.ListMediaItem", {
+	var Sandbox = ControlBase.extend("ui5strap.Sandbox", {
 		metadata : {
 
-			// ---- object ----
-			defaultAggregation : "media",
-			
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
-				contentPlacement : {
-					type : "ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.End
-				},
-
-				heading : {
-					type : "string",
+				src : {
+					type : "string", 
+					defaultValue : ""
+				}, 
+				frameName : {
+					type : "string", 
 					defaultValue : ""
 				}
-			},
-			aggregations : { 
-				media : {
-					multiple : false
-				}
 			}
+
 		}
 	}),
-	ListMediaItemProto = ListMediaItem.prototype;
-	
+	SandboxProto = Sandbox.prototype;
+
 	/**
-	 * TODO More efficient rerendering
+	 * Initialize
+	 * @override
 	 */
-	ListMediaItemProto.setText = function(newText, suppressInvalidate){
-		this.setProperty('text', newText, suppressInvalidate);
+	SandboxProto.init = function(){
+		var iframe = document.createElement('iframe');
+		iframe.className = 'sandbox-iframe';
+		iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-pointer-lock'; //allow-popups
+		iframe.id = this.getId() + '----iframe';
+		this.$iframe = jQuery(iframe);
+	};
+
+	/**
+	 * Cleanup
+	 * @override
+	 */
+	SandboxProto.exit = function(){
+		this.$iframe.remove();
+	};
+
+	/**
+	 * @override
+	 */
+	SandboxProto.setSrc = function(src){
+		this.$iframe.attr('src', src);
+		this.setProperty('src', src, this.getDomRef() ? true : false);
+		return this;
 	};
 	
-	return ListMediaItem;
+	/**
+	 * 
+	 */
+	SandboxProto.goHistoryBack = function(){
+		this.$iframe[0].contentWindow.history.go(-1);
+	};
+	
+	/**
+	 * 
+	 */
+	SandboxProto.goHistoryForward = function(){
+		this.$iframe[0].contentWindow.history.go(1);
+	};
+	
+	/**
+	 * 
+	 */
+	SandboxProto.refreshContent = function(){
+		this.$iframe[0].contentWindow.location.reload();
+	};
 
+	/**
+	 * @override
+	 */
+	SandboxProto.setFrameName = function(frameName){
+		this.$iframe.attr('frameName', frameName);
+		this.setProperty('frameName', frameName, this.getDomRef() ? true : false);
+		return this;
+	};
+
+	/**
+	 * @override
+	 */
+	SandboxProto.onBeforeRendering = function(){
+        if(this.getDomRef()){
+            this.$iframe.detach();
+		}
+	};
+
+	/**
+	 * @override
+	 */
+	SandboxProto.onAfterRendering = function(){
+		this.$().html(this.$iframe);
+	};
+
+	/**
+	 * Sends a frame message.
+	 */
+	SandboxProto.sendMessage = function(appMessage, targetOrigin){
+		this.$iframe[0].contentWindow.postMessage(appMessage, targetOrigin);
+	};
+	
+	//Return Constructor
+	return Sandbox;
 });</code></pre>
         </article>
     </section>

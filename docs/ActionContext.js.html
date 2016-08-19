@@ -67,16 +67,18 @@ sap.ui.define(['./library'], function(library){
 
 	ActionContext.NUMBER = 0;
 
+	//OLD Format
 	ActionContext.PREFIX = "__";
+	ActionContext.PARAM_MODULES = "modules";
+	
 	ActionContext.RESOLVE = "=";
 	
-	//Action Name
-	ActionContext.PARAM_ACTION = 'action';
-	
 	//AM Modules
-	ActionContext.PARAM_MODULES = 'modules';
-	ActionContext.PARAM_TASKS = 'TASKS';
-	ActionContext.PARAM_MODULE = 'TYPE';
+	ActionContext.PARAM_TASKS = "TASKS";
+	ActionContext.PARAM_MODULE = "TYPE";
+	ActionContext.PARAM_BEGIN = "BEGIN";
+	ActionContext.PARAM_END = "END";
+	ActionContext.PARAM_EXPORT = "EXPORT";
 	
 	ActionContext.WORKPOOL = "action";
 	
@@ -121,9 +123,12 @@ sap.ui.define(['./library'], function(library){
 		
 		//App Reference
 		_this.app = action.app;
+		_this.callback = action.callback;
 		
 		//Default parameters
 		_this.defaultParameters = action.parameters;
+		
+		_this.import = action.import;
 			
 		//Pool
 		_this.action = _buildPool(_this.defaultParameters, [], _this);
@@ -245,7 +250,7 @@ sap.ui.define(['./library'], function(library){
 	_ActionExpressionResolveObject.prototype = new _ActionExpression();
 	
 	_ActionExpressionResolveObject.prototype.evaluate = function(context, task){
-		return context.resolve(task, this._controlDef);
+		return context.resolve(task, this._controlDef, false, true);
 	};
 	
 	
@@ -286,15 +291,15 @@ sap.ui.define(['./library'], function(library){
 					throw new Error("Please provide both 'mode' and 'type' for Control '" + this._controlName + "'");
 				}
 				
-				//TODO Async!
-				jQuery.sap.require(moduleName);
-				var Constructor = jQuery.sap.getObject(moduleName);
-				
-				if(!Constructor){
-					throw new Error("'" + moduleName + "' is not a valid Control!");
-				}
-				
 				if("New" === mode){
+					//TODO Async!
+					jQuery.sap.require(moduleName);
+					var Constructor = jQuery.sap.getObject(moduleName);
+					
+					if(!Constructor){
+						throw new Error("'" + moduleName + "' is not a valid Control!");
+					}
+					
 					var moduleSettings = context.resolve(task, controlOrDef.SETTINGS);
 					controlOrDef = new Constructor(moduleSettings);
 				}
@@ -342,8 +347,8 @@ sap.ui.define(['./library'], function(library){
 				if(!controlOrDef){
 					throw new Error("Cannot find control '" + this._controlName + "'!");
 				}
-				else if(!(controlOrDef instanceof Constructor)){
-					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef + "' given!" );
+				else if(!(controlOrDef instanceof jQuery.sap.getObject(moduleName))){
+					throw new Error("Control '" + this._controlName + "' must be an instance of '" + moduleName + "', '" + controlOrDef.getMetadata().getName() + "' given!" );
 				}
 				
 				return controlOrDef;
@@ -433,14 +438,14 @@ sap.ui.define(['./library'], function(library){
 	 * @Public
 	 * FIXME
 	 */
-	ActionContextProto.resolve = function(task, pointer, onlyString){
+	ActionContextProto.resolve = function(task, pointer, onlyString, recursive){
 		if(pointer instanceof _ActionExpression){
 			return pointer.evaluate(this, task);
 		}
 		else if(!onlyString &amp;&amp; ("object" === typeof pointer)){
 			if(pointer._isActionArray){
 				for(var i = 0; i &lt; pointer.length; i++){
-					pointer[i] = this.resolve(task, pointer[i], true);
+					pointer[i] = this.resolve(task, pointer[i], !recursive, recursive);
 				}
 			}
 			else if(pointer instanceof _ActionParameterObject){
@@ -449,7 +454,7 @@ sap.ui.define(['./library'], function(library){
 			
 				for(var i=0; i &lt; objectKeysLength; i++){
 					//Store back the value in the context
-					pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], true);
+					pointer[objectKeys[i]] = this.resolve(task, pointer[objectKeys[i]], !recursive, recursive);
 				}
 			}
 		}
@@ -482,6 +487,25 @@ sap.ui.define(['./library'], function(library){
 		return func.apply(scope, args);
 	};
 	
+	/**
+	 * 
+	 */
+	ActionContextProto.finish = function(){
+		var endAction = this.action[ActionContext.PARAM_END];
+		if(endAction){
+			this.app.runAction({
+				controller : this.controller,
+				eventSource : this.eventSource,
+				eventParameters : this.eventParameters,
+				parameters: endAction,
+				import : this.action[ActionContext.PARAM_EXPORT] || {},
+				callback : this.callback
+			});
+		}
+		else if(this.callback){
+			this.callback();
+		}
+	};
 	
 	/**
 	* Gets and evaluates a context parameter.
@@ -893,13 +917,13 @@ sap.ui.define(['./library'], function(library){
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ui5strap.App.html">App</a></li><li><a href="ui5strap.AppBase.html">AppBase</a></li><li><a href="ui5strap.Bar.html">Bar</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ui5strap.App.html">App</a></li><li><a href="ui5strap.AppBase.html">AppBase</a></li><li><a href="ui5strap.Bar.html">Bar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#sendMessage">sendMessage</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 22 2016 00:55:45 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Aug 19 2016 20:33:07 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

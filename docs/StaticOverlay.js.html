@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: ListMediaItem.js</title>
+    <title>JSDoc: Source: StaticOverlay.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: ListMediaItem.js</h1>
+    <h1 class="page-title">Source: StaticOverlay.js</h1>
 
     
 
@@ -30,7 +30,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ListMediaItem
+ * ui5strap.Overlay
  * 
  * @author Jan Philipp Knöller &lt;info@pksoftware.de>
  * 
@@ -53,45 +53,103 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem'], function(library, ListItem){
-
-	var ListMediaItem = ListItem.extend("ui5strap.ListMediaItem", {
+sap.ui.define(['./library', './ControlBase'], function(uLib, ControlBase){
+	
+	var StaticOverlay = ControlBase.extend("ui5strap.StaticOverlay", {
 		metadata : {
 
-			// ---- object ----
-			defaultAggregation : "media",
-			
-			// ---- control specific ----
 			library : "ui5strap",
+			defaultAggregation : "content",
+			
 			properties : { 
-				contentPlacement : {
-					type : "ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.End
+				backdrop : {
+					type:"boolean", 
+					defaultValue:false
 				},
-
-				heading : {
-					type : "string",
-					defaultValue : ""
+				local : {
+					type : "boolean",
+					defaultValue : false
 				}
 			},
-			aggregations : { 
-				media : {
-					multiple : false
+			
+			aggregations : {
+				content : {
+					multiple : true
+				}
+			},
+			
+			events : {
+				close : {
+					
 				}
 			}
 		}
 	}),
-	ListMediaItemProto = ListMediaItem.prototype;
+	StaticOverlayProto = StaticOverlay.prototype;
 	
 	/**
-	 * TODO More efficient rerendering
+	 * @Protected
 	 */
-	ListMediaItemProto.setText = function(newText, suppressInvalidate){
-		this.setProperty('text', newText, suppressInvalidate);
+	
+	StaticOverlayProto._getStyleClassRoot = function(){
+		return this.getLocal() ? " ui5strap-layer ui5strap-hidden" : "";
 	};
 	
-	return ListMediaItem;
-
+	
+	/**
+	 * @override
+	 */
+	StaticOverlayProto.onBeforeRendering = function(oEvent){
+		if(this.getLocal()){
+			uLib.Layer.unregister(this.getId());
+		}
+		
+		if(this.getBackdrop()){
+			this._$backdrop &amp;&amp; this._$backdrop.off('click');
+			delete(this._$backdrop);
+		}
+	};
+	
+	/**
+	 * @override
+	 */
+	StaticOverlayProto.onAfterRendering = function(oEvent){
+		if(this.getLocal()){
+			uLib.Layer.register(this.getId(), this.$());
+		}
+		
+		if(this.getBackdrop()){
+			var _this = this;
+			this._$backdrop = this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
+				_this.fireClose({});
+			});
+		}
+	};
+	
+	StaticOverlayProto.open = function(app, fCallback, transitionName){
+		var _this = this;
+		
+		if(this.getLocal()){
+			uLib.Layer.setVisible(this.getId(), true, fCallback);
+		}
+		else if(app){
+			//TODO transition handling
+			app.showOverlay(this, fCallback, transitionName);
+		}
+	};
+	
+	StaticOverlayProto.close = function(app, fCallback, transitionName){
+		if(this.getLocal()){
+			uLib.Layer.setVisible(this.getId(), false, fCallback);
+		}
+		else if(app){ 		
+			//TODO transition handling
+			app.hideOverlay(fCallback, transitionName);
+		}
+		
+	};
+	
+	return StaticOverlay;
 });</code></pre>
         </article>
     </section>

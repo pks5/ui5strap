@@ -63,7 +63,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
 	 * 
 	 * @class
-	 * Base Class for ui5strap apps with navigation, views and custom stylesheets.
+	 * Base Class for ui5strap apps with root navigator.
 	 * @extends ui5strap.AppBase
 	 * 
 	 * @author Jan Philipp Knoeller
@@ -75,6 +75,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * 
 	 */
 	var App = AppBase.extend('ui5strap.App', /** @lends ui5strap.App.prototype */ {
+		metadata : {
+			interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"]
+		},
 		"constructor" : function(config, viewer){
 			AppBase.call(this, config, viewer);
 			
@@ -82,14 +85,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				config.data.rootNavigation = {};
 			}
 			
-			//Init local vars
-			this._runtimeData = {
-				"theme" : null,
-				"css" : {},
-				"js" : {}
-			};
-			
 			this._singleView = false;
+			this._historyQueue = [];
 		}
 	}),
 	/**
@@ -179,122 +176,54 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto.onHashChange = function(oEvent){
 		AppBase.prototype.onHashChange.call(this, oEvent);
 		
-		if(this.config.data.app.routing){
-			var newHash = document.location.hash;
+		var routing = this.config.data.app.routing;
+		if(routing){
+			var newHash = document.location.hash,
+				hashPrefix = "#" + routing,
+				targetPath = newHash.substring(hashPrefix.length),
+				_this = this;
 			
-			if(!jQuery.sap.startsWith(newHash, '#!/')){
+			if(!jQuery.sap.startsWith(newHash, hashPrefix)){
 				return;
 			}
 			
-			if(this._suppressHashChange){
-				jQuery.sap.log.info("Hashchange suppressed.");
+			if(this._historyWorking){
+				jQuery.sap.log.info("History working.");
+				this._historyQueue.push(targetPath);
+			}
+			else if(this._suppressHashChange){
+				//jQuery.sap.log.debug("Hashchange suppressed.");
+				this._suppressHashChange = false;
 			}
 			else{
-				
-				this.navigateByPath(newHash.substring(2), {}, false);
+				this._processHistory(targetPath, function(){
+					_this._historyWorking = false;
+				});
 			}
 			
-			this._suppressHashChange = false;
+			
 		}
 	};
 	
-	/*
-	* -------------------------------------------------
-	* --------------------- STYLE ---------------------
-	* -------------------------------------------------
-	*/
-
-	/**
-	* Include the style that is neccessary for this app
-	*
-	* @param callback {function} The callback function.
-	*/
-	AppProto.includeStyle = function(callback){
-		var _this = this,
-			configData = this.config.data,
-			cssKeys = Object.keys(configData.css),
-			callbackCount = cssKeys.length;
-
-		if(configData.app.theme){ 
-			this.setTheme(configData.app.theme);
-		}
-		
-		if(callbackCount === 0){
-			callback &amp;&amp; callback.call(this);
-
-			return;
-		}
-
-		var callbackI = 0,
-			success = function(){
-				callbackI++;
-				if(callbackI === callbackCount){
-					callback &amp;&amp; callback.call(_this);
+	AppProto._processHistory = function(targetPath, callback){
+		var _this = this;
+		this._historyWorking = true; 
+		this.navigateByPath(
+			targetPath, 
+			{}, 
+			function(){
+				if(_this._historyQueue.length){
+					_this._processHistory(_this._historyQueue.shift(), callback);
 				}
-			},
-			error = function(e){
-				alert('Could not load style!');
-				throw e;
-			};
-
-		for(var i = 0; i &lt; callbackCount; i++){
-			var cssKey = cssKeys[i],
-				cssPath = this.config.resolvePath(configData.css[cssKey], true);
-
-			cssKey = 'css--' + this.getId() + '--' + cssKey;
-
-			if(! ( cssKey in this._runtimeData.css ) ){	
-				this.log.debug('LOADING CSS "' + cssPath + '"');
-					
-				this._runtimeData.css[cssKey] = cssPath;
-				
-				jQuery.sap.includeStyleSheet(
-						cssPath, 
-						cssKey, 
-						success, 
-						error
-				);
-			}
-			
-			else{
-				this.log.debug("Css stylesheet '" + cssPath + "' already included.");
-				success();
-			}
-		}
+				else{
+					callback &amp;&amp; callback();
+				}
+			}, 
+			false
+		);
 	};
-
-	/**
-	 * Removes the stylesheets added by this app.
-	 */
-	AppProto.removeStyle = function(){
-		for(var cssKey in this._runtimeData.css){
-			jQuery('link#' + cssKey).remove();
-			delete this._runtimeData.css[cssKey];
-			this.log.info("Css stylesheet '" + cssKey + "' removed.");
-		}
-	};
-
-	/**
-	* Sets the theme of the app
-	* @param themeName {string} The name of the new theme.
-	*/
-	AppProto.setTheme = function(themeName){
-		this._runtimeData.theme = themeName;
-
-		if(!themeName || "base" === themeName){
-			sap.ui.getCore().applyTheme("base");
-			return;
-		}
-
-		if(jQuery.sap.startsWith(themeName, "sap_")){
-			sap.ui.getCore().applyTheme(themeName);
-			return;
-		}
-		//sap.ui.getCore().setThemeRoot(themeName, );
-		sap.ui.getCore().applyTheme(themeName, this.config.getEnvironment().pathToThemeRoot);
-
-		this.log.debug("Theme '" + themeName + "' set.");
-	};
+	
+	
 
 	/*
 	* -------------------------------------------------------------
@@ -407,23 +336,37 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param callback {function} The callback function.
 	 * @protected
 	 */
-	AppProto._showInitialContent = function(callback){
+	AppProto._showInitialContent = function(callback, useTransitions){
 		jQuery.sap.log.debug("Showing initial content...");
 		
-		var _this = this;
-		
-		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, true, null, function(){
-			if(_this.config.data.app.routing){
-				var newHash = document.location.hash;
-				if(!newHash){
-					_this._setHashPath("/", {}, true);
+		var _this = this,
+			ci = 1,
+			ca = function(){
+				ci --;
+				if(ci === 0){
+					//Trigger callback
+					callback &amp;&amp; callback();
 				}
-				else if(jQuery.sap.startsWith(newHash, '#!/')){
-					_this.navigateByPath(newHash.substring(2), {}, true);
+			};
+		
+		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, !useTransitions, null, function(){
+			var routing = _this.config.data.app.routing;
+			if(routing){
+				var newHash = document.location.hash,
+					hashPrefix = "#" + routing;
+				if(!newHash){
+					_this._setRoute("", {}, true);
+				}
+				else if(newHash === hashPrefix){
+					//Do nothing
+				}
+				else if(jQuery.sap.startsWith(newHash, hashPrefix)){
+					ci = 2;
+					_this.navigateByPath(newHash.substring(2), {}, ca, true);
 				}
 			}
 			
-			callback &amp;&amp; callback();
+			ca();
 		});
 	};
 	
@@ -490,14 +433,22 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					var evs = navigatorOptions.events.control[eKeys[i]];
 					
 					rootNavigation.attachEvent(eKeys[i], { "actions" : evs }, function(oEvent, data){
-						
-						for(var j = 0; j &lt; data.actions.length; j ++){
+						var nextAction = function(j){
+							if(j >= data.actions.length){
+								return;
+							}
+							
 							_this.runAction({
 								"parameters" : data.actions[j], 
 								"eventSource" : oEvent.getSource(),
-								"eventParameters" : oEvent.getParameters()
+								"eventParameters" : oEvent.getParameters(),
+								callback : function(){
+									nextAction(j+1);
+								}
 							});
-						}
+						};
+						
+						nextAction(0);
 					});
 				}
 			}
@@ -516,7 +467,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param suppressHashChange {boolean} Whether the path should not be appended to location hash.
 	 */
 	AppProto.navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions) {
-		this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions);
+		return this._rootComponent._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions);
 	};
 	
 	/**
@@ -525,7 +476,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param path {string} the path to navigate to.
 	 * @param suppressTransitions {boolean} Whether to suppress transitions.
 	 */
-	AppProto.navigateByPath = function(path, viewParameters, suppressTransitions){
+	AppProto.navigateByPath = function(path, viewParameters, callback, suppressTransitions){
+		if(!path){
+			return this._rootComponent._showInitialContent(callback, true);
+		}
+		
 		for(var i = 0; i &lt; this.config.data.routing.length; i++){
 			var routeInfo = this.config.data.routing[i],
 				matches = path.match(routeInfo.route);
@@ -557,12 +512,11 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 					viewConfig.transition = "transition-none";
 				}
 				
-				this.navigateTo(this.getRootControl(), viewConfig, null, false, true, suppressTransitions);
-			}
-			else{
-				//console.log("Route '%s' NOT matched with %s parameters.", routeInfo.route, matches.length-1);
+				return this.navigateTo(this.getRootControl(), viewConfig, callback, false, true, suppressTransitions);
 			}
 		}
+		
+		throw new Error("Route not found: " + path);
 	}
 	
 	/**
@@ -573,9 +527,12 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @param suppressHashChange {boolean} Whether triggering the onHashChange event should be suppressed.
 	 * @protected
 	 */
-	AppProto._setHashPath = function(path, parameters, suppressHashChange){
-		this._suppressHashChange = suppressHashChange;
-		document.location.hash = "!" + ulib.Utils.parsePath(path, parameters);
+	AppProto._setRoute = function(path, parameters, suppressHashChange){
+		var routing = this.config.data.app.routing;
+		if(routing){
+			this._suppressHashChange = suppressHashChange;
+			document.location.hash = routing + ulib.Utils.parsePath(path, parameters);
+		}
 	};
 	
 	/**
@@ -589,7 +546,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @protected
 	 */
 	AppProto._changePage = function(navControl, oPage, viewConfigResolved, suppressTransitions, excludeSubNavTarget, callback){
-		var target = viewConfigResolved.target;
+		var target = viewConfigResolved.target,
+			_this = this;
 		
 		//Trigger onUpdate events
 		navControl.updateTarget(target, oPage, viewConfigResolved.parameters);
@@ -603,6 +561,32 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				}
 			};
 		
+		//Set target busy
+		navControl.setTargetBusy(target, true);
+		
+		//Change NavContainer to page
+		var pageChanged = navControl.toPage(
+			oPage, 
+			target, 
+			suppressTransitions ? "transition-none" : viewConfigResolved.transition,
+			function toPage_complete(param){
+				
+				//TODO why the timeout here?
+				window.setTimeout(function(){
+					//Set target available
+					navControl.setTargetBusy(target, false);
+					
+					param.oldPage &amp;&amp; _this.detachPage(param.oldPage);
+					
+					//console.log(window.performance.memory);
+					
+					ca();
+				}, 50);
+				
+				
+			}
+		);
+		
 		var subNavConfig = viewConfigResolved.subNavigation;
 		if(subNavConfig){
 			var subNav = oPage.getController().byId(subNavConfig.id);
@@ -611,30 +595,8 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			}
 			
 			ci = 2;
-			this._initNavigator(subNav, subNavConfig.initialViews, suppressTransitions, excludeSubNavTarget, ca);
+			this._initNavigator(subNav, subNavConfig.initialViews, suppressTransitions || pageChanged, excludeSubNavTarget, ca);
 		}
-		
-		//Set target busy
-		navControl.setTargetBusy(target, true);
-		
-		//Change NavContainer to page
-		navControl.toPage(
-			oPage, 
-			target, 
-			suppressTransitions ? "transition-none" : viewConfigResolved.transition,
-			function toPage_complete(){
-				
-				//TODO why the timeout here?
-				window.setTimeout(function(){
-					//Set target available
-					navControl.setTargetBusy(target, false);
-					
-					ca();
-				}, 50);
-				
-				
-			}
-		);
 	}
 	
 	/**
@@ -707,6 +669,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		if(navControl.isTargetBusy(viewConfig.target)){
 			jQuery.sap.log.warning('[NC#' + navControl.getId() + '] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
+			//TODO Should we call the callback here?
 			return false;
 		}
 		
@@ -719,8 +682,9 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 			
 		});
 		
-		if(this.config.data.app.routing &amp;&amp; viewConfig.path &amp;&amp; !suppressHashChange){
-			this._setHashPath(viewConfig.path, viewConfig.parameters, true);
+		var viewRoute = viewConfig.route;
+		if(this.config.data.app.routing &amp;&amp; (viewRoute || viewRoute === "") &amp;&amp; !suppressHashChange){
+			this._setRoute(viewRoute, viewConfig.parameters, true);
 		}
 		
 		return oPage;
@@ -739,13 +703,13 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ui5strap.App.html">App</a></li><li><a href="ui5strap.AppBase.html">AppBase</a></li><li><a href="ui5strap.Bar.html">Bar</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ui5strap.App.html">App</a></li><li><a href="ui5strap.AppBase.html">AppBase</a></li><li><a href="ui5strap.Bar.html">Bar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#sendMessage">sendMessage</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 22 2016 00:55:45 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Aug 19 2016 20:33:07 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

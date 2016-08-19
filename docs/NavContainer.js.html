@@ -188,7 +188,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	* @Private
 	*/
 	var _triggerControllerEvent = function(_this, target, oControl, eventId, eventParameters){
-		var eventNameCC = jQuery.sap.charToUpperCase(eventId, 0);
 		if(oControl){
 			var controller = oControl;
 			
@@ -197,12 +196,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				controller = oControl.getController();
 			}
 			
-			var funcName = 'on' + eventNameCC;
-			if(controller &amp;&amp; controller[funcName]){
-				jQuery.sap.log.debug("[NC#" + _this.getId() + "] Triggering event '" + eventId + "' on target '" + target + "'");
-			
-				controller[funcName](new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}));
-			}
+			//TODO firePageEvent 
+			controller 
+				&amp;&amp; controller.firePageEvent 
+				&amp;&amp; controller.firePageEvent(new sap.ui.base.Event("ui5strap.controller." + eventId, _this, eventParameters || {}), eventId);
 		}
 	};
 
@@ -268,7 +265,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			//jQuery.sap.log.debug(' + [NC] CALLBACK_0 (' + callbacksLength + ') {' + pageChange.target + '}');
 
 			for(var i = 0; i &lt; callbacksLength; i++){
-				transList.callbacks[i]();
+				transList.callbacks[i]({
+					target : pageChange.target,
+					oldPage : pageChange.currentPage
+				});
 			}
 
 			//pageChange 
@@ -283,31 +283,64 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	* @Private
 	*/
 	var _executeTransition = function(_this, pageChange, transList){
-		//ui5strap.tm("APP", "NC", "EXEC_TRANS");
-		//jQuery.sap.log.debug(' + [NC] T3 (' + transList.callbacks.length + ') {' + pageChange.target + '}');
+		
+		if(pageChange.currentPage === pageChange.page){
+			throw new Error("Cannot execute transitions with 2 same instances: " + pageChange.page.getId());
+		}
 		
 		pageChange.transition.on("last", function(){
-			var $current = pageChange.transition._data.$current;
-			if($current){
-				$current.remove();
-			}
-			
-			if(pageChange.currentPage){
-				//Set Propagated Properties and Bindings back to ui area
-				ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
+			//Current Page
+			var oCurrentPage = pageChange.currentPage;
+			if(oCurrentPage){
+				var oUiArea = oCurrentPage.getParent();
+				if(oUiArea){
+					var $current = pageChange.transition._data.$current;
+					
+					if(!$current){
+						throw new Error("Removed page has no DOM reference.");
+					}
+					
+					//Hide the page container
+					//$current.attr("class", "ui5strap-hidden");
+					
+					//Finally remove the page container.
+					//oCurrentPage.$().detach();
+					$current.detach();
+					
+					var areaId = oUiArea.getId();
+					
+					//Remove the Page from the UIArea first, since we don't want to destroy the page.
+					oUiArea.removeContent(oCurrentPage, true);
+					
+					oUiArea.setRootNode(null);
+					
+					//Set Propagated Properties and Bindings back to ui area
+					//TODO verify that this is not needed anymore due removal from UiArea
+					//ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
+					
+					//Destroy the UIArea
+					oUiArea.destroy();
+					jQuery.sap.log.info("Destroyed UIArea " + areaId + " of page " + oCurrentPage.getId());
+					
+					$current.remove();
+				}
 				
-				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
+				_triggerControllerEvent(_this, pageChange.target, oCurrentPage, 'pageHidden', {
 					target : pageChange.target,
 					newPage : pageChange.page
 				});
 			}
 			
-			var $next = pageChange.transition._data.$next;
-			if($next){
-				$next.attr('class', 'navcontainer-page navcontainer-page-current');
-			}
-			
+			//Next Page
 			if(pageChange.page){
+				var $next = pageChange.transition._data.$next;
+				if($next){
+					$next.attr('class', 'navcontainer-page navcontainer-page-current');
+				}
+				else{
+					throw new Error("Next page has no DOM reference.");
+				}
+				
 				_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShown', {
 					target : pageChange.target,
 					oldPage : pageChange.currentPage
@@ -323,52 +356,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			_transitionCallback(_this, pageChange, transList);
 		});
 		
+		//Start the transition
 		pageChange.transition.execute();
-		
-		
-		/*
-		pageChange.transition.execute(
-			function anon_transitionCurrentComplete(){
-				var $current = this._data.$current;
-				if($current){
-					$current.remove();
-				}
-
-				//If next page is null, then execute the callbacks when old page has been hidden
-				if(pageChange.page === null){
-					_transitionCallback(_this, pageChange, transList);
-					
-					_this.firePageChanged({
-						target : pageChange.target,
-						oldPage : pageChange.currentPage
-					});
-				}
-
-				//onPageHidden event
-				_triggerControllerEvent(_this, pageChange.target, pageChange.currentPage, 'pageHidden', {
-					target : pageChange.target,
-					newPage : pageChange.page
-				});
-			}, 
-			function anon_transitionPreparedComplete(){
-				this._data.$next.attr('class', 'navcontainer-page navcontainer-page-current');
-				
-				//Transition callback
-				_transitionCallback(_this, pageChange, transList);
-
-				//onPageShown event
-				_triggerControllerEvent(_this, pageChange.target, pageChange.page, 'pageShown', {
-					target : pageChange.target,
-					oldPage : pageChange.currentPage
-				});
-				
-				_this.firePageChanged({
-					target : pageChange.target,
-					oldPage : pageChange.currentPage
-				});
-			}
-		);
-		*/
 	};
 
 	/**
@@ -393,7 +382,15 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				}
 			}
 			
-			_executeTransition(_this, pageChanges[pageChanges.length-1], transList);
+			var lastPageChange = pageChanges[pageChanges.length-1];
+			
+			if(lastPageChange.page === lastPageChange.currentPage){
+				//This can happen if the navcontainer is rerendered, but page is already current.
+				_transitionCallback(_this, lastPageChange, transList);
+			}
+			else{
+				_executeTransition(_this, lastPageChange, transList);
+			}
 		}
 		
 		_this._pendingTransitions = [];
@@ -548,19 +545,29 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			if(!page){
 				return null;
 			}
-		
-			//Page is already present in DOM, return parent jQuery reference
-			if(page.getDomRef()){
-				var $parent = page.$().parent();
-				if($parent.hasClass('navcontainer-page')){
-					return $parent;
-				}
-			}
 			
 			//Create dom element and jQuery wrapper
-			var newPageContainer = document.createElement('div'),
-				$newPageContainer = jQuery(newPageContainer),
-				oModels = _this.oModels;
+			var newPageContainer = document.createElement('div');
+				$newPageContainer = jQuery(newPageContainer);
+			
+			//Page still has a valid dom reference. Reuse the dom ref.
+			if(page.getDomRef()){
+				jQuery.sap.log.info("Reusing DOM reference for page: " + page.getId() );
+				
+				var $parent = page.$().parent();
+				if($parent.hasClass('navcontainer-page')){
+					
+					newPageContainer = $parent[0];
+					$newPageContainer = $parent;
+					
+					jQuery.sap.log.info("Recreated UIArea " + newPageContainer.id);
+				
+					if($newPageContainer.attr("data-sap-ui-area")){
+						jQuery.sap.log.warning("Existing page container already has a UIArea assigned.");
+					}
+				}
+				
+			}
 			
 			//Set css class name for new page container
 			newPageContainer.className = true === isPrepared
@@ -568,13 +575,15 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					: 'navcontainer-page';
 			
 			//Create and set id for new page container
-			newPageContainer.id = _this.pageDomId(target, page);
+			//newPageContainer.id = _this.pageDomId(target, page);
 			
 			//Append page container to the dom
 			jQuery('#' + _this.targetPagesDomId(target)).append($newPageContainer);
 			
 			//Add page to new page container
 			page.placeAt(newPageContainer);
+			
+			jQuery.sap.log.info("Created UIArea " + page.getParent().getId() + " for page " + page.getId());
 			
 			//Propagate Properties
 			//This must be done after the Page has attached to DOM,
@@ -655,7 +664,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			throw new Error('Parameters must not contain a target attribute!');
 		}
 		
-		_triggerControllerEvent(this, target, oPage, 'update', eventParameters);
+		_triggerControllerEvent(this, target, oPage, 'pageUpdate', eventParameters);
 		
 		this.firePageUpdate({
 			"target" : target,
@@ -718,9 +727,17 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			currentPage = this.targets[target];
 
 		if(this.getDomRef() &amp;&amp; currentPage === page){
-			jQuery.sap.log.debug(' + [NC] PAGE IS CURRENT {' + target + '}');
-
-			callback &amp;&amp; callback();
+			if(currentPage.getDomRef()){
+				jQuery.sap.log.info("NavContainer " + this.getId() + " already shown " + currentPage.getId() + " on target " + target);
+	
+				callback &amp;&amp; callback({
+					target : target,
+					currentPage : page
+				});
+			}
+			else{
+				throw new Error("RRR");
+			}
 			
 			return false;
 		}
@@ -734,13 +751,13 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 							+ ' ("'
 							+ transitionName + '")';
 
-		var $currentPage = jQuery('#' + this.createPageDomId(target, currentPage)),
-			targetTransition = {
+		//var $currentPage = jQuery('#' + this.createPageDomId(target, currentPage)),
+			var targetTransition = {
 				"changeName" : changeName,
 				"target" : target,
 				"transitionName" : transitionName,
 				"transition" : null,
-				"$current" : $currentPage.size() > 0 ? $currentPage : null,
+				"$current" : currentPage ? currentPage.$().parent() : null,
 				"$next" : null,
 				"callback" : callback,
 				"page" : page,
@@ -771,7 +788,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 		}
 		
 		if(this.getDomRef()){
-			//jQuery.sap.log.info("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
+			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
 			//NavContainer is already attached to DOM
 			targetTransition.$next = _placePage(_this, target, page, true);
 			
@@ -780,7 +797,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			}, domAttachTimeout);
 		}
 		else{
-			//jQuery.sap.log.info("[NC#" + this.getId() + "] NavContainer not attached to DOM yet.");
+			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer not attached to DOM yet.");
 
 			//NavContainer not attached to DOM yet
 			//It will override all pending transitions on this target!
@@ -912,6 +929,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				targetTransition.$next = _placePage(_this, targetTransition.target, targetTransition.page, true); 
 			}
 			else{
+				//TODO When does this ever happen?
+				console.log("NAPPEND");
 				//Reappend existing reference
 				jQuery('#' + _this.targetPagesDomId(targetTransition.target)).append(targetTransition.$next);
 			}
@@ -931,8 +950,23 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 	
 	NavContainerProto.exit = function(){
 		for(var target in this.targets){
-			this.targets[target] = null;
+			var oPage = this.targets[target];
+			
+			if(oPage){
+				var oUiArea = oPage.getParent();
+			
+				oUiArea.removeContent(oPage, true);
+				oUiArea.destroy();
+			}
 		}
+		
+		this._pendingTransitions = null;
+		this._targetTransitions = null;
+		
+		this._targetPagesCount = null;
+		this._targetStatus = null;
+		
+		this.targets = null;
 	};
 	
 
@@ -947,13 +981,13 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ui5strap.App.html">App</a></li><li><a href="ui5strap.AppBase.html">AppBase</a></li><li><a href="ui5strap.Bar.html">Bar</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ui5strap.App.html">App</a></li><li><a href="ui5strap.AppBase.html">AppBase</a></li><li><a href="ui5strap.Bar.html">Bar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#sendMessage">sendMessage</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 22 2016 00:55:45 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Aug 19 2016 20:33:07 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

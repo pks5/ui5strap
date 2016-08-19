@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: ListMediaItem.js</title>
+    <title>JSDoc: Source: Modal.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: ListMediaItem.js</h1>
+    <h1 class="page-title">Source: Modal.js</h1>
 
     
 
@@ -30,7 +30,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ListMediaItem
+ * ui5strap.Modal
  * 
  * @author Jan Philipp Knöller &lt;info@pksoftware.de>
  * 
@@ -53,45 +53,66 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem'], function(library, ListItem){
+sap.ui.define(['./library', './StaticOverlay'], function(library, StaticOverlay){
 
-	var ListMediaItem = ListItem.extend("ui5strap.ListMediaItem", {
+	var Modal = StaticOverlay.extend("ui5strap.Modal", {
 		metadata : {
-
-			// ---- object ----
-			defaultAggregation : "media",
 			
-			// ---- control specific ----
 			library : "ui5strap",
+			
 			properties : { 
-				contentPlacement : {
-					type : "ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.End
+				
+	        },
+	        
+			aggregations : { 
+				header : {
+					singularName: "header"
 				},
-
-				heading : {
-					type : "string",
-					defaultValue : ""
+				footer : {
+					singularName: "footer"
 				}
 			},
-			aggregations : { 
-				media : {
-					multiple : false
-				}
-			}
-		}
-	}),
-	ListMediaItemProto = ListMediaItem.prototype;
-	
-	/**
-	 * TODO More efficient rerendering
-	 */
-	ListMediaItemProto.setText = function(newText, suppressInvalidate){
-		this.setProperty('text', newText, suppressInvalidate);
-	};
-	
-	return ListMediaItem;
+			
+			defaultAggregation : "content",
+			
+		    events : {
+		        shown : {},
+		        hidden : {}
+		    }
 
+		}
+	}), ModalProto = Modal.prototype;
+
+	/**
+	 * TODO
+	 */
+	ModalProto._getStyleClassRoot = function(){
+		return StaticOverlay.prototype._getStyleClassRoot.call(this) + " ui5strapStaticOverlay";
+	};
+
+	/**
+	 * @deprecated
+	 */
+	ModalProto.show = function(){
+		jQuery.sap.log.warning("Modal.protoype.show is deprecated. Use open instead.");
+	};
+
+	/**
+	 * @deprecated
+	 */
+	ModalProto.hide = function(){
+		jQuery.sap.log.warning("Modal.protoype.hide is deprecated. Use close instead.");
+    };
+
+    /**
+     * @deprecated
+     */
+	ModalProto.toggle = function(){
+	    throw new Error("Modal.prototype.toggle is not supported anymore.");
+	};
+
+  //Return Constructor
+  return Modal;
 });</code></pre>
         </article>
     </section>
