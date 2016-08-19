@@ -144,6 +144,28 @@ sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller'], function
     };
     
     /*
+     * ===========
+     * START Tools
+     * ===========
+     */
+    
+    var mTools = {};
+    
+    /*
+    mTools.showOverlay = function(oEvent){
+    	
+    };
+    */
+    
+    ControllerProto.tools = mTools;
+    
+    /*
+     * =========
+     * END Tools
+     * =========
+     */
+    
+    /*
      * ================
      * START Formatters
      * ================

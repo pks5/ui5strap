@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Controls" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Dialogs" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
 
@@ -6,12 +6,33 @@
 			<!-- Modals -->
 			<Heading level="1" text="Dialogs" />
 			
-			<Heading text="Modal" />
-			<Button size="Large" text="Launch Modal" severity="Info" tap="showModal" />
+			<Heading text="Local Dialog" />
+			<Button size="Large" text="Launch" severity="Info" tap="onShowModal" />
 			
-			<Heading text="Modal" />
-			<Button size="Large" text="Launch Modal" severity="Info" tap="showModal" />
-			
+			<Heading text="App Overlay" />
+			<Button text="Fade" severity="Info" tap="onShowModalInApp" data:transitionIn="fade" data:transitionOut="fade" />
+			<Button text="Slide Vertical" severity="Info" tap="onShowModalInApp" data:transitionIn="slide-ttb" data:transitionOut="slide-btt" />
+			<Button text="Slide Horizontal" severity="Info" tap="onShowModalInApp" data:transitionIn="slide-ltr" data:transitionOut="slide-rtl" />
+			<Button text="Flip Vertical" severity="Info" tap="onShowModalInApp" data:transitionIn="flip-vertical-cw" data:transitionOut="flip-vertical-ccw" />
+            <Button text="Flip Horizontal" severity="Info" tap="onShowModalInApp" data:transitionIn="flip-horizontal-cw" data:transitionOut="flip-horizontal-ccw" />
+            <Button text="Zoom" severity="Info" tap="onShowModalInApp" data:transitionIn="zoom-in" data:transitionOut="zoom-out" />
+            
+			   <Modal id="myModal" local="true" backdrop="true" shown="modalShown" hidden="modalHidden">
+        <header>
+            <Button type="Close" tap="onCloseModal">
+                <Icon icon="times" />
+            </Button>
+            <Heading text="Modal heading" />
+
+        </header>
+        <content>
+            <Paragraph text="Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros." />
+        </content>
+        <footer>
+            <Button text="OK" severity="Primary" tap="onCloseModal" />
+            <Button text="Cancel" severity="Default" tap="onCloseModal" />
+        </footer>
+    </Modal>
 
 			<Heading text="Popovers" />
 
@@ -55,20 +76,5 @@
 
 	</Container>
 
-	<Modal id="myModal" backdrop="true" shown="modalShown" hidden="modalHidden">
-				<header>
-					<Button type="Close" bsAction="DismissModal">
-						<Icon icon="times" />
-					</Button>
-					<Heading text="Modal heading" />
-
-				</header>
-				<body>
-					<Paragraph text="Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros." />
-				</body>
-				<footer>
-					<Button text="OK" bsAction="DismissModal" severity="Primary" />
-					<Button text="Cancel" bsAction="DismissModal" severity="Default" />
-				</footer>
-	</Modal>
+	
 </sapUiCoreMvc:View>

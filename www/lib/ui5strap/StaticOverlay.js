@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase'], function(uLib, ControlBase){
 	
 	var StaticOverlay = ControlBase.extend("ui5strap.StaticOverlay", {
 		metadata : {
@@ -37,6 +37,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				backdrop : {
 					type:"boolean", 
 					defaultValue:false
+				},
+				local : {
+					type : "boolean",
+					defaultValue : false
 				}
 			},
 			
@@ -55,14 +59,37 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	StaticOverlayProto = StaticOverlay.prototype;
 	
+	/**
+	 * @Protected
+	 */
+	
+	StaticOverlayProto._getStyleClassRoot = function(){
+		return this.getLocal() ? " ui5strap-layer ui5strap-hidden" : "";
+	};
+	
+	
+	/**
+	 * @override
+	 */
 	StaticOverlayProto.onBeforeRendering = function(oEvent){
+		if(this.getLocal()){
+			uLib.Layer.unregister(this.getId());
+		}
+		
 		if(this.getBackdrop()){
 			this._$backdrop && this._$backdrop.off('click');
 			delete(this._$backdrop);
 		}
 	};
 	
+	/**
+	 * @override
+	 */
 	StaticOverlayProto.onAfterRendering = function(oEvent){
+		if(this.getLocal()){
+			uLib.Layer.register(this.getId(), this.$());
+		}
+		
 		if(this.getBackdrop()){
 			var _this = this;
 			this._$backdrop = this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
@@ -71,9 +98,27 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		}
 	};
 	
-	StaticOverlayProto.addContent = function(oObject, bSuppressInvalidate){
-		this.addAggregation("content", oObject, bSuppressInvalidate);
-		oObject.addStyleClass('modal-dialog');
+	StaticOverlayProto.open = function(app, fCallback, transitionName){
+		var _this = this;
+		
+		if(this.getLocal()){
+			uLib.Layer.setVisible(this.getId(), true, fCallback);
+		}
+		else if(app){
+			//TODO transition handling
+			app.showOverlay(this, fCallback, transitionName);
+		}
+	};
+	
+	StaticOverlayProto.close = function(app, fCallback, transitionName){
+		if(this.getLocal()){
+			uLib.Layer.setVisible(this.getId(), false, fCallback);
+		}
+		else if(app){ 		
+			//TODO transition handling
+			app.hideOverlay(fCallback, transitionName);
+		}
+		
 	};
 	
 	return StaticOverlay;

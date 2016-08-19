@@ -64,7 +64,7 @@ sap.ui.define(['./library', './ActionModule'], function(library, ActionModule){
 		},
 		"transition" : {
 			"required" : false, 
-			"defaultValue" : "transition-slide-ttb", 
+			"defaultValue" : "slide-ttb", 
 			"type" : "string"
 		},
 		"scope" : {

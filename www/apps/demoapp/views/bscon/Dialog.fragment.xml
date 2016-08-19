@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+   xmlns="ui5strap"
+   xmlns:core="sap.ui.core" >
+   <Modal backdrop="true" shown="modalShown" hidden="modalHidden">
+        <header>
+            <Button type="Close" tap="onCloseModalInApp">
+                <Icon icon="times" />
+            </Button>
+            <Heading text="Modal heading" />
+
+        </header>
+        <content>
+            <Paragraph text="Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros." />
+        </content>
+        <footer>
+            <Button text="OK" severity="Primary" tap="onCloseModalInApp" />
+            <Button text="Cancel" severity="Default" tap="onCloseModalInApp" />
+        </footer>
+    </Modal>
+</core:FragmentDefinition>

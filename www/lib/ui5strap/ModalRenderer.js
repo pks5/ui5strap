@@ -25,22 +25,18 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./StaticOverlayRenderer"], function(jQuery, StaticOverlayRenderer) {
 
 	var ModalRenderer = {};
 
 	ModalRenderer.render = function(rm, oControl) {
 		var header = oControl.getHeader(),
-			body = oControl.getBody(),
+			body = oControl.getContent(),
 			footer = oControl.getFooter();
-
-		rm.write("<div");
-		rm.writeControlData(oControl);
-		rm.addClass('modal' + (oControl.getAnimate() ? ' fade' : ''));
-		rm.writeClasses();
-		rm.write(">");
 		
-			rm.write('<div class="modal-dialog">');
+		StaticOverlayRenderer.startRender(rm, oControl);
+
+		rm.write("<div class='modal-dialog'>");
 			rm.write('<div class="modal-content">');
 
 			if(header.length > 0){
@@ -53,9 +49,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 			if(body.length > 0){
 				rm.write('<div class="modal-body">');
-				for(var i = 0; i < body.length; i++){ 
-					rm.renderControl(body[i]);
-				}
+				
+				StaticOverlayRenderer.renderContent(rm, oControl);
+				
 				rm.write("</div>");
 			}
 
@@ -68,8 +64,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 			
 			rm.write("</div>");
-			rm.write("</div>");
+			
 		rm.write("</div>");
+		
+		StaticOverlayRenderer.endRender(rm, oControl);
 	};
 	
 	return ModalRenderer;

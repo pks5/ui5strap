@@ -190,7 +190,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 	ViewerBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this,
 			overlayControl = this.overlayControl,
-			transitionName = transitionName || 'transition-slide-ttb';
+			transitionName = transitionName || 'slide-ttb';
 		
 		ui5strap.Layer.setVisible(this.options.overlay, true, function(){
 			if(viewDataOrControl instanceof ui5strap.Control){

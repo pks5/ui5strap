@@ -30,8 +30,14 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	var StaticOverlayRenderer = {};
 
 	StaticOverlayRenderer.render = function(rm, oControl) {
-		var content = oControl.getContent();
+		this.startRender(rm, oControl);
 		
+		this.renderContent(rm, oControl);
+		
+		this.endRender(rm, oControl);
+	};
+	
+	StaticOverlayRenderer.startRender = function(rm, oControl) {
 		rm.write("<div");
 		rm.writeControlData(oControl);
 		rm.addClass(oControl._getStyleClass());
@@ -41,15 +47,25 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		if(oControl.getBackdrop()){
 			rm.write('<div class="ui5strapStaticOverlay-backdrop" id="' + oControl.getId() + '--backdrop"></div>');
 		}
+	};	
+	
+	StaticOverlayRenderer.renderContent = function(rm, oControl){
+		//TODO dont use the modal-dialog css class here.
+		rm.write("<div class='modal-dialog'>");
+		
+		var content = oControl.getContent();
 		
 		for(var i = 0; i < content.length; i++){
 			rm.renderControl(content[i]);
 		}
 		
 		rm.write("</div>");
-
 	};
-
+	
+	StaticOverlayRenderer.endRender = function(rm, oControl) {
+		rm.write("</div>");
+	};
+	
 	return StaticOverlayRenderer;
 	
 }, true);

@@ -47,6 +47,10 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	}),
 	SandboxProto = Sandbox.prototype;
 
+	/**
+	 * Initialize
+	 * @override
+	 */
 	SandboxProto.init = function(){
 		var iframe = document.createElement('iframe');
 		iframe.className = 'sandbox-iframe';
@@ -55,42 +59,76 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		this.$iframe = jQuery(iframe);
 	};
 
+	/**
+	 * Cleanup
+	 * @override
+	 */
+	SandboxProto.exit = function(){
+		this.$iframe.remove();
+	};
 
+	/**
+	 * @override
+	 */
 	SandboxProto.setSrc = function(src){
 		this.$iframe.attr('src', src);
-		this.setProperty('src', src, this.getDomRef());
+		this.setProperty('src', src, this.getDomRef() ? true : false);
+		return this;
 	};
 	
+	/**
+	 * 
+	 */
 	SandboxProto.goHistoryBack = function(){
 		this.$iframe[0].contentWindow.history.go(-1);
 	};
 	
+	/**
+	 * 
+	 */
 	SandboxProto.goHistoryForward = function(){
 		this.$iframe[0].contentWindow.history.go(1);
 	};
 	
+	/**
+	 * 
+	 */
 	SandboxProto.refreshContent = function(){
 		this.$iframe[0].contentWindow.location.reload();
 	};
 
+	/**
+	 * @override
+	 */
 	SandboxProto.setFrameName = function(frameName){
 		this.$iframe.attr('frameName', frameName);
-		this.setProperty('frameName', frameName, this.getDomRef());
+		this.setProperty('frameName', frameName, this.getDomRef() ? true : false);
+		return this;
 	};
 
+	/**
+	 * @override
+	 */
 	SandboxProto.onBeforeRendering = function(){
         if(this.getDomRef()){
             this.$iframe.detach();
 		}
 	};
 
+	/**
+	 * @override
+	 */
 	SandboxProto.onAfterRendering = function(){
 		this.$().html(this.$iframe);
 	};
 
+	/**
+	 * Sends a frame message.
+	 */
 	SandboxProto.sendMessage = function(appMessage, targetOrigin){
 		this.$iframe[0].contentWindow.postMessage(appMessage, targetOrigin);
 	};
 	
+	//Return Constructor
 	return Sandbox;
 });

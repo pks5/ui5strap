@@ -80,7 +80,7 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(uLib, Manager){
 		}
 
 		if ( viewer.getApp() === appInstance ) {
-			this.hideApp('transition-zoom2', function hideAppComplete(){
+			this.hideApp('zoom-out', function hideAppComplete(){
 				viewer.stopApp(sappId);
 				viewer.unloadApp(sappId);
 				callback && callback();

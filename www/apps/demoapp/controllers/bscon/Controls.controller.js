@@ -49,9 +49,7 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 			alert("Submit!");
 		},
 		
-		showModal : function(){
-			this.getView().byId('myModal').show();
-		},
+		
 	
 		_showStatusMessage : function(message){
 			alert(message);
@@ -85,37 +83,7 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 			}
 		},
 	
-		modalShown : function(oEvent){
-			this._showStatusMessage('A modal has just been shown!');
-		},
-	
-		modalHidden : function(oEvent){
-			this._showStatusMessage('A modal has just been hidden!');
-		},
-	
-		popoverShown : function(oEvent){
-			this.getView().byId('popoverEventIndicator').setText('Popover shown!');
-		},
-	
-		popoverHidden : function(oEvent){
-			this.getView().byId('popoverEventIndicator').setText('Popover hidden!');
-		},
-	
-		popoverFromOutside : function(oEvent){
-			this.getView().byId('popoverBottom').toggle();
-		},
-	
-		tooltipFromOutside : function(oEvent){
-			this.getView().byId('tipTop').toggle();
-		},
-	
-		tooltipShown : function(oEvent){
-			this.getView().byId('tooltipEventIndicator').setText('Tooltip shown!');
-		},
-	
-		tooltipHidden : function(oEvent){
-			this.getView().byId('tooltipEventIndicator').setText('Tooltip hidden!');
-		},
+		
 	
 		startProgressBar : function(id, callback){
 			var _this = this;
