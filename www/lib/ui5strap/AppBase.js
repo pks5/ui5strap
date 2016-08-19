@@ -1120,7 +1120,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 				//Trigger callback
 				callback && callback();
 			});
-		});
+		}, true);
 	};
 
 	/**
@@ -1139,7 +1139,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 			transitionName = transitionName || 'slide-btt';
 		
 		navigator.toPage(null, 'content', transitionName, function toPage_complete(){
-			ui5strap.Layer.setVisible(_this._overlayId, false, callback);
+			ui5strap.Layer.setVisible(_this._overlayId, false, callback, true);
 		});	
 	};
 

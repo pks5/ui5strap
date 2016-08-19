@@ -980,7 +980,7 @@ sap.ui
 					 * @Static
 					 */
 					ui5strap.Layer.setVisible = function(layerId, visible,
-							callback) {
+							callback, bSuppressTransition) {
 
 						var layer = this.layers[layerId], $layer = layer.$domElement;
 
@@ -1013,10 +1013,15 @@ sap.ui
 
 						//Prepare Layer for transition
 						if (visible) {
-							$layer.removeClass("ui5strap-hidden").addClass("ui5strap-invisible");
+							$layer.removeClass("ui5strap-hidden");
+							
+							if(!bSuppressTransition){
+								$layer.addClass("ui5strap-invisible");
+							}
 						}
 						else{
-							//TODO Should we enable this?
+							//Explicit set layer visible
+							//TODO Do we need this?
 							$layer.removeClass("ui5strap-hidden ui5strap-invisible");
 						}
 
@@ -1058,23 +1063,28 @@ sap.ui
 						};
 
 						layer.busy = transCallback;
-
-						// Start Transition
-						ui5strap.polyfill.requestAnimationFrame(function() {
-							// Transition end event
-							$layer.one(ui5strap.support.transitionEndEvent,
-									transCallback);
-
-							// Start transition
+						
+						if(bSuppressTransition){
+							transCallback();
+						}
+						else{
+							// Start Transition
 							ui5strap.polyfill.requestAnimationFrame(function() {
-								// Transition timeout
-								transTimeout = window.setTimeout(transCallback,
-										ui5strap.options.layerTimeout);
-								
-								$layer.toggleClass("ui5strap-invisible", !visible);
-								
+								// Transition end event
+								$layer.one(ui5strap.support.transitionEndEvent,
+										transCallback);
+	
+								// Start transition
+								ui5strap.polyfill.requestAnimationFrame(function() {
+									// Transition timeout
+									transTimeout = window.setTimeout(transCallback,
+											ui5strap.options.layerTimeout);
+									
+									$layer.toggleClass("ui5strap-invisible", !visible);
+									
+								});
 							});
-						});
+						}
 					};
 
 					/*
