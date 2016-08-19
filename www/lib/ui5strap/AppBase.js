@@ -1778,25 +1778,40 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	AppBaseProto.destroy = function(){
 		this.log.debug("Destroying app...");
 		
-		//Destroy the root control first
-		var rootControl = this.getRootControl(),
-			overlayNavigator = this.getOverlayNavigator();
-		
 		//Destroy Root Control
-		if(rootControl){
-			rootControl.destroy();
-		}
+		this._rootControl && this._rootControl.destroy();
+		this._rootControl = null;
 		
-		//Destroy Overlay Navigator
-		if(overlayNavigator){
-			overlayNavigator.destroy();
-		}
+		//Destroy overlay Navigator
+		this._overlayNavigator && this._overlayNavigator.destroy();
+		this._overlayNavigator = null;
 		
 		//Destroy Cached Pages
 		var cacheKeys = Object.keys(this._pageCache);
 		
 		for(var i = 0; i < cacheKeys.length; i++){
 			this.destroyPage(this._pageCache[cacheKeys[i]]);
+		}
+		
+		//Destroy components
+		for(var compId in this.components){
+			this.components[compId].destroy();
+		}
+		this.components = null;
+		
+		//Destroy Configuration
+		this.config.destroy();
+		this.config = null;
+		
+		//Cleanup vars
+		this._pageCache = null;
+		this._events = null;
+		this._runtimeData = null;
+		
+		//Destroy Root Component
+		if(this._rootComponent !== this){
+			this._rootComponent.destroy();
+			this._rootComponent = null;
 		}
 		
 		//Finally, destroy the app object
