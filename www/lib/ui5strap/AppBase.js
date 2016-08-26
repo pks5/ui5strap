@@ -1302,13 +1302,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 			oApp = oComponent.getApp();
 		}
 		*/
-		else if(oComponent.getApp){
+		else if(oComponent && oComponent.getApp){
 			//Get app reference from Component's getApp method.
 			oApp = oComponent.getApp();
 		}
 		
 		if(!oApp || !oApp.getMetadata().isInstanceOf("ui5strap.IApp")){
-			throw new Error("Cannot determine app reference from view " + oController.getView().getId());
+			jQuery.sap.log.warning("Cannot determine app reference from view " + oController.getView().getId());
+			
+			return null;
 		}
 		
 		return oApp;

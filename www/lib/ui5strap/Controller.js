@@ -50,8 +50,14 @@ sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller'], function
 	 * @protected
 	 */
 	ControllerProto._runEventActions = function(oEvent, sEventName){
-		var app = this.getApp(),
-			_this = this,
+		var app = this.getApp();
+		
+		if(!app){
+			jQuery.sap.log.warning("Cannot run controller event '" + sEventName + "', no app referencce available.");
+			return;
+		}
+			
+		var _this = this,
 			viewId = this.getView().getId(),
 			updateEvents = app.config.getEvents('controller', sEventName, viewId),
 			updateEventsLength = updateEvents.length,
