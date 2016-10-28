@@ -20,7 +20,7 @@ sap.ui.define(['./OverflowToolbar', './OverflowToolbarRenderer', './Toolbar'],
 		 * @extends sap.m.OverflowToolbar
 		 *
 		 * @author SAP SE
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @private
@@ -46,6 +46,11 @@ sap.ui.define(['./OverflowToolbar', './OverflowToolbarRenderer', './Toolbar'],
 			});
 		};
 
+		AssociativeOverflowToolbar.prototype.exit = function () {
+			OverflowToolbar.prototype.exit.apply(this, arguments);
+			return this._callToolbarMethod('destroyContent', [true]);
+		};
+
 		AssociativeOverflowToolbar.prototype.indexOfContent = function(oControl) {
 			var controlIds = this.getAssociation("content") || [];
 			return controlIds.indexOf(oControl.getId());
@@ -62,15 +67,15 @@ sap.ui.define(['./OverflowToolbar', './OverflowToolbarRenderer', './Toolbar'],
 					return this.addAssociation("content", aArguments[0], aArguments[3]);
 				case 'removeContent':
 					//removeAssociation = function(sAssociationName, vObject, bSuppressInvalidate)
-					return this.removeAssociation("content", aArguments[0], aArguments[1], aArguments[2]).map(function (controlId) {
-						return sap.ui.getCore().byId(controlId);
-					});
+					return sap.ui.getCore().byId(this.removeAssociation("content", aArguments[0], aArguments[1], aArguments[2])) || null;
 				case 'destroyContent':
 					var content = this.removeAllAssociation("content", aArguments[0]).map(function (controlId) {
 						return sap.ui.getCore().byId(controlId);
 					});
 					content.forEach(function (control) {
-						control.destroy();
+						if (control) {
+							control.destroy();
+						}
 					});
 					return this;
 				case 'removeAllContent':

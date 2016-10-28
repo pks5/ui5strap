@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 * @class
 	 * The ObjectAttribute control displays a text field that can be normal or active. The ObjectAttribute fires a press event when the user selects active text.
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public

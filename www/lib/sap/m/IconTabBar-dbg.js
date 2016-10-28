@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 * @implements sap.m.ObjectHeaderContainer
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -102,7 +102,15 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 			 *
 			 * @since 1.26
 			 */
-			backgroundDesign : {type : "sap.m.BackgroundDesign", group : "Appearance", defaultValue : sap.m.BackgroundDesign.Solid}
+			backgroundDesign : {type : "sap.m.BackgroundDesign", group : "Appearance", defaultValue : sap.m.BackgroundDesign.Solid},
+
+			/**
+			 * Specifies the header mode.
+			 * <b>Note:</b> The Inline mode works only if no icons are set.
+			 *
+			 * @since 1.40
+			 */
+			headerMode : {type : "sap.m.IconTabHeaderMode", group : "Appearance", defaultValue : sap.m.IconTabHeaderMode.Standard}
 		},
 		aggregations : {
 
@@ -218,6 +226,22 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	IconTabBar.prototype.setExpandable = function (bExpandable) {
 		// set internal property
 		this.setProperty("expandable", bExpandable, true);
+		return this;
+	};
+
+	/**
+	 * Sets the header mode.
+	 * @overwrite
+	 * @public
+	 * @param {sap.m.IconTabHeaderMode} mode new parameter value
+	 * @return {sap.m.IconTabBar} this pointer for chaining
+	 */
+	IconTabBar.prototype.setHeaderMode = function (mode) {
+		// set internal property
+		this.setProperty("headerMode", mode, true);
+
+		this._getIconTabHeader().setMode(mode);
+
 		return this;
 	};
 

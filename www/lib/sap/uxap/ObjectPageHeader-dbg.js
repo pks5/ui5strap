@@ -102,7 +102,10 @@ sap.ui.define([
 				isActionAreaAlwaysVisible: {type: "boolean", defaultValue: true},
 
 				/**
-				 * Determines the design of the header - Light or Dark
+				 * Determines the design of the header - Light or Dark.
+				 * <b>Note: </b>This property is deprecated. It will continue to work in the Blue Crystal theme,
+				 * but it will not be taken into account for the Belize themes.
+				 * @deprecated Since version 1.40.1
 				 */
 				headerDesign: {
 					type: "sap.uxap.ObjectPageHeaderDesign",
@@ -266,10 +269,6 @@ sap.ui.define([
 			this.oLibraryResourceBundleOP = library.i18nModel.getResourceBundle(); // get resource translation bundle
 		}
 
-		this._iREMSize = parseInt(jQuery("body").css("font-size"), 10);
-		this._iOffset = parseInt(0.25 * this._iREMSize, 10);
-		this._iScrollBarWidth = jQuery.position.scrollbarWidth();
-
 		// Overflow button
 		this._oOverflowActionSheet = this._getInternalAggregation("_overflowActionSheet");
 		this._oOverflowButton = this._getInternalAggregation("_overflowButton").attachPress(this._handleOverflowButtonPress, this);
@@ -336,7 +335,7 @@ sap.ui.define([
 			return new ActionSheet({placement: sap.m.PlacementType.Bottom});
 		},
 		"_lockIconCont": function (oParent) {
-			return this._getButton(oParent, "sap-icon://locked", "lock-cont");
+			return this._getButton(oParent, "sap-icon://private", "lock-cont");
 		},
 		"_breadCrumbs": function (oParent) {
 			return new Breadcrumbs({
@@ -344,7 +343,7 @@ sap.ui.define([
 			});
 		},
 		"_lockIcon": function (oParent) {
-			return this._getButton(oParent, "sap-icon://locked", "lock", oParent.oLibraryResourceBundleOP.getText("TOOLTIP_OP_LOCK_MARK_VALUE"));
+			return this._getButton(oParent, "sap-icon://private", "lock", oParent.oLibraryResourceBundleOP.getText("TOOLTIP_OP_LOCK_MARK_VALUE"));
 		},
 		"_titleArrowIconCont": function (oParent) {
 			return this._getButton(oParent, "sap-icon://arrow-down", "titleArrow-cont", oParent.oLibraryResourceBundleOP.getText("OP_SELECT_ARROW_TOOLTIP"));
@@ -365,10 +364,10 @@ sap.ui.define([
 			return this._getButton(oParent, "sap-icon://slim-arrow-down", "expand", oParent.oLibraryResourceBundleOP.getText("TOOLTIP_OP_EXPAND_HEADER_BTN"));
 		},
 		"_changesIconCont": function (oParent) {
-			return this._getButton(oParent, "sap-icon://request", "changes-cont", oParent.oLibraryResourceBundleOP.getText("TOOLTIP_OP_CHANGES_MARK_VALUE"));
+			return this._getButton(oParent, "sap-icon://user-edit", "changes-cont", oParent.oLibraryResourceBundleOP.getText("TOOLTIP_OP_CHANGES_MARK_VALUE"));
 		},
 		"_changesIcon": function (oParent) {
-			return this._getButton(oParent, "sap-icon://request", "changes", oParent.oLibraryResourceBundleOP.getText("TOOLTIP_OP_CHANGES_MARK_VALUE"));
+			return this._getButton(oParent, "sap-icon://user-edit", "changes", oParent.oLibraryResourceBundleOP.getText("TOOLTIP_OP_CHANGES_MARK_VALUE"));
 		},
 		_getIcon: function (oParent, sIcon, sTooltip) {
 			return IconPool.createControlByURI({
@@ -440,29 +439,24 @@ sap.ui.define([
 	};
 
 	ObjectPageHeader.prototype._shiftHeaderTitle = function () {
+
 		var oParent = this.getParent(),
-			iHeaderOffset = 0,
-			sStyleAttribute = sap.ui.getCore().getConfiguration().getRTL() ? "left" : "right",
-			$actions = this.$().find(".sapUxAPObjectPageHeaderIdentifierActions"),
-			bHasVerticalScroll = true,
-			iActionsOffset = this._iOffset;
+			oShiftOffsetParams,
+			$actions,
+			iActionsOffset;
 
-		if (typeof oParent._hasVerticalScrollBar === "function") {
-			bHasVerticalScroll = oParent._hasVerticalScrollBar();
+		if (!oParent || (typeof oParent._calculateShiftOffset !== "function")) {
+			return;
 		}
 
-		if (sap.ui.Device.system.desktop) {
-			iHeaderOffset = this._iScrollBarWidth;
-			if (!bHasVerticalScroll) {
-				iHeaderOffset = 0;
-				iActionsOffset += this._iScrollBarWidth;
-			}
-		}
+		oShiftOffsetParams = oParent._calculateShiftOffset();
+		$actions = this.$().find(".sapUxAPObjectPageHeaderIdentifierActions");
+		iActionsOffset = parseInt($actions.css(oShiftOffsetParams.sStyleAttribute), 10);
 
-		$actions.css(sStyleAttribute, iActionsOffset + "px");
+		$actions.css(oShiftOffsetParams.sStyleAttribute, iActionsOffset + "px");
 
-		if (typeof oParent._shiftHeader === "function"){
-			oParent._shiftHeader(sStyleAttribute, iHeaderOffset + "px");
+		if (typeof oParent._shiftHeader === "function") {
+			oParent._shiftHeader(oShiftOffsetParams.sStyleAttribute, oShiftOffsetParams.iMarginalsOffset + "px");
 		}
 	};
 
@@ -478,7 +472,7 @@ sap.ui.define([
 
 		this._applyActionProperty("objectTitle", Array.prototype.slice.call(arguments));
 
-		if (bChanged && this.mEventRegistry["_titleChange"] ) {
+		if (bChanged && this.mEventRegistry["_titleChange"]) {
 			this.fireEvent("_titleChange", {
 				"id": this.getId(),
 				"name": "objectTitle",
@@ -494,7 +488,7 @@ sap.ui.define([
 			"showMarkers", "showPlaceholder", "markChanges"],
 		aObjectImageProperties = ["objectImageURI", "objectImageAlt", "objectImageDensityAware", "objectImageShape"];
 
-	var fnGenerateSetter = function (sPropertyName) {
+	var fnGenerateSetterForAction = function (sPropertyName) {
 		var sConvertedSetterName = "set" + sPropertyName.charAt(0).toUpperCase() + sPropertyName.slice(1);
 
 		ObjectPageHeader.prototype[sConvertedSetterName] = function () {
@@ -512,7 +506,19 @@ sap.ui.define([
 		};
 	};
 
-	aPropertiesToOverride.forEach(fnGenerateSetter);
+	var fnGenerateSetterProxy = function (sPropertyName, oSourceObject, oTargetObject) {
+		var sConvertedSetterName = "set" + sPropertyName.charAt(0).toUpperCase() + sPropertyName.slice(1);
+
+		oSourceObject[sConvertedSetterName] = function () {
+			var aArgumentsPassedToTheProperty = Array.prototype.slice.call(arguments);
+			aArgumentsPassedToTheProperty.unshift(sPropertyName);
+
+			oTargetObject.setProperty.apply(oTargetObject, aArgumentsPassedToTheProperty);
+			return this.setProperty.apply(this, aArgumentsPassedToTheProperty);
+		};
+	};
+
+	aPropertiesToOverride.forEach(fnGenerateSetterForAction);
 	aObjectImageProperties.forEach(fnGenerateSetterForObjectImageProperties);
 
 	ObjectPageHeader.prototype.getBreadCrumbsLinks = function () {
@@ -573,9 +579,11 @@ sap.ui.define([
 		//display overflow if there are more than 1 item or only 1 item and it is showing its text
 		if (aActions.length > 1 || this._hasOneButtonShowText(aActions)) {
 			//create responsive equivalents of the provided controls
-			jQuery.each(aActions, jQuery.proxy(function (iIndex, oAction) {
+			aActions.forEach(function (oAction) {
 				// Set internal visibility for normal buttons like for ObjectPageHeaderActionButton
 				if (oAction instanceof Button && !(oAction instanceof ObjectPageHeaderActionButton)) {
+
+					oAction._bInternalVisible = oAction.getVisible();
 					oAction._getInternalVisible = function () {
 						return this._bInternalVisible;
 					};
@@ -596,18 +604,19 @@ sap.ui.define([
 				}
 
 				// Force the design of the button to transparent
-				if (oAction instanceof Button && oAction.getVisible()) {
-					if (oAction instanceof Button && (oAction.getType() === "Default" || oAction.getType() === "Unstyled")) {
-						oAction.setProperty("type", sap.m.ButtonType.Transparent, false);
-					}
+				if (oAction instanceof Button && (oAction.getType() === "Default" || oAction.getType() === "Unstyled")) {
+					oAction.setProperty("type", sap.m.ButtonType.Transparent, false);
+				}
 
+				if (oAction instanceof Button && oAction.getVisible()) {
 					var oActionSheetButton = this._createActionSheetButton(oAction);
 
 					this._oActionSheetButtonMap[oAction.getId()] = oActionSheetButton; //store the originalId/reference for later use (adaptLayout)
-
 					this._oOverflowActionSheet.addButton(oActionSheetButton);
+					fnGenerateSetterProxy("text", oAction, oActionSheetButton);
+					fnGenerateSetterProxy("icon", oAction, oActionSheetButton);
 				}
-			}, this));
+			}, this);
 		}
 		this._oTitleArrowIcon.setVisible(this.getShowTitleSelector());
 		this._oFavIcon.setVisible(this.getMarkFavorite());
@@ -622,73 +631,46 @@ sap.ui.define([
 	 * @private
 	 */
 	ObjectPageHeader.prototype._createActionSheetButton = function (oButton) {
-
-		//copy binding if present
-		var oCopy = new Button({
+		return new Button({
 			press: jQuery.proxy(this._onSeeMoreContentSelect, this),
 			enabled: oButton.getEnabled(),
+			text: oButton.getText(),
+			icon: oButton.getIcon(),
+			tooltip: oButton.getTooltip(),
 			customData: new CustomData({
 				key: "originalId",
 				value: oButton.getId()
 			})
 		});
+	};
 
-		//carry property & binding on text
-		var oTextBinding = oButton.getBindingInfo("text"),
-			oIconBinding = oButton.getBindingInfo("icon"),
-			sModelName;
+	ObjectPageHeader.prototype._handleImageNotFoundError = function () {
+		var oObjectImage = this._getInternalAggregation("_objectImage"),
+			oParent = this.getParent(),
+			$context = oParent ? oParent.$() : this.$();
 
-		if (oTextBinding && oTextBinding.parts && oTextBinding.parts.length > 0) {
-			sModelName = oTextBinding.parts[0].model;
-
-			//copy binding information
-			oCopy.bindProperty("text", {
-				path: oTextBinding.parts[0].path,
-				model: sModelName,
-				formatter: oTextBinding.formatter
-			});
-
-			//handle relative binding scenarios
-			oCopy.setBindingContext(oButton.getBindingContext(sModelName), sModelName);
-			oCopy.setModel(oButton.getModel(sModelName), sModelName);
+		if (this.getShowPlaceholder()) {
+			/* The following two selectors affect both the HeaderTitle and HeaderContent */
+			$context.find(".sapMImg.sapUxAPObjectPageHeaderObjectImage").hide();
+			$context.find(".sapUxAPObjectPageHeaderPlaceholder").removeClass("sapUxAPHidePlaceholder");
 		} else {
-			oCopy.setText(oButton.getText());
+			oObjectImage.addStyleClass("sapMNoImg");
 		}
+	};
 
-		//carry property & binding on icon
-		if (oIconBinding && oIconBinding.parts && oIconBinding.parts.length > 0) {
-			sModelName = oIconBinding.parts[0].model;
-
-			//copy binding information
-			oCopy.bindProperty("icon", {
-				path: oIconBinding.parts[0].path,
-				model: sModelName,
-				formatter: oIconBinding.formatter
-			});
-
-			//handle relative binding scenarios
-			oCopy.setBindingContext(oButton.getBindingContext(sModelName), sModelName);
-			oCopy.setModel(oButton.getModel(sModelName), sModelName);
-		} else {
-			oCopy.setIcon(oButton.getIcon());
-		}
-
-		return oCopy;
+	ObjectPageHeader.prototype._clearImageNotFoundHandler = function (){
+		this._getInternalAggregation("_objectImage").$().off("error");
 	};
 
 	ObjectPageHeader.prototype.onAfterRendering = function () {
-
+		var $objectImage = this._getInternalAggregation("_objectImage").$();
 		this._adaptLayout();
 
-		if (this.getShowPlaceholder()) {
-			jQuery(".sapUxAPObjectPageHeaderObjectImage").off("error").error(function () {
-				jQuery(this).hide();
-				jQuery(".sapUxAPObjectPageHeaderPlaceholder").removeClass("sapUxAPHidePlaceholder");
-			});
-		} else {
-			jQuery(".sapUxAPObjectPageHeaderObjectImage").off("error").error(function () {
-				jQuery(this).addClass("sapMNoImg");
-			});
+		this._clearImageNotFoundHandler();
+		$objectImage.error(this._handleImageNotFoundError.bind(this));
+
+		if (!this.getObjectImageURI()){
+			this._handleImageNotFoundError();
 		}
 
 		if (!this._iResizeId) {
@@ -744,9 +726,9 @@ sap.ui.define([
 	};
 
 	ObjectPageHeader._actionImportanceMap = {
-			"Low": 3,
-			"Medium": 2,
-			"High": 1
+		"Low": 3,
+		"Medium": 2,
+		"High": 1
 	};
 
 	/**
@@ -880,8 +862,8 @@ sap.ui.define([
 	ObjectPageHeader.prototype._adaptOverflow = function () {
 		var aActionSheetButtons = this._oOverflowActionSheet.getButtons();
 
-		var bHasVisible = aActionSheetButtons.some(function(oActionSheetButton) {
-			 return oActionSheetButton.getVisible();
+		var bHasVisible = aActionSheetButtons.some(function (oActionSheetButton) {
+			return oActionSheetButton.getVisible();
 		});
 
 		this._oOverflowButton.$().toggle(bHasVisible);
@@ -950,7 +932,7 @@ sap.ui.define([
 	};
 
 	ObjectPageHeader.prototype.exit = function () {
-		jQuery(".sapUxAPObjectPageHeaderObjectImage").off("error");
+		this._clearImageNotFoundHandler();
 		if (this._iResizeId) {
 			ResizeHandler.deregister(this._iResizeId);
 		}
@@ -960,11 +942,11 @@ sap.ui.define([
 	/**
 	 * Fiori 2.0 adaptation
 	 */
-	ObjectPageHeader.prototype.setNavigationBar = function(oBar) {
+	ObjectPageHeader.prototype.setNavigationBar = function (oBar) {
 
 		this.setAggregation("navigationBar", oBar);
 
-		if (oBar && this.mEventRegistry["_adaptableContentChange"] ) {
+		if (oBar && this.mEventRegistry["_adaptableContentChange"]) {
 			this.fireEvent("_adaptableContentChange", {
 				"parent": this,
 				"adaptableContent": oBar
@@ -974,7 +956,7 @@ sap.ui.define([
 		return this;
 	};
 
-	ObjectPageHeader.prototype._getAdaptableContent = function() {
+	ObjectPageHeader.prototype._getAdaptableContent = function () {
 		return this.getNavigationBar();
 	};
 

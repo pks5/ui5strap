@@ -31,7 +31,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', 'jquery.sap.act', 'jqu
 	 * @alias sap.ui.core.ResizeHandler
 	 * @extends sap.ui.base.Object
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @public
 	 */
 

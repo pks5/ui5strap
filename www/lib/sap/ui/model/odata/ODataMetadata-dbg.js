@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', 'sap/ui/thirdpa
 	 * Implementation to access oData metadata
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -485,7 +485,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/EventProvider', 'sap/ui/thirdpa
 			// first part must be the entityType
 			oEntityType = this._getEntityTypeByName(aMetaParts[0]);
 
-			jQuery.sap.assert(oEntityType, aMetaParts[0] + " is not a valid EnityType");
+			jQuery.sap.assert(oEntityType, aMetaParts[0] + " is not a valid EntityType");
 
 			if (!oEntityType) {
 				return;

@@ -19,14 +19,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 	 * @namespace
 	 * @name sap.ui.layout
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.layout",
-		version: "1.38.7",
+		version: "1.40.7",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.ui.layout.BackgroundDesign",
@@ -68,7 +68,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/DataType',
 			"sap.ui.layout.PaneContainer",
 			"sap.ui.layout.SplitPane",
 			"sap.ui.layout.form.GridElementData"
-		]
+		],
+		extensions: {
+			flChangeHandlers: {
+				"sap.ui.layout.form.SimpleForm": {
+					"renameLabel": "sap/ui/layout/changeHandler/RenameSimpleForm",
+					"renameTitle": "sap/ui/layout/changeHandler/RenameSimpleForm",
+					"moveSimpleFormField": "sap/ui/layout/changeHandler/MoveSimpleForm",
+					"moveSimpleFormGroup": "sap/ui/layout/changeHandler/MoveSimpleForm",
+					"hideSimpleFormField": "sap/ui/layout/changeHandler/HideSimpleForm",
+					"unhideSimpleFormField": "sap/ui/layout/changeHandler/UnhideSimpleForm",
+					"removeSimpleFormGroup": "sap/ui/layout/changeHandler/HideSimpleForm",
+					"addSimpleFormGroup": "sap/ui/layout/changeHandler/AddSimpleFormGroup"
+				}
+			}
+		}
 	});
 
 	/**

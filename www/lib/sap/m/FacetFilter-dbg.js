@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './NavContainer', './library', 'sap/ui/core/
 	 * The FacetFilter control is used to provide filtering functionality with multiple parameters.
 	 * @extends sap.ui.core.Control
 	 * @implements sap.ui.core.IShrinkable
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -123,7 +123,12 @@ sap.ui.define(['jquery.sap.global', './NavContainer', './library', 'sap/ui/core/
 			/**
 			 * Fired when the Reset button is pressed to inform that all FacetFilterLists need to be reset.
 			 */
-			reset : {}
+			reset : {},
+
+			/**
+			 * Fired when the user confirms filter selection.
+			 */
+			confirm: {}
 		}
 	}});
 
@@ -874,7 +879,7 @@ sap.ui.define(['jquery.sap.global', './NavContainer', './library', 'sap/ui/core/
 
 		if (this.getShowPopoverOKButton()) {
 
-				this._addOKButtonToPopover(oPopover);
+			this._addOKButtonToPopover(oPopover);
 		} else {
 			oPopover.destroyAggregation("footer");
 		}
@@ -922,8 +927,10 @@ sap.ui.define(['jquery.sap.global', './NavContainer', './library', 'sap/ui/core/
 		this._restoreListFromDisplayContainer(oPopover);
 		this._displayRemoveIcon(false, oList);
 		oList._fireListCloseEvent();
+		this._fireConfirmEvent();
+
 		// Destroy the popover aggregation, otherwise if the list is then moved to the dialog filter items page, it will still think it's DOM element parent
-		// is the popover causing facet filter item checkbox selection to not display the check mark when the item is selected.
+		// is the popover causing facet filer item checkbox selection to not display the check mark when the item is selected.
 		this.destroyAggregation("popover");
 		if (this._oOpenPopoverDeferred) {
 			jQuery.sap.delayedCall(0, this, function () {
@@ -931,6 +938,14 @@ sap.ui.define(['jquery.sap.global', './NavContainer', './library', 'sap/ui/core/
 				this._oOpenPopoverDeferred = undefined;
 			});
 		}
+	};
+
+	/**
+	 * Fires the <code>confirm</code> event.
+	 * @private
+	 */
+	FacetFilter.prototype._fireConfirmEvent = function () {
+		this.fireEvent('confirm');
 	};
 
 	/**
@@ -1395,6 +1410,7 @@ oPopover.setContentWidth("30%");
 
 		if (oDialog && oDialog.isOpen()) {
 			oDialog.close();
+			this._fireConfirmEvent();
 		}
 	};
 
@@ -1689,13 +1705,13 @@ oPopover.setContentWidth("30%");
 			});
 
 			var that = this;
+			// create info bar without setting the height to "auto" (use default height)
+			// since we need the exact height of 2rem for both cozy and compact mode, which is set via css
 			oSummaryBar = new sap.m.Toolbar({
 				content : [ oText ], // Text is set before rendering
 				active : this.getType() === sap.m.FacetFilterType.Light ? true : false,
 				design : sap.m.ToolbarDesign.Info,
-				height: "auto",
 				press : function(oEvent) {
-
 						that.openFilterDialog();
 				}
 			});

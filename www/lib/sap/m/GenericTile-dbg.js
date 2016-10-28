@@ -18,7 +18,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @since 1.34
 	 *
 	 * @public
@@ -141,18 +141,30 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 			this._applyContentMode(bSubheader);
 		}
 		var iTiles = this.getTileContent().length;
-
 		for (var i = 0; i < iTiles; i++) {
 			this.getTileContent()[i].setDisabled(this.getState() == sap.m.LoadState.Disabled);
 		}
 
 		this._generateFailedText();
 		this.$().unbind("mouseenter", this._updateAriaAndTitle);
+		this.$().unbind("mouseleave", this._removeTooltipFromControl);
 	};
 
 	GenericTile.prototype.onAfterRendering = function() {
 		// attaches handler this._updateAriaAndTitle to the event mouseenter and removes attributes ARIA-label and title of all content elements
 		this.$().bind("mouseenter", this._updateAriaAndTitle.bind(this));
+
+		// attaches handler this._removeTooltipFromControl to the event mouseleave and removes control's own tooltips (Truncated header text and MicroChart tooltip).
+		this.$().bind("mouseleave", this._removeTooltipFromControl.bind(this));
+
+		// Assign TileContent content again after rendering.
+		if (this.getMode() === library.GenericTileMode.HeaderMode && this._aTileContentContent) {
+			var aTileContent = this.getTileContent();
+			for (var i = 0; i < aTileContent.length; i++) {
+				aTileContent[i].setAggregation("content", this._aTileContentContent[i], true);
+			}
+			delete this._aTileContentContent;
+		}
 	};
 
 	GenericTile.prototype.exit = function() {
@@ -292,6 +304,19 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 		} else {
 			this._oTitle.setMaxLines(5);
 		}
+		// Handles the tile content in a way that it is not rendered, but still existing and assigned
+		// if switching between HeaderMode or LineMode and ContentMode.
+		var aTileContent = this.getTileContent();
+		if (aTileContent.length > 0) {
+			this._aTileContentContent = [];
+			for (var i = 0; i < aTileContent.length; i++) {
+				if (aTileContent[i].getContent()) {
+					this._aTileContentContent[i] = aTileContent[i].removeAllAggregation("content", true);
+					// Parent needs to be set manually to null, because removeAllAggregation does not handle this.
+					this._aTileContentContent[i].setParent(null);
+				}
+			}
+		}
 	};
 
 	/**
@@ -313,10 +338,10 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 		}
 	};
 	/**
-	 * Returns a text for the tooltip and ARIA label of the header
+	 * Gets the header, subheader and image description text of GenericTile
 	 *
 	 * @private
-	 * @returns {String} The tooltip and ARIA label text
+	 * @returns {String} The text
 	 */
 	GenericTile.prototype._getHeaderAriaAndTooltipText = function() {
 		var sText = "";
@@ -338,10 +363,10 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 	};
 
 	/**
-	 * Returns a text for the tooltip and ARIA label of the content
+	 * Gets the ARIA label or tooltip text of the content in GenericTile
 	 *
 	 * @private
-	 * @returns {String} The tooltip and ARIA label text
+	 * @returns {String} The text
 	 */
 	GenericTile.prototype._getContentAriaAndTooltipText = function() {
 		var sText = "";
@@ -360,13 +385,13 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 	};
 
 	/**
-	 * Returns a text for the tooltip and ARIA label as combination of header and content texts
-	 *
+	 * Returns a text for the ARIA label as combination of header and content texts
+	 * when the tooltip is empty
 	 * @private
-	 * @returns {String} The tooltip and ARIA label text
+	 * @returns {String} The ARIA label text
 	 */
 	GenericTile.prototype._getAriaAndTooltipText = function() {
-		var sTooltip;
+		var sAriaText;
 		switch (this.getState()) {
 			case sap.m.LoadState.Disabled :
 				return "";
@@ -375,11 +400,11 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 			case sap.m.LoadState.Failed :
 				return this._oFailedText.getText();
 			default :
-				sTooltip = (this.getTooltip_AsString() && !this._isTooltipSuppressed()) ? this.getTooltip_AsString() : (this._getHeaderAriaAndTooltipText() + "\n" + this._getContentAriaAndTooltipText());
-				if (jQuery.trim(sTooltip).length === 0) { // If the string is empty or just whitespace, IE renders an empty tooltip (e.g. "" + "\n" + "")
+				sAriaText = (this.getTooltip_AsString() && !this._isTooltipSuppressed()) ? this.getTooltip_AsString() : (this._getHeaderAriaAndTooltipText() + "\n" + this._getContentAriaAndTooltipText());
+				if (jQuery.trim(sAriaText).length === 0) { // If the string is empty or just whitespace, IE renders an empty tooltip (e.g. "" + "\n" + "")
 					return "";
 				} else {
-					return sTooltip;
+					return sAriaText;
 				}
 		}
 	};
@@ -388,7 +413,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 	 * Returns text for ARIA label.
 	 * If the the application provides a specific tooltip, the ARIA label is equal to the tooltip text.
 	 * If the application doesn't provide a tooltip or the provided tooltip contains only white spaces,
-	 * the function returns a default text created by the control.
+	 * calls _getAriaAndTooltipText to get text.
 	 *
 	 * @private
 	 * @returns {String} Text for ARIA label.
@@ -405,16 +430,13 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 	 * Returns text for tooltip or null.
 	 * If the the application provides a specific tooltip, the returned string is equal to the tooltip text.
 	 * If the tooltip provided by the application is a string of only white spaces, the function returns null.
-	 * In other cases, the function returns a default text created by the control.
 	 *
 	 * @returns {String} Text for tooltip or null.
 	 * @private
 	 */
 	GenericTile.prototype._getTooltipText = function() {
 		var sTooltip = this.getTooltip_Text(); // checks (typeof sTooltip === "string" || sTooltip instanceof String || sTooltip instanceof sap.ui.core.TooltipBase), returns text, null or undefined
-		if (!sTooltip) {
-			sTooltip = this._getAriaText(); // tooltip set by the control, equal to ARIA label
-		} else if (this._isTooltipSuppressed() === true) {
+		if (this._isTooltipSuppressed() === true) {
 			sTooltip = null; // tooltip suppressed by the app
 		}
 		return sTooltip; // tooltip set by the app
@@ -466,6 +488,57 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 	};
 
 	/**
+	 * Returns true if header text is truncated, otherwise false.
+	 *
+	 * @private
+	 * @returns {boolean} true or false
+	 */
+	GenericTile.prototype._isHeaderTextTruncated = function() {
+		var oDom, iMaxHeight;
+		oDom = this.getAggregation("_titleText").getDomRef("inner");
+		iMaxHeight = this.getAggregation("_titleText").getClampHeight(oDom);
+
+		if (oDom && iMaxHeight < oDom.scrollHeight) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	/**
+	 * Sets tooltip for GenericTile when the content inside is MicroChart or the header text is truncated.
+	 * The tooltip set by user will overwrite the tooltip from Control.
+	 *
+	 * @private
+	 */
+	GenericTile.prototype._setTooltipFromControl = function() {
+		var oContent, sTooltip = "";
+		var bIsFirst = true;
+		var aTiles = this.getTileContent();
+
+		// when header text truncated, set header text as tooltip
+		if (this._isHeaderTextTruncated()) {
+			sTooltip = this._oTitle.getText();
+			bIsFirst = false;
+		}
+
+		// when MicroChart in GenericTile, set MicroChart tooltip as GenericTile tooltip
+		for (var i = 0; i < aTiles.length; i++) {
+			oContent = aTiles[i].getContent();
+			if (oContent && oContent.getMetadata().getLibraryName() === "sap.suite.ui.microchart") {
+				sTooltip += (bIsFirst ? "" : "\n") + oContent.getTooltip_AsString();
+			}
+			bIsFirst = false;
+		}
+
+		// when user does not set tooltip, apply the tooltip above
+		if (sTooltip && !this._getTooltipText() && !this._isTooltipSuppressed()) {
+			this.$().attr("title", sTooltip);
+			this._bTooltipFromControl = true;
+		}
+	};
+
+	/**
 	 * Updates the attributes ARIA-label and title of the GenericTile. The updated attribute title is used for tooltip as well.
 	 * The attributes ARIA-label and title of the descendants will be removed.
 	 *
@@ -473,15 +546,28 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/T
 	 */
 	GenericTile.prototype._updateAriaAndTitle = function () {
 		var sAriaAndTitleText = this._getAriaAndTooltipText();
-		var sTooltipText = this._getTooltipText();
 		var sAriaText = this._getAriaText();
 		var $Tile = this.$();
 
 		if ($Tile.attr("title") !== sAriaAndTitleText) {
-			$Tile.attr("aria-label", sAriaText).attr("title", sTooltipText);
+			$Tile.attr("aria-label", sAriaText);
 		}
 		$Tile.find('*').removeAttr("aria-label").removeAttr("title");
+
+		this._setTooltipFromControl();
 	};
 
+	/**
+	 * When mouse leaves GenericTile, removes the GenericTile's own tooltip (truncated header text or MicroChart tooltip), do not remove the tooltip set by user.
+	 * The reason is tooltip from control should not be displayed any more when the header text becomes short or MicroChart is not in GenericTile.
+	 *
+	 * @private
+	 */
+	GenericTile.prototype._removeTooltipFromControl = function() {
+		if (this._bTooltipFromControl) {
+			this.$().removeAttr("title");
+			this._bTooltipFromControl = false;
+		}
+	};
 	return GenericTile;
 }, /* bExport= */ true);

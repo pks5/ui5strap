@@ -556,6 +556,11 @@
       "theme": "base"
     },
     {
+      "name": "StepInput.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
       "name": "SuggestionItem.less",
       "designtime": true,
       "theme": "base"
@@ -672,6 +677,11 @@
     },
     {
       "name": "UploadCollection.less",
+      "designtime": true,
+      "theme": "base"
+    },
+    {
+      "name": "ValueStateMessage.less",
       "designtime": true,
       "theme": "base"
     },

@@ -20,7 +20,7 @@ sap.ui.define(['./Splitter', './SplitterRenderer'],
 	 * @extends sap.ui.layout.Splitter
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @private

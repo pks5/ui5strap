@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', './GroupHeaderListItem', './library', 'sap/u
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -135,15 +135,23 @@ sap.ui.define(['jquery.sap.global', './GroupHeaderListItem', './library', 'sap/u
 			growingTriggerText : {type : "string", group : "Appearance", defaultValue : null},
 
 			/**
-			 * If set to true, the user can scroll down to load more items. Otherwise a growing button is displayed at the bottom of the control.
+			 * If set to true, the user can scroll down/up to load more items. Otherwise a growing button is displayed at the bottom/top of the control.
 			 * <b>Note:</b> This property can only be used if the <code>growing</code> property is set to <code>true</code> and only if there is one instance of <code>sap.m.List</code> or <code>sap.m.Table</code> inside the scrollable scroll container (e.g <code>sap.m.Page</code>).
 			 * @since 1.16.0
 			 */
 			growingScrollToLoad : {type : "boolean", group : "Behavior", defaultValue : false},
 
 			/**
+			 * Defines the direction of the growing feature.
+			 * If set to <code>Downwards</code> the user has to scroll down to load more items or the growing button is displayed at the bottom.
+			 * If set to <code>Upwards</code> the user has to scroll up to load more items or the growing button is displayed at the top.
+			 * @since 1.40.0
+			 */
+			growingDirection : {type : "sap.m.ListGrowingDirection", group : "Behavior", defaultValue : sap.m.ListGrowingDirection.Downwards},
+
+			/**
 			 * If set to true, this control remembers and retains the selection of the items after a binding update has been performed (e.g. sorting, filtering).
-			 * <b>Note:</b> This feature works only if two-way binding for the <code>selected</code> property of the item is not used and needs to be turned off if the binding context of the item does not always point to the same entry in the model, for example, if the order of the data in the <code>JSONModel</code> is changed.
+			 * <b>Note:</b> This feature works only if two-way data binding for the <code>selected</code> property of the item is not used. It also needs to be turned off if the binding context of the item does not always point to the same entry in the model, for example, if the order of the data in the <code>JSONModel</code> is changed.
 			 * @since 1.16.6
 			 */
 			rememberSelections : {type : "boolean", group : "Behavior", defaultValue : true},
@@ -767,30 +775,27 @@ sap.ui.define(['jquery.sap.global', './GroupHeaderListItem', './library', 'sap/u
 			return this;
 		}
 
-		// update property with invalidate
-		this.setProperty("mode", sMode);
-
 		// determine the selection mode
 		this._bSelectionMode = sMode.indexOf("Select") > -1;
 
 		// remove selections if mode is not a selection mode
 		if (!this._bSelectionMode) {
 			this.removeSelections(true);
-			return this;
+		} else {
+			// update selection status of items
+			var aSelecteds = this.getSelectedItems();
+			if (aSelecteds.length > 1) {
+				// remove selection if there are more than one item is selected
+				this.removeSelections(true);
+			} else if (sOldMode === sap.m.ListMode.MultiSelect) {
+				// if old mode is multi select then we need to remember selected item
+				// in case of new item selection right after setMode call
+				this._oSelectedItem = aSelecteds[0];
+			}
 		}
 
-		// update selection status of items
-		var aSelecteds = this.getSelectedItems();
-		if (aSelecteds.length > 1) {
-			// remove selection if there are more than one item is selected
-			this.removeSelections(true);
-		} else if (sOldMode === sap.m.ListMode.MultiSelect) {
-			// if old mode is multi select then we need to remember selected item
-			// in case of new item selection right after setMode call
-			this._oSelectedItem = aSelecteds[0];
-		}
-
-		return this;
+		// update property with invalidate
+		return this.setProperty("mode", sMode);
 	};
 
 
@@ -1546,7 +1551,11 @@ sap.ui.define(['jquery.sap.global', './GroupHeaderListItem', './library', 'sap/u
 		var aNavigationItems = jQuery(oNavigationRoot).children(".sapMLIB").get();
 		oItemNavigation.setItemDomRefs(aNavigationItems);
 		if (oItemNavigation.getFocusedIndex() == -1) {
-			oItemNavigation.setFocusedIndex(0);
+			if (this.getGrowing() && this.getGrowingDirection() == sap.m.ListGrowingDirection.Upwards) {
+				oItemNavigation.setFocusedIndex(aNavigationItems.length - 1);
+			} else {
+				oItemNavigation.setFocusedIndex(0);
+			}
 		}
 	};
 

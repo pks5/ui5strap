@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	 *
 	 * @author SAP SE
 	 * @extends sap.m.InputBase
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -67,6 +67,8 @@ sap.ui.define(['jquery.sap.global', './InputBase', './MaskInputRule', 'sap/ui/co
 	 * Initializes the control.
 	 */
 	MaskInput.prototype.init = function () {
+		// After decoupling of ValueState from the InputBase, the InputBase creates the ValueStateMessage on init (see change #1755336)
+		InputBase.prototype.init.call(this);
 		// Stores the caret timeout id for further manipulation (e.g Canceling the timeout)
 		this._iCaretTimeoutId = null;
 		// Stores the first placeholder replaceable position where the user can enter a value (immutable characters are ignored)

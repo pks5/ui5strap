@@ -1486,7 +1486,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'jquery.sap.keycodes', "sap
 	 * Get the real native browser event from a jQuery event object
 	 */
 	var fnGetNativeEvent = function(oEvent) {
-		while (oEvent && oEvent.originalEvent) {
+		while (oEvent && oEvent.originalEvent && oEvent !== oEvent.originalEvent) {
 			oEvent = oEvent.originalEvent;
 		}
 

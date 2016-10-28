@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', './Dialog', './ComboBoxTextField', './Select
 		 * @extends sap.m.ComboBoxTextField
 		 *
 		 * @author SAP SE
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @public
@@ -349,7 +349,7 @@ sap.ui.define(['jquery.sap.global', './Dialog', './ComboBoxTextField', './Select
 			// mark the event for components that needs to know if the event was handled
 			oEvent.setMarked();
 
-			if (oControl.isOpenArea(oEvent.target)) {
+			if (oControl.isOpenArea && oControl.isOpenArea(oEvent.target)) {
 
 				if (this.isOpen()) {
 					this.close();
@@ -518,6 +518,16 @@ sap.ui.define(['jquery.sap.global', './Dialog', './ComboBoxTextField', './Select
 		 * @protected
 		 */
 		ComboBoxBase.prototype.createPicker = function(sPickerType) {};
+
+		/**
+		 * This event handler is called before the picker popup is closed.
+		 *
+		 */
+		ComboBoxBase.prototype.onBeforeClose = function() {
+
+			// reset opener
+			this.bOpenedByKeyboardOrButton = false;
+		};
 
 		/**
 		 * Gets the control's picker popup.

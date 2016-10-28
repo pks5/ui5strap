@@ -22,7 +22,7 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -1239,6 +1239,7 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 			});
 			this._getNavContainer().addPage(this._page1); // sort, group, filter
 		}
+
 		return this._page1;
 	};
 
@@ -1358,6 +1359,8 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 			this._filterSearchField = this._getFilterSearchField(this._filterDetailList);
 			this._selectAllCheckBox = this._createSelectAllCheckbox(aSubFilters, this._filterDetailList);
 			this._getPage2().addContent(this._filterSearchField.addStyleClass('sapMVSDFilterSearchField'));
+			// add this css style for recognizing when after the sap.m.Bar is SearchField, so we can remove the bar border
+			this._getPage2().getCustomHeader().addStyleClass('sapMVSDBarWithSearch');
 			this._filterDetailList.setHeaderToolbar(new Toolbar({
 				content: [ this._selectAllCheckBox ]
 			}).addStyleClass('sapMVSDFilterHeaderToolbar'));
@@ -2020,6 +2023,8 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 
 			return false;
 		}
+		//needed in order when we navigate through the pages to have correctly set box-shadows
+		this._getPage2().getCustomHeader().removeStyleClass('sapMVSDBarWithSearch');
 
 		// needed because the content aggregation is changing it's owner control from custom tab to page and vice-versa
 		// if there is existing page content and the last opened page was a custom tab
@@ -2698,6 +2703,7 @@ function(jQuery, library, Control, IconPool, Toolbar, CheckBox, SearchField) {
 	 */
 	ViewSettingsDialog.prototype.setBusy = function (bBusy) {
 		this._getDialog().setBusy(bBusy);
+		return this;
 	};
 
 

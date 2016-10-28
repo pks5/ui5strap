@@ -31,7 +31,7 @@ sap.ui.define([
 	 *   The OData V4 model
 	 * @param {string} sPath
 	 *   The binding path in the model; must not be empty or end with a slash
-	 * @param {sap.ui.model.Context} [oContext]
+	 * @param {sap.ui.model.odata.v4.Context} [oContext]
 	 *   The context which is required as base for a relative path
 	 * @param {object} [mParameters]
 	 *   Map of binding parameters which can be OData query options as specified in
@@ -64,7 +64,7 @@ sap.ui.define([
 	 *   For other events, an error is thrown.
 	 * @extends sap.ui.model.PropertyBinding
 	 * @public
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 */
 	var ODataPropertyBinding = PropertyBinding.extend(sClassName, {
 			constructor : function (oModel, sPath, oContext, mParameters) {
@@ -82,7 +82,8 @@ sap.ui.define([
 				if (!this.bRelative) {
 					this.oCache = _Cache.createSingle(oModel.oRequestor, sPath.slice(1),
 						_ODataHelper.buildQueryOptions(oModel.mUriParameters, mParameters), true);
-					oBindingParameters = _ODataHelper.buildBindingParameters(mParameters);
+					oBindingParameters = _ODataHelper.buildBindingParameters(mParameters,
+						["$$groupId", "$$updateGroupId"]);
 					this.sGroupId = oBindingParameters.$$groupId;
 					this.sUpdateGroupId = oBindingParameters.$$updateGroupId;
 				} else if (mParameters) {
@@ -134,21 +135,22 @@ sap.ui.define([
 	 */
 
 	/**
-	 * The 'dataReceived' event is fired after the back end data has been processed and the
+	 * The 'dataReceived' event is fired after the back-end data has been processed and the
 	 * registered 'change' event listeners have been notified. It is to be used by applications for
 	 * example to switch off a busy indicator or to process an error.
 	 *
-	 * If back end requests are successful, the event has no parameters. The response data is
-	 * available in the model. Note that controls bound to this data may not yet have been updated;
-	 * it is thus not safe for registered event handlers to access data via control APIs.
+	 * If back-end requests are successful, the event has no parameters. Use
+	 * {@link #getValue() oEvent.getSource().getValue()} to access the response data. Note that
+	 * controls bound to this data may not yet have been updated, meaning it is not safe for
+	 * registered event handlers to access data via control APIs.
 	 *
-	 * If a back end request fails, the 'dataReceived' event provides an <code>Error</code> in the
+	 * If a back-end request fails, the 'dataReceived' event provides an <code>Error</code> in the
 	 * 'error' event parameter.
 	 *
 	 * @param {sap.ui.base.Event} oEvent
 	 * @param {object} oEvent.getParameters
-	 * @param {Error} [oEvent.getParameters.error] The error object if a back end request failed.
-	 *   If there are multiple failed back end requests, the error of the first one is provided.
+	 * @param {Error} [oEvent.getParameters.error] The error object if a back-end request failed.
+	 *   If there are multiple failed back-end requests, the error of the first one is provided.
 	 *
 	 * @event
 	 * @name sap.ui.model.odata.v4.ODataPropertyBinding#dataReceived
@@ -229,14 +231,14 @@ sap.ui.define([
 			);
 		}
 		if (this.isRelative()) {
-			oReadPromise = this.oContext.requestValue(this.sPath);
+			oReadPromise = this.oContext.fetchValue(this.sPath, this);
 		} else {
 			sGroupId = this.sRefreshGroupId || this.getGroupId();
 			this.sRefreshGroupId = undefined;
 			oReadPromise = this.oCache.read(sGroupId, /*sPath*/undefined, function () {
 				bDataRequested = true;
 				that.oModel.addedRequestToGroup(sGroupId, that.fireDataRequested.bind(that));
-			});
+			}, this);
 		}
 		aPromises.push(oReadPromise.then(function (vValue) {
 			if (vValue && typeof vValue === "object") {
@@ -270,6 +272,21 @@ sap.ui.define([
 				that.fireDataReceived(mParametersForDataReceived);
 			}
 		});
+	};
+
+	/**
+	 * Destroys the object. The object must not be used anymore after this function was called.
+	 *
+	 * @public
+	 * @since 1.39.0
+	 */
+	ODataPropertyBinding.prototype.destroy = function() {
+		if (this.oCache) {
+			this.oCache.deregisterChange(undefined, this);
+		} else if (this.oContext) {
+			this.oContext.deregisterChange(this.sPath, this);
+		}
+		return PropertyBinding.prototype.destroy.apply(this, arguments);
 	};
 
 	/**
@@ -311,6 +328,26 @@ sap.ui.define([
 	};
 
 	/**
+	 * Returns <code>true</code> if the binding has pending changes, that is updates via two-way
+	 * binding that have not yet been sent to the server.
+	 *
+	 * @returns {boolean}
+	 *   <code>true</code> if the binding has pending changes
+	 *
+	 * @public
+	 * @since 1.39.0
+	 */
+	ODataPropertyBinding.prototype.hasPendingChanges = function () {
+		if (this.oCache) {
+			return this.oCache.hasPendingChanges("");
+		}
+		if (this.oContext) {
+			return this.oContext.hasPendingChanges(this.sPath);
+		}
+		return false;
+	};
+
+	/**
 	 * Method not supported
 	 *
 	 * @throws {Error}
@@ -322,6 +359,20 @@ sap.ui.define([
 	// @override
 	ODataPropertyBinding.prototype.isInitial = function () {
 		throw new Error("Unsupported operation: v4.ODataPropertyBinding#isInitial");
+	};
+
+	/**
+	 * Change handler for the cache. The cache calls this method when the value is changed via
+	 * two-way binding.
+	 *
+	 * @param {any} vValue
+	 *   The new value
+	 *
+	 * @private
+	 */
+	ODataPropertyBinding.prototype.onChange = function (vValue) {
+		this.vValue = vValue;
+		this._fireChange({reason : ChangeReason.Change});
 	};
 
 	/**
@@ -378,7 +429,7 @@ sap.ui.define([
 	 * {@link #checkUpdate} to check for the current value if the context has changed.
 	 * In case of absolute bindings nothing is done.
 	 *
-	 * @param {sap.ui.model.Context} [oContext]
+	 * @param {sap.ui.model.odata.v4.Context} [oContext]
 	 *   The context which is required as base for a relative path
 	 *
 	 * @private
@@ -387,8 +438,11 @@ sap.ui.define([
 	// @override
 	ODataPropertyBinding.prototype.setContext = function (oContext) {
 		if (this.oContext !== oContext) {
+			if (this.oContext && this.bRelative) {
+				this.oContext.deregisterChange(this.sPath, this);
+			}
 			this.oContext = oContext;
-			if (this.isRelative()) {
+			if (this.bRelative) {
 				this.checkUpdate(false, ChangeReason.Context);
 			}
 		}
@@ -452,9 +506,11 @@ sap.ui.define([
 				if (this.oContext) {
 					this.oContext.updateValue(sGroupId, this.sPath, vValue)
 						["catch"](function (oError) {
-							that.oModel.reportError("Failed to update path "
-									+ that.oModel.resolve(that.sPath, that.oContext),
-								sClassName, oError);
+							if (!oError.canceled) {
+								that.oModel.reportError("Failed to update path "
+										+ that.oModel.resolve(that.sPath, that.oContext),
+									sClassName, oError);
+							}
 						});
 				} else {
 					jQuery.sap.log.warning("Cannot set value on relative binding without context",
@@ -466,9 +522,6 @@ sap.ui.define([
 					sClassName);
 				return; // do not update this.vValue!
 			}
-
-			this.vValue = vValue;
-			this._fireChange({reason : ChangeReason.Change});
 		}
 	};
 

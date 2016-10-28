@@ -8,16 +8,19 @@ sap.ui.define(["jquery.sap.global", "sap/ui/Device", "sap/ui/core/library", "sap
 	function(jQuery, Device, coreLibrary, URI, MessageParser, Message) {
 	"use strict";
 
+// shortcuts for enums
+var MessageType = coreLibrary.MessageType;
+
 /**
  * This map is used to translate back-end response severity values to the values defined in the
  * enumeration sap.ui.core.MessageType
  * @see sap.ui.core.ValueState
  */
 var mSeverityMap = {
-	"error":   sap.ui.core.MessageType.Error,
-	"warning": sap.ui.core.MessageType.Warning,
-	"success": sap.ui.core.MessageType.Success,
-	"info":    sap.ui.core.MessageType.Information
+	"error":   MessageType.Error,
+	"warning": MessageType.Warning,
+	"success": MessageType.Success,
+	"info":    MessageType.Information
 };
 
 /**
@@ -67,7 +70,7 @@ var mSeverityMap = {
  * @extends sap.ui.core.message.MessageParser
  *
  * @author SAP SE
- * @version 1.38.7
+ * @version 1.40.7
  * @public
  * @abstract
  * @alias sap.ui.model.odata.ODataMessageParser
@@ -276,7 +279,7 @@ ODataMessageParser.prototype._propagateMessages = function(aMessages, mRequestIn
 			sTarget = sTarget.substr(0, iPropertyPos + 1);
 		}
 
-		if (mAffectedTargets[sTarget]) {
+		if (mAffectedTargets[sTarget] && !this._lastMessages[i].getPersistent()) {
 			// Message belongs to targets handled/requested by this request
 			aRemovedMessages.push(this._lastMessages[i]);
 		} else {
@@ -316,6 +319,21 @@ ODataMessageParser.prototype._createMessage = function(oMessageObject, mRequestI
 
 	var sDescriptionUrl = oMessageObject.longtext_url ? oMessageObject.longtext_url : "";
 
+	var bPersistent = false;
+	if (oMessageObject.propertyref) {
+		oMessageObject.target = oMessageObject.propertyref;
+	}
+	if (typeof oMessageObject.target === "undefined") {
+		oMessageObject.target = "";
+	}
+
+	if (oMessageObject.target.indexOf("/#TRANSIENT#") === 0) {
+		bPersistent = true;
+		oMessageObject.target = oMessageObject.target.substr(12);
+	} else if (oMessageObject.transient) {
+		bPersistent = true;
+	}
+
 	var sTarget = this._createTarget(oMessageObject, mRequestInfo);
 
 	return new Message({
@@ -325,7 +343,8 @@ ODataMessageParser.prototype._createMessage = function(oMessageObject, mRequestI
 		descriptionUrl: sDescriptionUrl,
 		target:    sTarget,
 		processor: this._processor,
-		technical: bIsTechnical
+		technical: bIsTechnical,
+		persistent: bPersistent
 	});
 };
 
@@ -425,13 +444,7 @@ ODataMessageParser.prototype._getFunctionTarget = function(mFunctionInfo, mReque
  * @private
  */
 ODataMessageParser.prototype._createTarget = function(oMessageObject, mRequestInfo) {
-	var sTarget = "";
-
-	if (oMessageObject.target) {
-		sTarget = oMessageObject.target;
-	} else if (oMessageObject.propertyref) {
-		sTarget = oMessageObject.propertyref;
-	}
+	var sTarget = oMessageObject.target;
 
 	if (sTarget.substr(0, 1) !== "/") {
 		var sRequestTarget = "";
@@ -550,7 +563,6 @@ ODataMessageParser.prototype._parseBody = function(/* ref: */ aMessages, oRespon
 
 	// Messages from an error response should contain duplicate messages - the main error should be the
 	// same as the first errordetail error. If this is the case, remove the first one.
-	// TODO: Check if this is actually correct, and if so, check if the below check can be improved
 	if (aMessages.length > 1) {
 		if (
 			aMessages[0].getCode()    == aMessages[1].getCode()    &&
@@ -582,7 +594,7 @@ ODataMessageParser.prototype._parseBodyXML = function(/* ref: */ aMessages, oRes
 
 			var oError = {};
 			// Manually set severity in case we get an error response
-			oError["severity"] = sap.ui.core.MessageType.Error;
+			oError["severity"] = MessageType.Error;
 
 			for (var n = 0; n < oNode.childNodes.length; ++n) {
 				var oChildNode = oNode.childNodes[n];
@@ -639,7 +651,7 @@ ODataMessageParser.prototype._parseBodyJSON = function(/* ref: */ aMessages, oRe
 		}
 
 		// Manually set severity in case we get an error response
-		oError["severity"] = sap.ui.core.MessageType.Error;
+		oError["severity"] = MessageType.Error;
 
 		aMessages.push(this._createMessage(oError, mRequestInfo, true));
 
@@ -710,20 +722,20 @@ ODataMessageParser.prototype._outputMesages = function(aMessages) {
 		var oMessage = aMessages[i];
 		var sOutput = "[OData Message] " + oMessage.getMessage() + " - " + oMessage.getDescription() + " (" + oMessage.getTarget() + ")";
 		switch (aMessages[i].getType()) {
-			case sap.ui.core.MessageType.Error:
+			case MessageType.Error:
 				jQuery.sap.log.error(sOutput);
 				break;
 
-			case sap.ui.core.MessageType.Warning:
+			case MessageType.Warning:
 				jQuery.sap.log.warning(sOutput);
 				break;
 
-			case sap.ui.core.MessageType.Success:
+			case MessageType.Success:
 				jQuery.sap.log.debug(sOutput);
 				break;
 
-			case sap.ui.core.MessageType.Information:
-			case sap.ui.core.MessageType.None:
+			case MessageType.Information:
+			case MessageType.None:
 			default:
 				jQuery.sap.log.info(sOutput);
 				break;

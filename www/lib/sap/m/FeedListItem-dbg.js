@@ -9,8 +9,6 @@ sap.ui.define(['jquery.sap.global', './ListItemBase', './library'],
 	function(jQuery, ListItemBase, library) {
 	"use strict";
 
-
-
 	/**
 	 * Constructor for a new FeedListItem.
 	 *
@@ -23,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './ListItemBase', './library'],
 	 * @extends sap.m.ListItemBase
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -219,7 +217,6 @@ sap.ui.define(['jquery.sap.global', './ListItemBase', './library'],
 
 		var that = this;
 		this._oImageControl = sap.m.ImageHelper.getImageControl(sImgId, this._oImageControl, this, mProperties, aCssClasses);
-
 		if (this.getIconActive()) {
 			this._oImageControl.attachPress(function() {
 				that.fireIconPress({

@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Butto
 		 * @extends sap.ui.core.Control
 		 *
 		 * @author SAP SE
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @public
@@ -429,6 +429,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Butto
 		MenuButton.prototype.setType = function (sValue) {
 			Button.prototype.setProperty.call(this, 'type', sValue);
 			this._getButtonControl().setType(sValue);
+			return this;
 		};
 
 		/**
@@ -440,6 +441,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Butto
 		MenuButton.prototype.setIcon = function (vValue) {
 			Button.prototype.setProperty.call(this, 'icon', vValue);
 			this._getButtonControl().setIcon(vValue);
+			return this;
 		};
 
 		MenuButton.prototype.getFocusDomRef = function() {

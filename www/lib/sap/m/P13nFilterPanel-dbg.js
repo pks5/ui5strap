@@ -17,7 +17,7 @@ sap.ui.define([
 	 * @param {object} [mSettings] initial settings for the new control
 	 * @class The P13nFilterPanel control is used to define filter-specific settings for table personalization.
 	 * @extends sap.m.P13nPanel
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @public
 	 * @alias sap.m.P13nFilterPanel
@@ -161,6 +161,7 @@ sap.ui.define([
 	 * @public
 	 * @since 1.26
 	 * @param {object[]} aConditions the complete list of conditions
+	 * @returns {sap.m.P13nFilterPanel} this for chaining
 	 */
 	P13nFilterPanel.prototype.setConditions = function(aConditions) {
 		var aIConditions = [];
@@ -182,6 +183,7 @@ sap.ui.define([
 		if (aEConditions.length > 0) {
 			this._oExcludePanel.setExpanded(true);
 		}
+		return this;
 	};
 
 	/**
@@ -202,6 +204,7 @@ sap.ui.define([
 
 		this._oIncludeFilterPanel.setContainerQuery(bContainerQuery);
 		this._oExcludeFilterPanel.setContainerQuery(bContainerQuery);
+		return this;
 	};
 
 	P13nFilterPanel.prototype.setLayoutMode = function(sMode) {
@@ -209,6 +212,7 @@ sap.ui.define([
 
 		this._oIncludeFilterPanel.setLayoutMode(sMode);
 		this._oExcludeFilterPanel.setLayoutMode(sMode);
+		return this;
 	};
 
 	/**
@@ -349,6 +353,7 @@ sap.ui.define([
 			this._oIncludeFilterPanel.setMaxConditions(sMax);
 		}
 		this._updatePanel();
+		return this;
 	};
 
 	P13nFilterPanel.prototype.setMaxExcludes = function(sMax) {
@@ -358,6 +363,7 @@ sap.ui.define([
 			this._oExcludeFilterPanel.setMaxConditions(sMax);
 		}
 		this._updatePanel();
+		return this;
 	};
 
 	P13nFilterPanel.prototype._updatePanel = function() {
@@ -431,10 +437,9 @@ sap.ui.define([
 		}
 		if (!this._aIncludeOperations["boolean"]) {
 			this.setIncludeOperations([
-			    sap.m.P13nConditionOperation.EQ
+				sap.m.P13nConditionOperation.EQ
 			], "boolean");
 		}
-
 
 		this._aExcludeOperations = {};
 
@@ -543,11 +548,12 @@ sap.ui.define([
 					values: fGetValueOfProperty("values", oContext, oItem_)
 				});
 
-
 				// check if maxLength is 1 and remove contains, start and ends with operations
 				var n = aKeyFields.length;
 				if (aKeyFields[n - 1].maxLength === 1 || aKeyFields[n - 1].maxLength === "1") {
-					aKeyFields[n - 1].operations = [sap.m.P13nConditionOperation.EQ, sap.m.P13nConditionOperation.BT, sap.m.P13nConditionOperation.LT, sap.m.P13nConditionOperation.LE, sap.m.P13nConditionOperation.GT, sap.m.P13nConditionOperation.GE];
+					aKeyFields[n - 1].operations = [
+						sap.m.P13nConditionOperation.EQ, sap.m.P13nConditionOperation.BT, sap.m.P13nConditionOperation.LT, sap.m.P13nConditionOperation.LE, sap.m.P13nConditionOperation.GT, sap.m.P13nConditionOperation.GE
+					];
 				}
 			});
 			this.setKeyFields(aKeyFields);
@@ -601,7 +607,7 @@ sap.ui.define([
 	};
 
 	P13nFilterPanel.prototype.addFilterItem = function(oFilterItem) {
-		this.addAggregation("filterItems", oFilterItem);
+		this.addAggregation("filterItems", oFilterItem, true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -609,7 +615,7 @@ sap.ui.define([
 	};
 
 	P13nFilterPanel.prototype.insertFilterItem = function(oFilterItem, iIndex) {
-		this.insertAggregation("filterItems", oFilterItem, iIndex);
+		this.insertAggregation("filterItems", oFilterItem, iIndex, true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -627,7 +633,7 @@ sap.ui.define([
 	};
 
 	P13nFilterPanel.prototype.removeFilterItem = function(oFilterItem) {
-		oFilterItem = this.removeAggregation("filterItems", oFilterItem);
+		oFilterItem = this.removeAggregation("filterItems", oFilterItem, true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -637,7 +643,7 @@ sap.ui.define([
 	};
 
 	P13nFilterPanel.prototype.removeAllFilterItems = function() {
-		var aFilterItems = this.removeAllAggregation("filterItems");
+		var aFilterItems = this.removeAllAggregation("filterItems", true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;

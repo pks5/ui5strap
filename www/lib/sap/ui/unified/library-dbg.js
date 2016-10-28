@@ -19,14 +19,14 @@ sap.ui.define(['jquery.sap.global',
 	 * @namespace
 	 * @name sap.ui.unified
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.unified",
-		version: "1.38.7",
+		version: "1.40.7",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.ui.unified.CalendarDayType",
@@ -176,6 +176,30 @@ sap.ui.define(['jquery.sap.global',
 		 * @public
 		 */
 		Month : "Month"
+
+	};
+
+	/**
+	 * Visualisation of an <code>CalendarAppoinment</code> in a <code>CalendarRow</code>.
+	 *
+	 * @enum {string}
+	 * @public
+	 * @since 1.40.0
+	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
+	 */
+	sap.ui.unified.CalendarAppointmentVisualization = {
+
+		/**
+		 * Standard visualization of an <code>CalendarAppoinment</code>
+		 * @public
+		 */
+		Standard : "Standard",
+
+		/**
+		 * depending on the used theme the <code>CalendarAppoinment</code> are visualized with filled color
+		 * @public
+		 */
+		Filled : "Filled"
 
 	};
 

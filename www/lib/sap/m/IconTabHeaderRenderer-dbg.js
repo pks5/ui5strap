@@ -38,7 +38,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 		var aItems = oControl.getItems(),
 			bTextOnly = oControl._checkTextOnly(aItems),
 			bNoText = oControl._checkNoText(aItems),
-			bInLine = oControl._checkInLine(aItems),
+			bInLine = oControl._checkInLine(aItems) || oControl.isInlineMode(),
 			oResourceBundle = sap.ui.getCore().getLibraryResourceBundle('sap.m');
 
 		var oIconTabBar = oControl.getParent();
@@ -47,6 +47,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 		// render wrapper div
 		oRM.write("<div role='tablist' ");
 		oRM.addClass("sapMITH");
+		oRM.addClass("sapContrastPlus");
 		if (oControl._scrollable) {
 			oRM.addClass("sapMITBScrollable");
 			if (oControl._bPreviousScrollForward) {
@@ -171,6 +172,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 					oRM.writeAttribute("aria-disabled", true);
 				}
 
+				oRM.writeAttribute("aria-selected", false);
+
 				var sTooltip = oItem.getTooltip_AsString();
 				if (sTooltip) {
 					oRM.writeAttributeEscaped("title", sTooltip);
@@ -226,9 +229,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 					if (bUpperCase) {
 						oRM.addClass("sapMITBTextUpperCase");
 					}
+
+					if (bInLine) {
+						oRM.writeAttribute("dir", "ltr");
+					}
+
 					oRM.writeClasses();
 					oRM.write(">");
-					oRM.writeEscaped(oItem.getText());
+					oRM.writeEscaped(oControl._getDisplayText(oItem));
 					oRM.write("</div>");
 				}
 

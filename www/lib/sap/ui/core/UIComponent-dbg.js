@@ -38,7 +38,7 @@ sap.ui.define(['jquery.sap.global', '../base/ManagedObject', './Component', './l
 	 * @extends sap.ui.core.Component
 	 * @abstract
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @alias sap.ui.core.UIComponent
 	 * @since 1.9.2
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
@@ -422,10 +422,10 @@ sap.ui.define(['jquery.sap.global', '../base/ManagedObject', './Component', './l
 	};
 
 	/**
-	 * Returns an element by its ID in the context of the Component
+	 * Returns an element by its ID in the context of the component.
 	 *
-	 * @param {string} sId
-	 * @return {sap.ui.core.Element} Element by its id
+	 * @param {string} sId Component local ID of the element
+	 * @return {sap.ui.core.Element} element by its ID or <code>undefined</code>
 	 * @public
 	 */
 	UIComponent.prototype.byId = function(sId) {
@@ -433,9 +433,10 @@ sap.ui.define(['jquery.sap.global', '../base/ManagedObject', './Component', './l
 	};
 
 	/**
-	 * Creates an ID for an element prefixed with the Component ID
+	 * Convert the given component local element ID to a globally unique ID
+	 * by prefixing it with the component ID.
 	 *
-	 * @param {string} sId
+	 * @param {string} sId Component local ID of the element
 	 * @return {string} prefixed id
 	 * @public
 	 */
@@ -448,13 +449,27 @@ sap.ui.define(['jquery.sap.global', '../base/ManagedObject', './Component', './l
 	};
 
 	/**
-	 * Checks whether the given ID is already prefixed with this view's ID
+	 * Returns the local ID of an element by removing the component ID prefix or
+	 * <code>null</code> if the ID does not contain a prefix.
 	 *
-	 * @param {string} potentially prefixed id
-	 * @return whether the ID is already prefixed
+	 * @param {string} sId Prefixed ID
+	 * @return {string} ID without prefix or <code>null</code>
+	 * @public
+	 * @since 1.39.0
+	 */
+	UIComponent.prototype.getLocalId = function(sId) {
+		var sPrefix = this.getId() + "---";
+		return (sId && sId.indexOf(sPrefix) === 0) ? sId.slice(sPrefix.length) : null;
+	};
+
+	/**
+	 * Checks whether the given ID already contains this component's ID prefix
+	 *
+	 * @param {string} sId ID that is checked for the prefix
+	 * @return {boolean} whether the ID is already prefixed
 	 */
 	UIComponent.prototype.isPrefixedId = function(sId) {
-		return (sId && sId.indexOf(this.getId() + "---") === 0);
+		return !!(sId && sId.indexOf(this.getId() + "---") === 0);
 	};
 
 	/**

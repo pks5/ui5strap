@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './ComponentMetadata', './library'],
 	 * @experimental Since 1.15.1. The Component concept is still under construction, so some implementation details can be changed in future.
 	 * @class
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @since 1.15.1
 	 * @alias sap.ui.core.UIComponentMetadata
 	 */

@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -48,7 +48,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 			 */
 			content : {type : "sap.ui.core.Control", multiple : true, singularName : "content"}
 		},
-		designtime : true
+		designTime: true
 	}});
 
 	/**

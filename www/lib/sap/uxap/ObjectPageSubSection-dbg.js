@@ -182,6 +182,18 @@ sap.ui.define([
 		});
 	};
 
+	sap.uxap.ObjectPageSubSection.prototype.clone = function () {
+		Object.keys(this._aAggregationProxy).forEach(function (sAggregationName){
+			var oAggregation = this.mAggregations[sAggregationName];
+
+			if (!oAggregation || oAggregation.length === 0){
+				this.mAggregations[sAggregationName] = this._aAggregationProxy[sAggregationName];
+			}
+
+		}, this);
+		return sap.ui.core.Control.prototype.clone.apply(this, arguments);
+	};
+
 	ObjectPageSubSection.prototype._cleanProxiedAggregations = function () {
 		var oProxiedAggregations = this._aAggregationProxy;
 		Object.keys(oProxiedAggregations).forEach(function (sKey) {
@@ -517,7 +529,7 @@ sap.ui.define([
 
 		//empty real aggregations and feed internal ones at first rendering only
 		jQuery.each(this._aAggregationProxy, jQuery.proxy(function (sAggregationName, aValue) {
-			this._setAggregation(sAggregationName, this.removeAllAggregation(sAggregationName));
+			this._setAggregation(sAggregationName, this.removeAllAggregation(sAggregationName, true), true);
 		}, this));
 
 		this._bRenderedFirstTime = true;
@@ -602,7 +614,7 @@ sap.ui.define([
 			aInternalAggregation.forEach(function (oObjectCandidate, iIndex) {
 				if (oObjectCandidate.getId() === oObject.getId()) {
 					aInternalAggregation.splice(iIndex, 1);
-					this._setAggregation(sAggregationName, aInternalAggregation);
+					this._setAggregation(aInternalAggregation);
 					bRemoved = true;
 				}
 				return !bRemoved;

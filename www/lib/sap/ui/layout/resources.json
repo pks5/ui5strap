@@ -640,6 +640,93 @@
       ]
     },
     {
+      "name": "changeHandler/AddSimpleFormGroup-dbg.js",
+      "module": "sap/ui/layout/changeHandler/AddSimpleFormGroup.js",
+      "isDebug": true,
+      "required": [
+        "sap/ui/fl/Utils.js",
+        "jquery.sap.global.js",
+        "sap/ui/fl/changeHandler/Base.js"
+      ]
+    },
+    {
+      "name": "changeHandler/AddSimpleFormGroup.js",
+      "module": "sap/ui/layout/changeHandler/AddSimpleFormGroup.js",
+      "required": [
+        "sap/ui/fl/Utils.js",
+        "jquery.sap.global.js",
+        "sap/ui/fl/changeHandler/Base.js"
+      ]
+    },
+    {
+      "name": "changeHandler/HideSimpleForm-dbg.js",
+      "module": "sap/ui/layout/changeHandler/HideSimpleForm.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "changeHandler/HideSimpleForm.js",
+      "module": "sap/ui/layout/changeHandler/HideSimpleForm.js",
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "changeHandler/MoveSimpleForm-dbg.js",
+      "module": "sap/ui/layout/changeHandler/MoveSimpleForm.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/fl/changeHandler/Base.js",
+        "sap/ui/fl/Utils.js"
+      ]
+    },
+    {
+      "name": "changeHandler/MoveSimpleForm.js",
+      "module": "sap/ui/layout/changeHandler/MoveSimpleForm.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/fl/changeHandler/Base.js",
+        "sap/ui/fl/Utils.js"
+      ]
+    },
+    {
+      "name": "changeHandler/RenameSimpleForm-dbg.js",
+      "module": "sap/ui/layout/changeHandler/RenameSimpleForm.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/fl/changeHandler/Base.js",
+        "sap/ui/fl/Utils.js"
+      ]
+    },
+    {
+      "name": "changeHandler/RenameSimpleForm.js",
+      "module": "sap/ui/layout/changeHandler/RenameSimpleForm.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/fl/changeHandler/Base.js",
+        "sap/ui/fl/Utils.js"
+      ]
+    },
+    {
+      "name": "changeHandler/UnhideSimpleForm-dbg.js",
+      "module": "sap/ui/layout/changeHandler/UnhideSimpleForm.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "changeHandler/UnhideSimpleForm.js",
+      "module": "sap/ui/layout/changeHandler/UnhideSimpleForm.js",
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
       "name": "form/Form-dbg.js",
       "module": "sap/ui/layout/form/Form.js",
       "isDebug": true,

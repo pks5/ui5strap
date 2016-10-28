@@ -18,7 +18,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 	 *
 	 * @extends sap.ui.base.Object
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @public
 	 * @alias sap.ui.core.LocaleData
@@ -26,6 +26,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 	var LocaleData = BaseObject.extend("sap.ui.core.LocaleData", /** @lends sap.ui.core.LocaleData.prototype */ {
 
 		constructor : function(oLocale) {
+			this.oLocale = oLocale;
 			BaseObject.apply(this);
 			this.mData = getData(oLocale);
 		},
@@ -1081,7 +1082,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/Object', './Configuration', './
 		getCalendarWeek : function(sStyle, iWeekNumber) {
 			jQuery.sap.assert(sStyle == "wide" || sStyle == "narrow" , "sStyle must be wide or narrow");
 
-			var oMessageBundle = sap.ui.getCore().getLibraryResourceBundle("sap.ui.core"),
+			var oMessageBundle = sap.ui.getCore().getLibraryResourceBundle("sap.ui.core", this.oLocale.toString()),
 				sKey = "date.week.calendarweek." + sStyle;
 
 			return oMessageBundle.getText(sKey, iWeekNumber);

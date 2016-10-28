@@ -10,6 +10,26 @@
       "theme": "sap_belize"
     },
     {
+      "name": "BrowserScrollbar.less",
+      "designtime": true,
+      "theme": "sap_belize"
+    },
+    {
+      "name": "DatePicker.less",
+      "designtime": true,
+      "theme": "sap_belize"
+    },
+    {
+      "name": "Icon.less",
+      "designtime": true,
+      "theme": "sap_belize"
+    },
+    {
+      "name": "Shadow.less",
+      "designtime": true,
+      "theme": "sap_belize"
+    },
+    {
       "name": "base.less",
       "designtime": true,
       "theme": "sap_belize"
@@ -48,6 +68,11 @@
     },
     {
       "name": "library.source.less",
+      "designtime": true,
+      "theme": "sap_belize"
+    },
+    {
+      "name": "parameterClasses.less",
       "designtime": true,
       "theme": "sap_belize"
     },

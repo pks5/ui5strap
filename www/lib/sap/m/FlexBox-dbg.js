@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', './FlexBoxStylingHelper', './library', 'sap/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -192,7 +192,7 @@ sap.ui.define(['jquery.sap.global', './FlexBoxStylingHelper', './library', 'sap/
 		if (oItem.getLayoutData()) {
 			oWrapper = jQuery.sap.byId(oItem.getLayoutData().getId());
 		} else {
-			oWrapper = jQuery.sap.byId(sap.ui.core.RenderPrefixes.Invisible + oItem.getId()).parent();
+			oWrapper = jQuery.sap.byId(sap.ui.core.RenderManager.createInvisiblePlaceholderId(oItem)).parent();
 		}
 
 		if (oControlEvent.getParameter("newValue")) {

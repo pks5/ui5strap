@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -79,30 +79,36 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		}
 	}});
 
-	ProgressIndicator.prototype.onAfterRendering = function() {
-		//if the user sets a height, this wins against everything else, therefore the styles have to be calculated and set here
-		if (!!this.getHeight()) {
-			var lineHeightText = this.$().height();
-			this.$("textRight").css("line-height", lineHeightText + "px");
-			this.$("textLeft").css("line-height", lineHeightText + "px");
-		}
-	};
-
 	ProgressIndicator.prototype.setPercentValue = function(fPercentValue) {
 		var that = this;
 
+		["sapMPIValueMax", "sapMPIValueMin", "sapMPIValueNormal"].forEach(function (sClass){
+			that.removeStyleClass(sClass);
+		});
+
 		// validation of fPercentValue
 		if (!isValidPercentValue(fPercentValue)) {
-			fPercentValue = 0;
 			jQuery.sap.log.warning(this + ": percentValue (" + fPercentValue + ") is not correct! Setting the default percentValue:0.");
+			fPercentValue = 0;
+			this.addStyleClass("sapMPIValueMin");
 		}
 
 		if (this.getPercentValue() !== fPercentValue) {
 			// animation without rerendering
 			this.setProperty("percentValue", fPercentValue, true);
+
+			// needed for the rounded shape at the end
+			if (fPercentValue === 100) {
+				this.addStyleClass("sapMPIValueMax");
+			} else if (fPercentValue === 0) {
+				this.addStyleClass("sapMPIValueMin");
+			} else {
+				this.addStyleClass("sapMPIValueNormal");
+			}
+
 			this.$().addClass("sapMPIAnimate")
-					.attr("aria-valuenow", fPercentValue)
-					.attr("aria-valuetext", this._getAriaValueText({fPercent: fPercentValue}));
+				.attr("aria-valuenow", fPercentValue)
+				.attr("aria-valuetext", this._getAriaValueText({fPercent: fPercentValue}));
 
 			var time = Math.abs(that.getPercentValue() - fPercentValue) * 20;
 			var $Bar = this.$("bar");

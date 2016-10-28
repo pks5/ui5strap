@@ -26,7 +26,6 @@ sap.ui.define([], function () {
 		// Dynamic Page Layout Header Root DOM Element.
 		oRm.write("<header");
 		oRm.writeControlData(oDynamicPageHeader);
-		oRm.writeAttribute("tabindex", "0");
 		oRm.writeAccessibilityState({
 			role: "region"
 		});

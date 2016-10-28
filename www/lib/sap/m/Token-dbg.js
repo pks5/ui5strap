@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -130,8 +130,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 		} else {
 			this.addStyleClass("sapMTokenReadOnly");
 			this.$().attr("aria-readonly", "false");
-
 		}
+		return this;
 	};
 
 	/**
@@ -161,6 +161,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 *
 	 * @param {boolean} bSelected Indicates if the token is selected.
 	 * @param {boolean} bMultiSelect Indicates if the token is one of the multi-selected tokens.
+	 * @return {sap.m.Token} this for chaining
 	 */
 	Token.prototype.setSelected = function(bSelected, bMultiSelect) {
 
@@ -195,6 +196,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 			this.fireSelect();
 		}
 
+		return this;
 	};
 
 	/**

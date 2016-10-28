@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/P
 		 * @extends sap.ui.core.Control
 		 *
 		 * @author SAP SE
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @public
@@ -237,7 +237,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/m/P
 				verticalScrolling: true,
 				initialFocus: selectedItem,
 				content: list
-			});
+			}).addStyleClass('sapContrast sapContrastPlus');
 
 			popover._adaptPositionParams = this._adaptPopoverPositionParams;
 

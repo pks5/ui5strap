@@ -31,7 +31,7 @@ sap.ui.define(['jquery.sap.global'],
 		var sType = oButton.getType();
 		var bEnabled = oButton.getEnabled();
 		var sWidth = oButton.getWidth();
-		var sTooltip = oButton.getTooltip_AsString();
+		var sTooltip = oButton._getTooltip();
 		var sText = oButton._getText();
 		var sTextDir = oButton.getTextDirection();
 		var bIE_Edge = sap.ui.Device.browser.internet_explorer || sap.ui.Device.browser.edge;
@@ -99,12 +99,9 @@ sap.ui.define(['jquery.sap.global'],
 			}
 		}
 
-		// get icon-font info. will return null if the icon is a image
-		var oIconInfo = sap.ui.core.IconPool.getIconInfo(oButton.getIcon());
-
 		// add tooltip if available
-		if (sTooltip || (oIconInfo && oIconInfo.text && !oButton.getText())) {
-			oRm.writeAttributeEscaped("title", sTooltip || oIconInfo.text);
+		if (sTooltip) {
+			oRm.writeAttributeEscaped("title", sTooltip);
 		}
 
 		oRm.writeClasses();
@@ -114,6 +111,7 @@ sap.ui.define(['jquery.sap.global'],
 			oRm.addStyle("width", sWidth);
 			oRm.writeStyles();
 		}
+		renderTabIndex(oButton, oRm);
 
 		// close button tag
 		oRm.write(">");
@@ -170,6 +168,9 @@ sap.ui.define(['jquery.sap.global'],
 
 		// add all classes to inner button tag
 		oRm.writeClasses();
+
+		//apply on the inner level as well as not applying it will allow for focusing the button after a mouse click
+		renderTabIndex(oButton, oRm);
 
 		// close inner button tag
 		oRm.write(">");
@@ -238,6 +239,17 @@ sap.ui.define(['jquery.sap.global'],
 	ButtonRenderer.writeInternalIconPoolHtml = function(oRm, oButton, sURI) {
 		oRm.renderControl(oButton._getInternalIconBtn((oButton.getId() + "-iconBtn"), sURI));
 	};
+
+	/**
+	 * Renders tabindex with value of "-1" if required by  <code>_bExcludeFromTabChain</code> property.
+	 * @param oButton
+	 * @param oRm
+	 */
+	function renderTabIndex(oButton, oRm){
+		if (oButton._bExcludeFromTabChain) {
+			oRm.writeAttribute("tabindex", -1);
+		}
+	}
 
 	return ButtonRenderer;
 

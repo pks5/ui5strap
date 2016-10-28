@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', './BarInPageEnabler', './ToolbarLayoutData',
 	 * @implements sap.ui.core.Toolbar,sap.m.IBar
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -106,7 +106,7 @@ sap.ui.define(['jquery.sap.global', './BarInPageEnabler', './ToolbarLayoutData',
 				}
 			}
 		},
-		designtime : true
+		designTime: true
 	}});
 
 	EnabledPropagator.call(Toolbar.prototype);

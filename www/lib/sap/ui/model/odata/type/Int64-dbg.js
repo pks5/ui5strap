@@ -4,10 +4,10 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-sap.ui.define(['sap/ui/model/odata/type/ODataType', 'sap/ui/model/FormatException',
-               'sap/ui/model/ParseException', 'sap/ui/core/format/NumberFormat',
-               'sap/ui/model/ValidateException'],
-	function(ODataType, FormatException, ParseException, NumberFormat, ValidateException) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/model/odata/type/ODataType',
+               'sap/ui/model/FormatException', 'sap/ui/model/ParseException',
+               'sap/ui/core/format/NumberFormat', 'sap/ui/model/ValidateException'],
+	function(jQuery, ODataType, FormatException, ParseException, NumberFormat, ValidateException) {
 	"use strict";
 
 	var rInteger = /^[-+]?(\d+)$/, // user input for an Int64 w/o the sign
@@ -128,7 +128,7 @@ sap.ui.define(['sap/ui/model/odata/type/ODataType', 'sap/ui/model/FormatExceptio
 	 * @extends sap.ui.model.odata.type.ODataType
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @alias sap.ui.model.odata.type.Int64

@@ -1,0 +1,6 @@
+/*!
+ * UI development toolkit for HTML5 (OpenUI5)
+ * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ */
+sap.ui.define(["jquery.sap.global","sap/ui/fl/changeHandler/Base","sap/ui/fl/Utils"],function(q,B,U){"use strict";var R={};R.applyChange=function(c,C,m,v){var o=c.getDefinition();var r=o.content.sRenameId;var a=m.byId(r,v);if(this._checkSufficientInfo(o,a)){if(!C){throw new Error("no Control provided for renaming");}var V=o.texts.formText.value;var p="text";m.setProperty(a,p,V);return true;}else{U.log.error("Change does not contain sufficient information to be applied: ["+o.layer+"]"+o.namespace+"/"+o.fileName+"."+o.fileType);}};R._checkSufficientInfo=function(c,r){if(c.texts&&c.texts.formText&&this._isProvided(c.texts.formText.value)&&r){return true;}else{return false;}};R.completeChangeContent=function(c,s){var C=c.getDefinition();if(s.sRenameId){C.content.sRenameId=s.sRenameId;}else{throw new Error("oSpecificChangeInfo.sRenameId attribute required");}if(this._isProvided(s.value)){B.setTextInChange(C,"formText",s.value,"XFLD");}else{throw new Error("oSpecificChangeInfo.value attribute required");}};R._isProvided=function(s){return typeof(s)==="string";};return R;},true);

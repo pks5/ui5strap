@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './Dialog', './Popover', './library', 'sap/u
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -520,8 +520,10 @@ sap.ui.define(['jquery.sap.global', './Dialog', './Popover', './library', 'sap/u
 	ResponsivePopover.prototype._oldSetProperty = ResponsivePopover.prototype.setProperty;
 	ResponsivePopover.prototype.setProperty = function(sPropertyName, oValue, bSuppressInvalidate){
 		this._oldSetProperty(sPropertyName, oValue, true);
-		if (jQuery.inArray(sPropertyName, this._aNotSupportedProperties) === -1) {
-			this._oControl["set" + this._firstLetterUpperCase(sPropertyName)](oValue);
+		var sSetterName = "set" + this._firstLetterUpperCase(sPropertyName);
+		if (jQuery.inArray(sPropertyName, this._aNotSupportedProperties) === -1 &&
+			sSetterName in this._oControl) {
+			this._oControl[sSetterName](oValue);
 		}
 		return this;
 	};
@@ -594,7 +596,7 @@ sap.ui.define(['jquery.sap.global', './Dialog', './Popover', './library', 'sap/u
 			return this[sPrivateName];
 		} else {
 			var sGetterName = "get" + this._firstLetterUpperCase(sPos) + "Button";
-			return this[sGetterName]();
+			return this._oControl[sGetterName]();
 		}
 	};
 

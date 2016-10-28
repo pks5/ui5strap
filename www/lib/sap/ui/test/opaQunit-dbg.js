@@ -4,10 +4,17 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 /*global QUnit */
-
 sap.ui.define(['./Opa', './Opa5'], function (Opa, Opa5) {
 	"use strict";
 
+	QUnit.testDone(function( details ) {
+		var bTimedOut = details.assertions.some(function (oAssertion) {
+			return !oAssertion.result && oAssertion.message === "Test timed out";
+		});
+		if (bTimedOut) {
+			Opa.stopQueue(false);
+		}
+	});
 	/**
 	 * QUnit test adapter for opa.js has the same signature as a test of QUnit.
 	 * Suggested usage:
@@ -65,6 +72,8 @@ sap.ui.define(['./Opa', './Opa5'], function (Opa, Opa5) {
 			QUnit.config.testTimeout  = 90000;
 		}
 		QUnit.config.reorder = false;
+		// better chance that screenshots will capture the current failure
+		QUnit.config.scrolltop = false;
 
 		if (arguments.length === 2) {
 			callback = expected;

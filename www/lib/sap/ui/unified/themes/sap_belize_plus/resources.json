@@ -6,6 +6,21 @@
       "theme": "sap_belize_plus"
     },
     {
+      "name": "Calendar.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "CalendarLegend.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "CalendarRow.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
       "name": "library-RTL-dbg.css",
       "isDebug": true,
       "theme": "sap_belize_plus"

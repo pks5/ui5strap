@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @class
 	 * ObjectHeader is a display control that enables the user to easily identify a specific object. The object header title is the key identifier of the object and additional text and icons can be used to further distinguish it from other objects.
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -271,7 +271,17 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			 * It can either be filled with an sap.m.IconTabBar or a sap.suite.ui.commons.HeaderContainer control. Overflow handling must be taken care of by the inner control. If used with an IconTabBar control, only the header will be displayed inside the object header, the content will be displayed below the ObjectHeader.
 			 * @since 1.21.1
 			 */
-			headerContainer : {type : "sap.m.ObjectHeaderContainer", multiple : false}
+			headerContainer : {type : "sap.m.ObjectHeaderContainer", multiple : false},
+
+			/**
+			 * Manages the Favorite marker.
+			 */
+			_markerFavorite : {type : "sap.m.ObjectMarker", multiple : false, visibility : "hidden"},
+
+			/**
+			 * Manages the Flagged marker.
+			 */
+			_markerFlagged : {type : "sap.m.ObjectMarker", multiple : false, visibility : "hidden"}
 		},
 		associations : {
 
@@ -345,28 +355,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	ObjectHeader.prototype.init = function() {
 		var oLibraryResourceBundle = sap.ui.getCore().getLibraryResourceBundle("sap.m"); // get resource translation bundle;
 
-		//TODO Remove placeholder when Safari iconFont issue is addressed.
-		this._oPlaceholderIcon = IconPool.createControlByURI({
-			id : this.getId() + "-placeholder",
-			useIconTooltip : false,
-			src : IconPool.getIconURI("fridge")
-		});
-		this._oPlaceholderIcon.addStyleClass("sapMObjStatusMarkerInvisible");
-
-		this._oFlagIcon = IconPool.createControlByURI({
-			id : this.getId() + "-flag",
-			tooltip: oLibraryResourceBundle.getText("TOOLTIP_OH_FLAG_MARK_VALUE"),
-			src : IconPool.getIconURI("flag"),
-			visible : false
-		});
-
-		this._oFavIcon = IconPool.createControlByURI({
-			id : this.getId() + "-favorite",
-			tooltip: oLibraryResourceBundle.getText("TOOLTIP_OH_FAVORITE_MARK_VALUE"),
-			src : IconPool.getIconURI("favorite"),
-			visible : false
-		});
-
 		this._oTitleArrowIcon = IconPool.createControlByURI({
 			id : this.getId() + "-titleArrow",
 			src: IconPool.getIconURI("arrow-down"),
@@ -375,7 +363,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			tooltip: oLibraryResourceBundle.getText("OH_SELECT_ARROW_TOOLTIP"),
 			size: "1.375rem",
 			press : function(oEvent) {
-				// empty function here becuase icon needs an event handler in order to show pointer cursor
+				// empty function here because icon needs an event handler in order to show pointer cursor
 			}
 		});
 
@@ -543,9 +531,45 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	};
 
 	/**
-	 * lazy initializes the object number aggregation
+	 * Sets the visibility value of the Favorite marker.
+	 * @override
+	 * @public
+	 * @param {boolean} bMarked the new value
+	 * @returns {sap.m.ObjectHeader} this pointer for chaining
+	 */
+	ObjectHeader.prototype.setMarkFavorite = function (bMarked) {
+		this.setProperty("markFavorite", bMarked, false);
+
+		if (bMarked) {
+			this._getMarkerFavorite();
+		} else {
+			this.destroyAggregation("_markerFavorite");
+		}
+		return this;
+	};
+
+	/**
+	 * Sets the visibility value of the Flagged marker.
+	 * @override
+	 * @public
+	 * @param {boolean} bMarked the new value
+	 * @returns {sap.m.ObjectHeader} this pointer for chaining
+	 */
+	ObjectHeader.prototype.setMarkFlagged = function (bMarked) {
+		this.setProperty("markFlagged", bMarked, false);
+
+		if (bMarked) {
+			this._getMarkerFlagged();
+		} else {
+			this.destroyAggregation("_markerFlagged");
+		}
+		return this;
+	};
+
+	/**
+	 * Lazily initializes the <code>ObjectNumber</code> aggregation.
 	 * @private
-	 * @returns {Object} the newly created control
+	 * @returns {sap.m.ObjectNumber} The newly created control
 	 */
 	ObjectHeader.prototype._getObjectNumber = function () {
 		var oControl = this.getAggregation("_objectNumber");
@@ -556,6 +580,42 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			});
 
 			this.setAggregation("_objectNumber", oControl, true);
+		}
+		return oControl;
+	};
+
+	/**
+	 * Lazily initializes the <code>ObjectMarker</code> favorite aggregation.
+	 * @private
+	 * @returns {sap.m.ObjectMarker} The newly created control
+	 */
+	ObjectHeader.prototype._getMarkerFavorite = function () {
+		var oControl = this.getAggregation("_markerFavorite");
+
+		if (!oControl) {
+			oControl = new sap.m.ObjectMarker(this.getId() + "-favorite", {
+				type: sap.m.ObjectMarkerType.Favorite
+			});
+
+			this.setAggregation("_markerFavorite", oControl, true);
+		}
+		return oControl;
+	};
+
+	/**
+	 * Lazily initializes the <code>ObjectMarker</code> favorite aggregation.
+	 * @private
+	 * @returns {sap.m.ObjectMarker} The newly created control
+	 */
+	ObjectHeader.prototype._getMarkerFlagged = function () {
+		var oControl = this.getAggregation("_markerFlagged");
+
+		if (!oControl) {
+			oControl = new sap.m.ObjectMarker(this.getId() + "-flag", {
+				type: sap.m.ObjectMarkerType.Flagged
+			});
+
+			this.setAggregation("_markerFlagged", oControl, true);
 		}
 		return oControl;
 	};
@@ -804,21 +864,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		if (this._oImageControl) {
 			this._oImageControl.destroy();
 			this._oImageControl = undefined;
-		}
-
-		if (this._oPlaceholderIcon) {
-			this._oPlaceholderIcon.destroy();
-			this._oPlaceholderIcon = undefined;
-		}
-
-		if (this._oFavIcon) {
-			this._oFavIcon.destroy();
-			this._oFavIcon = undefined;
-		}
-
-		if (this._oFlagIcon) {
-			this._oFlagIcon.destroy();
-			this._oFlagIcon = undefined;
 		}
 
 		if (this._oTitleArrowIcon) {

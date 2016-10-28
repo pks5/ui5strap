@@ -486,6 +486,11 @@
       "theme": "sap_bluecrystal"
     },
     {
+      "name": "StepInput.less",
+      "designtime": true,
+      "theme": "sap_bluecrystal"
+    },
+    {
       "name": "Switch.less",
       "designtime": true,
       "theme": "sap_bluecrystal"
@@ -566,6 +571,11 @@
       "theme": "sap_bluecrystal"
     },
     {
+      "name": "Tokenizer.less",
+      "designtime": true,
+      "theme": "sap_bluecrystal"
+    },
+    {
       "name": "Toolbar.less",
       "designtime": true,
       "theme": "sap_bluecrystal"
@@ -577,6 +587,11 @@
     },
     {
       "name": "UploadCollection.less",
+      "designtime": true,
+      "theme": "sap_bluecrystal"
+    },
+    {
+      "name": "ValueStateMessage.less",
       "designtime": true,
       "theme": "sap_bluecrystal"
     },

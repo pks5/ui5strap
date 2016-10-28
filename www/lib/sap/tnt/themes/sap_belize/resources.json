@@ -3,59 +3,59 @@
   "resources": [
     {
       "name": ".theming",
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "NavigationList.less",
       "designtime": true,
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "SideNavigation.less",
       "designtime": true,
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "ToolHeader.less",
       "designtime": true,
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "ToolPage.less",
       "designtime": true,
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "library-RTL-dbg.css",
       "isDebug": true,
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "library-RTL.css",
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "library-dbg.css",
       "isDebug": true,
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "library-parameters.json",
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "library.css",
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "library.less",
       "designtime": true,
-      "theme": "base"
+      "theme": "sap_belize"
     },
     {
       "name": "library.source.less",
       "designtime": true,
-      "theme": "base"
+      "theme": "sap_belize"
     }
   ]
 }

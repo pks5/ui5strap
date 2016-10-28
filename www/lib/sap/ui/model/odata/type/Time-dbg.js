@@ -4,10 +4,10 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-sap.ui.define(['sap/ui/core/format/DateFormat', 'sap/ui/model/FormatException',
-		'sap/ui/model/odata/type/ODataType', 'sap/ui/model/ParseException',
-		'sap/ui/model/ValidateException'],
-	function(DateFormat, FormatException, ODataType, ParseException, ValidateException) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/core/format/DateFormat',
+		'sap/ui/model/FormatException', 'sap/ui/model/odata/type/ODataType',
+		'sap/ui/model/ParseException', 'sap/ui/model/ValidateException'],
+	function(jQuery, DateFormat, FormatException, ODataType, ParseException, ValidateException) {
 	"use strict";
 
 	var oDemoTime = {
@@ -143,7 +143,7 @@ sap.ui.define(['sap/ui/core/format/DateFormat', 'sap/ui/model/FormatException',
 	 * @extends sap.ui.model.odata.type.ODataType
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @alias sap.ui.model.odata.type.Time
 	 * @param {object} [oFormatOptions]

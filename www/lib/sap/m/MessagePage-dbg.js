@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		 *		- The application is loading
 		 *	The layout is unchanged but the text varies depending on the use case.
 		 * @extends sap.ui.core.Control
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @public
@@ -108,6 +108,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			var oBundle = sap.ui.getCore().getLibraryResourceBundle("sap.m");
 
 			this.setAggregation("_page", new sap.m.Page({
+				id: this.getId() + "-page",
 				showHeader : this.getShowHeader(),
 				navButtonPress : jQuery.proxy(function() {
 					this.fireNavButtonPress();
@@ -148,32 +149,38 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		MessagePage.prototype.setTitle = function(sTitle) {
 			this.setProperty("title", sTitle, true); // no re-rendering
 			this.getAggregation("_page").setTitle(sTitle);
+			return this;
 		};
 
 		MessagePage.prototype.setText = function(sText) {
 			this.setProperty("text", sText, true); // no re-rendering
 			this._oText && this._oText.setText(sText);
+			return this;
 		};
 
 		MessagePage.prototype.setDescription = function(sDescription) {
 			this.setProperty("description", sDescription, true); // no re-rendering
 			this._oDescription && this._oDescription.setText(sDescription);
+			return this;
 		};
 
 		MessagePage.prototype.setShowHeader = function(bShowHeader) {
 			this.setProperty("showHeader", bShowHeader, true); // no re-rendering
 			this.getAggregation("_page").setShowHeader(bShowHeader);
+			return this;
 		};
 
 		MessagePage.prototype.setShowNavButton = function(bShowNavButton) {
 			this.setProperty("showNavButton", bShowNavButton, true); // no re-rendering
 			this.getAggregation("_page").setShowNavButton(bShowNavButton);
+			return this;
 		};
 
 		MessagePage.prototype.setTextDirection = function(sTextDirection) {
 			this.setProperty("textDirection", sTextDirection, true); // no re-rendering
 			this._oText && this._oText.setTextDirection(sTextDirection);
 			this._oDescription && this._oDescription.setTextDirection(sTextDirection);
+			return this;
 		};
 
 		MessagePage.prototype.setIcon = function(sIconUri) {
@@ -192,6 +199,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 					this._oIconControl.setSrc(sIconUri);
 				}
 			}
+			return this;
 		};
 
 		MessagePage.prototype._addPageContent = function() {
@@ -201,6 +209,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 				this._oText = this.getAggregation("customText");
 			} else {
 				this._oText = new sap.m.Text({
+					id: this.getId() + "-customText",
 					text: this.getText(),
 					textAlign: sap.ui.core.TextAlign.Center,
 					textDirection: this.getTextDirection()
@@ -211,6 +220,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 				this._oDescription = this.getAggregation("customDescription");
 			} else {
 				this._oDescription = new sap.m.Text({
+					id: this.getId() + "-customDescription",
 					text: this.getDescription(),
 					textAlign: sap.ui.core.TextAlign.Center,
 					textDirection: this.getTextDirection()

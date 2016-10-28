@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 	 * @extends sap.m.ComboBoxBase
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -320,7 +320,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 		}
 
 		// message popup won't open when the item list is shown
-		if (!this.isOpen()) {
+		if (!this.isOpen() && this.shouldValueStateMessageBeOpened()) {
 			this.openValueStateMessage();
 		}
 	};
@@ -404,8 +404,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 		} else {
 			this.fireChangeEvent(oNewSelectedItem.getText());
 			this.removeSelection(oParam);
-			this.setValue('');
 		}
+		this.setValue(this._sOldValue);
 
 		if (this.isOpen() && this.getPicker().oPopup.getOpenState() !== sap.ui.core.OpenState.CLOSING) {
 			// workaround: this is needed because the List fires the "selectionChange" event during the popover is closing.
@@ -669,11 +669,9 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 	/**
 	 * This event handler will be called before the MultiComboBox's Pop-up is closed.
 	 *
-	 * @private
 	 */
 	MultiComboBox.prototype.onBeforeClose = function() {
-		// reset opener
-		this.bOpenedByKeyboardOrButton = false;
+		ComboBoxBase.prototype.onBeforeClose.apply(this, arguments);
 	};
 
 	/**
@@ -687,6 +685,9 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 
 		// Show all items when the list will be opened next time
 		this.clearFilter();
+		this.setValue("");
+		this._sOldValue = "";
+
 		this.fireSelectionFinish({
 			selectedItems: this.getSelectedItems()
 		});
@@ -1139,7 +1140,6 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 				// suggest list the list
 				// with all entries should be opened
 				if (oEvent.which == jQuery.sap.KeyCodes.SPACE && this.isOpen() && this._isListInSuggestMode()) {
-					this.clearFilter();
 					this.open();
 					oItem = this._getLastSelectedItem();
 
@@ -1379,10 +1379,6 @@ sap.ui.define(['jquery.sap.global', './Bar', './InputBase', './ComboBoxBase', '.
 		oTokenizer.addEventDelegate({
 			onAfterRendering: this._onAfterRenderingTokenizer
 		}, this);
-
-		this.getRenderer().placeholderToBeShown = function(oRm, oControl) {
-			return (!oControl._oTokenizer.getTokens().length) && (oControl.getPlaceholder() ? true : false);
-		};
 
 		return oTokenizer;
 	};

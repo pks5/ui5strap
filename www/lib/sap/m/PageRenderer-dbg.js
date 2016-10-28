@@ -25,7 +25,8 @@ sap.ui.define(['sap/m/PageAccessibleLandmarkInfo'],
 		var oHeader = null,
 			oFooter = null,
 			oSubHeader = null,
-			sEnableScrolling = oPage.getEnableScrolling() ? " sapMPageScrollEnabled" : "";
+			sEnableScrolling = oPage.getEnableScrolling() ? " sapMPageScrollEnabled" : "",
+			bLightHeader  = this._isLightHeader(oPage);
 
 		if (oPage.getShowHeader()) {
 			oHeader = oPage._getAnyHeader();
@@ -61,6 +62,11 @@ sap.ui.define(['sap/m/PageAccessibleLandmarkInfo'],
 			oRm.addClass("sapMPageBusyCoversAll");
 		}
 
+		var theme = sap.ui.getCore().getConfiguration().getTheme();
+		if (oPage.getFloatingFooter() && oPage.getShowFooter() && theme !== 'sap_hcb') {
+			oRm.addClass("sapMPageFloatingFooter");
+		}
+
 		oRm.writeClasses();
 
 		var sTooltip = oPage.getTooltip_AsString();
@@ -75,13 +81,13 @@ sap.ui.define(['sap/m/PageAccessibleLandmarkInfo'],
 
 		//render headers
 		this.renderBarControl(oRm, oPage, oHeader, {
-			context : "header",
-			styleClass : "sapMPageHeader"
+			context: "header",
+			styleClass: "sapMPageHeader" + (bLightHeader ? "" : " sapContrastPlus")
 		});
 
 		this.renderBarControl(oRm, oPage, oSubHeader, {
-			context : "subHeader",
-			styleClass : "sapMPageSubHeader"
+			context: "subHeader",
+			styleClass: "sapMPageSubHeader" + (bLightHeader ? "" : " sapContrastPlus")
 		});
 
 		// render child controls
@@ -134,6 +140,43 @@ sap.ui.define(['sap/m/PageAccessibleLandmarkInfo'],
 		oBarControl.addStyleClass(oOptions.styleClass);
 
 		oRm.renderControl(oBarControl);
+	};
+
+	/**
+	 *	Check whether THIS page is used in scenario where its header should be light
+	 *	Important for Belize styling
+	 *
+	 * @param oPage
+	 * @returns {boolean}
+	 * @private
+	 */
+	PageRenderer._isLightHeader = function (oPage) {
+		var oChild = oPage,
+			oParent = oPage.getParent(),
+			sParentName,
+			sChildName;
+
+		// Loop back to the top to check if there's SplitContainer OR SplitApp OR QuickView and then check if child elem is
+		// sap.m.NavContainer and this Nav container is the master
+		while (oParent) {
+			sParentName = (oParent && oParent.getMetadata().getName()) || "";
+			sChildName = oChild.getMetadata().getName();
+
+			if ((sParentName === "sap.m.Popover" || sParentName === "sap.m.Dialog")
+				&& sChildName === "sap.m.NavContainer") {
+				return true;
+			}
+
+			if (oParent && ["sap.m.SplitApp", "sap.m.SplitContainer"].indexOf(sParentName) > -1
+				&& sChildName === "sap.m.NavContainer" && /\-Master$/.test(oChild.getId())) {
+				return true;
+			}
+
+			oChild = oParent;
+			oParent = oChild.getParent();
+		}
+
+		return false;
 	};
 
 	return PageRenderer;

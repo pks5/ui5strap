@@ -312,12 +312,14 @@
 	checkResize: true, // boolean
 	updateCurrentTime: true, // boolean
 	appointmentsReducedHeight: false, // boolean, since 1.38.0
+	appointmentsVisualization: sap.ui.unified.CalendarAppointmentVisualization.Standard, // sap.ui.unified.CalendarAppointmentVisualization, since 1.40.0
 	tooltip: undefined, // sap.ui.core.TooltipBase
 	customData: [], // sap.ui.core.CustomData
 	dependents: [], // sap.ui.core.Control, since 1.19
 	appointments: [], // sap.ui.unified.CalendarAppointment
 	intervalHeaders: [], // sap.ui.unified.CalendarAppointment
 	ariaLabelledBy: [], // sap.ui.core.Control
+	legend: undefined, // sap.ui.unified.CalendarLegend, since 1.40.0
 	validateFieldGroup: [function (oEvent) {
 		var ${control} = oEvent.getSource();
 	}, this],
@@ -354,7 +356,9 @@
 	checkResize="true"
 	updateCurrentTime="true"
 	appointmentsReducedHeight="false"
+	appointmentsVisualization="Standard"
 	ariaLabelledBy=""
+	legend=""
 	validateFieldGroup=""
 	select=""
 	startDateChange=""

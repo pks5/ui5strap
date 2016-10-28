@@ -99,10 +99,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/theming/Parameters', './ListIte
 		}
 
 		// determine items rendering
-		var aItems = oControl.getItems(true),
+		var aItems = oControl.getItems(),
 			bShowNoData = oControl.getShowNoData(),
 			bRenderItems = oControl.shouldRenderItems() && aItems.length,
-			iTabIndex = oControl.getKeyboardMode() == sap.m.ListKeyboardMode.Edit ? -1 : 0;
+			iTabIndex = oControl.getKeyboardMode() == sap.m.ListKeyboardMode.Edit ? -1 : 0,
+			bUpwardGrowing = oControl.getGrowingDirection() == sap.m.ListGrowingDirection.Upwards && oControl.getGrowing();
+
+		// render top growing
+		if (bUpwardGrowing) {
+			this.renderGrowing(rm, oControl);
+		}
 
 		// dummy keyboard handling area
 		if (bRenderItems || bShowNoData) {
@@ -141,6 +147,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/theming/Parameters', './ListIte
 
 		// render child controls
 		if (bRenderItems) {
+			if (bUpwardGrowing) {
+				aItems.reverse();
+			}
+
 			for (var i = 0; i < aItems.length; i++) {
 				rm.renderControl(aItems[i]);
 			}
@@ -159,8 +169,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/theming/Parameters', './ListIte
 			this.renderDummyArea(rm, oControl, "after", iTabIndex);
 		}
 
-		// render growing
-		this.renderGrowing(rm, oControl);
+		// render bottom growing
+		if (!bUpwardGrowing) {
+			this.renderGrowing(rm, oControl);
+		}
 
 		// footer
 		if (oControl.getFooterText()) {

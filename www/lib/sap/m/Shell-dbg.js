@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 		 * The Shell control can be used as root element of applications. It can contain an App or a <code>SplitApp</code> control.
 		 * The Shell provides some overarching functionality for the overall application and takes care of visual adaptation, such as a frame around the App, on desktop browser platforms.
 		 * @extends sap.ui.core.Control
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @public
@@ -209,6 +209,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 		Shell.prototype.setHomeIcon = function(oIcons) {
 			this.setProperty("homeIcon", oIcons, true); // no rerendering
 			jQuery.sap.setIcons(oIcons);
+			return this;
 		};
 
 		return Shell;

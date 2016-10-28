@@ -26,7 +26,7 @@ sap.ui.define([
 	 * @extends sap.m.QuickViewBase
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -95,6 +95,9 @@ sap.ui.define([
 		QuickViewCard.prototype._createPage = function(oQuickViewPage) {
 
 			var mContent = oQuickViewPage._createPageContent();
+
+			// don't store the content for destroying, the nav container will destroy all the pages
+			oQuickViewPage._mPageContent = null;
 
 			var oContainer = new ScrollContainer(this.getId() + '-' + oQuickViewPage.getPageId(), {
 				horizontal : false,

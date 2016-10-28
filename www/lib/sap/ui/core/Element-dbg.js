@@ -54,7 +54,7 @@ sap.ui.define(['jquery.sap.global', '../base/Object', '../base/ManagedObject', '
 	 * @class Base Class for Elements.
 	 * @extends sap.ui.base.ManagedObject
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @public
 	 * @alias sap.ui.core.Element
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
@@ -1013,7 +1013,7 @@ sap.ui.define(['jquery.sap.global', '../base/Object', '../base/ManagedObject', '
 		}
 
 		if (this._sapui_declarativeSourceInfo) {
-			oClone._sapui_declarativeSourceInfo = this._sapui_declarativeSourceInfo;
+			oClone._sapui_declarativeSourceInfo = jQuery.extend({}, this._sapui_declarativeSourceInfo);
 		}
 
 		return oClone;

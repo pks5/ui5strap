@@ -173,7 +173,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', '../Element'],
 				}
 			} else {
 				// ignore failure at least temporarily as long as there are libraries built using outdated tools which produce no json file
-				jQuery.sap.log.warning("Could not load theme parameters from: " + sUrl); // could be an error as well, but let's avoid more CSN messages...
+				jQuery.sap.log.error("Could not load theme parameters from: " + sUrl, oResponse.error); // could be an error as well, but let's avoid more CSN messages...
 			}
 		}
 
@@ -182,7 +182,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', '../Element'],
 			// Inital loading
 			if (!mParameters) {
 
-				mParameters = {};
+				mergeParameters({});
 				sTheme = sap.ui.getCore().getConfiguration().getTheme();
 
 				forEachStyleSheet(loadParameters);
@@ -259,70 +259,176 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/thirdparty/URI', '../Element'],
 			return sParam;
 		}
 
+		function getParamForActiveScope(sParamName, aScopeChain) {
+			for (var i = 0; i < aScopeChain.length; i++) {
+				var aCurrentScopes = aScopeChain[i];
+
+				for (var k = 0; k < aCurrentScopes.length; k++) {
+					var sScopeName = aCurrentScopes[k];
+
+					var sParamValue = getParam({
+						parameterName: sParamName,
+						scopeName: sScopeName
+					});
+
+					if (sParamValue) {
+						return sParamValue;
+					}
+				}
+			}
+			// if no matching scope was found return the default parameter
+			return getParam({
+				parameterName: sParamName
+			});
+		}
+
 		/**
-		 * Returns the current value for the given CSS parameter.
-		 * If no parameter is given, a map containing all parameters is returned. This map is a copy, so changing values in the map does not have any effect.
-		 * For any other input or an undefined parameter name, the result is undefined.
+		 * Returns the scopes from current theming parameters.
 		 *
-		 * @param {string} sName the CSS parameter name
-		 * @param {object} [oControl] optional the control instance
-		 * @returns {any} the CSS parameter value
+		 * @private
+		 * @sap-restricted sap.ui.core
+		 * @param {boolean} [bAvoidLoading] Whether loading of parameters should be avoided
+		 * @return {array} Scope names
+		 */
+		Parameters._getScopes = function(bAvoidLoading) {
+			if ( bAvoidLoading && !mParameters ) {
+				return;
+			}
+			var oParams = getParameters();
+			var aScopes = Object.keys(oParams["scopes"]);
+			return aScopes;
+		};
+
+		/**
+		 * Returns the active scope(s) for a given control by looking up the hierarchy.
+		 *
+		 * The lookup navigates the DOM hierarchy if it's available. Otherwise if controls aren't rendered yet,
+		 * it navigates the control hierarchy. By navigating the control hierarchy, inner-html elements
+		 * with the respective scope classes can't get recognized as the Custom Style Class API does only for
+		 * root elements.
+		 *
+		 * @private
+		 * @sap-restricted sap.viz
+		 * @param {object} oElement element/control instance
+		 * @return {array<array<string>>} Two dimensional array with scopes in bottom up order
+		 */
+		Parameters.getActiveScopesFor = function(oElement) {
+			var aScopeChain = [];
+
+			if (oElement instanceof Element) {
+				var domRef = oElement.getDomRef();
+
+				// make sure to first load all pending parameters
+				// doing it later (lazy) might change the behavior in case a scope is initially not defined
+				loadPendingLibraryParameters();
+
+				// check for scopes and try to find the classes in parent chain
+				var aScopes = this._getScopes();
+
+				if (domRef) {
+					var fnNodeHasStyleClass = function(sScopeName) {
+						var scopeList = domRef.classList;
+						return scopeList && scopeList.contains(sScopeName);
+					};
+
+					while (domRef) {
+						var aFoundScopeClasses = aScopes.filter(fnNodeHasStyleClass);
+						if (aFoundScopeClasses.length > 0) {
+							aScopeChain.push(aFoundScopeClasses);
+						}
+						domRef = domRef.parentNode;
+					}
+				} else {
+					var fnControlHasStyleClass = function(sScopeName) {
+						return typeof oElement.hasStyleClass === "function" && oElement.hasStyleClass(sScopeName);
+					};
+
+					while (oElement) {
+						var aFoundScopeClasses = aScopes.filter(fnControlHasStyleClass);
+						if (aFoundScopeClasses.length > 0) {
+							aScopeChain.push(aFoundScopeClasses);
+						}
+						oElement = typeof oElement.getParent === "function" && oElement.getParent();
+					}
+				}
+			}
+			return aScopeChain;
+		};
+
+		/**
+		 * Returns the current value for one or more theming parameters, depending on the given arguments.
+		 * <ul>
+		 * <li>If no parameter is given a key-value map containing all parameters is returned</li>
+		 * <li>If a <code>string</code> is given as first parameter the value is returned as a <code>string</code></li>
+		 * <li>If an <code>array</code> is given as first parameter a key-value map containing all parameters from the <code>array</code> is returned</li>
+		 * </ul>
+		 * <p>The returned key-value maps are a copy so changing values in the map does not have any effect</p>
+		 *
+		 * @param {string | string[]} vName the (array with) CSS parameter name(s)
+		 * @param {sap.ui.core.Element} [oElement]
+		 *                           Element / control instance to take into account when looking for a parameter value.
+		 *                           This can make a difference when a parameter value is overridden in a theme scope set via a CSS class.
+		 * @returns {string | object | undefined} the CSS parameter value(s)
 		 *
 		 * @public
 		 */
-		Parameters.get = function(sName, oControl) {
-			var sParam, oParams;
+		Parameters.get = function(vName, oElement) {
+			var sParam;
 
 			// Parameters.get() without arugments returns
 			// copy of complete default parameter set
 			if (arguments.length === 0) {
 				loadPendingLibraryParameters();
-				oParams = getParameters();
+				var oParams = getParameters();
 				return jQuery.extend({}, oParams["default"]);
 			}
 
-			if (typeof sName === "string") {
-
-				if (oControl instanceof Element) {
-					// make sure to first load all pending parameters
-					// doing it later (lazy) might change the behavior in case a scope is initially not defined
-					loadPendingLibraryParameters();
-
-					// check for scopes and try to find the classes in Control Tree
-					oParams = getParameters();
-					var aScopes = Object.keys(oParams["scopes"]);
-
-					var fnControlHasStyleClass = function(sScopeName) {
-						return typeof oControl.hasStyleClass === "function" && oControl.hasStyleClass(sScopeName);
-					};
-
-					while (oControl) {
-						var aFoundScopeClasses = aScopes.filter(fnControlHasStyleClass);
-						if (aFoundScopeClasses.length > 0) {
-							for (var i = 0; i < aFoundScopeClasses.length; i++) {
-								var sFoundScopeClass = aFoundScopeClasses[i];
-								sParam = getParam({
-									parameterName: sName,
-									scopeName: sFoundScopeClass
-								});
-								if (sParam) {
-									// return first matching scoped parameter
-									return sParam;
-								}
-							}
-						}
-						oControl = typeof oControl.getParent === "function" && oControl.getParent();
-					}
-
-					// if no matching scope was found return the default parameter (see below)
-				}
-
-				return getParam({
-					parameterName: sName,
-					loadPendingParameters: true
-				});
+			if (!vName) {
+				return undefined;
 			}
 
+			if (oElement instanceof Element) {
+				// make sure to first load all pending parameters
+				// doing it later (lazy) might change the behavior in case a scope is initially not defined
+				loadPendingLibraryParameters();
+
+				// check for scopes and try to find the classes in Control Tree
+				var aScopeChain = this.getActiveScopesFor(oElement);
+
+				if (typeof vName === "string") {
+
+					return getParamForActiveScope(vName, aScopeChain);
+
+				} else if (Array.isArray(vName)) {
+					var mParams = {};
+
+					for (var j = 0; j < vName.length; j++) {
+						var sParamName = vName[j];
+
+						mParams[sParamName] = getParamForActiveScope(sParamName, aScopeChain);
+					}
+
+					return mParams;
+				}
+			} else {
+				if (typeof vName === "string") {
+					sParam = getParam({
+						parameterName: vName,
+						loadPendingParameters: true
+					});
+					return sParam;
+				} else if (Array.isArray(vName)) {
+
+					var mParams = {};
+
+					for (var i = 0; i < vName.length; i++) {
+						var sParamName = vName[i];
+						mParams[sParamName] = Parameters.get(sParamName);
+					}
+
+					return mParams;
+				}
+			}
 		};
 
 		/**

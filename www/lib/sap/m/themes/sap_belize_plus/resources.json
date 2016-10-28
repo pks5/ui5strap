@@ -11,7 +11,22 @@
       "theme": "sap_belize_plus"
     },
     {
-      "name": "FeedContent.less",
+      "name": "CheckBox.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "Dialog.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "DynamicPageHeader.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "DynamicPageTitle.less",
       "designtime": true,
       "theme": "sap_belize_plus"
     },
@@ -26,7 +41,42 @@
       "theme": "sap_belize_plus"
     },
     {
+      "name": "FlexibleColumnLayout.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "IconTabBar.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
       "name": "ImageContent.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "InputBase.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "Link.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ListBase.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ListItemBase.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "MessageToast.less",
       "designtime": true,
       "theme": "sap_belize_plus"
     },
@@ -36,7 +86,12 @@
       "theme": "sap_belize_plus"
     },
     {
-      "name": "NotificationListItem.less",
+      "name": "NotificationListBase.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "NotificationListGroup.less",
       "designtime": true,
       "theme": "sap_belize_plus"
     },
@@ -46,7 +101,102 @@
       "theme": "sap_belize_plus"
     },
     {
+      "name": "ObjectAttribute.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ObjectMarker.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ObjectNumber.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ObjectStatus.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "Popover.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ProgressIndicator.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "RadioButton.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "RatingIndicator.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "SlideTile.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "Slider.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "StandardListItem.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "StandardTile.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "Switch.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "TabStrip.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "TileContent.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "TimePicker.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "Token.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
       "name": "UploadCollection.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ViewSettingsDialog.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "WizardProgressNavigator.less",
       "designtime": true,
       "theme": "sap_belize_plus"
     },

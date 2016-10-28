@@ -1005,7 +1005,7 @@
  * This API is independent from any other part of the UI5 framework. This allows it to be loaded beforehand, if it is needed, to create the UI5 bootstrap
  * dynamically depending on the capabilities of the browser or device.
  *
- * @version 1.38.7
+ * @version 1.40.7
  * @namespace
  * @name sap.ui.Device
  * @public
@@ -1031,7 +1031,7 @@ if (typeof window.sap.ui !== "object") {
 
 	//Skip initialization if API is already available
 	if (typeof window.sap.ui.Device === "object" || typeof window.sap.ui.Device === "function" ) {
-		var apiVersion = "1.38.7";
+		var apiVersion = "1.40.7";
 		window.sap.ui.Device._checkAPIVersion(apiVersion);
 		return;
 	}
@@ -1089,7 +1089,7 @@ if (typeof window.sap.ui !== "object") {
 
 	//Only used internal to make clear when Device API is loaded in wrong version
 	device._checkAPIVersion = function(sVersion){
-		var v = "1.38.7";
+		var v = "1.40.7";
 		if (v != sVersion) {
 			logger.log(WARNING, "Device API version differs: " + v + " <-> " + sVersion);
 		}
@@ -15268,7 +15268,7 @@ $.ui.position = {
 	"use strict";
 
 	if ( !jQuery ) {
-		throw new Error("SAPUI5 requires jQuery as a prerequisite (>= version 1.10)");
+		throw new Error("Loading of jQuery failed");
 	}
 
 	// ensure not to initialize twice
@@ -15469,8 +15469,10 @@ $.ui.position = {
 	// -----------------------------------------------------------------------
 
 	var oJQVersion = Version(jQuery.fn.jquery);
-	if ( !oJQVersion.inRange("1.10.1", "2.2.4") ) {
-		_earlyLog("error", "SAPUI5 requires a jQuery version of 1.10 or higher, but lower than 2.2.4; current version is " + jQuery.fn.jquery);
+	if ( oJQVersion.compareTo("2.2.3") != 0 ) {
+		// if the loaded jQuery version isn't SAPUI5's default version -> notify
+		// the application
+		_earlyLog("warning", "SAPUI5's default jQuery version is 2.2.3; current version is " + jQuery.fn.jquery + ". Please note that we only support version 2.2.3.");
 	}
 
 	// TODO move to a separate module? Only adds 385 bytes (compressed), but...
@@ -15671,7 +15673,7 @@ $.ui.position = {
 				var sDebugUrl = _oBootstrap.url.replace(/\/(?:sap-ui-cachebuster\/)?([^\/]+)\.js/, "/$1-dbg.js");
 				window["sap-ui-optimized"] = false;
 				document.write("<script type=\"text/javascript\" src=\"" + sDebugUrl + "\"></script>");
-				var oRestart = new Error("Aborting UI5 bootstrap and restarting from: " + sDebugUrl);
+				var oRestart = new Error("This is not a real error. Aborting UI5 bootstrap and restarting from: " + sDebugUrl);
 				oRestart.name = "Restart";
 				throw oRestart;
 			}
@@ -15791,7 +15793,7 @@ $.ui.position = {
 	/**
 	 * Root Namespace for the jQuery plug-in provided by SAP SE.
 	 *
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @namespace
 	 * @public
 	 * @static
@@ -17656,21 +17658,6 @@ $.ui.position = {
 				'sap/ui/thirdparty/jquery.js': {
 					amd: true
 				},
-				'sap/ui/thirdparty/jquery/jquery-1.10.1.js': {
-					amd: true
-				},
-				'sap/ui/thirdparty/jquery/jquery-1.10.2.js': {
-					amd: true
-				},
-				'sap/ui/thirdparty/jquery/jquery-1.11.1.js': {
-					amd: true
-				},
-				'sap/ui/thirdparty/jquery/jquery-2.1.4.js': {
-					amd: true
-				},
-				'sap/ui/thirdparty/jquery/jquery-2.2.1.js': {
-					amd: true
-				},
 				'sap/ui/thirdparty/jquery-mobile-custom.js': {
 					amd: true,
 					exports: 'jQuery.mobile'
@@ -18221,6 +18208,7 @@ $.ui.position = {
 						oModule.state = FAILED;
 						oModule.errorMessage = xhr ? xhr.status + " - " + xhr.statusText : textStatus;
 						oModule.errorStack = error && error.stack;
+						oModule.loadError = true;
 					}
 				});
 				/*eslint-enable no-loop-func */
@@ -18236,6 +18224,7 @@ $.ui.position = {
 			if ( oModule.state !== READY ) {
 				var oError = new Error("failed to load '" + sModuleName +  "' from " + oModule.url + ": " + oModule.errorMessage);
 				enhanceStacktrace(oError, oModule.errorStack);
+				oError.loadError = oModule.loadError;
 				throw oError;
 			}
 
@@ -18630,6 +18619,17 @@ $.ui.position = {
 		jQuery.sap.isDeclared = function isDeclared(sModuleName, bIncludePreloaded) {
 			sModuleName = ui5ToRJS(sModuleName) + ".js";
 			return mModules[sModuleName] && (bIncludePreloaded || mModules[sModuleName].state !== PRELOADED);
+		};
+
+		/**
+		 * Whether the given resource has been loaded (or preloaded).
+		 * @param {string} sResourceName Name of the resource to check, in unified resource name format
+		 * @returns {boolean} Whether the resource has been loaded already
+		 * @private
+		 * @sap-restricted sap.ui.core
+		 */
+		jQuery.sap.isResourceLoaded = function isResourceLoaded(sResourceName) {
+			return mModules[sResourceName];
 		};
 
 		/**
@@ -19179,9 +19179,15 @@ $.ui.position = {
 			return requireModule(sModuleName + ".js", true);
 		};
 
+		/**
+		 * @private
+		 * @deprecated
+		 */
 		jQuery.sap.preloadModules = function(sPreloadModule, bAsync, oSyncPoint) {
 
 			var sURL, iTask, sMsg;
+
+			jQuery.sap.log.error("[Deprecated] jQuery.sap.preloadModules was never a public API and will be removed soon. Migrate to Core.loadLibraries()!");
 
 			jQuery.sap.assert(!bAsync || oSyncPoint, "if mode is async, a syncpoint object must be given");
 
@@ -19204,15 +19210,21 @@ $.ui.position = {
 
 			log.debug("preload file " + sPreloadModule);
 			iTask = oSyncPoint && oSyncPoint.startTask("load " + sPreloadModule);
+
 			jQuery.ajax({
 				dataType : "json",
 				async : bAsync,
 				url : sURL,
 				success : function(data) {
 					if ( data ) {
-						data.url = sURL;
+						jQuery.sap.registerPreloadedModules(data, sURL);
+						// also preload dependencies
+						if ( Array.isArray(data.dependencies) ) {
+							data.dependencies.forEach(function(sDependency) {
+								jQuery.sap.preloadModules(sDependency, bAsync, oSyncPoint);
+							});
+						}
 					}
-					jQuery.sap.registerPreloadedModules(data, bAsync, oSyncPoint);
 					oSyncPoint && oSyncPoint.finishTask(iTask);
 				},
 				error : function(xhr, textStatus, error) {
@@ -19223,7 +19235,21 @@ $.ui.position = {
 
 		};
 
-		jQuery.sap.registerPreloadedModules = function(oData, bAsync, oSyncPoint) {
+		/**
+		 * Adds all resources from a preload bundle to the preload cache.
+		 *
+		 * When a resource exists already in the cache, the new content is ignored.
+		 *
+		 * @param {object} oData Preload bundle
+		 * @param {string} [oData.url] URL from which the bundle has been loaded
+		 * @param {string} [oData.name] Unique name of the bundle
+		 * @param {string} [oData.version='1.0'] Format version of the preload bundle
+		 * @param {object} oData.modules Map of resources keyed by their resource name; each resource must be a string or a function
+		 *
+		 * @private
+		 * @sap-restricted sap.ui.core,preloadfiles
+		 */
+		jQuery.sap.registerPreloadedModules = function(oData) {
 
 			var bOldSyntax = Version(oData.version || "1.0").compareTo("2.0") < 0;
 
@@ -19235,7 +19261,7 @@ $.ui.position = {
 				mPreloadModules[oData.name] = true;
 			}
 
-			jQuery.each(oData.modules, function(sName,sContent) {
+			jQuery.each(oData.modules, function(sName, sContent) {
 				sName = bOldSyntax ? ui5ToRJS(sName) + ".js" : sName;
 				Module.get(sName).preload(oData.url + "/" + sName, sContent, oData.name);
 				// when a library file is preloaded, also mark its preload file as loaded
@@ -19246,11 +19272,6 @@ $.ui.position = {
 				}
 			});
 
-			if ( oData.dependencies ) {
-				jQuery.each(oData.dependencies, function(idx,sModuleName) {
-					jQuery.sap.preloadModules(sModuleName, bAsync, oSyncPoint);
-				});
-			}
 		};
 
 		/**
@@ -19302,13 +19323,19 @@ $.ui.position = {
 		/**
 		 * Converts a UI5 module name to a unified resource name.
 		 *
-		 * Used by View and Fragment APIs to convert a given module name into an URN.
+		 * Used by View and Fragment APIs to convert a given module name into a unified resource name.
+		 * When the <code>sSuffix</code> is not given, the suffix '.js' is added. This fits the most
+		 * common use case of converting a module name to the Javascript resource that contains the
+		 * module. Note that an empty <code>sSuffix</code> is not replaced by '.js'. This allows to
+		 * convert UI5 module names to requireJS module names with a call to this method.
 		 *
-		 * @experimental Since 1.16.0, not for public usage yet.
+		 * @param {string} sModuleName Module name as a dot separated name
+		 * @param {string} [sSuffix='.js'] Suffix to add to the final resource name
 		 * @private
+		 * @sap-restricted sap.ui.core
 		 */
 		jQuery.sap.getResourceName = function(sModuleName, sSuffix) {
-			return ui5ToRJS(sModuleName) + (sSuffix || ".js");
+			return ui5ToRJS(sModuleName) + (sSuffix == null ? ".js" : sSuffix);
 		};
 
 		/**
@@ -20143,10 +20170,10 @@ $.ui.position = {
 		if (document.readyState == "complete") {
 			var lockDiv = document.createElement("div");
 			lockDiv.style.position = "absolute";
-			lockDiv.style.top = "0px";
-			lockDiv.style.bottom = "0px";
-			lockDiv.style.left = "0px";
-			lockDiv.style.right = "0px";
+			lockDiv.style.top = "-1000px";
+			lockDiv.style.bottom = "-1000px";
+			lockDiv.style.left = "-1000px";
+			lockDiv.style.right = "-1000px";
 			lockDiv.style.opacity = "0";
 			lockDiv.style.backgroundColor = "white";
 			lockDiv.style.zIndex = 2147483647; // Max value of signed integer (32bit)

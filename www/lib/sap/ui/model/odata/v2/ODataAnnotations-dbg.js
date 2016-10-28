@@ -5,8 +5,8 @@
  */
 
 // Provides class sap.ui.model.odata.v2.ODataAnnotations
-sap.ui.define(['sap/ui/model/odata/AnnotationParser', 'sap/ui/Device', 'sap/ui/base/EventProvider'],
-	function(AnnotationParser, Device, EventProvider) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/model/odata/AnnotationParser', 'sap/ui/Device', 'sap/ui/base/EventProvider'],
+	function(jQuery, AnnotationParser, Device, EventProvider) {
 	"use strict";
 
 	///////////////////////////////////////////////// Hidden Functions /////////////////////////////////////////////////
@@ -41,7 +41,7 @@ sap.ui.define(['sap/ui/model/odata/AnnotationParser', 'sap/ui/Device', 'sap/ui/b
 	 *
 	 * @author SAP SE
 	 * @version
-	 * 1.38.7
+	 * 1.40.7
 	 *
 	 * @public
 	 * @since 1.37.0

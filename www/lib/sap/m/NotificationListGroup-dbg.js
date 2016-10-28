@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Notif
 	 * @extends sap.m.NotificationListBase
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -41,7 +41,12 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Notif
 				/**
 				 * Determines if the group will automatically set the priority based on the highest priority of its notifications or get its priority from the developer.
 				 */
-				autoPriority: {type: 'boolean', group: 'Behavior', defaultValue: true}
+				autoPriority: {type: 'boolean', group: 'Behavior', defaultValue: true},
+
+				/**
+				 * Determines if the group header/footer of the empty group will be always shown. By default groups with 0 notifications are not shown.
+				 */
+				showEmptyGroup: {type: 'boolean', group: 'Behavior', defaultValue: false}
 			},
 			aggregations: {
 
@@ -141,9 +146,12 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Notif
 		var resourceBundle = sap.ui.getCore().getLibraryResourceBundle('sap.m');
 		var expandText = resourceBundle.getText('NOTIFICATION_LIST_GROUP_EXPAND');
 		var collapseText = resourceBundle.getText('NOTIFICATION_LIST_GROUP_COLLAPSE');
+		var disableExpandLink = this.getShowEmptyGroup() && (this._getVisibleItemsCount() === 0);
 
 		//Making sure the Expand/Collapse link text is set correctly
-		this.getAggregation('_collapseButton').setText(this.getCollapsed() ? expandText : collapseText);
+		this.getAggregation('_collapseButton').setText(this.getCollapsed() ? expandText : collapseText).setEnabled(!disableExpandLink);
+
+
 	};
 
 	NotificationListGroup.prototype.clone = function () {
@@ -230,6 +238,18 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './Notif
 
 		return firstPriority;
 	}
+		NotificationListGroup.prototype._getVisibleItemsCount = function() {
+		var aItems = this.getItems(),
+			result = 0;
+		aItems.forEach(function (item) {
+			if (item.getVisible()) {
+				result++;
+			}
+		});
+
+		return result;
+
+	};
 
 	return NotificationListGroup;
 }, /* bExport= */ true);

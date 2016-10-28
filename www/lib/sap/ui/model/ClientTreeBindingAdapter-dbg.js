@@ -36,6 +36,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', 'sap/ui/model/Cl
 
 			this._invalidTree = true;
 
+			// TODO: Decide if the tree state feature should be available for ClientModels
+			//-> remove comments if yes
+
+			// restore old tree state if given
+			//if (this.mParameters.treeState) {
+			//	this.setTreeState(this.mParameters.treeState);
+			//}
+
 			//set the default auto expand mode
 			this.setNumberOfExpandedLevels(this.mParameters.numberOfExpandedLevels || 0);
 		};
@@ -168,6 +176,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/TreeBinding', 'sap/ui/model/Cl
 				this._aRowIndexMap = []; // clear cache to prevent inconsistent state between cache and real tree
 				TreeBindingAdapter.prototype._buildTree.call(this, iStartIndex, iLength);
 			}
+		};
+
+		/**
+		 * Calculate the request length based on the given information
+		 *
+		 * Because client treebinding knows all of the data from the very beginning, it should simply return the the
+		 * maximum group size without looking at the current section.
+		 *
+		 * @override
+		 */
+		ClientTreeBindingAdapter.prototype._calculateRequestLength = function(iMaxGroupSize, oSection) {
+			return iMaxGroupSize;
 		};
 
 		ClientTreeBindingAdapter.prototype.getLength = function() {

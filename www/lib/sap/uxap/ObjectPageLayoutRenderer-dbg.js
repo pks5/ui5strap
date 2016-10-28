@@ -20,7 +20,7 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 				oAnchorBar = null,
 				bIsHeaderContentVisible = oControl.getHeaderContent() && oControl.getHeaderContent().length > 0 && oControl.getShowHeaderContent(),
 				bIsTitleInHeaderContent = oControl.getShowTitleInHeaderContent() && oControl.getShowHeaderContent(),
-				bRenderHeaderContent = 	bIsHeaderContentVisible || bIsTitleInHeaderContent;
+				bRenderHeaderContent = bIsHeaderContentVisible || bIsTitleInHeaderContent;
 
 			if (oControl.getShowAnchorBar() && oControl._getInternalAnchorBarVisible()) {
 				oAnchorBar = oControl.getAggregation("_anchorBar");
@@ -37,11 +37,17 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 			oRm.writeStyles();
 			oRm.write(">");
 
+            // custom scrollbar
+			if (sap.ui.Device.system.desktop) {
+				oRm.renderControl(oControl._getCustomScrollBar().addStyleClass("sapUxAPObjectPageCustomScroller"));
+			}
+
 			// Header
 			oRm.write("<header ");
 			oRm.writeAttribute("role", "header");
 			oRm.writeAttributeEscaped("id", oControl.getId() + "-headerTitle");
 			oRm.addClass("sapUxAPObjectPageHeaderTitle");
+			oRm.addClass("sapContrastPlus");
 			oRm.writeClasses();
 			oRm.write(">");
 			if (oHeader) {
@@ -49,9 +55,7 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 			}
 
 			// Sticky Header Content
-			if (bRenderHeaderContent) {
-				this._renderHeaderContentDOM(oRm, oControl, oControl._bHContentAlwaysExpanded, "-stickyHeaderContent");
-			}
+			this._renderHeaderContentDOM(oRm, oControl, bRenderHeaderContent && oControl._bHContentAlwaysExpanded, "-stickyHeaderContent");
 
 			// Sticky anchorBar placeholder
 			oRm.write("<div ");
@@ -84,9 +88,7 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 			oRm.write(">");
 
 			// Header Content
-			if (bRenderHeaderContent) {
-				this._renderHeaderContentDOM(oRm, oControl, !oControl._bHContentAlwaysExpanded, "-headerContent");
-			}
+			this._renderHeaderContentDOM(oRm, oControl, bRenderHeaderContent && !oControl._bHContentAlwaysExpanded, "-headerContent",  true);
 
 			// Anchor Bar
 			oRm.write("<section ");
@@ -94,6 +96,7 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 			// write ARIA role
 			oRm.writeAttribute("role", "navigation");
 			oRm.addClass("sapUxAPObjectPageNavigation");
+			oRm.addClass("sapContrastPlus");
 			oRm.writeClasses();
 			oRm.write(">");
 
@@ -104,6 +107,7 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 			// Content section
 			oRm.write("<section");
 			oRm.addClass("sapUxAPObjectPageContainer");
+			oRm.addClass("ui-helper-clearfix");
 			if (!oAnchorBar) {
 				oRm.addClass("sapUxAPObjectPageContainerNoBar");
 			}
@@ -127,6 +131,7 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 			oRm.write("</div>");  // END scroll
 
 			oRm.write("</div>"); // END wrapper
+			this._renderFooterContentInternal(oRm, oControl);
 
 			oRm.write("</div>"); // END page
 		};
@@ -165,12 +170,15 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 		 * @param sId - the id of the div that should be rendered
 		 * @param bRenderAlways - shows if the DOM of the control should be rendered no matter if the control is rendered inside or not
 		 */
-		ObjectPageLayoutRenderer._renderHeaderContentDOM = function (oRm, oControl, bRender, sId) {
+		ObjectPageLayoutRenderer._renderHeaderContentDOM = function (oRm, oControl, bRender, sId, bApplyBelizePlusClass) {
 			oRm.write("<header ");
 			oRm.writeAttributeEscaped("id", oControl.getId() + sId);
 			oRm.addClass("ui-helper-clearfix");
 			oRm.addClass("sapUxAPObjectPageHeaderDetails");
 			oRm.addClass("sapUxAPObjectPageHeaderDetailsDesign-" + oControl._getHeaderDesign());
+			if (bApplyBelizePlusClass) {
+				oRm.addClass("sapContrastPlus");
+			}
 			oRm.writeClasses();
 			oRm.writeAttribute("data-sap-ui-customfastnavgroup", true);
 			oRm.write(">");
@@ -198,8 +206,36 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 		 * @param {sap.ui.core.Control} oControl an object representation of the control that should be rendered
 		 */
 		ObjectPageLayoutRenderer.renderFooterContent = function (oRm, oControl) {
+
 		};
 
+		/**
+		 * This internal method is called to render objectpagelayout footer content
+		 *
+		 * @param {sap.ui.core.RenderManager} oRm the RenderManager that can be used for writing to the render output buffer
+		 * @param {sap.ui.core.Control} oObjectPageLayout an object representation of the control that should be rendered
+		 */
+		ObjectPageLayoutRenderer._renderFooterContentInternal = function (oRm, oObjectPageLayout) {
+			var oFooter = oObjectPageLayout.getFooter();
+
+			if (!oFooter) {
+				return;
+			}
+
+			oRm.write("<footer");
+			oRm.writeAttributeEscaped("id", oObjectPageLayout.getId() + "-footerWrapper");
+			oRm.addClass("sapUxAPObjectPageFooter sapMFooter-CTX sapContrast sapContrastPlus");
+
+			if (!oObjectPageLayout.getShowFooter()) {
+				oRm.addClass("sapUiHidden");
+			}
+
+			oRm.writeClasses();
+			oRm.write(">");
+			oFooter.addStyleClass("sapUxAPObjectPageFloatingFooter");
+			oRm.renderControl(oFooter);
+			oRm.write("</footer>");
+		};
 
 		/**
 		 * This method is called to rerender headerContent
@@ -208,9 +244,9 @@ sap.ui.define(["sap/ui/core/Renderer", "./ObjectPageHeaderRenderer"],
 		 * @param {sap.ui.core.Control} oControl an object representation of the control that should be rendered
 		 */
 		ObjectPageLayoutRenderer._rerenderHeaderContentArea = function (oRm, oControl) {
-			var sId = oControl.getId();
+			var sHeaderContentDOMId = oControl._bHContentAlwaysExpanded ? "stickyHeaderContent" : "headerContent";
 			this.renderHeaderContent(oRm, oControl);
-			oRm.flush(jQuery.sap.byId(sId + "-headerContent")[0]);
+			oRm.flush(oControl.$(sHeaderContentDOMId)[0]);
 		};
 
 

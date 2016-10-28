@@ -24,6 +24,9 @@ sap.ui.define(['jquery.sap.global'],
 	 * @param {sap.ui.core.Control} oControl an object representation of the control that should be rendered
 	 */
 	NavContainerRenderer.render = function(rm, oControl) {
+
+		oControl._bRenderingInProgress = true;
+
 		// return immediately if control is invisible
 		if (!oControl.getVisible()) {
 			return;
@@ -65,6 +68,8 @@ sap.ui.define(['jquery.sap.global'],
 		}
 
 		rm.write("</div>");
+
+		oControl._bRenderingInProgress = false;
 	};
 
 

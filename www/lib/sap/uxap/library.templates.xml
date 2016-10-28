@@ -143,6 +143,9 @@
 	autoAdjustWidth: false, // boolean, since 1.16
 	textAlign: sap.ui.core.TextAlign.Initial, // sap.ui.core.TextAlign, since 1.28
 	textDirection: sap.ui.core.TextDirection.Inherit, // sap.ui.core.TextDirection, since 1.28
+	valueState: sap.ui.core.ValueState.None, // sap.ui.core.ValueState, since 1.40.2
+	valueStateText: "", // string, since 1.40.5
+	showSecondaryValues: false, // boolean, since 1.40
 	forceSelection: true, // boolean, since 1.34
 	upperCase: false, // boolean
 	tooltip: undefined, // sap.ui.core.TooltipBase
@@ -176,6 +179,9 @@
 	autoAdjustWidth="false"
 	textAlign="Initial"
 	textDirection="Inherit"
+	valueState="None"
+	valueStateText=""
+	showSecondaryValues="false"
 	forceSelection="true"
 	upperCase="false"
 	selectedItem=""
@@ -411,81 +417,6 @@
 		<tooltip></tooltip> <!-- sap.ui.core.TooltipBase -->
 		<dependents></dependents> <!-- sap.ui.core.Control, since 1.19 -->
 </ObjectPageHeaderLayoutData>
-]]></xmlTemplate>
-</Template>
-<Template name="sap.uxap.ObjectPageLayout" alias="ObjectPageLayout,Layout">
-	<jsTemplate><![CDATA[new sap.uxap.ObjectPageLayout({
-	id: "${id}", // sap.ui.core.ID
-	busy: false, // boolean
-	busyIndicatorDelay: 1000, // int
-	visible: true, // boolean
-	fieldGroupIds: [], // string[], since 1.31
-	showAnchorBar: true, // boolean
-	showAnchorBarPopover: true, // boolean
-	upperCaseAnchorBar: true, // boolean
-	height: "100%", // sap.ui.core.CSSSize
-	enableLazyLoading: false, // boolean
-	subSectionLayout: sap.uxap.ObjectPageSubSectionLayout.TitleOnTop, // sap.uxap.ObjectPageSubSectionLayout
-	useIconTabBar: false, // boolean
-	showHeaderContent: true, // boolean
-	useTwoColumnsForLargeScreen: false, // boolean
-	showTitleInHeaderContent: false, // boolean
-	showOnlyHighImportance: false, // boolean, since 1.32.0
-	isChildPage: false, // boolean, since 1.34.0
-	alwaysShowContentHeader: false, // boolean, since 1.34.0
-	showEditHeaderButton: false, // boolean, since 1.34.0
-	flexEnabled: false, // boolean, since 1.34.0
-	tooltip: undefined, // sap.ui.core.TooltipBase
-	customData: [], // sap.ui.core.CustomData
-	dependents: [], // sap.ui.core.Control, since 1.19
-	sections: [], // sap.uxap.ObjectPageSection
-	headerTitle: undefined, // sap.uxap.ObjectPageHeader
-	headerContent: [], // sap.ui.core.Control
-	validateFieldGroup: [function (oEvent) {
-		var ${control} = oEvent.getSource();
-	}, this],
-	toggleAnchorBar: [function (oEvent) {
-		var ${control} = oEvent.getSource();
-	}, this],
-	editHeaderButtonPress: [function (oEvent) {
-		var ${control} = oEvent.getSource();
-	}, this],
-	tabSelect: [function (oEvent) {
-		var ${control} = oEvent.getSource();
-	}, this]
-})
-]]></jsTemplate>
-	<xmlTemplate><![CDATA[<ObjectPageLayout xmlns="sap.uxap"
-	id="${id}"
-	busy="false"
-	busyIndicatorDelay="1000"
-	visible="true"
-	fieldGroupIds=""
-	showAnchorBar="true"
-	showAnchorBarPopover="true"
-	upperCaseAnchorBar="true"
-	height="100%"
-	enableLazyLoading="false"
-	subSectionLayout="TitleOnTop"
-	useIconTabBar="false"
-	showHeaderContent="true"
-	useTwoColumnsForLargeScreen="false"
-	showTitleInHeaderContent="false"
-	showOnlyHighImportance="false"
-	isChildPage="false"
-	alwaysShowContentHeader="false"
-	showEditHeaderButton="false"
-	flexEnabled="false"
-	validateFieldGroup=""
-	toggleAnchorBar=""
-	editHeaderButtonPress=""
-	tabSelect="">
-		<tooltip></tooltip> <!-- sap.ui.core.TooltipBase -->
-		<dependents></dependents> <!-- sap.ui.core.Control, since 1.19 -->
-		<sections></sections> <!-- sap.uxap.ObjectPageSection -->
-		<headerTitle></headerTitle> <!-- sap.uxap.ObjectPageHeader -->
-		<headerContent></headerContent> <!-- sap.ui.core.Control -->
-</ObjectPageLayout>
 ]]></xmlTemplate>
 </Template>
 <Template name="sap.uxap.ObjectPageLazyLoader" alias="ObjectPageLazyLoader,Loader">

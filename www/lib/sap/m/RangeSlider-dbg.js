@@ -19,7 +19,7 @@ sap.ui.define(["./Slider", "./Input", 'sap/ui/core/InvisibleText'],
          * @extends sap.m.Slider
          *
          * @author SAP SE
-         * @version 1.38.7
+         * @version 1.40.7
          *
          * @constructor
          * @public
@@ -83,15 +83,31 @@ sap.ui.define(["./Slider", "./Input", 'sap/ui/core/InvisibleText'],
         RangeSlider.prototype.exit = function () {
             this._oResourceBundle = null;
             this._aInitialFocusRange = null;
-            this._oRangeLabel.destroy();
+
+			if (this._oRangeLabel) {
+				this._oRangeLabel.destroy();
+			}
+
             this._oRangeLabel = null;
 
             if (this.getInputsAsTooltips()) {
-                this._mHandleTooltip.start.tooltip.destroy();
-                this._mHandleTooltip.end.tooltip.destroy();
+
+				if (this._mHandleTooltip.start.tooltip) {
+					this._mHandleTooltip.start.tooltip.destroy();
+				}
+
+				if (this._mHandleTooltip.end.tooltip) {
+					this._mHandleTooltip.end.tooltip.destroy();
+				}
             }
-            this._mHandleTooltip.start.label.destroy();
-            this._mHandleTooltip.end.label.destroy();
+
+			if (this._mHandleTooltip.start.label) {
+				this._mHandleTooltip.start.label.destroy();
+			}
+
+			if (this._mHandleTooltip.end.label) {
+				this._mHandleTooltip.end.label.destroy();
+			}
 
             this._mHandleTooltip.start.handle = null;
             this._mHandleTooltip.start.tooltip = null;

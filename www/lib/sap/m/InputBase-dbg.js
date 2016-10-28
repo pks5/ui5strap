@@ -4,23 +4,23 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-// Provides control sap.m.InputBase.
-sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/core/EnabledPropagator', 'sap/ui/core/IconPool', 'sap/ui/core/Popup'],
-	function(jQuery, library, Control, EnabledPropagator, IconPool, Popup) {
+sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/core/EnabledPropagator', 'sap/ui/core/IconPool', 'sap/ui/core/Popup', './delegate/ValueStateMessage'],
+	function(jQuery, library, Control, EnabledPropagator, IconPool, Popup, ValueStateMessage) {
 	"use strict";
 
 	/**
-	 * Constructor for a new InputBase.
+	 * Constructor for a new <code>sap.m.InputBase</code>.
 	 *
 	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
 	 * @param {object} [mSettings] Initial settings for the new control
 	 *
 	 * @class
-	 * The <code>sap.m.InputBase</code> control provides a base functionality of the Input controls, e.g. <code>sap.m.Input</code>, <code>sap.m.DatePicker</code>, <code>sap.m.TextArea</code>, <code>sap.m.ComboBox</code>.
+	 * The <code>sap.m.InputBase</code> control provides a basic functionality for input controls.
+	 *
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -225,13 +225,13 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	/* Lifecycle methods                                           */
 	/* =========================================================== */
 
-	/**
+	/*
 	 * Initialization hook.
 	 *
 	 * TODO: respect hungarian notation for variables
-	 * @private
 	 */
 	InputBase.prototype.init = function() {
+
 		// last changed value
 		this._lastValue = "";
 
@@ -246,13 +246,10 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		 * Indicates whether the <code>focusout</code> event is triggered due a rendering.
 		 */
 		this.bFocusoutDueRendering = false;
+
+		this._oValueStateMessage = new ValueStateMessage(this);
 	};
 
-	/**
-	 * Required adaptations before rendering.
-	 *
-	 * @private
-	 */
 	InputBase.prototype.onBeforeRendering = function() {
 
 		if (this._bCheckDomValue && !this.bRenderingPhase) {
@@ -266,11 +263,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		this.bRenderingPhase = true;
 	};
 
-	/**
-	 * Required adaptations after rendering.
-	 *
-	 * @private
-	 */
 	InputBase.prototype.onAfterRendering = function() {
 
 		// maybe control is invalidated on keystrokes and
@@ -293,16 +285,13 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		this.bRenderingPhase = false;
 	};
 
-	/**
-	 * Cleans up before destruction.
-	 *
-	 * @private
-	 */
 	InputBase.prototype.exit = function() {
-		if (this._popup) {
-			this._popup.destroy();
-			this._popup = null;
+
+		if (this._oValueStateMessage) {
+			this._oValueStateMessage.destroy();
 		}
+
+		this._oValueStateMessage = null;
 	};
 
 	/* =========================================================== */
@@ -336,8 +325,11 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 									this._getInputElementTagName() === "INPUT"; // Make sure that we are applying this fix only for input html elements
 		this.$().toggleClass("sapMFocus", true);
 
-		// open value state message popup when focus is in the input
-		this.openValueStateMessage();
+		if (this.shouldValueStateMessageBeOpened()) {
+
+			// open value state message popup when focus is in the input
+			this.openValueStateMessage();
+		}
 	};
 
 	/**
@@ -460,6 +452,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @since 1.26
 	 */
 	InputBase.prototype.onValueRevertedByEscape = function(sValue) {
+
 		// fire private live change event
 		this.fireEvent("liveChange", {
 			value: sValue,
@@ -514,7 +507,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	/**
 	 * Handle DOM input event.
 	 *
-	 * This event is fired synchronously when the value of an <input> or <textarea> element is changed.
+	 * This event is fired synchronously when the value of an <code><input></code> or <code><textarea></code> element is changed.
 	 * IE9 does not fire an input event when the user removes characters via BACKSPACE / DEL / CUT
 	 * InputBase normalize this behaviour for IE9 and calls oninput for the subclasses
 	 *
@@ -527,6 +520,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @param {jQuery.Event} oEvent The event object.
 	 */
 	InputBase.prototype.oninput = function(oEvent) {
+
 		// ie 10+ fires the input event when an input field with a native placeholder is focused
 		if (this._bIgnoreNextInput) {
 			this._bIgnoreNextInput = false;
@@ -743,31 +737,39 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	};
 
 	/**
-	 * Close value state message.
+	 * Close value state message popup.
 	 *
 	 * @since 1.26
 	 * @protected
 	 */
-	InputBase.prototype.closeValueStateMessage = function (){
-		if (this._popup) {
-			this._popup.close(0);
+	InputBase.prototype.closeValueStateMessage = function() {
+		if (this._oValueStateMessage) {
+			this._oValueStateMessage.close();
 		}
-
-		this.$("inner").removeAriaDescribedBy(this.getId() + "-message");
 	};
 
 	/**
-	 * Get the reference element which the message popup should dock to.
+	 * Gets the reference element which the message popup should dock to.
 	 *
-	 * @return {object} DOM element which the message popup should dock to
+	 * @returns {object} DOM element which the message popup should dock to
 	 * @since 1.26
 	 * @protected
 	 */
-	InputBase.prototype.getDomRefForValueStateMessage = function(){
+	InputBase.prototype.getDomRefForValueStateMessage = function() {
 		return this.getFocusDomRef();
 	};
 
 	InputBase.prototype.iOpenMessagePopupDuration = 0;
+
+	/**
+	 * Gets the ID of the value state message.
+	 *
+	 * @returns {string} The ID of the value state message
+	 * @since 1.42
+	 */
+	InputBase.prototype.getValueStateMessageId = function() {
+		return this.getId() + "-message";
+	};
 
 	/**
 	 * Open value state message popup.
@@ -775,78 +777,10 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @since 1.26
 	 * @protected
 	 */
-	InputBase.prototype.openValueStateMessage = function (){
-
-		var sState = this.getValueState();
-		if (sState == sap.ui.core.ValueState.None ||
-			!this.getShowValueStateMessage() ||
-			!this.getEditable() ||
-			!this.getEnabled()) {
-			return;
+	InputBase.prototype.openValueStateMessage = function() {
+		if (this._oValueStateMessage) {
+			this._oValueStateMessage.open();
 		}
-
-		//get value state text
-		var sText = this.getValueStateText() || sap.ui.core.ValueStateSupport.getAdditionalText(this);
-
-		//create message popup
-		var sMessageId = this.getId() + "-message";
-		if (!this._popup) {
-			this._popup = new Popup(jQuery("<span></span>")[0] /* Just some dummy */, false, false, false);
-			this._popup.attachClosed(function () {
-				jQuery.sap.byId(sMessageId).remove();
-			});
-		}
-
-		var mDock = Popup.Dock;
-		var $Input = this.$("inner");
-		var sClass = "sapMInputBaseMessage sapMInputBaseMessage" + sState;
-		var sTextClass = "sapMInputBaseMessageText";
-		var oRB = sap.ui.getCore().getLibraryResourceBundle("sap.m");
-		if (sState === sap.ui.core.ValueState.Success) {
-			sClass = "sapUiInvisibleText";
-			sText = "";
-		}
-
-		var $Content = jQuery("<div>", {
-			"id": sMessageId,
-			"class": sClass,
-			"role": "tooltip",
-			"aria-live": "assertive"
-		}).append(
-			jQuery("<span>", {
-				"aria-hidden": true,
-				"class": "sapUiHidden",
-				"text": oRB.getText("INPUTBASE_VALUE_STATE_" + sState.toUpperCase())
-			})
-		).append(
-			jQuery("<span>", {
-				"id": sMessageId + "-text",
-				"class": sTextClass,
-				"text": sText
-			})
-		);
-
-		this._popup.setContent($Content[0]);
-		this._popup.close(0);
-		this._popup.open(
-			this.iOpenMessagePopupDuration,
-			mDock.BeginTop,
-			mDock.BeginBottom,
-			this.getDomRefForValueStateMessage(),
-			null,
-			null,
-			sap.ui.Device.system.phone ? true : Popup.CLOSE_ON_SCROLL
-		);
-
-		// Check whether popup is below or above the input
-		if ($Input.offset().top < $Content.offset().top) {
-			$Content.addClass("sapMInputBaseMessageBottom");
-		} else {
-			$Content.addClass("sapMInputBaseMessageTop");
-		}
-
-		$Input.addAriaDescribedBy(sMessageId);
-
 	};
 
 	InputBase.prototype.updateValueStateClasses = function(sValueState, sOldValueState) {
@@ -863,6 +797,13 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			$This.addClass("sapMInputBaseState sapMInputBase" + sValueState);
 			$Input.addClass("sapMInputBaseStateInner sapMInputBase" + sValueState + "Inner");
 		}
+	};
+
+	InputBase.prototype.shouldValueStateMessageBeOpened = function() {
+		return ((this.getValueState() !== sap.ui.core.ValueState.None) &&
+				this.getEditable() &&
+				this.getEnabled() &&
+				this.getShowValueStateMessage());
 	};
 
 	/* ----------------------------------------------------------- */
@@ -889,6 +830,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		}
 
 		var oDomRef = this.getDomRef();
+
 		if (!oDomRef) {
 			return this;
 		}
@@ -905,7 +847,11 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		this.updateValueStateClasses(sValueState, sOldValueState);
 
 		if ($Input[0] === document.activeElement) {
-			(sValueState == mValueState.None) ? this.closeValueStateMessage() : this.openValueStateMessage();
+			if (sValueState === mValueState.None) {
+				this.closeValueStateMessage();
+			} else if (this.shouldValueStateMessageBeOpened()) {
+				this.openValueStateMessage();
+			}
 		}
 
 		return this;
@@ -916,14 +862,14 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 *
 	 * Default value is empty/<code>undefined</code>.
 	 *
-	 * @param {string} sValueStateText  new value for property <code>valueStateText</code>
-	 * @return {sap.m.InputBase} <code>this</code> to allow method chaining
+	 * @param {string} sText New value for property <code>valueStateText</code>.
+	 * @returns {sap.m.InputBase} <code>this</code> to allow method chaining
 	 * @since 1.26
 	 * @public
 	 */
-	InputBase.prototype.setValueStateText = function (sText) {
+	InputBase.prototype.setValueStateText = function(sText) {
 		this.setProperty("valueStateText", sText, true);
-		this.$("message-text").text( this.getValueStateText() );
+		this.$("message").text(this.getValueStateText());
 		return this;
 	};
 

@@ -29,7 +29,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -362,13 +362,14 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control'],
 	 * This overrides the default setter of the activeSrc property in order to avoid the rerendering.
 	 *
 	 * @param {sap.ui.core.URI} sActiveSrc
+	 * @returns {sap.m.Image} <code>this</code> pointer for chaining
 	 * @public
 	 */
 	Image.prototype.setActiveSrc = function(sActiveSrc) {
 		if (!sActiveSrc) {
 			sActiveSrc = "";
 		}
-		this.setProperty("activeSrc", sActiveSrc, true);
+		return this.setProperty("activeSrc", sActiveSrc, true);
 	};
 
 	Image.prototype.attachPress = function() {

@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './ListI
          * @extends sap.m.ListItemBase
          *
          * @author SAP SE
-         * @version 1.38.7
+         * @version 1.40.7
          *
          * @constructor
          * @public
@@ -124,7 +124,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', './ListI
                 },
                 events: {
                     /**
-                     * Fired when the notification is closed.
+                     * Fired when the close button of the notification is pressed.<br><b>Note:</b> Pressing the close button doesn't destroy the notification automatically.
                      */
                     close: {}
 

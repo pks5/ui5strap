@@ -4,7 +4,7 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-sap.ui.define(["sap/m/semantic/SemanticConfiguration", "sap/ui/base/ManagedObject", "sap/ui/core/Element"], function (SemanticConfiguration, ManagedObject, Element) {
+sap.ui.define(['jquery.sap.global', "sap/m/semantic/SemanticConfiguration", "sap/ui/base/ManagedObject", "sap/ui/core/Element"], function (jQuery, SemanticConfiguration, ManagedObject, Element) {
 	"use strict";
 
 	/**
@@ -20,7 +20,7 @@ sap.ui.define(["sap/m/semantic/SemanticConfiguration", "sap/ui/base/ManagedObjec
 	 * @abstract
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -153,6 +153,34 @@ sap.ui.define(["sap/m/semantic/SemanticConfiguration", "sap/ui/base/ManagedObjec
 
 	SemanticControl.prototype.getDomRef = function(sSuffix) {
 		return this._getControl().getDomRef(sSuffix);
+	};
+
+	SemanticControl.prototype.addEventDelegate = function (oDelegate, oThis) {
+
+		jQuery.each(oDelegate, function(sEventType, fnCallback) {
+
+			if (typeof fnCallback === 'function') {
+
+				/* replace oEvent.srcControl with the semantic control
+				to prevent exposing the inner control */
+				var fnProxy = function(oEvent) {
+					oEvent.srcControl = this;
+					fnCallback.call(oThis, oEvent);
+				}.bind(this);
+
+				oDelegate[sEventType] = fnProxy;
+			}
+		}.bind(this));
+
+		this._getControl().addEventDelegate(oDelegate, oThis);
+
+		return this;
+	};
+
+	SemanticControl.prototype.removeEventDelegate = function (oDelegate) {
+
+		this._getControl().removeEventDelegate(oDelegate);
+		return this;
 	};
 
 	SemanticControl.prototype._getConfiguration = function () {

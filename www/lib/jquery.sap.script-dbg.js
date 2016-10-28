@@ -29,6 +29,24 @@ sap.ui.define(['jquery.sap.global'],
 	};
 
 	/**
+	 * This function generates a hash-code from a string
+	 * @param {string} sString The string to generate the hash-code from
+	 * @return {int} The generated hash-code
+	 * @since 1.39
+	 * @private
+	 */
+	jQuery.sap.hashCode = function(sString) {
+		var i = sString.length, iHash = 0;
+
+		while (i--) {
+			iHash = (iHash << 5) - iHash + sString.charCodeAt(i);
+			iHash = iHash & iHash; // convert to 32 bit
+		}
+
+		return iHash;
+	};
+
+	/**
 	 * Calls a method after a given delay and returns an id for this timer
 	 *
 	 * @param {int} iDelay Delay time in milliseconds
@@ -99,7 +117,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Use {@link jQuery.sap.getUriParameters} to create an instance of jQuery.sap.util.UriParameters.
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.UriParameters
 	 * @public
@@ -403,26 +421,6 @@ sap.ui.define(['jquery.sap.global'],
 				//	 spec but might be unexpected for some callers
 			};
 		}());
-
-	/**
-	 * This function generates a hash-code from a string
-	 * @param {string} sString The string to generate the hash-code from
-	 * @return {integer} The generated hash-code
-	 * @since 1.39
-	 * @private
-	 */
-	jQuery.sap.hashCode = function(sString) {
-		var iHash, iLength, iCharCode, i;
-		iHash = 0;
-		iLength = sString.length;
-
-		for (i = 0; i < iLength; i++) {
-			iCharCode = sString.charCodeAt(i);
-			iHash = (iHash << 5) - iHash + iCharCode;
-			iHash = iHash & iHash;
-		}
-		return iHash;
-	};
 
 	/**
 	 * Calculate delta of old list and new list

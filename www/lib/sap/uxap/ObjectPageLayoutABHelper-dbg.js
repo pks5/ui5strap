@@ -142,7 +142,6 @@ sap.ui.define([
 				});
 
 				oButtonClone.addEventDelegate(oEventDelegatesForkeyBoardHandler);
-
 				//has a ux rule been applied that we need to reflect here?
 				var sTitle = (oSectionBase._getInternalTitle() != "") ? oSectionBase._getInternalTitle() : oSectionBase.getTitle();
 				oButtonClone.setText(sTitle);

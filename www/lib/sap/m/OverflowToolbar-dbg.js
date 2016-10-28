@@ -34,10 +34,11 @@ sap.ui.define([
 	 * The OverflowToolbar control is a container based on sap.m.Toolbar, that provides overflow when its content does not fit in the visible area.
 	 *
 	 * Note: It is recommended that you use OverflowToolbar over {@link sap.m.Toolbar}, unless you want to avoid overflow in favor of shrinking.
-	 * @extends sap.ui.core.Toolbar
+	 * @extends sap.m.Toolbar
+	 * @implements sap.ui.core.Toolbar,sap.m.IBar
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -680,6 +681,9 @@ sap.ui.define([
 
 	OverflowToolbar.prototype.removeContent = function (oControl) {
 		var vContent = this._callToolbarMethod("removeContent", arguments);
+		if (vContent) {
+			this._getPopover().removeAssociatedContent(vContent.getId());
+		}
 		this._resetAndInvalidateToolbar(false);
 
 		this._postProcessControl(vContent);
@@ -940,6 +944,17 @@ sap.ui.define([
 
 	OverflowToolbar.prototype.onThemeChanged = function() {
 		this._resetAndInvalidateToolbar();
+	};
+
+	/**
+	 * Closes the overflow area.
+	 * Useful to manually close the overflow after having suppressed automatic closing with "closeOverflowOnInteraction=false".
+	 *
+	 * @public
+	 * @since 1.40
+	 */
+	OverflowToolbar.prototype.closeOverflow = function () {
+		this._getPopover().close();
 	};
 
 	return OverflowToolbar;

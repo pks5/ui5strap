@@ -26,7 +26,7 @@ function(Plugin, DOMUtil, OverlayUtil, ElementUtil) {
 	 * @extends sap.ui.dt.plugin.Plugin
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @private

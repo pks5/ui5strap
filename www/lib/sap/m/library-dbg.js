@@ -22,14 +22,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/base/DataType',
 	 * @namespace
 	 * @name sap.m
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.m",
-		version: "1.38.7",
+		version: "1.40.7",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.m.BackgroundDesign",
@@ -54,8 +54,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/base/DataType',
 			"sap.m.ImageMode",
 			"sap.m.Size",
 			"sap.m.ValueColor",
+			"sap.m.ValueCSSColor",
 			"sap.m.InputType",
 			"sap.m.LabelDesign",
+			"sap.m.ListGrowingDirection",
 			"sap.m.ListHeaderDesign",
 			"sap.m.ListKeyboardMode",
 			"sap.m.ListMode",
@@ -199,6 +201,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/base/DataType',
 			"sap.m.Shell",
 			"sap.m.Slider",
 			"sap.m.SlideTile",
+			"sap.m.StepInput",
 			"sap.m.SplitApp",
 			"sap.m.SplitContainer",
 			"sap.m.StandardListItem",
@@ -1057,9 +1060,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/base/DataType',
 
 	/**
 	 *
-	 *   Marker interface for controls which are suitable as items for the IconTabBar.
-	 *   These controls must implement a method isSelectable().
-	 *
+	 * Represents an interface for controls, which are suitable as items for the sap.m.IconTabBar.
+	 * The classes which implement this interface are:
+	 * - sap.m.IconTabFilter
+	 * - sap.m.IconTabSeparator
 	 *
 	 * @name sap.m.IconTab
 	 * @interface
@@ -1103,6 +1107,25 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/base/DataType',
 	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
 	 */
 
+	/**
+	 * Specifies <code>IconTabBar</code> header mode.
+	 *
+	 * @enum {string}
+	 * @public
+	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
+	 */
+	sap.m.IconTabHeaderMode = {
+
+		/**
+		 * Standard. In this mode when the <code>count</code> and the <code>text</code> are set, they are displayed in two separate lines.
+		 */
+		Standard : "Standard",
+
+		/**
+		 * Inline. In this mode when the <code>count</code> and the <code>text</code> are set, they are displayed in one line.
+		 */
+		Inline : "Inline"
+	};
 
 		/**
 	 * Available Filter Item Design.
@@ -1467,6 +1490,31 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/base/DataType',
 		 * @public
 		 */
 		Edit : "Edit"
+
+	};
+
+	/**
+	 * Defines the growing direction of the <code>sap.m.List</code> or <code>sap.m.Table</code>.
+	 *
+	 * @enum {string}
+	 * @public
+	 * @since 1.40.0
+	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
+	 */
+	sap.m.ListGrowingDirection = {
+
+		/**
+		 * User has to scroll down to load more items or the growing button is displayed at the bottom.
+		 * @public
+		 */
+		Downwards : "Downwards",
+
+		/**
+		 * User has to scroll up to load more items or the growing button is displayed at the top.
+		 * <b>Note:</b> If this option is active, there should not be any other control than <code>sap.m.List</code> inside its <code>ScollContainer</code>.
+		 * @public
+		 */
+		Upwards : "Upwards"
 
 	};
 

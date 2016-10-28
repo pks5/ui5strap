@@ -174,7 +174,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Manifest', '
 	 * @extends sap.ui.base.ManagedObject
 	 * @abstract
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @alias sap.ui.core.Component
 	 * @since 1.9.2
 	 */
@@ -798,7 +798,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Manifest', '
 	 * @public
 	 * @since 1.37.0
 	 */
-	sap.ui.core.Component.prototype.getService = function(sLocalServiceAlias) {
+	Component.prototype.getService = function(sLocalServiceAlias) {
 
 		// require the Service Factory Registry on-demand
 		var ServiceFactoryRegistry = sap.ui.requireSync("sap/ui/core/service/ServiceFactoryRegistry");
@@ -873,7 +873,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Manifest', '
 	 * @name sap.ui.core.Component.prototype.init
 	 * @protected
 	 */
-	//sap.ui.core.Component.prototype.init = function() {};
+	//Component.prototype.init = function() {};
 
 	/**
 	 * Cleans up the Component instance before destruction.
@@ -888,7 +888,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Manifest', '
 	 * @name sap.ui.core.Component.prototype.exit
 	 * @protected
 	 */
-	//sap.ui.core.Component.prototype.exit = function() {};
+	//Component.prototype.exit = function() {};
 
 
 	/**
@@ -1291,14 +1291,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Manifest', '
 	};
 
 	/**
-	 * Callback handler which will be executed once the component is loaded. The
-	 * configuration object will be passed into the registered function but must not
-	 * be modified. Also a return value is not expected from the callback handler.
+	 * Callback handler which will be executed once the component is loaded. A copy of the
+	 * configuration object together with a copy of the manifest object will be passed into
+	 * the registered function.
+	 * Also a return value is not expected from the callback handler.
 	 * It will only be called for asynchronous manifest first scenarios.
 	 * <p>
 	 * Example usage:
 	 * <pre>
-	 * sap.ui.core.Component._fnLoadComponentCallback = function(oConfig) {
+	 * sap.ui.core.Component._fnLoadComponentCallback = function(oConfig, oManifest) {
 	 *   // do some logic with the config
 	 * }
 	 * </pre>
@@ -1505,20 +1506,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Manifest', '
 	*/
 	function loadComponent(oConfig, mOptions) {
 
-		// if a callback is registered to the component load call it with the configuration
-		if (typeof Component._fnLoadComponentCallback === "function") {
-			// secure configuration from manipulation
-			var oConfigCopy = jQuery.extend(true, {}, oConfig);
-			Component._fnLoadComponentCallback(oConfigCopy);
-		}
-
 		var sName = oConfig.name,
 			sUrl = oConfig.url,
 			oConfiguration = sap.ui.getCore().getConfiguration(),
 			bComponentPreload = /^(sync|async)$/.test(oConfiguration.getComponentPreload()),
 			bManifestFirst = typeof oConfig.manifestFirst !== "undefined" ? oConfig.manifestFirst : oConfiguration.getManifestFirst(),
 			oManifest,
-			mModels;
+			mModels,
+			fnCallLoadComponentCallback;
 
 		// set the name of this newly loaded component at the interaction measurement,
 		// as otherwise this would be the outer component from where it was called,
@@ -1837,6 +1832,24 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Manifest', '
 					// preload the component
 					return preload(sComponentName, true);
 				}));
+
+				fnCallLoadComponentCallback = function(oLoadedManifest) {
+					// if a callback is registered to the component load call it with the configuration
+					if (typeof Component._fnLoadComponentCallback === "function") {
+						// secure configuration and manifest from manipulation
+						var oConfigCopy = jQuery.extend(true, {}, oConfig);
+						var oManifestCopy = jQuery.extend(true, {}, oLoadedManifest);
+						// trigger the callback with a copy if its required data
+						// do not await any result from the callback nor stop component loading on an occurring error
+						try {
+							Component._fnLoadComponentCallback(oConfigCopy, oManifestCopy);
+						} catch (oError) {
+							jQuery.sap.log.error("Callback for loading the component \"" + oManifest.getComponentName() +
+								"\" run into an error. The callback was skipped and the component loading resumed.",
+								oError, "sap.ui.core.Component");
+						}
+					}
+				};
 			}
 
 			// if a hint about "used" components is given, preload those components
@@ -1849,7 +1862,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/base/ManagedObject', './Manifest', '
 			}
 
 			// combine given promises
-			return Promise.all(promises).then(function(v) {
+			return Promise.all(promises).then(function (v) {
+				// after all promises including the loading of dependent libs have been resolved
+				// pass the manifest to the callback function in case the manifest is present and a callback was set
+				if (oManifest && fnCallLoadComponentCallback) {
+					oManifest.then(fnCallLoadComponentCallback);
+				}
+				return v;
+			}).then(function(v) {
 				jQuery.sap.log.debug("Component.load: all promises fulfilled, then " + v);
 				if (oManifest) {
 					return oManifest.then(function(oLoadedManifest) {

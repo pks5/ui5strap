@@ -17,7 +17,7 @@ sap.ui.define([
 	 * @param {object} [mSettings] initial settings for the new control
 	 * @class Type for <code>groupItems</code> aggregation in P13nGroupPanel control.
 	 * @extends sap.ui.core.Item
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @public
 	 * @alias sap.m.P13nGroupItem
@@ -62,6 +62,18 @@ sap.ui.define([
 			}
 		}
 	});
+
+	P13nGroupItem.prototype.setColumnKey = function(v) {
+		return this.setProperty("columnKey", v, true);
+	};
+
+	P13nGroupItem.prototype.setOperation = function(v) {
+		return this.setProperty("operation", v, true);
+	};
+
+	P13nGroupItem.prototype.setShowIfGrouped = function(v) {
+		return this.setProperty("showIfGrouped", v, true);
+	};
 
 	return P13nGroupItem;
 

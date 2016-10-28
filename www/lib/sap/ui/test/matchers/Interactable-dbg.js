@@ -4,7 +4,12 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-sap.ui.define(['jquery.sap.global', './Matcher', './Visible'], function ($, Matcher, Visible) {
+sap.ui.define([
+	'jquery.sap.global',
+	'./Matcher',
+	'./Visible',
+	'sap/ui/test/launchers/iFrameLauncher'
+], function ($, Matcher, Visible, iFrameLauncher) {
 	"use strict";
 	var oVisibleMatcher = new Visible();
 
@@ -14,6 +19,11 @@ sap.ui.define(['jquery.sap.global', './Matcher', './Visible'], function ($, Matc
 	 * OPA5 will automatically apply this matcher if you specify actions in {@link sap.ui.test.Opa5#waitFor}.
 	 * A control will be filtered out by this matcher when:
 	 * <ul>
+	 *     <li>
+	 *         There are unfinished XMLHttpRequests (globally).
+	 *         That means, the Opa can wait for pending requests to finish that would probably update the UI.
+	 *         Also detects sinon.FakeXMLHttpRequests that are not responded yet.
+	 *     </li>
 	 *     <li>
 	 *         The control is invisible (using the visible matcher)
 	 *     </li>
@@ -41,6 +51,12 @@ sap.ui.define(['jquery.sap.global', './Matcher', './Visible'], function ($, Matc
 	 */
 	return Matcher.extend("sap.ui.test.matchers.Interactable", {
 		isMatching:  function(oControl) {
+			var bHasPendingXhrs = iFrameLauncher._getIXHRCounter().hasPendingRequests();
+			if (bHasPendingXhrs) {
+				// There are open requests - the XHR counter will log if there are open XHRs
+				return false;
+			}
+
 			var bVisible = oVisibleMatcher.isMatching(oControl);
 
 			if (!bVisible) {

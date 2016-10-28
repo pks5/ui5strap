@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Element', './Split
 	 * @extends sap.ui.core.Element
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public

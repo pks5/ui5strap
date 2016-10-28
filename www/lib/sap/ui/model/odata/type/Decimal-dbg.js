@@ -4,10 +4,10 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-sap.ui.define(['sap/ui/core/format/NumberFormat', 'sap/ui/model/FormatException',
-		'sap/ui/model/odata/type/ODataType', 'sap/ui/model/ParseException',
-		'sap/ui/model/ValidateException'],
-	function(NumberFormat, FormatException, ODataType, ParseException, ValidateException) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/core/format/NumberFormat',
+		'sap/ui/model/FormatException', 'sap/ui/model/odata/type/ODataType',
+		'sap/ui/model/ParseException', 'sap/ui/model/ValidateException'],
+	function(jQuery, NumberFormat, FormatException, ODataType, ParseException, ValidateException) {
 	"use strict";
 
 	var rDecimal = /^[-+]?(\d+)(?:\.(\d+))?$/;
@@ -116,7 +116,7 @@ sap.ui.define(['sap/ui/core/format/NumberFormat', 'sap/ui/model/FormatException'
 		}
 
 		function setConstraint(sName, vValue, vDefault) {
-			if (vValue != vDefault) {
+			if (vValue !== vDefault) {
 				oType.oConstraints = oType.oConstraints || {};
 				oType.oConstraints[sName] = vValue;
 			}
@@ -154,7 +154,7 @@ sap.ui.define(['sap/ui/core/format/NumberFormat', 'sap/ui/model/FormatException'
 	 * @extends sap.ui.model.odata.type.ODataType
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @alias sap.ui.model.odata.type.Decimal
 	 * @param {object} [oFormatOptions]

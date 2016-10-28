@@ -30,7 +30,7 @@ function(ManagedObject, ElementOverlay, OverlayRegistry, Selection, ElementDesig
 	 * @extends sap.ui.core.ManagedObject
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @private
@@ -111,7 +111,11 @@ function(ManagedObject, ElementOverlay, OverlayRegistry, Selection, ElementDesig
 				/**
 				 * Event fired when DesignTime's overlays are in-sync with ControlTree of root elements
 				 */
-				synced : {}
+				synced : {},
+				/**
+				 * Event fired when DesignTime's overlays failed to sync with ControlTree of root elements
+				 */
+				syncFailed : {}
 			}
 		}
 	});
@@ -123,6 +127,7 @@ function(ManagedObject, ElementOverlay, OverlayRegistry, Selection, ElementDesig
 	DesignTime.prototype.init = function() {
 		// number of element overlays waiting for their designTimeMetadata
 		this._iOverlaysPending = 0;
+		// array of errors while element overlays waiting for their designTimeMetadata
 		this._oSelection = this.createSelection();
 		this._oSelection.attachEvent("change", function(oEvent) {
 			this.fireSelectionChange({selection: oEvent.getParameter("selection")});
@@ -364,7 +369,7 @@ function(ManagedObject, ElementOverlay, OverlayRegistry, Selection, ElementDesig
 
 		oElement = ElementUtil.fixComponentContainerElement(oElement);
 		var oElementOverlay = OverlayRegistry.getOverlay(oElement);
-		if (oElement && !oElementOverlay) {
+		if (oElement && !oElement.bIsDestroyed && !oElementOverlay) {
 			if (this._iOverlaysPending === 0) {
 				this.fireSyncing();
 			}
@@ -379,16 +384,22 @@ function(ManagedObject, ElementOverlay, OverlayRegistry, Selection, ElementDesig
 			}
 
 			ElementUtil.loadDesignTimeMetadata(oElement).then(function(oDesignTimeMetadata) {
+				// if oElement is already destroyed while designtime metadata is loading
+				if (!oElement || oElement.bIsDestroyed) {
+					return;
+				}
 				// merge the DTMetadata from the DesignTime and from UI5
 				var oMergedDesignTimeMetadata = oDesignTimeMetadata || {};
 				jQuery.extend(true, oMergedDesignTimeMetadata, that.getDesignTimeMetadataFor(oElement));
 				var oElementDesignTimeMetadata = new ElementDesignTimeMetadata({data : oMergedDesignTimeMetadata});
 
 				oElementOverlay.setDesignTimeMetadata(oElementDesignTimeMetadata);
-
 				that.fireElementOverlayCreated({elementOverlay : oElementOverlay});
 			}).catch(function(oError) {
 				jQuery.sap.log.error("exception occured in sap.ui.dt.DesignTime._createElementOverlay", oError);
+				if (oError instanceof Error) {
+					that.fireSyncFailed();
+				}
 			}).then(function() {
 				that._iOverlaysPending--;
 				if (that._iOverlaysPending === 0) {
@@ -489,7 +500,7 @@ function(ManagedObject, ElementOverlay, OverlayRegistry, Selection, ElementDesig
 
 		var oParams = oEvent.getParameters();
 		if (oParams.type === "addOrSetAggregation" || oParams.type === "insertAggregation") {
-			this._onElementOverlayAddAggregation(oParams.value);
+			this._onElementOverlayAddAggregation(oParams.value, oParams.target, oParams.name);
 		} else if (oParams.type === "setParent") {
 			// timeout is needed because UI5 controls & apps can temporary "dettach" controls from control tree
 			// and add them again later, so the check if the control is dettached from root element's tree is delayed
@@ -505,13 +516,13 @@ function(ManagedObject, ElementOverlay, OverlayRegistry, Selection, ElementDesig
 	 * @param {sap.ui.core.Element} oElement which was added
 	 * @private
 	 */
-	DesignTime.prototype._onElementOverlayAddAggregation = function(oChild) {
+	DesignTime.prototype._onElementOverlayAddAggregation = function(oChild, oParent, sAggregationName) {
 		// oElement can be of an alternative type (setLabel(sText) for example)
 		if (oChild instanceof sap.ui.core.Element) {
 			var oChildElementOverlay = OverlayRegistry.getOverlay(oChild);
-			// TODO what if it was moved between hidden/public tree? can this happen?
 			if (!oChildElementOverlay) {
-				this._createElementOverlay(oChild);
+				var bIsInHiddenTree = OverlayRegistry.getOverlay(oParent).getAggregationOverlay(sAggregationName).isInHiddenTree();
+				this._createElementOverlay(oChild, bIsInHiddenTree);
 			}
 		}
 	};

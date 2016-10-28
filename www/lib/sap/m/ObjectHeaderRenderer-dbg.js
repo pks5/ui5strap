@@ -142,48 +142,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 
 	/**
-	 * Renders hidden div with ARIA descriptions of the favorite and flag icons.
-	 *
-	 * @param {sap.ui.core.RenderManager}
-	 *            oRM the RenderManager that can be used for writing to the render output buffer
-	 *
-	 * @param {sap.m.ObjectHeader}
-	 *            oControl the ObjectHeader
-	 *
-	 * @private
-	 */
-	ObjectHeaderRenderer._renderMarkersAria = function(oRM, oControl) {
-		var sAriaDescription = "", // ARIA description message
-			oLibraryResourceBundle = sap.ui.getCore().getLibraryResourceBundle("sap.m"); // get resource translation bundle
-
-			// check if flag mark is set
-			if (oControl.getMarkFlagged()) {
-				sAriaDescription += (oLibraryResourceBundle.getText("ARIA_FLAG_MARK_VALUE") + " ");
-			}
-
-			// check if favorite mark is set
-			if (oControl.getMarkFavorite()) {
-				sAriaDescription += (oLibraryResourceBundle.getText("ARIA_FAVORITE_MARK_VALUE") + " ");
-			}
-
-			// if there is a description render ARIA node
-			if (sAriaDescription !== "") {
-				// BEGIN ARIA hidden node
-				oRM.write("<div");
-
-				oRM.writeAttribute("id", oControl.getId() + "-markers-aria");
-				oRM.writeAttribute("aria-hidden", "false");
-				oRM.addClass("sapUiHidden");
-				oRM.writeClasses();
-				oRM.write(">");
-				oRM.writeEscaped(sAriaDescription);
-
-				oRM.write("</div>");
-				// END ARIA hidden node
-			}
-	};
-
-	/**
 	 * Returns the array of icons from ObjectHeader.
 	 *
 	 * @param {sap.m.ObjectHeader}
@@ -193,20 +151,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 	 *
 	 * @private
 	 */
-	ObjectHeaderRenderer._getIcons = function(oOH) {
-
-		var icons = [];
+	ObjectHeaderRenderer._getMarkers = function(oOH) {
+		var aMarkers = [];
 
 		if (oOH.getShowMarkers()) {
-			oOH._oFavIcon.setVisible(oOH.getMarkFavorite());
-			oOH._oFlagIcon.setVisible(oOH.getMarkFlagged());
-
-			icons.push(oOH._oPlaceholderIcon);
-			icons.push(oOH._oFavIcon);
-			icons.push(oOH._oFlagIcon);
+			if (oOH.getMarkFavorite()) {
+				aMarkers.push(oOH._getMarkerFavorite());
+			}
+			if (oOH.getMarkFlagged()) {
+				aMarkers.push(oOH._getMarkerFlagged());
+			}
 		}
 
-		return icons;
+		return aMarkers;
 	};
 
 	/**
@@ -375,10 +332,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 			oRM.write("<div");
 			if (aRight[0] instanceof sap.m.ProgressIndicator) {
 				oRM.addClass("sapMOHStatusFixedWidth");
-			} else if (aRight[0] instanceof sap.ui.core.Icon) {
+			} else if (aRight[0] instanceof sap.m.ObjectMarker) {
 				oRM.addClass("sapMOHStatusFixedWidth");
 				oRM.addClass("sapMObjStatusMarker");
-				oRM.writeAttribute("aria-describedby", oOH.getId() + "-markers-aria");
 			} else {
 				oRM.addClass("sapMOHStatus");
 			}
@@ -413,27 +369,24 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 		var iAttribsLength = aVisibleAttribs.length;
 
-		var aIconsAndStatuses = [];
-		var aIcons = ObjectHeaderRenderer._getIcons(oOH);
+		var aMarkersAndStatuses = [];
+		var aMarkers = ObjectHeaderRenderer._getMarkers(oOH);
 		// flag and favorite are not rendered here in responsive mode
-		if (!oOH.getResponsive() && !ObjectHeaderRenderer._isEmptyArray(aIcons)) {
-			aIconsAndStatuses.push(aIcons);
+		if (!oOH.getResponsive() && !ObjectHeaderRenderer._isEmptyArray(aMarkers)) {
+			aMarkersAndStatuses.push(aMarkers);
 		}
 
 		var aVisibleStatuses = this._getVisibleStatuses(oOH);
 
-		aIconsAndStatuses = aIconsAndStatuses.concat(aVisibleStatuses);
+		aMarkersAndStatuses = aMarkersAndStatuses.concat(aVisibleStatuses);
 
-		var iIconsAndStatusesLength = aIconsAndStatuses.length;
+		var iMarkersAndStatusesLength = aMarkersAndStatuses.length;
 
-		var iNoOfRows = iAttribsLength > iIconsAndStatusesLength ? iAttribsLength : iIconsAndStatusesLength;
+		var iNoOfRows = iAttribsLength > iMarkersAndStatusesLength ? iAttribsLength : iMarkersAndStatusesLength;
 
 		if (!oOH.getResponsive()) {
-			if (oOH.getShowMarkers()) {
-				this._renderMarkersAria(oRM, oOH);
-			}
 			for (var iCount = 0; iCount < iNoOfRows; iCount++) {
-				this._renderRow(oRM, oOH, aVisibleAttribs[iCount], aIconsAndStatuses[iCount]);
+				this._renderRow(oRM, oOH, aVisibleAttribs[iCount], aMarkersAndStatuses[iCount]);
 			}
 		}
 
@@ -676,7 +629,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 		this._renderNumber(oRM, oOH);
 
-		oRM.write("<div class=\"sapMOHDivider\"/>");
+		oRM.write("<div class=\"sapMOHDivider\"></div>");
 		oRM.write("</div>"); // End Top row container
 
 		if (oOH._hasBottomContent()) {
@@ -687,7 +640,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 			this._renderAttributesAndStatuses(oRM, oOH);
 
-			oRM.write("<div class=\"sapMOHDivider\"/>");
+			oRM.write("<div class=\"sapMOHDivider\"></div>");
 			oRM.write("</div>"); // End Bottom row container
 		}
 	};
@@ -750,6 +703,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 		oRM.write("<div"); // Start Main container
 		oRM.writeControlData(oOH);
 		oRM.addClass("sapMOH");
+
+		// set contrast container, only when the background is not transparent
+		if (oOH._getBackground() !== sap.m.BackgroundDesign.Transparent) {
+			oRM.addClass("sapContrastPlus");
+		}
+
 		if (bCondensed) {
 			oRM.addClass("sapMOHC");
 		}
@@ -778,7 +737,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 			this._renderFullOH(oRM, oOH);
 		}
 
-		oRM.write("<div class=\"sapMOHLastDivider\"/>");
+		oRM.write("<div class=\"sapMOHLastDivider\"></div>");
 
 		oRM.write("</div>"); // End Main container\
 
@@ -836,6 +795,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 
 		oRM.write("<div");
 		oRM.addClass("sapMOHR");
+		// set contrast container, only when the background is not transparent
+		if (oOH._getBackground() !== sap.m.BackgroundDesign.Transparent) {
+			oRM.addClass("sapContrastPlus");
+		}
+
 		if (bTabs) {
 			oRM.addClass("sapMOHRNoBorder");
 		}
@@ -1142,21 +1106,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 	 * @private
 	 */
 	ObjectHeaderRenderer._renderResponsiveMarkers = function(oRM, oControl) {
-		var aIcons = [],
+		var aMarkers = [],
 			sTextDir = oControl.getTitleTextDirection(),
 			bPageRTL = sap.ui.getCore().getConfiguration().getRTL();
 
 		// load icons based on control state
 		if (oControl.getShowMarkers()) {
-			oControl._oFavIcon.setVisible(oControl.getMarkFavorite());
-			oControl._oFlagIcon.setVisible(oControl.getMarkFlagged());
+			if (oControl.getMarkFavorite()) {
+				aMarkers.push(oControl._getMarkerFavorite());
+			}
 
-			aIcons.push(oControl._oFavIcon);
-			aIcons.push(oControl._oFlagIcon);
+			if (oControl.getMarkFlagged()) {
+				aMarkers.push(oControl._getMarkerFlagged());
+			}
 
-			this._renderMarkersAria(oRM, oControl); // render hidden aria description of flag and favorite icons
-
-			// render icons
+			// render markers
 			oRM.write("<span");
 			oRM.addClass("sapMObjStatusMarker");
 
@@ -1165,11 +1129,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool'],
 			}
 			oRM.writeClasses();
 			oRM.writeAttribute("id", oControl.getId() + "-markers");
-			oRM.writeAttribute("aria-describedby", oControl.getId() + "-markers-aria");
 
 			oRM.write(">");
-			for (var i = 0; i < aIcons.length; i++) {
-				this._renderChildControl(oRM, oControl, aIcons[i]);
+			for (var i = 0; i < aMarkers.length; i++) {
+				this._renderChildControl(oRM, oControl, aMarkers[i]);
 			}
 			oRM.write("</span>");
 		}

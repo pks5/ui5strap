@@ -19,7 +19,7 @@ sap.ui.define(['sap/ui/model/SimpleType', 'sap/ui/model/FormatException', 'sap/u
 	 * @extends sap.ui.model.SimpleType
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public

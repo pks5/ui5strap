@@ -5,8 +5,11 @@
  */
 
 // Provides control sap.m.Dialog.
-sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './AssociativeOverflowToolbar', './ToolbarSpacer', './library', 'sap/ui/core/Control', 'sap/ui/core/IconPool', 'sap/ui/core/Popup', 'sap/ui/core/delegate/ScrollEnablement', 'sap/ui/core/theming/Parameters', 'sap/ui/core/RenderManager'],
-	function (jQuery, Bar, InstanceManager, AssociativeOverflowToolbar, ToolbarSpacer, library, Control, IconPool, Popup, ScrollEnablement, Parameters, RenderManager) {
+sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './AssociativeOverflowToolbar', './ToolbarSpacer',
+	'./library', 'sap/ui/core/Control', 'sap/ui/core/IconPool', 'sap/ui/core/Popup', 'sap/ui/core/delegate/ScrollEnablement',
+	'sap/ui/core/theming/Parameters', 'sap/ui/core/RenderManager', 'sap/ui/core/InvisibleText'],
+	function (jQuery, Bar, InstanceManager, AssociativeOverflowToolbar, ToolbarSpacer, library, Control, IconPool,
+			  Popup, ScrollEnablement, Parameters, RenderManager, InvisibleText) {
 		"use strict";
 
 
@@ -25,7 +28,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 		 * @implements sap.ui.core.PopupInterface
 		 *
 		 * @author SAP SE
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @public
@@ -94,14 +97,14 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 					contentHeight: {type: "sap.ui.core.CSSSize", group: "Dimension", defaultValue: null},
 
 					/**
-					 * Indicates if user can scroll horizontally inside dialog when the content is bigger than the content area. However, when scrollable control (sap.m.ScrollContainer, sap.m.Page) is in the dialog, this property needs to be set to false to disable the scrolling in dialog in order to make the scrolling in the child control work properly.
+					 * Indicates if user can scroll horizontally inside dialog when the content is bigger than the content area.
 					 * Dialog detects if there's sap.m.NavContainer, sap.m.Page, or sap.m.ScrollContainer as direct child added to dialog. If there is, dialog will turn off scrolling by setting this property to false automatically ignoring the existing value of this property.
 					 * @since 1.15.1
 					 */
 					horizontalScrolling: {type: "boolean", group: "Behavior", defaultValue: true},
 
 					/**
-					 * Indicates if user can scroll vertically inside dialog when the content is bignger than the content area. However, when scrollable control (sap.m.ScrollContainer, sap.m.Page) is in the dialog, this property needs to be set to false to disable the scrolling in dialog in order to make the scrolling in the child control work properly.
+					 * Indicates if user can scroll vertically inside dialog when the content is bigger than the content area.
 					 * Dialog detects if there's sap.m.NavContainer, sap.m.Page, or sap.m.ScrollContainer as direct child added to dialog. If there is, dialog will turn off scrolling by setting this property to false automatically ignoring the existing value of this property.
 					 * @since 1.15.1
 					 */
@@ -175,7 +178,12 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 					/**
 					 * The hidden aggregation for internal maintained toolbar instance
 					 */
-					_toolbar: {type: "sap.m.OverflowToolbar", multiple: false, visibility: "hidden"}
+					_toolbar: {type: "sap.m.OverflowToolbar", multiple: false, visibility: "hidden"},
+
+					/**
+					 * The hidden aggregation for the Dialog state
+					 */
+					_valueState: {type: "sap.ui.core.InvisibleText", multiple: false, visibility: "hidden"}
 				},
 				associations: {
 
@@ -336,28 +344,24 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 		Dialog.prototype.onBeforeRendering = function () {
 			//if content has scrolling, disable scrolling automatically
 			if (this._hasSingleScrollableContent()) {
-				this._forceDisableScrolling = true;
+				this.setProperty("verticalScrolling", false);
+				this.setProperty("horizontalScrolling", false);
 				jQuery.sap.log.info("VerticalScrolling and horizontalScrolling in sap.m.Dialog with ID " + this.getId() + " has been disabled because there's scrollable content inside");
-			} else {
-				this._forceDisableScrolling = false;
-			}
-
-			if (!this._forceDisableScrolling) {
-				if (!this._oScroller) {
-					this._oScroller = new ScrollEnablement(this, this.getId() + "-scroll", {
-						horizontal: this.getHorizontalScrolling(), // will be disabled in adjustScrollingPane if content can fit in
-						vertical: this.getVerticalScrolling(),
-						zynga: false,
-						preventDefault: false,
-						nonTouchScrolling: "scrollbar",
-						// In android stock browser, iScroll has to be used
-						// The scrolling layer using native scrolling is transparent for the browser to dispatch events
-						iscroll: sap.ui.Device.browser.name === "an" ? "force" : undefined
-					});
-				}
+			} else if (!this._oScroller) {
+				this._oScroller = new ScrollEnablement(this, this.getId() + "-scroll", {
+					horizontal: this.getHorizontalScrolling(), // will be disabled in adjustScrollingPane if content can fit in
+					vertical: this.getVerticalScrolling()
+				});
 			}
 
 			this._createToolbarButtons();
+
+			if (sap.ui.getCore().getConfiguration().getAccessibility() && this.getState() != ValueState.None) {
+				var oValueState = new InvisibleText({text: this.getValueStateString(this.getState())});
+
+				this.setAggregation("_valueState", oValueState);
+				this.addAriaLabelledBy(oValueState.getId());
+			}
 		};
 
 		Dialog.prototype.onAfterRendering = function () {
@@ -369,6 +373,11 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 			if (this.isOpen()) {
 				//restore the focus after rendering when dialog is already open
 				this._setInitialFocus();
+			}
+
+			if (this.getType() === sap.m.DialogType.Message ||
+				(sap.ui.Device.system.phone && !this.getStretch())) {
+				this.$("footer").removeClass("sapContrast sapContrastPlus");
 			}
 		};
 
@@ -622,6 +631,14 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 				}
 			}
 
+			if (oStyles.width == 'auto') {
+				oStyles.width = undefined;
+			}
+
+			if (oStyles.height == 'auto') {
+				oStyles.height = undefined;
+			}
+
 			if ((bStretch && !bMessageType) || (bStretchOnPhone)) {
 				this.$().addClass('sapMDialogStretched');
 			}
@@ -679,6 +696,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 		Dialog.prototype._onResize = function () {
 			var $dialog = this.$(),
 				$dialogContent = this.$('cont'),
+				sContentHeight = this.getContentHeight(),
 				iDialogHeight,
 				iDialogTopBorderHeight,
 				iDialogBottomBorderHeight;
@@ -688,7 +706,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 				return;
 			}
 
-			if (!this.getContentHeight()) {
+			if (!sContentHeight || sContentHeight == 'auto') {
 				//reset the height so the dialog can grow
 				$dialogContent.css({
 					height: 'auto'
@@ -1164,6 +1182,27 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 			return this._oToolbar;
 		};
 
+		/**
+		 * Returns the sap.ui.core.ValueState state according to the language settings
+		 * @param {sap.ui.core.ValueState|string} sValueState The dialog's value state
+		 * @returns {string} The translated text
+		 * @private
+		 */
+		Dialog.prototype.getValueStateString = function (sValueState) {
+			var rb = sap.ui.getCore().getLibraryResourceBundle("sap.m");
+
+			switch (sValueState) {
+				case (sap.ui.core.ValueState.Success):
+					return rb.getText("LIST_ITEM_STATE_SUCCESS");
+				case (sap.ui.core.ValueState.Warning):
+					return rb.getText("LIST_ITEM_STATE_WARNING");
+				case (sap.ui.core.ValueState.Error):
+					return rb.getText("LIST_ITEM_STATE_ERROR");
+				default:
+					return "";
+			}
+		};
+
 		/* =========================================================== */
 		/*                      end: private functions                 */
 		/* =========================================================== */
@@ -1289,6 +1328,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 				$this.toggleClass(Dialog._mStateClasses[sName], !!mFlags[sName]);
 			}
 			this.setIcon(Dialog._mIcons[sState], true);
+			return this;
 		};
 
 		Dialog.prototype.setIcon = function (sIcon, bInternal) {
@@ -1357,8 +1397,15 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 		};
 
 		Dialog.prototype.setVerticalScrolling = function (bValue) {
-			var oldValue = this.getVerticalScrolling();
-			if (oldValue === bValue) {
+			var bOldValue = this.getVerticalScrolling(),
+				bHasSingleScrollableContent = this._hasSingleScrollableContent();
+
+			if (bHasSingleScrollableContent) {
+				jQuery.sap.log.warning("sap.m.Dialog: property verticalScrolling automatically reset to false. See documentation.");
+				bValue = false;
+			}
+
+			if (bOldValue === bValue) {
 				return this;
 			}
 
@@ -1373,8 +1420,15 @@ sap.ui.define(['jquery.sap.global', './Bar', './InstanceManager', './Associative
 		};
 
 		Dialog.prototype.setHorizontalScrolling = function (bValue) {
-			var oldValue = this.getHorizontalScrolling();
-			if (oldValue === bValue) {
+			var bOldValue = this.getHorizontalScrolling(),
+				bHasSingleScrollableContent = this._hasSingleScrollableContent();
+
+			if (bHasSingleScrollableContent) {
+				jQuery.sap.log.warning("sap.m.Dialog: property horizontalScrolling automatically reset to false. See documentation.");
+				bValue = false;
+			}
+
+			if (bOldValue === bValue) {
 				return this;
 			}
 

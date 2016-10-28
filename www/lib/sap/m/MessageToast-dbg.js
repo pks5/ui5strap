@@ -19,6 +19,9 @@ sap.ui.define(['jquery.sap.global', './InstanceManager', 'sap/ui/core/Popup'],
 		 * The default position applies as long as the application does not do any position setting.
 		 * Position settings are "my", "at", "of" and "offset".
 		 *
+		 * If the configured message contains HTML code or script tags, those will be escaped.<br>
+		 * <b>Note: </b>Line breaks (\r\n, \n\r, \r, \n) will be visualized.
+		 *
 		 * Beware that only one message toast can be shown at a time in the same place.
 		 * If you want to have multiple message toasts visible at the same time, you need to position
 		 * the message toasts in different places.
@@ -34,7 +37,7 @@ sap.ui.define(['jquery.sap.global', './InstanceManager', 'sap/ui/core/Popup'],
 		 *     at: "center bottom",             // default
 		 *     of: window,                      // default
 		 *     offset: "0 0",                   // default
-		 *     collision: "fit fit"             // default
+		 *     collision: "fit fit",            // default
 		 *     onClose: null,                   // default
 		 *     autoClose: true,                 // default
 		 *     animationTimingFunction: "ease", // default
@@ -58,7 +61,9 @@ sap.ui.define(['jquery.sap.global', './InstanceManager', 'sap/ui/core/Popup'],
 
 		var OFFSET = "0 -64",
 			CSSCLASS = "sapMMessageToast",
-			ENABLESELECTIONCLASS = "sapUiSelectable";
+			ENABLESELECTIONCLASS = "sapUiSelectable",
+			BELIZECONTRAST = "sapContrast",
+			BELIZECONTRASTPLUS = "sapContrastPlus";
 
 		MessageToast._mSettings = {
 			duration: 3000,
@@ -193,7 +198,7 @@ sap.ui.define(['jquery.sap.global', './InstanceManager', 'sap/ui/core/Popup'],
 			var oMessageToastDomRef = document.createElement("div");
 
 			oMessageToastDomRef.style.width = mSettings.width;
-			oMessageToastDomRef.className = CSSCLASS + " " + ENABLESELECTIONCLASS;
+			oMessageToastDomRef.className = CSSCLASS + " " + ENABLESELECTIONCLASS + " " + BELIZECONTRAST + " " + BELIZECONTRASTPLUS;
 			oMessageToastDomRef.setAttribute("role", "alert");
 			oMessageToastDomRef.appendChild(document.createTextNode(mSettings.message));
 

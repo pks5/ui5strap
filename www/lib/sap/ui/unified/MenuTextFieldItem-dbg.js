@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/ValueStateSupport', './MenuItem
 	 * @extends sap.ui.unified.MenuItemBase
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @since 1.21.0
 	 *
 	 * @constructor
@@ -123,7 +123,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/ValueStateSupport', './MenuItem
 				labelledby: {value: /*oMenu.getId() + "-label " + */itemId + "-lbl", append: true}
 			});
 		}
-		rm.write("></input></div></div>");
+		rm.write("/></div></div>");
 
 		// Right border
 		rm.write("<div class=\"sapUiMnuItmR\"></div>");

@@ -13,8 +13,8 @@
  */
 
 // Provides class sap.ui.model.odata.ODataModel
-sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './CountMode', './ODataContextBinding', './ODataListBinding', './ODataMetadata', './ODataPropertyBinding', './ODataTreeBinding', 'sap/ui/model/odata/ODataMetaModel', 'sap/ui/thirdparty/URI', 'sap/ui/thirdparty/datajs'],
-	function(jQuery, Model, ODataUtils, CountMode, ODataContextBinding, ODataListBinding, ODataMetadata, ODataPropertyBinding, ODataTreeBinding, ODataMetaModel, URI, OData) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/model/BindingMode', 'sap/ui/model/Context', 'sap/ui/model/Model', './ODataUtils', './CountMode', './ODataContextBinding', './ODataListBinding', './ODataMetadata', './ODataPropertyBinding', './ODataTreeBinding', 'sap/ui/model/odata/ODataMetaModel', 'sap/ui/thirdparty/URI', 'sap/ui/thirdparty/datajs'],
+	function(jQuery, BindingMode, Context, Model, ODataUtils, CountMode, ODataContextBinding, ODataListBinding, ODataMetadata, ODataPropertyBinding, ODataTreeBinding, ODataMetaModel, URI, OData) {
 	"use strict";
 
 
@@ -49,7 +49,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 	 *
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -99,7 +99,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 			}
 
 			this.oServiceData = {};
-			this.sDefaultBindingMode = sap.ui.model.BindingMode.OneWay;
+			this.sDefaultBindingMode = BindingMode.OneWay;
 			this.mSupportedBindingModes = {"OneWay": true, "OneTime": true, "TwoWay":true};
 			this.bCountSupported = true;
 			this.bJSON = bJSON;
@@ -170,7 +170,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 
 			if (!this.oServiceData.oMetadata) {
 				//create Metadata object
-				this.oServiceData.oMetadata = new sap.ui.model.odata.ODataMetadata(sMetadataUrl, {
+				this.oServiceData.oMetadata = new ODataMetadata(sMetadataUrl, {
 					async: this.bLoadMetadataAsync,
 					user: this.sUser,
 					password: this.sPassword,
@@ -1322,7 +1322,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 	 */
 	ODataModel.prototype._getKey = function(oObject, bDecode) {
 		var sKey, sURI;
-		if (oObject instanceof sap.ui.model.Context) {
+		if (oObject instanceof Context) {
 			sKey = oObject.getPath().substr(1);
 		} else if (oObject && oObject.__metadata && oObject.__metadata.uri) {
 			sURI = oObject.__metadata.uri;
@@ -2055,7 +2055,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 			bAsync = false;
 
 	//ensure compatibility, check for old or new declaration of parameters
-		if (mParameters instanceof sap.ui.model.Context || arguments.length > 3) {
+		if (mParameters instanceof Context || arguments.length > 3) {
 			oContext  = mParameters;
 			fnSuccess = arguments[3];
 			fnError = arguments[4];
@@ -2129,7 +2129,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 		var oRequest, oBatchRequest, sUrl, oRequestHandle, oEntityMetadata,
 			oContext, fnSuccess, fnError, bAsync = false, mUrlParams;
 
-		if (mParameters && typeof (mParameters) == "object" && !(mParameters instanceof sap.ui.model.Context)) {
+		if (mParameters && typeof (mParameters) == "object" && !(mParameters instanceof Context)) {
 			// The object parameter syntax has been used.
 			oContext	= mParameters.context;
 			fnSuccess	= mParameters.success;
@@ -2194,7 +2194,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 			that = this;
 
 		// maintain compatibility, check if the old or new function parameters are used and set values accordingly:
-		if ((mParameters && mParameters instanceof sap.ui.model.Context) || arguments[2]) {
+		if ((mParameters && mParameters instanceof Context) || arguments[2]) {
 			oContext  = mParameters;
 			fnSuccess = arguments[2];
 			fnError   = arguments[3];
@@ -2366,7 +2366,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 			oEntityType, sResolvedPath,
 			aUrlParams;
 
-		if (mParameters && typeof (mParameters) == "object" && !(mParameters instanceof sap.ui.model.Context)) {
+		if (mParameters && typeof (mParameters) == "object" && !(mParameters instanceof Context)) {
 			// The object parameter syntax has been used.
 			oContext   = mParameters.context;
 			mUrlParams = mParameters.urlParameters;
@@ -3317,8 +3317,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/Model', './ODataUtils', './Cou
 	 */
 	ODataModel.prototype._getAnnotationParser = function(mAnnotationData) {
 		if (!this.oAnnotations) {
-			jQuery.sap.require("sap.ui.model.odata.ODataAnnotations");
-			this.oAnnotations = new sap.ui.model.odata.ODataAnnotations({
+			var ODataAnnotations = sap.ui.requireSync("sap/ui/model/odata/ODataAnnotations");
+			this.oAnnotations = new ODataAnnotations({
 				annotationData: mAnnotationData,
 				url: null,
 				metadata: this.oMetadata,

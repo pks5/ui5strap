@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 	 * @class HTML serializer delegate class.
 	 * @extends sap.ui.core.util.serializer.delegate.Delegate
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @alias sap.ui.core.util.serializer.delegate.HTML
 	 * @experimental Since 1.15.1. The HTML serializer delegate is still under construction, so some implementation details can be changed in future.
 	 */
@@ -137,8 +137,10 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 
 		// write properties
 		var oProperties = oControl.getMetadata().getAllProperties();
+		var oDefaults = oControl.getMetadata().getPropertyDefaults();
 		this._createAttributes(aHtml, oControl, oProperties, null, function (sName, oValue) {
-			return (!!oControl.getBindingInfo(sName) || (oValue !== null && typeof oValue !== undefined && oValue !== ""));
+			// write property only if it has a value different from the default value
+			return !jQuery.sap.equal(oValue, oDefaults[sName]);
 		});
 
 		// write aggregations
@@ -186,10 +188,8 @@ sap.ui.define(['jquery.sap.global', './Delegate'],
 				var oValue = oControl[sGetter]();
 				oValue = fnGetValue ? fnGetValue(sName, oValue) : oValue;
 				if (!oControl.getBindingInfo(sName)) {
-					if (!jQuery.sap.equal(oValue,oProp.defaultValue)) {
-						if (!fnValueCheck || fnValueCheck(sName, oValue)) {
-							aHtml.push(this._createAttribute("data-" + this._createHtmlAttributeName(sName), oValue));
-						}
+					if (!fnValueCheck || fnValueCheck(sName, oValue)) {
+						aHtml.push(this._createAttribute("data-" + this._createHtmlAttributeName(sName), oValue));
 					}
 				} else {
 					aHtml.push(this._createDataBindingAttribute(oControl, sName, oValue));

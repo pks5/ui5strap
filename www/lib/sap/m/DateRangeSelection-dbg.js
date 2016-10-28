@@ -47,7 +47,7 @@ sap.ui.define(['jquery.sap.global', './DatePicker', './library'],
 	 * the <code>sap.ui.unified</code> library.
 	 *
 	 * @extends sap.m.DatePicker
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -282,6 +282,7 @@ sap.ui.define(['jquery.sap.global', './DatePicker', './library'],
 	//that consisted of original primary sap.m.DateRangeSelection
 	DateRangeSelection.prototype.setFrom = function(oFrom) {
 		this.setDateValue(oFrom);
+		return this;
 	};
 
 	DateRangeSelection.prototype.getFrom = function() {
@@ -290,6 +291,7 @@ sap.ui.define(['jquery.sap.global', './DatePicker', './library'],
 
 	DateRangeSelection.prototype.setTo = function(oTo) {
 		this.setSecondDateValue(oTo);
+		return this;
 	};
 
 	DateRangeSelection.prototype.getTo = function() {

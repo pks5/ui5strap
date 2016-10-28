@@ -66,8 +66,6 @@ sap.ui.define('sap/ui/debug/TechnicalInfo', ['jquery.sap.global', 'sap/ui/Device
 			}
 			var vDebugInfo = window["sap-ui-debug"];
 			var bUseStatistics = jQuery.sap.statistics();
-			var sWeinreId = jQuery.sap.uid();
-			var sWeinreClientUrl = sap.ui.getCore().getConfiguration().getWeinreServer() + "/client/#" + sWeinreId;
 			var html = [];
 			html.push("<div id='sap-ui-techinfo' class='sapUiTInf sapUiDlg' style='width:800px; position: relative;'>");
 			html.push("<table border='0' cellpadding='3'>");
@@ -108,19 +106,19 @@ sap.ui.define('sap/ui/debug/TechnicalInfo', ['jquery.sap.global', 'sap/ui/Device
 			html.push("<tr><td><input id='sap-ui-techinfo-showControls' type='checkbox'",
 					bCT ? " checked='checked'" : "",
 					bEmbedded ? "" : " readonly='readonly'",
-					"><span ",
+					"/><span ",
 					bEmbedded ? "" : " style='color:grey'",
-					">Show UIAreas, Controls and Properties</span></input></td></tr>");
+					">Show UIAreas, Controls and Properties</span></td></tr>");
 			html.push("<tr><td><input id='sap-ui-techinfo-showLogViewer' type='checkbox' ",
 					bLV ? " checked='checked'" : "",
 					bEmbedded ? "" : " readonly='readonly' style='color:grey'",
-					"><span ",
+					"/><span ",
 					bEmbedded ? "" : " style='color:grey'",
-					">Show Log Viewer</span></input></td></tr>");
+					">Show Log Viewer</span></td></tr>");
 			html.push("<tr><td><input id='sap-ui-techinfo-useStatistics' type='checkbox' ",
 					bUseStatistics ? " checked='checked'" : "",
-					"><span ",
-					">Enable SAP-statistics for oData calls</span></input></td></tr>");
+					"/><span ",
+					">Enable SAP-statistics for oData calls</span></td></tr>");
 			html.push("<tr><td colspan='2' align='center' valign='bottom' height='40'><button id='sap-ui-techinfo-close' class='sapUiBtn sapUiBtnS sapUiBtnNorm sapUiBtnStd'>Close</button></td></tr>");
 			html.push("</table>");
 			if ( bDC ) {
@@ -135,14 +133,7 @@ sap.ui.define('sap/ui/debug/TechnicalInfo', ['jquery.sap.global', 'sap/ui/Device
 				html.push("<input type=\"hidden\" name=\"modules\"/>");
 				html.push("</form>");
 			}
-			if (sap.ui.getCore().getConfiguration().getRTL()) {
-				html.push("<div style='position: absolute; bottom: 5px; left: 5px; text-align: left'>");
-			} else {
-				html.push("<div style='position: absolute; bottom: 5px; right: 5px; text-align: right'>");
-			}
-			html.push("<canvas id='sap-ui-techinfo-qrcode' width='0' height='0'></canvas>");
-			html.push("<br><a id='sap-ui-techinfo-weinre' href=\"" + sWeinreClientUrl + "\" target=\"_blank\">Remote Web Inspector</a>");
-			html.push("</div></div>");
+			html.push("</div>");
 			this._$Ref = jQuery(html.join(""));
 			this._$Ref.find('#sap-ui-techinfo-useDbgSources').click(this.onUseDbgSources.bind(this));
 			this._$Ref.find('#sap-ui-techinfo-cfgDbgSources').click(this.onConfigDbgSources.bind(this));
@@ -154,7 +145,6 @@ sap.ui.define('sap/ui/debug/TechnicalInfo', ['jquery.sap.global', 'sap/ui/Device
 			this._$Ref.find('#sap-ui-techinfo-close').click(this.close.bind(this));
 			this._$Ref.find('#sap-ui-techinfo-customModule').click(this.onCreateCustomModule.bind(this));
 			this._$Ref.find('#sap-ui-techinfo-optimizeModuleSet').click(this.onOptimizeModuleSet.bind(this));
-			this._$Ref.find('#sap-ui-techinfo-weinre').click(this.onOpenWebInspector.bind(this));
 			this._$Ref.find('#sap-ui-techinfo-useStatistics').click(this.onUseStatistics.bind(this));
 			this._oPopup = new Popup(this._$Ref.get(0), /*modal*/true, /*shadow*/true, /*autoClose*/false);
 			this._oPopup.attachOpened(function(oEvent) {
@@ -162,17 +152,6 @@ sap.ui.define('sap/ui/debug/TechnicalInfo', ['jquery.sap.global', 'sap/ui/Device
 				// the z-index 999999 the popup needs a higher z-index to
 				// be able to click on the technical info.
 				this._$().css("z-index", "1000000");
-				// add the QR code when the control is available
-				var bDevAvailable = jQuery.sap.sjax({type: "HEAD", url: sap.ui.resource("sap.ui.dev", "library.js")}).success;
-				if (bDevAvailable) {
-					sap.ui.require(['sap/ui/dev/qrcode/QRCode'], function(QRCode) {
-						if (QRCode._renderQRCode) {
-							var sAbsUrl = window.location.href,
-								sWeinreTargetUrl = sAbsUrl + (sAbsUrl.indexOf("?") > 0 ? "&" : "?") + "sap-ui-weinreId=" + sWeinreId;
-							QRCode._renderQRCode(jQuery.sap.domById("sap-ui-techinfo-qrcode"), sWeinreTargetUrl);
-						}
-					});
-				}
 			});
 			this._oPopup.open(400);
 			this.populateRebootUrls();
@@ -680,18 +659,6 @@ sap.ui.define('sap/ui/debug/TechnicalInfo', ['jquery.sap.global', 'sap/ui/Device
 
 		onUseStatistics : function(e) {
 			jQuery.sap.statistics(!!e.target.checked);
-		},
-
-		onOpenWebInspector: function(e) {
-			/*eslint-disable no-alert */
-			if (!sap.ui.getCore().getConfiguration().getWeinreServer()) {
-				alert("Cannot start Web Inspector - WEINRE server is not configured.");
-				e.preventDefault();
-			} else if (!Device.browser.webkit) {
-				alert("Cannot start Web Inspector - WEINRE only runs on WebKit, please use Chrome or Safari.");
-				e.preventDefault();
-			}
-			/*eslint-enable no-alert */
 		}
 
 	};

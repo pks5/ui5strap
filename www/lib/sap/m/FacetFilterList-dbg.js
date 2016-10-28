@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './List', './library'],
 	 * @class
 	 * FacetFilterList represents a list of values for the FacetFilter control.
 	 * @extends sap.m.List
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -417,24 +417,22 @@ sap.ui.define(['jquery.sap.global', './List', './library'],
 	};
 
 	/**
+	 * Fires the <code>listClose</code> event.
 	 * @private
 	 */
 
 	FacetFilterList.prototype._fireListCloseEvent = function() {
+		var aSelectedItems = this.getSelectedItems();
+		var oSelectedKeys = this.getSelectedKeys();
+		var bAllSelected = aSelectedItems.length === 0;
 
-				  var aSelectedItems = this.getSelectedItems();
-		   var oSelectedKeys = this.getSelectedKeys();
+		this._firstTime = true;
 
-		   var bAllSelected = aSelectedItems.length === 0;
-
-		   this._firstTime = true;
-
-		   this.fireListClose({
-				  selectedItems : aSelectedItems,
-				  selectedKeys : oSelectedKeys,
-				  allSelected : bAllSelected
-		   });
-
+		this.fireListClose({
+			selectedItems: aSelectedItems,
+			selectedKeys: oSelectedKeys,
+			allSelected: bAllSelected
+		});
 	};
 
 

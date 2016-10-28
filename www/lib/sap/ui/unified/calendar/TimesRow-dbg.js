@@ -31,7 +31,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 *
 	 * The TimesRow works with JavaScript Date objects.
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -392,7 +392,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		if (this._oFormatLong.oLocale.toString() != sLocale) {
 			var oLocale = new sap.ui.core.Locale(sLocale);
-			this._oFormatLong = sap.ui.core.format.DateFormat.getInstance({style: "long"}, oLocale);
+			this._oFormatLong = sap.ui.core.format.DateFormat.getInstance({style: "long/short"}, oLocale);
 		}
 
 		return this._oFormatLong;

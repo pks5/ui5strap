@@ -5,44 +5,49 @@
  */
 
 // Provides class sap.ui.dt.plugin.ElementMover.
-sap.ui.define([
-	'sap/ui/base/ManagedObject', 'sap/ui/dt/ElementUtil', 'sap/ui/dt/OverlayUtil', 'sap/ui/dt/OverlayRegistry'
-], function(ManagedObject, ElementUtil, OverlayUtil, OverlayRegistry) {
+sap.ui.define(['sap/ui/base/ManagedObject', 'sap/ui/dt/ElementUtil', 'sap/ui/dt/OverlayUtil',
+		'sap/ui/dt/OverlayRegistry', 'sap/ui/dt/command/CommandFactory'], function(ManagedObject, ElementUtil, OverlayUtil,
+		OverlayRegistry, CommandFactory) {
 	"use strict";
 
 	/**
 	 * Constructor for a new ElementMover.
 	 *
-	 * @param {string} [sId] id for the new object, generated automatically if no id is given
-	 * @param {object} [mSettings] initial settings for the new object
-	 * @class The ElementMover enables movement of UI5 elements based on aggregation types, which can be used by drag and drop or cut and paste
-	 *        behavior.
+	 * @param {string}
+	 *          [sId] id for the new object, generated automatically if no id is given
+	 * @param {object}
+	 *          [mSettings] initial settings for the new object
+	 * @class The ElementMover enables movement of UI5 elements based on aggregation types, which can be used by drag and
+	 *        drop or cut and paste behavior.
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @private
 	 * @since 1.34
 	 * @alias sap.ui.dt.plugin.ElementMover
-	 * @experimental Since 1.34. This class is experimental and provides only limited functionality. Also the API might be changed in future.
+	 * @experimental Since 1.34. This class is experimental and provides only limited functionality. Also the API might be
+	 *               changed in future.
 	 */
 	var ElementMover = ManagedObject.extend("sap.ui.dt.plugin.ElementMover", /** @lends sap.ui.dt.plugin.ElementMover.prototype */
 	{
-		metadata: {
+		metadata : {
 			// ---- object ----
 
 			// ---- control specific ----
-			library: "sap.ui.dt",
-			properties: {
-				movableTypes: {
-					type: "string[]",
-					defaultValue: [
-						"sap.ui.core.Element"
-					]
+			library : "sap.ui.dt",
+			properties : {
+				commandFactory : {
+					type : "object",
+					defaultValue : CommandFactory
+				},
+				movableTypes : {
+					type : "string[]",
+					defaultValue : ["sap.ui.core.Element"]
 				}
 			},
-			associations: {},
-			events: {
-				'elementMoved': {}
+			associations : {},
+			events : {
+				'elementMoved' : {}
 			}
 		}
 	});
@@ -55,7 +60,9 @@ sap.ui.define([
 	};
 
 	/**
+	 * Predicate to compute movability of an type
 	 * @public
+	 * @return true if type is movable, false otherwise
 	 */
 	ElementMover.prototype.isMovableType = function(oElement) {
 		var aMovableTypes = this._getMovableTypes();
@@ -85,7 +92,8 @@ sap.ui.define([
 	/**
 	 * set the moved overlay (only during movements)
 	 *
-	 * @param {sap.ui.dt.Overlay} [oMovedOverlay] overlay which is moved
+	 * @param {sap.ui.dt.Overlay}
+	 *          [oMovedOverlay] overlay which is moved
 	 * @public
 	 */
 	ElementMover.prototype.setMovedOverlay = function(oMovedOverlay) {
@@ -189,6 +197,16 @@ sap.ui.define([
 		});
 	};
 
+	ElementMover.prototype._isInvalidateSimpleFormEnabled = function(bEnabled, oMovedOverlay) {
+		var oFirstHiddenAggregationOverlay = oMovedOverlay.getFirstHiddenAggregationOverlay();
+		if (oFirstHiddenAggregationOverlay) {
+			var oElementInstance = oFirstHiddenAggregationOverlay.getElementInstance();
+			if (oElementInstance.getMetadata().getName() === "sap.ui.layout.form.SimpleForm") {
+				// activate/deactivate overwrite of the invalidate function
+				oElementInstance._bChangedByMe = !bEnabled;
+			}
+		}
+	};
 
 	/**
 	 * @private
@@ -199,10 +217,12 @@ sap.ui.define([
 		var oTargetParent = OverlayUtil.getParentInformation(oTargetElementOverlay);
 
 		if (oTargetParent.index !== -1) {
-			ElementUtil.insertAggregation(oTargetParent.parent, oTargetParent.aggregation, oMovedElement, oTargetParent.index);
+			this._isInvalidateSimpleFormEnabled(false, oMovedOverlay);
+			ElementUtil
+					.insertAggregation(oTargetParent.parent, oTargetParent.aggregation, oMovedElement, oTargetParent.index);
+			this._isInvalidateSimpleFormEnabled(true, oMovedOverlay);
 		}
 	};
-
 
 	/**
 	 * @private
@@ -214,7 +234,9 @@ sap.ui.define([
 		var oSourceAggregationOverlay = oMovedOverlay.getParent();
 		if (oTargetAggregationOverlay !== oSourceAggregationOverlay) {
 			var sTargetAggregationName = oTargetAggregationOverlay.getAggregationName();
+			this._isInvalidateSimpleFormEnabled(false, oMovedOverlay);
 			ElementUtil.addAggregation(oTargetParentElement, sTargetAggregationName, oMovedElement);
+			this._isInvalidateSimpleFormEnabled(true, oMovedOverlay);
 		}
 	};
 
@@ -225,47 +247,48 @@ sap.ui.define([
 		var oSource = this._getSource();
 		var oTarget = OverlayUtil.getParentInformation(oMovedOverlay);
 
-		var aActions = [];
-		var oHookDescription = this._findAfterHook('afterMove', oSource, oTarget);
-		if (oHookDescription) {
-			var oParentElement = oHookDescription.parentOverlay.getElementInstance();
-			aActions = oHookDescription.afterHook.call(oParentElement, oMovedElement, oSource, oTarget);
-		} else {
-			aActions.push({
-					element: oMovedElement,
-					source: oSource,
-					target: oTarget
-				});
-		}
-
-		if (aActions && aActions.length > 0) {
-			ElementUtil.executeActions(aActions);
-		}
-
-		this.fireElementMoved({
-			data: aActions
+		var oMove = this.getCommandFactory().getCommandFor(oTarget.parent, "Move", {
+			element : oTarget.parent,
+			movedElements : [{
+				element : oMovedElement,
+				sourceIndex : oSource.index,
+				targetIndex : oTarget.index
+			}],
+			source : oSource,
+			target : oTarget
 		});
+
+		if (oMove) {
+			if (oMove.getMetadata().getName() === "sap.ui.dt.command.SimpleFormMove") {
+				// in case this is a dt command, perform immediately to show 'livechange'
+				oMove.execute();
+			}
+		}
+		return oMove;
 
 	};
 
 	/**
+	 * TODO: use this algorithm to search beforeHook
+	 *
 	 * @private
 	 */
-	ElementMover.prototype._findAfterHook = function(sHookName, oSource, oTarget) {
-		try {
-			var oParentOverlay = OverlayRegistry.getOverlay(oSource.parent);
-			var oAggregationOverlay = oParentOverlay.getAggregationOverlay(oSource.aggregation);
-			var oAggregationDesignTimeMetadata = oAggregationOverlay.getDesignTimeMetadata();
-			var oData = oAggregationDesignTimeMetadata.getData();
-			var oAfterHook = oData[sHookName];
-			if (oAfterHook) {
-				return {
-					afterHook : oAfterHook,
-					parentOverlay : oParentOverlay
-				};
+	ElementMover.prototype._findAfterHook = function(sName, oMovedOverlay, oSource) {
+		// TODO : move between two parents
+		var oFirstHiddenAggregationOverlay = oMovedOverlay.getFirstHiddenAggregationOverlay();
+		var oPublicParentElementOverlay = oMovedOverlay.getPublicParentElementOverlay();
+		if (oFirstHiddenAggregationOverlay && oPublicParentElementOverlay) {
+			var aggregationName = oFirstHiddenAggregationOverlay.getAggregationName();
+			var oAggregation = oPublicParentElementOverlay.getDesignTimeMetadata().getAggregation(aggregationName);
+			if (oAggregation) {
+				var oAfterHook = oAggregation[sName];
+				if (oAfterHook) {
+					return {
+						method : oAfterHook,
+						context : oPublicParentElementOverlay
+					};
+				}
 			}
-		} catch (ex) {
-			// Intensionally left blank
 		}
 		return null;
 	};

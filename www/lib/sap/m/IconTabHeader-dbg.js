@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -55,7 +55,15 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			 * Specifies whether the control is rendered.
 			 * @since 1.15.0
 			 */
-			visible : {type : "boolean", group : "Behavior", defaultValue : true}
+			visible : {type : "boolean", group : "Behavior", defaultValue : true},
+
+			/**
+			 * Specifies the header mode.
+			 * <b>Note:</b> The Inline mode works only if no icons are set.
+			 *
+			 * @since 1.40
+			 */
+			mode : {type : "sap.m.IconTabHeaderMode", group : "Appearance", defaultValue : sap.m.IconTabHeaderMode.Standard}
 		},
 		aggregations : {
 
@@ -334,7 +342,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 			(bIsParentIconTabBar && oParent.getExpandable() || this.oSelectedItem !== oItem)) {
 			this.oSelectedItem.$()
 					.removeClass("sapMITBSelected")
-					.removeAttr('aria-selected')
+					.attr('aria-selected', false)
 					.removeAttr('aria-expanded');
 		}
 
@@ -602,6 +610,35 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 		}
 
 		return Control.prototype.removeAllAggregation.apply(this, arguments);
+	};
+
+	/**
+	 * Returns the displayed text - text or text + (count)
+	 * @private
+	 */
+	IconTabHeader.prototype._getDisplayText = function (oItem) {
+		var sText = oItem.getText();
+
+		if (this.isInlineMode()) {
+			var sCount = oItem.getCount();
+			if (sCount) {
+				if (this._bRtl) {
+					sText = '(' + sCount + ') ' + sText;
+				} else {
+					sText += ' (' + sCount + ')';
+				}
+			}
+		}
+
+		return sText;
+	};
+
+	/**
+	 * Returns if the header is in inline mode.
+	 * @private
+	 */
+	IconTabHeader.prototype.isInlineMode = function () {
+		return this._bTextOnly && this.getMode() == sap.m.IconTabHeaderMode.Inline;
 	};
 
 

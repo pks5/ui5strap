@@ -17,7 +17,7 @@ sap.ui.define([
 	 * @param {object} [mSettings] initial settings for the new control
 	 * @class Type for <code>sortItems</code> aggregation in P13nSortPanel control.
 	 * @extends sap.ui.core.Item
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @public
 	 * @alias sap.m.P13nSortItem
@@ -52,6 +52,14 @@ sap.ui.define([
 			}
 		}
 	});
+
+	P13nSortItem.prototype.setColumnKey = function(v) {
+		return this.setProperty("columnKey", v, true);
+	};
+
+	P13nSortItem.prototype.setOperation = function(v) {
+		return this.setProperty("operation", v, true);
+	};
 
 	return P13nSortItem;
 

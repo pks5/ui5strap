@@ -95,8 +95,6 @@ sap.ui.define(['jquery.sap.global', '../Device', '../Global', '../base/Object', 
 					"onInit"                : { type : "code",     defaultValue : undefined, noUrl:true },
 					"uidPrefix"             : { type : "string",   defaultValue : "__",      noUrl:true },
 					"ignoreUrlParams"       : { type : "boolean",  defaultValue : false,     noUrl:true },
-					"weinreServer"          : { type : "string",   defaultValue : "",        noUrl:true },
-					"weinreId"              : { type : "string",   defaultValue : "" },
 					"preload"               : { type : "string",   defaultValue : "auto" },
 					"rootComponent"         : { type : "string",   defaultValue : "",        noUrl:true },
 					"preloadLibCss"         : { type : "string[]", defaultValue : [] },
@@ -640,6 +638,60 @@ sap.ui.define(['jquery.sap.global', '../Device', '../Global', '../base/Object', 
 		},
 
 		/**
+		 * Checks whether the Cache Manager is switched on.
+		 * @experimental
+		 * @since 1.37.0
+		 * @returns {boolean}
+		 */
+		isUI5CacheOn: function () {
+			return this["xx-cache-use"];
+		},
+		/**
+		 * Enables/Disables the Cache configuration.
+		 * @experimental
+		 * @since 1.37.0
+		 * @param {boolean} on true to switch it on, false if to switch it off
+		 * @returns {sap.ui.core.Configuration}
+		 */
+		setUI5CacheOn: function (on) {
+			this["xx-cache-use"] = on;
+			return this;
+		},
+
+		/**
+		 * Checks whether the Cache Manager serialization support is switched on.
+		 * @experimental
+		 * @since 1.37.0
+		 * @returns {boolean}
+		 */
+		isUI5CacheSerializationSupportOn: function () {
+			return this["xx-cache-serialization"];
+		},
+
+		/**
+		 * Enables/Disables the Cache serialization support
+		 * @experimental
+		 * @since 1.37.0
+		 * @param {boolean} on true to switch it on, false if to switch it off
+		 * @returns {sap.ui.core.Configuration}
+		 */
+		setUI5CacheSerializationSupport: function (on) {
+			this["xx-cache-serialization"] = on;
+			return this;
+		},
+
+		/**
+		 * Returns all keys, that the CacheManager will ignore when set/get values.
+		 * @experimental
+		 * @since 1.37.0
+		 * @returns {string[]} array of keys that CacheManager should ignore
+		 * @see sap.ui.core.cache.LRUPersistentCache#keyMatchesExclusionStrings
+		 */
+		getUI5CacheExcludedKeys: function () {
+			return this["xx-cache-excludedKeys"];
+		},
+
+		/**
 		 * Returns the calendar type which is being used in locale dependent functionalities.
 		 *
 		 * When it's explicitly set by calling <code>setCalendar</code>, the set calendar type is returned.
@@ -657,8 +709,7 @@ sap.ui.define(['jquery.sap.global', '../Device', '../Global', '../base/Object', 
 				CalendarType = sap.ui.require("sap/ui/core/library").CalendarType;
 			}
 			if ( !LocaleData ) {
-				jQuery.sap.require("sap.ui.core.LocaleData");
-				LocaleData = sap.ui.require("sap/ui/core/LocaleData");
+				LocaleData = sap.ui.requireSync("sap/ui/core/LocaleData");
 			}
 
 			if (this.calendarType) {
@@ -941,33 +992,6 @@ sap.ui.define(['jquery.sap.global', '../Device', '../Global', '../base/Object', 
 		 */
 		getControllerCodeDeactivated : function() {
 			return this.getDesignMode() && !this.getSuppressDeactivationOfControllerCode();
-		},
-
-		/**
-		 * WEINRE server URL
-		 *
-		 * @returns {string} the base URL of the WEINRE server
-		 * @public
-		 */
-		getWeinreServer : function() {
-			var sWeinreServer = this.weinreServer;
-			if (!sWeinreServer) {
-				// if not weinre server is configured - we expect that the weinre server
-				// is installed on the same machine with port no of the app + 1
-				sWeinreServer = window.location.protocol + "//" + window.location.hostname + ":";
-				sWeinreServer += (parseInt(window.location.port, 10) || 8080) + 1;
-			}
-			return sWeinreServer;
-		},
-
-		/**
-		 * WEINRE session ID
-		 *
-		 * @returns {string} the ID to use for the WEINRE server
-		 * @public
-		 */
-		getWeinreId : function() {
-			return this.weinreId;
 		},
 
 		/**

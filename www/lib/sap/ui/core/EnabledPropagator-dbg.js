@@ -25,7 +25,7 @@ sap.ui.define(['./Control'],
 	 * </code>
 	 *
 	 * @author Daniel Brinkmann
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @param {boolean} [bDefault=true] the value that should be used as default value for the enhancement of the control.
 	 * @param {boolean} [bLegacy=false] whether the introduced property should use the old name 'Enabled'
 	 * @public
@@ -77,7 +77,7 @@ sap.ui.define(['./Control'],
 
 		if (this.setEnabled === undefined) {
 			this.setEnabled = function(bEnabled) {
-				this.setProperty("enabled", bEnabled);
+				return this.setProperty("enabled", bEnabled);
 			};
 
 			this.getMetadata().addPublicMethods('setEnabled');

@@ -97,7 +97,7 @@ sap.ui
 							{
 								name : "ui5strap",
 
-								version : "0.11.5",
+								version : "0.11.6-SNAPSHOT",
 
 								dependencies : [ "sap.ui.core" ],
 

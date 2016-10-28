@@ -1,4 +1,3 @@
-
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
  * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
@@ -33,6 +32,7 @@ sap.ui.define(['jquery.sap.global'],
 		rm.addStyle("width",oControl.getWidth());
 		rm.writeStyles();
 		rm.addClass("sapMTC");
+		rm.addClass("sapContrastPlus");
 		rm.writeClasses();
 
 		/* WAI ARIA region */

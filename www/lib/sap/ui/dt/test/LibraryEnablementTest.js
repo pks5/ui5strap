@@ -1,0 +1,6 @@
+/*!
+ * UI development toolkit for HTML5 (OpenUI5)
+ * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ */
+sap.ui.define(['jquery.sap.global','sap/ui/dt/test/Test','sap/ui/dt/test/ElementEnablementTest'],function(q,T,E){"use strict";var L=T.extend("sap.ui.dt.test.LibraryEnablementTest",{metadata:{library:"sap.ui.dt",properties:{libraryName:{type:"string"},testData:{type:"object"}}}});L.prototype.run=function(){var t=this;this._aResult=[];var o=this.getTestData()||{};var l=this.getLibraryName();var e=[];var a=sap.ui.getCore().getLoadedLibraries()[l];if(a){var b=a.controls;b.forEach(function(s){var c=o[s];if(!c&&c!==false){c={};}if(c!==false){c.type=s;var d=null;if(c.create){d=q.extend({},c);delete d.create;c.groupPostfix="with create method";}e.push(new E(c));if(d){e.push(new E(d));}}});}var r=[];var i=function(R){if(R){r.push(R);}var c=e.shift();if(c){return c.run().then(function(R){c.destroy();return i(R);});}else{return Promise.resolve(r);}};return i().then(function(r){var R=t.createSuite("Library Enablement Test");r.forEach(function(m){var c=m.children[0];var p=R.children[R.children.length-1];if(p&&c.name==p.name){p.children=p.children.concat(c.children);}else{R.children.push(c);}});R=t.aggregate(R);return R;});};return L;},true);

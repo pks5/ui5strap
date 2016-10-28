@@ -4,8 +4,8 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
-sap.ui.define(['sap/ui/model/odata/type/DateTimeBase'],
-	function(DateTimeBase) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/model/odata/type/DateTimeBase'],
+	function(jQuery, DateTimeBase) {
 	"use strict";
 
 	/**
@@ -57,7 +57,7 @@ sap.ui.define(['sap/ui/model/odata/type/DateTimeBase'],
 	 * @extends sap.ui.model.odata.type.DateTimeBase
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @alias sap.ui.model.odata.type.DateTime
 	 * @param {object} [oFormatOptions]

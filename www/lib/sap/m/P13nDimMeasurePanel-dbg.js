@@ -19,7 +19,7 @@ sap.ui.define([
 	 *        dimensions and measures for table personalization.
 	 * @extends sap.m.P13nPanel
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @public
 	 * @since 1.34.0
@@ -97,6 +97,8 @@ sap.ui.define([
 
 	P13nDimMeasurePanel.prototype.init = function() {
 		var that = this;
+		this._iLiveChangeTimer = 0;
+		this._iSearchTimer = 0;
 		this._oRb = sap.ui.getCore().getLibraryResourceBundle("sap.m");
 		this._bOnAfterRenderingFirstTimeExecuted = false;
 		this._bOnBeforeRenderingFirstTimeExecuted = false;
@@ -206,8 +208,6 @@ sap.ui.define([
 	};
 
 	/**
-	 * *
-	 *
 	 * @param {string} sSearchText Table items are filtered by this text. <b>Note:</b> " " is a valid value. The table will be set back if
 	 *        sSearchText="".
 	 * @private
@@ -290,13 +290,13 @@ sap.ui.define([
 	};
 
 	P13nDimMeasurePanel.prototype.onAfterRendering = function() {
-		var that = this, iLiveChangeTimer = 0;
+		var that = this;
 
 		// adapt scroll-container very first time to the right size of the browser
 		if (!this._bOnAfterRenderingFirstTimeExecuted) {
 			this._bOnAfterRenderingFirstTimeExecuted = true;
-			window.clearTimeout(iLiveChangeTimer);
-			iLiveChangeTimer = window.setTimeout(function() {
+			window.clearTimeout(this._iLiveChangeTimer);
+			this._iLiveChangeTimer = window.setTimeout(function() {
 				that._fnHandleResize();
 
 				// following line is needed to get layout of OverflowToolbar rearranged IF it is used in a dialog
@@ -395,6 +395,9 @@ sap.ui.define([
 		if (this.getModel("$sapmP13nDimMeasurePanel")) {
 			this.getModel("$sapmP13nDimMeasurePanel").destroy();
 		}
+
+		window.clearTimeout(this._iLiveChangeTimer);
+		window.clearTimeout(this._iSearchTimer);
 	};
 
 	// ----------------------- Overwrite Method of chartTypeKey Property --------------------------
@@ -1178,14 +1181,13 @@ sap.ui.define([
 		});
 		oShowSelectedButton.setModel(oModel);
 
-		var iLiveChangeTimer = 0;
 		var oSearchField = new SearchField(this.getId() + "-searchField", {
 			liveChange: function(oEvent) {
 				var sValue = oEvent.getSource().getValue(), iDelay = (sValue ? 300 : 0); // no delay if value is empty
 				// execute search after user stops typing for 300ms
-				window.clearTimeout(iLiveChangeTimer);
+				window.clearTimeout(that._iSearchTimer);
 				if (iDelay) {
-					iLiveChangeTimer = window.setTimeout(function() {
+					that._iSearchTimer = window.setTimeout(function() {
 						that._onExecuteSearch();
 					}, iDelay);
 				} else {
@@ -1203,10 +1205,14 @@ sap.ui.define([
 			})
 		});
 
+		var oInvisibleChartTypeText = new sap.ui.core.InvisibleText({
+			text: that._oRb.getText('COLUMNSPANEL_CHARTTYPE')
+		});
 		var oChartTypeComboBox = new sap.m.ComboBox({
 			selectedKey: {
 				path: '/selectedChartTypeKey'
 			},
+			ariaLabelledBy: oInvisibleChartTypeText,
 			items: {
 				path: '/availableChartTypes',
 				template: new sap.ui.core.Item({
@@ -1224,7 +1230,7 @@ sap.ui.define([
 		var oToolbar = new sap.m.OverflowToolbar(this.getId() + "-toolbar", {
 			design: sap.m.ToolbarDesign.Solid, // Transparent,
 			content: [
-				oChartTypeComboBox, new sap.m.ToolbarSpacer(), oSearchField, oShowSelectedButton, oMoveToTopButton, oMoveUpButton, oMoveDownButton, oMoveToBottomButton
+				oInvisibleChartTypeText, oChartTypeComboBox, new sap.m.ToolbarSpacer(), oSearchField, oShowSelectedButton, oMoveToTopButton, oMoveUpButton, oMoveDownButton, oMoveToBottomButton
 			]
 		});
 		this.addAggregation("content", oToolbar);
@@ -1299,6 +1305,49 @@ sap.ui.define([
 			var oTableItem = aTableItems[i];
 			jQuery.sap.log.info(oModelItem.columnKey + ": " + oModelItem.visible + " " + oModelItem.tableIndex + " " + oModelItem.persistentSelected + "_" + oModelItem.persistentIndex + ";    " + oTableItem.getId() + " " + oTableItem.getCells()[0].getText() + ": " + oTableItem.getSelected() + " " + oTableItem.getCells()[1].getText());
 		}
+	};
+
+	P13nDimMeasurePanel.prototype.onBeforeNavigationFrom = function() {
+		// Check if chart type fits selected dimensions and measures
+		var sChartType = this.getChartTypeKey();
+		var aDimensionItems = [];
+		var aMeasureItems = [];
+
+		this.getDimMeasureItems().forEach(function(oDimMeasureItem) {
+			var oModelItem = this._getModelItemByColumnKey(oDimMeasureItem.getColumnKey());
+			if (!oModelItem) {
+				return;
+			}
+			if (oModelItem.aggregationRole === "Dimension") {
+				aDimensionItems.push(oDimMeasureItem);
+			} else if (oModelItem.aggregationRole === "Measure") {
+				aMeasureItems.push(oDimMeasureItem);
+			}
+		}, this);
+
+		aDimensionItems = aDimensionItems.filter(function(oItem) {
+			return oItem.getVisible();
+		}).map(function(oItem) {
+			return {
+				name: oItem.getColumnKey()
+			};
+		});
+		aMeasureItems = aMeasureItems.filter(function(oItem) {
+			return oItem.getVisible();
+		}).map(function(oItem) {
+			return {
+				name: oItem.getColumnKey()
+			};
+		});
+
+		sap.ui.getCore().loadLibrary("sap.chart");
+		var oResult;
+		try {
+			oResult = sap.chart.api.getChartTypeLayout(sChartType, aDimensionItems, aMeasureItems);
+		} catch (oException) {
+			return false;
+		}
+		return oResult.errors.length === 0;
 	};
 
 	return P13nDimMeasurePanel;

@@ -17,7 +17,7 @@ sap.ui.define([
 	 * @param {object} [mSettings] initial settings for the new control
 	 * @class The P13nSortPanel control is used to define settings for sorting in table personalization.
 	 * @extends sap.m.P13nPanel
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @public
 	 * @alias sap.m.P13nSortPanel
@@ -147,12 +147,14 @@ sap.ui.define([
 		this.setProperty("containerQuery", b);
 
 		this._oSortPanel.setContainerQuery(b);
+		return this;
 	};
 
 	P13nSortPanel.prototype.setLayoutMode = function(sMode) {
 		this.setProperty("layoutMode", sMode);
 
 		this._oSortPanel.setLayoutMode(sMode);
+		return this;
 	};
 
 	/**
@@ -200,6 +202,7 @@ sap.ui.define([
 	 * @public
 	 * @since 1.26
 	 * @param {array} array of operations [sap.m.P13nConditionOperation.BT, sap.m.P13nConditionOperation.EQ]
+	 * @returns {sap.m.P13nSortPanel} this for chaining
 	 */
 	P13nSortPanel.prototype.setOperations = function(aOperation) {
 		this._aOperations = aOperation;
@@ -207,6 +210,7 @@ sap.ui.define([
 		if (this._oSortPanel) {
 			this._oSortPanel.setOperations(this._aOperations);
 		}
+		return this;
 	};
 
 	/**
@@ -282,6 +286,10 @@ sap.ui.define([
 					tooltip: fGetValueOfProperty("tooltip", oContext, oItem_)
 				});
 			});
+			aKeyFields.splice(0, 0, {
+				key: null,
+				text: sap.ui.getCore().getLibraryResourceBundle("sap.m").getText("P13NDIALOG_SELECTION_NONE")
+			});
 			this._oSortPanel.setKeyFields(aKeyFields);
 
 			var aConditions = [];
@@ -333,7 +341,7 @@ sap.ui.define([
 	};
 
 	P13nSortPanel.prototype.addSortItem = function(oSortItem) {
-		this.addAggregation("sortItems", oSortItem);
+		this.addAggregation("sortItems", oSortItem, true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -341,7 +349,7 @@ sap.ui.define([
 	};
 
 	P13nSortPanel.prototype.insertSortItem = function(oSortItem, iIndex) {
-		this.insertAggregation("sortItems", oSortItem, iIndex);
+		this.insertAggregation("sortItems", oSortItem, iIndex, true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -359,7 +367,7 @@ sap.ui.define([
 	};
 
 	P13nSortPanel.prototype.removeSortItem = function(oSortItem) {
-		oSortItem = this.removeAggregation("sortItems", oSortItem);
+		oSortItem = this.removeAggregation("sortItems", oSortItem, true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;
@@ -369,7 +377,7 @@ sap.ui.define([
 	};
 
 	P13nSortPanel.prototype.removeAllSortItems = function() {
-		var aSortItems = this.removeAllAggregation("sortItems");
+		var aSortItems = this.removeAllAggregation("sortItems", true);
 
 		if (!this._bIgnoreBindCalls) {
 			this._bUpdateRequired = true;

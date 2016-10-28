@@ -6,8 +6,9 @@
 sap.ui.define([
 		'jquery.sap.global',
 		'sap/ui/thirdparty/URI',
-		'sap/ui/Device'
-	], function (jQuery, URI, Device) {
+		'sap/ui/Device',
+		'sap/ui/test/_XHRCounter'
+	], function (jQuery, URI, Device, _XHRCounter) {
 	"use strict";
 	var sLogPrefix = "Opa5 - finding controls",
 		$ = jQuery,
@@ -17,7 +18,8 @@ sap.ui.define([
 		oFrameUtils = null,
 		oFrameJQuery = null,
 		bRegiesteredToUI5Init = false,
-		bUi5Loaded = false;
+		bUi5Loaded = false,
+		oXHRCounter = null;
 
 	/*
 	 * INTERNALS
@@ -90,21 +92,27 @@ sap.ui.define([
 			fnOriginalSetHash = oHasher.setHash,
 			fnOriginalGetHash = oHasher.getHash,
 			sCurrentHash,
+			bKnownHashChange = false,
 			fnOriginalGo = oFrameWindow.history.go;
 
 		// replace hash is only allowed if it is triggered within the inner window. Even if you trigger an event from the outer test, it will not work.
 		// Therefore we have mock the behavior of replace hash. If an application uses the dom api to change the hash window.location.hash, this workaround will fail.
 		oHasher.replaceHash = function (sHash) {
+			bKnownHashChange = true;
 			var sOldHash = this.getHash();
 			sCurrentHash = sHash;
+			// fire the secret events for the local history so the recording is correct.
+			// The hash changer is not the global singleton it is a local one only used in this scope for the history.
 			oHashChanger.fireEvent("hashReplaced",{ sHash : sHash });
 			this.changed.dispatch(sHash, sOldHash);
 		};
 
 		oHasher.setHash = function (sHash) {
+			bKnownHashChange = true;
 			var sRealCurrentHash = fnOriginalGetHash.call(this);
-
 			sCurrentHash = sHash;
+			// fire the secret events for the local history so the recording is correct.
+			// The hash changer is not the global singleton it is a local one only used in this scope for the history.
 			oHashChanger.fireEvent("hashSet", { sHash : sHash });
 			fnOriginalSetHash.apply(this, arguments);
 
@@ -127,9 +135,22 @@ sap.ui.define([
 			return sCurrentHash;
 		};
 
+		// when a link is clicked or the hash is directly set we only get a changed event.
+		oHasher.changed.add(function (sNewHash) {
+			// only if the change does not come from the other known places it is likely to be a pressed link
+			if (!bKnownHashChange) {
+				// fire the secret events for the local history so the recording is correct.
+				// The hash changer is not the global singleton it is a local one only used in this scope for the history.
+				oHashChanger.fireEvent("hashSet", { sHash : sNewHash });
+				sCurrentHash = sNewHash;
+			}
+			bKnownHashChange = false;
+		});
+
 		oHashChanger.init();
 
 		function goBack () {
+			bKnownHashChange = true;
 			var sNewPreviousHash = oHistory.aHistory[oHistory.iHistoryPosition],
 				sNewCurrentHash = oHistory.getPreviousHash();
 
@@ -138,6 +159,7 @@ sap.ui.define([
 		}
 
 		function goForward () {
+			bKnownHashChange = true;
 			var sNewCurrentHash = oHistory.aHistory[oHistory.iHistoryPosition + 1],
 				sNewPreviousHash = oHistory.aHistory[oHistory.iHistoryPosition];
 
@@ -175,6 +197,9 @@ sap.ui.define([
 		oFrameJQuery.sap.require("sap.ui.test.OpaPlugin");
 		oFramePlugin = new oFrameWindow.sap.ui.test.OpaPlugin(sLogPrefix);
 
+		oFrameJQuery.sap.require("sap.ui.test._XHRCounter");
+		oXHRCounter = oFrameWindow.sap.ui.test._XHRCounter;
+
 		registerAbsoluteModulePathInIframe("sap.ui.qunit.QUnitUtils");
 		oFrameWindow.jQuery.sap.require("sap.ui.qunit.QUnitUtils");
 		oFrameUtils = oFrameWindow.sap.ui.qunit.QUnitUtils;
@@ -196,6 +221,7 @@ sap.ui.define([
 		oFrameWindow = null;
 		bUi5Loaded = false;
 		bRegiesteredToUI5Init = false;
+		oXHRCounter = null;
 	}
 
 	/**
@@ -254,6 +280,9 @@ sap.ui.define([
 		},
 		getWindow: function () {
 			return oFrameWindow;
+		},
+		_getIXHRCounter:function () {
+			return oXHRCounter || _XHRCounter;
 		},
 		teardown: function () {
 			destroyFrame();

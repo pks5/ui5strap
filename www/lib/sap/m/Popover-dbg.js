@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 		 * @implements sap.ui.core.PopupInterface
 		 *
 		 * @author SAP SE
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @public
@@ -603,10 +603,16 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			// initialFocus, beginButton, endButton, and popover itself.
 			// focus has to be inside/on popover otherwise autoclose() will not work
 				sFocusId = this._getInitialFocusId(),
-				oParentDomRef, iPlacePos;
+				sTheme = sap.ui.getCore().getConfiguration().getTheme(),
+				oParentDomRef, iPlacePos, bThemeBelize, aCompactParents;
+
+			oParentDomRef = (oControl.getDomRef && oControl.getDomRef()) || oControl;
+			aCompactParents = jQuery(oParentDomRef).closest(".sapUiSizeCompact");
 
 			// Determines if the Popover will be rendered in a compact mode
-			this._bSizeCompact = sap.m._bSizeCompact || !!document.querySelector('body.sapUiSizeCompact') || this.hasStyleClass("sapUiSizeCompact");
+			bThemeBelize = sTheme === "sap_belize" || sTheme === "sap_belize_plus";
+			this._bSizeCompact = sap.m._bSizeCompact || !!aCompactParents.length || this.hasStyleClass("sapUiSizeCompact");
+			this._bUseCompactArrow = this._bSizeCompact || bThemeBelize;
 
 			this._adaptPositionParams();
 
@@ -818,7 +824,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			oScrollAreaStyle.display = "";
 
 			// clear arrow styles
-			$arrow.removeClass("sapMPopoverArrRight sapMPopoverArrLeft sapMPopoverArrDown sapMPopoverArrUp sapMPopoverCrossArr sapMPopoverFooterAlignArr sapMPopoverHeaderAlignArr");
+			$arrow.removeClass("sapMPopoverArrRight sapMPopoverArrLeft sapMPopoverArrDown sapMPopoverArrUp sapMPopoverCrossArr sapMPopoverFooterAlignArr sapMPopoverHeaderAlignArr sapContrast sapContrastPlus");
 			$arrow.css({
 				left: "",
 				top: ""
@@ -1375,7 +1381,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 
 		/**
 		 * Calculate outerWidth of the element; used as hook for SVG elements
-		 *
+		 * @param {HTMLElement} oElement An Element for which outerWidth will be calculated.
+		 * @param {boolean} bIncludeMargin Determines if the margins should be included in the calculated outerWidth. Default value is false.
 		 * @protected
 		 */
 		Popover.outerWidth = function (oElement, bIncludeMargin) {
@@ -1383,12 +1390,13 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				return oElement.getBoundingClientRect().width;
 			}
 
-			return jQuery(oElement).outerWidth(bIncludeMargin);
+			return jQuery(oElement).outerWidth(!!bIncludeMargin);
 		};
 
 		/**
 		 * Calculate outerHeight of the element; used as hook for SVG elements
-		 *
+		 * @param {HTMLElement} oElement An Element for which outerHeight will be calculated.
+		 * @param {boolean} bIncludeMargin Determines if the margins should be included in the calculated outerHeight. Default value is false.
 		 * @protected
 		 */
 		Popover.outerHeight = function (oElement, bIncludeMargin) {
@@ -1396,7 +1404,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				return oElement.getBoundingClientRect().height;
 			}
 
-			return jQuery(oElement).outerHeight(bIncludeMargin);
+			return jQuery(oElement).outerHeight(!!bIncludeMargin);
 		};
 
 		Popover.prototype._getPositionParams = function ($popover, $arrow, $content, $scrollArea) {
@@ -1545,7 +1553,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 
 			return {
 				top: iTop,
-				bottom: Math.max(iBottom - oPosParams._fWindowTop, iBottom),
+				bottom: iBottom - oPosParams._fWindowTop,
 				left: iLeft,
 				right: typeof iRight === "number" ? iRight - oPosParams._fWindowLeft : iRight
 			};
@@ -1760,7 +1768,8 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 			if (this.getShowArrow()) {
 				// Set the arrow next to the opener
 				var iArrowOffset = this._getArrowOffsetCss(sCalculatedPlacement, oPosParams),
-					sArrowPositionClass = this._getArrowPositionCssClass(sCalculatedPlacement);
+					sArrowPositionClass = this._getArrowPositionCssClass(sCalculatedPlacement),
+					sArrowStyleClass, bUseContrastContainer;
 
 				// Remove old position of the arrow and add the new one
 				$arrow.removeAttr("style");
@@ -1769,13 +1778,28 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				// Add position class to the arrow
 				$arrow.addClass(sArrowPositionClass);
 
+				// Use contrast container if the arrow is placed down and the footer exists.
+				if (sCalculatedPlacement === sap.m.PlacementType.Top && oPosParams._$footer && oPosParams._$footer.size()) {
+					bUseContrastContainer = true;
+				}
+
 				// Style the arrow according to the header/footer/content if it is to the left or right
 				if (sCalculatedPlacement === sap.m.PlacementType.Left || sCalculatedPlacement === sap.m.PlacementType.Right) {
-					var sArrowStyleClass = this._getArrowStyleCssClass(oPosParams);
+					sArrowStyleClass = this._getArrowStyleCssClass(oPosParams);
 
 					if (sArrowStyleClass) {
 						$arrow.addClass(sArrowStyleClass);
+
+						// Use contrast container if there is a footer and the arrow is around it.
+						if (sArrowStyleClass === "sapMPopoverFooterAlignArr") {
+							bUseContrastContainer = true;
+						}
 					}
+				}
+
+				// Add the contrast container classes when a contrast container should be used.
+				if (bUseContrastContainer) {
+					$arrow.addClass("sapContrast sapContrastPlus");
 				}
 
 				// Prevent the popover from hiding the arrow
@@ -1799,7 +1823,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				this._arrowOffset = 18;
 				this._offsets = ["0 -18", "18 0", "0 18", "-18 0"];
 
-				if (this._bSizeCompact) {
+				if (this._bUseCompactArrow) {
 					this._arrowOffset = 9;
 					this._offsets = ["0 -9", "9 0", "0 9", "-9 0"];
 				}
@@ -2301,7 +2325,7 @@ sap.ui.define(['jquery.sap.global', './Bar', './Button', './InstanceManager', '.
 				bValue = false;
 			}
 
-			this.setProperty("resizable", bValue, true);
+			return this.setProperty("resizable", bValue, true);
 		};
 
 

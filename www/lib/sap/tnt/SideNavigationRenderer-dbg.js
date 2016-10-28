@@ -49,6 +49,7 @@ sap.ui.define([],
             rm.writeAttribute("role", 'navigation');
 
             rm.addClass('sapTntSideNavigation');
+            rm.addClass("sapContrast sapContrastPlus");
 
             if (!isExpanded) {
                 rm.addClass('sapTntSideNavigationNotExpanded');

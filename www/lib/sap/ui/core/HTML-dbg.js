@@ -5,12 +5,12 @@
  */
 
 // Provides control sap.ui.core.HTML.
-sap.ui.define(['jquery.sap.global', './Control', './RenderManager', './library'],
-	function(jQuery, Control, RenderManager, library) {
+sap.ui.define(['jquery.sap.global', './Control', './RenderManager'],
+	function(jQuery, Control, RenderManager) {
 	"use strict";
 
 	// local shortcut
-	var RenderPrefixes = library.RenderPrefixes;
+	var RenderPrefixes = RenderManager.RenderPrefixes;
 
 	/**
 	 * Constructor for a new HTML.
@@ -37,7 +37,7 @@ sap.ui.define(['jquery.sap.global', './Control', './RenderManager', './library']
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public

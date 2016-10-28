@@ -5,13 +5,13 @@
  */
 
 // Provides default renderer for XMLView
-sap.ui.define(['jquery.sap.global', './ViewRenderer', '../RenderManager', '../library'],
-	function(jQuery, ViewRenderer, RenderManager, CoreLib) {
+sap.ui.define(['jquery.sap.global', './ViewRenderer', '../RenderManager'],
+	function(jQuery, ViewRenderer, RenderManager) {
 	"use strict";
 
 	// shortcut
-	var PREFIX_DUMMY = CoreLib.RenderPrefixes.Dummy,
-		PREFIX_INVISIBLE = CoreLib.RenderPrefixes.Invisible;
+	var PREFIX_DUMMY = RenderManager.RenderPrefixes.Dummy,
+		PREFIX_INVISIBLE = RenderManager.RenderPrefixes.Invisible;
 
 	/**
 	 * Renderer for an XMLView.
@@ -82,7 +82,7 @@ sap.ui.define(['jquery.sap.global', './ViewRenderer', '../RenderManager', '../li
 				rm.addClass("sapUiView");
 				rm.addClass("sapUiXMLView");
 				ViewRenderer.addDisplayClass(rm, oControl);
-				if (!oControl._oAsyncState || !oControl._oAsyncState.suppressPreserve) {
+				if (!oControl.oAsyncState || !oControl.oAsyncState.suppressPreserve) {
 					// do not preserve when rendering initially in async mode
 					rm.writeAttribute("data-sap-ui-preserve", oControl.getId());
 				}

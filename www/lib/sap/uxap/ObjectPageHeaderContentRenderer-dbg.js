@@ -26,6 +26,7 @@ sap.ui.define([
 
 		if (bRenderEditBtn) {
 			oRm.write("<div ");
+			oRm.writeControlData(oControl);
 			oRm.addClass("sapUxAPObjectPageHeaderContentFlexBox");
 			oRm.addClass("sapUxAPObjectPageHeaderContentDesign-" + oControl.getContentDesign());
 			if (oHeader) {
@@ -35,10 +36,10 @@ sap.ui.define([
 			oRm.write(">");
 		}
 		oRm.write("<div ");
-		oRm.writeControlData(oControl);
 		if (bRenderEditBtn) {
 			oRm.addClass("sapUxAPObjectPageHeaderContentCellLeft");
 		} else {
+			oRm.writeControlData(oControl);
 			oRm.addClass("sapUxAPObjectPageHeaderContentDesign-" + oControl.getContentDesign());
 			if (oHeader) {
 				oRm.addClass('sapUxAPObjectPageContentObjectImage-' + oHeader.getObjectImageShape());

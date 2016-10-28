@@ -5,12 +5,13 @@
  */
 
 sap.ui.define([
+	"jquery.sap.global",
 	"sap/ui/core/format/DateFormat",
 	"sap/ui/model/FormatException",
 	"sap/ui/model/odata/type/ODataType",
 	"sap/ui/model/ParseException",
 	"sap/ui/model/ValidateException"
-], function (DateFormat, FormatException, ODataType, ParseException, ValidateException) {
+], function (jQuery, DateFormat, FormatException, ODataType, ParseException, ValidateException) {
 	"use strict";
 
 	var oDemoDate = new Date(2014, 10, 27, 13, 47, 26);
@@ -136,7 +137,7 @@ sap.ui.define([
 	 * @extends sap.ui.model.odata.type.ODataType
 	 * @public
 	 * @since 1.27.0
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 */
 	var DateTimeBase = ODataType.extend("sap.ui.model.odata.type.DateTimeBase", {
 			constructor : function (oFormatOptions, oConstraints) {

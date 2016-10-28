@@ -13,7 +13,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', '../base/EventProvider', '.
 	 * Provides methods to show or hide a waiting animation covering the whole
 	 * page and blocking user interaction.
 	 * @namespace
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @public
 	 * @alias sap.ui.core.BusyIndicator
 	 */
@@ -27,12 +27,49 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', '../base/EventProvider', '.
 
 	EventProvider.apply(BusyIndicator);
 
+	BusyIndicator.M_EVENTS = {
+		Open: "Open",
+
+		Close: "Close"
+	};
+
+	// This internal property keeps track if a show() call should be performed in case the core was not initialized yet.
+	// When show() is called and this variable is undefined: a core init event-handler is attached.
+	// When set to true || false internally, the core-init event-handler is not attached anymore.
+	// This is to make sure the handler is only attached once.
+	BusyIndicator._bShowIsDelayed = undefined;
+
 	/**
-	 * Map of event names and ids, that are provided by this class
-	 * @private
-	 * @name sap.ui.core.BusyIndicator.M_EVENTS
+	 * The <code>Open</code> event is fired, after the <code>BusyIndicator</code>
+	 * has opened.
+	 *
+	 * @name sap.ui.core.BusyIndicator#Open
+	 * @event
+	 * @param {sap.ui.base.Event} oControlEvent is the event object
+	 * @param {sap.ui.base.EventProvider} oControlEvent.getSource is the instance
+	 *                                    that fired the event
+	 * @param {object} oControlEvent.getParameters provides all additional parameters
+	 *                                    that are delivered with the event
+	 * @param {jQuery} oControlEvent.getParameters.$Busy is the jQuery object
+	 *                                    of the BusyIndicator
+	 * @public
 	 */
-	BusyIndicator.M_EVENTS = {Open: "Open", Close: "Close"};
+
+	/**
+	 * The <code>Close</code> event is fired, <strong>before</strong> the
+	 * <code>BusyIndicator</code> has closed.
+	 *
+	 * @name sap.ui.core.BusyIndicator#Close
+	 * @event
+	 * @param {sap.ui.base.Event} oControlEvent is the event object
+	 * @param {sap.ui.base.EventProvider} oControlEvent.getSource is the instance
+	 *                                    that fired the event
+	 * @param {object} oControlEvent.getParameters provides all additional parameters
+	 *                                    that are delivered with the event
+	 * @param {jQuery} oControlEvent.getParameters.$Busy is the jQuery object
+	 *                                    of the BusyIndicator
+	 * @public
+	 */
 
 
 	/**
@@ -182,7 +219,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', '../base/EventProvider', '.
 		// If body/Core are not available yet, give them some more time and open
 		// later if still required
 		if (!document.body || !sap.ui.getCore().isInitialized()) {
-			jQuery.sap.delayedCall(100, this, "show", arguments);
+			// register core init only once, when bShowIsDelayed is not set yet
+			if (BusyIndicator._bShowIsDelayed === undefined) {
+				sap.ui.getCore().attachInit(function () {
+					// ignore init event, in case hide() was called in between
+					if (BusyIndicator._bShowIsDelayed) {
+						BusyIndicator.show(iDelay);
+					}
+				});
+			}
+			// everytime show() is called the call has to be delayed
+			BusyIndicator._bShowIsDelayed = true;
 			return;
 		}
 
@@ -245,7 +292,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', '../base/EventProvider', '.
 	 */
 	BusyIndicator.hide = function() {
 		jQuery.sap.log.debug("sap.ui.core.BusyIndicator.hide at " + new Date().getTime());
-			if (this._fDelayedStartTime) {  // Implies fesr header active
+		if (this._fDelayedStartTime) {  // Implies fesr header active
 			// The busy indicator shown duration d is calculated with:
 			// d = "time busy indicator was hidden" - "time busy indicator was requested" - "busy indicator delay"
 			var fBusyIndicatorShownDuration = jQuery.sap.now() - this._fDelayedStartTime;
@@ -253,6 +300,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device', '../base/EventProvider', '.
 			delete this._fDelayedStartTime;
 		}
 		var bi = BusyIndicator; // Restore scope in case we are called with setTimeout or so...
+
+		// When hide() is called, a potential delayed show-call has to be ignored.
+		// Since there is no Core.detachInit(), this flag is used to reject an existing core-init handler
+		if (BusyIndicator._bShowIsDelayed === true) {
+			BusyIndicator._bShowIsDelayed = false;
+		}
 
 		bi.bOpenRequested = false;
 

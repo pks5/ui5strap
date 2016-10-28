@@ -3,54 +3,39 @@
   "resources": [
     {
       "name": ".theming",
-      "theme": "base"
-    },
-    {
-      "name": "TaskCircle.less",
-      "designtime": true,
-      "theme": "base"
-    },
-    {
-      "name": "VerticalProgressIndicator.less",
-      "designtime": true,
-      "theme": "base"
+      "theme": "sap_belize_plus"
     },
     {
       "name": "library-RTL-dbg.css",
       "isDebug": true,
-      "theme": "base"
+      "theme": "sap_belize_plus"
     },
     {
       "name": "library-RTL.css",
-      "theme": "base"
+      "theme": "sap_belize_plus"
     },
     {
       "name": "library-dbg.css",
       "isDebug": true,
-      "theme": "base"
+      "theme": "sap_belize_plus"
     },
     {
       "name": "library-parameters.json",
-      "theme": "base"
+      "theme": "sap_belize_plus"
     },
     {
       "name": "library.css",
-      "theme": "base"
+      "theme": "sap_belize_plus"
     },
     {
       "name": "library.less",
       "designtime": true,
-      "theme": "base"
+      "theme": "sap_belize_plus"
     },
     {
       "name": "library.source.less",
       "designtime": true,
-      "theme": "base"
-    },
-    {
-      "name": "shared.less",
-      "designtime": true,
-      "theme": "base"
+      "theme": "sap_belize_plus"
     }
   ]
 }

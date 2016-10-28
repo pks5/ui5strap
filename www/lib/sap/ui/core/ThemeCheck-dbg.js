@@ -5,8 +5,8 @@
  */
 
 // Provides class sap.ui.core.ThemeCheck
-sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/base/Object', 'sap/ui/thirdparty/URI', 'jquery.sap.script'],
-	function(jQuery, Device, BaseObject, URI/* , jQuerySap */) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/Device', 'sap/ui/Global', 'sap/ui/base/Object', 'sap/ui/thirdparty/URI', 'jquery.sap.script'],
+	function(jQuery, Device, Global, BaseObject, URI/* , jQuerySap */) {
 	"use strict";
 
 

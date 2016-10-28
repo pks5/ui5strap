@@ -26,7 +26,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/layout/Respon
 	 * Use <code>LayoutData</code> to influence the layout for special cases in the Input/Display controls.
 	 * <b>Note:</b> If a more complex form is needed, use <code>Form</code> instead.
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public

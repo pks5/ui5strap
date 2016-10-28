@@ -18,7 +18,7 @@ sap.ui.define([
 	 * @class The CutPaste enables Cut & Paste functionality for the overlays based on aggregation types
 	 * @extends sap.ui.dt.Plugin"
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @private
 	 * @since 1.34
@@ -150,7 +150,9 @@ sap.ui.define([
 				return;
 			}
 
-			this.getElementMover().buildMoveEvent();
+			this.fireElementModified({
+				"command" : this.getElementMover().buildMoveEvent()
+			});
 		}
 
 		// focus get invalidated, see https://support.wdf.sap.corp/sap/support/message/1580061207

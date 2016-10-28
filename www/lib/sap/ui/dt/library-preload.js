@@ -57,6 +57,17 @@ a.iterateOverlayTree=function(o,c){var t=this;c(o);o.getChildren().forEach(funct
 a.isInOverlayContainer=function(n){if(n&&q(n).closest(".sapUiDtOverlay, #overlay-container").length){return true;}};
 a.getClosestOverlayForNode=function(n){var e=E.getClosestElementForNode(n);return a.getClosestOverlayFor(e);};
 return a;},true);
+sap.ui.predefine('sap/ui/dt/command/Move',['jquery.sap.global','sap/ui/dt/command/BaseCommand','sap/ui/dt/ElementUtil'],function(q,B,E){"use strict";
+var M=B.extend("sap.ui.dt.command.Move",{metadata:{properties:{movedElements:{type:"array"},target:{type:"object"},source:{type:"object"}}}});
+M.prototype._executeWithElement=function(e){var t=this;this.getMovedElements().forEach(function(m){var s=t.getSource();var T=t.getTarget();E.removeAggregation(s.parent,s.aggregation,m.element);E.insertAggregation(T.parent,T.aggregation,m.element,m.targetIndex);});};
+return M;},true);
+sap.ui.predefine('sap/ui/dt/command/SimpleFormMove',['jquery.sap.global','sap/ui/dt/command/BaseCommand','sap/ui/dt/ElementUtil'],function(q,B,E){"use strict";
+var S=B.extend("sap.ui.dt.command.SimpleFormMove",{metadata:{properties:{movedElements:{type:"array"},target:{type:"object"},source:{type:"object"},changeType:{type:"string",defaultValue:"moveSimpleFormElement"},action:{type:"object"}}}});
+S.prototype._setReverseAction=function(o){this._reverseAction=o;};
+S.prototype._getReverseAction=function(){return(this._reverseAction);};
+S.prototype._executeWithElement=function(o){o=g(o);var h=this.getAction();if(!h){var i=o;var j=this.getMovedElements();if(j.length>1){q.sap.log.warning("Moving more than 1 Formelement is not yet supported.");}var k=j[0].element;var t=this.getTarget();if(k instanceof sap.ui.layout.form.FormContainer){h=f(i,k,t);}else if(k instanceof sap.ui.layout.form.FormElement){h=b(i,k,t);}this.setAction(h);var R=q.extend(true,{},h);R.source.elements=G(sap.ui.getCore().byId(h.target.parent),h);this._setReverseAction(R);}if(h){d(h);}};
+S.prototype._undoWithElement=function(o){s(this);this._executeWithElement(o);};
+var g=function(o){if(E.isInstanceOf(o,"sap.ui.layout.form.SimpleForm")){return o;}else if(E.isInstanceOf(o,"sap.ui.layout.form.Form")||E.isInstanceOf(o,"sap.ui.layout.form.FormContainer")||E.isInstanceOf(o,"sap.ui.layout.form.FormElement")){return g(o.getParent());}};var m=function(t,C,h){var R;var j=-1;for(var i=0;i<C.length;i++){if(C[i]instanceof t){j++;if(j===h){R=C[i];break;}}}return C.indexOf(R);};var M=function(F){var h=F.getFormElements();var i=h.reduce(function(p,j,k,l){p+=j.getFields().length+1;return p;},1);return i;};var e=function(C){var R=[];for(var i=0;i<C.length;i++){R.push(C[i].getId());}return R;};var a=function(h,j,t,T,k){var R=t;for(var i=0;i<k;i++){R.splice(T+i,0,h[j+i]);}return R;};var c=function(p,h){return{changeType:'reorder_aggregation',source:{elements:h},target:{parent:p,aggregation:'content'}};};var f=function(o,h,t){var C=o.getContent();var i=h.getTitle();var j=C.indexOf(i);var T=m(sap.ui.core.Title,C,t.index);var k=M(h);var l=C.slice();l.splice(j,k);l=a(C,j,l,T,k);return c(o.getId(),e(l));};var b=function(o,h,t){var C=o.getContent();var F=t.parent.getFormElements();var i=C.indexOf(h.getLabel());var j=F[t.index].getFields().length+1;var T=C.indexOf(t.parent.getTitle());if(T>i){T=T-j;}var O=0;for(var k=0;k<t.index;k++){O=O+F[k].getFields().length+1;}T=T+O+1;var l=C.slice();l.splice(i,j);l=a(C,i,l,T,j);return c(o.getId(),e(l));};var G=function(t,o){var h=E.getAggregationAccessors(t,o.target.aggregation).get;return e(t[h]());};var r=function(t,o){var h=E.getAggregationAccessors(t,o.target.aggregation).removeAll;t[h]();};var A=function(t,o){var h=E.getAggregationAccessors(t,o.target.aggregation).add;var i;for(var j=0;j<o.source.elements.length;j++){i=sap.ui.getCore().byId(o.source.elements[j]);t[h](i);}};var d=function(o){var t=sap.ui.getCore().byId(o.target.parent);r(t,o);A(t,o);};var s=function(C){var t=C._getReverseAction();C._setReverseAction(C.getAction());C.setAction(t);};return S;},true);
 sap.ui.predefine('sap/ui/dt/plugin/ContextMenu',['jquery.sap.global','sap/ui/dt/Plugin','sap/ui/dt/ContextMenuControl'],function(q,P,C){"use strict";
 var a=P.extend("sap.ui.dt.plugin.ContextMenu",{metadata:{library:"sap.ui.dt",properties:{},associations:{},events:{openedContextMenu:{},closedContextMenu:{}}}});
 a.prototype.registerElementOverlay=function(o){o.attachBrowserEvent("contextmenu",this._onContextMenu,this);o.attachBrowserEvent("keydown",this._onKeyDown,this);};
@@ -79,7 +90,7 @@ C.prototype.registerElementOverlay=function(o){D.prototype.registerElementOverla
 C.prototype.deregisterElementOverlay=function(o){D.prototype.deregisterElementOverlay.apply(this,arguments);o.setMovable(false);if(this.oDraggedElement){this.getElementMover().deactivateTargetZonesFor(o,d);}};
 C.prototype.getDraggedOverlay=function(){return this._oDraggedOverlay;};
 C.prototype.onDragStart=function(o,e){this._oDraggedOverlay=o;this.getElementMover().setMovedOverlay(o);this.getElementMover().activateAllValidTargetZones(this.getDesignTime(),d);};
-C.prototype.onDragEnd=function(o){this.getElementMover().buildMoveEvent();delete this._oPreviousTarget;this.getElementMover().deactivateAllTargetZones(this.getDesignTime(),d);delete this._oDraggedOverlay;this.getElementMover().setMovedOverlay(null);};
+C.prototype.onDragEnd=function(o){this.fireElementModified({"command":this.getElementMover().buildMoveEvent()});delete this._oPreviousTarget;this.getElementMover().deactivateAllTargetZones(this.getDesignTime(),d);delete this._oDraggedOverlay;this.getElementMover().setMovedOverlay(null);};
 C.prototype.onDragEnter=function(t,e){var o=this.getDraggedOverlay();if(t.getElementInstance()!==o.getElementInstance()&&t!==this._oPreviousTarget){this.getElementMover().repositionOn(o,t);}this._oPreviousTarget=t;};
 C.prototype.onAggregationDragEnter=function(A){delete this._oPreviousTarget;var o=this.getDraggedOverlay();this.getElementMover().insertInto(o,A);};
 return C;},true);
@@ -94,13 +105,13 @@ C.prototype.getCuttedOverlay=function(){return this.getElementMover().getMovedOv
 C.prototype.isElementPasteable=function(t){var T=this._getTargetZoneAggregation(t);if((T)||(O.isInTargetZoneAggregation(t))){return true;}else{return false;}};
 C.prototype._onKeyDown=function(e){var o=sap.ui.getCore().byId(e.currentTarget.id);if((e.keyCode===jQuery.sap.KeyCodes.X)&&(e.shiftKey===false)&&(e.altKey===false)&&(e.ctrlKey===true)){this.cut(o);e.stopPropagation();}else if((e.keyCode===jQuery.sap.KeyCodes.V)&&(e.shiftKey===false)&&(e.altKey===false)&&(e.ctrlKey===true)){this.paste(o);e.stopPropagation();}else if(e.keyCode===jQuery.sap.KeyCodes.ESCAPE){this.stopCutAndPaste();e.stopPropagation();}};
 C.prototype.cut=function(o){this.stopCutAndPaste();if(o.isMovable()){this.getElementMover().setMovedOverlay(o);o.addStyleClass("sapUiDtOverlayCutted");this.getElementMover().activateAllValidTargetZones(this.getDesignTime());}};
-C.prototype.paste=function(t){var c=this.getElementMover().getMovedOverlay();if(!c){return;}if(!this._isForSameElement(c,t)){var T=this._getTargetZoneAggregation(t);if(T){this.getElementMover().insertInto(c,T);}else if(O.isInTargetZoneAggregation(t)){this.getElementMover().repositionOn(c,t);}else{return;}this.getElementMover().buildMoveEvent();}setTimeout(function(){c.focus();},0);this.stopCutAndPaste();};
+C.prototype.paste=function(t){var c=this.getElementMover().getMovedOverlay();if(!c){return;}if(!this._isForSameElement(c,t)){var T=this._getTargetZoneAggregation(t);if(T){this.getElementMover().insertInto(c,T);}else if(O.isInTargetZoneAggregation(t)){this.getElementMover().repositionOn(c,t);}else{return;}this.fireElementModified({"command":this.getElementMover().buildMoveEvent()});}setTimeout(function(){c.focus();},0);this.stopCutAndPaste();};
 C.prototype.stopCutAndPaste=function(){var c=this.getElementMover().getMovedOverlay();if(c){c.removeStyleClass("sapUiDtOverlayCutted");this.getElementMover().setMovedOverlay(null);this.getElementMover().deactivateAllTargetZones(this.getDesignTime());}};
 C.prototype._isForSameElement=function(c,t){return t.getElementInstance()===c.getElementInstance();};
 C.prototype._getTargetZoneAggregation=function(t){var a=t.getAggregationOverlays();var p=a.filter(function(A){return A.isTargetZone();});if(p.length>0){return p[0];}else{return null;}};
 return C;},true);
-sap.ui.predefine('sap/ui/dt/plugin/ElementMover',['sap/ui/base/ManagedObject','sap/ui/dt/ElementUtil','sap/ui/dt/OverlayUtil','sap/ui/dt/OverlayRegistry'],function(M,E,O,a){"use strict";
-var b=M.extend("sap.ui.dt.plugin.ElementMover",{metadata:{library:"sap.ui.dt",properties:{movableTypes:{type:"string[]",defaultValue:["sap.ui.core.Element"]}},associations:{},events:{'elementMoved':{}}}});
+sap.ui.predefine('sap/ui/dt/plugin/ElementMover',['sap/ui/base/ManagedObject','sap/ui/dt/ElementUtil','sap/ui/dt/OverlayUtil','sap/ui/dt/OverlayRegistry','sap/ui/dt/command/CommandFactory'],function(M,E,O,a,C){"use strict";
+var b=M.extend("sap.ui.dt.plugin.ElementMover",{metadata:{library:"sap.ui.dt",properties:{commandFactory:{type:"object",defaultValue:C},movableTypes:{type:"string[]",defaultValue:["sap.ui.core.Element"]}},associations:{},events:{'elementMoved':{}}}});
 b.prototype._getMovableTypes=function(){return this.getProperty("movableTypes")||[];};
 b.prototype.isMovableType=function(e){var m=this._getMovableTypes();return m.some(function(t){return E.isInstanceOf(e,t);});};
 b.prototype.checkMovable=function(o){return true;};
@@ -116,10 +127,11 @@ b.prototype.deactivateTargetZonesFor=function(o,A){this._iterateOverlayAggregati
 b.prototype.deactivateAllTargetZones=function(d,A){this._iterateAllAggregations(d,this._deactivateTargetZone.bind(this),A);};
 b.prototype._iterateAllAggregations=function(d,s,A){var t=this;var o=d.getElementOverlays();o.forEach(function(c){t._iterateOverlayAggregations(c,s,A);});};
 b.prototype._iterateOverlayAggregations=function(o,s,A){var c=o.getAggregationOverlays();c.forEach(function(d){s(d,A);});};
-b.prototype.repositionOn=function(m,t){var o=m.getElementInstance();var T=O.getParentInformation(t);if(T.index!==-1){E.insertAggregation(T.parent,T.aggregation,o,T.index);}};
-b.prototype.insertInto=function(m,t){var o=m.getElementInstance();var T=t.getElementInstance();var s=m.getParent();if(t!==s){var c=t.getAggregationName();E.addAggregation(T,c,o);}};
-b.prototype.buildMoveEvent=function(){var m=this.getMovedOverlay();var o=m.getElementInstance();var s=this._getSource();var t=O.getParentInformation(m);var A=[];var h=this._findAfterHook('afterMove',s,t);if(h){var p=h.parentOverlay.getElementInstance();A=h.afterHook.call(p,o,s,t);}else{A.push({element:o,source:s,target:t});}if(A&&A.length>0){E.executeActions(A);}this.fireElementMoved({data:A});};
-b.prototype._findAfterHook=function(h,s,t){try{var p=a.getOverlay(s.parent);var A=p.getAggregationOverlay(s.aggregation);var o=A.getDesignTimeMetadata();var d=o.getData();var c=d[h];if(c){return{afterHook:c,parentOverlay:p};}}catch(e){}return null;};
+b.prototype._isInvalidateSimpleFormEnabled=function(e,m){var f=m.getFirstHiddenAggregationOverlay();if(f){var o=f.getElementInstance();if(o.getMetadata().getName()==="sap.ui.layout.form.SimpleForm"){o._bChangedByMe=!e;}}};
+b.prototype.repositionOn=function(m,t){var o=m.getElementInstance();var T=O.getParentInformation(t);if(T.index!==-1){this._isInvalidateSimpleFormEnabled(false,m);E.insertAggregation(T.parent,T.aggregation,o,T.index);this._isInvalidateSimpleFormEnabled(true,m);}};
+b.prototype.insertInto=function(m,t){var o=m.getElementInstance();var T=t.getElementInstance();var s=m.getParent();if(t!==s){var c=t.getAggregationName();this._isInvalidateSimpleFormEnabled(false,m);E.addAggregation(T,c,o);this._isInvalidateSimpleFormEnabled(true,m);}};
+b.prototype.buildMoveEvent=function(){var m=this.getMovedOverlay();var o=m.getElementInstance();var s=this._getSource();var t=O.getParentInformation(m);var c=this.getCommandFactory().getCommandFor(t.parent,"Move",{element:t.parent,movedElements:[{element:o,sourceIndex:s.index,targetIndex:t.index}],source:s,target:t});if(c){if(c.getMetadata().getName()==="sap.ui.dt.command.SimpleFormMove"){c.execute();}}return c;};
+b.prototype._findAfterHook=function(n,m,s){var f=m.getFirstHiddenAggregationOverlay();var p=m.getPublicParentElementOverlay();if(f&&p){var c=f.getAggregationName();var A=p.getDesignTimeMetadata().getAggregation(c);if(A){var o=A[n];if(o){return{method:o,context:p};}}}return null;};
 return b;},true);
 sap.ui.predefine('sap/ui/dt/plugin/TabHandling',['jquery.sap.global','sap/ui/dt/Plugin','sap/ui/dt/Overlay'],function(q,P,O){"use strict";
 var T=P.extend("sap.ui.dt.plugin.TabHandling",{metadata:{library:"sap.ui.dt",properties:{},associations:{},events:{}}});
@@ -140,7 +152,7 @@ var A=D.extend("sap.ui.dt.AggregationDesignTimeMetadata",{metadata:{library:"sap
 return A;},true);
 sap.ui.predefine('sap/ui/dt/AggregationOverlay',['jquery.sap.global','sap/ui/dt/Overlay','sap/ui/dt/DOMUtil','sap/ui/dt/ElementUtil','sap/ui/dt/OverlayUtil'],function(q,O,D,E,a){"use strict";
 var A=O.extend("sap.ui.dt.AggregationOverlay",{metadata:{library:"sap.ui.dt",properties:{aggregationName:{type:"string"},targetZone:{type:"boolean",defaultValue:false}},aggregations:{children:{type:"sap.ui.dt.Overlay",multiple:true},designTimeMetadata:{type:"sap.ui.dt.AggregationDesignTimeMetadata",multiple:false}},events:{targetZoneChange:{parameters:{targetZone:{type:"boolean"}}}}}});
-A.prototype.getAssociatedDomRef=function(){var e=this.getElementInstance();var s=this.getAggregationName();var o=E.getDomRef(e);if(o){var d=this.getDesignTimeMetadata();var v=d.getDomRef();if(typeof v==="function"){return v.call(e,s);}else if(typeof v==="string"){return D.getDomRefForCSSSelector(o,v).get(0);}}};
+A.prototype.getAssociatedDomRef=function(){var e=this.getElementInstance();var s=this.getAggregationName();var o=E.getDomRef(e);var d=this.getDesignTimeMetadata();var v=d.getDomRef();if(o){if(typeof v==="function"){return v.call(e,s);}else if(typeof v==="string"){return D.getDomRefForCSSSelector(o,v).get(0);}}else{if(typeof v==="function"){return v.call(e,s);}}};
 A.prototype.setTargetZone=function(t){if(this.getTargetZone()!==t){this.setProperty("targetZone",t);this.toggleStyleClass("sapUiDtOverlayTargetZone",t);this.fireTargetZoneChange({targetZone:t});}return this;};
 A.prototype.isTargetZone=function(){return this.getTargetZone();};
 A.prototype.getChildren=function(){return this.getAggregation("children")||[];};
@@ -174,7 +186,7 @@ D.copyComputedStyles=function(s,d){s=q(s).get(0);d=q(d).get(0);for(var i=0;i<s.c
 D.cloneDOMAndStyles=function(n,t){n=q(n).get(0);t=q(t).get(0);var c=n.cloneNode(true);this.copyComputedStyles(n,c);var $=q(c);q(t).append($);};
 return D;},true);
 sap.ui.predefine('sap/ui/dt/DesignTime',['sap/ui/base/ManagedObject','sap/ui/dt/ElementOverlay','sap/ui/dt/OverlayRegistry','sap/ui/dt/Selection','sap/ui/dt/ElementDesignTimeMetadata','sap/ui/dt/ElementUtil','sap/ui/dt/OverlayUtil','./library'],function(M,E,O,S,a,b,c){"use strict";
-var D=M.extend("sap.ui.dt.DesignTime",{metadata:{library:"sap.ui.dt",properties:{selectionMode:{type:"sap.ui.dt.SelectionMode",defaultValue:sap.ui.dt.SelectionMode.Single},designTimeMetadata:{type:"object"}},associations:{rootElements:{type:"sap.ui.core.Element",multiple:true}},aggregations:{plugins:{type:"sap.ui.dt.Plugin",multiple:true}},events:{elementOverlayCreated:{parameters:{elementOverlay:{type:"sap.ui.dt.ElementOverlay"}}},elementOverlayDestroyed:{parameters:{elementOverlay:{type:"sap.ui.dt.ElementOverlay"}}},selectionChange:{parameters:{selection:{type:"sap.ui.dt.Overlay[]"}}},syncing:{},synced:{}}}});
+var D=M.extend("sap.ui.dt.DesignTime",{metadata:{library:"sap.ui.dt",properties:{selectionMode:{type:"sap.ui.dt.SelectionMode",defaultValue:sap.ui.dt.SelectionMode.Single},designTimeMetadata:{type:"object"}},associations:{rootElements:{type:"sap.ui.core.Element",multiple:true}},aggregations:{plugins:{type:"sap.ui.dt.Plugin",multiple:true}},events:{elementOverlayCreated:{parameters:{elementOverlay:{type:"sap.ui.dt.ElementOverlay"}}},elementOverlayDestroyed:{parameters:{elementOverlay:{type:"sap.ui.dt.ElementOverlay"}}},selectionChange:{parameters:{selection:{type:"sap.ui.dt.Overlay[]"}}},syncing:{},synced:{},syncFailed:{}}}});
 D.prototype.init=function(){this._iOverlaysPending=0;this._oSelection=this.createSelection();this._oSelection.attachEvent("change",function(e){this.fireSelectionChange({selection:e.getParameter("selection")});},this);};
 D.prototype.exit=function(){delete this._iOverlaysPending;this._destroyAllOverlays();this._oSelection.destroy();};
 D.prototype.createSelection=function(){return new S();};
@@ -193,7 +205,7 @@ D.prototype.removeRootElement=function(r){this.removeAssociation("rootElements",
 D.prototype.removeAllRootElement=function(){this.removeAssociation("rootElements");this._destroyAllOverlays();return this;};
 D.prototype.createElementOverlay=function(e,i){return new E({inHiddenTree:i,element:e});};
 D.prototype.getElementOverlays=function(){var t=this;var e=[];this._iterateRootElements(function(r){e=e.concat(t._getAllElementOverlaysIn(r));});return e;};
-D.prototype._createElementOverlay=function(e,i){var t=this;e=b.fixComponentContainerElement(e);var o=O.getOverlay(e);if(e&&!o){if(this._iOverlaysPending===0){this.fireSyncing();}this._iOverlaysPending++;o=this.createElementOverlay(e,i);if(o){o.attachRequestElementOverlaysForAggregation(this._onRequestElementOverlaysForAggregation,this);o.attachElementModified(this._onElementModified,this);o.attachDestroyed(this._onElementOverlayDestroyed,this);o.attachSelectionChange(this._onElementOverlaySelectionChange,this);}b.loadDesignTimeMetadata(e).then(function(d){var m=d||{};jQuery.extend(true,m,t.getDesignTimeMetadataFor(e));var f=new a({data:m});o.setDesignTimeMetadata(f);t.fireElementOverlayCreated({elementOverlay:o});}).catch(function(d){jQuery.sap.log.error("exception occured in sap.ui.dt.DesignTime._createElementOverlay",d);}).then(function(){t._iOverlaysPending--;if(t._iOverlaysPending===0){t.fireSynced();}});}return o;};
+D.prototype._createElementOverlay=function(e,i){var t=this;e=b.fixComponentContainerElement(e);var o=O.getOverlay(e);if(e&&!e.bIsDestroyed&&!o){if(this._iOverlaysPending===0){this.fireSyncing();}this._iOverlaysPending++;o=this.createElementOverlay(e,i);if(o){o.attachRequestElementOverlaysForAggregation(this._onRequestElementOverlaysForAggregation,this);o.attachElementModified(this._onElementModified,this);o.attachDestroyed(this._onElementOverlayDestroyed,this);o.attachSelectionChange(this._onElementOverlaySelectionChange,this);}b.loadDesignTimeMetadata(e).then(function(d){if(!e||e.bIsDestroyed){return;}var m=d||{};jQuery.extend(true,m,t.getDesignTimeMetadataFor(e));var f=new a({data:m});o.setDesignTimeMetadata(f);t.fireElementOverlayCreated({elementOverlay:o});}).catch(function(d){jQuery.sap.log.error("exception occured in sap.ui.dt.DesignTime._createElementOverlay",d);if(d instanceof Error){t.fireSyncFailed();}}).then(function(){t._iOverlaysPending--;if(t._iOverlaysPending===0){t.fireSynced();}});}return o;};
 D.prototype.createOverlay=function(e){return this._createElementOverlay(e);};
 D.prototype._destroyOverlaysForElement=function(e){var o=O.getOverlay(e);if(o){o.destroy();}};
 D.prototype._destroyAllOverlays=function(){var t=this;this._iterateRootElements(function(r){t._destroyOverlaysForElement(r);});};
@@ -201,8 +213,8 @@ D.prototype._createChildOverlaysForAggregation=function(e,A){var t=this;var o=e.
 D.prototype._onRequestElementOverlaysForAggregation=function(e){var o=e.getSource();var A=e.getParameter("name");this._createChildOverlaysForAggregation(o,A);};
 D.prototype._onElementOverlayDestroyed=function(e){var o=e.getSource();if(o.getSelected()){this._oSelection.remove(o);}this.fireElementOverlayDestroyed({overlay:o});};
 D.prototype._onElementOverlaySelectionChange=function(e){var o=e.getSource();var s=e.getParameter("selected");this._oSelection.set(o,s);};
-D.prototype._onElementModified=function(e){var t=this;var p=e.getParameters();if(p.type==="addOrSetAggregation"||p.type==="insertAggregation"){this._onElementOverlayAddAggregation(p.value);}else if(p.type==="setParent"){setTimeout(function(){if(!t.bIsDestroyed){t._checkIfOverlayShouldBeDestroyed(p.target,p.value);}},0);}};
-D.prototype._onElementOverlayAddAggregation=function(C){if(C instanceof sap.ui.core.Element){var o=O.getOverlay(C);if(!o){this._createElementOverlay(C);}}};
+D.prototype._onElementModified=function(e){var t=this;var p=e.getParameters();if(p.type==="addOrSetAggregation"||p.type==="insertAggregation"){this._onElementOverlayAddAggregation(p.value,p.target,p.name);}else if(p.type==="setParent"){setTimeout(function(){if(!t.bIsDestroyed){t._checkIfOverlayShouldBeDestroyed(p.target,p.value);}},0);}};
+D.prototype._onElementOverlayAddAggregation=function(C,p,A){if(C instanceof sap.ui.core.Element){var o=O.getOverlay(C);if(!o){var i=O.getOverlay(p).getAggregationOverlay(A).isInHiddenTree();this._createElementOverlay(C,i);}}};
 D.prototype._checkIfOverlayShouldBeDestroyed=function(e,p){var o=O.getOverlay(e);if(o&&!this._isElementInRootElements(e)){o.destroy();}};
 D.prototype._isElementInRootElements=function(e){var f=false;this._iterateRootElements(function(r){if(b.hasAncestor(e,r)){f=true;return false;}});return f;};
 D.prototype._iterateRootElements=function(s){var r=this.getRootElements();r.forEach(function(R){var o=b.getElementInstance(R);s(o);});};
@@ -248,7 +260,7 @@ e.prototype._syncAggregationOverlay=function(o){var t=this;if(o.isVisible()){var
 e.prototype.setVisible=function(v){O.prototype.setVisible.apply(this,arguments);this.sync();};
 e.prototype.destroyAggregation=function(s,S){O.prototype.destroyAggregation.apply(this,arguments);if(s==="aggregationOverlays"){delete this._mAggregationOverlays;}};
 e.prototype._onElementModified=function(o){var p=o.getParameters();var s=o.getParameters().name;if(s){this.sync();var f=this.getAggregationOverlay(s);var g=f&&f.isVisible();if(g){this.fireElementModified(p);}}else if(o.getParameters().type==="setParent"){this.fireElementModified(p);}this.invalidate();};
-e.prototype._onDomChanged=function(o){var i=o.getParameters().elementIds||[];var f=this.getElementInstance();if(i.indexOf(f.getId())!==-1){if(this._mGeometry&&!this._mGeometry.visible){delete this._mGeometry;this.invalidate();}}if(this.isRoot()){this.applyStyles();}};
+e.prototype._onDomChanged=function(o){var i=o.getParameters().elementIds||[];var f=this.getElementInstance();if(f&&i.indexOf(f.getId())!==-1){if(this._mGeometry&&!this._mGeometry.visible){delete this._mGeometry;this.invalidate();}}if(this.isRoot()){this.applyStyles();}};
 e.prototype._onElementAfterRendering=function(){if(!this.getDomRef()){this.invalidate();}this.sync();};
 e.prototype._onElementDestroyed=function(){this.destroy();};
 e.prototype.getAggregationOverlays=function(){return this.getAggregation("aggregationOverlays")||[];};
@@ -261,11 +273,13 @@ e.prototype.isSelectable=function(){return this.getSelectable();};
 e.prototype.isMovable=function(){return this.getMovable();};
 e.prototype.isEditable=function(){return this.getEditable();};
 e.prototype._getElementInstanceVisible=function(){var o=this.getElementInstance();if(o){var g=this.getGeometry();return g&&g.visible;}else{return false;}};
+e.prototype.getPublicParentElementOverlay=function(){var p=this.getParentElementOverlay();while(p&&c.isInstanceOf(p,"sap.ui.dt.ElementOverlay")&&p.isInHiddenTree()){p=p.getParentElementOverlay();}return p;};
+e.prototype.getPublicParentAggregationOverlay=function(){var p;var P=this.getPublicParentElementOverlay();var o=this.getElementInstance();if(P){P.getAggregationOverlays().some(function(f){if(!f.isInHiddenTree()){var g=P.getElementInstance();var s=f.getAggregationName();var i=c.getIndexInAggregation(o,g,s);if(i!==-1){p=f;return true;}}});}return p;};
 return e;},true);
 sap.ui.predefine('sap/ui/dt/ElementOverlayRenderer',['sap/ui/dt/RenderingUtil'],function(R){"use strict";var O={};
 O.render=function(r,o){R.renderOverlay(r,o,"sapUiDtElementOverlay");};
 return O;},true);
-sap.ui.predefine('sap/ui/dt/ElementUtil',['jquery.sap.global'],function(q){"use strict";var E={};E.sACTION_MOVE='move';
+sap.ui.predefine('sap/ui/dt/ElementUtil',['jquery.sap.global'],function(q){"use strict";var E={};E.sACTION_MOVE='move';E.sACTION_CUT='cut';E.sACTION_PASTE='paste';E.sREORDER_AGGREGATION='reorder_aggregation';
 E.iterateOverElements=function(e,c){if(e&&e.length){for(var i=0;i<e.length;i++){var o=e[i];if(o instanceof sap.ui.core.Element){c(o);}}}else if(e instanceof sap.ui.core.Element){c(e);}};
 E.iterateOverAllPublicAggregations=function(e,c){var t=this;var a=e.getMetadata().getAllAggregations();var A=Object.keys(a);A.forEach(function(s){var o=a[s];var v=t.getAggregation(e,s);c(o,v);});};
 E.getElementInstance=function(e){if(typeof e==="string"){return sap.ui.getCore().byId(e);}else{return e;}};
@@ -279,8 +293,9 @@ E.getDomRef=function(e){if(e){var d;if(e.getDomRef){d=e.getDomRef();}if(!d&&e.ge
 E.findAllPublicChildren=function(e){var f=this.findAllPublicElements(e);var i=f.indexOf(e);if(i>-1){f.splice(i,1);}return f;};
 E.isElementFiltered=function(c,t){var a=this;t=t||this.getControlFilter();var f=false;t.forEach(function(T){f=a.isInstanceOf(c,T);if(f){return false;}});return f;};
 E.findClosestControlInDom=function(n){if(n&&n.getAttribute("data-sap-ui")){return sap.ui.getCore().byId(n.getAttribute("data-sap-ui"));}else{if(n.parentNode){this.findClosestControlInDom(n.parentNode);}else{return null;}}};
-E.getAggregationAccessors=function(e,a){var m=e.getMetadata();m.getJSONKeys();var A=m.getAggregation(a);if(A){var g=A._sGetter;if(A.altTypes&&A.altTypes.length&&e[A._sGetter+"Control"]){g=A._sGetter+"Control";}return{get:g,add:A._sMutator,remove:A._sRemoveMutator,insert:A._sInsertMutator};}else{return{};}};
+E.getAggregationAccessors=function(e,a){var m=e.getMetadata();m.getJSONKeys();var A=m.getAggregation(a);if(A){var g=A._sGetter;if(A.altTypes&&A.altTypes.length&&e[A._sGetter+"Control"]){g=A._sGetter+"Control";}return{get:g,add:A._sMutator,remove:A._sRemoveMutator,insert:A._sInsertMutator,removeAll:A._sRemoveAllMutator};}else{return{};}};
 E.getAggregation=function(e,a){var v;var g=this.getAggregationAccessors(e,a).get;if(g){v=e[g]();}else{v=e.getAggregation(a);}v=v&&v.splice?v:(v?[v]:[]);return v;};
+E.getIndexInAggregation=function(e,p,a){return this.getAggregation(p,a).indexOf(e);};
 E.addAggregation=function(p,a,e){if(this.hasAncestor(p,e)){throw new Error("Trying to add an element to itself or its successors");}var A=this.getAggregationAccessors(p,a).add;if(A){p[A](e);}else{p.addAggregation("sAggregationName",e);}};
 E.removeAggregation=function(p,a,e){var A=this.getAggregationAccessors(p,a).remove;if(A){p[A](e);}else{p.removeAggregation(a,e);}};
 E.insertAggregation=function(p,a,e,i){if(this.hasAncestor(p,e)){throw new Error("Trying to add an element to itself or its successors");}if(this.getAggregation(p,a).indexOf(e)!==-1){e.__bSapUiDtSupressParentChangeEvent=true;try{p.removeAggregation(a,e,true);}finally{delete e.__bSapUiDtSupressParentChangeEvent;}}var A=this.getAggregationAccessors(p,a).insert;if(A){p[A](e,i);}else{p.insertAggregation(a,e,i);}};
@@ -289,11 +304,11 @@ E.hasInterface=function(e,i){var I=e.getMetadata().getInterfaces();return I.inde
 E.isInstanceOf=function(e,t){var i=q.sap.getObject(t);if(typeof i==="function"){return e instanceof i;}else{return false;}};
 E.getDesignTimeMetadata=function(e){var d=e?e.getMetadata().getDesignTime():{};return d||{};};
 E.loadDesignTimeMetadata=function(e){return e?e.getMetadata().loadDesignTime():Promise.resolve({});};
-E.executeActions=function(a){for(var i=0;i<a.length;i++){var A=a[i];switch(A.changeType){case E.sACTION_MOVE:var t=sap.ui.getCore().byId(A.target.parent);var m=sap.ui.getCore().byId(A.element);E.insertAggregation(t,A.target.aggregation,m,A.target.index);break;default:}}};
+E.executeActions=function(a){for(var i=0;i<a.length;i++){var A=a[i];switch(A.changeType){case E.sACTION_MOVE:var t=sap.ui.getCore().byId(A.target.parent);var m=sap.ui.getCore().byId(A.element);E.insertAggregation(t,A.target.aggregation,m,A.target.index);break;case E.sACTION_CUT:var t=sap.ui.getCore().byId(A.source.parent);var m=sap.ui.getCore().byId(A.element);E.removeAggregation(t,A.source.aggregation,m);break;case E.sACTION_PASTE:var t=sap.ui.getCore().byId(A.target.parent);var m=sap.ui.getCore().byId(A.element);E.insertAggregation(t,A.target.aggregation,m,A.target.index);break;case E.sREORDER_AGGREGATION:var t=sap.ui.getCore().byId(A.target.parent);var s=this.getAggregationAccessors(t,A.target.aggregation).removeAll;t[s]();var b=this.getAggregationAccessors(t,A.target.aggregation).add;for(var j=0;j<A.source.elements.length;j++){var e=sap.ui.getCore().byId(A.source.elements[j]);t[b](e);}break;default:}}};
 return E;},true);
 sap.ui.predefine('sap/ui/dt/Overlay',['jquery.sap.global','sap/ui/core/Control','sap/ui/dt/MutationObserver','sap/ui/dt/ElementUtil','sap/ui/dt/OverlayUtil','sap/ui/dt/DOMUtil','jquery.sap.dom'],function(q,C,M,E,O,D){"use strict";var o="overlay-container";var a;var m;
 var b=C.extend("sap.ui.dt.Overlay",{metadata:{library:"sap.ui.dt",properties:{visible:{type:"boolean",defaultValue:true},lazyRendering:{type:"boolean",defaultValue:true},inHiddenTree:{type:"boolean",defaultValue:false},focusable:{type:"boolean",defaultValue:false}},associations:{element:{type:"sap.ui.core.Element"}},aggregations:{designTimeMetadata:{type:"sap.ui.dt.DesignTimeMetadata",multiple:false}},events:{focusableChange:{parameters:{focusable:{type:"boolean"}}},destroyed:{parameters:{}},visibleChanged:{parameters:{visible:"boolean"}}}}});
-b.getOverlayContainer=function(){if(!a){a=q.sap.byId(o);if(!a.length){a=q("<div id='"+o+"'></div>").css({"top":"0px","left":"0px"}).appendTo("body");}}return a.get(0);};
+b.getOverlayContainer=function(){if(!a){a=q.sap.byId(o);if(!a.length){a=q("<div id='"+o+"'></div>").css({"top":"0px","left":"0px","right":"0px","bottom":"0px"}).appendTo("body");}}return a.get(0);};
 b.removeOverlayContainer=function(){if(a){a.remove();}a=null;};
 b.getMutationObserver=function(){if(!m){m=new M();}return m;};
 b.destroyMutationObserver=function(){if(m){m.destroy();m=null;}};
@@ -311,7 +326,7 @@ b.prototype.applyStyles=function(){delete this._mGeometry;if(!this.getDomRef()){
 b.prototype._attachDomRefScrollHandler=function(){this._detachDomRefScrollHandler();var g=this.getGeometry();var d=g?g.domRef:null;if(d){this._oDomRefWithScrollHandler=d;q(this._oDomRefWithScrollHandler).on("scroll",this._domRefScrollHandler);}};
 b.prototype._detachDomRefScrollHandler=function(d){if(this._oDomRefWithScrollHandler){q(this._oDomRefWithScrollHandler).off("scroll",this._domRefScrollHandler);delete this._oDomRefWithScrollHandler;}};
 b.prototype._onSyncScrollWithDomRef=function(e){window.clearTimeout(this._iSyncScrollWithDomRef);var t=this;this._iSyncScrollWithDomRef=window.setTimeout(function(){t._syncScrollWithDomRef();delete t._iSyncScrollWithDomRef;},0);};
-b.prototype._syncScrollWithDomRef=function(){D.syncScroll(this._oDomRefWithScrollHandler,this.$());};
+b.prototype._syncScrollWithDomRef=function(e){D.syncScroll(this._oDomRefWithScrollHandler,this.$());};
 b.prototype.getGeometry=function(f){if(f||!this._mGeometry){var d=this.getAssociatedDomRef();var g=D.getGeometry(d,this.isRoot());if(!g){var c=[];this.getChildren().forEach(function(e){c.push(e.getGeometry(true));});g=O.getGeometry(c);}this._mGeometry=g;}return this._mGeometry;};
 b.prototype._cloneDomRef=function(d){var $=this.$();var c=$.find(">.sapUiDtClonedDom");var v=this.getDesignTimeMetadata().getCloneDomRef();if(v){if(d){var f=function(){if(v!==true){d=D.getDomRefForCSSSelector(d,v);}if(!c.length){c=q("<div class='sapUiDtClonedDom'></div>").prependTo($);}else{c.empty();}D.cloneDOMAndStyles(d,c);};if(!this._bClonedDom){this._bClonedDom=true;f();}else{window.clearTimeout(this._iCloneDomTimeout);this._iCloneDomTimeout=window.setTimeout(f,250);}}}else{c.remove();}};
 b.prototype._updateDom=function(){if(this.isRoot()){this._ensureIsInOverlayContainer();this.applyStyles();}else{this._ensureDomOrder();}};
@@ -324,6 +339,7 @@ b.prototype.setVisible=function(v){if(this.getVisible()!==v){this.setProperty("v
 b.prototype.getVisible=function(){if(this._bVisible===null){if(!this.getLazyRendering()){return true;}var d=this.getDesignTimeMetadata();return d?!d.isIgnored():false;}else{return this.getProperty("visible");}};
 b.prototype.isVisible=function(){return this.getVisible();};
 b.prototype.isRoot=function(){var p=this.getParent();if(p){if(!p.getDomRef){return true;}}};
+b.prototype.getFirstHiddenAggregationOverlay=function(){var p=this;var P=this.getParentElementOverlay();while(P&&P.isInHiddenTree()&&E.isInstanceOf(P,"sap.ui.dt.ElementOverlay")){p=P;P=P.getParentElementOverlay();}if(E.isInstanceOf(P,"sap.ui.dt.ElementOverlay")){return p.getParent();}};
 return b;},true);
 sap.ui.predefine('sap/ui/dt/OverlayRegistry',["sap/ui/core/Element","sap/ui/dt/ElementUtil"],function(E,a){"use strict";var O={};var o={};
 O.getOverlay=function(e){var b=a.getElementInstance(e);if(b){b=a.fixComponentContainerElement(b);b=a.fixComponentParent(b);if(b){var i=b.getId();return o[i];}}};
@@ -333,7 +349,7 @@ O.hasOverlays=function(){return!jQuery.isEmptyObject(o);};
 function g(e){return(e instanceof E)?e.getId():e;}
 return O;},true);
 sap.ui.predefine('sap/ui/dt/Plugin',['sap/ui/base/ManagedObject'],function(M){"use strict";
-var P=M.extend("sap.ui.dt.Plugin",{metadata:{"abstract":true,library:"sap.ui.dt",properties:{designTime:{type:"sap.ui.dt.DesignTime",multiple:false}},associations:{},events:{}}});
+var P=M.extend("sap.ui.dt.Plugin",{metadata:{"abstract":true,library:"sap.ui.dt",properties:{designTime:{type:"sap.ui.dt.DesignTime",multiple:false},commandFactory:{type:"sap.ui.dt.command.CommandFactory",multiple:false}},associations:{},events:{elementModified:{command:{type:"sap.ui.dt.command.BaseCommand"}}}}});
 P.prototype.init=function(){};
 P.prototype.exit=function(){this.setDesignTime(null);};
 P.prototype.setDesignTime=function(d){var o=this.getDesignTime();if(o){this._deregisterOverlays(o);o.detachEvent("elementOverlayCreated",this._onElementOverlayCreated,this);}this.setProperty("designTime",d);if(d){this._registerOverlays(d);d.attachEvent("elementOverlayCreated",this._onElementOverlayCreated,this);}return this;};
@@ -360,7 +376,23 @@ S.prototype.remove=function(o){this._syncSelectionWithMode();var i=this._aSelect
 S.prototype._isSingleMode=function(){return this.getMode()===sap.ui.dt.SelectionMode.Single;};
 S.prototype._syncSelectionWithMode=function(){if(this._isSingleMode()){this._aSelection.forEach(function(o){o.setSelected(false,true);});this._aSelection=[];}};
 return S;},true);
-sap.ui.predefine('sap/ui/dt/library',['jquery.sap.global','sap/ui/core/library'],function(q){"use strict";sap.ui.getCore().initLibrary({name:"sap.ui.dt",version:"1.38.7",dependencies:["sap.ui.core"],types:["sap.ui.dt.SelectionMode"],interfaces:[],controls:[],elements:[]});sap.ui.dt.SelectionMode={Multi:"Multi",Single:"Single"};return sap.ui.dt;},true);
+sap.ui.predefine('sap/ui/dt/command/BaseCommand',['sap/ui/base/ManagedObject'],function(M){"use strict";
+var B=M.extend("sap.ui.dt.command.BaseCommand",{metadata:{library:"sap.ui.dt",properties:{element:{type:"sap.ui.core.Element"},elementId:{type:"string"},name:{type:"string"}},associations:{},events:{}}});
+B.ERROR_UNKNOWN_ID="no element for id: ";
+B.prototype._executeWithElement=function(e){};
+B.prototype.execute=function(){this._withElement(this._executeWithElement.bind(this));};
+B.prototype._undoWithElement=function(e){};
+B.prototype.undo=function(){this._withElement(this._undoWithElement.bind(this));};
+B.prototype._withElement=function(f){var e=this._getElement();if(e){f(e);}else{jQuery.sap.log.error(this.getMetadata().getName(),B.ERROR_UNKNOWN_ID+this.getElementId());}};
+B.prototype.serialize=function(){};
+B.prototype.isEnabled=function(){return true;};
+B.prototype._getElement=function(){var e=this.getElement();if(!e){e=sap.ui.getCore().byId(this.getElementId());this.setElement(e);}return e;};
+return B;},true);
+sap.ui.predefine('sap/ui/dt/command/CommandFactory',['sap/ui/base/ManagedObject'],function(M){"use strict";var c={"Move":{findClass:function(e,s,S){var m=(S&&S.movedElements&&S.movedElements.length>0)?S.movedElements[0]:undefined;var E=m?m.element:e;var t=E.getMetadata().getName();if(t==="sap.ui.layout.form.FormContainer"||t==="sap.ui.layout.form.FormElement"){jQuery.sap.require("sap.ui.dt.command.SimpleFormMove");return sap.ui.dt.command.SimpleFormMove;}else{jQuery.sap.require("sap.ui.dt.command.Move");return sap.ui.dt.command.Move;}}}};
+var C=M.extend("sap.ui.dt.command.CommandFactory",{metadata:{library:"sap.ui.dt",properties:{},associations:{},events:{}}});
+C.getCommandFor=function(e,s,S){var m=c[s];var a=m.clazz;if(!a&&m.findClass){a=m.findClass(e,s,S);}S=jQuery.extend(S,{element:e,name:s});var o=new a(S);return o;};
+return C;},true);
+sap.ui.predefine('sap/ui/dt/library',['jquery.sap.global','sap/ui/core/library'],function(q){"use strict";sap.ui.getCore().initLibrary({name:"sap.ui.dt",version:"1.40.7",dependencies:["sap.ui.core"],types:["sap.ui.dt.SelectionMode"],interfaces:[],controls:[],elements:[]});sap.ui.dt.SelectionMode={Multi:"Multi",Single:"Single"};return sap.ui.dt;},true);
 sap.ui.predefine('sap/ui/dt/plugin/DragDrop',['sap/ui/dt/Plugin','sap/ui/dt/DOMUtil','sap/ui/dt/OverlayUtil','sap/ui/dt/ElementUtil'],function(P,D,O,E){"use strict";
 var a=P.extend("sap.ui.dt.plugin.DragDrop",{metadata:{"abstract":true,library:"sap.ui.dt",properties:{},associations:{},events:{}}});
 a.prototype.init=function(){P.prototype.init.apply(this,arguments);this._mElementOverlayDelegate={"onAfterRendering":this._checkMovable};this._mAggregationOverlayDelegate={"onAfterRendering":this._attachDragScrollHandler,"onBeforeRendering":this._removeDragScrollHandler};this._dragScrollHandler=this._dragScroll.bind(this);this._dragLeaveHandler=this._dragLeave.bind(this);this._mScrollIntervals={};};
@@ -418,9 +450,86 @@ M.prototype.registerElementOverlay=function(o){o.setSelectable(true);o.addEventD
 M.prototype.deregisterElementOverlay=function(o){o.removeEventDelegate(this._mEventDelegate,o);};
 M.prototype._onClick=function(e){this.setSelected(!this.getSelected());e.preventDefault();e.stopPropagation();};
 return M;},true);
+sap.ui.predefine('sap/ui/dt/test/Element',['jquery.sap.global','sap/ui/dt/ElementUtil','sap/ui/dt/OverlayRegistry'],function(q,E,O){"use strict";var M=5;var a={};
+a.getInfo=function(e){var m=e.getMetadata();var o=m.getDesignTime();var b=O.getOverlay(e);var d=b.getDesignTimeMetadata();return{metadata:m,designTimeMetadata:o,overlay:b,overlayDesignTimeMetadata:d};};
+a.getAggregationInfo=function(e,A){var m={ignored:true,domRefDeclared:false,domRefFound:false,domRefVisible:false,overlayTooSmall:false,overlayGeometryCalculatedByChildren:false,overlayVisible:false};var b=this.getInfo(e);var o=b.overlay.getAggregationOverlay(A);var d=o.getDesignTimeMetadata();if(!d.isIgnored()){m.ignored=false;m.domRefDeclared=!!d.getDomRef();var c=o.getAssociatedDomRef();if(c){m.domRefFound=true;m.domRefVisible=q(c).is(":visible");}var g=o.getGeometry();if(g){var s=g.size;m.overlayTooSmall=(s.width<=M||s.height<=M);m.overlayGeometryCalculatedByChildren=!g.domRef;m.overlayVisible=o.$().is(":visible");}}return m;};
+a.getAggregationsInfo=function(e){var t=this;var A={};E.iterateOverAllPublicAggregations(e,function(o){A[o.name]=t.getAggregationInfo(e,o.name);});return A;};
+return a;},true);
+sap.ui.predefine('sap/ui/dt/test/ElementEnablementTest',['jquery.sap.global','sap/ui/dt/test/Test','sap/ui/dt/DesignTime','sap/ui/dt/test/Element'],function(q,T,D,E){"use strict";
+var a=T.extend("sap.ui.dt.test.ElementEnablementTest",{metadata:{library:"sap.ui.dt",properties:{type:{type:"string"},create:{type:"function"},timeout:{type:"integer",defaultValue:0},groupPostfix:{type:"string"}}}});
+a.prototype.init=function(){this._aAggregatedTestResult=null;this._aAggregatedInfoResult=null;this._sAggregation=null;this._$TestAreaDomRef=null;};
+a.prototype.exit=function(){if(this._oDesignTime){this._oDesignTime.destroy();}window.clearTimeout(this._iTimeout);this._oElement.destroy();if(this._$TestAreaDomRef){this._$TestAreaDomRef.remove();delete this._$TestAreaDomRef;}};
+a.prototype.run=function(){var t=this;return this._setup().then(function(){t._mResult=t.createSuite("Element Enablement Test");var e=t.addGroup(t._mResult.children,t.getType(),"Given that an DesignTime is created for "+t.getType());t._testAggregations(e.children);t._mResult=t.aggregate(t._mResult);return t._mResult;});};
+a.prototype._createElement=function(){var t=this.getType();var c=this.getCreate();var b=q.sap.getObject(t);var e;if(c){e=c();}else{e=new b();}if(e.addStyleClass){e.addStyleClass("minSize");}return e;};
+a.prototype._getTestArea=function(){if(!this._$TestAreaDomRef){this._$TestAreaDomRef=q("<div id='"+this.getId()+"--testArea"+"'></div>").css({height:"500px",width:"1000px"}).appendTo("body");}return this._$TestAreaDomRef;};
+a.prototype._setup=function(){var t=this;window.clearTimeout(this._iTimeout);this._bNoRenderer=false;this._bErrorDuringRendering=false;return new Promise(function(r,R){t._oElement=t._createElement();try{t._oElement.getRenderer();}catch(e){t._bNoRenderer=true;}if(!t._bNoRenderer){try{t._oElement.placeAt(t._getTestArea().get(0));sap.ui.getCore().applyChanges();}catch(e){t._bErrorDuringRendering=true;}if(!t._bErrorDuringRendering){t._oDesignTime=new D({rootElements:[t._oElement]});t._oDesignTime.attachEventOnce("synced",function(){sap.ui.getCore().applyChanges();if(t.getTimeout()){t._iTimeout=window.setTimeout(function(){r();},t.getTimeout());}else{r();}},t);}else{r();}}else{r();}});};
+a.prototype._testAggregations=function(t){var A=this.addGroup(t,"Aggregations","Each aggregation needs to be ignored or has a visible domRef maintained in the metadata",this.getGroupPostfix());if(this._bNoRenderer){this.addTest(A.children,true,"Control has no renderer","Control has no renderer, not supported by the element test (requires a special element test)",T.STATUS.UNKNOWN);}else if(this._bErrorDuringRendering){this.addTest(A.children,true,"Error during rendering","Element can't be rendered, not supported by the DesignTime (please, provide a create method for this element)",T.STATUS.ERROR);}else{var m=E.getAggregationsInfo(this._oElement);for(var s in m){var b=m[s];var c=this.addGroup(A.children,s,(b.ignored?"Aggregation ignored":"Aggregation tests"));if(!b.ignored){this.addTest(c.children,b.overlayVisible,"Overlay Visible","Overlay domRef is visible in DOM");if(b.domRefDeclared){this.addTest(c.children,b.domRefDeclared,"Dom Ref Declared","DomRef is declared in design time metadata");this.addTest(c.children,b.domRefFound,"Dom Ref Found","Declared DomRef is found in DOM");this.addTest(c.children,b.domRefVisible,"Dom Ref Visible","Declared DomRef is visible");}else{if(b.overlayVisible){this.addTest(c.children,b.overlayGeometryCalculatedByChildren,"Overlay Geometry calculated by children","Control might work based on DT Heuristic, but safer with domRefDeclared",T.STATUS.PARTIAL_SUPPORTED);}else{this.addTest(c.children,false,"Overlay Dom Ref","Overlay domRef is not declared and aggregation overlay is not visible (please, declare domRef for this aggregation)",T.STATUS.PARTIAL_SUPPORTED);}}if(b.overlayTooSmall){this.addTest(c.children,false,"Overlay too small","Aggregation Overlay is too small to be accessible",T.STATUS.PARTIAL_SUPPORTED);}}}}};
+return a;},true);
+sap.ui.predefine('sap/ui/dt/test/LibraryEnablementTest',['jquery.sap.global','sap/ui/dt/test/Test','sap/ui/dt/test/ElementEnablementTest'],function(q,T,E){"use strict";
+var L=T.extend("sap.ui.dt.test.LibraryEnablementTest",{metadata:{library:"sap.ui.dt",properties:{libraryName:{type:"string"},testData:{type:"object"}}}});
+L.prototype.run=function(){var t=this;this._aResult=[];var o=this.getTestData()||{};var l=this.getLibraryName();var e=[];var a=sap.ui.getCore().getLoadedLibraries()[l];if(a){var b=a.controls;b.forEach(function(s){var c=o[s];if(!c&&c!==false){c={};}if(c!==false){c.type=s;var d=null;if(c.create){d=q.extend({},c);delete d.create;c.groupPostfix="with create method";}e.push(new E(c));if(d){e.push(new E(d));}}});}var r=[];var i=function(R){if(R){r.push(R);}var c=e.shift();if(c){return c.run().then(function(R){c.destroy();return i(R);});}else{return Promise.resolve(r);}};return i().then(function(r){var R=t.createSuite("Library Enablement Test");r.forEach(function(m){var c=m.children[0];var p=R.children[R.children.length-1];if(p&&c.name==p.name){p.children=p.children.concat(c.children);}else{R.children.push(c);}});R=t.aggregate(R);return R;});};
+return L;},true);
+sap.ui.predefine('sap/ui/dt/test/Test',['jquery.sap.global','sap/ui/base/ManagedObject'],function(q,M){"use strict";
+var T=M.extend("sap.ui.dt.test.Test",{metadata:{"abstract":true}});
+T.STATUS={"SUPPORTED":{key:"SUPPORTED",text:"supported",value:3},"PARTIAL_SUPPORTED":{key:"PARTIAL_SUPPORTED",text:"partial supported",value:2},"NOT_SUPPORTED":{key:"NOT_SUPPORTED",text:"not supported",value:1},"ERROR":{key:"ERROR",text:"error",value:0},"UNKNOWN":{key:"UNKNOWN",text:"unknown",value:0}};T.TYPE={"TEST":"Test","GROUP":"Group","SUITE":"Suite"};
+T.prototype.createSuite=function(n,m){return this.add(null,false,n,m,null,T.TYPE.SUITE);};
+T.prototype.addGroup=function(p,n,m,N){return this.add(p,true,n+(N?(" ("+N+")"):""),m,null,T.TYPE.GROUP);};
+T.prototype.addTest=function(p,r,n,m,s){return this.add(p,r,n,m,s,T.TYPE.TEST);};
+T.prototype.add=function(p,r,n,m,s,t){if(!s){if(r){s=T.STATUS.SUPPORTED;}else{s=T.STATUS.NOT_SUPPORTED;}}var e={name:n,message:m,result:r,status:s,type:t,statistic:{},children:[]};if(p){p.push(e);}return e;};
+T.prototype.run=function(){throw new Error("Abstract method");};
+T.prototype.aggregate=function(r){if(r.type!=T.TYPE.TEST&&r.children.length>0){var c=r.children;var t=this;var m=c.map(function(e){var C=t.aggregate(e);return{result:C.result,status:C.status};});if(m.length==1){m.push(m[0]);}var R=m.reduce(function(p,C){return{result:t._getResult(p,C),status:t._getStatus(p,C),statistic:t._getStatistic(p,C)};});r.result=R.result;r.status=R.status;r.statistic=R.statistic;}return r;};
+T.prototype._getResult=function(p,c){return!p.result?false:c.result;};
+T.prototype._getStatus=function(p,c){return p.status.value<c.status.value?p.status:c.status;};
+T.prototype._getStatistic=function(p,c){var s=this._getStatisticObjectForEntry(p);if(p!==c){s[c.status.key]++;}return s;};
+T.prototype._getStatisticObjectForEntry=function(e){var s={};if(!e.statistic){for(var S in T.STATUS){s[S]=0;}s[e.status.key]++;}else{s=e.statistic;}return s;};
+return T;},true);
+sap.ui.predefine('sap/ui/dt/test/report/QUnit',['jquery.sap.global','sap/ui/base/ManagedObject'],function(q,M){"use strict";
+var Q=M.extend("sap.ui.dt.test.report.QUnit",{
+metadata:{library:"sap.ui.dt",properties:{data:{type:"object"}}},
+init:function(){if(!QUnit){throw new Error("QUnit is required for this report.");}},
+setData:function(d){if(d){var t=this;var c=d.children;c.forEach(function(g){t._createModule(g);});}this.setProperty("data",d);},
+_createModule:function(g){var t=this;QUnit.module(g.message);g.children.forEach(function(g){t._createTest(g);});},
+_createTest:function(g){var t=this;QUnit.test(g.name+": "+g.message,function(a){g.children.forEach(function(g){t._createAssertion(g);});});},
+_createAssertion:function(g){if(g.children.length>0){g.children.forEach(function(t){assert.ok(t.result,g.name+": "+t.message);});}else{assert.ok(true,g.name+": "+g.message);}}
+});
+return Q;},true);
+sap.ui.predefine('sap/ui/dt/test/report/Statistic',['jquery.sap.global','sap/ui/core/Control','sap/ui/model/json/JSONModel','sap/ui/layout/form/SimpleForm',"sap/m/Label","sap/m/Text"],function(q,C,J,S,L,T){"use strict";
+var s=C.extend("sap.ui.dt.test.report.Statistic",{
+metadata:{properties:{data:{type:"object"}},aggregations:{"_form":{type:"sap.ui.layout.form.SimpleForm",hidden:true,multiple:false}}},
+init:function(){this._oModel=null;this.setAggregation("_form",this._createForm());},
+exit:function(){this.setData(null);},
+setData:function(d){if(this._oModel){this._oModel.destroy();delete this._oModel;}if(d){this._oModel=new J(d);this._getForm().setModel(this._oModel);}else{this._getForm().setModel(null);}this.setProperty("data",d);},
+_createForm:function(){var f=new sap.ui.layout.form.SimpleForm(this.getId()+"--form",{editable:false,title:"Statistics",content:[new L(this.getId()+"--form-supported-label",{text:"Supported"}),new T(this.getId()+"--form-supported-value",{text:"{/statistic/SUPPORTED}"}),new L(this.getId()+"--form-partial-supported-label",{text:"Partial Supported"}),new T(this.getId()+"--form-partial-supported-value",{text:"{/statistic/PARTIAL_SUPPORTED}"}),new L(this.getId()+"--form-not-supported-label",{text:"Not Supported"}),new T(this.getId()+"--form-not-supported-value",{text:"{/statistic/NOT_SUPPORTED}"}),new L(this.getId()+"--form-unknown-label",{text:"Unknown"}),new T(this.getId()+"--form-unknown-value",{text:"{/statistic/UNKNOWN}"}),new L(this.getId()+"--form-error-label",{text:"Error"}),new T(this.getId()+"--form-error-value",{text:"{/statistic/ERROR}"})]});return f;},
+_getForm:function(){return this.getAggregation("_form");}
+});
+return s;},true);
+sap.ui.predefine('sap/ui/dt/test/report/StatisticRenderer',['jquery.sap.global'],function(q){"use strict";var S={};
+S.render=function(r,s){r.addClass("sapUiDtStatisticReport");r.write("<div");r.writeControlData(s);r.writeStyles();r.writeClasses();r.write(">");r.renderControl(s._getForm());r.write("</div>");};
+return S;},true);
+sap.ui.predefine('sap/ui/dt/test/report/Table',['jquery.sap.global','sap/ui/core/Control','sap/ui/model/json/JSONModel','sap/ui/table/TreeTable','sap/ui/table/Column','sap/m/Toolbar','sap/m/Title','sap/m/ToolbarSpacer','sap/m/Button','sap/m/SearchField','sap/m/Text','sap/m/RatingIndicator','sap/ui/model/Filter','sap/ui/model/FilterOperator'],function(q,C,J,T,a,b,c,d,B,S,e,R,F,f){"use strict";
+var t=C.extend("sap.ui.dt.test.report.Table",{
+metadata:{properties:{data:{type:"object"}},aggregations:{"_table":{type:"sap.ui.table.TreeTable",hidden:true,multiple:false}}},
+init:function(){this.setAggregation("_table",this._createTable());},
+exit:function(){clearTimeout(this._iFilterTimeout);this.setData(null);},
+setData:function(D){if(this._oModel){this._oModel.destroy();delete this._oModel;}if(D){this._oModel=new J(D);this._getTable().setModel(this._oModel);}else{this._getTable().setModel(null);}this.setProperty("data",D);},
+filter:function(s){var m=this._getTable().getModel();if(m){if(s.length>0){var D=this.getData();var g=D.children.filter(function(E){if(s.indexOf("status=")!=-1){return E.status.value==s.substring(s.indexOf("=")+1);}else{return E.name.toLowerCase().indexOf(s.toLowerCase())!=-1;}});m.setData(g);}else{m.setData(this.getData());}}},
+_createTable:function(){var t=new T(this.getId()+"--table",{selectionMode:"MultiToggle",visibleRowCount:20,enableSelectAll:false,ariaLabelledBy:"title",toolbar:this._createToolbar(),rows:"{path:'/', parameters: {arrayNames:['children']}}",columns:[this._createTextColumn("name","Name","{name}"),this._createRatingIndicatorColumn("value","Status Values","{status/value}","{status/text} ({status/value})"),this._createTextColumn("status","Status","{status/text}"),this._createTextColumn("message","Message","{message}")]});return t;},
+_createToolbar:function(){return new b(this.getId()+"--toolbar",{content:[new d(this.getId()+"--toolbar-spacer"),new B(this.getId()+"--toolbar-collapse-button",{text:"Collapse all",press:this._onCollapseAll.bind(this)}),new B(this.getId()+"--toolbar-expand-button",{text:"Expand",press:this._onExpandSecondLevel.bind(this)}),new S(this.getId()+"--toolbar-search-field",{liveChange:this._onSearch.bind(this)})]});},
+_onSearch:function(E){var g=this;var s=E.getParameter('newValue');clearTimeout(this._iFilterTimeout);this._iFilterTimeout=setTimeout(function(){g.filter(s);},100);},
+_createTextColumn:function(i,s,r){return this._createColumn(i,s,new e({text:r}));},
+_createRatingIndicatorColumn:function(i,s,r,g){return this._createColumn(i,s,new R({maxValue:3,value:r,enabled:false,tooltip:g}));},
+_createColumn:function(i,s,o){return new a(this.getId()+"--table-column-"+i,{label:s,width:"13em",template:o});},
+_getTable:function(){return this.getAggregation("_table");},
+_onCollapseAll:function(E){var t=this._getTable();t.collapseAll();},
+_onExpandSecondLevel:function(E){var t=this._getTable();t.expandToLevel(2);}
+});
+return t;},true);
+sap.ui.predefine('sap/ui/dt/test/report/TableRenderer',['jquery.sap.global'],function(q){"use strict";var T={};
+T.render=function(r,t){r.addClass("sapUiDtTableReport");r.write("<div");r.writeControlData(t);r.writeStyles();r.writeClasses();r.write(">");r.renderControl(t._getTable());r.write("</div>");};
+return T;},true);
 jQuery.sap.registerPreloadedModules({
 "name":"sap/ui/dt/library-preload",
 "version":"2.0",
 "modules":{
-	"sap/ui/dt/manifest.json":'{\n  "_version": "1.2.0",\n  "sap.app": {\n    "_version": "1.2.0",\n    "id": "sap.ui.dt",\n    "type": "library",\n    "embeds": [],\n    "applicationVersion": {\n      "version": "1.38.7"\n    },\n    "title": "SAP UI library: sap.ui.dt (by SAP, Author)",\n    "description": "SAP UI library: sap.ui.dt (by SAP, Author)",\n    "resources": "resources.json",\n    "offline": true\n  },\n  "sap.ui": {\n    "_version": "1.1.0",\n    "technology": "UI5",\n    "supportedThemes": [\n      "base",\n      "sap_hcb"\n    ]\n  },\n  "sap.ui5": {\n    "_version": "1.1.0",\n    "dependencies": {\n      "minUI5Version": "1.38",\n      "libs": {\n        "sap.ui.core": {\n          "minVersion": "1.38.7"\n        }\n      }\n    }\n  }\n}'
+	"sap/ui/dt/manifest.json":'{\n  "_version": "1.2.0",\n  "sap.app": {\n    "_version": "1.2.0",\n    "id": "sap.ui.dt",\n    "type": "library",\n    "embeds": [],\n    "applicationVersion": {\n      "version": "1.40.7"\n    },\n    "title": "SAP UI library: sap.ui.dt (by SAP, Author)",\n    "description": "SAP UI library: sap.ui.dt (by SAP, Author)",\n    "resources": "resources.json",\n    "offline": true\n  },\n  "sap.ui": {\n    "_version": "1.1.0",\n    "technology": "UI5",\n    "supportedThemes": [\n      "base",\n      "sap_hcb"\n    ]\n  },\n  "sap.ui5": {\n    "_version": "1.1.0",\n    "dependencies": {\n      "minUI5Version": "1.40",\n      "libs": {\n        "sap.ui.core": {\n          "minVersion": "1.40.7"\n        }\n      }\n    }\n  }\n}'
 }});

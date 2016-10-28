@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', './ListBase', './library'],
 	 * @extends sap.m.ListBase
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -230,7 +230,11 @@ sap.ui.define(['jquery.sap.global', './ListBase', './library'],
 		// header and footer are in the item navigation but
 		// initial focus should be at the first item row
 		if (oItemNavigation.getFocusedIndex() == -1) {
-			oItemNavigation.setFocusedIndex($Header[0] ? 1 : 0);
+			if (this.getGrowing() && this.getGrowingDirection() == sap.m.ListGrowingDirection.Upwards) {
+				oItemNavigation.setFocusedIndex(aItemDomRefs.length - 1);
+			} else {
+				oItemNavigation.setFocusedIndex($Header[0] ? 1 : 0);
+			}
 		}
 	};
 

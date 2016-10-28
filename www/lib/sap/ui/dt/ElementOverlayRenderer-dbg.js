@@ -12,7 +12,7 @@ sap.ui.define(['sap/ui/dt/RenderingUtil'],
 
 	/**
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @namespace
 	 */
 	var OverlayRenderer = {

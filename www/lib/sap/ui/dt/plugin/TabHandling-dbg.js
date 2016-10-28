@@ -17,7 +17,7 @@ sap.ui.define([
 	 * @class The TabHandling plugin adjusts the tabindex for the elements.
 	 * @extends sap.ui.dt.Plugin
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @private
 	 * @since 1.38

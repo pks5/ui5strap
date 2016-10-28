@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', "sap/m/semantic/SemanticPage", "sap/m/semant
 	 * @extends sap.m.semantic.SemanticPage
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -150,7 +150,7 @@ sap.ui.define(['jquery.sap.global', "sap/m/semantic/SemanticPage", "sap/m/semant
 		var oActionSheet = this.getAggregation("_actionSheet");
 		if (!oActionSheet) {
 			this.setAggregation("_actionSheet", new ActionSheet(
-					{placement: sap.m.PlacementType.Top}));
+					{placement: sap.m.PlacementType.Top}), true);
 			oActionSheet = this.getAggregation("_actionSheet");
 		}
 

@@ -1159,11 +1159,17 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		var _this = this,
 			pageId = viewDef.id,
 			viewConfig = {
-				async : true
-			},
-			viewSettings = {};
+				async : true,
+				viewName : viewDef.viewName,
+				type : viewDef.type,
+				cache : {
+					keys : ["test"]
+				}
+			};
+		//,
+		//	viewSettings = {};
 			
-		jQuery.extend(viewConfig, viewDef);
+		//jQuery.extend(viewConfig, viewDef);
 		
 		if(pageId){
 			pageId = this.config.createControlId(pageId);
@@ -1175,7 +1181,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 				var oViewData = cachedPage.getViewData(),
 					oldCache = oViewData.__ui5strap.settings.cache;
 				
-				if(oldCache && viewConfig.cache){
+				if(oldCache && viewDef.cache){
 					_this.log.debug("Returning cached page '" + pageId + "'.");
 					return cachedPage;
 				}
@@ -1188,7 +1194,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		}
 		
 		
-		jQuery.extend(viewSettings, viewConfig);
+		//jQuery.extend(viewSettings, viewConfig);
 
 		//START Build ViewData
 		//The View Data holds the app reference.
@@ -1202,7 +1208,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		}
 
 		viewConfig.viewData.__ui5strap.app = this;
-		viewConfig.viewData.__ui5strap.settings = viewSettings;
+		viewConfig.viewData.__ui5strap.settings = viewDef;
 		
 		//END Build ViewData
 		
@@ -1222,8 +1228,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		*/
 		
 		//Add css style class
-		if(viewConfig.styleClass){
-			page.addStyleClass(viewConfig.styleClass);
+		if(viewDef.styleClass){
+			page.addStyleClass(viewDef.styleClass);
 		}
 		
 		if(pageId){

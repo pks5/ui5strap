@@ -458,16 +458,14 @@
         "sap/ui/core/CustomData.js",
         "sap/ui/Device.js",
         "sap/ui/core/delegate/ScrollEnablement.js",
+        "sap/uxap/ObjectPageSection.js",
         "sap/uxap/ObjectPageSubSection.js",
         "sap/uxap/ObjectPageSubSectionLayout.js",
         "sap/uxap/LazyLoading.js",
         "sap/uxap/ObjectPageLayoutABHelper.js",
+        "sap/ui/core/ScrollBar.js",
         "sap/uxap/library.js"
       ]
-    },
-    {
-      "name": "ObjectPageLayout.control",
-      "designtime": true
     },
     {
       "name": "ObjectPageLayout.designtime-dbg.js",
@@ -489,10 +487,12 @@
         "sap/ui/core/CustomData.js",
         "sap/ui/Device.js",
         "sap/ui/core/delegate/ScrollEnablement.js",
+        "sap/uxap/ObjectPageSection.js",
         "sap/uxap/ObjectPageSubSection.js",
         "sap/uxap/ObjectPageSubSectionLayout.js",
         "sap/uxap/LazyLoading.js",
         "sap/uxap/ObjectPageLayoutABHelper.js",
+        "sap/ui/core/ScrollBar.js",
         "sap/uxap/library.js"
       ]
     },
@@ -572,6 +572,7 @@
         "sap/ui/Device.js",
         "sap/m/Button.js",
         "sap/ui/core/StashedControlSupport.js",
+        "sap/uxap/ObjectPageSubSection.js",
         "sap/uxap/library.js"
       ]
     },
@@ -589,6 +590,7 @@
         "sap/ui/Device.js",
         "sap/m/Button.js",
         "sap/ui/core/StashedControlSupport.js",
+        "sap/uxap/ObjectPageSubSection.js",
         "sap/uxap/library.js"
       ]
     },

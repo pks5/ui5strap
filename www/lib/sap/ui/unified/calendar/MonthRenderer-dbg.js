@@ -285,8 +285,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 	};
 
 	MonthRenderer.renderDay = function(oRm, oMonth, oDay, oHelper, bOtherMonth, bWeekNum, iNumber, sWidth, bDayName){
-
-		var mAccProps = {
+		var oSecondaryDay = UniversalDate.getInstance(oDay.getJSDate(), oHelper.sSecondaryCalendarType),
+			mAccProps = {
 				role: "gridcell",
 				selected: false,
 				label: "",
@@ -382,6 +382,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 
 		oRm.writeAttribute("tabindex", "-1");
 		oRm.writeAttribute("data-sap-day", sYyyymmdd);
+		if (bDayName) {
+			mAccProps["label"] = mAccProps["label"] + oHelper.aWeekDaysWide[iWeekDay] + " ";
+		}
 		mAccProps["label"] = mAccProps["label"] + oHelper.oFormatLong.format(oDay, true);
 
 		if (oType && oType.type != sap.ui.unified.CalendarDayType.None) {
@@ -393,6 +396,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 					break;
 				}
 			}
+		}
+		if (oHelper.sSecondaryCalendarType) {
+			mAccProps["label"] = mAccProps["label"] + " " + oMonth._oFormatSecondaryLong.format(oSecondaryDay, true);
 		}
 
 		oRm.writeAccessibilityState(null, mAccProps);
@@ -423,18 +429,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 			oRm.write("<span");
 			oRm.addClass("sapUiCalDayName");
 			oRm.writeClasses();
-			oRm.writeAccessibilityState(null, {label: oHelper.aWeekDaysWide[iWeekDay]});
 			oRm.write(">"); // span
 			oRm.write(oHelper.aWeekDays[iWeekDay]);
 			oRm.write("</span>");
 		}
 
 		if (oHelper.sSecondaryCalendarType) {
-			var oSecondaryDay = UniversalDate.getInstance(oDay.getJSDate(), oHelper.sSecondaryCalendarType);
 			oRm.write("<span");
 			oRm.addClass("sapUiCalItemSecText");
 			oRm.writeClasses();
-			oRm.writeAccessibilityState(null, {label: oMonth._oFormatSecondaryLong.format(oSecondaryDay, true)});
 			oRm.write(">"); // span
 			oRm.write(oSecondaryDay.getUTCDate());
 			oRm.write("</span>");

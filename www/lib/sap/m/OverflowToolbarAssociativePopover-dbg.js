@@ -22,7 +22,7 @@ sap.ui.define(['./Popover', './PopoverRenderer', './OverflowToolbarAssociativePo
 	 * @extends sap.ui.core.Popover
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @private
@@ -76,7 +76,9 @@ sap.ui.define(['./Popover', './PopoverRenderer', './OverflowToolbarAssociativePo
 
 		if (sResult) {
 			oControlObject = sap.ui.getCore().byId(sResult);
-			this._postProcessControl(oControlObject);
+			if (oControlObject) {
+				this._postProcessControl(oControlObject);
+			}
 		}
 		return sResult;
 	};
@@ -95,7 +97,7 @@ sap.ui.define(['./Popover', './PopoverRenderer', './OverflowToolbarAssociativePo
 		// For each event that must close the popover, attach a handler
 		oCtrlConfig.listenForEvents.forEach(function(sEventType) {
 			sAttachFnName = "attach" + fnCapitalize(sEventType);
-			oControl[sAttachFnName](this._closeOnInteraction, this);
+			oControl[sAttachFnName](this._closeOnInteraction.bind(this, oControl));
 		}, this);
 
 		// Call preprocessor function, if any
@@ -148,8 +150,12 @@ sap.ui.define(['./Popover', './PopoverRenderer', './OverflowToolbarAssociativePo
 	 * Many of the controls that enter the popover attach this function to some of their interaction events, such as button click, select choose, etc...
 	 * @private
 	 */
-	OverflowToolbarAssociativePopover.prototype._closeOnInteraction = function() {
-		this.close();
+	OverflowToolbarAssociativePopover.prototype._closeOnInteraction = function(oControl) {
+		var oLayoutData = oControl.getLayoutData();
+
+		if (!oLayoutData || !(oLayoutData instanceof OverflowToolbarLayoutData) || oLayoutData.getCloseOverflowOnInteraction()) {
+			this.close();
+		}
 	};
 
 	/**

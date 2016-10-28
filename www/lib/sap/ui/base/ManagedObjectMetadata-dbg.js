@@ -49,7 +49,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * </ul>
 	 *
 	 * @author Frank Weigel
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @since 0.8.6
 	 * @alias sap.ui.base.ManagedObjectMetadata
 	 */
@@ -475,6 +475,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 		this._mAggregations = filter(mAllAggregations, true);
 		this._mPrivateAggregations = filter(mAllAggregations, false);
 		this._sDefaultAggregation = oStaticInfo.defaultAggregation || null;
+		this._sDefaultProperty = oStaticInfo.defaultProperty || null;
 		this._mAssociations = normalize(oStaticInfo.associations, this.metaFactoryAssociation);
 		this._mEvents = normalize(oStaticInfo.events, this.metaFactoryEvent);
 
@@ -501,6 +502,7 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 			this._mAllAggregations = jQuery.extend({}, oParent._mAllAggregations, this._mAggregations);
 			this._mAllAssociations = jQuery.extend({}, oParent._mAllAssociations, this._mAssociations);
 			this._sDefaultAggregation = this._sDefaultAggregation || oParent._sDefaultAggregation;
+			this._sDefaultProperty = this._sDefaultProperty || oParent._sDefaultProperty;
 			this._mAllSpecialSettings = jQuery.extend({}, oParent._mAllSpecialSettings, this._mSpecialSettings);
 		} else {
 			this._mAllEvents = this._mEvents;
@@ -747,6 +749,31 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	};
 
 	/**
+	 * Returns the name of the default property of the described class.
+	 *
+	 * If the class itself does not define a default property, then the default property
+	 * of the parent is returned. If no class in the hierarchy defines a default property,
+	 * <code>undefined</code> is returned.
+	 *
+	 * @return {string} Name of the default property
+	 */
+	ManagedObjectMetadata.prototype.getDefaultPropertyName = function() {
+		return this._sDefaultProperty;
+	};
+
+	/**
+	 * Returns an info object for the default property of the described class.
+	 *
+	 * If the class itself does not define a default property, then the
+	 * info object for the default property of the parent class is returned.
+	 *
+	 * @return {Object} An info object for the default property
+	 */
+	ManagedObjectMetadata.prototype.getDefaultProperty = function() {
+		return this.getProperty(this.getDefaultPropertyName());
+	};
+
+	/**
 	 * Returns an info object for a public setting with the given name that either is
 	 * a managed property or a managed aggregation of cardinality 0..1 and with at least
 	 * one simple alternative type. The setting can be defined by the class itself or
@@ -919,11 +946,12 @@ sap.ui.define(['jquery.sap.global', './DataType', './Metadata'],
 	 * call but that are neither properties, aggregations, associations nor events.
 	 *
 	 * @param {string} sName name of the setting
+	 * @param {object} oInfo metadata for the setting
 	 * @private
 	 * @experimental since 1.35.0
 	 */
 	ManagedObjectMetadata.prototype.addSpecialSetting = function (sName, oInfo) {
-		var oSS = this._mProperties[sName] = new SpecialSetting(this, sName, oInfo);
+		var oSS = new SpecialSetting(this, sName, oInfo);
 		this._mSpecialSettings[sName] = oSS;
 		if (!this._mAllSpecialSettings[sName]) {
 			this._mAllSpecialSettings[sName] = oSS;

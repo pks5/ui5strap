@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 		 * @extends sap.m.ComboBoxBase
 		 *
 		 * @author SAP SE
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @public
@@ -828,7 +828,7 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 				}
 
 				// open the message popup
-				if (!this.isOpen() && this.bOpenValueStateMessage) {
+				if (!this.isOpen() && this.bOpenValueStateMessage && this.shouldValueStateMessageBeOpened()) {
 					this.openValueStateMessage();
 				}
 
@@ -844,22 +844,26 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 		 * @param {jQuery.Event} oEvent The event object.
 		 */
 		ComboBox.prototype.onsapfocusleave = function(oEvent) {
+			var bTablet, oPicker,
+				oRelatedControl, oFocusDomRef;
+
 			ComboBoxBase.prototype.onsapfocusleave.apply(this, arguments);
 
 			if (this.getPickerType() === "Dialog") {
 				return;
 			}
 
-			var oPicker = this.getAggregation("picker");
+			oPicker = this.getAggregation("picker");
 
 			if (!oEvent.relatedControlId || !oPicker) {
 				return;
 			}
 
-			var oRelatedControl = sap.ui.getCore().byId(oEvent.relatedControlId),
-				oFocusDomRef = oRelatedControl && oRelatedControl.getFocusDomRef();
+			bTablet = sap.ui.Device.system.tablet;
+			oRelatedControl = sap.ui.getCore().byId(oEvent.relatedControlId);
+			oFocusDomRef = oRelatedControl && oRelatedControl.getFocusDomRef();
 
-			if (jQuery.sap.containsOrEquals(oPicker.getFocusDomRef(), oFocusDomRef)) {
+			if (jQuery.sap.containsOrEquals(oPicker.getFocusDomRef(), oFocusDomRef) && !bTablet) {
 
 				// force the focus to stay in the input field
 				this.focus();
@@ -1085,6 +1089,7 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 		 *
 		 */
 		ComboBox.prototype.onBeforeClose = function() {
+			ComboBoxBase.prototype.onBeforeClose.apply(this, arguments);
 			var oDomRef = this.getFocusDomRef();
 
 			if (oDomRef) {
@@ -1098,9 +1103,6 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 
 			// remove the active state of the control's field
 			this.removeStyleClass(this.getRenderer().CSS_CLASS_COMBOBOXBASE + "Pressed");
-
-			// reset opener
-			this.bOpenedByKeyboardOrButton = false;
 		};
 
 		/**
@@ -1112,11 +1114,12 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 
 			if (oDomRef) {
 				oDomRef.setAttribute("aria-expanded", "false");
-			}
 
-			// if the focus is back to the input after close the picker, the message should be open
-			if (document.activeElement === oDomRef) {
-				this.openValueStateMessage();
+				// if the focus is back to the input after closing the picker,
+				// the value state message should be reopen
+				if (this.shouldValueStateMessageBeOpened() && (document.activeElement === oDomRef)) {
+					this.openValueStateMessage();
+				}
 			}
 
 			// clear the filter to make all items visible
@@ -1162,7 +1165,7 @@ sap.ui.define(['jquery.sap.global', './ComboBoxTextField', './ComboBoxBase', './
 				oControl = (oData && oData.srcControl) || this.getPickerTextField();
 
 			// propagate some property changes to the picker text field
-			if (/value|enabled|name|placeholder|editable|textAlign|textDirection/.test(sProperty) &&
+			if (/\bvalue\b|\benabled\b|\bname\b|\bplaceholder\b|\beditable\b|\btextAlign\b|\btextDirection\b/.test(sProperty) &&
 				oControl && (typeof oControl[sMutator] === "function")) {
 				oControl[sMutator](sNewValue);
 			}

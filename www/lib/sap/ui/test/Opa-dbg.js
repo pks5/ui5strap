@@ -10,7 +10,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 	/// Privates
 	///////////////////////////////
 	var queue = [],
-		context = {};
+		context = {},
+		timeout = -1,
+		isStopped,
+		oDeferred;
 
 	function internalWait (fnCallback, oOptions, oDeferred) {
 
@@ -23,7 +26,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 		fnCheck();
 
 		function fnCheck () {
-
 			try {
 				var oResult = fnCallback();
 			} catch (err) {
@@ -44,7 +46,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 			var iPassedSeconds = Math.round(timeDiff % 60);
 
 			if (oOptions.timeout > iPassedSeconds) {
-				setTimeout(fnCheck, oOptions.pollingInterval);
+				timeout = setTimeout(fnCheck, oOptions.pollingInterval);
 				// timeout not yet reached
 				return;
 			}
@@ -63,7 +65,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 
 	}
 
-	function internalEmpty(deferred) {
+	function internalEmpty (deferred) {
 		var iInitialDelay = Device.browser.msie ? 50 : 0;
 		if (queue.length === 0) {
 			deferred.resolve();
@@ -76,12 +78,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 		// This has to be here for IFrame with IE - if there is no timeout 50, there is a window with all properties undefined.
 		// Therefore the core code throws exceptions, when functions like setTimeout are called.
 		// I don't have a proper explanation for this.
-		setTimeout(function () {
+		timeout = setTimeout(function () {
 			internalWait(queueElement.callback, queueElement.options, deferred);
 		}, iInitialDelay);
 	}
 
-	function ensureNewlyAddedWaitForStatementsPrepended(iPreviousQueueLength, nestedInOptions){
+	function ensureNewlyAddedWaitForStatementsPrepended (iPreviousQueueLength, nestedInOptions){
 		var iNewWaitForsCount = queue.length - iPreviousQueueLength;
 		if (iNewWaitForsCount) {
 			var aNewWaitFors = queue.splice(iPreviousQueueLength, iNewWaitForsCount);
@@ -92,7 +94,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 		}
 	}
 
-	function createStack(iDropCount) {
+	function createStack (iDropCount) {
 		iDropCount = (iDropCount || 0) + 2;
 
 		if (Device.browser.mozilla) {
@@ -120,6 +122,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 		stack = stack.split("\n");
 		stack.splice(0, iDropCount);
 		return stack.join("\n");
+	}
+
+	function addStacks (oOptions) {
+		var sResult = "\nCallstack:\n";
+		if (oOptions._stack) {
+			sResult += oOptions._stack;
+			delete oOptions._stack;
+		} else {
+			sResult += "Unknown";
+		}
+		if (oOptions._nestedIn) {
+			sResult += addStacks(oOptions._nestedIn);
+			delete oOptions._nestedIn;
+		}
+		return sResult;
 	}
 	///////////////////////////////
 	/// Public
@@ -284,31 +301,61 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 	 * @public
 	 */
 	Opa.emptyQueue = function emptyQueue () {
-		function addStacks(oOptions) {
-			var sResult = "\nCallstack:\n";
-			if (oOptions._stack) {
-				sResult += oOptions._stack;
-				delete oOptions._stack;
-			} else {
-				sResult += "Unknown";
-			}
-			if (oOptions._nestedIn) {
-				sResult += addStacks(oOptions._nestedIn);
-				delete oOptions._nestedIn;
-			}
-			return sResult;
-		}
-
-		var oDeferred = $.Deferred();
+		oDeferred = $.Deferred();
+		isStopped = false;
 
 		internalEmpty(oDeferred);
 
 		return oDeferred.promise().fail(function(oOptions){
 			queue = [];
-			oOptions.errorMessage = oOptions.errorMessage || "Failed to wait for check";
-			oOptions.errorMessage += addStacks(oOptions);
-			$.sap.log.error(oOptions.errorMessage);
+
+			if (isStopped) {
+				oOptions.errorMessage = "Queue was stopped manually";
+				oOptions.errorMessage += addStacks({ _stack : createStack(1) });
+			} else {
+				oOptions.errorMessage = oOptions.errorMessage || "Failed to wait for check";
+				oOptions.errorMessage += addStacks(oOptions);
+			}
+			$.sap.log.error(oOptions.errorMessage, "Opa");
+		}).always(function () {
+			timeout = -1;
+			oDeferred = null;
 		});
+	};
+
+	/**
+	 * Clears the queue and stops running tests so that new tests can be run.
+	 * This means all waitFor statements registered by {@link sap.ui.test.Opa#waitFor} will not be invoked anymore and
+	 * the promise returned by {@link sap.ui.test.Opa#.emptyQueue}
+	 * will be rejected or resolved depending on the failTest parameter.
+	 * When its called inside of a check in {@link sap.ui.test.Opa#waitFor}
+	 * the success function of this waitFor will not be called.
+	 * @param [boolean=true] failTest If true is passed or the parameter is omited,
+	 * the promise of {@link sap.ui.test.Opa#.emptyQueue} is rejected. If false is passed the promis is resolved.
+	 * @since 1.40.1
+	 * @public
+	 */
+	Opa.stopQueue = function stopQueue (failTest) {
+		var bFailTest = failTest !== false;
+		// clear queue
+		queue = [];
+
+		// clear running tests
+		if (!oDeferred) {
+			$.sap.log.warning("stopQueue was called before emptyQueue, queued tests have never been executed", "Opa");
+		} else {
+			if (timeout !== -1) {
+				clearTimeout(timeout);
+			}
+
+			isStopped = true;
+
+			if (bFailTest) {
+				oDeferred.reject({});
+			} else {
+				oDeferred.resolve();
+			}
+		}
 	};
 
 	//create the default config
@@ -361,6 +408,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 			options._stack = createStack(1 + options._stackDropCount);
 			delete options._stackDropCount;
 
+			this._validateWaitFor(options);
+
 			deferred.promise(this);
 
 			queue.push({
@@ -378,10 +427,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 						}
 					}
 
+					if (isStopped) {
+						// skip executing success and don't add new things
+						return { result: true, arguments: arguments };
+					}
+
 					if (bResult) {
 						if (options.success) {
+							var iCurrentQueueLength = queue.length;
 							try {
-								var iCurrentQueueLength = queue.length;
 								options.success.apply(this, arguments);
 							} catch (err) {
 								$.sap.log.error(err.stack, "OPA encountered an error");
@@ -413,7 +467,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device'], function ($, Device) {
 		 * @public
 		 * @function
 		 */
-		emptyQueue : Opa.emptyQueue
+		emptyQueue : Opa.emptyQueue,
+
+		_validateWaitFor: function (oParameters) {
+			if (oParameters.error && !$.isFunction(oParameters.error)) {
+				throw new Error("sap.ui.test.Opa#waitFor - the 'error' parameter needs to be a function but '"
+					+ oParameters.error + "' was passed");
+			}
+		}
 	};
 
 

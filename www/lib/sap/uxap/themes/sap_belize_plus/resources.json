@@ -6,6 +6,36 @@
       "theme": "sap_belize_plus"
     },
     {
+      "name": "AnchorBar.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "HierarchicalSelect.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ObjectPageHeader.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ObjectPageHeaderContent.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ObjectPageSection.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
+      "name": "ObjectPageSubSection.less",
+      "designtime": true,
+      "theme": "sap_belize_plus"
+    },
+    {
       "name": "library-RTL-dbg.css",
       "isDebug": true,
       "theme": "sap_belize_plus"

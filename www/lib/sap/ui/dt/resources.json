@@ -390,6 +390,82 @@
       ]
     },
     {
+      "name": "command/BaseCommand-dbg.js",
+      "module": "sap/ui/dt/command/BaseCommand.js",
+      "isDebug": true,
+      "required": [
+        "sap/ui/base/ManagedObject.js"
+      ]
+    },
+    {
+      "name": "command/BaseCommand.js",
+      "module": "sap/ui/dt/command/BaseCommand.js",
+      "required": [
+        "sap/ui/base/ManagedObject.js"
+      ]
+    },
+    {
+      "name": "command/CommandFactory-dbg.js",
+      "module": "sap/ui/dt/command/CommandFactory.js",
+      "isDebug": true,
+      "required": [
+        "sap/ui/base/ManagedObject.js"
+      ],
+      "condRequired": [
+        "sap/ui/dt/command/SimpleFormMove.js",
+        "sap/ui/dt/command/Move.js"
+      ]
+    },
+    {
+      "name": "command/CommandFactory.js",
+      "module": "sap/ui/dt/command/CommandFactory.js",
+      "required": [
+        "sap/ui/base/ManagedObject.js"
+      ],
+      "condRequired": [
+        "sap/ui/dt/command/SimpleFormMove.js",
+        "sap/ui/dt/command/Move.js"
+      ]
+    },
+    {
+      "name": "command/Move-dbg.js",
+      "module": "sap/ui/dt/command/Move.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/command/BaseCommand.js",
+        "sap/ui/dt/ElementUtil.js"
+      ]
+    },
+    {
+      "name": "command/Move.js",
+      "module": "sap/ui/dt/command/Move.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/command/BaseCommand.js",
+        "sap/ui/dt/ElementUtil.js"
+      ]
+    },
+    {
+      "name": "command/SimpleFormMove-dbg.js",
+      "module": "sap/ui/dt/command/SimpleFormMove.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/command/BaseCommand.js",
+        "sap/ui/dt/ElementUtil.js"
+      ]
+    },
+    {
+      "name": "command/SimpleFormMove.js",
+      "module": "sap/ui/dt/command/SimpleFormMove.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/command/BaseCommand.js",
+        "sap/ui/dt/ElementUtil.js"
+      ]
+    },
+    {
       "name": "library-all-dbg.js",
       "isDebug": true,
       "merged": true
@@ -525,7 +601,8 @@
         "sap/ui/base/ManagedObject.js",
         "sap/ui/dt/ElementUtil.js",
         "sap/ui/dt/OverlayUtil.js",
-        "sap/ui/dt/OverlayRegistry.js"
+        "sap/ui/dt/OverlayRegistry.js",
+        "sap/ui/dt/command/CommandFactory.js"
       ]
     },
     {
@@ -535,7 +612,8 @@
         "sap/ui/base/ManagedObject.js",
         "sap/ui/dt/ElementUtil.js",
         "sap/ui/dt/OverlayUtil.js",
-        "sap/ui/dt/OverlayRegistry.js"
+        "sap/ui/dt/OverlayRegistry.js",
+        "sap/ui/dt/command/CommandFactory.js"
       ]
     },
     {
@@ -574,6 +652,195 @@
     },
     {
       "name": "resources.json"
+    },
+    {
+      "name": "test/Element-dbg.js",
+      "module": "sap/ui/dt/test/Element.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/ElementUtil.js",
+        "sap/ui/dt/OverlayRegistry.js"
+      ]
+    },
+    {
+      "name": "test/Element.js",
+      "module": "sap/ui/dt/test/Element.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/ElementUtil.js",
+        "sap/ui/dt/OverlayRegistry.js"
+      ]
+    },
+    {
+      "name": "test/ElementEnablementTest-dbg.js",
+      "module": "sap/ui/dt/test/ElementEnablementTest.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/test/Test.js",
+        "sap/ui/dt/DesignTime.js",
+        "sap/ui/dt/test/Element.js"
+      ]
+    },
+    {
+      "name": "test/ElementEnablementTest.js",
+      "module": "sap/ui/dt/test/ElementEnablementTest.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/test/Test.js",
+        "sap/ui/dt/DesignTime.js",
+        "sap/ui/dt/test/Element.js"
+      ]
+    },
+    {
+      "name": "test/LibraryEnablementTest-dbg.js",
+      "module": "sap/ui/dt/test/LibraryEnablementTest.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/test/Test.js",
+        "sap/ui/dt/test/ElementEnablementTest.js"
+      ]
+    },
+    {
+      "name": "test/LibraryEnablementTest.js",
+      "module": "sap/ui/dt/test/LibraryEnablementTest.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/dt/test/Test.js",
+        "sap/ui/dt/test/ElementEnablementTest.js"
+      ]
+    },
+    {
+      "name": "test/Test-dbg.js",
+      "module": "sap/ui/dt/test/Test.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/base/ManagedObject.js"
+      ]
+    },
+    {
+      "name": "test/Test.js",
+      "module": "sap/ui/dt/test/Test.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/base/ManagedObject.js"
+      ]
+    },
+    {
+      "name": "test/report/QUnit-dbg.js",
+      "module": "sap/ui/dt/test/report/QUnit.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/base/ManagedObject.js"
+      ]
+    },
+    {
+      "name": "test/report/QUnit.js",
+      "module": "sap/ui/dt/test/report/QUnit.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/base/ManagedObject.js"
+      ]
+    },
+    {
+      "name": "test/report/Statistic-dbg.js",
+      "module": "sap/ui/dt/test/report/Statistic.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/layout/form/SimpleForm.js",
+        "sap/m/Label.js",
+        "sap/m/Text.js"
+      ]
+    },
+    {
+      "name": "test/report/Statistic.js",
+      "module": "sap/ui/dt/test/report/Statistic.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/layout/form/SimpleForm.js",
+        "sap/m/Label.js",
+        "sap/m/Text.js"
+      ]
+    },
+    {
+      "name": "test/report/StatisticRenderer-dbg.js",
+      "module": "sap/ui/dt/test/report/StatisticRenderer.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "test/report/StatisticRenderer.js",
+      "module": "sap/ui/dt/test/report/StatisticRenderer.js",
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "test/report/Table-dbg.js",
+      "module": "sap/ui/dt/test/report/Table.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/table/TreeTable.js",
+        "sap/ui/table/Column.js",
+        "sap/m/Toolbar.js",
+        "sap/m/Title.js",
+        "sap/m/ToolbarSpacer.js",
+        "sap/m/Button.js",
+        "sap/m/SearchField.js",
+        "sap/m/Text.js",
+        "sap/m/RatingIndicator.js",
+        "sap/ui/model/Filter.js",
+        "sap/ui/model/FilterOperator.js"
+      ]
+    },
+    {
+      "name": "test/report/Table.js",
+      "module": "sap/ui/dt/test/report/Table.js",
+      "required": [
+        "jquery.sap.global.js",
+        "sap/ui/core/Control.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/table/TreeTable.js",
+        "sap/ui/table/Column.js",
+        "sap/m/Toolbar.js",
+        "sap/m/Title.js",
+        "sap/m/ToolbarSpacer.js",
+        "sap/m/Button.js",
+        "sap/m/SearchField.js",
+        "sap/m/Text.js",
+        "sap/m/RatingIndicator.js",
+        "sap/ui/model/Filter.js",
+        "sap/ui/model/FilterOperator.js"
+      ]
+    },
+    {
+      "name": "test/report/TableRenderer-dbg.js",
+      "module": "sap/ui/dt/test/report/TableRenderer.js",
+      "isDebug": true,
+      "required": [
+        "jquery.sap.global.js"
+      ]
+    },
+    {
+      "name": "test/report/TableRenderer.js",
+      "module": "sap/ui/dt/test/report/TableRenderer.js",
+      "required": [
+        "jquery.sap.global.js"
+      ]
     },
     {
       "name": "themes/base/.theming",

@@ -21,7 +21,7 @@ sap.ui.define(["jquery.sap.global", "./library", "sap/ui/core/Control", "sap/ui/
 		 * Disclaimer: this control is in beta state - incompatible API changes may be done before its official public release. Use at your own discretion.
 		 *
 		 * @author SAP SE
-		 * @version 1.38.7
+		 * @version 1.40.7
 		 *
 		 * @constructor
 		 * @private

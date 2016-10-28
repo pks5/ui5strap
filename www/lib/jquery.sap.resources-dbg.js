@@ -44,7 +44,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.properties', 'jquery.sap.strings
 	 * Exception: Fallback for "zh_HK" is "zh_TW" before zh.
 	 *
 	 * @author SAP SE
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @since 0.9.0
 	 * @name jQuery.sap.util.ResourceBundle
 	 * @public
@@ -59,7 +59,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.properties', 'jquery.sap.strings
 	 * If text parameters are given, then any occurrences of the pattern "{<i>n</i>}" with <i>n</i> being an integer
 	 * are replaced by the parameter value with index <i>n</i>.  Note: This replacement is also applied if no text had been found (key).
 	 * For more details on this replacement mechanism refer also:
-	 * @see jQuery.sap#formatMessage
+	 * @see jQuery.sap.formatMessage
 	 *
 	 * @param {string} sKey
 	 * @param {string[]} [aArgs] List of parameters which should replace the place holders "{n}" (n is the index) in the found locale-specific string value.
@@ -186,7 +186,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.properties', 'jquery.sap.strings
 	 */
 	function defaultLocale() {
 		var sLocale;
-		if (window.sap && sap.ui && sap.ui.getCore) {
+		if (window.sap && window.sap.ui && sap.ui.getCore) {
 			sLocale = sap.ui.getCore().getConfiguration().getLanguage();
 			sLocale = normalize(sLocale);
 		}
@@ -449,7 +449,7 @@ sap.ui.define(['jquery.sap.global', 'jquery.sap.properties', 'jquery.sap.strings
 	}
 
 	function shouldRequest(sLocale) {
-		var aLanguages = window.sap && sap.ui && sap.ui.getCore && sap.ui.getCore().getConfiguration().getSupportedLanguages();
+		var aLanguages = window.sap && window.sap.ui && sap.ui.getCore && sap.ui.getCore().getConfiguration().getSupportedLanguages();
 		if ( aLanguages && aLanguages.length > 0 ) {
 			return jQuery.inArray(sLocale, aLanguages) >= 0;
 		}

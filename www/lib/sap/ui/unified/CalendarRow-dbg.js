@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * A calendar row with an header and appointments. The Appointments will be placed in the defined interval.
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 *
 	 * @constructor
 	 * @public
@@ -137,7 +137,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			 * to allow touching.
 			 * @since 1.38.0
 			 */
-			appointmentsReducedHeight : {type : "boolean", group : "Appearance", defaultValue : false}
+			appointmentsReducedHeight : {type : "boolean", group : "Appearance", defaultValue : false},
+
+			/**
+			 * Defines the visualization of the <code>CalendarAppoinment</code>
+			 *
+			 * <b>Note:</b> The real visualization depends on the used theme.
+			 * @since 1.40.0
+			 */
+			appointmentsVisualization : {type : "sap.ui.unified.CalendarAppointmentVisualization", group : "Appearance", defaultValue : sap.ui.unified.CalendarAppointmentVisualization.Standard}
 		},
 		aggregations : {
 
@@ -167,8 +175,18 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 			/**
 			 * Association to controls / IDs which label this control (see WAI-ARIA attribute aria-labelledby).
+			 *
+			 * <b>Note</b> These labels are also assigned to the appointments.
 			 */
-			ariaLabelledBy: { type: "sap.ui.core.Control", multiple: true, singularName: "ariaLabelledBy" }
+			ariaLabelledBy: { type: "sap.ui.core.Control", multiple: true, singularName: "ariaLabelledBy" },
+
+			/**
+			 * Association to the <code>CalendarLegend</code> explaining the colors of the <code>Appointments</code>.
+			 *
+			 * <b>Note</b> The legend does not have to be rendered but must exist, and all required types must be assigned.
+			 * @since 1.40.0
+			 */
+			legend: { type: "sap.ui.unified.CalendarLegend", multiple: false}
 		},
 		events : {
 
@@ -241,6 +259,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	CalendarRow.prototype.init = function(){
 
 		this._bRtl  = sap.ui.getCore().getConfiguration().getRTL();
+		this._oRb = sap.ui.getCore().getLibraryResourceBundle("sap.ui.unified");
+
+		if (!sap.ui.unified.CalendarRow._oStaticAppointmentText) {
+			sap.ui.unified.CalendarRow._oStaticAppointmentText = new sap.ui.core.InvisibleText({text: this._oRb.getText("APPOINTMENT")});
+			sap.ui.unified.CalendarRow._oStaticAppointmentText.toStatic(); //Put to Static UiArea
+			sap.ui.unified.CalendarRow._oStaticTentativeText = new sap.ui.core.InvisibleText({text: this._oRb.getText("APPOINTMENT_TENTATIVE")});
+			sap.ui.unified.CalendarRow._oStaticTentativeText.toStatic(); //Put to Static UiArea
+		}
+
+		this._oFormatAria = sap.ui.core.format.DateFormat.getDateTimeInstance({style: "long/short"});
 
 		this._iHoursMinDelta = 1; // minutes - to position appointments in 1 minutes steps
 		this._iDaysMinDelta = 30; // minutes
@@ -1203,6 +1231,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 					var oIntervalEndDate = new UniversalDate(oStartDate.getTime());
 					oIntervalEndDate.setUTCMinutes(oIntervalEndDate.getUTCMinutes() - 1);
 					var iFirstInterval = -1;
+					var iLastInterval = -1;
 
 					for (j = 0; j < iIntervals; j++) {
 
@@ -1241,8 +1270,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 							if (iFirstInterval < 0) {
 								iFirstInterval = j;
 							}
-							aVisibleIntervalHeaders.push({interval: j, appointment: oAppointment, first: iFirstInterval == j});
+							iLastInterval = j;
 						}
+					}
+					if (iFirstInterval >= 0) {
+						aVisibleIntervalHeaders.push({interval: iFirstInterval, appointment: oAppointment, last: iLastInterval});
 					}
 				}
 			}

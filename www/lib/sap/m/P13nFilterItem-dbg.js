@@ -17,7 +17,7 @@ sap.ui.define([
 	 * @param {object} [mSettings] initial settings for the new control
 	 * @class Type for <code>filterItems</code> aggregation in P13nFilterPanel control.
 	 * @extends sap.ui.core.Item
-	 * @version 1.38.7
+	 * @version 1.40.7
 	 * @constructor
 	 * @public
 	 * @alias sap.m.P13nFilterItem
@@ -84,13 +84,25 @@ sap.ui.define([
 	});
 
 
-//	P13nFilterItem.prototype.setOperation = function(sOperation) {
-//		return this.setProperty("operation", sOperation, true);
-//	};
-//
-//	P13nFilterItem.prototype.setColumnKey = function(sKey) {
-//		return this.setProperty("columnKey", sKey, true);
-//	};
+	P13nFilterItem.prototype.setOperation = function(sOperation) {
+		return this.setProperty("operation", sOperation, true);
+	};
+
+	P13nFilterItem.prototype.setColumnKey = function(sKey) {
+		return this.setProperty("columnKey", sKey, true);
+	};
+
+	P13nFilterItem.prototype.setValue1 = function(sKey) {
+		return this.setProperty("value1", sKey, true);
+	};
+
+	P13nFilterItem.prototype.setValue2 = function(sKey) {
+		return this.setProperty("value2", sKey, true);
+	};
+
+	P13nFilterItem.prototype.setExclude = function(sKey) {
+		return this.setProperty("exclude", sKey, true);
+	};
 
 	return P13nFilterItem;
 
