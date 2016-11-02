@@ -70,7 +70,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		
 		if(overlayNavContainerElm){
 			var navContainerHeight = ui5strap.Utils.getComputedStyle(overlayNavContainerElm, 'height');
-			cssAvailable = -1 !== navContainerHeight.indexOf("px") || _this._waitCssTime >= ui5strap.options.timeoutWaitForCss;
+			cssAvailable = "auto" !== navContainerHeight || _this._waitCssTime >= ui5strap.options.timeoutWaitForCss;
 		}
 		
 		if (cssAvailable) {
