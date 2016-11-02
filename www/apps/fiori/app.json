@@ -1,9 +1,0 @@
-{
-	"app" : {
-	        "id" : "sap.ui.demo.wt",
-	        "name" : "Fiori Test",
-	        "rootComponent" : true,
-	        "type" : "ui5strap.AppBase",
-	        "theme" : "sap_bluecrystal"
-	}
-}

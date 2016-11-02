@@ -1,0 +1,23 @@
+{
+	"//" : "Preselect the current system language on the specified ButtonGroup control.",
+	"BEGIN" : "setCurrentLanguage",
+	
+	"setCurrentLanguage" : {
+		
+		"CONTROLS" : {
+			"languageButtons" : {
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.ListBase",
+				"CONTROL_ID" : "languageSelect"
+			}
+		},
+		
+		"config" : "= core.getConfiguration()",
+		"language" : "= .config.getLanguage()",
+		
+		"customDataKey" : "language",
+		
+		"DO" : "= .CONTROLS.languageButtons.setSelectionByCustomData(.customDataKey, .language)"
+	}
+	
+}

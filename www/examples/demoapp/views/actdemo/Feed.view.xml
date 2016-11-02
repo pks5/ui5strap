@@ -1,0 +1,84 @@
+<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!-- The page control -->
+	<Page>
+		<!-- Head area with horizontal bar -->
+		<head>
+			<!-- Bar on top of page -->
+			<Bar inverse="true">
+				<!-- Left area of bar -->
+				<Text align="PullLeft">
+					<!-- Back Button -->
+					<Button tap="com.ui5strap.apps.demoapp.actions.home.NavigateToHome"
+						options="BarButton">
+						<Icon icon="home" />
+					</Button>
+
+					<!-- Toggle Menu Button (except for small screens) -->
+					<Button options="BarButton"
+							tap="com.ui5strap.apps.demoapp.actions.home.ToggleBarMenuRoot" visibilitySmall="HiddenUp"
+						visibilityMedium="VisibleUp">
+							<Icon icon="columns" />
+					</Button>
+				</Text>
+				
+				<!-- Middle area of bar -->
+				<Heading text="{i18n>PAGE_FEED_TITLE}" options="BarHeadingCenter" />
+
+				<!-- Toggle Menu Button (only for small screens) -->
+				<Button tap="com.ui5strap.apps.demoapp.actions.home.ToggleBarMenuRoot"
+						options="BarButton" align="PullRight"
+					visibilityExtraSmall="HiddenUp" visibilitySmall="VisibleUp"
+					visibilityMedium="HiddenUp">
+						<Icon icon="columns" />
+				</Button>
+			</Bar>
+		</head>
+
+		<!-- Body area with page content -->
+		<body>
+			<ScrollContainer vertical="true">
+				<Container type="FluidInset" severity="Success">
+                    <Text type="Lead">
+                        <Text text="{i18n>PAGE_ACTDEMO_LIST_INTRO}" />
+                        <Link tap="com.ui5strap.apps.demoapp.actions.actdemo.NavigateToContrdemo" text="{i18n>PAGE_ACTDEMO_LIST_SWITCH_1}" trail="Space" />
+                        <Text text="{i18n>PAGE_ACTDEMO_LIST_SWITCH_2}" />
+                    </Text>
+                    
+					<Panel>
+
+						<titleContent>
+							<Text text="{i18n>PAGE_FEED_PANEL_POSTS_TITLE}" />
+							<Button tap="com.ui5strap.apps.demoapp.actions.actdemo.ShowNewPostOverlay" align="PullRight">
+								<Icon icon="plus" />
+							</Button>
+						</titleContent>
+						<content>
+							<ListMedia id="feedListAct" tap="com.ui5strap.apps.demoapp.actions.actdemo.FeedTap"
+								items="{FEED_INFO>/feed}">
+
+								<!-- Media Item 1 -->
+								<ListMediaItem data:postId="{FEED_INFO>id}">
+									<media>
+										<Image options="MediaObject" mpath="{FEED_INFO>image}" ext="png"
+											alt="Image" width="64" />
+									</media>
+									<content>
+										<Icon icon="times" align="PullRight" data:command="DELETE" />
+										<Heading level="4" options="MediaHeading" text="{FEED_INFO>title}" />
+										<Text text="{FEED_INFO>message}" />
+										
+									</content>
+								</ListMediaItem>
+
+
+							</ListMedia>
+						</content>
+
+					</Panel>
+				</Container>
+			</ScrollContainer>
+		</body>
+
+	</Page>
+</sapUiCoreMvc:View>

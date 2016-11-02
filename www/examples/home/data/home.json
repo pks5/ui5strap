@@ -1,0 +1,39 @@
+{
+    "apps" : [
+        {
+            "id" : "com.ui5strap.apps.demoapp",
+            "internal" : false,
+            "name": "Demo App",
+            "type" : "UI5STRAP",
+            "icon": "/examples/demoapp/img/ui5strap-logo-7.png",
+            "url": "./examples/demoapp/app.json"
+        },
+        {
+            "type" : "HTML5",
+            "icon": "/examples/home/img/ui5strap-docs-icon.jpg",
+            "url": "http://ui5strap.com/docs",
+            "id" : "com.ui5strap.docs",
+            "name" : "Manual"
+        },
+        {
+            "id" : "com.ui5strap.apps.template",
+            "internal" : false,
+            "name": "Template",
+            "type" : "UI5STRAP",
+            "icon": "/apps/template/img/ui5strap-template-icon.jpg",
+            "url": "./apps/template/app.json"
+        },
+        {
+            "id" : "sap.ui.demo.wt",
+            "name": "Fiori",
+            
+            "location" : "./examples/fiori/",
+            "type" : "UI5STRAP",
+            "icon": "/examples/fiori/img/fiori.jpg",
+            "url": "./examples/fiori/app.json"
+        
+        }
+    
+    ]
+
+}

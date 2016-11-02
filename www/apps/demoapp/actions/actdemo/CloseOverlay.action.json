@@ -1,7 +1,0 @@
-{
-	"BEGIN" : "closeOverlay",
-	
-	"closeOverlay" : {
-		"DO" : "= app.hideOverlay()"
-	}
-}

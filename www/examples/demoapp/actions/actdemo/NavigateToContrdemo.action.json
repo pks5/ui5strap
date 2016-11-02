@@ -1,0 +1,16 @@
+{
+	"//" : "Navigate to View 'contrdemoList' via root navigation.",
+	
+	"BEGIN" : "navigate",
+	
+	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		
+		"VIEWS" : {
+			"contrdemoList" : {
+				"id" : "contrdemoList"
+			}
+		}
+	}
+
+}

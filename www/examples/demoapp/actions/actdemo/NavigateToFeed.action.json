@@ -1,0 +1,16 @@
+{
+	"//" : "Navigate to View 'actdemoFeed' via root navigation.",
+	
+	"BEGIN" : "navigate",
+	
+	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		
+		"VIEWS" : {
+			"actdemoFeed" : {
+				"id" : "actdemoFeed"
+			}
+		}
+	}
+
+}

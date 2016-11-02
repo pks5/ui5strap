@@ -1,0 +1,24 @@
+{
+	"//" : "Loads the menu for the Custom Controls section.",
+	
+	"BEGIN" : "navigate",
+	
+	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		"CONTROLS" : {
+			"NAVIGATOR" : {
+				"TYPE" : "ui5strap.NavContainer",
+				"SOURCE" : "View",
+				"CONTROL_ID" : "subNavCuscon",
+				"VIEW_ID" : "cuscon"
+			}
+		},
+		
+		"VIEWS" : {
+			"menuCuscon" : {
+				"id" : "menuCuscon"
+			}
+		}
+	}
+
+}

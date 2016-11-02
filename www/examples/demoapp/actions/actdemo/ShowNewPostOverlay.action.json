@@ -1,0 +1,13 @@
+{
+	"BEGIN" : "showOverlay",
+	
+	"showOverlay" : {
+		
+		"page" : {
+			"id" : "actdemoNewPost" 
+		},
+		
+		"DO" : "= app.showOverlay(.page)"
+	}
+
+}

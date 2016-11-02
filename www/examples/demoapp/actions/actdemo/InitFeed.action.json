@@ -1,0 +1,13 @@
+{
+
+    "BEGIN" : "initFeed",
+    
+    "initFeed" : {
+        
+        "feedManager" : "= app.getFeedManager()",
+        "feedListId" : ["feedListAct"], 
+        "DO" : "= .feedManager.registerControls(controller, .feedListId)"
+        
+    }
+
+}

@@ -1,0 +1,12 @@
+{
+
+    "BEGIN" : "refreshFeed",
+    
+    "refreshFeed" : {
+        
+        "feedManager" : "= app.getFeedManager()",
+        "DO" : "= .feedManager.refreshFeed()"
+    
+    }
+
+}

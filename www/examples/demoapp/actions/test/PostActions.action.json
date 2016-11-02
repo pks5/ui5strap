@@ -1,0 +1,16 @@
+{
+	"//" : "Shows a alert window with the content of the specified custom data field.",
+	
+	"TASKS" : "switch",
+	
+	"switch" : {
+		"TYPE" : "ui5strap.task.Switch",
+		"customDataKey" : "command", 
+		"expression" : "= eventParameters.srcControl.data(.customDataKey)",
+		"actions" : {
+			"DELETE" : "com.ui5strap.apps.demoapp.actions.home.NavigateToHome",
+			"MORE" : "com.ui5strap.apps.demoapp.actions.NavigateToPage3"
+		}
+	}
+	
+}

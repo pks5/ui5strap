@@ -1,0 +1,22 @@
+{
+	"//" : "Toggles the visibility of the menu bar of the specified NavContainer.",
+	
+	"BEGIN" : "toggleBarMenuSub1",
+	
+	"toggleBarMenuSub1" : {
+		"CONTROLS" : {
+			"navContainer" : {
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.NavContainer",
+				"CONTROL_ID" : "subNavCuscon",
+				"VIEW_ID" : "cuscon"
+			}
+		},
+		
+		"currentValue" : "= .CONTROLS.navContainer.getBarVisible()",
+		"oppositeValue" : "= lang.not(.currentValue)",
+		
+		"DO" : "= .CONTROLS.navContainer.setBarVisible(.oppositeValue)"
+	}
+
+}

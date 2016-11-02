@@ -1,0 +1,29 @@
+{
+	"//" : "Shows a alert window with the content of the specified custom data field.",
+	"TASKS" : "testTask",
+	
+	"testTask" : {
+		"compareValue" : "DELETE",
+		"anotherValue" : "QRS",
+		"customDataKey" : "command",
+		"tt" : false,
+		"customDataValue" : "= eventParameters.srcControl.data(.customDataKey)",
+		
+		"IF" : "= lang.equal(.compareValue, .customDataValue)",
+		
+		"message" : "= .tt ? toString() : .customDataKey",
+		"DO" : "= global.alert(.message)",
+		
+		"ELSE" : "error"
+	},
+	
+	"error" : {
+		"abc" : "= action.error.poo",
+		"poo" : {},
+		"srcParam" : "action.error.abc.q",
+		"set" : "= set(.srcParam, action.testTask.anotherValue)",
+		"alert" : "= global.alert(.poo.q)", 
+		"DO" : "= (.set, .alert)"
+	}
+	
+}

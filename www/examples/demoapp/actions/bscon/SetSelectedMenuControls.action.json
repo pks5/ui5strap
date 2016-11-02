@@ -1,0 +1,37 @@
+{
+	"//" : "Set the sub-menu item selected that has the same id as specified NavContainer's current page.",
+	
+	"BEGIN" : "setListItemSelected",
+	
+	"setListItemSelected" : {
+		"IF" : "= lang.equal(eventParameters.target, .targetName)",
+		
+		"CONTROLS" : {
+			"navContainer" : {
+				"SOURCE" : "Event",
+				"TYPE" : "ui5strap.NavContainer"
+			},
+			"barMenu" : {
+				"SOURCE" : "View",
+				"TYPE" : "ui5strap.BarMenu",
+				"CONTROL_ID" : "mySubMenuControls",
+				"VIEW_ID" : "menuControls"
+			}
+		},
+		
+		"targetName" : "content",
+		"page" : "= .CONTROLS.navContainer.getTarget(.targetName)",
+		"pageId" : "= .page.getId()",
+		"relativePageId" : "= app.extractRelativeControlId(.pageId)",
+		"customDataKey" : "pageId",
+		"setMenuSelected" : "= .CONTROLS.barMenu.setSelectionByCustomData(.customDataKey, .relativePageId)",
+		"DO" : "= .setMenuSelected",
+		"ERROR" : "errorHandler"
+	},
+	
+	"//errorHandler" : "The error handler if the menu selection failed.",
+	"errorHandler" : {
+		"errorMessage" : "Could not select controls menu item!",
+		"DO" : "= jQuery.sap.log.error(.errorMessage)"
+	}
+}

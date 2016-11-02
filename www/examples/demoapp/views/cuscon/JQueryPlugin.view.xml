@@ -1,0 +1,38 @@
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.cuscon.Cuscon"  xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+    xmlns:demoapp="com.ui5strap.apps.demoapp.controls" xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <!-- The page control -->
+    <Page>
+        <!-- Head area with horizontal bar -->
+        <head>
+            <!-- Bar on top of page -->
+            <Bar>
+                <!-- Left area of bar -->
+                <left>
+                    <Button tap="com.ui5strap.apps.demoapp.actions.cuscon.ToggleBarMenuCuscon" 
+                        options="BarButton">
+                        <Icon icon="columns" />
+                    </Button>
+                </left>
+                <!-- Middle area of bar -->
+                <middle>
+                    <Heading text="{i18n>PAGE_CUSCON_JQUERY_TITLE}" options="BarHeadingCenter" />
+                </middle>
+            </Bar>
+        </head>
+        
+        <!-- Body area with page content -->
+        <body>
+            <Container type="FluidInset">
+                <Text type="Lead" text="A custom control based on the JQuery Plugin 'Knob'." />
+                
+                <demoapp:Knob value="45" />
+                
+                <demoapp:Knob value="12" />
+                
+                <demoapp:Knob value="87" />
+            </Container>
+        </body>
+        
+    </Page>
+
+</sapUiCoreMvc:View>

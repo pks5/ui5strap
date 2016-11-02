@@ -1,0 +1,84 @@
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Controls" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+<Row>
+    <Col columnsExtraSmall="12" columnsSmall="6">
+        <Container>
+        <PickerWheel mode="Mode2D" id="wheelWithNumbers" active="true" >
+                       <Text text="0.0" />
+                       <Text text="0.5" />
+                       <Text text="1.0" />
+                       <Text text="1.5" />
+                       <Text text="2.0" />
+                       <Text text="2.5" />
+                       <Text text="3.0" />
+                       <Text text="3.5" />
+                       <Text text="4.0" />
+                       <Text text="4.5" />
+                       <Text text="5.0" />
+                       <Text text="5.5" />
+                       <Text text="6.0" />
+                       <Text text="6.5" />
+                       <Text text="7.0" />
+                       <Text text="7.5" />
+                       <Text text="8.0" />
+                       <Text text="8.5" />
+                       <Text text="9.0" />
+                       <Text text="9.5" />
+                       <Text text="10" />
+                    </PickerWheel>
+        </Container>
+        <Container>            
+                    <PickerWheel id="wheelWithIcons" mode="Mode3D" selectedIndex="2" selectionChange=".alertWheelValue">
+                       <Icon icon="plane" data:value="10" />
+                       <Icon icon="rocket" data:value="20" />
+                       <Icon icon="car" data:value="30" />
+                       <Icon icon="building" data:value="40" />
+                       <Icon icon="star" data:value="50" />
+                       <Icon icon="pencil" data:value="60" />
+                       <Icon icon="smile-o" data:value="70" />
+                       <Icon icon="child" data:value="80" />
+                    </PickerWheel>
+        </Container>
+    </Col>
+    <Col columnsExtraSmall="12" columnsSmall="6">
+        
+                    
+                    <PickerWheel mode="Mode2D" vertical="true" id="wheelWithLetters" >
+                       <Text text="A" />
+                       <Text text="B" />
+                       <Text text="C" />
+                       <Text text="D" />
+                       <Text text="E" />
+                       <Text text="F" />
+                       <Text text="G" />
+                       <Text text="H" />
+                       <Text text="I" />
+                       <Text text="J" />
+                       <Text text="K" />
+                       <Text text="L" />
+                    
+                    </PickerWheel>
+                    <PickerWheel mode="Mode3D" vertical="true" active="true">
+                       <Text text="A" />
+                       <Text text="B" />
+                       <Text text="C" />
+                       <Text text="D" />
+                       <Text text="E" />
+                       <Text text="F" />
+                       <Text text="G" />
+                       <Text text="H" />
+                       <Text text="I" />
+                       <Text text="J" />
+                       <Text text="K" />
+                       <Text text="L" />
+                    </PickerWheel>
+            <Button text="Select 50" tap=".selectWheelWithIcons" />
+    </Col>
+</Row>
+                
+                    
+                    
+                    
+    
+</sapUiCoreMvc:View>

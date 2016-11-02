@@ -1,0 +1,17 @@
+{
+	"//" : "Goto Page 5",
+	"BEGIN" : "navigate",
+	
+	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		
+		"VIEWS" : {
+			"cusconSimple" : {
+				"id" : "cusconSimple",
+				"transition" : "zoom-in",
+				"target" : "content"
+			}
+		}
+	}
+	
+}

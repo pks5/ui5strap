@@ -1,0 +1,12 @@
+<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Bar type="Default">
+		<BarMenu id="mySubMenuCuscon" typeExtraSmall="ButtonsVertical"
+			tap="com.ui5strap.apps.demoapp.actions.NavigateViaMenu" items="{menu>/subMenuCuscon}">
+			<!-- BINDING_FIX is a workaround that ensures that the correct menu language is set when language changes dynamically. -->
+            <BarMenuItem
+				text="{formatter:'.formatters.localeString', parts:[{path:'menu>label'},{path:'i18n>BINDING_FIX'}]}"
+				icon="{menu>icon}" data:pageId="{menu>id}"></BarMenuItem>
+		</BarMenu>
+	</Bar>
+</sapUiCoreMvc:View>
