@@ -65,26 +65,25 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	};
 	
 	var _waitForLibraryCss = function(_this, callback){
-		var overlayNavContainerElm = _this.overlayControl.getDomRef(),
-			cssAvailable = false;
+		var oNavContainerRef = _this.overlayControl.getDomRef(),
+			bCssAvailable = false;
 		
-		if(overlayNavContainerElm){
-			var sNavContainerHeight = ui5strap.Utils.getComputedStyle(overlayNavContainerElm, "height"),
-				sOverlayWidth = ui5strap.Utils.getComputedStyle(_this._dom.$root[0], "width")
+		if(oNavContainerRef){
+			var sNavContainerHeight = ui5strap.Utils.getComputedStyle(oNavContainerRef, "height");
 			
 			//console.log(sNavContainerHeight, sOverlayWidth);	
 				
-			cssAvailable = "auto" !== sNavContainerHeight && -1 !== sOverlayWidth.indexOf("px"); //|| _this._waitCssTime >= ui5strap.options.timeoutWaitForCss;
+			bCssAvailable = "100%" === sNavContainerHeight || -1 !== sNavContainerHeight.indexOf("px"); //|| _this._waitCssTime >= ui5strap.options.timeoutWaitForCss;
 		}
 		
-		if (cssAvailable) {
+		if (bCssAvailable) {
 			window.clearTimeout(_this._waitCssTimer);
 			_this._waitCssTimer = null;
 			
 			callback && callback();
 		} else {
 			jQuery.sap.log
-					.debug("Library CSS is not available yet...");
+					.debug("Ui5Strap library CSS is not available yet...");
 
 			_this._waitCssTimer = window.setTimeout(
 					function() {

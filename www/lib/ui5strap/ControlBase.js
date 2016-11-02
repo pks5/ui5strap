@@ -65,7 +65,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 * 
 	 * @Private
 	 */
-	var _testCssReady = function(_this, callback) {
+	var _testCssReady = function(_this, callback, iTimeout) {
 		window.clearTimeout(_this._waitRenderingTimer);
 		_this._waitRenderingTimer = null;
 		
@@ -83,7 +83,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 			return;
 		}
 		
-		if (_this._waitRenderingTime >= ui5strap.options.timeoutWaitForCss) {
+		if (_this._waitRenderingTime >= iTimeout) {
 			throw new Error("[" + _this.getId() + "] Cannot determine required CSS.");
 		}
 		
@@ -98,7 +98,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 
 			_this._waitRenderingTimer = window.setTimeout(
 					function() {
-						_testCssReady(_this, callback);
+						_testCssReady(_this, callback, iTimeout);
 					}, ui5strap.options.intervalWaitForCss);
 			
 			_this._waitRenderingTime += ui5strap.options.intervalWaitForCss;
@@ -109,7 +109,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 		return -1 !== library.Utils.getComputedStyle(oDomRef, "width").indexOf("px") && jQuery(oDomRef).height() > 0;
 	};
 
-	ControlBaseProto._waitForResume = function(callback){
+	ControlBaseProto._waitForResume = function(callback, iTimeout){
 		jQuery.sap.log
 		.debug("Document is hidden. Waiting for resume...");
 		
@@ -120,7 +120,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 				.debug("Document is visible again.");
 				document.removeEventListener(library.support.visibilityChange, fnListener, false);
 				
-				_this._waitForCss(callback);
+				_this._waitForCss(callback, iTimeout);
 			}
 		};
 		
@@ -134,7 +134,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 * 
 	 * @Protected
 	 */
-	ControlBaseProto._waitForCss = function(callback) {
+	ControlBaseProto._waitForCss = function(callback, iTimeout) {
 		jQuery.sap.log
 		.debug("[" + this.getId() + "] Waiting for required css rules...");
 		
@@ -143,7 +143,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 		
 		//Check if a existing timer is running.
 		if(!this._waitRenderingTimer){
-			_testCssReady(this, callback);
+			_testCssReady(this, callback, iTimeout || ui5strap.options.timeoutWaitForCss);
 		}
 	};
 	

@@ -160,7 +160,8 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
 				_updateGrid(_this);
 				
 				callback && callback();
-			}
+			},
+			30000
 		);
 	};
 	
