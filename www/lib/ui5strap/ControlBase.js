@@ -113,20 +113,17 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 		jQuery.sap.log
 		.debug("Document is hidden. Waiting for resume...");
 		
-		var _this = this;
-		
-		this._fnStartCssTesting = function(){
-			_this._waitForCss(callback);
-		};
-		
-		var fnListener = function(){
+		var _this = this,
+		fnListener = function(){
 			if(!library.polyfill.isDocumentHidden()){
 				jQuery.sap.log
 				.debug("Document is visible again.");
-				document.removeEventListener(library.support.visibilityChange, _this._fnStartCssTesting, false);
-				fnStartCssTesting();
+				document.removeEventListener(library.support.visibilityChange, fnListener, false);
+				
+				_this._waitForCss(callback);
 			}
 		};
+		
 		document.addEventListener(library.support.visibilityChange, fnListener, false);
 		//TODO Cleanup on exit!!!
 	};
