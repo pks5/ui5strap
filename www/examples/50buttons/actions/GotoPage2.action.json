@@ -1,0 +1,11 @@
+{
+	
+	"TASKS" : "gotoPage",
+
+	"gotoPage" : {
+	   "TYPE" : "ui5strap.AMGotoPage",
+		"id" : "viewPage2",
+		"transition" : "transition-flip"
+	}
+
+}

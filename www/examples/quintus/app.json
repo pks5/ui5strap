@@ -1,0 +1,103 @@
+{
+        "app" : {
+            "name" : "Quintus Game",
+            "package" : "net__rozzo__games.quintus__app",
+            "title" : "Quintus Demo",
+            "id" : "net.rozzo.games.quintus",
+            "logLevel" : 5
+        },
+
+        "icons" : {
+            "default" : "img/my-app-icon-144x144.png"
+        },
+
+        "developers" : [
+            {
+                "name" : "Jan Philipp Knöller",
+                "email" : "info@pksoftware.de",
+                "timezone" : -1,
+                "roles" : [
+                    "Developer"
+                ]
+            }
+        ],
+
+        "licenses" : [
+            {
+                "name" : "Apache2 License",
+                "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        ],
+
+        "css" : [
+            "css/my-app.css"
+        ],
+        
+        "js" : [
+        	"js/quintus.js",
+			"js/quintus_sprites.js",
+			"js/quintus_scenes.js",
+			"js/quintus_input.js",
+			"js/quintus_anim.js",
+			"js/quintus_2d.js",
+			"js/quintus_touch.js",
+			"js/quintus_ui.js",
+			"js/quintus_tmx.js",
+			"js/quintus_audio.js"
+        ],
+
+        "models" : [
+            {
+                "src" : "i18n/i18n.properties",
+                "type" : "RESOURCE",
+                "modelName" : "i18n" 
+            }
+        ],
+
+        "rootNavigation" : {
+            "initialViews" : [
+                "my-app-intro"
+            ]
+        },
+
+
+        "views" : [
+            {
+                "viewName" : ".views.Intro",
+                "id" : "my-app-intro",
+                "styleClass" : "quintus-intro",
+                "target" : "content",
+                "type" : "HTML",
+                "sidebarMenu" : "homeMenu",
+                "navbar" : false,
+                "preload" : true,
+                "sidebar" : true,
+                "sidebar2bottom" : true
+            },
+            {
+                "viewName" : ".views.Home",
+                "id" : "my-app-home",
+                "target" : "content",
+                "type" : "HTML",
+                "sidebarMenu" : "homeMenu",
+                "navbar" : false,
+                "preload" : true,
+                "sidebar" : true,
+                "sidebar2bottom" : true
+            },
+            {
+                "viewName" : ".views.Options",
+                "id" : "my-app-options",
+                "styleClass" : "quintus-options",
+                "target" : "content",
+                "type" : "HTML",
+                "sidebarMenu" : "homeMenu",
+                "navbar" : false,
+                "preload" : true,
+                "sidebar" : true,
+                "sidebar2bottom" : true
+            }
+        ],
+        
+        "components" : {}
+}

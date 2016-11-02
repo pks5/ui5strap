@@ -1,0 +1,17 @@
+{
+	
+	"TASKS" : ["callControlMethod", "changeTheme"],
+
+	"callControlMethod" : {
+	   "TYPE" : "ui5strap.AMCallControlMethod",
+		"scope" : "SELECTION",
+		"funcName" : "data",
+		"funcArgs" : ["theme"],
+		"tgtParam" : "parameters.changeTheme.theme"
+	},
+
+	"changeTheme" : {
+	   "TYPE" : "ui5strap.AMChangeTheme"
+	}
+	
+}

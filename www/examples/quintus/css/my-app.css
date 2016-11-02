@@ -1,0 +1,153 @@
+/*
+* Pictures for get started page
+*/
+.get-started-screenshot{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+/*
+* CSS for MyNavContainer
+*/
+
+.navcontainer-standard > .navcontainer-aggregation-content .navcontainer-page > .sapUiView > .container-fluid,
+.navcontainer-standard > .navcontainer-aggregation-content .navcontainer-page .ui5strap-scroll-container > .container-fluid
+{
+	padding-top:20px;
+}
+
+/*
+* Bootstrap Grid Demo
+*/
+.show-grid [class^=col-]{
+
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #eee;
+	background-color: rgba(86,61,124,.15);
+	border: 1px solid #ddd;
+	border: 1px solid rgba(86,61,124,.2);
+
+}
+
+/*
+* The carousel for the controls page
+*/
+.boilerplateCarousel{
+	width:100%; 
+	height:100%;
+	
+	overflow:hidden;
+	margin-bottom:10px;
+}
+
+.boilerplateCarousel > .carousel-inner{
+	height:100%;
+}
+
+
+.boilerplateCarousel  > .carousel-inner > .item{
+	height:100%;
+	padding-left:5%;
+	padding-right:5%;
+	
+}
+
+.boilerplateCarousel  > .carousel-inner > .item > .sapUiView{
+	width:100%;
+	height:100%;
+	overflow-x:hidden;
+	overflow-y:scroll;
+
+	-webkit-overflow-scrolling: touch;
+}
+
+.boilerplateCarousel  > .carousel-inner > .item > .sapUiView > .container-fluid{
+padding-bottom:80px;
+}
+
+.boilerplateCarousel .carousel-indicators li{
+	margin:3px;
+	-moz-box-shadow: 0 0 5px 0px #090909;
+	-webkit-box-shadow: 0 0 5px 0px#090090;
+	box-shadow: 0 0 5px 0px #090909;
+	background-color:white;
+	border-color: #888;
+}
+
+.boilerplateCarousel .carousel-indicators li.active{
+
+	background-color: #888;
+	
+}
+
+.boilerplateCarousel .carousel-control{
+	width:5%;
+}
+
+/*
+* Quintus
+*/
+
+.quintus-intro{
+	background-image: url('../img/quintus-overlay.jpg');
+	background-size: cover;
+}
+
+.game-intro-listgroup .list-group-item > a{
+	color: #ae7640;
+	cursor:pointer;
+	text-decoration : none;
+	display:block;
+}
+
+.game-intro-listgroup .list-group-item:hover { 
+	background-color: #ffcc00;
+}
+
+.game-intro-listgroup .list-group-item{
+	background-color: #d0f4f7;
+	font-weight: bold;
+	font-size: 22px;
+	color: #ae7640;
+	height: 52px;
+	width: 300px;
+	text-align: center;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	top:40px;
+	border:2px solid;
+	display: block;
+}
+
+.quintus-options{
+	background-image: url('../img/quintus-overlay.jpg');
+	background-size: cover;
+}
+
+.game-options-container{
+	font-weight: bold;
+	font-size: 22px;
+	color: #ae7640;
+	height: 52px;
+	width: 300px;
+	text-align: center;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	border-color: #ae7640;
+	top: 20px;
+}
+
+.game-options-container .panel-heading{
+	background-color: #d0f4f7;
+}
+
+.game-options-button{
+	display: block;
+	max-width: 300px;
+	margin: 0 auto;
+	background-color: #d0f4f7;
+	font-weight: bold;
+}

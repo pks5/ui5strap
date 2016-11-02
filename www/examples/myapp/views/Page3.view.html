@@ -1,0 +1,84 @@
+<template data-controller-name="tld__domain.product__app.controllers.Page3">
+	
+	<div data-sap-ui-type="ui5strap.Page">
+		<div data-sap-ui-aggregation="head">
+			<div data-sap-ui-type="ui5strap.Bar" data-inverse="true">
+				<div data-sap-ui-aggregation="middle">
+					<div data-sap-ui-type="ui5strap.Heading" data-options="BarHeadingCenter" data-text="{i18n>PAGE3_HEADING}" data-type="Phrasing"></div>
+				</div>
+			</div>
+		</div>
+		<div data-sap-ui-aggregation="body">
+
+			<div data-sap-ui-type="ui5strap.Container" data-type="FluidInset">
+
+				<div data-sap-ui-type="ui5strap.Nav" data-type="Tabs" id="tabContainer1Tabs" data-selection-mode="Single">
+					<div data-sap-ui-type="ui5strap.ListItem" data-selected="true">
+						<div data-sap-ui-type="ui5strap.Link" data-text="Theme"></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.ListItem">
+						<div data-sap-ui-type="ui5strap.Link" data-text="Navigation"></div>
+					</div>
+					<div data-sap-ui-type="ui5strap.ListItem">
+						<div data-sap-ui-type="ui5strap.Link" data-text="Overlay"></div>
+					</div>
+				</div>
+
+				<div data-sap-ui-type="ui5strap.TabContainer" class="tabContainer1" data-source="tabContainer1Tabs">
+					<div data-sap-ui-type="ui5strap.Container">
+						<div data-sap-ui-type="ui5strap.ScrollContainer" data-vertical="true">
+							<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Change Programmatically"></div>
+
+							<!-- Small buttons -->
+							<div data-sap-ui-type="ui5strap.Paragraph" data-text="You can easily change the app theme programmatically by calling the AMChangeTheme Action from anywhere in your code. Press one of the following buttons to test."></div>
+							<div data-sap-ui-type="ui5strap.Container">
+								<div data-sap-ui-type="ui5strap.ButtonGroup" data-select="__execute" data-custom-data:__action="tld__domain.product__app.actions.ChangeTheme" data-selection-mode="Single">
+									<div data-sap-ui-type="ui5strap.Button" data-text="base" data-custom-data:theme="base"></div>
+									<div data-sap-ui-type="ui5strap.Button" id="defaultThemeButton" data-selected="true" data-severity="Primary" data-text="ui5strap_default" data-custom-data:theme="ui5strap_default" ></div>
+								</div>
+							</div>
+
+							<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Change Permanently"></div>
+							<div data-sap-ui-type="ui5strap.Paragraph" data-text="Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo."></div>
+							
+
+							
+						</div>
+					</div>
+					<div data-sap-ui-type="ui5strap.Container">
+						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Sidebar"></div>
+						<div data-sap-ui-type="ui5strap.Paragraph" data-text="You can enable / disable the sidebar and set additional options."></div>
+
+						<div data-sap-ui-type="ui5strap.Container">
+							<div data-sap-ui-type="ui5strap.Button" data-tap="toggleSidebar" data-text="Sidebar" data-selected="true"></div>
+							<div data-sap-ui-type="ui5strap.Button" data-tap="toggleSidenav" data-text="Sidenav"></div>
+
+							<div data-sap-ui-type="ui5strap.ButtonGroup" id="vButtons" data-tap="toggleSidebarOptions" data-selection-mode="Single">
+								<div data-sap-ui-type="ui5strap.Button" data-text="default"></div>
+								<div data-sap-ui-type="ui5strap.Button" data-text="sidebar-small" data-selected="true"></div>
+								
+								<div data-sap-ui-type="ui5strap.Button" data-text="sidebar-2nav"></div>
+							</div>
+						</div>
+
+						<div data-sap-ui-type="ui5strap.Heading" data-level="5" data-text="Navbar"></div>
+						<div data-sap-ui-type="ui5strap.Paragraph" data-text="You can enable / disable the navbar."></div>
+
+						<div data-sap-ui-type="ui5strap.Paragraph">
+							<div data-sap-ui-type="ui5strap.Button" data-tap="toggleNavbar" data-text="Navbar"></div>
+						</div>
+
+						
+					</div>
+					<div data-sap-ui-type="ui5strap.Container">
+						<div data-sap-ui-type="ui5strap.Paragraph">
+							<div data-sap-ui-type="ui5strap.Button" data-tap="showOverlay" data-text="Show Overlay via Controller"></div>
+							
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</template>

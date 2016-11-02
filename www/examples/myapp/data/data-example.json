@@ -1,0 +1,128 @@
+{
+
+	"blog" : {
+		"title" : "The Bootstrap Blog",
+		"description" : "Just a description of the blog."
+	},
+
+	"page" : {
+		"title" : "The Bootstrap Blog",
+		"lead" : "The official example template of creating a blog with Bootstrap."
+	},
+
+	"widgets" : [
+		{
+			
+			"data" : {
+				"caption" : "About",
+				"text" :  "Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur."
+			}
+
+		},
+		{
+			
+			"data" : {
+				"caption" : "Archives",
+				"items" : [
+					{
+						"text" : "January 2014",
+						"value" : "2014-01"
+					},
+					{
+						"text" : "December 2013",
+						"value" : "2013-12"
+					},
+					{
+						"text" : "November 2013",
+						"value" : "2013-11"
+					},
+					{
+						"text" : "October 2013",
+						"value" : "2013-10"
+					},
+					{
+						"text" : "September 2013",
+						"value" : "2013-09"
+					},
+					{
+						"text" : "August 2013",
+						"value" : "2013-08"
+					},
+					{
+						"text" : "July 2013",
+						"value" : "2013-07"
+					},
+					{
+						"text" : "June 2013",
+						"value" : "2013-06"
+					},
+					{
+						"text" : "May 2013",
+						"value" : "2013-05"
+					},
+					{
+						"text" : "April 2013",
+						"value" : "2013-04"
+					},
+					{
+						"text" : "March 2013",
+						"value" : "2013-1"
+					},
+					{
+						"text" : "February 2013",
+						"value" : "2013-02"
+					}
+				]
+			}
+
+		},
+
+		{
+			
+			"data" : {
+				"caption" : "Elsewhere",
+				"items" : [
+					{
+						"text" : "GitHub",
+						"value" : "http://github.com"
+					},
+					{
+						"text" : "Twitter",
+						"value" : "http://twitter.com"
+					},
+					{
+						"text" : "Facebook",
+						"value" : "http://facebook.com"
+					}
+				]
+			}
+		}
+	],
+
+	"posts" : [
+		{
+			"title" : "Sample blog post",
+			"date" : "2014-01-01",
+			"author_id" : 1,
+			"author_name" : "Mark",
+			"content" : "My first post"
+		},
+		{
+			"title" : "Another blog post",
+			"date" : "2013-12-23",
+			"author_id" : 2,
+			"author_name" : "Jacob",
+			"content" : "A second post"
+		},
+		{
+			"title" : "New feature",
+			"date" : "2013-12-14",
+			"author_id" : 3,
+			"author_name" : "Chris",
+			"content" : "A third post"
+		}
+
+	]
+
+	
+}

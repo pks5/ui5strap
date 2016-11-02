@@ -1,0 +1,17 @@
+{
+	
+	"TASKS" : "gotoPage",
+	"DESCRIPTION" : "Goto Page 1",
+
+	"gotoPage" : {
+	   "TYPE" : "ui5strap.task.Navigate",
+		
+		"VIEWS" : {
+            "page1" : { 
+                "id" : "viewPage1",
+		        "transition" : "transition-flip"
+		    }
+		}
+	}
+
+}

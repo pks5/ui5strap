@@ -1,0 +1,23 @@
+<template data-controller-name="ui5strap.ActionController">
+	<div data-sap-ui-type="ui5strap.Page">
+		<div data-sap-ui-aggregation="head">
+			<div data-sap-ui-type="ui5strap.Bar" data-inverse="true">
+				<div data-sap-ui-type="ui5strap.Heading" data-options="BarHeadingCenter">
+					<div data-sap-ui-type="ui5strap.Text" data-text="Materials"></div>
+				</div>
+			</div>
+		</div>
+		<div data-sap-ui-aggregation="body">
+			<div data-sap-ui-type="ui5strap.Sidebar">
+				<div data-sap-ui-type="ui5strap.ListGroup" data-selection-mode="Single" data-select="__execute" data-custom-data:__action="net__rozzo__stockmgr.stockdemo__app.actions.UpdateMaterial" class="stock-list">
+					<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="AMR-334-X" data-selected="true">
+					</div>
+					<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="BSW-3222-V">
+					</div>
+					<div data-sap-ui-type="ui5strap.ListGroupItem" data-text="KSF-33422-V">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

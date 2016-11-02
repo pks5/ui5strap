@@ -1,0 +1,12 @@
+{
+	
+	"TASKS" : "gotoPage",
+	
+	"gotoPage" : {
+	   "TYPE" : "ui5strap.AMGotoPage",
+		"viewName" : "net__rozzo__stockmgr.stockdemo__app.views.MaterialDetails",
+		"transition" : "transition-flip",
+		"writeHistory" : true
+	}
+
+}

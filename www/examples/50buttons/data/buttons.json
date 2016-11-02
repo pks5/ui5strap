@@ -1,0 +1,80 @@
+{
+
+	"page1" : [
+		{
+			"icon" : "bell",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.Button1"
+		},
+		{
+			"icon" : "square-o",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.ShowOverlay"
+		},
+		{
+			"icon" : "remove"
+		},
+		{
+			"icon" : "rocket",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.Button1"
+		},
+		{
+			"icon" : "phone"
+		},
+		{
+			"icon" : "exclamation-circle",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.ShowAlertOverlay"
+		},
+		{
+			"icon" : "pencil"
+		},
+		
+		{
+			"icon" : "tint",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.ChangeThemeBase"
+		},
+		{
+			"icon" : "paint-brush",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.ChangeThemeDefault"
+		},
+		{
+			"icon" : "arrow-right",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.GotoPage2"
+		}
+	],
+
+	"page2" : [
+		{
+			"icon" : "arrow-left",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.GotoPage1"
+		},
+		{
+			"icon" : "pencil"
+		},
+		{
+			"icon" : "remove"
+		},
+		{
+			"icon" : "rocket"
+		},
+		{
+			"icon" : "phone"
+		},
+		{
+			"icon" : "exclamation-circle",
+			"action" : "com__ui5strap__examples.50buttons__app.actions.Button1"
+		},
+		{
+			"icon" : "pencil"
+		},
+		{
+			"icon" : "remove"
+		},
+		{
+			"icon" : "tint"
+		},
+		{
+			"icon" : "paint-brush"
+		}
+	]
+
+	
+}

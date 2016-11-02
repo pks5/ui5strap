@@ -1,0 +1,10 @@
+{
+	
+	"TASKS" : "changeTheme",
+
+	"changeTheme" : {
+	   "TYPE" : "ui5strap.AMChangeTheme",
+		"theme" : "base"
+	}
+	
+}

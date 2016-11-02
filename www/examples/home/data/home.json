@@ -32,6 +32,46 @@
             "icon": "/examples/fiori/img/fiori.jpg",
             "url": "./examples/fiori/app.json"
         
+        },
+        {
+            "id" : "net__rozzo__games.quintus__app",
+            "internal" : false,
+            "name": "Quintus",
+            "type" : "UI5STRAP",
+            "icon": "/examples/quintus/img/Quintus_New.jpg",
+            "url": "./examples/quintus/app.json"
+        },
+        {
+            "id" : "net.rozzo.stockmgr.stockdemo.app",
+            "internal" : false,
+            "name": "Stock Demo",
+            "type" : "UI5STRAP",
+            "icon": "/examples/stockdemo/img/stockdemo-icon.jpg",
+            "url": "./examples/stockdemo/app.json"
+        },
+        {
+            "id" : "com.ui5strap.examples.50buttons.app",
+            "internal" : false,
+            "name": "50 Buttons",
+            "type" : "UI5STRAP",
+            "icon": "/examples/50buttons/img/50buttons-icon-256x256.jpg",
+            "url": "./examples/50buttons/app.json"
+        },
+        {
+            "id" : "tld__domain.product__app",
+            "internal" : false,
+            "name": "MyApp",
+            "type" : "UI5STRAP",
+            "icon": "/examples/myapp/img/my-app-icon-256x256.jpg",
+            "url": "./examples/myapp/app.json"
+        },
+        {
+            "id" : "net__rozzo__webgl.visent__app",
+            "internal" : false,
+            "name": "WebGL",
+            "type" : "UI5STRAP",
+            "icon": "/examples/visent/img/webgl.png",
+            "url": "./examples/visent/app.json"
         }
     
     ]

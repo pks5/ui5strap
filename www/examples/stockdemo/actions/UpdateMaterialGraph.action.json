@@ -1,0 +1,12 @@
+{
+	
+	"TASKS" : "callControlMethod",
+	
+	"callControlMethod" : {
+	    "TYPE" : "ui5strap.AMCallControlMethod",
+		"controlId" : "material-graph",
+		"funcName" : "refresh",
+		"scope" : "VIEW"
+	}
+
+}

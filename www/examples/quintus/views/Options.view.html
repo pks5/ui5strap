@@ -1,0 +1,28 @@
+<!--
+View quintus options
+@author Daniel Krahnke <danielkrahnke@gmail.com>
+Copyright (c) 2014 Daniel Krahnke
+-->
+
+<template data-controller-name="ui5strap.ActionController">
+	<div data-sap-ui-type="ui5strap.Container" class="game-options-container" data-type="Fluid">
+
+			<div data-sap-ui-type="ui5strap.Panel" data-title="Difficulty" data-text="Normal">
+				<div data-sap-ui-aggregation="titleContent">
+					<div data-sap-ui-type="ui5strap.Icon" data-icon="star" data-fixed-width="true"></div>
+				</div>
+			</div>
+			<div data-sap-ui-type="ui5strap.Panel" data-title="Language" data-text="English">
+				<div data-sap-ui-aggregation="titleContent">
+					<div data-sap-ui-type="ui5strap.Icon" data-icon="flag" data-fixed-width="true"></div>
+				</div>
+			</div>
+			<div data-sap-ui-type="ui5strap.Panel" data-title="Sound" data-text="On">
+				<div data-sap-ui-aggregation="titleContent">
+					<div data-sap-ui-type="ui5strap.Icon" data-icon="volume-up" data-fixed-width="true"></div>
+				</div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Button" class="game-options-button" data-size="Large" data-tap="__execute" data-custom-data:__action="net__rozzo__games.quintus__app.actions.GotoPageIntro" data-text=" &laquo; Back"></div>
+	</div>
+</template>

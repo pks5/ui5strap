@@ -1,0 +1,62 @@
+{
+        "app" : {
+            "name" : "Stock Overview",
+            "title" : "Stock MGT Demo",
+            "id" : "net.rozzo.stockmgr.stockdemo.app",
+            "package" : "net__rozzo__stockmgr.stockdemo__app",
+            "logLevel" : 5
+        },
+
+        "icons" : {
+            "default" : "img/stockdemo-icon.jpg"
+        },
+
+        "libraries" : [],
+
+        "models" : [],
+
+        "js" : [
+        	"d3/d3_min.js"
+        ],
+
+        "css" : [
+            "css/stock_overview.css"
+        ],
+
+        "components" : [
+            {
+            	"id" : "frame",
+                "module" : "ui5strap.AppFrame",
+                "navContainer" : "ui5strap.NavContainerStandard",
+                "navContainerOptions" : {
+                    "options" : "sidebar"
+                },
+                "initialViews" : [
+                    { 
+                        "target" : "sidebar",
+                        "id" : "Materials", 
+                        "viewName" : "net__rozzo__stockmgr.stockdemo__app.views.Materials", 
+                        "type" : "HTML"
+                    },
+                    { 
+                        "id" : "MaterialDetails"
+                    }
+                ]
+            }
+        ],
+        "events" : {},
+        "views" : [
+
+            {
+                "viewName" : "net__rozzo__stockmgr.stockdemo__app.views.MaterialDetails",
+                "type" : "HTML",
+                "target" : "content",
+                 "id" : "MaterialDetails", 
+                "events" : {
+                    "controller" : {
+                        "update" : ["net__rozzo__stockmgr.stockdemo__app.actions.UpdateMaterialGraph"]
+                    }
+                }
+            }
+        ]
+}

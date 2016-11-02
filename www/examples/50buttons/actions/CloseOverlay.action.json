@@ -1,0 +1,8 @@
+{
+  "TASKS" : "closeOverlay", 
+  
+  "closeOverlay" : {
+    "TYPE" : "ui5strap.AMCloseOverlay"
+  }
+  
+}

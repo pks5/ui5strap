@@ -1,0 +1,12 @@
+{
+	
+	"TASKS" : "callControlMethod",
+
+	"callControlMethod" : {
+	    "TYPE" : "ui5strap.AMCallControlMethod",
+		"controlId" : "carousel-intro",
+		"scope" : "VIEW",
+		"funcName" : "nextPage"
+	}
+	
+}

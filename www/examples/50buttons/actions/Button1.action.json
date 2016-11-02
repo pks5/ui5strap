@@ -1,0 +1,9 @@
+{
+  "TASKS" : "alert",
+
+  "alert" : {
+    "TYPE" : "ui5strap.AMJsAlert",
+    "message" : "Hello, World!"
+  
+  }
+}

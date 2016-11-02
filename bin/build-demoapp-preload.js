@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 		    component: {
 		        options: {
 		          resources: {
-		            cwd: '../www/apps/demoapp/',
+		            cwd: '../www/examples/demoapp/',
 		            prefix: 'com/ui5strap/apps/demoapp',
 		            src : [
 		             '**/*.js',
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 		             '!Component-preload.js'
 		            ]
 		          },
-		          dest: '../www/apps/demoapp/'
+		          dest: '../www/examples/demoapp/'
 		        },
 		        components: 'com/ui5strap/apps/demoapp'
 		      }

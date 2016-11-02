@@ -1,0 +1,77 @@
+{
+        "app" : {
+            "name" : "Ui5Strap Visual Enterprise",
+            "package" : "net__rozzo__webgl.visent__app",
+            "title" : "Visual Enterprise",
+            "id" : "net.rozzo.webgl.visent.app",
+            "logLevel" : 0
+        },
+
+        "icons" : {
+            "default" : "img/my-app-icon-144x144.png"
+        },
+
+        "developers" : [
+            {
+                "name" : "Jan Philipp Knöller",
+                "email" : "info@pksoftware.de",
+                "timezone" : -1,
+                "roles" : [
+                    "Developer"
+                ]
+            }
+        ],
+
+        "licenses" : [
+            {
+                "name" : "Apache2 License",
+                "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        ],
+
+        "js" : [
+            "three/build/three.min.js",
+            "three/js/loaders/ColladaLoader.js",
+            "three/js/Detector.js",
+            "three/js/libs/stats.min.js"
+        ],
+
+        "components" : [
+            {
+            	"id" : "frame3",
+                "module" : "ui5strap.AppFrame",
+                "navContainer" : "ui5strap.NavContainerStandard",
+                "navContainerOptions" : {
+                    "options" : "sidebar"
+                },
+                "initialViews" : [
+                    { 
+                        "viewName" : "net__rozzo__webgl.visent__app.views.Home"
+                    },
+                    { 
+                        "viewName" : "net__rozzo__webgl.visent__app.views.Sidebar"
+                    }
+                ],
+                "navbarMenu" : "mainMenu"
+            }
+        ],
+
+        "views" : {
+            "net__rozzo__webgl.visent__app.views.Home" : {
+                "id" : "visent-home",
+                "target" : "content",
+                "type" : "HTML",
+                "navbar" : false,
+                "sidebar" : true
+            },
+
+            "net__rozzo__webgl.visent__app.views.Sidebar" : {
+                "id" : "visent-sidebar",
+                "target" : "sidebar",
+                "type" : "HTML",
+                "navbar" : false,
+                "sidebar" : true
+            }
+
+        }
+}

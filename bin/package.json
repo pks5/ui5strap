@@ -17,7 +17,7 @@
     "grunt-cli": "^0.1.13",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-uglify": "^0.10.1",
-    "grunt-openui5": "^0.8.1",
+    "grunt-openui5": "^0.10.0",
     "http-server": "^0.8.5",
     "jsdoc": "^3.4.0",
     "nw-builder": "^2.2.0"

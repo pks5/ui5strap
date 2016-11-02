@@ -1,0 +1,13 @@
+{
+	
+	"TASKS" : "gotoPage",
+
+	"gotoPage" : {
+	   "TYPE" : "ui5strap.AMGotoPage",
+		"viewName" : "tld__domain.product__app.views.Page2",
+		"transition" : "transition-flip",
+		"writeHistory" : true,
+		"bookmarkable" : false
+	}
+
+}

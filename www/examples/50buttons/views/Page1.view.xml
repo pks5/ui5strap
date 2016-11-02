@@ -1,0 +1,22 @@
+<sapUiCoreMvc:View controllerName="ui5strap.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+                      xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	
+	<Page>
+			<head>
+				<Bar inverse="true">
+					<Heading options="BarHeadingCenter" text="{i18n>PAGE1_TITLE}" />
+				</Bar>
+			</head>
+			<body>
+				<Nav selection-mode="Single" class="nav-round-btns" items="{buttons>/page1}">
+					<ListItem>
+						<Link tap="__execute" data:__action="{buttons>action}">
+							<Icon icon="{buttons>icon}" />
+						</Link>
+					</ListItem>
+				</Nav>
+
+			</body>
+	</Page>
+
+</sapUiCoreMvc:View>

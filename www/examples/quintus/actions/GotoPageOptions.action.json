@@ -1,0 +1,16 @@
+{
+	"TASKS" : "navigate",
+	"DESCRIPTION" : "Goto Page Options",
+
+	"navigate" : {
+		"TYPE" : "ui5strap.task.Navigate",
+		"VIEWS" : {
+			"home" : { 
+				"viewName" : "net__rozzo__games.quintus__app.views.Options",
+				"transition" : "transition-flip",
+				"writeHistory" : true
+			}
+		}
+	}
+
+}

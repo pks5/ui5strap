@@ -1,0 +1,79 @@
+.stock_overview-graph{
+	height:320px;
+	width:100%;
+}
+
+/* tell the SVG path to be a thin blue line without any area fill */
+path.stock_overview-graph-stock-line {
+	stroke:#025D8C;
+	stroke-width: 4;
+	fill: none;
+}
+
+.axis {
+	shape-rendering: crispEdges;
+}
+
+.x.axis line {
+	stroke: lightgrey;
+}
+
+.x.axis .minor {
+	stroke-opacity: .5;
+}
+
+.x.axis path {
+	display:none;
+}
+
+.y.axis line, .y.axis path {
+	fill: none;
+	stroke: #025D8C;
+}
+
+.x.axis .tick text {
+	font-size: 0.7em;
+}
+
+.stock_overview-graph-bar-segment-minus{
+	fill:#D83B2B;
+}
+
+.stock_overview-graph-bar-segment-plus{
+	fill:#028C42;
+}	
+
+.stock_overview-graph-bar-segment-type-A1{
+	fill : #35A368;
+}	
+
+.stock_overview-graph-bar-segment-type-A2{
+	fill : #67BA8E;
+}	
+
+.stock_overview-graph-bar-segment-type-B1{
+	fill: #CC4A14;
+}
+
+.stock_overview-graph-bar-segment-type-B2{
+	fill: #E88980;
+}
+
+.stock_overview-graph-safety-stock{
+	stroke:#D83B2B;
+	stroke-width:3;
+
+}
+
+.stock_overview-graph-stock-line-circle-beyond{
+	fill:#028C42;
+}
+
+.stock_overview-graph-stock-line-circle-below{
+	fill:#D83B2B;
+}
+
+.stock-list li:hover {
+	cursor:pointer;
+	background-color: #ECF3FA;
+}

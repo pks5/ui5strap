@@ -1,0 +1,68 @@
+<template  data-controller-name="ui5strap.ActionController">
+	<!-- Carousel to switch between pages -->
+	<div data-sap-ui-type="ui5strap.Carousel" class="introCarousel" id="carousel-intro" data-columns-extra-small="1" data-columns-small="1" data-controls="false">
+		
+		<!-- Introduction Page 1 -->
+		<div data-sap-ui-type="ui5strap.Container" class="index-carousel-page index-carousel-page1">
+			<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="{i18n>INTRO1_HEADING}" class="intro-heading"></div>
+			
+			<div data-sap-ui-type="ui5strap.List" class="intro-lead">
+				<div data-sap-ui-type="ui5strap.ListItem" data-text="{i18n>INTRO1_LEAD1}"></div>
+				<div data-sap-ui-type="ui5strap.ListItem" data-text="{i18n>INTRO1_LEAD2}"></div>
+				<div data-sap-ui-type="ui5strap.ListItem" data-text="{i18n>INTRO1_LEAD3}"></div>
+			</div>
+			
+			<div data-sap-ui-type="ui5strap.Paragraph">
+				<div data-sap-ui-type="ui5strap.Button" data-tap="__execute" data-custom-data:__action="tld__domain.product__app.actions.IntroCarouselNext"  data-size="Large" data-text="{i18n>LNK_NEXT_INTRO}" data-severity="Primary"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Container" class="big-icons">
+				<div data-sap-ui-type="ui5strap.Icon" data-icon="mobile" class="big-icon" data-trail="Space"></div>
+				<div data-sap-ui-type="ui5strap.Icon" data-icon="tablet" class="big-icon" data-trail="Space"></div>
+				<div data-sap-ui-type="ui5strap.Icon" data-icon="desktop" class="big-icon" data-trail="Space"></div>
+			</div>
+		</div>
+
+		<!-- Introduction Page 2 -->
+		<div data-sap-ui-type="ui5strap.Container" class="index-carousel-page index-carousel-page2">
+			<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="{i18n>INTRO2_HEADING}" class="intro-heading"></div>
+			
+			<div data-sap-ui-type="ui5strap.List" class="intro-lead">
+				<div data-sap-ui-type="ui5strap.ListItem" data-text="{i18n>INTRO2_LEAD1}"></div>
+				<div data-sap-ui-type="ui5strap.ListItem" data-text="{i18n>INTRO2_LEAD2}"></div>
+				<div data-sap-ui-type="ui5strap.ListItem" data-text="{i18n>INTRO2_LEAD3}"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Paragraph">
+				<div data-sap-ui-type="ui5strap.Button" data-tap="__execute" data-custom-data:__action="tld__domain.product__app.actions.IntroCarouselNext" data-size="Large" data-text="{i18n>LNK_NEXT_INTRO}" data-severity="Primary"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Container" class="big-icons">
+				<div data-sap-ui-type="ui5strap.Icon" data-icon="cogs" class="big-icon"></div>
+			</div>
+		</div>
+		
+		<!-- Introduction Page 3 -->
+		<div data-sap-ui-type="ui5strap.Container" class="index-carousel-page index-carousel-page4">
+			<div data-sap-ui-type="ui5strap.Heading" data-level="1" data-text="{i18n>INTRO3_HEADING}" class="intro-heading"></div>
+			<div data-sap-ui-type="ui5strap.List" class="intro-lead">
+				<div data-sap-ui-type="ui5strap.ListItem" data-text="{i18n>INTRO3_LEAD1}"></div>
+				<div data-sap-ui-type="ui5strap.ListItem" data-text="{i18n>INTRO3_LEAD2}"></div>
+				<div data-sap-ui-type="ui5strap.ListItem" data-text="{i18n>INTRO3_LEAD3}"></div>
+			</div>
+			<div data-sap-ui-type="ui5strap.Paragraph">
+				<div data-sap-ui-type="ui5strap.Button" data-tap="__execute" data-custom-data:__action="tld__domain.product__app.actions.GotoPage1" data-size="Large" data-text="{i18n>LNK_CLOSE_INTRO}" data-severity="Primary"></div>
+			</div>
+
+			<div data-sap-ui-type="ui5strap.Container" class="big-icons">
+				<div data-sap-ui-type="ui5strap.Icon" data-icon="cubes" class="big-icon"></div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Close Icon -->
+	<div data-sap-ui-type="ui5strap.Link" class="skip-intro-link" data-tap="__execute" data-custom-data:__action="tld__domain.product__app.actions.GotoPage1">
+		<div data-sap-ui-type="ui5strap.Icon" data-icon="times"></div>
+	</div>
+</template>

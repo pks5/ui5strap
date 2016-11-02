@@ -1,0 +1,12 @@
+{
+  "TASKS" : "showOverlay",
+
+  "showOverlay" : {
+    "TYPE" : "ui5strap.AMShowOverlay",
+    "viewName" : "tld__domain.product__app.views.Overlay2",
+    "viewType" : "HTML",
+    "target" : "content",
+    "overlayTransition" : "transition-slide-rtl"
+  
+  }
+}

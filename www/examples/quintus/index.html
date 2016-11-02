@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		
+		<!-- Preload title -->
+		<title>Ui5Strap</title>
+
+		<!-- 
+			Preload Stylesheet 
+			Changed in 0.8! Please remove your preload stylesheet or include it into the app's css file.
+		-->
+		<link rel="stylesheet" type="text/css" href="../../lib/ui5strap/preload.css" />
+
+		<!-- Content Type -->
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		
+		<!-- Internet Explorer -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		
+		<!-- Viewport settings -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		
+		<!-- IOS Webapp settings -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<link rel="apple-touch-icon" sizes="144x144" href="./img/my-app-icon-144x144.png" />
+
+		<!-- Fav icon -->
+		<link rel="shortcut icon" href="./img/my-app-icon-256x256.jpg" />
+
+		<!--
+			Splash Screen Style 
+			Changed in 0.8: the Splash Screen style is now inline! 
+		-->
+		<style>
+			/*
+			* Splash Screen
+			*/
+			#ui5strap-splash-screen{
+				background: #dedede; /* Old browsers */
+				background: -moz-linear-gradient(top, #dedede 0%, #afafaf 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(100%,#afafaf)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top, #dedede 0%,#afafaf 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(top, #dedede 0%,#afafaf 100%); /* IE10+ */
+				background: linear-gradient(to bottom, #dedede 0%,#afafaf 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#afafaf',GradientType=0 ); /* IE6-9 */
+			}
+
+			.game-splash-window{
+				width: 640px;
+				height: 480px;
+				background-color:#ffffff;
+				border:solid 1px #d0d0d0;
+				border-radius: 20px;
+				position: absolute;
+				background-image:url('./img/background-splash-game.jpg');
+				background-repeat: no-repeat;
+				left: 50%;
+				top:50%;
+				margin-left: -320px;
+				margin-top: -240px;
+				font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+			}
+			
+			.game-splash-window-title{
+				position: absolute;
+				top:20px;
+				left:20px;
+				right:20px;
+			}
+			
+			.game-splash-window-title-heading{
+				padding-left: 144px;
+				font-size: 38px;
+				height:128px;
+				line-height: 128px;
+			}
+			
+			.game-splash-window-title-image{
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				top:62px;
+				width:128px;
+				height:128px;
+				background-image:url('./img/player03.png');
+				background-repeat: no-repeat;
+				border:none;
+			}
+			
+			.game-animated { 
+			    -webkit-animation-duration: 1s; 
+			    animation-duration: 1s; 
+			    -webkit-animation-fill-mode: both; 
+			    animation-fill-mode: both; 
+			} 
+			
+			@-webkit-keyframes bounce { 
+			    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);} 
+			    40% {-webkit-transform: translateY(-30px);} 
+			    60% {-webkit-transform: translateY(-15px);} 
+			} 
+			
+			@keyframes bounce { 
+			    0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 
+			    40% {transform: translateY(-30px);} 
+			    60% {transform: translateY(-15px);} 
+			} 
+			
+			.game-bounce { 
+			    -webkit-animation-name: bounce; 
+			    animation-name: bounce; 
+			}
+
+		</style>
+	
+	</head>
+	
+	<body role="application">
+		
+		<!-- 
+			Root Container
+			Changed in 0.8: the Root Container has now a different id.
+		-->
+		<div id="ui5strap-container">
+			
+			<!-- 
+				Splash Screen
+				Changed in 0.8: the Splash Screen is now defined inside the Root Container.
+			-->
+			<div id="ui5strap-app-initial" class="ui5strap-app">
+				<div id="ui5strap-splash-screen" class="ui5strap-app-content">
+					<div class="game-splash-window">
+						<div class="game-splash-window-title">
+							<div class="game-splash-window-title-heading">Quintus Demo Level</div>
+							<div class="game-splash-window-title-image game-animated game-bounce"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+		<!--Ui5OS Home Bar. Will be used in future. -->
+		<div id="ui5os-bar-home">
+			<a id="ui5os-button-home"><span class="fa fa-home"></span></a>
+			<a id="ui5os-button-taskmanager"><span class="fa fa-exchange"></span></a>
+		</div>
+		
+
+		<!-- 
+			Global Overlay
+			Required for 0.8!
+		-->
+		<div id="ui5strap-overlay" class="ui5strap-overlay ui5strap-layer ui5strap-hidden">
+			<div id="ui5strap-overlay-backdrop" class="ui5strap-overlay-backdrop"></div>
+			<div id="ui5strap-overlay-content" class="ui5strap-overlay-content"></div>
+		</div>
+
+		<!-- Loading screen. Showing while the app is busy. -->
+		<div id="ui5strap-loader" class="ui5strap-layer ui5strap-loader ui5strap-hidden"></div>
+		
+		<!-- Fatal Error screen. Shown when a fatal error occurs. -->
+		<div id="ui5strap-fatal" class="ui5strap-layer">
+			<div id="ui5strap-fatal-message"></div>
+		</div>
+
+		<!-- No Script screen. Only visible when JavaScript is deactivated. -->
+		<noscript>
+			<div id="ui5strap-noscript" class="ui5strap-layer">
+				Ui5Strap requires JavaScript to be enabled.
+			</div>
+		</noscript>
+
+		<!-- Cordova Library (optional). Only needed when building native apps with Cordova. -->
+		<!-- <script type="text/javascript" src="cordova.js"></script> -->
+		
+		<!-- 
+			Minimized OpenUI5 library without sap.m and sap.ui.core.commons Controls. 
+			Changed in 0.8: If you need the full OpenUI5 library, please download it from http://openui5.org/ and include it here instead. 
+		-->
+		<script id="sap-ui-bootstrap" src="../../lib/openui5/sap-ui-core.js" data-sap-ui-xx-test-mobile="true" data-sap-ui-xx-bindingSyntax="complex"></script>
+		
+		<!-- Set Ui5Strap Library location. -->
+		<script>
+			jQuery.sap.registerModulePath("ui5strap", "../../lib/ui5strap/");
+		</script>
+
+		<!-- Include complete, minified Ui5Strap library at startup (optional) -->
+		<!-- <script id="ui5strap-bootstrap" src="lib/ui5strap/ui5strap-all.js"></script> -->
+
+		<!-- App Start -->
+		<script>
+
+			/*
+			* Viewer options
+			*/
+			var viewerOptions = {
+				"app" : {
+					type : "URI",
+					uriParam : "app",
+					defaultValue : "./app.json"
+				}
+			};
+
+			/*
+			* Initialize Viewer
+			* Changed in 0.8: Use instead of ui5strap.Device
+			*/
+			jQuery.sap.require("ui5strap.Viewer");
+			
+			var viewer = new ui5strap.Viewer(viewerOptions);
+			
+			viewer.start();
+			
+		</script>
+
+	</body>
+
+</html>
