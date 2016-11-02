@@ -1161,10 +1161,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 			viewConfig = {
 				async : true,
 				viewName : viewDef.viewName,
-				type : viewDef.type,
-				cache : {
-					keys : ["test"]
-				}
+				type : viewDef.type
 			};
 		//,
 		//	viewSettings = {};

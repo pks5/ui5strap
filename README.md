@@ -23,8 +23,8 @@ UI5Strap is released under Apache2 license: http://www.apache.org/licenses/LICEN
 THIRD PARTY COMPONENTS
 ----------------------
 
-OpenUi5 1.38.7 (Apache 2 License)
-Copyright (c) 2009-2015 SAP SE or an SAP affiliate company.
+OpenUi5 1.40.8 (Apache 2 License)
+Copyright (c) 2009-2016 SAP SE or an SAP affiliate company.
 
 Bootstrap 3.3.6 (MIT License) [modified]
 
