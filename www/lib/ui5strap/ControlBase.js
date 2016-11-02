@@ -83,7 +83,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 			return;
 		}
 		
-		if (_this._waitRenderingTime >= ui5strap.options.waitRenderingTimeout) {
+		if (_this._waitRenderingTime >= ui5strap.options.timeoutWaitForCss) {
 			throw new Error("[" + _this.getId() + "] Cannot determine required CSS.");
 		}
 		
@@ -99,9 +99,9 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 			_this._waitRenderingTimer = window.setTimeout(
 					function() {
 						_testCssReady(_this, callback);
-					}, ui5strap.options.waitRenderingInterval);
+					}, ui5strap.options.intervalWaitForCss);
 			
-			_this._waitRenderingTime += ui5strap.options.waitRenderingInterval;
+			_this._waitRenderingTime += ui5strap.options.intervalWaitForCss;
 		}
 	};
 	
