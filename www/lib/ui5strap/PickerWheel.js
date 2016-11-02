@@ -308,11 +308,18 @@ sap.ui
 					    }
 					    
 					    return styleClass;
-					}
+					};
 					
 					/*
 					 * START after Rendering
 					 */
+					
+					PickerWheelProto._isCssReady = function(oDomRef){
+						var $oDomRef = jQuery(oDomRef);
+						return this.getVertical() 
+						? -1 !== ulib.Utils.getComputedStyle(oDomRef, "height").indexOf("px") && $oDomRef.width() > 0
+						: -1 !== ulib.Utils.getComputedStyle(oDomRef, "width").indexOf("px") && $oDomRef.height() > 0;
+					};
 
 					/**
 					 * @override
@@ -321,27 +328,27 @@ sap.ui
 						var _this = this,
 							mode = this.getMode();
 						
-						this._waitForRendering(
-								this.getVertical() ? 'height' : 'width',
-								function() {
-							_this.$().find('.ui5strapPickerWheel-inner')
-									.removeClass('ui5strap-hidden');
-
-							if(_this.getPanels().length == 0){
-								return;
+						this._waitForCss(
+							function() {
+								_this.$().find('.ui5strapPickerWheel-inner')
+										.removeClass('ui5strap-hidden');
+	
+								if(_this.getPanels().length == 0){
+									return;
+								}
+								
+								_this._$wheelContainer = _this.$().find('.ui5strapPickerWheel-wheel');
+								
+								if(mode === ulib.PickerWheelMode.Mode3D){
+									_this._wheel = new Wheel3D(_this._$wheelContainer[0]);
+								}
+								else if(mode === ulib.PickerWheelMode.Mode2D){
+									_this._wheel = new Wheel2D(_this._$wheelContainer[0]);
+								}
+								
+								_this.refresh();
 							}
-							
-							_this._$wheelContainer = _this.$().find('.ui5strapPickerWheel-wheel');
-							
-							if(mode === ulib.PickerWheelMode.Mode3D){
-								_this._wheel = new Wheel3D(_this._$wheelContainer[0]);
-							}
-							else if(mode === ulib.PickerWheelMode.Mode2D){
-								_this._wheel = new Wheel2D(_this._$wheelContainer[0]);
-							}
-							
-							_this.refresh();
-						});
+						);
 
 					};
 					

@@ -155,8 +155,7 @@ sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
 		jQuery.sap.log.info("Updating HomeScreen Grid...");
 		
 		var _this = this;
-		this._waitForRendering(
-			"width",
+		this._waitForCss(
 			function() {
 				_updateGrid(_this);
 				

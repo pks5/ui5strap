@@ -55,8 +55,8 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 * 
 	 * @Public
 	 */
-	ControlBaseProto.getComputedStyle = function(strCssRule) {
-		return library.Utils.getComputedStyle(this.$()[0], strCssRule);
+	ControlBaseProto.getComputedStyle = function(sCssRule) {
+		return library.Utils.getComputedStyle(this.getDomRef(), sCssRule);
 	};
 	
 	/**
@@ -65,51 +65,88 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 * 
 	 * @Private
 	 */
-	var _waitForRendering = function(_this, cssProperty, callback) {
-		if (!_this.getDomRef() || _this._waitRenderingTime >= ui5strap.options.waitRenderingTimeout) {
-			window.clearTimeout(_this._waitRenderingTimer);
-			_this._waitRenderingTimer = null;
-			
-			throw new Error("Cannot render control '" + _this.getId() + "': css property '" + cssProperty + "' could not be resolved.");
+	var _testCssReady = function(_this, callback) {
+		window.clearTimeout(_this._waitRenderingTimer);
+		_this._waitRenderingTimer = null;
+		
+		var oDomRef = _this.getDomRef();
+		
+		if(!oDomRef){
+			//No DOM reference, so cancel waiting.
+			return;
 		}
 		
-		var width = _this.getComputedStyle(cssProperty);
-		// We want to find out whether we can get the width of
-		// container in pixels.
-		// This is needed if the width of the container is
-		// specified in percent.
-		// Its takes a short moment until the CSS is rendered.
-		if (-1 !== width.indexOf('px')) {
-			window.clearTimeout(_this._waitRenderingTimer);
-			_this._waitRenderingTimer = null;
+		if(library.polyfill.isDocumentHidden()){
+			//Document is hidden
+			_this._waitForResume(callback);
 			
+			return;
+		}
+		
+		if (_this._waitRenderingTime >= ui5strap.options.waitRenderingTimeout) {
+			throw new Error("[" + _this.getId() + "] Cannot determine required CSS.");
+		}
+		
+		//Test if the css is ready
+		if (_this._isCssReady(oDomRef)) {
+			jQuery.sap.log
+			.debug("[" + _this.getId() + "] Required CSS is now available.");
 			callback && callback();
 		} else {
 			jQuery.sap.log
-					.debug("Control CSS is not rendered yet...");
+					.debug("[" + _this.getId() + "] Required CSS isn't available yet.");
 
 			_this._waitRenderingTimer = window.setTimeout(
 					function() {
-						_waitForRendering(_this, cssProperty, callback);
+						_testCssReady(_this, callback);
 					}, ui5strap.options.waitRenderingInterval);
 			
 			_this._waitRenderingTime += ui5strap.options.waitRenderingInterval;
 		}
 	};
+	
+	ControlBaseProto._isCssReady = function(oDomRef){
+		return -1 !== library.Utils.getComputedStyle(oDomRef, "width").indexOf("px") && jQuery(oDomRef).height() > 0;
+	};
 
+	ControlBaseProto._waitForResume = function(callback){
+		jQuery.sap.log
+		.debug("Document is hidden. Waiting for resume...");
+		
+		var _this = this;
+		
+		this._fnStartCssTesting = function(){
+			_this._waitForCss(callback);
+		};
+		
+		var fnListener = function(){
+			if(!library.polyfill.isDocumentHidden()){
+				jQuery.sap.log
+				.debug("Document is visible again.");
+				document.removeEventListener(library.support.visibilityChange, _this._fnStartCssTesting, false);
+				fnStartCssTesting();
+			}
+		};
+		document.addEventListener(library.support.visibilityChange, fnListener, false);
+		//TODO Cleanup on exit!!!
+	};
+	
 	/**
 	 * Waits until the pixel value for the container width is
 	 * available.
 	 * 
 	 * @Protected
 	 */
-	ControlBaseProto._waitForRendering = function(cssProperty, callback) {
+	ControlBaseProto._waitForCss = function(callback) {
+		jQuery.sap.log
+		.debug("[" + this.getId() + "] Waiting for required css rules...");
+		
 		//Reset the counter
 		this._waitRenderingTime = 0;
 		
 		//Check if a existing timer is running.
 		if(!this._waitRenderingTimer){
-			_waitForRendering(this, cssProperty, callback);
+			_testCssReady(this, callback);
 		}
 	};
 	

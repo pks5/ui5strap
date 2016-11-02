@@ -145,8 +145,7 @@ sap.ui.define(['ui5strap/ControlBase', "./d3_min"], function(ControlBase){
 	 */
 	StockGraphProto.onAfterRendering = function(){
 		var _this = this;
-		this._waitForRendering(
-			"width",
+		this._waitForCss(
 			function() {
 				_this.refresh();
 			}

@@ -795,7 +795,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		});
 		*/
 		
-		//Listen to Html Frame Messages
+		//Listen to Frame Messages
 		window.addEventListener(
 			"message", 
 			function(event){
@@ -813,7 +813,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			false
 		);
 		
-		//Listen to Html Frame Messages
+		//Listen to Resize Events
 		window.addEventListener(
 			"resize", 
 			function(event){

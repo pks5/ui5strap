@@ -244,6 +244,7 @@ sap.ui
 					ui5strap.options = {
 						enableTapEvents : tapSupport,
 						enableClickEvents : !tapSupport,
+						
 						transitionTimeout : 2000,
 						layerTimeout : 1000,
 						waitCssInterval : 250,
@@ -263,7 +264,20 @@ sap.ui
 					ui5strap.support = {
 						"touch" : sap.ui.Device.support.touch
 					};
+					
+					//Visibility API
+					if (typeof document.hidden !== "undefined") { 
+						ui5strap.support.visibilityProperty = "hidden";
+						ui5strap.support.visibilityChange = "visibilitychange";
+					} else if (typeof document.msHidden !== "undefined") {
+						ui5strap.support.visibilityProperty = "msHidden";
+						ui5strap.support.visibilityChange = "msvisibilitychange";
+					} else if (typeof document.webkitHidden !== "undefined") {
+						ui5strap.support.visibilityProperty = "webkitHidden";
+						ui5strap.support.visibilityChange = "webkitvisibilitychange";
+					}
 
+					//Transition end events
 					var _transitionEndEvents = {
 						'transition' : 'transitionend',
 						'WebkitTransition' : 'webkitTransitionEnd',
@@ -353,6 +367,10 @@ sap.ui
 
 					ui5strap.polyfill.requestAnimationFrame = function(callback) {
 						_requestAnimFrame.call(window, callback);
+					};
+					
+					ui5strap.polyfill.isDocumentHidden = function(){
+						return ui5strap.support.visibilityProperty ? document[ui5strap.support.visibilityProperty] : false;
 					};
 
 					/*
