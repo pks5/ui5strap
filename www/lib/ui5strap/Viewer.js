@@ -69,8 +69,12 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			cssAvailable = false;
 		
 		if(overlayNavContainerElm){
-			var navContainerHeight = ui5strap.Utils.getComputedStyle(overlayNavContainerElm, 'height');
-			cssAvailable = "auto" !== navContainerHeight || _this._waitCssTime >= ui5strap.options.timeoutWaitForCss;
+			var sNavContainerHeight = ui5strap.Utils.getComputedStyle(overlayNavContainerElm, "height"),
+				sOverlayWidth = ui5strap.Utils.getComputedStyle(document.getElementById("ui5strap-container"), "width")
+			
+			//console.log(sNavContainerHeight, sOverlayWidth);	
+				
+			cssAvailable = "auto" !== sNavContainerHeight && -1 !== sOverlayWidth.indexOf("px"); //|| _this._waitCssTime >= ui5strap.options.timeoutWaitForCss;
 		}
 		
 		if (cssAvailable) {
