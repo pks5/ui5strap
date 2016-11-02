@@ -53,6 +53,22 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					singularName: "bar"
 				} 
 			}
+		},
+		
+		renderer : function(rm, oControl) {
+			var items = oControl.getBars();
+
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < items.length; i++){
+				rm.renderControl(items[i]);
+			}
+			
+			rm.write("</div>");
 		}
 	}),
 	ProgressProto = Progress.prototype;

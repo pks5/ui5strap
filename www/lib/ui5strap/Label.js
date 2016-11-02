@@ -52,6 +52,20 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					defaultValue:ui5strap.TrailHtml.Space
 				}
 			}
+		},
+		
+		renderer : function(rm, oControl) {
+			rm.write("<span");
+			rm.writeControlData(oControl);
+			rm.addClass("label label-" + ui5strap.BSSeverity[oControl.getSeverity()] );
+			rm.writeClasses();
+			rm.write(">");
+			
+			rm.writeEscaped(oControl.getText());
+			
+			rm.write("</span>");
+
+			ui5strap.RenderUtils.renderTrail(rm, oControl);
 		}
 	});
 	

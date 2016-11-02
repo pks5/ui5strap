@@ -89,6 +89,7 @@
 					<Col columnsSmall="5" pullSmall="2" columnsMedium="4" pullMedium="5">
 						<Paragraph text="(2) SM &lt;-2 &lt;5>, MD &lt;-5 &lt;4>" />
 					</Col>
+					<Clearfix />
 				</Row>
 			</Container>
 

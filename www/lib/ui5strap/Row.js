@@ -47,6 +47,21 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var content = oControl.getColumns();
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < content.length; i++){ 
+				rm.renderControl(content[i]);
+			}
+			
+			rm.write("</div>");
 		}
 	});
 	

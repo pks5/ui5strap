@@ -80,7 +80,29 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	         hidden : {}
 	      }
 	
-	    }
+	    },
+	    
+	    renderer : function(rm, oControl) {
+			
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.writeAttribute("style", "display:none;");
+			rm.addClass("tooltip-data");
+			rm.writeClasses();
+			rm.write(">");
+
+			rm.write("<div");
+				   
+			rm.addClass("tooltip-data-title");
+			rm.writeClasses();
+			rm.write(">");
+
+			ui5strap.RenderUtils.renderTitleContent(rm, oControl);
+
+			rm.write("</div>");
+			rm.write("</div>");
+			    
+		}
   }),
   TooltipProto = TooltipControl.prototype;
 

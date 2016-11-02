@@ -58,6 +58,33 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					defaultValue:""
 				}
 			}
+		},
+		
+		renderer : function(rm, oControl) {
+			var labelFormat = oControl.getLabelFormat(),
+				value = oControl.getValue(),
+				maxValue = oControl.getMaxValue(),
+				minValue = oControl.getMinValue(),
+				percentage = oControl.getProgress();
+			
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.writeAttribute('style', 'width:' + percentage + '%');
+			rm.write(">");
+			
+				if('' !== labelFormat){
+					rm.write(
+						labelFormat
+						.replace('[val]', value)
+						.replace('[min]', minValue)
+						.replace('[max]', maxValue)
+						.replace('[left]', maxValue - value)
+						.replace('[progress]', percentage));
+				}
+
+			rm.write("</div>");
 		}
 	}),
 	ProgressBarProto = ui5strap.ProgressBar.prototype;

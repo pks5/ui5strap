@@ -27,28 +27,62 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	var PageHeader = ControlBase.extend("ui5strap.PageHeader", {metadata : {
-		deprecated : true,
-		library : "ui5strap",
-		
-		properties : { 
-			text : {
-				type:"string", 
-				defaultValue:""
+	var PageHeader = ControlBase.extend("ui5strap.PageHeader", {
+		metadata : {
+			deprecated : true,
+			library : "ui5strap",
+			
+			properties : { 
+				text : {
+					type:"string", 
+					defaultValue:""
+				},
+				subText : {
+					type:"string", 
+					defaultValue:""
+				},
+				lead : {
+					type:"string", 
+					defaultValue:""
+				}
 			},
-			subText : {
-				type:"string", 
-				defaultValue:""
-			},
-			lead : {
-				type:"string", 
-				defaultValue:""
-			}
+			
+			aggregations : {}
 		},
 		
-		aggregations : {}
+		renderer : function(rm, oControl) {
+	        var lead = oControl.getLead();
 
-	}});
+	        rm.write("<div");
+	        rm.writeControlData(oControl);
+	        rm.addClass("page-header");
+	        rm.writeClasses();
+	        rm.write(">");
+	        
+	        rm.write("<h1>");
+	        
+	        rm.writeEscaped(oControl.getText());
+	        
+	        var subText = oControl.getSubText();
+	        if('' !== subText){
+	        	rm.write("<small>");
+	        	rm.writeEscaped(subText);
+	        	rm.write("</small>");
+	        }
+	        
+	        rm.write("</h1>");
+	        
+	        if('' !== lead){
+	             rm.write("<p class='lead'>")
+	             rm.writeEscaped(lead);
+	             rm.write('</p>');
+	        }
+	        
+	        rm.write("</div>");
+
+	        
+	    }
+	});
 	
 	return PageHeader;
 });

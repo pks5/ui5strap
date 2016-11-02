@@ -31,6 +31,17 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		metadata : {
 			interfaces : ["ui5strap.IText", "ui5strap.IColumn"],
 			library : "ui5strap"
+		},
+		
+		renderer : function(rm, oControl) {
+			rm.write("<span");
+			
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			rm.write("</span>");
 		}
 	}),
 	ClearFixProto = Clearfix.prototype;

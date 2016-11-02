@@ -67,6 +67,22 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var content = oControl.getContent(),
+				severity = oControl.getSeverity(),
+				textAlign = oControl.getTextAlign();
+
+			rm.write("<p");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			ui5strap.RenderUtils.renderContent(rm, oControl);
+			
+			rm.write("</p>");
 		}
 	}),
 	ParagraphProto = Paragraph.prototype;

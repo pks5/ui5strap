@@ -80,6 +80,19 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					defaultValue:ui5strap.TrailHtml.Space
 				}
 			}
+		},
+		
+		renderer : function(rm, oControl) {
+			rm.write("<span");
+			rm.writeControlData(oControl);
+			
+			rm.addClass(oControl._getStyleClass());
+			
+			rm.writeClasses();
+			rm.write(">");
+			rm.write("</span>");
+
+			ui5strap.RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	IconProto = Icon.prototype;

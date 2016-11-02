@@ -46,6 +46,23 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 					singularName: "buttonGroups"
 				} 
 			}
+		},
+		
+		renderer : function(rm, oControl) {
+			var buttons = oControl.getButtonGroups();
+		
+			rm.write("<div");
+			rm.writeControlData(oControl);
+		
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < buttons.length; i++){
+				rm.renderControl(buttons[i]);
+			}
+			
+			rm.write("</div>");
 		}
 	}), ButtonToolbarProto = ButtonToolbar.prototype;
 	

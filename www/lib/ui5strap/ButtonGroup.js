@@ -68,7 +68,34 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	ListSelectionSupport.meta(_meta);
 	
 	var ButtonGroup = ControlBase.extend("ui5strap.ButtonGroup", {
-		metadata : _meta
+		metadata : _meta,
+		
+		renderer : function(rm, oControl) {
+			var buttons = oControl.getButtons(),
+				type = oControl.getType();
+		
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < buttons.length; i++){
+				var button = buttons[i];
+				if(type === ui5strap.ButtonGroupType.Justified && button instanceof Button){
+					rm.write('<div class="btn-group">');
+					rm.renderControl(button);
+					rm.write("</div>");
+				}
+				else{
+					rm.renderControl(button);
+				}
+			}
+			
+			rm.write("</div>");
+		
+			ui5strap.RenderUtils.renderTrail(rm, oControl);
+		}
 	}),
 	ButtonGroupProto = ButtonGroup.prototype,
 	_typeToClass = {

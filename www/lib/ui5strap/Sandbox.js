@@ -43,6 +43,15 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			 rm.write("<div");
+			 rm.writeControlData(oControl);
+			 rm.addClass("sandbox");
+			 rm.writeClasses();
+			 rm.write(">");
+			 rm.write("</div>");
 		}
 	}),
 	SandboxProto = Sandbox.prototype;

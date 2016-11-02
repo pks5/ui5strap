@@ -59,6 +59,46 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var previous = oControl.getPrevious(),
+				next = oControl.getNext(),
+				spread = oControl.getAligned();
+
+			rm.write('<ul');
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			rm.write('<li');
+			if(spread){
+				rm.addClass('previous');
+			}
+			if(oControl.getDisabledPrevious()){
+				rm.addClass('disabled');
+			}
+			rm.writeClasses();
+			rm.write(">");
+			rm.renderControl(previous);
+			rm.write('</li>');
+			
+			rm.write('<li');
+			if(spread){
+				rm.addClass('next');
+			}
+			if(oControl.getDisabledNext()){
+				rm.addClass('disabled');
+			}
+			rm.writeClasses();
+			rm.write(">");
+			rm.renderControl(next);
+			rm.write('</li>');
+			
+
+			rm.write("</ul>");
+
 		}
 	}), PagerProto = Pager.prototype;
 	

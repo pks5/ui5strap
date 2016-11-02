@@ -44,7 +44,8 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	ListSelectionSupport.meta(_meta);
 	
 	var ListBase = ControlBase.extend("ui5strap.ListBase", {
-		metadata : _meta
+		metadata : _meta,
+		renderer : null
 	}),
 	ListBaseProto = ListBase.prototype;
 	

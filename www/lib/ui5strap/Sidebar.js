@@ -53,6 +53,34 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var content = oControl.getContent(),
+				inverse = oControl.getInverse();
+
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass('sidebar ' + (inverse ? 'sidebar-inverse' : 'sidebar-default'));
+			if(oControl.getPadding()){
+				rm.addClass('sidebar-with-padding');
+			}
+			rm.writeClasses();
+			rm.write(">");
+			
+
+			rm.write("<div");
+			rm.addClass('sidebar-content')
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < content.length; i++){ 
+				rm.renderControl(content[i]);
+			};
+
+			rm.write("</div>");
+
+			rm.write("</div>");
 		}
 	});
 	

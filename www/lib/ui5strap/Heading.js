@@ -65,6 +65,20 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				} 
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var level = oControl.getLevel();
+
+			rm.write("<h" + level);
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			ui5strap.RenderUtils.renderContent(rm, oControl);
+			    
+			rm.write("</h" + level + ">");
 		}
 	}),
 	HeadingProto = Heading.prototype;

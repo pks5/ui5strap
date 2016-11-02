@@ -48,6 +48,24 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 				} 
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var items = oControl.getItems();
+		
+			rm.write("<ul");
+			
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			
+			rm.write(">");
+			
+			for(var i = 0; i < items.length; i++){
+				rm.renderControl(items[i]);
+			}
+			
+			rm.write("</ul>");
 		}
 	}),
 	NavProto = ui5strap.Nav.prototype;

@@ -41,6 +41,22 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 				} 
 			}
 			
+		},
+		
+		renderer : function(rm, oControl) {
+			var items = oControl.getItems();
+		
+			rm.write("<ol");
+			rm.writeControlData(oControl);
+			rm.addClass('breadcrumb');
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < items.length; i++){
+				rm.renderControl(items[i]);
+			}
+			
+			rm.write("</ol>");
 		}
 	}),
 	BreadcrumbProto = Breadcrumb.prototype;
