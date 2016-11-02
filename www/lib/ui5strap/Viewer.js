@@ -70,7 +70,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 		
 		if(overlayNavContainerElm){
 			var sNavContainerHeight = ui5strap.Utils.getComputedStyle(overlayNavContainerElm, "height"),
-				sOverlayWidth = ui5strap.Utils.getComputedStyle(document.getElementById("ui5strap-container"), "width")
+				sOverlayWidth = ui5strap.Utils.getComputedStyle(_this._dom.$root[0], "width")
 			
 			//console.log(sNavContainerHeight, sOverlayWidth);	
 				
