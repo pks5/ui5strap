@@ -64,7 +64,46 @@ sap.ui.define(["./library", "./ControlBase", './SelectableSupport'], function(ul
 	
 	//Constructor
 	var ToggleButton = ControlBase.extend("ui5strap.ToggleButton", {
-		metadata : _meta
+		metadata : _meta,
+		
+		renderer : function(rm, oControl) {
+			rm.write("<div");
+			rm.writeControlData(oControl);
+		    rm.addClass(oControl._getStyleClass());
+		    rm.writeClasses();
+			rm.write(">");
+				
+				//Text On
+				if(oControl.getTextDeselected()){
+					rm.write("<span");
+					rm.addClass("ui5strapToggleButton-text ui5strapToggleButton-text-Deselected");
+					rm.writeClasses();
+					rm.write(">");
+					rm.writeEscaped(oControl.getTextDeselected());
+					rm.write("</span>");
+				}
+		
+				rm.write("<span");
+				rm.addClass("ui5strapToggleButton-hole");
+				rm.writeClasses();
+				rm.write(">");
+					rm.write("<span");
+					rm.addClass("ui5strapToggleButton-pin");
+					rm.writeClasses();
+					rm.write("></span>");
+				rm.write("</span>");
+			    
+				//Text Off
+				if(oControl.getTextSelected()){
+					rm.write("<span");
+					rm.addClass("ui5strapToggleButton-text ui5strapToggleButton-text-Selected");
+					rm.writeClasses();
+					rm.write(">");
+					rm.writeEscaped(oControl.getTextSelected());
+					rm.write("</span>");
+				}
+			rm.write("</div>");
+		}
 	}),
 	ToggleButtonProto = ToggleButton.prototype;
 	

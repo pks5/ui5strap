@@ -51,6 +51,55 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var type = oControl.getType(),
+				typeBlock = ui5strap.CheckboxType.Block,
+				inInputGroup = oControl.getParent().getMetadata().isInstanceOf("ui5strap.IInputGroup");
+
+			if(!inInputGroup){
+				if(type === typeBlock){
+					rm.write("<div");
+					rm.writeControlData(oControl);
+					rm.addClass('checkbox');
+					rm.writeClasses();
+					rm.write(">");
+				}
+			
+				rm.write("<label");
+				if(type === ui5strap.CheckboxType.Inline){
+					rm.writeControlData(oControl);
+					rm.addClass('checkbox-inline');
+				}
+				rm.writeClasses();
+				rm.write(">");
+			}
+			
+			rm.write('<input')
+			if(inInputGroup || type === ui5strap.CheckboxType.Default){
+				rm.writeControlData(oControl);
+			}
+			else{
+				rm.writeAttribute('id', oControl.getId() + '---checkbox');
+			}
+			rm.writeAttribute('type', 'checkbox');
+			rm.writeAttribute('value', oControl.getValue());
+			rm.writeClasses();
+			if(oControl.getSelected()){
+				rm.writeAttribute('checked', 'checked');
+			}
+			rm.write('/>');
+			
+			rm.writeEscaped(oControl.getLabel());
+
+			if(!inInputGroup){
+				rm.write("</label>");
+
+				if(type === typeBlock){
+					rm.write("</div>");
+				}
+			}
 		}
 	}),
 	CheckboxProto = Checkbox.prototype;

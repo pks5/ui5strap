@@ -95,6 +95,47 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		        tap : {allowPreventDefault : true}
 		    }
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var href = oControl.getHref(),
+				title = oControl.getTitle(),
+				action = oControl.getBsAction(),
+				target = oControl.getTarget();
+		
+			rm.write("<a");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			    
+			//Attributes
+			
+			if('' !== href){
+				rm.writeAttribute('href', href);
+			}
+		
+			if('' !== target){
+				rm.writeAttribute('target', target);
+			}
+		
+			if('' !== title){
+		    	rm.writeAttribute('title', title);
+		    }
+		
+			//@deprecated
+			if(action === ui5strap.BsAction.DismissModal){
+				rm.writeAttribute('data-dismiss', 'modal');	
+			}
+			
+			rm.write(">");
+			
+			//Content
+			ui5strap.RenderUtils.renderContent(rm, oControl);
+			
+			rm.write("</a>");
+
+			//Trail
+			ui5strap.RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	LinkProto = Link.prototype;

@@ -63,6 +63,37 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var content = oControl.getContent(),
+				action = oControl.getAction(),
+				method = oControl.getMethod();
+
+			rm.write("<form");
+			
+			rm.writeControlData(oControl);
+			
+			rm.addClass(oControl._getStyleClass());
+			
+			rm.writeClasses();
+			
+			//Attributes
+			rm.writeAttribute('role', 'form');
+			
+			action && rm.writeAttribute('action', action);
+			
+			if(ui5strap.FormMethod.Default !== method && ui5strap.FormMethod.None !== method){
+				rm.writeAttribute('method', method);
+			}
+			
+			rm.write(">");
+			
+			for(var i = 0; i < content.length; i++){ 
+				rm.renderControl(content[i]);
+			}
+			
+			rm.write("</form>");
 		}
 	}),
 	FormProto = Form.prototype;

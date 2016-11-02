@@ -71,7 +71,28 @@ sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library,
 	};
 	
 	var Container = ControlBase.extend("ui5strap.Container", {
-		metadata : _meta
+		metadata : _meta,
+		
+		renderer : function(rm, oControl) {
+			var content = oControl.getContent(),
+				html = oControl.getHtml();
+
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			//Render plain HTML
+			html && rm.write(html);
+			
+			//Render Content
+			for(var i = 0; i < content.length; i++){ 
+				rm.renderControl(content[i]);
+			}
+			
+			rm.write("</div>");
+		}
 	}),
 	ContainerProto = Container.prototype;
 	

@@ -74,6 +74,35 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var type = oControl.getType(),
+				tagData = oControl._typeToTag[type],
+				title = oControl.getTitle();
+
+			//Text with tag
+			rm.write("<" + tagData.tagName);
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			
+			//Attributes
+			
+			//Title
+			if('' !== title){
+	    		rm.writeAttribute('title', title);
+	    	}
+			
+			rm.write(">");
+			
+			//Content
+			ui5strap.RenderUtils.renderContent(rm, oControl);
+			
+			rm.write("</" + tagData.tagName + ">");
+
+			//Trail
+			ui5strap.RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	TextProto = Text.prototype;

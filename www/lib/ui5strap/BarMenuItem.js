@@ -40,6 +40,56 @@ sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 			},
 			
 			defaultAggregation : "content"
+		},
+		
+		renderer : function(rm, oControl) {
+			var icon = oControl.getIcon(),
+				text = oControl.getText(),
+				parse = oControl.getParse(),
+				content = oControl.getContent(),
+		        contentPlacement = oControl.getContentPlacement();
+
+			rm.write("<li");
+			rm.writeControlData(oControl);
+			rm.addClass('u5sl-barmenu-item');
+			if(oControl.getSelected()){
+				rm.addClass('active');
+			}
+			rm.writeClasses();
+			rm.write(">");
+			
+			if(contentPlacement === ui5strap.ContentPlacement.Start){
+		    	for(var i = 0; i < content.length; i++){ 
+					rm.renderControl(content[i]);
+				}
+		    }
+
+			if(icon){
+				rm.write('<span class="u5sl-barmenu-item-icon fa fa-' + icon + '"></span>');
+			}
+			
+			if(text){
+				if(parse){
+					text = ui5strap.RenderUtils.parseText(text);
+				}
+				
+				rm.write('<span class="u5sl-barmenu-item-text">');
+				if(parse){
+					rm.write(text);
+				}
+				else{
+					rm.writeEscaped(text);
+				}
+				rm.write('</span>');
+			}
+			
+			if(contentPlacement === ui5strap.ContentPlacement.End){
+				for(var i = 0; i < content.length; i++){ 
+					rm.renderControl(content[i]);
+				}
+	        }
+
+			rm.write("</li>");
 		}
 	}),
 	BarMenuItemProto = BarMenuItem.prototype;

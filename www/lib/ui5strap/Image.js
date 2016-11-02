@@ -83,6 +83,44 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var src = oControl.getSrc(),
+				mpath = oControl.getMpath(),
+				mext = oControl.getExt(),
+
+				width = oControl.getWidth(),
+				height = oControl.getHeight(),
+				
+				title = oControl.getTitle();
+
+			if(mpath){
+				src = jQuery.sap.getModulePath(mpath, '.' + mext);
+			}
+
+			rm.write("<img");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			
+			src && rm.writeAttribute('src', src);
+			
+			title && rm.writeAttribute('title', title);
+			
+			if(-1 !== width){
+				rm.writeAttribute('width', width);
+			}
+			
+			if(-1 !== height){
+				rm.writeAttribute('height', height);
+			}
+			
+			rm.writeAttribute('alt', oControl.getAlt());
+			
+			rm.write("/>");
+
+			ui5strap.RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	ImageProto = ImageControl.prototype;

@@ -75,6 +75,44 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var content = oControl.getPanes(),
+				selectedIndex = oControl.getSelectedIndex(),
+				customAssociation = oControl.getCustomAssociation();
+
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < content.length; i++){ 
+				var item = content[i];
+				
+				rm.write('<div role="tabpanel"');
+				
+				rm.writeAttribute('data-pane-index', i);
+				if(customAssociation){
+					rm.writeAttribute('data-pane-key', item.data(customAssociation));
+				}
+				rm.addClass(oControl._getStyleClassPart("pane"));
+				if(selectedIndex > -1 && i === selectedIndex){
+					rm.addClass('active');
+				}
+				else{
+					rm.addClass('ui5strap-hidden');
+				}
+				rm.writeClasses();
+				rm.write(">");
+				
+				rm.renderControl(item);
+
+				rm.write("</div>");
+			};
+
+			rm.write("</div>");
 		}
 	}),
 	TabContainerProto = ui5strap.TabContainer.prototype;

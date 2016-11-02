@@ -63,7 +63,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 				"js" : {}
 			};
 			
-			//TODO Beans
+			//Components
 			this.components = {};
 			
 			//Controls & Root Component
@@ -1151,22 +1151,19 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 
 	/**
 	 * Create a new View based on configuration object.
+	 * TODO Rename to create page.
 	 * 
-	 * @param viewDef {object} The view definition.
+	 * @param {object} mPageConfig The view definition.
 	 * @returns {sap.ui.core.mvc.View} The view reference.
 	 */
-	AppBaseProto.createView = function(viewDef){
+	AppBaseProto.createView = function(mPageConfig){
 		var _this = this,
-			pageId = viewDef.id,
+			pageId = mPageConfig.id,
 			viewConfig = {
-				async : true,
-				viewName : viewDef.viewName,
-				type : viewDef.type
+				async : mPageConfig.async !== false,
+				viewName : mPageConfig.viewName,
+				type : mPageConfig.type
 			};
-		//,
-		//	viewSettings = {};
-			
-		//jQuery.extend(viewConfig, viewDef);
 		
 		if(pageId){
 			pageId = this.config.createControlId(pageId);
@@ -1178,7 +1175,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 				var oViewData = cachedPage.getViewData(),
 					oldCache = oViewData.__ui5strap.settings.cache;
 				
-				if(oldCache && viewDef.cache){
+				if(oldCache && mPageConfig.cache){
 					_this.log.debug("Returning cached page '" + pageId + "'.");
 					return cachedPage;
 				}
@@ -1190,9 +1187,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 			}
 		}
 		
-		
-		//jQuery.extend(viewSettings, viewConfig);
-
 		//START Build ViewData
 		//The View Data holds the app reference.
 		//TODO This is bad practice. Once Root Component is mandatory, this will be replaced.
@@ -1205,7 +1199,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		}
 
 		viewConfig.viewData.__ui5strap.app = this;
-		viewConfig.viewData.__ui5strap.settings = viewDef;
+		//TODO Maybe rename settings to config?
+		viewConfig.viewData.__ui5strap.settings = mPageConfig;
 		
 		//END Build ViewData
 		
@@ -1214,6 +1209,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		var page = new sap.ui.view(viewConfig);
 		
 		page.attachBeforeExit(function(oEvent){
+			//clean up
 			var viewData = this.getViewData();
 			delete viewData.__ui5strap;
 		});
@@ -1225,8 +1221,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 		*/
 		
 		//Add css style class
-		if(viewDef.styleClass){
-			page.addStyleClass(viewDef.styleClass);
+		if(mPageConfig.styleClass){
+			page.addStyleClass(mPageConfig.styleClass);
 		}
 		
 		if(pageId){

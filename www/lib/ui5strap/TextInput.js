@@ -80,6 +80,86 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				liveChange : {}
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var rows = oControl.getRows(),
+				type = oControl.getType(),
+				maxLength = oControl.getMaxLength();
+			
+			//TODO We need a option for Input VS Textare instead of using rows to decide.
+			//If the new option is not specified, it could decide by rows.
+			if(2 > rows){
+				//Render Input Field
+				
+				rm.write("<input");
+				
+				rm.writeControlData(oControl);
+				
+				rm.writeAttribute('type', "text");
+
+				rm.writeAttribute('placeholder', oControl.getPlaceholder());
+				rm.writeAttribute('value', oControl.getValue());
+				
+				if(type === ui5strap.TextInputType.FormControl){
+					rm.addClass('form-control');
+				}
+				
+				if(!oControl.getEnabled()){
+					rm.writeAttribute('disabled', 'disabled');
+				}
+				
+				if(!oControl.getAutocomplete()){
+					rm.writeAttribute('autocomplete', 'off');
+				}
+				
+				if(maxLength > 0){
+					rm.writeAttribute('maxlength', maxLength);
+				}
+
+				var size = oControl.getSize();
+				if(ui5strap.Size.Default !== size){
+					rm.addClass('input-' + ui5strap.BSSize[size]);
+				}
+				
+				rm.writeClasses();
+				rm.write("/>");
+
+			}
+			else{
+				//Render Textarea
+				rm.write("<textarea");
+				
+				rm.writeControlData(oControl);
+				
+				rm.writeAttribute('rows', rows);
+				rm.writeAttribute('placeholder', oControl.getPlaceholder());
+				
+				if(type === ui5strap.TextInputType.FormControl){
+					rm.addClass('form-control');
+				}
+				
+				if(!oControl.getEnabled()){
+					rm.writeAttribute('disabled', 'disabled');
+				}
+				
+				if(!oControl.getAutocomplete()){
+					rm.writeAttribute('autocomplete', 'off');
+				}
+				
+				if(maxLength > 0){
+					rm.writeAttribute('maxlength', maxLength);
+				}
+
+				rm.writeClasses();
+				rm.write(">");
+				
+				rm.writeEscaped(oControl.getValue());
+				
+				rm.write("</textarea>");
+			}
+
+			ui5strap.RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	TextInputProto = TextInput.prototype;

@@ -43,6 +43,29 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				}
 			},
 
+		},
+		
+		renderer : function(rm, oControl) {
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass("ui5strap-console-container");
+			rm.writeClasses();
+			rm.write(">");
+			    
+		   		rm.write("<div");
+		   		rm.addClass("ui5strap-console");
+		   		rm.writeClasses();
+			    rm.write(">");
+			    
+			    rm.write("<div");
+		   		rm.addClass("ui5strap-console-inner");
+		   		rm.writeClasses();
+			    rm.write(">");
+			    
+			    rm.write("</div>");
+			rm.write("</div>");
+			    
+			rm.write("</div>");
 		}
 	}),
 	ConsolePrototype = Console.prototype;

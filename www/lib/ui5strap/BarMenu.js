@@ -100,6 +100,51 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 				} 
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var items = oControl.getItems(),
+				zoomExtraSmall = oControl.getZoomExtraSmall(),
+				zoomSmall = oControl.getZoomSmall(),
+				zoomMedium = oControl.getZoomMedium(),
+				zoomLarge = oControl.getZoomLarge(),
+				typeExtraSmall = oControl.getTypeExtraSmall(),
+				typeSmall = oControl.getTypeSmall(),
+				typeMedium = oControl.getTypeMedium(),
+				typeLarge = oControl.getTypeLarge();
+			
+			var classes = "u5sl-barmenu";
+			if(oControl.getInverse()){
+				classes += " ui5sl-barmenu-flag-inverse";
+			}
+			if(typeExtraSmall === ui5strap.BarMenuType.Default){
+				classes += ' u5sl-barmenu-flag-listvertical-xs';
+			}
+			else{
+				classes += ' u5sl-barmenu-flag-' + typeExtraSmall.toLowerCase() + "-xs";
+			}
+			classes += ' u5sl-barmenu-flag-' + typeSmall.toLowerCase() + "-sm";
+			classes += ' u5sl-barmenu-flag-' + typeMedium.toLowerCase() + "-md";
+			classes += ' u5sl-barmenu-flag-' + typeLarge.toLowerCase() + "-lg";
+			
+			//Zoom
+			classes += ' u5sl-barmenu-flag-zoom-xs-' + (zoomExtraSmall < 0 ? 'm' : 'p') + Math.abs(zoomExtraSmall);
+			classes += ' u5sl-barmenu-flag-zoom-sm-' + (zoomSmall < 0 ? 'm' : 'p') + Math.abs(zoomSmall);
+			classes += ' u5sl-barmenu-flag-zoom-md-' + (zoomMedium < 0 ? 'm' : 'p') + Math.abs(zoomMedium);
+			classes += ' u5sl-barmenu-flag-zoom-lg-' + (zoomLarge < 0 ? 'm' : 'p') + Math.abs(zoomLarge);
+			
+			
+			rm.write("<ul");
+			rm.writeControlData(oControl);
+			rm.addClass(classes);
+			rm.writeClasses();
+			rm.write(">");
+			    
+			for(var i = 0; i < items.length; i++){ 
+				rm.renderControl(items[i]);
+			}
+			    
+			rm.write("</ul>");
 		}
 	}),
 	BarMenuProto = BarMenu.prototype;

@@ -48,6 +48,63 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				} 
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var content = oControl.getContent(),
+				size = oControl.getSize();
+			
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass('input-group');
+
+			if(ui5strap.Size.Default !== size){
+				rm.addClass('input-group-' + ui5strap.BSSize[size]);
+			}
+			rm.writeClasses();
+			rm.write(">");
+
+			var contentLength = content.length; 
+
+			if(contentLength > 3){
+				throw new Error('Not more than 3 controls allowed within an imput group!');
+			}
+			    
+			for(var i = 0; i < contentLength; i++){ 
+				var item = content[i],
+					validAddonPosition = i === 0 || i === content.length - 1,
+					addonClass = null,
+					itemMeta = item.getMetadata();
+				
+				if(itemMeta.isInstanceOf("ui5strap.IInputGroupControl")){
+					//Do nothing
+				}
+				else if(validAddonPosition){
+					if(itemMeta.isInstanceOf("ui5strap.IInputGroupButton")){
+						addonClass = 'input-group-btn';
+					}
+					else if(itemMeta.isInstanceOf("ui5strap.IInputGroupAddon")){
+						addonClass = 'input-group-addon';
+					}
+					else{
+						throw new Error('Control is not a valid input group addon!');
+					}
+				}
+				else{
+					throw new Error('Control is not allowed witin InputGroup!');
+				}
+
+				if(null !== addonClass){
+					rm.write('<span class="' + addonClass + '">');
+					rm.renderControl(item);
+					rm.write("</span>");
+				}
+				else{
+					rm.renderControl(item);
+				}
+			}
+			    
+			rm.write("</div>");
 		}
 	});
 	
