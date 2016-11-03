@@ -70,7 +70,7 @@
             "internal" : false,
             "name": "WebGL",
             "type" : "UI5STRAP",
-            "icon": "/examples/visent/img/webgl.png",
+            "icon": "/examples/visent/img/visent-logo.jpg",
             "url": "./examples/visent/app.json"
         }
     

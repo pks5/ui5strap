@@ -13,7 +13,7 @@
 * Attention: this will be later configurable by the logged in user.
 */
 .ui5strapHomeScreen{
-    background-image: url('../img/home-bg.jpg');
+    background-image: url('../img/home-bg-low.jpg');
     background-position: center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
