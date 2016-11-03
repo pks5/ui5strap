@@ -5,7 +5,7 @@
             "internal" : false,
             "name": "Demo App",
             "type" : "UI5STRAP",
-            "icon": "/examples/demoapp/img/ui5strap-logo-7.png",
+            "icon": "/examples/demoapp/img/ui5strap-logo-256.png",
             "url": "./examples/demoapp/app.json"
         },
         {
