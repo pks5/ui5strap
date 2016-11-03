@@ -705,8 +705,7 @@ module.exports = function (grunt) {
   grunt.registerTask(
 	'build-theme-bs', 
 	[
-	 		'autoprefixer:core', 'csscomb:dist', 'cssmin:minifyCore', 
-	 		'cssmin:minifyTheme', 'copy:fonts'
+	 		'autoprefixer:core', 'csscomb:dist', 'cssmin:minifyCore', 'copy:fonts'
 	]
   );
 
