@@ -38,7 +38,7 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	 * @extends ui5strap.Button
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

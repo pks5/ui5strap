@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
+	/**
+	 * List dropdown item renderer.
+	 * @namespace
+	 */
 	var ListDropdownItemRenderer = {};
 
 	ListDropdownItemRenderer.render = function(rm, oControl) {

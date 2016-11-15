@@ -30,15 +30,15 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	/**
 	 * Constructor for a new RestClient instance.
 	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
+	 * @param {ui5strap.AppBase} app - App reference
+	 * @param {object} options - Initial settings
 	 * 
 	 * @class
 	 * App component that provides simple rest client functionality.
 	 * @extends ui5strap.AppComponent
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

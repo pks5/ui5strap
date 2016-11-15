@@ -27,6 +27,10 @@
 
 sap.ui.define([], function(){
 
+	/**
+	 * Picker wheel renderer.
+	 * @namespace
+	 */
 	var PickerWheelRenderer = {};
 	
 	PickerWheelRenderer.render = function(rm, oControl) {

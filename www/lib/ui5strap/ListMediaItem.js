@@ -38,7 +38,7 @@ sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 	 * @extends ui5strap.ListItem
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
+	/**
+	 * List nav item renderer.
+	 * @namespace
+	 */
 	var ListNavItemRenderer = {};
 
 	ListNavItemRenderer.render = function(rm, oControl) {

@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Nav bar renderer.
+	 * @namespace
+	 */
 	var NavBarRenderer = {
 
 		positionToClass : {

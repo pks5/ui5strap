@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * List group renderer.
+	 * @namespace
+	 */
 	var ListGroupRenderer = {};
 
 	ListGroupRenderer.render = function(rm, oControl) {

@@ -38,7 +38,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * @extends ui5strap.ListBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

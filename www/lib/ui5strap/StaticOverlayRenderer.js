@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Static overlay renderer.
+	 * @namespace
+	 */
 	var StaticOverlayRenderer = {};
 
 	StaticOverlayRenderer.render = function(rm, oControl) {

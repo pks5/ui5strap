@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global', "./StaticOverlayRenderer"], function(jQuery, StaticOverlayRenderer) {
 
+	/**
+	 * Modal renderer.
+	 * @namespace
+	 */
 	var ModalRenderer = {};
 
 	ModalRenderer.render = function(rm, oControl) {

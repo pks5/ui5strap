@@ -38,7 +38,7 @@ sap.ui.define(['./library', './ListItemBase', './ListLinkItem'], function(librar
 	 * @extends ui5strap.ListLinkItem
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

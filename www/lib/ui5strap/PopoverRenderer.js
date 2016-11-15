@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Popover renderer.
+	 * @namespace
+	 */
 	var PopoverRenderer = {};
 
 	PopoverRenderer.render = function(rm, oControl) {

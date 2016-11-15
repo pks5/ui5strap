@@ -11,7 +11,7 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Componen
 	 * @extends sap.ui.core.Component
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

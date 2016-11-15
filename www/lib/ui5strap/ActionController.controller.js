@@ -38,7 +38,7 @@ sap.ui.define(['./library', './Controller'], function(library, Controller){
 	 * @extends ui5strap.Controller
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

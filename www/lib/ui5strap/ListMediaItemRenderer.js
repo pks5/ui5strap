@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * List media item renderer.
+	 * @namespace
+	 */
 	var ListMediaItemRenderer = {};
 
 	ListMediaItemRenderer.render = function(rm, oControl) {

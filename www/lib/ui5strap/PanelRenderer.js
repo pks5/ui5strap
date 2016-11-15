@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Panel renderer.
+	 * @namespace
+	 */
 	var PanelRenderer = {};
 
 	PanelRenderer.render = function(rm, oControl) {

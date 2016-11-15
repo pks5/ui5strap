@@ -34,7 +34,7 @@ sap.ui.define(['./library'], function(library){
 	 * Trait for options support.
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

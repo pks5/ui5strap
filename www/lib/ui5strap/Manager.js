@@ -27,6 +27,24 @@
  
 sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 
+	/**
+	 * Constructor for a new Manager instance.
+	 * 
+	 * @param {ui5strap.AppBase} app - App reference
+	 * @param {object} options - Initial settings
+	 * 
+	 * @class
+	 * App component for creating services / managers.
+	 * @extends ui5strap.AppComponent
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Manager
+	 * 
+	 */
 	var Manager = AppComponent.extend("ui5strap.Manager", {
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);

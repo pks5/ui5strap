@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Common renderer.
+	 * @namespace
+	 */
 	var CommonRenderers = {};
 
 	CommonRenderers.DivWithContent = {};

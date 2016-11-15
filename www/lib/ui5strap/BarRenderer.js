@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Bar renderer.
+	 * @namespace
+	 */
 	var BarRenderer = {
 			typeToTag : {
 				Default : {

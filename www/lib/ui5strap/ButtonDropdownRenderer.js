@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 
+	/**
+	 * Button dropdown renderer.
+	 * @namespace
+	 */
 	var ButtonDropdownRenderer = {};
 
 	ButtonDropdownRenderer.render = function(rm, oControl) {

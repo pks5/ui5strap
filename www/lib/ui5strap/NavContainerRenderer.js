@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Nav Container renderer.
+	 * @namespace
+	 */
 	var NavContainerRenderer = {};
 
 	NavContainerRenderer.render = function(rm, oControl) {

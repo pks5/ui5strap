@@ -69,7 +69,7 @@ sap.ui.define(['./library', './ListItemBase', './SelectableSupport'], function(l
 	 * @extends ui5strap.ListItemBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

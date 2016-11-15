@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Button renderer.
+	 * @namespace
+	 */
 	var ButtonRenderer = {};
 
 	ButtonRenderer.render = function(rm, oControl) {

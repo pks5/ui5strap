@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Carousel renderer.
+	 * @namespace
+	 */
 	var CarouselRenderer = {};
 
 	CarouselRenderer.render = function(rm, oControl) {

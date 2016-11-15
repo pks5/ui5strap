@@ -92,7 +92,15 @@ sap.ui
 					 * ---------------
 					 */
 
-					// Register Ui5Strap as library
+					/**
+					 * The ui5strap library.
+					 *
+					 * @namespace
+					 * @name ui5strap
+					 * @author Jan Philipp Knoeller
+					 * @version 0.11.6
+					 * @public
+					 */
 					sap.ui.getCore().initLibrary(
 							{
 								name : "ui5strap",

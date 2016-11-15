@@ -38,7 +38,7 @@ sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 	 * @extends ui5strap.NavContainer
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.0
+	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public

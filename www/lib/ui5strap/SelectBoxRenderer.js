@@ -27,6 +27,10 @@
 
 sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
+	/**
+	 * Select box renderer.
+	 * @namespace
+	 */
 	var SelectBoxRenderer = {};
 
 	SelectBoxRenderer.render = function(rm, oControl) {
