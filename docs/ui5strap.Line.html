@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: NavBar.js</title>
+    <title>JSDoc: Class: Line</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,202 +17,249 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: NavBar.js</h1>
+    <h1 class="page-title">Class: Line</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*
- * 
- * UI5Strap
- *
- * ui5strap.NavBar
- * 
- * @author Jan Philipp Knöller &lt;info@pksoftware.de>
- * 
- * Homepage: http://ui5strap.com
- *
- * Copyright (c) 2013-2014 Jan Philipp Knöller &lt;info@pksoftware.de>
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
- * 
- */
+        <h2>
+            <span class="ancestors"><a href="ui5strap.html">ui5strap</a>.</span>Line</h2>
+        
+            <div class="class-description">Control for creating horizontal lines. Use sparingly</div>
+        
+    
+</header>
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+<article>
+    <div class="container-overview">
+    
+        
 
-	/**
-	 * Constructor for a new NavBar instance.
-	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
-	 * 
-	 * @class
-	 * Control for creating Bootstrap nav bars.
-	 * @extends ui5strap.ControlBase
-	 * 
-	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
-	 * 
-	 * @constructor
-	 * @public
-	 * @alias ui5strap.NavBar
-	 * 
-	 */
-	var NavBar = ControlBase.extend("ui5strap.NavBar", {
-		metadata : {
-			deprecated : true,
-			
-			// ---- object ----
-			defaultAggregation : "collapse",
-			
-			// ---- control specific ----
-			library : "ui5strap",
+    
+    <h2>Constructor</h2>
+    
 
-			properties : { 
-				type : {
-					type:"ui5strap.NavBarType", 
-					defaultValue:ui5strap.NavBarType.Default
-				},
-				inverse : {
-					type:"boolean", 
-					defaultValue:false
-				},
-				fluid : {
-					type:"boolean", 
-					defaultValue:false
-				},
-				collapsed : {
-					type : "boolean",
-					defaultValue : true
-				},
-				position : {
-					type:"ui5strap.NavBarPosition", 
-					defaultValue: ui5strap.NavBarPosition.Default
-				}
-			},
+    <h4 class="name" id="Line"><span class="type-signature"></span>new Line<span class="signature">(sId<span class="signature-attributes">opt</span>, mSettings<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
-			aggregations : { 
-				
-				collapse : {
-					singularName: "collapse"
-				},
-
-				brand : {
-					multiple : false,
-					type : "ui5strap.Link"
-				},
-
-				contentLeft : {
-					
-				},
-
-				content : {
-
-				},
-
-				contentRight : {
-					
-				}
-			}
-
-		}
-	}),
-	NavBarProto = ui5strap.NavBar.prototype;
-
-	NavBarProto.getCollapseId = function(){
-		return this.getId() + '---collapse';
-	};
-
-	NavBarProto.setCollapsed = function(newCollapsed){
-		if(newCollapsed === this.getCollapsed()){
-			return this;
-		}
-
-		if(this.getDomRef()){
-			var $collapse = jQuery('#' + this.getCollapseId());
-			if(newCollapsed){
-				$collapse
-			      .height($collapse.height())
-			      [0].offsetHeight
-
-			    $collapse
-			      .addClass('collapsing')
-			      .removeClass('collapse')
-			      .removeClass('in')
-
-			    var complete = function () {
-			      $collapse
-			        .removeClass('collapsing')
-			        .addClass('collapse')
-			    }
-
-			    if (!ui5strap.support.transition) return complete.call(this)
-
-			    $collapse
-			      .height(0)
-			      .one(ui5strap.support.transition.end, complete)
-			      .emulateTransitionEnd(350)
-
-			}
-			else{
-				//$collapse.addClass('collapse in').height('auto');
-			
-				$collapse
-      			.removeClass('collapse')
-      			.addClass('collapsing')
-      			.height(0);
-
-    			var complete = function () {
-			      	$collapse
-			        .removeClass('collapsing')
-			        .addClass('collapse in')
-			        .height('auto')
-			    	//fire event collapse completed
-			    }
-
-    			if (!ui5strap.support.transition) return complete.call(this)
-
-    			$collapse
-			      .one(ui5strap.support.transition.end, complete)
-			      .emulateTransitionEnd(350)
-			      
-			      .height($collapse[0]["scrollHeight"])
-
-			}
+    
 
 
-			this.setProperty('collapsed', newCollapsed, true);
-		}
-		else{
-			this.setProperty('collapsed', newCollapsed);
-		}
 
-		return this;
-	};
+<div class="description">
+    Constructor for a new Line instance.
+</div>
 
-	NavBarProto.toggle = function(){
-		this.setCollapsed(!this.getCollapsed());
-	};
-	
-	return NavBar;
-});</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">ID for the new control, generated automatically if no ID is given</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mSettings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Initial settings for the new control</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>0.11.6</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Jan Philipp Knoeller</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Line.js.html">Line.js</a>, <a href="Line.js.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>sap.ui.core.Control</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

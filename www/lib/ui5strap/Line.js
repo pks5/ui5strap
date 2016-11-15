@@ -34,7 +34,7 @@ sap.ui.define(['./library'], function(library){
 	 * @param {object} [mSettings] Initial settings for the new control
 	 * 
 	 * @class
-	 * Control for creating horizontal lines. Use sparingly.
+	 * Control for creating horizontal lines. Use sparingly
 	 * @extends sap.ui.core.Control
 	 * 
 	 * @author Jan Philipp Knoeller
@@ -45,10 +45,10 @@ sap.ui.define(['./library'], function(library){
 	 * @alias ui5strap.Line
 	 * 
 	 */
-	return library.Control.extend("ui5strap.Line", {
+	var Line = library.Control.extend("ui5strap.Line", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "ui5strap"
 			
 		},
 		
@@ -60,4 +60,5 @@ sap.ui.define(['./library'], function(library){
 		}
 	});
 
+	return Line;
 });
