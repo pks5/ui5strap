@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Tooltip.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Tooltip.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ * 
+ * UI5Strap
+ *
+ * ui5strap.Tooltip
+ * 
+ * @author Jan Philipp Knöller &lt;info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller &lt;info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+
+	/**
+	 * Constructor for a new Tooltip instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap tooltips.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Tooltip
+	 * 
+	 */
+	var TooltipControl = ControlBase.extend("ui5strap.Tooltip", {
+	    metadata : {
+	
+	      // ---- object ----
+	      defaultAggregation : "titleContent",
+	      // ---- control specific ----
+	      library : "ui5strap",
+	      
+	      properties : { 
+	        
+	        title : {
+	          type:"string", 
+	          defaultValue:""
+	        },
+	        
+	        titleContentPlacement : {
+	          type:"ui5strap.ContentPlacement",
+	          defaultValue : ui5strap.ContentPlacement.Start
+	        },
+	
+	        placement : {
+	          type: "ui5strap.Placement", 
+	          defaultValue: ui5strap.Placement.Right
+	        },
+	
+	        trigger : {
+	          type: "ui5strap.TriggerMode", 
+	          defaultValue: ui5strap.TriggerMode.Hover
+	        },
+	
+	        animate : {
+	          type:"boolean", 
+	          defaultValue:true
+	        }
+	
+	      },
+	      
+	      aggregations : { 
+	        titleContent : {
+	          singularName: "titleContent"
+	        },
+	      },
+	      
+	      associations : {
+	        source : {
+	            multiple : false
+	        }
+	      },
+	      events : {
+	         shown : {},
+	         hidden : {}
+	      }
+	
+	    },
+	    
+	    renderer : function(rm, oControl) {
+			
+			rm.write("&lt;div");
+			rm.writeControlData(oControl);
+			rm.writeAttribute("style", "display:none;");
+			rm.addClass("tooltip-data");
+			rm.writeClasses();
+			rm.write(">");
+
+			rm.write("&lt;div");
+				   
+			rm.addClass("tooltip-data-title");
+			rm.writeClasses();
+			rm.write(">");
+
+			ui5strap.RenderUtils.renderTitleContent(rm, oControl);
+
+			rm.write("&lt;/div>");
+			rm.write("&lt;/div>");
+			    
+		}
+  }),
+  TooltipProto = TooltipControl.prototype;
+
+  TooltipProto.init = function(){
+      this.sourceControl = null;
+  };
+
+  TooltipProto.getSourceControl = function(){
+      if(null === this.sourceControl){
+        this.sourceControl = sap.ui.getCore().byId(this.getSource());
+        
+      }
+
+      return this.sourceControl;
+  };
+
+  TooltipProto.getSourceDomRef = function(){
+      return this.getSourceControl().$();
+  };
+
+  TooltipProto.onAfterRendering = function(){
+    var $this = this.$(),
+        _this = this;
+
+    var tooltipOptions = {
+      title : function(){
+        var title = $this.find('.tooltip-data-title').html();
+        var sourceControl = _this.getSourceControl();
+        if('' === title &amp;&amp; 'getTitle' in sourceControl){
+             title = sourceControl.getTitle(); 
+        }
+        return title;
+      },
+      
+      trigger : ui5strap.BSTriggerMode[this.getTrigger()],
+      
+      html : true,
+
+      animation : _this.getAnimate()
+    };
+
+    var placement = this.getPlacement();
+    if(placement !== ui5strap.Placement.None){
+        if(placement !== ui5strap.Placement.Default){
+          tooltipOptions.placement = ui5strap.BSPlacement[placement];
+        }
+        this.getSourceDomRef().tooltip(tooltipOptions);
+    }
+
+    this.getSourceDomRef().on('hidden.bs.tooltip', function(){
+        _this.fireHidden();
+    }).on('shown.bs.tooltip', function(){
+        _this.fireShown();
+    });
+  };
+
+  TooltipProto.show = function(){
+      this.getSourceDomRef().tooltip('show');
+  };
+
+  TooltipProto.hide = function(){
+      this.getSourceDomRef().tooltip('hide');
+  };
+
+  TooltipProto.toggle = function(){
+      this.getSourceDomRef().tooltip('toggle');
+  };
+  
+  return TooltipControl;
+  
+});
+
+/* ========================================================================
+ * Bootstrap: tooltip.js v3.1.1
+ * http://getbootstrap.com/javascript/#tooltip
+ * Inspired by the original jQuery.tipsy by Jason Frame
+ * ========================================================================
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+  'use strict';
+
+  // TOOLTIP PUBLIC CLASS DEFINITION
+  // ===============================
+
+  var Tooltip = function (element, options) {
+    this.type       =
+    this.options    =
+    this.enabled    =
+    this.timeout    =
+    this.hoverState =
+    this.$element   = null
+
+    this.init('tooltip', element, options)
+  }
+
+  Tooltip.DEFAULTS = {
+    animation: true,
+    placement: 'top',
+    selector: false,
+    template: '&lt;div class="tooltip">&lt;div class="tooltip-arrow">&lt;/div>&lt;div class="tooltip-inner">&lt;/div>&lt;/div>',
+    trigger: 'hover focus',
+    title: '',
+    delay: 0,
+    html: false,
+    container: false
+  }
+
+  Tooltip.prototype.init = function (type, element, options) {
+    this.enabled  = true
+    this.type     = type
+    this.$element = $(element)
+    this.options  = this.getOptions(options)
+
+    var triggers = this.options.trigger.split(' ')
+
+    for (var i = triggers.length; i--;) {
+      var trigger = triggers[i]
+
+      if (trigger == 'click') {
+        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+      } else if (trigger != 'manual') {
+        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
+        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+
+        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+      }
+    }
+
+    this.options.selector ?
+      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+      this.fixTitle()
+  }
+
+  Tooltip.prototype.getDefaults = function () {
+    return Tooltip.DEFAULTS
+  }
+
+  Tooltip.prototype.getOptions = function (options) {
+    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
+
+    if (options.delay &amp;&amp; typeof options.delay == 'number') {
+      options.delay = {
+        show: options.delay,
+        hide: options.delay
+      }
+    }
+
+    return options
+  }
+
+  Tooltip.prototype.getDelegateOptions = function () {
+    var options  = {}
+    var defaults = this.getDefaults()
+
+    this._options &amp;&amp; $.each(this._options, function (key, value) {
+      if (defaults[key] != value) options[key] = value
+    })
+
+    return options
+  }
+
+  Tooltip.prototype.enter = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'in'
+
+    if (!self.options.delay || !self.options.delay.show) return self.show()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'in') self.show()
+    }, self.options.delay.show)
+  }
+
+  Tooltip.prototype.leave = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'out'
+
+    if (!self.options.delay || !self.options.delay.hide) return self.hide()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'out') self.hide()
+    }, self.options.delay.hide)
+  }
+
+  Tooltip.prototype.show = function () {
+    var e = $.Event('show.bs.' + this.type)
+
+    if (this.hasContent() &amp;&amp; this.enabled) {
+      this.$element.trigger(e)
+
+      if (e.isDefaultPrevented()) return
+      var that = this;
+
+      var $tip = this.tip()
+
+      this.setContent()
+
+      if (this.options.animation) $tip.addClass('fade')
+
+      var placement = typeof this.options.placement == 'function' ?
+        this.options.placement.call(this, $tip[0], this.$element[0]) :
+        this.options.placement
+
+      var autoToken = /\s?auto?\s?/i
+      var autoPlace = autoToken.test(placement)
+      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
+
+      $tip
+        .detach()
+        .css({ top: 0, left: 0, display: 'block' })
+        .addClass(placement)
+
+      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
+
+      var pos          = this.getPosition()
+      var actualWidth  = $tip[0].offsetWidth
+      var actualHeight = $tip[0].offsetHeight
+
+      if (autoPlace) {
+        var $parent = this.$element.parent()
+
+        var orgPlacement = placement
+        var docScroll    = document.documentElement.scrollTop || document.body.scrollTop
+        var parentWidth  = this.options.container == 'body' ? window.innerWidth  : $parent.outerWidth()
+        var parentHeight = this.options.container == 'body' ? window.innerHeight : $parent.outerHeight()
+        var parentLeft   = this.options.container == 'body' ? 0 : $parent.offset().left
+
+        placement = placement == 'bottom' &amp;&amp; pos.top   + pos.height  + actualHeight - docScroll > parentHeight  ? 'top'    :
+                    placement == 'top'    &amp;&amp; pos.top   - docScroll   - actualHeight &lt; 0                         ? 'bottom' :
+                    placement == 'right'  &amp;&amp; pos.right + actualWidth > parentWidth                              ? 'left'   :
+                    placement == 'left'   &amp;&amp; pos.left  - actualWidth &lt; parentLeft                               ? 'right'  :
+                    placement
+
+        $tip
+          .removeClass(orgPlacement)
+          .addClass(placement)
+      }
+
+      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
+
+      this.applyPlacement(calculatedOffset, placement)
+      this.hoverState = null
+
+      var complete = function() {
+        that.$element.trigger('shown.bs.' + that.type)
+      }
+
+      ui5strap.support.transition &amp;&amp; this.$tip.hasClass('fade') ?
+        $tip
+          .one(ui5strap.support.transition.end, complete)
+          .emulateTransitionEnd(150) :
+        complete()
+    }
+  }
+
+  Tooltip.prototype.applyPlacement = function (offset, placement) {
+    var replace
+    var $tip   = this.tip()
+    var width  = $tip[0].offsetWidth
+    var height = $tip[0].offsetHeight
+
+    // manually read margins because getBoundingClientRect includes difference
+    var marginTop = parseInt($tip.css('margin-top'), 10)
+    var marginLeft = parseInt($tip.css('margin-left'), 10)
+
+    // we must check for NaN for ie 8/9
+    if (isNaN(marginTop))  marginTop  = 0
+    if (isNaN(marginLeft)) marginLeft = 0
+
+    offset.top  = offset.top  + marginTop
+    offset.left = offset.left + marginLeft
+
+    // $.fn.offset doesn't round pixel values
+    // so we use setOffset directly with our own function B-0
+    $.offset.setOffset($tip[0], $.extend({
+      using: function (props) {
+        $tip.css({
+          top: Math.round(props.top),
+          left: Math.round(props.left)
+        })
+      }
+    }, offset), 0)
+
+    $tip.addClass('in')
+
+    // check to see if placing tip in new offset caused the tip to resize itself
+    var actualWidth  = $tip[0].offsetWidth
+    var actualHeight = $tip[0].offsetHeight
+
+    if (placement == 'top' &amp;&amp; actualHeight != height) {
+      replace = true
+      offset.top = offset.top + height - actualHeight
+    }
+
+    if (/bottom|top/.test(placement)) {
+      var delta = 0
+
+      if (offset.left &lt; 0) {
+        delta       = offset.left * -2
+        offset.left = 0
+
+        $tip.offset(offset)
+
+        actualWidth  = $tip[0].offsetWidth
+        actualHeight = $tip[0].offsetHeight
+      }
+
+      this.replaceArrow(delta - width + actualWidth, actualWidth, 'left')
+    } else {
+      this.replaceArrow(actualHeight - height, actualHeight, 'top')
+    }
+
+    if (replace) $tip.offset(offset)
+  }
+
+  Tooltip.prototype.replaceArrow = function (delta, dimension, position) {
+    this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + '%') : '')
+  }
+
+  Tooltip.prototype.setContent = function () {
+    var $tip  = this.tip()
+    var title = this.getTitle()
+
+    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
+    $tip.removeClass('fade in top bottom left right')
+  }
+
+  Tooltip.prototype.hide = function () {
+    var that = this
+    var $tip = this.tip()
+    var e    = $.Event('hide.bs.' + this.type)
+
+    function complete() {
+      if (that.hoverState != 'in') $tip.detach()
+      that.$element.trigger('hidden.bs.' + that.type)
+    }
+
+    this.$element.trigger(e)
+
+    if (e.isDefaultPrevented()) return
+
+    $tip.removeClass('in')
+
+    ui5strap.support.transition &amp;&amp; this.$tip.hasClass('fade') ?
+      $tip
+        .one(ui5strap.support.transition.end, complete)
+        .emulateTransitionEnd(150) :
+      complete()
+
+    this.hoverState = null
+
+    return this
+  }
+
+  Tooltip.prototype.fixTitle = function () {
+    var $e = this.$element
+    if ($e.attr('title') || typeof($e.attr('data-original-title')) != 'string') {
+      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
+    }
+  }
+
+  Tooltip.prototype.hasContent = function () {
+    return this.getTitle()
+  }
+
+  Tooltip.prototype.getPosition = function () {
+    var el = this.$element[0]
+    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : {
+      width: el.offsetWidth,
+      height: el.offsetHeight
+    }, this.$element.offset())
+  }
+
+  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
+    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
+  }
+
+  Tooltip.prototype.getTitle = function () {
+    var title
+    var $e = this.$element
+    var o  = this.options
+
+    title = $e.attr('data-original-title')
+      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+    return title
+  }
+
+  Tooltip.prototype.tip = function () {
+    return this.$tip = this.$tip || $(this.options.template)
+  }
+
+  Tooltip.prototype.arrow = function () {
+    return this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow')
+  }
+
+  Tooltip.prototype.validate = function () {
+    if (!this.$element[0].parentNode) {
+      this.hide()
+      this.$element = null
+      this.options  = null
+    }
+  }
+
+  Tooltip.prototype.enable = function () {
+    this.enabled = true
+  }
+
+  Tooltip.prototype.disable = function () {
+    this.enabled = false
+  }
+
+  Tooltip.prototype.toggleEnabled = function () {
+    this.enabled = !this.enabled
+  }
+
+  Tooltip.prototype.toggle = function (e) {
+    var self = e ? $(e.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type) : this
+    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
+  }
+
+  Tooltip.prototype.destroy = function () {
+    clearTimeout(this.timeout)
+    this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
+  }
+
+
+  // TOOLTIP PLUGIN DEFINITION
+  // =========================
+
+  var old = $.fn.tooltip
+
+  $.fn.tooltip = function (option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.tooltip')
+      var options = typeof option == 'object' &amp;&amp; option
+
+      if (!data &amp;&amp; option == 'destroy') return
+      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.tooltip.Constructor = Tooltip
+
+
+  // TOOLTIP NO CONFLICT
+  // ===================
+
+  $.fn.tooltip.noConflict = function () {
+    $.fn.tooltip = old
+    return this
+  }
+
+}(jQuery);</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="-_.html"></a></li><li><a href="ui5strap.Action.html">Action</a></li><li><a href="ui5strap.ActionContext.html">ActionContext</a></li><li><a href="ui5strap.ActionModule.html">ActionModule</a></li><li><a href="ui5strap.Alert.html">Alert</a></li><li><a href="ui5strap.App.html">App</a></li><li><a href="ui5strap.AppBase.html">AppBase</a></li><li><a href="ui5strap.AppComponent.html">AppComponent</a></li><li><a href="ui5strap.AppConfig.html">AppConfig</a></li><li><a href="ui5strap.AppConsole.html">AppConsole</a></li><li><a href="ui5strap.AppFrame.html">AppFrame</a></li><li><a href="ui5strap.AppSandbox.html">AppSandbox</a></li><li><a href="ui5strap.AppSystem.html">AppSystem</a></li><li><a href="ui5strap.Bar.html">Bar</a></li><li><a href="ui5strap.BarMenu.html">BarMenu</a></li><li><a href="ui5strap.BarMenuItem.html">BarMenuItem</a></li><li><a href="ui5strap.BarNavContainer.html">BarNavContainer</a></li><li><a href="ui5strap.BaseSupport.html">BaseSupport</a></li><li><a href="ui5strap.Breadcrumb.html">Breadcrumb</a></li><li><a href="ui5strap.Break.html">Break</a></li><li><a href="ui5strap.Button.html">Button</a></li><li><a href="ui5strap.ButtonDropdown.html">ButtonDropdown</a></li><li><a href="ui5strap.ButtonGroup.html">ButtonGroup</a></li><li><a href="ui5strap.ButtonToolbar.html">ButtonToolbar</a></li><li><a href="ui5strap.Carousel.html">Carousel</a></li><li><a href="ui5strap.Checkbox.html">Checkbox</a></li><li><a href="ui5strap.Clearfix.html">Clearfix</a></li><li><a href="ui5strap.Col.html">Col</a></li><li><a href="ui5strap.Console.html">Console</a></li><li><a href="ui5strap.Container.html">Container</a></li><li><a href="ui5strap.ControlBase.html">ControlBase</a></li><li><a href="ui5strap.Controller.html">Controller</a></li><li><a href="ui5strap.ElementBase.html">ElementBase</a></li><li><a href="ui5strap.Form.html">Form</a></li><li><a href="ui5strap.FormGroup.html">FormGroup</a></li><li><a href="ui5strap.Heading.html">Heading</a></li><li><a href="ui5strap.Icon.html">Icon</a></li><li><a href="ui5strap.Image.html">Image</a></li><li><a href="ui5strap.InputGroup.html">InputGroup</a></li><li><a href="ui5strap.Item.html">Item</a></li><li><a href="ui5strap.Jumbotron.html">Jumbotron</a></li><li><a href="ui5strap.Label.html">Label</a></li><li><a href="ui5strap.Link.html">Link</a></li><li><a href="ui5strap.List.html">List</a></li><li><a href="ui5strap.ListBase.html">ListBase</a></li><li><a href="ui5strap.ListDropdownItem.html">ListDropdownItem</a></li><li><a href="ui5strap.ListDropdownMenu.html">ListDropdownMenu</a></li><li><a href="ui5strap.ListGroup.html">ListGroup</a></li><li><a href="ui5strap.ListGroupItem.html">ListGroupItem</a></li><li><a href="ui5strap.ListItem.html">ListItem</a></li><li><a href="ui5strap.ListItemBase.html">ListItemBase</a></li><li><a href="ui5strap.ListLinkItem.html">ListLinkItem</a></li><li><a href="ui5strap.ListMedia.html">ListMedia</a></li><li><a href="ui5strap.ListMediaItem.html">ListMediaItem</a></li><li><a href="ui5strap.ListNavItem.html">ListNavItem</a></li><li><a href="ui5strap.ListSelectionSupport.html">ListSelectionSupport</a></li><li><a href="ui5strap.Modal.html">Modal</a></li><li><a href="ui5strap.Nav.html">Nav</a></li><li><a href="ui5strap.NavBar.html">NavBar</a></li><li><a href="ui5strap.NavContainer.html">NavContainer</a></li><li><a href="ui5strap.NavContainerStandard.html">NavContainerStandard</a></li><li><a href="ui5strap.OptionsSupport.html">OptionsSupport</a></li><li><a href="ui5strap.Page.html">Page</a></li><li><a href="ui5strap.PageHeader.html">PageHeader</a></li><li><a href="ui5strap.Pager.html">Pager</a></li><li><a href="ui5strap.Pagination.html">Pagination</a></li><li><a href="ui5strap.Panel.html">Panel</a></li><li><a href="ui5strap.PanelGroup.html">PanelGroup</a></li><li><a href="ui5strap.Paragraph.html">Paragraph</a></li><li><a href="ui5strap.PickerWheel.html">PickerWheel</a></li><li><a href="ui5strap.Popover.html">Popover</a></li><li><a href="ui5strap.PositionSupport.html">PositionSupport</a></li><li><a href="ui5strap.Progress.html">Progress</a></li><li><a href="ui5strap.ProgressBar.html">ProgressBar</a></li><li><a href="ui5strap.RadioButton.html">RadioButton</a></li><li><a href="ui5strap.ResponsiveTransition.html">ResponsiveTransition</a></li><li><a href="ui5strap.RestClient.html">RestClient</a></li><li><a href="ui5strap.RootComponent.html">RootComponent</a></li><li><a href="ui5strap.Row.html">Row</a></li><li><a href="ui5strap.Sandbox.html">Sandbox</a></li><li><a href="ui5strap.ScrollContainer.html">ScrollContainer</a></li><li><a href="ui5strap.SelectableSupport.html">SelectableSupport</a></li><li><a href="ui5strap.SelectBox.html">SelectBox</a></li><li><a href="ui5strap.Sidebar.html">Sidebar</a></li><li><a href="ui5strap.StaticOverlay.html">StaticOverlay</a></li><li><a href="ui5strap.TabContainer.html">TabContainer</a></li><li><a href="ui5strap.Table.html">Table</a></li><li><a href="ui5strap.TableColumn.html">TableColumn</a></li><li><a href="ui5strap.TableRow.html">TableRow</a></li><li><a href="ui5strap.Text.html">Text</a></li><li><a href="ui5strap.TextInput.html">TextInput</a></li><li><a href="ui5strap.Thumbnail.html">Thumbnail</a></li><li><a href="ui5strap.ToggleButton.html">ToggleButton</a></li><li><a href="ui5strap.Tooltip.html">Tooltip</a></li><li><a href="ui5strap.Viewer.html">Viewer</a></li><li><a href="ui5strap.ViewerBase.html">ViewerBase</a></li><li><a href="ui5strap.Well.html">Well</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Nov 15 2016 19:39:25 GMT+0100 (W. Europe Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
