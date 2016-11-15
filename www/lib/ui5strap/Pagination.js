@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
+	/**
+	 * Constructor for a new Pagination instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap paginations.
+	 * @extends ui5strap.ListBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Pagination
+	 * 
+	 */
 	var Pagination = ListBase.extend("ui5strap.Pagination", {
 		metadata : {
 

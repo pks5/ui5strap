@@ -70,6 +70,24 @@ sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library,
 		
 	};
 	
+	/**
+	 * Constructor for a new Container instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap grid containers.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Container
+	 * 
+	 */
 	var Container = ControlBase.extend("ui5strap.Container", {
 		metadata : _meta,
 		

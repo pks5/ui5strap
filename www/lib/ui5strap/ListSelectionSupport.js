@@ -27,6 +27,20 @@
 
 sap.ui.define(['./library'], function(library){
 	
+	/**
+	 * Constructor for a new ListSelectionSupport instance.
+	 * 
+	 * @class
+	 * Trait for list selection support.
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ListSelectionSupport
+	 * 
+	 */
 	var ListSelectionSupport = {};
 	
 	/**

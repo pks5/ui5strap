@@ -27,6 +27,26 @@
 
 sap.ui.define(['./library'], function(library){
 
+	/**
+	 * Constructor for a new Break instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Creates a simple html break. Use sparingly.
+	 * @extends sap.ui.core.Control
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Break
+	 * 
+	 */
+	
+	//TODO eliminate ui5strap shortcuts
 	var Break = ui5strap.Control.extend("ui5strap.Break", {
 		metadata : {
 			interfaces : ["ui5strap.IText"],

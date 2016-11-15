@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	
+	/**
+	 * Constructor for a new Page instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating pages with header and footer.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Page
+	 * 
+	 */
 	var Page = ControlBase.extend("ui5strap.Page", {
 		metadata : {
 

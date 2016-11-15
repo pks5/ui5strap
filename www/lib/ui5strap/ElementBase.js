@@ -38,6 +38,24 @@ sap.ui.define(['./library', './BaseSupport', './OptionsSupport'], function(libra
 	BaseSupport.meta(_meta);
 	OptionsSupport.meta(_meta);
 		
+	/**
+	 * Constructor for a new ElementBase instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Abstract base class for all ui5strap elements.
+	 * @extends sap.ui.core.Element
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ElementBase
+	 * 
+	 */
 	var ElementBase = ui5strap.Element.extend("ui5strap.ElementBase", {
 		metadata : _meta
 	}),

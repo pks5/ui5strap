@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 
+	/**
+	 * Constructor for a new ListGroupItem instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating items for ListGroup controls.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ListGroupItem
+	 * 
+	 */
 	var ListGroupItem = ListItem.extend("ui5strap.ListGroupItem", {
 		metadata : {
 

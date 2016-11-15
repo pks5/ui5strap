@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller'], function(uLib, AppBase, ControllerBase){
 
+	/**
+	 * Constructor for a new Controller instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Abstract base class for all controllers.
+	 * @extends sap.ui.core.mvc.Controller
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Controller
+	 * 
+	 */
 	var Controller = ControllerBase.extend("ui5strap.Controller"),
 		ControllerProto = Controller.prototype;
 	

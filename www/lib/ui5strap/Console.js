@@ -27,8 +27,27 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
-	var defaultLogName = '__DEFAULT_LOG',
-		Console = ControlBase.extend("ui5strap.Console", {
+	var defaultLogName = '__DEFAULT_LOG';
+	
+	/**
+	 * Constructor for a new Console instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating a output console.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Console
+	 * 
+	 */
+	var Console = ControlBase.extend("ui5strap.Console", {
 		metadata : {
 
 			library : "ui5strap",

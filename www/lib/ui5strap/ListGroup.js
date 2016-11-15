@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
+	/**
+	 * Constructor for a new ListGroup instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap list groups.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ListGroup
+	 * 
+	 */
 	var ListGroup = ListBase.extend("ui5strap.ListGroup", {
 		metadata : {
 

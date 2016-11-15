@@ -34,7 +34,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @param {object} [mSettings] Initial settings for the new control
 	 * 
 	 * @class
-	 * The Bar Control creates a simple bar.
+	 * Control for creating bars.
 	 * @extends ui5strap.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller

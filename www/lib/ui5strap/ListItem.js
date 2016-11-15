@@ -58,6 +58,24 @@ sap.ui.define(['./library', './ListItemBase', './SelectableSupport'], function(l
 	
 	SelectableSupport.meta(_meta);
 	
+	/**
+	 * Constructor for a new ListItem instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating items for List controls.
+	 * @extends ui5strap.ListItemBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ListItem
+	 * 
+	 */
 	var ListItem = ListItemBase.extend("ui5strap.ListItem", {
 		metadata : _meta
 	}),

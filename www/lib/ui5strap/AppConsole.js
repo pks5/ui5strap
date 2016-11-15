@@ -31,6 +31,24 @@
 
  sap.ui.define(['./library', './AppBase', './Console'], function(library, AppBase, Console){
 
+	 /**
+		 * Constructor for a new AppConsole instance.
+		 * 
+		 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+		 * @param {object} [mSettings] Initial settings for the new control
+		 * 
+		 * @class
+		 * App module for creating console apps.
+		 * @extends ui5strap.AppBase
+		 * 
+		 * @author Jan Philipp Knoeller
+		 * @version 0.11.0
+		 * 
+		 * @constructor
+		 * @public
+		 * @alias ui5strap.AppConsole
+		 * 
+		 */
 	 var AppConsole = AppBase.extend("ui5strap.AppConsole"),
 		AppConsoleProto = AppConsole.prototype;
 

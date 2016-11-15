@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 
+	/**
+	 * Constructor for a new BarMenu instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating bar menus.
+	 * @extends ui5strap.ListBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.BarMenu
+	 * 
+	 */
 	var BarMenu = ListBase.extend("ui5strap.BarMenu", {
 		metadata : {
 

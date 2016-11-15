@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel'], function(library, ObjectBase, JSONModel){
 
+	/**
+	 * Constructor for a new AppConfig instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Class representing the ui5strap configuration.
+	 * @extends sap.ui.base.Object
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.AppConfig
+	 * 
+	 */
 	var AppConfig = ObjectBase.extend("ui5strap.AppConfig", {
 		"constructor" : function(options, parameters){
 			this.options = options || {};

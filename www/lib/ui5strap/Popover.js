@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './Tooltip'], function(library, Tooltip){
 
+	/**
+	 * Constructor for a new Popover instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap popovers.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Popover
+	 * 
+	 */
 	var Popover = Tooltip.extend("ui5strap.Popover", {
     metadata : {
 

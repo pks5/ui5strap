@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ListItemBase', './ListLinkItem'], function(library, ListItemBase, ListLinkItem){
 
+	/**
+	 * Constructor for a new ListDropdownItem instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating dropdown items for the Bootstrap list.
+	 * @extends ui5strap.ListLinkItem
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ListDropdownItem
+	 * 
+	 */
 	var ListDropdownItem = ListLinkItem.extend("ui5strap.ListDropdownItem", {
 		metadata : {
 			interfaces : ["ui5strap.IDropdownMenuHost"],

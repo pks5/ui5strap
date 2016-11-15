@@ -27,6 +27,26 @@
 
 sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
 
+	/**
+	 * Constructor for a new TableColumn instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Element for creating cells for the Table control.
+	 * @extends ui5strap.ElementBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.TableColumn
+	 * 
+	 */
+	
+	//TODO rename to TableCell
 	var TableColumn = ElementBase.extend("ui5strap.TableColumn", {
 		metadata : {
 

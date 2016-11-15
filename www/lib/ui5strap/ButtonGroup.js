@@ -67,6 +67,24 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	
 	ListSelectionSupport.meta(_meta);
 	
+	/**
+	 * Constructor for a new ButtonGroup instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap button groups.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ButtonGroup
+	 * 
+	 */
 	var ButtonGroup = ControlBase.extend("ui5strap.ButtonGroup", {
 		metadata : _meta,
 		

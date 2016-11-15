@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ActionContext', './ActionModule'], function(library, ActionContext, ActionModule){
 	
+	/**
+	 * Constructor for a new Action instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Class for interpreting ui5strap actions.
+	 * @extends sap.ui.base.Object
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Action
+	 * 
+	 */
 	var Action = ui5strap.Object.extend("ui5strap.Action"),
 		ActionProto = Action.prototype,
 		_actionsCache = {},

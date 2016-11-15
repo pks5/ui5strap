@@ -62,7 +62,24 @@ sap.ui.define(["./library", "./ControlBase", './SelectableSupport'], function(ul
 	//Add meta data of ISelectableItem
 	SelectableSupport.meta(_meta);
 	
-	//Constructor
+	/**
+	 * Constructor for a new ToggleButton instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating mobile like toggle buttons.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ToggleButton
+	 * 
+	 */
 	var ToggleButton = ControlBase.extend("ui5strap.ToggleButton", {
 		metadata : _meta,
 		

@@ -40,6 +40,24 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	PositionSupport.meta(_meta);
 	OptionsSupport.meta(_meta);
 	
+	/**
+	 * Constructor for a new ControlBase instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Abstract base class for all ui5strap controls.
+	 * @extends sap.ui.core.Control
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ControlBase
+	 * 
+	 */
 	var ControlBase = ui5strap.Control.extend("ui5strap.ControlBase", {
 		metadata : _meta,
 		renderer : null

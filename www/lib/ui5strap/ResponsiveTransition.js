@@ -57,10 +57,20 @@ sap.ui
 					};
 
 					/**
-					 * Constructs a responsive Transition (experimental)
+					 * Constructor for a new ResponsiveTransition instance.
 					 * 
-					 * @Constructor
-					 * @Public
+					 * @param {object} data - Initial settings.
+					 * 
+					 * @class
+					 * Class that provides responsive transition support.
+					 * 
+					 * @author Jan Philipp Knoeller
+					 * @version 0.11.0
+					 * 
+					 * @constructor
+					 * @public
+					 * @alias ui5strap.ResponsiveTransition
+					 * 
 					 */
 					var ResponsiveTransition = function(data) {
 						this._data = data;

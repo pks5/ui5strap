@@ -27,7 +27,24 @@
 
 sap.ui.define(['./library', './Controller'], function(library, Controller){
 
-	//Return Module Constructor
+	/**
+	 * Constructor for a new ActionController instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Basic controller with action support that can be used in views directly.
+	 * @extends ui5strap.Controller
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ActionController
+	 * 
+	 */
 	return Controller.extend("ui5strap.ActionController");
 
 });

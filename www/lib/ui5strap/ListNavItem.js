@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
 
+	/**
+	 * Constructor for a new ListNavItem instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating items for a Bootstrap nav list.
+	 * @extends ui5strap.ListLinkItem
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ListNavItem
+	 * 
+	 */
 	var ListNavItem = ListLinkItem.extend("ui5strap.ListNavItem", {
 		metadata : {
 

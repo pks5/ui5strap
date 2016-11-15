@@ -1,5 +1,23 @@
 sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Component){
 
+	/**
+	 * Constructor for a new RootComponent instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Root component for apps.
+	 * @extends sap.ui.core.Component
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.RootComponent
+	 * 
+	 */
 	var RootComponent = Component.extend("ui5strap.RootComponent", {
 		metadata : {
 	    	interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"],

@@ -28,6 +28,23 @@
 sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition'], 
 				function(uLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition){
 	
+	/**
+	 * Constructor for a new Viewer instance.
+	 * 
+	 * @param {object} options - Initial settings.
+	 * 
+	 * @class
+	 * App module for system apps.
+	 * @extends ui5strap.ViewerBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Viewer
+	 * 
+	 */
 	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", {
 		"constructor" : function(options){
 			ViewerBase.call(this, options);

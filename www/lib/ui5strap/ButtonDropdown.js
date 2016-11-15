@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './Button'], function(library, Button){
 
+	/**
+	 * Constructor for a new ButtonDropdown instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap buttons with dropdown.
+	 * @extends ui5strap.Button
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ButtonDropdown
+	 * 
+	 */
 	var ButtonDropdown = Button.extend("ui5strap.ButtonDropdown", {
 		metadata : {
 			interfaces : ["ui5strap.IDropdownMenuHost"],

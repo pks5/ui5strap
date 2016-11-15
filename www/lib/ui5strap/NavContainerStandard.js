@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 
+	/**
+	 * Constructor for a new NavContainerStandard instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * NavContainer with optional nav bar and sidebar.
+	 * @extends ui5strap.NavContainer
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.NavContainerStandard
+	 * 
+	 */
 	var NavContainerStandard = NavContainer.extend("ui5strap.NavContainerStandard", {
 		metadata : {
 

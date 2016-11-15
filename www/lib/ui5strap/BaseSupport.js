@@ -27,6 +27,20 @@
 
 sap.ui.define(['./library'], function(library){
 	
+	/**
+	 * Constructor for a new BaseSupport instance.
+	 * 
+	 * @class
+	 * Trait for base support.
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.BaseSupport
+	 * 
+	 */
 	var BaseSupport = {};
 	
 	BaseSupport.meta = function(meta){

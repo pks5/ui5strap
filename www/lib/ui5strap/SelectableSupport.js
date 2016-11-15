@@ -27,6 +27,20 @@
 
 sap.ui.define(['./library'], function(library){
 	
+	/**
+	 * Constructor for a new SelectableSupport instance.
+	 * 
+	 * @class
+	 * Trait for selection support.
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.SelectableSupport
+	 * 
+	 */
 	var SelectableSupport = {};
 	
 	/**

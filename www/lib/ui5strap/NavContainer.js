@@ -27,6 +27,24 @@
  
 sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function(library, ControlBase, ResponsiveTransition){
 
+	/**
+	 * Constructor for a new NavContainer instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating nav containers.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.NavContainer
+	 * 
+	 */
 	var NavContainer = ControlBase.extend("ui5strap.NavContainer", {
 		metadata : {
 			interfaces : ["ui5strap.INavigator"],

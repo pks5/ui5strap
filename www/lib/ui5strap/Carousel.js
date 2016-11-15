@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
+	/**
+	 * Constructor for a new Carousel instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap carousels. There are some slight differences in the markup compared to the original Bootstrap carousel.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Carousel
+	 * 
+	 */
 	var Carousel = ControlBase.extend("ui5strap.Carousel", {
 		metadata : {
 

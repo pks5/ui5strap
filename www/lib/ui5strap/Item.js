@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library'], function(library){
 
+	/**
+	 * Constructor for a new Item instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Base class for key/value elements.
+	 * @extends sap.ui.core.Element
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Item
+	 * 
+	 */
 	var Item = ui5strap.Element.extend("ui5strap.Item", {
 		metadata : {
 

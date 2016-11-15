@@ -31,6 +31,24 @@
 
  sap.ui.define(['./library', './AppBase', './Sandbox'], function(library, AppBase, Sandbox){
 
+	 /**
+		 * Constructor for a new AppSandbox instance.
+		 * 
+		 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+		 * @param {object} [mSettings] Initial settings for the new control
+		 * 
+		 * @class
+		 * App module for creating sandbox apps.
+		 * @extends ui5strap.AppBase
+		 * 
+		 * @author Jan Philipp Knoeller
+		 * @version 0.11.0
+		 * 
+		 * @constructor
+		 * @public
+		 * @alias ui5strap.AppSandbox
+		 * 
+		 */
 	 var AppSandbox = AppBase.extend("ui5strap.AppSandbox", {
 		"constructor" : function(config, viewer){
 			AppBase.call(this, config, viewer);

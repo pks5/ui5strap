@@ -28,6 +28,23 @@
 
 sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library, ObjectBase, Console){
 	
+	/**
+	 * Constructor for a new ViewerBase instance.
+	 * 
+	 * @param {object} options - Initial settings.
+	 * 
+	 * @class
+	 * Abstract base class for viewers.
+	 * @extends sap.ui.base.Object
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ViewerBase
+	 * 
+	 */
 	var ViewerBase = ObjectBase.extend('ui5strap.ViewerBase', {
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);

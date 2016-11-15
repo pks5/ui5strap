@@ -36,7 +36,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
 	 * 
 	 * @class
-	 * Base class for ui5strap Apps.
+	 * Abstract base class for ui5strap apps.
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller

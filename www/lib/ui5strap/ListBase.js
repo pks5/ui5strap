@@ -43,6 +43,24 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	
 	ListSelectionSupport.meta(_meta);
 	
+	/**
+	 * Constructor for a new ListBase instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Abstrac base class for all ui5strap lists.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ListBase
+	 * 
+	 */
 	var ListBase = ControlBase.extend("ui5strap.ListBase", {
 		metadata : _meta,
 		renderer : null

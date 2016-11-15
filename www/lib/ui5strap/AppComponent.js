@@ -27,6 +27,24 @@
  
 sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
 
+	/**
+	 * Constructor for a new AppComponent instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Base class for ui5strap app components.
+	 * @extends sap.ui.base.Object
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.AppComponent
+	 * 
+	 */
 	var AppComponent = ObjectBase.extend("ui5strap.AppComponent", {
 		"constructor" : function(){
 			ObjectBase.apply(this);

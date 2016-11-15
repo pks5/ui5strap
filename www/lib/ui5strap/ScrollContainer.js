@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(library, ControlBase, CommonRenderers){
 
+	/**
+	 * Constructor for a new ScrollContainer instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating containers with scrolling abilities.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.ScrollContainer
+	 * 
+	 */
 	var ScrollContainer = ControlBase.extend("ui5strap.ScrollContainer", {
 		
 		metadata : {

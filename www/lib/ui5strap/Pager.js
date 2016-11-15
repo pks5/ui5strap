@@ -27,6 +27,24 @@
 
 sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 
+	/**
+	 * Constructor for a new Pager instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap pagers.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Pager
+	 * 
+	 */
 	var Pager = ControlBase.extend("ui5strap.Pager", {
 		metadata : {
 

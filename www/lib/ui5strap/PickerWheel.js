@@ -31,6 +31,24 @@ sap.ui
 				function(ulib, ControlBase) {
 					"use strict";
 					
+					/**
+					 * Constructor for a new PickerWheel instance.
+					 * 
+					 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+					 * @param {object} [mSettings] Initial settings for the new control
+					 * 
+					 * @class
+					 * Control for creating picker wheels.
+					 * @extends ui5strap.ControlBase
+					 * 
+					 * @author Jan Philipp Knoeller
+					 * @version 0.11.0
+					 * 
+					 * @constructor
+					 * @public
+					 * @alias ui5strap.PickerWheel
+					 * 
+					 */
 					var PickerWheel = ControlBase.extend(
 							"ui5strap.PickerWheel", {
 								metadata : {

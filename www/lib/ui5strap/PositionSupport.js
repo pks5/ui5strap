@@ -27,6 +27,20 @@
 
 sap.ui.define(['./library'], function(library){
 	
+	/**
+	 * Constructor for a new PositionSupport instance.
+	 * 
+	 * @class
+	 * Trait for position support.
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.0
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.PositionSupport
+	 * 
+	 */
 	var PositionSupport = {};
 	
 	/**

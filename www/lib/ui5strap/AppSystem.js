@@ -31,6 +31,24 @@
 
  sap.ui.define(['./library', './App'], function(library, App){
 
+	 /**
+		 * Constructor for a new AppSystem instance.
+		 * 
+		 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+		 * @param {object} [mSettings] Initial settings for the new control
+		 * 
+		 * @class
+		 * App module for system apps.
+		 * @extends ui5strap.App
+		 * 
+		 * @author Jan Philipp Knoeller
+		 * @version 0.11.0
+		 * 
+		 * @constructor
+		 * @public
+		 * @alias ui5strap.AppSystem
+		 * 
+		 */
 	 var AppSystem = App.extend("ui5strap.AppSystem", {
 		"constructor" : function(config, viewer){
 			App.call(this, config, viewer);
