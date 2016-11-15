@@ -45,7 +45,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 	 * @alias ui5strap.ViewerBase
 	 * 
 	 */
-	var ViewerBase = ObjectBase.extend('ui5strap.ViewerBase', {
+	var ViewerBase = ObjectBase.extend('ui5strap.ViewerBase', /** @lends ui5strap.ViewerBase.prototype */{
+		/**
+		 * @constructs
+		 */
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);
 			

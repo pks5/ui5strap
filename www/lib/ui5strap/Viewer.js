@@ -45,7 +45,10 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	 * @alias ui5strap.Viewer
 	 * 
 	 */
-	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", {
+	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", /** @lends ui5strap.Viewer.prototype */ {
+		/**
+		 * @constructs
+		 */
 		"constructor" : function(options){
 			ViewerBase.call(this, options);
 

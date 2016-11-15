@@ -46,6 +46,9 @@ sap.ui.define(['./library'], function(library){
 	 * 
 	 */
 	var ActionContext = ui5strap.Object.extend('ui5strap.ActionContext', {
+		/**
+		 * @constructs
+		 */
 		"constructor" : function(action){
 			_init(this, action);
 		}

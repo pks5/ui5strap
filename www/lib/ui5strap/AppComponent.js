@@ -45,7 +45,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 	 * @alias ui5strap.AppComponent
 	 * 
 	 */
-	var AppComponent = ObjectBase.extend("ui5strap.AppComponent", {
+	var AppComponent = ObjectBase.extend("ui5strap.AppComponent", /** @lends ui5strap.AppComponent.prototype */{
+		/**
+		 * @constructs
+		 */
 		"constructor" : function(){
 			ObjectBase.apply(this);
 			

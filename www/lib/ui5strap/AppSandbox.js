@@ -49,8 +49,11 @@
 		 * @alias ui5strap.AppSandbox
 		 * 
 		 */
-	 var AppSandbox = AppBase.extend("ui5strap.AppSandbox", {
-		"constructor" : function(config, viewer){
+	 var AppSandbox = AppBase.extend("ui5strap.AppSandbox", /** @lends ui5strap.AppSandbox.prototype */{
+		 /**
+			 * @constructs
+			 */
+		 "constructor" : function(config, viewer){
 			AppBase.call(this, config, viewer);
 			
 			this._sandboxControl = new Sandbox();

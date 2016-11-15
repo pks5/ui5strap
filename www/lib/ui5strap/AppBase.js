@@ -47,10 +47,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Actio
 	 * @alias ui5strap.AppBase
 	 * 
 	 */
-	var AppBase = ObjectBase.extend('ui5strap.AppBase', {
+	var AppBase = ObjectBase.extend('ui5strap.AppBase', /** @lends ui5strap.AppBase.prototype */{
 		metadata : {
 			interfaces : ["ui5strap.IApp"]
 		},
+		
+		/**
+		 * @constructs
+		 */
 		"constructor" : function(config, viewer){
 			sap.ui.base.Object.apply(this);
 			

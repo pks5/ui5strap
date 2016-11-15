@@ -45,10 +45,13 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	 * @alias ui5strap.AppFrame
 	 * 
 	 */
-	var AppFrame = AppComponent.extend("ui5strap.AppFrame", {
+	var AppFrame = AppComponent.extend("ui5strap.AppFrame", /** @lends ui5strap.AppFrame.prototype */{
 		metadata : {
 			interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"]
 		},
+		/**
+		 * @constructs
+		 */
 		constructor : function(app, options){
 			AppComponent.call(this, app, options);
 			

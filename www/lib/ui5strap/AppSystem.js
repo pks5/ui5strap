@@ -49,8 +49,11 @@
 		 * @alias ui5strap.AppSystem
 		 * 
 		 */
-	 var AppSystem = App.extend("ui5strap.AppSystem", {
-		"constructor" : function(config, viewer){
+	 var AppSystem = App.extend("ui5strap.AppSystem", /** @lends ui5strap.AppSystem.prototype */{
+		 /**
+			 * @constructs
+			 */
+		 "constructor" : function(config, viewer){
 			App.call(this, config, viewer);
 
 			this.getViewer = function(){
