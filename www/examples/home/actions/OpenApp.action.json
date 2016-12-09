@@ -2,7 +2,7 @@
 	"BEGIN" : "getContextData",
 	
 	"getContextData" : {
-	    "TYPE" : "ui5strap.AMGetContextData",
+	    "TYPE" : "pks.ui5strap.action.AMGetContextData",
 		"modelName" : "APPS",
 		"tgtParam" : "parameters.getContextData.CONTEXT",
 		"scope" : "SOURCE",
@@ -10,7 +10,7 @@
 	},
 	
 	"openApp" : {
-	   "TYPE" : "ui5strap.AMOpenApp",
+	   "TYPE" : "pks.ui5strap.action.AMOpenApp",
 		"url" : "= action.getContextData.CONTEXT.url",
 		"internal" : "= action.getContextData.CONTEXT.internal",
 		"id" : "= action.getContextData.CONTEXT.id",

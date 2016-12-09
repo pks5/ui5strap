@@ -3,7 +3,7 @@
 	"TASKS" : "changeTheme",
 
 	"changeTheme" : {
-	   "TYPE" : "ui5strap.AMChangeTheme",
+	   "TYPE" : "pks.ui5strap.action.AMChangeTheme",
 		"theme" : "base"
 	}
 	

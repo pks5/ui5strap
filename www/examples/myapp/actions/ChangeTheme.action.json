@@ -3,7 +3,7 @@
 	"TASKS" : ["callControlMethod", "changeTheme"],
 
 	"callControlMethod" : {
-	   "TYPE" : "ui5strap.AMCallControlMethod",
+	   "TYPE" : "pks.ui5strap.action.AMCallControlMethod",
 		"scope" : "SELECTION",
 		"funcName" : "data",
 		"funcArgs" : ["theme"],
@@ -11,7 +11,7 @@
 	},
 
 	"changeTheme" : {
-	   "TYPE" : "ui5strap.AMChangeTheme"
+	   "TYPE" : "pks.ui5strap.action.AMChangeTheme"
 	}
 	
 }

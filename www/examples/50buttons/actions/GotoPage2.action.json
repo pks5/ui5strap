@@ -3,7 +3,7 @@
 	"TASKS" : "gotoPage",
 
 	"gotoPage" : {
-	   "TYPE" : "ui5strap.AMGotoPage",
+	   "TYPE" : "pks.ui5strap.action.AMGotoPage",
 		"id" : "viewPage2",
 		"transition" : "transition-flip"
 	}

@@ -3,14 +3,14 @@
 	"TASKS" : ["getContextData", "closeOverlay"],
 	
 	"getContextData" : {
-	    "TYPE" : "ui5strap.AMGetContextData",
+	    "TYPE" : "pks.ui5strap.action.AMGetContextData",
 		"modelName" : "tasks",
 		"tgtParam" : "parameters.getContextData.CONTEXT",
 		"scope" : "SOURCE"
 	},
 
 	"closeOverlay" : {
-	    "TYPE" : "ui5strap.AMCloseOverlay",
+	    "TYPE" : "pks.ui5strap.action.AMCloseOverlay",
 		"scope" : "VIEWER", 
 		"THEN" : "showApp"
 	},
@@ -20,7 +20,7 @@
 	},
 	
 	"showApp" : {
-	   "TYPE" : "ui5strap.AMShowApp",
+	   "TYPE" : "pks.ui5strap.action.AMShowApp",
 	   "id" : "= action.getContextData.CONTEXT.app.id"
 	}
 

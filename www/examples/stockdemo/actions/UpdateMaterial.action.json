@@ -3,7 +3,7 @@
 	"TASKS" : "gotoPage",
 	
 	"gotoPage" : {
-	   "TYPE" : "ui5strap.AMGotoPage",
+	   "TYPE" : "pks.ui5strap.action.AMGotoPage",
 		"viewName" : "net__rozzo__stockmgr.stockdemo__app.views.MaterialDetails",
 		"transition" : "transition-flip",
 		"writeHistory" : true

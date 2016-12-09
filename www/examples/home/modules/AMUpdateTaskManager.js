@@ -17,7 +17,7 @@
 
 sap.ui.define(['ui5strap/library', 'pks.ui5strap/action/Task'], function(library, Task){
 
-	var AMUpdateTaskManager = Task.extend("ui5strap.AMUpdateTaskManager"),
+	var AMUpdateTaskManager = Task.extend("pks.ui5strap.action.AMUpdateTaskManager"),
 	AMUpdateTaskManagerProto = AMUpdateTaskManager.prototype;
 
 	AMUpdateTaskManagerProto.namespace = 'updateTaskManager';

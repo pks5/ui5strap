@@ -3,7 +3,7 @@
 	"BEGIN" : "navigate",
 	
 	"navigate" : {
-		"TYPE" : "ui5strap.task.Navigate",
+		"TYPE" : "pks.ui5strap.action.NavigateTask",
 		
 		"VIEWS" : {
 			"cusconSimple" : {

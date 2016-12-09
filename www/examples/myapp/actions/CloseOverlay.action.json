@@ -2,6 +2,6 @@
   "TASKS" : "closeOverlay",
   
   "closeOverlay" : {
-    "TYPE" : "ui5strap.AMCloseOverlay"
+    "TYPE" : "pks.ui5strap.action.AMCloseOverlay"
   }
 }

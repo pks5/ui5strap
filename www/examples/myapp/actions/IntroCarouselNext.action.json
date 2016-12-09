@@ -3,7 +3,7 @@
 	"TASKS" : "callControlMethod",
 
 	"callControlMethod" : {
-	    "TYPE" : "ui5strap.AMCallControlMethod",
+	    "TYPE" : "pks.ui5strap.action.AMCallControlMethod",
 		"controlId" : "carousel-intro",
 		"scope" : "VIEW",
 		"funcName" : "nextPage"

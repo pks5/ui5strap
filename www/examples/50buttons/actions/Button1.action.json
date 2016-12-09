@@ -2,7 +2,7 @@
   "TASKS" : "alert",
 
   "alert" : {
-    "TYPE" : "ui5strap.AMJsAlert",
+    "TYPE" : "pks.ui5strap.action.AMJsAlert",
     "message" : "Hello, World!"
   
   }

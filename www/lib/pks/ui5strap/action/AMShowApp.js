@@ -50,7 +50,7 @@ sap.ui.define(['./library', "./Task"], function(library, ActionModule){
 	*/
 	ShowAppProto.run = function(){
 		if(!(this.context.app instanceof ui5strap.AppSystem)){
-			throw new Error('Only system apps can run ui5strap.AMOpenApp');
+			throw new Error('Only system apps can run pks.ui5strap.action.AMOpenApp');
 		}
 
 		var viewer = this.context.app.getViewer();
