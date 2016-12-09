@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ActionContext', "ui5strap/Utils"], function(library, ActionContext, Utils){
+sap.ui.define(['./library', './ActionContext', "ui5strap/Utils", "sap/ui/base/Object"], function(library, ActionContext, Utils, ObjectBase){
 	
 	/**
 	 * Constructor for a new Action instance.
@@ -45,7 +45,7 @@ sap.ui.define(['./library', './ActionContext', "ui5strap/Utils"], function(libra
 	 * @alias ui5strap.Action
 	 * 
 	 */
-	var Action = ui5strap.Object.extend("pks.ui5strap.action.Action"),
+	var Action = ObjectBase.extend("pks.ui5strap.action.Action"),
 		ActionProto = Action.prototype,
 		_actionsCache = {},
 		_modulesCache = {};

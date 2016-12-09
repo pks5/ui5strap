@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5strap/action/Action', "./Utils", "./Layer"], function(uLib, ObjectBase, UIArea, Action, Utils, Layer){
+sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui/core/UIArea', 'pks/ui5strap/action/Action', "./Utils", "./Layer"], function(uLib, ObjectBase, ControlBase, UIArea, Action, Utils, Layer){
 	
 	"use strict";
 	
@@ -1080,7 +1080,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5
 	*/
 	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
 		var _this = this;
-		if(!(viewDataOrControl instanceof ui5strap.Control)){
+		if(!(viewDataOrControl instanceof ControlBase)){
 			var viewParameters = viewDataOrControl.parameters;
 			
 			viewDataOrControl = this.createView(this.config.getViewConfig(viewDataOrControl));

@@ -26,7 +26,7 @@
  */
  
 
-sap.ui.define(['./library', 'sap/ui/base/Object', "./Console", "./Layer"], function(library, ObjectBase, Console, Layer){
+sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Console", "./Layer"], function(library, ObjectBase, ControlBase, Console, Layer){
 	
 	/**
 	 * Constructor for a new ViewerBase instance.
@@ -213,7 +213,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console", "./Layer"], funct
 			transitionName = transitionName || 'slide-ttb';
 		
 		Layer.setVisible(this.options.overlay, true, function(){
-			if(viewDataOrControl instanceof ui5strap.Control){
+			if(viewDataOrControl instanceof ControlBase){
 				//Control is directly injected into the frame
 				overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
 			}

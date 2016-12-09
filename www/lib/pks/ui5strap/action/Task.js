@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ActionContext', './Action'], function(library, ActionContext, Action){
+sap.ui.define(['./library', './ActionContext', './Action', "sap/ui/base/Object"], function(library, ActionContext, Action, ObjectBase){
 
 	/**
 	 * Constructor for a new Task instance.
@@ -45,7 +45,7 @@ sap.ui.define(['./library', './ActionContext', './Action'], function(library, Ac
 	 * @alias pks.ui5strap.action.Task
 	 * 
 	 */
-	var Task = ui5strap.Object.extend("pks.ui5strap.action.Task"),
+	var Task = ObjectBase.extend("pks.ui5strap.action.Task"),
 		TaskProto = Task.prototype;
 
 	/*

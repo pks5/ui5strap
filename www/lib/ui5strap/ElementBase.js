@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './BaseSupport', './OptionsSupport'], function(library, BaseSupport, OptionsSupport){
+sap.ui.define(['./library', './BaseSupport', './OptionsSupport', "sap/ui/core/Element"], function(library, BaseSupport, OptionsSupport, SapElementBase){
 
 	var _meta = {
 		library : "ui5strap",
@@ -56,7 +56,7 @@ sap.ui.define(['./library', './BaseSupport', './OptionsSupport'], function(libra
 	 * @alias ui5strap.ElementBase
 	 * 
 	 */
-	var ElementBase = ui5strap.Element.extend("ui5strap.ElementBase", {
+	var ElementBase = SapElementBase.extend("ui5strap.ElementBase", {
 		metadata : _meta
 	}),
 	ElementBaseProto = ElementBase.prototype;

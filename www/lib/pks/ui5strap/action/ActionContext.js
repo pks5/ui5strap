@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library'], function(library){
+sap.ui.define(['./library', "sap/ui/base/Object", "sap/ui/core/Control"], function(library, ObjectBase, ControlBase){
 
 	/**
 	 * Constructor for a new Action instance.
@@ -45,7 +45,7 @@ sap.ui.define(['./library'], function(library){
 	 * @alias ui5strap.ActionContext
 	 * 
 	 */
-	var ActionContext = ui5strap.Object.extend('pks.ui5strap.action.ActionContext', {
+	var ActionContext = ObjectBase.extend('pks.ui5strap.action.ActionContext', {
 		/**
 		 * @constructs
 		 */
@@ -273,7 +273,7 @@ sap.ui.define(['./library'], function(library){
 	_ActionExpressionFindControl.prototype.evaluate = function(context, task){
 		var controlOrDef = this._controlDef;
 		if(typeof controlOrDef === "object"){
-			if(!(controlOrDef instanceof ui5strap.Control)){
+			if(!(controlOrDef instanceof ControlBase)){
 				var mode = context.resolve(task, controlOrDef.SOURCE, true),
 					moduleName = context.resolve(task, controlOrDef.TYPE, true);
 				

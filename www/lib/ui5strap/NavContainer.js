@@ -62,14 +62,14 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 				pageChange : {
 					parameters : {
 						"target" : {type : "string"},
-						"oldPage" : {type : "ui5strap.Control"}
+						"oldPage" : {type : "sap/ui/core/Control"}
 					}
 				},
 				
 				pageChanged : {
 					parameters : {
 						"target" : {type : "string"},
-						"oldPage" : {type : "ui5strap.Control"}
+						"oldPage" : {type : "sap/ui/core/Control"}
 					}
 				},
 				
@@ -77,7 +77,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 					parameters : {
 						"target" : {type : "string"},
 						"pageParameters" : {type : "object"},
-						"page" : {type : "ui5strap.Control"}
+						"page" : {type : "sap/ui/core/Control"}
 					}
 				}
 			}

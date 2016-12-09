@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library'], function(library){
+sap.ui.define(['./library', "sap/ui/core/Element"], function(library, ElementBase){
 
 	/**
 	 * Constructor for a new Item instance.
@@ -45,7 +45,7 @@ sap.ui.define(['./library'], function(library){
 	 * @alias ui5strap.Item
 	 * 
 	 */
-	var Item = ui5strap.Element.extend("ui5strap.Item", {
+	var Item = ElementBase.extend("ui5strap.Item", {
 		metadata : {
 
 			// ---- control specific ----

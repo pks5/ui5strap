@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupport', "./Utils"], function(library, BaseSupport, PositionSupport, OptionsSupport, Utils){
+sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './PositionSupport', './OptionsSupport', "./Utils"], function(library, SapControlBase, BaseSupport, PositionSupport, OptionsSupport, Utils){
 
 	var _meta = {
 		library : "ui5strap",
@@ -58,7 +58,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 * @alias ui5strap.ControlBase
 	 * 
 	 */
-	var ControlBase = ui5strap.Control.extend("ui5strap.ControlBase", {
+	var ControlBase = SapControlBase.extend("ui5strap.ControlBase", {
 		metadata : _meta,
 		renderer : null
 	}),

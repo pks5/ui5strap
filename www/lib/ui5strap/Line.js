@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library'], function(library){
+sap.ui.define(['./library', "sap/ui/core/Control"], function(library, ControlBase){
 
 	/**
 	 * Constructor for a new Line instance.
@@ -45,7 +45,7 @@ sap.ui.define(['./library'], function(library){
 	 * @alias ui5strap.Line
 	 * 
 	 */
-	var Line = library.Control.extend("ui5strap.Line", {
+	var Line = ControlBase.extend("ui5strap.Line", {
 		metadata : {
 
 			library : "ui5strap"

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library'], function(library){
+sap.ui.define(['./library', "sap/ui/core/Control"], function(library, ControlBase){
 
 	/**
 	 * Constructor for a new Break instance.
@@ -47,7 +47,7 @@ sap.ui.define(['./library'], function(library){
 	 */
 	
 	//TODO eliminate ui5strap shortcuts
-	var Break = ui5strap.Control.extend("ui5strap.Break", {
+	var Break = ControlBase.extend("ui5strap.Break", {
 		metadata : {
 			interfaces : ["ui5strap.IText"],
 			deprecated : true,

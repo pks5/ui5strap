@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manager){
+sap.ui.define(['ui5strap/library', 'ui5strap/Manager', "sap/ui/model/json/JSONModel"], function(library, Manager, JSONModel){
 
 	var FeedManager = Manager.extend("com.ui5strap.apps.demoapp.modules.FeedManager"),
 		FeedManagerProto = FeedManager.prototype;
@@ -38,7 +38,7 @@ sap.ui.define(['ui5strap/library', 'ui5strap/Manager'], function(library, Manage
 	FeedManagerProto.refreshFeed = function(callback){
 		var _this = this;
 		this.app.getFeedClient().info(function(feedInfo){
-			var feedInfoModel = new ui5strap.JSONModel(feedInfo);
+			var feedInfoModel = new JSONModel(feedInfo);
 			_this.controls.feedListContr && _this.controls.feedListContr.setModel(feedInfoModel, "FEED_INFO");
 			_this.controls.feedListAct && _this.controls.feedListAct.setModel(feedInfoModel, "FEED_INFO");
 			callback && callback();

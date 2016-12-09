@@ -30,27 +30,13 @@ sap.ui
 				[ 'jquery.sap.global', 
 				  'sap/ui/Device', 
 				  'sap/ui/core/library',
-				  'jquery.sap.mobile',
-				  "sap/ui/base/Object",
-				  "sap/ui/base/EventProvider",
-				  "sap/ui/base/ManagedObject",
-				  "sap/ui/core/Element",
-				  "sap/ui/core/Control",
-				  "sap/ui/model/json/JSONModel",
-				  "sap/ui/core/mvc/View"
+				  'jquery.sap.mobile'
 				],
 				function(
 					jQuery, 
 					Device, 
 					coreLib, 
-					jqm,
-					BaseObject,
-					EventProvider,
-					ManagedObject,
-					BaseElement,
-					BaseControl,
-					JSONModel,
-					BaseView
+					jqm
 				) {
 					
 					"use strict";
@@ -211,32 +197,6 @@ sap.ui
 					 * 
 					 * -------
 					 */
-					
-					//JQuery
-					ui5strap.$ = jQuery;
-					
-					//Device
-					ui5strap.Device = Device;
-					
-					// Object
-					ui5strap.Object = BaseObject;
-					
-					ui5strap.EventProvider = EventProvider;
-
-					// Managed Object
-					ui5strap.ManagedObject = ManagedObject;
-
-					// Element
-					ui5strap.Element = BaseElement;
-
-					// Control
-					ui5strap.Control = BaseControl;
-
-					// JSONModel
-					ui5strap.JSONModel = JSONModel;
-
-					// View
-					ui5strap.View = BaseView;
 					
 					/*
 					 * -------

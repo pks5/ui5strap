@@ -70,7 +70,7 @@ sap.ui.define(['./library'], function(library){
 		meta.events.select = {
 			parameters : {
 				srcItem : {type : "ui5strap.ISelectableItem"},
-				srcControl : {type : "ui5strap.Control"}
+				srcControl : {type : "sap/ui/core/Control"}
 			}
 		};
 		
@@ -78,7 +78,7 @@ sap.ui.define(['./library'], function(library){
 		meta.events.tap = {
 			parameters : {
 				srcItem : {type : "ui5strap.ISelectableItem"},
-				srcControl : {type : "ui5strap.Control"}
+				srcControl : {type : "sap/ui/core/Control"}
 			}
 		};
 

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/Controller'], function(Controller){
+sap.ui.define(['ui5strap/Controller', "sap/ui/model/json/JSONModel"], function(Controller, JSONModel){
 
 	var controllerImpl = {
 			onUpdate : function(oEvent){
@@ -33,7 +33,7 @@ sap.ui.define(['ui5strap/Controller'], function(Controller){
 					post = oEvent.getParameter("post");
 				
 				this.getApp().getFeedManager().readPost(post.id, function(postData){
-					_this.getView().setModel(new ui5strap.JSONModel(postData), "POST");
+					_this.getView().setModel(new JSONModel(postData), "POST");
 				})
 				
 			},
