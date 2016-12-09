@@ -6,7 +6,7 @@
             "copyright" : "(c) 2014 PKSoftware",
             
             "transition" : "zoom-out",
-            "type" : "ui5strap.AppSystem",
+            "type" : "pks.ui5strap.viewer.AppSystem",
             
             "styleClass" : "ui5strap-home",
             "logLevel" : 5
@@ -61,7 +61,7 @@
         
         
         "rootNavigation" : {
-        	"module" : "ui5strap.NavContainer",
+        	"module" : "pks.ui5strap.viewer.NavContainer",
         	"initialViews" : [
         	   "Home"
         	]

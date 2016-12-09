@@ -30,15 +30,13 @@ sap.ui
 				[ 'jquery.sap.global', 
 				  'sap/ui/Device', 
 				  'sap/ui/core/library',
-				  'jquery.sap.mobile',
-				  "sap/ui/base/Object"
+				  'jquery.sap.mobile'
 				],
 				function(
 					jQuery, 
 					Device, 
 					coreLib, 
-					jqm,
-					BaseObject
+					jqm
 				) {
 					
 					"use strict";

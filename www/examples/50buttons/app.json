@@ -97,8 +97,8 @@
             {
                 
                 "id" : "frame",
-                "module" : "ui5strap.AppFrame",
-                "navContainer" : "ui5strap.NavContainer",
+                "module" : "pks.ui5strap.viewer.AppFrame",
+                "navContainer" : "pks.ui5strap.viewer.NavContainer",
                 
                 "initialViews" : [
                     { 

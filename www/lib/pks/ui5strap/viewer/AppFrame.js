@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AppFrame
+ * pks.ui5strap.viewer.AppFrame
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -30,22 +30,22 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	/**
 	 * Constructor for a new AppFrame instance.
 	 * 
-	 * @param {ui5strap.AppBase} app - App reference
+	 * @param {pks.ui5strap.viewer.AppBase} app - App reference
 	 * @param {object} options - Initial settings
 	 * 
 	 * @class
 	 * App component for frame logic.
-	 * @extends ui5strap.AppComponent
+	 * @extends pks.ui5strap.viewer.AppComponent
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.AppFrame
+	 * @alias pks.ui5strap.viewer.AppFrame
 	 * 
 	 */
-	var AppFrame = AppComponent.extend("ui5strap.AppFrame", /** @lends ui5strap.AppFrame.prototype */{
+	var AppFrame = AppComponent.extend("pks.ui5strap.viewer.AppFrame", /** @lends pks.ui5strap.viewer.AppFrame.prototype */{
 		metadata : {
 			interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"]
 		},
@@ -68,7 +68,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	 * @Public
 	 */
 	AppFrameProto.init = function(){
-		jQuery.sap.log.warning("ui5strap.AppFrame is deprecated.");
+		jQuery.sap.log.warning("pks.ui5strap.viewer.AppFrame is deprecated.");
 		
 		this._initHistory();
 	};
@@ -117,7 +117,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 		//Init default NavContainer
 		var frameConfig = this.options,
 			app = this.app,
-			navContainerModule = frameConfig.navContainer || "ui5strap.NavContainerStandard";
+			navContainerModule = frameConfig.navContainer || "pks.ui5strap.viewer.NavContainerStandard";
 		
 		jQuery.sap.require(navContainerModule);
 		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);
@@ -239,7 +239,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	* @deprecated
 	*/
 	AppFrameProto.getConfig = function(){
-		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.getConfig is deprecated and will be removed soon. Use ui5strap.AppFrame.prototype.getApp().getConfig() instead.");
+		jQuery.sap.log.warning("pks.ui5strap.viewer.AppFrame.prototype.getConfig is deprecated and will be removed soon. Use pks.ui5strap.viewer.AppFrame.prototype.getApp().getConfig() instead.");
 		return this.app.config;
 	};
 
@@ -295,7 +295,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	* @deprecated
 	*/
 	AppFrameProto.resolveViewConfig = function(navControl, viewDef){
-		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.resolveViewConfig is deprecated. Use AppConfigProto.getViewConfig instead.");
+		jQuery.sap.log.warning("pks.ui5strap.viewer.AppFrame.prototype.resolveViewConfig is deprecated. Use AppConfigProto.getViewConfig instead.");
 		var viewConfig = this.app.config.getViewConfig(viewDef);
 
 		return viewConfig;
@@ -305,7 +305,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	 * @deprecated
 	 */
 	AppFrameProto.validatePage = function(viewDef){
-		jQuery.sap.log.warning("ui5strap.AppFrame.prototype.validatePage is deprecated and will be removed soon! Use getViewConfig instead.");
+		jQuery.sap.log.warning("pks.ui5strap.viewer.AppFrame.prototype.validatePage is deprecated and will be removed soon! Use getViewConfig instead.");
 		
 		return this.getViewConfig(viewDef);
 	};

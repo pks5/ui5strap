@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AppConsole
+ * pks.ui5strap.viewer.AppConsole
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -39,17 +39,17 @@
 		 * 
 		 * @class
 		 * App module for creating console apps.
-		 * @extends ui5strap.AppBase
+		 * @extends pks.ui5strap.viewer.AppBase
 		 * 
 		 * @author Jan Philipp Knoeller
 		 * @version 0.11.6
 		 * 
 		 * @constructor
 		 * @public
-		 * @alias ui5strap.AppConsole
+		 * @alias pks.ui5strap.viewer.AppConsole
 		 * 
 		 */
-	 var AppConsole = AppBase.extend("ui5strap.AppConsole"),
+	 var AppConsole = AppBase.extend("pks.ui5strap.viewer.AppConsole"),
 		AppConsoleProto = AppConsole.prototype;
 
 	/*

@@ -18,7 +18,7 @@
 
 	jQuerySap.declare("tld__domain.product__app.modules.AppFrameExample");
 	
-	jQuerySap.require("ui5strap.AppFrame");
+	jQuerySap.require("pks.ui5strap.viewer.AppFrame");
 
 	jQuerySap.require("ui5strap.Sidebar");
 	jQuerySap.require("ui5strap.NavBar");
@@ -33,7 +33,7 @@
 	
 
 	//FrameControllers must extend the AppFrame class
-	ui5strap.AppFrame.extend("tld__domain.product__app.modules.AppFrameExample");
+	pks.ui5strap.viewer.AppFrame.extend("tld__domain.product__app.modules.AppFrameExample");
 
 	var FrameController = tld__domain.product__app.modules.AppFrameExample,
 		FrameControllerProto = FrameController.prototype,
@@ -85,7 +85,7 @@
 	*/
 	FrameControllerProto._createControl = function(){
 		var _this = this,
-			navContainer = ui5strap.AppFrame.prototype._createControl.call(this);
+			navContainer = pks.ui5strap.viewer.AppFrame.prototype._createControl.call(this);
 
 		//Get the frame options
 		var frameOptions = this.options;

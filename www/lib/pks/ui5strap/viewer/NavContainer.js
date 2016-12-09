@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.NavContainer
+ * pks.ui5strap.viewer.NavContainer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
  
-sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"], function(library, ControlBase, ResponsiveTransition, Utils){
+sap.ui.define(['./library', 'ui5strap/ControlBase', 'ui5strap/ResponsiveTransition', "ui5strap/Utils"], function(library, ControlBase, ResponsiveTransition, Utils){
 
 	/**
 	 * Constructor for a new NavContainer instance.
@@ -42,10 +42,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.NavContainer
+	 * @alias pks.ui5strap.viewer.NavContainer
 	 * 
 	 */
-	var NavContainer = ControlBase.extend("ui5strap.NavContainer", {
+	var NavContainer = ControlBase.extend("pks.ui5strap.viewer.NavContainer", {
 		metadata : {
 			interfaces : ["ui5strap.INavigator"],
 			

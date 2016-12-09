@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.App
+ * pks.ui5strap.viewer.AppBase
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,14 +25,14 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui/core/UIArea', 'pks/ui5strap/action/Action', "./Utils", "./Layer"], function(uLib, ObjectBase, ControlBase, UIArea, Action, Utils, Layer){
+sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui/core/UIArea', 'pks/ui5strap/action/Action', "ui5strap/Utils", "ui5strap/Layer"], function(uLib, ObjectBase, ControlBase, UIArea, Action, Utils, Layer){
 	
 	"use strict";
 	
 	/**
 	 * Constructor for a new App instance.
 	 * 
-	 * @param config {ui5strap.AppConfig} App configuration.
+	 * @param config {pks.ui5strap.viewer.AppConfig} App configuration.
 	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
 	 * 
 	 * @class
@@ -44,10 +44,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	 * 
 	 * @constructor
 	 * @protected
-	 * @alias ui5strap.AppBase
+	 * @alias pks.ui5strap.viewer.AppBase
 	 * 
 	 */
-	var AppBase = ObjectBase.extend('ui5strap.AppBase', /** @lends ui5strap.AppBase.prototype */{
+	var AppBase = ObjectBase.extend('pks.ui5strap.viewer.AppBase', /** @lends pks.ui5strap.viewer.AppBase.prototype */{
 		metadata : {
 			interfaces : ["ui5strap.IApp"]
 		},
@@ -137,7 +137,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	/**
 	 * Helper function to create the app root css class.
 	 * 
-	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param _this {pks.ui5strap.viewer.AppBase} Instance of the app to apply this function to.
 	 * @param appClasses {string} Existing classes.
 	 * @private
 	 */
@@ -164,7 +164,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	/**
 	* Preload JavaScript libraries defined in configuration.
 	* 
-	* @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	* @param _this {pks.ui5strap.viewer.AppBase} Instance of the app to apply this function to.
 	* @param callback {function} The callback function. 
 	* @private
 	*/
@@ -203,7 +203,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	/**
 	 * Preload models defined in configuration.
 	 * 
-	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param _this {pks.ui5strap.viewer.AppBase} Instance of the app to apply this function to.
 	 * @param callback {function} The callback function. 
 	 * @private
 	 */
@@ -316,7 +316,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	/**
 	 * Initializes an app component.
 	 * 
-	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param _this {pks.ui5strap.viewer.AppBase} Instance of the app to apply this function to.
 	 * @param compConfig {object} The component configuration object.
 	 * @param oComp {object} The component instance.
 	 * @private
@@ -368,7 +368,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	/**
 	 * Preloads the root component.
 	 * 
-	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param _this {pks.ui5strap.viewer.AppBase} Instance of the app to apply this function to.
 	 * @param callback {function} The callback function.
 	 */
 	var _preloadRootComponent = function(_this, callback){
@@ -396,7 +396,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	/**
 	 * Preloads components defined in configuration.
 	 * 
-	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param _this {pks.ui5strap.viewer.AppBase} Instance of the app to apply this function to.
 	 * @param callback {function} The callback function. 
 	 * @private
 	 */
@@ -492,7 +492,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	/**
 	 * Preload actions defined in configuration.
 	 * 
-	 * @param _this {ui5strap.AppBase} Instance of the app to apply this function to.
+	 * @param _this {pks.ui5strap.viewer.AppBase} Instance of the app to apply this function to.
 	 * @param callback {function} The callback function. 
 	 * @private
 	 */
@@ -1460,10 +1460,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	* @param controlId {string} The ID of the control.
 	* @param viewId {string} The ID of the view that contains the control.
 	* @returns {string} The final control id.
-	* @deprecated Use ui5strap.AppConfig.createControlId instead.
+	* @deprecated Use pks.ui5strap.viewer.AppConfig.createControlId instead.
 	*/ 
 	AppBaseProto.createControlId = function(controlId, viewId){
-		jQuery.sap.log.warning("ui5strap.AppBase.prototype.createControlId is deprecated! Use ui5strap.AppConfig.prototype.createControlId instead!");
+		jQuery.sap.log.warning("pks.ui5strap.viewer.AppBase.prototype.createControlId is deprecated! Use pks.ui5strap.viewer.AppConfig.prototype.createControlId instead!");
 		return this.config.createControlId(controlId, viewId);
 	
 	};
@@ -1581,7 +1581,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	 */
 	AppBaseProto.createOverlayNavigator = function(callback){
 		var _this = this;
-		sap.ui.require(["ui5strap/NavContainer"], function(NavContainer){
+		sap.ui.require(["pks/ui5strap/viewer/NavContainer"], function(NavContainer){
 			//TODO Build via root component
 			
 			_this._overlayNavigator = new NavContainer();
@@ -1670,7 +1670,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	* @returns {string} The dom ID.
 	*/
 	AppBaseProto.getDomId = function(subElement){
-		jQuery.sap.log.warning("ui5strap.App.prototype.getDomId is deprecated! Use ui5strap.AppConfig.prototype.getAppDomId instead!");
+		jQuery.sap.log.warning("pks.ui5strap.viewer.App.prototype.getDomId is deprecated! Use pks.ui5strap.viewer.AppConfig.prototype.getAppDomId instead!");
 		return this.config.createDomId(subElement);
 	};
 

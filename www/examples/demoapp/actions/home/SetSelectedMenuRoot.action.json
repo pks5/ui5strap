@@ -13,7 +13,7 @@
 		"CONTROLS" : {
 			"navContainer" : {
 				"SOURCE" : "Event",
-				"TYPE" : "ui5strap.NavContainer"
+				"TYPE" : "pks.ui5strap.viewer.NavContainer"
 			},
 			"barMenu" : {
 				"SOURCE" : "View",

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.NavContainerStandard
+ * ui5strap.BarNavContainer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], function(library, NavContainer, ResponsiveTransition){
+sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', './ResponsiveTransition'], function(library, NavContainer, ResponsiveTransition){
 
 	/**
 	 * Constructor for a new BarNavContainer instance.
@@ -35,7 +35,7 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 	 * 
 	 * @class
 	 * Control for creating nav containers with navigation bar.
-	 * @extends ui5strap.NavContainer
+	 * @extends pks.ui5strap.viewer.NavContainer
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -161,7 +161,7 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 		},
 
 		//Use default NavContainerRenderer
-		renderer : "ui5strap.NavContainerRenderer"
+		renderer : "pks.ui5strap.viewer.NavContainerRenderer"
 	}),
 	BarNavContainerProto = BarNavContainer.prototype;
 	
@@ -435,7 +435,7 @@ sap.ui.define(['./library', './NavContainer', './ResponsiveTransition'], functio
 			
 		}
 		
-		return ui5strap.NavContainer.prototype._getTargetClassString.call(this, target);
+		return NavContainer.prototype._getTargetClassString.call(this, target);
 	}
 	
 	return BarNavContainer;

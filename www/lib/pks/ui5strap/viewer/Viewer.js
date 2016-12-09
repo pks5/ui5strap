@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition', "./Utils", "./Layer"], 
+sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', 'ui5strap/ResponsiveTransition', "ui5strap/Utils", "ui5strap/Layer"], 
 				function(uLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition, Utils, Layer){
 	
 	/**
@@ -35,17 +35,17 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	 * 
 	 * @class
 	 * App module for system apps.
-	 * @extends ui5strap.ViewerBase
+	 * @extends pks.ui5strap.viewer.ViewerBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.Viewer
+	 * @alias pks.ui5strap.viewer.Viewer
 	 * 
 	 */
-	var ViewerMulti = ViewerBase.extend("ui5strap.Viewer", /** @lends ui5strap.Viewer.prototype */ {
+	var ViewerMulti = ViewerBase.extend("pks.ui5strap.viewer.Viewer", /** @lends pks.ui5strap.viewer.Viewer.prototype */ {
 		/**
 		 * @constructs
 		 */
@@ -231,7 +231,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			        	"id" : appDefinition.id,
 			            "location" : appDefinition["location"] || Utils.getFileLocation(appDefinition.url),
 			            
-			            "type" : "ui5strap.AppSandbox",
+			            "type" : "pks.ui5strap.viewer.AppSandbox",
 			            
 			            "appURL" : appDefinition.url,
 			            "propagateMessages" : true
@@ -254,7 +254,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			            "id" : appDefinition.id,
 			            "location" : appDefinition["location"],
 			            
-			            "type" : "ui5strap.AppBase",
+			            "type" : "pks.ui5strap.viewer.AppBase",
 			            "rootComponent" : true,
 			            "theme" : "sap_bluecrystal"
 			        },
@@ -329,7 +329,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 				            "id" : appDefinition.id,
 				            "location" : appLocation,
 				            
-				            "type" : "ui5strap.AppSandbox",
+				            "type" : "pks.ui5strap.viewer.AppSandbox",
 				            
 				            "appURL" : appURL,
 				            "propagateMessages" : true

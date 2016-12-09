@@ -161,8 +161,6 @@ sap.ui
 										"ui5strap.ListNavItem",
 										"ui5strap.Modal", "ui5strap.Nav",
 										"ui5strap.NavBar",
-										"ui5strap.NavContainer",
-										"ui5strap.NavContainerStandard",
 										"ui5strap.PageHeader",
 										"ui5strap.Pager",
 										"ui5strap.Pagination",
@@ -857,38 +855,6 @@ sap.ui
 					 * END Types
 					 * ---------
 					 */
-
-					/*
-					 * ---------
-					 * 
-					 * Shorthand
-					 * 
-					 * ---------
-					 */
-
-					/**
-					 * Create a Controller instance with Action support. TODO
-					 * remove ui5strap.App dependency from here?
-					 * 
-					 * @Public
-					 * @Static
-					 * @deprecated
-					 */
-					ui5strap.controller = function(controllerName,
-							controllerImpl) {
-						jQuery.sap.log
-								.warning("ui5strap.controller is deprecated. Please extend ui5strap.Controller instead.");
-
-						jQuery.sap.require('ui5strap.Controller');
-
-						return ui5strap.Controller.extend(controllerName, controllerImpl);
-					};
-
-					
-
-					
-
-					
 
 					// End of library
 					return ui5strap;

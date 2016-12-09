@@ -7,7 +7,7 @@
 		<title>Ui5Strap</title>
 
 		<!-- Ui5Strap Preload Stylesheet -->
-		<link rel="stylesheet" type="text/css" href="lib/ui5strap/preload.css" />
+		<link rel="stylesheet" type="text/css" href="lib/pks/ui5strap/viewer/preload.css" />
 
 		<!-- Content Type -->
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
@@ -196,6 +196,7 @@
             data-sap-ui-logLevel="ALL"
             data-sap-ui-resourceroots='{
             	"pks.ui5strap.action": "./lib/pks/ui5strap/action/",
+            	"pks.ui5strap.viewer": "./lib/pks/ui5strap/viewer/",
         		"ui5strap": "./lib/ui5strap/"
     		}'>
        </script>
@@ -221,7 +222,7 @@
                     /*
                     * Initialize Viewer
                     */
-                    sap.ui.require(["ui5strap/Viewer"], function(Viewer){
+                    sap.ui.require(["pks/ui5strap/viewer/Viewer"], function(Viewer){
                         
                     	//The reference to the viewer instance should not be global
                         var viewer = new Viewer(viewerOptions);

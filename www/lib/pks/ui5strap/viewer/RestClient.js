@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.RestClient
+ * pks.ui5strap.viewer.RestClient
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -30,22 +30,22 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	/**
 	 * Constructor for a new RestClient instance.
 	 * 
-	 * @param {ui5strap.AppBase} app - App reference
+	 * @param {pks.ui5strap.viewer.AppBase} app - App reference
 	 * @param {object} options - Initial settings
 	 * 
 	 * @class
 	 * App component that provides simple rest client functionality.
-	 * @extends ui5strap.AppComponent
+	 * @extends pks.ui5strap.viewer.AppComponent
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.RestClient
+	 * @alias pks.ui5strap.viewer.RestClient
 	 * 
 	 */
-	var RestClient = AppComponent.extend("ui5strap.RestClient", {
+	var RestClient = AppComponent.extend("pks.ui5strap.viewer.RestClient", {
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);
 			

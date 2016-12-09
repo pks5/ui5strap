@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.Controller
+ * pks.ui5strap.viewer.Controller
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller', "./Utils"], function(uLib, AppBase, ControllerBase, Utils){
+sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller', "ui5strap/Utils"], function(uLib, AppBase, ControllerBase, Utils){
 
 	/**
 	 * Constructor for a new Controller instance.
@@ -42,10 +42,10 @@ sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller', "./Utils"
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.Controller
+	 * @alias pks.ui5strap.viewer.Controller
 	 * 
 	 */
-	var Controller = ControllerBase.extend("ui5strap.Controller"),
+	var Controller = ControllerBase.extend("pks.ui5strap.viewer.Controller"),
 		ControllerProto = Controller.prototype;
 	
 	/**

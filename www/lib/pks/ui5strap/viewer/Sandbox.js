@@ -42,13 +42,13 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.Sandbox
+	 * @alias pks.ui5strap.viewer.Sandbox
 	 * 
 	 */
-	var Sandbox = ControlBase.extend("ui5strap.Sandbox", {
+	var Sandbox = ControlBase.extend("pks.ui5strap.viewer.Sandbox", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.viewer",
 			
 			properties : { 
 				src : {

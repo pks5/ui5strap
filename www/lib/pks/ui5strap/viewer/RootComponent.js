@@ -15,16 +15,16 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Componen
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.RootComponent
+	 * @alias pks.ui5strap.viewer.RootComponent
 	 * 
 	 */
-	var RootComponent = Component.extend("ui5strap.RootComponent", {
+	var RootComponent = Component.extend("pks.ui5strap.viewer.RootComponent", {
 		metadata : {
 	    	interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"],
 	    	
 			properties : {
 	            app: {
-	            	type : "ui5strap.AppBase"
+	            	type : "pks.ui5strap.viewer.AppBase"
 	            }
 	        }
 	    }
@@ -34,7 +34,7 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Componen
 	
 	/**
 	 * Creates the Root Control asynchronously.
-	 * FIXME: When using ui5strap.AppBase as app module, there is no method called _createRootControl.
+	 * FIXME: When using pks.ui5strap.viewer.AppBase as app module, there is no method called _createRootControl.
 	 */
 	RootComponentProto._createRootControl = function(callback){
 		return this.getApp()._createRootControl(callback);
@@ -42,7 +42,7 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Componen
 	
 	/**
 	 * Shows the app's initial content.
-	 * TODO: This is only relevant when using ui5strap.App as app module.
+	 * TODO: This is only relevant when using pks.ui5strap.viewer.App as app module.
 	 */
 	RootComponentProto._showInitialContent = function(callback, useTransitions){
 		return this.getApp()._showInitialContent(callback, useTransitions);
@@ -50,7 +50,7 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Componen
 	
 	/**
 	 * Makes the app navigate to a certain page.
-	 * TODO: This is only relevant when using ui5strap.App as app module.
+	 * TODO: This is only relevant when using pks.ui5strap.viewer.App as app module.
 	 */
 	RootComponentProto._navigateTo = function(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions){
 		return this.getApp()._navigateTo(navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions);

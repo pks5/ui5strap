@@ -9,7 +9,7 @@ sap.ui.define([
            manifest: "json",
            
            properties : {
-        	   app : "ui5strap.AppBase"
+        	   app : "pks.ui5strap.viewer.AppBase"
            }
      },
       init : function () {

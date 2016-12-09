@@ -378,7 +378,7 @@
 	        
 	        {
 	             "id" : "feedClient",
-	             "type" : "ui5strap.RestClient",
+	             "type" : "pks.ui5strap.viewer.RestClient",
                      
 	             "settings" : {
 		             "url" : "/api/feed",

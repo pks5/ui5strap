@@ -30,27 +30,13 @@ sap.ui
 				[ 'jquery.sap.global', 
 				  'sap/ui/Device', 
 				  'sap/ui/core/library',
-				  'jquery.sap.mobile',
-				  "sap/ui/base/Object",
-				  "sap/ui/base/EventProvider",
-				  "sap/ui/base/ManagedObject",
-				  "sap/ui/core/Element",
-				  "sap/ui/core/Control",
-				  "sap/ui/model/json/JSONModel",
-				  "sap/ui/core/mvc/View"
+				  'jquery.sap.mobile'
 				],
 				function(
 					jQuery, 
 					Device, 
 					coreLib, 
-					jqm,
-					BaseObject,
-					EventProvider,
-					ManagedObject,
-					BaseElement,
-					BaseControl,
-					JSONModel,
-					BaseView
+					jqm
 				) {
 					
 					"use strict";
@@ -74,7 +60,7 @@ sap.ui
 					 */
 					sap.ui.getCore().initLibrary(
 							{
-								name : "pks.ui5strap.core.library",
+								name : "pks.ui5strap.viewer",
 
 								version : "0.11.6-SNAPSHOT",
 
@@ -89,9 +75,9 @@ sap.ui
 								elements : []
 							});
 					
-					var ui5strapCoreLib = pks.ui5strap.core.library;
+					var ui5strapViewerLib = pks.ui5strap.viewer;
 
 					// End of library
-					return ui5strapCoreLib;
+					return ui5strapViewerLib;
 
 				});

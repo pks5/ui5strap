@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AppSystem
+ * pks.ui5strap.viewer.AppSystem
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -26,7 +26,7 @@
  */
 
 /*
- * TODO Refactor to "ui5strap.SystemApp"
+ * TODO Refactor to "pks.ui5strap.viewer.SystemApp"
  */
 
  sap.ui.define(['./library', './App'], function(library, App){
@@ -39,17 +39,17 @@
 		 * 
 		 * @class
 		 * App module for system apps.
-		 * @extends ui5strap.App
+		 * @extends pks.ui5strap.viewer.App
 		 * 
 		 * @author Jan Philipp Knoeller
 		 * @version 0.11.6
 		 * 
 		 * @constructor
 		 * @public
-		 * @alias ui5strap.AppSystem
+		 * @alias pks.ui5strap.viewer.AppSystem
 		 * 
 		 */
-	 var AppSystem = App.extend("ui5strap.AppSystem", /** @lends ui5strap.AppSystem.prototype */{
+	 var AppSystem = App.extend("pks.ui5strap.viewer.AppSystem", /** @lends pks.ui5strap.viewer.AppSystem.prototype */{
 		 /**
 			 * @constructs
 			 */

@@ -61,7 +61,7 @@ sap.ui.define(['./library', "./Task"], function(library, ActionModule){
 			overlayParent = app;
 		
 		if("VIEWER" === this.getParameter("scope")){
-			if(!(app instanceof ui5strap.AppSystem)){
+			if(!(app instanceof pks.ui5strap.viewer.AppSystem)){
 				throw new Error("Only System Apps can open global overlays!");
 			}
 			overlayParent = app.getViewer();

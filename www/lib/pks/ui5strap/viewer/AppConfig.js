@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AppConfig
+ * pks.ui5strap.viewer.AppConfig
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -42,10 +42,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.AppConfig
+	 * @alias pks.ui5strap.viewer.AppConfig
 	 * 
 	 */
-	var AppConfig = ObjectBase.extend("ui5strap.AppConfig", {
+	var AppConfig = ObjectBase.extend("pks.ui5strap.viewer.AppConfig", {
 		"constructor" : function(options, parameters){
 			this.options = options || {};
 			this.parameters = parameters || {};
@@ -551,7 +551,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				appSection["type"] = appSection.module;
 			}
 			else{
-				appSection["type"] = "ui5strap.App";
+				appSection["type"] = "pks.ui5strap.viewer.App";
 			}
 		}
 		
@@ -603,7 +603,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				jQuery.sap.log.warning("Config setting 'app.views' is deprecated! Use 'app.pages' instead.")
 			}
 			else{
-				appSection["views"] = "ui5strap.App";
+				appSection["views"] = "pks.ui5strap.viewer.App";
 			}
 		}
 		*/

@@ -49,7 +49,7 @@ sap.ui.define(['./library', "./Task"], function(library, ActionModule){
 	* @Override
 	*/
 	ShowAppProto.run = function(){
-		if(!(this.context.app instanceof ui5strap.AppSystem)){
+		if(!(this.context.app instanceof pks.ui5strap.viewer.AppSystem)){
 			throw new Error('Only system apps can run pks.ui5strap.action.AMOpenApp');
 		}
 

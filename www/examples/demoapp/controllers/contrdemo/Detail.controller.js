@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/Controller', "sap/ui/model/json/JSONModel"], function(Controller, JSONModel){
+sap.ui.define(['pks/ui5strap/viewer/Controller', "sap/ui/model/json/JSONModel"], function(Controller, JSONModel){
 
 	var controllerImpl = {
 			onUpdate : function(oEvent){

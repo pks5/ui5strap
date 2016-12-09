@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './Task'], function(library, Task){
+sap.ui.define(['./library', './Task', "pks/ui5strap/viewer/NavContainer"], function(library, Task, NavContainer){
 
 	var NavigateTask = Task.extend("pks.ui5strap.action.NavigateTask"),
 		NavigateTaskProto = NavigateTask.prototype;
@@ -53,7 +53,7 @@ sap.ui.define(['./library', './Task'], function(library, Task){
 				navigator = this.context.resolve(this, CONTROLS.NAVIGATOR, true);
 			}
 			
-			if(!navigator || !(navigator instanceof ui5strap.NavContainer)){
+			if(!navigator || !(navigator instanceof NavContainer)){
 				throw new Error("[NavigateTask] Please provide a valid INavigator instance in .CONTROLS.navigator!");
 			}
 			

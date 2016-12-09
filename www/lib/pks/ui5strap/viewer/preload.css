@@ -1,0 +1,426 @@
+/*
+ * 
+ * UI5Strap
+ *
+ * Preload Stylesheet
+ *
+ * Include this Stylesheet into your index.html file.
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+/*
+* ROOT STRUCTURE
+*/
+
+/*
+* HTML Skeleton
+*/
+html, body{
+	width:100%;
+	height:100%;
+	
+	padding:0;
+	margin:0;
+
+	overflow:hidden;
+}
+
+/*
+* Root Container
+*/
+#ui5strap-container{
+	position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+
+  min-width:320px;
+  overflow: hidden;
+
+  transition: top .4s ease-in, bottom .4s ease-in;
+	-webkit-transition: top .4s ease-in, bottom .4s ease-in;
+	-moz-transition: top .4s ease-in, bottom .4s ease-in;
+}
+
+/*
+* Global Overlay
+* Z-Index 200K
+*/
+#ui5strap-overlay{
+  z-index:200000;
+}
+
+.ui5strap-overlay-default #ui5strap-overlay-content{
+	top:20%;
+	bottom:20%;
+	left:0;
+	right:0;
+}
+
+/*
+* Global Loader
+* Z-Index 300K
+*/
+#ui5strap-loader{
+	z-index:300000;
+}
+
+/*
+* Fatal Error Screen
+* Z-Index 400K
+*/
+#ui5strap-fatal{
+	z-index:400000;
+	display:none;
+	padding:20px;
+	color:white;
+	background-color: rgba(0,0,0,0.9);
+}
+
+/*
+* Fatal Error Screen Message
+*/
+#ui5strap-fatal-message{
+
+}
+
+/*
+* No Script Screen
+* Only visible when JavaScript is deactivated.
+*/
+#ui5strap-noscript{
+	z-index:400010;
+	padding:20px;
+	color:white;
+	background-color: rgba(0,0,0,0.9);
+}
+
+/*
+* APP
+*/
+
+/*
+* App Container
+*/
+.ui5strap-app{
+  position:absolute;
+  
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  
+  
+  overflow:hidden;
+}
+
+.ui5strap-app-standard{
+	background-color:white;
+}
+
+/*
+* Container for App Content
+*/
+.ui5strap-app-content{
+  position:absolute;
+  
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+
+  overflow:hidden;
+}
+
+/*
+* App Overlays
+* Z-Index: 20K
+*/
+.ui5strap-app-overlay{
+	z-index:20000;
+}
+
+/*
+* App Loaders
+* Z-Index: 20K
+*/
+.ui5strap-app-loader{
+	z-index:30000;
+}
+
+/*
+* Next App Container in Transitions
+*/
+.ui5strap-app-next{
+  position:absolute;
+  
+  left:0;
+  top:0;
+  right:auto;
+  bottom:auto;
+
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+/*
+* LAYERS
+*/
+
+/*
+* Base class for all kind of Layers such as Loaders, Overlays and Error Screens.
+*/
+.ui5strap-layer{
+	position: absolute;
+
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	
+	transition: opacity .25s ease;
+	-webkit-transition: opacity .25s ease;
+	-moz-transition: opacity .25s ease;
+
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+	
+	opacity:1;
+}
+
+/*
+* Base class for global and app dedicated Loading Screens.
+*/
+.ui5strap-loader{
+	background-color:rgba(0,0,0,0.8); 
+}
+
+/*
+* Spinner for the loader.
+*/
+.ui5strap-loader:after{
+	content:'';
+	position:absolute;
+	background-image:url('img/spinner-white.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size:cover;
+	width:24px;
+	height:24px;
+
+	left:50%;
+	top:50%;
+
+	margin-left:-12px;
+	margin-top:-12px;
+
+	color:white;
+
+	-webkit-animation: spin 2s infinite linear;
+	-moz-animation: spin 2s infinite linear;
+	-o-animation: spin 2s infinite linear;
+	animation: spin 2s infinite linear;
+
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+/*
+* Base class for global and app dedicated Overlays.
+*/
+.ui5strap-overlay{
+	
+}
+
+/*
+* Content of the Overlay. Lays over the Backdrop.
+*/
+.ui5strap-overlay-content{
+	position:absolute; 
+   top:0; 
+   left:0; 
+   bottom:0;
+   right:0;
+}
+
+/*
+* Backdrop for Overlay
+*/
+.ui5strap-overlay-backdrop{
+   position:absolute; 
+   top:0; 
+   left:0; 
+   bottom:0;
+   right:0;
+}
+
+/*
+* TODO
+*/
+.ui5strap-overlay-backdrop{
+	background-color:rgba(0,0,0,0.8); 
+    cursor:pointer;
+
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+
+/*
+* HELPERS
+*/
+
+/*
+* Hidden Class
+*/
+.ui5strap-hidden{
+	display:none !important;
+}
+
+.ui5strap-invisible{
+	opacity:0 !important;
+}
+
+/*
+* ANIMATIONS
+* Can be used for spinners on the splash screen.
+*/
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+@-moz-keyframes shake {
+    0% { -moz-transform: rotate(-5deg); }
+    50% { -moz-transform: rotate(5deg); }
+    100% { -moz-transform: rotate(-5deg); }
+}
+@-webkit-keyframes shake {
+    0% { -webkit-transform: rotate(-5deg); }
+    50% { -webkit-transform: rotate(5deg); }
+    100% { -webkit-transform: rotate(-5deg); }
+}
+@keyframes shake {
+    0%{transform:rotate(-5deg);}
+    50% {transform:rotate(5deg);}
+    100%{transform:rotate(-5deg);}
+}
+
+@keyframes shake-wide{ 
+    0% { transform: translate(12px, 0); }
+    50% { transform: translate(-12px, 0); }
+    100% { transform: translate(0, 0); }
+}
+ 
+@-moz-keyframes shake-wide{ 
+    0% { -moz-transform: translate(12px, 0); }
+    50% { -moz-transform: translate(-12px, 0); }
+    100% { -moz-transform: translate(0, 0); }
+}
+ 
+@-webkit-keyframes shake-wide {
+    0% { -webkit-transform: translate(12px, 0); }
+    50% { -webkit-transform: translate(-12px, 0); }
+    100% { -webkit-transform: translate(0, 0); }
+}
+
+/*
+* Home bar
+*/
+#ui5strap-bar-home{
+    display:none;
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height:30px;
+    background-color:black;
+}
+
+/*
+* Home bar show trigger
+*/
+.ui5strap-with-bar-home #ui5strap-bar-home{
+    display:block;
+}
+
+/*
+* Home Button (middle)
+*/
+#ui5strap-button-home{
+    position: absolute;
+    display:block;
+    width:90px;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+    left:50%;
+    top: 0;
+    margin-left: -45px;
+    font-size: 18px;
+    cursor:pointer;
+    background-color:#202020;
+    color:#f0f0f0;
+}
+
+/*
+* TaskManager Button (right)
+*/
+#ui5strap-button-taskmanager{
+    position: absolute;
+    display:block;
+    width:90px;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+    right:0;
+    top: 0;
+    font-size: 18px;
+    cursor:pointer;
+    background-color:#202020;
+    color:#f0f0f0;
+}
+
+/*
+* Shrink the main container for home bar
+*/
+.ui5strap-with-bar-home #ui5strap-container{
+    bottom:30px; 
+}

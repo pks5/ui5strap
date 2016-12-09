@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ViewerBase
+ * pks.ui5strap.viewer.ViewerBase
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -26,7 +26,7 @@
  */
  
 
-sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Console", "./Layer"], function(library, ObjectBase, ControlBase, Console, Layer){
+sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Console", "ui5strap/Layer", "./NavContainer"], function(library, ObjectBase, ControlBase, Console, Layer, NavContainer){
 	
 	/**
 	 * Constructor for a new ViewerBase instance.
@@ -42,10 +42,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ViewerBase
+	 * @alias pks.ui5strap.viewer.ViewerBase
 	 * 
 	 */
-	var ViewerBase = ObjectBase.extend('ui5strap.ViewerBase', /** @lends ui5strap.ViewerBase.prototype */{
+	var ViewerBase = ObjectBase.extend('pks.ui5strap.viewer.ViewerBase', /** @lends pks.ui5strap.viewer.ViewerBase.prototype */{
 		/**
 		 * @constructs
 		 */
@@ -187,7 +187,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 		
 		Layer.register(this.options.overlay);
 
-		this.overlayControl = new ui5strap.NavContainer();
+		this.overlayControl = new NavContainer();
 		this.overlayControl.placeAt(this.options.overlay + '-content');
 
 		jQuery('#' + this.options.overlay + '-backdrop').on('tap', function onTap(event){

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.App
+ * pks.ui5strap.viewer.App
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,28 +25,28 @@
  * 
  */
 
-sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui/core/mvc/HTMLView", "sap/ui/core/mvc/XMLView", "sap/ui/core/CustomData", "sap/ui/model/resource/ResourceModel", "sap/ui/model/json/JSONModel", "./Utils"], 
+sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui/core/mvc/HTMLView", "sap/ui/core/mvc/XMLView", "sap/ui/core/CustomData", "sap/ui/model/resource/ResourceModel", "sap/ui/model/json/JSONModel", "ui5strap/Utils"], 
 				function(ulib, AppBase, AppConfig, AppComponent, HTMLView, XMLView, CustomData, ResourceModel, JSONModel, Utils){
 	
 	/**
 	 * Constructor for a new App instance.
 	 * 
-	 * @param config {ui5strap.AppConfig} App configuration.
-	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
+	 * @param config {pks.ui5strap.viewer.AppConfig} App configuration.
+	 * @param viewser {pks.ui5strap.viewer.ViewerBase} Viewer instance that loaded this app.
 	 * 
 	 * @class
 	 * Base Class for ui5strap apps with root navigator.
-	 * @extends ui5strap.AppBase
+	 * @extends pks.ui5strap.viewer.AppBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.App
+	 * @alias pks.ui5strap.viewer.App
 	 * 
 	 */
-	var App = AppBase.extend('ui5strap.App', /** @lends ui5strap.App.prototype */ {
+	var App = AppBase.extend('pks.ui5strap.viewer.App', /** @lends pks.ui5strap.viewer.App.prototype */ {
 		metadata : {
 			interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"]
 		},
@@ -62,7 +62,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		}
 	}),
 	/**
-	 * @alias ui5strap.App.prototype
+	 * @alias pks.ui5strap.viewer.App.prototype
 	 */
 	AppProto = App.prototype;
 
@@ -75,7 +75,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	/**
 	* Preloads views that can be cached.
 	* 
-	* @param _this {ui5strap.App} The reference to the app instance.
+	* @param _this {pks.ui5strap.viewer.App} The reference to the app instance.
 	* @param callback {function} The callback function.
 	* @private
 	*/
@@ -349,7 +349,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @protected
 	 */
 	AppProto._buildSingleViewRootControl = function(callback){
-		sap.ui.require(["ui5strap/NavContainer"], function(NavContainerConstructor){
+		sap.ui.require(["pks/ui5strap/viewer/NavContainer"], function(NavContainerConstructor){
 			callback && callback(new NavContainerConstructor());
 		});
 	};
@@ -388,7 +388,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto._createRootControl = function(callback){
 		var _this = this,
 			navigatorOptions = this.config.data.rootNavigation,
-			navContainerModule = navigatorOptions["type"] || navigatorOptions.module || "ui5strap.NavContainer";
+			navContainerModule = navigatorOptions["type"] || navigatorOptions.module || "pks.ui5strap.viewer.NavContainer";
 		
 		sap.ui.require([navContainerModule.replace(/\./g, "/")], function(NavContainerConstructor){
 			var navContainerOptions = navigatorOptions.settings || {};

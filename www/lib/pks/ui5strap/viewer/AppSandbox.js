@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.App
+ * pks.ui5strap.viewer.AppSandbox
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -26,7 +26,7 @@
  */
 
 /*
- * TODO Refactor to "ui5strap.SandboxApp"
+ * TODO Refactor to "pks.ui5strap.viewer.SandboxApp"
  */
 
  sap.ui.define(['./library', './AppBase', './Sandbox'], function(library, AppBase, Sandbox){
@@ -39,17 +39,17 @@
 		 * 
 		 * @class
 		 * App module for creating sandbox apps.
-		 * @extends ui5strap.AppBase
+		 * @extends pks.ui5strap.viewer.AppBase
 		 * 
 		 * @author Jan Philipp Knoeller
 		 * @version 0.11.6
 		 * 
 		 * @constructor
 		 * @public
-		 * @alias ui5strap.AppSandbox
+		 * @alias pks.ui5strap.viewer.AppSandbox
 		 * 
 		 */
-	 var AppSandbox = AppBase.extend("ui5strap.AppSandbox", /** @lends ui5strap.AppSandbox.prototype */{
+	 var AppSandbox = AppBase.extend("pks.ui5strap.viewer.AppSandbox", /** @lends pks.ui5strap.viewer.AppSandbox.prototype */{
 		 /**
 			 * @constructs
 			 */

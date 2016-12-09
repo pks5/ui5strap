@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.Console
+ * pks.ui5strap.viewer.Console
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', 'ui5strap/ControlBase'], function(library, ControlBase){
 
 	var defaultLogName = '__DEFAULT_LOG';
 	
@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @alias ui5strap.Console
 	 * 
 	 */
-	var Console = ControlBase.extend("ui5strap.Console", {
+	var Console = ControlBase.extend("pks.ui5strap.viewer.Console", {
 		metadata : {
 
 			library : "ui5strap",

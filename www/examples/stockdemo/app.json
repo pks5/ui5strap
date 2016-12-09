@@ -26,8 +26,8 @@
         "components" : [
             {
             	"id" : "frame",
-                "module" : "ui5strap.AppFrame",
-                "navContainer" : "ui5strap.NavContainerStandard",
+                "module" : "pks.ui5strap.viewer.AppFrame",
+                "navContainer" : "pks.ui5strap.viewer.NavContainerStandard",
                 "navContainerOptions" : {
                     "options" : "sidebar"
                 },

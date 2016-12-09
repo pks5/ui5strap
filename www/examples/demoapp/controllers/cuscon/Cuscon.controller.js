@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/Controller'], function(Controller){
+sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 
 	var controllerImpl = {
 			handleTap : function(oEvent){

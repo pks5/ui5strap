@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.AppComponent
+ * pks.ui5strap.viewer.AppComponent
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -42,10 +42,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase)
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.AppComponent
+	 * @alias pks.ui5strap.viewer.AppComponent
 	 * 
 	 */
-	var AppComponent = ObjectBase.extend("ui5strap.AppComponent", /** @lends ui5strap.AppComponent.prototype */{
+	var AppComponent = ObjectBase.extend("pks.ui5strap.viewer.AppComponent", /** @lends pks.ui5strap.viewer.AppComponent.prototype */{
 		/**
 		 * @constructs
 		 */

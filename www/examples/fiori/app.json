@@ -3,7 +3,7 @@
 	        "id" : "sap.ui.demo.wt",
 	        "name" : "Fiori Test",
 	        "rootComponent" : true,
-	        "type" : "ui5strap.AppBase",
+	        "type" : "pks.ui5strap.viewer.AppBase",
 	        "theme" : "sap_bluecrystal"
 	}
 }

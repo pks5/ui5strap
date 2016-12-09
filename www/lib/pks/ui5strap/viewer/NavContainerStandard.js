@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.NavContainerStandard
+ * pks.ui5strap.viewer.NavContainerStandard
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -35,17 +35,17 @@ sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 	 * 
 	 * @class
 	 * NavContainer with optional nav bar and sidebar.
-	 * @extends ui5strap.NavContainer
+	 * @extends pks.ui5strap.viewer.NavContainer
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.NavContainerStandard
+	 * @alias pks.ui5strap.viewer.NavContainerStandard
 	 * 
 	 */
-	var NavContainerStandard = NavContainer.extend("ui5strap.NavContainerStandard", {
+	var NavContainerStandard = NavContainer.extend("pks.ui5strap.viewer.NavContainerStandard", {
 		metadata : {
 
 			library : "ui5strap",
@@ -53,7 +53,7 @@ sap.ui.define(['./library', './NavContainer'], function(library, NavContainer){
 		},
 
 		//Use default NavContainerRenderer
-		renderer : "ui5strap.NavContainerRenderer"
+		renderer : "pks.ui5strap.viewer.NavContainerRenderer"
 	}),
 	NavContainerStandardProto = NavContainerStandard.prototype;
 
