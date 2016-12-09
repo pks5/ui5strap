@@ -26,7 +26,7 @@
  */
  
 
-sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library, ObjectBase, Console){
+sap.ui.define(['./library', 'sap/ui/base/Object', "./Console", "./Layer"], function(library, ObjectBase, Console, Layer){
 	
 	/**
 	 * Constructor for a new ViewerBase instance.
@@ -101,7 +101,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 	 */
 	ViewerBaseProto.init = function(){
 		//Register Loader Layer
-		ui5strap.Layer.register('ui5strap-loader');
+		Layer.register('ui5strap-loader');
   		
 		this._initLog();
 		this._initOverlay();
@@ -185,7 +185,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 	ViewerBaseProto._initOverlay = function(){
 		var _this = this;
 		
-		ui5strap.Layer.register(this.options.overlay);
+		Layer.register(this.options.overlay);
 
 		this.overlayControl = new ui5strap.NavContainer();
 		this.overlayControl.placeAt(this.options.overlay + '-content');
@@ -200,7 +200,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 	* @Public
 	*/
 	ViewerBaseProto.isOverlayVisible = function(){
-		return ui5strap.Layer.isVisible(this.options.overlay);
+		return Layer.isVisible(this.options.overlay);
 	};
 
 	/**
@@ -212,7 +212,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 			overlayControl = this.overlayControl,
 			transitionName = transitionName || 'slide-ttb';
 		
-		ui5strap.Layer.setVisible(this.options.overlay, true, function(){
+		Layer.setVisible(this.options.overlay, true, function(){
 			if(viewDataOrControl instanceof ui5strap.Control){
 				//Control is directly injected into the frame
 				overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
@@ -278,7 +278,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "./Console"], function(library
 			transitionName = transitionName || 'slide-btt';
 		
 		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
-			ui5strap.Layer.setVisible(_this.options.overlay, false, function(){
+			Layer.setVisible(_this.options.overlay, false, function(){
 				if(page instanceof sap.ui.core.mvc.View){
 					var pageViewData = page.getViewData();
 					if(pageViewData.app){

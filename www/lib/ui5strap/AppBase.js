@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5strap/action/Action'], function(uLib, ObjectBase, UIArea, Action){
+sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5strap/action/Action', "./Utils", "./Layer"], function(uLib, ObjectBase, UIArea, Action, Utils, Layer){
 	
 	"use strict";
 	
@@ -191,7 +191,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5
 			}
 		}
 
-		var scriptBlock = new ui5strap.ScriptBlock();
+		var scriptBlock = new Utils.ScriptBlock();
 
 		scriptBlock.load(files, function(){
 			scriptBlock.execute(true);
@@ -729,8 +729,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5
 	AppBaseProto.unload = function(callback){
 		jQuery.sap.log.debug("AppBaseProto.unload");
 		
-		ui5strap.Layer.unregister(this._overlayId);
-		ui5strap.Layer.unregister(this.config.createDomId('loader'));
+		Layer.unregister(this._overlayId);
+		Layer.unregister(this.config.createDomId('loader'));
 
 		this.onUnload(new sap.ui.base.Event("ui5strap.app.unload", this, {}));
 
@@ -1058,8 +1058,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5
 	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.setLoaderVisible = function(visible, callback){
-		//ui5strap.Layer.setVisible('ui5strap-loader', visible, callback, option);
-		ui5strap.Layer.setVisible(this.config.createDomId('loader'), visible, callback);
+		//Layer.setVisible('ui5strap-loader', visible, callback, option);
+		Layer.setVisible(this.config.createDomId('loader'), visible, callback);
 	};
 
 	/**
@@ -1068,7 +1068,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5
 	* @returns {boolean} Whether the overlay is visible.
 	*/
 	AppBaseProto.isOverlayVisible = function(){
-		return ui5strap.Layer.isVisible(this._overlayId);
+		return Layer.isVisible(this._overlayId);
 	};
 
 	/**
@@ -1113,7 +1113,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5
 		//Trigger onUpdate events
 		navControl.updateTarget(target, oPage, pageUpdateParameters);
 		
-		ui5strap.Layer.setVisible(this._overlayId, true, function(){
+		Layer.setVisible(this._overlayId, true, function(){
 			navControl.toPage(oPage, target, transitionName || "slide-ttb", function toPage_complete(param){
 				
 				//Set target available
@@ -1143,7 +1143,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5
 			transitionName = transitionName || 'slide-btt';
 		
 		navigator.toPage(null, 'content', transitionName, function toPage_complete(){
-			ui5strap.Layer.setVisible(_this._overlayId, false, callback, true);
+			Layer.setVisible(_this._overlayId, false, callback, true);
 		});	
 	};
 
@@ -1684,7 +1684,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5
 		}
 		
 		var _this = this,
-			Layer = uLib.Layer,
 			overlayId = this.config.createDomId("overlay"),
 			appContainer = document.createElement('div'),
 			appContent = document.createElement('div'),

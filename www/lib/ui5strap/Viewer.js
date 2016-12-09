@@ -25,8 +25,8 @@
  * 
  */
 
-sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition', "./Utils"], 
-				function(uLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition, Utils){
+sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition', "./Utils", "./Layer"], 
+				function(uLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition, Utils, Layer){
 	
 	/**
 	 * Constructor for a new Viewer instance.
@@ -719,7 +719,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	* @Public
 	*/
 	ViewerMultiProto.showLoader = function(callback){
-		ui5strap.Layer.setVisible('ui5strap-loader', true, callback);
+		Layer.setVisible('ui5strap-loader', true, callback);
 	};
 
 	/**
@@ -727,7 +727,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 	* @Public
 	*/
 	ViewerMultiProto.hideLoader = function(callback){
-		ui5strap.Layer.setVisible('ui5strap-loader', false, callback);
+		Layer.setVisible('ui5strap-loader', false, callback);
 	};
 
 	/*

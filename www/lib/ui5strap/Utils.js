@@ -395,5 +395,96 @@ sap.ui.define([ './library'], function(ui5strapLibrary) {
 		return parentControl;
 	};
 	
+	Utils.ScriptBlock = function() {
+		this._pending = {};
+		this._order = [];
+		this._pendingRequests = 0;
+		this._buffer = '';
+
+		var _this = this;
+
+		/**
+		 * @Private
+		 */
+		var _successCallback = function(response, callback) {
+			_this._pending[this.url]["script"] = response;
+
+			_this._pendingRequests--;
+
+			if (0 === _this._pendingRequests) {
+				for (var i = 0; i < _this._order.length; i++) {
+					if (!_this._order[i].script) {
+						throw new Error(
+								'Could not append script to buffer: '
+										+ _this._order[i].url);
+					}
+					_this._buffer = _this._buffer.concat(
+							"\n;\n", _this._order[i].script);
+				}
+
+				_this._pending = {};
+				_this._order = [];
+
+				callback && callback();
+			}
+		};
+
+		/**
+		 * @Public
+		 */
+		this.load = function(scripts, callback) {
+			if (0 < this._pendingRequests
+					|| this._order.length > 0) {
+				throw new Error(
+						'Could not load scripts: requests still pending.');
+			}
+
+			this._pendingRequests = scripts.length;
+
+			for (var i = 0; i < this._pendingRequests; i++) {
+				var scriptUrl = scripts[i], scriptData = {
+					"index" : i,
+					"url" : scriptUrl,
+					"script" : null
+				};
+
+				this._pending[scriptUrl] = scriptData;
+				this._order.push(scriptData);
+
+				jQuery.ajax({
+					url : scriptUrl,
+					dataType : "text",
+					success : function(response) {
+						_successCallback.call(this, response,
+								callback);
+					},
+					error : function() {
+						throw new Error(
+								'Could not load script: '
+										+ scriptUrl);
+					}
+				});
+			}
+		};
+
+		/**
+		 * @Public
+		 */
+		this.execute = function(useEval) {
+			if ('' === this._buffer) {
+				return false;
+			}
+			var returnValue = null;
+			if (true === useEval) {
+				returnValue = eval.call(window, this._buffer);
+			} else {
+				returnValue = (new Function(this._buffer))(); // .call(window);
+			}
+			this._buffer = '';
+
+			return returnValue;
+		};
+	};
+	
 	return Utils;
 });
