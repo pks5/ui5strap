@@ -27,7 +27,7 @@
 
 sap.ui
 		.define(
-				[ "ui5strap/library", "ui5strap/ControlBase", "./Utils" ],
+				[ "ui5strap/library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils" ],
 				function(ulib, ControlBase, Utils) {
 					"use strict";
 					

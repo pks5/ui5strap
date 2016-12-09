@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', "./Utils"], function(library, ControlBase, Utils){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils"], function(library, ControlBase, Utils){
 
 	/**
 	 * Constructor for a new Well instance.

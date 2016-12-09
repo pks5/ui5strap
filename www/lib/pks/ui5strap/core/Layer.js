@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.Layer
+ * pks.ui5strap.core.Layer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -28,7 +28,7 @@
 sap.ui
 		.define(
 				[ './library' ],
-				function(ui5strapLibrary) {
+				function(ui5strapCoreLib) {
 
 					/*
 					 * -----
@@ -216,7 +216,7 @@ sap.ui
 													transTimeout = window
 															.setTimeout(
 																	transCallback,
-																	ui5strap.options.layerTimeout);
+																	ui5strapCoreLib.options.layerTimeout);
 
 													$layer
 															.toggleClass(

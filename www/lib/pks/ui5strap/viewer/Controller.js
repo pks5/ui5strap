@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller', "ui5strap/Utils"], function(uLib, AppBase, ControllerBase, Utils){
+sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller', "../core/Utils"], function(uLib, AppBase, ControllerBase, Utils){
 
 	/**
 	 * Constructor for a new Controller instance.

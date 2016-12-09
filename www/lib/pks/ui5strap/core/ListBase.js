@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ListBase
+ * pks.ui5strap.core.ListBase
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListItemBase', "./Utils"], function(library, ControlBase, ListSelectionSupport, ListItemBase, Utils){
+sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListItemBase', "./Utils"], function(library, ControlBase, ListSelectionSupport, ListItemBase, Utils){
 
 	var _meta = {
 			interfaces : [],
@@ -51,17 +51,17 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	 * 
 	 * @class
 	 * Abstrac base class for all ui5strap lists.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ListBase
+	 * @alias pks.ui5strap.core.ListBase
 	 * 
 	 */
-	var ListBase = ControlBase.extend("ui5strap.ListBase", {
+	var ListBase = ControlBase.extend("pks.ui5strap.core.ListBase", {
 		metadata : _meta,
 		renderer : null
 	}),
@@ -90,7 +90,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 		oEvent.setMarked();
 		oEvent.setMarked("ui5strap.ISelectionProvider");
 		oEvent.setMarked("ui5strap.IItemsProvider");
-		oEvent.setMarked("ui5strap.ListBase");
+		oEvent.setMarked("pks.ui5strap.core.ListBase");
 		
 		//TODO find the right list item! (dropdown menu)
 		var item = Utils.findClosestParentControl(oEvent.srcControl, ListItemBase),
@@ -132,7 +132,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	 * @deprecated
 	 */
 	ListBaseProto.setSelectedIndex = function(itemIndex){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
 		
 		return this.setSelectionIndex(itemIndex);
 	};
@@ -142,7 +142,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	 * @deprecated
 	 */
 	ListBaseProto.getSelectedIndex = function(){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
 		
 		var selection = this.getSelectionIndex();
 		return selection && selection.length ? selection[0] : null;
@@ -154,7 +154,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	 * @deprecated
 	 */
 	ListBaseProto.setSelectedControl = function(item){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedControl is deprecated! Use .setSelection instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.setSelectedControl is deprecated! Use .setSelection instead.");
 	
 		return this.setSelection(item);
 	};
@@ -164,7 +164,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	 * @deprecated
 	 */
 	ListBaseProto.getSelectedControl = function(){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedControl is deprecated! Use .getSelection instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.getSelectedControl is deprecated! Use .getSelection instead.");
 		
 		var selection = this.getSelection();
 		return selection && selection.length ? selection[0] : null;
@@ -175,7 +175,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 	 * @deprecated
 	 */
 	ListBaseProto.setSelectedCustom = function(dataKey, value){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedCustom is deprecated! Use .setSelectionByCustomData instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.setSelectedCustom is deprecated! Use .setSelectionByCustomData instead.");
 		
 		return this.setSelectionByCustomData(dataKey, value);
 	};

@@ -35,7 +35,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * 
 	 * @class
 	 * Control for creating Bootstrap paginations.
-	 * @extends ui5strap.ListBase
+	 * @extends pks.ui5strap.core.ListBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6

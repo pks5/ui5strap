@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function(library, ControlBase, ResponsiveTransition){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/ResponsiveTransition'], function(library, ControlBase, ResponsiveTransition){
 
 	/**
 	 * Constructor for a new TabContainer instance.

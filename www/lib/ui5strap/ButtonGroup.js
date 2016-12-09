@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button', './ListItemBase', "./Utils", "./RenderUtils"], function(library, ControlBase, ListSelectionSupport, Button, ListItemBase, Utils, RenderUtils){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/ListSelectionSupport', './Button', 'pks/ui5strap/core/ListItemBase', "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(library, ControlBase, ListSelectionSupport, Button, ListItemBase, Utils, RenderUtils){
 
 	var _meta = {
 			
@@ -219,7 +219,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	 * @deprecated
 	 */
 	ButtonGroupProto.setSelectedIndex = function(itemIndex){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.setSelectedIndex is deprecated! Use .setSelectionIndices instead.");
 		
 		return this.setSelectionIndex(itemIndex);
 	};
@@ -229,7 +229,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	 * @deprecated
 	 */
 	ButtonGroupProto.getSelectedIndex = function(){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.getSelectedIndex is deprecated! Use .getSelectionIndices instead.");
 		
 		var selection = this.getSelectionIndex();
 		return selection && selection.length ? selection[0] : null;
@@ -241,7 +241,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	 * @deprecated
 	 */
 	ButtonGroupProto.setSelectedControl = function(item){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedControl is deprecated! Use .setSelection instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.setSelectedControl is deprecated! Use .setSelection instead.");
 	
 		return this.setSelection(item);
 	};
@@ -251,7 +251,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	 * @deprecated
 	 */
 	ButtonGroupProto.getSelectedControl = function(){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.getSelectedControl is deprecated! Use .getSelection instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.getSelectedControl is deprecated! Use .getSelection instead.");
 		
 		var selection = this.getSelection();
 		return selection && selection.length ? selection[0] : null;
@@ -262,7 +262,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 	 * @deprecated
 	 */
 	ButtonGroupProto.setSelectedCustom = function(dataKey, value){
-		jQuery.sap.log.warning("ui5strap.ListBase.prototy.setSelectedCustom is deprecated! Use .setSelectionByCustomData instead.");
+		jQuery.sap.log.warning("pks.ui5strap.core.ListBase.prototy.setSelectedCustom is deprecated! Use .setSelectionByCustomData instead.");
 		
 		return this.setSelectionByCustomData(dataKey, value);
 	};

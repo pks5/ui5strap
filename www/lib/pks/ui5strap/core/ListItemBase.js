@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ListItemBase
+ * pks.ui5strap.core.ListItemBase
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
+sap.ui.define(['./library', "./ControlBase", './SelectableSupport'], function(library, ControlBase, SelectableSupport){
 
 	var _meta = {
 			interfaces : [],
@@ -63,10 +63,10 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ListItemBase
+	 * @alias pks.ui5strap.core.ListItemBase
 	 * 
 	 */
-	var ListItemBase = ControlBase.extend("ui5strap.ListItemBase", {
+	var ListItemBase = ControlBase.extend("pks.ui5strap.core.ListItemBase", {
 		metadata : _meta
 	}),
 	ListItemBaseProto = ListItemBase.prototype;

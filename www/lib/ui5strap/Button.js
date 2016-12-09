@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './SelectableSupport', "./Utils"], function(library, ControlBase, SelectableSupport, Utils){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils"], function(library, ControlBase, SelectableSupport, Utils){
 
 	var _meta =  {
 			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupButton"],

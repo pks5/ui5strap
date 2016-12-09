@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItemBase', './ListLinkItem', "./Utils"], function(library, ListItemBase, ListLinkItem, Utils){
+sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', './ListLinkItem', "pks/ui5strap/core/Utils"], function(library, ListItemBase, ListLinkItem, Utils){
 
 	/**
 	 * Constructor for a new ListDropdownItem instance.

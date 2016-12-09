@@ -6,7 +6,7 @@
 		"CONTROLS" : {
 			"languageButton" : {
 				"SOURCE" : "Event",
-				"TYPE" : "ui5strap.ListItemBase",
+				"TYPE" : "pks.ui5strap.core.ListItemBase",
 				"parameter" : "listItem"
 			}
 		},

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.SelectableSupport
+ * pks.ui5strap.core.SelectableSupport
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.OptionsSupport
+ * pks.ui5strap.core.OptionsSupport
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -38,7 +38,7 @@ sap.ui.define(['./library'], function(library){
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.OptionsSupport
+	 * @alias pks.ui5strap.core.OptionsSupport
 	 * 
 	 */
 	var OptionsSupport = {};

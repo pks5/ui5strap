@@ -25,8 +25,8 @@
  * 
  */
 
-sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', 'ui5strap/ResponsiveTransition', "ui5strap/Utils", "ui5strap/Layer"], 
-				function(uLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition, Utils, Layer){
+sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppConfig', './NavContainer', '../core/ResponsiveTransition', "../core/Utils", "../core/Layer"], 
+				function(ui5strapViewerLib, ui5strapCoreLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition, Utils, Layer){
 	
 	/**
 	 * Constructor for a new Viewer instance.
@@ -93,7 +93,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			
 			//console.log(sNavContainerHeight, sOverlayWidth);	
 				
-			bCssAvailable = "100%" === sNavContainerHeight || -1 !== sNavContainerHeight.indexOf("px"); //|| _this._waitCssTime >= ui5strap.options.timeoutWaitForCss;
+			bCssAvailable = "100%" === sNavContainerHeight || -1 !== sNavContainerHeight.indexOf("px"); //|| _this._waitCssTime >= ui5strapCoreLib.options.timeoutWaitForCss;
 		}
 		
 		if (bCssAvailable) {
@@ -108,8 +108,8 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			_this._waitCssTimer = window.setTimeout(
 					function() {
 						_waitForLibraryCss(_this, callback);
-					}, ui5strap.options.intervalWaitForCss);
-			_this._waitCssTime += ui5strap.options.intervalWaitForCss;
+					}, ui5strapCoreLib.options.intervalWaitForCss);
+			_this._waitCssTime += ui5strapCoreLib.options.intervalWaitForCss;
 		}
 	};
 	

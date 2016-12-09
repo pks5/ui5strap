@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './RenderUtils'], function(library, ControlBase, RenderUtils){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/RenderUtils'], function(library, ControlBase, RenderUtils){
 
 	/**
 	 * Constructor for a new TextInput instance.

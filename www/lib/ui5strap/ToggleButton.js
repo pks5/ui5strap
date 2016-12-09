@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "./ControlBase", './SelectableSupport'], function(ulib, ControlBase, SelectableSupport){
+sap.ui.define(["./library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport'], function(ulib, ControlBase, SelectableSupport){
 	
 	
 	var _meta = {

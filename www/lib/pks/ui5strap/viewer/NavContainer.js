@@ -25,7 +25,7 @@
  * 
  */
  
-sap.ui.define(['./library', 'ui5strap/ControlBase', 'ui5strap/ResponsiveTransition', "ui5strap/Utils"], function(library, ControlBase, ResponsiveTransition, Utils){
+sap.ui.define(['./library', '../core/ControlBase', '../core/ResponsiveTransition', "../core/Utils"], function(library, ControlBase, ResponsiveTransition, Utils){
 
 	/**
 	 * Constructor for a new NavContainer instance.
@@ -805,7 +805,7 @@ sap.ui.define(['./library', 'ui5strap/ControlBase', 'ui5strap/ResponsiveTransiti
 	};
 	
 	NavContainerProto.updateBindingContext = function(bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll){
-		ui5strap.ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
+		ControlBase.prototype.updateBindingContext.call(this, bSkipLocal, bSkipChildren, sFixedModelName, bUpdateAll);
 		
 		var oModelNames = {},
 			sModelName,

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItemBase', './SelectableSupport', "./Utils"], function(library, ListItemBase, SelectableSupport, Utils){
+sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils"], function(library, ListItemBase, SelectableSupport, Utils){
 
 	var _meta = {
 			interfaces : [],
@@ -66,7 +66,7 @@ sap.ui.define(['./library', './ListItemBase', './SelectableSupport', "./Utils"],
 	 * 
 	 * @class
 	 * Control for creating items for List controls.
-	 * @extends ui5strap.ListItemBase
+	 * @extends pks.ui5strap.core.ListItemBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6

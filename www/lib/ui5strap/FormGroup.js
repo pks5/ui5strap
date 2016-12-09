@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, ControlBase){
 
 	/**
 	 * Constructor for a new FormGroup instance.

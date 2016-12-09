@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.RenderUtils
+ * pks.ui5strap.core.RenderUtils
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 

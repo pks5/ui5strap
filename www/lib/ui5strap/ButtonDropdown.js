@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './Button', "./Utils"], function(library, Button, Utils){
+sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils"], function(library, Button, Utils){
 
 	/**
 	 * Constructor for a new ButtonDropdown instance.
@@ -143,7 +143,7 @@ sap.ui.define(['./library', './Button', "./Utils"], function(library, Button, Ut
 			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 				this.close();
 				
-				var menuListItem = Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItemBase),
+				var menuListItem = Utils.findClosestParentControl(oEvent.srcControl, pks.ui5strap.core.ListItemBase),
 					hostUpdate = this.getUpdate();
 				
 				if(menuListItem){

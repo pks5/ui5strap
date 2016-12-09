@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', "./Utils", "./RenderUtils"], function(library, ControlBase, Utils, RenderUtils){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(library, ControlBase, Utils, RenderUtils){
 
 	/**
 	 * Constructor for a new Paragraph instance.

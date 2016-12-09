@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/library', 'ui5strap/ControlBase'], function(library, ControlBase){
+sap.ui.define(['ui5strap/library', 'pks/ui5strap/core/ControlBase'], function(library, ControlBase){
 	
 	var EventTest = ControlBase.extend("com.ui5strap.apps.demoapp.controls.EventTest", {
 		metadata : {

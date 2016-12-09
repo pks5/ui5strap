@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global', "./RenderUtils"], function(jQuery, RenderUtils) {
+sap.ui.define(['jquery.sap.global', "pks/ui5strap/core/RenderUtils"], function(jQuery, RenderUtils) {
 
 	/**
 	 * Panel renderer.

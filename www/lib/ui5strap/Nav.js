@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListBase'], function(library, ListBase){
+sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, ListBase){
 
 	/**
 	 * Constructor for a new Nav instance.
@@ -35,7 +35,7 @@ sap.ui.define(['./library', './ListBase'], function(library, ListBase){
 	 * 
 	 * @class
 	 * Control for creating Boostrap nav lists.
-	 * @extends ui5strap.ListBase
+	 * @extends pks.ui5strap.core.ListBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6

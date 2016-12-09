@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', './ResponsiveTransition'], function(library, NavContainer, ResponsiveTransition){
+sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', 'pks/ui5strap/core/ResponsiveTransition'], function(library, NavContainer, ResponsiveTransition){
 
 	/**
 	 * Constructor for a new BarNavContainer instance.

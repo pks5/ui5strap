@@ -148,12 +148,12 @@ sap.ui
 										"ui5strap.InputGroup",
 										"ui5strap.Jumbotron", "ui5strap.Label",
 										"ui5strap.Line", "ui5strap.Link",
-										"ui5strap.List", "ui5strap.ListBase",
+										"ui5strap.List", "pks.ui5strap.core.ListBase",
 										"ui5strap.ListDropdownItem",
 										"ui5strap.ListDropdownMenu",
 										"ui5strap.ListGroup",
 										"ui5strap.ListGroupItem",
-										"ui5strap.ListItemBase",
+										"pks.ui5strap.core.ListItemBase",
 										"ui5strap.ListItem",
 										"ui5strap.ListLinkItem",
 										"ui5strap.ListMedia",
@@ -203,20 +203,6 @@ sap.ui
 					 * 
 					 * -------
 					 */
-
-					// @deprecated
-					var tapSupport = Device.support.touch;
-
-					ui5strap.options = {
-						enableTapEvents : tapSupport,
-						enableClickEvents : !tapSupport,
-						
-						transitionTimeout : 2000,
-						layerTimeout : 1000,
-						
-						intervalWaitForCss : 100,
-						timeoutWaitForCss : 10000
-					};
 
 					/*
 					 * -------
@@ -799,7 +785,7 @@ sap.ui
 					}
 
 					/*
-					 * SelectionMode Used by ui5strap.ListBase
+					 * SelectionMode Used by pks.ui5strap.core.ListBase
 					 */
 					ui5strap.SelectionMode = {
 						None : "None",

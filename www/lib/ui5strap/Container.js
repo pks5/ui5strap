@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './BaseSupport'], function(library, ControlBase, BaseSupport){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, ControlBase){
 
 	var _meta = {
 

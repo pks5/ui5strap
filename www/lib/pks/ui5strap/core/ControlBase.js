@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ControlBase
+ * pks.ui5strap.core.ControlBase
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,10 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './PositionSupport', './OptionsSupport', "./Utils"], function(library, SapControlBase, BaseSupport, PositionSupport, OptionsSupport, Utils){
+sap.ui.define(['./library', "../../../ui5strap/library", "sap/ui/core/Control", './BaseSupport', './PositionSupport', './OptionsSupport', "./Utils"], function(ui5strapCoreLib, ui5strapBsLib, SapControlBase, BaseSupport, PositionSupport, OptionsSupport, Utils){
 
 	var _meta = {
-		library : "ui5strap",
+		library : "pks.ui5strap.core",
 		"abstract" : true,
 		
 		properties : {
@@ -55,10 +55,10 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './PositionS
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ControlBase
+	 * @alias pks.ui5strap.core.ControlBase
 	 * 
 	 */
-	var ControlBase = SapControlBase.extend("ui5strap.ControlBase", {
+	var ControlBase = SapControlBase.extend("pks.ui5strap.core.ControlBase", {
 		metadata : _meta,
 		renderer : null
 	}),
@@ -94,7 +94,7 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './PositionS
 			return;
 		}
 		
-		if(library.polyfill.isDocumentHidden()){
+		if(ui5strapBsLib.polyfill.isDocumentHidden()){
 			//Document is hidden
 			_this._waitForResume(callback);
 			
@@ -117,9 +117,9 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './PositionS
 			_this._waitRenderingTimer = window.setTimeout(
 					function() {
 						_testCssReady(_this, callback, iTimeout);
-					}, ui5strap.options.intervalWaitForCss);
+					}, ui5strapCoreLib.options.intervalWaitForCss);
 			
-			_this._waitRenderingTime += ui5strap.options.intervalWaitForCss;
+			_this._waitRenderingTime += ui5strapCoreLib.options.intervalWaitForCss;
 		}
 	};
 	
@@ -133,16 +133,16 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './PositionS
 		
 		var _this = this,
 		fnListener = function(){
-			if(!library.polyfill.isDocumentHidden()){
+			if(!ui5strapBsLib.polyfill.isDocumentHidden()){
 				jQuery.sap.log
 				.debug("Document is visible again.");
-				document.removeEventListener(library.support.visibilityChange, fnListener, false);
+				document.removeEventListener(ui5strapBsLib.support.visibilityChange, fnListener, false);
 				
 				_this._waitForCss(callback, iTimeout);
 			}
 		};
 		
-		document.addEventListener(library.support.visibilityChange, fnListener, false);
+		document.addEventListener(ui5strapBsLib.support.visibilityChange, fnListener, false);
 		//TODO Cleanup on exit!!!
 	};
 	
@@ -161,7 +161,7 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './PositionS
 		
 		//Check if a existing timer is running.
 		if(!this._waitRenderingTimer){
-			_testCssReady(this, callback, iTimeout || ui5strap.options.timeoutWaitForCss);
+			_testCssReady(this, callback, iTimeout || ui5strapCoreLib.options.timeoutWaitForCss);
 		}
 	};
 	

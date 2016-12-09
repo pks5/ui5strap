@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'ui5strap/ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', '../core/ControlBase'], function(library, ControlBase){
 
 	var defaultLogName = '__DEFAULT_LOG';
 	

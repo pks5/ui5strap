@@ -10,7 +10,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/ControlBase', "./d3_min"], function(ControlBase){
+sap.ui.define(['pks/ui5strap/core/ControlBase', "./d3_min"], function(ControlBase){
 
     "use strict";
     

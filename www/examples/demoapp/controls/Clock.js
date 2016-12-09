@@ -22,7 +22,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
+sap.ui.define(['pks/ui5strap/core/ControlBase'], function(ControlBase){
 
 	//Define the contstructor
 	var Clock = ControlBase.extend("com.ui5strap.apps.demoapp.controls.Clock", {

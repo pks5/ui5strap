@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', "../core/ControlBase"], function(library, ControlBase){
 
 	/**
 	 * Constructor for a new Sandbox instance.

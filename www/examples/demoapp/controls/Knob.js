@@ -1,4 +1,4 @@
-sap.ui.define(['ui5strap/ControlBase', './jquery.knob.min'], function(ControlBase){
+sap.ui.define(['pks/ui5strap/core/ControlBase', './jquery.knob.min'], function(ControlBase){
 
     "use strict";
     

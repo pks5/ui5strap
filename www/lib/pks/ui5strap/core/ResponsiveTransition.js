@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ResponsiveTransition
+ * pks.ui5strap.core.ResponsiveTransition
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -28,7 +28,7 @@
 sap.ui
 		.define(
 				[ './library' ],
-				function(library) {
+				function(ui5strapCoreLib) {
 
 					/**
 					 * Converts old transition strings into new ones.
@@ -302,7 +302,7 @@ sap.ui
 								if (this._data.$current) {
 									this._currentTimout = window.setTimeout(
 											_finallyCurrent,
-											ui5strap.options.transitionTimeout);
+											ui5strapCoreLib.options.transitionTimeout);
 
 									this._data.$current
 											.one(
@@ -314,7 +314,7 @@ sap.ui
 								if (this._data.$next) {
 									this._nextTimout = window.setTimeout(
 											_finallyNext,
-											ui5strap.options.transitionTimeout);
+											ui5strapCoreLib.options.transitionTimeout);
 
 									this._data.$next
 											.one(

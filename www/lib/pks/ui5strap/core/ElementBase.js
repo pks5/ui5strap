@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ElementBase
+ * pks.ui5strap.core.ElementBase
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -28,7 +28,7 @@
 sap.ui.define(['./library', './BaseSupport', './OptionsSupport', "sap/ui/core/Element"], function(library, BaseSupport, OptionsSupport, SapElementBase){
 
 	var _meta = {
-		library : "ui5strap",
+		library : "pks.ui5strap.core",
 		
 		properties : {
 			
@@ -53,10 +53,10 @@ sap.ui.define(['./library', './BaseSupport', './OptionsSupport', "sap/ui/core/El
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ElementBase
+	 * @alias pks.ui5strap.core.ElementBase
 	 * 
 	 */
-	var ElementBase = SapElementBase.extend("ui5strap.ElementBase", {
+	var ElementBase = SapElementBase.extend("pks.ui5strap.core.ElementBase", {
 		metadata : _meta
 	}),
 	ElementBaseProto = ElementBase.prototype;

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './PanelGroup'], function(library, ControlBase, PanelGroup){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './PanelGroup'], function(library, ControlBase, PanelGroup){
 
 	/**
 	 * Constructor for a new Panel instance.

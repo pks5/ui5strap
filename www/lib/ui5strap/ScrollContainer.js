@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './CommonRenderers'], function(library, ControlBase, CommonRenderers){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './CommonRenderers'], function(library, ControlBase, CommonRenderers){
 
 	/**
 	 * Constructor for a new ScrollContainer instance.

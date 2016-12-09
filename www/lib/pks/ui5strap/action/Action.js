@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ActionContext', "ui5strap/Utils", "sap/ui/base/Object"], function(library, ActionContext, Utils, ObjectBase){
+sap.ui.define(['./library', './ActionContext', "../core/Utils", "sap/ui/base/Object"], function(library, ActionContext, Utils, ObjectBase){
 	
 	/**
 	 * Constructor for a new Action instance.

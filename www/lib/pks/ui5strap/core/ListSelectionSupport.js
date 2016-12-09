@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.PositionSupport
+ * pks.ui5strap.core.ListSelectionSupport
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -38,7 +38,7 @@ sap.ui.define(['./library'], function(library){
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ListSelectionSupport
+	 * @alias pks.ui5strap.core.ListSelectionSupport
 	 * 
 	 */
 	var ListSelectionSupport = {};
