@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define([ './library', './ControlBase' ], function(library, ControlBase) {
+sap.ui.define([ './library', './ControlBase', "./Utils", "./RenderUtils" ], function(library, ControlBase, Utils, RenderUtils) {
 
 	/**
 	 * Constructor for a new Alert instance.
@@ -109,14 +109,14 @@ sap.ui.define([ './library', './ControlBase' ], function(library, ControlBase) {
 				rm.renderControl(closeButton);
 			}
 			
-			ui5strap.RenderUtils.renderContent(rm, oControl);
+			RenderUtils.renderContent(rm, oControl);
 
 			rm.write("</div>");
 
 		}
 	}), AlertProto = Alert.prototype;
 
-	ui5strap.Utils.dynamicText(AlertProto);
+	Utils.dynamicText(AlertProto);
 
 	/**
 	 * @Protected

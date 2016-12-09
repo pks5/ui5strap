@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ActionContext'], function(library, ActionContext){
+sap.ui.define(['./library', './ActionContext', "ui5strap/Utils"], function(library, ActionContext, Utils){
 	
 	/**
 	 * Constructor for a new Action instance.
@@ -116,7 +116,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 		var oTask = _modulesCache[actionModuleName];
 		
 		if(!oTask){
-			var TaskConstructor = ui5strap.Utils.getObject(actionModuleName);
+			var TaskConstructor = Utils.getObject(actionModuleName);
 			
 				oTask = new TaskConstructor();
 						
@@ -212,7 +212,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 				};
 				
 				//TODO Optimize performance
-				var pack = ui5strap.Utils.getObject(actionName, 1),
+				var pack = Utils.getObject(actionName, 1),
 					parts = actionName.split(/\./);
 				
 				pack[parts[parts.length - 1]] = ActionInstance;

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(library, ControlBase, SelectableSupport){
+sap.ui.define(['./library', './ControlBase', './SelectableSupport', "./Utils"], function(library, ControlBase, SelectableSupport, Utils){
 
 	var _meta =  {
 			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupButton"],
@@ -172,7 +172,7 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 	/**
 	 * Setter for dynamic html tag attributes.
 	 */
-	ui5strap.Utils.dynamicAttributes(
+	Utils.dynamicAttributes(
 		ButtonProto, 
 		[
 			"title"
@@ -182,7 +182,7 @@ sap.ui.define(['./library', './ControlBase', './SelectableSupport'], function(li
 	/**
 	 * Setter for dynamic text.
 	 */
-	ui5strap.Utils.dynamicText(ButtonProto);
+	Utils.dynamicText(ButtonProto);
 
 	/**
 	 * Handler for Tap / Click Events

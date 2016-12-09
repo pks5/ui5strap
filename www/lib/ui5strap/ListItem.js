@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItemBase', './SelectableSupport'], function(library, ListItemBase, SelectableSupport){
+sap.ui.define(['./library', './ListItemBase', './SelectableSupport', "./Utils"], function(library, ListItemBase, SelectableSupport, Utils){
 
 	var _meta = {
 			interfaces : [],
@@ -83,7 +83,7 @@ sap.ui.define(['./library', './ListItemBase', './SelectableSupport'], function(l
 
 	SelectableSupport.proto(ListItemProto);
 	
-	ui5strap.Utils.dynamicText(ListItemProto);
+	Utils.dynamicText(ListItemProto);
 
 	return ListItem;
 });

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', "./RenderUtils"], function(library, ControlBase, RenderUtils){
 
 	/**
 	 * Constructor for a new Label instance.
@@ -83,7 +83,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			
 			rm.write("</span>");
 
-			ui5strap.RenderUtils.renderTrail(rm, oControl);
+			RenderUtils.renderTrail(rm, oControl);
 		}
 	});
 	

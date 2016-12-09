@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button', './ListItemBase'], function(library, ControlBase, ListSelectionSupport, Button, ListItemBase){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button', './ListItemBase', "./Utils", "./RenderUtils"], function(library, ControlBase, ListSelectionSupport, Button, ListItemBase, Utils, RenderUtils){
 
 	var _meta = {
 			
@@ -112,7 +112,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 			
 			rm.write("</div>");
 		
-			ui5strap.RenderUtils.renderTrail(rm, oControl);
+			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	ButtonGroupProto = ButtonGroup.prototype,
@@ -179,14 +179,14 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './Button
 		oEvent.setMarked("ui5strap.IItemsProvider");
 		oEvent.setMarked("ui5strap.ButtonGroup");
 		
-		var button = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, Button),
+		var button = Utils.findClosestParentControl(oEvent.srcControl, Button),
 			selectionProvider = this,
 			providerItem = button,
 			buttonUpdated = false;
 		
 		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 			//TODO search for selectable item instead
-			providerItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase);
+			providerItem = Utils.findClosestParentControl(oEvent.srcControl, ListItemBase);
 			if(providerItem){
 				selectionProvider = providerItem.getParent();
 				

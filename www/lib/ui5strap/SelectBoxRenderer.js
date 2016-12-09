@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', './RenderUtils'], function(jQuery, RenderUtils) {
 
 	/**
 	 * Select box renderer.
@@ -60,7 +60,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write("</select>");
 		
-		ui5strap.RenderUtils.renderTrail(rm, oControl);
+		RenderUtils.renderTrail(rm, oControl);
 	};
 
 	SelectBoxRenderer.renderOption = function(rm, oControl, item) {

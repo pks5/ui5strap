@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./RenderUtils"], function(jQuery, RenderUtils) {
 	
 	/**
 	 * List link item renderer.
@@ -36,7 +36,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	ListLinkItemRenderer.render = function(rm, oControl) {
 		this.startRender(rm, oControl, {});
 
-		ui5strap.RenderUtils.renderContent(rm, oControl);
+		RenderUtils.renderContent(rm, oControl);
 
 		this.endRender(rm, oControl);
 	};

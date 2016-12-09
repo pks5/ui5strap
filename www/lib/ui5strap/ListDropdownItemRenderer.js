@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./RenderUtils"], function(jQuery, RenderUtils) {
 	
 	/**
 	 * List dropdown item renderer.
@@ -44,7 +44,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		this.startRenderLink(rm, oControl);
 		
-		ui5strap.RenderUtils.renderContent(rm, oControl);
+		RenderUtils.renderContent(rm, oControl);
 		rm.write(' <span class="caret"></span>');
 
 		rm.write('</a>');

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItemBase', './ListLinkItem'], function(library, ListItemBase, ListLinkItem){
+sap.ui.define(['./library', './ListItemBase', './ListLinkItem', "./Utils"], function(library, ListItemBase, ListLinkItem, Utils){
 
 	/**
 	 * Constructor for a new ListDropdownItem instance.
@@ -87,7 +87,7 @@ sap.ui.define(['./library', './ListItemBase', './ListLinkItem'], function(librar
 	
 	ListDropdownItemProto.setText = function(newText){
 		if(this.getMenu() === null){
-			ui5strap.Utils.updateText(this, jQuery('#' + this.getId() + '---link'), newText);
+			Utils.updateText(this, jQuery('#' + this.getId() + '---link'), newText);
 		}
 		else{
 			this.setProperty('text', newText);
@@ -128,7 +128,7 @@ sap.ui.define(['./library', './ListItemBase', './ListLinkItem'], function(librar
 			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 				this.close();
 				
-				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase),
+				var menuListItem = Utils.findClosestParentControl(oEvent.srcControl, ListItemBase),
 					hostUpdate = this.getUpdate();
 				
 				if(menuListItem){

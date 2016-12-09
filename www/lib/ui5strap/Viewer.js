@@ -25,8 +25,8 @@
  * 
  */
 
-sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition'], 
-				function(uLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition){
+sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContainer', './ResponsiveTransition', "./Utils"], 
+				function(uLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition, Utils){
 	
 	/**
 	 * Constructor for a new Viewer instance.
@@ -89,7 +89,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			bCssAvailable = false;
 		
 		if(oNavContainerRef){
-			var sNavContainerHeight = ui5strap.Utils.getComputedStyle(oNavContainerRef, "height");
+			var sNavContainerHeight = Utils.getComputedStyle(oNavContainerRef, "height");
 			
 			//console.log(sNavContainerHeight, sOverlayWidth);	
 				
@@ -229,7 +229,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 			        	"name" : appDefinition.name,
 			            
 			        	"id" : appDefinition.id,
-			            "location" : appDefinition["location"] || uLib.Utils.getFileLocation(appDefinition.url),
+			            "location" : appDefinition["location"] || Utils.getFileLocation(appDefinition.url),
 			            
 			            "type" : "ui5strap.AppSandbox",
 			            
@@ -285,7 +285,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 					"dataType" : "json",
 					"url" : appDefinition.url,
 					"success" : function(oConfigData){
-						oConfigData.app["location"] = appDefinition["location"] || uLib.Utils.getFileLocation(appDefinition.url);
+						oConfigData.app["location"] = appDefinition["location"] || Utils.getFileLocation(appDefinition.url);
 						
 						_this.loadApp(
 							oConfigData, 
@@ -316,7 +316,7 @@ sap.ui.define(['./library', './ViewerBase', './App', './AppConfig', './NavContai
 					appURL += "?app=" + encodeURIComponent(appDefinition.url);
 					
 					if(!appLocation){
-						 appLocation = uLib.Utils.getFileLocation(appDefinition.url);
+						 appLocation = Utils.getFileLocation(appDefinition.url);
 					}
 				}
 				

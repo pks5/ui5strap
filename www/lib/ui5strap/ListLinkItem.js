@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem'], function(library, ListItem){
+sap.ui.define(['./library', './ListItem', "./Utils"], function(library, ListItem, Utils){
 
 	/**
 	 * Constructor for a new ListLinkItem instance.
@@ -81,7 +81,7 @@ sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 	ListLinkItemProto = ListLinkItem.prototype;
 
 	ListLinkItemProto.setText = function(newText){
-		ui5strap.Utils.updateText(this, jQuery('#' + this.getId() + '---link'), newText);
+		Utils.updateText(this, jQuery('#' + this.getId() + '---link'), newText);
 	};
 	
 	return ListLinkItem;

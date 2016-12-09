@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./RenderUtils"], function(jQuery, RenderUtils) {
 
 	/**
 	 * Button renderer.
@@ -62,11 +62,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		
 	    rm.write(">");
 
-		ui5strap.RenderUtils.renderContent(rm, oControl);
+		RenderUtils.renderContent(rm, oControl);
 
 		rm.write("</button>");
 
-	    ui5strap.RenderUtils.renderTrail(rm, oControl);
+	    RenderUtils.renderTrail(rm, oControl);
 	};
 
 	return ButtonRenderer;

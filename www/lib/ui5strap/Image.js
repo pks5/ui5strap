@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', "./RenderUtils"], function(library, ControlBase, RenderUtils){
 
 	/**
 	 * Constructor for a new Image instance.
@@ -138,7 +138,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			
 			rm.write("/>");
 
-			ui5strap.RenderUtils.renderTrail(rm, oControl);
+			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	ImageProto = ImageControl.prototype;

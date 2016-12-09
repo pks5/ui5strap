@@ -25,7 +25,7 @@
  * 
  */
  
-sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function(library, ControlBase, ResponsiveTransition){
+sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"], function(library, ControlBase, ResponsiveTransition, Utils){
 
 	/**
 	 * Constructor for a new NavContainer instance.
@@ -306,7 +306,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 					
 					//Set Propagated Properties and Bindings back to ui area
 					//TODO verify that this is not needed anymore due removal from UiArea
-					//ui5strap.Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
+					//Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
 					
 					//Destroy the UIArea
 					oUiArea.destroy();
@@ -578,7 +578,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 			//Propagate Properties
 			//This must be done after the Page has attached to DOM,
 			//because the page might get a new UIArea as Parent and therefore new propagated properties.
-			ui5strap.Utils.addPropertyPropagation(_this, page);
+			Utils.addPropertyPropagation(_this, page);
 			
 			//jQuery.sap.log.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
 
@@ -753,29 +753,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition'], function
 				"page" : page,
 				"currentPage" : currentPage
 			};
-		
-		if(page){
-			/*
-			 * START OpenUi5 MOD
-			 * Since we do not use aggregations in NavContainer, we have to care about propagation ourselves.
-			 * Usually, this happens in ManagedObject.prototype.setParent, but our pages have no parent set.
-			 */
-			
-			//ui5strap.Utils.addPropertyPropagation(this, page);
-			
-			/*
-			var oldSetParent = page.setParent;
-			page.setParent = function(oParent, sAggregationName, bSuppressInvalidate){
-				oldSetParent && oldSetParent.call(this, oParent, sAggregationName, bSuppressInvalidate);
-				ui5strap.Utils.addPropertyPropagation(_this, page);
-			}
-			*/
-			
-			/*
-			 * END OpenUi5 MOD
-			 */
-			
-		}
 		
 		if(this.getDomRef()){
 			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");

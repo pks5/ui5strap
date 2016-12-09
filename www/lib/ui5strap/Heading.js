@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', "./Utils", "./RenderUtils"], function(library, ControlBase, Utils, RenderUtils){
 
 	/**
 	 * Constructor for a new Heading instance.
@@ -94,7 +94,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			rm.writeClasses();
 			rm.write(">");
 			
-			ui5strap.RenderUtils.renderContent(rm, oControl);
+			RenderUtils.renderContent(rm, oControl);
 			    
 			rm.write("</h" + level + ">");
 		}
@@ -121,7 +121,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		return classAdd;
 	};
 	
-	ui5strap.Utils.dynamicText(HeadingProto);
+	Utils.dynamicText(HeadingProto);
 	
 	return Heading;
 });

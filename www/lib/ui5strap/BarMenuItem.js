@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem'], function(library, ListItem){
+sap.ui.define(['./library', './ListItem', './Utils'], function(library, ListItem, Utils){
 
 	/**
 	 * Constructor for a new ListItem instance.
@@ -88,7 +88,7 @@ sap.ui.define(['./library', './ListItem'], function(library, ListItem){
 			
 			if(text){
 				if(parse){
-					text = ui5strap.RenderUtils.parseText(text);
+					text = Utils.parseText(text);
 				}
 				
 				rm.write('<span class="u5sl-barmenu-item-text">');

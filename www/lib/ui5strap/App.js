@@ -25,8 +25,8 @@
  * 
  */
 
-sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui/core/mvc/HTMLView", "sap/ui/core/mvc/XMLView", "sap/ui/core/CustomData", "sap/ui/model/resource/ResourceModel", "sap/ui/model/json/JSONModel"], 
-				function(ulib, AppBase, AppConfig, AppComponent, HTMLView, XMLView, CustomData, ResourceModel, JSONModel){
+sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui/core/mvc/HTMLView", "sap/ui/core/mvc/XMLView", "sap/ui/core/CustomData", "sap/ui/model/resource/ResourceModel", "sap/ui/model/json/JSONModel", "./Utils"], 
+				function(ulib, AppBase, AppConfig, AppComponent, HTMLView, XMLView, CustomData, ResourceModel, JSONModel, Utils){
 	
 	/**
 	 * Constructor for a new App instance.
@@ -476,7 +476,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 				
 				if(matches.length > 1){
 					for(var j = 0; j < routeInfo.pathParameters.length; j++){
-						ulib.Utils.addToObject(viewConfig.parameters, routeInfo.pathParameters[j], matches[1 + j]);
+						Utils.addToObject(viewConfig.parameters, routeInfo.pathParameters[j], matches[1 + j]);
 					}
 				}
 				
@@ -503,7 +503,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 		var routing = this.config.data.app.routing;
 		if(routing){
 			this._suppressHashChange = suppressHashChange;
-			document.location.hash = routing + ulib.Utils.parsePath(path, parameters);
+			document.location.hash = routing + Utils.parsePath(path, parameters);
 		}
 	};
 	

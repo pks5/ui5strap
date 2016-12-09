@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller'], function(uLib, AppBase, ControllerBase){
+sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller', "./Utils"], function(uLib, AppBase, ControllerBase, Utils){
 
 	/**
 	 * Constructor for a new Controller instance.
@@ -123,7 +123,7 @@ sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller'], function
 	 */
 	ControllerProto._getActionFromEvent = function(oEvent, customDataKey){
 		var actionName = oEvent.getSource().data(customDataKey),
-			actionNamesList = uLib.Utils.parseIContent(actionName);
+			actionNamesList = Utils.parseIContent(actionName);
 		
 		if(actionNamesList && typeof actionNamesList === 'object'){
 			var eventId = oEvent.getId();

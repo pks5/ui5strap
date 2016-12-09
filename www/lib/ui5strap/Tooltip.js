@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './RenderUtils'], function(library, ControlBase, RenderUtils){
 
 	/**
 	 * Constructor for a new Tooltip instance.
@@ -115,7 +115,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			rm.writeClasses();
 			rm.write(">");
 
-			ui5strap.RenderUtils.renderTitleContent(rm, oControl);
+			RenderUtils.renderTitleContent(rm, oControl);
 
 			rm.write("</div>");
 			rm.write("</div>");

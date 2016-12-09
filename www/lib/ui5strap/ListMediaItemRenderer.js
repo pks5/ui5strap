@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./RenderUtils"], function(jQuery, RenderUtils) {
 
 	/**
 	 * List media item renderer.
@@ -62,7 +62,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.write('</h4>');
 		}
 		
-		ui5strap.RenderUtils.renderContent(rm, oControl);
+		RenderUtils.renderContent(rm, oControl);
 		
 		rm.write('</div>');
 		    

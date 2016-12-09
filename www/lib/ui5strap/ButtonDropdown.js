@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './Button'], function(library, Button){
+sap.ui.define(['./library', './Button', "./Utils"], function(library, Button, Utils){
 
 	/**
 	 * Constructor for a new ButtonDropdown instance.
@@ -115,7 +115,7 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 	};
 
 	ButtonDropdownProto.setSelected = function(newValue){ 
-        ui5strap.Utils.updateClass(this, jQuery('#' + this.getId() + '---' + (this.getSplit() ? 'button' : 'toggle')), "selected", newValue, { 'true' : 'active' });
+        Utils.updateClass(this, jQuery('#' + this.getId() + '---' + (this.getSplit() ? 'button' : 'toggle')), "selected", newValue, { 'true' : 'active' });
     };
 	
 	ButtonDropdownProto.open = function(){
@@ -143,7 +143,7 @@ sap.ui.define(['./library', './Button'], function(library, Button){
 			if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 				this.close();
 				
-				var menuListItem = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItemBase),
+				var menuListItem = Utils.findClosestParentControl(oEvent.srcControl, ui5strap.ListItemBase),
 					hostUpdate = this.getUpdate();
 				
 				if(menuListItem){

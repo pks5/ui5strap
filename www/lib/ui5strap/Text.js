@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', "./Utils", "./RenderUtils"], function(library, ControlBase, Utils, RenderUtils){
 
 	/**
 	 * Constructor for a new Text instance.
@@ -115,12 +115,12 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			rm.write(">");
 			
 			//Content
-			ui5strap.RenderUtils.renderContent(rm, oControl);
+			RenderUtils.renderContent(rm, oControl);
 			
 			rm.write("</" + tagData.tagName + ">");
 
 			//Trail
-			ui5strap.RenderUtils.renderTrail(rm, oControl);
+			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	TextProto = Text.prototype;
@@ -233,7 +233,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Public
 	 */
 	TextProto.setText = function(newText, suppressInvalidate){
-		ui5strap.Utils.updateText(this, this.$(), newText, suppressInvalidate);
+		Utils.updateText(this, this.$(), newText, suppressInvalidate);
 	};
 
 	/**
@@ -242,7 +242,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 	 * @Public
 	 */
 	TextProto.setTitle = function(newTitle, suppressInvalidate){
-		ui5strap.Utils.updateAttribute(this, 'title', newTitle, suppressInvalidate);
+		Utils.updateAttribute(this, 'title', newTitle, suppressInvalidate);
 	};
 
 	return Text;

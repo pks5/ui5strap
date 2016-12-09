@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', "./Utils", "./RenderUtils"], function(library, ControlBase, Utils, RenderUtils){
 
 	/**
 	 * Constructor for a new Paragraph instance.
@@ -98,7 +98,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			rm.writeClasses();
 			rm.write(">");
 			
-			ui5strap.RenderUtils.renderContent(rm, oControl);
+			RenderUtils.renderContent(rm, oControl);
 			
 			rm.write("</p>");
 		}
@@ -127,7 +127,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		return styleClass;
 	};
 
-	ui5strap.Utils.dynamicText(Paragraph.prototype);
+	Utils.dynamicText(Paragraph.prototype);
 	
 	return Paragraph;
 });

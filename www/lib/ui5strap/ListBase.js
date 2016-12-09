@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListItemBase'], function(library, ControlBase, ListSelectionSupport, ListItemBase){
+sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListItemBase', "./Utils"], function(library, ControlBase, ListSelectionSupport, ListItemBase, Utils){
 
 	var _meta = {
 			interfaces : [],
@@ -93,7 +93,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 		oEvent.setMarked("ui5strap.ListBase");
 		
 		//TODO find the right list item! (dropdown menu)
-		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase),
+		var item = Utils.findClosestParentControl(oEvent.srcControl, ListItemBase),
 			selectionProvider = this,
 			listItem = item,
 			listItemUpdated = false;
@@ -101,7 +101,7 @@ sap.ui.define(['./library', './ControlBase', './ListSelectionSupport', './ListIt
 		if(oEvent.isMarked("ui5strap.ListDropdownMenu")){
 			selectionProvider = item.getParent();
 			//TODO search for selectable item instead
-			listItem = ui5strap.Utils.findClosestParentControl(selectionProvider, ListItemBase);
+			listItem = Utils.findClosestParentControl(selectionProvider, ListItemBase);
 			
 			if(listItem){
 				if(oEvent.isMarked("ui5strap.ISelectableItem.update")){

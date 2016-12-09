@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./RenderUtils"], function(jQuery, RenderUtils) {
 
 	/**
 	 * Panel renderer.
@@ -49,7 +49,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.writeClasses();
 			rm.write(">");
 			
-			ui5strap.RenderUtils.renderTitleContent(rm, oControl);
+			RenderUtils.renderTitleContent(rm, oControl);
 
 			rm.write("</div>");
 		}
@@ -69,7 +69,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.writeClasses();
 		rm.write(">");
 
-		ui5strap.RenderUtils.renderContent(rm, oControl);
+		RenderUtils.renderContent(rm, oControl);
 		
 		rm.write("</div>");
 		

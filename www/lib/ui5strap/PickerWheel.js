@@ -27,8 +27,8 @@
 
 sap.ui
 		.define(
-				[ "ui5strap/library", "ui5strap/ControlBase" ],
-				function(ulib, ControlBase) {
+				[ "ui5strap/library", "ui5strap/ControlBase", "./Utils" ],
+				function(ulib, ControlBase, Utils) {
 					"use strict";
 					
 					/**
@@ -335,8 +335,8 @@ sap.ui
 					PickerWheelProto._isCssReady = function(oDomRef){
 						var $oDomRef = jQuery(oDomRef);
 						return this.getVertical() 
-						? -1 !== ulib.Utils.getComputedStyle(oDomRef, "height").indexOf("px") && $oDomRef.width() > 0
-						: -1 !== ulib.Utils.getComputedStyle(oDomRef, "width").indexOf("px") && $oDomRef.height() > 0;
+						? -1 !== Utils.getComputedStyle(oDomRef, "height").indexOf("px") && $oDomRef.width() > 0
+						: -1 !== Utils.getComputedStyle(oDomRef, "width").indexOf("px") && $oDomRef.height() > 0;
 					};
 
 					/**

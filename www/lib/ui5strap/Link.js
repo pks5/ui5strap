@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', "./Utils", "./RenderUtils"], function(library, ControlBase, Utils, RenderUtils){
 	
 	/**
 	 * Constructor for a new Link instance.
@@ -148,12 +148,12 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 			rm.write(">");
 			
 			//Content
-			ui5strap.RenderUtils.renderContent(rm, oControl);
+			RenderUtils.renderContent(rm, oControl);
 			
 			rm.write("</a>");
 
 			//Trail
-			ui5strap.RenderUtils.renderTrail(rm, oControl);
+			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	LinkProto = Link.prototype;
@@ -177,7 +177,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		return styleClass;
 	};
 	
-	ui5strap.Utils.dynamicAttributes(
+	Utils.dynamicAttributes(
 		LinkProto, 
 		[
 			"title",
@@ -186,7 +186,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		]
 	);
 
-	ui5strap.Utils.dynamicText(LinkProto);
+	Utils.dynamicText(LinkProto);
 	
 	/**
 	 * Handler for Tap / Click Events

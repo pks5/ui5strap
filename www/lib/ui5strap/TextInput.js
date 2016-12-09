@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', './RenderUtils'], function(library, ControlBase, RenderUtils){
 
 	/**
 	 * Constructor for a new TextInput instance.
@@ -177,7 +177,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 				rm.write("</textarea>");
 			}
 
-			ui5strap.RenderUtils.renderTrail(rm, oControl);
+			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
 	TextInputProto = TextInput.prototype;

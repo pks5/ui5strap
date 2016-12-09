@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./RenderUtils"], function(jQuery, RenderUtils) {
 	
 	/**
 	 * List nav item renderer.
@@ -71,7 +71,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	
 		rm.write(">");
 		
-		ui5strap.RenderUtils.renderContent(rm, oControl);
+		RenderUtils.renderContent(rm, oControl);
 
 		if('' !== badge){
 			rm.write('<span class="badge">');

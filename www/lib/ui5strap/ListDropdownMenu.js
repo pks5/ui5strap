@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListBase', './ListItemBase'], function(library, ListBase, ListItemBase){
+sap.ui.define(['./library', './ListBase', './ListItemBase', "./Utils"], function(library, ListBase, ListItemBase, Utils){
 
 	/**
 	 * Constructor for a new ListDropdownMenu instance.
@@ -80,7 +80,7 @@ sap.ui.define(['./library', './ListBase', './ListItemBase'], function(library, L
 		oEvent.setMarked("ui5strap.ListDropdownMenu");
 		
 		//Find the closest item. Should be an item from the dropdown menu.
-		var item = ui5strap.Utils.findClosestParentControl(oEvent.srcControl, ListItemBase);
+		var item = Utils.findClosestParentControl(oEvent.srcControl, ListItemBase);
 		
 		this.pressItem(oEvent.srcControl, item, false, this, item);
 	};

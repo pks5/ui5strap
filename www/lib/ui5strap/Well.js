@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
+sap.ui.define(['./library', './ControlBase', "./Utils"], function(library, ControlBase, Utils){
 
 	/**
 	 * Constructor for a new Well instance.
@@ -107,7 +107,7 @@ sap.ui.define(['./library', './ControlBase'], function(library, ControlBase){
 		return styleClass;
 	};
 	
-	ui5strap.Utils.dynamicText(WellProto);
+	Utils.dynamicText(WellProto);
 	
 	return Well;
 });

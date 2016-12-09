@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupport'], function(library, BaseSupport, PositionSupport, OptionsSupport){
+sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupport', "./Utils"], function(library, BaseSupport, PositionSupport, OptionsSupport, Utils){
 
 	var _meta = {
 		library : "ui5strap",
@@ -74,7 +74,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	 * @Public
 	 */
 	ControlBaseProto.getComputedStyle = function(sCssRule) {
-		return library.Utils.getComputedStyle(this.getDomRef(), sCssRule);
+		return Utils.getComputedStyle(this.getDomRef(), sCssRule);
 	};
 	
 	/**
@@ -124,7 +124,7 @@ sap.ui.define(['./library', './BaseSupport', './PositionSupport', './OptionsSupp
 	};
 	
 	ControlBaseProto._isCssReady = function(oDomRef){
-		return -1 !== library.Utils.getComputedStyle(oDomRef, "width").indexOf("px") && jQuery(oDomRef).height() > 0;
+		return -1 !== Utils.getComputedStyle(oDomRef, "width").indexOf("px") && jQuery(oDomRef).height() > 0;
 	};
 
 	ControlBaseProto._waitForResume = function(callback, iTimeout){

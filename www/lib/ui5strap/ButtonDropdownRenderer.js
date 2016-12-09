@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
+sap.ui.define(['jquery.sap.global', './Button', "./RenderUtils"], function(jQuery, Button, RenderUtils) {
 
 	/**
 	 * Button dropdown renderer.
@@ -63,7 +63,7 @@ sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 		
 		rm.write("</div>");
 
-		ui5strap.RenderUtils.renderTrail(rm, oControl);
+		RenderUtils.renderTrail(rm, oControl);
 	};
 	
 	ButtonDropdownRenderer.startRender = function(rm, oControl, tog) {
@@ -101,7 +101,7 @@ sap.ui.define(['jquery.sap.global', './Button'], function(jQuery, Button) {
 	};
 
 	ButtonDropdownRenderer.renderContent = function(rm, oControl) {
-		ui5strap.RenderUtils.renderContent(rm, oControl);
+		RenderUtils.renderContent(rm, oControl);
 		
 		if(!oControl.getSplit()){
 			rm.write(' <span class="caret"></span>');

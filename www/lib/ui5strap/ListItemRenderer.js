@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./RenderUtils"], function(jQuery, RenderUtils) {
 
 	/**
 	 * List item renderer.
@@ -43,7 +43,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 		rm.write(">");
 
-		ui5strap.RenderUtils.renderContent(rm, oControl);
+		RenderUtils.renderContent(rm, oControl);
 
 		rm.write("</li>");
 	};
