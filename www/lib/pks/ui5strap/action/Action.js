@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.Action
+ * pks.ui5strap.action.Action
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ActionContext', './ActionModule'], function(library, ActionContext, ActionModule){
+sap.ui.define(['./library', './ActionContext'], function(library, ActionContext){
 	
 	/**
 	 * Constructor for a new Action instance.
@@ -45,7 +45,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 	 * @alias ui5strap.Action
 	 * 
 	 */
-	var Action = ui5strap.Object.extend("ui5strap.Action"),
+	var Action = ui5strap.Object.extend("pks.ui5strap.action.Action"),
 		ActionProto = Action.prototype,
 		_actionsCache = {},
 		_modulesCache = {};
@@ -66,7 +66,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 					throw new Error("No task definition for task '" + actionModuleName + "'");
 				}
 				if(!taskDefinition[ActionContext.PARAM_MODULE]){
-					taskDefinition[ActionContext.PARAM_MODULE] = "ui5strap.ActionModule";
+					taskDefinition[ActionContext.PARAM_MODULE] = "pks.ui5strap.action.Task";
 				}
 				instanceDef = {
 					namespace : actionModuleName,
@@ -93,7 +93,7 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 	
 	/**
 	* 
-	* Executes an AM Module (ui5strap.ActionModule)
+	* Execute task in context.
 	* This method is used to execute tasks as a list synchroneously.
 	* Will be dropped.
 	* @deprecated
@@ -113,23 +113,23 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 			throw new Error("No task module specified!");
 		}
 		
-		var oActionModule = _modulesCache[actionModuleName];
+		var oTask = _modulesCache[actionModuleName];
 		
-		if(!oActionModule){
-			var ActionModuleConstructor = ui5strap.Utils.getObject(actionModuleName);
+		if(!oTask){
+			var TaskConstructor = ui5strap.Utils.getObject(actionModuleName);
 			
-				oActionModule = new ActionModuleConstructor();
+				oTask = new TaskConstructor();
 						
-			if(!(oActionModule instanceof ui5strap.ActionModule)){
-				throw new Error("Error in action '" + context + "':  '" + actionModuleName +  "' must be an instance of ui5strap.ActionModule!");
+			if(!(oTask instanceof pks.ui5strap.action.Task)){
+				throw new Error("Error in action '" + context + "':  '" + actionModuleName +  "' must be an instance of pks.ui5strap.action.Task!");
 			}
 			
-			if(!ActionModuleConstructor.cacheable){
-				//_modulesCache[actionModuleName] = oActionModule;
+			if(!TaskConstructor.cacheable){
+				//_modulesCache[actionModuleName] = oTask;
 			}
 		}
 
-		oActionModule.init(context, instanceDef).execute();
+		oTask.init(context, instanceDef).execute();
 	};
 
 	
@@ -276,17 +276,17 @@ sap.ui.define(['./library', './ActionContext', './ActionModule'], function(libra
 				throw new Error("No task module specified!");
 			}
 			
-			var oActionModule = _modulesCache[actionModuleName];
+			var oTask = _modulesCache[actionModuleName];
 			
-			if(!oActionModule){
-				oActionModule = new TaskConstructor();
+			if(!oTask){
+				oTask = new TaskConstructor();
 							
-				if(!(oActionModule instanceof ui5strap.ActionModule)){
-					throw new Error("Error in action '" + context + "':  '" + actionModuleName +  "' must be an instance of ui5strap.ActionModule!");
+				if(!(oTask instanceof pks.ui5strap.action.Task)){
+					throw new Error("Error in action '" + context + "':  '" + actionModuleName +  "' must be an instance of pks.ui5strap.action.Task!");
 				}
 			}
 
-			oActionModule.init(context, instanceDef).execute();
+			oTask.init(context, instanceDef).execute();
 		});
 		
 		return true;

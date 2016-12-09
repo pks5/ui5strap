@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', './Action'], function(uLib, ObjectBase, UIArea, Action){
+sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/core/UIArea', 'pks/ui5strap/action/Action'], function(uLib, ObjectBase, UIArea, Action){
 	
 	"use strict";
 	

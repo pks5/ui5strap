@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ActionContext
+ * pks.ui5strap.action.ActionContext
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -45,7 +45,7 @@ sap.ui.define(['./library'], function(library){
 	 * @alias ui5strap.ActionContext
 	 * 
 	 */
-	var ActionContext = ui5strap.Object.extend('ui5strap.ActionContext', {
+	var ActionContext = ui5strap.Object.extend('pks.ui5strap.action.ActionContext', {
 		/**
 		 * @constructs
 		 */

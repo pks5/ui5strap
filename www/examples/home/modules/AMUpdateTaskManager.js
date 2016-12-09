@@ -15,9 +15,9 @@
  */
 
 
-sap.ui.define(['ui5strap/library', 'ui5strap/ActionModule'], function(library, ActionModule){
+sap.ui.define(['ui5strap/library', 'pks.ui5strap/action/Task'], function(library, Task){
 
-	var AMUpdateTaskManager = ActionModule.extend("ui5strap.AMUpdateTaskManager"),
+	var AMUpdateTaskManager = Task.extend("ui5strap.AMUpdateTaskManager"),
 	AMUpdateTaskManagerProto = AMUpdateTaskManager.prototype;
 
 	AMUpdateTaskManagerProto.namespace = 'updateTaskManager';

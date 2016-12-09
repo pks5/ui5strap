@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ActionController
+ * pks.ui5strap.action.ActionController
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './Controller'], function(library, Controller){
+sap.ui.define(['./library', 'ui5strap/Controller'], function(library, Controller){
 
 	/**
 	 * Constructor for a new ActionController instance.
@@ -42,9 +42,9 @@ sap.ui.define(['./library', './Controller'], function(library, Controller){
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ActionController
+	 * @alias pks.ui5strap.action.ActionController
 	 * 
 	 */
-	return Controller.extend("ui5strap.ActionController");
+	return Controller.extend("pks.ui5strap.action.ActionController");
 
 });

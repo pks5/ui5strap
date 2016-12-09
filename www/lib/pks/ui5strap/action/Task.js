@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ActionModule
+ * pks.ui5strap.action.Task
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,10 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', './ActionContext'], function(library, ActionContext){
+sap.ui.define(['./library', './ActionContext', './Action'], function(library, ActionContext, Action){
 
 	/**
-	 * Constructor for a new ActionModule instance.
+	 * Constructor for a new Task instance.
 	 * 
 	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
 	 * @param {object} [mSettings] Initial settings for the new control
@@ -42,34 +42,34 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ActionModule
+	 * @alias pks.ui5strap.action.Task
 	 * 
 	 */
-	var ActionModule = ui5strap.Object.extend("ui5strap.ActionModule"),
-		ActionModuleProto = ActionModule.prototype;
+	var Task = ui5strap.Object.extend("pks.ui5strap.action.Task"),
+		TaskProto = Task.prototype;
 
 	/*
 	* Name of the event that is triggered when the event is completed
 	*/
-	ActionModule.EVENT_COMPLETED = "completed";
+	Task.EVENT_COMPLETED = "completed";
 	
-	ActionModule.cacheable = true;
+	Task.cacheable = true;
 	
 	/*
 	* Namespace of the action module instance
 	*/
-	ActionModuleProto.namespace = 'task';
+	TaskProto.namespace = 'task';
 
 	/*
 	* Defined parameters for this action module
 	*/
-	ActionModuleProto.parameters = {};
+	TaskProto.parameters = {};
 
 	/**
 	* Initializes the action module
 	* @PostConstruct
 	*/
-	ActionModuleProto.init = function(context, instanceDef){
+	TaskProto.init = function(context, instanceDef){
 		this.context = context;
 		this._instanceDef = instanceDef;
 		
@@ -79,7 +79,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 			this.namespace = instanceDef.namespace;
 		}
 		else{
-			//this.namespace = ActionModuleProto.namespace;
+			//this.namespace = TaskProto.namespace;
 		}
 		
 		//Test if Namespace is valid
@@ -98,14 +98,14 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	 * String representation of the Module
 	 * @Public
 	 */
-	ActionModuleProto.toString = function(){
+	TaskProto.toString = function(){
 		return this._instanceDef.module + ' ' + this.context;
 	};
 
 	/**
 	 * @Public
 	 */
-	ActionModuleProto.getScope = function(){
+	TaskProto.getScope = function(){
 		return ActionContext.WORKPOOL + "." + this.namespace;
 	};
 
@@ -113,7 +113,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	* Does same as ActionContext.prototype.get - plus type validation.
 	* @Public
 	*/
-	ActionModuleProto.getParameter = function(paramKey, resolveAll){
+	TaskProto.getParameter = function(paramKey, resolveAll){
 		var paramDef = this.parameters[paramKey];
 		
 		if(!paramDef){
@@ -168,7 +168,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	* Sets an action module specific parameter to the action context
 	* @Public
 	*/
-	ActionModuleProto.setParameter = function(parameterKey, parameterValue){
+	TaskProto.setParameter = function(parameterKey, parameterValue){
 		return this.context.set(this, "." + parameterKey, parameterValue);
 	};
 
@@ -176,7 +176,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	* Execute the action module
 	* @Public
 	*/
-	ActionModuleProto.execute = function(){
+	TaskProto.execute = function(){
 		this.context._log.debug("Executing Task " + this);
 		
 		try{
@@ -208,17 +208,17 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	* Run the action module. Inheritants should override this method.
 	* @Protected
 	*/
-	ActionModuleProto.run = function(){
+	TaskProto.run = function(){
 		_expression(this, "DO");
 		
 		this.then();
 	};
 	
-	ActionModuleProto.suppressThen = function(){
+	TaskProto.suppressThen = function(){
 		this._suppressThen = true;
 	}
 	
-	ActionModuleProto.then = function(force){
+	TaskProto.then = function(force){
 		if(force || !this._suppressThen){
 			var context = this.context,
 				thenExpr = _expression(this, "THEN");
@@ -226,7 +226,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 			if(ActionContext.PARAM_END === thenExpr){
 				context.finish();
 			}
-			else if(!ui5strap.Action.runTask(context, thenExpr)){
+			else if(!Action.runTask(context, thenExpr)){
 				//Action has been finished
 				if(context.parameters[ActionContext.PARAM_BEGIN]){
 					context.finish();
@@ -235,26 +235,26 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 		}
 	};
 	
-	ActionModuleProto["else"] = function(){
-		ui5strap.Action.runTask(this.context, _expression(this, "ELSE"));
+	TaskProto["else"] = function(){
+		Action.runTask(this.context, _expression(this, "ELSE"));
 	};
 	
-	ActionModuleProto.error = function(err){
+	TaskProto.error = function(err){
 		var errorTask = _expression(this, "ERROR");
 		if(errorTask){
 			//No callback needed?
-			ui5strap.Action.runTask(this.context, errorTask);
+			Action.runTask(this.context, errorTask);
 		}
 		else{
 			throw err;
 		}
 	};
 	
-	ActionModuleProto.fatal = function(err){
+	TaskProto.fatal = function(err){
 		var errorTask = _expression(this, "FATAL");
 		if(errorTask){
 			//No callback needed?
-			ui5strap.Action.runTask(this.context, errorTask);
+			Action.runTask(this.context, errorTask);
 		}
 		else{
 			throw err;
@@ -273,7 +273,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	* @Public
 	* @deprecated
 	*/
-	ActionModuleProto.deleteParameter = function(parameterKey){
+	TaskProto.deleteParameter = function(parameterKey){
 		return this.context._deleteParameter(this._createParameterKey(parameterKey));
 	};
 
@@ -284,7 +284,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	* @Protected
 	* @deprecated
 	*/
-	ActionModuleProto._createParameterKey = function(parameterKey){
+	TaskProto._createParameterKey = function(parameterKey){
 		return  this.getScope() + '.' + parameterKey;
 	};	
 	
@@ -294,7 +294,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	* @Protected
 	* @deprecated
 	*/
-	ActionModuleProto.prepareParameters = function(){
+	TaskProto.prepareParameters = function(){
 		//throw new Error('Please override the prepareParameters method in action module ' + this);
 	};
 
@@ -302,7 +302,7 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	 * Tries to find a control by a given scope and additional paramters
 	 * @deprecated
 	 */
-	ActionModuleProto.findControl = function(){
+	TaskProto.findControl = function(){
 		var theControl = null,
 			scope = this.getParameter("scope");
 
@@ -378,10 +378,10 @@ sap.ui.define(['./library', './ActionContext'], function(library, ActionContext)
 	* @deprecated
 	* @Protected
 	*/
-	ActionModuleProto.completed = function(){
+	TaskProto.completed = function(){
 		
 	};
 
 	//Return Module Constructor
-	return ActionModule;
+	return Task;
 });
