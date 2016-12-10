@@ -25,686 +25,612 @@
  * 
  */
 
-sap.ui
-		.define(
-				[ 'jquery.sap.global', 
-				  'sap/ui/Device', 
-				  'sap/ui/core/library',
-				  'jquery.sap.mobile'
-				],
-				function(
-					jQuery, 
-					Device, 
-					coreLib, 
-					jqm
-				) {
-					
-					"use strict";
-					
-					/*
-					 * ---------------
-					 * 
-					 * Declare Library
-					 * 
-					 * ---------------
-					 */
-
-					/**
-					 * The ui5strap library.
-					 *
-					 * @namespace
-					 * @name ui5strap
-					 * @author Jan Philipp Knoeller
-					 * @version 0.11.6
-					 * @public
-					 */
-					sap.ui.getCore().initLibrary(
-							{
-								name : "ui5strap",
-
-								version : "0.11.6-SNAPSHOT",
-
-								dependencies : [ "sap.ui.core" ],
-
-								types : [ "ui5strap.Size", 
-								          "ui5strap.Severity",
-										"ui5strap.TriggerMode",
-										"ui5strap.TrailHtml",
-										"ui5strap.ContentPlacement",
-										"ui5strap.Placement",
-										"ui5strap.Alignment",
-										"ui5strap.TextAlignment",
-										"ui5strap.TextType",
-										"ui5strap.ListType",
-										"ui5strap.LinkType",
-										"ui5strap.HeadingType",
-										"ui5strap.ButtonType",
-										"ui5strap.ButtonGroupType",
-										"ui5strap.IconType",
-										"ui5strap.IconSize",
-										"ui5strap.IconTransform",
-										"ui5strap.FormSeverity",
-										"ui5strap.FormType",
-										"ui5strap.TextInputType",
-										"ui5strap.SelectBoxType",
-										"ui5strap.TextInputFormat",
-										"ui5strap.CheckboxType",
-										"ui5strap.RadioButtonType",
-										"ui5strap.FormMethod",
-										"ui5strap.NavBarType",
-										"ui5strap.NavBarPosition",
-										"ui5strap.NavType",
-										"ui5strap.SelectionMode",
-										"ui5strap.ContainerType",
-										"ui5strap.ImageShape" ],
-
-								interfaces : [ 
-								        "ui5strap.IApp",
-								        "ui5strap.IBar",
-								        "ui5strap.IColumn",
-								        "ui5strap.IDropdownMenuHost",
-								        "ui5strap.IInputGroupAddon",
-								        "ui5strap.IInputGroup",
-								        "ui5strap.IInputGroupControl",
-								        "ui5strap.IInputGroupButton",
-								        "ui5strap.IItemsProvider",
-								        "ui5strap.INavigator",
-								        "ui5strap.IRootComponent",
-								        "ui5strap.IRootNavigator",
-								        "ui5strap.ISelectionProvider",
-								        "ui5strap.ISelectableItem",
-								        "ui5strap.IText"
-								],
-
-								controls : [ 
-								        "ui5strap.Alert",
-										"ui5strap.Bar",
-								        "ui5strap.Breadcrumb",
-										"ui5strap.Break", 
-										"ui5strap.Button",
-										"ui5strap.ButtonDropdown",
-										"ui5strap.ButtonGroup",
-										"ui5strap.ButtonToolbar",
-										"ui5strap.Carousel",
-										"ui5strap.Checkbox",
-										"ui5strap.Clearfix", 
-										"ui5strap.Col",
-										"ui5strap.Container", 
-										"ui5strap.Form",
-										"ui5strap.FormGroup",
-										"ui5strap.Heading", 
-										"ui5strap.Icon",
-										"ui5strap.Image",
-										"ui5strap.InputGroup",
-										"ui5strap.Jumbotron", 
-										"ui5strap.Line", 
-										"ui5strap.Link",
-										"ui5strap.List", 
-										"ui5strap.ListDropdownItem",
-										"ui5strap.ListDropdownMenu",
-										"ui5strap.ListGroup",
-										"ui5strap.ListGroupItem",
-										"ui5strap.ListItem",
-										"ui5strap.ListLinkItem",
-										"ui5strap.ListMedia",
-										"ui5strap.ListMediaItem",
-										"ui5strap.ListNavItem",
-										"ui5strap.Modal", 
-										"ui5strap.Nav",
-										"ui5strap.NavBar",
-										"ui5strap.Page",
-										"ui5strap.Pager",
-										"ui5strap.Pagination",
-										"ui5strap.Panel",
-										"ui5strap.PanelGroup",
-										"ui5strap.Paragraph",
-										"ui5strap.PickerWheel",
-										"ui5strap.Popover",
-										"ui5strap.Progress",
-										"ui5strap.ProgressBar",
-										"ui5strap.RadioButton", 
-										"ui5strap.Row",
-										"ui5strap.SelectBox",
-										"ui5strap.StaticOverlay",
-										"ui5strap.TabContainer",
-										"ui5strap.Table", 
-										"ui5strap.Text",
-										"ui5strap.TextInput",
-										"ui5strap.Thumbnail",
-										"ui5strap.ToggleButton",
-										"ui5strap.Tooltip", 
-										"ui5strap.Well" ],
-
-								elements : [ 
-								        "ui5strap.Item",
-										"ui5strap.TableCell",
-										"ui5strap.TableRow" 
-										]
-							});
-					
-					/*
-					 * -------
-					 * 
-					 * Support
-					 * 
-					 * -------
-					 */
-
-					//Legacy
-					//TODO remove
-					ui5strap.support = {
-						"touch" : sap.ui.Device.support.touch
-					};
-					
-					/*
-					 * Bootstrap Transition End Legacy
-					 */
-
-					// CSS TRANSITION SUPPORT (Shoutout:
-					// http://www.modernizr.com/)
-					// ============================================================
-					var _bootstrapTransitionEnd = function() {
-						var el = document.createElement('bootstrap');
-
-						var transEndEventNames = {
-							'WebkitTransition' : 'webkitTransitionEnd',
-							'MozTransition' : 'transitionend',
-							'OTransition' : 'oTransitionEnd otransitionend',
-							'transition' : 'transitionend'
-						};
-
-						for ( var name in transEndEventNames) {
-							if (el.style[name] !== undefined) {
-								return {
-									end : transEndEventNames[name]
-								};
-							}
-						}
-
-						return false; // explicit for ie8 ( ._.)
-					};
-					
-					ui5strap.support.transition = _bootstrapTransitionEnd();
-
-					// http://blog.alexmaccaw.com/css-transitions
-					jQuery.fn.emulateTransitionEnd = function(duration) {
-						var called = false, $el = this;
-						jQuery(this).one(ui5strap.support.transition.end,
-								function() {
-									called = true
-								});
-
-						var callback = function() {
-							if (!called)
-								jQuery($el).trigger(
-										ui5strap.support.transition.end);
-						};
-
-						setTimeout(callback, duration);
-
-						return this;
-					};
-
-					/*
-					 * END Bootstrap Transition End Legacy
-					 */
-
-					/*
-					 * -----------
-					 * 
-					 * START Types
-					 * 
-					 * -----------
-					 */
-					
-					ui5strap.PickerWheelMode = {
-						Mode3D : "Mode3D",
-						Mode2D : "Mode2D"
-					};
-							
-							
-					/*
-					 * Size
-					 */
-					ui5strap.Size = {
-						ExtraSmall : "ExtraSmall",
-						Small : "Small",
-						Medium : "Medium",
-						Large : "Large",
-						Default : "Default"
-					};
-
-					ui5strap.BSSize = {
-						ExtraSmall : "xs",
-						Small : "sm",
-						Medium : "md",
-						Large : "lg"
-					};
-
-					/*
-					 * Severity
-					 */
-					ui5strap.Severity = {
-						Default : "Default",
-						Primary : "Primary",
-						Success : "Success",
-						Warning : "Warning",
-						Info : "Info",
-						Danger : "Danger",
-						None : "None"
-					};
-
-					ui5strap.BSSeverity = {
-						Default : "default",
-						Primary : "primary",
-						Success : "success",
-						Warning : "warning",
-						Info : "info",
-						Danger : "danger"
-					};
-
-					/**
-					 * CarouselOverflow defines how you see overflowing content
-					 * in Carousel controls.
-					 */
-					ui5strap.CarouselOverflow = {
-						Default : "Default",
-						Visible : "Visible",
-						Hidden : "Hidden",
-						Covered : "Covered"
-					};
-
-					/*
-					 * TriggerMode Used by Popovers
-					 */
-					ui5strap.TriggerMode = {
-						Click : "Click",
-						Hover : "Hover",
-						Focus : "Focus",
-						Manual : "Manual"
-					};
-
-					ui5strap.BSTriggerMode = {
-						Click : "click",
-						Hover : "hover",
-						Focus : "focus",
-						Manual : "manual"
-					};
-
-					/*
-					 * TrailHtml Used by inline Controls
-					 */
-					ui5strap.TrailHtml = {
-						"None" : "None",
-						"Space" : "Space",
-						"DoubleSpace" : "DoubleSpace",
-						"Break" : "Break"
-					};
-
-					/*
-					 * ContentPlacement Defines where to place the rendering of
-					 * the content aggregation. Used when there are both
-					 * properties and aggregation that produces output.
-					 */
-					ui5strap.ContentPlacement = {
-						Start : "Start",
-						End : "End"
-					};
-
-					/*
-					 * Placement Used by Popover and Tooltip controls
-					 */
-					ui5strap.Placement = {
-						None : "None",
-						Default : "Default",
-
-						Top : "Top",
-						Left : "Left",
-						Bottom : "Bottom",
-						Right : "Right",
-
-						AutoTop : "AutoTop",
-						AutoLeft : "AutoLeft",
-						AutoBottom : "AutoBottom",
-						AutoRight : "AutoRight"
-					};
-
-					// Bootstrap CSS mapping
-					ui5strap.BSPlacement = {
-						Top : "top",
-						Left : "left",
-						Bottom : "bottom",
-						Right : "right",
-
-						AutoTop : "auto top",
-						AutoLeft : "auto left",
-						AutoBottom : "auto bottom",
-						AutoRight : "auto right"
-					};
-
-					/*
-					 * Alignment Used for align block elements
-					 */
-					ui5strap.Alignment = {
-						Default : "Default",
-						PullLeft : "PullLeft",
-						PullRight : "PullRight",
-						CenterBlock : "CenterBlock",
-
-						// Deprecated
-						NavBar : "NavBar",
-						NavBarLeft : "NavBarLeft",
-						NavBarRight : "NavBarRight"
-					};
-
-					// Bootstrap CSS mapping
-					ui5strap.BSAlignment = {
-						PullLeft : "pull-left",
-						PullRight : "pull-right",
-						CenterBlock : "center-block",
-
-						// Deprecated
-						NavBarLeft : "navbar-left",
-						NavBarRight : "navbar-right"
-					};
-
-					/*
-					 * TextType
-					 */
-					ui5strap.TextType = {
-						Default : "Default",
-						Strong : "Strong",
-						Blockquote : "Blockquote",
-						Quote : "Quote",
-						Preformatted : "Preformatted",
-						Emphasized : "Emphasized",
-						Code : "Code",
-						Paragraph : "Paragraph",
-						HelpBlock : "HelpBlock",
-						FormStatic : "FormStatic",
-						Small : "Small",
-						Lead : "Lead",
-						Abbreviation : "Abbreviation",
-						Label : "Label",
-						Badge : "Badge"
-					};
-
-					/*
-					 * TextAlignment
-					 */
-					ui5strap.TextAlignment = {
-						Default : "Default",
-
-						Left : "Left",
-						Right : "Right",
-						Center : "Center",
-						Justify : "Justify"
-					};
-
-					/*
-					 * ListType
-					 */
-					ui5strap.ListType = {
-						Unordered : "Unordered",
-						Ordered : "Ordered"
-					};
-
-					ui5strap.ListGroupMode = {
-						Default : "Default",
-						Navigation : "Navigation"
-					};
-					
-					ui5strap.DropdownMenuHostUpdate = {
-							None : "None",
-							Text : "Text",
-							Data : "Data",
-							TextAndData : "TextAndData"
-					};
-
-					/*
-					 * LinkType
-					 */
-					ui5strap.LinkType = {
-						Default : "Default",
-
-						// Deprecated
-						Thumbnail : "Thumbnail"
-					};
-
-					/*
-					 * HeadingType TODO check this
-					 */
-					ui5strap.HeadingType = {
-						Default : "Default",
-						PageHeader : "PageHeader",
-						ListGroupItemHeading : "ListGroupItemHeading",
-						MediaHeading : "MediaHeading"
-					};
-
-					/*
-					 * ButtonType TODO check this
-					 */
-					ui5strap.ButtonType = {
-						Default : "Default",
-						Button : "Button",
-						Block : "Block",
-						Link : "Link",
-
-						// @deprecated
-						Close : "Close",
-						Icon : "Icon"
-					};
-
-					/*
-					 * ButtonGroupType Used by ButtonGroup
-					 */
-					ui5strap.ButtonGroupType = {
-						Default : "Default",
-						Justified : "Justified",
-						Vertical : "Vertical"
-					};
-
-					/*
-					 * IconType Only used by ui5strap.Icon
-					 */
-					ui5strap.IconType = {
-						Default : "Default",
-						FormFeedback : "FormFeedback"
-					};
-
-					/*
-					 * IconSize Only used by ui5strap.Icon
-					 */
-					ui5strap.IconSize = {
-						Default : "Default",
-						Large : "Large",
-						X2 : "X2",
-						X3 : "X3",
-						X4 : "X4",
-						X5 : "X5"
-					};
-
-					/*
-					 * IconTransform Only used by ui5strap.Icon
-					 */
-					ui5strap.IconTransform = {
-						Default : "Default",
-						Rotate90 : "Rotate90",
-						Rotate180 : "Rotate180",
-						Rotate270 : "Rotate270",
-						FlipHorizontal : "FlipHorizontal",
-						FlipVertical : "FlipVertical"
-					};
-
-					/*
-					 * FormSeverity Only used by ui5strap.Form
-					 */
-					ui5strap.FormSeverity = {
-						Success : "Success",
-						Warning : "Warning",
-						Error : "Error",
-						None : "None"
-					};
-
-					/*
-					 * FormType Only used by ui5strap.Form
-					 */
-					ui5strap.FormType = {
-						Default : "Default",
-						Horizontal : "Horizontal",
-						Inline : "Inline"
-					};
-
-					/*
-					 * TextInputType Only used by ui5strap.TextInput
-					 */
-					ui5strap.TextInputType = {
-						Default : "Default",
-						FormControl : "FormControl"
-					};
-
-					/*
-					 * TextInputFormat Only used by ui5strap.TextInput
-					 */
-					ui5strap.TextInputFormat = {
-						Default : "Default",
-						Plain : "Plain",
-						Html : "Html",
-						Email : "Email",
-						Date : "Date"
-					}
-
-					/*
-					 * SelectBoxType Only used by ui5strap.SelectBox
-					 */
-					ui5strap.SelectBoxType = {
-						Default : "Default",
-						FormControl : "FormControl"
-					};
-
-					/*
-					 * CheckboxType Only used by ui5strap.Checkbox
-					 */
-					ui5strap.CheckboxType = {
-						Default : "Default",
-						Block : "Block",
-						Inline : "Inline"
-					};
-
-					/*
-					 * RadioButtonType Only used by ui5strap.RadioButton
-					 */
-					ui5strap.RadioButtonType = {
-						Default : "Default",
-						Block : "Block",
-						Inline : "Inline"
-					};
-
-					/*
-					 * FormMethod Only used by ui5strap.Form
-					 */
-					ui5strap.FormMethod = {
-						None : "None",
-						Default : "Default",
-						POST : "POST",
-						GET : "GET",
-						PUT : "PUT"
-					};
-
-					/*
-					 * NavBarType Only used by ui5strap.NavBar
-					 */
-					ui5strap.NavBarType = {
-						Default : "Default",
-						None : "None"
-					};
-
-					/*
-					 * NavBarPosition Only used by ui5strap.NavBar
-					 */
-					ui5strap.NavBarPosition = {
-						Default : "Default",
-						FixedTop : "FixedTop",
-						FixedBottom : "FixedBottom",
-						StaticTop : "StaticTop"
-					};
-
-					/*
-					 * NavType Only used by ui5strap.Nav
-					 */
-					ui5strap.NavType = {
-						Tabs : "Tabs",
-						Pills : "Pills",
-						PillsStacked : "PillsStacked",
-						PillsJustified : "PillsJustified",
-						TabsJustified : "TabsJustified",
-						Default : "Default"
-					};
-
-					
-
-					/*
-					 * BarMenuType
-					 */
-					ui5strap.BarType = {
-						Default : "Default",
-						Fluid : "Fluid"
-					}
-
-					/*
-					 * SelectionMode Used by pks.ui5strap.core.ListBase
-					 */
-					ui5strap.SelectionMode = {
-						None : "None",
-						Single : "Single",
-						SingleToggle : "SingleToggle",
-						Multiple : "Multiple"
-					};
-
-					/*
-					 * ContainerType Only used by ui5strap.Container
-					 */
-					ui5strap.ContainerType = {
-						// Plain HTML <div>
-						Default : "Default",
-
-						// Bootstrap "container" & "container-fluid"
-						Fluid : "Fluid",
-
-						// Bootstrap styles
-						Website : "Website",
-						Jumbotron : "Jumbotron",
-						Well : "Well",
-						WellLarge : "WellLarge",
-						PageHeader : "PageHeader",
-
-						// Deprecated
-						FluidInset : "FluidInset"
-					};
-
-					/*
-					 * ImageShape Only used by ui5strap.Image
-					 */
-					ui5strap.ImageShape = {
-						Default : "Default",
-						Rounded : "Rounded",
-						Circle : "Circle",
-						Thumbnail : "Thumbnail"
-					};
-
-					ui5strap.ImageType = {
-						Default : "Default",
-						MediaObject : "MediaObject",
-						Responsive : "Responsive"
-					};
-					
-					/*
-					 * ---------
-					 * END Types
-					 * ---------
-					 */
-
-					// End of library
-					return ui5strap;
-
-				});
+sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
+		'jquery.sap.mobile' ], function(jQuery, Device, coreLib, jqm) {
+
+	"use strict";
+
+	/*
+	 * ---------------
+	 * 
+	 * Declare Library
+	 * 
+	 * ---------------
+	 */
+
+	/**
+	 * The ui5strap library.
+	 * 
+	 * @namespace
+	 * @name ui5strap
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * @public
+	 */
+	sap.ui.getCore().initLibrary(
+			{
+				name : "ui5strap",
+
+				version : "0.11.6-SNAPSHOT",
+
+				dependencies : [ "sap.ui.core" ],
+
+				types : [ "ui5strap.Alignment", "ui5strap.BarType", "ui5strap.BSAlignment", 
+				          "ui5strap.BSPlacement", "ui5strap.BSSeverity", "ui5strap.BSSize",
+				          "ui5strap.BSTriggerMode", "ui5strap.ButtonType", "ui5strap.ButtonGroupType",
+				          "ui5strap.CarouselOverflow", "ui5strap.CheckboxType", "ui5strap.ContainerType",
+				          "ui5strap.ContentPlacement", "ui5strap.DropdownMenuHostUpdate", "ui5strap.FormMethod",
+				          "ui5strap.FormSeverity", "ui5strap.FormType", "ui5strap.HeadingType",
+				          "ui5strap.IconType", "ui5strap.IconSize", "ui5strap.IconTransform",
+				          "ui5strap.ImageTpye", "ui5strap.ImageShape", "ui5strap.ListType",
+				          "ui5strap.ListGroupMode", "ui5strap.LinkType", "ui5strap.NavBarType",
+				          "ui5strap.NavBarPosition",  "ui5strap.NavType", "ui5strap.PickerWheelMode",
+				          "ui5strap.Placement", "ui5strap.RadioButtonType", "ui5strap.SelectionMode",
+				          "ui5strap.SelectBoxType", "ui5strap.Severity", "ui5strap.Size",
+				          "ui5strap.TextAlignment", "ui5strap.TextInputFormat", "ui5strap.TextInputType",
+				          "ui5strap.TextType", "ui5strap.TrailHtml", "ui5strap.TriggerMode"],
+
+				interfaces : [ "ui5strap.IApp", "ui5strap.IBar",
+						"ui5strap.IColumn", "ui5strap.IDropdownMenuHost",
+						"ui5strap.IInputGroupAddon", "ui5strap.IInputGroup",
+						"ui5strap.IInputGroupControl",
+						"ui5strap.IInputGroupButton",
+						"ui5strap.IItemsProvider", "ui5strap.INavigator",
+						"ui5strap.IRootComponent", "ui5strap.IRootNavigator",
+						"ui5strap.ISelectionProvider",
+						"ui5strap.ISelectableItem", "ui5strap.IText" ],
+
+				controls : [ "ui5strap.Alert", "ui5strap.Bar",
+						"ui5strap.Breadcrumb", "ui5strap.Break",
+						"ui5strap.Button", "ui5strap.ButtonDropdown",
+						"ui5strap.ButtonGroup", "ui5strap.ButtonToolbar",
+						"ui5strap.Carousel", "ui5strap.Checkbox",
+						"ui5strap.Clearfix", "ui5strap.Col",
+						"ui5strap.Container", "ui5strap.Form",
+						"ui5strap.FormGroup", "ui5strap.Heading",
+						"ui5strap.Icon", "ui5strap.Image",
+						"ui5strap.InputGroup", "ui5strap.Jumbotron",
+						"ui5strap.Line", "ui5strap.Link", "ui5strap.List",
+						"ui5strap.ListDropdownItem",
+						"ui5strap.ListDropdownMenu", "ui5strap.ListGroup",
+						"ui5strap.ListGroupItem", "ui5strap.ListItem",
+						"ui5strap.ListLinkItem", "ui5strap.ListMedia",
+						"ui5strap.ListMediaItem", "ui5strap.ListNavItem",
+						"ui5strap.Modal", "ui5strap.Nav", "ui5strap.NavBar",
+						"ui5strap.Page", "ui5strap.Pager",
+						"ui5strap.Pagination", "ui5strap.Panel",
+						"ui5strap.PanelGroup", "ui5strap.Paragraph",
+						"ui5strap.PickerWheel", "ui5strap.Popover",
+						"ui5strap.Progress", "ui5strap.ProgressBar",
+						"ui5strap.RadioButton", "ui5strap.Row",
+						"ui5strap.SelectBox", "ui5strap.StaticOverlay",
+						"ui5strap.TabContainer", "ui5strap.Table",
+						"ui5strap.Text", "ui5strap.TextInput",
+						"ui5strap.Thumbnail", "ui5strap.ToggleButton",
+						"ui5strap.Tooltip", "ui5strap.Well" ],
+
+				elements : [ "ui5strap.Item", "ui5strap.TableCell",
+						"ui5strap.TableRow" ]
+			});
+
+	var ui5strapBsLib = ui5strap;
+
+	/*
+	 * -------
+	 * 
+	 * Support
+	 * 
+	 * -------
+	 */
+
+	// Legacy
+	// TODO remove
+	ui5strapBsLib.support = {
+		"touch" : sap.ui.Device.support.touch
+	};
+
+	/*
+	 * Bootstrap Transition End Legacy
+	 */
+
+	// CSS TRANSITION SUPPORT (Shoutout:
+	// http://www.modernizr.com/)
+	// ============================================================
+	var _bootstrapTransitionEnd = function() {
+		var el = document.createElement('bootstrap');
+
+		var transEndEventNames = {
+			'WebkitTransition' : 'webkitTransitionEnd',
+			'MozTransition' : 'transitionend',
+			'OTransition' : 'oTransitionEnd otransitionend',
+			'transition' : 'transitionend'
+		};
+
+		for ( var name in transEndEventNames) {
+			if (el.style[name] !== undefined) {
+				return {
+					end : transEndEventNames[name]
+				};
+			}
+		}
+
+		return false; // explicit for ie8 ( ._.)
+	};
+
+	ui5strap.support.transition = _bootstrapTransitionEnd();
+
+	// http://blog.alexmaccaw.com/css-transitions
+	jQuery.fn.emulateTransitionEnd = function(duration) {
+		var called = false, $el = this;
+		jQuery(this).one(ui5strap.support.transition.end, function() {
+			called = true
+		});
+
+		var callback = function() {
+			if (!called)
+				jQuery($el).trigger(ui5strap.support.transition.end);
+		};
+
+		setTimeout(callback, duration);
+
+		return this;
+	};
+
+	/*
+	 * END Bootstrap Transition End Legacy
+	 */
+
+	/*
+	 * -----------
+	 * 
+	 * START Types
+	 * 
+	 * -----------
+	 */
+
+	/*
+	 * Alignment Used for align block elements
+	 */
+	ui5strapBsLib.Alignment = {
+		Default : "Default",
+		PullLeft : "PullLeft",
+		PullRight : "PullRight",
+		CenterBlock : "CenterBlock",
+
+		// Deprecated
+		NavBar : "NavBar",
+		NavBarLeft : "NavBarLeft",
+		NavBarRight : "NavBarRight"
+	};
+
+	/*
+	 * BarMenuType
+	 */
+	ui5strapBsLib.BarType = {
+		Default : "Default",
+		Fluid : "Fluid"
+	}
+
+	// Bootstrap CSS mapping
+	ui5strapBsLib.BSAlignment = {
+		PullLeft : "pull-left",
+		PullRight : "pull-right",
+		CenterBlock : "center-block",
+
+		// Deprecated
+		NavBarLeft : "navbar-left",
+		NavBarRight : "navbar-right"
+	};
+
+	// Bootstrap CSS mapping
+	ui5strapBsLib.BSPlacement = {
+		Top : "top",
+		Left : "left",
+		Bottom : "bottom",
+		Right : "right",
+
+		AutoTop : "auto top",
+		AutoLeft : "auto left",
+		AutoBottom : "auto bottom",
+		AutoRight : "auto right"
+	};
+
+	ui5strapBsLib.BSSeverity = {
+		Default : "default",
+		Primary : "primary",
+		Success : "success",
+		Warning : "warning",
+		Info : "info",
+		Danger : "danger"
+	};
+
+	ui5strapBsLib.BSSize = {
+		ExtraSmall : "xs",
+		Small : "sm",
+		Medium : "md",
+		Large : "lg"
+	};
+
+	ui5strapBsLib.BSTriggerMode = {
+		Click : "click",
+		Hover : "hover",
+		Focus : "focus",
+		Manual : "manual"
+	};
+
+	/*
+	 * ButtonType TODO check this
+	 */
+	ui5strapBsLib.ButtonType = {
+		Default : "Default",
+		Button : "Button",
+		Block : "Block",
+		Link : "Link",
+
+		// @deprecated
+		Close : "Close",
+		Icon : "Icon"
+	};
+
+	/*
+	 * ButtonGroupType Used by ButtonGroup
+	 */
+	ui5strapBsLib.ButtonGroupType = {
+		Default : "Default",
+		Justified : "Justified",
+		Vertical : "Vertical"
+	};
+
+	/**
+	 * CarouselOverflow defines how you see overflowing content in Carousel
+	 * controls.
+	 */
+	ui5strapBsLib.CarouselOverflow = {
+		Default : "Default",
+		Visible : "Visible",
+		Hidden : "Hidden",
+		Covered : "Covered"
+	};
+
+	/*
+	 * CheckboxType Only used by ui5strapBsLib.Checkbox
+	 */
+	ui5strapBsLib.CheckboxType = {
+		Default : "Default",
+		Block : "Block",
+		Inline : "Inline"
+	};
+
+	/*
+	 * ContainerType Only used by ui5strapBsLib.Container
+	 */
+	ui5strapBsLib.ContainerType = {
+		// Plain HTML <div>
+		Default : "Default",
+
+		// Bootstrap "container" & "container-fluid"
+		Fluid : "Fluid",
+
+		// Bootstrap styles
+		Website : "Website",
+		Jumbotron : "Jumbotron",
+		Well : "Well",
+		WellLarge : "WellLarge",
+		PageHeader : "PageHeader",
+
+		// Deprecated
+		FluidInset : "FluidInset"
+	};
+
+	/*
+	 * ContentPlacement Defines where to place the rendering of the content
+	 * aggregation. Used when there are both properties and aggregation that
+	 * produces output.
+	 */
+	ui5strapBsLib.ContentPlacement = {
+		Start : "Start",
+		End : "End"
+	};
+
+	ui5strapBsLib.DropdownMenuHostUpdate = {
+		None : "None",
+		Text : "Text",
+		Data : "Data",
+		TextAndData : "TextAndData"
+	};
+
+	/*
+	 * FormMethod Only used by ui5strapBsLib.Form
+	 */
+	ui5strapBsLib.FormMethod = {
+		None : "None",
+		Default : "Default",
+		POST : "POST",
+		GET : "GET",
+		PUT : "PUT"
+	};
+
+	/*
+	 * FormSeverity Only used by ui5strapBsLib.Form
+	 */
+	ui5strapBsLib.FormSeverity = {
+		Success : "Success",
+		Warning : "Warning",
+		Error : "Error",
+		None : "None"
+	};
+
+	/*
+	 * FormType Only used by ui5strapBsLib.Form
+	 */
+	ui5strapBsLib.FormType = {
+		Default : "Default",
+		Horizontal : "Horizontal",
+		Inline : "Inline"
+	};
+
+	/*
+	 * HeadingType TODO check this
+	 */
+	ui5strapBsLib.HeadingType = {
+		Default : "Default",
+		PageHeader : "PageHeader",
+		ListGroupItemHeading : "ListGroupItemHeading",
+		MediaHeading : "MediaHeading"
+	};
+
+	/*
+	 * IconType Only used by ui5strapBsLib.Icon
+	 */
+	ui5strapBsLib.IconType = {
+		Default : "Default",
+		FormFeedback : "FormFeedback"
+	};
+
+	/*
+	 * IconSize Only used by ui5strapBsLib.Icon
+	 */
+	ui5strapBsLib.IconSize = {
+		Default : "Default",
+		Large : "Large",
+		X2 : "X2",
+		X3 : "X3",
+		X4 : "X4",
+		X5 : "X5"
+	};
+
+	/*
+	 * IconTransform Only used by ui5strapBsLib.Icon
+	 */
+	ui5strapBsLib.IconTransform = {
+		Default : "Default",
+		Rotate90 : "Rotate90",
+		Rotate180 : "Rotate180",
+		Rotate270 : "Rotate270",
+		FlipHorizontal : "FlipHorizontal",
+		FlipVertical : "FlipVertical"
+	};
+
+	/*
+	 * ImageShape Only used by ui5strapBsLib.Image
+	 */
+	ui5strapBsLib.ImageShape = {
+		Default : "Default",
+		Rounded : "Rounded",
+		Circle : "Circle",
+		Thumbnail : "Thumbnail"
+	};
+
+	ui5strapBsLib.ImageType = {
+		Default : "Default",
+		MediaObject : "MediaObject",
+		Responsive : "Responsive"
+	};
+
+	/*
+	 * ListType
+	 */
+	ui5strapBsLib.ListType = {
+		Unordered : "Unordered",
+		Ordered : "Ordered"
+	};
+
+	ui5strapBsLib.ListGroupMode = {
+		Default : "Default",
+		Navigation : "Navigation"
+	};
+
+	/*
+	 * LinkType
+	 */
+	ui5strapBsLib.LinkType = {
+		Default : "Default",
+
+		// Deprecated
+		Thumbnail : "Thumbnail"
+	};
+
+	/*
+	 * NavBarType Only used by ui5strapBsLib.NavBar
+	 */
+	ui5strapBsLib.NavBarType = {
+		Default : "Default",
+		None : "None"
+	};
+
+	/*
+	 * NavBarPosition Only used by ui5strapBsLib.NavBar
+	 */
+	ui5strapBsLib.NavBarPosition = {
+		Default : "Default",
+		FixedTop : "FixedTop",
+		FixedBottom : "FixedBottom",
+		StaticTop : "StaticTop"
+	};
+
+	/*
+	 * NavType Only used by ui5strapBsLib.Nav
+	 */
+	ui5strapBsLib.NavType = {
+		Tabs : "Tabs",
+		Pills : "Pills",
+		PillsStacked : "PillsStacked",
+		PillsJustified : "PillsJustified",
+		TabsJustified : "TabsJustified",
+		Default : "Default"
+	};
+
+	ui5strapBsLib.PickerWheelMode = {
+		Mode3D : "Mode3D",
+		Mode2D : "Mode2D"
+	};
+
+	/*
+	 * Placement Used by Popover and Tooltip controls
+	 */
+	ui5strapBsLib.Placement = {
+		None : "None",
+		Default : "Default",
+
+		Top : "Top",
+		Left : "Left",
+		Bottom : "Bottom",
+		Right : "Right",
+
+		AutoTop : "AutoTop",
+		AutoLeft : "AutoLeft",
+		AutoBottom : "AutoBottom",
+		AutoRight : "AutoRight"
+	};
+
+	/*
+	 * RadioButtonType Only used by ui5strapBsLib.RadioButton
+	 */
+	ui5strapBsLib.RadioButtonType = {
+		Default : "Default",
+		Block : "Block",
+		Inline : "Inline"
+	};
+
+	/*
+	 * SelectionMode Used by pks.ui5strapBsLib.core.ListBase
+	 */
+	ui5strapBsLib.SelectionMode = {
+		None : "None",
+		Single : "Single",
+		SingleToggle : "SingleToggle",
+		Multiple : "Multiple"
+	};
+
+	/*
+	 * SelectBoxType Only used by ui5strapBsLib.SelectBox
+	 */
+	ui5strapBsLib.SelectBoxType = {
+		Default : "Default",
+		FormControl : "FormControl"
+	};
+
+	/*
+	 * Severity
+	 */
+	ui5strapBsLib.Severity = {
+		Default : "Default",
+		Primary : "Primary",
+		Success : "Success",
+		Warning : "Warning",
+		Info : "Info",
+		Danger : "Danger",
+		None : "None"
+	};
+
+	/*
+	 * Size
+	 */
+	ui5strapBsLib.Size = {
+		ExtraSmall : "ExtraSmall",
+		Small : "Small",
+		Medium : "Medium",
+		Large : "Large",
+		Default : "Default"
+	};
+
+	/*
+	 * TextAlignment
+	 */
+	ui5strapBsLib.TextAlignment = {
+		Default : "Default",
+
+		Left : "Left",
+		Right : "Right",
+		Center : "Center",
+		Justify : "Justify"
+	};
+
+	/*
+	 * TextInputFormat Only used by ui5strapBsLib.TextInput
+	 */
+	ui5strapBsLib.TextInputFormat = {
+		Default : "Default",
+		Plain : "Plain",
+		Html : "Html",
+		Email : "Email",
+		Date : "Date"
+	}
+
+	/*
+	 * TextInputType Only used by ui5strapBsLib.TextInput
+	 */
+	ui5strapBsLib.TextInputType = {
+		Default : "Default",
+		FormControl : "FormControl"
+	};
+
+	/*
+	 * TextType
+	 */
+	ui5strapBsLib.TextType = {
+		Default : "Default",
+		Strong : "Strong",
+		Blockquote : "Blockquote",
+		Quote : "Quote",
+		Preformatted : "Preformatted",
+		Emphasized : "Emphasized",
+		Code : "Code",
+		Paragraph : "Paragraph",
+		HelpBlock : "HelpBlock",
+		FormStatic : "FormStatic",
+		Small : "Small",
+		Lead : "Lead",
+		Abbreviation : "Abbreviation",
+		Label : "Label",
+		Badge : "Badge"
+	};
+
+	/*
+	 * TrailHtml Used by inline Controls
+	 */
+	ui5strapBsLib.TrailHtml = {
+		"None" : "None",
+		"Space" : "Space",
+		"DoubleSpace" : "DoubleSpace",
+		"Break" : "Break"
+	};
+
+	/*
+	 * TriggerMode Used by Popovers
+	 */
+	ui5strapBsLib.TriggerMode = {
+		Click : "Click",
+		Hover : "Hover",
+		Focus : "Focus",
+		Manual : "Manual"
+	};
+
+	/*
+	 * --------- END Types ---------
+	 */
+
+	// End of library
+	return ui5strap;
+
+});
