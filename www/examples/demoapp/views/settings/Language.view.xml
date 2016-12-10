@@ -1,5 +1,6 @@
 <sapUiCoreMvc:View controllerName="pks.ui5strap.action.ActionController"
 	xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+	 xmlns:ui5strapEx="pks.ui5strap.ex"
 	xmlns:demoapp="com.ui5strap.apps.demoapp.controls"
 	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<!-- The page control -->

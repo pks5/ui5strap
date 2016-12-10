@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.PickerWheel
+ * pks.ui5strap.ex.PickerWheel
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -27,8 +27,8 @@
 
 sap.ui
 		.define(
-				[ "ui5strap/library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils" ],
-				function(ulib, ControlBase, Utils) {
+				[ "./library", "../core/ControlBase", "../core/Utils" ],
+				function(ui5strapExLib, ControlBase, Utils) {
 					"use strict";
 					
 					/**
@@ -39,21 +39,21 @@ sap.ui
 					 * 
 					 * @class
 					 * Control for creating picker wheels.
-					 * @extends ui5strap.ControlBase
+					 * @extends pks.ui5strap.core.ControlBase
 					 * 
 					 * @author Jan Philipp Knoeller
 					 * @version 0.11.6
 					 * 
 					 * @constructor
 					 * @public
-					 * @alias ui5strap.PickerWheel
+					 * @alias pks.ui5strap.ex.PickerWheel
 					 * 
 					 */
 					var PickerWheel = ControlBase.extend(
-							"ui5strap.PickerWheel", {
+							"pks.ui5strap.ex.PickerWheel", {
 								metadata : {
 
-									library : "ui5strap",
+									library : "pks.ui5strap.ex",
 									
 									properties : {
 										selectedIndex : {
@@ -77,8 +77,8 @@ sap.ui
 										},
 										
 										mode : {
-											type : "ui5strap.PickerWheelMode",
-											defaultValue : sap.ui.Device.browser.msie ? ulib.PickerWheelMode.Mode2D : ulib.PickerWheelMode.Mode3D
+											type : "pks.ui5strap.ex.PickerWheelMode",
+											defaultValue : sap.ui.Device.browser.msie ? ui5strapExLib.PickerWheelMode.Mode2D : ui5strapExLib.PickerWheelMode.Mode3D
 										}
 										
 										
@@ -308,6 +308,10 @@ sap.ui
 						this._wheel = null;
 					};
 					
+					PickerWheelProto._getStyleClassPrefix = function(){
+						return "ui5strapPickerWheel";
+					};
+					
 					/**
 					 * @override
 					 */
@@ -357,10 +361,10 @@ sap.ui
 								
 								_this._$wheelContainer = _this.$().find('.ui5strapPickerWheel-wheel');
 								
-								if(mode === ulib.PickerWheelMode.Mode3D){
+								if(mode === ui5strapExLib.PickerWheelMode.Mode3D){
 									_this._wheel = new Wheel3D(_this._$wheelContainer[0]);
 								}
-								else if(mode === ulib.PickerWheelMode.Mode2D){
+								else if(mode === ui5strapExLib.PickerWheelMode.Mode2D){
 									_this._wheel = new Wheel2D(_this._$wheelContainer[0]);
 								}
 								
@@ -613,7 +617,7 @@ sap.ui
 					 */
 					PickerWheelProto.setMode = function(newMode, suppress) {
 						if(sap.ui.Device.browser.msie){
-							newMode = ulib.PickerWheelMode.Mode2D;
+							newMode = ui5strapExLib.PickerWheelMode.Mode2D;
 						}
 						
 						this.setProperty('mode', newMode, suppress);
@@ -789,7 +793,7 @@ sap.ui
 							$newPanel.addClass('active');
 							
 							//WebKit Bugfix "Hanging Active Panel"
-							if(this.getMode() === ulib.PickerWheelMode.Mode2D){
+							if(this.getMode() === ui5strapExLib.PickerWheelMode.Mode2D){
 								this._wheel.rotate(this._wheel.rotation + 0.0001);
 							}
 							

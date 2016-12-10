@@ -191,22 +191,6 @@ sap.ui
 					/*
 					 * -------
 					 * 
-					 * Wrapper
-					 * 
-					 * -------
-					 */
-					
-					/*
-					 * -------
-					 * 
-					 * Options
-					 * 
-					 * -------
-					 */
-
-					/*
-					 * -------
-					 * 
 					 * Support
 					 * 
 					 * -------
@@ -746,35 +730,7 @@ sap.ui
 						Default : "Default"
 					};
 
-					/*
-					 * BarNavContainerMode
-					 */
-					ui5strap.BarNavContainerMode = {
-						Intrude : "Intrude",
-						Extrude : "Extrude",
-						Overlay : "Overlay"
-					};
-
-					/*
-					 * BarNavContainerPlacement
-					 */
-					ui5strap.BarNavContainerPlacement = {
-						Left : "Left",
-						Top : "Top",
-						Right : "Right",
-						Bottom : "Bottom"
-					};
-
-					/*
-					 * BarMenuType
-					 */
-					ui5strap.BarMenuType = {
-						Default : "Default",
-						ListHorizontal : "ListHorizontal",
-						ListVertical : "ListVertical",
-						ButtonsHorizontal : "ButtonsHorizontal",
-						ButtonsVertical : "ButtonsVertical"
-					}
+					
 
 					/*
 					 * BarMenuType
@@ -829,11 +785,6 @@ sap.ui
 						Default : "Default",
 						MediaObject : "MediaObject",
 						Responsive : "Responsive"
-					};
-					
-					ui5strap.PickerWheelMode = {
-						Mode3D : "Mode3D",
-						Mode2D : "Mode2D"
 					};
 					
 					/*

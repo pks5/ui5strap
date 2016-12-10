@@ -13,7 +13,7 @@
 			},
 			"barMenu" : {
 				"SOURCE" : "View",
-				"TYPE" : "ui5strap.BarMenu",
+				"TYPE" : "pks.ui5strap.ex.BarMenu",
 				"CONTROL_ID" : "mySubMenuControls",
 				"VIEW_ID" : "menuControls"
 			}

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport'], function(ulib, ControlBase, SelectableSupport){
+sap.ui.define(["./library", "../core/ControlBase", '../core/SelectableSupport'], function(ui5strapExLib, ControlBase, SelectableSupport){
 	
 	
 	var _meta = {
@@ -70,7 +70,7 @@ sap.ui.define(["./library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	 * 
 	 * @class
 	 * Control for creating mobile like toggle buttons.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -80,7 +80,7 @@ sap.ui.define(["./library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	 * @alias ui5strap.ToggleButton
 	 * 
 	 */
-	var ToggleButton = ControlBase.extend("ui5strap.ToggleButton", {
+	var ToggleButton = ControlBase.extend("pks.ui5strap.ex.ToggleButton", {
 		metadata : _meta,
 		
 		renderer : function(rm, oControl) {

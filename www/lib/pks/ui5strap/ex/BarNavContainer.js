@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.BarNavContainer
+ * pks.ui5strap.ex.BarNavContainer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', 'pks/ui5strap/core/ResponsiveTransition'], function(library, NavContainer, ResponsiveTransition){
+sap.ui.define(['./library', "ui5strap/library", '../viewer/NavContainer', '../core/ResponsiveTransition'], function(ui5strapExLib, ui5strapBsLib, NavContainer, ResponsiveTransition){
 
 	/**
 	 * Constructor for a new BarNavContainer instance.
@@ -42,13 +42,13 @@ sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', 'pks/ui5strap/co
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.BarNavContainer
+	 * @alias pks.ui5strap.ex.BarNavContainer
 	 * 
 	 */
-	var BarNavContainer = NavContainer.extend("ui5strap.BarNavContainer", {
+	var BarNavContainer = NavContainer.extend("pks.ui5strap.ex.BarNavContainer", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.ex",
 			
 			properties : { 
 				barVisible : {
@@ -60,20 +60,20 @@ sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', 'pks/ui5strap/co
 				//TODO add barMode for all sizes?
 				
 				barModeExtraSmall : {
-					type : "ui5strap.BarNavContainerMode",
-					defaultValue : ui5strap.BarNavContainerMode.Intrude
+					type : "pks.ui5strap.ex.BarNavContainerMode",
+					defaultValue : ui5strapExLib.BarNavContainerMode.Intrude
 				},
 				barModeSmall : {
-					type : "ui5strap.BarNavContainerMode",
-					defaultValue : ui5strap.BarNavContainerMode.Intrude
+					type : "pks.ui5strap.ex.BarNavContainerMode",
+					defaultValue : ui5strapExLib.BarNavContainerMode.Intrude
 				},
 				barModeMedium : {
-					type : "ui5strap.BarNavContainerMode",
-					defaultValue : ui5strap.BarNavContainerMode.Intrude
+					type : "pks.ui5strap.ex.BarNavContainerMode",
+					defaultValue : ui5strapExLib.BarNavContainerMode.Intrude
 				},
 				barModeLarge : {
-					type : "ui5strap.BarNavContainerMode",
-					defaultValue : ui5strap.BarNavContainerMode.Intrude
+					type : "pks.ui5strap.ex.BarNavContainerMode",
+					defaultValue : ui5strapExLib.BarNavContainerMode.Intrude
 				},
 				//TODO add barModeExtraLarge on Bootstrap 4 Upgrade
 				
@@ -109,20 +109,20 @@ sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', 'pks/ui5strap/co
 				//TODO add barPlacement for all sizes?
 				
 				barPlacementExtraSmall : {
-					type : "ui5strap.BarNavContainerPlacement",
-					defaultValue : ui5strap.BarNavContainerPlacement.Left
+					type : "pks.ui5strap.ex.BarNavContainerPlacement",
+					defaultValue : ui5strapExLib.BarNavContainerPlacement.Left
 				},
 				barPlacementSmall : {
-					type : "ui5strap.BarNavContainerPlacement",
-					defaultValue : ui5strap.BarNavContainerPlacement.Left
+					type : "pks.ui5strap.ex.BarNavContainerPlacement",
+					defaultValue : ui5strapExLib.BarNavContainerPlacement.Left
 				},
 				barPlacementMedium : {
-					type : "ui5strap.BarNavContainerPlacement",
-					defaultValue : ui5strap.BarNavContainerPlacement.Left
+					type : "pks.ui5strap.ex.BarNavContainerPlacement",
+					defaultValue : ui5strapExLib.BarNavContainerPlacement.Left
 				},
 				barPlacementLarge : {
-					type : "ui5strap.BarNavContainerPlacement",
-					defaultValue : ui5strap.BarNavContainerPlacement.Left
+					type : "pks.ui5strap.ex.BarNavContainerPlacement",
+					defaultValue : ui5strapExLib.BarNavContainerPlacement.Left
 				},
 				//TODO add barPlacementExtraLarge on Bootstrap 4 Upgrade
 				
@@ -149,7 +149,7 @@ sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', 'pks/ui5strap/co
 				
 				barTransitionSpeed : {
 					type : "ui5strap.TransitionSpeed",
-					defaultValue : ui5strap.TransitionSpeed.Normal
+					defaultValue : ui5strapBsLib.TransitionSpeed.Normal
 				}
 				
 			},
@@ -186,16 +186,16 @@ sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', 'pks/ui5strap/co
 	
 	BarNavContainerProto._getBarTransitionByPlacement = function(placement){
 		var transition = "none none";
-		if(placement === ui5strap.BarNavContainerPlacement.Left){
+		if(placement === ui5strapExLib.BarNavContainerPlacement.Left){
 			transition = "slide-ltr slide-rtl";
 		}
-		else if(placement === ui5strap.BarNavContainerPlacement.Top){
+		else if(placement === ui5strapExLib.BarNavContainerPlacement.Top){
 			transition = "slide-ttb slide-btt";
 		}
-		else if(placement === ui5strap.BarNavContainerPlacement.Right){
+		else if(placement === ui5strapExLib.BarNavContainerPlacement.Right){
 			transition = "slide-rtl slide-ltr";
 		}
-		else if(placement === ui5strap.BarNavContainerPlacement.Bottom){
+		else if(placement === ui5strapExLib.BarNavContainerPlacement.Bottom){
 			transition = "slide-btt slide-ttb";
 		}
 		return transition;
@@ -318,13 +318,13 @@ sap.ui.define(['./library', 'pks/ui5strap/viewer/NavContainer', 'pks/ui5strap/co
 					};
 				
 				//RAF start
-				ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+				ui5strapBsLib.polyfill.requestAnimationFrame(function RAF1(){
 					
 					//Prepare Transition
 					transition.prepare();
 					
 					//RAF
-					ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+					ui5strapBsLib.polyfill.requestAnimationFrame(function RAF2(){
 						//Execure Transition
 						transition.execute(transitionComplete, transitionComplete);
 						

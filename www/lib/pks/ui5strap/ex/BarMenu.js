@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ListGroup
+ * pks.ui5strap.ex.BarMenu
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, ListBase){
+sap.ui.define(['./library', '../core/ListBase'], function(ui5strapExLib, ListBase){
 
 	/**
 	 * Constructor for a new BarMenu instance.
@@ -42,13 +42,13 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, Lis
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.BarMenu
+	 * @alias pks.ui5strap.ex.BarMenu
 	 * 
 	 */
-	var BarMenu = ListBase.extend("ui5strap.BarMenu", {
+	var BarMenu = ListBase.extend("pks.ui5strap.ex.BarMenu", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.ex",
 			
 			defaultAggregation : "items",
 			
@@ -86,26 +86,26 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, Lis
 				
 				//TODO rename to type
 				typeExtraSmall : {
-					type : "ui5strap.BarMenuType",
-					defaultValue : ui5strap.BarMenuType.ListVertical
+					type : "pks.ui5strap.ex.BarMenuType",
+					defaultValue : ui5strapExLib.BarMenuType.ListVertical
 				},
 				
 				//TODO rename to typeSmallUp
 				typeSmall : {
-					type : "ui5strap.BarMenuType",
-					defaultValue : ui5strap.BarMenuType.Default
+					type : "pks.ui5strap.ex.BarMenuType",
+					defaultValue : ui5strapExLib.BarMenuType.Default
 				},
 				
 				//TODO rename to typeMediumUp
 				typeMedium : {
-					type : "ui5strap.BarMenuType",
-					defaultValue : ui5strap.BarMenuType.Default
+					type : "pks.ui5strap.ex.BarMenuType",
+					defaultValue : ui5strapExLib.BarMenuType.Default
 				},
 				
 				//TODO rename to typeLargeUp
 				typeLarge : {
-					type : "ui5strap.BarMenuType",
-					defaultValue : ui5strap.BarMenuType.Default
+					type : "pks.ui5strap.ex.BarMenuType",
+					defaultValue : ui5strapExLib.BarMenuType.Default
 				}
 				
 				//TODO add typeExtraLarge on Bootstrap 4 Upgrade
@@ -113,7 +113,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, Lis
 			
 			aggregations : { 
 				items : {
-					type : "ui5strap.BarMenuItem",
+					type : "pks.ui5strap.ex.BarMenuItem",
 					singularName: "item"
 				} 
 			}
@@ -135,7 +135,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, Lis
 			if(oControl.getInverse()){
 				classes += " ui5sl-barmenu-flag-inverse";
 			}
-			if(typeExtraSmall === ui5strap.BarMenuType.Default){
+			if(typeExtraSmall === ui5strapExLib.BarMenuType.Default){
 				classes += ' u5sl-barmenu-flag-listvertical-xs';
 			}
 			else{

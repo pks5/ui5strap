@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Controls" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Controls" xmlns="ui5strap" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
 	<Container type="Fluid" options="PictureFrame">
@@ -138,15 +138,15 @@
 					</ButtonDropdown>
 			</Paragraph>
 			
-			<ToggleButton></ToggleButton>
+			<ui5strapEx:ToggleButton></ui5strapEx:ToggleButton>
                     
-                    <ToggleButton vertical="true"></ToggleButton>
+                    <ui5strapEx:ToggleButton vertical="true"></ui5strapEx:ToggleButton>
                     
-                    <ToggleButton textSelected="Enabled" textDeselected="Disabled"></ToggleButton>
+                    <ui5strapEx:ToggleButton textSelected="Enabled" textDeselected="Disabled"></ui5strapEx:ToggleButton>
                     
-                    <ToggleButton vertical="true" textSelected="On" textDeselected="Off"></ToggleButton>
+                    <ui5strapEx:ToggleButton vertical="true" textSelected="On" textDeselected="Off"></ui5strapEx:ToggleButton>
                     
-                    <ToggleButton enabled="false"></ToggleButton>
+                    <ui5strapEx:ToggleButton enabled="false"></ui5strapEx:ToggleButton>
                     
                     
 

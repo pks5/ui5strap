@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.BarMenuItem
+ * pks.ui5strap.ex.BarMenuItem
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem', 'pks/ui5strap/core/Utils'], function(library, ListItem, Utils){
+sap.ui.define(['./library', 'ui5strap/library', 'ui5strap/ListItem', '../core/Utils'], function(ui5strapExLib, ui5strapBsLib, ListItem, Utils){
 
 	/**
 	 * Constructor for a new ListItem instance.
@@ -42,13 +42,13 @@ sap.ui.define(['./library', './ListItem', 'pks/ui5strap/core/Utils'], function(l
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.BarMenuItem
+	 * @alias pks.ui5strap.ex.BarMenuItem
 	 * 
 	 */
-	var BarMenuItem = ListItem.extend("ui5strap.BarMenuItem", {
+	var BarMenuItem = ListItem.extend("pks.ui5strap.ex.BarMenuItem", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.ex",
 			
 			properties : { 
 				icon : {
@@ -76,7 +76,7 @@ sap.ui.define(['./library', './ListItem', 'pks/ui5strap/core/Utils'], function(l
 			rm.writeClasses();
 			rm.write(">");
 			
-			if(contentPlacement === ui5strap.ContentPlacement.Start){
+			if(contentPlacement === ui5strapBsLib.ContentPlacement.Start){
 		    	for(var i = 0; i < content.length; i++){ 
 					rm.renderControl(content[i]);
 				}
@@ -101,7 +101,7 @@ sap.ui.define(['./library', './ListItem', 'pks/ui5strap/core/Utils'], function(l
 				rm.write('</span>');
 			}
 			
-			if(contentPlacement === ui5strap.ContentPlacement.End){
+			if(contentPlacement === ui5strapBsLib.ContentPlacement.End){
 				for(var i = 0; i < content.length; i++){ 
 					rm.renderControl(content[i]);
 				}

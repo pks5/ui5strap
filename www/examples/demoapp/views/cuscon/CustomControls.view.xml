@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="pks.ui5strap.action.ActionController" xmlns="ui5strap" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="pks.ui5strap.action.ActionController" xmlns="ui5strap" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<!-- The page control -->
 	<Page>
@@ -38,12 +38,12 @@
 		<!-- Body area with page content -->
 		<body>
 		      
-		    <BarNavContainer
+		    <ui5strapEx:BarNavContainer
                 id="subNavCuscon"
                     barVisible="true" 
                     barSizeExtraSmall="2"
                     pageChange="com.ui5strap.apps.demoapp.actions.cuscon.SetSelectedMenuCuscon" 
-                    ></BarNavContainer>
+                    ></ui5strapEx:BarNavContainer>
 		
 		
 			
