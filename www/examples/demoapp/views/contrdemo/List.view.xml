@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.contrdemo.List" xmlns="ui5strap" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.contrdemo.List" xmlns:ui5strapCore="pks.ui5strap.core" xmlns="ui5strap" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<!-- The page control -->
 	<Page>
@@ -37,7 +37,7 @@
 
 		<!-- Body area with page content -->
 		<body>
-			<ScrollContainer vertical="true">
+			<ui5strapCore:ScrollContainer vertical="true">
 				<Container type="FluidInset" severity="Warning">
                     <Text type="Lead">
                         <Text text="{i18n>PAGE_CONTRDEMO_LIST_INTRO}" />
@@ -77,7 +77,7 @@
 
 					</Panel>
 				</Container>
-			</ScrollContainer>
+			</ui5strapCore:ScrollContainer>
 		</body>
 
 	</Page>

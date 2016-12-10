@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './CommonRenderers'], function(library, ControlBase, CommonRenderers){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, ControlBase){
 
 	/**
 	 * Constructor for a new Column instance.
@@ -126,7 +126,21 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './CommonRenderers'
 			defaultAggregation : "content"
 		},
 		
-		renderer : "ui5strap.CommonRenderers.DivWithContent"
+		renderer : function(rm, oControl){
+			var content = oControl.getContent();
+
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < content.length; i++){ 
+					rm.renderControl(content[i]);
+			}
+			
+			rm.write("</div>");
+		}
 	}), ColProto = Col.prototype;
 	
 	/**

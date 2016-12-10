@@ -349,7 +349,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	 * @protected
 	 */
 	AppProto._buildSingleViewRootControl = function(callback){
-		sap.ui.require(["pks/ui5strap/viewer/NavContainer"], function(NavContainerConstructor){
+		sap.ui.require(["pks/ui5strap/core/NavContainer"], function(NavContainerConstructor){
 			callback && callback(new NavContainerConstructor());
 		});
 	};
@@ -388,7 +388,7 @@ sap.ui.define(['./library', './AppBase', './AppConfig','./AppComponent', "sap/ui
 	AppProto._createRootControl = function(callback){
 		var _this = this,
 			navigatorOptions = this.config.data.rootNavigation,
-			navContainerModule = navigatorOptions["type"] || navigatorOptions.module || "pks.ui5strap.viewer.NavContainer";
+			navContainerModule = navigatorOptions["type"] || navigatorOptions.module || "pks.ui5strap.core.NavContainer";
 		
 		sap.ui.require([navContainerModule.replace(/\./g, "/")], function(NavContainerConstructor){
 			var navContainerOptions = navigatorOptions.settings || {};

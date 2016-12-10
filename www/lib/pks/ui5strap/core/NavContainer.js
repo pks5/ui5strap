@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.viewer.NavContainer
+ * pks.ui5strap.core.NavContainer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
  
-sap.ui.define(['./library', '../core/ControlBase', '../core/ResponsiveTransition', "../core/Utils"], function(library, ControlBase, ResponsiveTransition, Utils){
+sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"], function(library, ControlBase, ResponsiveTransition, Utils){
 
 	/**
 	 * Constructor for a new NavContainer instance.
@@ -35,17 +35,17 @@ sap.ui.define(['./library', '../core/ControlBase', '../core/ResponsiveTransition
 	 * 
 	 * @class
 	 * Control for creating nav containers.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias pks.ui5strap.viewer.NavContainer
+	 * @alias pks.ui5strap.core.NavContainer
 	 * 
 	 */
-	var NavContainer = ControlBase.extend("pks.ui5strap.viewer.NavContainer", {
+	var NavContainer = ControlBase.extend("pks.ui5strap.core.NavContainer", {
 		metadata : {
 			interfaces : ["ui5strap.INavigator"],
 			
@@ -62,14 +62,14 @@ sap.ui.define(['./library', '../core/ControlBase', '../core/ResponsiveTransition
 				pageChange : {
 					parameters : {
 						"target" : {type : "string"},
-						"oldPage" : {type : "sap/ui/core/Control"}
+						"oldPage" : {type : "sap.ui.core.Control"}
 					}
 				},
 				
 				pageChanged : {
 					parameters : {
 						"target" : {type : "string"},
-						"oldPage" : {type : "sap/ui/core/Control"}
+						"oldPage" : {type : "sap.ui.core.Control"}
 					}
 				},
 				
@@ -77,7 +77,7 @@ sap.ui.define(['./library', '../core/ControlBase', '../core/ResponsiveTransition
 					parameters : {
 						"target" : {type : "string"},
 						"pageParameters" : {type : "object"},
-						"page" : {type : "sap/ui/core/Control"}
+						"page" : {type : "sap.ui.core.Control"}
 					}
 				}
 			}

@@ -1582,7 +1582,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	 */
 	AppBaseProto.createOverlayNavigator = function(callback){
 		var _this = this;
-		sap.ui.require(["pks/ui5strap/viewer/NavContainer"], function(NavContainer){
+		sap.ui.require(["pks/ui5strap/core/NavContainer"], function(NavContainer){
 			//TODO Build via root component
 			
 			_this._overlayNavigator = new NavContainer();

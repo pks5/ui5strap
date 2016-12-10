@@ -11,7 +11,7 @@
 		
 		"CONTROLS" : {
 			"NAVIGATOR" : {
-				"TYPE" : "pks.ui5strap.viewer.NavContainer",
+				"TYPE" : "pks.ui5strap.core.NavContainer",
 				"SOURCE" : "View",
 				"CONTROL_ID" : "subNavControls",
 				"VIEW_ID" : "controls"

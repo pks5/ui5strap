@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.viewer.NavContainerRenderer
+ * pks.ui5strap.core.NavContainerRenderer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 

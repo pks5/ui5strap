@@ -7,7 +7,7 @@
 		"CONTROLS" : {
 			"navContainer" : {
 				"SOURCE" : "View",
-				"TYPE" : "pks.ui5strap.viewer.NavContainer",
+				"TYPE" : "pks.ui5strap.core.NavContainer",
 				"CONTROL_ID" : "subNavCuscon",
 				"VIEW_ID" : "cuscon"
 			}

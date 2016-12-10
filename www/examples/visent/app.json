@@ -40,7 +40,7 @@
             {
             	"id" : "frame3",
                 "module" : "pks.ui5strap.viewer.AppFrame",
-                "navContainer" : "pks.ui5strap.viewer.NavContainerStandard",
+                "navContainer" : "ui5strap.NavContainerStandard",
                 "navContainerOptions" : {
                     "options" : "sidebar"
                 },

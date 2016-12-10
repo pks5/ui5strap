@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppConfig', './NavContainer', '../core/ResponsiveTransition', "../core/Utils", "../core/Layer"], 
+sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppConfig', '../core/NavContainer', '../core/ResponsiveTransition', "../core/Utils", "../core/Layer"], 
 				function(ui5strapViewerLib, ui5strapCoreLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition, Utils, Layer){
 	
 	/**

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './Task', "pks/ui5strap/viewer/NavContainer"], function(library, Task, NavContainer){
+sap.ui.define(['./library', './Task', "pks/ui5strap/core/NavContainer"], function(library, Task, NavContainer){
 
 	var NavigateTask = Task.extend("pks.ui5strap.action.NavigateTask"),
 		NavigateTaskProto = NavigateTask.prototype;

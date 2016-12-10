@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ScrollContainer
+ * pks.ui5strap.core.ScrollContainer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './CommonRenderers'], function(library, ControlBase, CommonRenderers){
+sap.ui.define(['./library', "./ControlBase"], function(library, ControlBase){
 
 	/**
 	 * Constructor for a new ScrollContainer instance.
@@ -35,17 +35,17 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './CommonRenderers'
 	 * 
 	 * @class
 	 * Control for creating containers with scrolling abilities.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ScrollContainer
+	 * @alias pks.ui5strap.core.ScrollContainer
 	 * 
 	 */
-	var ScrollContainer = ControlBase.extend("ui5strap.ScrollContainer", {
+	var ScrollContainer = ControlBase.extend("pks.ui5strap.core.ScrollContainer", {
 		
 		metadata : {
 
@@ -71,7 +71,21 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './CommonRenderers'
 			defaultAggregation : "content"
 		},
 		
-		renderer : "ui5strap.CommonRenderers.DivWithContent"
+		renderer : function(rm, oControl){
+			var content = oControl.getContent();
+
+			rm.write("<div");
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < content.length; i++){ 
+					rm.renderControl(content[i]);
+			}
+			
+			rm.write("</div>");
+		}
 	
 	}),
 	ScrollContainerProto = ScrollContainer.prototype;

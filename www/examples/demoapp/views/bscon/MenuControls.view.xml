@@ -1,7 +1,7 @@
-<sapUiCoreMvc:View controllerName="pks.ui5strap.action.ActionController" xmlns="ui5strap" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="pks.ui5strap.action.ActionController" xmlns:ui5strapCore="pks.ui5strap.core" xmlns="ui5strap" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
     <Bar type="Default">
-		<ScrollContainer vertical="true">
+		<ui5strapCore:ScrollContainer vertical="true">
     
 		<ui5strapEx:BarMenu id="mySubMenuControls" typeExtraSmall="ButtonsVertical"
 			tap="com.ui5strap.apps.demoapp.actions.NavigateViaMenu" items="{menu>/subMenuControls}">
@@ -10,6 +10,6 @@
 				text="{formatter:'.formatters.localeString', parts:[{path:'menu>label'},{path:'i18n>BINDING_FIX'}]}"
 				icon="{menu>icon}" data:pageId="{menu>id}"></ui5strapEx:BarMenuItem>
 		</ui5strapEx:BarMenu>
-	</ScrollContainer>	
+	</ui5strapCore:ScrollContainer>	
 	</Bar>
 </sapUiCoreMvc:View>
