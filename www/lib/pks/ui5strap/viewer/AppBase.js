@@ -1105,7 +1105,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 	 */
 	AppBaseProto._showOverlay = function(oPage, callback, transitionName, pageUpdateParameters){
 		var navControl = this.getOverlayNavigator(),
-			target = navControl.defaultTarget;
+			target = navControl.defaultTarget,
+			_this = this;
 		
 		//Set target busy
 		navControl.setTargetBusy(target, true);

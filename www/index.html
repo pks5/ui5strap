@@ -185,14 +185,13 @@
          -->
          
         <!-- 
-            Minimized OpenUI5 library. If you need the full OpenUI5 Library, you can get it at http://openui5.org
             Please note that preloading of the Ui5Strap library is disabled by default. Remove "_preload-disabled" to activate preloading. 
         -->
        <script id="sap-ui-bootstrap" 
             src="resources/sap-ui-core.js" 
             data-sap-ui-compatVersion="edge" 
             data-sap-ui-preload="async" 
-            data-sap-ui-libs_d="ui5strap"
+            data-sap-ui-libs_preload-disabled="pks.ui5strap.core, pks.ui5strap.bs, pks.ui5strap.action, pks.ui5strap.viewer, pks.ui5strap.ex"
             data-sap-ui-logLevel="ALL"
             data-sap-ui-resourceroots='{
             	"pks.ui5strap": "./lib/pks/ui5strap/",

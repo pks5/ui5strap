@@ -41,7 +41,7 @@
 					barVisible="true" 
 					barSizeExtraSmall="2"
 					pageChange="com.ui5strap.apps.demoapp.actions.settings.SetSelectedMenuSettings" 
-					></BarNavContainer>
+					></ui5strapEx:BarNavContainer>
 			</body>
 			
 	</Page>

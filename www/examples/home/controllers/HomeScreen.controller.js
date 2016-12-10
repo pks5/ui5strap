@@ -1,4 +1,4 @@
-sap.ui.define(['ui5strap/Controller'], function(Controller){
+sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 
 	return Controller.extend("com.ui5strap.apps.home.controllers.HomeScreen", {
 		onPageShown : function(){

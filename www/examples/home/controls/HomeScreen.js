@@ -14,7 +14,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
+sap.ui.define(['pks/ui5strap/core/ControlBase'], function(ControlBase){
 	var HomeScreen = ControlBase.extend("com.ui5strap.apps.home.controls.HomeScreen", {
 		metadata : {
 

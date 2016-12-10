@@ -10,7 +10,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/ControlBase'], function(ControlBase){
+sap.ui.define(['pks/ui5strap/core/ControlBase'], function(ControlBase){
 
     "use strict";
     
