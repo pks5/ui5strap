@@ -165,6 +165,12 @@ sap.ui.define(['pks/ui5strap/core/ControlBase'], function(ControlBase){
 		);
 	};
 	
+	/*
+	HomeScreenProto.rerender = function(){
+		jQuery.sap.log.info("Rerender");
+	};
+	*/
+	
 	/**
 	 * Shows the Icons
 	 */

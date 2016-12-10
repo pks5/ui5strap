@@ -35,7 +35,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			}
 			rm.writeClasses();
 			rm.write(">");
-	
+			
+			jQuery.sap.log.info("Icons: " + iconsLength);
+			
 			for(var i = 0; i< iconsLength; i++){
 				icons[i].setIndex(i);
 				rm.renderControl(icons[i]);

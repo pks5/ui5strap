@@ -1,0 +1,12 @@
+{
+  "name": "ui5chart-themes",
+  "version": "0.0.1",
+  "author": "Jan Philipp Knoeller",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-cli": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-openui5": "*"
+  }
+}

@@ -34,6 +34,7 @@ sap.ui.define(['ui5strap/library', 'pks/ui5strap/viewer/Manager'], function(uLib
 		        "id" : "taskManager"
 			});
 		});
+		
   };
   
   HomeMainProto.onLoad = function(){
@@ -51,6 +52,7 @@ sap.ui.define(['ui5strap/library', 'pks/ui5strap/viewer/Manager'], function(uLib
 		if(currentPage && currentPage.getId() === this.getApp().config.createControlId("Home")){
 			currentPage.byId("homeScreen").updateGrid();
 		}
+		
 	};
   
   /**
@@ -61,6 +63,7 @@ sap.ui.define(['ui5strap/library', 'pks/ui5strap/viewer/Manager'], function(uLib
 		if(currentPage && currentPage.getId() === this.getApp().config.createControlId("Home")){
 			currentPage.byId("homeScreen").updateGrid();
 		}
+		
 	};
   
 	/**

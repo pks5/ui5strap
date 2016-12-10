@@ -7,19 +7,23 @@
     "run-web": "node ../server/server.js",
     "run-desktop": "nwbuild -r ../www",
     "run-android": "cd .. && cordova emulate android",
+    
+    "build-ui5strap-themes": "grunt --gruntfile ../build/ui5strap/themes/build-ui5strap-themes.js",
+    
+    
     "build-ui5strap-library": "grunt --gruntfile build-ui5strap-preload.js",
     "build-demoapp-component": "grunt --gruntfile build-demoapp-preload.js",
     "build-ui5strap-docs" : "jsdoc ../www/lib/ui5strap -r -d ../docs"
   },
   "devDependencies": {
-    "cordova": "^5.4.1",
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-uglify": "^0.10.1",
-    "grunt-openui5": "^0.10.0",
-    "http-server": "^0.8.5",
-    "jsdoc": "^3.4.0",
-    "nw-builder": "^2.2.0"
+    "cordova": "*",
+    "grunt": "*",
+    "grunt-cli": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-openui5": "*",
+    "http-server": "*",
+    "jsdoc": "*",
+    "nw-builder": "*"
   }
 }

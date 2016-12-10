@@ -52,8 +52,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 		"constructor" : function(options){
 			sap.ui.base.Object.apply(this);
 			
-			if(!options.app){
-				throw new Error("Please specify the default app in the Viewer Options!");
+			if(!options.app || !options.container){
+				throw new Error("Missing required viewer options 'app' or 'container'.");
 			}
 			
 			//Error to Browser
@@ -61,11 +61,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 				options.errorToBrowser = false;
 			}
 			
-			if(!options.container){
-				//Default container dom id
-				options.container = "ui5strap-container";
-			}
-
 			if(!options.overlay){
 				//Default overlay dom id
 				options.overlay = "ui5strap-overlay";

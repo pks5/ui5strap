@@ -31,33 +31,18 @@
 * ROOT STRUCTURE
 */
 
-/*
-* HTML Skeleton
-*/
-html, body{
-	width:100%;
-	height:100%;
-	
-	padding:0;
-	margin:0;
 
-	overflow:hidden;
-}
 
 /*
 * Root Container
 */
-#ui5strap-container{
-	position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
+.ui5strap-apps{
+	position:relative;
+  	width: 100%;
+  	height: 100%;
+    overflow: hidden;
 
-  min-width:320px;
-  overflow: hidden;
-
-  transition: top .4s ease-in, bottom .4s ease-in;
+    transition: top .4s ease-in, bottom .4s ease-in;
 	-webkit-transition: top .4s ease-in, bottom .4s ease-in;
 	-moz-transition: top .4s ease-in, bottom .4s ease-in;
 }
@@ -130,12 +115,27 @@ html, body{
   width:100%;
   height:100%;
   
-  
   overflow:hidden;
 }
 
 .ui5strap-app-standard{
 	background-color:white;
+}
+
+/*
+* Next App Container in Transitions
+*/
+.ui5strap-app-next{
+  position:absolute;
+  
+  left:0;
+  top:0;
+  right:auto;
+  bottom:auto;
+
+  width:100%;
+  height:100%;
+  z-index:1;
 }
 
 /*
@@ -168,21 +168,7 @@ html, body{
 	z-index:30000;
 }
 
-/*
-* Next App Container in Transitions
-*/
-.ui5strap-app-next{
-  position:absolute;
-  
-  left:0;
-  top:0;
-  right:auto;
-  bottom:auto;
 
-  width:100%;
-  height:100%;
-  z-index:1;
-}
 
 /*
 * LAYERS
@@ -421,6 +407,6 @@ html, body{
 /*
 * Shrink the main container for home bar
 */
-.ui5strap-with-bar-home #ui5strap-container{
+.ui5strap-with-bar-home .ui5strap-apps{
     bottom:30px; 
 }

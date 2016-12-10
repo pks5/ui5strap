@@ -503,38 +503,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		//Create or Update App Container
 		appInstance.updateContainer();
 
-		var $currentRoot = prevApp ? prevApp.$() : jQuery('#ui5strap-app-initial'),
-			
-			//Remove current app dom after transition
-			currentRootCallbackI = 0,
-			currentRootCallback = function(){
-				currentRootCallbackI++
-				if(currentRootCallbackI < 2){
-					return;
-				}
-	
-				if(prevApp){
-					//Previous App onHidden
-					prevApp.hidden(function(){
-						_this.removeStyle(prevApp);
-					});
-				}
-				else{
-					//Remove Initial View
-					$currentRoot.remove();
-				}
-			},
-	
-			//Introduce new app dom
-			preparedRootCallback = function(){
-				currentRootCallback();
-				
-				//Current App onShown
-				appInstance.shown(function(){
-					//Show App Completed, trigger the Callback
-					callback && callback.call(appInstance);
-				});
-			};
+		var $currentRoot = prevApp ? prevApp.$() : this._dom.$root.find('.ui5strap-app');
 
 		//Load app css
 		appInstance.includeStyle(function includeStyle_complete(){
@@ -553,6 +522,26 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 					id : appInstance.getId()
 					}
 			);
+			
+			transition.on("last", function(){
+				if(prevApp){
+					//Previous App onHidden
+					prevApp.hidden(function(){
+						_this.removeStyle(prevApp);
+					});
+				}
+				else{
+					jQuery.sap.log.debug("Removing splash...");
+					//Remove Initial View
+					$currentRoot.remove();
+				}
+				
+				//Current App onShown
+				appInstance.shown(function(){
+					//Show App Completed, trigger the Callback
+					callback && callback.call(appInstance);
+				});
+			});
 			
 			//<DOM_ATTACH_TIMEOUT>
 			window.setTimeout(function setTimeout_complete(){
@@ -573,7 +562,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 						ui5strap.polyfill.requestAnimationFrame(function RAF2(){
 							
 							//Execure Transition
-							transition.execute(currentRootCallback, preparedRootCallback);
+							transition.execute();
 							
 							//Set viewer to available
 							_this._loadingApp = null;
@@ -748,10 +737,10 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		this._dom = {};
 
 		this._dom.$body = jQuery(document.body);
-		this._dom.$root = jQuery('#' + this.options.container);
+		this._dom.$root = jQuery('#' + this.options.container).find(".ui5strap-apps");
 
 		if(this._dom.$root.length === 0){
-			throw new Error('Root Container not found in HTML: ' + this.options.container);
+			throw new Error('Element of class .ui5strap-apps not found in container: ' + this.options.container);
 		}
 	};
 

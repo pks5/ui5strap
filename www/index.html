@@ -29,16 +29,40 @@
 		<!-- Splash Screen Style -->
 		<style>
 			/*
+			* HTML Skeleton
+			*/
+			html, body{
+				width:100%;
+				height:100%;
+				
+				padding:0;
+				margin:0;
+			
+				overflow:hidden;
+			}
+			
+			#myContainer{
+				margin:100px;
+				border:solid 4px red;
+				box-sizing: border-box;
+				width:480px;
+				height:480px;	
+				position:relative;
+			}
+			
+			/*
 			* Splash Screen
 			*/
-			#ui5strap-splash-screen{
+			#mySplashScreen{
 				background-image: url('./apps/template/img/tiny-grid-bg.jpg');
+				width:100%;
+				height:100%;
 			}
 
 			/*
 			* Splash Screen Window
 			*/
-			#ui5strap-splash-screen-window{
+			#mySplashScreen-window{
 				position:absolute;
 
 				width:192px; 
@@ -54,7 +78,7 @@
 			/*
 			* Splash Screen Logo
 			*/
-			#ui5strap-splash-screen-logo{
+			#mySplashScreen-logo{
 				position:absolute;
 				
 				width:128px;
@@ -67,7 +91,7 @@
 			/*
 			* Splash Screen Spinner
 			*/
-			#ui5strap-splash-screen-spinner{
+			#mySplashScreen-spinner{
 				position:absolute;
 				
 				width:24px;
@@ -96,7 +120,7 @@
 			/*
 			* Splash Screen Message
 			*/
-			#ui5strap-splash-screen-message{
+			#mySplashScreen-message{
 				position:absolute;
 
 				width:100%;
@@ -116,7 +140,7 @@
 				-moz-transition: opacity .3s ease-in;
 			}
 
-			#ui5strap-splash-screen-message.ui5strap-splash-screen-message-visible{
+			#mySplashScreen-message.mySplashScreen-messageVisible{
 				opacity: 1;
 			}
 		</style>
@@ -125,53 +149,62 @@
 	
 	<body role="application">
 		
-		<!-- Ui5Strap Root Container Layer -->
-		<div id="ui5strap-container">
-			
-			<!-- App Container, contains splash screen as first "app" -->
-			<div id="ui5strap-app-initial" class="ui5strap-app">
-				<div id="ui5strap-splash-screen" class="ui5strap-app-content">
-					<div id="ui5strap-splash-screen-window">
-						<img id="ui5strap-splash-screen-logo" src="./apps/template/img/ui5strap-logo-256.png" />
-						<div id="ui5strap-splash-screen-spinner"></div>
-						<div id="ui5strap-splash-screen-message">Welcome</div>
+		<div id="myContainer">
+			<!-- Ui5Strap Root Container Layer -->
+			<div class="ui5strap-apps">
+				
+				<!-- App Container, showing custom splash screen as intial content -->
+				<div class="ui5strap-app">
+					
+					<!-- START Custom Splash Screen -->
+					<div id="mySplashScreen">
+						<div id="mySplashScreen-window">
+							<img id="mySplashScreen-logo" src="./apps/template/img/ui5strap-logo-256.png" />
+							<div id="mySplashScreen-spinner"></div>
+							<div id="mySplashScreen-message">Welcome</div>
+						</div>
 					</div>
+					<!-- END Custom Splash Screen -->
+				
 				</div>
+				
 			</div>
+	        
+	        <!--Ui5OS Home Bar. -->
+	        <div id="ui5strap-bar-home">
+	            <a id="ui5strap-button-home"><span class="fa fa-home"></span></a>
+	            <a id="ui5strap-button-taskmanager"><span class="fa fa-exchange"></span></a>
+	        </div>
+	        
+	        <!-- TODO Global Dialog Layer ? -->
+	        
+			<!-- Global Overlay Layer -->
+			<div id="ui5strap-overlay" class="ui5strap-overlay ui5strap-layer ui5strap-hidden">
+				<div id="ui5strap-overlay-backdrop" class="ui5strap-overlay-backdrop"></div>
+				<div id="ui5strap-overlay-content" class="ui5strap-overlay-content"></div>
+			</div>
+	
+			<!-- Global Loading Layer -->
+			<div id="ui5strap-loader" class="ui5strap-layer ui5strap-loader ui5strap-hidden"></div>
 			
-		</div>
-        
-        <!--Ui5OS Home Bar. -->
-        <div id="ui5strap-bar-home">
-            <a id="ui5strap-button-home"><span class="fa fa-home"></span></a>
-            <a id="ui5strap-button-taskmanager"><span class="fa fa-exchange"></span></a>
-        </div>
-        
-		<!-- Global Overlay Layer -->
-		<div id="ui5strap-overlay" class="ui5strap-overlay ui5strap-layer ui5strap-hidden">
-			<div id="ui5strap-overlay-backdrop" class="ui5strap-overlay-backdrop"></div>
-			<div id="ui5strap-overlay-content" class="ui5strap-overlay-content"></div>
-		</div>
-
-		<!-- Global Loading Layer -->
-		<div id="ui5strap-loader" class="ui5strap-layer ui5strap-loader ui5strap-hidden"></div>
-		
-		<!-- START Error Layers -->
-		
-		<!-- Fatal Error Layer -->
-		<div id="ui5strap-fatal" class="ui5strap-layer">
-			<div id="ui5strap-fatal-message"></div>
-		</div>
-
-		<!-- No Script Layer. Only visible when JavaScript is deactivated. -->
-		<noscript>
-			<div id="ui5strap-noscript" class="ui5strap-layer">
-				Ui5Strap requires JavaScript to be enabled.
+			<!-- START Error Layers -->
+			
+			<!-- Fatal Error Layer -->
+			<div id="ui5strap-fatal" class="ui5strap-layer">
+				<div id="ui5strap-fatal-message"></div>
 			</div>
-		</noscript>
-
-		<!-- END Error Layers -->
-
+	
+			<!-- No Script Layer. Only visible when JavaScript is deactivated. -->
+			<noscript>
+				<div id="ui5strap-noscript" class="ui5strap-layer">
+					Ui5Strap requires JavaScript to be enabled.
+				</div>
+			</noscript>
+	
+			<!-- END Error Layers -->
+		
+		</div><!-- END #myContainer -->
+		
 		<!-- Cordova Library (optional). Only needed when building mobile apps. -->
 		<!-- <script type="text/javascript" src="cordova.js"></script> -->
 		
@@ -210,6 +243,7 @@
                 */
                 var viewerOptions = {
                         "console" : true,
+                        "container" : "myContainer",
                         "app" : {
                             type : "URI",
                             uriParam : "app",
@@ -233,8 +267,8 @@
                         */
                         viewer.start(null, function(){
                             //In this example we want to show the welcome message when the App has been loaded.
-                            document.getElementById('ui5strap-splash-screen-spinner').className = 'ui5strap-hidden';
-                            document.getElementById('ui5strap-splash-screen-message').className = 'ui5strap-splash-screen-message-visible';
+                            document.getElementById('mySplashScreen-spinner').className = 'ui5strap-hidden';
+                            document.getElementById('mySplashScreen-message').className = 'mySplashScreen-messageVisible';
                         });
                         
                     });

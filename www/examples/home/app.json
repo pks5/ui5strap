@@ -9,7 +9,7 @@
             "type" : "pks.ui5strap.viewer.AppSystem",
             
             "styleClass" : "ui5strap-home",
-            "logLevel" : 5
+            "logLevel" : 0
         },
         
         "developers" : [
