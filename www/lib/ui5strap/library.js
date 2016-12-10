@@ -530,7 +530,6 @@ sap.ui
 					 */
 					ui5strap.BsAction = {
 						None : "None",
-						DismissModal : "DismissModal",
 						ToggleNavbar : "ToggleNavbar",
 						ToggleSidenav : "ToggleSidenav"
 					};

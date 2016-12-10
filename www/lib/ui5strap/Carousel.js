@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, ControlBase){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase"], function(ui5strapBsLib, ui5strapCoreLib, ControlBase){
 
 	/**
 	 * Constructor for a new Carousel instance.
@@ -71,11 +71,11 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 		        
 				innerAlign : {
 			        type: "ui5strap.Alignment",
-			        defaultValue : ui5strap.Alignment.CenterBlock
+			        defaultValue : ui5strapBsLib.Alignment.CenterBlock
 		        },
 		        innerOverflow : {
 		            type: "ui5strap.CarouselOverflow",
-		            defaultValue : ui5strap.CarouselOverflow.Visible
+		            defaultValue : ui5strapBsLib.CarouselOverflow.Visible
 		        },
 		        
 		        label : {
@@ -187,7 +187,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
   CarouselProto.init = function(){
 		this.items = [];
 
-    if(!ui5strap.support.transitionEndEvent){
+    if(!ui5strapCoreLib.polyfill.transitionEndEvent){
       throw new Error('ui5strap.Carousel requires "transitionEndEvent" support.');
     }
   };
@@ -219,7 +219,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
     }
 
     cssClasses += " carousel-overflow-" + this.getInnerOverflow().toLowerCase();
-    cssClasses += " carousel-align-" + ui5strap.BSAlignment[this.getInnerAlign()];
+    cssClasses += " carousel-align-" + ui5strapBsLib.BSAlignment[this.getInnerAlign()];
        cssClasses += " carousel-current-" + newIndex;
       if(newIndex === 0){
         cssClasses += " carousel-current-first";
@@ -242,8 +242,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	    //Store lane reference
 			this.$lane = _findPart(this, 'lane');
 	
-	    if(ui5strap.support.transitionEndEvent){
-	        this.$lane.on(ui5strap.support.transitionEndEvent, function(){
+	    if(ui5strapCoreLib.polyfill.transitionEndEvent){
+	        this.$lane.on(ui5strapCoreLib.polyfill.transitionEndEvent, function(){
 	            _this.fireChanged({});
 	        });
 	    }
@@ -417,7 +417,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	    }
   };
 
-  if(ui5strap.support.touch){
+  if(ui5strapBsLib.support.touch){
 	    CarouselProto.ontap = CarouselProto._handlePress;
 	}
 	else{

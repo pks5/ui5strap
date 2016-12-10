@@ -68,14 +68,13 @@ sap.ui.define(['jquery.sap.global', './Button', "pks/ui5strap/core/RenderUtils"]
 	
 	ButtonDropdownRenderer.startRender = function(rm, oControl, tog) {
 		var size = oControl.getSize(),
-			action = oControl.getBsAction(),
 			title = oControl.getTitle();
 
 		rm.write("<button");
 	    
 	    rm.writeAttribute('id', oControl.getId() + '---' + ( tog ? 'toggle' : 'button') );
 
-    	if(tog && action !== ui5strap.BsAction.ToggleDropdown){ 
+    	if(tog){ 
 	    	rm.addClass("dropdown-toggle");
 	    }
 	    
@@ -91,13 +90,7 @@ sap.ui.define(['jquery.sap.global', './Button', "pks/ui5strap/core/RenderUtils"]
 			rm.writeAttribute("disabled", "disabled");
 		}
 		
-		//Modal close button
-		//@deprecated
-		if(action === ui5strap.BsAction.DismissModal){
-			rm.writeAttribute('data-dismiss', 'modal');	
-		}
-		
-	    rm.write(">");
+		rm.write(">");
 	};
 
 	ButtonDropdownRenderer.renderContent = function(rm, oControl) {

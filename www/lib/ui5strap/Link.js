@@ -72,11 +72,6 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 					deprecated : true,
 					type : "ui5strap.LinkType",
 					defaultValue : ui5strap.LinkType.Default
-				},
-				bsAction : {
-					deprecated : true,
-					type : "ui5strap.BsAction", 
-					defaultValue : ui5strap.BsAction.None
 				}
 			},
 
@@ -121,7 +116,6 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		renderer : function(rm, oControl) {
 			var href = oControl.getHref(),
 				title = oControl.getTitle(),
-				action = oControl.getBsAction(),
 				target = oControl.getTarget();
 		
 			rm.write("<a");
@@ -143,11 +137,6 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		    	rm.writeAttribute('title', title);
 		    }
 		
-			//@deprecated
-			if(action === ui5strap.BsAction.DismissModal){
-				rm.writeAttribute('data-dismiss', 'modal');	
-			}
-			
 			rm.write(">");
 			
 			//Content

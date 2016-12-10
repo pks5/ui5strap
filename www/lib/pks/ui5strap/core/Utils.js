@@ -395,6 +395,10 @@ sap.ui.define([ './library'], function(ui5strapLibrary) {
 		return parentControl;
 	};
 	
+	/**
+	 * 
+	 * @deprecated
+	 */
 	Utils.ScriptBlock = function() {
 		this._pending = {};
 		this._order = [];

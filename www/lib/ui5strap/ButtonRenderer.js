@@ -35,7 +35,6 @@ sap.ui.define(['jquery.sap.global', "pks/ui5strap/core/RenderUtils"], function(j
 
 	ButtonRenderer.render = function(rm, oControl) {
 		var size = oControl.getSize(),
-			action = oControl.getBsAction(),
 			title = oControl.getTitle();
 	
 		rm.write("<button");
@@ -54,13 +53,7 @@ sap.ui.define(['jquery.sap.global', "pks/ui5strap/core/RenderUtils"], function(j
 			rm.writeAttribute("disabled", "disabled");
 		}
 		
-		//Modal close button
-		//@deprecated
-		if(action === ui5strap.BsAction.DismissModal){
-			rm.writeAttribute('data-dismiss', 'modal');	
-		}
-		
-	    rm.write(">");
+		rm.write(">");
 
 		RenderUtils.renderContent(rm, oControl);
 

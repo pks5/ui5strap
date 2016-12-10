@@ -58,11 +58,6 @@ sap.ui.define(['./library', './ListItem', "pks/ui5strap/core/Utils"], function(l
 					type : "boolean",
 					defaultValue : false
 				},
-				bsAction : {
-					deprecated : true,
-					type: "ui5strap.BsAction", 
-					defaultValue: ui5strap.BsAction.None
-				},
 				title : {
 					type:"string", 
 					defaultValue:""
