@@ -64,13 +64,13 @@ sap.ui
 
 								version : "0.11.6-SNAPSHOT",
 
-								dependencies : [ "sap.ui.core" ],
+								dependencies : [ "sap.ui.core", "pks.ui5strap.core", "pks.ui5strap.action" ],
 
 								types : [ ],
 
 								interfaces : [],
 
-								controls : [],
+								controls : ["pks.ui5strap.viewer.Console", "pks.ui5strap.viewer.Sandbox"],
 
 								elements : []
 							});

@@ -64,13 +64,14 @@ sap.ui
 
 								version : "0.11.6-SNAPSHOT",
 
-								dependencies : [ "sap.ui.core" ],
+								dependencies : [ "sap.ui.core", "pks.ui5strap.core", "pks.ui5strap.bs" ],
 
-								types : [ ],
+								types : [ "pks.ui5strap.ex.BarNavContainerMode", "pks.ui5strap.ex.BarNavContainerPlacement",
+								          "pks.ui5strap.ex.BarMenuType"],
 
 								interfaces : [],
 
-								controls : [],
+								controls : ["pks.ui5strap.ex.BarMenu", "pks.ui5strap.ex.BarNavContainer"],
 
 								elements : []
 							});

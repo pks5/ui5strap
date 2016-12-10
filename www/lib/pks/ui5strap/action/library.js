@@ -64,7 +64,7 @@ sap.ui
 
 								version : "0.11.6-SNAPSHOT",
 
-								dependencies : [ "sap.ui.core" ],
+								dependencies : [ "sap.ui.core", "pks.ui5strap.core" ],
 
 								types : [ ],
 

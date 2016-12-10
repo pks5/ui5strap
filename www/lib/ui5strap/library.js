@@ -53,7 +53,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 
 				version : "0.11.6-SNAPSHOT",
 
-				dependencies : [ "sap.ui.core" ],
+				dependencies : [ "sap.ui.core", "pks.ui5strap.core" ],
 
 				types : [ "ui5strap.Alignment", "ui5strap.BarType", "ui5strap.BSAlignment", 
 				          "ui5strap.BSPlacement", "ui5strap.BSSeverity", "ui5strap.BSSize",
