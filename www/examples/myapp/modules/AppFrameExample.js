@@ -101,10 +101,10 @@
 
 		//Sidenav toggle
 		var toggle = new ui5strap.Button( { 
-				align : ui5strap.Alignment.NavBarLeft,
-				bsAction : ui5strap.BsAction.ToggleSidenav
+				align : ui5strap.Alignment.NavBarLeft
 			} 
 		);
+		toggle.addStyleClass("btn-toggle-sidenav");
 		toggle.addContent(new ui5strap.Icon( { icon : 'columns', size : ui5strap.IconSize.Large } ));
 
 		toggle.attachEvent('tap', {}, function(){
@@ -187,11 +187,10 @@
 
 		//Nav menu toggle
 		var toggleRight = new ui5strap.Button( { 
-				align : ui5strap.Alignment.NavBarRight,
-				bsAction : ui5strap.BsAction.ToggleNavbar
+				align : ui5strap.Alignment.NavBarRight
 			} 
 		);
-		
+		toggle.addStyleClass("btn-toggle-navbar");
 		toggleRight.addContent(new ui5strap.Icon( { icon : 'bars', size : ui5strap.IconSize.Large } ));
 
 		toggleRight.attachEvent('tap', {}, function(){

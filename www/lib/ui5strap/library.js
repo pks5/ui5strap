@@ -82,7 +82,6 @@ sap.ui
 										"ui5strap.IconType",
 										"ui5strap.IconSize",
 										"ui5strap.IconTransform",
-										"ui5strap.BsAction",
 										"ui5strap.FormSeverity",
 										"ui5strap.FormType",
 										"ui5strap.TextInputType",
@@ -519,19 +518,6 @@ sap.ui
 						Rotate270 : "Rotate270",
 						FlipHorizontal : "FlipHorizontal",
 						FlipVertical : "FlipVertical"
-					};
-
-					/*
-					 * BsAction adds a special class to a control that is used
-					 * by Bootstrap's JavaScript. This is the most bad way to
-					 * create dynamic behaviour. Use Actions instead.
-					 * 
-					 * @deprecated Will be removed in future releases.
-					 */
-					ui5strap.BsAction = {
-						None : "None",
-						ToggleNavbar : "ToggleNavbar",
-						ToggleSidenav : "ToggleSidenav"
 					};
 
 					/*

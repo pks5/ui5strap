@@ -62,13 +62,6 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 				contentPlacement : {
 					type:"ui5strap.ContentPlacement",
 					defaultValue : ui5strap.ContentPlacement.Start
-				},
-				
-				//@deprecated
-				bsAction : {
-					deprecated : true,
-					type: "ui5strap.BsAction", 
-					defaultValue: ui5strap.BsAction.None
 				}
 			},
 			aggregations : { 
@@ -140,19 +133,6 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 		}
 		else if(type === ui5strap.ButtonType.Close || type === ui5strap.ButtonType.Icon){
 			styleClass += " close";
-		}
-		
-		//Bootstrap Actions (deprecated)
-		var action = this.getBsAction();
-		//Navbar toggle
-		//@deprecated
-		if(action === ui5strap.BsAction.ToggleNavbar){
-			styleClass += " btn-toggle-navbar";
-		}
-		//Sidenav toggle
-		//@deprecated
-		else if(action === ui5strap.BsAction.ToggleSidenav){
-			styleClass += " btn-toggle-sidenav";
 		}
 		
 		return styleClass;
