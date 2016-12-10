@@ -127,7 +127,7 @@
   
   overflow:hidden;
   
-  z-index: 100;
+  
 }
 
 .ui5strap-app-standard{
@@ -135,8 +135,15 @@
 }
 
 /*
+* Z: 10
+*/
+.ui5strap-app-current{
+	
+}
+
+/*
 * Next App Container in Transitions
-* Z: 200
+* Z: 20
 */
 .ui5strap-app-next{
   position:absolute;
@@ -148,7 +155,8 @@
 
   width:100%;
   height:100%;
-  z-index: 200;
+  
+  z-index:50;
 }
 
 /*

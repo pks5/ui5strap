@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'ui5strap/library', 'ui5strap/ListItem', '../core/Utils'], function(ui5strapExLib, ui5strapBsLib, ListItem, Utils){
+sap.ui.define(['./library', 'ui5strap/library', 'ui5strap/ListItem', '../core/Utils'], function(ui5strapExLib, ui5strapBs3Lib, ListItem, Utils){
 
 	/**
 	 * Constructor for a new ListItem instance.
@@ -76,7 +76,7 @@ sap.ui.define(['./library', 'ui5strap/library', 'ui5strap/ListItem', '../core/Ut
 			rm.writeClasses();
 			rm.write(">");
 			
-			if(contentPlacement === ui5strapBsLib.ContentPlacement.Start){
+			if(contentPlacement === ui5strapBs3Lib.ContentPlacement.Start){
 		    	for(var i = 0; i < content.length; i++){ 
 					rm.renderControl(content[i]);
 				}
@@ -101,7 +101,7 @@ sap.ui.define(['./library', 'ui5strap/library', 'ui5strap/ListItem', '../core/Ut
 				rm.write('</span>');
 			}
 			
-			if(contentPlacement === ui5strapBsLib.ContentPlacement.End){
+			if(contentPlacement === ui5strapBs3Lib.ContentPlacement.End){
 				for(var i = 0; i < content.length; i++){ 
 					rm.renderControl(content[i]);
 				}

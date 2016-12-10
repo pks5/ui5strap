@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global', "./library"], function(jQuery, ui5strapBsLib) {
+sap.ui.define(['jquery.sap.global', "./library"], function(jQuery, ui5strapBs3Lib) {
 
 	/**
 	 * Carousel renderer.
@@ -78,7 +78,7 @@ sap.ui.define(['jquery.sap.global', "./library"], function(jQuery, ui5strapBsLib
 
 			rm.write("</div>"); //End carousel-inner
 		    
-		    if(oControl.getInnerOverflow() === ui5strapBsLib.CarouselOverflow.Covered){
+		    if(oControl.getInnerOverflow() === ui5strapBs3Lib.CarouselOverflow.Covered){
 			    rm.write("<div id='" + oControl.getId() + "--carousel-cover-prev'");
 			    rm.addClass("carousel-cover carousel-cover-prev");
 			    rm.writeClasses();

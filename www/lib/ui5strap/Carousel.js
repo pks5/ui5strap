@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase"], function(ui5strapBsLib, ui5strapCoreLib, ControlBase){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase){
 
 	/**
 	 * Constructor for a new Carousel instance.
@@ -71,11 +71,11 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 		        
 				innerAlign : {
 			        type: "ui5strap.Alignment",
-			        defaultValue : ui5strapBsLib.Alignment.CenterBlock
+			        defaultValue : ui5strapBs3Lib.Alignment.CenterBlock
 		        },
 		        innerOverflow : {
 		            type: "ui5strap.CarouselOverflow",
-		            defaultValue : ui5strapBsLib.CarouselOverflow.Visible
+		            defaultValue : ui5strapBs3Lib.CarouselOverflow.Visible
 		        },
 		        
 		        label : {
@@ -219,7 +219,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
     }
 
     cssClasses += " carousel-overflow-" + this.getInnerOverflow().toLowerCase();
-    cssClasses += " carousel-align-" + ui5strapBsLib.BSAlignment[this.getInnerAlign()];
+    cssClasses += " carousel-align-" + ui5strapBs3Lib.BSAlignment[this.getInnerAlign()];
        cssClasses += " carousel-current-" + newIndex;
       if(newIndex === 0){
         cssClasses += " carousel-current-first";
@@ -417,7 +417,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 	    }
   };
 
-  if(ui5strapBsLib.support.touch){
+  if(ui5strapBs3Lib.support.touch){
 	    CarouselProto.ontap = CarouselProto._handlePress;
 	}
 	else{

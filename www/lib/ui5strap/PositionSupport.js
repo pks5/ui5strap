@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library'], function(ui5strapBsLib){
+sap.ui.define(['./library'], function(ui5strapBs3Lib){
 	
 	/**
 	 * Constructor for a new PositionSupport instance.
@@ -50,7 +50,7 @@ sap.ui.define(['./library'], function(ui5strapBsLib){
 	PositionSupport.meta = function(meta){
 		meta.properties.align = {
 			type : "ui5strap.Alignment",
-			defaultValue : ui5strapBsLib.Alignment.Default
+			defaultValue : ui5strapBs3Lib.Alignment.Default
 		};
 	};
 	
@@ -70,10 +70,10 @@ sap.ui.define(['./library'], function(ui5strapBsLib){
 	};
 	
 	PositionSupport.getStyleClass = function(oControl){
-		var align = oControl.getAlign(), Alignment = ui5strapBsLib.Alignment, styleClass = "";
+		var align = oControl.getAlign(), Alignment = ui5strapBs3Lib.Alignment, styleClass = "";
 
 		if (align !== Alignment.Default && align !== Alignment.NavBar && align !== Alignment.Sidebar) {
-			styleClass += " " + ui5strapBsLib.BSAlignment[align];
+			styleClass += " " + ui5strapBs3Lib.BSAlignment[align];
 		}
 
 		/*

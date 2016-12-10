@@ -49,7 +49,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	 */
 	sap.ui.getCore().initLibrary(
 			{
-				name : "pks.ui5strap.ex",
+				name : "pks.ui5strap.bs3",
 
 				version : "0.11.6-SNAPSHOT",
 
@@ -58,51 +58,20 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 				// "pks.ui5strap.bs3"
 				],
 
-				types : [ "pks.ui5strap.ex.BarNavContainerMode",
-						"pks.ui5strap.ex.BarNavContainerPlacement",
-						"pks.ui5strap.ex.BarMenuType" ],
+				types : [],
 
 				interfaces : [],
 
-				controls : [ "pks.ui5strap.ex.BarMenu",
-						"pks.ui5strap.ex.BarNavContainer" ],
+				controls : [],
 
 				elements : []
 			});
 
-	var ui5strapExLib = pks.ui5strap.ex;
+	var ui5strapBs3Lib = pks.ui5strap.bs3;
 
-	/*
-	 * BarNavContainerMode
-	 */
-	ui5strapExLib.BarNavContainerMode = {
-		Intrude : "Intrude",
-		Extrude : "Extrude",
-		Overlay : "Overlay"
-	};
-
-	/*
-	 * BarNavContainerPlacement
-	 */
-	ui5strapExLib.BarNavContainerPlacement = {
-		Left : "Left",
-		Top : "Top",
-		Right : "Right",
-		Bottom : "Bottom"
-	};
-
-	/*
-	 * BarMenuType
-	 */
-	ui5strapExLib.BarMenuType = {
-		Default : "Default",
-		ListHorizontal : "ListHorizontal",
-		ListVertical : "ListVertical",
-		ButtonsHorizontal : "ButtonsHorizontal",
-		ButtonsVertical : "ButtonsVertical"
-	};
+	
 
 	// End of library
-	return ui5strapExLib;
+	return ui5strapBs3Lib;
 
 });

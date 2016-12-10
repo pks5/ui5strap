@@ -25,6 +25,7 @@
  * 
  */
 
+@transition-z-index: 50;
 
 //Transition tranform
 .ui5strapTransitionTransform(@t){
@@ -236,7 +237,7 @@
 		}
 	
 		&.ui5strap-transition-current{
-			z-index:1;
+			z-index:@transition-z-index!important;
 		}
 		
 		&.ui5strap-transition-current-out{
@@ -278,7 +279,7 @@
 		}
 	
 		&.ui5strap-transition-current{
-			z-index:1;
+			z-index:@transition-z-index!important;
 		}
 		
 		&.ui5strap-transition-current-out{
@@ -321,7 +322,7 @@
 		}
 	
 		&.ui5strap-transition-current{
-			z-index:1;
+			z-index:@transition-z-index!important;
 		}
 		
 		&.ui5strap-transition-current-out{
@@ -364,7 +365,7 @@
 		}
 	
 		&.ui5strap-transition-current{
-			z-index:1;
+			z-index:@transition-z-index!important;
 		}
 		
 		&.ui5strap-transition-current-out{
@@ -402,7 +403,7 @@
 	
 		&.ui5strap-transition-next{
 			 .ui5strapTransformScale3d(0, 0, 0);
-			 z-index:1;
+			 z-index:@transition-z-index!important;
 		}
 	}
 	
@@ -427,7 +428,7 @@
 		}
 		
 		&.ui5strap-transition-current{
-			z-index:1;
+			z-index:@transition-z-index!important;
 		}
 		
 		&.ui5strap-transition-current-out{
@@ -460,7 +461,7 @@
 		}
 		
 		&.ui5strap-transition-current{
-			z-index:1;
+			z-index:@transition-z-index!important;
 		}
 		
 		&.ui5strap-transition-current-out{

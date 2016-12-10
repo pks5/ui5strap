@@ -113,7 +113,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 						"ui5strap.TableRow" ]
 			});
 
-	var ui5strapBsLib = ui5strap;
+	var ui5strapBs3Lib = ui5strap;
 
 	/*
 	 * -------
@@ -125,7 +125,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 
 	// Legacy
 	// TODO remove
-	ui5strapBsLib.support = {
+	ui5strapBs3Lib.support = {
 		"touch" : sap.ui.Device.support.touch
 	};
 
@@ -191,7 +191,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * Alignment Used for align block elements
 	 */
-	ui5strapBsLib.Alignment = {
+	ui5strapBs3Lib.Alignment = {
 		Default : "Default",
 		PullLeft : "PullLeft",
 		PullRight : "PullRight",
@@ -206,13 +206,13 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * BarMenuType
 	 */
-	ui5strapBsLib.BarType = {
+	ui5strapBs3Lib.BarType = {
 		Default : "Default",
 		Fluid : "Fluid"
 	}
 
 	// Bootstrap CSS mapping
-	ui5strapBsLib.BSAlignment = {
+	ui5strapBs3Lib.BSAlignment = {
 		PullLeft : "pull-left",
 		PullRight : "pull-right",
 		CenterBlock : "center-block",
@@ -223,7 +223,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	// Bootstrap CSS mapping
-	ui5strapBsLib.BSPlacement = {
+	ui5strapBs3Lib.BSPlacement = {
 		Top : "top",
 		Left : "left",
 		Bottom : "bottom",
@@ -235,7 +235,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 		AutoRight : "auto right"
 	};
 
-	ui5strapBsLib.BSSeverity = {
+	ui5strapBs3Lib.BSSeverity = {
 		Default : "default",
 		Primary : "primary",
 		Success : "success",
@@ -244,14 +244,14 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 		Danger : "danger"
 	};
 
-	ui5strapBsLib.BSSize = {
+	ui5strapBs3Lib.BSSize = {
 		ExtraSmall : "xs",
 		Small : "sm",
 		Medium : "md",
 		Large : "lg"
 	};
 
-	ui5strapBsLib.BSTriggerMode = {
+	ui5strapBs3Lib.BSTriggerMode = {
 		Click : "click",
 		Hover : "hover",
 		Focus : "focus",
@@ -261,7 +261,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * ButtonType TODO check this
 	 */
-	ui5strapBsLib.ButtonType = {
+	ui5strapBs3Lib.ButtonType = {
 		Default : "Default",
 		Button : "Button",
 		Block : "Block",
@@ -275,7 +275,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * ButtonGroupType Used by ButtonGroup
 	 */
-	ui5strapBsLib.ButtonGroupType = {
+	ui5strapBs3Lib.ButtonGroupType = {
 		Default : "Default",
 		Justified : "Justified",
 		Vertical : "Vertical"
@@ -285,7 +285,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	 * CarouselOverflow defines how you see overflowing content in Carousel
 	 * controls.
 	 */
-	ui5strapBsLib.CarouselOverflow = {
+	ui5strapBs3Lib.CarouselOverflow = {
 		Default : "Default",
 		Visible : "Visible",
 		Hidden : "Hidden",
@@ -293,18 +293,18 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * CheckboxType Only used by ui5strapBsLib.Checkbox
+	 * CheckboxType Only used by ui5strapBs3Lib.Checkbox
 	 */
-	ui5strapBsLib.CheckboxType = {
+	ui5strapBs3Lib.CheckboxType = {
 		Default : "Default",
 		Block : "Block",
 		Inline : "Inline"
 	};
 
 	/*
-	 * ContainerType Only used by ui5strapBsLib.Container
+	 * ContainerType Only used by ui5strapBs3Lib.Container
 	 */
-	ui5strapBsLib.ContainerType = {
+	ui5strapBs3Lib.ContainerType = {
 		// Plain HTML <div>
 		Default : "Default",
 
@@ -327,12 +327,12 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	 * aggregation. Used when there are both properties and aggregation that
 	 * produces output.
 	 */
-	ui5strapBsLib.ContentPlacement = {
+	ui5strapBs3Lib.ContentPlacement = {
 		Start : "Start",
 		End : "End"
 	};
 
-	ui5strapBsLib.DropdownMenuHostUpdate = {
+	ui5strapBs3Lib.DropdownMenuHostUpdate = {
 		None : "None",
 		Text : "Text",
 		Data : "Data",
@@ -340,9 +340,9 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * FormMethod Only used by ui5strapBsLib.Form
+	 * FormMethod Only used by ui5strapBs3Lib.Form
 	 */
-	ui5strapBsLib.FormMethod = {
+	ui5strapBs3Lib.FormMethod = {
 		None : "None",
 		Default : "Default",
 		POST : "POST",
@@ -351,9 +351,9 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * FormSeverity Only used by ui5strapBsLib.Form
+	 * FormSeverity Only used by ui5strapBs3Lib.Form
 	 */
-	ui5strapBsLib.FormSeverity = {
+	ui5strapBs3Lib.FormSeverity = {
 		Success : "Success",
 		Warning : "Warning",
 		Error : "Error",
@@ -361,9 +361,9 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * FormType Only used by ui5strapBsLib.Form
+	 * FormType Only used by ui5strapBs3Lib.Form
 	 */
-	ui5strapBsLib.FormType = {
+	ui5strapBs3Lib.FormType = {
 		Default : "Default",
 		Horizontal : "Horizontal",
 		Inline : "Inline"
@@ -372,7 +372,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * HeadingType TODO check this
 	 */
-	ui5strapBsLib.HeadingType = {
+	ui5strapBs3Lib.HeadingType = {
 		Default : "Default",
 		PageHeader : "PageHeader",
 		ListGroupItemHeading : "ListGroupItemHeading",
@@ -380,17 +380,17 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * IconType Only used by ui5strapBsLib.Icon
+	 * IconType Only used by ui5strapBs3Lib.Icon
 	 */
-	ui5strapBsLib.IconType = {
+	ui5strapBs3Lib.IconType = {
 		Default : "Default",
 		FormFeedback : "FormFeedback"
 	};
 
 	/*
-	 * IconSize Only used by ui5strapBsLib.Icon
+	 * IconSize Only used by ui5strapBs3Lib.Icon
 	 */
-	ui5strapBsLib.IconSize = {
+	ui5strapBs3Lib.IconSize = {
 		Default : "Default",
 		Large : "Large",
 		X2 : "X2",
@@ -400,9 +400,9 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * IconTransform Only used by ui5strapBsLib.Icon
+	 * IconTransform Only used by ui5strapBs3Lib.Icon
 	 */
-	ui5strapBsLib.IconTransform = {
+	ui5strapBs3Lib.IconTransform = {
 		Default : "Default",
 		Rotate90 : "Rotate90",
 		Rotate180 : "Rotate180",
@@ -412,16 +412,16 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * ImageShape Only used by ui5strapBsLib.Image
+	 * ImageShape Only used by ui5strapBs3Lib.Image
 	 */
-	ui5strapBsLib.ImageShape = {
+	ui5strapBs3Lib.ImageShape = {
 		Default : "Default",
 		Rounded : "Rounded",
 		Circle : "Circle",
 		Thumbnail : "Thumbnail"
 	};
 
-	ui5strapBsLib.ImageType = {
+	ui5strapBs3Lib.ImageType = {
 		Default : "Default",
 		MediaObject : "MediaObject",
 		Responsive : "Responsive"
@@ -430,12 +430,12 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * ListType
 	 */
-	ui5strapBsLib.ListType = {
+	ui5strapBs3Lib.ListType = {
 		Unordered : "Unordered",
 		Ordered : "Ordered"
 	};
 
-	ui5strapBsLib.ListGroupMode = {
+	ui5strapBs3Lib.ListGroupMode = {
 		Default : "Default",
 		Navigation : "Navigation"
 	};
@@ -443,7 +443,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * LinkType
 	 */
-	ui5strapBsLib.LinkType = {
+	ui5strapBs3Lib.LinkType = {
 		Default : "Default",
 
 		// Deprecated
@@ -451,17 +451,17 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * NavBarType Only used by ui5strapBsLib.NavBar
+	 * NavBarType Only used by ui5strapBs3Lib.NavBar
 	 */
-	ui5strapBsLib.NavBarType = {
+	ui5strapBs3Lib.NavBarType = {
 		Default : "Default",
 		None : "None"
 	};
 
 	/*
-	 * NavBarPosition Only used by ui5strapBsLib.NavBar
+	 * NavBarPosition Only used by ui5strapBs3Lib.NavBar
 	 */
-	ui5strapBsLib.NavBarPosition = {
+	ui5strapBs3Lib.NavBarPosition = {
 		Default : "Default",
 		FixedTop : "FixedTop",
 		FixedBottom : "FixedBottom",
@@ -469,9 +469,9 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * NavType Only used by ui5strapBsLib.Nav
+	 * NavType Only used by ui5strapBs3Lib.Nav
 	 */
-	ui5strapBsLib.NavType = {
+	ui5strapBs3Lib.NavType = {
 		Tabs : "Tabs",
 		Pills : "Pills",
 		PillsStacked : "PillsStacked",
@@ -480,7 +480,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 		Default : "Default"
 	};
 
-	ui5strapBsLib.PickerWheelMode = {
+	ui5strapBs3Lib.PickerWheelMode = {
 		Mode3D : "Mode3D",
 		Mode2D : "Mode2D"
 	};
@@ -488,7 +488,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * Placement Used by Popover and Tooltip controls
 	 */
-	ui5strapBsLib.Placement = {
+	ui5strapBs3Lib.Placement = {
 		None : "None",
 		Default : "Default",
 
@@ -504,18 +504,18 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * RadioButtonType Only used by ui5strapBsLib.RadioButton
+	 * RadioButtonType Only used by ui5strapBs3Lib.RadioButton
 	 */
-	ui5strapBsLib.RadioButtonType = {
+	ui5strapBs3Lib.RadioButtonType = {
 		Default : "Default",
 		Block : "Block",
 		Inline : "Inline"
 	};
 
 	/*
-	 * SelectionMode Used by pks.ui5strapBsLib.core.ListBase
+	 * SelectionMode Used by pks.ui5strapBs3Lib.core.ListBase
 	 */
-	ui5strapBsLib.SelectionMode = {
+	ui5strapBs3Lib.SelectionMode = {
 		None : "None",
 		Single : "Single",
 		SingleToggle : "SingleToggle",
@@ -523,9 +523,9 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * SelectBoxType Only used by ui5strapBsLib.SelectBox
+	 * SelectBoxType Only used by ui5strapBs3Lib.SelectBox
 	 */
-	ui5strapBsLib.SelectBoxType = {
+	ui5strapBs3Lib.SelectBoxType = {
 		Default : "Default",
 		FormControl : "FormControl"
 	};
@@ -533,7 +533,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * Severity
 	 */
-	ui5strapBsLib.Severity = {
+	ui5strapBs3Lib.Severity = {
 		Default : "Default",
 		Primary : "Primary",
 		Success : "Success",
@@ -546,7 +546,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * Size
 	 */
-	ui5strapBsLib.Size = {
+	ui5strapBs3Lib.Size = {
 		ExtraSmall : "ExtraSmall",
 		Small : "Small",
 		Medium : "Medium",
@@ -557,7 +557,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * TextAlignment
 	 */
-	ui5strapBsLib.TextAlignment = {
+	ui5strapBs3Lib.TextAlignment = {
 		Default : "Default",
 
 		Left : "Left",
@@ -567,9 +567,9 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * TextInputFormat Only used by ui5strapBsLib.TextInput
+	 * TextInputFormat Only used by ui5strapBs3Lib.TextInput
 	 */
-	ui5strapBsLib.TextInputFormat = {
+	ui5strapBs3Lib.TextInputFormat = {
 		Default : "Default",
 		Plain : "Plain",
 		Html : "Html",
@@ -578,9 +578,9 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	}
 
 	/*
-	 * TextInputType Only used by ui5strapBsLib.TextInput
+	 * TextInputType Only used by ui5strapBs3Lib.TextInput
 	 */
-	ui5strapBsLib.TextInputType = {
+	ui5strapBs3Lib.TextInputType = {
 		Default : "Default",
 		FormControl : "FormControl"
 	};
@@ -588,7 +588,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * TextType
 	 */
-	ui5strapBsLib.TextType = {
+	ui5strapBs3Lib.TextType = {
 		Default : "Default",
 		Strong : "Strong",
 		Blockquote : "Blockquote",
@@ -609,7 +609,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * TrailHtml Used by inline Controls
 	 */
-	ui5strapBsLib.TrailHtml = {
+	ui5strapBs3Lib.TrailHtml = {
 		"None" : "None",
 		"Space" : "Space",
 		"DoubleSpace" : "DoubleSpace",
@@ -619,7 +619,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	/*
 	 * TriggerMode Used by Popovers
 	 */
-	ui5strapBsLib.TriggerMode = {
+	ui5strapBs3Lib.TriggerMode = {
 		Click : "Click",
 		Hover : "Hover",
 		Focus : "Focus",
