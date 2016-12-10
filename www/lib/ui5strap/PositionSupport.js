@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.core.PositionSupport
+ * ui5strap.PositionSupport
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library'], function(library){
+sap.ui.define(['./library'], function(ui5strapBsLib){
 	
 	/**
 	 * Constructor for a new PositionSupport instance.
@@ -50,7 +50,7 @@ sap.ui.define(['./library'], function(library){
 	PositionSupport.meta = function(meta){
 		meta.properties.align = {
 			type : "ui5strap.Alignment",
-			defaultValue : ui5strap.Alignment.Default
+			defaultValue : ui5strapBsLib.Alignment.Default
 		};
 	};
 	
@@ -70,10 +70,10 @@ sap.ui.define(['./library'], function(library){
 	};
 	
 	PositionSupport.getStyleClass = function(oControl){
-		var align = oControl.getAlign(), Alignment = ui5strap.Alignment, styleClass = "";
+		var align = oControl.getAlign(), Alignment = ui5strapBsLib.Alignment, styleClass = "";
 
 		if (align !== Alignment.Default && align !== Alignment.NavBar && align !== Alignment.Sidebar) {
-			styleClass += " " + ui5strap.BSAlignment[align];
+			styleClass += " " + ui5strapBsLib.BSAlignment[align];
 		}
 
 		/*
@@ -102,18 +102,6 @@ sap.ui.define(['./library'], function(library){
 			}
 		}
 		
-
-		/*
-		 * This are special options for Nav controls to show
-		 * properly inside Sidebar controls
-		 * 
-		 * @deprecated
-		 */
-		if (align === Alignment.Sidebar) {
-			jQuery.sap.log
-					.warning("Using Alignment.Sidebar options is deprecated.");
-			styleClass += " sidebar-nav";
-		}
 		return styleClass;
 	};
 	

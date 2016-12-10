@@ -25,28 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(library, ControlBase, Utils, RenderUtils){
-
-	/**
-	 * Constructor for a new Text instance.
-	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
-	 * 
-	 * @class
-	 * Control for creating inline text.
-	 * @extends ui5strap.ControlBase
-	 * 
-	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
-	 * 
-	 * @constructor
-	 * @public
-	 * @alias ui5strap.Text
-	 * 
-	 */
-	var Text = ControlBase.extend("ui5strap.Text", {
-		metadata : {
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(library, ControlBase, Utils, RenderUtils, PositionSupport){
+	
+	var mMetaData = {
 			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupAddon"],
 			// ---- object ----
 			defaultAggregation : "content",
@@ -92,7 +73,30 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 				}
 			}
 
-		},
+		};
+	
+	PositionSupport.meta(mMetaData);
+	
+	/**
+	 * Constructor for a new Text instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating inline text.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Text
+	 * 
+	 */
+	var Text = ControlBase.extend("ui5strap.Text", {
+		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
 			var type = oControl.getType(),
@@ -124,6 +128,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		}
 	}),
 	TextProto = Text.prototype;
+	
+	PositionSupport.proto(TextProto);
 	
 	TextProto._typeToTag = {
 		Default : { 
@@ -185,12 +191,6 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		Badge : {
 			tagName : "span",
 			className : "badge"
-		},
-		
-		//Deprecated
-		Phrasing : {
-			tagName : "span",
-			className : null
 		}
 		
 	};

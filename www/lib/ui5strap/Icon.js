@@ -25,28 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/RenderUtils"], function(library, ControlBase, RenderUtils){
-
-	/**
-	 * Constructor for a new Icon instance.
-	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
-	 * 
-	 * @class
-	 * Control for creating Bootstrap and Font Awesome icons.
-	 * @extends ui5strap.ControlBase
-	 * 
-	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
-	 * 
-	 * @constructor
-	 * @public
-	 * @alias ui5strap.Icon
-	 * 
-	 */
-	var Icon = ControlBase.extend("ui5strap.Icon", {
-		metadata : {
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(library, ControlBase, RenderUtils, PositionSupport){
+	
+	var mMetaData = {
 
 			library : "ui5strap",
 			
@@ -98,7 +79,30 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 					defaultValue:ui5strap.TrailHtml.Space
 				}
 			}
-		},
+		};
+	
+	PositionSupport.meta(mMetaData);
+	
+	/**
+	 * Constructor for a new Icon instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap and Font Awesome icons.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Icon
+	 * 
+	 */
+	var Icon = ControlBase.extend("ui5strap.Icon", {
+		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
 			rm.write("<span");
@@ -114,6 +118,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		}
 	}),
 	IconProto = Icon.prototype;
+	
+	PositionSupport.proto(IconProto);
 	
 	IconProto._sizeToClass = {
 	    Large : "lg",

@@ -27,8 +27,8 @@
 
 sap.ui
 		.define(
-				[ "./library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils" ],
-				function(ui5strapExLib, ControlBase, Utils) {
+				[ "./library", "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils" ],
+				function(ui5strapBsLib, ui5strapCoreLib, ControlBase, Utils) {
 					"use strict";
 					
 					/**
@@ -78,7 +78,7 @@ sap.ui
 										
 										mode : {
 											type : "ui5strap.PickerWheelMode",
-											defaultValue : sap.ui.Device.browser.msie ? ui5strapExLib.PickerWheelMode.Mode2D : ui5strapExLib.PickerWheelMode.Mode3D
+											defaultValue : sap.ui.Device.browser.msie ? ui5strapBsLib.PickerWheelMode.Mode2D : ui5strapBsLib.PickerWheelMode.Mode3D
 										}
 										
 										
@@ -361,10 +361,10 @@ sap.ui
 								
 								_this._$wheelContainer = _this.$().find('.ui5strapPickerWheel-wheel');
 								
-								if(mode === ui5strapExLib.PickerWheelMode.Mode3D){
+								if(mode === ui5strapBsLib.PickerWheelMode.Mode3D){
 									_this._wheel = new Wheel3D(_this._$wheelContainer[0]);
 								}
-								else if(mode === ui5strapExLib.PickerWheelMode.Mode2D){
+								else if(mode === ui5strapBsLib.PickerWheelMode.Mode2D){
 									_this._wheel = new Wheel2D(_this._$wheelContainer[0]);
 								}
 								
@@ -617,7 +617,7 @@ sap.ui
 					 */
 					PickerWheelProto.setMode = function(newMode, suppress) {
 						if(sap.ui.Device.browser.msie){
-							newMode = ui5strapExLib.PickerWheelMode.Mode2D;
+							newMode = ui5strapBsLib.PickerWheelMode.Mode2D;
 						}
 						
 						this.setProperty('mode', newMode, suppress);
@@ -793,7 +793,7 @@ sap.ui
 							$newPanel.addClass('active');
 							
 							//WebKit Bugfix "Hanging Active Panel"
-							if(this.getMode() === ui5strapExLib.PickerWheelMode.Mode2D){
+							if(this.getMode() === ui5strapBsLib.PickerWheelMode.Mode2D){
 								this._wheel.rotate(this._wheel.rotation + 0.0001);
 							}
 							

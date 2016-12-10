@@ -25,9 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, ControlBase){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "./PositionSupport"], function(ui5strapBsLib, ui5strapCoreLib, ControlBase, PositionSupport){
 
-	var _meta = {
+	var mMetaData = {
 
 		library : "ui5strap",
 		
@@ -50,13 +50,6 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 				fullHeight : {
 					type : "boolean",
 					defaultValue : false
-				},
-				
-				//@deprecated
-				visibility : {
-					deprecated : true,
-					type : "ui5strap.Visibility",
-					defaultValue : ui5strap.Visibility.Default
 				}
 		},
 		
@@ -69,6 +62,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 		defaultAggregation : "content"
 		
 	};
+	
+	PositionSupport.meta(mMetaData);
 	
 	/**
 	 * Constructor for a new Container instance.
@@ -89,7 +84,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	 * 
 	 */
 	var Container = ControlBase.extend("ui5strap.Container", {
-		metadata : _meta,
+		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
 			var content = oControl.getContent(),
@@ -113,6 +108,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 		}
 	}),
 	ContainerProto = Container.prototype;
+	
+	PositionSupport.proto(ContainerProto);
 	
 	ContainerProto._typeData = {
 		Default : {

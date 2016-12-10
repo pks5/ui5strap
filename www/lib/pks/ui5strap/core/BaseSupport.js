@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library'], function(library){
+sap.ui.define(['./library'], function(ui5strapCoreLib){
 	
 	/**
 	 * Constructor for a new BaseSupport instance.
@@ -46,20 +46,20 @@ sap.ui.define(['./library'], function(library){
 	BaseSupport.meta = function(meta){
 		//Visibility DOES inherit from smaller sizes
 		meta.properties.visibilityExtraSmall = {
-			type : "ui5strap.Visibility",
-			defaultValue : ui5strap.Visibility.Default
+			type : "pks.ui5strap.core.Visibility",
+			defaultValue : ui5strapCoreLib.Visibility.Default
 		};
 		meta.properties.visibilitySmall = {
-			type : "ui5strap.Visibility",
-			defaultValue : ui5strap.Visibility.Default
+			type : "pks.ui5strap.core.Visibility",
+			defaultValue : ui5strapCoreLib.Visibility.Default
 		};
 		meta.properties.visibilityMedium = {
-			type : "ui5strap.Visibility",
-			defaultValue : ui5strap.Visibility.Default
+			type : "pks.ui5strap.core.Visibility",
+			defaultValue : ui5strapCoreLib.Visibility.Default
 		};
 		meta.properties.visibilityLarge = {
-			type : "ui5strap.Visibility",
-			defaultValue : ui5strap.Visibility.Default
+			type : "pks.ui5strap.core.Visibility",
+			defaultValue : ui5strapCoreLib.Visibility.Default
 		};
 		//TODO add visibilityExtraLarge on Bootstrap 4 Upgrade
 	};
@@ -74,7 +74,7 @@ sap.ui.define(['./library'], function(library){
 		 */
 		oControl._getIdPart = function(){
 			if(arguments.legnth === 0){
-				throw new Error("Please provide at least one argument for ui5strap.ControlBase.prototype._getIdPart!");
+				throw new Error("Please provide at least one argument for BaseSupport::_getIdPart!");
 			}
 			var args = jQuery.makeArray(arguments);
 			return this.getId() + "___" + args.join('-');
@@ -153,7 +153,7 @@ sap.ui.define(['./library'], function(library){
 				.getVisibilityExtraSmall(), visibilitySmall = oControl
 				.getVisibilitySmall(), visibilityMedium = oControl
 				.getVisibilityMedium(), visibilityLarge = oControl
-				.getVisibilityLarge(), Visibility = ui5strap.Visibility;
+				.getVisibilityLarge(), Visibility = ui5strapCoreLib.Visibility;
 		
 		var styleClass = "", inheritHide = false;
 		

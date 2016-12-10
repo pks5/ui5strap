@@ -25,8 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', "../../../ui5strap/library", "sap/ui/core/Control", './BaseSupport', './PositionSupport', './OptionsSupport', "./Utils"], function(ui5strapCoreLib, ui5strapBsLib, SapControlBase, BaseSupport, PositionSupport, OptionsSupport, Utils){
-
+sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSupport', "./Utils"], function(ui5strapCoreLib, SapControlBase, BaseSupport, OptionsSupport, Utils){
+	
+	"use strict";
+	
 	var _meta = {
 		library : "pks.ui5strap.core",
 		"abstract" : true,
@@ -37,7 +39,6 @@ sap.ui.define(['./library', "../../../ui5strap/library", "sap/ui/core/Control", 
 	};
 	
 	BaseSupport.meta(_meta);
-	PositionSupport.meta(_meta);
 	OptionsSupport.meta(_meta);
 	
 	/**
@@ -65,7 +66,6 @@ sap.ui.define(['./library', "../../../ui5strap/library", "sap/ui/core/Control", 
 	ControlBaseProto = ControlBase.prototype;
 	
 	BaseSupport.proto(ControlBaseProto);
-	PositionSupport.proto(ControlBaseProto);
 	OptionsSupport.proto(ControlBaseProto);
 	
 	/**
@@ -94,7 +94,7 @@ sap.ui.define(['./library', "../../../ui5strap/library", "sap/ui/core/Control", 
 			return;
 		}
 		
-		if(ui5strapBsLib.polyfill.isDocumentHidden()){
+		if(ui5strapCoreLib.polyfill.isDocumentHidden()){
 			//Document is hidden
 			_this._waitForResume(callback);
 			
@@ -133,16 +133,16 @@ sap.ui.define(['./library', "../../../ui5strap/library", "sap/ui/core/Control", 
 		
 		var _this = this,
 		fnListener = function(){
-			if(!ui5strapBsLib.polyfill.isDocumentHidden()){
+			if(!ui5strapCoreLib.polyfill.isDocumentHidden()){
 				jQuery.sap.log
 				.debug("Document is visible again.");
-				document.removeEventListener(ui5strapBsLib.support.visibilityChange, fnListener, false);
+				document.removeEventListener(ui5strapCoreLib.polyfill.visibilityChange, fnListener, false);
 				
 				_this._waitForCss(callback, iTimeout);
 			}
 		};
 		
-		document.addEventListener(ui5strapBsLib.support.visibilityChange, fnListener, false);
+		document.addEventListener(ui5strapCoreLib.polyfill.visibilityChange, fnListener, false);
 		//TODO Cleanup on exit!!!
 	};
 	

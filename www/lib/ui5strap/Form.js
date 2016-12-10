@@ -25,8 +25,47 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, ControlBase){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"], function(library, ControlBase, PositionSupport){
+	
+	var mMetaData = {
 
+		defaultAggregation : "content",
+		
+		library : "ui5strap",
+
+		properties : { 
+			type : {
+				type:"ui5strap.FormType", 
+				defaultValue:ui5strap.FormType.Default
+			},
+			action : {
+				type:"string", 
+				defaultValue:""
+			},
+			method : {
+				type:"ui5strap.FormMethod", 
+				defaultValue:ui5strap.FormMethod.None
+			},
+			align : {
+				type:"ui5strap.Alignment",
+				defaultValue:ui5strap.Alignment.Default
+			}
+		},
+		aggregations : { 
+			content : {
+				singularName: "content"
+			}
+		},
+		events : {
+			submit : {
+
+			}
+		}
+
+	};
+	
+	PositionSupport.meta(mMetaData);
+	
 	/**
 	 * Constructor for a new Form instance.
 	 * 
@@ -46,42 +85,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	 * 
 	 */
 	var Form = ControlBase.extend("ui5strap.Form", {
-		metadata : {
-
-			defaultAggregation : "content",
-			
-			library : "ui5strap",
-
-			properties : { 
-				type : {
-					type:"ui5strap.FormType", 
-					defaultValue:ui5strap.FormType.Default
-				},
-				action : {
-					type:"string", 
-					defaultValue:""
-				},
-				method : {
-					type:"ui5strap.FormMethod", 
-					defaultValue:ui5strap.FormMethod.None
-				},
-				align : {
-					type:"ui5strap.Alignment",
-					defaultValue:ui5strap.Alignment.Default
-				}
-			},
-			aggregations : { 
-				content : {
-					singularName: "content"
-				}
-			},
-			events : {
-				submit : {
-
-				}
-			}
-
-		},
+		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
 			var content = oControl.getContent(),
@@ -115,6 +119,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 		}
 	}),
 	FormProto = Form.prototype;
+	
+	PositionSupport.proto(FormProto);
 	
 	var _typeToClass = {
 		"Horizontal" : 'form-horizontal',

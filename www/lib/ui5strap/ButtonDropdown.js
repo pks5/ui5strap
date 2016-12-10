@@ -25,8 +25,41 @@
  * 
  */
 
-sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils"], function(library, Button, Utils){
+sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils", "./PositionSupport"], function(library, Button, Utils, PositionSupport){
+	
+	var mMetaData = {
+		interfaces : ["ui5strap.IDropdownMenuHost"],
+		
+		defaultAggregation : "menu",
+			
+		library : "ui5strap",
 
+		properties : { 
+			update : {
+				type : "ui5strap.DropdownMenuHostUpdate",
+				defaultValue : ui5strap.DropdownMenuHostUpdate.None
+			},
+			dropup : {
+				type:"boolean", 
+				defaultValue:false
+			},
+			split : {
+				type:"boolean", 
+				defaultValue:false
+			}
+		},
+				
+		aggregations : { 
+			menu : {
+				type : "ui5strap.ListDropdownMenu",
+				multiple : false
+			} 
+		}
+
+	};
+	
+	PositionSupport.meta(mMetaData);
+	
 	/**
 	 * Constructor for a new ButtonDropdown instance.
 	 * 
@@ -46,39 +79,12 @@ sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils"], function(lib
 	 * 
 	 */
 	var ButtonDropdown = Button.extend("ui5strap.ButtonDropdown", {
-		metadata : {
-			interfaces : ["ui5strap.IDropdownMenuHost"],
-			
-			defaultAggregation : "menu",
-				
-			library : "ui5strap",
-
-			properties : { 
-				update : {
-					type : "ui5strap.DropdownMenuHostUpdate",
-					defaultValue : ui5strap.DropdownMenuHostUpdate.None
-				},
-				dropup : {
-					type:"boolean", 
-					defaultValue:false
-				},
-				split : {
-					type:"boolean", 
-					defaultValue:false
-				}
-			},
-					
-			aggregations : { 
-				menu : {
-					type : "ui5strap.ListDropdownMenu",
-					multiple : false
-				} 
-			}
-
-		}
+		metadata : mMetaData
 	}),
-	ButtonDropdownProto = ui5strap.ButtonDropdown.prototype;
+	ButtonDropdownProto = ButtonDropdown.prototype;
 
+	PositionSupport.proto(ButtonDropdownProto);
+	
 	/**
 	 * @Protected
 	 * @Override

@@ -25,28 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(library, ControlBase, Utils, RenderUtils){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(library, ControlBase, Utils, RenderUtils, PositionSupport){
 	
-	/**
-	 * Constructor for a new Link instance.
-	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
-	 * 
-	 * @class
-	 * Control for creating links.
-	 * @extends ui5strap.ControlBase
-	 * 
-	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
-	 * 
-	 * @constructor
-	 * @public
-	 * @alias ui5strap.Link
-	 * 
-	 */
-	var Link = ControlBase.extend("ui5strap.Link", {
-		metadata : {
+	var mMetaData = {
 
 			interfaces : ["ui5strap.IText"],
 			
@@ -113,7 +94,29 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		        tap : {allowPreventDefault : true}
 		    }
 
-		},
+		};
+	
+	PositionSupport.meta(mMetaData);
+	/**
+	 * Constructor for a new Link instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating links.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Link
+	 * 
+	 */
+	var Link = ControlBase.extend("ui5strap.Link", {
+		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
 			var href = oControl.getHref(),
@@ -157,6 +160,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		}
 	}),
 	LinkProto = Link.prototype;
+	
+	PositionSupport.proto(LinkProto);
 	
 	LinkProto._typeToClass = {
 		Thumbnail : "thumbnail"

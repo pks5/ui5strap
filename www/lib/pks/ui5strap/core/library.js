@@ -76,8 +76,30 @@ sap.ui
 							});
 					
 					var ui5strapCoreLib = pks.ui5strap.core,
-						mPolyfill = {};
-				
+						mPolyfill = {},
+						fnTestRequirements = function() {
+							if (!Object.keys) {
+								jQuery.sap.log
+										.error('Object.keys is not supported by the browser!');
+								return false;
+							}
+	
+							return true;
+						};
+
+					if (!fnTestRequirements()) {
+						throw new Error(
+								"<h4>We are sorry!</h4>"
+										+ "<p>You're browser / device is not supported by Ui5Strap yet.</p>"
+										+ "<p>Please use one of following browsers:</p>"
+										+ "<ul>" + "<li>Chrome 26+</li>"
+										+ "<li>Firefox 10+</li>"
+										+ "<li>Safari 5+</li>"
+										+ "<li>Internet Explorer 9+</li>"
+										+ "</ul>");
+					}
+
+					
 					/*
 					 * START Options
 					 */
@@ -156,6 +178,19 @@ sap.ui
 					/*
 					 * END Polyfill
 					 */
+					
+					/*
+					 * Visibility
+					 */
+					ui5strapCoreLib.Visibility = {
+						Default : "Default",
+						Visible : "Visible",
+						VisibleUp : "VisibleUp",
+						Hidden : "Hidden",
+						HiddenUp : "HiddenUp"
+					};
+
+					
 					
 					// End of library
 					return ui5strapCoreLib;

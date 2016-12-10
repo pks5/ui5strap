@@ -25,9 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils"], function(library, ControlBase, SelectableSupport, Utils){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils", "./PositionSupport"], function(library, ControlBase, SelectableSupport, Utils, PositionSupport){
 
-	var _meta =  {
+	var mMetaData =  {
 			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupButton"],
 			
 			defaultAggregation : "content",
@@ -84,7 +84,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 
 		};
 	
-	SelectableSupport.meta(_meta);
+	PositionSupport.meta(mMetaData);
+	SelectableSupport.meta(mMetaData);
 	
 	/**
 	 * Constructor for a new Button instance.
@@ -105,10 +106,11 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	 * 
 	 */
 	var Button = ControlBase.extend("ui5strap.Button", {
-		metadata : _meta
+		metadata : mMetaData
 	}),
 	ButtonProto = Button.prototype;
 	
+	PositionSupport.proto(ButtonProto);
 	SelectableSupport.proto(ButtonProto);
 	
 	/**

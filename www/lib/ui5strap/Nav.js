@@ -25,28 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, ListBase){
-
-	/**
-	 * Constructor for a new Nav instance.
-	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
-	 * 
-	 * @class
-	 * Control for creating Boostrap nav lists.
-	 * @extends pks.ui5strap.core.ListBase
-	 * 
-	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
-	 * 
-	 * @constructor
-	 * @public
-	 * @alias ui5strap.Nav
-	 * 
-	 */
-	var Nav = ListBase.extend("ui5strap.Nav", {
-		metadata : {
+sap.ui.define(['./library', 'pks/ui5strap/core/ListBase', "./PositionSupport"], function(library, ListBase, PositionSupport){
+	
+	var mMetaData = {
 
 			library : "ui5strap",
 			
@@ -66,7 +47,29 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, Lis
 				} 
 			}
 
-		},
+		};
+	
+	PositionSupport.meta(mMetaData);
+	/**
+	 * Constructor for a new Nav instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Boostrap nav lists.
+	 * @extends pks.ui5strap.core.ListBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Nav
+	 * 
+	 */
+	var Nav = ListBase.extend("ui5strap.Nav", {
+		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
 			var items = oControl.getItems();
@@ -87,6 +90,8 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, Lis
 		}
 	}),
 	NavProto = ui5strap.Nav.prototype;
+	
+	PositionSupport.proto(NavProto);
 	
 	var _typeToClass = {
 		Default : "nav-default",

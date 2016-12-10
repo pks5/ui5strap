@@ -41,35 +41,6 @@ sap.ui
 					
 					"use strict";
 					
-					/**
-					 * 
-					 * Test system requirements
-					 * 
-					 * @Private
-					 * @Static
-					 */
-					var _testRequirements = function() {
-						if (!Object.keys) {
-							jQuery.sap.log
-									.error('Object.keys is not supported by the browser!');
-							return false;
-						}
-
-						return true;
-					};
-
-					if (!_testRequirements()) {
-						throw new Error(
-								"<h4>We are sorry!</h4>"
-										+ "<p>You're browser / device is not supported by Ui5Strap yet.</p>"
-										+ "<p>Please use one of following browsers:</p>"
-										+ "<ul>" + "<li>Chrome 26+</li>"
-										+ "<li>Firefox 10+</li>"
-										+ "<li>Safari 5+</li>"
-										+ "<li>Internet Explorer 9+</li>"
-										+ "</ul>");
-					}
-
 					/*
 					 * ---------------
 					 * 
@@ -96,7 +67,6 @@ sap.ui
 								dependencies : [ "sap.ui.core" ],
 
 								types : [ "ui5strap.Size", "ui5strap.Severity",
-										"ui5strap.Visibility",
 										"ui5strap.TriggerMode",
 										"ui5strap.TrailHtml",
 										"ui5strap.ContentPlacement",
@@ -202,8 +172,6 @@ sap.ui
 						"touch" : sap.ui.Device.support.touch
 					};
 					
-					
-
 					/*
 					 * Bootstrap Transition End Legacy
 					 */
@@ -258,9 +226,6 @@ sap.ui
 					 */
 
 					/*
-					 
-
-					/*
 					 * -----------
 					 * 
 					 * START Types
@@ -274,9 +239,6 @@ sap.ui
 					};
 							
 							
-						
-						
-
 					/*
 					 * Size
 					 */
@@ -324,17 +286,6 @@ sap.ui
 						Warning : "warning",
 						Info : "info",
 						Danger : "danger"
-					};
-
-					/*
-					 * Visibility
-					 */
-					ui5strap.Visibility = {
-						Default : "Default",
-						Visible : "Visible",
-						VisibleUp : "VisibleUp",
-						Hidden : "Hidden",
-						HiddenUp : "HiddenUp"
 					};
 
 					/**
@@ -428,8 +379,7 @@ sap.ui
 						// Deprecated
 						NavBar : "NavBar",
 						NavBarLeft : "NavBarLeft",
-						NavBarRight : "NavBarRight",
-						Sidebar : "Sidebar"
+						NavBarRight : "NavBarRight"
 					};
 
 					// Bootstrap CSS mapping
@@ -448,7 +398,6 @@ sap.ui
 					 */
 					ui5strap.TextType = {
 						Default : "Default",
-						Phrasing : "Phrasing",
 						Strong : "Strong",
 						Blockquote : "Blockquote",
 						Quote : "Quote",

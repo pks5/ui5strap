@@ -25,9 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/ListSelectionSupport', './Button', 'pks/ui5strap/core/ListItemBase', "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(library, ControlBase, ListSelectionSupport, Button, ListItemBase, Utils, RenderUtils){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/ListSelectionSupport', "./PositionSupport", './Button', 'pks/ui5strap/core/ListItemBase', "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(library, ControlBase, ListSelectionSupport, PositionSupport, Button, ListItemBase, Utils, RenderUtils){
 
-	var _meta = {
+	var mMetaData = {
 			
 			interfaces : [],
 			
@@ -65,7 +65,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 		    }
 		};
 	
-	ListSelectionSupport.meta(_meta);
+	ListSelectionSupport.meta(mMetaData);
+	PositionSupport.meta(mMetaData);
 	
 	/**
 	 * Constructor for a new ButtonGroup instance.
@@ -86,7 +87,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	 * 
 	 */
 	var ButtonGroup = ControlBase.extend("ui5strap.ButtonGroup", {
-		metadata : _meta,
+		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
 			var buttons = oControl.getButtons(),
@@ -123,6 +124,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	};
 	
 	ListSelectionSupport.proto(ButtonGroupProto);
+	PositionSupport.proto(ButtonGroupProto);
 	
 	/**
 	 * @Protected

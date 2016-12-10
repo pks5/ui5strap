@@ -25,28 +25,9 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(library, ControlBase, Utils, RenderUtils){
-
-	/**
-	 * Constructor for a new Heading instance.
-	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
-	 * 
-	 * @class
-	 * Control for creating Bootstrap headings.
-	 * @extends ui5strap.ControlBase
-	 * 
-	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
-	 * 
-	 * @constructor
-	 * @public
-	 * @alias ui5strap.Heading
-	 * 
-	 */
-	var Heading = ControlBase.extend("ui5strap.Heading", {
-		metadata : {
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(library, ControlBase, Utils, RenderUtils, PositionSupport){
+	
+	var mMetaData = {
 
 			// ---- object ----
 			defaultAggregation : "content",
@@ -83,7 +64,29 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 				} 
 			}
 
-		},
+		};
+	
+	PositionSupport.meta(mMetaData);
+	/**
+	 * Constructor for a new Heading instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap headings.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.Heading
+	 * 
+	 */
+	var Heading = ControlBase.extend("ui5strap.Heading", {
+		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
 			var level = oControl.getLevel();
@@ -100,6 +103,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		}
 	}),
 	HeadingProto = Heading.prototype;
+	
+	PositionSupport.proto(HeadingProto);
 	
 	Heading._typeToClass = {
 		"PageHeader" : 'page-header',
