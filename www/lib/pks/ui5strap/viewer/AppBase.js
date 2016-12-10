@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui/core/UIArea', 'pks/ui5strap/action/Action', "../core/Utils", "../core/Layer"], function(uLib, ObjectBase, ControlBase, UIArea, Action, Utils, Layer){
+sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui/core/UIArea', 'pks/ui5strap/action/Action', "../core/Utils", "../core/Layer"], function(ui5strapCoreLib, ObjectBase, ControlBase, UIArea, Action, Utils, Layer){
 	
 	"use strict";
 	
@@ -646,7 +646,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 
 		var _this = this;
 
-		ui5strap.polyfill.requestAnimationFrame(function(){
+		ui5strapCoreLib.polyfill.requestAnimationFrame(function(){
 			_this.domRef.className = _createAppClass(_this, 'ui5strap-app ui5strap-app-current');
 			
 			_this.onShown(new sap.ui.base.Event("ui5strap.app.shown", _this, {}));
@@ -686,7 +686,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 		jQuery.sap.log.debug("AppBaseProto.hidden");
 
 		var _this = this;
-		ui5strap.polyfill.requestAnimationFrame(function(){
+		ui5strapCoreLib.polyfill.requestAnimationFrame(function(){
 			if(null === _this.domRef){
 				jQuery.sap.log.warning("AppBaseProto.stop seemed to be executed before AppBaseProto.hidden. This seems to be a bug.");
 			}
@@ -696,7 +696,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui
 			
 			_this.onHidden(new sap.ui.base.Event("ui5strap.app.hidden", _this, {}));
 
-			callback && ui5strap.polyfill.requestAnimationFrame(callback);
+			callback && ui5strapCoreLib.polyfill.requestAnimationFrame(callback);
 		})
 	};
 

@@ -27,8 +27,8 @@
 
 sap.ui
 		.define(
-				[ './library', "ui5strap/library" ],
-				function(ui5strapCoreLib, ui5strapBsLib) {
+				[ './library'],
+				function(ui5strapCoreLib) {
 
 					/**
 					 * Converts old transition strings into new ones.
@@ -103,7 +103,7 @@ sap.ui
 							}
 						}
 
-						this._skip = !ui5strapBsLib.support.transitionEndEvent
+						this._skip = !ui5strapCoreLib.polyfill.transitionEndEvent
 								|| transString === "ui5strap-trans-all-type-none";
 
 						this._transitions = transString;
@@ -306,7 +306,7 @@ sap.ui
 
 									this._data.$current
 											.one(
-													ui5strapBsLib.support.transitionEndEvent,
+													ui5strapCoreLib.polyfill.transitionEndEvent,
 													_finallyCurrent);
 								}
 
@@ -318,7 +318,7 @@ sap.ui
 
 									this._data.$next
 											.one(
-													ui5strapBsLib.support.transitionEndEvent,
+													ui5strapCoreLib.polyfill.transitionEndEvent,
 													_finallyNext);
 								}
 

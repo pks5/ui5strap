@@ -196,36 +196,13 @@ sap.ui
 					 * -------
 					 */
 
+					//Legacy
+					//TODO remove
 					ui5strap.support = {
 						"touch" : sap.ui.Device.support.touch
 					};
 					
-					//Visibility API
-					if (typeof document.hidden !== "undefined") { 
-						ui5strap.support.visibilityProperty = "hidden";
-						ui5strap.support.visibilityChange = "visibilitychange";
-					} else if (typeof document.msHidden !== "undefined") {
-						ui5strap.support.visibilityProperty = "msHidden";
-						ui5strap.support.visibilityChange = "msvisibilitychange";
-					} else if (typeof document.webkitHidden !== "undefined") {
-						ui5strap.support.visibilityProperty = "webkitHidden";
-						ui5strap.support.visibilityChange = "webkitvisibilitychange";
-					}
-
-					//Transition end events
-					var _transitionEndEvents = {
-						'transition' : 'transitionend',
-						'WebkitTransition' : 'webkitTransitionEnd',
-						'MozTransition' : 'transitionend',
-						'OTransition' : 'otransitionend'
-					}, elem = document.createElement('div');
-
-					for ( var t in _transitionEndEvents) {
-						if (typeof elem.style[t] !== 'undefined') {
-							ui5strap.support.transitionEndEvent = _transitionEndEvents[t];
-							break;
-						}
-					}
+					
 
 					/*
 					 * Bootstrap Transition End Legacy
@@ -254,7 +231,7 @@ sap.ui
 
 						return false; // explicit for ie8 ( ._.)
 					};
-
+					
 					ui5strap.support.transition = _bootstrapTransitionEnd();
 
 					// http://blog.alexmaccaw.com/css-transitions
@@ -281,32 +258,7 @@ sap.ui
 					 */
 
 					/*
-					 * -------
-					 * 
-					 * Polyfill
-					 * 
-					 * -------
-					 */
-					ui5strap.polyfill = {};
-
-					var _requestAnimFrame = (function() {
-						return window.requestAnimationFrame
-								|| window.webkitRequestAnimationFrame
-								|| window.mozRequestAnimationFrame
-								|| function(callback) {
-									// For Browsers that do not support
-									// requestAnimationFrame
-									window.setTimeout(callback, 1000 / 30);
-								};
-					})();
-
-					ui5strap.polyfill.requestAnimationFrame = function(callback) {
-						_requestAnimFrame.call(window, callback);
-					};
-					
-					ui5strap.polyfill.isDocumentHidden = function(){
-						return ui5strap.support.visibilityProperty ? document[ui5strap.support.visibilityProperty] : false;
-					};
+					 
 
 					/*
 					 * -----------

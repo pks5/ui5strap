@@ -75,8 +75,12 @@ sap.ui
 								elements : []
 							});
 					
-					var ui5strapCoreLib = pks.ui5strap.core;
-
+					var ui5strapCoreLib = pks.ui5strap.core,
+						mPolyfill = {};
+				
+					/*
+					 * START Options
+					 */
 					ui5strapCoreLib.options = {
 						transitionTimeout : 2000,
 						
@@ -85,6 +89,73 @@ sap.ui
 						intervalWaitForCss : 100,
 						timeoutWaitForCss : 10000
 					};
+					
+					/*
+					 * END Options
+					 */
+					
+					/*
+					 * START Polyfill
+					 */
+					
+					//Visibility API
+					if (typeof document.hidden !== "undefined") { 
+						mPolyfill.visibilityProperty = "hidden";
+						mPolyfill.visibilityChange = "visibilitychange";
+					} else if (typeof document.msHidden !== "undefined") {
+						mPolyfill.visibilityProperty = "msHidden";
+						mPolyfill.visibilityChange = "msvisibilitychange";
+					} else if (typeof document.webkitHidden !== "undefined") {
+						mPolyfill.visibilityProperty = "webkitHidden";
+						mPolyfill.visibilityChange = "webkitvisibilitychange";
+					}
+					
+					//Transition End
+					var _transitionEndEvents = {
+						'transition' : 'transitionend',
+						'WebkitTransition' : 'webkitTransitionEnd',
+						'MozTransition' : 'transitionend',
+						'OTransition' : 'otransitionend'
+					}, elem = document.createElement('div');
+
+					for ( var t in _transitionEndEvents) {
+						if (typeof elem.style[t] !== 'undefined') {
+							mPolyfill.transitionEndEvent = _transitionEndEvents[t];
+							break;
+						}
+					}
+					
+					//Request Animation Frame
+					var _fnRequestAnimationFrame = (function() {
+						return window.requestAnimationFrame
+								|| window.webkitRequestAnimationFrame
+								|| window.mozRequestAnimationFrame
+								|| function(callback) {
+									// For Browsers that do not support
+									// requestAnimationFrame
+									window.setTimeout(callback, 1000 / 30);
+								};
+					})();
+
+					/**
+					 * Request animation polyfill.
+					 */
+					mPolyfill.requestAnimationFrame = function(callback) {
+						_fnRequestAnimationFrame.call(window, callback);
+					};
+					
+					/**
+					 * Returns whether the browser document is hiddden.
+					 */
+					mPolyfill.isDocumentHidden = function(){
+						return mPolyfill.visibilityProperty ? document[mPolyfill.visibilityProperty] : false;
+					};
+					
+					ui5strapCoreLib.polyfill = mPolyfill;
+					
+					/*
+					 * END Polyfill
+					 */
 					
 					// End of library
 					return ui5strapCoreLib;

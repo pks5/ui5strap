@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/ResponsiveTransition'], function(library, ControlBase, ResponsiveTransition){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/ResponsiveTransition'], function(ui5strapBsLib, ui5strapCoreLib, ControlBase, ResponsiveTransition){
 
 	/**
 	 * Constructor for a new TabContainer instance.
@@ -234,7 +234,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			};
 		
 		//RAF start
-		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+			ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
 			
 			//Prepare Transition
 			transition.prepare();
@@ -242,7 +242,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			$next.addClass("active");
 			
 			//RAF
-			ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+			ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF2(){
 				//Execure Transition
 				transition.execute(transitionCurrentComplete, transitionNextComplete);
 			});

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListItemBase', "./Utils"], function(library, ControlBase, ListSelectionSupport, ListItemBase, Utils){
+sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListItemBase', "./Utils", 'sap/ui/Device'], function(library, ControlBase, ListSelectionSupport, ListItemBase, Utils, Device){
 
 	var _meta = {
 			interfaces : [],
@@ -114,7 +114,8 @@ sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListIt
 	};
 	
 	//Touchscreen
-	if(ui5strap.support.touch){
+	//TODO is this needed?
+	if(Device.support.touch){
 		ListBaseProto.ontap = ListBaseProto._handlePress;
 	}
 	else{

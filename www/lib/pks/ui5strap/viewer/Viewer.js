@@ -553,13 +553,13 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 				appInstance.show(function(){
 					
 					//RAF start
-					ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+					ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
 						
 						//Prepare Transition
 						transition.prepare();
 						
 						//RAF
-						ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+						ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF2(){
 							
 							//Execure Transition
 							transition.execute();

@@ -201,16 +201,16 @@ sap.ui
 							transCallback();
 						} else {
 							// Start Transition
-							ui5strap.polyfill
+							ui5strapCoreLib.polyfill
 									.requestAnimationFrame(function() {
 										// Transition end event
 										$layer
 												.one(
-														ui5strap.support.transitionEndEvent,
+														ui5strapCoreLib.polyfill.transitionEndEvent,
 														transCallback);
 
 										// Start transition
-										ui5strap.polyfill
+										ui5strapCoreLib.polyfill
 												.requestAnimationFrame(function() {
 													// Transition timeout
 													transTimeout = window

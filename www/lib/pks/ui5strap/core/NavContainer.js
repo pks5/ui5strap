@@ -25,7 +25,7 @@
  * 
  */
  
-sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"], function(library, ControlBase, ResponsiveTransition, Utils){
+sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"], function(ui5strapCoreLib, ControlBase, ResponsiveTransition, Utils){
 
 	/**
 	 * Constructor for a new NavContainer instance.
@@ -426,7 +426,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		}
 		
 		//RAF start
-		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+		ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
 
 			if(!_preparePendingTransitions(_this)){
 				//jQuery.sap.log.debug(" - [NC] CANCEL HANDLING PENDING TRANSITIONS");
@@ -434,7 +434,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 				return;
 			}
 			
-			ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+			ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF2(){
 				_executePendingTransitions(_this);
 			});
 		
@@ -485,12 +485,12 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		}
 		
 		//RAF start
-		ui5strap.polyfill.requestAnimationFrame(function RAF1(){
+		ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
 			
 			//Prepare Transition before next repaint
 			_prepareTransition(_this, pageChange);
 			
-			ui5strap.polyfill.requestAnimationFrame(function RAF2(){
+			ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF2(){
 				
 				//Execute Transition before next repaint
 				_executeTransition(_this, pageChange, transList);
