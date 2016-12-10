@@ -127,6 +127,10 @@ sap.ui.define(["./library", "../core/ControlBase", '../core/SelectableSupport'],
 	//Add methods of ISelectableItem 
 	SelectableSupport.proto(ToggleButtonProto);
 	
+	ToggleButtonProto._getStyleClassPrefix = function(){
+		return "ui5strapToggleButton";
+	};
+	
 	/**
 	 * Produces the Root CSS Classes
 	 */
