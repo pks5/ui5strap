@@ -737,10 +737,10 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		this._dom = {};
 
 		this._dom.$body = jQuery(document.body);
-		this._dom.$root = jQuery('#' + this.options.container).find(".ui5strap-apps");
+		this._dom.$root = jQuery('#' + this.options.container).find(".ui5strap-desktop");
 
 		if(this._dom.$root.length === 0){
-			throw new Error('Element of class .ui5strap-apps not found in container: ' + this.options.container);
+			throw new Error('Element of class .ui5strap-desktop not found in container: ' + this.options.container);
 		}
 	};
 

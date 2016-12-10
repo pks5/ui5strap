@@ -1,0 +1,516 @@
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for transitions
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+
+//Transition tranform
+.ui5strapTransitionTransform(@t){
+	-webkit-transition: -webkit-transform @t;
+	-moz-transition: -moz-transform @t;
+	-o-transition: -o-transform @t;
+	-ms-transition: -ms-transform @t;
+	transition: transform @t;
+}
+
+//Transition opacity
+.ui5strapTransitionOpacity(@t){
+	-webkit-transition: opacity @t;
+	-moz-transition: opacity @t;
+	-o-transition: opacity @t;
+	-ms-transition: opacity @t;
+	transition: opacity @t;
+}
+
+//Transition transform and opacity
+.ui5strapTransitionTransformOpacity(@t1, @t2){
+	-webkit-transition: -webkit-transform @t1, opacity @t2;
+  	-moz-transition: -moz-transform @t1, opacity @t2;
+  	-o-transition: -o-transform @t1, opacity @t2;
+  	-ms-transition: -ms-transform @t1, opacity @t2;
+  	transition: transform @t1, opacity @t2;
+}
+
+//Transform 3d
+.ui5strapTransformTranslate3d(@x, @y, @z){
+	-webkit-transform: translate3d(@x, @y, @z);
+	-moz-transform: translate3d(@x, @y, @z);
+	-ms-transform: translate3d(@x, @y, @z);
+	-o-transform: translate3d(@x, @y, @z);
+	transform: translate3d(@x, @y, @z);
+}
+
+//Rotate 3d
+.ui5strapTransformRotate3d(@x, @y, @z, @angle){
+	-webkit-transform: rotate3d(@x, @y, @z, @angle);
+	-moz-transform: rotate3d(@x, @y, @z, @angle);
+	-ms-transform: rotate3d(@x, @y, @z, @angle);
+	-o-transform: rotate3d(@x, @y, @z, @angle);
+	transform: rotate3d(@x, @y, @z, @angle);
+}
+
+//Transform 3d
+.ui5strapTransformScale3d(@x, @y, @z){
+	-webkit-transform: scale3d(@x, @y, @z);
+	-moz-transform: scale3d(@x, @y, @z);
+	-ms-transform: scale3d(@x, @y, @z);
+	-o-transform: scale3d(@x, @y, @z);
+	transform: scale3d(@x, @y, @z);
+}
+
+.makeTransitionSize(@size){
+	/*
+	* Transiton Slide Right to Left
+	*/
+	.ui5strap-trans-@{size}-type-slide-rtl{
+	
+		&{
+			  .ui5strapTransitionTransform(@transition-speed-normal);
+			  
+			  .ui5strapTransformTranslate3d(0, 0, 0);
+			
+			  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+		
+		&.ui5strap-transition-current-out{
+			 .ui5strapTransformTranslate3d(-100%, 0, 0);
+		}
+		
+		&.ui5strap-transition-next{
+			.ui5strapTransformTranslate3d(100%, 0, 0);
+		}
+	
+	}
+	
+	/*
+	* Transiton Slide Left to Right
+	*/
+	.ui5strap-trans-@{size}-type-slide-ltr{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformTranslate3d(0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformTranslate3d(100%, 0, 0);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformTranslate3d(-100%, 0, 0);
+		}
+		
+	}
+	
+	/*
+	*
+	* Transition Slide Top to Bottom
+	*
+	*/
+	.ui5strap-trans-@{size}-type-slide-ttb{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformTranslate3d(0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformTranslate3d(0, 100%, 0);
+		}
+	
+		&.ui5strap-transition-next{
+			.ui5strapTransformTranslate3d(0, -100%, 0);
+		}
+	
+	}
+	
+	/*
+	*
+	* Transition Slide Bottom to Top
+	*
+	*/
+	.ui5strap-trans-@{size}-type-slide-btt{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformTranslate3d(0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformTranslate3d(0, -100%, 0);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformTranslate3d(0, 100%, 0);
+		}
+		
+	}
+	
+	/*
+	*
+	* Transition Flip Horizontal Clockwise
+	*
+	*/
+	.ui5strap-trans-@{size}-type-flip-horizontal-cw{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformRotate3d(0, 0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		  
+		  -webkit-backface-visibility: hidden;
+		     -moz-backface-visibility: hidden;
+		       -o-backface-visibility: hidden;
+		      -ms-backface-visibility: hidden;
+		      
+		      backface-visibility: hidden;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformRotate3d(0, 1, 0, -180deg);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformRotate3d(0, 1, 0, 180deg);
+		}
+	}
+	
+	/*
+	*
+	* Transition Flip Horizontal Counter Clockwise
+	*
+	*/
+	.ui5strap-trans-@{size}-type-flip-horizontal-ccw{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformRotate3d(0, 0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		  
+		  -webkit-backface-visibility: hidden;
+		     -moz-backface-visibility: hidden;
+		       -o-backface-visibility: hidden;
+		      -ms-backface-visibility: hidden;
+		      
+		      backface-visibility: hidden;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformRotate3d(0, 1, 0, 180deg);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformRotate3d(0, 1, 0, -180deg);
+		}
+	}
+
+	/*
+	*
+	* Transition Flip Vertical Clockwise
+	*
+	*/
+	.ui5strap-trans-@{size}-type-flip-vertical-cw{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformRotate3d(0, 0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		  
+				  
+		  -webkit-backface-visibility: hidden;
+		     -moz-backface-visibility: hidden;
+		       -o-backface-visibility: hidden;
+		      -ms-backface-visibility: hidden;
+		      
+		      backface-visibility: hidden;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformRotate3d(1, 0, 0, -180deg);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformRotate3d(1, 0, 0, 180deg);
+		}
+	}
+	
+	/*
+	*
+	* Transition Flip Vertical Counter Clockwise
+	*
+	*/
+	.ui5strap-trans-@{size}-type-flip-vertical-ccw{
+		&{
+		  .ui5strapTransitionTransform(@transition-speed-normal);
+		
+		  .ui5strapTransformRotate3d(0, 0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		  
+				  
+		  -webkit-backface-visibility: hidden;
+		     -moz-backface-visibility: hidden;
+		       -o-backface-visibility: hidden;
+		      -ms-backface-visibility: hidden;
+		      
+		      backface-visibility: hidden;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransform(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransform(@transition-speed-fast);
+		}
+	
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+		  .ui5strapTransformRotate3d(1, 0, 0, 180deg);
+		}
+	
+		&.ui5strap-transition-next{
+		  .ui5strapTransformRotate3d(1, 0, 0, -180deg);
+		}
+	}
+	
+	/*
+	*
+	* Transition Zoom In
+	*
+	*/
+	.ui5strap-trans-@{size}-type-zoom-in{
+		&{
+		  .ui5strapTransitionTransformOpacity(@transition-speed-normal, @transition-speed-dummy);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransformOpacity(@transition-speed-slow, @transition-speed-dummy);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransformOpacity(@transition-speed-fast, @transition-speed-dummy);
+		}
+		
+		&.ui5strap-transition-current-out{
+			opacity: 0.99; 
+		}
+	
+		&.ui5strap-transition-next{
+			 .ui5strapTransformScale3d(0, 0, 0);
+			 z-index:1;
+		}
+	}
+	
+	/*
+	*
+	* Transition Zoom Out
+	*
+	*/
+	.ui5strap-trans-@{size}-type-zoom-out{
+		&{
+		  .ui5strapTransitionTransformOpacity(@transition-speed-normal, @transition-speed-dummy);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionTransformOpacity(@transition-speed-slow, @transition-speed-dummy);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionTransformOpacity(@transition-speed-fast, @transition-speed-dummy);
+		}
+		
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+			.ui5strapTransformScale3d(0, 0, 0);
+		}
+	
+		&.ui5strap-transition-next{
+			opacity: 0.99;  
+		}
+	}
+	
+	/*
+	*
+	* Transition Fade
+	*
+	*/
+	.ui5strap-trans-@{size}-type-fade{
+		&{
+		  .ui5strapTransitionOpacity(@transition-speed-normal);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+		
+		&.ui5strap-transition-speed-slow{
+			.ui5strapTransitionOpacity(@transition-speed-slow);
+		}
+		
+		&.ui5strap-transition-speed-fast{
+			.ui5strapTransitionOpacity(@transition-speed-fast);
+		}
+		
+		&.ui5strap-transition-current{
+			z-index:1;
+		}
+		
+		&.ui5strap-transition-current-out{
+			opacity: 0;
+		}
+	
+		&.ui5strap-transition-next{
+			opacity: 0;  
+		}
+	}
+	
+	/*
+	* Transiton NONE
+	*/
+	.ui5strap-trans-@{size}-type-none{
+		&{
+		  opacity: 1;
+		
+		  .ui5strapTransitionOpacity(@transition-speed-dummy);
+  
+		  .ui5strapTransformTranslate3d(0, 0, 0);
+		
+		  -webkit-font-smoothing: subpixel-antialiased;
+		}
+	
+		&.ui5strap-transition-current-out{
+		  opacity: 0.99;
+		}
+	
+		&.ui5strap-transition-next{
+		  opacity: 0.99;
+		}
+		
+	}
+}
+
+.makeTransitionSize(all);
+
+@media (max-width: (@screen-sm - 1)) {
+	.makeTransitionSize(xs);
+}
+
+@media (min-width: @screen-sm) and (max-width: (@screen-md - 1)) {
+	.makeTransitionSize(sm);
+}
+
+@media (min-width: @screen-md) and (max-width: (@screen-lg - 1)) {
+	.makeTransitionSize(md);
+}
+
+@media (min-width: @screen-lg) {
+	.makeTransitionSize(lg);
+}

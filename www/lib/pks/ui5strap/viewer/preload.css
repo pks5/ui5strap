@@ -36,15 +36,24 @@
 /*
 * Root Container
 */
-.ui5strap-apps{
-	position:relative;
-  	width: 100%;
-  	height: 100%;
+.ui5strap-desktop{
+	position:absolute;
+  	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left : 0;
     overflow: hidden;
 
     transition: top .4s ease-in, bottom .4s ease-in;
 	-webkit-transition: top .4s ease-in, bottom .4s ease-in;
 	-moz-transition: top .4s ease-in, bottom .4s ease-in;
+}
+
+/*
+* Shrink the main container for home bar
+*/
+.ui5strap-with-bar-home .ui5strap-desktop{
+    bottom:30px; 
 }
 
 /*
@@ -404,9 +413,4 @@
     color:#f0f0f0;
 }
 
-/*
-* Shrink the main container for home bar
-*/
-.ui5strap-with-bar-home .ui5strap-apps{
-    bottom:30px; 
-}
+

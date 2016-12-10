@@ -12,6 +12,12 @@ module.exports = function(grunt) {
 		    
 			ui5strapLibraries: {
 		      files: [
+				{
+				    expand: true,
+				    cwd: '../../../www/lib/ui5strap/',
+				    src: 'themes/*/library.source.less',
+				    dest: '../../../www/lib/ui5strap/'
+				},
 		        {
 		          expand: true,
 		          cwd: '../../../www/lib/pks/ui5strap/action/',

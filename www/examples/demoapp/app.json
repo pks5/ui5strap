@@ -7,8 +7,7 @@
 	        "routing" : "/",
 	        
 	        "logLevel" : 5,
-	        "mode" : "Devel",
-	        "theme" : "ui5strap_default"
+	        "mode" : "Devel"
 	},
 	
 	"options" : {
