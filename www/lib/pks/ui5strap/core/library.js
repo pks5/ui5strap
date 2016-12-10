@@ -190,6 +190,15 @@ sap.ui
 						HiddenUp : "HiddenUp"
 					};
 
+					/*
+					 * TransitionSpeed
+					 */
+					ui5strapCoreLib.TransitionSpeed = {
+						Slow : "Slow",
+						Normal : "Normal",
+						Fast : "Fast"
+					};
+
 					
 					
 					// End of library

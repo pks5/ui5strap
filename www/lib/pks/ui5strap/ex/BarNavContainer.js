@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "ui5strap/library", '../core/NavContainer', '../core/ResponsiveTransition'], function(ui5strapExLib, ui5strapBsLib, NavContainer, ResponsiveTransition){
+sap.ui.define(['./library', "../core/library", '../core/NavContainer', '../core/ResponsiveTransition'], function(ui5strapExLib, ui5strapCoreLib, NavContainer, ResponsiveTransition){
 
 	/**
 	 * Constructor for a new BarNavContainer instance.
@@ -148,8 +148,8 @@ sap.ui.define(['./library', "ui5strap/library", '../core/NavContainer', '../core
 				//TODO add barTransitionExtraLarge on Bootstrap 4 Upgrade
 				
 				barTransitionSpeed : {
-					type : "ui5strap.TransitionSpeed",
-					defaultValue : ui5strapBsLib.TransitionSpeed.Normal
+					type : "pks.ui5strap.core.TransitionSpeed",
+					defaultValue : ui5strapCoreLib.TransitionSpeed.Normal
 				}
 				
 			},
@@ -318,13 +318,13 @@ sap.ui.define(['./library', "ui5strap/library", '../core/NavContainer', '../core
 					};
 				
 				//RAF start
-				ui5strapBsLib.polyfill.requestAnimationFrame(function RAF1(){
+				ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
 					
 					//Prepare Transition
 					transition.prepare();
 					
 					//RAF
-					ui5strapBsLib.polyfill.requestAnimationFrame(function RAF2(){
+					ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF2(){
 						//Execure Transition
 						transition.execute(transitionComplete, transitionComplete);
 						
@@ -368,7 +368,7 @@ sap.ui.define(['./library', "ui5strap/library", '../core/NavContainer', '../core
 		
 		//Transition Speed
 		//Applies for all sizes
-		if(transitionSpeed !== ui5strap.TransitionSpeed.Normal){
+		if(transitionSpeed !== ui5strapCoreLib.TransitionSpeed.Normal){
 			classes += " ui5strap-transition-speed-" + transitionSpeed.toLowerCase();
 		}
 			

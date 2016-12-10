@@ -49,7 +49,7 @@ sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
 		metadata : {
 	
 			// ---- object ----
-			defaultAggregation : "columns",
+			defaultAggregation : "cells",
 			// ---- control specific ----
 			library : "ui5strap",
 	
@@ -61,8 +61,8 @@ sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
 			},
 	
 			aggregations : { 
-				"columns" : {
-					type : "ui5strap.TableColumn"
+				"cells" : {
+					type : "ui5strap.TableCell"
 				} 
 			}
 	

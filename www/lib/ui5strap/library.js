@@ -66,7 +66,8 @@ sap.ui
 
 								dependencies : [ "sap.ui.core" ],
 
-								types : [ "ui5strap.Size", "ui5strap.Severity",
+								types : [ "ui5strap.Size", 
+								          "ui5strap.Severity",
 										"ui5strap.TriggerMode",
 										"ui5strap.TrailHtml",
 										"ui5strap.ContentPlacement",
@@ -97,40 +98,61 @@ sap.ui
 										"ui5strap.ContainerType",
 										"ui5strap.ImageShape" ],
 
-								interfaces : [ "ui5strap.IColumn",
-										"ui5strap.IBar" ],
+								interfaces : [ 
+								        "ui5strap.IApp",
+								        "ui5strap.IBar",
+								        "ui5strap.IColumn",
+								        "ui5strap.IDropdownMenuHost",
+								        "ui5strap.IInputGroupAddon",
+								        "ui5strap.IInputGroup",
+								        "ui5strap.IInputGroupControl",
+								        "ui5strap.IInputGroupButton",
+								        "ui5strap.IItemsProvider",
+								        "ui5strap.INavigator",
+								        "ui5strap.IRootComponent",
+								        "ui5strap.IRootNavigator",
+								        "ui5strap.ISelectionProvider",
+								        "ui5strap.ISelectableItem",
+								        "ui5strap.IText"
+								],
 
-								controls : [ "ui5strap.Alert",
-										"ui5strap.Badge",
-										"ui5strap.Breadcrumb",
-										"ui5strap.Break", "ui5strap.Button",
+								controls : [ 
+								        "ui5strap.Alert",
+										"ui5strap.Bar",
+								        "ui5strap.Breadcrumb",
+										"ui5strap.Break", 
+										"ui5strap.Button",
 										"ui5strap.ButtonDropdown",
 										"ui5strap.ButtonGroup",
 										"ui5strap.ButtonToolbar",
 										"ui5strap.Carousel",
 										"ui5strap.Checkbox",
-										"ui5strap.Clearfix", "ui5strap.Col",
-										"ui5strap.Container", "ui5strap.Form",
+										"ui5strap.Clearfix", 
+										"ui5strap.Col",
+										"ui5strap.Container", 
+										"ui5strap.Form",
 										"ui5strap.FormGroup",
-										"ui5strap.Heading", "ui5strap.Icon",
+										"ui5strap.Heading", 
+										"ui5strap.Icon",
 										"ui5strap.Image",
 										"ui5strap.InputGroup",
-										"ui5strap.Jumbotron", "ui5strap.Label",
-										"ui5strap.Line", "ui5strap.Link",
-										"ui5strap.List", "pks.ui5strap.core.ListBase",
+										"ui5strap.Jumbotron", 
+										"ui5strap.Line", 
+										"ui5strap.Link",
+										"ui5strap.List", 
 										"ui5strap.ListDropdownItem",
 										"ui5strap.ListDropdownMenu",
 										"ui5strap.ListGroup",
 										"ui5strap.ListGroupItem",
-										"pks.ui5strap.core.ListItemBase",
 										"ui5strap.ListItem",
 										"ui5strap.ListLinkItem",
 										"ui5strap.ListMedia",
 										"ui5strap.ListMediaItem",
 										"ui5strap.ListNavItem",
-										"ui5strap.Modal", "ui5strap.Nav",
+										"ui5strap.Modal", 
+										"ui5strap.Nav",
 										"ui5strap.NavBar",
-										"ui5strap.PageHeader",
+										"ui5strap.Page",
 										"ui5strap.Pager",
 										"ui5strap.Pagination",
 										"ui5strap.Panel",
@@ -140,21 +162,24 @@ sap.ui
 										"ui5strap.Popover",
 										"ui5strap.Progress",
 										"ui5strap.ProgressBar",
-										"ui5strap.RadioButton", "ui5strap.Row",
-										"ui5strap.ScrollContainer",
+										"ui5strap.RadioButton", 
+										"ui5strap.Row",
 										"ui5strap.SelectBox",
-										"ui5strap.Sidebar",
+										"ui5strap.StaticOverlay",
 										"ui5strap.TabContainer",
-										"ui5strap.Table", "ui5strap.Text",
+										"ui5strap.Table", 
+										"ui5strap.Text",
 										"ui5strap.TextInput",
 										"ui5strap.Thumbnail",
 										"ui5strap.ToggleButton",
 										"ui5strap.Tooltip", 
 										"ui5strap.Well" ],
 
-								elements : [ "ui5strap.Item",
-										"ui5strap.TableColumn",
-										"ui5strap.TableRow" ]
+								elements : [ 
+								        "ui5strap.Item",
+										"ui5strap.TableCell",
+										"ui5strap.TableRow" 
+										]
 							});
 					
 					/*
@@ -254,15 +279,6 @@ sap.ui
 						Small : "sm",
 						Medium : "md",
 						Large : "lg"
-					};
-
-					/*
-					 * TransitionSpeed
-					 */
-					ui5strap.TransitionSpeed = {
-						Slow : "Slow",
-						Normal : "Normal",
-						Fast : "Fast"
 					};
 
 					/*

@@ -69,8 +69,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	TableRenderer.renderRow = function(rm, oControl, row, isHeader) {
 
-		var columns = row.getColumns(),
-			columnsLength = columns.length,
+		var aCells = row.getCells(),
+			iCellsLength = aCells.length,
 			severity = row.getSeverity();
 
 		rm.write("<tr");
@@ -80,28 +80,28 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	    rm.writeClasses();
 	    rm.write(">");
 
-	    for(var i = 0; i < columnsLength; i++){
-		    this.renderColumn(rm, oControl, columns[i], i, isHeader);
+	    for(var i = 0; i < iCellsLength; i++){
+		    this.renderCell(rm, oControl, aCells[i], i, isHeader);
 		}
 
 	    rm.write("</tr>");
 
 	};
 
-	TableRenderer.renderColumn = function(rm, oControl, col, i, isHeader) {
+	TableRenderer.renderCell = function(rm, oControl, oCell, i, isHeader) {
 		var tagName = isHeader ? 'th' : 'td';
 		rm.write("<" + tagName);
 		    
 		    rm.writeClasses();
 		    rm.write(">");
 		    
-		    var text = col.getText();
+		    var text = oCell.getText();
 		    rm.writeEscaped(text);
 	
-		    var content = col.getContent();
+		    var aontent = oCell.getContent();
 	
-		    for(var i = 0; i < content.length; i++){
-		    	rm.renderControl(content[i]);
+		    for(var i = 0; i < aontent.length; i++){
+		    	rm.renderControl(aContent[i]);
 		    }
 		rm.write("</" + tagName + ">");
 	}

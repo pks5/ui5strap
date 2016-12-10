@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
 	 */
 	
 	//TODO rename to TableCell
-	var TableColumn = ElementBase.extend("ui5strap.TableColumn", {
+	var TableColumn = ElementBase.extend("ui5strap.TableCell", {
 		metadata : {
 
 			// ---- object ----
