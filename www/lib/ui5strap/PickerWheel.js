@@ -27,7 +27,7 @@
 
 sap.ui
 		.define(
-				[ "./library", "../core/ControlBase", "../core/Utils" ],
+				[ "./library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils" ],
 				function(ui5strapExLib, ControlBase, Utils) {
 					"use strict";
 					
@@ -46,14 +46,14 @@ sap.ui
 					 * 
 					 * @constructor
 					 * @public
-					 * @alias pks.ui5strap.ex.PickerWheel
+					 * @alias ui5strap.PickerWheel
 					 * 
 					 */
 					var PickerWheel = ControlBase.extend(
-							"pks.ui5strap.ex.PickerWheel", {
+							"ui5strap.PickerWheel", {
 								metadata : {
 
-									library : "pks.ui5strap.ex",
+									library : "ui5strap",
 									
 									properties : {
 										selectedIndex : {
@@ -77,7 +77,7 @@ sap.ui
 										},
 										
 										mode : {
-											type : "pks.ui5strap.ex.PickerWheelMode",
+											type : "ui5strap.PickerWheelMode",
 											defaultValue : sap.ui.Device.browser.msie ? ui5strapExLib.PickerWheelMode.Mode2D : ui5strapExLib.PickerWheelMode.Mode3D
 										}
 										

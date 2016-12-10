@@ -107,13 +107,6 @@ sap.ui
 						ButtonsVertical : "ButtonsVertical"
 					};
 					
-					ui5strapExLib.PickerWheelMode = {
-						Mode3D : "Mode3D",
-						Mode2D : "Mode2D"
-					};
-						
-						
-					
 					// End of library
 					return ui5strapExLib;
 

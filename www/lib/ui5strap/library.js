@@ -315,6 +315,15 @@ sap.ui
 					 * 
 					 * -----------
 					 */
+					
+					ui5strap.PickerWheelMode = {
+						Mode3D : "Mode3D",
+						Mode2D : "Mode2D"
+					};
+							
+							
+						
+						
 
 					/*
 					 * Size

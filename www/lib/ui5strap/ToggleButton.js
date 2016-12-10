@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../core/ControlBase", '../core/SelectableSupport'], function(ui5strapExLib, ControlBase, SelectableSupport){
+sap.ui.define(["./library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport'], function(ui5strapExLib, ControlBase, SelectableSupport){
 	
 	
 	var _meta = {
@@ -80,7 +80,7 @@ sap.ui.define(["./library", "../core/ControlBase", '../core/SelectableSupport'],
 	 * @alias ui5strap.ToggleButton
 	 * 
 	 */
-	var ToggleButton = ControlBase.extend("pks.ui5strap.ex.ToggleButton", {
+	var ToggleButton = ControlBase.extend("ui5strap.ToggleButton", {
 		metadata : _meta,
 		
 		renderer : function(rm, oControl) {
