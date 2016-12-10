@@ -203,7 +203,10 @@
 		//Sidebar / Sidenav
 		var sidebar = new ui5strap.Bar({ "fullHeight" : true, "inverse" : true }),
 			navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked, align : ui5strap.Alignment.Sidebar });
-
+		
+		navSidebar.addStyleClass("sidebar-nav")
+		
+		
 		this.sidebar = sidebar;
 
 		navSidebar.attachEvent('tap', {}, function(oEvent){
