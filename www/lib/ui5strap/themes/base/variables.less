@@ -28,20 +28,7 @@
 @import "source/bootstrap-variables.less";
 @import "source/fontawesome-variables.less";
 
-
-
-//Transition Speeds
-@transition-speed-slow:     0.75s;
-@transition-speed-normal:   0.5s;
-@transition-speed-fast:     0.25s;
-@transition-speed-dummy:    0.1s;
-
-@transition-speed-fix-slower: 1.02;
-@transition-speed-fix-faster: 0.98;
-
-@barnavcontainer-grid-colums: 4;
-@barnavcontainer-column-size: 50px;
-
+@import "../../../pks/ui5strap/core/themes/base/variables.less";
 
 //Abstract generic bar
 @bar-height:                      44px;
@@ -71,25 +58,6 @@
 @bar-inverse-link-disabled-color:        @navbar-inverse-link-disabled-color;
 @bar-inverse-link-disabled-bg:           @navbar-inverse-link-disabled-bg;
 
-//Bar Menu
-//Default
-@barmenu-default-color:                @navbar-default-link-color;
-@barmenu-default-hover-color:          @navbar-default-link-hover-color;
-@barmenu-default-hover-bg:             @navbar-default-link-hover-bg;
-@barmenu-default-active-color:         @navbar-default-link-active-color;
-@barmenu-default-active-bg:            @navbar-default-link-active-bg;
-@barmenu-default-disabled-color:       @navbar-default-link-disabled-color;
-@barmenu-default-disabled-bg:          @navbar-default-link-disabled-bg;
-
-// Inverted
-@barmenu-inverse-color:                 @navbar-inverse-link-color;
-@barmenu-inverse-hover-color:           @navbar-inverse-link-hover-color;
-@barmenu-inverse-hover-bg:              @navbar-inverse-link-hover-bg;
-@barmenu-inverse-active-color:          @navbar-inverse-link-active-color;
-@barmenu-inverse-active-bg:             @navbar-inverse-link-active-bg;
-@barmenu-inverse-disabled-color:        @navbar-inverse-link-disabled-color;
-@barmenu-inverse-disabled-bg:           @navbar-inverse-link-disabled-bg;
-
 /*
  * ==========================
  * DEPRECATED will be dropped
@@ -99,33 +67,6 @@
 @size-B:       576px;
 @size-C:       768px;
 @size-D:       992px;
-
-//Sidebar
-@sidebar-default-bg:                  @navbar-default-bg;
-@sidebar-default-border:              @navbar-default-border;
-@sidebar-default-color:               @navbar-default-color;
-
-// Sidebar default links
-@sidebar-default-link-color:                @navbar-default-link-color;
-@sidebar-default-link-hover-color:          @navbar-default-link-hover-color;
-@sidebar-default-link-hover-bg:             @navbar-default-link-hover-bg;
-@sidebar-default-link-active-color:         @navbar-default-link-active-color;
-@sidebar-default-link-active-bg:            @navbar-default-link-active-bg;
-@sidebar-default-link-disabled-color:       @navbar-default-link-disabled-color;
-@sidebar-default-link-disabled-bg:          @navbar-default-link-disabled-bg;
-
-@sidebar-inverse-bg:                  @navbar-inverse-bg;
-@sidebar-inverse-border:              @navbar-inverse-border;
-@sidebar-inverse-color:               @navbar-inverse-color;
-
-// Inverted navbar links
-@sidebar-inverse-link-color:                 @navbar-inverse-link-color;
-@sidebar-inverse-link-hover-color:           @navbar-inverse-link-hover-color;
-@sidebar-inverse-link-hover-bg:              @navbar-inverse-link-hover-bg;
-@sidebar-inverse-link-active-color:          @navbar-inverse-link-active-color;
-@sidebar-inverse-link-active-bg:             @navbar-inverse-link-active-bg;
-@sidebar-inverse-link-disabled-color:        @navbar-inverse-link-disabled-color;
-@sidebar-inverse-link-disabled-bg:           @navbar-inverse-link-disabled-bg;
 
 //Navcontainer Sidebar
 @sidebar-A-width:                   220px;

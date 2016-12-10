@@ -14,6 +14,12 @@ module.exports = function(grunt) {
 		      files: [
 				{
 				    expand: true,
+				    cwd: '../../../www/lib/pks/ui5strap/core/',
+				    src: 'themes/*/library.source.less',
+				    dest: '../../../www/lib/pks/ui5strap/core/'
+				  },
+				{
+				    expand: true,
 				    cwd: '../../../www/lib/ui5strap/',
 				    src: 'themes/*/library.source.less',
 				    dest: '../../../www/lib/ui5strap/'
@@ -25,12 +31,7 @@ module.exports = function(grunt) {
 		          dest: '../../../www/lib/pks/ui5strap/action/'
 		        },
 		        
-		        {
-		          expand: true,
-		          cwd: '../../../www/lib/pks/ui5strap/core/',
-		          src: 'themes/*/library.source.less',
-		          dest: '../../../www/lib/pks/ui5strap/core/'
-		        },
+		        
 		        
 		        {
 		          expand: true,
