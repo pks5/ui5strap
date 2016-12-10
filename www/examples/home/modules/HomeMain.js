@@ -13,12 +13,18 @@ sap.ui.define(['ui5strap/library', 'pks/ui5strap/viewer/Manager'], function(uLib
 
   HomeMainProto.init = function(){
 	  var _this = this,
-	  	  $homeButton = jQuery('#ui5strap-button-home'),
-		  $taskmanagerButton = jQuery('#ui5strap-button-taskmanager');
+	  	  $homeButton = jQuery('<a id="ui5strap-button-home"><span class="fa fa-home"></span></a>'),
+		  $taskmanagerButton = jQuery('<a id="ui5strap-button-taskmanager"><span class="fa fa-exchange"></span></a>');
 			
-	  	this.$barHome = jQuery('#ui5strap-bar-home');
-			
-		$homeButton.on('click', function(){
+	  	var $oHomeBar = jQuery('<div id="ui5strap-bar-home"></div>');
+	  	$oHomeBar.append($homeButton);
+	  	$oHomeBar.append($taskmanagerButton);
+	  	
+	  	this.$barHome = $oHomeBar;
+	  	
+	  	jQuery("#" + this.getApp().getViewer().options.container).append($oHomeBar);
+		
+	  	$homeButton.on('click', function(){
 			//_this.app.getViewer().executeApp(_this.app.getUrl(), false);
 			_this.app.getViewer().showApp(_this.app.getId(), null, function showAppComplete(){
 				

@@ -45,19 +45,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	 * @alias pks.ui5strap.viewer.Viewer
 	 * 
 	 */
-	var ViewerMulti = ViewerBase.extend("pks.ui5strap.viewer.Viewer", /** @lends pks.ui5strap.viewer.Viewer.prototype */ {
-		/**
-		 * @constructs
-		 */
-		"constructor" : function(options){
-			ViewerBase.call(this, options);
-
-			this._loadedLibraries = {};
-			this._loadingApp = null;
-
-			this._dom = null;
-		}
-	}),
+	var ViewerMulti = ViewerBase.extend("pks.ui5strap.viewer.Viewer"),
 	ViewerMultiProto = ViewerMulti.prototype,
 	domAttachTimeout = 50;
 
@@ -78,9 +66,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	ViewerMultiProto.init = function(){
 		ViewerBase.prototype.init.call(this);
 		
-		//Init methods
-		//TOOO Move to Viewer base
-		this._initDom();
+		
 		this._initEvents();
 	};
 	
@@ -727,22 +713,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* -------------
 	*/
 
-	/**
-	* Inititalizes the dom cache
-	* @Protected
-	*/
-	ViewerMultiProto._initDom = function(){
-		var _this = this;
-
-		this._dom = {};
-
-		this._dom.$body = jQuery(document.body);
-		this._dom.$root = jQuery('#' + this.options.container).find(".ui5strap-desktop");
-
-		if(this._dom.$root.length === 0){
-			throw new Error('Element of class .ui5strap-desktop not found in container: ' + this.options.container);
-		}
-	};
+	
 
 	/**
 	* Inititalizes the events
@@ -844,6 +815,12 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 				_this.getApp().onHashChange(new sap.ui.base.Event("ui5strap.app.hashChange", null, {}));
 			}
 		);
+		
+		window.addEventListener(
+			"error", function(e) { 
+			  jQuery("#ui5strap-fatal").append("<span>" + e.message + " in " + e.filename + " on line " + e.lineno + "</span>").removeClass("ui5strap-hidden");
+		}, false);
+		
 	};
 	
 	return ViewerMulti;

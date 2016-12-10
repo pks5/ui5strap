@@ -61,11 +61,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 				options.errorToBrowser = false;
 			}
 			
-			if(!options.overlay){
-				//Default overlay dom id
-				options.overlay = "ui5strap-overlay";
-			}
-			
 			if(!options.environments){
 				options.environments = {
 						local : {
@@ -90,15 +85,20 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	}),
 	ViewerBaseProto = ViewerBase.prototype;
 	
+	ViewerBase.OVERLAY_ID = "ui5strap-overlay";
+	
 	/**
 	 * Initialzer
 	 * @Public
 	 */
 	ViewerBaseProto.init = function(){
+		this._initLog();
+		
+		this._initDom();
+		
 		//Register Loader Layer
 		Layer.register('ui5strap-loader');
   		
-		this._initLog();
 		this._initOverlay();
 	};
 	
@@ -172,7 +172,61 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	* --------------------- Global Overlay ---------------------------------
 	* ----------------------------------------------------------------------
 	*/
+	
+	/**
+	* Inititalizes the dom cache
+	* @Protected
+	*/
+	ViewerBaseProto._initDom = function(){
+		var _this = this,
+			$oRootContainer = jQuery('#' + this.options.container);
+		
+		if($oRootContainer.length === 0){
+			throw new Error("Cannot find root container: " + this.options.container);
+		}
+		
+		var $oViewer = $oRootContainer.find(".ui5strap-viewer");
 
+		if($oViewer.length === 0){
+			var oViewerElement = document.createElement("div");
+			oViewerElement.className = "ui5strap-viewer";
+			$oViewer = jQuery(oViewerElement);
+			$oRootContainer.append($oViewer);
+		}
+		
+		var $oGlobalOverlay = $oRootContainer.find("#ui5strap-overlay");
+			
+		if($oGlobalOverlay.length === 0){
+			$oGlobalOverlay = jQuery('<div id="' + ViewerBase.OVERLAY_ID + '" class="ui5strap-overlay ui5strap-layer ui5strap-hidden">'
+					+ '<div id="' + ViewerBase.OVERLAY_ID + '-backdrop" class="ui5strap-overlay-backdrop"></div>'
+					+ '<div id="' + ViewerBase.OVERLAY_ID + '-content" class="ui5strap-overlay-content"></div>'
+				+ '</div>');
+			
+			$oRootContainer.append($oGlobalOverlay);
+		}
+		
+		var $oGlobalLoader = $oRootContainer.find("#ui5strap-loader");
+		
+		if($oGlobalLoader.length === 0){
+			$oGlobalLoader = jQuery('<div id="ui5strap-loader" class="ui5strap-layer ui5strap-loader ui5strap-hidden"></div>');
+			
+			$oRootContainer.append($oGlobalLoader);
+		}
+		
+		var $oGlobalFatalScreen = $oRootContainer.find("#ui5strap-fatal");
+		
+		if($oGlobalFatalScreen.length === 0){
+			$oGlobalFatalScreen = jQuery('<div id="ui5strap-fatal" class="ui5strap-layer ui5strap-hidden"></div>');
+			
+			$oRootContainer.append($oGlobalFatalScreen);
+		}
+		
+		this._dom = {
+			"$body" : jQuery(document.body),
+			"$root" : $oViewer
+		};
+	};
+	
 	/**
 	* Inititalzes the overlay
 	* @Protected
@@ -180,12 +234,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	ViewerBaseProto._initOverlay = function(){
 		var _this = this;
 		
-		Layer.register(this.options.overlay);
+		Layer.register(ViewerBase.OVERLAY_ID);
 
 		this.overlayControl = new NavContainer();
-		this.overlayControl.placeAt(this.options.overlay + '-content');
+		this.overlayControl.placeAt(ViewerBase.OVERLAY_ID + '-content');
 
-		jQuery('#' + this.options.overlay + '-backdrop').on('tap', function onTap(event){
+		jQuery('#' + ViewerBase.OVERLAY_ID + '-backdrop').on('tap', function onTap(event){
 			_this.hideOverlay();
 		});
 	};
@@ -195,7 +249,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	* @Public
 	*/
 	ViewerBaseProto.isOverlayVisible = function(){
-		return Layer.isVisible(this.options.overlay);
+		return Layer.isVisible(ViewerBase.OVERLAY_ID);
 	};
 
 	/**
@@ -207,7 +261,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			overlayControl = this.overlayControl,
 			transitionName = transitionName || 'slide-ttb';
 		
-		Layer.setVisible(this.options.overlay, true, function(){
+		Layer.setVisible(ViewerBase.OVERLAY_ID, true, function(){
 			if(viewDataOrControl instanceof ControlBase){
 				//Control is directly injected into the frame
 				overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
@@ -273,7 +327,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			transitionName = transitionName || 'slide-btt';
 		
 		overlayControl.toPage(null, 'content', transitionName, function toPage_complete(){
-			Layer.setVisible(_this.options.overlay, false, function(){
+			Layer.setVisible(ViewerBase.OVERLAY_ID, false, function(){
 				if(page instanceof sap.ui.core.mvc.View){
 					var pageViewData = page.getViewData();
 					if(pageViewData.app){
