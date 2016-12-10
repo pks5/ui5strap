@@ -20,7 +20,7 @@
 	
 	jQuerySap.require("pks.ui5strap.viewer.AppFrame");
 
-	jQuerySap.require("ui5strap.Sidebar");
+	jQuerySap.require("ui5strap.Bar");
 	jQuerySap.require("ui5strap.NavBar");
 	jQuerySap.require("ui5strap.Nav");
 	jQuerySap.require("ui5strap.ListNavItem");
@@ -201,7 +201,7 @@
 		navbar.addContentRight(toggleRight);
 
 		//Sidebar / Sidenav
-		var sidebar = new ui5strap.Sidebar({ "inverse" : true }),
+		var sidebar = new ui5strap.Bar({ "fullHeight" : true, "inverse" : true }),
 			navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked, align : ui5strap.Alignment.Sidebar });
 
 		this.sidebar = sidebar;

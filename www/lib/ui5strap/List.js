@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListBase'], function(library, ListBase){
+sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, ListBase){
 
 	/**
 	 * Constructor for a new List instance.
