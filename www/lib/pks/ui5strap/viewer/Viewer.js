@@ -519,23 +519,28 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			);
 			
 			transition.on("last", function(){
+				var fnHidden = function(){
+					//Current App onShown
+					appInstance.shown(function(){
+						//Show App Completed, trigger the Callback
+						callback && callback.call(appInstance);
+					});
+				}
+				
 				if(prevApp){
 					//Previous App onHidden
 					prevApp.hidden(function(){
 						_this.removeStyle(prevApp);
+						
+						fnHidden();
 					});
 				}
 				else{
 					jQuery.sap.log.debug("Removing splash...");
 					//Remove Initial View
 					$currentRoot.remove();
+					fnHidden();
 				}
-				
-				//Current App onShown
-				appInstance.shown(function(){
-					//Show App Completed, trigger the Callback
-					callback && callback.call(appInstance);
-				});
 			});
 			
 			//<DOM_ATTACH_TIMEOUT>
