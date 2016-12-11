@@ -25,8 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', "sap/ui/base/Object", "sap/ui/core/Control"], function(library, ObjectBase, ControlBase){
+sap.ui.define(['./library', "sap/ui/base/Object", "sap/ui/core/Control"], function(ui5strapActionLib, ObjectBase, ControlBase){
 
+	"use strict";
+	
 	/**
 	 * Constructor for a new Action instance.
 	 * 

@@ -25,8 +25,10 @@
  * 
  */
 
-sap.ui.define(['../library', '../Task'], function(library, Task){
-
+sap.ui.define(['./library', './Task'], function(ui5strapActionLib, Task){
+	
+	"use strict";
+	
 	//Define Constructor
 	var Switch = Task.extend("pks.ui5strap.action.SwitchTask"),
 		SwitchProto = ui5strap.task.Switch.prototype;

@@ -60,10 +60,10 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	
 	var _oInstance;
 	
-	ViewerMulti.load = function(mOptions, fnCallback){
+	ViewerMulti.load = function(mOptions, fnLoadCallback, fnStartCallback){
 		if(!_oInstance){
 			_oInstance = new ViewerMulti(mOptions);
-			_oInstance.start(null, fnCallback);
+			_oInstance.start(fnStartCallback, fnLoadCallback);
 		}
 	};
 

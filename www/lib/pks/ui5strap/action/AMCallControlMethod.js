@@ -25,8 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(library, ActionModule){
-
+sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+	
+	"use strict";
+	
 	var AMCallControlMethod = ActionModule.extend("pks.ui5strap.action.AMCallControlMethod"),
 		AMCallControlMethodProto = AMCallControlMethod.prototype;
 

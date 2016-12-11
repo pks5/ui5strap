@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './StaticOverlay'], function(library, StaticOverlay){
+sap.ui.define(['./library', './StaticOverlay'], function(ui5strapBs3Lib, StaticOverlay){
 	
 	"use strict";
 	

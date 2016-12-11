@@ -25,8 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(library, ActionModule){
-
+sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+	
+	"use strict";
+	
 	var AMSetListItemSelected = ActionModule.extend("pks.ui5strap.action.AMSetListItemSelected"),
 		AMSetListItemSelectedProto = AMSetListItemSelected.prototype;
 	

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './Tooltip'], function(library, Tooltip){
+sap.ui.define(['./library', './Tooltip'], function(ui5strapBs3Lib, Tooltip){
 	
 	"use strict";
 	

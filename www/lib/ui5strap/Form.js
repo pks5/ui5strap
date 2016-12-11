@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"], function(library, ControlBase, PositionSupport){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"], function(ui5strapBs3Lib, ControlBase, PositionSupport){
 	
 	"use strict";
 	

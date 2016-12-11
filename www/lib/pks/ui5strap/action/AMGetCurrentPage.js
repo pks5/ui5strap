@@ -25,8 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(library, ActionModule){
-
+sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+	
+	"use strict";
+	
 	var AMGetCurrentPage = ActionModule.extend("pks.ui5strap.action.AMGetCurrentPage"),
 		AMGetCurrentPageProto = AMGetCurrentPage.prototype;
 	

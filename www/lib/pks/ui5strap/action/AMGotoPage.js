@@ -25,8 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(library, ActionModule){
-
+sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+	
+	"use strict";
+	
 	var AMGotoPage = ActionModule.extend("pks.ui5strap.action.AMGotoPage"),
 		AMGotoPageProto = AMGotoPage.prototype;
 

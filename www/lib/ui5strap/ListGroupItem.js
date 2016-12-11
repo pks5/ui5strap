@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem'], function(library, ListItem){
+sap.ui.define(['./library', './ListItem'], function(ui5strapBs3Lib, ListItem){
 	
 	"use strict";
 	

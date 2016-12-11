@@ -25,8 +25,10 @@
  * 
  */
 
-sap.ui.define(['./library', 'pks/ui5strap/viewer/Controller'], function(library, Controller){
+sap.ui.define(['./library', 'pks/ui5strap/viewer/Controller'], function(ui5strapActionLib, Controller){
 
+	"use strict";
+	
 	/**
 	 * Constructor for a new ActionController instance.
 	 * 
