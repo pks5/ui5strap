@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'pks/ui5strap/core/NavContainer'], function(ui5strapBs3Lib, NavContainer){
+sap.ui.define(['./library', '../core/NavContainer'], function(ui5strapBs3Lib, NavContainer){
 	
 	"use strict";
 	

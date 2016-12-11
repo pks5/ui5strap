@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/ListSelectionSupport', "./PositionSupport", './Button', 'pks/ui5strap/core/ListItemBase', "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, ListSelectionSupport, PositionSupport, Button, ListItemBase, Utils, RenderUtils){
+sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/ListSelectionSupport', "./PositionSupport", './Button', '../core/ListItemBase', "../core/Utils", "../core/RenderUtils"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, ListSelectionSupport, PositionSupport, Button, ListItemBase, Utils, RenderUtils){
 	
 	"use strict";
 	

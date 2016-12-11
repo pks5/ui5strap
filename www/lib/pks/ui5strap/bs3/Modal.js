@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.Modal
+ * pks.ui5strap.bs3.Modal
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -44,10 +44,10 @@ sap.ui.define(['./library', './StaticOverlay'], function(ui5strapBs3Lib, StaticO
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.Modal
+	 * @alias pks.ui5strap.bs3.Modal
 	 * 
 	 */
-	var Modal = StaticOverlay.extend("ui5strap.Modal", {
+	var Modal = StaticOverlay.extend("pks.ui5strap.bs3.Modal", {
 		metadata : {
 			
 			library : "pks.ui5strap.bs3",

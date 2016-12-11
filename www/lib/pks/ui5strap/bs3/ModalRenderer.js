@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.ModalRenderer
+ * pks.ui5strap.bs3.ModalRenderer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 

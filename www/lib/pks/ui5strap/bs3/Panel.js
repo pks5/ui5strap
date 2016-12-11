@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", './PanelGroup'], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, PanelGroup){
+sap.ui.define(['./library', "../core/library", "../core/ControlBase", './PanelGroup'], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, PanelGroup){
 	
 	"use strict";
 	
@@ -142,11 +142,11 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			        .addClass('collapse')
 			    }
 
-			    if (!ui5strap.support.transition) return complete.call(this)
+			    if (!ui5strapBs3Lib.support.transition) return complete.call(this)
 
 			    $collapse
 			      .height(0)
-			      .one(ui5strap.support.transition.end, complete)
+			      .one(ui5strapBs3Lib.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 
 			}
@@ -166,10 +166,10 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			    	//fire event collapse completed
 			    }
 
-    			if (!ui5strap.support.transition) return complete.call(this)
+    			if (!ui5strapBs3Lib.support.transition) return complete.call(this)
 
     			$collapse
-			      .one(ui5strap.support.transition.end, complete)
+			      .one(ui5strapBs3Lib.support.transition.end, complete)
 			      .emulateTransitionEnd(350)
 			      
 			      .height($collapse[0]["scrollHeight"])

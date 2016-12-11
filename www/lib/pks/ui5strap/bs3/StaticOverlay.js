@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Layer"], function(ui5strapBs3Lib, ControlBase, Layer){
+sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui5strapBs3Lib, ControlBase, Layer){
 	
 	"use strict";
 	

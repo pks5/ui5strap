@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global', "pks/ui5strap/core/RenderUtils"], function(jQuery, RenderUtils) {
+sap.ui.define(['jquery.sap.global', "../core/RenderUtils"], function(jQuery, RenderUtils) {
 	
 	"use strict";
 	

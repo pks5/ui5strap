@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/library", './Tooltip'], function(ui5strapBs3Lib, ui5strapCoreLib, Tooltip){
+sap.ui.define(['./library', "../core/library", './Tooltip'], function(ui5strapBs3Lib, ui5strapCoreLib, Tooltip){
 	
 	"use strict";
 	

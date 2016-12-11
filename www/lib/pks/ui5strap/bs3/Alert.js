@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define([ './library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils" ], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, Utils, RenderUtils) {
+sap.ui.define([ './library', "../core/library", "../core/ControlBase", "../core/Utils", "../core/RenderUtils" ], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, Utils, RenderUtils) {
 	
 	"use strict";
 	
@@ -185,8 +185,8 @@ sap.ui.define([ './library', "pks/ui5strap/core/library", "pks/ui5strap/core/Con
 			_this.destroy();
 		}
 
-		ui5strap.support.transition && $alert.hasClass('fade') ? $alert.one(
-				ui5strap.support.transition.end, removeElement)
+		ui5strapBs3Lib.support.transition && $alert.hasClass('fade') ? $alert.one(
+				ui5strapBs3Lib.support.transition.end, removeElement)
 				.emulateTransitionEnd(150) : removeElement()
 	};
 

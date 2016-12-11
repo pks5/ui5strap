@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/RenderUtils'], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, RenderUtils){
+sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/RenderUtils'], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, RenderUtils){
 	
 	"use strict";
 	
@@ -382,9 +382,9 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
         that.$element.trigger('shown.bs.' + that.type)
       }
 
-      ui5strap.support.transition && this.$tip.hasClass('fade') ?
+      pks.ui5strap.bs3.support.transition && this.$tip.hasClass('fade') ?
         $tip
-          .one(ui5strap.support.transition.end, complete)
+          .one(pks.ui5strap.bs3.support.transition.end, complete)
           .emulateTransitionEnd(150) :
         complete()
     }
@@ -478,9 +478,9 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 
     $tip.removeClass('in')
 
-    ui5strap.support.transition && this.$tip.hasClass('fade') ?
+    pks.ui5strap.bs3.support.transition && this.$tip.hasClass('fade') ?
       $tip
-        .one(ui5strap.support.transition.end, complete)
+        .one(pks.ui5strap.bs3.support.transition.end, complete)
         .emulateTransitionEnd(150) :
       complete()
 
