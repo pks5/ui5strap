@@ -1,14 +1,14 @@
 sap.ui.define([
                "pks/ui5strap/bs3/library",
                'pks/ui5strap/viewer/AppFrame', 
-               "ui5strap/Bar", 
-               "ui5strap/NavBar", 
-               "ui5strap/Nav", 
-               "ui5strap/ListNavItem",
-               "ui5strap/Link",
-               "ui5strap/ButtonGroup",
-               "ui5strap/Button",
-               "ui5strap/Icon"
+               "pks/ui5strap/bs3/Bar", 
+               "pks/ui5strap/bs3/NavBar", 
+               "pks/ui5strap/bs3/Nav", 
+               "pks/ui5strap/bs3/ListNavItem",
+               "pks/ui5strap/bs3/Link",
+               "pks/ui5strap/bs3/ButtonGroup",
+               "pks/ui5strap/bs3/Button",
+               "pks/ui5strap/bs3/Icon"
                ], function(ui5strapBs3Lib, AppFrame, Bar, NavBar, Nav, ListNavItem, Link, ButtonGroup, Button, Icon){
 
 	var jQuerySap = jQuery.sap;
