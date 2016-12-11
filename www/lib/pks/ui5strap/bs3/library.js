@@ -106,7 +106,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 						"pks.ui5strap.bs3.Thumbnail", "pks.ui5strap.bs3.ToggleButton",
 						"pks.ui5strap.bs3.Tooltip", "pks.ui5strap.bs3.Well" ],
 
-				elements : [ "pks.ui5strap.bs3.Item", "pks.ui5strap.bs3.TableCell",
+				elements : [ "pks.ui5strap.bs3.TableCell",
 						"pks.ui5strap.bs3.TableRow" ]
 			});
 

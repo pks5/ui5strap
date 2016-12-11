@@ -78,7 +78,7 @@ sap.ui
 												"pks.ui5strap.core.ISelectableItem", "pks.ui5strap.core.IText"],
 
 								controls : [
-								      "pks.ui5strap.core.Break",
+								      "pks.ui5strap.core.LineBreak",
 								      "pks.ui5strap.core.ListBase",
 								      "pks.ui5strap.core.ListItemBase",
 								      "pks.ui5strap.core.NavContainer",
@@ -86,7 +86,7 @@ sap.ui
 								      "pks.ui5strap.core.ThematicBreak"
 								],
 
-								elements : []
+								elements : ["pks.ui5strap.core.Item"]
 							});
 					
 					var ui5strapCoreLib = pks.ui5strap.core,

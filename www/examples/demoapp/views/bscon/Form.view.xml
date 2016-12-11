@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Controls" xmlns="pks.ui5strap.bs3" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Controls" xmlns:ui5strapCore="pks.ui5strap.core" xmlns="pks.ui5strap.bs3" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
 	<Container type="Fluid" options="PictureFrame">
@@ -36,10 +36,10 @@
 						<Col columnsSmall="3">
 							<InputGroup>
 								<SelectBox>
-									<Item text="Option 1" value="option1" />
-									<Item text="Option 2" value="option2" />
-									<Item text="Option 3" value="option3" />
-									<Item text="Option 4" value="option4" />
+									<ui5strapCore:Item text="Option 1" value="option1" />
+									<ui5strapCore:Item text="Option 2" value="option2" />
+									<ui5strapCore:Item text="Option 3" value="option3" />
+									<ui5strapCore:Item text="Option 4" value="option4" />
 								</SelectBox>
 								<Checkbox type="Default" />
 							</InputGroup>
@@ -101,26 +101,26 @@
 				<FormGroup label="Category" labelSmall="3">
 					<Col columnsSmall="3">
 						<SelectBox>
-							<Item text="Option 1" value="option1" />
-							<Item text="Option 2" value="option2" />
-							<Item text="Option 3" value="option3" />
-							<Item text="Option 4" value="option4" />
+							<ui5strapCore:Item text="Option 1" value="option1" />
+							<ui5strapCore:Item text="Option 2" value="option2" />
+							<ui5strapCore:Item text="Option 3" value="option3" />
+							<ui5strapCore:Item text="Option 4" value="option4" />
 						</SelectBox>
 					</Col>
 					<Col columnsSmall="3">
 						<SelectBox>
-							<Item text="Option 1" value="option1" />
-							<Item text="Option 2" value="option2" />
-							<Item text="Option 3" value="option3" />
-							<Item text="Option 4" value="option4" />
+							<ui5strapCore:Item text="Option 1" value="option1" />
+							<ui5strapCore:Item text="Option 2" value="option2" />
+							<ui5strapCore:Item text="Option 3" value="option3" />
+							<ui5strapCore:Item text="Option 4" value="option4" />
 						</SelectBox>
 					</Col>
 					<Col columnsSmall="3">
 						<SelectBox>
-							<Item text="Option 1" value="option1" />
-							<Item text="Option 2" value="option2" />
-							<Item text="Option 3" value="option3" />
-							<Item text="Option 4" value="option4" />
+							<ui5strapCore:Item text="Option 1" value="option1" />
+							<ui5strapCore:Item text="Option 2" value="option2" />
+							<ui5strapCore:Item text="Option 3" value="option3" />
+							<ui5strapCore:Item text="Option 4" value="option4" />
 						</SelectBox>
 					</Col>
 				</FormGroup>

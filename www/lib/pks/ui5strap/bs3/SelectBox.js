@@ -60,7 +60,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 
 			aggregations : { 
 				items : {
-					type : "pks.ui5strap.bs3.Item",
+					type : "pks.ui5strap.core.Item",
 					singularName: "items"
 				} 
 			}
