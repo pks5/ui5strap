@@ -116,7 +116,7 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 	* @override
 	*/
 	AMGotoPageProto.run = function(){
-			var frameId = this.getParameter("frameId");
+			var frameId = this.getParameter("frameId"),
 				control = this.findControl();
 
 			var frameGetter = 'get' + jQuery.sap.charToUpperCase(frameId, 0);

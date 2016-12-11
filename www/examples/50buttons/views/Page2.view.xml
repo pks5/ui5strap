@@ -9,11 +9,8 @@
             </head>
             <body>
                 <Nav selection-mode="Single" class="nav-round-btns" items="{buttons>/page2}">
-                    <ListItem>
-                        <Link tap="__execute" data:__action="{buttons>action}">
-                            <Icon icon="{buttons>icon}" />
-                        </Link>
-                    </ListItem>
+                    <ListLinkItem tap="__execute" data:__action="{buttons>action}">
+                    </ListLinkItem>
                 </Nav>
 
             </body>
