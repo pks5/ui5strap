@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["ui5strap/library", 'pks/ui5strap/viewer/Controller'], function(ui5strapBs3Lib, Controller){
+sap.ui.define(["pks/ui5strap/bs3/library", 'pks/ui5strap/viewer/Controller'], function(ui5strapBs3Lib, Controller){
 
 	var controllerImpl = {
 		onInit : function(){
@@ -56,7 +56,7 @@ sap.ui.define(["ui5strap/library", 'pks/ui5strap/viewer/Controller'], function(u
 		},
 	
 		newAlert : function(oEvent){
-			var al = new ui5strap.Alert({ visible : true, closable : true, text : 'Just a new alert!' });
+			var al = new pks.ui5strap.bs3.Alert({ visible : true, closable : true, text : 'Just a new alert!' });
 			al.placeAt(this.getView().byId('alerts').getId());
 		},
 	

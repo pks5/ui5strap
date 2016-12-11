@@ -119,7 +119,7 @@ sap.ui.define(['./library', './AppComponent'], function(ui5strapViewerLib, AppCo
 		//Init default NavContainer
 		var frameConfig = this.options,
 			app = this.app,
-			navContainerModule = frameConfig.navContainer || "ui5strap.NavContainerStandard";
+			navContainerModule = frameConfig.navContainer || "pks.ui5strap.bs3.NavContainerStandard";
 		
 		jQuery.sap.require(navContainerModule);
 		var NavContainerConstructor = jQuery.sap.getObject(navContainerModule);

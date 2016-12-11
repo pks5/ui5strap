@@ -1,5 +1,5 @@
 
-sap.ui.define(['ui5strap/library', 'pks/ui5strap/viewer/Manager'], function(uLib, Manager){
+sap.ui.define(['pks/ui5strap/bs3/library', 'pks/ui5strap/viewer/Manager'], function(uLib, Manager){
   
   //Define Constructor
   var HomeMain = Manager.extend("com.ui5strap.apps.home.modules.HomeMain", {

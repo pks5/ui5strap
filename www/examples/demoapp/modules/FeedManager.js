@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['ui5strap/library', 'pks/ui5strap/viewer/Manager', "sap/ui/model/json/JSONModel"], function(library, Manager, JSONModel){
+sap.ui.define(['pks/ui5strap/bs3/library', 'pks/ui5strap/viewer/Manager', "sap/ui/model/json/JSONModel"], function(library, Manager, JSONModel){
 
 	var FeedManager = Manager.extend("com.ui5strap.apps.demoapp.modules.FeedManager"),
 		FeedManagerProto = FeedManager.prototype;

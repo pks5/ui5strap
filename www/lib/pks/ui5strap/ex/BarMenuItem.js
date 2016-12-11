@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', '../core/library', 'ui5strap/ListItem', '../core/Utils'], function(ui5strapExLib, ui5strapCoreLib, ListItem, Utils){
+sap.ui.define(['./library', '../core/library', '../bs3/ListItem', '../core/Utils'], function(ui5strapExLib, ui5strapCoreLib, ListItem, Utils){
 	
 	"use strict";
 	
@@ -37,7 +37,7 @@ sap.ui.define(['./library', '../core/library', 'ui5strap/ListItem', '../core/Uti
 	 * 
 	 * @class
 	 * Control for creating menu entries for the BarMenu control.
-	 * @extends ui5strap.ListItem
+	 * @extends pks.ui5strap.bs3.ListItem
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6

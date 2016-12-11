@@ -15,7 +15,7 @@
  */
 
 
-sap.ui.define(['ui5strap/library', 'pks/ui5strap/action/Task'], function(library, Task){
+sap.ui.define(['pks/ui5strap/bs3/library', 'pks/ui5strap/action/Task'], function(library, Task){
 
 	var AMUpdateTaskManager = Task.extend("pks.ui5strap.action.AMUpdateTaskManager"),
 	AMUpdateTaskManagerProto = AMUpdateTaskManager.prototype;

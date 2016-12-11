@@ -1,5 +1,5 @@
 sap.ui.define([
-               "ui5strap/library",
+               "pks/ui5strap/bs3/library",
                'pks/ui5strap/viewer/AppFrame', 
                "ui5strap/Bar", 
                "ui5strap/NavBar", 

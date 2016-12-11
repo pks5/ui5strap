@@ -8,12 +8,12 @@
 		"CONTROLS" : {
 		  "titleInputField" : {
                 "SOURCE" : "View",
-                "TYPE" : "ui5strap.TextInput",
+                "TYPE" : "pks.ui5strap.bs3.TextInput",
                 "CONTROL_ID" : "titleInput"
             },
             "textInputField" : {
                 "SOURCE" : "View",
-                "TYPE" : "ui5strap.TextInput",
+                "TYPE" : "pks.ui5strap.bs3.TextInput",
                 "CONTROL_ID" : "messageInput"
             }
 		},

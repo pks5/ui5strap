@@ -1,0 +1,176 @@
+/*
+ * 
+ * UI5Strap
+ *
+ * LESS for pks.ui5strap.bs3.ToggleButton
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://ui5strap.com
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
+
+.ui5strapToggleButton{
+    position:relative;
+    display:inline-block;
+    cursor:pointer;
+}
+
+.ui5strapToggleButton.disabled{
+    cursor: auto;
+}
+
+.ui5strapToggleButton-type-Horizontal{
+    line-height:32px;
+   
+}
+
+/*
+ * Hole
+ */
+.ui5strapToggleButton-hole{
+    position: relative;
+    border-radius: 16px;
+}
+
+.ui5strapToggleButton-type-Vertical .ui5strapToggleButton-hole{
+    margin-left:auto;
+    margin-right:auto;
+    display: block;
+    width:32px;
+    height:54px;
+}
+
+.ui5strapToggleButton-type-Horizontal .ui5strapToggleButton-hole{
+    display:inline-block;    
+    vertical-align:middle;
+     width:54px;
+    height:32px;   
+}
+
+/*
+ * Pin
+ */
+.ui5strapToggleButton-pin{
+    position: absolute;
+    
+    display: block;
+    border-radius: 50%;
+    
+    -moz-box-shadow: 0 0 2px #888;
+    -webkit-box-shadow: 0 0 2px #888;
+    box-shadow: 0 0 2px #888;
+}
+
+.ui5strapToggleButton-type-Vertical .ui5strapToggleButton-pin{
+    left:50%;
+    top:2px;
+    
+    width:28px;
+    height:28px;
+    
+    margin-left:-14px;
+    
+    -webkit-transition: top 0.1s ease-out;
+        -moz-transition: top 0.1s ease-out;
+        -o-transition: top 0.1s ease-out;
+        transition: top 0.1s ease-out;
+}
+
+.ui5strapToggleButton-type-Vertical.active .ui5strapToggleButton-pin{
+    
+    top:24px;
+}
+
+
+.ui5strapToggleButton-type-Horizontal .ui5strapToggleButton-pin{
+    left:2px;
+    top:50%;
+    
+    width:28px;
+    height:28px;
+    
+    margin-top:-14px;
+    
+    -webkit-transition: left 0.1s ease-out;
+        -moz-transition: left 0.1s ease-out;
+        -o-transition: left 0.1s ease-out;
+        transition: left 0.1s ease-out;
+}
+
+
+.ui5strapToggleButton-type-Horizontal.active .ui5strapToggleButton-pin{
+    left:24px;
+}
+
+
+/*
+ * Text
+ */
+.ui5strapToggleButton-text{
+    
+}
+
+.ui5strapToggleButton-type-Vertical .ui5strapToggleButton-text{
+    padding:5px;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
+    /*
+    max-width:64px;
+    */
+}
+
+
+.ui5strapToggleButton-type-Horizontal .ui5strapToggleButton-text{
+    display:inline-block;
+    vertical-align:middle;
+    padding:5px;
+    /*
+    max-width:54px;
+    */
+}
+
+/*
+ * Colors
+ */
+ 
+ .ui5strapToggleButton-pin{
+     background-color: white;
+ }
+ 
+ .ui5strapToggleButton-text{
+     color:gray;
+ }
+ 
+.ui5strapToggleButton-hole{
+    background-color:gray;
+}
+
+.ui5strapToggleButton.disabled .ui5strapToggleButton-pin{
+    background-color:darkgray;
+}
+
+.active .ui5strapToggleButton-hole{
+    background-color:@brand-primary;
+}
+
+.active .ui5strapToggleButton-text-Selected{
+     color:@brand-primary;  
+}
