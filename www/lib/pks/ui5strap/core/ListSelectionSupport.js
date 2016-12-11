@@ -57,8 +57,8 @@ sap.ui.define(['./library'], function(ui5strapCoreLib){
 		//Properties
 		
 		meta.properties.selectionMode = {
-			"type" : "ui5strap.SelectionMode",
-			"defaultValue" : ui5strap.SelectionMode.None
+			"type" : "pks.ui5strap.core.SelectionMode",
+			"defaultValue" : ui5strapCoreLib.SelectionMode.None
 		};
 		
 		//Events
@@ -790,16 +790,16 @@ sap.ui.define(['./library'], function(ui5strapCoreLib){
 				
 				//Process selection
 				var selectionMode = this.getSelectionMode();
-				if(ui5strap.SelectionMode.None !== selectionMode 
+				if(ui5strapCoreLib.SelectionMode.None !== selectionMode 
 						&& this._isItemSelectable(item, _defaultSelectionGroup, selectionProvider)){
 					//List allows selections and item is selectable
 					
 					var changes = null;
 					
-					if(selectionMode === ui5strap.SelectionMode.Single){
+					if(selectionMode === ui5strapCoreLib.SelectionMode.Single){
 						changes = this.setSelection(item, _defaultSelectionGroup);
 					}
-					else if(selectionMode === ui5strap.SelectionMode.SingleToggle){
+					else if(selectionMode === ui5strapCoreLib.SelectionMode.SingleToggle){
 						if(this.isInSelection(item)){
 							changes = this.removeSelection(item, _defaultSelectionGroup);
 						}
@@ -807,7 +807,7 @@ sap.ui.define(['./library'], function(ui5strapCoreLib){
 							changes = this.setSelection(item, _defaultSelectionGroup);
 						}
 					}
-					else if(selectionMode === ui5strap.SelectionMode.Multiple){
+					else if(selectionMode === ui5strapCoreLib.SelectionMode.Multiple){
 						changes = this.toggleSelection(item, _defaultSelectionGroup);
 					}
 					

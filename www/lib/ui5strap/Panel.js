@@ -58,7 +58,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			properties : { 
 				severity : {
 					type: "ui5strap.Severity", 
-					defaultValue: ui5strap.Severity.Default
+					defaultValue: ui5strapBs3Lib.Severity.Default
 				},
 				title : {
 					type:"string", defaultValue:""
@@ -108,7 +108,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 		var styleClass = " panel",
 			severity = this.getSeverity();
 		
-		if(ui5strap.Severity.None !== severity){
+		if(ui5strapBs3Lib.Severity.None !== severity){
 			styleClass += " panel-" + ui5strapBs3Lib.BSSeverity[severity];
 		}
 		

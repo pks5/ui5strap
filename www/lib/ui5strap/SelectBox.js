@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"], function(ui5strapBs3Lib, ControlBase, PositionSupport){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "./PositionSupport"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, PositionSupport){
 	
 	"use strict";
 	
@@ -38,7 +38,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"
 			properties : { 
 				type : {
 					type: "ui5strap.SelectBoxType", 
-					defaultValue: ui5strap.SelectBoxType.FormControl
+					defaultValue: ui5strapBs3Lib.SelectBoxType.FormControl
 				},
 				value : {
 					type:"string", 
@@ -46,7 +46,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"
 				},
 				size : {
 					type: "ui5strap.Size", 
-					defaultValue: ui5strap.Size.Default
+					defaultValue: ui5strapBs3Lib.Size.Default
 				},
 				disabled : {
 					type:"boolean", 
@@ -57,8 +57,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"
 					defaultValue:ui5strap.Alignment.Default
 				},
 				trail : {
-					type:"ui5strap.TrailHtml", 
-					defaultValue:ui5strap.TrailHtml.Space
+					type:"pks.ui5strap.core.TrailHtml", 
+					defaultValue:ui5strapCoreLib.TrailHtml.Space
 				}
 			},
 

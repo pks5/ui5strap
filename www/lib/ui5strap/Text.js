@@ -46,19 +46,19 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 				},
 				type : {
 					type:"ui5strap.TextType", 
-					defaultValue:ui5strap.TextType.Default
+					defaultValue:ui5strapBs3Lib.TextType.Default
 				},
 				title : {
 					type: "string", 
 					defaultValue: ""
 				},
 				trail : {
-					type:"ui5strap.TrailHtml", 
-					defaultValue:ui5strap.TrailHtml.Space
+					type:"pks.ui5strap.core.TrailHtml", 
+					defaultValue:ui5strapCoreLib.TrailHtml.Space
 				},
 				textAlign : {
 					type : "ui5strap.TextAlignment",
-					defaultValue : ui5strap.TextAlignment.Default
+					defaultValue : ui5strapBs3Lib.TextAlignment.Default
 				},
 				contentPlacement : {
 					type:"pks.ui5strap.core.ContentPlacement",
@@ -66,7 +66,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 				},
 				severity : {
 					type: "ui5strap.Severity", 
-					defaultValue: ui5strap.Severity.None
+					defaultValue: ui5strapBs3Lib.Severity.None
 				}
 			},
 			aggregations : { 
@@ -209,16 +209,16 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			tagData = this._typeToTag[type];
 		
 		//CSS Classes
-		if(ui5strap.TextType.Label === type){
+		if(ui5strapBs3Lib.TextType.Label === type){
 			//Severity for labels
-			styleClass += " label-" + ui5strapBs3Lib.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity];
+			styleClass += " label-" + ui5strapBs3Lib.BSSeverity[ui5strapBs3Lib.Severity.None === severity ? ui5strapBs3Lib.Severity.Default : severity];
 		}
-		else if(ui5strap.Severity.None !== severity){
+		else if(ui5strapBs3Lib.Severity.None !== severity){
 			//Severity for general text
 			styleClass += " text-" + ui5strapBs3Lib.BSSeverity[severity];
 		}
 		
-		if(ui5strap.TextAlignment.Default !== textAlign){
+		if(ui5strapBs3Lib.TextAlignment.Default !== textAlign){
 			styleClass += " ui5strap-textAlign-" + textAlign;
 		}
 		

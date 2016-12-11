@@ -41,7 +41,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 				
 				severity : {
 					type: "ui5strap.Severity", 
-					defaultValue: ui5strap.Severity.None
+					defaultValue: ui5strapBs3Lib.Severity.None
 				},
 				
 				html : {
@@ -156,7 +156,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			
 			severity = this.getSeverity();
 		
-		if(ui5strap.Severity.None !== severity){
+		if(ui5strapBs3Lib.Severity.None !== severity){
 			styleClass += " bg-" + ui5strapBs3Lib.BSSeverity[severity];
 		}
 		

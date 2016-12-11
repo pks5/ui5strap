@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global', "pks/ui5strap/core/RenderUtils"], function(jQuery, RenderUtils) {
+sap.ui.define(['jquery.sap.global', "./library", "pks/ui5strap/core/RenderUtils"], function(jQuery, ui5strapBs3Lib, RenderUtils) {
 	
 	"use strict";
 	
@@ -39,7 +39,7 @@ sap.ui.define(['jquery.sap.global', "pks/ui5strap/core/RenderUtils"], function(j
 		var badge = oControl.getBadge(),
 			icon = oControl.getIcon(),
 			parent = oControl.getParent(),
-			tag = parent.getListMode() === ui5strap.ListGroupMode.Default ? 'li' : 'a',
+			tag = parent.getListMode() === ui5strapBs3Lib.ListGroupMode.Default ? 'li' : 'a',
 			severity = oControl.getSeverity();
 
 		rm.write("<" + tag);
@@ -48,7 +48,7 @@ sap.ui.define(['jquery.sap.global', "pks/ui5strap/core/RenderUtils"], function(j
 		if(oControl.getSelected()){
 			rm.addClass('active');
 		}
-		if(ui5strap.Severity.None !== severity){
+		if(ui5strapBs3Lib.Severity.None !== severity){
 			//Severity for general text
 			rm.addClass("list-group-item-" + ui5strapBs3Lib.BSSeverity[severity]);
 		}

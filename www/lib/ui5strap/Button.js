@@ -50,16 +50,16 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 				},
 				severity : {
 					type: "ui5strap.Severity", 
-					defaultValue: ui5strap.Severity.Default
+					defaultValue: ui5strapBs3Lib.Severity.Default
 				},
 				size : {
 					type: "ui5strap.Size", 
-					defaultValue: ui5strap.Size.Default
+					defaultValue: ui5strapBs3Lib.Size.Default
 				},
 				
 				trail : {
-					type:"ui5strap.TrailHtml", 
-					defaultValue:ui5strap.TrailHtml.Space
+					type:"pks.ui5strap.core.TrailHtml", 
+					defaultValue:ui5strapCoreLib.TrailHtml.Space
 				},
 				contentPlacement : {
 					type:"pks.ui5strap.core.ContentPlacement",
@@ -122,7 +122,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			styleClass += " btn-" + ui5strapBs3Lib.BSSeverity[this.getSeverity()];
 		    
 			var size = this.getSize();
-			if(ui5strap.Size.Default !== size){
+			if(ui5strapBs3Lib.Size.Default !== size){
 				styleClass += ' btn-' + ui5strapBs3Lib.BSSize[size];
 		    }
 

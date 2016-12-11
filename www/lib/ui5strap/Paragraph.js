@@ -69,11 +69,11 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 				},
 				severity : {
 					type: "ui5strap.Severity", 
-					defaultValue: ui5strap.Severity.None
+					defaultValue: ui5strapBs3Lib.Severity.None
 				},
 				textAlign : {
 					type : "ui5strap.TextAlignment",
-					defaultValue : ui5strap.TextAlignment.Default
+					defaultValue : ui5strapBs3Lib.TextAlignment.Default
 				},
 				formStatic : {
 					type : "boolean",
@@ -113,12 +113,12 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			textAlign = this.getTextAlign();
 		
 		//CSS Classes
-		if(ui5strap.Severity.None !== severity){
+		if(ui5strapBs3Lib.Severity.None !== severity){
 			//Severity for general text
 			styleClass += " text-" + ui5strapBs3Lib.BSSeverity[severity];
 		}
 		
-		if(ui5strap.TextAlignment.Default !== textAlign){
+		if(ui5strapBs3Lib.TextAlignment.Default !== textAlign){
 			styleClass += " ui5strap-textAlign-" + textAlign;
 		}
 		

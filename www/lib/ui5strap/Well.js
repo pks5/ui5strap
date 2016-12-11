@@ -63,7 +63,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 				},
 				size : {
 					type : "ui5strap.Size",
-					defaultValue:ui5strap.Size.Default
+					defaultValue:ui5strapBs3Lib.Size.Default
 				}
 			},
 			
@@ -103,7 +103,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 	WellProto._getStyleClassDesign = function(){
 		var styleClass = " well";
 		var size = this.getSize();
-		if(ui5strap.Size.Default !== size){
+		if(ui5strapBs3Lib.Size.Default !== size){
 			styleClass += " well-" + ui5strapBs3Lib.BSSize[size];
 		}
 		return styleClass;

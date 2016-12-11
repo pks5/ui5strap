@@ -71,7 +71,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 				},  
 				severity : {
 					type:"ui5strap.Severity", 
-					defaultValue:ui5strap.Severity.None
+					defaultValue:ui5strapBs3Lib.Severity.None
 				},
 				labelFormat : {
 					type:"string", 
@@ -113,7 +113,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 		var styleClass = " progress-bar",
 			type = this.getSeverity();
 		
-		if(ui5strap.Severity.None !== type){
+		if(ui5strapBs3Lib.Severity.None !== type){
 			styleClass += " progress-bar-" + ui5strapBs3Lib.BSSeverity[type];
 		}
 

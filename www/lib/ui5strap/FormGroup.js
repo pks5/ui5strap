@@ -57,7 +57,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			properties : { 
 				severity : {
 					type:"ui5strap.FormSeverity", 
-					defaultValue:ui5strap.FormSeverity.None
+					defaultValue:ui5strapBs3Lib.FormSeverity.None
 				},
 				label : {
 					type:"string", 
@@ -153,7 +153,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			severity = this.getSeverity();
 		
 		
-		if(ui5strap.FormSeverity.None !== severity){
+		if(ui5strapBs3Lib.FormSeverity.None !== severity){
 			styleClass += " has-" + _severityToClass[severity];
 		}
 		

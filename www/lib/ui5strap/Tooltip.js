@@ -69,12 +69,12 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 	
 	        placement : {
 	          type: "ui5strap.Placement", 
-	          defaultValue: ui5strap.Placement.Right
+	          defaultValue: ui5strapBs3Lib.Placement.Right
 	        },
 	
 	        trigger : {
 	          type: "ui5strap.TriggerMode", 
-	          defaultValue: ui5strap.TriggerMode.Hover
+	          defaultValue: ui5strapBs3Lib.TriggerMode.Hover
 	        },
 	
 	        animate : {
@@ -165,8 +165,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
     };
 
     var placement = this.getPlacement();
-    if(placement !== ui5strap.Placement.None){
-        if(placement !== ui5strap.Placement.Default){
+    if(placement !== ui5strapBs3Lib.Placement.None){
+        if(placement !== ui5strapBs3Lib.Placement.Default){
           tooltipOptions.placement = ui5strapBs3Lib.BSPlacement[placement];
         }
         this.getSourceDomRef().tooltip(tooltipOptions);

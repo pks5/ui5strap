@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./library"], function(jQuery, ui5strapBs3Lib) {
 	
 	"use strict";
 	
@@ -37,7 +37,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 
 	ListGroupRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
-			tag = oControl.getListMode() === ui5strap.ListGroupMode.Default ? 'ul' : 'div';
+			tag = oControl.getListMode() === ui5strapBs3Lib.ListGroupMode.Default ? 'ul' : 'div';
 		
 
 		rm.write("<" + tag);

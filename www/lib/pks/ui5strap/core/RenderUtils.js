@@ -119,7 +119,7 @@ sap.ui.define([ './library', './Utils'], function(ui5strapCoreLib, Utils) {
 			text) {
 		var trail = oControl.getTrail();
 
-		if (trail !== ui5strap.TrailHtml.None) {
+		if (trail !== ui5strapCoreLib.TrailHtml.None) {
 			rm.write(this.trailHtml[trail]);
 		}
 	};

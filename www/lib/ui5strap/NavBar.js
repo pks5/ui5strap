@@ -60,7 +60,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			properties : { 
 				type : {
 					type:"ui5strap.NavBarType", 
-					defaultValue:ui5strap.NavBarType.Default
+					defaultValue:ui5strapBs3Lib.NavBarType.Default
 				},
 				inverse : {
 					type:"boolean", 
@@ -76,7 +76,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 				},
 				position : {
 					type:"ui5strap.NavBarPosition", 
-					defaultValue: ui5strap.NavBarPosition.Default
+					defaultValue: ui5strapBs3Lib.NavBarPosition.Default
 				}
 			},
 

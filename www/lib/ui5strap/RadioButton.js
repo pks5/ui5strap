@@ -56,7 +56,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			properties : { 
 				type : {
 					type:"ui5strap.RadioButtonType", 
-					defaultValue:ui5strap.RadioButtonType.Block
+					defaultValue:ui5strapBs3Lib.RadioButtonType.Block
 				},
 				value : {
 					type:"string", 
@@ -81,7 +81,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 		renderer : function(rm, oControl) {
 			var groupName = oControl.getGroupName(),
 				type = oControl.getType(),
-				typeBlock = ui5strap.RadioButtonType.Block,
+				typeBlock = ui5strapBs3Lib.RadioButtonType.Block,
 				inInputGroup = oControl.getParent().getMetadata().isInstanceOf("pks.ui5strap.bs3.IInputGroup");
 			
 			if(!inInputGroup){
@@ -94,7 +94,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 				}
 				
 				rm.write("<label");
-				if(type === ui5strap.RadioButtonType.Inline){
+				if(type === ui5strapBs3Lib.RadioButtonType.Inline){
 					rm.writeControlData(oControl);
 					rm.addClass('radio-inline');
 				}
@@ -103,7 +103,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			}
 			
 			rm.write('<input')
-			if(inInputGroup || type === ui5strap.RadioButtonType.Default){
+			if(inInputGroup || type === ui5strapBs3Lib.RadioButtonType.Default){
 				rm.writeControlData(oControl);
 			}
 			else{

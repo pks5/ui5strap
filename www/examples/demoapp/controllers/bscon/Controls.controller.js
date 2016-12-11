@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
+sap.ui.define(["ui5strap/library", 'pks/ui5strap/viewer/Controller'], function(ui5strapBs3Lib, Controller){
 
 	var controllerImpl = {
 		onInit : function(){
@@ -108,7 +108,7 @@ sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 	
 		resetBars : function(button){
 			button.setSelected(false);
-			button.setSeverity(ui5strap.Severity.Success);
+			button.setSeverity(ui5strapBs3Lib.Severity.Success);
 				button.setText('Start Progress');
 				var icon = button.getContent()[0];
 				icon.setIcon('play');
@@ -129,7 +129,7 @@ sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 				var icon = button.getContent()[0];
 				icon.setIcon('spinner');
 				icon.setSpin(true);
-				button.setSeverity(ui5strap.Severity.Danger);
+				button.setSeverity(ui5strapBs3Lib.Severity.Danger);
 				button.setText('Please wait...');
 				button.setEnabled(false);
 				var callI = 5;

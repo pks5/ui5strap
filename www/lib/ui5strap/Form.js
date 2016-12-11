@@ -38,7 +38,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"
 		properties : { 
 			type : {
 				type:"ui5strap.FormType", 
-				defaultValue:ui5strap.FormType.Default
+				defaultValue:ui5strapBs3Lib.FormType.Default
 			},
 			action : {
 				type:"string", 
@@ -46,7 +46,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"
 			},
 			method : {
 				type:"ui5strap.FormMethod", 
-				defaultValue:ui5strap.FormMethod.None
+				defaultValue:ui5strapBs3Lib.FormMethod.None
 			}
 		},
 		aggregations : { 
@@ -103,7 +103,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"
 			
 			action && rm.writeAttribute('action', action);
 			
-			if(ui5strap.FormMethod.Default !== method && ui5strap.FormMethod.None !== method){
+			if(ui5strapBs3Lib.FormMethod.Default !== method && ui5strapBs3Lib.FormMethod.None !== method){
 				rm.writeAttribute('method', method);
 			}
 			
@@ -133,7 +133,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"
 		var _this = this;
 		this.$().on('submit', function(){
 			_this.fireSubmit({});
-			if(_this.getMethod() === ui5strap.FormMethod.None){
+			if(_this.getMethod() === ui5strapBs3Lib.FormMethod.None){
 				return false;
 			}
 		});

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(ui5strapBs3Lib, ControlBase, RenderUtils, PositionSupport){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, RenderUtils, PositionSupport){
 	
 	"use strict";
 	
@@ -68,19 +68,19 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 					defaultValue:-1
 				},
 				trail : {
-					type:"ui5strap.TrailHtml", 
-					defaultValue:ui5strap.TrailHtml.None
+					type:"pks.ui5strap.core.TrailHtml", 
+					defaultValue:ui5strapCoreLib.TrailHtml.None
 				},
 				shape: {
 					type:"ui5strap.ImageShape",
-					defaultValue:ui5strap.ImageShape.Default
+					defaultValue:ui5strapBs3Lib.ImageShape.Default
 				},
 				
 				//@deprecated
 				type: {
 					deprecated : true,
 					type:"ui5strap.ImageType",
-					defaultValue:ui5strap.ImageType.Default
+					defaultValue:ui5strapBs3Lib.ImageType.Default
 				}
 			}
 

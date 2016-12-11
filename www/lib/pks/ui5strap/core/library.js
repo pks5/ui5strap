@@ -66,7 +66,12 @@ sap.ui
 
 								dependencies : [ "sap.ui.core" ],
 
-								types : [ "pks.ui5strap.core.ContentPlacement", "pks.ui5strap.core.TransitionSpeed", "pks.ui5strap.core.Visibility" ],
+								types : [ 
+								          "pks.ui5strap.core.ContentPlacement",
+								          "pks.ui5strap.core.SelectionMode",
+								          "pks.ui5strap.core.TrailHtml", 
+								          "pks.ui5strap.core.TransitionSpeed", 
+								          "pks.ui5strap.core.Visibility" ],
 
 								interfaces : ["pks.ui5strap.core.IItemsProvider", "pks.ui5strap.core.INavigator",
 												"pks.ui5strap.core.ISelectionProvider",
@@ -192,16 +197,27 @@ sap.ui
 					};
 
 					/*
-					 * Visibility
+					 * SelectionMode Used by pks.ui5strapBs3Lib.core.ListBase
 					 */
-					ui5strapCoreLib.Visibility = {
-						Default : "Default",
-						Visible : "Visible",
-						VisibleUp : "VisibleUp",
-						Hidden : "Hidden",
-						HiddenUp : "HiddenUp"
+					ui5strapCoreLib.SelectionMode = {
+						None : "None",
+						Single : "Single",
+						SingleToggle : "SingleToggle",
+						Multiple : "Multiple"
+					};
+					
+					/*
+					 * TrailHtml Used by inline Controls
+					 */
+					ui5strapCoreLib.TrailHtml = {
+						"None" : "None",
+						"Space" : "Space",
+						"DoubleSpace" : "DoubleSpace",
+						"Break" : "Break"
 					};
 
+					
+					
 					/*
 					 * TransitionSpeed
 					 */
@@ -211,7 +227,16 @@ sap.ui
 						Fast : "Fast"
 					};
 
-					
+					/*
+					 * Visibility
+					 */
+					ui5strapCoreLib.Visibility = {
+						Default : "Default",
+						Visible : "Visible",
+						VisibleUp : "VisibleUp",
+						Hidden : "Hidden",
+						HiddenUp : "HiddenUp"
+					};
 					
 					// End of library
 					return ui5strapCoreLib;

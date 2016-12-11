@@ -59,7 +59,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			properties : { 
 				size : {
 					type: "ui5strap.Size", 
-					defaultValue: ui5strap.Size.Default
+					defaultValue: ui5strapBs3Lib.Size.Default
 				}
 			},
 			aggregations : { 
@@ -78,7 +78,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			rm.writeControlData(oControl);
 			rm.addClass('input-group');
 
-			if(ui5strap.Size.Default !== size){
+			if(ui5strapBs3Lib.Size.Default !== size){
 				rm.addClass('input-group-' + ui5strapBs3Lib.BSSize[size]);
 			}
 			rm.writeClasses();

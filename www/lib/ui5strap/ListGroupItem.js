@@ -66,7 +66,7 @@ sap.ui.define(['./library', './ListItem'], function(ui5strapBs3Lib, ListItem){
 				},
 				severity : {
 					type: "ui5strap.Severity", 
-					defaultValue: ui5strap.Severity.None
+					defaultValue: ui5strapBs3Lib.Severity.None
 				}
 			}
 		}

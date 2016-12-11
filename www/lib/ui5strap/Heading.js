@@ -56,7 +56,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 				type : {
 					deprecated : true,
 					type: "ui5strap.HeadingType", 
-					defaultValue: ui5strap.HeadingType.Default
+					defaultValue: ui5strapBs3Lib.HeadingType.Default
 				}
 				
 			},
@@ -121,7 +121,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 	HeadingProto._getStyleClassRoot = function(){
 		var type = this.getType(),
 			classAdd = "";
-		if(ui5strap.HeadingType.Default !== type){
+		if(ui5strapBs3Lib.HeadingType.Default !== type){
 			classAdd = " " + Heading._typeToClass[type] + " " + this._getStyleClassType(type);
 		}
 		

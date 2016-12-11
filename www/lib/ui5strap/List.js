@@ -57,7 +57,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(ui5strapBs3L
 			properties : { 
 				type : {
 					type:"ui5strap.ListType", 
-					defaultValue:ui5strap.ListType.Unordered
+					defaultValue:ui5strapBs3Lib.ListType.Unordered
 				}
 			},
 			

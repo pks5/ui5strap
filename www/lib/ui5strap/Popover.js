@@ -58,7 +58,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", './Tooltip'], function(
       properties : {
          trigger : {
             type: "ui5strap.TriggerMode", 
-            defaultValue: ui5strap.TriggerMode.Click
+            defaultValue: ui5strapBs3Lib.TriggerMode.Click
         },
         text : {
           type:"string", defaultValue:""
@@ -97,8 +97,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", './Tooltip'], function(
     };
 
     var placement = this.getPlacement();
-    if(placement !== ui5strap.Placement.None){
-        if(placement !== ui5strap.Placement.Default){
+    if(placement !== ui5strapBs3Lib.Placement.None){
+        if(placement !== ui5strapBs3Lib.Placement.Default){
           popoverOptions.placement = ui5strapBs3Lib.BSPlacement[placement];
         }
         this.getSourceDomRef().popover(popoverOptions);

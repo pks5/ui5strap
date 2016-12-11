@@ -39,7 +39,7 @@ sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils", "./PositionSu
 		properties : { 
 			update : {
 				type : "ui5strap.DropdownMenuHostUpdate",
-				defaultValue : ui5strap.DropdownMenuHostUpdate.None
+				defaultValue : ui5strapBs3Lib.DropdownMenuHostUpdate.None
 			},
 			dropup : {
 				type:"boolean", 
@@ -155,18 +155,19 @@ sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils", "./PositionSu
 					hostUpdate = this.getUpdate();
 				
 				if(menuListItem){
-					if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
-						|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Text){
+					var DropdownMenuHostUpdate = ui5strapBs3Lib.DropdownMenuHostUpdate;
+					if(hostUpdate === DropdownMenuHostUpdate.TextAndData
+						|| hostUpdate === DropdownMenuHostUpdate.Text){
 						this.setText(menuListItem.getText());
 					}
 					
-					if(hostUpdate === ui5strap.DropdownMenuHostUpdate.TextAndData
-						|| hostUpdate === ui5strap.DropdownMenuHostUpdate.Data){
+					if(hostUpdate === DropdownMenuHostUpdate.TextAndData
+						|| hostUpdate === DropdownMenuHostUpdate.Data){
 						
 						this.data(menuListItem.data());
 					}
 					
-					if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
+					if(hostUpdate !== DropdownMenuHostUpdate.None){
 						oEvent.setMarked("pks.ui5strap.core.ISelectableItem.update");
 					}
 				}

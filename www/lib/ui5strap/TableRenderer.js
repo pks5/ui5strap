@@ -76,7 +76,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			severity = row.getSeverity();
 
 		rm.write("<tr");
-	    if(ui5strap.Severity.None !== severity){
+	    if(ui5strapBs3Lib.Severity.None !== severity){
 			rm.addClass(ui5strapBs3Lib.BSSeverity[severity]);
 		}
 	    rm.writeClasses();

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/RenderUtils'], function(ui5strapBs3Lib, ControlBase, RenderUtils){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/RenderUtils'], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, RenderUtils){
 	
 	"use strict";
 	
@@ -55,11 +55,11 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			properties : { 
 				type : {
 					type : "ui5strap.TextInputType",
-					defaultValue : ui5strap.TextInputType.FormControl
+					defaultValue : ui5strapBs3Lib.TextInputType.FormControl
 				},
 				format : {
 					type : "ui5strap.TextInputFormat",
-					defaultValue : ui5strap.TextInputFormat.Default
+					defaultValue : ui5strapBs3Lib.TextInputFormat.Default
 				},
 				value : {
 					type:"string", 
@@ -67,7 +67,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 				},
 				size : {
 					type: "ui5strap.Size", 
-					defaultValue: ui5strap.Size.Default
+					defaultValue: ui5strapBs3Lib.Size.Default
 				},
 				rows : {
 					type: "int",
@@ -90,8 +90,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 					defaultValue:true
 				},
 				trail : {
-					type:"ui5strap.TrailHtml", 
-					defaultValue:ui5strap.TrailHtml.Space
+					type:"pks.ui5strap.core.TrailHtml", 
+					defaultValue:ui5strapCoreLib.TrailHtml.Space
 				}
 			},
 			
@@ -121,7 +121,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 				rm.writeAttribute('placeholder', oControl.getPlaceholder());
 				rm.writeAttribute('value', oControl.getValue());
 				
-				if(type === ui5strap.TextInputType.FormControl){
+				if(type === ui5strapBs3Lib.TextInputType.FormControl){
 					rm.addClass('form-control');
 				}
 				
@@ -138,7 +138,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 				}
 
 				var size = oControl.getSize();
-				if(ui5strap.Size.Default !== size){
+				if(ui5strapBs3Lib.Size.Default !== size){
 					rm.addClass('input-' + ui5strapBs3Lib.BSSize[size]);
 				}
 				
@@ -155,7 +155,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 				rm.writeAttribute('rows', rows);
 				rm.writeAttribute('placeholder', oControl.getPlaceholder());
 				
-				if(type === ui5strap.TextInputType.FormControl){
+				if(type === ui5strapBs3Lib.TextInputType.FormControl){
 					rm.addClass('form-control');
 				}
 				

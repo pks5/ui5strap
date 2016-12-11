@@ -38,7 +38,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase', "./PositionSupport"], 
 			properties : { 
 				type : {
 					type:"ui5strap.NavType", 
-					defaultValue:ui5strap.NavType.Default
+					defaultValue:ui5strapBs3Lib.NavType.Default
 				}
 			},
 			

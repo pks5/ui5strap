@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/ListSelectionSupport', "./PositionSupport", './Button', 'pks/ui5strap/core/ListItemBase', "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(ui5strapBs3Lib, ControlBase, ListSelectionSupport, PositionSupport, Button, ListItemBase, Utils, RenderUtils){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/ListSelectionSupport', "./PositionSupport", './Button', 'pks/ui5strap/core/ListItemBase', "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, ListSelectionSupport, PositionSupport, Button, ListItemBase, Utils, RenderUtils){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 					defaultValue: ui5strapBs3Lib.ButtonGroupType.Default
 				},
 				trail : {
-					type:"ui5strap.TrailHtml", 
+					type:"pks.ui5strap.core.TrailHtml", 
 					defaultValue: ui5strapBs3Lib.TrailHtml.Space
 				}
 			},
@@ -133,7 +133,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			type = this.getType(),
 			styleClass = " " + _typeToClass[type];
 		
-		if(ui5strap.Size.Default !== size){
+		if(ui5strapBs3Lib.Size.Default !== size){
 			styleClass += ' btn-group-' + ui5strapBs3Lib.BSSize[size];
 		}
 		

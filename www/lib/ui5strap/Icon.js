@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(ui5strapBs3Lib, ControlBase, RenderUtils, PositionSupport){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, RenderUtils, PositionSupport){
 	
 	"use strict";
 	
@@ -46,7 +46,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 				},
 				type : {
 					type:"ui5strap.IconType",
-					defaultValue:ui5strap.IconType.Default
+					defaultValue:ui5strapBs3Lib.IconType.Default
 				},
 				fixedWidth : {
 					type : "boolean",
@@ -66,19 +66,19 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 				},
 				size : {
 					type : "ui5strap.IconSize",
-					defaultValue : ui5strap.IconSize.Default
+					defaultValue : ui5strapBs3Lib.IconSize.Default
 				},
 				transform : {
 					type : "ui5strap.IconTransform",
-					defaultValue : ui5strap.IconTransform.Default
+					defaultValue : ui5strapBs3Lib.IconTransform.Default
 				},
 				severity : {
 					type: "ui5strap.Severity", 
-					defaultValue: ui5strap.Severity.None
+					defaultValue: ui5strapBs3Lib.Severity.None
 				},
 				trail : {
-					type:"ui5strap.TrailHtml", 
-					defaultValue:ui5strap.TrailHtml.Space
+					type:"pks.ui5strap.core.TrailHtml", 
+					defaultValue:ui5strapCoreLib.TrailHtml.Space
 				}
 			}
 		};
@@ -155,11 +155,11 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		
 		//Font Awesome only
 		if(prefix === modPrefix){
-			if(size !== ui5strap.IconSize.Default){
+			if(size !== ui5strapBs3Lib.IconSize.Default){
 				styleClass += " " + modPrefix + this._sizeToClass[size];
 			}
 	
-			if(transform !== ui5strap.IconTransform.Default){
+			if(transform !== ui5strapBs3Lib.IconTransform.Default){
 				styleClass += " " + modPrefix + this._transformToClass[transform];
 			}
 	
@@ -180,11 +180,11 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 			}
 		}
 		
-		if(ui5strap.IconType.FormFeedback === this.getType()){
+		if(ui5strapBs3Lib.IconType.FormFeedback === this.getType()){
 			styleClass += " form-control-feedback";
 		}
 
-		if(ui5strap.Severity.None !== severity){
+		if(ui5strapBs3Lib.Severity.None !== severity){
 			styleClass += " text-" + ui5strapBs3Lib.BSSeverity[severity];
 		}
 		

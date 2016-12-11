@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global', 'pks/ui5strap/core/RenderUtils'], function(jQuery, RenderUtils) {
+sap.ui.define(['jquery.sap.global', "./library", 'pks/ui5strap/core/RenderUtils'], function(jQuery, ui5strapBs3Lib, RenderUtils) {
 	
 	"use strict";
 	
@@ -47,10 +47,10 @@ sap.ui.define(['jquery.sap.global', 'pks/ui5strap/core/RenderUtils'], function(j
 		if(oControl.getDisabled()){
 			rm.writeAttribute('disabled', 'disabled');
 		}
-		if(ui5strap.Size.Default !== size){
+		if(ui5strapBs3Lib.Size.Default !== size){
 			rm.addClass('input-' + ui5strapBs3Lib.BSSize[size]);
 		}
-		if(type === ui5strap.SelectBoxType.FormControl){
+		if(type === ui5strapBs3Lib.SelectBoxType.FormControl){
 			rm.addClass('form-control');
 		}
 		rm.writeClasses();

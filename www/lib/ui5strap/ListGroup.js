@@ -57,7 +57,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(ui5strapBs3L
 			properties : { 
 				listMode : {
 					type:"ui5strap.ListGroupMode", 
-					defaultValue : ui5strap.ListGroupMode.Default
+					defaultValue : ui5strapBs3Lib.ListGroupMode.Default
 				}
 			},
 			

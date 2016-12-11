@@ -62,13 +62,13 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 				          "ui5strap.DropdownMenuHostUpdate", "ui5strap.FormMethod",
 				          "ui5strap.FormSeverity", "ui5strap.FormType", "ui5strap.HeadingType",
 				          "ui5strap.IconType", "ui5strap.IconSize", "ui5strap.IconTransform",
-				          "ui5strap.ImageTpye", "ui5strap.ImageShape", "ui5strap.ListType",
+				          "ui5strap.ImageType", "ui5strap.ImageShape", "ui5strap.ListType",
 				          "ui5strap.ListGroupMode", "ui5strap.LinkType", "ui5strap.NavBarType",
 				          "ui5strap.NavBarPosition",  "ui5strap.NavType", "ui5strap.PickerWheelMode",
-				          "ui5strap.Placement", "ui5strap.RadioButtonType", "ui5strap.SelectionMode",
+				          "ui5strap.Placement", "ui5strap.RadioButtonType",
 				          "ui5strap.SelectBoxType", "ui5strap.Severity", "ui5strap.Size",
 				          "ui5strap.TextAlignment", "ui5strap.TextInputFormat", "ui5strap.TextInputType",
-				          "ui5strap.TextType", "ui5strap.TrailHtml", "ui5strap.TriggerMode"],
+				          "ui5strap.TextType", "ui5strap.TriggerMode"],
 
 				interfaces : [ "pks.ui5strap.bs3.IBar",
 						"pks.ui5strap.bs3.IColumn", "pks.ui5strap.bs3.IDropdownMenuHost",
@@ -500,16 +500,6 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	};
 
 	/*
-	 * SelectionMode Used by pks.ui5strapBs3Lib.core.ListBase
-	 */
-	ui5strapBs3Lib.SelectionMode = {
-		None : "None",
-		Single : "Single",
-		SingleToggle : "SingleToggle",
-		Multiple : "Multiple"
-	};
-
-	/*
 	 * SelectBoxType Only used by ui5strapBs3Lib.SelectBox
 	 */
 	ui5strapBs3Lib.SelectBoxType = {
@@ -591,16 +581,6 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 		Abbreviation : "Abbreviation",
 		Label : "Label",
 		Badge : "Badge"
-	};
-
-	/*
-	 * TrailHtml Used by inline Controls
-	 */
-	ui5strapBs3Lib.TrailHtml = {
-		"None" : "None",
-		"Space" : "Space",
-		"DoubleSpace" : "DoubleSpace",
-		"Break" : "Break"
 	};
 
 	/*

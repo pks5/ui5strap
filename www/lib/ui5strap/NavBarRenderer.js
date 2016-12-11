@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./library"], function(jQuery, ui5strapBs3Lib) {
 	
 	"use strict";
 	
@@ -62,7 +62,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.writeControlData(oControl);
 		rm.addClass("navbar");
 		
-		if(ui5strap.NavBarType.None !== type){
+		if(ui5strapBs3Lib.NavBarType.None !== type){
 			rm.addClass(this.typeToClass[type]);
 		}
 
@@ -70,7 +70,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.addClass('navbar-inverse');
 		}
 
-		if(ui5strap.NavBarPosition.Default !== position){
+		if(ui5strapBs3Lib.NavBarPosition.Default !== position){
 			rm.addClass(this.positionToClass[position]);
 		}
 

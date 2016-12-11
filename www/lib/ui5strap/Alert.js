@@ -78,7 +78,7 @@ sap.ui.define([ './library', "pks/ui5strap/core/library", "pks/ui5strap/core/Con
 				},
 				severity : {
 					type : "ui5strap.Severity",
-					defaultValue : ui5strap.Severity.Info
+					defaultValue : ui5strapBs3Lib.Severity.Info
 				}
 			},
 			aggregations : {

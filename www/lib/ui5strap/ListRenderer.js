@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['jquery.sap.global'], function(jQuery) {
+sap.ui.define(['jquery.sap.global', "./library"], function(jQuery, ui5strapBs3Lib) {
 	
 	"use strict";
 	
@@ -39,7 +39,7 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		var items = oControl.getItems();
 	
 		var tagName = 'ul';
-		if(oControl.getType() === ui5strap.ListType.Ordered){
+		if(oControl.getType() === ui5strapBs3Lib.ListType.Ordered){
 			tagName = 'ol';
 		}
 	

@@ -55,8 +55,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 					defaultValue : ui5strapCoreLib.ContentPlacement.Start
 				},
 				trail : {
-					type:"ui5strap.TrailHtml", 
-					defaultValue : ui5strap.TrailHtml.None
+					type:"pks.ui5strap.core.TrailHtml", 
+					defaultValue : ui5strapCoreLib.TrailHtml.None
 				},
 				
 				//Default functionality
@@ -73,7 +73,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 				type : {
 					deprecated : true,
 					type : "ui5strap.LinkType",
-					defaultValue : ui5strap.LinkType.Default
+					defaultValue : ui5strapBs3Lib.LinkType.Default
 				}
 			},
 
@@ -166,7 +166,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 		var styleClass = "";
 		
 		var type = this.getType();
-		if(ui5strap.LinkType.Default !== type){
+		if(ui5strapBs3Lib.LinkType.Default !== type){
 			styleClass += " " + this._typeToClass[type];
 		}
 		
