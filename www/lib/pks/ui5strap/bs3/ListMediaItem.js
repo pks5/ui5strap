@@ -56,6 +56,14 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 			// ---- control specific ----
 			library : "pks.ui5strap.bs3",
 			properties : { 
+				text : {
+					type:"string", 
+					defaultValue:""
+				},
+				parse : {
+					type : "boolean",
+					defaultValue : false
+				},
 				contentPlacement : {
 					type : "pks.ui5strap.core.ContentPlacement",
 					defaultValue : ui5strapCoreLib.ContentPlacement.End
