@@ -20,9 +20,9 @@ module.exports = function(grunt) {
 				  },
 				{
 				    expand: true,
-				    cwd: '../../../www/lib/ui5strap/',
+				    cwd: '../../../www/lib/pks/ui5strap/bs3/',
 				    src: 'themes/*/library.source.less',
-				    dest: '../../../www/lib/ui5strap/'
+				    dest: '../../../www/lib/pks/ui5strap/bs3/'
 				},
 		        {
 		          expand: true,
