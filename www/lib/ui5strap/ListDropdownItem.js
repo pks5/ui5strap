@@ -160,7 +160,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', './ListLinkItem', 
 
 	//Registering Event Handler
 	//TODO Desktop / Mobile Test!!!
-	if(ui5strap.support.touch){
+	if(ui5strapBs3Lib.support.touch){
 		ListDropdownItemProto.ontap = ListDropdownItemProto._handlePress;
 	}
 	else{

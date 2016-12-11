@@ -190,7 +190,7 @@ sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils", "./PositionSu
 		}
 	};
 	
-	if(ui5strap.support.touch){	
+	if(ui5strapBs3Lib.support.touch){	
 		ButtonDropdownProto.ontap = ButtonDropdownProto._handlePress;
 	}
 	else{

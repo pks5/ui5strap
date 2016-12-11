@@ -212,7 +212,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 
 	//Registering Event Handler
 	//TODO Desktop / Mobile Test!!!
-	if(ui5strap.support.touch){
+	if(ui5strapBs3Lib.support.touch){
 		PanelProto.ontap = PanelProto._handlePress;
 	}
 	else{

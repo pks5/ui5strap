@@ -162,7 +162,7 @@ sap.ui.define(["./library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 		}
 	}
 	
-	if(ui5strap.support.touch){	
+	if(ui5strapBs3Lib.support.touch){	
 		ToggleButtonProto.ontap = ToggleButtonProto._handlePress;
 	}
 	else{

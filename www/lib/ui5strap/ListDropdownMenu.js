@@ -87,7 +87,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase', 'pks/ui5strap/core/Lis
 		this.pressItem(oEvent.srcControl, item, false, this, item);
 	};
 
-	if(ui5strap.support.touch){
+	if(ui5strapBs3Lib.support.touch){
 		ListDropdownMenuProto.ontap = ListDropdownMenuProto._handlePress;
 	}
 	else{

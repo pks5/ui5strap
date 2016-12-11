@@ -48,7 +48,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 				},
 				trail : {
 					type:"pks.ui5strap.core.TrailHtml", 
-					defaultValue: ui5strapBs3Lib.TrailHtml.Space
+					defaultValue: ui5strapCoreLib.TrailHtml.Space
 				}
 			},
 					
@@ -201,7 +201,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 	};
 	
 	//Touchscreen
-	if(ui5strap.support.touch){
+	if(ui5strapBs3Lib.support.touch){
 		ButtonGroupProto.ontap = ButtonGroupProto._handlePress;
 	}
 	else{

@@ -191,7 +191,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 		}
 	};
 	
-	if(ui5strap.support.touch){	
+	if(ui5strapBs3Lib.support.touch){	
 		ButtonProto.ontap = ButtonProto._handlePress;
 	}
 	else{
