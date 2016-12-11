@@ -1,4 +1,4 @@
-sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Component){
+sap.ui.define(['./library', 'sap/ui/core/Component'], function(ui5strapViewerLib, Component){
 	
 	"use strict";
 	

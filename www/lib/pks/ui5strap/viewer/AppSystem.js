@@ -29,7 +29,7 @@
  * TODO Refactor to "pks.ui5strap.viewer.SystemApp"
  */
 
- sap.ui.define(['./library', './App'], function(library, App){
+ sap.ui.define(['./library', './App'], function(ui5strapViewerLib, App){
 	 
 	 "use strict";
 	 

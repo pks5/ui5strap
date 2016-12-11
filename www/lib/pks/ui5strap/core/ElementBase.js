@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './BaseSupport', './OptionsSupport', "sap/ui/core/Element"], function(library, BaseSupport, OptionsSupport, SapElementBase){
+sap.ui.define(['./library', './BaseSupport', './OptionsSupport', "sap/ui/core/Element"], function(ui5strapCoreLib, BaseSupport, OptionsSupport, SapElementBase){
 	
 	"use strict";
 	

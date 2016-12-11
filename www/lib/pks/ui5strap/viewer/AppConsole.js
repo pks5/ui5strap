@@ -29,7 +29,7 @@
  * TODO Refactor to "ui5strap.ConsoleApp"
  */
 
- sap.ui.define(['./library', './AppBase', './Console'], function(library, AppBase, Console){
+ sap.ui.define(['./library', './AppBase', './Console'], function(ui5strapViewerLib, AppBase, Console){
 	 
 	 "use strict";
 	 

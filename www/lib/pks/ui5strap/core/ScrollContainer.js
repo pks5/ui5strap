@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "./ControlBase"], function(library, ControlBase){
+sap.ui.define(['./library', "./ControlBase"], function(ui5strapCoreLib, ControlBase){
 	
 	"use strict";
 	
@@ -51,7 +51,7 @@ sap.ui.define(['./library', "./ControlBase"], function(library, ControlBase){
 		
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.core",
 
 			properties : { 
 				vertical : {

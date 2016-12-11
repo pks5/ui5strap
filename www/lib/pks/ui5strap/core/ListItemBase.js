@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "./ControlBase", './SelectableSupport'], function(library, ControlBase, SelectableSupport){
+sap.ui.define(['./library', "./ControlBase", './SelectableSupport'], function(ui5strapCoreLib, ControlBase, SelectableSupport){
 	
 	"use strict";
 	
@@ -34,7 +34,7 @@ sap.ui.define(['./library', "./ControlBase", './SelectableSupport'], function(li
 			
 			defaultAggregation : "content",
 			
-			library : "ui5strap",
+			library : "pks.ui5strap.core",
 
 			properties : { 
 				

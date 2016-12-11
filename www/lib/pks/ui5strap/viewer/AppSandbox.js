@@ -29,7 +29,7 @@
  * TODO Refactor to "pks.ui5strap.viewer.SandboxApp"
  */
 
- sap.ui.define(['./library', './AppBase', './Sandbox'], function(library, AppBase, Sandbox){
+ sap.ui.define(['./library', './AppBase', './Sandbox'], function(ui5strapViewerLib, AppBase, Sandbox){
 	 
 	 "use strict";
 	 

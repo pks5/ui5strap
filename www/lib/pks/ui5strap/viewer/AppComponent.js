@@ -25,7 +25,7 @@
  * 
  */
  
-sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
+sap.ui.define(['./library', 'sap/ui/base/Object'], function(ui5strapViewerLib, ObjectBase){
 
 	"use strict";
 	

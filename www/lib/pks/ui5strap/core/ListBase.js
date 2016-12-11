@@ -25,14 +25,14 @@
  * 
  */
 
-sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListItemBase', "./Utils", 'sap/ui/Device'], function(library, ControlBase, ListSelectionSupport, ListItemBase, Utils, Device){
+sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListItemBase', "./Utils", 'sap/ui/Device'], function(ui5strapCoreLib, ControlBase, ListSelectionSupport, ListItemBase, Utils, Device){
 	
 	"use strict";
 	
 	var _meta = {
 			interfaces : [],
 
-			library : "ui5strap",
+			library : "pks.ui5strap.core",
 			
 			properties : {
 				

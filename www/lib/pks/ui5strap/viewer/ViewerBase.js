@@ -26,7 +26,7 @@
  */
  
 
-sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Console", "../core/Layer", "../core/NavContainer"], function(library, ObjectBase, ControlBase, Console, Layer, NavContainer){
+sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Console", "../core/Layer", "../core/NavContainer"], function(ui5strapViewerLib, ObjectBase, ControlBase, Console, Layer, NavContainer){
 	
 	"use strict";
 	
