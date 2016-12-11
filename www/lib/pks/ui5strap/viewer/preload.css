@@ -426,13 +426,13 @@
 }
 
 
-.ui5strap-spinnerBounce {
+.ui5strap-spinner-bounce {
 margin:0 auto;
   width: 70px;
   text-align: center;
 }
 
-.ui5strap-spinnerBounce > div {
+.ui5strap-spinner-bounce > div {
   width: 18px;
   height: 18px;
   background-color: #333;
@@ -443,12 +443,12 @@ margin:0 auto;
   animation: sk-bouncedelay 1.4s infinite ease-in-out both;
 }
 
-.ui5strap-spinnerBounce > div:nth-child(1) {
+.ui5strap-spinner-bounce > div:nth-child(1) {
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
 
-.ui5strap-spinnerBounce > div:nth-child(2) {
+.ui5strap-spinner-bounce > div:nth-child(2) {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
