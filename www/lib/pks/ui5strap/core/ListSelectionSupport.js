@@ -50,7 +50,7 @@ sap.ui.define(['./library'], function(library){
 	ListSelectionSupport.meta = function(meta){
 		//Interfaces
 		
-		meta.interfaces.push("ui5strap.IItemsProvider", "ui5strap.ISelectionProvider");
+		meta.interfaces.push("pks.ui5strap.core.IItemsProvider", "pks.ui5strap.core.ISelectionProvider");
 		
 		//Properties
 		
@@ -69,7 +69,7 @@ sap.ui.define(['./library'], function(library){
 			
 		meta.events.select = {
 			parameters : {
-				srcItem : {type : "ui5strap.ISelectableItem"},
+				srcItem : {type : "pks.ui5strap.core.ISelectableItem"},
 				srcControl : {type : "sap/ui/core/Control"}
 			}
 		};
@@ -77,7 +77,7 @@ sap.ui.define(['./library'], function(library){
 		//TODO Rename 'tap' event to 'press' sometimes
 		meta.events.tap = {
 			parameters : {
-				srcItem : {type : "ui5strap.ISelectableItem"},
+				srcItem : {type : "pks.ui5strap.core.ISelectableItem"},
 				srcControl : {type : "sap/ui/core/Control"}
 			}
 		};

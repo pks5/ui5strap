@@ -61,7 +61,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 			
 			aggregations : { 
 				columns : {
-					type : "ui5strap.IColumn"
+					type : "pks.ui5strap.bs3.IColumn"
 				}
 			}
 

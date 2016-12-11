@@ -177,8 +177,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 		
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
-		oEvent.setMarked("ui5strap.ISelectionProvider");
-		oEvent.setMarked("ui5strap.IItemsProvider");
+		oEvent.setMarked("pks.ui5strap.core.ISelectionProvider");
+		oEvent.setMarked("pks.ui5strap.core.IItemsProvider");
 		oEvent.setMarked("ui5strap.ButtonGroup");
 		
 		var button = Utils.findClosestParentControl(oEvent.srcControl, Button),
@@ -192,7 +192,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			if(providerItem){
 				selectionProvider = providerItem.getParent();
 				
-				if(oEvent.isMarked("ui5strap.ISelectableItem.update")){
+				if(oEvent.isMarked("pks.ui5strap.core.ISelectableItem.update")){
 					buttonUpdated = true;
 				}
 			}

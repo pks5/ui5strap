@@ -49,7 +49,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", 'sap/ui/base/Object', "
 	 */
 	var AppBase = ObjectBase.extend('pks.ui5strap.viewer.AppBase', /** @lends pks.ui5strap.viewer.AppBase.prototype */{
 		metadata : {
-			interfaces : ["ui5strap.IApp"]
+			interfaces : ["pks.ui5strap.viewer.IApp"]
 		},
 		
 		/**
@@ -1301,8 +1301,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", 'sap/ui/base/Object', "
 		    oApp = viewData.__ui5strap.app;
 		}
 		/*
-		else if(oComponent && oComponent.getMetadata().isInstanceOf("ui5strap.IRootComponent")){
-			//Component implements ui5strap.IRootComponent
+		else if(oComponent && oComponent.getMetadata().isInstanceOf("pks.ui5strap.viewer.IRootComponent")){
+			//Component implements pks.ui5strap.viewer.IRootComponent
 			oApp = oComponent.getApp();
 		}
 		*/
@@ -1311,7 +1311,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", 'sap/ui/base/Object', "
 			oApp = oComponent.getApp();
 		}
 		
-		if(!oApp || !oApp.getMetadata().isInstanceOf("ui5strap.IApp")){
+		if(!oApp || !oApp.getMetadata().isInstanceOf("pks.ui5strap.viewer.IApp")){
 			jQuery.sap.log.warning("Cannot determine app reference from view " + oController.getView().getId());
 			
 			return null;
@@ -1547,7 +1547,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", 'sap/ui/base/Object', "
 			_this = this;
 		
 		//TODO Instead of just checking the existance of the methods,
-		//it would be better to check whether the class implements the interface ui5strap.IRootComponent
+		//it would be better to check whether the class implements the interface pks.ui5strap.viewer.IRootComponent
 		if(rootComponent._buildRootControl){
 			this._rootControl = rootComponent._buildRootControl();
 			callback && callback();

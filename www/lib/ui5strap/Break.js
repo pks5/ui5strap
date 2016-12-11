@@ -49,7 +49,7 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(library, ControlBas
 	//TODO eliminate ui5strap shortcuts
 	var Break = ControlBase.extend("ui5strap.Break", {
 		metadata : {
-			interfaces : ["ui5strap.IText"],
+			interfaces : ["pks.ui5strap.core.IText"],
 			deprecated : true,
 			library : "ui5strap"
 		},

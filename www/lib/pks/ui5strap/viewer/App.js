@@ -48,7 +48,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	 */
 	var App = AppBase.extend('pks.ui5strap.viewer.App', /** @lends pks.ui5strap.viewer.App.prototype */ {
 		metadata : {
-			interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"]
+			interfaces : ["pks.ui5strap.viewer.IRootComponent", "pks.ui5strap.viewer.IRootNavigator"]
 		},
 		"constructor" : function(config, viewer){
 			AppBase.call(this, config, viewer);
@@ -247,7 +247,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	/**
 	 * Initializes a navigator.
 	 * 
-	 * @param navigator {ui5strap.INavigator} The navigator instance.
+	 * @param navigator {pks.ui5strap.core.INavigator} The navigator instance.
 	 * @param intitalViews {array} An array of view definitions.
 	 * @param excludeTarget {string} If specified, this target will be skipped.
 	 * @param callback {function} The callback function.
@@ -432,7 +432,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	/**
 	 * Navigate to a certain view via root component.
 	 * 
-	 * @param navControl {ui5strap.INavigator} The navigator instance.
+	 * @param navControl {pks.ui5strap.core.INavigator} The navigator instance.
 	 * @param viewConfig {object} The view definition.
 	 * @param callback {function} The callback function.
 	 * @param suppressResolve {boolean} Whether the view definition should not be resolved via config.
@@ -510,7 +510,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	/**
 	 * Finally changes to a page in the given navigator.
 	 * 
-	 * @param navControl {ui5strap.INavigator} The navigator instance.
+	 * @param navControl {pks.ui5strap.core.INavigator} The navigator instance.
 	 * @param oPage {sap.ui.core.Control} The control representing the page.
 	 * @param viewConfigResolved {object} The resolved view definition.
 	 * @param excludeSubNavTarget {string} If specified, this target is skipped when initializing a sub navigation.
@@ -574,7 +574,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	/**
 	 * Implementation of the navigateTo function for this root component.
 	 * 
-	 * @param navControl {ui5strap.INavigator} The navigator instance.
+	 * @param navControl {pks.ui5strap.core.INavigator} The navigator instance.
 	 * @param viewConfig {object} The view definition.
 	 * @param callback {function} The callback function.
 	 * @param suppressResolve {boolean} Whether resolving the view definition should be suppressed.

@@ -47,7 +47,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	 */
 	var RadioButton = ControlBase.extend("ui5strap.RadioButton", {
 		metadata : {
-			interfaces : ["ui5strap.IInputGroupAddon"],
+			interfaces : ["pks.ui5strap.bs3.IInputGroupAddon"],
 			
 			library : "ui5strap",
 			
@@ -80,7 +80,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 			var groupName = oControl.getGroupName(),
 				type = oControl.getType(),
 				typeBlock = ui5strap.RadioButtonType.Block,
-				inInputGroup = oControl.getParent().getMetadata().isInstanceOf("ui5strap.IInputGroup");
+				inInputGroup = oControl.getParent().getMetadata().isInstanceOf("pks.ui5strap.bs3.IInputGroup");
 			
 			if(!inInputGroup){
 				if(type === typeBlock){ 

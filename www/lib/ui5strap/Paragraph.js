@@ -81,7 +81,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 			aggregations : { 
 				content : {
 					singularName: "content",
-					type:"ui5strap.IText"
+					type:"pks.ui5strap.core.IText"
 				}
 			}
 

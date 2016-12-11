@@ -68,7 +68,7 @@ sap.ui
 
 								types : [ ],
 
-								interfaces : [],
+								interfaces : ["pks.ui5strap.viewer.IApp", "pks.ui5strap.viewer.IRootComponent", "pks.ui5strap.viewer.IRootNavigator"],
 
 								controls : ["pks.ui5strap.viewer.Console", "pks.ui5strap.viewer.Sandbox"],
 

@@ -47,7 +47,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 	 */
 	var TabContainer = ControlBase.extend("ui5strap.TabContainer", {
 		metadata : {
-			interfaces : ["ui5strap.ISelectionProvider"],
+			interfaces : ["pks.ui5strap.core.ISelectionProvider"],
 
 			// ---- object ----
 			defaultAggregation : "panes",
@@ -88,7 +88,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			
 			associations : {
 				"source" : {
-					type : "ui5strap.ISelectionProvider",
+					type : "pks.ui5strap.core.ISelectionProvider",
 					multiple : false
 				}
 			}

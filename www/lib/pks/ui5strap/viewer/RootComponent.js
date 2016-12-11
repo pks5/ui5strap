@@ -20,7 +20,7 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Componen
 	 */
 	var RootComponent = Component.extend("pks.ui5strap.viewer.RootComponent", {
 		metadata : {
-	    	interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"],
+	    	interfaces : ["pks.ui5strap.viewer.IRootComponent", "pks.ui5strap.viewer.IRootNavigator"],
 	    	
 			properties : {
 	            app: {

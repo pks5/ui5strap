@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	 */
 	var NavContainer = ControlBase.extend("pks.ui5strap.core.NavContainer", {
 		metadata : {
-			interfaces : ["ui5strap.INavigator"],
+			interfaces : ["pks.ui5strap.core.INavigator"],
 			
 			library : "ui5strap",
 			
@@ -635,7 +635,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	
 	/*
 	 *
-	 * START Implement ui5strap.INavigator
+	 * START Implement pks.ui5strap.core.INavigator
 	 * 
 	 */
 	
@@ -776,7 +776,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	
 	/*
 	 *
-	 * END Implement ui5strap.INavigator
+	 * END Implement pks.ui5strap.core.INavigator
 	 * 
 	 */
 	

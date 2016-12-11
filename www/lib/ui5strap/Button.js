@@ -28,7 +28,7 @@
 sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils", "./PositionSupport"], function(library, ControlBase, SelectableSupport, Utils, PositionSupport){
 
 	var mMetaData =  {
-			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupButton"],
+			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IInputGroupButton"],
 			
 			defaultAggregation : "content",
 			library : "ui5strap",
@@ -173,7 +173,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	ButtonProto._handlePress = function(oEvent) {
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
-		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("pks.ui5strap.core.ISelectableItem");
 		oEvent.setMarked("ui5strap.Button");
 		
 		if (this.getEnabled()) {

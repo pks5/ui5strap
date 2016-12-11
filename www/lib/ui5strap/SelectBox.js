@@ -47,7 +47,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	 */
 	var SelectBox = ControlBase.extend("ui5strap.SelectBox", {
 		metadata : {
-			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupControl"],
+			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IInputGroupControl"],
 			defaultAggregation : "items",
 
 			library : "ui5strap",

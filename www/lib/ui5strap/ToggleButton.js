@@ -29,7 +29,7 @@ sap.ui.define(["./library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	
 	
 	var _meta = {
-			interfaces : ["ui5strap.IText"],
+			interfaces : ["pks.ui5strap.core.IText"],
 			
 			library : "ui5strap",
 			
@@ -145,7 +145,7 @@ sap.ui.define(["./library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	 */
 	ToggleButtonProto._handlePress = function(oEvent){
 		oEvent.setMarked();
-		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("pks.ui5strap.core.ISelectableItem");
 		oEvent.setMarked("ui5strap.ToggleButton");
 		
 		if(this.getEnabled()){

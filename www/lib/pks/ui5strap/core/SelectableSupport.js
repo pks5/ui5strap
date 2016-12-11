@@ -51,7 +51,7 @@ sap.ui.define(['./library'], function(library){
 		
 		//Interfaces
 		
-		meta.interfaces.push("ui5strap.ISelectableItem");
+		meta.interfaces.push("pks.ui5strap.core.ISelectableItem");
 		
 		//Properties
 		

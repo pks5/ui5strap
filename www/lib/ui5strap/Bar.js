@@ -47,7 +47,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	 */
 	var Bar = ControlBase.extend("ui5strap.Bar", /** @lends ui5strap.Bar.prototype */ {
 		metadata : {
-			interfaces : ["ui5strap.IBar"],
+			interfaces : ["pks.ui5strap.bs3.IBar"],
 			
 			"library" : "ui5strap",
 			

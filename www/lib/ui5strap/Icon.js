@@ -31,7 +31,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 
 			library : "ui5strap",
 			
-			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupAddon"],
+			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IInputGroupAddon"],
 			
 			properties : { 
 				iconSet : {

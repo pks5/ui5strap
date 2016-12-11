@@ -88,8 +88,8 @@ sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListIt
 		
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
-		oEvent.setMarked("ui5strap.ISelectionProvider");
-		oEvent.setMarked("ui5strap.IItemsProvider");
+		oEvent.setMarked("pks.ui5strap.core.ISelectionProvider");
+		oEvent.setMarked("pks.ui5strap.core.IItemsProvider");
 		oEvent.setMarked("pks.ui5strap.core.ListBase");
 		
 		//TODO find the right list item! (dropdown menu)
@@ -104,7 +104,7 @@ sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListIt
 			listItem = Utils.findClosestParentControl(selectionProvider, ListItemBase);
 			
 			if(listItem){
-				if(oEvent.isMarked("ui5strap.ISelectableItem.update")){
+				if(oEvent.isMarked("pks.ui5strap.core.ISelectableItem.update")){
 					listItemUpdated = true;
 				}
 			}

@@ -68,7 +68,9 @@ sap.ui
 
 								types : [ ],
 
-								interfaces : [],
+								interfaces : ["pks.ui5strap.core.IItemsProvider", "pks.ui5strap.core.INavigator",
+												"pks.ui5strap.core.ISelectionProvider",
+												"pks.ui5strap.core.ISelectableItem", "pks.ui5strap.core.IText"],
 
 								controls : [],
 

@@ -28,7 +28,7 @@
 sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils", "./PositionSupport"], function(library, Button, Utils, PositionSupport){
 	
 	var mMetaData = {
-		interfaces : ["ui5strap.IDropdownMenuHost"],
+		interfaces : ["pks.ui5strap.bs3.IDropdownMenuHost"],
 		
 		defaultAggregation : "menu",
 			
@@ -142,7 +142,7 @@ sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils", "./PositionSu
 	 */
 	ButtonDropdownProto._handlePress = function(oEvent){
 		oEvent.setMarked();
-		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("pks.ui5strap.core.ISelectableItem");
 		oEvent.setMarked("ui5strap.ButtonDropdown");
 		
 		if (this.getEnabled()) {
@@ -165,7 +165,7 @@ sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils", "./PositionSu
 					}
 					
 					if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
-						oEvent.setMarked("ui5strap.ISelectableItem.update");
+						oEvent.setMarked("pks.ui5strap.core.ISelectableItem.update");
 					}
 				}
 			}

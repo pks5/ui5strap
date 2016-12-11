@@ -47,7 +47,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	 */
 	var Checkbox = ControlBase.extend("ui5strap.Checkbox", {
 		metadata : {
-			interfaces : ["ui5strap.IInputGroupAddon"],
+			interfaces : ["pks.ui5strap.bs3.IInputGroupAddon"],
 			library : "ui5strap",
 			
 			properties : { 
@@ -74,7 +74,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 		renderer : function(rm, oControl) {
 			var type = oControl.getType(),
 				typeBlock = ui5strap.CheckboxType.Block,
-				inInputGroup = oControl.getParent().getMetadata().isInstanceOf("ui5strap.IInputGroup");
+				inInputGroup = oControl.getParent().getMetadata().isInstanceOf("pks.ui5strap.bs3.IInputGroup");
 
 			if(!inInputGroup){
 				if(type === typeBlock){

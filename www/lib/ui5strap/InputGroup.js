@@ -47,7 +47,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	 */
 	var InputGroup = ControlBase.extend("ui5strap.InputGroup", {
 		metadata : {
-			interfaces : ["ui5strap.IInputGroup"],
+			interfaces : ["pks.ui5strap.bs3.IInputGroup"],
 			
 			// ---- object ----
 			defaultAggregation : "content",
@@ -94,14 +94,14 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 					addonClass = null,
 					itemMeta = item.getMetadata();
 				
-				if(itemMeta.isInstanceOf("ui5strap.IInputGroupControl")){
+				if(itemMeta.isInstanceOf("pks.ui5strap.bs3.IInputGroupControl")){
 					//Do nothing
 				}
 				else if(validAddonPosition){
-					if(itemMeta.isInstanceOf("ui5strap.IInputGroupButton")){
+					if(itemMeta.isInstanceOf("pks.ui5strap.bs3.IInputGroupButton")){
 						addonClass = 'input-group-btn';
 					}
-					else if(itemMeta.isInstanceOf("ui5strap.IInputGroupAddon")){
+					else if(itemMeta.isInstanceOf("pks.ui5strap.bs3.IInputGroupAddon")){
 						addonClass = 'input-group-addon';
 					}
 					else{

@@ -28,7 +28,7 @@
 sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(library, ControlBase, Utils, RenderUtils, PositionSupport){
 	
 	var mMetaData = {
-			interfaces : ["ui5strap.IText", "ui5strap.IInputGroupAddon"],
+			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IInputGroupAddon"],
 			// ---- object ----
 			defaultAggregation : "content",
 			// ---- control specific ----

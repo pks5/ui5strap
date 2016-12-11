@@ -47,7 +47,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, 
 	 */
 	var Col = ControlBase.extend("ui5strap.Col", {
 		metadata : {
-			interfaces : ["ui5strap.IColumn"],
+			interfaces : ["pks.ui5strap.bs3.IColumn"],
 			
 			library : "ui5strap",
 			

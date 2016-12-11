@@ -47,7 +47,7 @@ sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
 	 */
 	var AppFrame = AppComponent.extend("pks.ui5strap.viewer.AppFrame", /** @lends pks.ui5strap.viewer.AppFrame.prototype */{
 		metadata : {
-			interfaces : ["ui5strap.IRootComponent", "ui5strap.IRootNavigator"]
+			interfaces : ["pks.ui5strap.viewer.IRootComponent", "pks.ui5strap.viewer.IRootNavigator"]
 		},
 		/**
 		 * @constructs

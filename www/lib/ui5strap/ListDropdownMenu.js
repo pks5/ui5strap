@@ -75,8 +75,8 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase', 'pks/ui5strap/core/Lis
 	ListDropdownMenuProto._handlePress = function(oEvent){
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
-		oEvent.setMarked("ui5strap.ISelectionProvider");
-		oEvent.setMarked("ui5strap.IItemsProvider");
+		oEvent.setMarked("pks.ui5strap.core.ISelectionProvider");
+		oEvent.setMarked("pks.ui5strap.core.IItemsProvider");
 		oEvent.setMarked("ui5strap.ListDropdownMenu");
 		
 		//Find the closest item. Should be an item from the dropdown menu.

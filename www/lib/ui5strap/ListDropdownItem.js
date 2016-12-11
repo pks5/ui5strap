@@ -47,7 +47,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', './ListLinkItem', 
 	 */
 	var ListDropdownItem = ListLinkItem.extend("ui5strap.ListDropdownItem", {
 		metadata : {
-			interfaces : ["ui5strap.IDropdownMenuHost"],
+			interfaces : ["pks.ui5strap.bs3.IDropdownMenuHost"],
 			
 			library : "ui5strap",
 
@@ -121,7 +121,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', './ListLinkItem', 
 	ListDropdownItemProto._handlePress = function(oEvent){
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
-		oEvent.setMarked("ui5strap.ISelectableItem");
+		oEvent.setMarked("pks.ui5strap.core.ISelectableItem");
 		oEvent.setMarked("ui5strap.ListDropdownItem");
 		
 		if(this.getEnabled()){
@@ -145,7 +145,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', './ListLinkItem', 
 					}
 					
 					if(hostUpdate !== ui5strap.DropdownMenuHostUpdate.None){
-						oEvent.setMarked("ui5strap.ISelectableItem.update");
+						oEvent.setMarked("pks.ui5strap.core.ISelectableItem.update");
 					}
 				}
 			}
