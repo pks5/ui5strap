@@ -60,7 +60,7 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 	
 			aggregations : { 
 				items : {
-					type : "pks.ui5strap.bs3.ListItem",
+					type : "pks.ui5strap.bs3.ListLinkItem",
 					singularName: "item"
 				} 
 			}

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', '../core/library', '../bs3/ListItem', '../core/Utils'], function(ui5strapExLib, ui5strapCoreLib, ListItem, Utils){
+sap.ui.define(['./library', '../core/library', '../core/ListItemBase', '../core/Utils'], function(ui5strapExLib, ui5strapCoreLib, ListItemBase, Utils){
 	
 	"use strict";
 	
@@ -37,7 +37,7 @@ sap.ui.define(['./library', '../core/library', '../bs3/ListItem', '../core/Utils
 	 * 
 	 * @class
 	 * Control for creating menu entries for the BarMenu control.
-	 * @extends pks.ui5strap.bs3.ListItem
+	 * @extends pks.ui5strap.core.ListItemBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,12 +47,24 @@ sap.ui.define(['./library', '../core/library', '../bs3/ListItem', '../core/Utils
 	 * @alias pks.ui5strap.ex.BarMenuItem
 	 * 
 	 */
-	var BarMenuItem = ListItem.extend("pks.ui5strap.ex.BarMenuItem", {
+	var BarMenuItem = ListItemBase.extend("pks.ui5strap.ex.BarMenuItem", {
 		metadata : {
 
 			library : "pks.ui5strap.ex",
 			
 			properties : { 
+				text : {
+					type:"string", 
+					defaultValue:""
+				},
+				parse : {
+					type : "boolean",
+					defaultValue : false
+				},
+				contentPlacement : {
+					type:"pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
+				},
 				icon : {
 					type:"string",
 					defaultValue : ""
@@ -113,13 +125,6 @@ sap.ui.define(['./library', '../core/library', '../bs3/ListItem', '../core/Utils
 		}
 	}),
 	BarMenuItemProto = BarMenuItem.prototype;
-	
-	/**
-	 * TODO More efficient rerendering
-	 */
-	BarMenuItemProto.setText = function(newText, suppressInvalidate){
-		this.setProperty('text', newText, suppressInvalidate);
-	};
 	
 	return BarMenuItem;
 });

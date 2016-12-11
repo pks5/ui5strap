@@ -44,7 +44,7 @@ sap.ui.define(['./library', '../core/ListBase', "./PositionSupport"], function(u
 			
 			aggregations : { 
 				items : {
-					type : "pks.ui5strap.bs3.ListItem",
+					type : "pks.ui5strap.bs3.ListLinkItem",
 					singularName: "item"
 				} 
 			}

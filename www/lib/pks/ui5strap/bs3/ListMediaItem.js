@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "../core/library", './ListItem'], function(ui5strapBs3Lib, ui5strapCoreLib, ListItem){
+sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function(ui5strapBs3Lib, ui5strapCoreLib, ListItemBase){
 	
 	"use strict";
 	
@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/library", './ListItem'], function(ui5strapB
 	 * 
 	 * @class
 	 * Control for creating items for ListMedia controls.
-	 * @extends pks.ui5strap.bs3.ListItem
+	 * @extends pks.ui5strap.core.ListItemBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", './ListItem'], function(ui5strapB
 	 * @alias pks.ui5strap.bs3.ListMediaItem
 	 * 
 	 */
-	var ListMediaItem = ListItem.extend("pks.ui5strap.bs3.ListMediaItem", {
+	var ListMediaItem = ListItemBase.extend("pks.ui5strap.bs3.ListMediaItem", {
 		metadata : {
 
 			// ---- object ----
@@ -74,13 +74,6 @@ sap.ui.define(['./library', "../core/library", './ListItem'], function(ui5strapB
 		}
 	}),
 	ListMediaItemProto = ListMediaItem.prototype;
-	
-	/**
-	 * TODO More efficient rerendering
-	 */
-	ListMediaItemProto.setText = function(newText, suppressInvalidate){
-		this.setProperty('text', newText, suppressInvalidate);
-	};
 	
 	return ListMediaItem;
 

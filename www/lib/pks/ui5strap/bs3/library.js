@@ -62,7 +62,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 				          "pks.ui5strap.bs3.DropdownMenuHostUpdate", "pks.ui5strap.bs3.FormMethod",
 				          "pks.ui5strap.bs3.FormSeverity", "pks.ui5strap.bs3.FormType", "pks.ui5strap.bs3.HeadingType",
 				          "pks.ui5strap.bs3.IconType", "pks.ui5strap.bs3.IconSize", "pks.ui5strap.bs3.IconTransform",
-				          "pks.ui5strap.bs3.ImageType", "pks.ui5strap.bs3.ImageShape", "pks.ui5strap.bs3.ListType",
+				          "pks.ui5strap.bs3.ImageType", "pks.ui5strap.bs3.ImageShape", 
 				          "pks.ui5strap.bs3.ListGroupMode", "pks.ui5strap.bs3.LinkType", "pks.ui5strap.bs3.NavBarType",
 				          "pks.ui5strap.bs3.NavBarPosition",  "pks.ui5strap.bs3.NavType", "pks.ui5strap.bs3.PickerWheelMode",
 				          "pks.ui5strap.bs3.Placement", "pks.ui5strap.bs3.RadioButtonType",
@@ -87,10 +87,10 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 						"pks.ui5strap.bs3.FormGroup", "pks.ui5strap.bs3.Heading",
 						"pks.ui5strap.bs3.Icon", "pks.ui5strap.bs3.Image",
 						"pks.ui5strap.bs3.InputGroup", "pks.ui5strap.bs3.Jumbotron",
-						"pks.ui5strap.bs3.Link", "pks.ui5strap.bs3.List",
+						"pks.ui5strap.bs3.Link", 
 						"pks.ui5strap.bs3.ListDropdownItem",
 						"pks.ui5strap.bs3.ListDropdownMenu", "pks.ui5strap.bs3.ListGroup",
-						"pks.ui5strap.bs3.ListGroupItem", "pks.ui5strap.bs3.ListItem",
+						"pks.ui5strap.bs3.ListGroupItem", 
 						"pks.ui5strap.bs3.ListLinkItem", "pks.ui5strap.bs3.ListMedia",
 						"pks.ui5strap.bs3.ListMediaItem", "pks.ui5strap.bs3.ListNavItem",
 						"pks.ui5strap.bs3.Modal", "pks.ui5strap.bs3.Nav", "pks.ui5strap.bs3.NavBar",
@@ -412,14 +412,6 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 		Default : "Default",
 		MediaObject : "MediaObject",
 		Responsive : "Responsive"
-	};
-
-	/*
-	 * ListType
-	 */
-	ui5strapBs3Lib.ListType = {
-		Unordered : "Unordered",
-		Ordered : "Ordered"
 	};
 
 	ui5strapBs3Lib.ListGroupMode = {

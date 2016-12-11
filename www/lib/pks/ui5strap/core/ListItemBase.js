@@ -69,7 +69,8 @@ sap.ui.define(['./library', "./ControlBase", './SelectableSupport'], function(ui
 	 * 
 	 */
 	var ListItemBase = ControlBase.extend("pks.ui5strap.core.ListItemBase", {
-		metadata : _meta
+		metadata : _meta,
+		renderer: null
 	}),
 	ListItemBaseProto = ListItemBase.prototype;
 

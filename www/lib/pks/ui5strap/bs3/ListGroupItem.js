@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem'], function(ui5strapBs3Lib, ListItem){
+sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function(ui5strapBs3Lib, ui5strapCoreLib, ListItemBase){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ListItem'], function(ui5strapBs3Lib, ListItem){
 	 * @alias pks.ui5strap.bs3.ListGroupItem
 	 * 
 	 */
-	var ListGroupItem = ListItem.extend("pks.ui5strap.bs3.ListGroupItem", {
+	var ListGroupItem = ListItemBase.extend("pks.ui5strap.bs3.ListGroupItem", {
 		metadata : {
 
 			// ---- object ----
@@ -55,7 +55,19 @@ sap.ui.define(['./library', './ListItem'], function(ui5strapBs3Lib, ListItem){
 			
 			// ---- control specific ----
 			library : "pks.ui5strap.bs3",
-			properties : { 
+			properties : {
+				text : {
+					type:"string", 
+					defaultValue:""
+				},
+				parse : {
+					type : "boolean",
+					defaultValue : false
+				},
+				contentPlacement : {
+					type:"pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
+				},
 				badge : {
 					type:"string",
 					defaultValue : ""

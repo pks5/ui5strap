@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.ListItem
+ * pks.ui5strap.core.PlainListItem
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,14 +25,14 @@
  * 
  */
 
-sap.ui.define(['./library', "../core/library", '../core/ListItemBase', '../core/SelectableSupport', "../core/Utils"], function(ui5strapBs3Lib, ui5strapCoreLib, ListItemBase, SelectableSupport, Utils){
+sap.ui.define(['./library', './ListItemBase', "./Utils", "./RenderUtils"], function(ui5strapCoreLib, ListItemBase, Utils, RenderUtils){
 	
 	"use strict";
 	
 	var _meta = {
 			interfaces : [],
 			
-			library : "pks.ui5strap.bs3",
+			library : "pks.ui5strap.core",
 
 			properties : { 
 				text : {
@@ -46,19 +46,10 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase', '../core/
 				contentPlacement : {
 					type:"pks.ui5strap.core.ContentPlacement",
 					defaultValue : ui5strapCoreLib.ContentPlacement.Start
-				},
-				
-				//@deprecated
-				itemId : {
-					deprecated: true,
-					type:"string",
-					defaultValue : ""
 				}
 			}
 
 		};
-	
-	SelectableSupport.meta(_meta);
 	
 	/**
 	 * Constructor for a new ListItem instance.
@@ -75,16 +66,28 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase', '../core/
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias pks.ui5strap.bs3.ListItem
+	 * @alias pks.ui5strap.core.PlainListItem
 	 * 
 	 */
-	var ListItem = ListItemBase.extend("pks.ui5strap.bs3.ListItem", {
-		metadata : _meta
+	var ListItem = ListItemBase.extend("pks.ui5strap.core.PlainListItem", {
+		metadata : _meta,
+		renderer : function(rm, oControl) {
+			rm.write("<li");
+			rm.writeControlData(oControl);
+			
+			rm.addClass(oControl._getStyleClass());
+
+			rm.writeClasses();
+
+			rm.write(">");
+
+			RenderUtils.renderContent(rm, oControl);
+
+			rm.write("</li>");
+		}
 	}),
 	ListItemProto = ListItem.prototype;
 
-	SelectableSupport.proto(ListItemProto);
-	
 	Utils.dynamicText(ListItemProto);
 
 	return ListItem;

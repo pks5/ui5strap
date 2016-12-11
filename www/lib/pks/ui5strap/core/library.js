@@ -68,6 +68,7 @@ sap.ui
 
 								types : [ 
 								          "pks.ui5strap.core.ContentPlacement",
+								          "pks.ui5strap.core.PlainListType",
 								          "pks.ui5strap.core.SelectionMode",
 								          "pks.ui5strap.core.TrailHtml", 
 								          "pks.ui5strap.core.TransitionSpeed", 
@@ -82,6 +83,8 @@ sap.ui
 								      "pks.ui5strap.core.ListBase",
 								      "pks.ui5strap.core.ListItemBase",
 								      "pks.ui5strap.core.NavContainer",
+								      "pks.ui5strap.core.PlainList",
+								      "pks.ui5strap.core.PlainListItem",
 								      "pks.ui5strap.core.ScrollContainer",
 								      "pks.ui5strap.core.ThematicBreak"
 								],
@@ -202,7 +205,16 @@ sap.ui
 						Start : "Start",
 						End : "End"
 					};
+					
+					/*
+					 * ListType
+					 */
+					ui5strapCoreLib.PlainListType = {
+						Unordered : "Unordered",
+						Ordered : "Ordered"
+					};
 
+					
 					/*
 					 * SelectionMode Used by pks.ui5strapBs3Lib.core.ListBase
 					 */

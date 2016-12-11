@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem', "../core/Utils"], function(ui5strapBs3Lib, ListItem, Utils){
+sap.ui.define(['./library', "../core/library", '../core/ListItemBase', "../core/Utils"], function(ui5strapBs3Lib, ui5strapCoreLib, ListItemBase, Utils){
 	
 	"use strict";
 	
@@ -37,7 +37,7 @@ sap.ui.define(['./library', './ListItem', "../core/Utils"], function(ui5strapBs3
 	 * 
 	 * @class
 	 * Control for creating list items with containing links.
-	 * @extends pks.ui5strap.bs3.ListItem
+	 * @extends pks.ui5strap.core.ListItemBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ListItem', "../core/Utils"], function(ui5strapBs3
 	 * @alias pks.ui5strap.bs3.ListLinkItem
 	 * 
 	 */
-	var ListLinkItem = ListItem.extend("pks.ui5strap.bs3.ListLinkItem", {
+	var ListLinkItem = ListItemBase.extend("pks.ui5strap.bs3.ListLinkItem", {
 		metadata : {
 			library : "pks.ui5strap.bs3",
 			
@@ -59,6 +59,10 @@ sap.ui.define(['./library', './ListItem', "../core/Utils"], function(ui5strapBs3
 				parse : {
 					type : "boolean",
 					defaultValue : false
+				},
+				contentPlacement : {
+					type:"pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
 				},
 				title : {
 					type:"string", 

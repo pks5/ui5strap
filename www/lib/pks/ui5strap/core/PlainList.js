@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.List
+ * pks.ui5strap.core.PlainList
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBase){
+sap.ui.define(['./library', './ListBase'], function(ui5strapCoreLib, ListBase){
 	
 	"use strict";
 	
@@ -44,30 +44,51 @@ sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBa
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias pks.ui5strap.bs3.List
+	 * @alias pks.ui5strap.core.PlainList
 	 * 
 	 */
-	var List = ListBase.extend("pks.ui5strap.bs3.List", {
+	var List = ListBase.extend("pks.ui5strap.core.PlainList", {
 		metadata : {
 
-			library : "pks.ui5strap.bs3",
+			library : "pks.ui5strap.core",
 			
 			defaultAggregation : "items",
 			
 			properties : { 
 				type : {
-					type:"pks.ui5strap.bs3.ListType", 
-					defaultValue:ui5strapBs3Lib.ListType.Unordered
+					type:"pks.ui5strap.core.PlainListType", 
+					defaultValue:ui5strapCoreLib.PlainListType.Unordered
 				}
 			},
 			
 			aggregations : { 
 				items : {
-					type : "pks.ui5strap.bs3.ListItem",
+					type : "pks.ui5strap.core.PlainListItem",
 					singularName: "item"
 				} 
 			}
 
+		},
+		
+		renderer : function(rm, oControl) {
+			var items = oControl.getItems();
+			
+			var tagName = 'ul';
+			if(oControl.getType() === ui5strapCoreLib.PlainListType.Ordered){
+				tagName = 'ol';
+			}
+		
+			rm.write("<" + tagName);
+			rm.writeControlData(oControl);
+			rm.addClass(oControl._getStyleClass());
+			rm.writeClasses();
+			rm.write(">");
+			
+			for(var i = 0; i < items.length; i++){
+				rm.renderControl(items[i]);
+			}
+			
+			rm.write("</" + tagName + ">");
 		}
 	}),
 	ListProto = List.prototype;

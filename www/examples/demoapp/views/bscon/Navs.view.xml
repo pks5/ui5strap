@@ -15,12 +15,8 @@
 				</brand>
 				<collapse>
 					<Nav align="NavBar" selectionMode="Single">
-						<ListItem>
-							<Link text="Home" />
-						</ListItem>
-						<ListItem selected="true">
-							<Link text="Library" />
-						</ListItem>
+						<ListLinkItem text="Home" />
+						<ListLinkItem selected="true" text="Library" />
 					</Nav>
 					<Form align="NavBarLeft">
 						<FormGroup>
@@ -34,10 +30,8 @@
 			<NavBar inverse="true" fluid="true">
 				<collapse>
 					<Nav align="NavBar" selectionMode="Single">
-						<ListItem>
-							<Link text="Home" />
-						</ListItem>
-						<ListLinkItem  text="Library" />
+						<ListLinkItem text="Home"/>
+						<ListLinkItem text="Library" />
 						<ListDropdownItem text="Data" update="TextAndData">
 							<ListDropdownMenu>
 								<ListLinkItem text="Cras justo odio" />
@@ -47,9 +41,7 @@
 								<ListLinkItem text="Vestibulum at eros" />
 							</ListDropdownMenu>
 						</ListDropdownItem>
-						<ListItem>
-							<Link text="Contact" />
-						</ListItem>
+						<ListLinkItem text="Contact" />
 					</Nav>
 				</collapse>
 			</NavBar>
@@ -60,18 +52,10 @@
 				<Col columns-small="4">
 
 					<Nav selectionMode="Single">
-						<ListItem>
-							<Link text="Home" />
-						</ListItem>
-						<ListItem selected="true">
-							<Link text="Library" />
-						</ListItem>
-						<ListItem>
-							<Link text="Data" />
-						</ListItem>
-						<ListItem>
-							<Link text="Contact" />
-						</ListItem>
+						<ListLinkItem text="Home" />
+						<ListLinkItem text="Library" />
+						<ListLinkItem text="Data" />
+						<ListLinkItem text="Contact" />
 					</Nav>
 
 				</Col>
@@ -79,40 +63,25 @@
 				<Col columns-small="4">
 
 					<Nav type="Pills" selectionMode="Single">
-						<ListItem>
-							<Link text="Home" />
-						</ListItem>
-						<ListItem selected="true">
-							<Link text="Library" />
-						</ListItem>
-						<ListItem>
-							<Link text="Data" />
-						</ListItem>
-						<ListItem>
-							<Link text="Contact" />
-						</ListItem>
+						<ListLinkItem text="Home" />
+						<ListLinkItem selected="true" text="Library" />
+						<ListLinkItem text="Data" />
+						<ListLinkItem text="Contact" />
 					</Nav>
 
 				</Col>
 				<Col columns-small="4">
 
 					<Nav type="PillsStacked" selectionMode="Single">
-						<ListItem>
-							<Link text="Home">
-								<Icon icon="home" fixed-width="true" />
-							</Link>
-						</ListItem>
-						<ListItem selected="true">
-							<Link text="Library">
-								<Icon icon="book" fixed-width="true" />
-							</Link>
-						</ListItem>
-						<ListItem>
-							<Link text="Data" />
-						</ListItem>
-						<ListItem>
-							<Link text="Contact" />
-						</ListItem>
+						<ListLinkItem text="Home">
+							<Icon icon="home" fixed-width="true" />
+						</ListLinkItem>
+						<ListLinkItem selected="true" text="Library">
+							<Icon icon="book" fixed-width="true" />
+						</ListLinkItem>
+						<ListLinkItem text="Data" />
+						<ListLinkItem text="Contact" />
+						
 					</Nav>
 
 				</Col>
@@ -147,18 +116,10 @@
 			</TabContainer>
 
 			<Nav type="Tabs" id="tabContainer1Tabs" selectionMode="Single">
-				<ListItem>
-					<Link text="Home" />
-				</ListItem>
-				<ListItem>
-					<Link text="Library" />
-				</ListItem>
-				<ListItem selected="true">
-					<Link text="Data" />
-				</ListItem>
-				<ListItem>
-					<Link text="Contact" />
-				</ListItem>
+				<ListLinkItem text="Home" />
+				<ListLinkItem text="Library" />
+				<ListLinkItem selected="true" text="Data" />
+				<ListLinkItem text="Contact" />
 			</Nav>
 
 			<TabContainer class="tabContainer1" source="tabContainer1Tabs" transition="zoom-in">
@@ -183,12 +144,8 @@
 			<Heading level="4" text="Custom association" />
 
 			<Nav type="TabsJustified" id="tabContainer3Tabs" selectionMode="Single" >
-				<ListItem data:panelId="home">
-					<Link text="Home" />
-				</ListItem>
-				<ListItem selected="true" data:panelId="library">
-					<Link text="Library" />
-				</ListItem>
+				<ListLinkItem text="Home" data:panelId="home" />
+				<ListLinkItem text="Library" selected="true" data:panelId="library" />
 				<ListDropdownItem text="Data"  update="TextAndData">
 					<ListDropdownMenu selectionMode="Single">
 							<ListLinkItem text="Cras justo odio" data:panelId="d1" />
@@ -196,9 +153,7 @@
 							<ListLinkItem text="Morbi leo risus" data:panelId="d3" />
 					</ListDropdownMenu>
 				</ListDropdownItem>
-				<ListItem data:panelId="contact">
-					<Link text="Contact" />
-				</ListItem>
+				<ListLinkItem text="Contact" data:panelId="contact" />
 			</Nav>
 
 			<TabContainer class="tabContainer2" source="tabContainer3Tabs" customAssociation="panelId" transition="flip-horizontal-cw">

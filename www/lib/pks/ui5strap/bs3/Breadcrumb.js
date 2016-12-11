@@ -56,7 +56,7 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapBs3Lib, ListBase){
 			
 			aggregations : { 
 				items : {
-					type : "pks.ui5strap.bs3.ListItem",
+					type : "pks.ui5strap.bs3.ListLinkItem",
 					singularName: "item"
 				} 
 			}
