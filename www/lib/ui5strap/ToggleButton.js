@@ -27,6 +27,7 @@
 
 sap.ui.define(["./library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport'], function(ui5strapExLib, ControlBase, SelectableSupport){
 	
+	"use strict";
 	
 	var _meta = {
 			interfaces : ["pks.ui5strap.core.IText"],

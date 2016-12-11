@@ -26,7 +26,9 @@
  */
 
 sap.ui.define([], function(){
-
+	
+	"use strict";
+	
 	/**
 	 * Picker wheel renderer.
 	 * @namespace

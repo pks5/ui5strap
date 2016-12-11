@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './ListBase'], function(library, ListBase){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Breadcrumb instance.
 	 * 

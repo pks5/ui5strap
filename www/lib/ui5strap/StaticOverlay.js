@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Layer"], function(uLib, ControlBase, Layer){
 	
+	"use strict";
+	
 	/**
 	 * Constructor for a new StaticOverlay instance.
 	 * 

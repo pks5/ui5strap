@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './ActionContext', './Action', "sap/ui/base/Object"], function(library, ActionContext, Action, ObjectBase){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Task instance.
 	 * 

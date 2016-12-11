@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './ElementBase'], function(library, ElementBase){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new TableRow instance.
 	 * 

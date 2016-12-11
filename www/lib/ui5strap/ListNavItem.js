@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './ListLinkItem'], function(library, ListLinkItem){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new ListNavItem instance.
 	 * 

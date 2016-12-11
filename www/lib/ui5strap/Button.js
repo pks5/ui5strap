@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils", "./PositionSupport"], function(library, ControlBase, SelectableSupport, Utils, PositionSupport){
-
+	
+	"use strict";
+	
 	var mMetaData =  {
 			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IInputGroupButton"],
 			

@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './StaticOverlay'], function(library, StaticOverlay){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Modal instance.
 	 * 

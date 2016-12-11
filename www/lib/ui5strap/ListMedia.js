@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(library, ListBase){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new ListMedia instance.
 	 * 

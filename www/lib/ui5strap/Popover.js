@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './Tooltip'], function(library, Tooltip){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Popover instance.
 	 * 

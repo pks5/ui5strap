@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['jquery.sap.global', "./library"], function(jQuery, ui5strapBs3Lib) {
-
+	
+	"use strict";
+	
 	/**
 	 * Carousel renderer.
 	 * @namespace

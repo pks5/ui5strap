@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library', 'pks/ui5strap/core/ListBase', "./PositionSupport"], function(library, ListBase, PositionSupport){
 	
+	"use strict";
+	
 	var mMetaData = {
 
 			library : "ui5strap",

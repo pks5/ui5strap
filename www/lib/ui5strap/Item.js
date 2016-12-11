@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "sap/ui/core/Element"], function(library, ElementBase){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Item instance.
 	 * 

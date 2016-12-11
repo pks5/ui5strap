@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils", "./PositionSupport"], function(library, Button, Utils, PositionSupport){
 	
+	"use strict";
+	
 	var mMetaData = {
 		interfaces : ["pks.ui5strap.bs3.IDropdownMenuHost"],
 		

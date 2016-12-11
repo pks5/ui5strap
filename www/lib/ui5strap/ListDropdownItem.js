@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', './ListLinkItem', "pks/ui5strap/core/Utils"], function(library, ListItemBase, ListLinkItem, Utils){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new ListDropdownItem instance.
 	 * 

@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './ListItem'], function(library, ListItem){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new ListGroupItem instance.
 	 * 

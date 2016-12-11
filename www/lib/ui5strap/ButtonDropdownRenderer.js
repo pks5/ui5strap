@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['jquery.sap.global', './Button', "pks/ui5strap/core/RenderUtils"], function(jQuery, Button, RenderUtils) {
-
+	
+	"use strict";
+	
 	/**
 	 * Button dropdown renderer.
 	 * @namespace

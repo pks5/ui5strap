@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "sap/ui/core/Control"], function(library, ControlBase){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Break instance.
 	 * 

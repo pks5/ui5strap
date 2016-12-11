@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils"], function(library, ListItemBase, SelectableSupport, Utils){
-
+	
+	"use strict";
+	
 	var _meta = {
 			interfaces : [],
 			

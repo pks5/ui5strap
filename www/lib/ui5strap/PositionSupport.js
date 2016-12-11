@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library'], function(ui5strapBs3Lib){
 	
+	"use strict";
+	
 	/**
 	 * Constructor for a new PositionSupport instance.
 	 * 

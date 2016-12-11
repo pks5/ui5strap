@@ -110,7 +110,7 @@ sap.ui
 
 						this._transitions = transString;
 
-						if (transSpeed && transitionSpeed !== "normal") {
+						if (transSpeed && transSpeed !== "normal") {
 							this._transitions += " ui5strap-transition-speed-"
 									+ transSpeed;
 						}

@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "./PositionSupport"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, PositionSupport){
-
+	
+	"use strict";
+	
 	var mMetaData = {
 
 		library : "ui5strap",

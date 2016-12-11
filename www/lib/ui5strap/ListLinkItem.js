@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './ListItem', "pks/ui5strap/core/Utils"], function(library, ListItem, Utils){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new ListLinkItem instance.
 	 * 

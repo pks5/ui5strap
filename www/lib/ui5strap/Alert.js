@@ -26,7 +26,9 @@
  */
 
 sap.ui.define([ './library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils" ], function(library, ControlBase, Utils, RenderUtils) {
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Alert instance.
 	 * 

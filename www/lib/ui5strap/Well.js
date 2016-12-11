@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils"], function(library, ControlBase, Utils){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Well instance.
 	 * 

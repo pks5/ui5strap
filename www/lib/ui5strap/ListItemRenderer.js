@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['jquery.sap.global', "pks/ui5strap/core/RenderUtils"], function(jQuery, RenderUtils) {
-
+	
+	"use strict";
+	
 	/**
 	 * List item renderer.
 	 * @namespace

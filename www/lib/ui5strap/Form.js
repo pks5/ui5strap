@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"], function(library, ControlBase, PositionSupport){
 	
+	"use strict";
+	
 	var mMetaData = {
 
 		defaultAggregation : "content",

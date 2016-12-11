@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(library, ControlBase, RenderUtils, PositionSupport){
 	
+	"use strict";
+	
 	var mMetaData = {
 			interfaces : ["pks.ui5strap.core.IText"],
 			

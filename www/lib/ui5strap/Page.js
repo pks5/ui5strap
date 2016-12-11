@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(library, ControlBase){
 	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Page instance.
 	 * 
