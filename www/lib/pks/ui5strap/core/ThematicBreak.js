@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.Break
+ * pks.ui5strap.core.ThematicBreak
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -30,13 +30,13 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 	"use strict";
 	
 	/**
-	 * Constructor for a new Break instance.
+	 * Constructor for a new Line instance.
 	 * 
 	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
 	 * @param {object} [mSettings] Initial settings for the new control
 	 * 
 	 * @class
-	 * Creates a simple html break. Use sparingly.
+	 * Control for creating horizontal lines. Use sparingly
 	 * @extends sap.ui.core.Control
 	 * 
 	 * @author Jan Philipp Knoeller
@@ -44,22 +44,23 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias pks.ui5strap.bs3.Break
+	 * @alias pks.ui5strap.core.ThematicBreak
 	 * 
 	 */
-	
-	//TODO eliminate ui5strap shortcuts
-	var Break = ControlBase.extend("pks.ui5strap.bs3.Break", {
+	var Line = ControlBase.extend("pks.ui5strap.core.ThematicBreak", {
 		metadata : {
-			interfaces : ["pks.ui5strap.core.IText"],
-			deprecated : true,
-			library : "pks.ui5strap.bs3"
+
+			library : "pks.ui5strap.core"
+			
 		},
 		
 		renderer : function(rm, oControl) {
-			rm.write("<br />");
+			rm.write("<hr");
+			rm.writeControlData(oControl);
+			rm.writeClasses();
+			rm.write(" />");
 		}
 	});
-	
-	return Break;
+
+	return Line;
 });

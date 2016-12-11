@@ -77,7 +77,14 @@ sap.ui
 												"pks.ui5strap.core.ISelectionProvider",
 												"pks.ui5strap.core.ISelectableItem", "pks.ui5strap.core.IText"],
 
-								controls : [],
+								controls : [
+								      "pks.ui5strap.core.Break",
+								      "pks.ui5strap.core.ListBase",
+								      "pks.ui5strap.core.ListItemBase",
+								      "pks.ui5strap.core.NavContainer",
+								      "pks.ui5strap.core.ScrollContainer",
+								      "pks.ui5strap.core.ThematicBreak"
+								],
 
 								elements : []
 							});

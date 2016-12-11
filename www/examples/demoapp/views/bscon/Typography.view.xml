@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Controls" xmlns="pks.ui5strap.bs3" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Controls" xmlns="pks.ui5strap.bs3" xmlns:ui5strapCore="pks.ui5strap.core" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
 	<Container type="Fluid" options="PictureFrame">
@@ -18,7 +18,7 @@
 
 			<Paragraph text="Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula." />
             
-            <Break />
+            <ui5strapCore:LineBreak />
             
             <Paragraph text="This line comes after a additional Break. Use Breaks sparingly." />
             
@@ -31,7 +31,7 @@
 				<Text text="The following snippet of text is rendered as [strong]bold text[/strong]." parse="true" />
 			</Paragraph>
 			
-			<Line />
+			<ui5strapCore:ThematicBreak />
 
 			<Paragraph>
 				<Text text="The following snippet of text is rendered as [em]emphasized text[/em]." parse="true" />
