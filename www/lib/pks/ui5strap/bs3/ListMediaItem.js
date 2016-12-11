@@ -83,6 +83,15 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 	}),
 	ListMediaItemProto = ListMediaItem.prototype;
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ListMediaItemProto._getStyleClassPrefix = function(){
+		return "ui5strapListMediaItem";
+	};
+	
 	return ListMediaItem;
 
 });

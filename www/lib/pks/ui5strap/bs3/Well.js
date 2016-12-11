@@ -97,6 +97,15 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Utils"], function(ui
 	WellProto = Well.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	WellProto._getStyleClassPrefix = function(){
+		return "ui5strapWell";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

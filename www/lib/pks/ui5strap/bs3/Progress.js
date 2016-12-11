@@ -92,7 +92,16 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 		}
 	}),
 	ProgressProto = Progress.prototype;
-
+	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ProgressProto._getStyleClassPrefix = function(){
+		return "ui5strapProgress";
+	};
+	
 	ProgressProto._getStyleClassDesign = function(){
 		var styleClass = " progress";
 		

@@ -119,7 +119,16 @@ sap.ui.define([ './library', "../core/library", "../core/ControlBase", "../core/
 	}), AlertProto = Alert.prototype;
 
 	Utils.dynamicText(AlertProto);
-
+	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	AlertProto._getStyleClassPrefix = function(){
+		return "ui5strapAlert";
+	};
+	
 	/**
 	 * @Protected
 	 * @Override

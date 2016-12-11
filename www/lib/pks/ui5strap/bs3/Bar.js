@@ -100,6 +100,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	BarProto = Bar.prototype; 
 
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	BarProto._getStyleClassPrefix = function(){
+		return "ui5strapBar";
+	};
+	
+	/**
 	 * Returns the root style class.
 	 * 
 	 * @returns {string} The style class string.

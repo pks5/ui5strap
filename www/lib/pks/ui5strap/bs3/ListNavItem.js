@@ -64,5 +64,14 @@ sap.ui.define(['./library', './ListLinkItem'], function(ui5strapBs3Lib, ListLink
 		}
 	});
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ListNavItem.prototype._getStyleClassPrefix = function(){
+		return "ui5strapListNavItem";
+	};
+	
 	return ListNavItem;
 });

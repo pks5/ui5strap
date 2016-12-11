@@ -73,6 +73,15 @@ sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBa
 	ListGroupProto = pks.ui5strap.bs3.ListGroup.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ListGroupProto._getStyleClassPrefix = function(){
+		return "ui5strapListGroup";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

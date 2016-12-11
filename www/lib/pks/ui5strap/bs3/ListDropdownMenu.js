@@ -70,6 +70,15 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 	ListDropdownMenuProto = ListDropdownMenu.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ListDropdownMenuProto._getStyleClassPrefix = function(){
+		return "ui5strapListDropdownMenu";
+	};
+	
+	/**
 	 * Handler for Tap / Click Events
 	 * @Protected
 	 * @Override

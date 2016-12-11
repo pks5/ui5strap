@@ -74,6 +74,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	PageProto = Page.prototype;
 
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	PageProto._getStyleClassPrefix = function(){
+		return "ui5strapPage";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

@@ -80,6 +80,15 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 	StaticOverlayProto = StaticOverlay.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	StaticOverlayProto._getStyleClassPrefix = function(){
+		return "ui5strapStaticOverlay";
+	};
+	
+	/**
 	 * @Protected
 	 */
 	

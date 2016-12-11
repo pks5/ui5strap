@@ -71,6 +71,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	}),
 	PanelGroupProto = PanelGroup.prototype;
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	PanelGroupProto._getStyleClassPrefix = function(){
+		return "ui5strapPanelGroup";
+	};
+	
 	PanelGroupProto._getStyleClassDesign = function(){
 		return " panel-group";
 	};

@@ -148,6 +148,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 		Error : "error"
 	};
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	FormGroupProto._getStyleClassPrefix = function(){
+		return "ui5strapFormGroup";
+	};
+	
 	FormGroupProto._getStyleClassDesign = function(){
 		var styleClass = " form-group",
 			severity = this.getSeverity();

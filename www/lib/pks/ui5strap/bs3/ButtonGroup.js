@@ -125,6 +125,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/L
 	PositionSupport.proto(ButtonGroupProto);
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ButtonGroupProto._getStyleClassPrefix = function(){
+		return "ui5strapButtonGroup";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

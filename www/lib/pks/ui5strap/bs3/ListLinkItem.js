@@ -81,6 +81,15 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase', "../core/
 	}),
 	ListLinkItemProto = ListLinkItem.prototype;
 
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ListLinkItemProto._getStyleClassPrefix = function(){
+		return "ui5strapListLinkItem";
+	};
+	
 	ListLinkItemProto.setText = function(newText){
 		Utils.updateText(this, jQuery('#' + this.getId() + '---link'), newText);
 	};

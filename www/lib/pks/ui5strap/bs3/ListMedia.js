@@ -73,6 +73,15 @@ sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBa
 	ListMediaProto = ListMedia.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ListMediaProto._getStyleClassPrefix = function(){
+		return "ui5strapListMedia";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

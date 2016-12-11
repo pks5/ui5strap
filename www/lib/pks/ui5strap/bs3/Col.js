@@ -146,6 +146,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	}), ColProto = Col.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ColProto._getStyleClassPrefix = function(){
+		return "ui5strapCol";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

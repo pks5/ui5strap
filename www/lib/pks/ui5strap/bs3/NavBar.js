@@ -108,6 +108,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	}),
 	NavBarProto = pks.ui5strap.bs3.NavBar.prototype;
 
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	NavBarProto._getStyleClassPrefix = function(){
+		return "ui5strapNavBar";
+	};
+	
 	NavBarProto.getCollapseId = function(){
 		return this.getId() + '---collapse';
 	};

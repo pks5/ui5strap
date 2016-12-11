@@ -125,6 +125,15 @@ sap.ui.define(['./library', "../core/ControlBase", "./PositionSupport"], functio
 		"Inline" : 'form-inline',
 	};
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	FormProto._getStyleClassPrefix = function(){
+		return "ui5strapForm";
+	};
+	
 	FormProto._getStyleClassDesign = function(){
 		return  " " + _typeToClass[this.getType()];
 	};

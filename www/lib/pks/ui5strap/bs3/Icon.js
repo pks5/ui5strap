@@ -138,6 +138,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/R
 	    FlipHorizontal : "flip-horizontal",
 	    FlipVertical : "flip-vertical"
 	  };
+	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	IconProto._getStyleClassPrefix = function(){
+		return "ui5strapIcon";
+	};
 	  
 	/**
 	 * @Protected

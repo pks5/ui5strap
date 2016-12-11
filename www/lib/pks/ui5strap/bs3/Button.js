@@ -109,6 +109,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/S
 	SelectableSupport.proto(ButtonProto);
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ButtonProto._getStyleClassPrefix = function(){
+		return "ui5strapButton";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

@@ -123,6 +123,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	}), PagerProto = Pager.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	PagerProto._getStyleClassPrefix = function(){
+		return "ui5strapPager";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

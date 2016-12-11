@@ -131,7 +131,16 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 		}
 	}),
 	RadioButtonProto = RadioButton.prototype;
-
+	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	RadioButtonProto._getStyleClassPrefix = function(){
+		return "ui5strapRadioButton";
+	};
+	
 	var _onChange = function(_this){
 		return function(ev){
 			var inputValue = _this.$checkbox.prop('checked');

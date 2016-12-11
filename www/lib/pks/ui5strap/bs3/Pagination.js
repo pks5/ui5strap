@@ -85,6 +85,15 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapBs3Lib, ListBase){
 	PaginationProto = Pagination.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	PaginationProto._getStyleClassPrefix = function(){
+		return "ui5strapPagination";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

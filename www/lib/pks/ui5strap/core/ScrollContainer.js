@@ -93,6 +93,15 @@ sap.ui.define(['./library', "./ControlBase"], function(ui5strapCoreLib, ControlB
 	ScrollContainerProto = ScrollContainer.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ScrollContainerProto._getStyleClassPrefix = function(){
+		return "ui5strapScrollContainer";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

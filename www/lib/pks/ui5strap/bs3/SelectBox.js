@@ -94,6 +94,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 	
 	PositionSupport.proto(SelectBoxProto);
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	SelectBoxProto._getStyleClassPrefix = function(){
+		return "ui5strapSelectBox";
+	};
+	
 	var _getInputValue = function(_this){
 		return _this.$().val();
 	};

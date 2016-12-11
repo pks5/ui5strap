@@ -162,6 +162,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/R
 		Responsive : "img-responsive"
 	};
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ImageProto._getStyleClassPrefix = function(){
+		return "ui5strapImage";
+	};
+	
 	ImageProto._getStyleClassDesign = function(){
 		var styleClass = "",
 			shape = this.getShape(),

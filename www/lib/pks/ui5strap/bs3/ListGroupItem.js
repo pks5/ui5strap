@@ -84,5 +84,14 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 		}
 	});
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ListGroupItem.prototype._getStyleClassPrefix = function(){
+		return "ui5strapListGroupItem";
+	};
+	
 	return ListGroupItem;
 });

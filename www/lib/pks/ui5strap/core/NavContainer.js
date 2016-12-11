@@ -89,8 +89,9 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	domAttachTimeout = 50;
 	
 	/**
-	 * @Protected
-	 * @Override
+	 * Returns the style class prefix of this control.
+	 * @protected
+	 * @override
 	 */
 	NavContainerProto._getStyleClassPrefix = function(){
 		return "navcontainer";

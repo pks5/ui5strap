@@ -77,7 +77,16 @@ sap.ui.define(['./library', "../core/library", './Tooltip'], function(ui5strapBs
   });
 
   Popover.lastShownInstance = null;
-
+  
+  /**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	Popover.prototype._getStyleClassPrefix = function(){
+		return "ui5strapPopover";
+	};
+  
   Popover.prototype.onAfterRendering = function(){
     var $this = this.$(),
         _this = this;

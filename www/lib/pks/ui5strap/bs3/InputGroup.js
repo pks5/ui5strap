@@ -128,5 +128,14 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 		}
 	});
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	InputGroup.prototype._getStyleClassPrefix = function(){
+		return "ui5strapInputGroup";
+	};
+	
 	return InputGroup;
 });

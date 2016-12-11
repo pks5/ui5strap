@@ -126,5 +126,14 @@ sap.ui.define(['./library', '../core/library', '../core/ListItemBase', '../core/
 	}),
 	BarMenuItemProto = BarMenuItem.prototype;
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	BarMenuItemProto._getStyleClassPrefix = function(){
+		return "ui5strapBarMenuItem";
+	};
+	
 	return BarMenuItem;
 });

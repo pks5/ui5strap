@@ -81,5 +81,14 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapBs3Lib, ListBase){
 	}),
 	BreadcrumbProto = Breadcrumb.prototype;
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	BreadcrumbProto._getStyleClassPrefix = function(){
+		return "ui5strapBreadcrumb";
+	};
+	
 	return Breadcrumb;
 });

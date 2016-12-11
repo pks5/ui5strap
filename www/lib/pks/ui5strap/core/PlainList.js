@@ -93,5 +93,14 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapCoreLib, ListBase){
 	}),
 	ListProto = List.prototype;
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ListProto._getStyleClassPrefix = function(){
+		return "ui5strapPlainList";
+	};
+	
 	return List;
 });

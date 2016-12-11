@@ -184,6 +184,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	}),
 	TextInputProto = TextInput.prototype;
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	TextInputProto._getStyleClassPrefix = function(){
+		return "ui5strapTextInput";
+	};
+	
 	TextInputProto.onAfterRendering = function(){
 		
 	};

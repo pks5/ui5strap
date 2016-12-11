@@ -101,6 +101,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", './PanelGr
 	PanelProto = pks.ui5strap.bs3.Panel.prototype;
 
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	PanelProto._getStyleClassPrefix = function(){
+		return "ui5strapPanel";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

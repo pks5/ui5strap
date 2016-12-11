@@ -146,6 +146,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 	};
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ContainerProto._getStyleClassPrefix = function(){
+		return "ui5strapContainer";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

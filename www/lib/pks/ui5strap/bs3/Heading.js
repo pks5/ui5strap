@@ -115,6 +115,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	};
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	HeadingProto._getStyleClassPrefix = function(){
+		return "ui5strapHeading";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

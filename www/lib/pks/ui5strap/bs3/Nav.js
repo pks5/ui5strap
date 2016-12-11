@@ -105,6 +105,15 @@ sap.ui.define(['./library', '../core/ListBase', "./PositionSupport"], function(u
 	};
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	NavProto._getStyleClassPrefix = function(){
+		return "ui5strapNav";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

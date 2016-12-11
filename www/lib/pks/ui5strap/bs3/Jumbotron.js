@@ -87,6 +87,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	JumbotronProto = Jumbotron.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	JumbotronProto._getStyleClassPrefix = function(){
+		return "ui5strapJumbotron";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

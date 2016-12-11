@@ -74,7 +74,16 @@ sap.ui.define(['./library', './StaticOverlay'], function(ui5strapBs3Lib, StaticO
 
 		}
 	}), ModalProto = Modal.prototype;
-
+	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ModalProto._getStyleClassPrefix = function(){
+		return "ui5strapModal";
+	};
+	
 	/**
 	 * TODO
 	 */

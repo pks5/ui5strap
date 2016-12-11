@@ -108,7 +108,16 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 		}
 	}),
 	ProgressBarProto = pks.ui5strap.bs3.ProgressBar.prototype;
-
+	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ProgressBarProto._getStyleClassPrefix = function(){
+		return "ui5strapProgressBar";
+	};
+	
 	ProgressBarProto._getStyleClassDesign = function(){
 		var styleClass = " progress-bar",
 			type = this.getSeverity();

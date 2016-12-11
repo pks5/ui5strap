@@ -85,6 +85,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 		}
 	});
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	Table.prototype._getStyleClassPrefix = function(){
+		return "ui5strapTable";
+	};
+	
 	return Table;
 
 });

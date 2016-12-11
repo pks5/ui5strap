@@ -87,7 +87,16 @@ sap.ui.define(['./library', './ListItemBase', "./Utils", "./RenderUtils"], funct
 		}
 	}),
 	ListItemProto = ListItem.prototype;
-
+	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ListItemProto._getStyleClassPrefix = function(){
+		return "ui5strapPlainListItem";
+	};
+	
 	Utils.dynamicText(ListItemProto);
 
 	return ListItem;

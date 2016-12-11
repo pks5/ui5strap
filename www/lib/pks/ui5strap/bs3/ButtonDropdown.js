@@ -88,6 +88,15 @@ sap.ui.define(['./library', './Button', "../core/Utils", "./PositionSupport"], f
 	PositionSupport.proto(ButtonDropdownProto);
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ButtonDropdownProto._getStyleClassPrefix = function(){
+		return "ui5strapButtonDropdown";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

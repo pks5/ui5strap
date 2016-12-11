@@ -125,7 +125,16 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 		}
   }),
   TooltipProto = TooltipControl.prototype;
-
+	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	TooltipProto._getStyleClassPrefix = function(){
+		return "ui5strapTooltip";
+	};
+	
   TooltipProto.init = function(){
       this.sourceControl = null;
   };

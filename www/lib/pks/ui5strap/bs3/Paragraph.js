@@ -107,6 +107,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	}),
 	ParagraphProto = Paragraph.prototype;
 	
+	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ParagraphProto._getStyleClassPrefix = function(){
+		return "ui5strapParagraph";
+	};
+	
 	ParagraphProto._getStyleClassDesign = function(){
 		var styleClass = "",
 			severity = this.getSeverity(),

@@ -159,6 +159,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	};
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	LinkProto._getStyleClassPrefix = function(){
+		return "ui5strapLink";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */

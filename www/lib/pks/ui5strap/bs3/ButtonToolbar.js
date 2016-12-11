@@ -87,6 +87,15 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	}), ButtonToolbarProto = ButtonToolbar.prototype;
 	
 	/**
+	 * Returns the style prefix of this control.
+	 * @override
+	 * @protected
+	 */
+	ButtonToolbarProto._getStyleClassPrefix = function(){
+		return "ui5strapButtonToolbar";
+	};
+	
+	/**
 	 * @Protected
 	 * @Override
 	 */
