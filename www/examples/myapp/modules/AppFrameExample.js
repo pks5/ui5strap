@@ -1,41 +1,22 @@
-/*
- * 
- * MyFrameController
- *
- * @author [Your Name]
- * 
- * Copyright (c) 2014 [Your Company]
- * 
- * [Website]
- *
- * [License information]
- * 
- */
-
-(function(){
+sap.ui.define([
+               "ui5strap/library",
+               'pks/ui5strap/viewer/AppFrame', 
+               "ui5strap/Bar", 
+               "ui5strap/NavBar", 
+               "ui5strap/Nav", 
+               "ui5strap/ListNavItem",
+               "ui5strap/Link",
+               "ui5strap/ButtonGroup",
+               "ui5strap/Button",
+               "ui5strap/Icon"
+               ], function(ui5strapBs3Lib, AppFrame, Bar, NavBar, Nav, ListNavItem, Link, ButtonGroup, Button, Icon){
 
 	var jQuerySap = jQuery.sap;
-
-	jQuerySap.declare("tld__domain.product__app.modules.AppFrameExample");
 	
-	jQuerySap.require("pks.ui5strap.viewer.AppFrame");
-
-	jQuerySap.require("ui5strap.Bar");
-	jQuerySap.require("ui5strap.NavBar");
-	jQuerySap.require("ui5strap.Nav");
-	jQuerySap.require("ui5strap.ListNavItem");
-	jQuerySap.require("ui5strap.Link");
-	jQuerySap.require("ui5strap.ButtonGroup");
-	jQuerySap.require("ui5strap.Button");
-	jQuerySap.require("ui5strap.Icon");
-
 	jQuerySap.require("jquery.sap.history");
 	
-
 	//FrameControllers must extend the AppFrame class
-	pks.ui5strap.viewer.AppFrame.extend("tld__domain.product__app.modules.AppFrameExample");
-
-	var FrameController = tld__domain.product__app.modules.AppFrameExample,
+	var FrameController = AppFrame.extend("tld__domain.product__app.modules.AppFrameExample"),
 		FrameControllerProto = FrameController.prototype,
 		configuration = sap.ui.getCore().getConfiguration();
 
@@ -85,27 +66,27 @@
 	*/
 	FrameControllerProto._createControl = function(){
 		var _this = this,
-			navContainer = pks.ui5strap.viewer.AppFrame.prototype._createControl.call(this);
+			navContainer = AppFrame.prototype._createControl.call(this);
 
 		//Get the frame options
 		var frameOptions = this.options;
 		
 		//Navbar
-		var navbar = new ui5strap.NavBar({ 
+		var navbar = new NavBar({ 
 			inverse : true, 
 			fluid : true, 
-			position : ui5strap.NavBarPosition.StaticTop
+			position : ui5strapBs3Lib.NavBarPosition.StaticTop
 		});
 
 		this.navbar = navbar;
 
 		//Sidenav toggle
-		var toggle = new ui5strap.Button( { 
-				align : ui5strap.Alignment.NavBarLeft
+		var toggle = new Button( { 
+				align : ui5strapBs3Lib.Alignment.NavBarLeft
 			} 
 		);
 		toggle.addStyleClass("btn-toggle-sidenav");
-		toggle.addContent(new ui5strap.Icon( { icon : 'columns', size : ui5strap.IconSize.Large } ));
+		toggle.addContent(new Icon( { icon : 'columns', size : ui5strapBs3Lib.IconSize.Large } ));
 
 		toggle.attachEvent('tap', {}, function(){
 			_this.getRootControl().toggleOption('sidenav');
@@ -114,7 +95,7 @@
 		navbar.addContentLeft(toggle);
 
 		//Brand
-		var brand = new ui5strap.Link();
+		var brand = new Link();
 		brand.bindProperty('text', {path : 'i18n>MENU_BRAND'});
 		
 		brand.attachEvent('tap', {}, function(){
@@ -124,15 +105,15 @@
 		navbar.setBrand(brand);
 
 		//Main menu
-		var navNavbar = new ui5strap.Nav(),
+		var navNavbar = new Nav(),
 			menu = this.app.config.getMenuData(frameOptions.navbarMenu);
 		
 		if(menu){
 			//If a navbarMenu is specified in frameOptions, create the nav menu from it
 			for (var i = 0; i < menu.items.length; i++){
 				var menuPage = menu.items[i],
-					navItem = new ui5strap.ListItem(),
-					navItemLink = new ui5strap.Link();
+					navItem = new ListItem(),
+					navItemLink = new Link();
 				
 				navItemLink.bindProperty('text', {path : menuPage.label});
 				
@@ -152,15 +133,15 @@
 				navbar.setCollapsed(true);
 			}
 		});
-		navNavbar.setAlign(ui5strap.Alignment.NavBarLeft);
+		navNavbar.setAlign(ui5strapBs3Lib.Alignment.NavBarLeft);
 
 		navbar.addCollapse(navNavbar);
 		this.navNavbar = navNavbar;
 
 		//Language select buttons
-		var navButtons = new ui5strap.ButtonGroup({align : ui5strap.Alignment.NavBarRight}),
-			buttonDe = new ui5strap.Button({'text' : "DE" }),
-			buttonEn = new ui5strap.Button({'text' : "EN" });
+		var navButtons = new ButtonGroup({align : ui5strapBs3Lib.Alignment.NavBarRight}),
+			buttonDe = new Button({'text' : "DE" }),
+			buttonEn = new Button({'text' : "EN" });
 		
 		navButtons.addButton(buttonEn);
 		navButtons.addButton(buttonDe);
@@ -186,12 +167,12 @@
 		}
 
 		//Nav menu toggle
-		var toggleRight = new ui5strap.Button( { 
-				align : ui5strap.Alignment.NavBarRight
+		var toggleRight = new Button( { 
+				align : ui5strapBs3Lib.Alignment.NavBarRight
 			} 
 		);
 		toggle.addStyleClass("btn-toggle-navbar");
-		toggleRight.addContent(new ui5strap.Icon( { icon : 'bars', size : ui5strap.IconSize.Large } ));
+		toggleRight.addContent(new Icon( { icon : 'bars', size : ui5strapBs3Lib.IconSize.Large } ));
 
 		toggleRight.attachEvent('tap', {}, function(){
 			navbar.toggle();
@@ -200,8 +181,8 @@
 		navbar.addContentRight(toggleRight);
 
 		//Sidebar / Sidenav
-		var sidebar = new ui5strap.Bar({ "fullHeight" : true, "inverse" : true }),
-			navSidebar = new ui5strap.Nav({ type : ui5strap.NavType.PillsStacked, align : ui5strap.Alignment.Sidebar });
+		var sidebar = new Bar({ "fullHeight" : true, "inverse" : true }),
+			navSidebar = new Nav({ type : ui5strapBs3Lib.NavType.PillsStacked, align : ui5strapBs3Lib.Alignment.Sidebar });
 		
 		navSidebar.addStyleClass("sidebar-nav")
 		
@@ -475,13 +456,13 @@
 			var items = sidebarMenu.items;
 			for(var i = 0; i < items.length; i++){
 				var menuItemData = items[i],
-					navItem = new ui5strap.ListNavItem();
+					navItem = new ListNavItem();
 
 				navItem.bindProperty('text', menuItemData.label);
 				navItem.data(menuItemData);
 
 				if(menuItemData.icon){
-					navItem.addContent(new ui5strap.Icon({ 'icon' : menuItemData.icon, 'fixedWidth' : true }));
+					navItem.addContent(new Icon({ 'icon' : menuItemData.icon, 'fixedWidth' : true }));
 				}
 				
 				navSidebar.addItem(navItem);
@@ -495,5 +476,5 @@
 		}
 	};
 
-
-}());
+	return FrameController;
+});
