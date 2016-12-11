@@ -51,7 +51,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 		metadata : {
 			interfaces : ["pks.ui5strap.bs3.IColumn"],
 			
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			properties : { 
 				//Size DOES inherit from smaller sizes

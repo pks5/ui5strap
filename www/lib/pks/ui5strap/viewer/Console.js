@@ -52,7 +52,7 @@ sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, 
 	var Console = ControlBase.extend("pks.ui5strap.viewer.Console", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.viewer",
 			properties : { 
 				"logLevel" : {
 					type:"int", 

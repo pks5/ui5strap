@@ -52,7 +52,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IInputGroupControl"],
 			defaultAggregation : "items",
 
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			properties : { 
 				type : {

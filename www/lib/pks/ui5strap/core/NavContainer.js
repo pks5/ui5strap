@@ -51,7 +51,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		metadata : {
 			interfaces : ["pks.ui5strap.core.INavigator"],
 			
-			library : "ui5strap",
+			library : "pks.ui5strap.core",
 			
 			properties : {
 				defaultTransition : {

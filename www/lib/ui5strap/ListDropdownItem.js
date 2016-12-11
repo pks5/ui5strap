@@ -51,7 +51,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', './ListLinkItem', 
 		metadata : {
 			interfaces : ["pks.ui5strap.bs3.IDropdownMenuHost"],
 			
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 
 			defaultAggregation : "menu",
 			

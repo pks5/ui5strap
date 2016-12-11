@@ -31,7 +31,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase', "./PositionSupport"], 
 	
 	var mMetaData = {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			defaultAggregation : "items",
 			

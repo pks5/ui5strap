@@ -55,7 +55,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			defaultAggregation : "panes",
 			
 			// ---- control specific ----
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 
 			properties : { 
 				

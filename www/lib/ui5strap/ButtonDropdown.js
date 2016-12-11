@@ -34,7 +34,7 @@ sap.ui.define(['./library', './Button', "pks/ui5strap/core/Utils", "./PositionSu
 		
 		defaultAggregation : "menu",
 			
-		library : "ui5strap",
+		library : "pks.ui5strap.bs3",
 
 		properties : { 
 			update : {

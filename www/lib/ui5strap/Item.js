@@ -51,7 +51,7 @@ sap.ui.define(['./library', "sap/ui/core/Element"], function(ui5strapBs3Lib, Ele
 		metadata : {
 
 			// ---- control specific ----
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 
 			properties : { 
 				text : {

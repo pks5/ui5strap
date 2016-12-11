@@ -50,7 +50,7 @@ sap.ui.define(['./library', './StaticOverlay'], function(ui5strapBs3Lib, StaticO
 	var Modal = StaticOverlay.extend("ui5strap.Modal", {
 		metadata : {
 			
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			properties : { 
 				

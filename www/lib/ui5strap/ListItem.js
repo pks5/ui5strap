@@ -32,7 +32,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', 'pks/ui5strap/core
 	var _meta = {
 			interfaces : [],
 			
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 
 			properties : { 
 				text : {

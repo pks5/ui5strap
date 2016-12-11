@@ -50,7 +50,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	var TextInput = ControlBase.extend("ui5strap.TextInput", {
 		metadata : {
 			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IInputGroupControl"],
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			properties : { 
 				type : {

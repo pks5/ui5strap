@@ -33,7 +33,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 
 			interfaces : ["pks.ui5strap.core.IText"],
 			
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 
 			properties : { 
 				

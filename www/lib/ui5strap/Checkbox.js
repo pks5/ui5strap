@@ -50,7 +50,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 	var Checkbox = ControlBase.extend("ui5strap.Checkbox", {
 		metadata : {
 			interfaces : ["pks.ui5strap.bs3.IInputGroupAddon"],
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			properties : { 
 				type : {

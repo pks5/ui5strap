@@ -54,7 +54,7 @@ sap.ui.define(['./library', './ListItem'], function(ui5strapBs3Lib, ListItem){
 			defaultAggregation : "media",
 			
 			// ---- control specific ----
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			properties : { 
 				contentPlacement : {
 					type : "ui5strap.ContentPlacement",

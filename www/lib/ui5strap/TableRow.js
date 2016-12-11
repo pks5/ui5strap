@@ -53,7 +53,7 @@ sap.ui.define(['./library', './ElementBase'], function(ui5strapBs3Lib, ElementBa
 			// ---- object ----
 			defaultAggregation : "cells",
 			// ---- control specific ----
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 	
 			properties : {
 				severity : {

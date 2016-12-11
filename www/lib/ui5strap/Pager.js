@@ -51,7 +51,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 		metadata : {
 
 			// ---- control specific ----
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			properties : {
 				aligned : {

@@ -50,7 +50,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase', 'pks/ui5strap/core/Lis
 	var ListDropdownMenu = ListBase.extend("ui5strap.ListDropdownMenu", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			defaultAggregation : "items",
 			

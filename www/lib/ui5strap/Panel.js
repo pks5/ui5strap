@@ -54,7 +54,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './PanelGroup'], fu
 			defaultAggregation : "content",
 			
 			// ---- control specific ----
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			properties : { 
 				severity : {
 					type: "ui5strap.Severity", 

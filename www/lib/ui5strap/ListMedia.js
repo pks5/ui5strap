@@ -50,7 +50,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListBase'], function(ui5strapBs3L
 	var ListMedia = ListBase.extend("ui5strap.ListMedia", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			defaultAggregation : "items",
 			

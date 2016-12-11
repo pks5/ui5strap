@@ -50,7 +50,7 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapBs3Lib, ListBase){
 	var Breadcrumb = ListBase.extend("ui5strap.Breadcrumb", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			defaultAggregation : "items",
 			

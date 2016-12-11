@@ -50,7 +50,7 @@ sap.ui.define(['./library', 'pks/ui5strap/core/NavContainer'], function(ui5strap
 	var NavContainerStandard = NavContainer.extend("ui5strap.NavContainerStandard", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 		},
 

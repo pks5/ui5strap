@@ -50,7 +50,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 	var Clearfix = ControlBase.extend("ui5strap.Clearfix", {
 		metadata : {
 			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IColumn"],
-			library : "ui5strap"
+			library : "pks.ui5strap.bs3"
 		},
 		
 		renderer : function(rm, oControl) {

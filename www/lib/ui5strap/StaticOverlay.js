@@ -50,7 +50,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 	var StaticOverlay = ControlBase.extend("ui5strap.StaticOverlay", {
 		metadata : {
 
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			defaultAggregation : "content",
 			
 			properties : { 

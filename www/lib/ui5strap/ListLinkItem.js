@@ -49,7 +49,7 @@ sap.ui.define(['./library', './ListItem', "pks/ui5strap/core/Utils"], function(u
 	 */
 	var ListLinkItem = ListItem.extend("ui5strap.ListLinkItem", {
 		metadata : {
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 			
 			properties : { 
 				text : {

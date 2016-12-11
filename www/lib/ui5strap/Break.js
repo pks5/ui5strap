@@ -53,7 +53,7 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 		metadata : {
 			interfaces : ["pks.ui5strap.core.IText"],
 			deprecated : true,
-			library : "ui5strap"
+			library : "pks.ui5strap.bs3"
 		},
 		
 		renderer : function(rm, oControl) {

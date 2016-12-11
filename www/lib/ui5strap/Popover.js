@@ -53,7 +53,7 @@ sap.ui.define(['./library', './Tooltip'], function(ui5strapBs3Lib, Tooltip){
       // ---- object ----
       defaultAggregation : "content",
       // ---- control specific ----
-      library : "ui5strap",
+      library : "pks.ui5strap.bs3",
       
       properties : {
          trigger : {

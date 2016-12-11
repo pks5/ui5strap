@@ -52,7 +52,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 
 			defaultAggregation : "controls",
 			
-			library : "ui5strap",
+			library : "pks.ui5strap.bs3",
 
 			properties : { 
 				severity : {

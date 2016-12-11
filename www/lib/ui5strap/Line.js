@@ -50,7 +50,7 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 	var Line = ControlBase.extend("ui5strap.Line", {
 		metadata : {
 
-			library : "ui5strap"
+			library : "pks.ui5strap.bs3"
 			
 		},
 		
