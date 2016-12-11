@@ -50,7 +50,7 @@ sap.ui.define(['jquery.sap.global', "pks/ui5strap/core/RenderUtils"], function(j
 		}
 		if(ui5strap.Severity.None !== severity){
 			//Severity for general text
-			rm.addClass("list-group-item-" + ui5strap.BSSeverity[severity]);
+			rm.addClass("list-group-item-" + ui5strapBs3Lib.BSSeverity[severity]);
 		}
 		rm.writeClasses();
 		rm.write(">");

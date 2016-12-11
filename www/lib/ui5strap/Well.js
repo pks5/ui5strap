@@ -104,7 +104,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		var styleClass = " well";
 		var size = this.getSize();
 		if(ui5strap.Size.Default !== size){
-			styleClass += " well-" + ui5strap.BSSize[size];
+			styleClass += " well-" + ui5strapBs3Lib.BSSize[size];
 		}
 		return styleClass;
 	};

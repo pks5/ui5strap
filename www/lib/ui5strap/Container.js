@@ -36,7 +36,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 		properties : { 
 				type : {
 					type:"ui5strap.ContainerType", 
-					defaultValue: ui5strap.ContainerType.Default
+					defaultValue: ui5strapBs3Lib.ContainerType.Default
 				},
 				
 				severity : {
@@ -157,7 +157,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/Cont
 			severity = this.getSeverity();
 		
 		if(ui5strap.Severity.None !== severity){
-			styleClass += " bg-" + ui5strap.BSSeverity[severity];
+			styleClass += " bg-" + ui5strapBs3Lib.BSSeverity[severity];
 		}
 		
 		if(this.getFullHeight()){

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/RenderUtils'], function(ui5strapBs3Lib, ControlBase, RenderUtils){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/RenderUtils'], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, RenderUtils){
 	
 	"use strict";
 	
@@ -63,8 +63,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	        },
 	        
 	        titleContentPlacement : {
-	          type:"ui5strap.ContentPlacement",
-	          defaultValue : ui5strap.ContentPlacement.Start
+	          type:"pks.ui5strap.core.ContentPlacement",
+	          defaultValue : ui5strapCoreLib.ContentPlacement.Start
 	        },
 	
 	        placement : {
@@ -157,7 +157,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
         return title;
       },
       
-      trigger : ui5strap.BSTriggerMode[this.getTrigger()],
+      trigger : ui5strapBs3Lib.BSTriggerMode[this.getTrigger()],
       
       html : true,
 
@@ -167,7 +167,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
     var placement = this.getPlacement();
     if(placement !== ui5strap.Placement.None){
         if(placement !== ui5strap.Placement.Default){
-          tooltipOptions.placement = ui5strap.BSPlacement[placement];
+          tooltipOptions.placement = ui5strapBs3Lib.BSPlacement[placement];
         }
         this.getSourceDomRef().tooltip(tooltipOptions);
     }

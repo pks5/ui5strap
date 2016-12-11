@@ -55,7 +55,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			properties : { 
 				type : {
 					type:"ui5strap.CheckboxType", 
-					defaultValue:ui5strap.CheckboxType.Block
+					defaultValue:ui5strapBs3Lib.CheckboxType.Block
 				},
 				value : {
 					type:"string", 
@@ -75,7 +75,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 		
 		renderer : function(rm, oControl) {
 			var type = oControl.getType(),
-				typeBlock = ui5strap.CheckboxType.Block,
+				typeBlock = ui5strapBs3Lib.CheckboxType.Block,
 				inInputGroup = oControl.getParent().getMetadata().isInstanceOf("pks.ui5strap.bs3.IInputGroup");
 
 			if(!inInputGroup){
@@ -88,7 +88,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 				}
 			
 				rm.write("<label");
-				if(type === ui5strap.CheckboxType.Inline){
+				if(type === ui5strapBs3Lib.CheckboxType.Inline){
 					rm.writeControlData(oControl);
 					rm.addClass('checkbox-inline');
 				}
@@ -97,7 +97,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			}
 			
 			rm.write('<input')
-			if(inInputGroup || type === ui5strap.CheckboxType.Default){
+			if(inInputGroup || type === ui5strapBs3Lib.CheckboxType.Default){
 				rm.writeControlData(oControl);
 			}
 			else{

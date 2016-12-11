@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './PanelGroup'], function(ui5strapBs3Lib, ControlBase, PanelGroup){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", './PanelGroup'], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, PanelGroup){
 	
 	"use strict";
 	
@@ -64,8 +64,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './PanelGroup'], fu
 					type:"string", defaultValue:""
 				},
 				titleContentPlacement : {
-					type:"ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.Start
+					type:"pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
 				},
 				collapse : {
 					type : "boolean",
@@ -79,8 +79,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './PanelGroup'], fu
 					type:"string", defaultValue:""
 				},
 				contentPlacement : {
-					type:"ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.Start
+					type:"pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
 				}
 			},
 			aggregations : { 
@@ -109,7 +109,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", './PanelGroup'], fu
 			severity = this.getSeverity();
 		
 		if(ui5strap.Severity.None !== severity){
-			styleClass += " panel-" + ui5strap.BSSeverity[severity];
+			styleClass += " panel-" + ui5strapBs3Lib.BSSeverity[severity];
 		}
 		
 		if(this.getCollapse()){

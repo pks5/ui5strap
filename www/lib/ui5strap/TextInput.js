@@ -139,7 +139,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 
 				var size = oControl.getSize();
 				if(ui5strap.Size.Default !== size){
-					rm.addClass('input-' + ui5strap.BSSize[size]);
+					rm.addClass('input-' + ui5strapBs3Lib.BSSize[size]);
 				}
 				
 				rm.writeClasses();

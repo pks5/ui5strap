@@ -25,30 +25,11 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapBs3Lib, ControlBase){
+sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"], function(ui5strapBs3Lib, ControlBase, PositionSupport){
 	
 	"use strict";
 	
-	/**
-	 * Constructor for a new SelectBox instance.
-	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
-	 * 
-	 * @class
-	 * Control for creating Bootstrap select boxes.
-	 * @extends ui5strap.ControlBase
-	 * 
-	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
-	 * 
-	 * @constructor
-	 * @public
-	 * @alias ui5strap.SelectBox
-	 * 
-	 */
-	var SelectBox = ControlBase.extend("ui5strap.SelectBox", {
-		metadata : {
+	var mMetaData = {
 			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IInputGroupControl"],
 			defaultAggregation : "items",
 
@@ -88,9 +69,34 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 				} 
 			}
 
-		}
+		};
+	
+	PositionSupport.meta(mMetaData);
+	
+	/**
+	 * Constructor for a new SelectBox instance.
+	 * 
+	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 * 
+	 * @class
+	 * Control for creating Bootstrap select boxes.
+	 * @extends ui5strap.ControlBase
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias ui5strap.SelectBox
+	 * 
+	 */
+	var SelectBox = ControlBase.extend("ui5strap.SelectBox", {
+		metadata : mMetaData
 	}),
 	SelectBoxProto = SelectBox.prototype;
+	
+	PositionSupport.proto(SelectBoxProto);
 	
 	var _getInputValue = function(_this){
 		return _this.$().val();

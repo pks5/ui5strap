@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './Tooltip'], function(ui5strapBs3Lib, Tooltip){
+sap.ui.define(['./library', "pks/ui5strap/core/library", './Tooltip'], function(ui5strapBs3Lib, ui5strapCoreLib, Tooltip){
 	
 	"use strict";
 	
@@ -64,8 +64,8 @@ sap.ui.define(['./library', './Tooltip'], function(ui5strapBs3Lib, Tooltip){
           type:"string", defaultValue:""
         },
         contentPlacement : {
-          type:"ui5strap.ContentPlacement",
-          defaultValue : ui5strap.ContentPlacement.Start
+          type:"pks.ui5strap.core.ContentPlacement",
+          defaultValue : ui5strapCoreLib.ContentPlacement.Start
         }
       },
 
@@ -92,14 +92,14 @@ sap.ui.define(['./library', './Tooltip'], function(ui5strapBs3Lib, Tooltip){
         return $this.find('.popover-data-content').html();
       },
       
-      trigger : ui5strap.BSTriggerMode[this.getTrigger()],
+      trigger : ui5strapBs3Lib.BSTriggerMode[this.getTrigger()],
       html : true
     };
 
     var placement = this.getPlacement();
     if(placement !== ui5strap.Placement.None){
         if(placement !== ui5strap.Placement.Default){
-          popoverOptions.placement = ui5strap.BSPlacement[placement];
+          popoverOptions.placement = ui5strapBs3Lib.BSPlacement[placement];
         }
         this.getSourceDomRef().popover(popoverOptions);
     }

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils", "./PositionSupport"], function(ui5strapBs3Lib, ControlBase, SelectableSupport, Utils, PositionSupport){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils", "./PositionSupport"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, SelectableSupport, Utils, PositionSupport){
 	
 	"use strict";
 	
@@ -38,7 +38,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			properties : { 
 				type : {
 					type: "ui5strap.ButtonType", 
-					defaultValue: ui5strap.ButtonType.Button
+					defaultValue: ui5strapBs3Lib.ButtonType.Button
 				},
 				text : {
 					type: "string", 
@@ -62,8 +62,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 					defaultValue:ui5strap.TrailHtml.Space
 				},
 				contentPlacement : {
-					type:"ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.Start
+					type:"pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
 				}
 			},
 			aggregations : { 
@@ -117,23 +117,23 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			styleClass = "";
 		
 		//Bootstrap classes
-		if(type === ui5strap.ButtonType.Button || ui5strap.ButtonType.Block === type){
+		if(type === ui5strapBs3Lib.ButtonType.Button || ui5strapBs3Lib.ButtonType.Block === type){
 			styleClass += " btn";
-			styleClass += " btn-" + ui5strap.BSSeverity[this.getSeverity()];
+			styleClass += " btn-" + ui5strapBs3Lib.BSSeverity[this.getSeverity()];
 		    
 			var size = this.getSize();
 			if(ui5strap.Size.Default !== size){
-				styleClass += ' btn-' + ui5strap.BSSize[size];
+				styleClass += ' btn-' + ui5strapBs3Lib.BSSize[size];
 		    }
 
-		    if(ui5strap.ButtonType.Block === type){
+		    if(ui5strapBs3Lib.ButtonType.Block === type){
 		    	styleClass += " btn-block";
 			}
 		}
-		else if(type === ui5strap.ButtonType.Link){
+		else if(type === ui5strapBs3Lib.ButtonType.Link){
 			styleClass += " btn btn-link";
 		}
-		else if(type === ui5strap.ButtonType.Close || type === ui5strap.ButtonType.Icon){
+		else if(type === ui5strapBs3Lib.ButtonType.Close || type === ui5strapBs3Lib.ButtonType.Icon){
 			styleClass += " close";
 		}
 		
@@ -147,7 +147,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 	ButtonProto._getStyleClassRoot = function(){
 		var type = this.getType(),
 			styleClass = "";
-		if(ui5strap.ButtonType.Default !== type){
+		if(ui5strapBs3Lib.ButtonType.Default !== type){
 			styleClass = " " + this._getStyleClassType(type);
 		}
 		return styleClass;

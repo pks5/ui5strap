@@ -55,7 +55,7 @@ sap.ui.define([ './library', './Utils'], function(ui5strapCoreLib, Utils) {
 				.getTitleContentPlacement(), text = text
 				|| oControl.getTitle();
 
-		if (contentPlacement === ui5strap.ContentPlacement.End) {
+		if (contentPlacement === ui5strapCoreLib.ContentPlacement.End) {
 			rm.writeEscaped(text);
 		}
 
@@ -63,7 +63,7 @@ sap.ui.define([ './library', './Utils'], function(ui5strapCoreLib, Utils) {
 			rm.renderControl(content[i]);
 		}
 
-		if (contentPlacement === ui5strap.ContentPlacement.Start) {
+		if (contentPlacement === ui5strapCoreLib.ContentPlacement.Start) {
 			rm.writeEscaped(text);
 		}
 	};
@@ -82,7 +82,7 @@ sap.ui.define([ './library', './Utils'], function(ui5strapCoreLib, Utils) {
 				.getContentPlacement(), text = oControl.getText
 				&& oControl.getText(), parse = oControl.getParse && oControl.getParse();
 
-		if (contentPlacement === ui5strap.ContentPlacement.End) {
+		if (contentPlacement === ui5strapCoreLib.ContentPlacement.End) {
 			if (parse) {
 				rm.write(Utils.parseText(text));
 			} else {
@@ -94,7 +94,7 @@ sap.ui.define([ './library', './Utils'], function(ui5strapCoreLib, Utils) {
 			rm.renderControl(content[i]);
 		}
 
-		if (contentPlacement === ui5strap.ContentPlacement.Start) {
+		if (contentPlacement === ui5strapCoreLib.ContentPlacement.Start) {
 			if (parse) {
 				rm.write(Utils.parseText(text));
 			} else {

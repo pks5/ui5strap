@@ -40,19 +40,15 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			properties : { 
 				size : {
 					type: "ui5strap.Size", 
-					defaultValue: ui5strap.Size.Default
+					defaultValue: ui5strapBs3Lib.Size.Default
 				},
 				type : {
 					type: "ui5strap.ButtonGroupType", 
-					defaultValue: ui5strap.ButtonGroupType.Default
-				},
-				align : {
-					type:"ui5strap.Alignment",
-					defaultValue:ui5strap.Alignment.Default
+					defaultValue: ui5strapBs3Lib.ButtonGroupType.Default
 				},
 				trail : {
 					type:"ui5strap.TrailHtml", 
-					defaultValue:ui5strap.TrailHtml.Space
+					defaultValue: ui5strapBs3Lib.TrailHtml.Space
 				}
 			},
 					
@@ -103,7 +99,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			
 			for(var i = 0; i < buttons.length; i++){
 				var button = buttons[i];
-				if(type === ui5strap.ButtonGroupType.Justified && button instanceof Button){
+				if(type === ui5strapBs3Lib.ButtonGroupType.Justified && button instanceof Button){
 					rm.write('<div class="btn-group">');
 					rm.renderControl(button);
 					rm.write("</div>");
@@ -138,7 +134,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", 'pks/ui5strap/core/
 			styleClass = " " + _typeToClass[type];
 		
 		if(ui5strap.Size.Default !== size){
-			styleClass += ' btn-group-' + ui5strap.BSSize[size];
+			styleClass += ' btn-group-' + ui5strapBs3Lib.BSSize[size];
 		}
 		
 		return styleClass;

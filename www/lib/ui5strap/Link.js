@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(ui5strapBs3Lib, ControlBase, Utils, RenderUtils, PositionSupport){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, Utils, RenderUtils, PositionSupport){
 	
 	"use strict";
 	
@@ -51,8 +51,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 				},
 				
 				contentPlacement : {
-					type:"ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.Start
+					type:"pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
 				},
 				trail : {
 					type:"ui5strap.TrailHtml", 

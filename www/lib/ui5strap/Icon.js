@@ -185,7 +185,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		}
 
 		if(ui5strap.Severity.None !== severity){
-			styleClass += " text-" + ui5strap.BSSeverity[severity];
+			styleClass += " text-" + ui5strapBs3Lib.BSSeverity[severity];
 		}
 		
 		return styleClass;

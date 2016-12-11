@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define([ './library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils" ], function(ui5strapBs3Lib, ControlBase, Utils, RenderUtils) {
+sap.ui.define([ './library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils" ], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, Utils, RenderUtils) {
 	
 	"use strict";
 	
@@ -73,8 +73,8 @@ sap.ui.define([ './library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core
 					defaultValue : false
 				},
 				contentPlacement : {
-					type : "ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.Start
+					type : "pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
 				},
 				severity : {
 					type : "ui5strap.Severity",
@@ -127,7 +127,7 @@ sap.ui.define([ './library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core
 	AlertProto._getStyleClassDesign = function(){
 		var styleClass = " alert";
 		
-		styleClass += " alert-" + ui5strap.BSSeverity[this.getSeverity()] + (this.getAnimate() ? " fade" : '');
+		styleClass += " alert-" + ui5strapBs3Lib.BSSeverity[this.getSeverity()] + (this.getAnimate() ? " fade" : '');
 		
 		return styleClass;
 	};
@@ -148,7 +148,7 @@ sap.ui.define([ './library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core
 	AlertProto.onBeforeRendering = function() {
 		if (this.getClosable() && this.getCloseButton() === null) {
 			this.setCloseButton(new ui5strap.Button({
-				type : ui5strap.ButtonType.Close,
+				type : ui5strapBs3Lib.ButtonType.Close,
 				content : [ new ui5strap.Icon({
 					icon : "times",
 					iconSet : "fa"

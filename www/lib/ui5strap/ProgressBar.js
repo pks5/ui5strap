@@ -114,7 +114,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			type = this.getSeverity();
 		
 		if(ui5strap.Severity.None !== type){
-			styleClass += " progress-bar-" + ui5strap.BSSeverity[type];
+			styleClass += " progress-bar-" + ui5strapBs3Lib.BSSeverity[type];
 		}
 
 		return styleClass;

@@ -47,10 +47,6 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "./PositionSupport"
 			method : {
 				type:"ui5strap.FormMethod", 
 				defaultValue:ui5strap.FormMethod.None
-			},
-			align : {
-				type:"ui5strap.Alignment",
-				defaultValue:ui5strap.Alignment.Default
 			}
 		},
 		aggregations : { 

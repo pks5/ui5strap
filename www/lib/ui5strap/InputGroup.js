@@ -79,7 +79,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 			rm.addClass('input-group');
 
 			if(ui5strap.Size.Default !== size){
-				rm.addClass('input-group-' + ui5strap.BSSize[size]);
+				rm.addClass('input-group-' + ui5strapBs3Lib.BSSize[size]);
 			}
 			rm.writeClasses();
 			rm.write(">");

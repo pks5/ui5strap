@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(ui5strapBs3Lib, ControlBase, Utils, RenderUtils, PositionSupport){
+sap.ui.define(['./library', "pks/ui5strap/core/library", "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/Utils", "pks/ui5strap/core/RenderUtils", "./PositionSupport"], function(ui5strapBs3Lib, ui5strapCoreLib, ControlBase, Utils, RenderUtils, PositionSupport){
 	
 	"use strict";
 	
@@ -61,8 +61,8 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 					defaultValue : ui5strap.TextAlignment.Default
 				},
 				contentPlacement : {
-					type:"ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.Start
+					type:"pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
 				},
 				severity : {
 					type: "ui5strap.Severity", 
@@ -211,11 +211,11 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase", "pks/ui5strap/core/
 		//CSS Classes
 		if(ui5strap.TextType.Label === type){
 			//Severity for labels
-			styleClass += " label-" + ui5strap.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity];
+			styleClass += " label-" + ui5strapBs3Lib.BSSeverity[ui5strap.Severity.None === severity ? ui5strap.Severity.Default : severity];
 		}
 		else if(ui5strap.Severity.None !== severity){
 			//Severity for general text
-			styleClass += " text-" + ui5strap.BSSeverity[severity];
+			styleClass += " text-" + ui5strapBs3Lib.BSSeverity[severity];
 		}
 		
 		if(ui5strap.TextAlignment.Default !== textAlign){

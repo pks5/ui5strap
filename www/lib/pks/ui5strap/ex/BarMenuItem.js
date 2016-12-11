@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'ui5strap/library', 'ui5strap/ListItem', '../core/Utils'], function(ui5strapExLib, ui5strapBs3Lib, ListItem, Utils){
+sap.ui.define(['./library', '../core/library', 'ui5strap/ListItem', '../core/Utils'], function(ui5strapExLib, ui5strapCoreLib, ListItem, Utils){
 	
 	"use strict";
 	
@@ -78,7 +78,7 @@ sap.ui.define(['./library', 'ui5strap/library', 'ui5strap/ListItem', '../core/Ut
 			rm.writeClasses();
 			rm.write(">");
 			
-			if(contentPlacement === ui5strapBs3Lib.ContentPlacement.Start){
+			if(contentPlacement === ui5strapCoreLib.ContentPlacement.Start){
 		    	for(var i = 0; i < content.length; i++){ 
 					rm.renderControl(content[i]);
 				}
@@ -103,7 +103,7 @@ sap.ui.define(['./library', 'ui5strap/library', 'ui5strap/ListItem', '../core/Ut
 				rm.write('</span>');
 			}
 			
-			if(contentPlacement === ui5strapBs3Lib.ContentPlacement.End){
+			if(contentPlacement === ui5strapCoreLib.ContentPlacement.End){
 				for(var i = 0; i < content.length; i++){ 
 					rm.renderControl(content[i]);
 				}

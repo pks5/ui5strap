@@ -59,7 +59,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 				          "ui5strap.BSPlacement", "ui5strap.BSSeverity", "ui5strap.BSSize",
 				          "ui5strap.BSTriggerMode", "ui5strap.ButtonType", "ui5strap.ButtonGroupType",
 				          "ui5strap.CarouselOverflow", "ui5strap.CheckboxType", "ui5strap.ContainerType",
-				          "ui5strap.ContentPlacement", "ui5strap.DropdownMenuHostUpdate", "ui5strap.FormMethod",
+				          "ui5strap.DropdownMenuHostUpdate", "ui5strap.FormMethod",
 				          "ui5strap.FormSeverity", "ui5strap.FormType", "ui5strap.HeadingType",
 				          "ui5strap.IconType", "ui5strap.IconSize", "ui5strap.IconTransform",
 				          "ui5strap.ImageTpye", "ui5strap.ImageShape", "ui5strap.ListType",
@@ -317,16 +317,6 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 
 		// Deprecated
 		FluidInset : "FluidInset"
-	};
-
-	/*
-	 * ContentPlacement Defines where to place the rendering of the content
-	 * aggregation. Used when there are both properties and aggregation that
-	 * produces output.
-	 */
-	ui5strapBs3Lib.ContentPlacement = {
-		Start : "Start",
-		End : "End"
 	};
 
 	ui5strapBs3Lib.DropdownMenuHostUpdate = {

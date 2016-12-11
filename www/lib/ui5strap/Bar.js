@@ -59,7 +59,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 				 */
 				type : {
 					type:"ui5strap.BarType", 
-					defaultValue: ui5strap.BarType.Fluid
+					defaultValue: ui5strapBs3Lib.BarType.Fluid
 				},
 				"inverse" : {
 					type:"boolean", 
@@ -122,7 +122,7 @@ sap.ui.define(['./library', "pks/ui5strap/core/ControlBase"], function(ui5strapB
 	 */
 	BarProto._getStyleClassPart = function(partName){
 		var partClassName = ControlBase.prototype._getStyleClassPart.call(this, partName);
-		if("inner" === partName && this.getType() === ui5strap.BarType.Fluid){
+		if("inner" === partName && this.getType() === ui5strapBs3Lib.BarType.Fluid){
 			partClassName += " container-fluid";
 		}
 		return partClassName;

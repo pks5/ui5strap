@@ -48,7 +48,7 @@ sap.ui.define(['jquery.sap.global', 'pks/ui5strap/core/RenderUtils'], function(j
 			rm.writeAttribute('disabled', 'disabled');
 		}
 		if(ui5strap.Size.Default !== size){
-			rm.addClass('input-' + ui5strap.BSSize[size]);
+			rm.addClass('input-' + ui5strapBs3Lib.BSSize[size]);
 		}
 		if(type === ui5strap.SelectBoxType.FormControl){
 			rm.addClass('form-control');

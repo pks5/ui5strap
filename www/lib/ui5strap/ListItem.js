@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils"], function(ui5strapBs3Lib, ListItemBase, SelectableSupport, Utils){
+sap.ui.define(['./library', "pks/ui5strap/core/library", 'pks/ui5strap/core/ListItemBase', 'pks/ui5strap/core/SelectableSupport', "pks/ui5strap/core/Utils"], function(ui5strapBs3Lib, ui5strapCoreLib, ListItemBase, SelectableSupport, Utils){
 	
 	"use strict";
 	
@@ -44,8 +44,8 @@ sap.ui.define(['./library', 'pks/ui5strap/core/ListItemBase', 'pks/ui5strap/core
 					defaultValue : false
 				},
 				contentPlacement : {
-					type:"ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.Start
+					type:"pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.Start
 				},
 				
 				//@deprecated

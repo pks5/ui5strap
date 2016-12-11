@@ -66,7 +66,7 @@ sap.ui
 
 								dependencies : [ "sap.ui.core" ],
 
-								types : [ ],
+								types : [ "pks.ui5strap.core.ContentPlacement", "pks.ui5strap.core.TransitionSpeed", "pks.ui5strap.core.Visibility" ],
 
 								interfaces : ["pks.ui5strap.core.IItemsProvider", "pks.ui5strap.core.INavigator",
 												"pks.ui5strap.core.ISelectionProvider",
@@ -181,6 +181,16 @@ sap.ui
 					 * END Polyfill
 					 */
 					
+					/*
+					 * ContentPlacement Defines where to place the rendering of the content
+					 * aggregation. Used when there are both properties and aggregation that
+					 * produces output.
+					 */
+					ui5strapCoreLib.ContentPlacement = {
+						Start : "Start",
+						End : "End"
+					};
+
 					/*
 					 * Visibility
 					 */

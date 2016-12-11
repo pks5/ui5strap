@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ListItem'], function(ui5strapBs3Lib, ListItem){
+sap.ui.define(['./library', "pks/ui5strap/core/library", './ListItem'], function(ui5strapBs3Lib, ui5strapCoreLib, ListItem){
 	
 	"use strict";
 	
@@ -57,8 +57,8 @@ sap.ui.define(['./library', './ListItem'], function(ui5strapBs3Lib, ListItem){
 			library : "pks.ui5strap.bs3",
 			properties : { 
 				contentPlacement : {
-					type : "ui5strap.ContentPlacement",
-					defaultValue : ui5strap.ContentPlacement.End
+					type : "pks.ui5strap.core.ContentPlacement",
+					defaultValue : ui5strapCoreLib.ContentPlacement.End
 				},
 
 				heading : {
