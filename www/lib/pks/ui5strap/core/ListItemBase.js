@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "./ControlBase", './SelectableSupport'], function(library, ControlBase, SelectableSupport){
-
+	
+	"use strict";
+	
 	var _meta = {
 			interfaces : [],
 			

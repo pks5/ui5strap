@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library'], function(ui5strapCoreLib){
 	
+	"use strict";
+	
 	/**
 	 * Constructor for a new BaseSupport instance.
 	 * 
@@ -149,7 +151,7 @@ sap.ui.define(['./library'], function(ui5strapCoreLib){
 	};
 	
 	BaseSupport.getStyleClass = function(oControl){
-		var visibility = visibilityExtraSmall = oControl
+		var visibilityExtraSmall = oControl
 				.getVisibilityExtraSmall(), visibilitySmall = oControl
 				.getVisibilitySmall(), visibilityMedium = oControl
 				.getVisibilityMedium(), visibilityLarge = oControl

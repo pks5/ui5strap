@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', 'ui5strap/library', 'ui5strap/ListItem', '../core/Utils'], function(ui5strapExLib, ui5strapBs3Lib, ListItem, Utils){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new ListItem instance.
 	 * 

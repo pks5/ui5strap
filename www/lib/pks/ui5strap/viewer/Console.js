@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, ControlBase){
-
+	
+	"use strict";
+	
 	var defaultLogName = '__DEFAULT_LOG';
 	
 	/**

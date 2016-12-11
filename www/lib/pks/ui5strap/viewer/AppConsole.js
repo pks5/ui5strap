@@ -30,7 +30,9 @@
  */
 
  sap.ui.define(['./library', './AppBase', './Console'], function(library, AppBase, Console){
-
+	 
+	 "use strict";
+	 
 	 /**
 		 * Constructor for a new AppConsole instance.
 		 * 

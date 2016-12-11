@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "../core/library", '../core/NavContainer', '../core/ResponsiveTransition'], function(ui5strapExLib, ui5strapCoreLib, NavContainer, ResponsiveTransition){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new BarNavContainer instance.
 	 * 
@@ -354,11 +356,11 @@ sap.ui.define(['./library', "../core/library", '../core/NavContainer', '../core/
 			modeExtraSmall = this.getBarModeExtraSmall(),
 			modeSmall = this.getBarModeSmall(),
 			modeMedium = this.getBarModeMedium(),
-			modeLarge = this.getBarModeLarge();
+			modeLarge = this.getBarModeLarge(),
 			placementExtraSmall = this.getBarPlacementExtraSmall(),
 			placementSmall = this.getBarPlacementSmall(),
 			placementMedium = this.getBarPlacementMedium(),
-			placementLarge = this.getBarPlacementLarge();
+			placementLarge = this.getBarPlacementLarge(),
 			columnsExtraSmall = this.getBarSizeExtraSmall(),
 			columnsSmall = this.getBarSizeSmall(),
 			columnsMedium = this.getBarSizeMedium(),

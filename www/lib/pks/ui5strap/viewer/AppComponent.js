@@ -27,6 +27,8 @@
  
 sap.ui.define(['./library', 'sap/ui/base/Object'], function(library, ObjectBase){
 
+	"use strict";
+	
 	/**
 	 * Constructor for a new AppComponent instance.
 	 * 

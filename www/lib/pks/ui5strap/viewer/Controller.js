@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller', "../core/Utils"], function(uLib, AppBase, ControllerBase, Utils){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Controller instance.
 	 * 

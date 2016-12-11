@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel'], function(library, ObjectBase, JSONModel){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new AppConfig instance.
 	 * 

@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './AppComponent'], function(library, AppComponent){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new RestClient instance.
 	 * 

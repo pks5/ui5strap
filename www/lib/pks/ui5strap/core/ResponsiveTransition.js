@@ -29,7 +29,9 @@ sap.ui
 		.define(
 				[ './library'],
 				function(ui5strapCoreLib) {
-
+					
+					"use strict";
+					
 					/**
 					 * Converts old transition strings into new ones.
 					 * 

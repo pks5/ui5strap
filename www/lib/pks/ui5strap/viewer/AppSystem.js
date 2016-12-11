@@ -30,7 +30,9 @@
  */
 
  sap.ui.define(['./library', './App'], function(library, App){
-
+	 
+	 "use strict";
+	 
 	 /**
 		 * Constructor for a new AppSystem instance.
 		 * 

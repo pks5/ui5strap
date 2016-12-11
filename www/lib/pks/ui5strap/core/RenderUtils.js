@@ -27,6 +27,8 @@
 
 sap.ui.define([ './library', './Utils'], function(ui5strapLibrary, Utils) {
 	
+	"use strict";
+	
 	/*
 	 * ---------
 	 * 

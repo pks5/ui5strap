@@ -28,6 +28,8 @@
 sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppConfig', '../core/NavContainer', '../core/ResponsiveTransition', "../core/Utils", "../core/Layer"], 
 				function(ui5strapViewerLib, ui5strapCoreLib, ViewerBase, App, AppConfig, NavContainer, ResponsiveTransition, Utils, Layer){
 	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Viewer instance.
 	 * 

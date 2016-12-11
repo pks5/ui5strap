@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library'], function(library){
 	
+	"use strict";
+	
 	/**
 	 * Constructor for a new ListSelectionSupport instance.
 	 * 

@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library', '../core/ListBase'], function(ui5strapExLib, ListBase){
 
+	"use strict";
+	
 	/**
 	 * Constructor for a new BarMenu instance.
 	 * 

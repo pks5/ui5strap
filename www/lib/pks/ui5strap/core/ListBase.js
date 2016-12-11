@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListItemBase', "./Utils", 'sap/ui/Device'], function(library, ControlBase, ListSelectionSupport, ListItemBase, Utils, Device){
-
+	
+	"use strict";
+	
 	var _meta = {
 			interfaces : [],
 

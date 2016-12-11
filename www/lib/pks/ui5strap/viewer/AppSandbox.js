@@ -30,7 +30,9 @@
  */
 
  sap.ui.define(['./library', './AppBase', './Sandbox'], function(library, AppBase, Sandbox){
-
+	 
+	 "use strict";
+	 
 	 /**
 		 * Constructor for a new AppSandbox instance.
 		 * 

@@ -27,6 +27,8 @@
 
 sap.ui.define(['./library'], function(ui5strapCoreLib){
 	
+	"use strict";
+	
 	/**
 	 * Constructor for a new OptionsSupport instance.
 	 * 

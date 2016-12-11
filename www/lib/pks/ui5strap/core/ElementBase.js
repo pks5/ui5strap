@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', './BaseSupport', './OptionsSupport', "sap/ui/core/Element"], function(library, BaseSupport, OptionsSupport, SapElementBase){
-
+	
+	"use strict";
+	
 	var _meta = {
 		library : "pks.ui5strap.core",
 		

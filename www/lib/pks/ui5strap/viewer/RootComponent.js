@@ -1,5 +1,7 @@
 sap.ui.define(['./library', 'sap/ui/core/Component'], function(library, Component){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new RootComponent instance.
 	 * 

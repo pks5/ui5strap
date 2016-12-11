@@ -27,6 +27,8 @@
  
 sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"], function(ui5strapCoreLib, ControlBase, ResponsiveTransition, Utils){
 
+	"use strict";
+	
 	/**
 	 * Constructor for a new NavContainer instance.
 	 * 
@@ -537,7 +539,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			}
 			
 			//Create dom element and jQuery wrapper
-			var newPageContainer = document.createElement('div');
+			var newPageContainer = document.createElement('div'),
 				$newPageContainer = jQuery(newPageContainer);
 			
 			//Page still has a valid dom reference. Reuse the dom ref.
@@ -809,7 +811,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		
 		var oModelNames = {},
 			sModelName,
-			oContext;
+			oContext,
+			sTarget;
 
 		// find models that need an context update
 		if (bUpdateAll) {

@@ -26,7 +26,9 @@
  */
 
 sap.ui.define(['./library', "../core/ControlBase"], function(library, ControlBase){
-
+	
+	"use strict";
+	
 	/**
 	 * Constructor for a new Sandbox instance.
 	 * 
