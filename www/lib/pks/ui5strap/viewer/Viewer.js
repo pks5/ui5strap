@@ -56,7 +56,14 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	var _m_currentSapplication = null;
 	var _m_loadedSapplicationsById = {};
 	
-
+	var _oInstance;
+	
+	ViewerMulti.open = function(mOptions, fnCallback){
+		if(!_oInstance){
+			_oInstance = new ViewerMulti(mOptions);
+			_oInstance.start(null, fnCallback);
+		}
+	};
 
 	/**
 	 * Initializes the ViewerMulti instance
@@ -177,7 +184,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			 * 
 			 */
 			_loadAppComplete = function loadAppComplete(appInstance){
-				loadCallback && loadCallback();
+				loadCallback && loadCallback(appInstance);
 				
 			    var startedCallback = function(){
 					if(!doNotShow){

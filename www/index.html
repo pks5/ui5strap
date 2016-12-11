@@ -39,14 +39,16 @@
 				margin:0;
 			
 				overflow:hidden;
+				box-sizing: border-box;
 			}
 			
 			#myContainer{
 				position:relative;
-				box-sizing: border-box;
+				
 				
 				width:100%;
 				height:100%;
+				
 				/*
 				margin:100px;
 				border:solid 4px red;
@@ -61,6 +63,7 @@
 			*/
 			#mySplashScreen{
 				background-image: url('./apps/template/img/tiny-grid-bg.jpg');
+				
 				width:100%;
 				height:100%;
 			}
@@ -100,27 +103,15 @@
 			#mySplashScreen-spinner{
 				position:absolute;
 				
-				width:24px;
+				width:140px;
 				height:24px;
 				left:50%;
 				top:152px;
-				margin-left:-12px;
-
-				background-image:url('lib/pks/ui5strap/viewer/img/spinner-black.png');
-				background-position: center center;
-				background-repeat: no-repeat;
-				background-size:cover;
-				
-				-webkit-animation: spin 2s infinite linear;
-				-moz-animation: spin 2s infinite linear;
-				-o-animation: spin 2s infinite linear;
-				animation: spin 2s infinite linear;
-
-				-webkit-transform: translate3d(0,0,0);
-				-moz-transform: translate3d(0,0,0);
-				-ms-transform: translate3d(0,0,0);
-				-o-transform: translate3d(0,0,0);
-				transform: translate3d(0,0,0);
+				margin-left:-70px;
+			}
+			
+			.ui5strap-spinnerBounce > div{
+				background-color: #2980b9!important;
 			}
 
 			/*
@@ -141,33 +132,44 @@
 
 				opacity: 0;
 
-				transition: opacity .3s ease-in;
-				-webkit-transition: opacity .3s ease-in;
-				-moz-transition: opacity .3s ease-in;
+				transition: opacity .1s ease-in;
+				-webkit-transition: opacity .1s ease-in;
+				-moz-transition: opacity .1s ease-in;
+				
+				font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 			}
 
 			#mySplashScreen-message.mySplashScreen-messageVisible{
 				opacity: 1;
 			}
+			
+			
 		</style>
 	
 	</head>
 	
 	<body role="application">
 		
+		<!-- Root Container (required). Must be relative or absolute in position. -->
 		<div id="myContainer">
 			
-			<!-- Ui5Strap Root Container Layer -->
+			<!-- Viewer Container (optional) - required when using a custom splash screen. -->
 			<div class="ui5strap-viewer">
 				
-				<!-- App Container, showing custom splash screen as intial content -->
+				<!-- Initial App Container - required when using a viewer container. -->
 				<div class="ui5strap-app">
 					
-					<!-- START Custom Splash Screen -->
+					<!-- Custom Splash Screen - shown until the app is loaded. -->
 					<div id="mySplashScreen">
 						<div id="mySplashScreen-window">
 							<img id="mySplashScreen-logo" src="./apps/template/img/ui5strap-logo-256.png" />
-							<div id="mySplashScreen-spinner"></div>
+							<div id="mySplashScreen-spinner">
+								<div class="ui5strap-spinnerBounce">
+								  	<div></div>
+								  	<div></div>
+								  	<div></div>
+							  	</div>
+							</div>
 							<div id="mySplashScreen-message">Welcome</div>
 						</div>
 					</div><!-- END #mySplashScreen -->
@@ -176,10 +178,10 @@
 				
 			</div><!-- END .ui5strap-viewer -->
 	         
-	        <!-- Optional NoScript layer. Only visible when JavaScript is deactivated. -->
+	        <!-- NoScript Layer (optional) - only visible when JavaScript is deactivated. -->
 			<noscript>
 				<div id="ui5strap-noscript" class="ui5strap-layer">
-					Ui5Strap requires JavaScript to be enabled.
+					JavaScript must be enabled.
 				</div>
 			</noscript>
 	
@@ -197,9 +199,7 @@
 		  ></script>
          -->
          
-        <!-- 
-            Please note that preloading of the Ui5Strap library is disabled by default. Remove "_preload-disabled" to activate preloading. 
-        -->
+        <!-- OpenUI5 -->
        <script id="sap-ui-bootstrap" 
             src="resources/sap-ui-core.js" 
             data-sap-ui-compatVersion="edge" 
@@ -218,39 +218,33 @@
 		   
 		   (function(){
 			   /*
-                * Define Viewer Options
-                * Use "app.defaultValue" to set the Default App. 
-                * It is used if no "app" GET parameter is present.
+                * Viewer Options
                 */
-                var viewerOptions = {
-                        "console" : true,
-                        "container" : "myContainer",
-                        "app" : {
-                            type : "URI",
-                            uriParam : "app",
-                            defaultValue : "./apps/template/app.json"
-                        }
+                var mViewerOptions = {
+                    console : true,
+                    container : "myContainer",
+                    app : {
+                        type : "URI",
+                        uriParam : "app",
+                        defaultValue : "./apps/template/app.json"
+                    }
                 },
                 onDeviceReady = function(){
-                    /*
-                    * Initialize Viewer
-                    */
-                    sap.ui.require(["pks/ui5strap/viewer/Viewer"], function(Viewer){
+                    
+                	//Require Viewer
+                	sap.ui.require(["pks/ui5strap/viewer/Viewer"], function(Viewer){
                         
-                    	//The reference to the viewer instance should not be global
-                        var viewer = new Viewer(viewerOptions);
-                        
-                        /*
-                        * Viewer.prototype.start accepts two callback functions as parameters.
-                        * The first callback is fired when the app has been completely started and shown.
-                        * The second callback is fired when the app has been loaded but did not show yet.
-                        * Both parameters are optional.
+                    	/*
+                        * Open the Viewer.
                         */
-                        viewer.start(null, function(){
+                        Viewer.open(mViewerOptions, function(oApp){
                         	if(document.getElementById('mySplashScreen')){
                             	//In this example we want to show the welcome message when the App has been loaded.
                             	document.getElementById('mySplashScreen-spinner').className = 'ui5strap-hidden';
-                            	document.getElementById('mySplashScreen-message').className = 'mySplashScreen-messageVisible';
+                            	
+                            	var oMessage = document.getElementById('mySplashScreen-message');
+                            	oMessage.innerHTML = oApp.config.data.app.name;
+                            	oMessage.className = 'mySplashScreen-messageVisible';
                         	}
                         });
                         
@@ -268,6 +262,7 @@
 	                sap.ui.getCore().attachInit(onDeviceReady);
 	            }
 		    }());
+		   
 		</script>
 
 	</body>
