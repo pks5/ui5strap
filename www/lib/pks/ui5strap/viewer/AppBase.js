@@ -438,7 +438,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 				if(compConfig.module){
 					//App Component
 					//Deprecated soon!
-					var moduleName = _this.config.resolvePackage(compConfig.module, "modules");
+					var moduleName = _this.config.resolvePackage(compConfig.module);
 					
 					//TODO Async!
 					jQuery.sap.require(moduleName);
@@ -516,7 +516,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		};
 		
 		for(var i = 0; i < actions.length; i++){
-			Action.loadFromFile(_this.config.resolvePackage(actions[i], "actions"), successCallback, true);
+			Action.loadFromFile(_this.config.resolvePackage(actions[i]), successCallback, true);
 		}
 	};
 	
@@ -1336,7 +1336,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		
 		var actionName = action.parameters;
 		if(typeof actionName === 'string'){
-			actionName = this.config.resolvePackage(actionName, "actions");
+			actionName = this.config.resolvePackage(actionName);
 			action.parameters = actionName;
 		}
 		Action.run(action);

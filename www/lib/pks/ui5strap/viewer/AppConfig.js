@@ -159,7 +159,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		
 		//Resolve View Name
 		if(viewName){
-			viewName = this.resolvePackage(viewName, "views");
+			viewName = this.resolvePackage(viewName);
 			var viewsByName = this.data.viewsByName[viewName];
 			
 			//Search by View Name if not found by ID
@@ -334,7 +334,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 					viewData.cache = true;
 				}
 				
-				var viewNameResolved = this.resolvePackage(viewName, "views");
+				var viewNameResolved = this.resolvePackage(viewName);
 				viewData.viewName = viewNameResolved;
 				if(!configDataJSON.viewsByName[viewNameResolved]){
 					configDataJSON.viewsByName[viewNameResolved] = [];
@@ -379,7 +379,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 				viewNamesLength = viewNames.length;
 			for(var i = 0; i < viewNamesLength; i++){
 				var viewName = viewNames[i],
-					viewNameResolved = this.resolvePackage(viewName, "views"),
+					viewNameResolved = this.resolvePackage(viewName),
 					viewData = configDataJSON.views[viewName];
 				
 				if(!viewData.type){
@@ -489,20 +489,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	/**
 	* Resolves a package relative to app package.
 	*/
-	AppConfigProto.resolvePackage = function (packageString, defaultFolder){
+	AppConfigProto.resolvePackage = function (packageString){
 		if(-1 === packageString.indexOf(".")){
 			jQuery.sap.log.warning("Please add a leading dot '.' to " + packageString);
 			packageString = "." + packageString;
 		}
 		
 		if(jQuery.sap.startsWith(packageString, ".")){
-			if(defaultFolder && !jQuery.sap.startsWith(packageString, "." + defaultFolder)){
-				throw new Error("Default Folders are deprecated and will be dropped. Thus '" + packageString + "' should be '" + "." + defaultFolder + packageString + "'"); 
-			}
-			else{
-				packageString = this.data.app["package"] + packageString;
-			}
-			
+			packageString = this.data.app["package"] + packageString;
 		}
 		
 		return packageString;

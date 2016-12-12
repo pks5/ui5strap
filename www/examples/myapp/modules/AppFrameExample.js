@@ -385,7 +385,7 @@ sap.ui.define([
 					sidebarItems = sidebarMenu.items;
 				
 				for(var i=0; i<sidebarItems.length; i++){
-					if(viewName === this.app.config.resolvePackage(sidebarItems[i].viewName, "views")){
+					if(viewName === this.app.config.resolvePackage(sidebarItems[i].viewName)){
 						sidebarMenuIndex = i;
 						break;
 					}
