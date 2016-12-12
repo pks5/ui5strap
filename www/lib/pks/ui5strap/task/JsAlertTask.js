@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.ActionController
+ * pks.ui5strap.task.JsAlertTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,28 +25,34 @@
  * 
  */
 
-sap.ui.define(['./library', 'pks/ui5strap/viewer/Controller'], function(ui5strapActionLib, Controller){
-
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+	
 	"use strict";
 	
-	/**
-	 * Constructor for a new ActionController instance.
-	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
-	 * 
-	 * @class
-	 * Basic controller with action support that can be used in views directly.
-	 * @extends ui5strap.Controller
-	 * 
-	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
-	 * 
-	 * @constructor
-	 * @public
-	 * @alias pks.ui5strap.action.ActionController
-	 * 
-	 */
-	return Controller.extend("pks.ui5strap.action.ActionController");
+	var AMJsAlert = ActionModule.extend("pks.ui5strap.task.JsAlertTask"),
+		AMJsAlertProto = AMJsAlert.prototype;
 
+	/*
+	* @Override
+	*/
+	AMJsAlertProto.parameters = {
+		"message" : {
+			"required" : true,
+			"type" : "string"
+		}
+	};
+
+	/*
+	* @Override
+	*/
+	AMJsAlertProto.run = function(){
+		alert(this.getParameter('message'));
+		
+		this.then();
+	};
+	
+	//Legacy
+	AMJsAlertProto.completed = function(){};
+	
+	return AMJsAlert;
 });

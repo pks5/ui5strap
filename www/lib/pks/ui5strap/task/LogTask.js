@@ -2,13 +2,13 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMShowApp
+ * pks.ui5strap.task.LogTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
  * Homepage: http://ui5strap.com
  *
- * Copyright (c) 2013 Jan Philipp Knöller <info@pksoftware.de>
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,23 +25,22 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMShowApp = ActionModule.extend("pks.ui5strap.action.AMShowApp"),
-		ShowAppProto = AMShowApp.prototype;
+	var AMLog = ActionModule.extend("pks.ui5strap.task.LogTask"),
+		AMLogProto = AMLog.prototype;
 
 	/*
 	* @Override
 	*/
-	ShowAppProto.namespace = 'showApp';
-
-	/*
-	* @Override
-	*/
-	ShowAppProto.parameters = {
-		"id" : {
+	AMLogProto.parameters = {
+		"logType" : {
+			"required" : true, 
+			"type" : "string"
+		},
+		"message" : {
 			"required" : true, 
 			"type" : "string"
 		}
@@ -50,27 +49,14 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 	/*
 	* @Override
 	*/
-	ShowAppProto.run = function(){
-		if(!(this.context.app instanceof pks.ui5strap.viewer.AppSystem)){
-			throw new Error('Only system apps can run pks.ui5strap.action.AMOpenApp');
-		}
-
-		var viewer = this.context.app.getViewer();
-		var _this = this;
-			viewer.showApp(
-				this.getParameter("id"),
-				null, 
-				function(){
-					//Notify the action module that the action is completed.
-					_this.then();
-				}
-			);	
+	AMLogProto.run = function(){
+		this.context._log[this.getParameter("logType")](this.getParameter("message"));
 		
-		
+		this.then();
 	};
 	
 	//Legacy
-	ShowAppProto.completed = function(){};
-
-	return AMShowApp;
+	AMLogProto.completed = function(){};
+	
+	return AMLog;
 });

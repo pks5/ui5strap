@@ -2,7 +2,7 @@
 	"BEGIN" : "changeTheme",
 
 	"changeTheme" : {
-		"TYPE" : "pks.ui5strap.action.AMChangeTheme",
+		"TYPE" : "pks.ui5strap.task.ChangeThemeTask",
 		
 		"CONTROLS" : {
 			"themeButton" : {

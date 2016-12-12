@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.ActionContext
+ * pks.ui5strap.viewer.ActionContext
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "sap/ui/base/Object", "sap/ui/core/Control"], function(ui5strapActionLib, ObjectBase, ControlBase){
+sap.ui.define(["./library", "sap/ui/base/Object", "sap/ui/core/Control"], function(ui5strapViewerLib, ObjectBase, ControlBase){
 
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "sap/ui/base/Object", "sap/ui/core/Control"], functi
 	 * @alias ui5strap.ActionContext
 	 * 
 	 */
-	var ActionContext = ObjectBase.extend('pks.ui5strap.action.ActionContext', {
+	var ActionContext = ObjectBase.extend('pks.ui5strap.viewer.ActionContext', {
 		/**
 		 * @constructs
 		 */
@@ -59,15 +59,10 @@ sap.ui.define(['./library', "sap/ui/base/Object", "sap/ui/core/Control"], functi
 
 	ActionContext.NUMBER = 0;
 
-	//OLD Format
-	ActionContext.PREFIX = "__";
-	ActionContext.PARAM_MODULES = "modules";
-	
 	ActionContext.RESOLVE = "=";
 	
 	//AM Modules
-	ActionContext.PARAM_TASKS = "TASKS";
-	ActionContext.PARAM_MODULE = "TYPE";
+	ActionContext.PARAM_TYPE = "TYPE";
 	ActionContext.PARAM_BEGIN = "BEGIN";
 	ActionContext.PARAM_END = "END";
 	ActionContext.PARAM_EXPORT = "EXPORT";

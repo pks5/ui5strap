@@ -3,7 +3,7 @@
 	"DESCRIPTION" : "Goto Page Options",
 
 	"navigate" : {
-		"TYPE" : "pks.ui5strap.action.NavigateTask",
+		"TYPE" : "pks.ui5strap.task.NavigateTask",
 		"VIEWS" : {
 			"home" : { 
 				"viewName" : "net__rozzo__games.quintus__app.views.Options",

@@ -1,8 +1,8 @@
 /*
  * 
- * UI5Strap Action Library
+ * UI5Strap Task Library
  *
- * pks.ui5strap.action.library
+ * pks.ui5strap.task.library
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -60,11 +60,11 @@ sap.ui
 					 */
 					sap.ui.getCore().initLibrary(
 							{
-								name : "pks.ui5strap.action",
+								name : "pks.ui5strap.task",
 
 								version : "0.11.6-SNAPSHOT",
 
-								dependencies : [ "sap.ui.core", "pks.ui5strap.core" ],
+								dependencies : [ "pks.ui5strap.core", "pks.ui5strap.viewer" ],
 
 								types : [ ],
 
@@ -75,9 +75,9 @@ sap.ui
 								elements : []
 							});
 					
-					var ui5strapActionLib = pks.ui5strap.action;
+					var ui5strapTaskLib = pks.ui5strap.action;
 
 					// End of library
-					return ui5strapActionLib;
+					return ui5strapTaskLib;
 
 				});

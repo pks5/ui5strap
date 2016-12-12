@@ -2,7 +2,7 @@
   "TASKS" : "showOverlay",
 
   "showOverlay" : {
-    "TYPE" : "pks.ui5strap.action.AMShowOverlay",
+    "TYPE" : "pks.ui5strap.task.ShowOverlayTask",
     "viewName" : "com__ui5strap__examples.50buttons__app.views.AlertOverlay",
     "target" : "content",
     "transition" : "transition-zoom"

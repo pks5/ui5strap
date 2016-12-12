@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMToggleProperty
+ * pks.ui5strap.task.SetListItemSelectedTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,37 +25,32 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMToggleProperty = ActionModule.extend("pks.ui5strap.action.AMToggleProperty"),
-		AMTogglePropertyProto = AMToggleProperty.prototype;
-
+	var AMSetListItemSelected = ActionModule.extend("pks.ui5strap.task.SetListItemSelectedTask"),
+		AMSetListItemSelectedProto = AMSetListItemSelected.prototype;
+	
 	/*
 	* @Override
 	*/
-	AMTogglePropertyProto.namespace = 'toggleProperty';
-
-	/*
-	* @Override
-	*/
-	AMTogglePropertyProto.parameters = {
+	AMSetListItemSelectedProto.parameters = {
 		
 		//Required
-		"propertyName" : {
+		"itemId" : {
 			"required" : true, 
 			"type" : "string"
 		},
-
-		//Optional
+		
 		"controlId" : {
 			"required" : false, 
+			"defaultValue" : null, 
 			"type" : "string"
 		},
 		"viewId" : {
-			"required" : false,
-			"defaultValue" : null,
+			"required" : false, 
+			"defaultValue" : null, 
 			"type" : "string"
 		},
 		"parameterKey" : {
@@ -65,36 +60,40 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 		},
 		"scope" : {
 			"required" : false, 
-			"defaultValue" : "APP", 
+			"defaultValue" : "VIEW", 
 			"type" : "string"
 		}
-
 	};
-
+	
 	/*
 	* Run the ActionModule
 	* @override
 	*/
-	AMTogglePropertyProto.run = function(){
-			var propertyName = this.getParameter("propertyName"),
-				control = this.findControl(),
-				setter = "set" + jQuery.sap.charToUpperCase(propertyName),
-				getter = "get" + jQuery.sap.charToUpperCase(propertyName);
-			
-			if(!control[setter]){
-				throw new Exception("Cannot toggle property: missing property '" + propertyName + "'");
+	AMSetListItemSelectedProto.run = function(){
+		var itemId = this.getParameter("itemId");
+		
+		if(!itemId){
+			return;
+		}
+		
+		var menu = this.findControl(),
+			items = menu.getItems(),
+			selectedItem = null;
+		
+		for(var i = 0; i < items.length; i++){
+			if(this.context.app.config.createControlId(itemId) === this.context.app.config.createControlId(items[i].getItemId())){
+				selectedItem = items[i];
+				break;
 			}
-			
-			var propertyValue = !control[getter]();
-			control[setter](propertyValue);
-			
-			this.then();
-
-			this.context._log.debug("[AMToggleProperty]: '" + propertyName + "' = '" + propertyValue + "'");
+		}
+		
+		menu.setSelection(selectedItem);
+		
+		this.then();
 	};
 	
 	//Legacy
-	AMTogglePropertyProto.completed = function(){};
+	AMSetListItemSelectedProto.completed = function(){};
 	
-	return AMToggleProperty;
+	return AMSetListItemSelected;
 });

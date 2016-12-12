@@ -2,13 +2,13 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMChangeTheme
+ * pks.ui5strap.task.ShowAppTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
  * Homepage: http://ui5strap.com
  *
- * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * Copyright (c) 2013 Jan Philipp Knöller <info@pksoftware.de>
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,24 +25,19 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMChangeTheme = ActionModule.extend("pks.ui5strap.action.AMChangeTheme"),
-		AMChangeThemeProto = AMChangeTheme.prototype;
+	var AMShowApp = ActionModule.extend("pks.ui5strap.task.ShowAppTask"),
+		ShowAppProto = AMShowApp.prototype;
 
 	/*
 	* @Override
 	*/
-	AMChangeThemeProto.namespace = 'changeTheme';
-
-	/*
-	* @Override
-	*/
-	AMChangeThemeProto.parameters = {
-		"theme" : {
-			"required" : true,
+	ShowAppProto.parameters = {
+		"id" : {
+			"required" : true, 
 			"type" : "string"
 		}
 	};
@@ -50,32 +45,27 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 	/*
 	* @Override
 	*/
-	AMChangeThemeProto.run = function(){
-		var newTheme = this.getParameter('theme'),
-			_this = this,
-			app = this.context.app;
+	ShowAppProto.run = function(){
+		if(!(this.context.app instanceof pks.ui5strap.viewer.AppSystem)){
+			throw new Error('Only system apps can run pks.ui5strap.task.OpenAppTask');
+		}
 
-		app.setLoaderVisible(true, function(){
-
-			window.setTimeout(function(){
-				
-				app.setTheme(newTheme);
-
-				window.setTimeout(function(){
-					app.setLoaderVisible(false);
-					
+		var viewer = this.context.app.getViewer();
+		var _this = this;
+			viewer.showApp(
+				this.getParameter("id"),
+				null, 
+				function(){
+					//Notify the action module that the action is completed.
 					_this.then();
-				}, 800);
-				
-
-			}, 200);
-
-		}, 'opaque');
+				}
+			);	
+		
+		
 	};
 	
 	//Legacy
-	AMChangeThemeProto.completed = function(){};
+	ShowAppProto.completed = function(){};
 
-	//Return Module Constructor
-	return AMChangeTheme;
+	return AMShowApp;
 });

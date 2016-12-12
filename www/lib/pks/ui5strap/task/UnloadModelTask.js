@@ -2,13 +2,13 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMSetListItemSelected
+ * pks.ui5strap.task.UnloadModelTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
  * Homepage: http://ui5strap.com
  *
- * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * Copyright (c) 2013 Jan Philipp Knöller <info@pksoftware.de>
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,37 +25,33 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMSetListItemSelected = ActionModule.extend("pks.ui5strap.action.AMSetListItemSelected"),
-		AMSetListItemSelectedProto = AMSetListItemSelected.prototype;
-	
+	var AMUnloadModel = ActionModule.extend("pks.ui5strap.task.UnloadModelTask"),
+		AMUnloadModelProto = AMUnloadModel.prototype;
+
 	/*
 	* @Override
 	*/
-	AMSetListItemSelectedProto.namespace = "setListItemSelected";
-	
-	/*
-	* @Override
-	*/
-	AMSetListItemSelectedProto.parameters = {
+	AMUnloadModelProto.parameters = {
 		
 		//Required
-		"itemId" : {
+		"modelName" : {
 			"required" : true, 
 			"type" : "string"
 		},
 		
+		//Optional
 		"controlId" : {
 			"required" : false, 
 			"defaultValue" : null, 
 			"type" : "string"
 		},
 		"viewId" : {
-			"required" : false, 
-			"defaultValue" : null, 
+			"required" : false,
+			"defaultValue" : null,
 			"type" : "string"
 		},
 		"parameterKey" : {
@@ -68,37 +64,25 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 			"defaultValue" : "VIEW", 
 			"type" : "string"
 		}
+
 	};
-	
+
 	/*
-	* Run the ActionModule
-	* @override
+	* @Override
 	*/
-	AMSetListItemSelectedProto.run = function(){
-		var itemId = this.getParameter("itemId");
-		
-		if(!itemId){
-			return;
-		}
-		
-		var menu = this.findControl(),
-			items = menu.getItems(),
-			selectedItem = null;
-		
-		for(var i = 0; i < items.length; i++){
-			if(this.context.app.config.createControlId(itemId) === this.context.app.config.createControlId(items[i].getItemId())){
-				selectedItem = items[i];
-				break;
-			}
-		}
-		
-		menu.setSelection(selectedItem);
-		
-		this.then();
+	AMUnloadModelProto.run = function(){ 
+			var theControl = this.findControl(true),
+				modelName = this.getParameter("modelName");
+			
+			theControl.setModel(null, modelName);
+			
+			this.then();
+			
+			this.context._log.debug(this._actionNameShort + "Model '" + modelName + "' (scope: '" + this.getParameter("scope") + "') unloaded.");
 	};
 	
 	//Legacy
-	AMSetListItemSelectedProto.completed = function(){};
+	AMUnloadModelProto.completed = function(){};
 	
-	return AMSetListItemSelected;
+	return AMUnloadModel;
 });

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMLoadModel
+ * pks.ui5strap.task.LoadModelTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,22 +25,17 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMLoadModel = ActionModule.extend("pks.ui5strap.action.AMLoadModel"),
+	var AMLoadModel = ActionModule.extend("pks.ui5strap.task.LoadModelTask"),
 		AMLoadModelProto = AMLoadModel.prototype;
 	
 
 	AMLoadModel.TYPE_ODATA = "ODATA";
 	AMLoadModel.TYPE_JSON = "JSON";
 	AMLoadModel.TYPE_RESOURCE = "RESOURCE";
-
-	/*
-	* @Override
-	*/
-	AMLoadModelProto.namespace = 'loadModel';
 
 	/*
 	* @Override 

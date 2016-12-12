@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMCallControlMethod
+ * pks.ui5strap.task.CallControlMethodTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,17 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMCallControlMethod = ActionModule.extend("pks.ui5strap.action.AMCallControlMethod"),
+	var AMCallControlMethod = ActionModule.extend("pks.ui5strap.task.CallControlMethodTask"),
 		AMCallControlMethodProto = AMCallControlMethod.prototype;
-
-	/*
-	* @Override
-	*/
-	AMCallControlMethodProto.namespace = 'callControlMethod';
 
 	/*
 	* @Override

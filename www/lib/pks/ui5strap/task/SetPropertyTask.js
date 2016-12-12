@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMGetContextData
+ * pks.ui5strap.task.SetPropertyTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,33 +25,28 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMGetContextData = ActionModule.extend("pks.ui5strap.action.AMGetContextData"),
-		AMGetContextDataProto = AMGetContextData.prototype;
+	var AMSetProperty = ActionModule.extend("pks.ui5strap.task.SetPropertyTask"),
+		AMSetPropertyProto = AMSetProperty.prototype;
 
 	/*
 	* @Override
 	*/
-	AMGetContextDataProto.namespace = 'getContextData';
-
-	/*
-	* @Override
-	*/
-	AMGetContextDataProto.parameters = {
+	AMSetPropertyProto.parameters = {
 		
 		//Required
-		"modelName" : {
+		"propertyName" : {
 			"required" : true, 
 			"type" : "string"
 		},
-		"tgtParam" : {
+		"value" : {
 			"required" : true, 
-			"type" : "string"
+			"type" : ["int", "boolean", "string", "object"]
 		},
-		
+
 		//Optional
 		"controlId" : {
 			"required" : false, 
@@ -71,30 +66,45 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 			"required" : false, 
 			"defaultValue" : "APP", 
 			"type" : "string"
+		},
+
+		"srcParam" : {
+			"required" : false,
+			"defaultValue" : null,
+			"type" : "string"
 		}
-		
+
 	};
 
 	/*
 	* Run the ActionModule
 	* @override
 	*/
-	AMGetContextDataProto.run = function(){
-			var modelName = this.getParameter("modelName"),
-				tgtParam = this.getParameter("tgtParam"),
-				control = this.findControl();
-
-			var bindingContext = control.getBindingContext(modelName);
-			var model = bindingContext.getModel();
-			var data = model.getProperty(bindingContext.getPath());
-
-			this.context.set(this, tgtParam, data);
+	AMSetPropertyProto.run = function(){
+			var srcParam = this.getParameter("srcParam"),
+				propertyName = this.getParameter("propertyName"),
+				propertyValue = this.getParameter("value"),
+				control = this.findControl(),
+				setter = "set" + jQuery.sap.charToUpperCase(propertyName);
+			
+			//Read value from another parameter
+			if(null !== srcParam){
+				propertyValue = this.context.get(this, srcParam);
+			}
+			
+			if(!control[setter]){
+				throw new Exception("Cannot set property: missing property '" + propertyName + "'");
+			}
+			
+			control[setter](propertyValue);
 			
 			this.then();
+
+			this.context._log.debug("[AMSetProperty]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
 	
 	//Legacy
-	AMGetContextDataProto.completed = function(){};
-
-	return AMGetContextData;
+	AMSetPropertyProto.completed = function(){};
+	
+	return AMSetProperty;
 });

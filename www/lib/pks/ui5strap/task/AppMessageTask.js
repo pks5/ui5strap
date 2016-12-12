@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMAppMessage
+ * pks.ui5strap.task.AppMessageTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,14 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMAppMessage = ActionModule.extend("pks.ui5strap.action.AMAppMessage"),
+	var AMAppMessage = ActionModule.extend("pks.ui5strap.task.AppMessageTask"),
 		AMAppMessageProto = AMAppMessage.prototype;
-
-	AMAppMessageProto.namespace = 'appMessage';
 
 	AMAppMessageProto.parameters = {
 		"receiver" : {

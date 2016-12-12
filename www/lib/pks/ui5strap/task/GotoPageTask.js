@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMGotoPage
+ * pks.ui5strap.task.GotoPageTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,17 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMGotoPage = ActionModule.extend("pks.ui5strap.action.AMGotoPage"),
+	var AMGotoPage = ActionModule.extend("pks.ui5strap.task.GotoPageTask"),
 		AMGotoPageProto = AMGotoPage.prototype;
-
-	/*
-	* @Override
-	*/
-	AMGotoPageProto.namespace = "gotoPage";
 
 	/*
 	* @Override

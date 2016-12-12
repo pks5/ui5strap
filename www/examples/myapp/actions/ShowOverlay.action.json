@@ -2,7 +2,7 @@
   "TASKS" : "showOverlay",
 
   "showOverlay" : {
-    "TYPE" : "pks.ui5strap.action.AMShowOverlay",
+    "TYPE" : "pks.ui5strap.task.ShowOverlayTask",
     "viewName" : "tld__domain.product__app.views.Overlay2",
     "viewType" : "HTML",
     "target" : "content",

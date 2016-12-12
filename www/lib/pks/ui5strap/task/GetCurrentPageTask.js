@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMGetProperty
+ * pks.ui5strap.task.GetCurrentPageTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,26 +25,22 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMGetProperty = ActionModule.extend("pks.ui5strap.action.AMGetProperty"),
-		AMGetPropertyProto = AMGetProperty.prototype;
-
+	var AMGetCurrentPage = ActionModule.extend("pks.ui5strap.task.GetCurrentPageTask"),
+		AMGetCurrentPageProto = AMGetCurrentPage.prototype;
+	
 	/*
 	* @Override
 	*/
-	AMGetPropertyProto.namespace = 'getProperty';
-
-	/*
-	* @Override
-	*/
-	AMGetPropertyProto.parameters = {
+	AMGetCurrentPageProto.parameters = {
 		
 		//Required
-		"propertyName" : {
+		"target" : {
 			"required" : true, 
+			"defaultValue" : null, 
 			"type" : "string"
 		},
 		"tgtParam" : {
@@ -52,14 +48,14 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 			"type" : "string"
 		},
 		
-		//Optional
 		"controlId" : {
 			"required" : false, 
+			"defaultValue" : null, 
 			"type" : "string"
 		},
 		"viewId" : {
-			"required" : false,
-			"defaultValue" : null,
+			"required" : false, 
+			"defaultValue" : null, 
 			"type" : "string"
 		},
 		"parameterKey" : {
@@ -69,35 +65,38 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 		},
 		"scope" : {
 			"required" : false, 
-			"defaultValue" : "APP", 
+			"defaultValue" : "VIEW", 
 			"type" : "string"
 		}
-		
 	};
-
+	
 	/*
 	* Run the ActionModule
 	* @override
 	*/
-	AMGetPropertyProto.run = function(){
-			var propertyKey = this.getParameter("propertyName"),
-				tgtParam = this.getParameter("tgtParam"),
-				control = this.findControl(false),
-				propertyValue = control["get" + jQuery.sap.charToUpperCase(propertyKey, 0)]();
-			
-			if(tgtParam){
-				this.context.set(this, tgtParam, propertyValue);
-			}
-			
-			this.setParameter("result", propertyValue);
-			
-			this.context._log.debug("get '" + propertyKey + "' = '" + propertyValue + "'");
-			
-			this.then();
+	AMGetCurrentPageProto.run = function(){
+		var target = this.getParameter("target"),
+			scope = this.getParameter("scope"),
+			tgtParam = this.getParameter("tgtParam");
+		
+		//TODO better with action conditions
+		if(scope === "SOURCE" && target !== this.context.eventParameters["target"]){
+			return;
+		}
+		
+		var nc = this.findControl(),
+			currentPage = nc.getTarget(target);
+		
+		if(tgtParam){
+			this.context.set(this, tgtParam, currentPage.getId());
+		}
+		this.setParameter("result", currentPage.getId());
+		
+		this.then();
 	};
 	
 	//Legacy
-	AMGetPropertyProto.completed = function(){};
+	AMGetCurrentPageProto.completed = function(){};
 	
-	return AMGetProperty;
+	return AMGetCurrentPage;
 });

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMSetModel
+ * pks.ui5strap.task.GetContextDataTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,39 +25,36 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMSetModel = ActionModule.extend("pks.ui5strap.action.AMSetModel"),
-		AMSetModelProto = AMSetModel.prototype;
+	var AMGetContextData = ActionModule.extend("pks.ui5strap.task.GetContextDataTask"),
+		AMGetContextDataProto = AMGetContextData.prototype;
 
 	/*
 	* @Override
 	*/
-	AMSetModelProto.namespace = 'setModel';
-
-	/*
-	* @Override
-	*/
-	AMSetModelProto.parameters = {
+	AMGetContextDataProto.parameters = {
 		
 		//Required
 		"modelName" : {
 			"required" : true, 
-			"defaultValue" : null, 
 			"type" : "string"
 		},
-
+		"tgtParam" : {
+			"required" : true, 
+			"type" : "string"
+		},
+		
 		//Optional
 		"controlId" : {
 			"required" : false, 
-			"defaultValue" : null, 
 			"type" : "string"
 		},
 		"viewId" : {
-			"required" : false, 
-			"defaultValue" : null, 
+			"required" : false,
+			"defaultValue" : null,
 			"type" : "string"
 		},
 		"parameterKey" : {
@@ -67,49 +64,32 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 		},
 		"scope" : {
 			"required" : false, 
-			"defaultValue" : "VIEW", 
-			"type" : "string"
-		},
-		
-		"data" : {
-			"required" : false,
-			"defaultValue" : null, 
-			"type" : "object"
-		},
-		"srcParam" : {
-			"required" : false,
-			"defaultValue" : null, 
+			"defaultValue" : "APP", 
 			"type" : "string"
 		}
-
+		
 	};
 
 	/*
-	* @Override
+	* Run the ActionModule
+	* @override
 	*/
-	AMSetModelProto.run = function(){ 
-			var srcParam = this.getParameter("srcParam"),
-				modelName = this.getParameter("modelName"),
-				data = this.getParameter("data"),
-				theControl = this.findControl(true);
-			
-			if(null !== srcParam){
-				data = this.context.get(this, srcParam);
-			}
+	AMGetContextDataProto.run = function(){
+			var modelName = this.getParameter("modelName"),
+				tgtParam = this.getParameter("tgtParam"),
+				control = this.findControl();
 
-			if(!data){
-				throw new Error('Data must be an object!');
-			}
+			var bindingContext = control.getBindingContext(modelName);
+			var model = bindingContext.getModel();
+			var data = model.getProperty(bindingContext.getPath());
 
-			theControl.setModel(new sap.ui.model.json.JSONModel(data), modelName);
+			this.context.set(this, tgtParam, data);
 			
 			this.then();
-			
-			this.context._log.debug("Model '" + modelName + "' (src param: '" + srcParam + "', scope: '" + this.getParameter("scope") + "') set.");
 	};
 	
 	//Legacy
-	AMSetModelProto.completed = function(){};
-	
-	return AMSetModel;
+	AMGetContextDataProto.completed = function(){};
+
+	return AMGetContextData;
 });

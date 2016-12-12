@@ -2,13 +2,13 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMUnloadModel
+ * pks.ui5strap.task.TogglePropertyTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
  * Homepage: http://ui5strap.com
  *
- * Copyright (c) 2013 Jan Philipp Knöller <info@pksoftware.de>
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,33 +25,27 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMUnloadModel = ActionModule.extend("pks.ui5strap.action.AMUnloadModel"),
-		AMUnloadModelProto = AMUnloadModel.prototype;
+	var AMToggleProperty = ActionModule.extend("pks.ui5strap.task.TogglePropertyTask"),
+		AMTogglePropertyProto = AMToggleProperty.prototype;
 
 	/*
 	* @Override
 	*/
-	AMUnloadModelProto.namespace = 'unloadModel';
-
-	/*
-	* @Override
-	*/
-	AMUnloadModelProto.parameters = {
+	AMTogglePropertyProto.parameters = {
 		
 		//Required
-		"modelName" : {
+		"propertyName" : {
 			"required" : true, 
 			"type" : "string"
 		},
-		
+
 		//Optional
 		"controlId" : {
 			"required" : false, 
-			"defaultValue" : null, 
 			"type" : "string"
 		},
 		"viewId" : {
@@ -66,28 +60,36 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 		},
 		"scope" : {
 			"required" : false, 
-			"defaultValue" : "VIEW", 
+			"defaultValue" : "APP", 
 			"type" : "string"
 		}
 
 	};
 
 	/*
-	* @Override
+	* Run the ActionModule
+	* @override
 	*/
-	AMUnloadModelProto.run = function(){ 
-			var theControl = this.findControl(true),
-				modelName = this.getParameter("modelName");
+	AMTogglePropertyProto.run = function(){
+			var propertyName = this.getParameter("propertyName"),
+				control = this.findControl(),
+				setter = "set" + jQuery.sap.charToUpperCase(propertyName),
+				getter = "get" + jQuery.sap.charToUpperCase(propertyName);
 			
-			theControl.setModel(null, modelName);
+			if(!control[setter]){
+				throw new Exception("Cannot toggle property: missing property '" + propertyName + "'");
+			}
+			
+			var propertyValue = !control[getter]();
+			control[setter](propertyValue);
 			
 			this.then();
-			
-			this.context._log.debug(this._actionNameShort + "Model '" + modelName + "' (scope: '" + this.getParameter("scope") + "') unloaded.");
+
+			this.context._log.debug("[AMToggleProperty]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
 	
 	//Legacy
-	AMUnloadModelProto.completed = function(){};
+	AMTogglePropertyProto.completed = function(){};
 	
-	return AMUnloadModel;
+	return AMToggleProperty;
 });

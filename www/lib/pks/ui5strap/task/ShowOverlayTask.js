@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMShowOverlay
+ * pks.ui5strap.task.ShowOverlayTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,17 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMShowOverlay = ActionModule.extend("pks.ui5strap.action.AMShowOverlay"),
+	var AMShowOverlay = ActionModule.extend("pks.ui5strap.task.ShowOverlayTask"),
 		AMShowOverlayProto = AMShowOverlay.prototype;
-
-	/*
-	* @Override
-	*/
-	AMShowOverlayProto.namespace = 'showOverlay';
 
 	/*
 	* @Override

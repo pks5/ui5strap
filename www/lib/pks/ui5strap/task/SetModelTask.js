@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMGetCurrentPage
+ * pks.ui5strap.task.SetModelTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,34 +25,26 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMGetCurrentPage = ActionModule.extend("pks.ui5strap.action.AMGetCurrentPage"),
-		AMGetCurrentPageProto = AMGetCurrentPage.prototype;
-	
+	var AMSetModel = ActionModule.extend("pks.ui5strap.task.SetModelTask"),
+		AMSetModelProto = AMSetModel.prototype;
+
 	/*
 	* @Override
 	*/
-	AMGetCurrentPageProto.namespace = "getCurrentPage";
-	
-	/*
-	* @Override
-	*/
-	AMGetCurrentPageProto.parameters = {
+	AMSetModelProto.parameters = {
 		
 		//Required
-		"target" : {
+		"modelName" : {
 			"required" : true, 
 			"defaultValue" : null, 
 			"type" : "string"
 		},
-		"tgtParam" : {
-			"required" : false, 
-			"type" : "string"
-		},
-		
+
+		//Optional
 		"controlId" : {
 			"required" : false, 
 			"defaultValue" : null, 
@@ -72,36 +64,47 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 			"required" : false, 
 			"defaultValue" : "VIEW", 
 			"type" : "string"
+		},
+		
+		"data" : {
+			"required" : false,
+			"defaultValue" : null, 
+			"type" : "object"
+		},
+		"srcParam" : {
+			"required" : false,
+			"defaultValue" : null, 
+			"type" : "string"
 		}
+
 	};
-	
+
 	/*
-	* Run the ActionModule
-	* @override
+	* @Override
 	*/
-	AMGetCurrentPageProto.run = function(){
-		var target = this.getParameter("target"),
-			scope = this.getParameter("scope"),
-			tgtParam = this.getParameter("tgtParam");
-		
-		//TODO better with action conditions
-		if(scope === "SOURCE" && target !== this.context.eventParameters["target"]){
-			return;
-		}
-		
-		var nc = this.findControl(),
-			currentPage = nc.getTarget(target);
-		
-		if(tgtParam){
-			this.context.set(this, tgtParam, currentPage.getId());
-		}
-		this.setParameter("result", currentPage.getId());
-		
-		this.then();
+	AMSetModelProto.run = function(){ 
+			var srcParam = this.getParameter("srcParam"),
+				modelName = this.getParameter("modelName"),
+				data = this.getParameter("data"),
+				theControl = this.findControl(true);
+			
+			if(null !== srcParam){
+				data = this.context.get(this, srcParam);
+			}
+
+			if(!data){
+				throw new Error('Data must be an object!');
+			}
+
+			theControl.setModel(new sap.ui.model.json.JSONModel(data), modelName);
+			
+			this.then();
+			
+			this.context._log.debug("Model '" + modelName + "' (src param: '" + srcParam + "', scope: '" + this.getParameter("scope") + "') set.");
 	};
 	
 	//Legacy
-	AMGetCurrentPageProto.completed = function(){};
+	AMSetModelProto.completed = function(){};
 	
-	return AMGetCurrentPage;
+	return AMSetModel;
 });

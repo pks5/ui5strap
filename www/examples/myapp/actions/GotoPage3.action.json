@@ -2,7 +2,7 @@
 	"TASKS" : "gotoPage",
 
 	"gotoPage" : {
-	   "TYPE" : "pks.ui5strap.action.AMGotoPage",
+	   "TYPE" : "pks.ui5strap.task.GotoPageTask",
 		"viewName" : "tld__domain.product__app.views.Page3",
 		"transition" : "transition-flip",
 		"writeHistory" : true

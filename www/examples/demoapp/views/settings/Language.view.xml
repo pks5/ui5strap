@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="pks.ui5strap.action.ActionController"
+<sapUiCoreMvc:View controllerName="pks.ui5strap.viewer.ActionController"
 	xmlns="pks.ui5strap.bs3" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
 	 xmlns:ui5strapEx="pks.ui5strap.ex"
 	xmlns:demoapp="com.ui5strap.apps.demoapp.controls"

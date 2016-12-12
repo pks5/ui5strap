@@ -4,7 +4,7 @@
 	"BEGIN" : "navigate",
 	
 	"navigate" : {
-		"TYPE" : "pks.ui5strap.action.NavigateTask",
+		"TYPE" : "pks.ui5strap.task.NavigateTask",
 		
 		"modelName" : "menu",
 		"contextData" : "= event.parameters.listItem.getBindingContextData(.modelName)",

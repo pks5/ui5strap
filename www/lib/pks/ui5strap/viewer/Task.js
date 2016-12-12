@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.Task
+ * pks.ui5strap.viewer.Task
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', './ActionContext', './Action', "sap/ui/base/Object"], function(ui5strapActionLib, ActionContext, Action, ObjectBase){
+sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext"], function(ui5strapViewerLib, ObjectBase, ActionContext){
 	
 	"use strict";
 	
@@ -44,68 +44,54 @@ sap.ui.define(['./library', './ActionContext', './Action', "sap/ui/base/Object"]
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias pks.ui5strap.action.Task
+	 * @alias pks.ui5strap.viewer.Task
 	 * 
 	 */
-	var Task = ObjectBase.extend("pks.ui5strap.action.Task"),
-		TaskProto = Task.prototype;
+	var Task = ObjectBase.extend("pks.ui5strap.viewer.Task", {
+			"constructor" : function(mSettings, oContext){
+				this.mSettings = mSettings;
+				this.oContext = oContext;
+				
+				//Legacy
+				this.context = oContext;
+				this.namespace = mSettings.namespace;
+			}
+		}),
+		TaskProto = Task.prototype,
+		_modulesCache = {};
 
 	/*
 	* Name of the event that is triggered when the event is completed
+	* @deprecated
 	*/
 	Task.EVENT_COMPLETED = "completed";
 	
-	Task.cacheable = true;
-	
-	/*
-	* Namespace of the action module instance
-	*/
-	TaskProto.namespace = 'task';
-
 	/*
 	* Defined parameters for this action module
 	*/
 	TaskProto.parameters = {};
 
 	/**
-	* Initializes the action module
-	* @PostConstruct
-	*/
-	TaskProto.init = function(context, instanceDef){
-		this.context = context;
-		this._instanceDef = instanceDef;
-		
-		context._log.debug("INIT " + this);
-		
-		if(instanceDef.namespace){
-			this.namespace = instanceDef.namespace;
-		}
-		else{
-			//this.namespace = TaskProto.namespace;
-		}
-		
-		//Test if Namespace is valid
-		if(jQuery.sap.startsWith(this.namespace, ActionContext.PREFIX)){
-			throw new Error("Action namespace must not start with '" + ActionContext.PREFIX + "'!");
-		}
-		
-		if(!context.action[this.namespace]){
-			context.action[this.namespace] = {};
-		}
-
-		return this;
-	};
-
-	/**
 	 * String representation of the Module
 	 * @Public
 	 */
 	TaskProto.toString = function(){
-		return this._instanceDef.module + ' ' + this.context;
+		return this.mSettings.type + ' ' + this.context;
 	};
 
+	TaskProto.getContext = function(){
+		return this.oContext;
+	};
+	
 	/**
-	 * @Public
+	 * @public
+	 */
+	TaskProto.getNamespace = function(){
+		return this.mSettings.namespace;
+	};
+	
+	/**
+	 * @public
 	 */
 	TaskProto.getScope = function(){
 		return ActionContext.WORKPOOL + "." + this.namespace;
@@ -207,6 +193,52 @@ sap.ui.define(['./library', './ActionContext', './Action', "sap/ui/base/Object"]
 	};
 	
 	/**
+	 * Runs a single task within the context.
+	 * @static
+	 */
+	Task.runTask = function(oContext, sNamespace){
+		if(!sNamespace){
+			return false;
+		}
+		
+		var mTaskDef = oContext.action[sNamespace];
+		
+		if(!mTaskDef){
+			throw new Error("No task definition for task '" + sNamespace + "'");
+		}
+		
+		var sTaskType = mTaskDef[ActionContext.PARAM_TYPE];
+		
+		if(!sTaskType){
+			sTaskType = "pks.ui5strap.viewer.Task";
+		}
+		
+		sap.ui.require([oContext.app.config.resolvePackage(sTaskType).replace(/\./g, "/")], function(TaskConstructor){
+			var mSettings = {
+				namespace : sNamespace,
+				type : sTaskType
+			};
+				
+			//Push to callstack
+			oContext._callStack.push(mSettings);
+
+			var oTask = _modulesCache[sTaskType];
+			
+			if(!oTask){
+				oTask = new TaskConstructor(mSettings, oContext);
+							
+				if(!(oTask instanceof Task)){
+					throw new Error("Error in action '" + oContext + "':  '" + sTaskType +  "' must be a Task instance.");
+				}
+			}
+
+			oTask.execute();
+		});
+		
+		return true;
+	};
+	
+	/**
 	* Run the action module. Inheritants should override this method.
 	* @Protected
 	*/
@@ -222,30 +254,29 @@ sap.ui.define(['./library', './ActionContext', './Action', "sap/ui/base/Object"]
 	
 	TaskProto.then = function(force){
 		if(force || !this._suppressThen){
-			var context = this.context,
+			var oContext = this.context,
 				thenExpr = _expression(this, "THEN");
 			
 			if(ActionContext.PARAM_END === thenExpr){
-				context.finish();
+				//THEN : "END"
+				oContext.finish();
 			}
-			else if(!Action.runTask(context, thenExpr)){
-				//Action has been finished
-				if(context.parameters[ActionContext.PARAM_BEGIN]){
-					context.finish();
-				}
+			else if(!Task.runTask(oContext, thenExpr)){
+				//No THEN
+				oContext.finish();
 			}
 		}
 	};
 	
 	TaskProto["else"] = function(){
-		Action.runTask(this.context, _expression(this, "ELSE"));
+		Task.runTask(this.context, _expression(this, "ELSE"));
 	};
 	
 	TaskProto.error = function(err){
 		var errorTask = _expression(this, "ERROR");
 		if(errorTask){
 			//No callback needed?
-			Action.runTask(this.context, errorTask);
+			Task.runTask(this.context, errorTask);
 		}
 		else{
 			throw err;
@@ -256,7 +287,7 @@ sap.ui.define(['./library', './ActionContext', './Action', "sap/ui/base/Object"]
 		var errorTask = _expression(this, "FATAL");
 		if(errorTask){
 			//No callback needed?
-			Action.runTask(this.context, errorTask);
+			Task.runTask(this.context, errorTask);
 		}
 		else{
 			throw err;
@@ -265,8 +296,9 @@ sap.ui.define(['./library', './ActionContext', './Action', "sap/ui/base/Object"]
 	
 	/*
 	 * 
-	 * ------------------------------------------------
-	 * ------------------------------------------------
+	 * ----------------
+	 * START DEPRECATED
+	 * ----------------
 	 * 
 	 */
 	

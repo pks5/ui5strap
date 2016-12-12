@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMOpenApp
+ * pks.ui5strap.task.OpenAppTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,17 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMOpenApp = ActionModule.extend("pks.ui5strap.action.AMOpenApp"),
+	var AMOpenApp = ActionModule.extend("pks.ui5strap.task.OpenAppTask"),
 		OpenAppProto = AMOpenApp.prototype;
-
-	/*
-	* @Override
-	*/
-	OpenAppProto.namespace = 'openApp';
 
 	/*
 	* @Override
@@ -92,7 +87,7 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 	*/
 	OpenAppProto.run = function(){
 		if(!(this.context.app instanceof pks.ui5strap.viewer.AppSystem)){
-			throw new Error('Only system apps can run pks.ui5strap.action.AMOpenApp');
+			throw new Error('Only system apps can run pks.ui5strap.task.OpenAppTask');
 		}
 
 		var appUrl = this.getParameter("url"),

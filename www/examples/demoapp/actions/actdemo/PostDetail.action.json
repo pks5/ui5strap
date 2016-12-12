@@ -12,7 +12,7 @@
     },
     
     "setModel" : {
-        "TYPE" : "pks.ui5strap.action.AMSetModel",
+        "TYPE" : "pks.ui5strap.task.SetModelTask",
         "modelName" : "POST",
         "data" : "= action.readPost.callbackArgs.0"
     }

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMLog
+ * pks.ui5strap.task.ChangeThemeTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,28 +25,19 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMLog = ActionModule.extend("pks.ui5strap.action.AMLog"),
-		AMLogProto = AMLog.prototype;
+	var AMChangeTheme = ActionModule.extend("pks.ui5strap.task.ChangeThemeTask"),
+		AMChangeThemeProto = AMChangeTheme.prototype;
 
 	/*
 	* @Override
 	*/
-	AMLogProto.namespace = 'log';
-
-	/*
-	* @Override
-	*/
-	AMLogProto.parameters = {
-		"logType" : {
-			"required" : true, 
-			"type" : "string"
-		},
-		"message" : {
-			"required" : true, 
+	AMChangeThemeProto.parameters = {
+		"theme" : {
+			"required" : true,
 			"type" : "string"
 		}
 	};
@@ -54,14 +45,32 @@ sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule)
 	/*
 	* @Override
 	*/
-	AMLogProto.run = function(){
-		this.context._log[this.getParameter("logType")](this.getParameter("message"));
-		
-		this.then();
+	AMChangeThemeProto.run = function(){
+		var newTheme = this.getParameter('theme'),
+			_this = this,
+			app = this.context.app;
+
+		app.setLoaderVisible(true, function(){
+
+			window.setTimeout(function(){
+				
+				app.setTheme(newTheme);
+
+				window.setTimeout(function(){
+					app.setLoaderVisible(false);
+					
+					_this.then();
+				}, 800);
+				
+
+			}, 200);
+
+		}, 'opaque');
 	};
 	
 	//Legacy
-	AMLogProto.completed = function(){};
-	
-	return AMLog;
+	AMChangeThemeProto.completed = function(){};
+
+	//Return Module Constructor
+	return AMChangeTheme;
 });

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.NavigateTask
+ * pks.ui5strap.task.NavigateTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,17 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', './Task', "../core/NavContainer"], function(ui5strapActionLib, Task, NavContainer){
+sap.ui.define(["./library", "../viewer/Task", "../core/NavContainer"], function(ui5strapTaskLib, Task, NavContainer){
 	
 	"use strict";
 	
-	var NavigateTask = Task.extend("pks.ui5strap.action.NavigateTask"),
+	var NavigateTask = Task.extend("pks.ui5strap.task.NavigateTask"),
 		NavigateTaskProto = NavigateTask.prototype;
-
-	/**
-	* @Override
-	*/
-	NavigateTaskProto.namespace = "navigate";
 
 	/**
 	* @Override

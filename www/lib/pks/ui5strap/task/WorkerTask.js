@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMWorker
+ * pks.ui5strap.task.WorkerTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,17 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMWorker = ActionModule.extend("pks.ui5strap.action.AMWorker"),
+	var AMWorker = ActionModule.extend("pks.ui5strap.task.WorkerTask"),
 		AMWorkerProto = AMWorker.prototype;
-
-	/*
-	* @Override
-	*/
-	AMWorkerProto.namespace = 'worker';
 
 	/*
 	* @Override

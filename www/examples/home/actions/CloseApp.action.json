@@ -3,7 +3,7 @@
 	"BEGIN" : "getContextData",
 	
 	"getContextData" : {
-	   "TYPE" : "pks.ui5strap.action.AMGetContextData",
+	   "TYPE" : "pks.ui5strap.task.GetContextDataTask",
 		"modelName" : "tasks",
 		"tgtParam" : "parameters.getContextData.CONTEXT",
 		"scope" : "SOURCE",

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.action.AMCloseOverlay
+ * pks.ui5strap.task.CloseOverlayTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,17 +25,12 @@
  * 
  */
 
-sap.ui.define(['./library', "./Task"], function(ui5strapActionLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
 	
 	"use strict";
 	
-	var AMCloseOverlay = ActionModule.extend("pks.ui5strap.action.AMCloseOverlay"),
+	var AMCloseOverlay = ActionModule.extend("pks.ui5strap.task.CloseOverlayTask"),
 		AMCloseOverlayProto = AMCloseOverlay.prototype;
-
-	/*
-	* @Override
-	*/
-	AMCloseOverlayProto.namespace = 'closeOverlay';
 
 	/*
 	* @Override
