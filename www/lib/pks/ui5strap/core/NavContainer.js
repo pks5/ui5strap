@@ -287,7 +287,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			if(oCurrentPage){
 				var oUiArea = oCurrentPage.getParent();
 				if(oUiArea){
-					var $current = pageChange.transition._data.$current;
+					var $current = pageChange.transition.getData().$current;
 					
 					if(!$current){
 						throw new Error("Removed page has no DOM reference.");
@@ -326,7 +326,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			
 			//Next Page
 			if(pageChange.page){
-				var $next = pageChange.transition._data.$next;
+				var $next = pageChange.transition.getData().$next;
 				if($next){
 					$next.attr('class', 'navcontainer-page navcontainer-page-current');
 				}

@@ -7,7 +7,7 @@
 		"VIEWS" : {
 			"home" : { 
 				"viewName" : "net__rozzo__games.quintus__app.views.Options",
-				"transition" : "transition-flip",
+				"transition" : "flip-horizontal-ccw",
 				"writeHistory" : true
 			}
 		}

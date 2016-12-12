@@ -4,7 +4,7 @@
 	"gotoPage" : {
 	   "TYPE" : "pks.ui5strap.task.GotoPageTask",
 		"viewName" : "tld__domain.product__app.views.Page3",
-		"transition" : "transition-flip",
+		"transition" : "flip-horizontal-ccw",
 		"writeHistory" : true
 	}
 	

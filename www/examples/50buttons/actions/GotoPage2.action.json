@@ -5,7 +5,7 @@
 	"gotoPage" : {
 	   "TYPE" : "pks.ui5strap.task.GotoPageTask",
 		"id" : "viewPage2",
-		"transition" : "transition-flip"
+		"transition" : "flip-horizontal-ccw"
 	}
 
 }

@@ -9,7 +9,7 @@
 		"VIEWS" : {
             "page1" : { 
                 "id" : "viewPage1",
-		        "transition" : "transition-flip"
+		        "transition" : "flip-horizontal-ccw"
 		    }
 		}
 	}

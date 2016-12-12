@@ -33,35 +33,9 @@ sap.ui
 					"use strict";
 					
 					/**
-					 * Converts old transition strings into new ones.
-					 * 
-					 * @deprecated
-					 * @Private
-					 */
-					var _deprecatedTransitionsConvert = function($trans) {
-						var $newTrans = "";
-						if ($trans === 'transition-zoom')
-							$newTrans = 'zoom-in';
-						else if ($trans === 'transition-zoom2')
-							$newTrans = 'zoom-out';
-
-						else if ($trans === 'transition-flip')
-							$newTrans = 'flip-horizontal-ccw';
-						else if ($trans === 'transition-slide')
-							$newTrans = 'slide-rtl';
-						else
-							$newTrans = $trans.substring(11);
-
-						jQuery.sap.log.warning("Transition deprecated: '"
-								+ $trans + "'. Please use instead: "
-								+ $newTrans);
-						return $newTrans;
-					};
-
-					/**
 					 * Constructor for a new ResponsiveTransition instance.
 					 * 
-					 * @param {object} data - Initial settings.
+					 * @param {object} mData - Initial settings.
 					 * 
 					 * @class
 					 * Class that provides responsive transition support.
@@ -74,257 +48,272 @@ sap.ui
 					 * @alias pks.ui5strap.core.ResponsiveTransition
 					 * 
 					 */
-					var ResponsiveTransition = function(data) {
-						this._data = data;
+					var ResponsiveTransition = function(mData) {
+						this._mData = mData;
 
-						var transString = "", transSpeed = data.transitionSpeed;
+						var sTransClasses = "", transSpeed = mData.transitionSpeed;
 
-						if (data.transitionAll) {
-							if (data.transitionAll.indexOf("transition-") === 0) {
-
-								data.transitionAll = _deprecatedTransitionsConvert(data.transitionAll);
-							}
-							transString = "ui5strap-trans-all-type-"
-									+ data.transitionAll;
+						if (mData.transitionAll) {
+							sTransClasses = "ui5strap-trans-all-type-"
+									+ mData.transitionAll;
 						} else {
-							transString += data.transitionExtraSmall ? "ui5strap-trans-xs-type-"
-									+ data.transitionExtraSmall
+							sTransClasses += mData.transitionExtraSmall ? "ui5strap-trans-xs-type-"
+									+ mData.transitionExtraSmall
 									: "ui5strap-trans-xs-type-none";
-							transString += data.transitionSmall ? " ui5strap-trans-sm-type-"
-									+ data.transitionSmall
+							sTransClasses += mData.transitionSmall ? " ui5strap-trans-sm-type-"
+									+ mData.transitionSmall
 									: " ui5strap-trans-sm-type-none";
-							transString += data.transitionMedium ? " ui5strap-trans-md-type-"
-									+ data.transitionMedium
+							sTransClasses += mData.transitionMedium ? " ui5strap-trans-md-type-"
+									+ mData.transitionMedium
 									: " ui5strap-trans-md-type-none";
-							transString += data.transitionLarge ? " ui5strap-trans-lg-type-"
-									+ data.transitionLarge
+							sTransClasses += mData.transitionLarge ? " ui5strap-trans-lg-type-"
+									+ mData.transitionLarge
 									: " ui5strap-trans-lg-type-none";
 
-							if (transString === "ui5strap-trans-xs-type-none ui5strap-trans-sm-type-none ui5strap-trans-md-type-none ui5strap-trans-lg-type-none") {
-								transString = "ui5strap-trans-all-type-none";
+							if (sTransClasses === "ui5strap-trans-xs-type-none ui5strap-trans-sm-type-none ui5strap-trans-md-type-none ui5strap-trans-lg-type-none") {
+								sTransClasses = "ui5strap-trans-all-type-none";
 							}
 						}
 
-						this._skip = !ui5strapCoreLib.polyfill.transitionEndEvent
-								|| transString === "ui5strap-trans-all-type-none";
-
-						this._transitions = transString;
+						this._mStatus = {
+							skipped : false,
+							prepared : false,
+							executed : false,
+							canceled : false,
+							firstFinished : false,
+							currentFinished : false,
+							nextFinished : false,
+							lastFinished : false,
+							finished : false
+						};
+						
+						this._mStatus.skipped = !ui5strapCoreLib.polyfill.transitionEndEvent
+								|| sTransClasses === "ui5strap-trans-all-type-none";
 
 						if (transSpeed && transSpeed !== "normal") {
-							this._transitions += " ui5strap-transition-speed-"
+							sTransClasses += " ui5strap-transition-speed-"
 									+ transSpeed;
 						}
+						
+						this._sTransClasses = sTransClasses;
 
-						this._prepared = false;
-						this._executed = false;
-						this._canceled = false;
-
-						this._finished = false;
-						this._nextFinished = false;
-						this._currentFinished = false;
-						this._firstFinished = null;
-
-						this._events = {
+						this._mEvents = {
 							current : [],
 							next : [],
 							first : [],
 							last : []
 						};
-
-						this.on = function(event, callback) {
-							if (("current" === event && this._currentFinished)
-									|| ("next" === event && this._nextFinished)
-									|| ("first" === event && this._firstFinished)
-									|| ("last" === event && this._finished)) {
-								callback();
-							}
-
-							this._events[event].push(callback);
-						};
-
-						var _runEvent = function(_this, event) {
-							for (var i = 0; i < _this._events[event].length; i++) {
-								_this._events[event][i]();
-							}
-							_this._events[event] = [];
-						};
-
-						/**
-						 * Should always be surrounded by a RAF.
-						 * 
-						 * @Public
-						 */
-						this.prepare = function() {
-							if (this._prepared || this._executed) {
-								throw new Error(
-										'Cannot prepare transition: already prepared or executed!');
-							}
-
-							if (!this._skip && !this._canceled) {
-								// Prepare DOM elements
-								this._data.$current
-										&& this._data.$current
-												.addClass(this._transitions
-														+ ' '
-														+ 'ui5strap-transition-current');
-								this._data.$next
-										&& this._data.$next
-												.addClass(
-														this._transitions
-																+ ' '
-																+ 'ui5strap-transition-next')
-												.removeClass('ui5strap-hidden');
-								
-								this._prepared = true;
-							}
-						};
-						
-						/**
-						 * Should always be surrounded by a RAF.
-						 * 
-						 * @Public
-						 */
-						this.execute = function() {
-							var _this = this;
-
-							if (this._executed) {
-								throw new Error(
-										'Cannot execute responsive transition: already executed!');
-							}
-
-							this._executed = true;
-
-							var _finallyCurrent = function() {
-								if (_this._currentFinished) {
-									jQuery.sap.log
-											.warning('[TRANS#'
-													+ _this._data.id
-													+ ' ('
-													+ _this._transitions
-													+ ')] Hiding page caused a timeout.');
-
-									return;
-								}
-
-								// Clear timeout for current page, if any
-								window.clearTimeout(_this._currentTimout);
-								
-								//First
-								if (!_this._firstFinished) {
-									_runEvent(_this, "first");
-									
-									_this._firstFinished = "current";
-								}
-
-								//Current
-								_runEvent(_this, "current");
-								
-								_this._currentFinished = true;
-								
-								//Last
-								var bFinished = _this._nextFinished || !_this._data.$next;
-								
-								if (bFinished) {
-									_runEvent(_this, "last");
-									
-									_this._finished = true;
-								}
-								
-								
-								
-							}, _finallyNext = function() {
-								if (_this._nextFinished) {
-									jQuery.sap.log
-											.warning('[TRANS#'
-													+ _this._data.id
-													+ ' ('
-													+ _this._transitions
-													+ ')] Showing page caused a timeout.');
-
-									return;
-								}
-								
-								// Clear timeout for next page, if any
-								window.clearTimeout(_this._nextTimout);
-								
-								//First
-								if (!_this._firstFinished) {
-									_runEvent(_this, "first");
-									
-									_this._firstFinished = "next";
-								}
-
-								//Next
-								_runEvent(_this, "next");
-								_this._nextFinished = true;
-								
-								var bFinished = _this._currentFinished || !_this._data.$current;
-								
-								if (bFinished) {
-									_runEvent(_this, "last");
-									
-									_this._finished = true;
-								}
-							};
-
-							// Check if transition is skipped or canceled.
-							if (this._skip || this._canceled) {
-								// Transition skipped
-								jQuery.sap.log.debug("[TRANS#" + _this._data.id
-										+ "] Transition skipped: '"
-										+ _this._transitions + "'");
-
-								_finallyCurrent();
-								_finallyNext();
-							} else {
-								// Execute transition
-								jQuery.sap.log.debug("[TRANS#" + this._data.id
-										+ "] Executing '" + _this._transitions
-										+ "'");
-
-								// Current DOM element
-								if (this._data.$current) {
-									this._currentTimout = window.setTimeout(
-											_finallyCurrent,
-											ui5strapCoreLib.options.transitionTimeout);
-
-									this._data.$current
-											.one(
-													ui5strapCoreLib.polyfill.transitionEndEvent,
-													_finallyCurrent);
-								}
-
-								// Next DOM element
-								if (this._data.$next) {
-									this._nextTimout = window.setTimeout(
-											_finallyNext,
-											ui5strapCoreLib.options.transitionTimeout);
-
-									this._data.$next
-											.one(
-													ui5strapCoreLib.polyfill.transitionEndEvent,
-													_finallyNext);
-								}
-
-								// Now set the classes to start the transitions
-								this._data.$current
-										&& this._data.$current
-												.addClass('ui5strap-transition-current-out');
-								this._data.$next
-										&& this._data.$next
-												.removeClass('ui5strap-transition-next');
-							}
-
-						};
-
-						this.cancel = function() {
-							this._canceled = true;
-						};
-						
-						this.getData = function(){
-							return this._data;
-						};
 					};
+					
+					ResponsiveTransition.prototype = {};
+					
+					var ResponsiveTransitionProto = ResponsiveTransition.prototype;
+					
+					ResponsiveTransitionProto.on = function(event, callback) {
+						if (("current" === event && this._mStatus.currentFinished)
+								|| ("next" === event && this._mStatus.nextFinished)
+								|| ("first" === event && this._mStatus.firstFinished)
+								|| ("last" === event && this._mStatus.finished)) {
+							callback();
+						}
 
+						this._mEvents[event].push(callback);
+					};
+					
+					ResponsiveTransitionProto.prepare = function() {
+						var mStatus = this._mStatus,
+							mData = this._mData;
+						
+						if (mStatus.prepared || mStatus.executed) {
+							throw new Error(
+									'Cannot prepare transition: already prepared or executed!');
+						}
+
+						if (!mStatus.skipped && !mStatus.canceled) {
+							var $oNext = mData.$next,
+								$oCurrent = mData.$current,
+								sTransClasses = this._sTransClasses;
+							
+							// Prepare DOM elements
+							$oCurrent
+									&& $oCurrent.addClass(sTransClasses
+													+ ' '
+													+ 'ui5strap-transition-current');
+							$oNext
+									&& $oNext
+											.addClass(
+													sTransClasses
+															+ ' '
+															+ 'ui5strap-transition-next')
+											.removeClass('ui5strap-hidden');
+							
+							mStatus.prepared = true;
+						}
+					};
+					
+					ResponsiveTransitionProto.cancel = function() {
+						this._mStatus.canceled = true;
+					};
+					
+					ResponsiveTransitionProto.getData = function(){
+						return this._mData;
+					};
+					
+					ResponsiveTransitionProto.getStatus = function(){
+						return this._mStatus;
+					};
+					
+					ResponsiveTransitionProto.runEvent = function(sEventName) {
+						for (var i = 0; i < this._mEvents[sEventName].length; i++) {
+							this._mEvents[sEventName][i]();
+						}
+						this._mEvents[sEventName] = [];
+					};
+					
+					ResponsiveTransitionProto.finishCurrent = function(){
+						var mStatus = this._mStatus,
+							mData = this._mData;
+						
+						if (mStatus.currentFinished) {
+							jQuery.sap.log
+									.warning("Transition timeout.");
+
+							return;
+						}
+
+						// Clear timeout for current page, if any
+						window.clearTimeout(this._currentTimout);
+						
+						//First
+						if (!mStatus.firstFinished) {
+							this.runEvent("first");
+							
+							mStatus.firstFinished = "current";
+						}
+
+						//Current
+						this.runEvent("current");
+						
+						mStatus.currentFinished = true;
+						
+						//Last
+						var bFinished = mStatus.nextFinished || !mData.$next;
+						
+						if (bFinished) {
+							this.runEvent("last");
+							
+							mStatus.finished = true;
+						}
+					};
+					
+					ResponsiveTransitionProto.finishNext = function(){
+						var mStatus = this._mStatus,
+							mData = this._mData;
+						
+						if (mStatus.nextFinished) {
+							jQuery.sap.log
+							.warning("Transition timeout.");
+							
+							return;
+						}
+						
+						// Clear timeout for next page, if any
+						window.clearTimeout(this._nextTimout);
+						
+						//First
+						if (!mStatus.firstFinished) {
+							this.runEvent("first");
+							
+							mStatus.firstFinished = "next";
+						}
+
+						//Next
+						this.runEvent("next");
+						mStatus.nextFinished = true;
+						
+						var bFinished = mStatus.currentFinished || !mData.$current;
+						
+						if (bFinished) {
+							this.runEvent("last");
+							
+							mStatus.finished = true;
+						}
+					};
+					
+					/**
+					 * Should always be surrounded by a RAF.
+					 * 
+					 * @Public
+					 */
+					ResponsiveTransitionProto.execute = function() {
+						var _this = this,
+							mStatus = this._mStatus,
+							mData = this._mData,
+							$oNext = mData.$next,
+							$oCurrent = mData.$current;
+
+						if (mStatus.executed) {
+							throw new Error(
+									'Cannot execute responsive transition: already executed!');
+						}
+						
+						// Check if transition is skipped or canceled.
+						if (mStatus.skipped || mStatus.canceled) {
+							
+							jQuery.sap.log
+							.warning("Transition skipped or canceled.");
+							
+							this.finishCurrent();
+							this.finishNext();
+							
+						} else {
+							jQuery.sap.log
+							.warning("Executing transition.");
+							
+							// Current DOM element
+							if ($oCurrent) {
+								var fnFinishCurrent = function(){
+									_this.finishCurrent();
+								};
+								
+								this._currentTimout = window.setTimeout(
+										fnFinishCurrent,
+										ui5strapCoreLib.options.transitionTimeout);
+
+								$oCurrent
+										.one(
+												ui5strapCoreLib.polyfill.transitionEndEvent,
+												fnFinishCurrent);
+							}
+
+							// Next DOM element
+							if ($oNext) {
+								var fnFinishNext = function(){
+									_this.finishNext();
+								};
+								
+								this._nextTimout = window.setTimeout(
+										fnFinishNext,
+										ui5strapCoreLib.options.transitionTimeout);
+
+								$oNext
+										.one(
+												ui5strapCoreLib.polyfill.transitionEndEvent,
+												fnFinishNext);
+							}
+
+							// Now set the classes to start the transitions
+							$oCurrent
+									&& $oCurrent
+											.addClass('ui5strap-transition-current-out');
+							$oNext
+									&& $oNext
+											.removeClass('ui5strap-transition-next');
+						}
+						
+						mStatus.executed = true;
+						
+					};
+					
 					return ResponsiveTransition;
 				});

@@ -6,7 +6,7 @@
     "viewName" : "tld__domain.product__app.views.Overlay2",
     "viewType" : "HTML",
     "target" : "content",
-    "overlayTransition" : "transition-slide-rtl"
+    "overlayTransition" : "slide-rtl"
   
   }
 }
