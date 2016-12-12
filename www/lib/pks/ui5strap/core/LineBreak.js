@@ -52,7 +52,6 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 	var Break = ControlBase.extend("pks.ui5strap.core.LineBreak", {
 		metadata : {
 			interfaces : ["pks.ui5strap.core.IText"],
-			deprecated : true,
 			library : "pks.ui5strap.core"
 		},
 		

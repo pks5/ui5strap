@@ -319,6 +319,8 @@ sap.ui.define(['./library', "../core/library", '../core/NavContainer', '../core/
 						jQuery.sap.log.debug("[BarNavContainer] Transition complete.")
 					};
 				
+				transition.on("last", transitionComplete);	
+					
 				//RAF start
 				ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
 					
@@ -328,7 +330,7 @@ sap.ui.define(['./library', "../core/library", '../core/NavContainer', '../core/
 					//RAF
 					ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF2(){
 						//Execure Transition
-						transition.execute(transitionComplete, transitionComplete);
+						transition.execute();
 						
 						if(newBarVisible){
 							_this.$().removeClass("navcontainer-flag-bar-hide");

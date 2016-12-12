@@ -160,48 +160,31 @@ sap.ui
 										'Cannot prepare transition: already prepared or executed!');
 							}
 
-							if (this._canceled) {
-								return;
-							}
-
-							this._prepared = true;
-
-							if (this._skip) {
-								// Transition skipped
-								// We still need to remove the hidden flag from
-								// the next dom element.
+							if (!this._skip && !this._canceled) {
+								// Prepare DOM elements
+								this._data.$current
+										&& this._data.$current
+												.addClass(this._transitions
+														+ ' '
+														+ 'ui5strap-transition-current');
 								this._data.$next
 										&& this._data.$next
+												.addClass(
+														this._transitions
+																+ ' '
+																+ 'ui5strap-transition-next')
 												.removeClass('ui5strap-hidden');
-
-								return;
+								
+								this._prepared = true;
 							}
-
-							// Prepare DOM elements
-							this._data.$current
-									&& this._data.$current
-											.addClass(this._transitions
-													+ ' '
-													+ 'ui5strap-transition-current');
-							this._data.$next
-									&& this._data.$next
-											.addClass(
-													this._transitions
-															+ ' '
-															+ 'ui5strap-transition-next')
-											.removeClass('ui5strap-hidden');
 						};
 						
-						this.madeChanges = function(){
-							return this._prepared;
-						};
-
 						/**
 						 * Should always be surrounded by a RAF.
 						 * 
 						 * @Public
 						 */
-						this.execute = function(callbackCurrent, callbackNext) {
+						this.execute = function() {
 							var _this = this;
 
 							if (this._executed) {
@@ -223,31 +206,32 @@ sap.ui
 									return;
 								}
 
-								_this._currentFinished = true;
-
-								if (_this._nextFinished || !_this._data.$next) {
-									_this._finished = true;
-								}
-
+								// Clear timeout for current page, if any
+								window.clearTimeout(_this._currentTimout);
+								
+								//First
 								if (!_this._firstFinished) {
+									_runEvent(_this, "first");
+									
 									_this._firstFinished = "current";
 								}
 
-								// Clear timeout for current page, if any
-								window.clearTimeout(_this._currentTimout);
-
-								if ("current" === _this._firstFinished) {
-									_runEvent(_this, "first");
-								}
-
-								// Callback for current page
-								callbackCurrent && callbackCurrent.call(_this);
-
+								//Current
 								_runEvent(_this, "current");
-
-								if (_this._finished) {
+								
+								_this._currentFinished = true;
+								
+								//Last
+								var bFinished = _this._nextFinished || !_this._data.$next;
+								
+								if (bFinished) {
 									_runEvent(_this, "last");
+									
+									_this._finished = true;
 								}
+								
+								
+								
 							}, _finallyNext = function() {
 								if (_this._nextFinished) {
 									jQuery.sap.log
@@ -259,34 +243,32 @@ sap.ui
 
 									return;
 								}
-								_this._nextFinished = true;
-								if (_this._currentFinished || !_this._data.$current) {
-									_this._finished = true;
-								}
-
+								
+								// Clear timeout for next page, if any
+								window.clearTimeout(_this._nextTimout);
+								
+								//First
 								if (!_this._firstFinished) {
+									_runEvent(_this, "first");
+									
 									_this._firstFinished = "next";
 								}
 
-								// Clear timeout for next page, if any
-								window.clearTimeout(_this._nextTimout);
-
-								if ("next" === _this._firstFinished) {
-									_runEvent(_this, "first");
-								}
-
-								// Callback for next page
-								callbackNext && callbackNext.call(_this);
-
+								//Next
 								_runEvent(_this, "next");
-
-								if (_this._finished) {// alert(_this._currentFinished + "-" + _this._events.current.length);
+								_this._nextFinished = true;
+								
+								var bFinished = _this._currentFinished || !_this._data.$current;
+								
+								if (bFinished) {
 									_runEvent(_this, "last");
+									
+									_this._finished = true;
 								}
 							};
 
 							// Check if transition is skipped or canceled.
-							if (this._skip || this._canceled || !this._prepared) {
+							if (this._skip || this._canceled) {
 								// Transition skipped
 								jQuery.sap.log.debug("[TRANS#" + _this._data.id
 										+ "] Transition skipped: '"
@@ -338,7 +320,10 @@ sap.ui
 						this.cancel = function() {
 							this._canceled = true;
 						};
-
+						
+						this.getData = function(){
+							return this._data;
+						};
 					};
 
 					return ResponsiveTransition;

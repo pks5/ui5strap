@@ -232,20 +232,14 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 			);
 		
 		this._transition = transition;
-			
-		var transitionNextComplete = function (){
-				if(transition.madeChanges() && $next.data("paneIndex") === _this.getSelectedIndex()){
-					$next.attr("class", _this._getStyleClassPart("pane") + " active");
-				}
-			},
-			transitionCurrentComplete = function (){
-				if(transition.madeChanges() && $current.data("paneIndex") !== _this.getSelectedIndex()){
-					$current.attr("class", _this._getStyleClassPart("pane") + " ui5strap-hidden");
-				}
-			};
 		
-		//RAF start
-			ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
+		transition.on("last", function(){
+			$next.attr("class", _this._getStyleClassPart("pane") + " active");
+			
+			$current.attr("class", _this._getStyleClassPart("pane") + " ui5strap-hidden");
+		});
+			
+		ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
 			
 			//Prepare Transition
 			transition.prepare();
@@ -255,7 +249,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 			//RAF
 			ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF2(){
 				//Execure Transition
-				transition.execute(transitionCurrentComplete, transitionNextComplete);
+				transition.execute();
 			});
 	
 		});
@@ -272,11 +266,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 
 			if(this._transition){
 				var _this = this;
+				
 				this._transition.cancel();
+				
 				this._transition.on("last", function(){
 					_this._transition = null;
 					_this._showSelectedPane();
 				});
+				
+				
 			}
 			else{
 				this._showSelectedPane();
