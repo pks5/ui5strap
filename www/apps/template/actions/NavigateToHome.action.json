@@ -1,7 +1,7 @@
 {
 	"//" : "Makes the root NavContainer navigate to the 'Home' view.",
 	
-	"TASKS" : "navigateToHome",
+	"BEGIN" : "navigateToHome",
 	
 	"navigateToHome" : {
 		"TYPE" : "pks.ui5strap.task.NavigateTask",

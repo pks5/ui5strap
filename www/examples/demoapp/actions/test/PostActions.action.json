@@ -1,7 +1,7 @@
 {
 	"//" : "Shows a alert window with the content of the specified custom data field.",
 	
-	"TASKS" : "switch",
+	"BEGIN" : "switch",
 	
 	"switch" : {
 		"TYPE" : "ui5strap.task.Switch",

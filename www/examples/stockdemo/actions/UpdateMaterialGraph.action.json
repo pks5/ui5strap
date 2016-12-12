@@ -1,6 +1,6 @@
 {
 	
-	"TASKS" : "callControlMethod",
+	"BEGIN" : "callControlMethod",
 	
 	"callControlMethod" : {
 	    "TYPE" : "pks.ui5strap.task.CallControlMethodTask",

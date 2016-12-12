@@ -1,5 +1,5 @@
 {
-	"TASKS" : "navigate",
+	"BEGIN" : "navigate",
 	"DESCRIPTION" : "Goto Page Home",
 
 	"navigate" : {

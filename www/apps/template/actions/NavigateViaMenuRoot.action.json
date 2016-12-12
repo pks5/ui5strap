@@ -1,7 +1,7 @@
 {
 	"//" : "Makes the root NavContainer navigate to the view that is specified in the list item context of the specified model.",
 	
-	"TASKS" : "navigate",
+	"BEGIN" : "navigate",
 	
 	"navigate" : {
 		"TYPE" : "pks.ui5strap.task.NavigateTask",

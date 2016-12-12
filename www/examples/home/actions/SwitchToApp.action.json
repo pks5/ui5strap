@@ -1,6 +1,6 @@
 {
 	
-	"TASKS" : ["getContextData", "closeOverlay"],
+	"BEGIN" : ["getContextData", "closeOverlay"],
 	
 	"getContextData" : {
 	    "TYPE" : "pks.ui5strap.task.GetContextDataTask",

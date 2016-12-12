@@ -1,6 +1,6 @@
 {
 	"//" : "Shows a alert window with the content of the specified custom data field.",
-	"TASKS" : "testTask",
+	"BEGIN" : "testTask",
 	
 	"testTask" : {
 		"compareValue" : "DELETE",

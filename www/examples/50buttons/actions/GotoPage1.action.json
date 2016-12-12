@@ -1,6 +1,6 @@
 {
 	
-	"TASKS" : "gotoPage",
+	"BEGIN" : "gotoPage",
 	"DESCRIPTION" : "Goto Page 1",
 
 	"gotoPage" : {
