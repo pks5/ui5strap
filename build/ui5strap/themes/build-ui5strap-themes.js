@@ -17,34 +17,34 @@ module.exports = function(grunt) {
 				    cwd: '../../../www/lib/pks/ui5strap/core/',
 				    src: 'themes/*/library.source.less',
 				    dest: '../../../www/lib/pks/ui5strap/core/'
-				  },
-				{
-				    expand: true,
-				    cwd: '../../../www/lib/pks/ui5strap/bs3/',
-				    src: 'themes/*/library.source.less',
-				    dest: '../../../www/lib/pks/ui5strap/bs3/'
 				},
-		        {
-		          expand: true,
-		          cwd: '../../../www/lib/pks/ui5strap/action/',
-		          src: 'themes/*/library.source.less',
-		          dest: '../../../www/lib/pks/ui5strap/action/'
-		        },
-		        
-		        
-		        
-		        {
-		          expand: true,
-		          cwd: '../../../www/lib/pks/ui5strap/ex/',
-		          src: 'themes/*/library.source.less',
-		          dest: '../../../www/lib/pks/ui5strap/ex/'
-		        },
 		        
 		        {
 		          expand: true,
 		          cwd: '../../../www/lib/pks/ui5strap/viewer/',
 		          src: 'themes/*/library.source.less',
 		          dest: '../../../www/lib/pks/ui5strap/viewer/'
+		        },
+		        
+		        {
+		          expand: true,
+		          cwd: '../../../www/lib/pks/ui5strap/task/',
+		          src: 'themes/*/library.source.less',
+		          dest: '../../../www/lib/pks/ui5strap/task/'
+		        },
+				
+		        {
+				    expand: true,
+				    cwd: '../../../www/lib/pks/ui5strap/bs3/',
+				    src: 'themes/*/library.source.less',
+				    dest: '../../../www/lib/pks/ui5strap/bs3/'
+				},
+		        
+		        {
+		          expand: true,
+		          cwd: '../../../www/lib/pks/ui5strap/ex/',
+		          src: 'themes/*/library.source.less',
+		          dest: '../../../www/lib/pks/ui5strap/ex/'
 		        }
 		      ]
 		    }
