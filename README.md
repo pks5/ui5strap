@@ -1,19 +1,19 @@
-ui5strap 0.11.6-SNAPSHOT
+Ui5Strap 1.0.0-SNAPSHOT
 ========================
 
-The independent SAPUI5 / OpenUI5 App Development Toolkit based on Bootstrap.
+Build apps with UI5 and Bootstrap.
 
 Get more information at http://ui5strap.com
 
 DOCUMENTATION
 -------------
 
-Documentation is online available at http://ui5strap.com/docs/
+Online documentation is available at http://ui5strap.com/manual/
 
 EXAMPLES
 --------
 
-See Ui5Strap in action at http://ui5strap.com/examples.html
+See Ui5Strap in action at http://ui5strap.com/examples/
 
 LICENSE
 -------
@@ -23,11 +23,8 @@ UI5Strap is released under Apache2 license: http://www.apache.org/licenses/LICEN
 THIRD PARTY COMPONENTS
 ----------------------
 
-OpenUi5 1.40.8 (Apache 2 License)
-Copyright (c) 2009-2016 SAP SE or an SAP affiliate company.
+The following third party software is delivered with Ui5Strap:
 
-Bootstrap 3.3.6 (MIT License) [modified]
+Bootstrap 3.3.7 (MIT License) [modified]
 
-Font Awesome 4.6.1 (SIL OFL 1.1 / MIT License)
-
-Flag Icon Css 2.4.0 (MIT License)
+Font Awesome 4.7.0 (SIL OFL 1.1 / MIT License)
