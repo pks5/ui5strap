@@ -89,7 +89,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	
 	ViewerBase.OVERLAY_ID = "ui5strapGlobalOverlay";
 	ViewerBase.LOADER_ID = "ui5strapGlobalLoader";
-	ViewerBase.FATAL_ID = "ui5strapGlobalFatal";
+	ViewerBase.FATAL_ID = "ui5strapFatalError";
 	
 	/**
 	 * Initialzer
