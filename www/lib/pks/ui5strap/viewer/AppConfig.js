@@ -159,7 +159,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		
 		if(!mPageConfig.type){
-			mPageConfig.type = "XMLView";
+			mPageConfig.type = "sap.ui.core.mvc.XMLView";
 		}
 		
 		if(!("cache" in mPageConfig)){
@@ -253,41 +253,45 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	};
 	
 	var _pageTypes = {
-			"XMLView" : {
+			"sap.ui.core.mvc.XMLView" : {
 				"nature" : "View",
 				"viewType" : "XML"
 			},
-			"HTMLView" : {
+			"sap.ui.core.mvc.HTMLView" : {
 				"nature" : "View",
 				"viewType" : "HTML"
 			},
-			"JSONView" : {
+			"sap.ui.core.mvc.JSONView" : {
 				"nature" : "View",
 				"viewType" : "JSON"
 			},
-			"JSView" : {
+			"sap.ui.core.mvc.JSView" : {
 				"nature" : "View",
 				"viewType" : "JS"
 			},
 			
 			"XML" : {
 				"nature" : "View",
-				"viewType" : "XML"
+				"viewType" : "XML",
+				deprecated : "sap.ui.core.mvc.XMLView"
 			},
 			"HTML" : {
 				"nature" : "View",
-				"viewType" : "HTML"
+				"viewType" : "HTML",
+				deprecated : "sap.ui.core.mvc.HTMLView"
 			},
 			"JSON" : {
 				"nature" : "View",
-				"viewType" : "JSON"
+				"viewType" : "JSON",
+				deprecated : "sap.ui.core.mvc.JSONView"
 			},
 			"JS" : {
 				"nature" : "View",
-				"viewType" : "JS"
+				"viewType" : "JS",
+				deprecated : "sap.ui.core.mvc.JSView"
 			},
 			
-			"UIComponent" : {
+			"sap.ui.core.UIComponent" : {
 				"nature" : "UIComponent"
 			}
 		};
@@ -343,8 +347,6 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			mPageConfig.id = sPageId;
 			
 			configDataJSON.pagesById[sPageId] = mPageConfig;
-			
-			var mPageType = this.getPageType(mPageConfig.type);
 			
 			var routingPath = mPageConfig.route;
 			if(routingPath){
