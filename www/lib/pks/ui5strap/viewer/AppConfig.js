@@ -56,7 +56,51 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 	}),
 	AppConfigProto = AppConfig.prototype;
-
+	
+	var _pageTypes = {
+		"sap.ui.core.mvc.XMLView" : {
+			"nature" : "View",
+			"viewType" : "XML"
+		},
+		"sap.ui.core.mvc.HTMLView" : {
+			"nature" : "View",
+			"viewType" : "HTML"
+		},
+		"sap.ui.core.mvc.JSONView" : {
+			"nature" : "View",
+			"viewType" : "JSON"
+		},
+		"sap.ui.core.mvc.JSView" : {
+			"nature" : "View",
+			"viewType" : "JS"
+		},
+		
+		"XML" : {
+			"nature" : "View",
+			"viewType" : "XML",
+			deprecated : "sap.ui.core.mvc.XMLView"
+		},
+		"HTML" : {
+			"nature" : "View",
+			"viewType" : "HTML",
+			deprecated : "sap.ui.core.mvc.HTMLView"
+		},
+		"JSON" : {
+			"nature" : "View",
+			"viewType" : "JSON",
+			deprecated : "sap.ui.core.mvc.JSONView"
+		},
+		"JS" : {
+			"nature" : "View",
+			"viewType" : "JS",
+			deprecated : "sap.ui.core.mvc.JSView"
+		},
+		
+		"sap.ui.core.UIComponent" : {
+			"nature" : "UIComponent"
+		}
+	};
+	
 	/**
 	* Sets the configuration data after validating.
 	*/
@@ -252,49 +296,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		return option;
 	};
 	
-	var _pageTypes = {
-			"sap.ui.core.mvc.XMLView" : {
-				"nature" : "View",
-				"viewType" : "XML"
-			},
-			"sap.ui.core.mvc.HTMLView" : {
-				"nature" : "View",
-				"viewType" : "HTML"
-			},
-			"sap.ui.core.mvc.JSONView" : {
-				"nature" : "View",
-				"viewType" : "JSON"
-			},
-			"sap.ui.core.mvc.JSView" : {
-				"nature" : "View",
-				"viewType" : "JS"
-			},
-			
-			"XML" : {
-				"nature" : "View",
-				"viewType" : "XML",
-				deprecated : "sap.ui.core.mvc.XMLView"
-			},
-			"HTML" : {
-				"nature" : "View",
-				"viewType" : "HTML",
-				deprecated : "sap.ui.core.mvc.HTMLView"
-			},
-			"JSON" : {
-				"nature" : "View",
-				"viewType" : "JSON",
-				deprecated : "sap.ui.core.mvc.JSONView"
-			},
-			"JS" : {
-				"nature" : "View",
-				"viewType" : "JS",
-				deprecated : "sap.ui.core.mvc.JSView"
-			},
-			
-			"sap.ui.core.UIComponent" : {
-				"nature" : "UIComponent"
-			}
-		};
+	
 		
 	AppConfigProto.getPageType = function(sPageType){
 		var mPageType = _pageTypes[sPageType];

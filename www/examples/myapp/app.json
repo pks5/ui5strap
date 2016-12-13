@@ -64,7 +64,7 @@
 
         },
 
-        "views" : [
+        "pages" : [
             {
                 "viewName" : ".views.Intro",
                 "type" : "HTML",
@@ -130,19 +130,19 @@
             "myMenu" : {
                 "items" : [
                         {
-                            "viewName" : ".views.Page1",
+                            "id" : "my-app-page1",
                             "label" : "i18n>MENU_PAGE1",
                             "icon" : "home",
                             "writeHistory" : true
                         },
                         {
-                            "viewName" : ".views.Page2",
+                            "id" : "my-app-page2",
                             "label" : "i18n>MENU_PAGE2",
                             "icon" : "download",
                             "writeHistory" : true
                         },
                         {
-                            "viewName" : ".views.Page3",
+                            "id" : "my-app-page3",
                             "label" : "i18n>MENU_PAGE3",
                             "icon" : "wrench",
                             "writeHistory" : true

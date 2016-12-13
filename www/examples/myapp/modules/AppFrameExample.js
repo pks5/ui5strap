@@ -39,13 +39,13 @@ sap.ui.define([
 				this.app.setLocalStorageItem("skipIntro", true);
 				
 				this.gotoPage({ 
-					"viewName" : "tld__domain.product__app.views.Intro",
+					"id" : "my-app-intro",
 					"transition" : "transition-none"
 				}, complete);
 			}
 			else{
 				this.gotoPage({ 
-					"viewName" : "tld__domain.product__app.views.Page1",
+					"id" : "my-app-page1",
 					"transition" : "transition-none"
 				}, complete);
 			}
@@ -53,7 +53,7 @@ sap.ui.define([
 		catch(e){
 			//If localStorage is not supported, always show the Intro (IE9)
 			this.gotoPage({ 
-				"viewName" : "tld__domain.product__app.views.Intro",
+				"id" : "my-app-intro",
 				"transition" : "transition-none"
 			}, complete);
 		}
@@ -248,9 +248,9 @@ sap.ui.define([
 		var _this = this,
 			frameOptions = this.options;
 		
-		//If "sidebarMenu" is set, and no "viewName" specified, goto first page of sidebarMenu.
-		if(viewDef.sidebarMenu && !viewDef.viewName){
-			//if the viewDef contains no viewName but a sidebarMenu only, show the first entry of the submenu
+		//If "sidebarMenu" is set, and no "id" specified, goto first page of sidebarMenu.
+		if(viewDef.sidebarMenu && !viewDef.id){
+			//if the viewDef contains no id but a sidebarMenu only, show the first entry of the submenu
 
 			var submenu = this.app.config.getMenuData(viewDef.sidebarMenu);
 			if("items" in submenu && submenu.items.length > 0){
@@ -264,7 +264,7 @@ sap.ui.define([
 		}
 
 		//Get final view configuration
-		var viewConfig = this.getPageConfig(viewDef),
+		var viewConfig = this.getViewConfig(viewDef),
 			target = viewConfig.target;
 
 		if(this.isBusy(target)){
@@ -346,7 +346,7 @@ sap.ui.define([
 			}
 		}
 
-		this.updateMenu(viewConfig.viewName);
+		this.updateMenu(viewConfig.id);
 
 		if(viewConfig.showLoader){
 			this.app.setLoaderVisible(true, function(){
@@ -372,20 +372,20 @@ sap.ui.define([
 	*
 	* @Public
 	*/
-	FrameControllerProto.updateMenu = function(viewName){
-		this.app.log.debug('[APP_FRAME_EXAMPLE] updateMenu "' + viewName + '"');
-
+	FrameControllerProto.updateMenu = function(sPageId){
+		this.app.log.debug('[APP_FRAME_EXAMPLE] updateMenu "' + sPageId + '"');
+		
 		var navSidebar = this.navSidebar;
 
 		if(this.sidebarMenu){
 			var sidebarMenu = this.app.config.getMenuData(this.sidebarMenu);
-			
+			console.log(sPageId, sidebarMenu)
 			if(null !== sidebarMenu && 'items' in sidebarMenu){
 				var sidebarMenuIndex = -1,
 					sidebarItems = sidebarMenu.items;
 				
 				for(var i=0; i<sidebarItems.length; i++){
-					if(viewName === this.app.config.resolvePackage(sidebarItems[i].viewName)){
+					if(sPageId === this.app.config.createControlId(sidebarItems[i].id)){
 						sidebarMenuIndex = i;
 						break;
 					}
@@ -412,7 +412,7 @@ sap.ui.define([
 					menuItems = menu.items;
 
 				for(var i=0; i<menuItems.length; i++){
-					if(viewName === menuItems[i].viewName || (this.sidebarMenu && this.sidebarMenu === menuItems[i].sidebarMenu)){
+					if(sPageId === this.app.config.createControlId(menuItems[i].id) || (this.sidebarMenu && this.sidebarMenu === menuItems[i].sidebarMenu)){
 						menuIndex = i;
 						break;
 					}
