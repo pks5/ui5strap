@@ -498,7 +498,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		//Create or Update App Container
 		appInstance.updateContainer();
 
-		var $currentRoot = prevApp ? prevApp.$() : this._dom.$root.find('.ui5strapApp');
+		var $currentRoot = prevApp ? prevApp.$() : this._dom.$viewer.find('.ui5strapApp');
 
 		//Load app css
 		appInstance.includeStyle(function includeStyle_complete(){
@@ -506,7 +506,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			jQuery.sap.log.debug("Attaching root to DOM...");
 			
 			//Append App to DOM is not yet
-			appInstance.attach(_this._dom.$root[0]);
+			appInstance.attach(_this._dom.$viewer[0]);
 			
 			//Create new Transition
 			var transition = new ResponsiveTransition(
@@ -708,7 +708,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.showLoader = function(callback){
-		Layer.setVisible('ui5strap-loader', true, callback);
+		Layer.setVisible(ViewerBase.LOADER_ID, true, callback);
 	};
 
 	/**
@@ -716,7 +716,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.hideLoader = function(callback){
-		Layer.setVisible('ui5strap-loader', false, callback);
+		Layer.setVisible(ViewerBase.LOADER_ID, false, callback);
 	};
 
 	/*
@@ -832,7 +832,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		
 		window.addEventListener(
 			"error", function(e) { 
-			  jQuery("#ui5strap-fatal").append("<span>" + e.message + " in " + e.filename + " on line " + e.lineno + "</span>").removeClass("ui5strap-hidden");
+			  _this._dom.$fatal.append("<span>" + e.message + " in " + e.filename + " on line " + e.lineno + "</span>").removeClass("ui5strap-hidden");
 		}, false);
 		
 	};

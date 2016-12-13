@@ -1,7 +1,7 @@
 /*
 * Shrink the main container for home bar
 */
-.ui5strap-with-bar-home .ui5strap-viewer{
+.ui5strap-with-bar-home .ui5strapViewer{
     bottom:30px; 
 }
 

@@ -67,11 +67,11 @@ sap.ui
 							return false;
 						}
 
-						if (!$layer.hasClass('ui5strap-layer')) {
+						if (!$layer.hasClass('ui5strapLayer')) {
 							throw new Error(
 									"Cannot register layer '"
 											+ layerId
-											+ "': layers must have the css class 'ui5strap-layer'.");
+											+ "': layers must have the css class 'ui5strapLayer'.");
 						}
 
 						this.layers[layerId] = {

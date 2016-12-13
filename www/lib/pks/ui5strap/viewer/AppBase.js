@@ -1059,7 +1059,6 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.setLoaderVisible = function(visible, callback){
-		//Layer.setVisible('ui5strap-loader', visible, callback, option);
 		Layer.setVisible(this.config.createDomId('loader'), visible, callback);
 	};
 
@@ -1737,13 +1736,13 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		appContainer.appendChild(appContent);
 
 		//App Overlay
-		appOverlay.className = APP_PREFIX_STYLE_CLASS + "-overlay ui5strap-overlay ui5strap-layer ui5strap-hidden";
+		appOverlay.className = APP_PREFIX_STYLE_CLASS + "-overlay ui5strapOverlay ui5strapLayer ui5strap-hidden";
 		appOverlay.id = overlayId;
 		
 		this._overlayId = overlayId;
 
 		//var appOverlayBackdrop = document.createElement('div');
-		//appOverlayBackdrop.className = 'ui5strap-overlay-backdrop';
+		//appOverlayBackdrop.className = 'ui5strapOverlay-backdrop';
 		//appOverlayBackdrop.id = this.config.createDomId('overlay-backdrop');
 		/*
 		appOverlayBackdrop.onclick = function(){
@@ -1752,7 +1751,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		*/
 		//appOverlay.appendChild(appOverlayBackdrop);
 
-		appOverlayContent.className = 'ui5strap-overlay-content';
+		appOverlayContent.className = 'ui5strapOverlay-content';
 		appOverlayContent.id = this.config.createDomId('overlay-content');
 		appOverlay.appendChild(appOverlayContent);
 
@@ -1762,7 +1761,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 
 		//App Loader
 		
-		appLoader.className = APP_PREFIX_STYLE_CLASS + "-loader ui5strap-loader ui5strap-layer ui5strap-hidden";
+		appLoader.className = APP_PREFIX_STYLE_CLASS + "-loader ui5strapLoader ui5strapLayer ui5strap-hidden";
 		appLoader.id = this.config.createDomId('loader');
 		appContainer.appendChild(appLoader);
 

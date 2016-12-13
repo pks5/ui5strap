@@ -87,7 +87,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	}),
 	ViewerBaseProto = ViewerBase.prototype;
 	
-	ViewerBase.OVERLAY_ID = "ui5strap-overlay";
+	ViewerBase.OVERLAY_ID = "ui5strapGlobalOverlay";
+	ViewerBase.LOADER_ID = "ui5strapGlobalLoader";
+	ViewerBase.FATAL_ID = "ui5strapGlobalFatal";
 	
 	/**
 	 * Initialzer
@@ -99,7 +101,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 		this._initDom();
 		
 		//Register Loader Layer
-		Layer.register('ui5strap-loader');
+		Layer.register(ViewerBase.LOADER_ID);
   		
 		this._initOverlay();
 	};
@@ -187,45 +189,49 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			throw new Error("Cannot find root container: " + this.options.container);
 		}
 		
-		var $oViewer = $oRootContainer.find(".ui5strap-viewer");
+		var $oViewer = $oRootContainer.find(".ui5strapViewer");
 
 		if($oViewer.length === 0){
 			var oViewerElement = document.createElement("div");
-			oViewerElement.className = "ui5strap-viewer";
+			oViewerElement.className = "ui5strapViewer";
 			$oViewer = jQuery(oViewerElement);
 			$oRootContainer.append($oViewer);
 		}
 		
-		var $oGlobalOverlay = $oRootContainer.find("#ui5strap-overlay");
+		var $oGlobalOverlay = $oRootContainer.find("#" + ViewerBase.OVERLAY_ID);
 			
 		if($oGlobalOverlay.length === 0){
-			$oGlobalOverlay = jQuery('<div id="' + ViewerBase.OVERLAY_ID + '" class="ui5strap-overlay ui5strap-layer ui5strap-hidden">'
-					+ '<div id="' + ViewerBase.OVERLAY_ID + '-backdrop" class="ui5strap-overlay-backdrop"></div>'
-					+ '<div id="' + ViewerBase.OVERLAY_ID + '-content" class="ui5strap-overlay-content"></div>'
+			$oGlobalOverlay = jQuery('<div id="' + ViewerBase.OVERLAY_ID + '" class="ui5strapOverlay ui5strapLayer ui5strap-hidden">'
+					+ '<div id="' + ViewerBase.OVERLAY_ID + '-backdrop" class="ui5strapOverlay-backdrop"></div>'
+					+ '<div id="' + ViewerBase.OVERLAY_ID + '-content" class="ui5strapOverlay-content"></div>'
 				+ '</div>');
 			
 			$oRootContainer.append($oGlobalOverlay);
 		}
 		
-		var $oGlobalLoader = $oRootContainer.find("#ui5strap-loader");
+		var $oGlobalLoader = $oRootContainer.find("#" + ViewerBase.LOADER_ID);
 		
 		if($oGlobalLoader.length === 0){
-			$oGlobalLoader = jQuery('<div id="ui5strap-loader" class="ui5strap-layer ui5strap-loader ui5strap-hidden"></div>');
+			$oGlobalLoader = jQuery('<div id="' + ViewerBase.LOADER_ID + '" class="ui5strapLayer ui5strapLoader ui5strap-hidden"></div>');
 			
 			$oRootContainer.append($oGlobalLoader);
 		}
 		
-		var $oGlobalFatalScreen = $oRootContainer.find("#ui5strap-fatal");
+		var $oGlobalFatalScreen = $oRootContainer.find("#" + ViewerBase.FATAL_ID);
 		
 		if($oGlobalFatalScreen.length === 0){
-			$oGlobalFatalScreen = jQuery('<div id="ui5strap-fatal" class="ui5strap-layer ui5strap-hidden"></div>');
+			$oGlobalFatalScreen = jQuery('<div id="' + ViewerBase.FATAL_ID + '" class="ui5strapLayer ui5strap-hidden"></div>');
 			
 			$oRootContainer.append($oGlobalFatalScreen);
 		}
 		
 		this._dom = {
-			"$body" : jQuery(document.body),
-			"$root" : $oViewer
+			$body : jQuery(document.body),
+			$root : $oRootContainer,
+			$viewer : $oViewer,
+			$overlay : $oGlobalOverlay,
+			$loader : $oGlobalLoader,
+			$fatal : $oGlobalFatalScreen
 		};
 	};
 	

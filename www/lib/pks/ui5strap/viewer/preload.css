@@ -35,7 +35,7 @@
 * Root Container
 * Z: 1K
 */
-.ui5strap-viewer{
+.ui5strapViewer{
 	position:absolute;
   	
   	top: 0;
@@ -57,22 +57,15 @@
 * Global Overlay
 * Z: 2K
 */
-#ui5strap-overlay{
+#ui5strapGlobalOverlay{
   z-index:2000;
-}
-
-.ui5strap-overlay-default #ui5strap-overlay-content{
-	top:20%;
-	bottom:20%;
-	left:0;
-	right:0;
 }
 
 /*
 * Global Loader
 * Z: 3K
 */
-#ui5strap-loader{
+#ui5strapGlobalLoader{
 	z-index:3000;
 }
 
@@ -80,7 +73,7 @@
 * Fatal Error Screen
 * Z: 4K
 */
-#ui5strap-fatal{
+#ui5strapGlobalFatal{
 	z-index:4000;
 	padding:20px;
 	color:white;
@@ -189,7 +182,7 @@
 /*
 * Base class for all kind of Layers such as Loaders, Overlays and Error Screens.
 */
-.ui5strap-layer{
+.ui5strapLayer{
 	position: absolute;
 
 	top:0;
@@ -213,14 +206,14 @@
 /*
 * Base class for global and app dedicated Loading Screens.
 */
-.ui5strap-loader{
+.ui5strapLoader{
 	background-color:rgba(0,0,0,0.8); 
 }
 
 /*
 * Spinner for the loader.
 */
-.ui5strap-loader:after{
+.ui5strapLoader:after{
 	content:'';
 	position:absolute;
 	background-image:url('img/spinner-white.png');
@@ -253,14 +246,14 @@
 /*
 * Base class for global and app dedicated Overlays.
 */
-.ui5strap-overlay{
+.ui5strapOverlay{
 	
 }
 
 /*
 * Content of the Overlay. Lays over the Backdrop.
 */
-.ui5strap-overlay-content{
+.ui5strapOverlay-content{
 	position:absolute; 
    top:0; 
    left:0; 
@@ -271,7 +264,7 @@
 /*
 * Backdrop for Overlay
 */
-.ui5strap-overlay-backdrop{
+.ui5strapOverlay-backdrop{
    position:absolute; 
    top:0; 
    left:0; 
@@ -282,7 +275,7 @@
 /*
 * TODO
 */
-.ui5strap-overlay-backdrop{
+.ui5strapOverlay-backdrop{
 	background-color:rgba(0,0,0,0.8); 
     cursor:pointer;
 

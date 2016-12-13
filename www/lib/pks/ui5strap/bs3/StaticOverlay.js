@@ -93,7 +93,7 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 	 */
 	
 	StaticOverlayProto._getStyleClassRoot = function(){
-		return this.getLocal() ? " ui5strap-layer ui5strap-hidden" : "";
+		return this.getLocal() ? " ui5strapLayer ui5strap-hidden" : "";
 	};
 	
 	
