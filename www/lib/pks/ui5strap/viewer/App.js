@@ -82,13 +82,13 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	* @private
 	*/
 	var _preloadViews = function(_this, callback){
-		var views = _this.config.data.viewsById,
+		var views = _this.config.data.pagesById,
 			viewKeys = Object.keys(views);
 		for(var i = 0; i < viewKeys.length; i++){
 			var viewConfig = _this.config.getViewConfig(views[viewKeys[i]].id);
 			if(viewConfig.preload && viewConfig.cache){
 				jQuery.sap.log.debug("Caching view: " + viewConfig.id);
-				_this.createView(viewConfig);
+				_this.createPage(viewConfig);
 			}
 		}
 		
@@ -229,7 +229,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 							viewName : viewName,
 							parameters : viewParameters
 						}),
-						oPage = _this.createView(viewConfig);
+						oPage = _this.createPage(viewConfig);
 					
 					oPage.loaded().then(function(){
 						_this.getRootControl().toPage(oPage, "content", "transition-none", callback);
@@ -648,7 +648,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 		}
 		
 		var target = viewConfig.target,
-			oPage = this.createView(viewConfig);
+			oPage = this.createPage(viewConfig);
 		
 		oPage.loaded().then(function(){
 			

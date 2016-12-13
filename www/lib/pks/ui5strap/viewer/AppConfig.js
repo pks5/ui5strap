@@ -91,33 +91,33 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	 * Creates a globally unique Control ID.
 	 * TODO This method should not be used when root component is an UIComponent.
 	 */
-	AppConfigProto.createControlId = function(controlId, viewId){
+	AppConfigProto.createControlId = function(sControlId, sViewId){
 		//TODO Should the app prefix have a subElement with ----?
 		var appPrefix = this.getDomId() + '---';
-		if(jQuery.sap.startsWith(controlId, appPrefix)){
-			if(viewId){
-				throw new Error("Cannot create absolute control id: controlId is already absolute but viewId is given!");
+		if(jQuery.sap.startsWith(sControlId, appPrefix)){
+			if(sViewId){
+				throw new Error("Cannot create absolute control id: sControlId is already absolute but sViewId is given!");
 			}
 			
 			//ControlID already has a app prefix, just return it.
-			jQuery.sap.log.debug("Control ID '" + controlId + "' already have an app prefix.");
+			jQuery.sap.log.debug("Control ID '" + sControlId + "' already have an app prefix.");
 			
-			return controlId;
+			return sControlId;
 		}
 		
-		if(viewId){
-			if(jQuery.sap.startsWith(viewId, appPrefix)){
-				controlId = viewId + "--" + controlId;
+		if(sViewId){
+			if(jQuery.sap.startsWith(sViewId, appPrefix)){
+				sControlId = sViewId + "--" + sControlId;
 			}
 			else{
-				controlId = appPrefix + viewId + "--" + controlId;
+				sControlId = appPrefix + sViewId + "--" + sControlId;
 			}
 		}
 		else{
-			controlId = appPrefix + controlId;
+			sControlId = appPrefix + sControlId;
 		}
 		
-		return controlId;
+		return sControlId;
 	
 	};
 	
@@ -126,96 +126,56 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* If an ID and viewName is provided, it first looks for a view with that ID - if there is no view with the ID but ONE with the provided viewName without any ID, that view is returned.
 	* If only a viewName is provided, it looks if there is ONE view with that viewName or throws an error.
 	*/
-	AppConfigProto.getViewConfig = function(viewDef){
-		//If viewDef is a string, use it as id.
-		if(typeof viewDef === "string"){
-			viewDef = {
-				id : viewDef
+	AppConfigProto.getViewConfig = function(mViewDef){
+		var mPageConfig;
+		if(typeof mViewDef === "string"){
+			//If mViewDef is a string, use it as id.
+			mPageConfig = {
+				id : mViewDef
 			};
 		}
+		else{
+			mPageConfig = {};
+			
+			jQuery.extend(mPageConfig, mViewDef);
+		}
 		
-		var viewOptions = jQuery.extend({}, viewDef),
-			viewName = viewOptions.viewName,
-			viewId = viewOptions.id,
-			viewConfig = {},
-			viewConfigOrg = null,
-			foundById = false;
+		var sPageId = mPageConfig.id;
 		
 		//Resolve View ID
-		if(viewId){
-			viewId = this.createControlId(viewId);
+		if(sPageId){
+			sPageId = this.createControlId(sPageId);
+			
+			mPageConfig.id = sPageId;
 			
 			//Search View by ID
-			if(this.data.viewsById[viewId]){
-				//Delete viewName that is inside the provided view definition since we will use the viewName from config.
-				delete viewOptions.viewName;
-				//Delete id that is inside the provided view definition since it might be unresolved.
-				delete viewOptions.id;
+			if(this.data.pagesById[sPageId]){
+				var mMergedPageConfig = {};
 				
-				viewConfigOrg = this.data.viewsById[viewId];
-				foundById = true;
+				jQuery.extend(mMergedPageConfig, this.data.pagesById[sPageId], mPageConfig);
+				
+				mPageConfig = mMergedPageConfig;
 			}
 		}
 		
-		//Resolve View Name
-		if(viewName){
-			viewName = this.resolvePackage(viewName);
-			var viewsByName = this.data.viewsByName[viewName];
-			
-			//Search by View Name if not found by ID
-			if(!foundById && viewsByName){
-				for(var j = 0; j < viewsByName.length; j++){
-					if(viewId && viewsByName[j].id){
-						//We skip all views that are found by viewName but have an id - if also a search id is specified
-						continue;
-					}
-					
-					//Check if there are multiple candidates
-					if(viewConfigOrg){
-						throw new Error("Cannot determine view configuration by viewName: more than one view is defined with that name!");
-					}
-					
-					//Delete viewName that is inside the provided view definition since we will use the resolved name.
-					delete viewOptions.viewName;
-					
-					if(viewId){
-						//Set the resolved view ID.
-						viewOptions.id = viewId;
-					}
-					
-					viewConfigOrg = viewsByName[j];
-				}
-			}
+		if(!mPageConfig.type){
+			mPageConfig.type = "XMLView";
 		}
 		
-		//Test if view configuration has been found
-		if(viewConfigOrg){
-			jQuery.extend(viewConfig, viewConfigOrg, viewOptions);
-		}
-		else{
-			//No view config for the given ID and Name.
-			if(viewName){
-				//Set the resolved viewName.
-				viewOptions.viewName = viewName;
-			}
-			if(viewId){
-				//Set the resolved view ID.
-				viewOptions.id = viewId;
-			}
-			
-			viewConfig = viewOptions;
+		if(!("cache" in mPageConfig)){
+			mPageConfig.cache = true;
 		}
 		
-		return viewConfig;
+		return mPageConfig;
 	};
 
 	/**
 	* Returns a list of events / actions for given scope, eventName and viewName.
 	*/
-	AppConfigProto.getEvents = function(eventGroup, eventName, viewDef){
+	AppConfigProto.getEvents = function(eventGroup, eventName, mViewDef){
 		var eventList = [],
 			_configData = this.data,
-			viewData = this.getViewConfig(viewDef);
+			mPageConfig = this.getViewConfig(mViewDef);
 		
 		//Add global events to event list.
 		if(_configData.events 
@@ -225,12 +185,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		
 		//Add view events to event list.
-		if(viewData
-				&& viewData.events 
-				&& viewData.events[eventGroup] 
-				&& viewData.events[eventGroup][eventName]){
+		if(mPageConfig
+				&& mPageConfig.events 
+				&& mPageConfig.events[eventGroup] 
+				&& mPageConfig.events[eventGroup][eventName]){
 			
-			eventList = eventList.concat(viewData.events[eventGroup][eventName]);
+			eventList = eventList.concat(mPageConfig.events[eventGroup][eventName]);
 		}
 
 		return eventList;
@@ -291,6 +251,58 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		//throw new Error('Invalid option type: ' + option.type);
 		return option;
 	};
+	
+	var _pageTypes = {
+			"XMLView" : {
+				"nature" : "View",
+				"viewType" : "XML"
+			},
+			"HTMLView" : {
+				"nature" : "View",
+				"viewType" : "HTML"
+			},
+			"JSONView" : {
+				"nature" : "View",
+				"viewType" : "JSON"
+			},
+			"JSView" : {
+				"nature" : "View",
+				"viewType" : "JS"
+			},
+			
+			"XML" : {
+				"nature" : "View",
+				"viewType" : "XML"
+			},
+			"HTML" : {
+				"nature" : "View",
+				"viewType" : "HTML"
+			},
+			"JSON" : {
+				"nature" : "View",
+				"viewType" : "JSON"
+			},
+			"JS" : {
+				"nature" : "View",
+				"viewType" : "JS"
+			},
+			
+			"UIComponent" : {
+				"nature" : "UIComponent"
+			}
+		};
+		
+	AppConfigProto.getPageType = function(sPageType){
+		var mPageType = _pageTypes[sPageType];
+		
+		if(!mPageType){
+			mPageType = {
+				"nature" : "Control"
+			};
+		}
+		
+		return mPageType;
+	};
 
 	/**
 	* Resolves the raw information.
@@ -298,112 +310,65 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	AppConfigProto.resolve = function(){
 		var configDataJSON = this.data,
 			viewerOptions = this.options,
-			appId = this.data.app.id;
+			appId = this.data.app.id,
+			aPages = configDataJSON.pages;
 		
 		//START read Views
-		configDataJSON.viewsById = {};
-		configDataJSON.viewsByName = {};
+		configDataJSON.pagesById = {};
 		configDataJSON.routing = [];
 		
-		if(jQuery.isArray(configDataJSON.views)){
-			//New format as array
-			var views = configDataJSON.views,
-				viewsLength = views.length;
-			
-			for(var i = 0; i < viewsLength; i++){
-				var viewData = views[i],
-					viewName = viewData.viewName;
-				
-				if(typeof viewData === 'string'){
-					//Comment
-					continue;
-				}
-				
-				if(!viewName){
-					jQuery.sap.log.warning("Skipped view definition because attribute 'viewName' is missing.");
-					continue;
-				}
-				
-				//TODO Move this to getViewConfig to add these default value also for non configured views?
-				//Currenty, if a view is not defined in views, you get a no view type specified if you refer the View.
-				if(!viewData.type){
-					viewData.type = "XML";
-				}
-				
-				if(!("cache" in viewData)){
-					viewData.cache = true;
-				}
-				
-				var viewNameResolved = this.resolvePackage(viewName);
-				viewData.viewName = viewNameResolved;
-				if(!configDataJSON.viewsByName[viewNameResolved]){
-					configDataJSON.viewsByName[viewNameResolved] = [];
-				}
-				configDataJSON.viewsByName[viewNameResolved].push(viewData);
-				
-				if(viewData.id){
-					viewData.id = this.createControlId(viewData.id);
-					configDataJSON.viewsById[viewData.id] = viewData;
-				}
-				
-				var routingPath = viewData.route;
-				if(viewData.id && routingPath){
-					//if(jQuery.sap.startsWith(routingPath, "/")){
-					//	throw new Error("Route must not start with a /: " + routingPath);
-					//}
-					
-					var pathParameters = [],
-						route = routingPath.replace(/\{([\w]+[\w\.]*)\}/g, function(s, parameterName, x, y){
-							pathParameters.push(parameterName);
-							
-							//TODO more precise
-							return "([\\w\\-]+)";
-						}) + "$";
-					
-					configDataJSON.routing.push({
-						id : viewData.id,
-						route : route,
-						pathParameters : pathParameters
-					});
-				}
-			}
+		if(!jQuery.isArray(aPages)){
+			throw new Error("Declaring pages as object is deprecated. Please use an array instead.");
 		}
-		else{
-			//TODO remove
-			//START deprecated views format
-			//@deprecated
 			
-			jQuery.sap.log.warning("Declaring views as object is deprecated. Please use an array instead.");
+		//New format as array
+		var iPageConfigLength = aPages.length;
+		
+		for(var i = 0; i < iPageConfigLength; i++){
+			var mPageConfig = aPages[i];
 			
-			var viewNames = Object.keys(configDataJSON.views),
-				viewNamesLength = viewNames.length;
-			for(var i = 0; i < viewNamesLength; i++){
-				var viewName = viewNames[i],
-					viewNameResolved = this.resolvePackage(viewName),
-					viewData = configDataJSON.views[viewName];
-				
-				if(!viewData.type){
-					viewData.type = "XML";
-				}
-				
-				if(!("cache" in viewData)){
-					viewData.cache = true;
-				}
-				
-				viewData.viewName = viewNameResolved;
-				if(!configDataJSON.viewsByName[viewNameResolved]){
-					configDataJSON.viewsByName[viewNameResolved] = [];
-				}
-				configDataJSON.viewsByName[viewNameResolved].push(viewData);
-				
-				if(viewData.id){
-					viewData.id = this.createControlId(viewData.id);
-					configDataJSON.viewsById[viewData.id] = viewData;
-				}
+			if(typeof mPageConfig === 'string'){
+				//Comment
+				continue;
 			}
 			
-			//END deprecated views format
+			var sPageId = mPageConfig.id;
+			
+			if(!sPageId){
+				throw new Error("Page config requires id: " + JSON.stringify(mPageConfig));
+			}
+			
+			sPageId = this.createControlId(sPageId);
+			
+			mPageConfig.id = sPageId;
+			
+			configDataJSON.pagesById[sPageId] = mPageConfig;
+			
+			var mPageType = this.getPageType(mPageConfig.type);
+			
+			var routingPath = mPageConfig.route;
+			if(routingPath){
+				//if(jQuery.sap.startsWith(routingPath, "/")){
+				//	throw new Error("Route must not start with a /: " + routingPath);
+				//}
+				
+				var aParams = [],
+					sRoute = routingPath.replace(/\{([\w]+[\w\.]*)\}/g, function(s, sParamName, x, y){
+						aParams.push(sParamName);
+						
+						//TODO more precise
+						return "([\\w\\-]+)";
+					}) + "$";
+				
+				configDataJSON.routing.push({
+					id : sPageId,
+					route : sRoute,
+					pathParameters : aParams
+				});
+			}
 		}
+		
+		
 		//END read Views
 		
 		//Icons
@@ -589,20 +554,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		
 		//Views directory
-		if(!configDataJSON.views){
-			configDataJSON.views = [];
-		}
-		
-		/*
-		if(!appSection["pages"]){
-			if(appSection.views){
-				jQuery.sap.log.warning("Config setting 'app.views' is deprecated! Use 'app.pages' instead.")
+		if(!configDataJSON.pages){
+			if(configDataJSON.views){
+				jQuery.sap.log.warning("config data views is deprecated. use pages instead.");
+				configDataJSON.pages = configDataJSON.views;
 			}
 			else{
-				appSection["views"] = "pks.ui5strap.viewer.App";
+				configDataJSON.pages = [];
 			}
 		}
-		*/
 		
 		//App Components
 		if(!configDataJSON.components){

@@ -278,7 +278,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 					//View from a app
 					viewApp.includeStyle(function includeStyle_complete(){
 						var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
-							view = viewApp.createView(viewConfig),
+							view = viewApp.createPage(viewConfig),
 							target = overlayControl.defaultTarget;
 						
 						//Set target busy

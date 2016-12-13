@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/core/Control", 'sap/ui/core/UIArea', './Action', "../core/Utils", "../core/Layer"], function(ui5strapViewerLib, ui5strapCoreLib, ObjectBase, ControlBase, UIArea, Action, Utils, Layer){
+sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/core/Control", "sap/ui/core/mvc/View", 'sap/ui/core/UIArea', './Action', "../core/Utils", "../core/Layer"], function(ui5strapViewerLib, ui5strapCoreLib, ObjectBase, ControlBase, ViewBase, UIArea, Action, Utils, Layer){
 	
 	"use strict";
 	
@@ -1083,7 +1083,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		if(!(viewDataOrControl instanceof ControlBase)){
 			var viewParameters = viewDataOrControl.parameters;
 			
-			viewDataOrControl = this.createView(this.config.getViewConfig(viewDataOrControl));
+			viewDataOrControl = this.createPage(this.config.getViewConfig(viewDataOrControl));
 		
 			viewDataOrControl.loaded().then(function(){
 				_this._showOverlay(viewDataOrControl, callback, transitionName, viewParameters);
@@ -1164,7 +1164,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	AppBaseProto.createView = function(mPageConfig){
 		var _this = this,
 			pageId = mPageConfig.id,
-			viewConfig = {
+			mViewSettings = {
 				async : mPageConfig.async !== false,
 				viewName : mPageConfig.viewName,
 				type : mPageConfig.type
@@ -1172,15 +1172,14 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		
 		if(pageId){
 			pageId = this.config.createControlId(pageId);
-			viewConfig.id = pageId;
+			mViewSettings.id = pageId;
 			
 			var cachedPage = this._pageCache[pageId];
 			
 			if(cachedPage){
-				var oViewData = cachedPage.getViewData(),
-					oldCache = oViewData.__ui5strap.settings.cache;
+				var oViewData = cachedPage.getViewData();
 				
-				if(oldCache && mPageConfig.cache){
+				if(mPageConfig.cache && oViewData.__ui5strap.settings.cache){
 					_this.log.debug("Returning cached page '" + pageId + "'.");
 					return cachedPage;
 				}
@@ -1195,23 +1194,23 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		//START Build ViewData
 		//The View Data holds the app reference.
 		//TODO This is bad practice. Once Root Component is mandatory, this will be replaced.
-		if(!viewConfig.viewData){
-			viewConfig.viewData = {};
+		if(!mViewSettings.viewData){
+			mViewSettings.viewData = {};
 		}
 
-		if(!viewConfig.viewData.__ui5strap){
-			viewConfig.viewData.__ui5strap = {};
+		if(!mViewSettings.viewData.__ui5strap){
+			mViewSettings.viewData.__ui5strap = {};
 		}
 
-		viewConfig.viewData.__ui5strap.app = this;
+		mViewSettings.viewData.__ui5strap.app = this;
 		//TODO Maybe rename settings to config?
-		viewConfig.viewData.__ui5strap.settings = mPageConfig;
+		mViewSettings.viewData.__ui5strap.settings = mPageConfig;
 		
 		//END Build ViewData
 		
 		//Create View
 		//Will crash if "viewName" or "type" attribute is missing!
-		var page = new sap.ui.view(viewConfig);
+		var page = new sap.ui.view(mViewSettings);
 		
 		page.attachBeforeExit(function(oEvent){
 			//clean up
@@ -1235,9 +1234,127 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			this._pageCache[pageId] = page;
 		}
 		
-		jQuery.sap.log.info("Created view " + page.getId());
+		jQuery.sap.log.info("Created new page: " + page.getId());
 
 		return page;
+	};
+	
+	/**
+	 * Create a new View based on configuration object.
+	 * TODO Rename to create page.
+	 * 
+	 * @param {object} mPageConfig The view definition.
+	 * @returns {sap.ui.core.mvc.View} The view reference.
+	 */
+	AppBaseProto.createPage = function(mPageConfig, fnCallback){
+		var _this = this,
+			pageId = mPageConfig.id,
+			sPageType = mPageConfig.type,
+			mControlConfig = {};
+		
+		if(!sPageType){
+			console.log(mPageConfig);
+			throw new Error("Missing required page config parameter 'type'.");
+		}
+		
+		var mPageType = this.config.getPageType(sPageType);
+		
+		if(pageId){
+			pageId = this.config.createControlId(pageId);
+			mControlConfig.id = pageId;
+			
+			var cachedPage = this._pageCache[pageId];
+			
+			if(cachedPage){
+				var bCached = mPageConfig.cache;
+				
+				if(mPageType.nature === "View"){
+					var oData = cachedPage.getViewData();
+					bCached = bCached && oData.__ui5strap.settings.cache;
+				}
+				else if(mPageType.nature === "UIComponent"){
+				
+				}
+				else{
+					
+				}
+				
+				if(bCached){
+					_this.log.debug("Returning cached page '" + pageId + "'.");
+					return cachedPage;
+				}
+				else{
+					jQuery.sap.log.warning("Created a new page but a page with that id already exists. Destroying existing page...");
+					
+					this.destroyPage(cachedPage);
+				}
+			}
+		}
+		
+		var oPage,
+			mAdditionalData = {};
+		
+		if(mPageConfig.data){
+			jQuery.extend(mAdditionalData, mPageConfig.data);
+			
+			if(mAdditionalData.__ui5strap){
+				throw new Error("Data must not contain __ui5strap");
+			}
+		}
+		
+		mAdditionalData.__ui5strap = { 
+			app : this,
+			settings : mPageConfig
+		};
+		
+		var fnLoaded = function(){
+			if(pageId){
+				//Add to page cache
+				_this._pageCache[pageId] = oPage;
+			}
+			
+			//Add css style class
+			if(mPageConfig.styleClass){
+				oPage.addStyleClass(mPageConfig.styleClass);
+			}
+			
+			fnCallback && fnCallback(oPage);
+		};
+		
+		if(mPageType.nature === "View"){
+			mControlConfig.type = mPageType.viewType;
+			mControlConfig.async = true;
+			
+			if(!mPageConfig.viewName){
+				throw new Error("Missing required property viewName!");
+			}
+			
+			mControlConfig.viewName = this.config.resolvePackage(mPageConfig.viewName);
+			mControlConfig.viewData = mAdditionalData;
+			
+			//Create View
+			//Will crash if "viewName" or "type" attribute is missing!
+			oPage = new sap.ui.view(mControlConfig);
+			
+			oPage.attachBeforeExit(function(oEvent){
+				//clean up
+				var viewData = this.getViewData();
+				delete viewData.__ui5strap;
+			});
+			
+			oPage.loaded().then(fnLoaded);
+		}
+		else if(mPageType.nature === "UIComponent"){
+			//TODO
+		}
+		else if(mPageType.nature === "Control"){
+			//TODO
+			sap.ui.require([this.config.resolvePackage(sPageType).replace(/\./g, "/")], function(ControlConstructor){
+				
+			});
+		}
+		
+		return oPage;
 	};
 	
 	/**

@@ -37,6 +37,7 @@
     		"//BEGIN home",
     		{
                 "id" : "menuRoot",
+                "type" : "XMLView",
                 "viewName" : ".views.home.MenuRoot",
                 "target" : "bar",
                 "transition" : "transition-none"
