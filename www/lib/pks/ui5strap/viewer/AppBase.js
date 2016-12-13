@@ -1198,7 +1198,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			
 			fnCallback && fnCallback(oPage);
 		};
-		console.log(mPageType);
+		
 		if(mPageType.nature === "View"){
 			mControlConfig.type = mPageType.viewType;
 			mControlConfig.async = true;
