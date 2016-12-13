@@ -4,7 +4,8 @@
 	        "name" : "Ui5Strap App Template",
 	        "logLevel" : 5,
 	        "mode" : "Devel",
-	        "routing" : "/"
+	        "routing" : "/",
+	        "transition" : "zoom-out"
 	},
 	
 	"css" : [

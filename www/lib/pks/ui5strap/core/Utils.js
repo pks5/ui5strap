@@ -233,11 +233,6 @@ sap.ui.define([ './library'], function(ui5strapCoreLib) {
 				$target.text(newText);
 			}
 			
-			/*
-			if(oControl.getId() === "com-ui5strap-apps-demoapp---settings--headingSettings"){
-				debugger;
-			}
-			*/
 			//jQuery.sap.log.info("Updated text directly for control " + oControl.getId());
 			
 			//Set property value without rerendering

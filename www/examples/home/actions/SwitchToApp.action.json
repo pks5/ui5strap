@@ -1,12 +1,13 @@
 {
 	
-	"BEGIN" : ["getContextData", "closeOverlay"],
+	"BEGIN" : "getContextData",
 	
 	"getContextData" : {
 	    "TYPE" : "pks.ui5strap.task.GetContextDataTask",
 		"modelName" : "tasks",
 		"tgtParam" : "parameters.getContextData.CONTEXT",
-		"scope" : "SOURCE"
+		"scope" : "SOURCE",
+		"THEN" : "closeOverlay"
 	},
 
 	"closeOverlay" : {

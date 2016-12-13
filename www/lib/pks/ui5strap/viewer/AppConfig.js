@@ -517,8 +517,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		
 		//Style Class
+		//TODO Use options?
 		if(!appSection.styleClass){
-			appSection.styleClass = 'ui5strap-app-standard';
+			appSection.styleClass = 'ui5strapApp-option-Standard';
 		}
 		
 		//Environments

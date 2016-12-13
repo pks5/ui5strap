@@ -157,7 +157,7 @@
 			<div class="ui5strap-viewer">
 				
 				<!-- Initial App Container - required when using a viewer container. -->
-				<div class="ui5strap-app">
+				<div class="ui5strapApp">
 					
 					<!-- Custom Splash Screen - shown until the app is loaded. -->
 					<div id="mySplashScreen">
@@ -174,7 +174,7 @@
 						</div>
 					</div><!-- END #mySplashScreen -->
 					
-				</div><!-- END .ui5strap-app -->
+				</div><!-- END .ui5strapApp -->
 				
 			</div><!-- END .ui5strap-viewer -->
 	         
@@ -214,6 +214,7 @@
          
          <!-- Main Script -->           
 		<script>
+		   console.time("STARTUP");
 		   
 		   (function(){
 			   /*
@@ -245,7 +246,10 @@
                             	oMessage.innerHTML = oApp.config.data.app.name;
                             	oMessage.className = 'mySplashScreen-messageVisible';
                         	}
-                        });
+                        },
+                    	function(){
+                    		console.timeEnd("STARTUP");
+                 		});
                         
                     });
                 };

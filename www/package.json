@@ -1,5 +1,5 @@
 {
-  "name": "ui5strap-app",
+  "name": "ui5strap-nwjs",
   "version": "0.0.1",
   "main": "index.html",
   "chromium-args": "--touch-events=enabled",

@@ -498,7 +498,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		//Create or Update App Container
 		appInstance.updateContainer();
 
-		var $currentRoot = prevApp ? prevApp.$() : this._dom.$root.find('.ui5strap-app');
+		var $currentRoot = prevApp ? prevApp.$() : this._dom.$root.find('.ui5strapApp');
 
 		//Load app css
 		appInstance.includeStyle(function includeStyle_complete(){
@@ -511,7 +511,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			//Create new Transition
 			var transition = new ResponsiveTransition(
 					{
-					"transitionAll" : transitionName || configAppSection.transition, 
+					"transitionAll" : transitionName || configAppSection.transition || "zoom-out", 
 					"$current" : $currentRoot, 
 					"$next" : appInstance.$(), 
 					id : appInstance.getId()

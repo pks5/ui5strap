@@ -308,7 +308,7 @@ sap.ui
 											.addClass('ui5strap-transition-current-out');
 							$oNext
 									&& $oNext
-											.removeClass('ui5strap-transition-next');
+											.removeClass('ui5strap-transition-next').addClass('ui5strap-transition-next-in');
 						}
 						
 						mStatus.executed = true;

@@ -52,16 +52,6 @@
 	z-index: 1000;
 }
 
-/*
-* Shrink the main container for home bar
-*/
-.ui5strap-with-bar-home .ui5strap-viewer{
-    bottom:30px; 
-}
-
-#ui5strap-bar-home{
-	z-index: 1001;
-}
 
 /*
 * Global Overlay
@@ -117,7 +107,7 @@
 * App Container
 * Z: 100
 */
-.ui5strap-app{
+.ui5strapApp{
   position:absolute;
   
   top:0;
@@ -126,26 +116,27 @@
   height:100%;
   
   overflow:hidden;
-  
-  
 }
 
-.ui5strap-app-standard{
+/*
+* TODO option
+*/
+.ui5strapApp-option-Standard{
 	background-color:white;
 }
 
 /*
-* Z: 10
+* Z: 20
 */
-.ui5strap-app-current{
-	
+.ui5strapApp-current{
+	z-index:20;
 }
 
 /*
 * Next App Container in Transitions
-* Z: 20
+* Z: 10
 */
-.ui5strap-app-next{
+.ui5strapApp-next{
   position:absolute;
   
   left:0;
@@ -156,13 +147,13 @@
   width:100%;
   height:100%;
   
-  z-index:50;
+  z-index:10;
 }
 
 /*
 * Container for App Content
 */
-.ui5strap-app-content{
+.ui5strapApp-content{
   position:absolute;
   
   left:0;
@@ -177,7 +168,7 @@
 * App Overlays
 * Z: 300
 */
-.ui5strap-app-overlay{
+.ui5strapApp-overlay{
 	z-index:300;
 }
 
@@ -185,7 +176,7 @@
 * App Loaders
 * Z: 200
 */
-.ui5strap-app-loader{
+.ui5strapApp-loader{
 	z-index:400;
 }
 
@@ -368,62 +359,7 @@
     100% { -webkit-transform: translate(0, 0); }
 }
 
-/*
-* Home bar
-*/
-#ui5strap-bar-home{
-    display:none;
-    position: absolute;
-    bottom:0;
-    left:0;
-    right:0;
-    height:30px;
-    background-color:black;
-}
 
-/*
-* Home bar show trigger
-*/
-.ui5strap-with-bar-home #ui5strap-bar-home{
-    display:block;
-}
-
-/*
-* Home Button (middle)
-*/
-#ui5strap-button-home{
-    position: absolute;
-    display:block;
-    width:90px;
-    height:30px;
-    line-height: 30px;
-    text-align: center;
-    left:50%;
-    top: 0;
-    margin-left: -45px;
-    font-size: 18px;
-    cursor:pointer;
-    background-color:#202020;
-    color:#f0f0f0;
-}
-
-/*
-* TaskManager Button (right)
-*/
-#ui5strap-button-taskmanager{
-    position: absolute;
-    display:block;
-    width:90px;
-    height:30px;
-    line-height: 30px;
-    text-align: center;
-    right:0;
-    top: 0;
-    font-size: 18px;
-    cursor:pointer;
-    background-color:#202020;
-    color:#f0f0f0;
-}
 
 
 .ui5strap-spinner-bounce {

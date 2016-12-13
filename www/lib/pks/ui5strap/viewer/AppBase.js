@@ -99,7 +99,8 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			};
 		}
 	}),
-	AppBaseProto = AppBase.prototype;
+	AppBaseProto = AppBase.prototype,
+	APP_PREFIX_STYLE_CLASS = "ui5strapApp";
 
 	/**
 	* Init app specific logging
@@ -647,7 +648,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		var _this = this;
 
 		ui5strapCoreLib.polyfill.requestAnimationFrame(function(){
-			_this.domRef.className = _createAppClass(_this, 'ui5strap-app ui5strap-app-current');
+			_this.domRef.className = _createAppClass(_this, APP_PREFIX_STYLE_CLASS + " " + APP_PREFIX_STYLE_CLASS + "-current");
 			
 			_this.onShown(new sap.ui.base.Event("ui5strap.app.shown", _this, {}));
 
@@ -691,7 +692,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 				jQuery.sap.log.warning("AppBaseProto.stop seemed to be executed before AppBaseProto.hidden. This seems to be a bug.");
 			}
 			else{
-				_this.domRef.className = _createAppClass(_this, 'ui5strap-app ui5strap-app-inactive ui5strap-hidden');
+				_this.domRef.className = _createAppClass(_this, APP_PREFIX_STYLE_CLASS + " " + APP_PREFIX_STYLE_CLASS + "-inactive ui5strap-hidden");
 			}	
 			
 			_this.onHidden(new sap.ui.base.Event("ui5strap.app.hidden", _this, {}));
@@ -1712,7 +1713,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 */
 	AppBaseProto.updateContainer = function(){
 		if(this.domRef){
-			this.domRef.className = _createAppClass(this, 'ui5strap-app ui5strap-app-next ui5strap-hidden');
+			this.domRef.className = _createAppClass(this, APP_PREFIX_STYLE_CLASS + " " + APP_PREFIX_STYLE_CLASS + "-next ui5strap-hidden");
 			return;
 		}
 		
@@ -1727,16 +1728,16 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			
 			
 		//App Container
-		appContainer.className = _createAppClass(this, 'ui5strap-app ui5strap-app-prepared ui5strap-hidden');
+		appContainer.className = _createAppClass(this, APP_PREFIX_STYLE_CLASS + " " + APP_PREFIX_STYLE_CLASS + "-prepared ui5strap-hidden");
 		appContainer.id = this.config.getDomId();
 		
 		//App Content
-		appContent.className = 'ui5strap-app-content';
+		appContent.className = APP_PREFIX_STYLE_CLASS + "-content";
 		appContent.id = this.config.createDomId('content');
 		appContainer.appendChild(appContent);
 
 		//App Overlay
-		appOverlay.className = 'ui5strap-app-overlay ui5strap-overlay ui5strap-layer ui5strap-hidden';
+		appOverlay.className = APP_PREFIX_STYLE_CLASS + "-overlay ui5strap-overlay ui5strap-layer ui5strap-hidden";
 		appOverlay.id = overlayId;
 		
 		this._overlayId = overlayId;
@@ -1761,19 +1762,12 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 
 		//App Loader
 		
-		appLoader.className = 'ui5strap-app-loader ui5strap-loader ui5strap-layer ui5strap-hidden';
+		appLoader.className = APP_PREFIX_STYLE_CLASS + "-loader ui5strap-loader ui5strap-layer ui5strap-hidden";
 		appLoader.id = this.config.createDomId('loader');
 		appContainer.appendChild(appLoader);
 
 		Layer.register(appLoader.id, jQuery(appLoader));
 
-		//App Splash
-		/*
-		appSplash.className = 'ui5strap-app-splash ui5strap-layer ui5strap-hidden';
-		appSplash.id = this.config.createDomId('splash');
-		appContainer.appendChild(appSplash);
-		*/
-		
 		//Cache DOM Ref
 		this.domRef = appContainer;
 		this.contentDomRef = appContent;

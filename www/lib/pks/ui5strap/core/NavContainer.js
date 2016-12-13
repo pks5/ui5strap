@@ -201,8 +201,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _prepareTransition = function(_this, pageChange){
-		//ui5strap.tm("APP", "NC", "PREP_TRANS");
-		
 		if(pageChange.transition){
 			jQuery.sap.log.warning("NavContainer::_prepareTransition: Transition already prepared for target " + pageChange.target);
 			//There is already a Transition defined
@@ -243,8 +241,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	*/
 
 	var _transitionCallback = function(_this, pageChange, transList){
-		//ui5strap.tm("APP", "NC", "TRANS_CB");
-		
 		transList.callI --;
 		
 		var callbacksLength = transList.callbacks.length;
@@ -397,8 +393,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _preparePendingTransitions = function(_this){
-		//ui5strap.tm("APP", "NC", "PREP_PEND_TRANS");
-		
 		var pendingTransitionsLength = _this._pendingTransitions.length,
 			successAll = true;
 		//jQuery.sap.log.debug(' + [NC] PREPARE ' + pendingTransitionsLength + ' PENDING TRANSITIONS'); 
@@ -419,8 +413,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _handlePendingTransitions = function(_this){
-		//ui5strap.tm("APP", "NC", "HANDLE_PEND_TRANS");
-		
 		if(0 === _this._pendingTransitions.length){
 			
 			//No pending transitions, so return.
@@ -474,8 +466,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _pageChange = function(_this, pageChange){
-		//ui5strap.tm("APP", "NC", "PAGE_CHANGE");
-		
 		_onPageChange(_this, pageChange);
 		
 		var transList = {
@@ -508,8 +498,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	 * @Private
 	 */
 	var _pageChangeLater = function(_this, pageChange, override){
-		//ui5strap.tm("APP", "NC", "PAGE_CHANGE_LATER");
-		
 		var target = pageChange.target;
 		if(-1 === jQuery.inArray(target, _this._pendingTransitions)){ 
 			_this._pendingTransitions.push(target);
@@ -532,8 +520,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _placePage = function(_this, target, page, isPrepared){
-			//ui5strap.tm("APP", "NC", "PLACE_PAGE");
-			
 			//Page is null, return null
 			if(!page){
 				return null;
@@ -599,8 +585,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @PostConstruct
 	*/
 	NavContainerProto.init = function(){
-		//ui5strap.tm("APP", "NC", "INIT");
-		
 		this._pendingTransitions = [];
 		
 		this._targetTransitions = {};
@@ -618,8 +602,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Protected
 	*/
 	NavContainerProto._initNavContainer = function(){
-		//ui5strap.tm("APP", "NC", "INIT_NC");
-		
 		//NavContainer type string. Should only contain letters, numbers and hyphens.
 		this.ncType = "default";
 
@@ -859,8 +841,6 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Public
 	*/
 	NavContainerProto.onBeforeRendering = function(){
-		//ui5strap.tm("APP", "NC", "BEFORE_RENDERING");
-
 		for(var target in this.targets){
 			var currentPage = this.targets[target];
 			if(currentPage){
