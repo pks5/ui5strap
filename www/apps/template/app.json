@@ -19,7 +19,7 @@
             }
     ],
     
-    "views" : [
+    "pages" : [
     		{
                 "id" : "menuRoot",
                 "viewName" : ".views.MenuRoot",

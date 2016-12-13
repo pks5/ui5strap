@@ -126,7 +126,7 @@ sap.ui
 						
 						if (mStatus.prepared || mStatus.executed) {
 							throw new Error(
-									'Cannot prepare transition: already prepared or executed!');
+									'Transition already prepared or executed: ' + this);
 						}
 
 						if (!mStatus.skipped && !mStatus.canceled) {
@@ -176,7 +176,7 @@ sap.ui
 						
 						if (mStatus.currentFinished) {
 							jQuery.sap.log
-									.warning("Transition timeout.");
+									.warning("Transition timeout: " + this);
 
 							return;
 						}
@@ -212,7 +212,7 @@ sap.ui
 						
 						if (mStatus.nextFinished) {
 							jQuery.sap.log
-							.warning("Transition timeout.");
+							.warning("Transition timeout: " + this);
 							
 							return;
 						}
@@ -254,21 +254,21 @@ sap.ui
 
 						if (mStatus.executed) {
 							throw new Error(
-									'Cannot execute responsive transition: already executed!');
+									'Transition already executed: ' + this);
 						}
 						
 						// Check if transition is skipped or canceled.
 						if (mStatus.skipped || mStatus.canceled) {
 							
 							jQuery.sap.log
-							.warning("Transition skipped or canceled.");
+							.warning("Transition skipped or canceled: " + this);
 							
 							this.finishCurrent();
 							this.finishNext();
 							
 						} else {
 							jQuery.sap.log
-							.warning("Executing transition.");
+							.info("Executing transition: " + this);
 							
 							// Current DOM element
 							if ($oCurrent) {
@@ -313,6 +313,10 @@ sap.ui
 						
 						mStatus.executed = true;
 						
+					};
+					
+					ResponsiveTransitionProto.toString = function(){
+						return "TRANS";
 					};
 					
 					return ResponsiveTransition;
