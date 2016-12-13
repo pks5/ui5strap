@@ -126,18 +126,18 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* If an ID and viewName is provided, it first looks for a view with that ID - if there is no view with the ID but ONE with the provided viewName without any ID, that view is returned.
 	* If only a viewName is provided, it looks if there is ONE view with that viewName or throws an error.
 	*/
-	AppConfigProto.getViewConfig = function(mViewDef){
+	AppConfigProto.getPageConfig = function(mPageDef){
 		var mPageConfig;
-		if(typeof mViewDef === "string"){
-			//If mViewDef is a string, use it as id.
+		if(typeof mPageDef === "string"){
+			//If mPageDef is a string, use it as id.
 			mPageConfig = {
-				id : mViewDef
+				id : mPageDef
 			};
 		}
 		else{
 			mPageConfig = {};
 			
-			jQuery.extend(mPageConfig, mViewDef);
+			jQuery.extend(mPageConfig, mPageDef);
 		}
 		
 		var sPageId = mPageConfig.id;
@@ -172,10 +172,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	/**
 	* Returns a list of events / actions for given scope, eventName and viewName.
 	*/
-	AppConfigProto.getEvents = function(eventGroup, eventName, mViewDef){
+	AppConfigProto.getEvents = function(eventGroup, eventName, mPageDef){
 		var eventList = [],
 			_configData = this.data,
-			mPageConfig = this.getViewConfig(mViewDef);
+			mPageConfig = this.getPageConfig(mPageDef);
 		
 		//Add global events to event list.
 		if(_configData.events 

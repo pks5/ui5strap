@@ -264,27 +264,27 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	* Shows the overlay layer
 	* @Public
 	*/
-	ViewerBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
+	ViewerBaseProto.showOverlay = function(oPageConfigOrControl, callback, transitionName){
 		var _this = this,
 			overlayControl = this.overlayControl,
 			transitionName = transitionName || 'slide-ttb';
 		
 		Layer.setVisible(ViewerBase.OVERLAY_ID, true, function(){
-			if(viewDataOrControl instanceof ControlBase){
+			if(oPageConfigOrControl instanceof ControlBase){
 				//Control is directly injected into the frame
-				overlayControl.toPage(viewDataOrControl, "content", transitionName, callback);
+				overlayControl.toPage(oPageConfigOrControl, "content", transitionName, callback);
 			}
 			else{ 
-				//viewDataOrControl is a data object
-				if("appId" in viewDataOrControl){
-					var viewApp = _this.getApp(viewDataOrControl.appId);
-					if(null === viewApp){
-						throw new Error('Invalid app: ' + viewDataOrControl.appId);
+				//oPageConfigOrControl is a data object
+				if("appId" in oPageConfigOrControl){
+					var oPageApp = _this.getApp(oPageConfigOrControl.appId);
+					if(null === oPageApp){
+						throw new Error('Invalid app: ' + oPageConfigOrControl.appId);
 					}
 					//View from a app
-					viewApp.includeStyle(function includeStyle_complete(){
-						var viewConfig = viewApp.config.getViewConfig(viewDataOrControl),
-							view = viewApp.createPage(viewConfig),
+					oPageApp.includeStyle(function includeStyle_complete(){
+						var mPageConfig = oPageApp.config.getPageConfig(oPageConfigOrControl),
+							view = oPageApp.createPage(mPageConfig),
 							target = overlayControl.defaultTarget;
 						
 						//Set target busy
@@ -295,16 +295,16 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 						
 						view.loaded().then(function(){
 							overlayControl.toPage(view, 'content', transitionName, function(param){
-								viewApp.isVisibleInOverlay = true;
+								oPageApp.isVisibleInOverlay = true;
 								
 								//Set target available
 								overlayControl.setTargetBusy(target, false);
 								
-								param.oldPage && viewApp.detachPage(param.oldPage);
+								param.oldPage && oPageApp.detachPage(param.oldPage);
 
-								viewApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", viewApp, { 
+								oPageApp.onShowInOverlay(new sap.ui.base.Event("ui5strap.app.showInOverlay", oPageApp, { 
 									view : view, 
-									viewConfig : viewConfig
+									viewConfig : mPageConfig
 								}));
 								
 								callback && callback();	
@@ -314,7 +314,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 				}
 				else{
 					//TODO How should this work here?
-					overlayControl.toPage(viewDataOrControl, 'content', transitionName, callback);
+					overlayControl.toPage(oPageConfigOrControl, 'content', transitionName, callback);
 				}
 			}
 		});
@@ -339,10 +339,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 				if(page instanceof sap.ui.core.mvc.View){
 					var pageViewData = page.getViewData();
 					if(pageViewData.app){
-						var viewApp = pageViewData.app;
-						viewApp.isVisibleInOverlay = false;
-						viewApp.onHideInOverlay(new sap.ui.base.Event("ui5strap.app.hideInOverlay", viewApp, {})); 
-						_this.removeStyle(viewApp);
+						var oPageApp = pageViewData.app;
+						oPageApp.isVisibleInOverlay = false;
+						oPageApp.onHideInOverlay(new sap.ui.base.Event("ui5strap.app.hideInOverlay", oPageApp, {})); 
+						_this.removeStyle(oPageApp);
 					}
 				}
 

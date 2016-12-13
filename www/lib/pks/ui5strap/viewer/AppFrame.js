@@ -282,7 +282,7 @@ sap.ui.define(['./library', './AppComponent'], function(ui5strapViewerLib, AppCo
 	*/
 	AppFrameProto.getViewConfig = function(viewDef){
 		jQuery.sap.log.warning("AppFrameProto.getViewConfig is deprecated! Use resolveViewConfig instead!");
-		var viewConfig = this.app.config.getViewConfig(viewDef);
+		var viewConfig = this.app.config.getPageConfig(viewDef);
 
 		//TODO use default target here...
 		if(!viewConfig.target){
@@ -297,8 +297,8 @@ sap.ui.define(['./library', './AppComponent'], function(ui5strapViewerLib, AppCo
 	* @deprecated
 	*/
 	AppFrameProto.resolveViewConfig = function(navControl, viewDef){
-		jQuery.sap.log.warning("pks.ui5strap.viewer.AppFrame.prototype.resolveViewConfig is deprecated. Use AppConfigProto.getViewConfig instead.");
-		var viewConfig = this.app.config.getViewConfig(viewDef);
+		jQuery.sap.log.warning("pks.ui5strap.viewer.AppFrame.prototype.resolveViewConfig is deprecated. Use AppConfigProto.getPageConfig instead.");
+		var viewConfig = this.app.config.getPageConfig(viewDef);
 
 		return viewConfig;
 	};

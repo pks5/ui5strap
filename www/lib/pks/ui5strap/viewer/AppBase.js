@@ -1033,23 +1033,23 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	/**
 	* Shows a view or control inside the overlay.
 	* 
-	* @param viewDataOrControl {object|sap.ui.core.Control} Either a view definition or a control reference.
+	* @param oPageConfigOrControl {object|sap.ui.core.Control} Either a view definition or a control reference.
 	* @param callback {function} The callback function.
 	* @param transitionName {string} The transition name.
 	*/
-	AppBaseProto.showOverlay = function(viewDataOrControl, callback, transitionName){
+	AppBaseProto.showOverlay = function(oPageConfigOrControl, callback, transitionName){
 		var _this = this;
-		if(!(viewDataOrControl instanceof ControlBase)){
-			var viewParameters = viewDataOrControl.parameters;
+		if(!(oPageConfigOrControl instanceof ControlBase)){
+			var viewParameters = oPageConfigOrControl.parameters;
 			
-			viewDataOrControl = this.createPage(this.config.getViewConfig(viewDataOrControl));
+			oPageConfigOrControl = this.createPage(this.config.getPageConfig(oPageConfigOrControl));
 		
-			viewDataOrControl.loaded().then(function(){
-				_this._showOverlay(viewDataOrControl, callback, transitionName, viewParameters);
+			oPageConfigOrControl.loaded().then(function(){
+				_this._showOverlay(oPageConfigOrControl, callback, transitionName, viewParameters);
 			});
 		}
 		else{
-			this._showOverlay(viewDataOrControl, callback, transitionName);
+			this._showOverlay(oPageConfigOrControl, callback, transitionName);
 		}
 	};
 	

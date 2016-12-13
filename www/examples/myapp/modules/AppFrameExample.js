@@ -264,7 +264,7 @@ sap.ui.define([
 		}
 
 		//Get final view configuration
-		var viewConfig = this.getViewConfig(viewDef),
+		var viewConfig = this.getPageConfig(viewDef),
 			target = viewConfig.target;
 
 		if(this.isBusy(target)){

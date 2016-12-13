@@ -85,7 +85,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 		var views = _this.config.data.pagesById,
 			viewKeys = Object.keys(views);
 		for(var i = 0; i < viewKeys.length; i++){
-			var viewConfig = _this.config.getViewConfig(views[viewKeys[i]].id);
+			var viewConfig = _this.config.getPageConfig(views[viewKeys[i]].id);
 			if(viewConfig.preload && viewConfig.cache){
 				jQuery.sap.log.debug("Caching view: " + viewConfig.id);
 				_this.createPage(viewConfig);
@@ -224,7 +224,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 						viewParameters = JSON.parse(viewParameters);
 					}
 					
-					var viewConfig = _this.config.getViewConfig({ 
+					var viewConfig = _this.config.getPageConfig({ 
 							type : uriParameters.get("_viewType"),
 							viewName : viewName,
 							parameters : viewParameters
@@ -282,7 +282,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 				};
 			}
 			
-			initialView = this.config.getViewConfig(initialView);
+			initialView = this.config.getPageConfig(initialView);
 			
 			if(!initialView.target){
 				initialView.target = navigator.defaultTarget;
@@ -463,7 +463,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 				//console.log(matches);
 				console.log("Route '%s' matched with %s parameters.", routeInfo.route, matches.length-1);
 				
-				var viewConfig = this.config.getViewConfig({ id : routeInfo.id });
+				var viewConfig = this.config.getPageConfig({ id : routeInfo.id });
 				
 				if(!viewParameters){
 					viewParameters = {};
@@ -589,7 +589,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 		jQuery.sap.log.debug("AppBaseProto.navigateTo");
 		
 		if(!suppressResolve){
-			viewConfig = this.config.getViewConfig(viewConfig);
+			viewConfig = this.config.getPageConfig(viewConfig);
 		}
 		
 		if(!viewConfig.target){
@@ -602,7 +602,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 		
 		var _this = this;
 		if(viewConfig.parentId){
-			var parentViewConfig = this.config.getViewConfig({ id : viewConfig.parentId });
+			var parentViewConfig = this.config.getPageConfig({ id : viewConfig.parentId });
 			if(!parentViewConfig || !parentViewConfig.subNavigation || !parentViewConfig.cache){
 				throw new Error("Parent view is not defined in config, has no subNavigation set or is not cached: " + viewConfig.parentId);
 			}
