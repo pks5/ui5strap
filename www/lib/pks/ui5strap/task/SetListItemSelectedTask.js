@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.SetListItemSelectedTask
 	 * 
 	 */
-	var SetListItemSelectedTask = ActionModule.extend("pks.ui5strap.task.SetListItemSelectedTask"),
+	var SetListItemSelectedTask = Task.extend("pks.ui5strap.task.SetListItemSelectedTask"),
 	/**
 	 * @alias pks.ui5strap.task.SetListItemSelectedTask.prototype
 	 */
@@ -86,9 +86,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		}
 	};
 	
-	/*
-	* Run the ActionModule
+	/**
+	 * Run the task.
 	* @override
+	* @protected
 	*/
 	SetListItemSelectedTaskProto.run = function(){
 		var itemId = this.getParameter("itemId");

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.CallControlMethodTask
 	 * 
 	 */
-	var CallControlMethodTask = ActionModule.extend("pks.ui5strap.task.CallControlMethodTask"),
+	var CallControlMethodTask = Task.extend("pks.ui5strap.task.CallControlMethodTask"),
 	/**
 	 * @alias pks.ui5strap.task.CallControlMethodTask.prototype
 	 */
@@ -97,8 +97,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		}
 	};
 
-	/*
-	* @Override
+	/**
+	 * Run the task.
+	* @override
+	* @protected
 	*/
 	CallControlMethodTaskProto.run = function(){
 		var funcName = this.getParameter("funcName"),

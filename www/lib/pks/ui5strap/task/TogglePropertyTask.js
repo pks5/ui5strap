@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.TogglePropertyTask
 	 * 
 	 */
-	var TogglePropertyTask = ActionModule.extend("pks.ui5strap.task.TogglePropertyTask"),
+	var TogglePropertyTask = Task.extend("pks.ui5strap.task.TogglePropertyTask"),
 	/**
 	 * @alias pks.ui5strap.task.TogglePropertyTask.prototype
 	 */
@@ -87,9 +87,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 
 	};
 
-	/*
-	* Run the ActionModule
+	/**
+	 * Run the task.
 	* @override
+	* @protected
 	*/
 	TogglePropertyTaskProto.run = function(){
 			var propertyName = this.getParameter("propertyName"),

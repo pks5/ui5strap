@@ -59,8 +59,9 @@ sap.ui.define(["./library", "../viewer/Task", "../core/NavContainer"], function(
 	NavigateTaskProto.parameters = {};
 
 	/**
-	* Run the task.
+	 * Run the task.
 	* @override
+	* @protected
 	*/
 	NavigateTaskProto.run = function(){
 			var navigator = this.context.app.getRootControl(),

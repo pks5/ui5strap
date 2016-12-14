@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.ShowOverlayTask
 	 * 
 	 */
-	var ShowOverlayTask = ActionModule.extend("pks.ui5strap.task.ShowOverlayTask"),
+	var ShowOverlayTask = Task.extend("pks.ui5strap.task.ShowOverlayTask"),
 	/**
 	 * @alias pks.ui5strap.task.ShowOverlayTask.prototype
 	 */
@@ -92,8 +92,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		}
 	};
 
-	/*
-	* @Override
+	/**
+	 * Run the task.
+	* @override
+	* @protected
 	*/
 	ShowOverlayTaskProto.run = function(){
 

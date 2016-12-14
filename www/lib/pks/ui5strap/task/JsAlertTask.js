@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.JsAlertTask
 	 * 
 	 */
-	var JsAlertTask = ActionModule.extend("pks.ui5strap.task.JsAlertTask"),
+	var JsAlertTask = Task.extend("pks.ui5strap.task.JsAlertTask"),
 	/**
 	 * @alias pks.ui5strap.task.JsAlertTask.prototype
 	 */
@@ -63,8 +63,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		}
 	};
 
-	/*
-	* @Override
+	/**
+	 * Run the task.
+	* @override
+	* @protected
 	*/
 	JsAlertTaskProto.run = function(){
 		alert(this.getParameter('message'));

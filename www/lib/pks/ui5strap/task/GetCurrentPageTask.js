@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.GetCurrentPageTask
 	 * 
 	 */
-	var GetCurrentPageTask = ActionModule.extend("pks.ui5strap.task.GetCurrentPageTask"),
+	var GetCurrentPageTask = Task.extend("pks.ui5strap.task.GetCurrentPageTask"),
 	/**
 	 * @alias pks.ui5strap.task.GetCurrentPageTask.prototype
 	 */
@@ -91,9 +91,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		}
 	};
 	
-	/*
-	* Run the ActionModule
+	/**
+	 * Run the task.
 	* @override
+	* @protected
 	*/
 	GetCurrentPageTaskProto.run = function(){
 		var target = this.getParameter("target"),

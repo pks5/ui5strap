@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.AppMessageTask
 	 * 
 	 */
-	var AppMessageTask = ActionModule.extend("pks.ui5strap.task.AppMessageTask"),
+	var AppMessageTask = Task.extend("pks.ui5strap.task.AppMessageTask"),
 	/**
 	 * @alias pks.ui5strap.task.AppMessageTask.prototype
 	 */
@@ -70,7 +70,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 
 	/**
-	* @Override
+	 * Run the task.
+	* @override
+	* @protected
 	*/
 	AppMessageTaskProto.run = function(){
 		this.context.app.sendMessage(this.context.parameters[this.namespace]);

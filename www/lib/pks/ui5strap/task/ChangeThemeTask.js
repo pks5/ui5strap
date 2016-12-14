@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.ChangeThemeTask
 	 * 
 	 */
-	var ChangeThemeTask = ActionModule.extend("pks.ui5strap.task.ChangeThemeTask"),
+	var ChangeThemeTask = Task.extend("pks.ui5strap.task.ChangeThemeTask"),
 	/**
 	 * @alias pks.ui5strap.task.ChangeThemeTask.prototype
 	 */
@@ -63,8 +63,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		}
 	};
 
-	/*
-	* @Override
+	/**
+	 * Run the task.
+	* @override
+	* @protected
 	*/
 	ChangeThemeTaskProto.run = function(){
 		var newTheme = this.getParameter('theme'),

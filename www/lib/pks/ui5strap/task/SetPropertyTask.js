@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.SetPropertyTask
 	 * 
 	 */
-	var SetPropertyTask = ActionModule.extend("pks.ui5strap.task.SetPropertyTask"),
+	var SetPropertyTask = Task.extend("pks.ui5strap.task.SetPropertyTask"),
 	/**
 	 * @alias pks.ui5strap.task.SetPropertyTask.prototype
 	 */
@@ -97,9 +97,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 
 	};
 
-	/*
-	* Run the ActionModule
+	/**
+	 * Run the task.
 	* @override
+	* @protected
 	*/
 	SetPropertyTaskProto.run = function(){
 			var srcParam = this.getParameter("srcParam"),

@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.GetContextDataTask
 	 * 
 	 */
-	var GetContextDataTask = ActionModule.extend("pks.ui5strap.task.GetContextDataTask"),
+	var GetContextDataTask = Task.extend("pks.ui5strap.task.GetContextDataTask"),
 	/**
 	 * @alias pks.ui5strap.task.GetContextDataTask.prototype
 	 */
@@ -91,9 +91,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		
 	};
 
-	/*
-	* Run the ActionModule
+	/**
+	 * Run the task.
 	* @override
+	* @protected
 	*/
 	GetContextDataTaskProto.run = function(){
 			var modelName = this.getParameter("modelName"),

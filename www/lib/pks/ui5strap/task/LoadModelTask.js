@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.LoadModelTask
 	 * 
 	 */
-	var LoadModelTask = ActionModule.extend("pks.ui5strap.task.LoadModelTask"),
+	var LoadModelTask = Task.extend("pks.ui5strap.task.LoadModelTask"),
 	/**
 	 * @alias pks.ui5strap.task.LoadModelTask.prototype
 	 */
@@ -131,8 +131,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 			}
 	};
 
-	/*
-	* @Override 
+	/**
+	 * Run the task.
+	* @override
+	* @protected
 	*/
 	LoadModelTaskProto.run = function(){ 
 			var _this = this,

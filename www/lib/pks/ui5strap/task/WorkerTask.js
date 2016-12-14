@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.WorkerTask
 	 * 
 	 */
-	var WorkerTask = ActionModule.extend("pks.ui5strap.task.WorkerTask"),
+	var WorkerTask = Task.extend("pks.ui5strap.task.WorkerTask"),
 	/**
 	 * @alias pks.ui5strap.task.WorkerTask.prototype
 	 */
@@ -63,8 +63,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		}
 	};
 
-	/*
-	* @Override
+	/**
+	 * Run the task.
+	* @override
+	* @protected
 	*/
 	WorkerTaskProto.run = function(){
 		var workerUrl = jQuery.sap.getModulePath(this.getParameter("workerName")) + '.worker.js',

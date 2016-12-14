@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.LogTask
 	 * 
 	 */
-	var LogTask = ActionModule.extend("pks.ui5strap.task.LogTask"),
+	var LogTask = Task.extend("pks.ui5strap.task.LogTask"),
 	/**
 	 * @alias pks.ui5strap.task.LogTask.prototype
 	 */
@@ -67,8 +67,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		}
 	};
 
-	/*
-	* @Override
+	/**
+	 * Run the task.
+	* @override
+	* @protected
 	*/
 	LogTaskProto.run = function(){
 		this.context._log[this.getParameter("logType")](this.getParameter("message"));

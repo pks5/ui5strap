@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.UnloadModelTask
 	 * 
 	 */
-	var UnloadModelTask = ActionModule.extend("pks.ui5strap.task.UnloadModelTask"),
+	var UnloadModelTask = Task.extend("pks.ui5strap.task.UnloadModelTask"),
 	/**
 	 * @alias pks.ui5strap.task.UnloadModelTask.prototype
 	 */
@@ -88,8 +88,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 
 	};
 
-	/*
-	* @Override
+	/**
+	 * Run the task.
+	* @override
+	* @protected
 	*/
 	UnloadModelTaskProto.run = function(){ 
 			var theControl = this.findControl(true),

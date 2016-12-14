@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionModule){
+sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
@@ -47,7 +47,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	 * @alias pks.ui5strap.task.GetPropertyTask
 	 * 
 	 */
-	var GetPropertyTask = ActionModule.extend("pks.ui5strap.task.GetPropertyTask"),
+	var GetPropertyTask = Task.extend("pks.ui5strap.task.GetPropertyTask"),
 	/**
 	 * @alias pks.ui5strap.task.GetPropertyTask.prototype
 	 */
@@ -91,9 +91,10 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 		
 	};
 
-	/*
-	* Run the ActionModule
+	/**
+	 * Run the task.
 	* @override
+	* @protected
 	*/
 	GetPropertyTaskProto.run = function(){
 			var propertyKey = this.getParameter("propertyName"),

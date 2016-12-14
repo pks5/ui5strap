@@ -73,8 +73,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	};
 	
 	/**
-	* Run the task.
+	 * Run the task.
 	* @override
+	* @protected
 	*/
 	SwitchActionTaskProto.run = function(){
 		var actionKey = this.getParameter("EXPRESSION"),
