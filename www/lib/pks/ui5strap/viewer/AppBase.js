@@ -1451,20 +1451,6 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	*/
 
 	/**
-	* Create an control id with app namespace. If viewId is given, the controlId must be local.
-	* 
-	* @param controlId {string} The ID of the control.
-	* @param viewId {string} The ID of the view that contains the control.
-	* @returns {string} The final control id.
-	* @deprecated Use pks.ui5strap.viewer.AppConfig.createControlId instead.
-	*/ 
-	AppBaseProto.createControlId = function(controlId, viewId){
-		jQuery.sap.log.warning("pks.ui5strap.viewer.AppBase.prototype.createControlId is deprecated! Use pks.ui5strap.viewer.AppConfig.prototype.createControlId instead!");
-		return this.config.createControlId(controlId, viewId);
-	
-	};
-	
-	/**
 	 * Extracts the ID part of a Control ID without the app namespace.
 	 * 
 	 * @param controlId {string} The control ID.
