@@ -8,13 +8,16 @@
     "run-desktop": "nwbuild -r ../www",
     "run-android": "cd .. && cordova emulate android",
     
-    "build-ui5strap-themes": "grunt --gruntfile ../build/pks.ui5strap/themes/build-ui5strap-themes.js",
+    "build-ui5strap-themes": "grunt --gruntfile ../build/pks.ui5strap/themes/ui5strap-themes.js",
     
-    "clean-ui5strap-library": "grunt cleanup --gruntfile ../build/pks.ui5strap/library/build-ui5strap-library.js",
-    "build-ui5strap-library": "grunt --gruntfile ../build/pks.ui5strap/library/build-ui5strap-library.js",
+    "clean-ui5strap-library": "grunt cleanup --gruntfile ../build/pks.ui5strap/library/ui5strap-library.js",
+    "build-ui5strap-library": "grunt --gruntfile ../build/pks.ui5strap/library/ui5strap-library.js",
   	
   	"build-ui5strap-docs" : "jsdoc ../www/lib/ui5strap -r -d ../docs",
   	
+  	"clean-ui5strap-release": "grunt cleanup --gruntfile ../build/pks.ui5strap/release/ui5strap-release.js",
+    "build-ui5strap-release": "grunt --gruntfile ../build/pks.ui5strap/release/ui5strap-release.js",
+    
     "build-demoapp-component": "grunt --gruntfile build-demoapp-preload.js"
     
   },
