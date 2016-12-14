@@ -32,9 +32,6 @@ sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext", "./Task", "
 	/**
 	 * Constructor for a new Action instance.
 	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
-	 * 
 	 * @class
 	 * Class for interpreting ui5strap actions.
 	 * @extends sap.ui.base.Object

@@ -32,8 +32,8 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	/**
 	 * Constructor for a new App instance.
 	 * 
-	 * @param config {pks.ui5strap.viewer.AppConfig} App configuration.
-	 * @param viewser {ui5strap.ViewerBase} Viewer instance that loaded this app.
+	 * @param {pks.ui5strap.viewer.AppConfig} oAppConfig - App configuration.
+	 * @param {pks.ui5strap.viewer.ViewerBase} oViewer - Viewer instance that loaded this app.
 	 * 
 	 * @class
 	 * Abstract base class for ui5strap apps.

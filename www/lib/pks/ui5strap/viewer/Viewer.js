@@ -33,7 +33,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	/**
 	 * Constructor for a new Viewer instance.
 	 * 
-	 * @param {object} options - Initial settings.
+	 * @param {object} mOptions - Viewer options.
 	 * 
 	 * @class
 	 * App module for system apps.

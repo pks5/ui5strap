@@ -33,7 +33,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	/**
 	 * Constructor for a new ViewerBase instance.
 	 * 
-	 * @param {object} options - Initial settings.
+	 * @param {object} mOptions - Viewer options.
 	 * 
 	 * @class
 	 * Abstract base class for viewers.

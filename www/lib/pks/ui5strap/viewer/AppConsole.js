@@ -36,8 +36,8 @@
 	 /**
 		 * Constructor for a new AppConsole instance.
 		 * 
-		 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-		 * @param {object} [mSettings] Initial settings for the new control
+		 * @param {pks.ui5strap.viewer.AppConfig} oAppConfig - App configuration.
+		 * @param {pks.ui5strap.viewer.ViewerBase} oViewer - Viewer instance that loaded this app.
 		 * 
 		 * @class
 		 * App module for creating console apps.

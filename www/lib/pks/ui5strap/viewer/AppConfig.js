@@ -32,8 +32,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	/**
 	 * Constructor for a new AppConfig instance.
 	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
+	 * @param {object} [mOptions] App ptions. ???
+	 * @param {object} [mParameters] Parameters. ???
 	 * 
 	 * @class
 	 * Class representing the ui5strap configuration.

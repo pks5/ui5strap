@@ -32,8 +32,8 @@ sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext"], function(u
 	/**
 	 * Constructor for a new Task instance.
 	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
 	 * 
 	 * @class
 	 * Base class for tasks.
@@ -48,12 +48,12 @@ sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext"], function(u
 	 * 
 	 */
 	var Task = ObjectBase.extend("pks.ui5strap.viewer.Task", /** @lends pks.ui5strap.viewer.Task.prototype */{
-			"constructor" : function(mSettings, oContext){
+			"constructor" : function(mSettings, oActionContext){
 				this.mSettings = mSettings;
-				this.oContext = oContext;
+				this.oContext = oActionContext;
 				
 				//Legacy
-				this.context = oContext;
+				this.context = oActionContext;
 				this.namespace = mSettings.namespace;
 			}
 		}),

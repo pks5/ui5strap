@@ -32,8 +32,7 @@ sap.ui.define(["./library", "sap/ui/base/Object", "sap/ui/core/Control"], functi
 	/**
 	 * Constructor for a new Action instance.
 	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
+	 * @param {object} mAction The Action definition.
 	 * 
 	 * @class
 	 * Class that represents an action context.

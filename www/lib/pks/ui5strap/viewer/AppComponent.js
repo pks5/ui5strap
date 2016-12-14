@@ -32,8 +32,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(ui5strapViewerLib, O
 	/**
 	 * Constructor for a new AppComponent instance.
 	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
+	 * @param {pks.ui5strap.viewer.AppBase} [oApp] - The app this component belongs to.
+	 * @param {object} [mSettings] - Settings for this component.
 	 * 
 	 * @class
 	 * Base class for ui5strap app components.

@@ -32,8 +32,8 @@ sap.ui.define(['./library', './AppComponent'], function(ui5strapViewerLib, AppCo
 	/**
 	 * Constructor for a new AppFrame instance.
 	 * 
-	 * @param {pks.ui5strap.viewer.AppBase} app - App reference
-	 * @param {object} options - Initial settings
+	 * @param {pks.ui5strap.viewer.AppBase} [oApp] - The app this component belongs to.
+	 * @param {object} [mSettings] - Settings for this component.
 	 * 
 	 * @class
 	 * App component for frame logic.

@@ -5,8 +5,8 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(ui5strapViewerLib
 	/**
 	 * Constructor for a new RootComponent instance.
 	 * 
-	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
-	 * @param {object} [mSettings] Initial settings for the new control
+	 * @param {string} [sId] ID for the new component, generated automatically if no ID is given
+	 * @param {object} [mSettings] Initial settings for the new component
 	 * 
 	 * @class
 	 * Root component for apps.
