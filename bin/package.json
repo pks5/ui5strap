@@ -1,6 +1,6 @@
 {
   "name": "ui5strap-bin",
-  "version": "0.0.1",
+  "version": "1.0.0-SNAPSHOT",
   "author": "Jan Philipp Knoeller",
   "license": "Apache2",
   "scripts": {

@@ -1,11 +1,11 @@
 {
-  "name": "Express-web-app",
-  "version": "1.0.0",
-  "dependencies": {
-    "body-parser": "^1.15.2",
-    "ejs": "~1.0.0",
-    "express": "~4.0.0",
-    "express-http-proxy": "^0.9.1",
+  "name": "ui5strap-server",
+  "version": "1.0.0-SNAPSHOT",
+  "devDependencies": {
+    "body-parser": "*",
+    "ejs": "*",
+    "express": "*",
+    "express-http-proxy": "*",
     "mysql": "*"
   }
 }
