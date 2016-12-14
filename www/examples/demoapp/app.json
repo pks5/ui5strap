@@ -40,7 +40,7 @@
                 "type" : "sap.ui.core.mvc.XMLView",
                 "viewName" : ".views.home.MenuRoot",
                 "target" : "bar",
-                "transition" : "transition-none"
+                "transition" : "none"
             },
             
             {
@@ -122,7 +122,7 @@
                 "id" : "menuControls",
                 "viewName" : ".views.bscon.MenuControls",
                 "target" : "bar",
-                "transition" : "transition-none"
+                "transition" : "none"
             },
             
             {
@@ -229,7 +229,7 @@
                 "id" : "menuCuscon",
                 "viewName" : ".views.cuscon.MenuCuscon",
                 "target" : "bar",
-                "transition" : "transition-none"
+                "transition" : "none"
             },
             
             {
@@ -276,7 +276,7 @@
                 "id" : "menuSettings",
                 "viewName" : ".views.settings.MenuSettings",
                 "target" : "bar",
-                "transition" : "transition-none"
+                "transition" : "none"
             },
             
             {

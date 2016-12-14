@@ -105,6 +105,8 @@ sap.ui
 						};
 					};
 					
+					ResponsiveTransition.NO_TRANSITION = "none";
+					
 					ResponsiveTransition.prototype = {};
 					
 					var ResponsiveTransitionProto = ResponsiveTransition.prototype;
@@ -130,6 +132,9 @@ sap.ui
 						}
 
 						if (!mStatus.skipped && !mStatus.canceled) {
+							
+							//jQuery.sap.log.info("Preparing transition: " + this);
+							
 							var $oNext = mData.$next,
 								$oCurrent = mData.$current,
 								sTransClasses = this._sTransClasses;
@@ -170,14 +175,13 @@ sap.ui
 						this._mEvents[sEventName] = [];
 					};
 					
-					ResponsiveTransitionProto.finishCurrent = function(){
+					ResponsiveTransitionProto.finishCurrent = function(bTimeout){
 						var mStatus = this._mStatus,
 							mData = this._mData;
 						
+						bTimeout && jQuery.sap.log.warning("Transition timeout: " + this);
+						
 						if (mStatus.currentFinished) {
-							jQuery.sap.log
-									.warning("Transition timeout: " + this);
-
 							return;
 						}
 
@@ -206,14 +210,13 @@ sap.ui
 						}
 					};
 					
-					ResponsiveTransitionProto.finishNext = function(){
+					ResponsiveTransitionProto.finishNext = function(bTimeout){
 						var mStatus = this._mStatus,
 							mData = this._mData;
 						
+						bTimeout && jQuery.sap.log.warning("Transition timeout: " + this);
+						
 						if (mStatus.nextFinished) {
-							jQuery.sap.log
-							.warning("Transition timeout: " + this);
-							
 							return;
 						}
 						
@@ -251,7 +254,7 @@ sap.ui
 							mData = this._mData,
 							$oNext = mData.$next,
 							$oCurrent = mData.$current;
-
+						
 						if (mStatus.executed) {
 							throw new Error(
 									'Transition already executed: ' + this);
@@ -261,7 +264,7 @@ sap.ui
 						if (mStatus.skipped || mStatus.canceled) {
 							
 							jQuery.sap.log
-							.warning("Transition skipped or canceled: " + this);
+							.info("Transition skipped or canceled: " + this);
 							
 							this.finishCurrent();
 							this.finishNext();
@@ -272,8 +275,8 @@ sap.ui
 							
 							// Current DOM element
 							if ($oCurrent) {
-								var fnFinishCurrent = function(){
-									_this.finishCurrent();
+								var fnFinishCurrent = function(oEvent){
+									_this.finishCurrent(!oEvent || !oEvent.type);
 								};
 								
 								this._currentTimout = window.setTimeout(
@@ -288,8 +291,8 @@ sap.ui
 
 							// Next DOM element
 							if ($oNext) {
-								var fnFinishNext = function(){
-									_this.finishNext();
+								var fnFinishNext = function(oEvent){
+									_this.finishNext(!oEvent || !oEvent.type);
 								};
 								
 								this._nextTimout = window.setTimeout(
@@ -316,7 +319,24 @@ sap.ui
 					};
 					
 					ResponsiveTransitionProto.toString = function(){
-						return "TRANS";
+						var mData = this._mData;
+						var sString = "{ResponsiveTransition";
+						if(mData.transitionAll){
+							sString += " transitionAll='" + mData.transitionAll + "'";
+						}
+						if(mData.transitionExtraSmall){
+							sString += " transitionExtraSmall='" + mData.transitionExtraSmall + "'";
+						}
+						if(mData.transitionSmall){
+							sString += " transitionSmall='" + mData.transitionSmall + "'";
+						}
+						if(mData.transitionMedium){
+							sString += " transitionMedium='" + mData.transitionMedium + "'";
+						}
+						if(mData.transitionLarge){
+							sString += " transitionLarge='" + mData.transitionLarge + "'";
+						}
+						return sString + "}";
 					};
 					
 					return ResponsiveTransition;

@@ -209,7 +209,7 @@ sap.ui.define(['./library', './AppComponent'], function(ui5strapViewerLib, AppCo
 			
 			if(!_this.initialized){
 				//Skip transition if frame has not been initialized yet
-				initialView.transition = 'transition-none';
+				initialView.transition = "none";
 			}
 			this.gotoPage(initialView, complete);
 		}

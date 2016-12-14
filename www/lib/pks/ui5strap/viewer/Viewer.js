@@ -115,7 +115,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
-		jQuery.sap.log.debug("ViewerProto.start");
+		jQuery.sap.log.info("Starting Ui5Strap Viewer...");
 		
 		var _this = this;
 		this.init();
@@ -536,9 +536,12 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 					});
 				}
 				else{
-					jQuery.sap.log.debug("Removing splash...");
-					//Remove Initial View
-					$currentRoot.remove();
+					if($currentRoot.length){
+						//Remove splash screen.
+						$currentRoot.remove();
+						jQuery.sap.log.info("Splash screen removed.");
+					}
+					
 					fnHidden();
 				}
 			});

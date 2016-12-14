@@ -207,19 +207,13 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			return false;
 		}
 		else{
-			var changeTransitionName = pageChange.transitionName;
-			if(!changeTransitionName){
-				changeTransitionName = _this.getDefaultTransition();
-			}
-			
-			//"no-transition" is deprecated, use "transition-none" instead
-			if(changeTransitionName === 'no-transition'
-				|| changeTransitionName === 'transition-none'){
-				changeTransitionName = null;
+			var sTransitionName = pageChange.transitionName;
+			if(!sTransitionName){
+				sTransitionName = _this.getDefaultTransition();
 			}
 			
 			var transition = new ResponsiveTransition({
-					"transitionAll" : changeTransitionName, 
+					"transitionAll" : sTransitionName, 
 					"$current" : pageChange.$current, 
 					"$next" : pageChange.$next, 
 					id : 'nc-' + _this.ncType + '-' + pageChange.target
@@ -245,14 +239,14 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		
 		var callbacksLength = transList.callbacks.length;
 		if(0 === callbacksLength){
-			////jQuery.sap.log.debug('[NC][' + pageChange.target + '] No transition callbacks');
-
+			//jQuery.sap.log.info("No transition callbacks.");
+			
 			return;
 		}
 
 		if(0 === transList.callI){
-			//jQuery.sap.log.debug(' + [NC] CALLBACK_0 (' + callbacksLength + ') {' + pageChange.target + '}');
-
+			//jQuery.sap.log.info("Calling " + callbacksLength + " callbacks.");
+			
 			for(var i = 0; i < callbacksLength; i++){
 				transList.callbacks[i]({
 					target : pageChange.target,
@@ -262,9 +256,9 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 
 			//pageChange 
 		}
-		else{
-			//jQuery.sap.log.debug(' - [NC] C_' + transList.callI + ' {' + pageChange.target + '}');
-		}
+		//else{
+			//jQuery.sap.log.info("Transition callback " + transList.callI + " call left.");
+		//}
 	};
 
 	/**
@@ -272,6 +266,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _executeTransition = function(_this, pageChange, transList){
+		//jQuery.sap.log.info("Execute transition: " + pageChange.changeName);
 		
 		if(pageChange.currentPage === pageChange.page){
 			throw new Error("Cannot execute transitions with 2 same instances: " + pageChange.page.getId());
@@ -321,7 +316,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			}
 			
 			//Next Page
-			if(pageChange.page){
+			if(pageChange.page){ //console.log(pageChange.transition.getData());
 				var $next = pageChange.transition.getData().$next;
 				if($next){
 					$next.attr('class', 'navcontainer-page navcontainer-page-current');
@@ -354,7 +349,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _executePendingTransitions = function(_this){
-		//jQuery.sap.log.info("Executing pending transitions");
+		jQuery.sap.log.info("Executing pending transitions (" + _this._pendingTransitions.length + ")");
 		
 		var pendingTransitionsLength = _this._pendingTransitions.length,
 			transList = {
@@ -374,7 +369,10 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			var lastPageChange = pageChanges[pageChanges.length-1];
 			
 			if(lastPageChange.page === lastPageChange.currentPage){
+				jQuery.sap.log.info("Page is already current: " + lastPageChange.changeName);
 				//This can happen if the navcontainer is rerendered, but page is already current.
+				
+				lastPageChange.transition.getData().$next.attr('class', 'navcontainer-page navcontainer-page-current');
 				_transitionCallback(_this, lastPageChange, transList);
 			}
 			else{
@@ -466,6 +464,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _pageChange = function(_this, pageChange){
+		//jQuery.sap.log.info("Page change: " + pageChange.changeName);
+		
 		_onPageChange(_this, pageChange);
 		
 		var transList = {
@@ -848,7 +848,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 				_pageChangeLater(this, {
 					changeName : "rerender",
 					target : target,
-					transitionName : "transition-none",
+					transitionName : ResponsiveTransition.NO_TRANSITION,
 					transition : null,
 					"$current" : null,
 					"$next" : null,

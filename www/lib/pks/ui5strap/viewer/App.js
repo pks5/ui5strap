@@ -232,7 +232,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 						oPage = _this.createPage(viewConfig);
 					
 					oPage.loaded().then(function(){
-						_this.getRootControl().toPage(oPage, "content", "transition-none", callback);
+						_this.getRootControl().toPage(oPage, "content", "none", callback);
 					});
 					
 					return;
@@ -297,8 +297,6 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 				
 				continue;
 			}
-			
-			//initialView.transition = 'transition-none';
 			
 			this.navigateTo(navigator, initialView, complete, true, true, suppressTransitions);
 		}
@@ -483,7 +481,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 				}
 				
 				if(suppressTransitions){
-					viewConfig.transition = "transition-none";
+					viewConfig.transition = "none";
 				}
 				
 				return this.navigateTo(this.getRootControl(), viewConfig, callback, false, true, suppressTransitions);
@@ -542,7 +540,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 		var pageChanged = navControl.toPage(
 			oPage, 
 			target, 
-			suppressTransitions ? "transition-none" : viewConfigResolved.transition,
+			suppressTransitions ? "none" : viewConfigResolved.transition,
 			function toPage_complete(param){
 				
 				//TODO why the timeout here?

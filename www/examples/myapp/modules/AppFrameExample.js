@@ -40,13 +40,13 @@ sap.ui.define([
 				
 				this.gotoPage({ 
 					"id" : "my-app-intro",
-					"transition" : "transition-none"
+					"transition" : "none"
 				}, complete);
 			}
 			else{
 				this.gotoPage({ 
 					"id" : "my-app-page1",
-					"transition" : "transition-none"
+					"transition" : "none"
 				}, complete);
 			}
 		}
@@ -54,7 +54,7 @@ sap.ui.define([
 			//If localStorage is not supported, always show the Intro (IE9)
 			this.gotoPage({ 
 				"id" : "my-app-intro",
-				"transition" : "transition-none"
+				"transition" : "none"
 			}, complete);
 		}
 		
@@ -223,7 +223,7 @@ sap.ui.define([
 						}
 						else{
 							params.writeHistory = true;
-							params.transition = 'transition-none';
+							params.transition = "none";
 						}
 					}
 				}
@@ -322,8 +322,8 @@ sap.ui.define([
 			this.setSidebarMenu(frameOptions.sidebarMenu);
 		}
 
-		this.getRootControl().toPage(this.sidebar, 'sidebar', "transition-none");
-		this.getRootControl().toPage(this.navbar, 'navbar', "transition-none");
+		this.getRootControl().toPage(this.sidebar, 'sidebar', "none");
+		this.getRootControl().toPage(this.navbar, 'navbar', "none");
 
 		var currentPage = this.getCurrentPage(target);
 		if(
