@@ -60,3 +60,4 @@ target
 /www/lib/pks/*_all
 /www/lib/pks/*_min
 /www/lib/pks/*_pre
+/www/docs

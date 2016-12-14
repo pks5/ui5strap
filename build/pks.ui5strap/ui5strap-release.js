@@ -5,7 +5,10 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON("package.json"),
 		
 		pathToMinLib : "../../www/lib/pks/ui5strap_min/",
-		pathToDocsRelease : "../../../ui5strap-docs/www/lib/pks/ui5strap_min_release/",
+		pathToDocs : "../../www/docs/",
+		
+		pathToDocsRelease : "../../../ui5strap-docs/www/ui5strap_api_docs/",
+		pathToMinLibRelease : "../../../ui5strap-docs/www/lib/pks/ui5strap_min_release/",
 		
 		/*
 		 * Deletes all generated libraries.
@@ -15,8 +18,8 @@ module.exports = function(grunt) {
 				force : true
 			},
 			
-			cleanDocsRelease : {
-				src : ["<%= pathToDocsRelease %>"]
+			cleanRelease : {
+				src : ["<%= pathToMinLibRelease %>", "<%= pathToDocsRelease %>"]
 			}
 		},
 		
@@ -24,9 +27,16 @@ module.exports = function(grunt) {
 		 * File copy.
 		 */
 		copy : {
-			copyMinLibToDocs: {
+			copyMinLibRelease: {
 				expand : true,
 				cwd : "<%= pathToMinLib %>",
+				src : ['**'],
+				dest : "<%= pathToMinLibRelease %>"
+			},
+			
+			copyDocsRelease: {
+				expand : true,
+				cwd : "<%= pathToDocs %>",
 				src : ['**'],
 				dest : "<%= pathToDocsRelease %>"
 			}
@@ -43,10 +53,10 @@ module.exports = function(grunt) {
 	 */
 	
 	//Clean releases in docs.
-	grunt.registerTask("cleanup", [ "clean:cleanDocsRelease" ]);
+	grunt.registerTask("cleanup", [ "clean:cleanRelease" ]);
 	
 	//Creates a complete release.
-	grunt.registerTask("default", [ "clean:cleanDocsRelease", "copy:copyMinLibToDocs" ]);
+	grunt.registerTask("default", [ "clean:cleanRelease", "copy:copyMinLibRelease", "copy:copyDocsRelease" ]);
 	
 	/*
 	 * END Define Tasks
