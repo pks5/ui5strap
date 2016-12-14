@@ -44,10 +44,10 @@ sap.ui.define(["./library", "sap/ui/base/Object", "sap/ui/core/Control"], functi
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias ui5strap.ActionContext
+	 * @alias pks.ui5strap.viewer.ActionContext
 	 * 
 	 */
-	var ActionContext = ObjectBase.extend('pks.ui5strap.viewer.ActionContext', {
+	var ActionContext = ObjectBase.extend('pks.ui5strap.viewer.ActionContext', /** @lends pks.ui5strap.viewer.ActionContext.prototype */{
 		/**
 		 * @constructs
 		 */
@@ -55,6 +55,9 @@ sap.ui.define(["./library", "sap/ui/base/Object", "sap/ui/core/Control"], functi
 			_init(this, action);
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.ActionContext.prototype
+	 */
 	ActionContextProto = ActionContext.prototype;
 
 	ActionContext.NUMBER = 0;

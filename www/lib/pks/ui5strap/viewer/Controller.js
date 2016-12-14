@@ -48,6 +48,9 @@ sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller', "../core/
 	 * 
 	 */
 	var Controller = ControllerBase.extend("pks.ui5strap.viewer.Controller"),
+	/**
+	 * @alias pks.ui5strap.viewer.Controller.prototype
+	 */
 		ControllerProto = Controller.prototype;
 	
 	/**

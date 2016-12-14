@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	 * @alias pks.ui5strap.core.NavContainer
 	 * 
 	 */
-	var NavContainer = ControlBase.extend("pks.ui5strap.core.NavContainer", {
+	var NavContainer = ControlBase.extend("pks.ui5strap.core.NavContainer", /** @lends pks.ui5strap.core.NavContainer.prototype */ {
 		metadata : {
 			interfaces : ["pks.ui5strap.core.INavigator"],
 			
@@ -85,6 +85,9 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			}
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.core.NavContainer.prototype
+	 */
 	NavContainerProto = NavContainer.prototype,
 	domAttachTimeout = 50;
 	

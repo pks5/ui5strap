@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMJsAlert = ActionModule.extend("pks.ui5strap.task.JsAlertTask"),
+	/**
+	 * @alias pks.ui5strap.task.JsAlertTask.prototype
+	 */
 		AMJsAlertProto = AMJsAlert.prototype;
 
 	/*

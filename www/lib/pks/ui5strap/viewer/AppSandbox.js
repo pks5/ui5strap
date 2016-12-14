@@ -61,6 +61,9 @@
 			this._sandboxControl = new Sandbox();
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.AppSandbox.prototype
+	 */
 	AppSandboxProto = AppSandbox.prototype;
 
 	/*

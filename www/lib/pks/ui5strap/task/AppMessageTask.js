@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMAppMessage = ActionModule.extend("pks.ui5strap.task.AppMessageTask"),
+	/**
+	 * @alias pks.ui5strap.task.AppMessageTask.prototype
+	 */
 		AMAppMessageProto = AMAppMessage.prototype;
 
 	AMAppMessageProto.parameters = {

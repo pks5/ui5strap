@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMCallControlMethod = ActionModule.extend("pks.ui5strap.task.CallControlMethodTask"),
+	/**
+	 * @alias pks.ui5strap.task.CallControlMethodTask.prototype
+	 */
 		AMCallControlMethodProto = AMCallControlMethod.prototype;
 
 	/*

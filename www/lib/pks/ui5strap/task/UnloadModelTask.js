@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMUnloadModel = ActionModule.extend("pks.ui5strap.task.UnloadModelTask"),
+	/**
+	 * @alias pks.ui5strap.task.UnloadModelTask.prototype
+	 */
 		AMUnloadModelProto = AMUnloadModel.prototype;
 
 	/*

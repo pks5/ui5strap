@@ -47,13 +47,16 @@ sap.ui.define(['./library', './AppComponent'], function(ui5strapViewerLib, AppCo
 	 * @alias pks.ui5strap.viewer.RestClient
 	 * 
 	 */
-	var RestClient = AppComponent.extend("pks.ui5strap.viewer.RestClient", {
+	var RestClient = AppComponent.extend("pks.ui5strap.viewer.RestClient", /** @lends pks.ui5strap.viewer.RestClient.prototype */ {
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);
 			
 			this._createMethods();
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.RestClient.prototype
+	 */
 	RestClientProto = RestClient.prototype;
 
     RestClient.CONTENT_TYPE_TEXT = 'text/plain';

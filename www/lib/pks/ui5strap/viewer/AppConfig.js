@@ -47,7 +47,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	 * @alias pks.ui5strap.viewer.AppConfig
 	 * 
 	 */
-	var AppConfig = ObjectBase.extend("pks.ui5strap.viewer.AppConfig", {
+	var AppConfig = ObjectBase.extend("pks.ui5strap.viewer.AppConfig", /** @lends pks.ui5strap.viewer.AppConfig.prototype */ {
 		"constructor" : function(options, parameters){
 			this.options = options || {};
 			this.parameters = parameters || {};
@@ -55,6 +55,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			this.data = {};
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.AppConfig.prototype
+	 */
 	AppConfigProto = AppConfig.prototype;
 	
 	var _pageTypes = {

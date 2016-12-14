@@ -47,13 +47,16 @@ sap.ui.define(['./library', './AppComponent'], function(ui5strapViewerLib, AppCo
 	 * @alias pks.ui5strap.viewer.Manager
 	 * 
 	 */
-	var Manager = AppComponent.extend("pks.ui5strap.viewer.Manager", {
+	var Manager = AppComponent.extend("pks.ui5strap.viewer.Manager", /** @lends pks.ui5strap.viewer.Manager.prototype */{
 		"constructor" : function(app, options){
 			AppComponent.call(this, app, options);
 			
 			this.controls = {};
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.Manager.prototype
+	 */
 	ManagerProto = Manager.prototype;
 
 	ManagerProto.registerControls = function(){

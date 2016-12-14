@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task", "../core/NavContainer"], function(
 	"use strict";
 	
 	var NavigateTask = Task.extend("pks.ui5strap.task.NavigateTask"),
+	/**
+	 * @alias pks.ui5strap.task.NavigateTask.prototype
+	 */
 		NavigateTaskProto = NavigateTask.prototype;
 
 	/**

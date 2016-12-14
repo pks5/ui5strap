@@ -99,6 +99,9 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			};
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.AppBase.prototype
+	 */
 	AppBaseProto = AppBase.prototype,
 	APP_PREFIX_STYLE_CLASS = "ui5strapApp";
 

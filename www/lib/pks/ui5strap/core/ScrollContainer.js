@@ -47,7 +47,7 @@ sap.ui.define(['./library', "./ControlBase"], function(ui5strapCoreLib, ControlB
 	 * @alias pks.ui5strap.core.ScrollContainer
 	 * 
 	 */
-	var ScrollContainer = ControlBase.extend("pks.ui5strap.core.ScrollContainer", {
+	var ScrollContainer = ControlBase.extend("pks.ui5strap.core.ScrollContainer", /** @lends pks.ui5strap.core.ResponsiveTransition.prototype */ {
 		
 		metadata : {
 
@@ -90,6 +90,9 @@ sap.ui.define(['./library', "./ControlBase"], function(ui5strapCoreLib, ControlB
 		}
 	
 	}),
+	/**
+	 * @alias pks.ui5strap.core.ScrollContainer.prototype
+	 */
 	ScrollContainerProto = ScrollContainer.prototype;
 	
 	/**

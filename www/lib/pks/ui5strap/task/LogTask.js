@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMLog = ActionModule.extend("pks.ui5strap.task.LogTask"),
+	/**
+	 * @alias pks.ui5strap.task.LogTask.prototype
+	 */
 		AMLogProto = AMLog.prototype;
 
 	/*

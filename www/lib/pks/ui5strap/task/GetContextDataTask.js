@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMGetContextData = ActionModule.extend("pks.ui5strap.task.GetContextDataTask"),
+	/**
+	 * @alias pks.ui5strap.task.GetContextDataTask.prototype
+	 */
 		AMGetContextDataProto = AMGetContextData.prototype;
 
 	/*

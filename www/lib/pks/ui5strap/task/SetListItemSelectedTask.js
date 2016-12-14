@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMSetListItemSelected = ActionModule.extend("pks.ui5strap.task.SetListItemSelectedTask"),
+	/**
+	 * @alias pks.ui5strap.task.SetListItemSelectedTask.prototype
+	 */
 		AMSetListItemSelectedProto = AMSetListItemSelected.prototype;
 	
 	/*

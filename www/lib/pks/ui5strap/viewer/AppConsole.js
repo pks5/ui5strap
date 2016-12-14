@@ -52,6 +52,9 @@
 		 * 
 		 */
 	 var AppConsole = AppBase.extend("pks.ui5strap.viewer.AppConsole"),
+	 /**
+		 * @alias pks.ui5strap.viewer.AppConsole.prototype
+		 */
 		AppConsoleProto = AppConsole.prototype;
 
 	/*

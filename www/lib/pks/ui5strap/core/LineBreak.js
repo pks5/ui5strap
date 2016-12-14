@@ -48,8 +48,7 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 	 * 
 	 */
 	
-	//TODO eliminate ui5strap shortcuts
-	var Break = ControlBase.extend("pks.ui5strap.core.LineBreak", {
+	var LineBreak = ControlBase.extend("pks.ui5strap.core.LineBreak", /** @lends pks.ui5strap.core.LineBreak.prototype */ {
 		metadata : {
 			interfaces : ["pks.ui5strap.core.IText"],
 			library : "pks.ui5strap.core"
@@ -60,5 +59,5 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 		}
 	});
 	
-	return Break;
+	return LineBreak;
 });

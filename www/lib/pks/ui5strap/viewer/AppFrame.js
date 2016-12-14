@@ -62,6 +62,9 @@ sap.ui.define(['./library', './AppComponent'], function(ui5strapViewerLib, AppCo
 			this.initialized = false;
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.AppFrame.prototype
+	 */
 	AppFrameProto = AppFrame.prototype;
 
 	/*

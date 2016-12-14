@@ -20,7 +20,7 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(ui5strapViewerLib
 	 * @alias pks.ui5strap.viewer.RootComponent
 	 * 
 	 */
-	var RootComponent = Component.extend("pks.ui5strap.viewer.RootComponent", {
+	var RootComponent = Component.extend("pks.ui5strap.viewer.RootComponent", /** @lends pks.ui5strap.viewer.RootComponent.prototype */{
 		metadata : {
 	    	interfaces : ["pks.ui5strap.viewer.IRootComponent", "pks.ui5strap.viewer.IRootNavigator"],
 	    	
@@ -32,6 +32,9 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(ui5strapViewerLib
 	    }
 	
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.RootComponent.prototype
+	 */
 	RootComponentProto = RootComponent.prototype;
 	
 	/**

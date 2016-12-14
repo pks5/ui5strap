@@ -68,6 +68,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object'], function(ui5strapViewerLib, O
 			}
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.AppComponent.prototype
+	 */
 	AppComponentProto = AppComponent.prototype;
 
 	AppComponentProto.init = function(){};

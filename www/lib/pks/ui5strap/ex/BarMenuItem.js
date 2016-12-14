@@ -47,7 +47,7 @@ sap.ui.define(['./library', '../core/library', '../core/ListItemBase', '../core/
 	 * @alias pks.ui5strap.ex.BarMenuItem
 	 * 
 	 */
-	var BarMenuItem = ListItemBase.extend("pks.ui5strap.ex.BarMenuItem", {
+	var BarMenuItem = ListItemBase.extend("pks.ui5strap.ex.BarMenuItem", /** @lends pks.ui5strap.ex.BarMenuItem.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.ex",
@@ -124,6 +124,9 @@ sap.ui.define(['./library', '../core/library', '../core/ListItemBase', '../core/
 			rm.write("</li>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.ex.BarMenuItem.prototype
+	 */
 	BarMenuItemProto = BarMenuItem.prototype;
 	
 	/**

@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMSetProperty = ActionModule.extend("pks.ui5strap.task.SetPropertyTask"),
+	/**
+	 * @alias pks.ui5strap.task.SetPropertyTask.prototype
+	 */
 		AMSetPropertyProto = AMSetProperty.prototype;
 
 	/*

@@ -47,7 +47,7 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 	 * @alias pks.ui5strap.core.ThematicBreak
 	 * 
 	 */
-	var Line = ControlBase.extend("pks.ui5strap.core.ThematicBreak", {
+	var ThematicBreak = ControlBase.extend("pks.ui5strap.core.ThematicBreak", /** @lends pks.ui5strap.core.ThematicBreak.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.core"
@@ -62,5 +62,5 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 		}
 	});
 
-	return Line;
+	return ThematicBreak;
 });

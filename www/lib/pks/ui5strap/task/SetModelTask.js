@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMSetModel = ActionModule.extend("pks.ui5strap.task.SetModelTask"),
+	/**
+	 * @alias pks.ui5strap.task.SetModelTask.prototype
+	 */
 		AMSetModelProto = AMSetModel.prototype;
 
 	/*

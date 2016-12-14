@@ -59,10 +59,13 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSu
 	 * @alias pks.ui5strap.core.ControlBase
 	 * 
 	 */
-	var ControlBase = SapControlBase.extend("pks.ui5strap.core.ControlBase", {
+	var ControlBase = SapControlBase.extend("pks.ui5strap.core.ControlBase", /** @lends pks.ui5strap.core.ControlBase.prototype */ {
 		metadata : _meta,
 		renderer : null
 	}),
+	/**
+	 * @alias pks.ui5strap.core.ControlBase.prototype
+	 */
 	ControlBaseProto = ControlBase.prototype;
 	
 	BaseSupport.proto(ControlBaseProto);

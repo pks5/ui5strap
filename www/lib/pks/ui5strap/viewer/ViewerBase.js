@@ -85,6 +85,9 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			}
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.ViewerBase.prototype
+	 */
 	ViewerBaseProto = ViewerBase.prototype;
 	
 	ViewerBase.OVERLAY_ID = "ui5strapGlobalOverlay";

@@ -48,6 +48,9 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	 * 
 	 */
 	var ViewerMulti = ViewerBase.extend("pks.ui5strap.viewer.Viewer"),
+	/**
+	 * @alias pks.ui5strap.viewer.Viewer.prototype
+	 */
 	ViewerMultiProto = ViewerMulti.prototype,
 	domAttachTimeout = 50;
 

@@ -69,7 +69,7 @@ sap.ui.define(['./library', './ListItemBase', "./Utils", "./RenderUtils"], funct
 	 * @alias pks.ui5strap.core.PlainListItem
 	 * 
 	 */
-	var ListItem = ListItemBase.extend("pks.ui5strap.core.PlainListItem", {
+	var ListItem = ListItemBase.extend("pks.ui5strap.core.PlainListItem", /** @lends pks.ui5strap.core.PlainListItem.prototype */ {
 		metadata : _meta,
 		renderer : function(rm, oControl) {
 			rm.write("<li");
@@ -86,6 +86,9 @@ sap.ui.define(['./library', './ListItemBase', "./Utils", "./RenderUtils"], funct
 			rm.write("</li>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.core.PlainListItem.prototype
+	 */
 	ListItemProto = ListItem.prototype;
 	
 	/**

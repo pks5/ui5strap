@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMToggleProperty = ActionModule.extend("pks.ui5strap.task.TogglePropertyTask"),
+	/**
+	 * @alias pks.ui5strap.task.TogglePropertyTask.prototype
+	 */
 		AMTogglePropertyProto = AMToggleProperty.prototype;
 
 	/*

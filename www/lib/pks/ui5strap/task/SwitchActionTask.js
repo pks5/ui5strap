@@ -31,6 +31,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	//Define Constructor
 	var Switch = Task.extend("pks.ui5strap.task.SwitchActionTask"),
+	/**
+	 * @alias pks.ui5strap.task.SwitchActionTask.prototype
+	 */
 		SwitchProto = ui5strap.task.Switch.prototype;
 	
 	/**

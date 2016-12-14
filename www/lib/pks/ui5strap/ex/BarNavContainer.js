@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", '../core/NavContainer', '../core/
 	 * @alias pks.ui5strap.ex.BarNavContainer
 	 * 
 	 */
-	var BarNavContainer = NavContainer.extend("pks.ui5strap.ex.BarNavContainer", {
+	var BarNavContainer = NavContainer.extend("pks.ui5strap.ex.BarNavContainer", /** @lends pks.ui5strap.ex.BarNavContainer.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.ex",
@@ -165,6 +165,9 @@ sap.ui.define(['./library', "../core/library", '../core/NavContainer', '../core/
 		//Use default NavContainerRenderer
 		renderer : "pks.ui5strap.core.NavContainerRenderer"
 	}),
+	/**
+	 * @alias pks.ui5strap.ex.BarNavContainer.prototype
+	 */
 	BarNavContainerProto = BarNavContainer.prototype;
 	
 	/**

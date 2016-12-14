@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapViewerLib, 
 	 * @alias pks.ui5strap.viewer.Sandbox
 	 * 
 	 */
-	var Sandbox = ControlBase.extend("pks.ui5strap.viewer.Sandbox", {
+	var Sandbox = ControlBase.extend("pks.ui5strap.viewer.Sandbox", /** @lends pks.ui5strap.viewer.Sandbox.prototype */{
 		metadata : {
 
 			library : "pks.ui5strap.viewer",
@@ -74,6 +74,9 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapViewerLib, 
 			 rm.write("</div>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.Sandbox.prototype
+	 */
 	SandboxProto = Sandbox.prototype;
 
 	/**

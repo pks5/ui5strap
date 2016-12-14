@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapCoreLib, ListBase){
 	 * @alias pks.ui5strap.core.PlainList
 	 * 
 	 */
-	var List = ListBase.extend("pks.ui5strap.core.PlainList", {
+	var List = ListBase.extend("pks.ui5strap.core.PlainList", /** @lends pks.ui5strap.core.PlainList.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.core",
@@ -91,6 +91,9 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapCoreLib, ListBase){
 			rm.write("</" + tagName + ">");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.core.PlainList.prototype
+	 */
 	ListProto = List.prototype;
 	
 	/**

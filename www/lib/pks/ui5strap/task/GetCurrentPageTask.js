@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMGetCurrentPage = ActionModule.extend("pks.ui5strap.task.GetCurrentPageTask"),
+	/**
+	 * @alias pks.ui5strap.task.GetCurrentPageTask.prototype
+	 */
 		AMGetCurrentPageProto = AMGetCurrentPage.prototype;
 	
 	/*

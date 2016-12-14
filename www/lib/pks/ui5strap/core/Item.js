@@ -47,7 +47,7 @@ sap.ui.define(['./library', "sap/ui/core/Element"], function(ui5strapBs3Lib, Ele
 	 * @alias pks.ui5strap.core.Item
 	 * 
 	 */
-	var Item = ElementBase.extend("pks.ui5strap.core.Item", {
+	var Item = ElementBase.extend("pks.ui5strap.core.Item", /** @lends pks.ui5strap.core.Item.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.core",

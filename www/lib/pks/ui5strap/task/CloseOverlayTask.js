@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMCloseOverlay = ActionModule.extend("pks.ui5strap.task.CloseOverlayTask"),
+	/**
+	 * @alias pks.ui5strap.task.CloseOverlayTask.prototype
+	 */
 		AMCloseOverlayProto = AMCloseOverlay.prototype;
 
 	/*

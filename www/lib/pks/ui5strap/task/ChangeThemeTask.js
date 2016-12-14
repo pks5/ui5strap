@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMChangeTheme = ActionModule.extend("pks.ui5strap.task.ChangeThemeTask"),
+	/**
+	 * @alias pks.ui5strap.task.ChangeThemeTask.prototype
+	 */
 		AMChangeThemeProto = AMChangeTheme.prototype;
 
 	/*

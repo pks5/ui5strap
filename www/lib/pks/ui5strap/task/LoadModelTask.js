@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMLoadModel = ActionModule.extend("pks.ui5strap.task.LoadModelTask"),
+	/**
+	 * @alias pks.ui5strap.task.LoadModelTask.prototype
+	 */
 		AMLoadModelProto = AMLoadModel.prototype;
 	
 

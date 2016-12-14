@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMGotoPage = ActionModule.extend("pks.ui5strap.task.GotoPageTask"),
+	/**
+	 * @alias pks.ui5strap.task.GotoPageTask.prototype
+	 */
 		AMGotoPageProto = AMGotoPage.prototype;
 
 	/*

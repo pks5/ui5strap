@@ -58,9 +58,12 @@ sap.ui.define(['./library', './BaseSupport', './OptionsSupport', "sap/ui/core/El
 	 * @alias pks.ui5strap.core.ElementBase
 	 * 
 	 */
-	var ElementBase = SapElementBase.extend("pks.ui5strap.core.ElementBase", {
+	var ElementBase = SapElementBase.extend("pks.ui5strap.core.ElementBase", /** @lends pks.ui5strap.core.ElementBase.prototype */ {
 		metadata : _meta
 	}),
+	/**
+	 * @alias pks.ui5strap.core.ElementBase.prototype
+	 */
 	ElementBaseProto = ElementBase.prototype;
 	
 	BaseSupport.proto(ElementBaseProto);

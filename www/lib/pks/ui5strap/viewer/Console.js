@@ -49,7 +49,7 @@ sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, 
 	 * @alias ui5strap.Console
 	 * 
 	 */
-	var Console = ControlBase.extend("pks.ui5strap.viewer.Console", {
+	var Console = ControlBase.extend("pks.ui5strap.viewer.Console", /** @lends pks.ui5strap.viewer.Console.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.viewer",
@@ -89,6 +89,9 @@ sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, 
 			rm.write("</div>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.viewer.Console.prototype
+	 */
 	ConsolePrototype = Console.prototype;
 
 	Console.MAX_SIZE = 200;

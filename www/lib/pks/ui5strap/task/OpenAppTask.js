@@ -30,6 +30,9 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	"use strict";
 	
 	var AMOpenApp = ActionModule.extend("pks.ui5strap.task.OpenAppTask"),
+	/**
+	 * @alias pks.ui5strap.task.OpenAppTask.prototype
+	 */
 		OpenAppProto = AMOpenApp.prototype;
 
 	/*

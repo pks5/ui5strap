@@ -47,7 +47,7 @@ sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext"], function(u
 	 * @alias pks.ui5strap.viewer.Task
 	 * 
 	 */
-	var Task = ObjectBase.extend("pks.ui5strap.viewer.Task", {
+	var Task = ObjectBase.extend("pks.ui5strap.viewer.Task", /** @lends pks.ui5strap.viewer.Task.prototype */{
 			"constructor" : function(mSettings, oContext){
 				this.mSettings = mSettings;
 				this.oContext = oContext;
@@ -57,6 +57,9 @@ sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext"], function(u
 				this.namespace = mSettings.namespace;
 			}
 		}),
+		/**
+		 * @alias pks.ui5strap.viewer.Task.prototype
+		 */
 		TaskProto = Task.prototype,
 		_modulesCache = {};
 
