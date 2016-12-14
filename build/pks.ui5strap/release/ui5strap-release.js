@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON("package.json"),
 		
 		pathToMinLib : "../../../www/lib/pks/ui5strap_min/",
-		pathToDocsRelease : "../../../../ui5strap-docs/www/lib/ui5strap_min_release/",
+		pathToDocsRelease : "../../../../ui5strap-docs/www/lib/pks/ui5strap_min_release/",
 		
 		/*
 		 * Deletes all generated libraries.

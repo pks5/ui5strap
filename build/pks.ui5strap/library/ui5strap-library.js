@@ -115,7 +115,7 @@ module.exports = function(grunt) {
 				files : [ {
 					expand : true,
 					cwd : "<%= folderAll %>",
-					src : [ '**/*.js', '!*-dbg.js' ],
+					src : [ '**/*.js', '!*-dbg.js', '!library-preload.js', '!*_min.js', '!*.min.js' ],
 					dest : "<%= folderAll %>",
 					ext : '.js'
 				} ]
