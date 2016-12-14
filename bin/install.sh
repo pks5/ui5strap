@@ -12,11 +12,15 @@ curDir=$(pwd)
 
 echo Welcome to Ui5Strap installation.
 
+echo
+
 echo Installing node modules for /bin ...
 
 cd "$(dirname "$0")"
 
 npm install
+
+echo
 
 echo Installing node modules for /server ...
 
@@ -24,24 +28,32 @@ cd ../server
 
 npm install
 
+echo
+
 echo Installing node modules for /build/pks.ui5strap/themes ...
 
 cd ../build/pks.ui5strap/themes
 
 npm install
 
+echo
+
 echo Installing node modules for /build/pks.ui5strap/library ...
 
-cd ../build/pks.ui5strap/library
+cd ../library
 
 npm install
 
+echo
+
 echo Installing node modules for /build/pks.ui5strap/release ...
 
-cd ../build/pks.ui5strap/release
+cd ../release
 
 npm install
 
 cd $curDir
+
+echo
 
 read -p "Finished. Press any key to continue or wait 10 seconds ..." -t 10
