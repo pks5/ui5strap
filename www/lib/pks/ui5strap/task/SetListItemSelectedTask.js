@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMSetListItemSelected = ActionModule.extend("pks.ui5strap.task.SetListItemSelectedTask"),
+	/**
+	 * Constructor for a new SetListItemSelectedTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Sets a list item as selected.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.SetListItemSelectedTask
+	 * 
+	 */
+	var SetListItemSelectedTask = ActionModule.extend("pks.ui5strap.task.SetListItemSelectedTask"),
 	/**
 	 * @alias pks.ui5strap.task.SetListItemSelectedTask.prototype
 	 */
-		AMSetListItemSelectedProto = AMSetListItemSelected.prototype;
+		SetListItemSelectedTaskProto = SetListItemSelectedTask.prototype;
 	
 	/*
 	* @Override
 	*/
-	AMSetListItemSelectedProto.parameters = {
+	SetListItemSelectedTaskProto.parameters = {
 		
 		//Required
 		"itemId" : {
@@ -72,7 +90,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	* Run the ActionModule
 	* @override
 	*/
-	AMSetListItemSelectedProto.run = function(){
+	SetListItemSelectedTaskProto.run = function(){
 		var itemId = this.getParameter("itemId");
 		
 		if(!itemId){
@@ -96,7 +114,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMSetListItemSelectedProto.completed = function(){};
+	SetListItemSelectedTaskProto.completed = function(){};
 	
-	return AMSetListItemSelected;
+	return SetListItemSelectedTask;
 });

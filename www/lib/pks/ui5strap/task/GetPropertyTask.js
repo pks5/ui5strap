@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMGetProperty = ActionModule.extend("pks.ui5strap.task.GetPropertyTask"),
+	/**
+	 * Constructor for a new GetPropertyTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Gets a property.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.GetPropertyTask
+	 * 
+	 */
+	var GetPropertyTask = ActionModule.extend("pks.ui5strap.task.GetPropertyTask"),
 	/**
 	 * @alias pks.ui5strap.task.GetPropertyTask.prototype
 	 */
-		AMGetPropertyProto = AMGetProperty.prototype;
+		GetPropertyTaskProto = GetPropertyTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMGetPropertyProto.parameters = {
+	GetPropertyTaskProto.parameters = {
 		
 		//Required
 		"propertyName" : {
@@ -77,7 +95,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	* Run the ActionModule
 	* @override
 	*/
-	AMGetPropertyProto.run = function(){
+	GetPropertyTaskProto.run = function(){
 			var propertyKey = this.getParameter("propertyName"),
 				tgtParam = this.getParameter("tgtParam"),
 				control = this.findControl(false),
@@ -95,7 +113,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMGetPropertyProto.completed = function(){};
+	GetPropertyTaskProto.completed = function(){};
 	
-	return AMGetProperty;
+	return GetPropertyTask;
 });

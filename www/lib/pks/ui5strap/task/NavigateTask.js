@@ -29,6 +29,24 @@ sap.ui.define(["./library", "../viewer/Task", "../core/NavContainer"], function(
 	
 	"use strict";
 	
+	/**
+	 * Constructor for a new NavigateTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Navigates to a page.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.NavigateTask
+	 * 
+	 */
 	var NavigateTask = Task.extend("pks.ui5strap.task.NavigateTask"),
 	/**
 	 * @alias pks.ui5strap.task.NavigateTask.prototype

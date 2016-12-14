@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMShowOverlay = ActionModule.extend("pks.ui5strap.task.ShowOverlayTask"),
+	/**
+	 * Constructor for a new ShowOverlayTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Shows an overlay.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.ShowOverlayTask
+	 * 
+	 */
+	var ShowOverlayTask = ActionModule.extend("pks.ui5strap.task.ShowOverlayTask"),
 	/**
 	 * @alias pks.ui5strap.task.ShowOverlayTask.prototype
 	 */
-		AMShowOverlayProto = AMShowOverlay.prototype;
+		ShowOverlayTaskProto = ShowOverlayTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMShowOverlayProto.parameters = {
+	ShowOverlayTaskProto.parameters = {
 		"id" : {
 			"required" : false, 
 			"defaultValue" : null, 
@@ -77,7 +95,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	AMShowOverlayProto.run = function(){
+	ShowOverlayTaskProto.run = function(){
 
 		var _this = this,
 			viewId = this.getParameter("id"),
@@ -104,13 +122,13 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 			overlayParent = app.getViewer();
 		}
 		
-		overlayParent.showOverlay(viewOptions, function AMShowOverlayRunComplete(){
+		overlayParent.showOverlay(viewOptions, function ShowOverlayTaskRunComplete(){
 			_this.then();
 		}, this.getParameter('transition'));
 	};
 	
 	//Legacy
-	AMShowOverlayProto.completed = function(){};
+	ShowOverlayTaskProto.completed = function(){};
 
-	return AMShowOverlay;
+	return ShowOverlayTask;
 });

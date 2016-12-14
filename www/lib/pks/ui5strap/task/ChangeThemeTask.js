@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMChangeTheme = ActionModule.extend("pks.ui5strap.task.ChangeThemeTask"),
+	/**
+	 * Constructor for a new ChangeThemeTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Changes the theme.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.ChangeThemeTask
+	 * 
+	 */
+	var ChangeThemeTask = ActionModule.extend("pks.ui5strap.task.ChangeThemeTask"),
 	/**
 	 * @alias pks.ui5strap.task.ChangeThemeTask.prototype
 	 */
-		AMChangeThemeProto = AMChangeTheme.prototype;
+		ChangeThemeTaskProto = ChangeThemeTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMChangeThemeProto.parameters = {
+	ChangeThemeTaskProto.parameters = {
 		"theme" : {
 			"required" : true,
 			"type" : "string"
@@ -48,7 +66,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	AMChangeThemeProto.run = function(){
+	ChangeThemeTaskProto.run = function(){
 		var newTheme = this.getParameter('theme'),
 			_this = this,
 			app = this.context.app;
@@ -72,8 +90,8 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMChangeThemeProto.completed = function(){};
+	ChangeThemeTaskProto.completed = function(){};
 
 	//Return Module Constructor
-	return AMChangeTheme;
+	return ChangeThemeTask;
 });

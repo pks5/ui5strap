@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMLog = ActionModule.extend("pks.ui5strap.task.LogTask"),
+	/**
+	 * Constructor for a new LogTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Logs in console.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.LogTask
+	 * 
+	 */
+	var LogTask = ActionModule.extend("pks.ui5strap.task.LogTask"),
 	/**
 	 * @alias pks.ui5strap.task.LogTask.prototype
 	 */
-		AMLogProto = AMLog.prototype;
+		LogTaskProto = LogTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMLogProto.parameters = {
+	LogTaskProto.parameters = {
 		"logType" : {
 			"required" : true, 
 			"type" : "string"
@@ -52,14 +70,14 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	AMLogProto.run = function(){
+	LogTaskProto.run = function(){
 		this.context._log[this.getParameter("logType")](this.getParameter("message"));
 		
 		this.then();
 	};
 	
 	//Legacy
-	AMLogProto.completed = function(){};
+	LogTaskProto.completed = function(){};
 	
-	return AMLog;
+	return LogTask;
 });

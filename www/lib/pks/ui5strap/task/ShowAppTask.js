@@ -29,11 +29,29 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMShowApp = ActionModule.extend("pks.ui5strap.task.ShowAppTask"),
+	/**
+	 * Constructor for a new ShowAppTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Loads and shows an app.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.ShowAppTask
+	 * 
+	 */
+	var ShowAppTask = ActionModule.extend("pks.ui5strap.task.ShowAppTask"),
 	/**
 	 * @alias pks.ui5strap.task.ShowAppTask.prototype
 	 */
-		ShowAppProto = AMShowApp.prototype;
+		ShowAppProto = ShowAppTask.prototype;
 
 	/*
 	* @Override
@@ -70,5 +88,5 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	//Legacy
 	ShowAppProto.completed = function(){};
 
-	return AMShowApp;
+	return ShowAppTask;
 });

@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMCloseOverlay = ActionModule.extend("pks.ui5strap.task.CloseOverlayTask"),
+	/**
+	 * Constructor for a new CloseOverlayTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Closes an overlay.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.CloseOverlayTask
+	 * 
+	 */
+	var CloseOverlayTask = ActionModule.extend("pks.ui5strap.task.CloseOverlayTask"),
 	/**
 	 * @alias pks.ui5strap.task.CloseOverlayTask.prototype
 	 */
-		AMCloseOverlayProto = AMCloseOverlay.prototype;
+		CloseOverlayTaskProto = CloseOverlayTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMCloseOverlayProto.parameters = {
+	CloseOverlayTaskProto.parameters = {
 			
 			"transition" : {
 				"required" : false, 
@@ -55,7 +73,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	AMCloseOverlayProto.run = function(){
+	CloseOverlayTaskProto.run = function(){
 		var _this = this,
 			app = this.context.app,
 			overlayParent = app;
@@ -73,7 +91,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMCloseOverlayProto.completed = function(){};
+	CloseOverlayTaskProto.completed = function(){};
 
-	return AMCloseOverlay;
+	return CloseOverlayTask;
 });

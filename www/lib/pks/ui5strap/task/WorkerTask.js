@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMWorker = ActionModule.extend("pks.ui5strap.task.WorkerTask"),
+	/**
+	 * Constructor for a new WorkerTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Runs a JavaScript worker thread.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.WorkerTask
+	 * 
+	 */
+	var WorkerTask = ActionModule.extend("pks.ui5strap.task.WorkerTask"),
 	/**
 	 * @alias pks.ui5strap.task.WorkerTask.prototype
 	 */
-		AMWorkerProto = AMWorker.prototype;
+		WorkerTaskProto = WorkerTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMWorkerProto.parameters = {
+	WorkerTaskProto.parameters = {
 		"workerName" : {
 			"required" : true, 
 			"type" : "string"
@@ -48,7 +66,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	AMWorkerProto.run = function(){
+	WorkerTaskProto.run = function(){
 		var workerUrl = jQuery.sap.getModulePath(this.getParameter("workerName")) + '.worker.js',
 			worker = new Worker(workerUrl),
 			app = this.context.app,
@@ -80,7 +98,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMWorkerProto.completed = function(){};
+	WorkerTaskProto.completed = function(){};
 	
-	return AMWorker;
+	return WorkerTask;
 });

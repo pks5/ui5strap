@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMOpenApp = ActionModule.extend("pks.ui5strap.task.OpenAppTask"),
+	/**
+	 * Constructor for a new OpenAppTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Opens an app.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.OpenAppTask
+	 * 
+	 */
+	var OpenAppTask = ActionModule.extend("pks.ui5strap.task.OpenAppTask"),
 	/**
 	 * @alias pks.ui5strap.task.OpenAppTask.prototype
 	 */
-		OpenAppProto = AMOpenApp.prototype;
+		OpenAppTaskProto = OpenAppTask.prototype;
 
 	/*
 	* @Override
 	*/
-	OpenAppProto.parameters = {
+	OpenAppTaskProto.parameters = {
 		"url" : {
 			"required" : true, 
 			"type" : "string"
@@ -88,7 +106,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	OpenAppProto.run = function(){
+	OpenAppTaskProto.run = function(){
 		if(!(this.context.app instanceof pks.ui5strap.viewer.AppSystem)){
 			throw new Error('Only system apps can run pks.ui5strap.task.OpenAppTask');
 		}
@@ -127,7 +145,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	OpenAppProto.completed = function(){};
+	OpenAppTaskProto.completed = function(){};
 
-	return AMOpenApp;
+	return OpenAppTask;
 });

@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMGetContextData = ActionModule.extend("pks.ui5strap.task.GetContextDataTask"),
+	/**
+	 * Constructor for a new GetContextDataTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Gets the context data.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.GetContextDataTask
+	 * 
+	 */
+	var GetContextDataTask = ActionModule.extend("pks.ui5strap.task.GetContextDataTask"),
 	/**
 	 * @alias pks.ui5strap.task.GetContextDataTask.prototype
 	 */
-		AMGetContextDataProto = AMGetContextData.prototype;
+		GetContextDataTaskProto = GetContextDataTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMGetContextDataProto.parameters = {
+	GetContextDataTaskProto.parameters = {
 		
 		//Required
 		"modelName" : {
@@ -77,7 +95,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	* Run the ActionModule
 	* @override
 	*/
-	AMGetContextDataProto.run = function(){
+	GetContextDataTaskProto.run = function(){
 			var modelName = this.getParameter("modelName"),
 				tgtParam = this.getParameter("tgtParam"),
 				control = this.findControl();
@@ -92,7 +110,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMGetContextDataProto.completed = function(){};
+	GetContextDataTaskProto.completed = function(){};
 
-	return AMGetContextData;
+	return GetContextDataTask;
 });

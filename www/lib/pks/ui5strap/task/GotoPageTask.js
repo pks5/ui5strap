@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMGotoPage = ActionModule.extend("pks.ui5strap.task.GotoPageTask"),
+	/**
+	 * Constructor for a new GotoPageTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Navigates to a page.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.GotoPageTask
+	 * 
+	 */
+	var GotoPageTask = ActionModule.extend("pks.ui5strap.task.GotoPageTask"),
 	/**
 	 * @alias pks.ui5strap.task.GotoPageTask.prototype
 	 */
-		AMGotoPageProto = AMGotoPage.prototype;
+		GotoPageTaskProto = GotoPageTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMGotoPageProto.parameters = {
+	GotoPageTaskProto.parameters = {
 		//Required
 		"viewName" : {
 			"required" : true, 
@@ -113,7 +131,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	* Run the ActionModule
 	* @override
 	*/
-	AMGotoPageProto.run = function(){
+	GotoPageTaskProto.run = function(){
 			var frameId = this.getParameter("frameId"),
 				control = this.findControl();
 
@@ -135,7 +153,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	}
 	
 	//Legacy
-	AMGotoPageProto.completed = function(){};
+	GotoPageTaskProto.completed = function(){};
 	
-	return AMGotoPage;
+	return GotoPageTask;
 });

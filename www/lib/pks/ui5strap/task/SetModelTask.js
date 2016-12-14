@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMSetModel = ActionModule.extend("pks.ui5strap.task.SetModelTask"),
+	/**
+	 * Constructor for a new SetModelTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Sets a model.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.SetModelTask
+	 * 
+	 */
+	var SetModelTask = ActionModule.extend("pks.ui5strap.task.SetModelTask"),
 	/**
 	 * @alias pks.ui5strap.task.SetModelTask.prototype
 	 */
-		AMSetModelProto = AMSetModel.prototype;
+		SetModelTaskProto = SetModelTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMSetModelProto.parameters = {
+	SetModelTaskProto.parameters = {
 		
 		//Required
 		"modelName" : {
@@ -85,7 +103,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	AMSetModelProto.run = function(){ 
+	SetModelTaskProto.run = function(){ 
 			var srcParam = this.getParameter("srcParam"),
 				modelName = this.getParameter("modelName"),
 				data = this.getParameter("data"),
@@ -107,7 +125,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMSetModelProto.completed = function(){};
+	SetModelTaskProto.completed = function(){};
 	
-	return AMSetModel;
+	return SetModelTask;
 });

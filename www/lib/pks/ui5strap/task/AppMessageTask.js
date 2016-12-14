@@ -29,13 +29,31 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMAppMessage = ActionModule.extend("pks.ui5strap.task.AppMessageTask"),
+	/**
+	 * Constructor for a new AppMessageTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Sends a (frame) message to an App.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.AppMessageTask
+	 * 
+	 */
+	var AppMessageTask = ActionModule.extend("pks.ui5strap.task.AppMessageTask"),
 	/**
 	 * @alias pks.ui5strap.task.AppMessageTask.prototype
 	 */
-		AMAppMessageProto = AMAppMessage.prototype;
+		AppMessageTaskProto = AppMessageTask.prototype;
 
-	AMAppMessageProto.parameters = {
+	AppMessageTaskProto.parameters = {
 		"receiver" : {
 			"required" : true, 
 			"type" : [ "string", "object"]
@@ -54,15 +72,15 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/**
 	* @Override
 	*/
-	AMAppMessageProto.run = function(){
+	AppMessageTaskProto.run = function(){
 		this.context.app.sendMessage(this.context.parameters[this.namespace]);
 		
 		this.then();
 	};
 	
 	//Legacy
-	AMAppMessageProto.completed = function(){};
+	AppMessageTaskProto.completed = function(){};
 
 	//Return Module Constructor
-	return AMAppMessage;
+	return AppMessageTask;
 });

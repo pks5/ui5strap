@@ -29,21 +29,39 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMLoadModel = ActionModule.extend("pks.ui5strap.task.LoadModelTask"),
+	/**
+	 * Constructor for a new LoadModelTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Loads a model.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.LoadModelTask
+	 * 
+	 */
+	var LoadModelTask = ActionModule.extend("pks.ui5strap.task.LoadModelTask"),
 	/**
 	 * @alias pks.ui5strap.task.LoadModelTask.prototype
 	 */
-		AMLoadModelProto = AMLoadModel.prototype;
+		LoadModelTaskProto = LoadModelTask.prototype;
 	
 
-	AMLoadModel.TYPE_ODATA = "ODATA";
-	AMLoadModel.TYPE_JSON = "JSON";
-	AMLoadModel.TYPE_RESOURCE = "RESOURCE";
+	LoadModelTask.TYPE_ODATA = "ODATA";
+	LoadModelTask.TYPE_JSON = "JSON";
+	LoadModelTask.TYPE_RESOURCE = "RESOURCE";
 
 	/*
 	* @Override 
 	*/
-	AMLoadModelProto.parameters = {
+	LoadModelTaskProto.parameters = {
 		
 		//Required
 		"modelName" : {
@@ -102,7 +120,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override 
 	*/
-	AMLoadModelProto.prepareParameters = function(){
+	LoadModelTaskProto.prepareParameters = function(){
 			var serviceId = this.getParameter("serviceId");
 			if(null !== serviceId){
 				var service = this.context.app.getServiceData(serviceId);
@@ -116,7 +134,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override 
 	*/
-	AMLoadModelProto.run = function(){ 
+	LoadModelTaskProto.run = function(){ 
 			var _this = this,
 				modelUrl = this.context.app.config.resolvePath(this.getParameter("src"), false);
 
@@ -149,14 +167,14 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 			var theControl = this.findControl(true);
 			
 			var oModel = null;
-			if(AMLoadModel.TYPE_ODATA === modelType){
+			if(LoadModelTask.TYPE_ODATA === modelType){
 				oModel = new sap.ui.model.odata.ODataModel(modelUrl);
 			}
-			else if(AMLoadModel.TYPE_JSON === modelType){ 
+			else if(LoadModelTask.TYPE_JSON === modelType){ 
 				oModel = new sap.ui.model.json.JSONModel();
 				oModel.loadData(modelUrl);
 			}
-			else if(AMLoadModel.TYPE_RESOURCE === modelType){ 
+			else if(LoadModelTask.TYPE_RESOURCE === modelType){ 
 				oModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl : modelUrl,
 					async : true
@@ -189,7 +207,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMLoadModelProto.completed = function(){};
+	LoadModelTaskProto.completed = function(){};
 	
-	return AMLoadModel;
+	return LoadModelTask;
 });

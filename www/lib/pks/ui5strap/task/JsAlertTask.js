@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMJsAlert = ActionModule.extend("pks.ui5strap.task.JsAlertTask"),
+	/**
+	 * Constructor for a new JsAlertTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Shows a JavaScript alert for debugging purposes.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.JsAlertTask
+	 * 
+	 */
+	var JsAlertTask = ActionModule.extend("pks.ui5strap.task.JsAlertTask"),
 	/**
 	 * @alias pks.ui5strap.task.JsAlertTask.prototype
 	 */
-		AMJsAlertProto = AMJsAlert.prototype;
+		JsAlertTaskProto = JsAlertTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMJsAlertProto.parameters = {
+	JsAlertTaskProto.parameters = {
 		"message" : {
 			"required" : true,
 			"type" : "string"
@@ -48,14 +66,14 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	AMJsAlertProto.run = function(){
+	JsAlertTaskProto.run = function(){
 		alert(this.getParameter('message'));
 		
 		this.then();
 	};
 	
 	//Legacy
-	AMJsAlertProto.completed = function(){};
+	JsAlertTaskProto.completed = function(){};
 	
-	return AMJsAlert;
+	return JsAlertTask;
 });

@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * ui5strap.task.Switch
+ * pks.ui5strap.task.SwitchActionTask
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -29,17 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	
 	"use strict";
 	
-	//Define Constructor
-	var Switch = Task.extend("pks.ui5strap.task.SwitchActionTask"),
+	/**
+	 * Constructor for a new SwitchActionTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Switches between multiple actions.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.SwitchActionTask
+	 * 
+	 */
+	var SwitchActionTask = Task.extend("pks.ui5strap.task.SwitchActionTask"),
 	/**
 	 * @alias pks.ui5strap.task.SwitchActionTask.prototype
 	 */
-		SwitchProto = ui5strap.task.Switch.prototype;
+		SwitchActionTaskProto = SwitchActionTask.prototype;
 	
 	/**
 	* @Override
 	*/
-	SwitchProto.parameters = {
+	SwitchActionTaskProto.parameters = {
 			"EXPRESSION" : {
 				"required" : true, 
 				"type" : "string"
@@ -59,7 +76,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	* Run the task.
 	* @override
 	*/
-	SwitchProto.run = function(){
+	SwitchActionTaskProto.run = function(){
 		var actionKey = this.getParameter("EXPRESSION"),
 			actions = this.getParameter("ACTIONS"),
 			theAction = this.getParameter("DEFAULT_ACTION"),
@@ -85,5 +102,5 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	};
 
 	//Return Module Constructor
-	return Switch;
+	return SwitchActionTask;
 });

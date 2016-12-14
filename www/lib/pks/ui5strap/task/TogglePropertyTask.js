@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMToggleProperty = ActionModule.extend("pks.ui5strap.task.TogglePropertyTask"),
+	/**
+	 * Constructor for a new TogglePropertyTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Toggles a boolean property.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.TogglePropertyTask
+	 * 
+	 */
+	var TogglePropertyTask = ActionModule.extend("pks.ui5strap.task.TogglePropertyTask"),
 	/**
 	 * @alias pks.ui5strap.task.TogglePropertyTask.prototype
 	 */
-		AMTogglePropertyProto = AMToggleProperty.prototype;
+		TogglePropertyTaskProto = TogglePropertyTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMTogglePropertyProto.parameters = {
+	TogglePropertyTaskProto.parameters = {
 		
 		//Required
 		"propertyName" : {
@@ -73,7 +91,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	* Run the ActionModule
 	* @override
 	*/
-	AMTogglePropertyProto.run = function(){
+	TogglePropertyTaskProto.run = function(){
 			var propertyName = this.getParameter("propertyName"),
 				control = this.findControl(),
 				setter = "set" + jQuery.sap.charToUpperCase(propertyName),
@@ -88,11 +106,11 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 			
 			this.then();
 
-			this.context._log.debug("[AMToggleProperty]: '" + propertyName + "' = '" + propertyValue + "'");
+			this.context._log.debug("[TogglePropertyTask]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
 	
 	//Legacy
-	AMTogglePropertyProto.completed = function(){};
+	TogglePropertyTaskProto.completed = function(){};
 	
-	return AMToggleProperty;
+	return TogglePropertyTask;
 });

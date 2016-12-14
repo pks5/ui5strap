@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMUnloadModel = ActionModule.extend("pks.ui5strap.task.UnloadModelTask"),
+	/**
+	 * Constructor for a new UnloadModelTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Unloads a model.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.UnloadModelTask
+	 * 
+	 */
+	var UnloadModelTask = ActionModule.extend("pks.ui5strap.task.UnloadModelTask"),
 	/**
 	 * @alias pks.ui5strap.task.UnloadModelTask.prototype
 	 */
-		AMUnloadModelProto = AMUnloadModel.prototype;
+		UnloadModelTaskProto = UnloadModelTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMUnloadModelProto.parameters = {
+	UnloadModelTaskProto.parameters = {
 		
 		//Required
 		"modelName" : {
@@ -73,7 +91,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	AMUnloadModelProto.run = function(){ 
+	UnloadModelTaskProto.run = function(){ 
 			var theControl = this.findControl(true),
 				modelName = this.getParameter("modelName");
 			
@@ -85,7 +103,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMUnloadModelProto.completed = function(){};
+	UnloadModelTaskProto.completed = function(){};
 	
-	return AMUnloadModel;
+	return UnloadModelTask;
 });

@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMSetProperty = ActionModule.extend("pks.ui5strap.task.SetPropertyTask"),
+	/**
+	 * Constructor for a new SetPropertyTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Sets a property.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.SetPropertyTask
+	 * 
+	 */
+	var SetPropertyTask = ActionModule.extend("pks.ui5strap.task.SetPropertyTask"),
 	/**
 	 * @alias pks.ui5strap.task.SetPropertyTask.prototype
 	 */
-		AMSetPropertyProto = AMSetProperty.prototype;
+		SetPropertyTaskProto = SetPropertyTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMSetPropertyProto.parameters = {
+	SetPropertyTaskProto.parameters = {
 		
 		//Required
 		"propertyName" : {
@@ -83,7 +101,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	* Run the ActionModule
 	* @override
 	*/
-	AMSetPropertyProto.run = function(){
+	SetPropertyTaskProto.run = function(){
 			var srcParam = this.getParameter("srcParam"),
 				propertyName = this.getParameter("propertyName"),
 				propertyValue = this.getParameter("value"),
@@ -103,11 +121,11 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 			
 			this.then();
 
-			this.context._log.debug("[AMSetProperty]: '" + propertyName + "' = '" + propertyValue + "'");
+			this.context._log.debug("[SetPropertyTask]: '" + propertyName + "' = '" + propertyValue + "'");
 	};
 	
 	//Legacy
-	AMSetPropertyProto.completed = function(){};
+	SetPropertyTaskProto.completed = function(){};
 	
-	return AMSetProperty;
+	return SetPropertyTask;
 });

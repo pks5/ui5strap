@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMGetCurrentPage = ActionModule.extend("pks.ui5strap.task.GetCurrentPageTask"),
+	/**
+	 * Constructor for a new GetCurrentPageTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Gets a NavContainer's current page.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.GetCurrentPageTask
+	 * 
+	 */
+	var GetCurrentPageTask = ActionModule.extend("pks.ui5strap.task.GetCurrentPageTask"),
 	/**
 	 * @alias pks.ui5strap.task.GetCurrentPageTask.prototype
 	 */
-		AMGetCurrentPageProto = AMGetCurrentPage.prototype;
+		GetCurrentPageTaskProto = GetCurrentPageTask.prototype;
 	
 	/*
 	* @Override
 	*/
-	AMGetCurrentPageProto.parameters = {
+	GetCurrentPageTaskProto.parameters = {
 		
 		//Required
 		"target" : {
@@ -77,7 +95,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	* Run the ActionModule
 	* @override
 	*/
-	AMGetCurrentPageProto.run = function(){
+	GetCurrentPageTaskProto.run = function(){
 		var target = this.getParameter("target"),
 			scope = this.getParameter("scope"),
 			tgtParam = this.getParameter("tgtParam");
@@ -99,7 +117,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMGetCurrentPageProto.completed = function(){};
+	GetCurrentPageTaskProto.completed = function(){};
 	
-	return AMGetCurrentPage;
+	return GetCurrentPageTask;
 });

@@ -29,16 +29,34 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	
 	"use strict";
 	
-	var AMCallControlMethod = ActionModule.extend("pks.ui5strap.task.CallControlMethodTask"),
+	/**
+	 * Constructor for a new CallControlMethodTask instance.
+	 * 
+	 * @param {object} mSettings The task settings.
+	 * @param {pks.ui5strap.viewer.ActionContext} oActionContext The action context to run the task on.
+	 * 
+	 * @class
+	 * Calls a control method.
+	 * @extends pks.ui5strap.viewer.Task
+	 * 
+	 * @author Jan Philipp Knoeller
+	 * @version 0.11.6
+	 * 
+	 * @constructor
+	 * @public
+	 * @alias pks.ui5strap.task.CallControlMethodTask
+	 * 
+	 */
+	var CallControlMethodTask = ActionModule.extend("pks.ui5strap.task.CallControlMethodTask"),
 	/**
 	 * @alias pks.ui5strap.task.CallControlMethodTask.prototype
 	 */
-		AMCallControlMethodProto = AMCallControlMethod.prototype;
+		CallControlMethodTaskProto = CallControlMethodTask.prototype;
 
 	/*
 	* @Override
 	*/
-	AMCallControlMethodProto.parameters = {
+	CallControlMethodTaskProto.parameters = {
 		//Required
 		"funcName" : {
 			"required" : true,
@@ -82,7 +100,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	/*
 	* @Override
 	*/
-	AMCallControlMethodProto.run = function(){
+	CallControlMethodTaskProto.run = function(){
 		var funcName = this.getParameter("funcName"),
 			funcArgs = this.getParameter("funcArgs"),
 			tgtParam = this.getParameter("tgtParam"),
@@ -104,8 +122,8 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, ActionM
 	};
 	
 	//Legacy
-	AMCallControlMethodProto.completed = function(){};
+	CallControlMethodTaskProto.completed = function(){};
 
 	//Return Module Constructor
-	return AMCallControlMethod;
+	return CallControlMethodTask;
 });
