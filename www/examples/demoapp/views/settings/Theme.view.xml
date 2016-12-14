@@ -30,8 +30,8 @@
                         <ListGroup id="languageSelect" listMode="Navigation"
                             select="com.ui5strap.apps.demoapp.actions.settings.ChangeTheme"
                             selectionMode="Single">
-                            <ListGroupItem text="Base" data:theme="base" selected="true" />
-                            <ListGroupItem text="Ui5Strap Default" data:theme="ui5strap_default" />
+                            <ListGroupItem text="Base" data:theme="base" />
+                            <ListGroupItem text="SAP BlueCrystal" data:theme="sap_bluecrystal" selected="true" />
                         </ListGroup>
                     </Col>
                 </Row>
