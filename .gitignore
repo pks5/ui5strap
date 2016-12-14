@@ -55,12 +55,8 @@ plugins
 #######
 target
 
-# Tools   #
-###########
-/tools/theme-builder/*/dist
-
 #Lib#
 #####
-/www/lib/*_all
-/www/lib/*_min
-/www/lib/*_pre
+/www/lib/pks/*_all
+/www/lib/pks/*_min
+/www/lib/pks/*_pre
