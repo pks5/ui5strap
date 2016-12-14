@@ -1,8 +1,16 @@
 #!/bin/bash
 
+echo '  __  ___ ____ ______              '
+echo ' / / / (_) __// __/ /________ ____ ' 
+echo '/ /_/ / /__ \_\ \/ __/ __/ _ `/ _ \'
+echo '\____/_/____/___/\__/_/  \_,_/ .__/'
+echo '                            /_/    '                                        
+
+echo
+
 curDir=$(pwd)
 
-echo Building Ui5Strap Themes...
+echo Building Ui5Strap Themes ...
 
 cd "$(dirname "$0")"
 
@@ -10,6 +18,4 @@ npm run build-ui5strap-themes
 
 cd $curDir
 
-echo Building finished.
-
-read -p "Press any key to continue ..."
+read -p "Finished. Press any key to continue or wait 10 seconds ..." -t 10
