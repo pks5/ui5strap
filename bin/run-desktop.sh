@@ -18,4 +18,6 @@ npm run run-desktop
 
 cd $curDir
 
+echo 
+
 read -p "Finished. Press any key to continue or wait 10 seconds ..." -t 10
