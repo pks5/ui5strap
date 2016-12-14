@@ -14,7 +14,7 @@ echo Welcome to Ui5Strap update.
 
 echo
 
-echo Installing node modules for /bin ...
+echo Updating node modules for /bin ...
 
 cd "$(dirname "$0")"
 
@@ -22,7 +22,7 @@ npm update
 
 echo
 
-echo Installing node modules for /server ...
+echo Updating node modules for /server ...
 
 cd ../server
 
@@ -30,25 +30,9 @@ npm update
 
 echo
 
-echo Installing node modules for /build/pks.ui5strap/themes ...
+echo Updating node modules for /build/pks.ui5strap ...
 
-cd ../build/pks.ui5strap/themes
-
-npm update
-
-echo
-
-echo Installing node modules for /build/pks.ui5strap/library ...
-
-cd ../library
-
-npm update
-
-echo
-
-echo Installing node modules for /build/pks.ui5strap/release ...
-
-cd ../release
+cd ../build/pks.ui5strap
 
 npm update
 

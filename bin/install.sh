@@ -30,25 +30,9 @@ npm install
 
 echo
 
-echo Installing node modules for /build/pks.ui5strap/themes ...
+echo Installing node modules for /build/pks.ui5strap ...
 
-cd ../build/pks.ui5strap/themes
-
-npm install
-
-echo
-
-echo Installing node modules for /build/pks.ui5strap/library ...
-
-cd ../library
-
-npm install
-
-echo
-
-echo Installing node modules for /build/pks.ui5strap/release ...
-
-cd ../release
+cd ../build/pks.ui5strap
 
 npm install
 
