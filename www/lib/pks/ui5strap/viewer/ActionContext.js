@@ -424,8 +424,8 @@ sap.ui.define(["./library", "sap/ui/base/Object", "sap/ui/core/Control"], functi
 	 */
 	
 	/**
-	 * @Public
 	 * FIXME
+	 * @public
 	 */
 	ActionContextProto.resolve = function(task, pointer, onlyString, recursive){
 		if(pointer instanceof _ActionExpression){

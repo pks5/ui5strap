@@ -42,7 +42,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	 * The ui5strap library.
 	 * 
 	 * @namespace
-	 * @name ui5strap
+	 * @name pks.ui5strap.ex
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * @public

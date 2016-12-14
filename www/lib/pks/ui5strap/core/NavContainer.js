@@ -139,24 +139,24 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	};
 	
 	/**
-	 * @Public
 	 * TODO Improve component ID syntax
+	 * @public
 	 */
 	NavContainerProto.targetDomId = function(target){
 		return 'navcontainer-target-' + target + '---' + this.getId();
 	};
 	
 	/**
-	 * @Public
 	 * TODO Improve component ID syntax
+	 * @public
 	 */
 	NavContainerProto.targetPagesDomId = function(target){
 		return 'navcontainer-pages-' + target + '---' + this.getId();
 	};
 
 	/**
-	 * @Public
 	 * TODO Improve component ID syntax
+	 * @public
 	 */
 	NavContainerProto.targetLayersDomId = function(target){
 		return 'navcontainer-layers-' + target + '---' + this.getId();

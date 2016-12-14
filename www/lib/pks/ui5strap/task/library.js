@@ -53,7 +53,7 @@ sap.ui
 					 * The ui5strap library.
 					 *
 					 * @namespace
-					 * @name ui5strap
+					 * @name pks.ui5strap.task
 					 * @author Jan Philipp Knoeller
 					 * @version 0.11.6
 					 * @public

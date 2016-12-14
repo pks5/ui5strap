@@ -773,8 +773,9 @@ sap.ui.define(['./library'], function(ui5strapCoreLib){
 		
 		/**
 		 * Performs a press on an item.
-		 * @Public
 		 * TODO is this really part of ISelectionProvider?
+		 * @public
+		 * 
 		 */
 		oControl.pressItem = function(srcControl, item, itemUpdated, selectionProvider, providerItem){
 			if(item && this._isItemEnabled(item, _defaultSelectionGroup)){

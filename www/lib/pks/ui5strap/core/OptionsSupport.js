@@ -70,9 +70,9 @@ sap.ui.define(['./library'], function(ui5strapCoreLib){
 		};
 		
 		/**
+		* TODO avoid overriding of user provided css classes
 		* @Public
 		* @Override
-		* TODO avoid overriding of user provided css classes
 		*/
 		oControl.setOptions = function(newOptions){
 			
