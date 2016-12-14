@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * 
 	 * @class
 	 * Control for creating Bootstrap grid columns.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * @alias pks.ui5strap.bs3.Col
 	 * 
 	 */
-	var Col = ControlBase.extend("pks.ui5strap.bs3.Col", {
+	var Col = ControlBase.extend("pks.ui5strap.bs3.Col", /** @lends pks.ui5strap.bs3.Col.prototype */ {
 		metadata : {
 			interfaces : ["pks.ui5strap.bs3.IColumn"],
 			
@@ -143,7 +143,11 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 			
 			rm.write("</div>");
 		}
-	}), ColProto = Col.prototype;
+	}), 
+	/**
+	 * @alias pks.ui5strap.bs3.Col.prototype
+	 */
+	ColProto = Col.prototype;
 	
 	/**
 	 * Returns the style prefix of this control.

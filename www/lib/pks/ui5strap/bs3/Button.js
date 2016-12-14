@@ -90,7 +90,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/S
 	 * 
 	 * @class
 	 * Control for creating Bootstrap Buttons.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -100,9 +100,12 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/S
 	 * @alias pks.ui5strap.bs3.Button
 	 * 
 	 */
-	var Button = ControlBase.extend("pks.ui5strap.bs3.Button", {
+	var Button = ControlBase.extend("pks.ui5strap.bs3.Button", /** @lends pks.ui5strap.bs3.Button.prototype */ {
 		metadata : mMetaData
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Button.prototype
+	 */
 	ButtonProto = Button.prototype;
 	
 	PositionSupport.proto(ButtonProto);

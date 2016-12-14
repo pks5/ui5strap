@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapBs3Lib, ListBase){
 	 * @alias pks.ui5strap.bs3.Breadcrumb
 	 * 
 	 */
-	var Breadcrumb = ListBase.extend("pks.ui5strap.bs3.Breadcrumb", {
+	var Breadcrumb = ListBase.extend("pks.ui5strap.bs3.Breadcrumb", /** @lends pks.ui5strap.bs3.Breadcrumb.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.bs3",
@@ -79,6 +79,9 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapBs3Lib, ListBase){
 			rm.write("</ol>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Breadcrumb.prototype
+	 */
 	BreadcrumbProto = Breadcrumb.prototype;
 	
 	/**

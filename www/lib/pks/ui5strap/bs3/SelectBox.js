@@ -77,7 +77,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 	 * 
 	 * @class
 	 * Control for creating Bootstrap select boxes.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -87,9 +87,12 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 	 * @alias pks.ui5strap.bs3.SelectBox
 	 * 
 	 */
-	var SelectBox = ControlBase.extend("pks.ui5strap.bs3.SelectBox", {
+	var SelectBox = ControlBase.extend("pks.ui5strap.bs3.SelectBox", /** @lends pks.ui5strap.bs3.SelectBox.prototype */ {
 		metadata : mMetaData
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.SelectBox.prototype
+	 */
 	SelectBoxProto = SelectBox.prototype;
 	
 	PositionSupport.proto(SelectBoxProto);

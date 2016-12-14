@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	 * 
 	 * @class
 	 * Control for creating Bootstrap tooltips.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	 * @alias pks.ui5strap.bs3.Tooltip
 	 * 
 	 */
-	var TooltipControl = ControlBase.extend("pks.ui5strap.bs3.Tooltip", {
+	var TooltipControl = ControlBase.extend("pks.ui5strap.bs3.Tooltip", /** @lends pks.ui5strap.bs3.Tooltip.prototype */ {
 	    metadata : {
 	
 	      // ---- object ----
@@ -124,6 +124,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 			    
 		}
   }),
+  /**
+	 * @alias pks.ui5strap.bs3.Tooltip.prototype
+	 */
   TooltipProto = TooltipControl.prototype;
 	
 	/**

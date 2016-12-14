@@ -37,7 +37,7 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapCoreLib, ListBase){
 	 * 
 	 * @class
 	 * Control for creating plain lists.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6

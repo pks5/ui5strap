@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ListLinkItem'], function(ui5strapBs3Lib, ListLink
 	 * @alias pks.ui5strap.bs3.ListNavItem
 	 * 
 	 */
-	var ListNavItem = ListLinkItem.extend("pks.ui5strap.bs3.ListNavItem", {
+	var ListNavItem = ListLinkItem.extend("pks.ui5strap.bs3.ListNavItem", /** @lends pks.ui5strap.bs3.ListNavItem.prototype */ {
 		metadata : {
 
 			// ---- object ----

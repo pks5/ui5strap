@@ -102,7 +102,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	 * 
 	 * @class
 	 * Control for creating links.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -112,7 +112,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	 * @alias pks.ui5strap.bs3.Link
 	 * 
 	 */
-	var Link = ControlBase.extend("pks.ui5strap.bs3.Link", {
+	var Link = ControlBase.extend("pks.ui5strap.bs3.Link", /** @lends pks.ui5strap.bs3.Link.prototype */ {
 		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
@@ -150,6 +150,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Link.prototype
+	 */
 	LinkProto = Link.prototype;
 	
 	PositionSupport.proto(LinkProto);

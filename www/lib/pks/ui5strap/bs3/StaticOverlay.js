@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 	 * 
 	 * @class
 	 * Control for creating static overlays.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 	 * @alias pks.ui5strap.bs3.StaticOverlay
 	 * 
 	 */
-	var StaticOverlay = ControlBase.extend("pks.ui5strap.bs3.StaticOverlay", {
+	var StaticOverlay = ControlBase.extend("pks.ui5strap.bs3.StaticOverlay", /** @lends pks.ui5strap.bs3.StaticOverlay.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.bs3",
@@ -77,6 +77,9 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 			}
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.StaticOverlay.prototype
+	 */
 	StaticOverlayProto = StaticOverlay.prototype;
 	
 	/**

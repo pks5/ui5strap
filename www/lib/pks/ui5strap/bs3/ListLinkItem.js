@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase', "../core/
 	 * @alias pks.ui5strap.bs3.ListLinkItem
 	 * 
 	 */
-	var ListLinkItem = ListItemBase.extend("pks.ui5strap.bs3.ListLinkItem", {
+	var ListLinkItem = ListItemBase.extend("pks.ui5strap.bs3.ListLinkItem", /** @lends pks.ui5strap.bs3.ListLinkItem.prototype */ {
 		metadata : {
 			library : "pks.ui5strap.bs3",
 			
@@ -79,6 +79,9 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase', "../core/
 			}
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.ListLinkItem.prototype
+	 */
 	ListLinkItemProto = ListLinkItem.prototype;
 
 	/**

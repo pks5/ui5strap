@@ -58,7 +58,7 @@ sap.ui.define(['./library', "./ControlBase", './SelectableSupport'], function(ui
 	 * 
 	 * @class
 	 * Abstract base class for all list item controls
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6

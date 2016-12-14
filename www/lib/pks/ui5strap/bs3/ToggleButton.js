@@ -81,7 +81,7 @@ sap.ui.define(["./library", "../core/ControlBase", '../core/SelectableSupport'],
 	 * @alias pks.ui5strap.bs3.ToggleButton
 	 * 
 	 */
-	var ToggleButton = ControlBase.extend("pks.ui5strap.bs3.ToggleButton", {
+	var ToggleButton = ControlBase.extend("pks.ui5strap.bs3.ToggleButton", /** @lends pks.ui5strap.bs3.ToggleButton.prototype */ {
 		metadata : _meta,
 		
 		renderer : function(rm, oControl) {
@@ -123,6 +123,9 @@ sap.ui.define(["./library", "../core/ControlBase", '../core/SelectableSupport'],
 			rm.write("</div>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.ToggleButton.prototype
+	 */
 	ToggleButtonProto = ToggleButton.prototype;
 	
 	//Add methods of ISelectableItem 

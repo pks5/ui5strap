@@ -74,7 +74,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/L
 	 * 
 	 * @class
 	 * Control for creating Bootstrap button groups.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -84,7 +84,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/L
 	 * @alias pks.ui5strap.bs3.ButtonGroup
 	 * 
 	 */
-	var ButtonGroup = ControlBase.extend("pks.ui5strap.bs3.ButtonGroup", {
+	var ButtonGroup = ControlBase.extend("pks.ui5strap.bs3.ButtonGroup", /** @lends pks.ui5strap.bs3.ButtonGroup.prototype */ {
 		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
@@ -114,6 +114,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/L
 			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.ButtonGroup.prototype
+	 */
 	ButtonGroupProto = ButtonGroup.prototype,
 	_typeToClass = {
 		Default : "btn-group",

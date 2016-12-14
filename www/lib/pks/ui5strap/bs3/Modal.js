@@ -37,7 +37,7 @@ sap.ui.define(['./library', './StaticOverlay'], function(ui5strapBs3Lib, StaticO
 	 * 
 	 * @class
 	 * Control for creating Bootstrap modals.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', './StaticOverlay'], function(ui5strapBs3Lib, StaticO
 	 * @alias pks.ui5strap.bs3.Modal
 	 * 
 	 */
-	var Modal = StaticOverlay.extend("pks.ui5strap.bs3.Modal", {
+	var Modal = StaticOverlay.extend("pks.ui5strap.bs3.Modal", /** @lends pks.ui5strap.bs3.Modal.prototype */ {
 		metadata : {
 			
 			library : "pks.ui5strap.bs3",
@@ -73,7 +73,11 @@ sap.ui.define(['./library', './StaticOverlay'], function(ui5strapBs3Lib, StaticO
 		    }
 
 		}
-	}), ModalProto = Modal.prototype;
+	}), 
+	/**
+	 * @alias pks.ui5strap.bs3.Modal.prototype
+	 */
+	ModalProto = Modal.prototype;
 	
 	/**
 	 * Returns the style prefix of this control.

@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Utils"], function(ui
 	 * 
 	 * @class
 	 * Control for creating Bootstrap wells.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Utils"], function(ui
 	 * @alias pks.ui5strap.bs3.Well
 	 * 
 	 */
-	var Well = ControlBase.extend("pks.ui5strap.bs3.Well", {
+	var Well = ControlBase.extend("pks.ui5strap.bs3.Well", /** @lends pks.ui5strap.bs3.Well.prototype */ {
 		metadata : {
 
 			// ---- object ----
@@ -94,6 +94,9 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Utils"], function(ui
 			rm.write("</div>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Well.prototype
+	 */
 	WellProto = Well.prototype;
 	
 	/**

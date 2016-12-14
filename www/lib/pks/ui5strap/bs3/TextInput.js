@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	 * 
 	 * @class
 	 * Control for creating text input fields.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	 * @alias pks.ui5strap.bs3.TextInput
 	 * 
 	 */
-	var TextInput = ControlBase.extend("pks.ui5strap.bs3.TextInput", {
+	var TextInput = ControlBase.extend("pks.ui5strap.bs3.TextInput", /** @lends pks.ui5strap.bs3.TextInput.prototype */ {
 		metadata : {
 			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IInputGroupControl"],
 			library : "pks.ui5strap.bs3",
@@ -182,6 +182,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.TextInput.prototype
+	 */
 	TextInputProto = TextInput.prototype;
 	
 	/**

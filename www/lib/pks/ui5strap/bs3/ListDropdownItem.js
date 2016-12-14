@@ -47,7 +47,7 @@ sap.ui.define(['./library', '../core/ListItemBase', './ListLinkItem', "../core/U
 	 * @alias pks.ui5strap.bs3.ListDropdownItem
 	 * 
 	 */
-	var ListDropdownItem = ListLinkItem.extend("pks.ui5strap.bs3.ListDropdownItem", {
+	var ListDropdownItem = ListLinkItem.extend("pks.ui5strap.bs3.ListDropdownItem", /** @lends pks.ui5strap.bs3.ListDropdownItem.prototype */ {
 		metadata : {
 			interfaces : ["pks.ui5strap.bs3.IDropdownMenuHost"],
 			
@@ -70,6 +70,9 @@ sap.ui.define(['./library', '../core/ListItemBase', './ListLinkItem', "../core/U
 			}
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.ListDropdownItem.prototype
+	 */
 	ListDropdownItemProto = ListDropdownItem.prototype;
 
 	/**

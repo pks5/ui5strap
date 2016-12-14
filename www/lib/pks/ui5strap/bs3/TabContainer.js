@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	 * 
 	 * @class
 	 * Control for creating Bootstrap tab containers.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	 * @alias pks.ui5strap.bs3.TabContainer
 	 * 
 	 */
-	var TabContainer = ControlBase.extend("pks.ui5strap.bs3.TabContainer", {
+	var TabContainer = ControlBase.extend("pks.ui5strap.bs3.TabContainer", /** @lends pks.ui5strap.bs3.TabContainer.prototype */ {
 		metadata : {
 			interfaces : ["pks.ui5strap.core.ISelectionProvider"],
 
@@ -135,6 +135,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 			rm.write("</div>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.TabContainer.prototype
+	 */
 	TabContainerProto = pks.ui5strap.bs3.TabContainer.prototype;
 	
 	/**

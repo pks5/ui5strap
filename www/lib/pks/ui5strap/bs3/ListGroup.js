@@ -37,7 +37,7 @@ sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBa
 	 * 
 	 * @class
 	 * Control for creating Bootstrap list groups.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBa
 	 * @alias pks.ui5strap.bs3.ListGroup
 	 * 
 	 */
-	var ListGroup = ListBase.extend("pks.ui5strap.bs3.ListGroup", {
+	var ListGroup = ListBase.extend("pks.ui5strap.bs3.ListGroup", /** @lends pks.ui5strap.bs3.ListGroup.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.bs3",
@@ -70,6 +70,9 @@ sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBa
 
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.ListGroup.prototype
+	 */
 	ListGroupProto = pks.ui5strap.bs3.ListGroup.prototype;
 	
 	/**

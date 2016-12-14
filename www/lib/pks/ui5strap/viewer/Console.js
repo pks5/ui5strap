@@ -39,7 +39,7 @@ sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, 
 	 * 
 	 * @class
 	 * Control for creating a output console.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6

@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * 
 	 * @class
 	 * Control for creating Bootstrap nav bars.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * @alias pks.ui5strap.bs3.NavBar
 	 * 
 	 */
-	var NavBar = ControlBase.extend("pks.ui5strap.bs3.NavBar", {
+	var NavBar = ControlBase.extend("pks.ui5strap.bs3.NavBar", /** @lends pks.ui5strap.bs3.NavBar.prototype */ {
 		metadata : {
 			deprecated : true,
 			
@@ -106,6 +106,9 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.NavBar.prototype
+	 */
 	NavBarProto = pks.ui5strap.bs3.NavBar.prototype;
 
 	/**

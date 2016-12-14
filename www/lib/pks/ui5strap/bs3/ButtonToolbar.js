@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * 
 	 * @class
 	 * Control for creating Bootstrap button toolbars.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * @alias pks.ui5strap.bs3.ButtonToolbar
 	 * 
 	 */
-	var ButtonToolbar = ControlBase.extend("pks.ui5strap.bs3.ButtonToolbar", {
+	var ButtonToolbar = ControlBase.extend("pks.ui5strap.bs3.ButtonToolbar", /** @lends pks.ui5strap.bs3.ButtonToolbar.prototype */ {
 		metadata : {
 
 			// ---- object ----
@@ -84,7 +84,11 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 			
 			rm.write("</div>");
 		}
-	}), ButtonToolbarProto = ButtonToolbar.prototype;
+	}), 
+	/**
+	 * @alias pks.ui5strap.bs3.ButtonToolbar.prototype
+	 */
+	ButtonToolbarProto = ButtonToolbar.prototype;
 	
 	/**
 	 * Returns the style prefix of this control.

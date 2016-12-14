@@ -47,7 +47,7 @@ sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBa
 	 * @alias pks.ui5strap.bs3.ListMedia
 	 * 
 	 */
-	var ListMedia = ListBase.extend("pks.ui5strap.bs3.ListMedia", {
+	var ListMedia = ListBase.extend("pks.ui5strap.bs3.ListMedia", /** @lends pks.ui5strap.bs3.ListMedia.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.bs3",
@@ -70,6 +70,9 @@ sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBa
 
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.ListMedia.prototype
+	 */
 	ListMediaProto = ListMedia.prototype;
 	
 	/**

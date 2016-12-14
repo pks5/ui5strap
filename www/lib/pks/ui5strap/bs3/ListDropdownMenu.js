@@ -37,7 +37,7 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 	 * 
 	 * @class
 	 * Control for creating Bootstrap dropdown menus.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 	 * @alias pks.ui5strap.bs3.ListDropdownMenu
 	 * 
 	 */
-	var ListDropdownMenu = ListBase.extend("pks.ui5strap.bs3.ListDropdownMenu", {
+	var ListDropdownMenu = ListBase.extend("pks.ui5strap.bs3.ListDropdownMenu", /** @lends pks.ui5strap.bs3.ListDropdownMenu.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.bs3",
@@ -67,6 +67,9 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.ListDropdownMenu.prototype
+	 */
 	ListDropdownMenuProto = ListDropdownMenu.prototype;
 	
 	/**

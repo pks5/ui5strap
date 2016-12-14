@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", './PanelGr
 	 * 
 	 * @class
 	 * Control for creating Bootstrap panels.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", './PanelGr
 	 * @alias pks.ui5strap.bs3.Panel
 	 * 
 	 */
-	var Panel = ControlBase.extend("pks.ui5strap.bs3.Panel", {
+	var Panel = ControlBase.extend("pks.ui5strap.bs3.Panel", /** @lends pks.ui5strap.bs3.Panel.prototype */ {
 		metadata : {
 
 			// ---- object ----
@@ -98,6 +98,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", './PanelGr
 
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Panel.prototype
+	 */
 	PanelProto = pks.ui5strap.bs3.Panel.prototype;
 
 	/**

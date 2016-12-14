@@ -51,7 +51,7 @@ sap.ui
 					 * 
 					 */
 					var PickerWheel = ControlBase.extend(
-							"pks.ui5strap.bs3.PickerWheel", {
+							"pks.ui5strap.bs3.PickerWheel", /** @lends pks.ui5strap.bs3.PickerWheel.prototype */ {
 								metadata : {
 
 									library : "pks.ui5strap.bs3",
@@ -99,7 +99,11 @@ sap.ui
 									}
 
 								}
-							}), PickerWheelProto = PickerWheel.prototype;
+							}), 
+							/**
+							 * @alias pks.ui5strap.bs3.PickerWheel.prototype
+							 */
+							PickerWheelProto = PickerWheel.prototype;
 
 					//TODO vendor prefix detection
 					var _transformProperty = 'transform';

@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * 
 	 * @class
 	 * Control for creating Bootstrap pagers.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * @alias pks.ui5strap.bs3.Pager
 	 * 
 	 */
-	var Pager = ControlBase.extend("pks.ui5strap.bs3.Pager", {
+	var Pager = ControlBase.extend("pks.ui5strap.bs3.Pager", /** @lends pks.ui5strap.bs3.Pager.prototype */ {
 		metadata : {
 
 			// ---- control specific ----
@@ -120,7 +120,11 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 			rm.write("</ul>");
 
 		}
-	}), PagerProto = Pager.prototype;
+	}), 
+	/**
+	 * @alias pks.ui5strap.bs3.Pager.prototype
+	 */
+	PagerProto = Pager.prototype;
 	
 	/**
 	 * Returns the style prefix of this control.

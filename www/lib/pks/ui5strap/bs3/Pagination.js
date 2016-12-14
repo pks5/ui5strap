@@ -47,7 +47,7 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapBs3Lib, ListBase){
 	 * @alias pks.ui5strap.bs3.Pagination
 	 * 
 	 */
-	var Pagination = ListBase.extend("pks.ui5strap.bs3.Pagination", {
+	var Pagination = ListBase.extend("pks.ui5strap.bs3.Pagination", /** @lends pks.ui5strap.bs3.Pagination.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.bs3",
@@ -82,6 +82,9 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapBs3Lib, ListBase){
 			rm.write("</ul>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Pagination.prototype
+	 */
 	PaginationProto = Pagination.prototype;
 	
 	/**

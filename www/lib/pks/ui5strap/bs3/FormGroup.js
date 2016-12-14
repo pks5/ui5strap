@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * 
 	 * @class
 	 * Control for creating Bootstrap form groups.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * @alias pks.ui5strap.bs3.FormGroup
 	 * 
 	 */
-	var FormGroup = ControlBase.extend("pks.ui5strap.bs3.FormGroup", {
+	var FormGroup = ControlBase.extend("pks.ui5strap.bs3.FormGroup", /** @lends pks.ui5strap.bs3.FormGroup.prototype */ {
 		metadata : {
 
 			defaultAggregation : "controls",
@@ -140,7 +140,11 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 			
 			rm.write("</div> ");
 		}
-	}),FormGroupProto = FormGroup.prototype;
+	}),
+	/**
+	 * @alias pks.ui5strap.bs3.FormGroup.prototype
+	 */
+	FormGroupProto = FormGroup.prototype;
 	
 	var _severityToClass = {
 		Success : "success",

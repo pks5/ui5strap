@@ -77,7 +77,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	 * 
 	 * @class
 	 * Control for creating Bootstrap headings.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -87,7 +87,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	 * @alias pks.ui5strap.bs3.Heading
 	 * 
 	 */
-	var Heading = ControlBase.extend("pks.ui5strap.bs3.Heading", {
+	var Heading = ControlBase.extend("pks.ui5strap.bs3.Heading", /** @lends pks.ui5strap.bs3.Heading.prototype */ {
 		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
@@ -104,6 +104,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 			rm.write("</h" + level + ">");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Heading.prototype
+	 */
 	HeadingProto = Heading.prototype;
 	
 	PositionSupport.proto(HeadingProto);

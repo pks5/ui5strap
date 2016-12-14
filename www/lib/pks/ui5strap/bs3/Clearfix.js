@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * @alias pks.ui5strap.bs3.Clearfix
 	 * 
 	 */
-	var Clearfix = ControlBase.extend("pks.ui5strap.bs3.Clearfix", {
+	var Clearfix = ControlBase.extend("pks.ui5strap.bs3.Clearfix", /** @lends pks.ui5strap.bs3.Clearfix.prototype */ {
 		metadata : {
 			interfaces : ["pks.ui5strap.core.IText", "pks.ui5strap.bs3.IColumn"],
 			library : "pks.ui5strap.bs3"
@@ -64,6 +64,9 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 			rm.write("</span>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Clearfix.prototype
+	 */
 	ClearfixProto = Clearfix.prototype;
 	
 	/**

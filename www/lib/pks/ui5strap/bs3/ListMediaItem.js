@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 	 * @alias pks.ui5strap.bs3.ListMediaItem
 	 * 
 	 */
-	var ListMediaItem = ListItemBase.extend("pks.ui5strap.bs3.ListMediaItem", {
+	var ListMediaItem = ListItemBase.extend("pks.ui5strap.bs3.ListMediaItem", /** @lends pks.ui5strap.bs3.ListMediaItem.prototype */ {
 		metadata : {
 
 			// ---- object ----
@@ -81,6 +81,9 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 			}
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.ListMediaItem.prototype
+	 */
 	ListMediaItemProto = ListMediaItem.prototype;
 	
 	/**

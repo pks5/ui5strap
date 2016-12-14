@@ -96,7 +96,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/R
 	 * 
 	 * @class
 	 * Control for creating images.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -106,7 +106,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/R
 	 * @alias pks.ui5strap.bs3.Image
 	 * 
 	 */
-	var ImageControl = ControlBase.extend("pks.ui5strap.bs3.Image", {
+	var ImageControl = ControlBase.extend("pks.ui5strap.bs3.Image", /** @lends pks.ui5strap.bs3.Image.prototype */ {
 		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
@@ -147,6 +147,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/R
 			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Image.prototype
+	 */
 	ImageProto = ImageControl.prototype;
 	
 	PositionSupport.proto(ImageProto);

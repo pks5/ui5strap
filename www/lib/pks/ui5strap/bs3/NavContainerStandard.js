@@ -47,7 +47,7 @@ sap.ui.define(['./library', '../core/NavContainer'], function(ui5strapBs3Lib, Na
 	 * @alias pks.ui5strap.bs3.NavContainerStandard
 	 * 
 	 */
-	var NavContainerStandard = NavContainer.extend("pks.ui5strap.bs3.NavContainerStandard", {
+	var NavContainerStandard = NavContainer.extend("pks.ui5strap.bs3.NavContainerStandard", /** @lends pks.ui5strap.bs3.NavContainerStandard.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.bs3",
@@ -57,6 +57,9 @@ sap.ui.define(['./library', '../core/NavContainer'], function(ui5strapBs3Lib, Na
 		//Use default NavContainerRenderer
 		renderer : "pks.ui5strap.core.NavContainerRenderer"
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.NavContainerStandard.prototype
+	 */
 	NavContainerStandardProto = NavContainerStandard.prototype;
 
 	/**

@@ -47,7 +47,7 @@ sap.ui.define(['./library', '../core/ElementBase'], function(ui5strapBs3Lib, Ele
 	 * @alias pks.ui5strap.bs3.TableRow
 	 * 
 	 */
-	var TableRow = ElementBase.extend("pks.ui5strap.bs3.TableRow", {
+	var TableRow = ElementBase.extend("pks.ui5strap.bs3.TableRow", /** @lends pks.ui5strap.bs3.TableRow.prototype */ {
 		metadata : {
 	
 			// ---- object ----

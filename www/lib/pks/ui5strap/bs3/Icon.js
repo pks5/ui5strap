@@ -93,7 +93,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/R
 	 * 
 	 * @class
 	 * Control for creating Bootstrap and Font Awesome icons.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -103,7 +103,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/R
 	 * @alias pks.ui5strap.bs3.Icon
 	 * 
 	 */
-	var Icon = ControlBase.extend("pks.ui5strap.bs3.Icon", {
+	var Icon = ControlBase.extend("pks.ui5strap.bs3.Icon", /** @lends pks.ui5strap.bs3.Icon.prototype */ {
 		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
@@ -119,6 +119,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/R
 			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Icon.prototype
+	 */
 	IconProto = Icon.prototype;
 	
 	PositionSupport.proto(IconProto);

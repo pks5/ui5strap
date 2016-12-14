@@ -72,7 +72,7 @@ sap.ui.define(['./library', "../core/ControlBase", "./PositionSupport"], functio
 	 * 
 	 * @class
 	 * Control for creating Bootstrap forms.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -82,7 +82,7 @@ sap.ui.define(['./library', "../core/ControlBase", "./PositionSupport"], functio
 	 * @alias pks.ui5strap.bs3.Form
 	 * 
 	 */
-	var Form = ControlBase.extend("pks.ui5strap.bs3.Form", {
+	var Form = ControlBase.extend("pks.ui5strap.bs3.Form", /** @lends pks.ui5strap.bs3.Form.prototype */ {
 		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
@@ -116,6 +116,9 @@ sap.ui.define(['./library', "../core/ControlBase", "./PositionSupport"], functio
 			rm.write("</form>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Form.prototype
+	 */
 	FormProto = Form.prototype;
 	
 	PositionSupport.proto(FormProto);

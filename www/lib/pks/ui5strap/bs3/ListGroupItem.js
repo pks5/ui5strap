@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 	 * 
 	 * @class
 	 * Control for creating items for ListGroup controls.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 	 * @alias pks.ui5strap.bs3.ListGroupItem
 	 * 
 	 */
-	var ListGroupItem = ListItemBase.extend("pks.ui5strap.bs3.ListGroupItem", {
+	var ListGroupItem = ListItemBase.extend("pks.ui5strap.bs3.ListGroupItem", /** @lends pks.ui5strap.bs3.ListGroupItem.prototype */ {
 		metadata : {
 
 			// ---- object ----

@@ -80,9 +80,12 @@ sap.ui.define(['./library', './Button', "../core/Utils", "./PositionSupport"], f
 	 * @alias pks.ui5strap.bs3.ButtonDropdown
 	 * 
 	 */
-	var ButtonDropdown = Button.extend("pks.ui5strap.bs3.ButtonDropdown", {
+	var ButtonDropdown = Button.extend("pks.ui5strap.bs3.ButtonDropdown", /** @lends pks.ui5strap.bs3.ButtonDropdown.prototype */ {
 		metadata : mMetaData
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.ButtonDropdown.prototype
+	 */
 	ButtonDropdownProto = ButtonDropdown.prototype;
 
 	PositionSupport.proto(ButtonDropdownProto);

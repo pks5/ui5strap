@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
 	 * 
 	 * @class
 	 * Control for creating Bootstrap carousels. There are some slight differences in the markup compared to the original Bootstrap carousel.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
 	 * @alias pks.ui5strap.bs3.Carousel
 	 * 
 	 */
-	var Carousel = ControlBase.extend("pks.ui5strap.bs3.Carousel", {
+	var Carousel = ControlBase.extend("pks.ui5strap.bs3.Carousel", /** @lends pks.ui5strap.bs3.Carousel.prototype */ {
 		metadata : {
 
 			defaultAggregation : "items",
@@ -133,6 +133,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
 
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Carousel.prototype
+	 */
 	CarouselProto = Carousel.prototype;
 
 	/**

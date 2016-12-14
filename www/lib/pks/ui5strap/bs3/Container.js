@@ -75,7 +75,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 	 * 
 	 * @class
 	 * Control for creating Bootstrap grid containers.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -85,7 +85,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 	 * @alias pks.ui5strap.bs3.Container
 	 * 
 	 */
-	var Container = ControlBase.extend("pks.ui5strap.bs3.Container", {
+	var Container = ControlBase.extend("pks.ui5strap.bs3.Container", /** @lends pks.ui5strap.bs3.Container.prototype */ {
 		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
@@ -109,6 +109,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 			rm.write("</div>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Container.prototype
+	 */
 	ContainerProto = Container.prototype;
 	
 	PositionSupport.proto(ContainerProto);

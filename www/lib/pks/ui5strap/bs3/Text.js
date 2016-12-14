@@ -87,7 +87,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	 * 
 	 * @class
 	 * Control for creating inline text.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -97,7 +97,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	 * @alias pks.ui5strap.bs3.Text
 	 * 
 	 */
-	var Text = ControlBase.extend("pks.ui5strap.bs3.Text", {
+	var Text = ControlBase.extend("pks.ui5strap.bs3.Text", /** @lends pks.ui5strap.bs3.Text.prototype */ {
 		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
@@ -129,6 +129,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 			RenderUtils.renderTrail(rm, oControl);
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Text.prototype
+	 */
 	TextProto = Text.prototype;
 	
 	PositionSupport.proto(TextProto);

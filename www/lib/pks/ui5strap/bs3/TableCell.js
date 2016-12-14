@@ -49,7 +49,7 @@ sap.ui.define(['./library', '../core/ElementBase'], function(ui5strapBs3Lib, Ele
 	 */
 	
 	//TODO rename to TableCell
-	var TableColumn = ElementBase.extend("pks.ui5strap.bs3.TableCell", {
+	var TableColumn = ElementBase.extend("pks.ui5strap.bs3.TableCell", /** @lends pks.ui5strap.bs3.TableCell.prototype */ {
 		metadata : {
 
 			// ---- object ----

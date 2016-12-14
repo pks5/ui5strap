@@ -70,7 +70,7 @@ sap.ui.define(['./library', '../core/ListBase', "./PositionSupport"], function(u
 	 * @alias pks.ui5strap.bs3.Nav
 	 * 
 	 */
-	var Nav = ListBase.extend("pks.ui5strap.bs3.Nav", {
+	var Nav = ListBase.extend("pks.ui5strap.bs3.Nav", /** @lends pks.ui5strap.bs3.Nav.prototype */ {
 		metadata : mMetaData,
 		
 		renderer : function(rm, oControl) {
@@ -91,6 +91,9 @@ sap.ui.define(['./library', '../core/ListBase', "./PositionSupport"], function(u
 			rm.write("</ul>");
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.Nav.prototype
+	 */
 	NavProto = pks.ui5strap.bs3.Nav.prototype;
 	
 	PositionSupport.proto(NavProto);

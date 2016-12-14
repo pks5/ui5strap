@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * 
 	 * @class
 	 * Control for creating Bootstrap radio buttons.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * @alias pks.ui5strap.bs3.RadioButton
 	 * 
 	 */
-	var RadioButton = ControlBase.extend("pks.ui5strap.bs3.RadioButton", {
+	var RadioButton = ControlBase.extend("pks.ui5strap.bs3.RadioButton", /** @lends pks.ui5strap.bs3.RadioButton.prototype */ {
 		metadata : {
 			interfaces : ["pks.ui5strap.bs3.IInputGroupAddon"],
 			
@@ -130,6 +130,9 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 			}
 		}
 	}),
+	/**
+	 * @alias pks.ui5strap.bs3.RadioButton.prototype
+	 */
 	RadioButtonProto = RadioButton.prototype;
 	
 	/**

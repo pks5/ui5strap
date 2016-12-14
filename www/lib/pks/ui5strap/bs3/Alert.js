@@ -37,7 +37,7 @@ sap.ui.define([ './library', "../core/library", "../core/ControlBase", "../core/
 	 * 
 	 * @class
 	 * The Alert Control creates a Boostrap alert.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define([ './library', "../core/library", "../core/ControlBase", "../core/
 	 * @alias pks.ui5strap.bs3.Alert
 	 * 
 	 */
-	var Alert = ControlBase.extend("pks.ui5strap.bs3.Alert", {
+	var Alert = ControlBase.extend("pks.ui5strap.bs3.Alert", /** @lends pks.ui5strap.bs3.Alert.prototype */ {
 		metadata : {
 
 			// ---- object ----
@@ -116,7 +116,11 @@ sap.ui.define([ './library', "../core/library", "../core/ControlBase", "../core/
 			rm.write("</div>");
 
 		}
-	}), AlertProto = Alert.prototype;
+	}), 
+	/**
+	 * @alias pks.ui5strap.bs3.Alert.prototype
+	 */
+	AlertProto = Alert.prototype;
 
 	Utils.dynamicText(AlertProto);
 	

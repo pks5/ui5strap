@@ -37,7 +37,7 @@ sap.ui.define(['./library', "../core/library", './Tooltip'], function(ui5strapBs
 	 * 
 	 * @class
 	 * Control for creating Bootstrap popovers.
-	 * @extends ui5strap.ControlBase
+	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
@@ -47,7 +47,7 @@ sap.ui.define(['./library', "../core/library", './Tooltip'], function(ui5strapBs
 	 * @alias pks.ui5strap.bs3.Popover
 	 * 
 	 */
-	var Popover = Tooltip.extend("pks.ui5strap.bs3.Popover", {
+	var Popover = Tooltip.extend("pks.ui5strap.bs3.Popover", /** @lends pks.ui5strap.bs3.Popover.prototype */ {
     metadata : {
 
       // ---- object ----
