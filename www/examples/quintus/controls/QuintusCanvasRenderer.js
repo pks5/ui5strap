@@ -22,19 +22,23 @@
  * 
  */
 
-jQuery.sap.declare("net__rozzo__games.quintus__app.controls.QuintusRenderer");
+sap.ui.define([], function(){
 
-net__rozzo__games.quintus__app.controls.QuintusRenderer = {
-};
+	var QuintusRenderer = {
+	};
+	
+	QuintusRenderer.render = function(rm, oControl) {
+		 	rm.write("<div");
+		    rm.writeControlData(oControl);
+		    rm.addClass("quintus-container");
+		    rm.writeClasses();
+		    rm.write(">");
+	
+		    rm.write('<canvas id="' + oControl.getId() + '---canvas"></canvas>');
+		    
+		    rm.write("</div>");
+	};
+	
+	return QuintusRenderer;
 
-net__rozzo__games.quintus__app.controls.QuintusRenderer.render = function(rm, oControl) {
-	 	rm.write("<div");
-	    rm.writeControlData(oControl);
-	    rm.addClass("quintus-container");
-	    rm.writeClasses();
-	    rm.write(">");
-
-	    rm.write('<canvas id="' + oControl.getId() + '---canvas"></canvas>');
-	    
-	    rm.write("</div>");
-};
+}, true);

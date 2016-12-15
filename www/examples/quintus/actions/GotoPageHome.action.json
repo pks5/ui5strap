@@ -6,7 +6,7 @@
 		"TYPE" : "pks.ui5strap.task.NavigateTask",
 		"VIEWS" : {
 			"home" : { 
-				"viewName" : "net__rozzo__games.quintus__app.views.Home",
+				"id" : "my-app-home",
 				"transition" : "flip-horizontal-ccw",
 				"writeHistory" : true
 			}

@@ -22,11 +22,27 @@
  * 
  */
 
-(function(){
+sap.ui.define([
+           'pks/ui5strap/core/ControlBase',
+           
+           "./quintus",
+       	"./quintus_sprites",
+       	"./quintus_scenes",
+       	"./quintus_input",
+       	"./quintus_anim",
+       	"./quintus_2d",
+       	"./quintus_touch",
+       	"./quintus_ui",
+       	"./quintus_tmx",
+       	"./quintus_audio"
+           ], function(ControlBase){
 
-	jQuery.sap.declare("net__rozzo__games.quintus__app.controls.Quintus");
+    "use strict";
+    
 
-	sap.ui.core.Control.extend("net__rozzo__games.quintus__app.controls.Quintus", {
+	jQuery.sap.declare("net__rozzo__games.quintus__app.controls.QuintusCanvas");
+	
+	var QuintusCanvas = ControlBase.extend("net__rozzo__games.quintus__app.controls.QuintusCanvas", {
 		metadata : {
 
 			// ---- object ----
@@ -47,9 +63,8 @@
 			}
 
 		}
-	});
-
-	var QuintusProto = net__rozzo__games.quintus__app.controls.Quintus.prototype;
+	}),
+	QuintusProto = QuintusCanvas.prototype;
 
 	QuintusProto.onBeforeRendering = function(){
 	};
@@ -506,5 +521,5 @@
 		//--------------------
 	};
 
-
-}());
+	return QuintusCanvas;
+});

@@ -33,19 +33,6 @@
             "css/my-app.css"
         ],
         
-        "js" : [
-        	"js/quintus.js",
-			"js/quintus_sprites.js",
-			"js/quintus_scenes.js",
-			"js/quintus_input.js",
-			"js/quintus_anim.js",
-			"js/quintus_2d.js",
-			"js/quintus_touch.js",
-			"js/quintus_ui.js",
-			"js/quintus_tmx.js",
-			"js/quintus_audio.js"
-        ],
-
         "models" : [
             {
                 "src" : "i18n/i18n.properties",
