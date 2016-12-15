@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 		
 		libraryAll : "<%= libraryName %><%= suffixAll %>/*",
 		
-		folderDev : "<%= pathToLibRoot %><%= libraryName %>/", //"<%= pathToLibRoot %><%= libraryName %><%= suffixDev %>/",
+		folderDev : "<%= pathToLibRoot %><%= libraryName %><%= suffixDev %>/",
 		
 		folderAll : "<%= pathToLibRoot %><%= libraryName %><%= suffixAll %>/",
 		folderMin : "<%= pathToLibRoot %><%= libraryName %><%= suffixMin %>/",

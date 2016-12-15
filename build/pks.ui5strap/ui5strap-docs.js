@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON("package.json"),
 		
-		pathToSrc : "../../www/lib/pks/ui5strap/",
+		pathToSrc : "../../www/lib/pks/ui5strap_dev/",
 		pathToDocs : "../../www/docs/",
 		
 		/*

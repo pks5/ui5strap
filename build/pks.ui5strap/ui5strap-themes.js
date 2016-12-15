@@ -4,6 +4,9 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		
 		pathToLibRoot : "../../www/lib/",
+		libraryName : "pks/ui5strap",
+		suffixDev : "_dev",
+		folderDev : "<%= pathToLibRoot %><%= libraryName %><%= suffixDev %>/",
 		
 		openui5_theme: {
 			options : {
@@ -16,37 +19,37 @@ module.exports = function(grunt) {
 		      files: [
 				{
 				    expand: true,
-				    cwd: '<%= pathToLibRoot %>pks/ui5strap/core/',
+				    cwd: '<%= folderDev %>core/',
 				    src: 'themes/*/library.source.less',
-				    dest: '<%= pathToLibRoot %>pks/ui5strap/core/'
+				    dest: '<%= folderDev %>core/'
 				},
 		        
 		        {
 		          expand: true,
-		          cwd: '<%= pathToLibRoot %>pks/ui5strap/viewer/',
+		          cwd: '<%= folderDev %>viewer/',
 		          src: 'themes/*/library.source.less',
-		          dest: '<%= pathToLibRoot %>pks/ui5strap/viewer/'
+		          dest: '<%= folderDev %>viewer/'
 		        },
 		        
 		        {
 		          expand: true,
-		          cwd: '<%= pathToLibRoot %>pks/ui5strap/task/',
+		          cwd: '<%= folderDev %>task/',
 		          src: 'themes/*/library.source.less',
-		          dest: '<%= pathToLibRoot %>pks/ui5strap/task/'
+		          dest: '<%= folderDev %>task/'
 		        },
 				
 		        {
 				    expand: true,
-				    cwd: '<%= pathToLibRoot %>pks/ui5strap/bs3/',
+				    cwd: '<%= folderDev %>bs3/',
 				    src: 'themes/*/library.source.less',
-				    dest: '<%= pathToLibRoot %>pks/ui5strap/bs3/'
+				    dest: '<%= folderDev %>bs3/'
 				},
 		        
 		        {
 		          expand: true,
-		          cwd: '<%= pathToLibRoot %>pks/ui5strap/ex/',
+		          cwd: '<%= folderDev %>ex/',
 		          src: 'themes/*/library.source.less',
-		          dest: '<%= pathToLibRoot %>pks/ui5strap/ex/'
+		          dest: '<%= folderDev %>ex/'
 		        }
 		      ]
 		    }
