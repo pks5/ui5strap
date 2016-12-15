@@ -89,7 +89,7 @@ sap.ui
 								      "pks.ui5strap.core.ThematicBreak"
 								],
 
-								elements : ["pks.ui5strap.core.Item"]
+								elements : []
 							});
 					
 					var ui5strapCoreLib = pks.ui5strap.core,

@@ -66,11 +66,11 @@ sap.ui.define(['jquery.sap.global', "./library", '../core/RenderUtils'], functio
 	};
 
 	SelectBoxRenderer.renderOption = function(rm, oControl, item) {
-		var itemValue = item.getValue();
+		var sKey = item.getKey();
 
 			rm.write("<option");
-			rm.writeAttribute("value", itemValue);
-			if(oControl.getValue() === itemValue){
+			rm.writeAttribute("value", sKey);
+			if(oControl.getSelectedKey() === sKey){
 				rm.writeAttribute("selected", "selected");
 			}
 			rm.write(">");

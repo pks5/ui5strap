@@ -40,10 +40,16 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 					type: "pks.ui5strap.bs3.SelectBoxType", 
 					defaultValue: ui5strapBs3Lib.SelectBoxType.FormControl
 				},
+				selectedKey : {
+					type:"string", 
+					defaultValue:""
+				},
+				/*
 				value : {
 					type:"string", 
 					defaultValue:""
 				},
+				*/
 				size : {
 					type: "pks.ui5strap.bs3.Size", 
 					defaultValue: ui5strapBs3Lib.Size.Default
@@ -60,7 +66,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 
 			aggregations : { 
 				items : {
-					type : "pks.ui5strap.core.Item",
+					type : "sap.ui.core.Item",
 					singularName: "items"
 				} 
 			}
@@ -97,6 +103,10 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 	
 	PositionSupport.proto(SelectBoxProto);
 	
+	SelectBoxProto.exit = function(){
+		this.$().off();
+	};
+	
 	/**
 	 * Returns the style prefix of this control.
 	 * @override
@@ -112,9 +122,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 	
 	var _onChange = function(_this){
 		return function(ev){
-			var inputValue = _getInputValue(_this);
-			if(inputValue !== _this.getValue()){ 
-				_this.setProperty("value", inputValue, true);
+			var sKey = _getInputValue(_this);
+			if(sKey !== _this.getSelectedKey()){ 
+				_this.setProperty("selectedKey", sKey, true);
 			}
 		}
 	};
@@ -126,20 +136,22 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "./Positio
 	SelectBoxProto.onBeforeRendering = function() {
 		if (this.getDomRef()) {
 			this.$().off();
-			//this._curpos = this._$input.cursorPos();
 		}
 	};
 
-	SelectBoxProto.setValue = function(sValue) {
-		sValue = this.validateProperty("value", sValue);
+	SelectBoxProto.setSelectedKey = function(sKey, bSuppressInvalidate) {
+		sKey = this.validateProperty("selectedKey", sKey);
 		
-		if (sValue != this.getValue()) {
-			this.setProperty("value", sValue, true);
-			if (this.getDomRef() && this.$().val() != sValue) {
-				this.$().val(sValue);
-				//this._curpos = this._$input.cursorPos();
+		if (sKey != this.getValue()) {
+			if (this.getDomRef()){
+				this.setProperty("selectedKey", sKey, true);
+				this.$().val(sKey);
+			}
+			else{
+				this.setProperty("selectedKey", sKey, bSuppressInvalidate);
 			}
 		}
+		
 		return this;
 	};
 
