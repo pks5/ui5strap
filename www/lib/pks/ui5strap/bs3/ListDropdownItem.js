@@ -64,7 +64,7 @@ sap.ui.define(['./library', '../core/ListItemBase', './ListLinkItem', "../core/U
 
 			aggregations : { 
 				menu : {
-					type : "pks.ui5strap.bs3.ListDropdownMenu",
+					type : "pks.ui5strap.bs3.DropdownMenu",
 					multiple : false
 				}
 			}
@@ -139,7 +139,7 @@ sap.ui.define(['./library', '../core/ListItemBase', './ListLinkItem', "../core/U
 		oEvent.setMarked("pks.ui5strap.bs3.ListDropdownItem");
 		
 		if(this.getEnabled()){
-			if(oEvent.isMarked("pks.ui5strap.bs3.ListDropdownMenu")){
+			if(oEvent.isMarked("pks.ui5strap.bs3.DropdownMenu")){
 				this.close();
 				
 				var menuListItem = Utils.findClosestParentControl(oEvent.srcControl, ListItemBase),

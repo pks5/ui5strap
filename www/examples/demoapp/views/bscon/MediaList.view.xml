@@ -6,9 +6,9 @@
 			<Heading level="1" text="Media" />
 
 			<Heading text="Media List" />
-			<ListMedia>
+			<MediaList>
 						
-						<ListMediaItem>
+						<MediaListItem>
 							<media>
 								
 								<Link>
@@ -22,7 +22,7 @@
 								<Text text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." />
 
 
-								<ListMediaItem>
+								<MediaListItem>
 									<media>
 										<Link>
 											<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png"  alt="Image" width="64" height="64" />
@@ -34,30 +34,30 @@
 										<Text text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." />
 										
 
-										<ListMediaItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
+										<MediaListItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
 											<Link>
 												<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
 											</Link>
-										</ListMediaItem>
+										</MediaListItem>
 									
 
 									</content>
-								</ListMediaItem>
+								</MediaListItem>
 								
 							</content>
-						</ListMediaItem>
-						<ListMediaItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
+						</MediaListItem>
+						<MediaListItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
 							<Link>
 								<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
 							</Link>
-						</ListMediaItem>
+						</MediaListItem>
 						
-						<ListMediaItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
+						<MediaListItem text="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus." heading="Quick Media Heading">
 							<Link>
 								<Image mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" width="64" height="64" />
 							</Link>
-						</ListMediaItem>
-		</ListMedia>
+						</MediaListItem>
+		</MediaList>
 
 		<Heading text="Thumbnails" />
 			<Row>

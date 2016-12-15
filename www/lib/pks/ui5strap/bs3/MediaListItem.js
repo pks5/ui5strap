@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.ListMediaItem
+ * pks.ui5strap.bs3.MediaListItem
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -30,13 +30,13 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 	"use strict";
 	
 	/**
-	 * Constructor for a new ListMediaItem instance.
+	 * Constructor for a new MediaListItem instance.
 	 * 
 	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
 	 * @param {object} [mSettings] Initial settings for the new control
 	 * 
 	 * @class
-	 * Control for creating items for ListMedia controls.
+	 * Control for creating items for MediaList controls.
 	 * @extends pks.ui5strap.core.ListItemBase
 	 * 
 	 * @author Jan Philipp Knoeller
@@ -44,10 +44,10 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias pks.ui5strap.bs3.ListMediaItem
+	 * @alias pks.ui5strap.bs3.MediaListItem
 	 * 
 	 */
-	var ListMediaItem = ListItemBase.extend("pks.ui5strap.bs3.ListMediaItem", /** @lends pks.ui5strap.bs3.ListMediaItem.prototype */ {
+	var MediaListItem = ListItemBase.extend("pks.ui5strap.bs3.MediaListItem", /** @lends pks.ui5strap.bs3.MediaListItem.prototype */ {
 		metadata : {
 
 			// ---- object ----
@@ -82,19 +82,19 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase'], function
 		}
 	}),
 	/**
-	 * @alias pks.ui5strap.bs3.ListMediaItem.prototype
+	 * @alias pks.ui5strap.bs3.MediaListItem.prototype
 	 */
-	ListMediaItemProto = ListMediaItem.prototype;
+	MediaListItemProto = MediaListItem.prototype;
 	
 	/**
 	 * Returns the style prefix of this control.
 	 * @override
 	 * @protected
 	 */
-	ListMediaItemProto._getStyleClassPrefix = function(){
-		return "ui5strapListMediaItem";
+	MediaListItemProto._getStyleClassPrefix = function(){
+		return "ui5strapMediaListItem";
 	};
 	
-	return ListMediaItem;
+	return MediaListItem;
 
 });

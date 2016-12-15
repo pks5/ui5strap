@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.ListMediaItemRenderer
+ * pks.ui5strap.bs3.MediaListItemRenderer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -33,13 +33,13 @@ sap.ui.define(['jquery.sap.global', "../core/RenderUtils"], function(jQuery, Ren
 	 * List media item renderer.
 	 * @namespace
 	 */
-	var ListMediaItemRenderer = {};
+	var MediaListItemRenderer = {};
 
-	ListMediaItemRenderer.render = function(rm, oControl) {
+	MediaListItemRenderer.render = function(rm, oControl) {
 		var parent = oControl.getParent(),
 			media = oControl.getMedia(),
 			heading = oControl.getHeading(),
-			tag = !(parent instanceof pks.ui5strap.bs3.ListMedia) || parent.getContainer() ? 'div' : 'li';
+			tag = !(parent instanceof pks.ui5strap.bs3.MediaList) || parent.getContainer() ? 'div' : 'li';
 
 		rm.write("<" + tag);
 		rm.writeControlData(oControl);
@@ -71,6 +71,6 @@ sap.ui.define(['jquery.sap.global', "../core/RenderUtils"], function(jQuery, Ren
 		rm.write("</"+ tag + ">");
 	};
 	
-	return ListMediaItemRenderer;
+	return MediaListItemRenderer;
 
 }, true);

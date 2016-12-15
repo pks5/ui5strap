@@ -33,13 +33,13 @@
 						<ListLinkItem text="Home"/>
 						<ListLinkItem text="Library" />
 						<ListDropdownItem text="Data" update="TextAndData">
-							<ListDropdownMenu>
+							<DropdownMenu>
 								<ListLinkItem text="Cras justo odio" />
 								<ListLinkItem text="Dapibus ac facilisis in" />
 								<ListLinkItem text="Morbi leo risus" />
 								<ListLinkItem text="Porta ac consectetur ac" />
 								<ListLinkItem text="Vestibulum at eros" />
-							</ListDropdownMenu>
+							</DropdownMenu>
 						</ListDropdownItem>
 						<ListLinkItem text="Contact" />
 					</Nav>
@@ -90,10 +90,10 @@
 			<Heading level="4" text="Ordered TabContainer" />
 
 			<Nav id="tabContainer2Pills" type="PillsJustified" selectionMode="Single">
-				<ListNavItem text="Home" />
-				<ListNavItem selected="true" text="Library" />
-				<ListNavItem text="Data" badge="9" />
-				<ListNavItem text="Contact" badge="3" />
+				<NavItem text="Home" />
+				<NavItem selected="true" text="Library" />
+				<NavItem text="Data" badge="9" />
+				<NavItem text="Contact" badge="3" />
 			</Nav>
 
 			<TabContainer class="tabContainer2" source="tabContainer2Pills">
@@ -147,11 +147,11 @@
 				<ListLinkItem text="Home" data:panelId="home" />
 				<ListLinkItem text="Library" selected="true" data:panelId="library" />
 				<ListDropdownItem text="Data"  update="TextAndData">
-					<ListDropdownMenu selectionMode="Single">
+					<DropdownMenu selectionMode="Single">
 							<ListLinkItem text="Cras justo odio" data:panelId="d1" />
 							<ListLinkItem text="Dapibus ac facilisis in" data:panelId="d2" />
 							<ListLinkItem text="Morbi leo risus" data:panelId="d3" />
-					</ListDropdownMenu>
+					</DropdownMenu>
 				</ListDropdownItem>
 				<ListLinkItem text="Contact" data:panelId="contact" />
 			</Nav>

@@ -65,9 +65,9 @@
 					<Heading text="Badges" />
 
 					<Nav type="Pills" selectionMode="Single">
-						<ListNavItem text="Home" badge="12" selected="true" />
-						<ListNavItem text="Profile" />
-						<ListNavItem text="Messages" badge="3" />
+						<NavItem text="Home" badge="12" selected="true" />
+						<NavItem text="Profile" />
+						<NavItem text="Messages" badge="3" />
 					</Nav>
 				</Col>
 				<Col columnsSmall="4">

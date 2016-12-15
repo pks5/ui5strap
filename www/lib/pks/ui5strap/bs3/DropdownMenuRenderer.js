@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.ListDropdownMenuRenderer
+ * pks.ui5strap.bs3.DropdownMenuRenderer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -33,9 +33,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	 * List dropdown menu renderer.
 	 * @namespace
 	 */
-	var ListDropdownMenuRenderer = {};
+	var DropdownMenuRenderer = {};
 	
-	ListDropdownMenuRenderer.render = function(rm, oControl) {
+	DropdownMenuRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems();
 	
 		rm.write("<ul");
@@ -52,6 +52,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("</ul>");
 	};
 	
-	return ListDropdownMenuRenderer;
+	return DropdownMenuRenderer;
 
 }, true);

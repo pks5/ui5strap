@@ -54,11 +54,11 @@
 							</Button>
 						</titleContent>
 						<content>
-							<ListMedia id="feedListContr" tap=".handleFeedTap"
+							<MediaList id="feedListContr" tap=".handleFeedTap"
 								items="{FEED_INFO>/feed}">
 
 								<!-- Media Item 1 -->
-								<ListMediaItem data:postId="{FEED_INFO>id}">
+								<MediaListItem data:postId="{FEED_INFO>id}">
 									<media>
 										<Image options="MediaObject" mpath="{FEED_INFO>image}" ext="png"
 											alt="Image" width="64" />
@@ -69,10 +69,10 @@
 										<Text text="{FEED_INFO>message}" />
 										
 									</content>
-								</ListMediaItem>
+								</MediaListItem>
 
 
-							</ListMedia>
+							</MediaList>
 						</content>
 
 					</Panel>

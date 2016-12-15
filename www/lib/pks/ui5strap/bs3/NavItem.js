@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.ListMedia
+ * pks.ui5strap.bs3.NavItem
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -25,72 +25,53 @@
  * 
  */
 
-sap.ui.define(['./library', '../core/ListBase'], function(ui5strapBs3Lib, ListBase){
+sap.ui.define(['./library', './ListLinkItem'], function(ui5strapBs3Lib, ListLinkItem){
 	
 	"use strict";
 	
 	/**
-	 * Constructor for a new ListMedia instance.
+	 * Constructor for a new NavItem instance.
 	 * 
 	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
 	 * @param {object} [mSettings] Initial settings for the new control
 	 * 
 	 * @class
-	 * Control for creating Bootstrap media lists.
-	 * @extends pks.ui5strap.core.ListBase
+	 * Control for creating items for a Bootstrap nav list.
+	 * @extends pks.ui5strap.bs3.ListLinkItem
 	 * 
 	 * @author Jan Philipp Knoeller
 	 * @version 0.11.6
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias pks.ui5strap.bs3.ListMedia
+	 * @alias pks.ui5strap.bs3.NavItem
 	 * 
 	 */
-	var ListMedia = ListBase.extend("pks.ui5strap.bs3.ListMedia", /** @lends pks.ui5strap.bs3.ListMedia.prototype */ {
+	var NavItem = ListLinkItem.extend("pks.ui5strap.bs3.NavItem", /** @lends pks.ui5strap.bs3.NavItem.prototype */ {
 		metadata : {
 
+			// ---- object ----
+			defaultAggregation : "content",
+			
+			// ---- control specific ----
 			library : "pks.ui5strap.bs3",
-			
-			defaultAggregation : "items",
-			
 			properties : { 
-				container : {
-					type:"boolean", 
-					defaultValue:false
+				badge : {
+					type:"string",
+					defaultValue : ""
 				}
-			},
-			
-			aggregations : { 
-				items : {
-					type : "pks.ui5strap.bs3.ListMediaItem",
-					singularName: "item"
-				} 
 			}
-
 		}
-	}),
-	/**
-	 * @alias pks.ui5strap.bs3.ListMedia.prototype
-	 */
-	ListMediaProto = ListMedia.prototype;
+	});
 	
 	/**
 	 * Returns the style prefix of this control.
 	 * @override
 	 * @protected
 	 */
-	ListMediaProto._getStyleClassPrefix = function(){
-		return "ui5strapListMedia";
+	NavItem.prototype._getStyleClassPrefix = function(){
+		return "ui5strapNavItem";
 	};
 	
-	/**
-	 * @Protected
-	 * @Override
-	 */
-	ListMediaProto._getStyleClassDesign = function(){
-		return " media-list";
-	};
-	
-	return ListMedia;
+	return NavItem;
 });

@@ -57,40 +57,40 @@
 			<!-- Dropdown buttons -->
 			<Paragraph>
 					<ButtonDropdown tap="buttonDropdownTap" text="Default" severity="Success" size="ExtraSmall">
-						<ListDropdownMenu tap="listDropdownMenuTap" >
+						<DropdownMenu tap="listDropdownMenuTap" >
 							<ListLinkItem text="Cras justo odio" />
 							<ListLinkItem text="Dapibus ac facilisis in" />
 							<ListLinkItem text="Morbi leo risus" />
 							<ListLinkItem text="Porta ac consectetur ac" />
 							<ListLinkItem text="Vestibulum at eros" />
-						</ListDropdownMenu>
+						</DropdownMenu>
 					</ButtonDropdown>
 					<ButtonDropdown tap="buttonDropdownTap" text="Primary" severity="Success" size="Small">
-						<ListDropdownMenu tap="listDropdownMenuTap" >
+						<DropdownMenu tap="listDropdownMenuTap" >
 							<ListLinkItem text="Cras justo odio" />
 							<ListLinkItem text="Dapibus ac facilisis in" />
 							<ListLinkItem text="Morbi leo risus" />
 							<ListLinkItem text="Porta ac consectetur ac" />
 							<ListLinkItem text="Vestibulum at eros" />
-						</ListDropdownMenu>
+						</DropdownMenu>
 					</ButtonDropdown>
 					<ButtonDropdown tap="buttonDropdownTap" text="Success" severity="Success" size="Medium" dropup="true" >
-						<ListDropdownMenu tap="listDropdownMenuTap" >
+						<DropdownMenu tap="listDropdownMenuTap" >
 							<ListLinkItem text="Cras justo odio" />
 							<ListLinkItem text="Dapibus ac facilisis in" />
 							<ListLinkItem text="Morbi leo risus" />
 							<ListLinkItem text="Porta ac consectetur ac" />
 							<ListLinkItem text="Vestibulum at eros" />
-						</ListDropdownMenu>
+						</DropdownMenu>
 					</ButtonDropdown>
 					<ButtonDropdown tap="buttonDropdownTap" text="Success" severity="Success" size="Large" dropup="true" >
-						<ListDropdownMenu tap="listDropdownMenuTap" >
+						<DropdownMenu tap="listDropdownMenuTap" >
 							<ListLinkItem text="Cras justo odio" />
 							<ListLinkItem text="Dapibus ac facilisis in" />
 							<ListLinkItem text="Morbi leo risus" />
 							<ListLinkItem text="Porta ac consectetur ac" />
 							<ListLinkItem text="Vestibulum at eros" />
-						</ListDropdownMenu>
+						</DropdownMenu>
 					</ButtonDropdown>
 			</Paragraph>
 			
@@ -99,42 +99,42 @@
 			<!--Split buttons -->
 			<Paragraph>
 					<ButtonDropdown size="ExtraSmall" tap="buttonTap" split="true" text="Single" severity="Info">
-						<ListDropdownMenu tap="listDropdownMenuTap" selectionMode="Single">
+						<DropdownMenu tap="listDropdownMenuTap" selectionMode="Single">
 							<ListLinkItem text="Cras justo odio" />
 							<ListLinkItem text="Dapibus ac facilisis in" />
 							<ListLinkItem text="Morbi leo risus" />
 							<ListLinkItem text="Porta ac consectetur ac" />
 							<ListLinkItem text="Vestibulum at eros" />
-						</ListDropdownMenu>
+						</DropdownMenu>
 					</ButtonDropdown>
 					
 					<ButtonDropdown size="Small" tap="buttonTap" split="true" text="Single" severity="Info">
-						<ListDropdownMenu tap="listDropdownMenuTap" selectionMode="Single">
+						<DropdownMenu tap="listDropdownMenuTap" selectionMode="Single">
 							<ListLinkItem text="Cras justo odio" />
 							<ListLinkItem text="Dapibus ac facilisis in" />
 							<ListLinkItem text="Morbi leo risus" />
 							<ListLinkItem text="Porta ac consectetur ac" />
 							<ListLinkItem text="Vestibulum at eros" />
-						</ListDropdownMenu>
+						</DropdownMenu>
 					</ButtonDropdown>
 					
 					<ButtonDropdown size="Medium" tap="buttonTap" split="true" text="SingleToggle" dropup="true" severity="Info">
-						<ListDropdownMenu tap="listDropdownMenuTap" selectionMode="SingleToggle" >
+						<DropdownMenu tap="listDropdownMenuTap" selectionMode="SingleToggle" >
 							<ListLinkItem text="Cras justo odio" />
 							<ListLinkItem text="Dapibus ac facilisis in" />
 							<ListLinkItem text="Morbi leo risus" />
 							<ListLinkItem text="Porta ac consectetur ac" />
 							<ListLinkItem text="Vestibulum at eros" />
-						</ListDropdownMenu>
+						</DropdownMenu>
 					</ButtonDropdown>
 					<ButtonDropdown size="Large" tap="buttonTap"  split="true" text="Multiple" dropup="true" severity="Info" update="Text">
-						<ListDropdownMenu tap="listDropdownMenuTap"  selectionMode="Multiple" >
+						<DropdownMenu tap="listDropdownMenuTap"  selectionMode="Multiple" >
 							<ListLinkItem text="Cras justo odio" />
 							<ListLinkItem text="Dapibus ac facilisis in" />
 							<ListLinkItem text="Morbi leo risus" />
 							<ListLinkItem text="Porta ac consectetur ac" />
 							<ListLinkItem text="Vestibulum at eros" />
-						</ListDropdownMenu>
+						</DropdownMenu>
 					</ButtonDropdown>
 			</Paragraph>
 			
@@ -192,13 +192,13 @@
 					<ButtonGroup>
 						<Button tap="buttonTap" text="5" />
 						<ButtonDropdown text="Dropdown" update="TextAndData">
-							<ListDropdownMenu tap="buttonDropdownTap"  selectionMode="Single" >
+							<DropdownMenu tap="buttonDropdownTap"  selectionMode="Single" >
 								<ListLinkItem text="Cras justo odio" />
 								<ListLinkItem text="Dapibus ac facilisis in" />
 								<ListLinkItem text="Morbi leo risus" />
 								<ListLinkItem text="Porta ac consectetur ac" />
 								<ListLinkItem text="Vestibulum at eros" />
-							</ListDropdownMenu>
+							</DropdownMenu>
 						</ButtonDropdown>
 					</ButtonGroup>
 				

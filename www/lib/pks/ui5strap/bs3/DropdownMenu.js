@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.ListDropdownMenu
+ * pks.ui5strap.bs3.DropdownMenu
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -30,7 +30,7 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 	"use strict";
 	
 	/**
-	 * Constructor for a new ListDropdownMenu instance.
+	 * Constructor for a new DropdownMenu instance.
 	 * 
 	 * @param {string} [sId] ID for the new control, generated automatically if no ID is given
 	 * @param {object} [mSettings] Initial settings for the new control
@@ -44,10 +44,10 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 	 * 
 	 * @constructor
 	 * @public
-	 * @alias pks.ui5strap.bs3.ListDropdownMenu
+	 * @alias pks.ui5strap.bs3.DropdownMenu
 	 * 
 	 */
-	var ListDropdownMenu = ListBase.extend("pks.ui5strap.bs3.ListDropdownMenu", /** @lends pks.ui5strap.bs3.ListDropdownMenu.prototype */ {
+	var DropdownMenu = ListBase.extend("pks.ui5strap.bs3.DropdownMenu", /** @lends pks.ui5strap.bs3.DropdownMenu.prototype */ {
 		metadata : {
 
 			library : "pks.ui5strap.bs3",
@@ -68,17 +68,17 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 		}
 	}),
 	/**
-	 * @alias pks.ui5strap.bs3.ListDropdownMenu.prototype
+	 * @alias pks.ui5strap.bs3.DropdownMenu.prototype
 	 */
-	ListDropdownMenuProto = ListDropdownMenu.prototype;
+	DropdownMenuProto = DropdownMenu.prototype;
 	
 	/**
 	 * Returns the style prefix of this control.
 	 * @override
 	 * @protected
 	 */
-	ListDropdownMenuProto._getStyleClassPrefix = function(){
-		return "ui5strapListDropdownMenu";
+	DropdownMenuProto._getStyleClassPrefix = function(){
+		return "ui5strapDropdownMenu";
 	};
 	
 	/**
@@ -86,12 +86,12 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 	 * @Protected
 	 * @Override
 	 */
-	ListDropdownMenuProto._handlePress = function(oEvent){
+	DropdownMenuProto._handlePress = function(oEvent){
 		//Mark the event so parent Controls know that event has been handled already
 		oEvent.setMarked();
 		oEvent.setMarked("pks.ui5strap.core.ISelectionProvider");
 		oEvent.setMarked("pks.ui5strap.core.IItemsProvider");
-		oEvent.setMarked("pks.ui5strap.bs3.ListDropdownMenu");
+		oEvent.setMarked("pks.ui5strap.bs3.DropdownMenu");
 		
 		//Find the closest item. Should be an item from the dropdown menu.
 		var item = Utils.findClosestParentControl(oEvent.srcControl, ListItemBase);
@@ -100,11 +100,11 @@ sap.ui.define(['./library', '../core/ListBase', '../core/ListItemBase', "../core
 	};
 
 	if(ui5strapBs3Lib.support.touch){
-		ListDropdownMenuProto.ontap = ListDropdownMenuProto._handlePress;
+		DropdownMenuProto.ontap = DropdownMenuProto._handlePress;
 	}
 	else{
-		ListDropdownMenuProto.onclick = ListDropdownMenuProto._handlePress;
+		DropdownMenuProto.onclick = DropdownMenuProto._handlePress;
 	}
 	
-	return ListDropdownMenu;
+	return DropdownMenu;
 });

@@ -196,7 +196,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/L
 			providerItem = button,
 			buttonUpdated = false;
 		
-		if(oEvent.isMarked("pks.ui5strap.bs3.ListDropdownMenu")){
+		if(oEvent.isMarked("pks.ui5strap.bs3.DropdownMenu")){
 			//TODO search for selectable item instead
 			providerItem = Utils.findClosestParentControl(oEvent.srcControl, ListItemBase);
 			if(providerItem){

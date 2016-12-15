@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.ListNavItemRenderer
+ * pks.ui5strap.bs3.NavItemRenderer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -33,9 +33,9 @@ sap.ui.define(['jquery.sap.global', "../core/RenderUtils"], function(jQuery, Ren
 	 * List nav item renderer.
 	 * @namespace
 	 */
-	var ListNavItemRenderer = {};
+	var NavItemRenderer = {};
 
-	ListNavItemRenderer.render = function(rm, oControl) {
+	NavItemRenderer.render = function(rm, oControl) {
 		var badge = oControl.getBadge(),
 			href = oControl.getHref(),
 			title = oControl.getTitle(),
@@ -86,6 +86,6 @@ sap.ui.define(['jquery.sap.global', "../core/RenderUtils"], function(jQuery, Ren
 		rm.write("</li>");
 	};
 	
-	return ListNavItemRenderer;
+	return NavItemRenderer;
 
 }, true);

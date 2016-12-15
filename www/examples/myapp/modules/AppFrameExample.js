@@ -4,12 +4,12 @@ sap.ui.define([
                "pks/ui5strap/bs3/Bar", 
                "pks/ui5strap/bs3/NavBar", 
                "pks/ui5strap/bs3/Nav", 
-               "pks/ui5strap/bs3/ListNavItem",
+               "pks/ui5strap/bs3/NavItem",
                "pks/ui5strap/bs3/Link",
                "pks/ui5strap/bs3/ButtonGroup",
                "pks/ui5strap/bs3/Button",
                "pks/ui5strap/bs3/Icon"
-               ], function(ui5strapBs3Lib, AppFrame, Bar, NavBar, Nav, ListNavItem, Link, ButtonGroup, Button, Icon){
+               ], function(ui5strapBs3Lib, AppFrame, Bar, NavBar, Nav, NavItem, Link, ButtonGroup, Button, Icon){
 
 	var jQuerySap = jQuery.sap;
 	
@@ -456,7 +456,7 @@ sap.ui.define([
 			var items = sidebarMenu.items;
 			for(var i = 0; i < items.length; i++){
 				var menuItemData = items[i],
-					navItem = new ListNavItem();
+					navItem = new NavItem();
 
 				navItem.bindProperty('text', menuItemData.label);
 				navItem.data(menuItemData);

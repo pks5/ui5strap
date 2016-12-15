@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.bs3.ListMediaRenderer
+ * pks.ui5strap.bs3.MediaListRenderer
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -33,9 +33,9 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	 * List media renderer.
 	 * @namespace
 	 */
-	var ListMediaRenderer = {};
+	var MediaListRenderer = {};
 
-	ListMediaRenderer.render = function(rm, oControl) {
+	MediaListRenderer.render = function(rm, oControl) {
 		var items = oControl.getItems(),
 			tag = oControl.getContainer() ? 'div' : 'ul';
 		
@@ -52,6 +52,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		rm.write("</" + tag + ">");
 	};
 	
-	return ListMediaRenderer;
+	return MediaListRenderer;
 
 }, true);
