@@ -110,7 +110,7 @@
             	"viewName" : ".views.bscon.BootstrapControls",
             	"subNavigation" : {
                     "id" : "subNavControls",
-                    "initialViews" : [
+                    "initialPages" : [
                         "menuControls",
                         "controlsButtons"
                     ]
@@ -217,7 +217,7 @@
                 "viewName" : ".views.cuscon.CustomControls",
                 "subNavigation" : {
                     "id" : "subNavCuscon",
-                    "initialViews" : [
+                    "initialPages" : [
                         "menuCuscon",
                         "cusconSimple"
                     ]
@@ -264,7 +264,7 @@
                 "viewName" : ".views.settings.Settings",
                 "subNavigation" : {
                     "id" : "navContainerSettings",
-                    "initialViews" : [
+                    "initialPages" : [
                         "menuSettings",
                         "settingsLanguage"
                     ]
@@ -364,7 +364,7 @@
          	}
          },
          
-         "initialViews" : [
+         "initialPages" : [
              "home",
              "menuRoot"
          ]

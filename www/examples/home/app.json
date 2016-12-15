@@ -62,7 +62,7 @@
         
         "rootNavigation" : {
         	"module" : "pks.ui5strap.core.NavContainer",
-        	"initialViews" : [
+        	"initialPages" : [
         	   "Home"
         	]
         },

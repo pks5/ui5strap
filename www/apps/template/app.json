@@ -79,7 +79,7 @@
          	}
          },
          
-         "initialViews" : [
+         "initialPages" : [
              "home",
              "menuRoot"
          ]

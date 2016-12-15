@@ -55,7 +55,7 @@
         ],
 
         "rootNavigation" : {
-            "initialViews" : [
+            "initialPages" : [
                 "my-app-intro"
             ]
         },

@@ -255,7 +255,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	 * @param callback {function} The callback function.
 	 * @protected
 	 */
-	AppProto._initNavigator = function(navigator, initialViews, suppressTransitions, excludeTarget, callback){
+	AppProto._initNavigator = function(navigator, aInitialPages, suppressTransitions, excludeTarget, callback){
 		var _this = this,
 			callI = 0;
 	
@@ -266,16 +266,16 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 			}
 		}
 	
-		if(!initialViews || initialViews.length === 0){
+		if(!aInitialPages || aInitialPages.length === 0){
 			callI = 1;
 			complete();
 			return;
 		}
 	
-		callI = initialViews.length;
+		callI = aInitialPages.length;
 	
-		for(var i = 0; i < initialViews.length; i++){
-			var initialView = initialViews[i];
+		for(var i = 0; i < aInitialPages.length; i++){
+			var initialView = aInitialPages[i];
 			if(typeof initialView === "string"){
 				initialView = {
 					id : initialView	
@@ -321,7 +321,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 				}
 			};
 		
-		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialViews, !useTransitions, null, function(){
+		this._initNavigator(this.getRootControl(), this.config.data.rootNavigation.initialPages, !useTransitions, null, function(){
 			var routing = _this.config.data.app.routing;
 			if(routing){
 				var newHash = document.location.hash,
@@ -567,7 +567,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 			}
 			
 			ci = 2;
-			this._initNavigator(subNav, subNavConfig.initialViews, suppressTransitions || pageChanged, excludeSubNavTarget, ca);
+			this._initNavigator(subNav, subNavConfig.initialPages, suppressTransitions || pageChanged, excludeSubNavTarget, ca);
 		}
 	}
 	
