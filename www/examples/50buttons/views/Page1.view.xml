@@ -8,11 +8,13 @@
 				</Bar>
 			</head>
 			<body>
-				<Nav selection-mode="Single" class="nav-round-btns" items="{buttons>/page1}">
-					<ListLinkItem tap="__execute" data:__action="{buttons>action}">
-						<Icon icon="{buttons>icon}" />
-					</ListLinkItem>
-				</Nav>
+				<ui5strapCore:PlainList selection-mode="Single" class="nav-round-btns" items="{buttons>/page1}">
+					<ui5strapCore:PlainListItem>
+						<Link tap="__execute" data:__action="{buttons>action}">
+							<Icon icon="{buttons>icon}" />
+						</Link>
+					</ui5strapCore:PlainListItem>
+				</ui5strapCore:PlainList>
 
 			</body>
 	</Page>

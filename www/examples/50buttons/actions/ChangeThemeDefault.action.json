@@ -4,7 +4,7 @@
 
     "changeTheme" : {
        "TYPE" : "pks.ui5strap.task.ChangeThemeTask",
-        "theme" : "ui5strap_default"
+        "theme" : "sap_bluecrystal"
     }
 	
 }

@@ -1,4 +1,4 @@
-<sapUiCoreMvc:View controllerName="pks.ui5strap.viewer.ActionController" xmlns="pks.ui5strap.bs3" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+<sapUiCoreMvc:View controllerName="pks.ui5strap.viewer.ActionController" xmlns="pks.ui5strap.bs3" xmlns:ui5strapCore="pks.ui5strap.core" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
                       xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
     
     <Page>
@@ -8,10 +8,13 @@
                 </Bar>
             </head>
             <body>
-                <Nav selection-mode="Single" class="nav-round-btns" items="{buttons>/page2}">
-                    <ListLinkItem tap="__execute" data:__action="{buttons>action}">
-                    </ListLinkItem>
-                </Nav>
+                <ui5strapCore:PlainList  selection-mode="Single" class="nav-round-btns" items="{buttons>/page2}">
+                    <ui5strapCore:PlainListItem>
+						<Link tap="__execute" data:__action="{buttons>action}">
+                    		<Icon icon="{buttons>icon}" />
+                    	</Link>
+                    </ui5strapCore:PlainListItem>
+                </ui5strapCore:PlainList >
 
             </body>
     </Page>
