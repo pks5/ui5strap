@@ -459,7 +459,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 			//console.log("testing", path, routeInfo.route);
 			if(matches && matches.length){
 				//console.log(matches);
-				console.log("Route '%s' matched with %s parameters.", routeInfo.route, matches.length-1);
+				//console.log("Route '%s' matched with %s parameters.", routeInfo.route, matches.length-1);
 				
 				var viewConfig = this.config.getPageConfig({ id : routeInfo.id });
 				
