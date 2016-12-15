@@ -55,14 +55,14 @@ sap.ui
 					 * @namespace
 					 * @name pks.ui5strap.core
 					 * @author Jan Philipp Knoeller
-					 * @version 0.11.6
+					 * @version 1.0.0-SNAPSHOT
 					 * @public
 					 */
 					sap.ui.getCore().initLibrary(
 							{
 								name : "pks.ui5strap.core",
 
-								version : "0.11.6-SNAPSHOT",
+								version : "1.0.0-SNAPSHOT",
 
 								dependencies : [ "sap.ui.core" ],
 

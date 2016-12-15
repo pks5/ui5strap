@@ -63,7 +63,7 @@ sap.ui.define(['./library', '../core/ListBase', "./PositionSupport"], function(u
 	 * @extends pks.ui5strap.core.ListBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
+	 * @version 1.0.0-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

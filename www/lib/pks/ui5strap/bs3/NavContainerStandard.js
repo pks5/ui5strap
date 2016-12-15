@@ -40,7 +40,7 @@ sap.ui.define(['./library', '../core/NavContainer'], function(ui5strapBs3Lib, Na
 	 * @extends pks.ui5strap.core.NavContainer
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
+	 * @version 1.0.0-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

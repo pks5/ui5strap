@@ -13,7 +13,7 @@ sap.ui.define(['./library', 'sap/ui/core/Component'], function(ui5strapViewerLib
 	 * @extends sap.ui.core.Component
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
+	 * @version 1.0.0-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

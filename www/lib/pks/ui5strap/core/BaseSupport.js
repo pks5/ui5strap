@@ -36,7 +36,7 @@ sap.ui.define(['./library'], function(ui5strapCoreLib){
 	 * Trait for base support.
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
+	 * @version 1.0.0-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

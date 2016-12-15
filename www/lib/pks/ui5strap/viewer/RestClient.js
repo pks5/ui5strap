@@ -40,7 +40,7 @@ sap.ui.define(['./library', './AppComponent'], function(ui5strapViewerLib, AppCo
 	 * @extends pks.ui5strap.viewer.AppComponent
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
+	 * @version 1.0.0-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

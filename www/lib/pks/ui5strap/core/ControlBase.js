@@ -52,7 +52,7 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSu
 	 * @extends sap.ui.core.Control
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
+	 * @version 1.0.0-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

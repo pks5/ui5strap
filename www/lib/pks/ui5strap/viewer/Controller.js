@@ -40,7 +40,7 @@ sap.ui.define(['./library', "./AppBase", 'sap/ui/core/mvc/Controller', "../core/
 	 * @extends sap.ui.core.mvc.Controller
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 0.11.6
+	 * @version 1.0.0-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public
