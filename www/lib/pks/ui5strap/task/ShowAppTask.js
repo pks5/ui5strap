@@ -69,7 +69,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	* @protected
 	*/
 	ShowAppProto.run = function(){
-		if(!(this.context.app instanceof pks.ui5strap.viewer.AppSystem)){
+		if(!(this.context.app instanceof pks.ui5strap.viewer.SystemApp)){
 			throw new Error('Only system apps can run pks.ui5strap.task.OpenAppTask');
 		}
 

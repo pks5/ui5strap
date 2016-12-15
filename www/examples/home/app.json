@@ -6,7 +6,7 @@
             "copyright" : "(c) 2014 PKSoftware",
             
             "transition" : "zoom-out",
-            "type" : "pks.ui5strap.viewer.AppSystem",
+            "type" : "pks.ui5strap.viewer.SystemApp",
             
             "styleClass" : "ui5strap-home",
             "logLevel" : 0

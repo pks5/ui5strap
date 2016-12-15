@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.viewer.AppSandbox
+ * pks.ui5strap.viewer.SandboxApp
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -34,7 +34,7 @@
 	 "use strict";
 	 
 	 /**
-		 * Constructor for a new AppSandbox instance.
+		 * Constructor for a new SandboxApp instance.
 		 * 
 		 * @param {pks.ui5strap.viewer.AppConfig} oAppConfig - App configuration.
 		 * @param {pks.ui5strap.viewer.ViewerBase} oViewer - Viewer instance that loaded this app.
@@ -48,10 +48,10 @@
 		 * 
 		 * @constructor
 		 * @public
-		 * @alias pks.ui5strap.viewer.AppSandbox
+		 * @alias pks.ui5strap.viewer.SandboxApp
 		 * 
 		 */
-	 var AppSandbox = AppBase.extend("pks.ui5strap.viewer.AppSandbox", /** @lends pks.ui5strap.viewer.AppSandbox.prototype */{
+	 var SandboxApp = AppBase.extend("pks.ui5strap.viewer.SandboxApp", /** @lends pks.ui5strap.viewer.SandboxApp.prototype */{
 		 /**
 			 * @constructs
 			 */
@@ -62,9 +62,9 @@
 		}
 	}),
 	/**
-	 * @alias pks.ui5strap.viewer.AppSandbox.prototype
+	 * @alias pks.ui5strap.viewer.SandboxApp.prototype
 	 */
-	AppSandboxProto = AppSandbox.prototype;
+	SandboxAppProto = SandboxApp.prototype;
 
 	/*
 	* -------------------------------------------------------------
@@ -75,7 +75,7 @@
 	 /**
 	  * Creates the App's Root Control.
 	  */
-	AppSandboxProto._createRootControl = function(callback){
+	SandboxAppProto._createRootControl = function(callback){
 		callback && callback(this._sandboxControl);
 	}; 
 
@@ -89,7 +89,7 @@
 	* Triggered when an app message is sent to this app
 	* @public
 	*/
-	AppSandboxProto.onMessage = function(oEvent){
+	SandboxAppProto.onMessage = function(oEvent){
 		AppBase.prototype.onMessage.call(this, oEvent);
 		
 		var appMessage = oEvent.getParameters();
@@ -100,12 +100,12 @@
 		}
 	};
 
-	AppSandboxProto.onFirstShow = function(){
+	SandboxAppProto.onFirstShow = function(){
 		AppBase.prototype.onFirstShow.call(this);
 
 		this._sandboxControl.setSrc(this.config.data.app.appURL);
 	};
 
 	//Return Module Constructor
-	return AppSandbox;
+	return SandboxApp;
 });

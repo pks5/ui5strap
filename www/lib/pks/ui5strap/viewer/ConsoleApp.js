@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.viewer.AppConsole
+ * pks.ui5strap.viewer.ConsoleApp
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -34,7 +34,7 @@
 	 "use strict";
 	 
 	 /**
-		 * Constructor for a new AppConsole instance.
+		 * Constructor for a new ConsoleApp instance.
 		 * 
 		 * @param {pks.ui5strap.viewer.AppConfig} oAppConfig - App configuration.
 		 * @param {pks.ui5strap.viewer.ViewerBase} oViewer - Viewer instance that loaded this app.
@@ -48,14 +48,14 @@
 		 * 
 		 * @constructor
 		 * @public
-		 * @alias pks.ui5strap.viewer.AppConsole
+		 * @alias pks.ui5strap.viewer.ConsoleApp
 		 * 
 		 */
-	 var AppConsole = AppBase.extend("pks.ui5strap.viewer.AppConsole"),
+	 var ConsoleApp = AppBase.extend("pks.ui5strap.viewer.ConsoleApp"),
 	 /**
-		 * @alias pks.ui5strap.viewer.AppConsole.prototype
+		 * @alias pks.ui5strap.viewer.ConsoleApp.prototype
 		 */
-		AppConsoleProto = AppConsole.prototype;
+		ConsoleAppProto = ConsoleApp.prototype;
 
 	/*
 	* ------------------------------------------------
@@ -67,7 +67,7 @@
 	* Init app specific logging
 	* @protected
 	*/
-	AppConsoleProto._initLog = function(){
+	ConsoleAppProto._initLog = function(){
 		
 		var _this = this;
 
@@ -111,7 +111,7 @@
 	 * Creates the root control of this app.
 	 * @Override
 	 */
-	AppConsoleProto._createRootControl = function(callback){
+	ConsoleAppProto._createRootControl = function(callback){
 		if(!this.console){
 			this.console = new Console();
 			this.console.setCurrentLog(this.getId());
@@ -122,5 +122,5 @@
 	}; 
 
 	//Return Module Constructor
-	return AppConsole;
+	return ConsoleApp;
 });

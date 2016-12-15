@@ -2,7 +2,7 @@
  * 
  * UI5Strap
  *
- * pks.ui5strap.viewer.AppSystem
+ * pks.ui5strap.viewer.SystemApp
  * 
  * @author Jan Philipp Knöller <info@pksoftware.de>
  * 
@@ -34,7 +34,7 @@
 	 "use strict";
 	 
 	 /**
-		 * Constructor for a new AppSystem instance.
+		 * Constructor for a new SystemApp instance.
 		 * 
 		 * @param {pks.ui5strap.viewer.AppConfig} oAppConfig - App configuration.
 		 * @param {pks.ui5strap.viewer.ViewerBase} oViewer - Viewer instance that loaded this app.
@@ -48,10 +48,10 @@
 		 * 
 		 * @constructor
 		 * @public
-		 * @alias pks.ui5strap.viewer.AppSystem
+		 * @alias pks.ui5strap.viewer.SystemApp
 		 * 
 		 */
-	 var AppSystem = App.extend("pks.ui5strap.viewer.AppSystem", /** @lends pks.ui5strap.viewer.AppSystem.prototype */{
+	 var SystemApp = App.extend("pks.ui5strap.viewer.SystemApp", /** @lends pks.ui5strap.viewer.SystemApp.prototype */{
 		 /**
 			 * @constructs
 			 */
@@ -65,5 +65,5 @@
 	});
 
 	//Return Module Constructor
-	return AppSystem;
+	return SystemApp;
 });

@@ -229,7 +229,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			        	"id" : appDefinition.id,
 			            "location" : appDefinition["location"] || Utils.getFileLocation(appDefinition.url),
 			            
-			            "type" : "pks.ui5strap.viewer.AppSandbox",
+			            "type" : "pks.ui5strap.viewer.SandboxApp",
 			            
 			            "appURL" : appDefinition.url,
 			            "propagateMessages" : true
@@ -327,7 +327,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 				            "id" : appDefinition.id,
 				            "location" : appLocation,
 				            
-				            "type" : "pks.ui5strap.viewer.AppSandbox",
+				            "type" : "pks.ui5strap.viewer.SandboxApp",
 				            
 				            "appURL" : appURL,
 				            "propagateMessages" : true
