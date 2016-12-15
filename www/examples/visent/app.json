@@ -29,6 +29,13 @@
             }
         ],
 
+        "js" : [
+            "three/build/three_min.js",
+            "three/js/loaders/ColladaLoader.js",
+            "three/js/Detector.js",
+            "three/js/libs/stats.min.js"
+        ],
+
         "components" : [
             {
             	"id" : "frame3",

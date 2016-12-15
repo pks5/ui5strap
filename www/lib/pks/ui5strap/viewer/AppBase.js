@@ -164,6 +164,45 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	AppBaseProto.init = function(){
 		this.onInit(new sap.ui.base.Event("ui5strap.app.init", this, {}));
 	};
+	
+	/**
+	* Preload JavaScript libraries defined in configuration.
+	* 
+	* @param _this {pks.ui5strap.viewer.AppBase} Instance of the app to apply this function to.
+	* @param callback {function} The callback function. 
+	* @private
+	*/
+	var _preloadJavaScript = function(_this, callback){
+		_this.log.info("AppBase::_preloadJavaScript");
+		
+		var scripts = _this.config.data.js;
+		if(scripts.length === 0){
+			callback && callback.call(_this);
+
+			return;
+		}
+
+		var files = [];
+		for(var i = 0; i < scripts.length; i++){
+			var jsPath = _this.config.resolvePath(scripts[i], true);
+
+			var jsKey = 'js---' + _this.getId() + '--' + jsPath;
+
+			if(! ( jsKey in _this._runtimeData.js ) ){	
+				_this._runtimeData.js[jsKey] = jsPath;
+
+				files.push(jsPath);
+			}
+		}
+
+		var scriptBlock = new Utils.ScriptBlock();
+
+		scriptBlock.load(files, function(){
+			scriptBlock.execute(true);
+
+			callback && callback.call(_this);
+		});
+	};
 
 	/**
 	 * Preload models defined in configuration.
@@ -509,21 +548,23 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		var _this = this;
 		
 		//JavaScript
-		//Root Component
-		_preloadRootComponent(_this, function _preloadRootCompComplete(){
-			//Components / Beans
-			_preloadComponents(_this, function _preloadComponentsComplete(){
-				//Overlay Navigator
-				_this.createOverlayNavigator(function(){
-					//Root Control
-					_this.createRootControl(function(){
+		_preloadJavaScript(_this, function preloadJavaScriptComplete(){
+			//Root Component
+			_preloadRootComponent(_this, function _preloadRootCompComplete(){
+				//Components / Beans
+				_preloadComponents(_this, function _preloadComponentsComplete(){
+					//Overlay Navigator
+					_this.createOverlayNavigator(function(){
+						//Root Control
+						_this.createRootControl(function(){
+							
+							//Preload Models
+							_preloadModels(_this, function _preloadModelsComplete(){
+								//Preload Actions
+								_preloadActions(_this, callback);
+							});
 						
-						//Preload Models
-						_preloadModels(_this, function _preloadModelsComplete(){
-							//Preload Actions
-							_preloadActions(_this, callback);
 						});
-					
 					});
 				});
 			});

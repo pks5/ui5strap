@@ -1,10 +1,7 @@
 sap.ui
 		.define(
-				[ 'pks/ui5strap/viewer/Controller',
-						"../three/build/three_min",
-						"../three/js/loaders/ColladaLoader",
-						"../three/js/Detector",
-						"../three/js/libs/stats.min" ],
+				[ 'pks/ui5strap/viewer/Controller'
+						 ],
 				function(Controller) {
 
 					return Controller
