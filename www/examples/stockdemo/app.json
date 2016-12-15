@@ -15,10 +15,6 @@
 
         "models" : [],
 
-        "js" : [
-        	"d3/d3_min.js"
-        ],
-
         "css" : [
             "css/stock_overview.css"
         ],

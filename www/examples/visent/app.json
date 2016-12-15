@@ -29,13 +29,6 @@
             }
         ],
 
-        "js" : [
-            "three/build/three.min.js",
-            "three/js/loaders/ColladaLoader.js",
-            "three/js/Detector.js",
-            "three/js/libs/stats.min.js"
-        ],
-
         "components" : [
             {
             	"id" : "frame3",
@@ -46,32 +39,34 @@
                 },
                 "initialViews" : [
                     { 
-                        "viewName" : "net__rozzo__webgl.visent__app.views.Home"
+                        "id" : "visent-home"
                     },
                     { 
-                        "viewName" : "net__rozzo__webgl.visent__app.views.Sidebar"
+                        "id" : "visent-sidebar"
                     }
                 ],
                 "navbarMenu" : "mainMenu"
             }
         ],
 
-        "views" : {
-            "net__rozzo__webgl.visent__app.views.Home" : {
+        "pages" : [
+            {
                 "id" : "visent-home",
+                "viewName" : "net__rozzo__webgl.visent__app.views.Home",
                 "target" : "content",
                 "type" : "HTML",
                 "navbar" : false,
                 "sidebar" : true
             },
 
-            "net__rozzo__webgl.visent__app.views.Sidebar" : {
+            {
                 "id" : "visent-sidebar",
+                "viewName" : "net__rozzo__webgl.visent__app.views.Sidebar",
                 "target" : "sidebar",
                 "type" : "HTML",
                 "navbar" : false,
                 "sidebar" : true
             }
 
-        }
+        ]
 }
