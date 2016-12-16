@@ -1,6 +1,6 @@
 {
   "name": "ui5strap-nwjs",
-  "version": "1.0.0-SNAPSHOT",
+  "version": "1.0.0-RELEASE",
   "main": "index.html",
   "chromium-args": "--touch-events=enabled",
   "window": {
