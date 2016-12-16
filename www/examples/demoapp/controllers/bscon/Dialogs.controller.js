@@ -30,27 +30,34 @@ sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 	var controllerImpl = {
 		onInit : function(){
 			console.log("bscon", this);
+			
+			var oDialog = sap.ui.xmlfragment({
+				id : "abc",
+				fragmentName : "com.ui5strap.apps.demoapp.views.bscon.Dialog1"
+			}, this);
+			
+			this._oDialog1 = oDialog;
 		},	
 			
 		onShowModal : function(oEvent){
-			var oDialog = this.getView().byId("myModal");
-			oDialog.open();
+			
+			
+			this._oDialog1.open();
+		},
+		
+		onCloseModal : function(oEvent){
+			this._oDialog1.close();
 		},
 		
 		onShowModalInApp : function(oEvent){
 			var oDialog = sap.ui.xmlfragment({
 				id : "abc",
-				fragmentName : "com.ui5strap.apps.demoapp.views.bscon.Dialog"
+				fragmentName : "com.ui5strap.apps.demoapp.views.bscon.Dialog2"
 			}, this);
 			
 			oDialog.data("transitionOut", oEvent.getSource().data("transitionOut"));
 			//var oDialog = this.getView().byId("myModal");
-			oDialog.open(this.getApp(), null, oEvent.getSource().data("transitionIn"));
-		},
-		
-		onCloseModal : function(oEvent){
-			
-			this.getView().byId("myModal").close();
+			this.getApp().showOverlay(oDialog, null, oEvent.getSource().data("transitionIn"));
 		},
 		
 		onCloseModalInApp : function(oEvent){

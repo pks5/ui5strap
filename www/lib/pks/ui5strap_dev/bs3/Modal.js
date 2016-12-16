@@ -95,27 +95,6 @@ sap.ui.define(['./library', './StaticOverlay'], function(ui5strapBs3Lib, StaticO
 		return StaticOverlay.prototype._getStyleClassRoot.call(this) + " ui5strapStaticOverlay";
 	};
 
-	/**
-	 * @deprecated
-	 */
-	ModalProto.show = function(){
-		jQuery.sap.log.warning("Modal.protoype.show is deprecated. Use open instead.");
-	};
-
-	/**
-	 * @deprecated
-	 */
-	ModalProto.hide = function(){
-		jQuery.sap.log.warning("Modal.protoype.hide is deprecated. Use close instead.");
-    };
-
-    /**
-     * @deprecated
-     */
-	ModalProto.toggle = function(){
-	    throw new Error("Modal.prototype.toggle is not supported anymore.");
-	};
-
   //Return Constructor
   return Modal;
 });

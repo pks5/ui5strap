@@ -2,9 +2,9 @@
    xmlns="pks.ui5strap.bs3"
     xmlns:ui5strapEx="pks.ui5strap.ex"
    xmlns:core="sap.ui.core" >
-   <Modal backdrop="true" shown="modalShown" hidden="modalHidden">
+   <Modal backdrop="true">
         <header>
-            <Button type="Close" tap="onCloseModalInApp">
+            <Button type="Close" tap="onCloseModal">
                 <Icon icon="times" />
             </Button>
             <Heading text="Modal heading" />
@@ -14,8 +14,8 @@
             <Paragraph text="Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros." />
         </content>
         <footer>
-            <Button text="OK" severity="Primary" tap="onCloseModalInApp" />
-            <Button text="Cancel" severity="Default" tap="onCloseModalInApp" />
+            <Button text="OK" severity="Primary" tap="onCloseModal" />
+            <Button text="Cancel" severity="Default" tap="onCloseModal" />
         </footer>
     </Modal>
 </core:FragmentDefinition>

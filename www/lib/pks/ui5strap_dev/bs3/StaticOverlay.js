@@ -57,10 +57,6 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 				backdrop : {
 					type:"boolean", 
 					defaultValue:false
-				},
-				local : {
-					type : "boolean",
-					defaultValue : false
 				}
 			},
 			
@@ -82,6 +78,15 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 	 */
 	StaticOverlayProto = StaticOverlay.prototype;
 	
+	StaticOverlayProto.exit = function(){
+		if(this.getBackdrop()){
+			this._$backdrop && this._$backdrop.off('click');
+			delete(this._$backdrop);
+		}
+		
+		this.oDelegate = null;
+	};
+	
 	/**
 	 * Returns the style prefix of this control.
 	 * @override
@@ -92,22 +97,9 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 	};
 	
 	/**
-	 * @Protected
-	 */
-	
-	StaticOverlayProto._getStyleClassRoot = function(){
-		return this.getLocal() ? " ui5strapLayer ui5strap-hidden" : "";
-	};
-	
-	
-	/**
 	 * @override
 	 */
 	StaticOverlayProto.onBeforeRendering = function(oEvent){
-		if(this.getLocal()){
-			Layer.unregister(this.getId());
-		}
-		
 		if(this.getBackdrop()){
 			this._$backdrop && this._$backdrop.off('click');
 			delete(this._$backdrop);
@@ -118,10 +110,6 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 	 * @override
 	 */
 	StaticOverlayProto.onAfterRendering = function(oEvent){
-		if(this.getLocal()){
-			Layer.register(this.getId(), this.$());
-		}
-		
 		if(this.getBackdrop()){
 			var _this = this;
 			this._$backdrop = this.$().find('#' + this.getId() + '--backdrop').on('click', function(){
@@ -130,27 +118,44 @@ sap.ui.define(['./library', "../core/ControlBase", "../core/Layer"], function(ui
 		}
 	};
 	
-	StaticOverlayProto.open = function(app, fCallback, transitionName){
-		var _this = this;
-		
-		if(this.getLocal()){
-			Layer.setVisible(this.getId(), true, fCallback);
+	
+	
+	StaticOverlayProto.open = function(fCallback){
+		var $oStatic = jQuery("#sap-ui-static");
+		if($oStatic.length === 0){
+			jQuery('body').prepend('<div id="sap-ui-static" data-sap-ui-area="sap-ui-static" style="height: 0px; width: 0px; overflow: hidden; float: left;"></div>');
 		}
-		else if(app){
-			//TODO transition handling
-			app.showOverlay(this, fCallback, transitionName);
+		
+		console.log(this.getParent());
+		
+		if(!this.getParent()){
+			if(this.oDelegate){
+				//If a delegate is left for some reasons
+				this.removeEventDelegate(this.oDelegate, this);
+			}
+			
+			this.oDelegate = {
+				onAfterRendering : function(){
+					this.removeEventDelegate(this.oDelegate, this);
+					this.oDelegate = null;
+					
+					Layer.register(this.getId(), this.$());
+					Layer.setVisible(this.getId(), true, fCallback);
+				}
+			};
+			
+			this.addEventDelegate(this.oDelegate, this);
+			
+			this.addStyleClass("ui5strapLayer ui5strapLayer-type-Global ui5strap-hidden");
+			this.placeAt('sap-ui-static');
+		}
+		else{
+			Layer.setVisible(this.getId(), true, fCallback);
 		}
 	};
 	
-	StaticOverlayProto.close = function(app, fCallback, transitionName){
-		if(this.getLocal()){
-			Layer.setVisible(this.getId(), false, fCallback);
-		}
-		else if(app){ 		
-			//TODO transition handling
-			app.hideOverlay(fCallback, transitionName);
-		}
-		
+	StaticOverlayProto.close = function(fCallback){
+		Layer.setVisible(this.getId(), false, fCallback);
 	};
 	
 	return StaticOverlay;

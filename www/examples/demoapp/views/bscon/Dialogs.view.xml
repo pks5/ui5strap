@@ -6,7 +6,7 @@
 			<!-- Modals -->
 			<Heading level="1" text="Dialogs" />
 			
-			<Heading text="Local Dialog" />
+			<Heading text="Static Modal" />
 			<Button size="Large" text="Launch" severity="Info" tap="onShowModal" />
 			
 			<Heading text="App Overlay" />
@@ -17,22 +17,7 @@
             <Button text="Flip Horizontal" severity="Info" tap="onShowModalInApp" data:transitionIn="flip-horizontal-cw" data:transitionOut="flip-horizontal-ccw" />
             <Button text="Zoom" severity="Info" tap="onShowModalInApp" data:transitionIn="zoom-in" data:transitionOut="zoom-out" />
             
-			   <Modal id="myModal" local="true" backdrop="true" shown="modalShown" hidden="modalHidden">
-        <header>
-            <Button type="Close" tap="onCloseModal">
-                <Icon icon="times" />
-            </Button>
-            <Heading text="Modal heading" />
-
-        </header>
-        <content>
-            <Paragraph text="Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros." />
-        </content>
-        <footer>
-            <Button text="OK" severity="Primary" tap="onCloseModal" />
-            <Button text="Cancel" severity="Default" tap="onCloseModal" />
-        </footer>
-    </Modal>
+			   
 
 			<Heading text="Popovers" />
 

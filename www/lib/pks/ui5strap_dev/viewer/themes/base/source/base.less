@@ -48,33 +48,37 @@
     transition: top .2s ease-in, bottom .2s ease-in;
 	-webkit-transition: top .2s ease-in, bottom .2s ease-in;
 	-moz-transition: top .2s ease-in, bottom .2s ease-in;
-	
-	z-index: 1000;
+
+  z-index:1;
 }
 
 
 /*
 * Global Overlay
-* Z: 2K
+* Z: 4
 */
 #ui5strapGlobalOverlay{
-  z-index:2000;
+  z-index:4;
 }
 
 /*
+* Dialogs 5
+*/
+
+/*
 * Global Loader
-* Z: 3K
+* Z: 60
 */
 #ui5strapGlobalLoader{
-	z-index:3000;
+	z-index:60;
 }
 
 /*
 * Fatal Error Screen
-* Z: 4K
+* Z: 1K
 */
 #ui5strapFatalError{
-	z-index:4000;
+	z-index:1000;
 	padding:20px;
 	color:white;
 	background-color: rgba(0,0,0,0.9);
@@ -119,15 +123,15 @@
 }
 
 /*
-* Z: 20
+* Z: 2
 */
 .ui5strapApp-current{
-	z-index:20;
+	z-index:2;
 }
 
 /*
 * Next App Container in Transitions
-* Z: 10
+* Z: 1
 */
 .ui5strapApp-next{
   position:absolute;
@@ -140,7 +144,7 @@
   width:100%;
   height:100%;
   
-  z-index:10;
+  z-index:1;
 }
 
 /*
@@ -158,19 +162,29 @@
 }
 
 /*
+* Transitions
+* Z: 3
+*/
+
+/*
 * App Overlays
-* Z: 300
+* Z: 4
 */
 .ui5strapApp-overlay{
-	z-index:300;
+	z-index:4;
 }
 
 /*
+* Dialogs
+* Z: 5
+*/
+
+/*
 * App Loaders
-* Z: 200
+* Z: 6
 */
 .ui5strapApp-loader{
-	z-index:400;
+	z-index:6;
 }
 
 
@@ -201,6 +215,10 @@
 	transform: translate3d(0,0,0);
 	
 	opacity:1;
+}
+
+.ui5strapLayer-type-Global{
+   z-index:10;
 }
 
 /*
