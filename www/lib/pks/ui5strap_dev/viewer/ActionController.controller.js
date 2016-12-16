@@ -40,7 +40,7 @@ sap.ui.define(["pks/ui5strap/viewer/Controller"], function(Controller){
 	 * @extends pks.ui5strap.viewer.Controller
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-SNAPSHOT
+	 * @version 1.0.0-RELEASE
 	 * 
 	 * @constructor
 	 * @public

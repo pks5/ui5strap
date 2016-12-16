@@ -41,7 +41,7 @@ sap.ui
 					 * Class that provides responsive transition support.
 					 * 
 					 * @author Jan Philipp Knoeller
-					 * @version 1.0.0-SNAPSHOT
+					 * @version 1.0.0-RELEASE
 					 * 
 					 * @constructor
 					 * @public

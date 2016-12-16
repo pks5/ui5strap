@@ -40,7 +40,7 @@ sap.ui.define(['./library', "../core/library", '../core/ListItemBase', "../core/
 	 * @extends pks.ui5strap.core.ListItemBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-SNAPSHOT
+	 * @version 1.0.0-RELEASE
 	 * 
 	 * @constructor
 	 * @public

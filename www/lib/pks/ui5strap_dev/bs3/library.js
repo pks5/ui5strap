@@ -44,14 +44,14 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 	 * @namespace
 	 * @name pks.ui5strap.bs3
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-SNAPSHOT
+	 * @version 1.0.0-RELEASE
 	 * @public
 	 */
 	sap.ui.getCore().initLibrary(
 			{
 				name : "pks.ui5strap.bs3",
 
-				version : "1.0.0-SNAPSHOT",
+				version : "1.0.0-RELEASE",
 
 				dependencies : [ "sap.ui.core", "pks.ui5strap.core" ],
 

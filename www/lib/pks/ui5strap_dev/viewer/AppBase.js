@@ -40,7 +40,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-SNAPSHOT
+	 * @version 1.0.0-RELEASE
 	 * 
 	 * @constructor
 	 * @protected

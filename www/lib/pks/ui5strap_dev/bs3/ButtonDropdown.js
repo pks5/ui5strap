@@ -73,7 +73,7 @@ sap.ui.define(['./library', './Button', "../core/Utils", "./PositionSupport"], f
 	 * @extends pks.ui5strap.bs3.Button
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-SNAPSHOT
+	 * @version 1.0.0-RELEASE
 	 * 
 	 * @constructor
 	 * @public

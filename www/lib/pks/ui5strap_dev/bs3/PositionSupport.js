@@ -36,7 +36,7 @@ sap.ui.define(['./library'], function(ui5strapBs3Lib){
 	 * Trait for position support.
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-SNAPSHOT
+	 * @version 1.0.0-RELEASE
 	 * 
 	 * @constructor
 	 * @public

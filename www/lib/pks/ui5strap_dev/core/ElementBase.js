@@ -51,7 +51,7 @@ sap.ui.define(['./library', './BaseSupport', './OptionsSupport', "sap/ui/core/El
 	 * @extends sap.ui.core.Element
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-SNAPSHOT
+	 * @version 1.0.0-RELEASE
 	 * 
 	 * @constructor
 	 * @public

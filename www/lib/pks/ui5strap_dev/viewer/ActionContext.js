@@ -39,7 +39,7 @@ sap.ui.define(["./library", "sap/ui/base/Object", "sap/ui/core/Control"], functi
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-SNAPSHOT
+	 * @version 1.0.0-RELEASE
 	 * 
 	 * @constructor
 	 * @public

@@ -62,7 +62,7 @@ sap.ui.define(['./library', './ListItemBase', "./Utils", "./RenderUtils"], funct
 	 * @extends pks.ui5strap.core.ListItemBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-SNAPSHOT
+	 * @version 1.0.0-RELEASE
 	 * 
 	 * @constructor
 	 * @public
