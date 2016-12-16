@@ -63,13 +63,13 @@
 			<Row>
 				
 				<Col columnsSmall="4">
-					<Link type="Thumbnail">
+					<Link options="Thumbnail">
 						<Image title="Awesome, isn't it?" tooltipPlacement="Top" mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" />
 					</Link>
 				</Col>
 				
 				<Col columnsSmall="4">
-					<Link type="Thumbnail">
+					<Link options="Thumbnail">
 						<Image title="Awesome, isn't it?" tooltipPlacement="Top" mpath="com.ui5strap.apps.demoapp.img.awesome" ext="png" alt="Image" />
 					</Link>
 				</Col>

@@ -157,10 +157,6 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	
 	PositionSupport.proto(LinkProto);
 	
-	LinkProto._typeToClass = {
-		Thumbnail : "thumbnail"
-	};
-	
 	/**
 	 * Returns the style prefix of this control.
 	 * @override
@@ -178,8 +174,8 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 		var styleClass = "";
 		
 		var type = this.getType();
-		if(ui5strapBs3Lib.LinkType.Default !== type){
-			styleClass += " " + this._typeToClass[type];
+		if(this.isOptionEnabled("Thumbnail")){
+			styleClass += " thumbnail";
 		}
 		
 		return styleClass;

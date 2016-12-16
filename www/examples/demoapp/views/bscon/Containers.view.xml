@@ -78,15 +78,15 @@
 				<Col columnsSmall="4">
 					<ListGroup container="true" selectionMode="Single">
 						<ListGroupItem selected="true">
-							<Heading type="ListGroupItemHeading" level="4" text="List group item heading" />
+							<Heading options="ListGroupItemHeading" level="4" text="List group item heading" />
 							<Paragraph text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." />
 						</ListGroupItem>
 						<ListGroupItem>
-							<Heading type="ListGroupItemHeading" level="4" text="List group item heading" />
+							<Heading options="ListGroupItemHeading" level="4" text="List group item heading" />
 							<Paragraph text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." />
 						</ListGroupItem>
 						<ListGroupItem>
-							<Heading type="ListGroupItemHeading" level="4" text="List group item heading" />
+							<Heading options="ListGroupItemHeading" level="4" text="List group item heading" />
 							<Paragraph text="Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." />
 						</ListGroupItem>
 						

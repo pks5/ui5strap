@@ -51,12 +51,6 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 				contentPlacement : {
 					type:"pks.ui5strap.core.ContentPlacement",
 					defaultValue : ui5strapCoreLib.ContentPlacement.Start
-				},
-				
-				type : {
-					deprecated : true,
-					type: "pks.ui5strap.bs3.HeadingType", 
-					defaultValue: ui5strapBs3Lib.HeadingType.Default
 				}
 				
 			},
@@ -111,12 +105,6 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	
 	PositionSupport.proto(HeadingProto);
 	
-	Heading._typeToClass = {
-		"PageHeader" : 'page-header',
-		'ListGroupItemHeading' : 'list-group-item-heading',
-		'MediaHeading' : 'media-heading'
-	};
-	
 	/**
 	 * Returns the style prefix of this control.
 	 * @override
@@ -131,10 +119,14 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/U
 	 * @Override
 	 */
 	HeadingProto._getStyleClassRoot = function(){
-		var type = this.getType(),
-			classAdd = "";
-		if(ui5strapBs3Lib.HeadingType.Default !== type){
-			classAdd = " " + Heading._typeToClass[type] + " " + this._getStyleClassType(type);
+		var classAdd = "";
+		
+		if(this.isOptionEnabled("ListGroupItemHeading")){
+			classAdd += " list-group-item-heading";
+		}
+		
+		if(this.isOptionEnabled("MediaHeading")){
+			classAdd += " media-heading";
 		}
 		
 		return classAdd;
