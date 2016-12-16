@@ -54,7 +54,7 @@ sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 	
 		showOverlay : function(oEvent){
 			
-			this.getApp().showOverlay({ "viewName" : "tld__domain.product__app.views.Overlay" }, null, 'slide-ttb');
+			this.getApp().showOverlay({ "id" : "my-app-overlay" }, null, 'slide-ttb');
 		}
 	});
 });
