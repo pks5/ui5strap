@@ -7,7 +7,7 @@
 			<!-- Bar on top of page -->
 			<Bar inverse="true">
 				<!-- Left area of bar -->
-				<left>
+				<Container align="PullLeft">
 					<!-- Back Button -->
 					<Button tap="com.ui5strap.apps.demoapp.actions.home.NavigateToHome" 
 						options="BarButton">
@@ -18,20 +18,18 @@
 							options="BarButton" visibilitySmall="HiddenUp" visibilityMedium="VisibleUp">
 							<Icon icon="columns" />
 					</Button>
-				</left>
+				</Container>
 				
 				<!-- Middle area of bar -->
-				<middle>
-					<Heading options="BarHeadingCenter" text="{i18n>PAGE_CUSCON_TITLE}" />
-				</middle>
+				<Heading options="BarHeadingCenter" text="{i18n>PAGE_CUSCON_TITLE}" />
 				
-				<right>
+				<Container align="PullRight" visibilityExtraSmall="HiddenUp" visibilitySmall="VisibleUp" visibilityMedium="HiddenUp">
 					<!-- Toggle Menu Button (only for small screens) -->
 					<Button tap="com.ui5strap.apps.demoapp.actions.home.ToggleBarMenuRoot" 
-							options="BarButton" visibilityExtraSmall="HiddenUp" visibilitySmall="VisibleUp" visibilityMedium="HiddenUp">
+							options="BarButton">
 							<Icon icon="columns" />
 					</Button>
-				</right>
+				</Container>
 			</Bar>
 		</head>
 		

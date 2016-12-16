@@ -7,16 +7,15 @@
 			<!-- Bar on top of page -->
 			<Bar>
 				<!-- Left area of bar -->
-				<left>
+				<Container align="PullLeft">
 					<Button tap="com.ui5strap.apps.demoapp.actions.settings.ToggleBarMenuSettings" 
 						options="BarButton">
 						<Icon icon="columns" />
 					</Button>
-				</left>
-				<!-- Middle area of bar -->
-				<middle>
-					<Heading text="{i18n>PAGE_SETTINGS_THEME_TITLE}" options="BarHeadingCenter" />
-				</middle>
+				</Container>
+				
+				<Heading text="{i18n>PAGE_SETTINGS_THEME_TITLE}" options="BarHeadingCenter" />
+				
 			</Bar>
 		</head>
 		

@@ -48,13 +48,8 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	};
 
 	BarRenderer.render = function(rm, oControl) {
-		var content = oControl.getContent(),
-	 	
-			contentLeft = oControl.getLeft(),
-		 	contentMiddle = oControl.getMiddle(),
-			contentRight = oControl.getRight();
+		var content = oControl.getContent();
 		
-
 		rm.write("<div");
 		rm.writeControlData(oControl);
 		rm.addClass(oControl._getStyleClass());
@@ -66,32 +61,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 			rm.writeClasses();
 			rm.write(">");
 			  
-			//Middle
-			//@deprecated
-			if(contentMiddle.length > 0){     
-				rm.write("<div");
-				rm.addClass("ui5strapBar-contentMiddle");
-				rm.writeClasses();
-				rm.write(">");
-				for(var i = 0; i < contentMiddle.length; i++){ 
-					rm.renderControl(contentMiddle[i]);
-				}
-				rm.write("</div>");
-			}
-			
-			//Left
-			//@deprecated
-			if(contentLeft.length > 0){     
-				rm.write("<div");
-				rm.addClass("ui5strapBar-contentLeft");
-				rm.writeClasses();
-				rm.write(">");
-				for(var i = 0; i < contentLeft.length; i++){ 
-					rm.renderControl(contentLeft[i]);
-				}
-				rm.write("</div>");
-			}
-	
 			//Content
 			if(content.length > 0){     
 				for(var i = 0; i < content.length; i++){ 
@@ -99,19 +68,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 				}
 			}
 			   
-			//Right
-			//@deprecated
-			if(contentRight.length > 0){     
-				rm.write("<div");
-				rm.addClass("ui5strapBar-contentRight");
-				rm.writeClasses();
-				rm.write(">");
-				for(var i = 0; i < contentRight.length; i++){ 
-					rm.renderControl(contentRight[i]);
-				}
-				rm.write("</div>");
-			}   
-			    
 			rm.write("</div>");    
 		rm.write("</div>");
 	};

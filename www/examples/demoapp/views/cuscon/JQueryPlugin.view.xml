@@ -6,17 +6,16 @@
         <head>
             <!-- Bar on top of page -->
             <Bar>
-                <!-- Left area of bar -->
-                <left>
+               <!-- Left area of bar -->
+                <Container align="PullLeft">
                     <Button tap="com.ui5strap.apps.demoapp.actions.cuscon.ToggleBarMenuCuscon" 
                         options="BarButton">
                         <Icon icon="columns" />
                     </Button>
-                </left>
+                </Container>
                 <!-- Middle area of bar -->
-                <middle>
-                    <Heading text="{i18n>PAGE_CUSCON_JQUERY_TITLE}" options="BarHeadingCenter" />
-                </middle>
+                <Heading text="{i18n>PAGE_CUSCON_D3_TITLE}" options="BarHeadingCenter" />
+                
             </Bar>
         </head>
         

@@ -74,21 +74,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 			"aggregations" : {
 				"content":{
 					"singularName" : "content"
-				},
-				
-				//@deprecated
-				"left" : {
-					deprecated : true,
-					"singularName" : "left"
-				},
-				"middle" : {
-					deprecated : true,
-					"singularName" : "middle"
-				}, 
-				"right" : {
-					deprecated : true,
-					"singularName" : "right"
-				}  
+				}
 			},
 			
 			"defaultAggregation" : "content"
