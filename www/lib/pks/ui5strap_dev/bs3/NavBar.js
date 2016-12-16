@@ -49,12 +49,8 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 */
 	var NavBar = ControlBase.extend("pks.ui5strap.bs3.NavBar", /** @lends pks.ui5strap.bs3.NavBar.prototype */ {
 		metadata : {
-			deprecated : true,
-			
-			// ---- object ----
 			defaultAggregation : "collapse",
 			
-			// ---- control specific ----
 			library : "pks.ui5strap.bs3",
 
 			properties : { 
