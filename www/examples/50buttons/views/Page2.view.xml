@@ -4,7 +4,7 @@
     <Page>
             <head>
                 <Bar inverse="true">
-                    <Heading options="BarHeadingCenter" text="{i18n>PAGE1_TITLE}" />
+                    <Heading options="BarHeadingCenter" text="{i18n>PAGE2_TITLE}" />
                 </Bar>
             </head>
             <body>
