@@ -201,40 +201,53 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			$oRootContainer.append($oViewer);
 		}
 		
-		var $oGlobalOverlay = $oRootContainer.find("#" + ViewerBase.OVERLAY_ID);
+		var elGlobalOverlay = document.getElementById(ViewerBase.OVERLAY_ID);
 			
-		if($oGlobalOverlay.length === 0){
-			$oGlobalOverlay = jQuery('<div id="' + ViewerBase.OVERLAY_ID + '" class="ui5strapOverlay ui5strapLayer ui5strap-hidden">'
-					+ '<div id="' + ViewerBase.OVERLAY_ID + '-backdrop" class="ui5strapOverlay-backdrop"></div>'
-					+ '<div id="' + ViewerBase.OVERLAY_ID + '-content" class="ui5strapOverlay-content"></div>'
-				+ '</div>');
+		if(!elGlobalOverlay){
+			elGlobalOverlay = document.createElement("div");
+			elGlobalOverlay.id = ViewerBase.OVERLAY_ID;
+			elGlobalOverlay.className = "ui5strapOverlay ui5strapLayer ui5strap-hidden";
 			
-			$oRootContainer.append($oGlobalOverlay);
+			var elGlobalOverlayBackdrop = document.createElement("div");
+			elGlobalOverlayBackdrop.id = ViewerBase.OVERLAY_ID + "-backdrop";
+			elGlobalOverlayBackdrop.className = "ui5strapOverlay-backdrop";
+			elGlobalOverlay.appendChild(elGlobalOverlayBackdrop);
+			
+			var elGlobalOverlayContent = document.createElement("div");
+			elGlobalOverlayContent.id = ViewerBase.OVERLAY_ID + "-content";
+			elGlobalOverlayContent.className = "ui5strapOverlay-content";
+			elGlobalOverlay.appendChild(elGlobalOverlayContent);
+			
+			$oRootContainer.append(elGlobalOverlay);
 		}
 		
-		var $oGlobalLoader = $oRootContainer.find("#" + ViewerBase.LOADER_ID);
+		var elGlobalLoader = document.getElementById(ViewerBase.LOADER_ID);
 		
-		if($oGlobalLoader.length === 0){
-			$oGlobalLoader = jQuery('<div id="' + ViewerBase.LOADER_ID + '" class="ui5strapLayer ui5strapLoader ui5strap-hidden"></div>');
+		if(!elGlobalLoader){
+			elGlobalLoader = document.createElement("div");
+			elGlobalLoader.id = ViewerBase.LOADER_ID;
+			elGlobalLoader.className = "ui5strapLayer ui5strapLoader ui5strap-hidden";
 			
-			$oRootContainer.append($oGlobalLoader);
+			$oRootContainer.append(elGlobalLoader);
 		}
 		
-		var $oGlobalFatalScreen = $oRootContainer.find("#" + ViewerBase.FATAL_ID);
+		var elFatalScreen = document.getElementById(ViewerBase.FATAL_ID);
 		
-		if($oGlobalFatalScreen.length === 0){
-			$oGlobalFatalScreen = jQuery('<div id="' + ViewerBase.FATAL_ID + '" class="ui5strapLayer ui5strap-hidden"></div>');
+		if(!elFatalScreen){
+			elFatalScreen = document.createElement("div");
+			elFatalScreen.id = ViewerBase.FATAL_ID;
+			elFatalScreen.className = "ui5strapLayer ui5strap-hidden";
 			
-			$oRootContainer.append($oGlobalFatalScreen);
+			$oRootContainer.append(elFatalScreen);
 		}
 		
 		this._dom = {
 			$body : jQuery(document.body),
 			$root : $oRootContainer,
 			$viewer : $oViewer,
-			$overlay : $oGlobalOverlay,
-			$loader : $oGlobalLoader,
-			$fatal : $oGlobalFatalScreen
+			$overlay : jQuery(elGlobalOverlay),
+			$loader : jQuery(elGlobalLoader),
+			$fatal : jQuery(elFatalScreen)
 		};
 	};
 	
