@@ -108,17 +108,10 @@ sap.ui.define(['pks/ui5strap/core/ControlBase'], function(ControlBase){
 	/**
 	 * @private
 	 */
-	var _updateGrid = function(_this){
-		var containerWidth = _this._$homeScreen.width(),
-			containerHeight = _this._$homeScreen.height();
+	var _updateGrid = function(_this, iHomeWidth){
+		jQuery.sap.log.info("Container Width is {}. Now updating grid.", iHomeWidth);
 		
-		if(0 === containerWidth || 100 === containerWidth){
-			throw new Error('Container width is not available!');
-		}
-		
-		jQuery.sap.log.info("Container Width is {}. Now updating grid.", containerWidth);
-		
-		var tilesPerRow = Math.floor(containerWidth / _this._minTileWidth);
+		var tilesPerRow = Math.floor(iHomeWidth / _this._minTileWidth);
 
 		if(tilesPerRow > _this._maxColumnCount){
 			tilesPerRow = _this._maxColumnCount;
@@ -128,7 +121,7 @@ sap.ui.define(['pks/ui5strap/core/ControlBase'], function(ControlBase){
 			tilesPerRow = _this._minColumnCount;
 		}
 
-		var newWidth = Math.floor(containerWidth / tilesPerRow);
+		var newWidth = Math.floor(iHomeWidth / tilesPerRow);
 		
 		if(newWidth > _this._maxTileWidth){
 			newWidth = _this._maxTileWidth;
@@ -155,14 +148,21 @@ sap.ui.define(['pks/ui5strap/core/ControlBase'], function(ControlBase){
 		jQuery.sap.log.info("Updating HomeScreen Grid...");
 		
 		var _this = this;
-		this._waitForCss(
-			function() {
-				_updateGrid(_this);
-				
-				callback && callback();
-			},
-			30000
-		);
+		try{
+			this._waitForCss(
+				function() {
+					_updateGrid(_this, _this._$homeScreen.width());
+					
+					callback && callback();
+				},
+				30000
+			);
+		}
+		catch(e){
+			_updateGrid(_this, 480);
+			
+			callback && callback();
+		}
 	};
 	
 	/*
