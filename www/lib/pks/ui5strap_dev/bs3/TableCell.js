@@ -40,7 +40,7 @@ sap.ui.define(['./library', '../core/ElementBase'], function(ui5strapBs3Lib, Ele
 	 * @extends ui5strap.ElementBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public

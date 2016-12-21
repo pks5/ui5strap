@@ -36,7 +36,7 @@ sap.ui.define(['./library'], function(ui5strapCoreLib){
 	 * Trait for list selection support.
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public

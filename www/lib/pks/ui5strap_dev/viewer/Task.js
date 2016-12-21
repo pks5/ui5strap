@@ -40,7 +40,7 @@ sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext"], function(u
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public

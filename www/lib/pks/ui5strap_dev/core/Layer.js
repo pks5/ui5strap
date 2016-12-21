@@ -114,7 +114,9 @@ sap.ui
 					 */
 					Layer.setVisible = function(layerId, visible, callback,
 							bSuppressTransition) {
-
+						
+						bSuppressTransition = !sap.ui.getCore().getConfiguration().getAnimation() || bSuppressTransition;
+						
 						var layer = this.layers[layerId], $layer = layer.$domElement;
 
 						if (!layer || visible == layer.visible) {

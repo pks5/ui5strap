@@ -40,7 +40,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public
@@ -186,19 +186,20 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	*/
 	ViewerBaseProto._initDom = function(){
 		var _this = this,
-			$oRootContainer = jQuery('#' + this.options.container);
+			elRootContainer = document.getElementById(this.options.container);
 		
-		if($oRootContainer.length === 0){
+		if(!elRootContainer){
 			throw new Error("Cannot find root container: " + this.options.container);
 		}
 		
-		var $oViewer = $oRootContainer.find(".ui5strapViewer");
+		var $oRootContainer = jQuery(elRootContainer),
+			$oViewer = $oRootContainer.find(".ui5strapViewer");
 
 		if($oViewer.length === 0){
-			var oViewerElement = document.createElement("div");
-			oViewerElement.className = "ui5strapViewer";
-			$oViewer = jQuery(oViewerElement);
-			$oRootContainer.append($oViewer);
+			var elViewer = document.createElement("div");
+			elViewer.className = "ui5strapViewer";
+			$oViewer = jQuery(elViewer);
+			elRootContainer.appendChild(elViewer);
 		}
 		
 		var elGlobalOverlay = document.getElementById(ViewerBase.OVERLAY_ID);
@@ -218,7 +219,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			elGlobalOverlayContent.className = "ui5strapOverlay-content";
 			elGlobalOverlay.appendChild(elGlobalOverlayContent);
 			
-			$oRootContainer.append(elGlobalOverlay);
+			elRootContainer.appendChild(elGlobalOverlay);
 		}
 		
 		var elGlobalLoader = document.getElementById(ViewerBase.LOADER_ID);
@@ -228,7 +229,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			elGlobalLoader.id = ViewerBase.LOADER_ID;
 			elGlobalLoader.className = "ui5strapLayer ui5strapLoader ui5strap-hidden";
 			
-			$oRootContainer.append(elGlobalLoader);
+			elRootContainer.appendChild(elGlobalLoader);
 		}
 		
 		var elFatalScreen = document.getElementById(ViewerBase.FATAL_ID);
@@ -238,17 +239,24 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			elFatalScreen.id = ViewerBase.FATAL_ID;
 			elFatalScreen.className = "ui5strapLayer ui5strap-hidden";
 			
-			$oRootContainer.append(elFatalScreen);
+			elRootContainer.appendChild(elFatalScreen);
 		}
 		
 		this._dom = {
-			$body : jQuery(document.body),
-			$root : $oRootContainer,
-			$viewer : $oViewer,
-			$overlay : jQuery(elGlobalOverlay),
-			$loader : jQuery(elGlobalLoader),
-			$fatal : jQuery(elFatalScreen)
+			root : elRootContainer,
+			viewer : $oViewer[0],
+			globalOverlay : elGlobalOverlay,
+			fatalScreen : elFatalScreen
 		};
+	};
+	
+	ViewerBaseProto.showFatalError = function(e){
+		var elFatalScreen = this._dom.fatalScreen,
+		elErrorMessage = document.createElement("span");
+	
+		elErrorMessage.innerHTML = e.message + " in " + e.filename + " on line " + e.lineno;
+		elFatalScreen.appendChild(elErrorMessage);
+		elFatalScreen.className = "ui5strapLayer";
 	};
 	
 	/**

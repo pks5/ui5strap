@@ -40,7 +40,7 @@ sap.ui.define([ './library', "../core/library", "../core/ControlBase", "../core/
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public
@@ -198,7 +198,7 @@ sap.ui.define([ './library', "../core/library", "../core/ControlBase", "../core/
 			_this.destroy();
 		}
 
-		ui5strapBs3Lib.support.transition && $alert.hasClass('fade') ? $alert.one(
+		sap.ui.getCore().getConfiguration().getAnimation() && ui5strapBs3Lib.support.transition && this.getAnimate() ? $alert.one(
 				ui5strapBs3Lib.support.transition.end, removeElement)
 				.emulateTransitionEnd(150) : removeElement()
 	};

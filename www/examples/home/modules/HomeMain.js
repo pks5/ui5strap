@@ -51,14 +51,14 @@ sap.ui.define(['pks/ui5strap/bs3/library', 'pks/ui5strap/viewer/Manager'], funct
 	 * Triggered when the Viewer is resized.
 	 */
   HomeMainProto.onShow = function(oEvent){
-		
-		var rootControl = this.getApp().getRootControl(),
-			currentPage = rootControl.getTarget("content");
-		
-		if(currentPage && currentPage.getId() === this.getApp().config.createControlId("Home")){
-			currentPage.byId("homeScreen").updateGrid();
+		var rootControl = this.getApp().getRootControl()
+		if(rootControl){
+			var currentPage = rootControl.getTarget("content");
+			
+			if(currentPage && currentPage.getId() === this.getApp().config.createControlId("Home")){
+				currentPage.byId("homeScreen").updateGrid();
+			}
 		}
-		
 	};
   
   /**

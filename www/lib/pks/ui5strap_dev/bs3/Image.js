@@ -99,7 +99,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", "../core/R
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public

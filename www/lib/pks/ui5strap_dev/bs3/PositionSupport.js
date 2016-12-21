@@ -36,7 +36,7 @@ sap.ui.define(['./library'], function(ui5strapBs3Lib){
 	 * Trait for position support.
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public
@@ -74,22 +74,18 @@ sap.ui.define(['./library'], function(ui5strapBs3Lib){
 	PositionSupport.getStyleClass = function(oControl){
 		var align = oControl.getAlign(), Alignment = ui5strapBs3Lib.Alignment, styleClass = "";
 
-		if (align !== Alignment.Default && align !== Alignment.NavBar && align !== Alignment.Sidebar) {
+		if (align !== Alignment.Default && align !== Alignment.NavBar) {
 			styleClass += " " + ui5strapBs3Lib.BSAlignment[align];
 		}
 
 		/*
 		 * This are special options for Button, ButtonGroup, Nav
 		 * and Form to show properly inside NavBar controls
-		 * 
-		 * @deprecated
 		 */
 		
 		if (align === Alignment.NavBar
 				|| align === Alignment.NavBarLeft
 				|| align === Alignment.NavBarRight) {
-			jQuery.sap.log
-					.warning("Using Alignment.NavBar* options is deprecated.");
 			var elName = oControl.getMetadata().getElementName();
 			if(elName === "pks.ui5strap.bs3.Button" 
 				|| elName === "pks.ui5strap.bs3.ButtonGroup"

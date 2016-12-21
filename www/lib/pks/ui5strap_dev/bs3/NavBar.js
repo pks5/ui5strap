@@ -40,7 +40,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public
@@ -143,7 +143,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 			        .addClass('collapse')
 			    }
 
-			    if (!ui5strapBs3Lib.support.transition) return complete.call(this)
+			    if (!sap.ui.getCore().getConfiguration().getAnimation() || !ui5strapBs3Lib.support.transition) return complete.call(this)
 
 			    $collapse
 			      .height(0)
@@ -167,7 +167,7 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapBs3Lib, Con
 			    	//fire event collapse completed
 			    }
 
-    			if (!ui5strapBs3Lib.support.transition) return complete.call(this)
+    			if (!sap.ui.getCore().getConfiguration().getAnimation() || !ui5strapBs3Lib.support.transition) return complete.call(this)
 
     			$collapse
 			      .one(ui5strapBs3Lib.support.transition.end, complete)

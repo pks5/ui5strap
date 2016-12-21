@@ -40,7 +40,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public
@@ -51,10 +51,6 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 		metadata : {
 			interfaces : ["pks.ui5strap.core.ISelectionProvider"],
 
-			// ---- object ----
-			defaultAggregation : "panes",
-			
-			// ---- control specific ----
 			library : "pks.ui5strap.bs3",
 
 			properties : { 
@@ -70,7 +66,6 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 				},
 				
 				customAssociation : {
-					deprecated : true,
 					type : "string",
 					defaultValue : "",
 					bindable : false
@@ -88,6 +83,8 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 				}
 			},
 			
+			defaultAggregation : "panes",
+			
 			associations : {
 				"source" : {
 					type : "pks.ui5strap.core.ISelectionProvider",
@@ -100,7 +97,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 		renderer : function(rm, oControl) {
 			var content = oControl.getPanes(),
 				selectedIndex = oControl.getSelectedIndex(),
-				customAssociation = oControl.getCustomAssociation();
+				sCustomAssoc = oControl.getCustomAssociation();
 
 			rm.write("<div");
 			rm.writeControlData(oControl);
@@ -114,8 +111,8 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 				rm.write('<div role="tabpanel"');
 				
 				rm.writeAttribute('data-pane-index', i);
-				if(customAssociation){
-					rm.writeAttribute('data-pane-key', item.data(customAssociation));
+				if(sCustomAssoc){
+					rm.writeAttribute('data-pane-key', item.data(sCustomAssoc));
 				}
 				rm.addClass(oControl._getStyleClassPart("pane"));
 				if(selectedIndex > -1 && i === selectedIndex){
@@ -139,6 +136,22 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	 * @alias pks.ui5strap.bs3.TabContainer.prototype
 	 */
 	TabContainerProto = pks.ui5strap.bs3.TabContainer.prototype;
+	
+	TabContainerProto.init = function(){
+		var _this = this;
+		this._fnSource = function(oEvent){
+			if(oEvent.getParameter("updates")){
+				_this.synchronize();
+			}
+		};
+	};
+	
+	TabContainerProto.exit = function(){
+		this._fnSource = null;
+		this._oSelectionProvider = null;
+		this._oTransition = null;
+	};
+	
 	
 	/**
 	 * Returns the style prefix of this control.
@@ -176,40 +189,39 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 		return classPart;
 	};
 	
-	/**
-	 * @Public
-	 */
-	TabContainerProto.onBeforeRendering= function(){
-  		var _this = this;
-  		
-  		if(!this.sourceControl){
-  			this.sourceControl = sap.ui.getCore().byId(this.getSource());
+	TabContainerProto.setSource = function(vSource, bSuppressRendering){
+		var vOldSource = this.getSource();
+		
+		if(vSource !== vOldSource){
+			this.setAssociation("source", vSource, true);
+			
+			if(this._oSelectionProvider){
+				this._oSelectionProvider.detachEvent("tap", this._fnSource);
+			}
+			
+			this._oSelectionProvider = sap.ui.getCore().byId(vSource);
 		    
-			this.sourceControl.attachEvent("tap", {}, function(oEvent){
-				if(oEvent.getParameter("updates")){
-					_this.synchronize();
-				}
-				
-			});
-
+			this._oSelectionProvider.attachEvent("tap", {}, this._fnSource);
+			
 			this.synchronize();
 		}
+		
+		return this;
 	};
 	
 	/**
-	 * @Public
-	 * @deprecated
+	 * @protected
 	 */
 	TabContainerProto.synchronize = function(){
-  		var customAssociation = this.getCustomAssociation();
-  		if(!customAssociation){
-			this.setSelectedIndex(this.sourceControl.getSelectionIndex()[0], true);
+  		var sCustomAssoc = this.getCustomAssociation();
+  		if(!sCustomAssoc){
+			this.setSelectedIndex(this._oSelectionProvider.getSelectionIndex()[0], true);
 		}
 		else{
 			var panes = this.getPanes();
 			
 			for(var i = 0; i < panes.length; i++){
-				if(this.sourceControl.getSelection()[0].data(customAssociation) === panes[i].data(customAssociation)){
+				if(this._oSelectionProvider.getSelection()[0].data(sCustomAssoc) === panes[i].data(sCustomAssoc)){
 					this.setSelectedIndex(i, true);
 					break;
 				}
@@ -218,7 +230,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	};
 	
 	/**
-	 * @Public
+	 * @protected
 	 */
 	TabContainerProto._showSelectedPane = function(){
 		var _this = this,
@@ -234,12 +246,14 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 				}
 			);
 		
-		this._transition = transition;
+		this._oTransition = transition;
 		
 		transition.on("last", function(){
 			$next.attr("class", _this._getStyleClassPart("pane") + " active");
 			
 			$current.attr("class", _this._getStyleClassPart("pane") + " ui5strap-hidden");
+			
+			_this._oTransition = null;
 		});
 			
 		ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
@@ -267,17 +281,15 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 			
 			this.setProperty('selectedIndex', newIndex, true);
 
-			if(this._transition){
+			if(this._oTransition){
 				var _this = this;
 				
-				this._transition.cancel();
+				this._oTransition.cancel();
 				
-				this._transition.on("last", function(){
-					_this._transition = null;
+				this._oTransition.on("last", function(){
+					_this._oTransition = null;
 					_this._showSelectedPane();
 				});
-				
-				
 			}
 			else{
 				this._showSelectedPane();
@@ -288,34 +300,5 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 		}
 	};
 	
-	/*
-	 * ----------
-	 * DEPRECATED
-	 * ----------
-	 */
-	
-	/**
-	 * @Public
-	 * @deprecated
-	 */
-	TabContainerProto.getSelectedControl = function(){
-		return this.getPanes()[this.getSelectedIndex()];
-	};
-
-	/**
-	 * @Public
-	 * @deprecated
-	 */
-	TabContainerProto.setSelectedControl = function(pane, suppressInvalidate){
-		var panes = this.getPanes();
-		
-		for(var i = 0; i < panes.length; i++){
-			if(panes[i].getId() === pane.getId()){
-				this.setSelectedIndex(i, suppressInvalidate);
-				break;
-			}
-		}
-	};
-
 	return TabContainer;
 });

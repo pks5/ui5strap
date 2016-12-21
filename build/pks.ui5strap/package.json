@@ -1,6 +1,6 @@
 {
   "name": "ui5strap-build",
-  "version": "1.0.0-RELEASE",
+  "version": "1.0.1-RELEASE",
   "author": "Jan Philipp Knoeller",
   "devDependencies": {
     "grunt": "*",

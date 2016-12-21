@@ -41,7 +41,7 @@ sap.ui
 					 * Class that provides responsive transition support.
 					 * 
 					 * @author Jan Philipp Knoeller
-					 * @version 1.0.0-RELEASE
+					 * @version 1.0.1-RELEASE
 					 * 
 					 * @constructor
 					 * @public
@@ -87,8 +87,9 @@ sap.ui
 							finished : false
 						};
 						
-						this._mStatus.skipped = !ui5strapCoreLib.polyfill.transitionEndEvent
-								|| sTransClasses === "ui5strap-trans-all-type-none";
+						this._mStatus.skipped = !sap.ui.getCore().getConfiguration().getAnimation()  //Animation is disabled in core
+								|| !ui5strapCoreLib.polyfill.transitionEndEvent //Transition end even is not supported
+								|| sTransClasses === "ui5strap-trans-all-type-none"; //No transition
 
 						if (transSpeed && transSpeed !== "normal") {
 							sTransClasses += " ui5strap-transition-speed-"

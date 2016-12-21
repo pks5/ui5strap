@@ -40,7 +40,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", './PanelGr
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public
@@ -137,6 +137,8 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", './PanelGr
 		}
 
 		if(this.getDomRef()){
+			this.setProperty('collapsed', newCollapsed, true);
+			
 			var $collapse = jQuery('#panel-collapse---' + this.getId());
 			if(newCollapsed){
 				$collapse
@@ -154,17 +156,17 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", './PanelGr
 			        .addClass('collapse')
 			    }
 
-			    if (!ui5strapBs3Lib.support.transition) return complete.call(this)
-
-			    $collapse
-			      .height(0)
-			      .one(ui5strapBs3Lib.support.transition.end, complete)
-			      .emulateTransitionEnd(350)
-
+			    
+			    if (!sap.ui.getCore().getConfiguration().getAnimation() || !ui5strapBs3Lib.support.transition){
+			    	complete();
+			    }
+			    else{
+			    	$collapse
+				      .height(0).one(ui5strapBs3Lib.support.transition.end, complete)
+				      .emulateTransitionEnd(350);
+			    }
 			}
 			else{
-				//$collapse.addClass('collapse in').height('auto');
-			
 				$collapse
       			.removeClass('collapse')
       			.addClass('collapsing')
@@ -178,16 +180,16 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", './PanelGr
 			    	//fire event collapse completed
 			    }
 
-    			if (!ui5strapBs3Lib.support.transition) return complete.call(this)
-
-    			$collapse
-			      .one(ui5strapBs3Lib.support.transition.end, complete)
-			      .emulateTransitionEnd(350)
-			      
-			      .height($collapse[0]["scrollHeight"])
+    			if (!sap.ui.getCore().getConfiguration().getAnimation() || !ui5strapBs3Lib.support.transition){
+    				complete();
+    			}
+    			else{
+	    			$collapse
+				      .one(ui5strapBs3Lib.support.transition.end, complete)
+				      .emulateTransitionEnd(350)
+				      .height($collapse[0]["scrollHeight"])
+    			}
 			}
-
-			this.setProperty('collapsed', newCollapsed, true);
 		}
 		else{
 			this.setProperty('collapsed', newCollapsed, suppressInvalidate);

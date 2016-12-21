@@ -40,7 +40,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	 * @extends pks.ui5strap.viewer.ViewerBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public
@@ -501,7 +501,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		//Create or Update App Container
 		appInstance.updateContainer();
 
-		var $currentRoot = prevApp ? prevApp.$() : this._dom.$viewer.find('.ui5strapApp');
+		var $currentRoot = prevApp ? prevApp.$() : jQuery(this._dom.viewer).find('.ui5strapApp');
 
 		//Load app css
 		appInstance.includeStyle(function includeStyle_complete(){
@@ -509,7 +509,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			jQuery.sap.log.debug("Attaching root to DOM...");
 			
 			//Append App to DOM is not yet
-			appInstance.attach(_this._dom.$viewer[0]);
+			appInstance.attach(_this._dom.viewer);
 			
 			//Create new Transition
 			var transition = new ResponsiveTransition(
@@ -838,7 +838,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		
 		window.addEventListener(
 			"error", function(e) { 
-			  _this._dom.$fatal.append("<span>" + e.message + " in " + e.filename + " on line " + e.lineno + "</span>").removeClass("ui5strap-hidden");
+				_this.showFatalError(e);
 		}, false);
 		
 	};

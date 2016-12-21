@@ -40,7 +40,7 @@ sap.ui.define(['./library', './ListLinkItem'], function(ui5strapBs3Lib, ListLink
 	 * @extends pks.ui5strap.bs3.ListLinkItem
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public

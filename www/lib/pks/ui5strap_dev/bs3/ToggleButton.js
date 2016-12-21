@@ -74,7 +74,7 @@ sap.ui.define(["./library", "../core/ControlBase", '../core/SelectableSupport'],
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public
@@ -89,6 +89,7 @@ sap.ui.define(["./library", "../core/ControlBase", '../core/SelectableSupport'],
 			rm.writeControlData(oControl);
 		    rm.addClass(oControl._getStyleClass());
 		    rm.writeClasses();
+		    rm.writeAttribute("tabindex", 0);
 			rm.write(">");
 				
 				//Text On
@@ -142,6 +143,14 @@ sap.ui.define(["./library", "../core/ControlBase", '../core/SelectableSupport'],
 		var styleClass = " " + this._getStyleClassType(this.getVertical() ? 'Vertical' : 'Horizontal');
 		
 		return styleClass;
+	};
+	
+	ToggleButtonProto.onkeypress = function(oEvent){
+		if(this.getEnabled()){
+			if(oEvent.keyCode === jQuery.sap.KeyCodes.SPACE || oEvent.keyCode === jQuery.sap.KeyCodes.ENTER){
+				this.setSelected(!this.getSelected());
+			}
+		}
 	};
 	
 	/**

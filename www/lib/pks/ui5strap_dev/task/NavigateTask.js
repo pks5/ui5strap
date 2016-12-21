@@ -40,7 +40,7 @@ sap.ui.define(["./library", "../viewer/Task", "../core/NavContainer"], function(
 	 * @extends pks.ui5strap.viewer.Task
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public

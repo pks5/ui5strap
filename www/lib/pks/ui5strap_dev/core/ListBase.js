@@ -56,7 +56,7 @@ sap.ui.define(['./library', "./ControlBase", './ListSelectionSupport', './ListIt
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.0-RELEASE
+	 * @version 1.0.1-RELEASE
 	 * 
 	 * @constructor
 	 * @public

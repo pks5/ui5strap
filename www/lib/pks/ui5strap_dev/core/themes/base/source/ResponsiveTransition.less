@@ -30,8 +30,6 @@
 //Transition tranform
 .ui5strapTransitionTransform(@t){
 	-webkit-transition: -webkit-transform @t;
-	-moz-transition: -moz-transform @t;
-	-o-transition: -o-transform @t;
 	-ms-transition: -ms-transform @t;
 	transition: transform @t;
 }
@@ -39,8 +37,6 @@
 //Transition opacity
 .ui5strapTransitionOpacity(@t){
 	-webkit-transition: opacity @t;
-	-moz-transition: opacity @t;
-	-o-transition: opacity @t;
 	-ms-transition: opacity @t;
 	transition: opacity @t;
 }
@@ -48,8 +44,6 @@
 //Transition transform and opacity
 .ui5strapTransitionTransformOpacity(@t1, @t2){
 	-webkit-transition: -webkit-transform @t1, opacity @t2;
-  	//-moz-transition: -moz-transform @t1, opacity @t2;
-  	//-o-transition: -o-transform @t1, opacity @t2;
   	-ms-transition: -ms-transform @t1, opacity @t2;
   	transition: transform @t1, opacity @t2;
 }
@@ -57,18 +51,14 @@
 //Transform 3d
 .ui5strapTransformTranslate3d(@x, @y, @z){
 	-webkit-transform: translate3d(@x, @y, @z);
-	-moz-transform: translate3d(@x, @y, @z);
 	-ms-transform: translate3d(@x, @y, @z);
-	-o-transform: translate3d(@x, @y, @z);
 	transform: translate3d(@x, @y, @z);
 }
 
 //Rotate 3d
 .ui5strapTransformRotate3d(@x, @y, @z, @angle){
 	-webkit-transform: rotate3d(@x, @y, @z, @angle);
-	-moz-transform: rotate3d(@x, @y, @z, @angle);
 	-ms-transform: rotate3d(@x, @y, @z, @angle);
-	-o-transform: rotate3d(@x, @y, @z, @angle);
 	transform: rotate3d(@x, @y, @z, @angle);
 }
 
@@ -89,9 +79,7 @@
 //Transform 3d
 .ui5strapTransformScale3d(@x, @y, @z){
 	-webkit-transform: scale3d(@x, @y, @z);
-	-moz-transform: scale3d(@x, @y, @z);
 	-ms-transform: scale3d(@x, @y, @z);
-	-o-transform: scale3d(@x, @y, @z);
 	transform: scale3d(@x, @y, @z);
 }
 
