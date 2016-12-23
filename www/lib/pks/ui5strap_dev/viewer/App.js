@@ -41,7 +41,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	 * @extends pks.ui5strap.viewer.AppBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public
@@ -66,7 +66,8 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	/**
 	 * @alias pks.ui5strap.viewer.App.prototype
 	 */
-	AppProto = App.prototype;
+	AppProto = App.prototype,
+	SAP_LOG = jQuery.sap.log;
 
 	/*
 	* ------------------------------------------------
@@ -87,7 +88,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 		for(var i = 0; i < viewKeys.length; i++){
 			var viewConfig = _this.config.getPageConfig(views[viewKeys[i]].id);
 			if(viewConfig.preload && viewConfig.cache){
-				jQuery.sap.log.debug("Caching view: " + viewConfig.id);
+				SAP_LOG.debug("Caching view: " + viewConfig.id);
 				_this.createPage(viewConfig);
 			}
 		}
@@ -107,7 +108,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 		var _this = this;
 		AppBase.prototype.preload.call(this, function(){
 			_this.includeStyle(function includeStyle_complete(){
-				_this.log.debug("PRELOADING VIEWS...");
+				SAP_LOG.debug(_this + " Preloading pages ...");
 				
 				_preloadViews(_this, callback);
 			});
@@ -162,11 +163,11 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 			}
 			
 			if(this._historyWorking){
-				jQuery.sap.log.info("History working.");
+				SAP_LOG.info("History working.");
 				this._historyQueue.push(targetPath);
 			}
 			else if(this._suppressHashChange){
-				//jQuery.sap.log.debug("Hashchange suppressed.");
+				//SAP_LOG.debug("Hashchange suppressed.");
 				this._suppressHashChange = false;
 			}
 			else{
@@ -309,7 +310,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	 * @protected
 	 */
 	AppProto._showInitialContent = function(callback, useTransitions){
-		jQuery.sap.log.debug("Showing initial content...");
+		SAP_LOG.debug(this + " Showing initial content ...");
 		
 		var _this = this,
 			ci = 1,
@@ -584,7 +585,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 	 * @protected
 	 */
 	AppProto._navigateTo = function (navControl, viewConfig, callback, suppressResolve, suppressHashChange, suppressTransitions, excludeSubNavTarget) {
-		jQuery.sap.log.debug("AppBaseProto.navigateTo");
+		SAP_LOG.debug(this + " Navigating ...");
 		
 		if(!suppressResolve){
 			viewConfig = this.config.getPageConfig(viewConfig);
@@ -639,7 +640,7 @@ sap.ui.define(['./library', "../core/library", './AppBase', './AppConfig','./App
 		}
 		
 		if(navControl.isTargetBusy(viewConfig.target)){
-			jQuery.sap.log.warning('[NC#' + navControl.getId() + '] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
+			SAP_LOG.warning('[NC#' + navControl.getId() + '] Cannot navigate: Target is busy: "' + viewConfig.target + '"');
 
 			//TODO Should we call the callback here?
 			return false;

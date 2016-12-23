@@ -30,7 +30,6 @@ sap.ui.define(["pks/ui5strap/bs3/library", 'pks/ui5strap/viewer/Controller'], fu
 	var controllerImpl = {
 		onInit : function(){
 			
-			console.log("bscon", this);
 		},	
 			
 		onUpdate : function(){

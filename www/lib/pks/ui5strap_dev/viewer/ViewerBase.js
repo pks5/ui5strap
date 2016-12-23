@@ -40,7 +40,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public
@@ -81,14 +81,15 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			
 			//Initialize the Console
 			if(options.console){
-				this._console = new Console({ logLevel : jQuery.sap.log.getLevel() });
+				this._console = new Console({ logLevel : SAP_LOG.getLevel() });
 			}
 		}
 	}),
 	/**
 	 * @alias pks.ui5strap.viewer.ViewerBase.prototype
 	 */
-	ViewerBaseProto = ViewerBase.prototype;
+	ViewerBaseProto = ViewerBase.prototype,
+	SAP_LOG = jQuery.sap.log;
 	
 	ViewerBase.OVERLAY_ID = "ui5strapGlobalOverlay";
 	ViewerBase.LOADER_ID = "ui5strapGlobalLoader";
@@ -120,49 +121,49 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 		{
 			debug : function (message, logName) {
 				_this._console.debug(message, logName);
-				jQuery.sap.log.debug(message);
+				SAP_LOG.debug(message);
 			},
 
 			warning : function (message, logName) {
 				_this._console.warning(message, logName);
-				jQuery.sap.log.warning(message);
+				SAP_LOG.warning(message);
 			},
 
 			error : function (message, logName) {
 				_this._console.error(message, logName);
-				jQuery.sap.log.error(message);
+				SAP_LOG.error(message);
 			},
 
 			info : function (message, logName) {
 				_this._console.info(message, logName);
-				jQuery.sap.log.info(message);
+				SAP_LOG.info(message);
 			},
 
 			fatal : function (message, logName) {
 				_this._console.fatal(message, logName);
-				jQuery.sap.log.fatal(message);
+				SAP_LOG.fatal(message);
 			}
 		} :		
 				
 		{
 			debug : function (message) {
-				jQuery.sap.log.debug(message);
+				SAP_LOG.debug(message);
 			},
 
 			warning : function (message) {
-				jQuery.sap.log.warning(message);
+				SAP_LOG.warning(message);
 			},
 
 			error : function (message) {
-				jQuery.sap.log.error(message);
+				SAP_LOG.error(message);
 			},
 
 			info : function (message) {
-				jQuery.sap.log.info(message);
+				SAP_LOG.info(message);
 			},
 
 			fatal : function (message) {
-				jQuery.sap.log.fatal(message);
+				SAP_LOG.fatal(message);
 			}
 		};
 	};

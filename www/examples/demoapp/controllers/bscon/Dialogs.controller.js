@@ -29,8 +29,6 @@ sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 
 	var controllerImpl = {
 		onInit : function(){
-			console.log("bscon", this);
-			
 			var oDialog = sap.ui.xmlfragment({
 				id : "abc",
 				fragmentName : "com.ui5strap.apps.demoapp.views.bscon.Dialog1"

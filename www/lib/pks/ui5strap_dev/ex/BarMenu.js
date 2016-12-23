@@ -40,7 +40,7 @@ sap.ui.define(['./library', '../core/ListBase'], function(ui5strapExLib, ListBas
 	 * @extends pks.ui5strap.core.ListBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

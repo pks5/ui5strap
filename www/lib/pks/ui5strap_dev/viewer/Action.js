@@ -37,7 +37,7 @@ sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext", "./Task", "
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public
@@ -62,7 +62,7 @@ sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext", "./Task", "
 		
 		var actionUrl = jQuery.sap.getResourceName(sActionName, '.action.json');
 		
-		jQuery.sap.log.debug("[ACTION] Loading '" + sActionName + "' from '" + actionUrl + "'" );
+		jQuery.sap.log.debug("{Action} Loading '" + actionUrl + "' ..." );
 		
 		jQuery.sap.loadResource(actionUrl, {async : true}).then(function(actionParameters) {
 			_actionsCache[sActionName] = {
@@ -117,7 +117,7 @@ sap.ui.define(["./library", "sap/ui/base/Object", "./ActionContext", "./Task", "
 	* @Public
 	*/
 	Action.run = function(action){
-		jQuery.sap.log.debug("[ACTION] Action.run");
+		jQuery.sap.log.debug("{Action} executing ...");
 
 		var sActionName = action.parameters;
 		if(!sActionName){

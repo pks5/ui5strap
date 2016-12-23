@@ -40,7 +40,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public
@@ -89,6 +89,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	 * @alias pks.ui5strap.core.NavContainer.prototype
 	 */
 	NavContainerProto = NavContainer.prototype,
+	SAP_LOG = jQuery.sap.log,
 	domAttachTimeout = 50;
 	
 	/**
@@ -205,7 +206,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	*/
 	var _prepareTransition = function(_this, pageChange){
 		if(pageChange.transition){
-			jQuery.sap.log.warning("NavContainer::_prepareTransition: Transition already prepared for target " + pageChange.target);
+			SAP_LOG.warning("NavContainer::_prepareTransition: Transition already prepared for target " + pageChange.target);
 			//There is already a Transition defined
 			return false;
 		}
@@ -242,13 +243,13 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		
 		var callbacksLength = transList.callbacks.length;
 		if(0 === callbacksLength){
-			//jQuery.sap.log.info("No transition callbacks.");
+			//SAP_LOG.debug("No transition callbacks.");
 			
 			return;
 		}
 
 		if(0 === transList.callI){
-			//jQuery.sap.log.info("Calling " + callbacksLength + " callbacks.");
+			//SAP_LOG.debug("Calling " + callbacksLength + " callbacks.");
 			
 			for(var i = 0; i < callbacksLength; i++){
 				transList.callbacks[i]({
@@ -260,7 +261,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			//pageChange 
 		}
 		//else{
-			//jQuery.sap.log.info("Transition callback " + transList.callI + " call left.");
+			//SAP_LOG.debug("Transition callback " + transList.callI + " call left.");
 		//}
 	};
 
@@ -269,7 +270,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _executeTransition = function(_this, pageChange, transList){
-		//jQuery.sap.log.info("Execute transition: " + pageChange.changeName);
+		SAP_LOG.info(_this + " Execute transition '" + pageChange.changeName + "' ...");
 		
 		if(pageChange.currentPage === pageChange.page){
 			throw new Error("Cannot execute transitions with 2 same instances: " + pageChange.page.getId());
@@ -283,33 +284,23 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 				if(oUiArea){
 					var $current = pageChange.transition.getData().$current;
 					
-					if(!$current){
-						throw new Error("Removed page has no DOM reference.");
-					}
-					
-					//Hide the page container
-					//$current.attr("class", "ui5strap-hidden");
-					
-					//Finally remove the page container.
-					//oCurrentPage.$().detach();
+					//If current page has a dom reference, detach it now.
 					$current.detach();
 					
 					var areaId = oUiArea.getId();
 					
 					//Remove the Page from the UIArea first, since we don't want to destroy the page.
 					oUiArea.removeContent(oCurrentPage, true);
-					
 					oUiArea.setRootNode(null);
-					
-					//Set Propagated Properties and Bindings back to ui area
-					//TODO verify that this is not needed anymore due removal from UiArea
-					//Utils.addPropertyPropagation(pageChange.currentPage.getParent(), pageChange.currentPage);
-					
-					//Destroy the UIArea
 					oUiArea.destroy();
-					jQuery.sap.log.info("Destroyed UIArea " + areaId + " of page " + oCurrentPage.getId());
 					
+					SAP_LOG.info(_this + " Destroyed UIArea '" + areaId + "' of Page '" + oCurrentPage.getId() + "'.");
+					
+					//if current page has a dom reference, remove it now.
 					$current.remove();
+				}
+				else{
+					SAP_LOG.warning("Page has no UIArea!");
 				}
 				
 				_triggerControllerEvent(_this, pageChange.target, oCurrentPage, 'pageHidden', {
@@ -352,7 +343,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _executePendingTransitions = function(_this){
-		jQuery.sap.log.info("Executing pending transitions (" + _this._pendingTransitions.length + ")");
+		SAP_LOG.info(_this + " Executing pending transitions (" + _this._pendingTransitions.length + ") ...");
 		
 		var pendingTransitionsLength = _this._pendingTransitions.length,
 			transList = {
@@ -372,7 +363,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			var lastPageChange = pageChanges[pageChanges.length-1];
 			
 			if(lastPageChange.page === lastPageChange.currentPage){
-				jQuery.sap.log.info("Page is already current: " + lastPageChange.changeName);
+				SAP_LOG.info(_this + "Page is already current: '" + lastPageChange.changeName + "'.");
 				//This can happen if the navcontainer is rerendered, but page is already current.
 				
 				lastPageChange.transition.getData().$next.attr('class', 'navcontainer-page navcontainer-page-current');
@@ -386,7 +377,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		_this._pendingTransitions = [];
 		_this._targetTransitions = {};
 		
-		//jQuery.sap.log.info("Executed pending transitions");
+		//SAP_LOG.debug("Executed pending transitions");
 	};
 
 	/**
@@ -396,7 +387,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	var _preparePendingTransitions = function(_this){
 		var pendingTransitionsLength = _this._pendingTransitions.length,
 			successAll = true;
-		//jQuery.sap.log.debug(' + [NC] PREPARE ' + pendingTransitionsLength + ' PENDING TRANSITIONS'); 
+		//SAP_LOG.debug(' + [NC] PREPARE ' + pendingTransitionsLength + ' PENDING TRANSITIONS'); 
 		
 		for(var i = 0; i < pendingTransitionsLength; i++){
 			var pageChanges = _this._targetTransitions[_this._pendingTransitions[i]],
@@ -425,8 +416,8 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		ui5strapCoreLib.polyfill.requestAnimationFrame(function RAF1(){
 
 			if(!_preparePendingTransitions(_this)){
-				//jQuery.sap.log.debug(" - [NC] CANCEL HANDLING PENDING TRANSITIONS");
-				jQuery.sap.log.warning("Canceled pending transitions");
+				//SAP_LOG.debug(" - [NC] CANCEL HANDLING PENDING TRANSITIONS");
+				SAP_LOG.warning("Canceled pending transitions");
 				return;
 			}
 			
@@ -467,7 +458,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Private
 	*/
 	var _pageChange = function(_this, pageChange){
-		//jQuery.sap.log.info("Page change: " + pageChange.changeName);
+		//SAP_LOG.debug("Page change: " + pageChange.changeName);
 		
 		_onPageChange(_this, pageChange);
 		
@@ -511,11 +502,11 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		}
 
 		if(override || _this._targetTransitions[target].length === 0){
-			//jQuery.sap.log.debug(' + [NC] T1L {' + pageChange.target + '}');
+			//SAP_LOG.debug(' + [NC] T1L {' + pageChange.target + '}');
 			_this._targetTransitions[target].push(pageChange);
 		}
 		//else{
-			//jQuery.sap.log.debug(' + [NC] T1S {' + pageChange.target + '}');
+			//SAP_LOG.debug(' + [NC] T1S {' + pageChange.target + '}');
 		//}
 	};
 
@@ -533,8 +524,12 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 				$newPageContainer = jQuery(newPageContainer);
 			
 			//Page still has a valid dom reference. Reuse the dom ref.
+			//TODO Why?
 			if(page.getDomRef()){
-				jQuery.sap.log.info("Reusing DOM reference for page: " + page.getId() );
+				throw new Error("Page already has a reference!");
+				
+				/*
+				SAP_LOG.debug("Reusing DOM reference for page: " + page.getId() );
 				
 				var $parent = page.$().parent();
 				if($parent.hasClass('navcontainer-page')){
@@ -542,13 +537,13 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 					newPageContainer = $parent[0];
 					$newPageContainer = $parent;
 					
-					jQuery.sap.log.info("Recreated UIArea " + newPageContainer.id);
+					SAP_LOG.debug("Recreated UIArea " + newPageContainer.id);
 				
 					if($newPageContainer.attr("data-sap-ui-area")){
-						jQuery.sap.log.warning("Existing page container already has a UIArea assigned.");
+						SAP_LOG.warning("Existing page container already has a UIArea assigned.");
 					}
 				}
-				
+				*/
 			}
 			
 			//Set css class name for new page container
@@ -565,14 +560,14 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			//Add page to new page container
 			page.placeAt(newPageContainer);
 			
-			jQuery.sap.log.info("Created UIArea " + page.getParent().getId() + " for page " + page.getId());
+			SAP_LOG.info(_this + " Created UIArea '" + page.getParent().getId() + "' for Page '" + page.getId() + "'.");
 			
 			//Propagate Properties
 			//This must be done after the Page has attached to DOM,
 			//because the page might get a new UIArea as Parent and therefore new propagated properties.
 			Utils.addPropertyPropagation(_this, page);
 			
-			//jQuery.sap.log.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
+			//SAP_LOG.debug(" + [NC] NEW PAGE {" + target + "} #" + page.getId());
 
 			return $newPageContainer;
 	};
@@ -685,7 +680,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			throw new Error("Cannot set target busy: already busy!");
 		}
 		this._targetStatus[target] = targetBusy;
-		jQuery.sap.log.debug("[NC#" + this.getId() + "] Target '" + target + "' is " + (targetBusy ? 'busy' : 'available'));
+		SAP_LOG.info(this + " Target '" + target + "' is " + (targetBusy ? 'busy' : 'available') + ".");
 	};
 	
 	/**
@@ -693,20 +688,20 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Override
 	*/
 	NavContainerProto.toPage = function(page, target, transitionName, callback){
-		//jQuery.sap.log.info("[NC#" + this.getId() + "] to page on target " + target);
+		//SAP_LOG.debug("[NC#" + this.getId() + "] to page on target " + target);
 		
 		if(!(target in this.targets)){
-			throw new Error('NavContainer does not support target: ' + target);
+			throw new Error(this + " Invalid target: '" + target + "'.");
 		}
 		
-		jQuery.sap.log.debug("[NC#" + this.getId() + "] Navigating on target '" + target + "'");
+		SAP_LOG.info(this + " Navigating on target '" + target + "' ...");
 		
 		var _this = this,
 			currentPage = this.targets[target];
 
 		if(this.getDomRef() && currentPage === page){
 			if(currentPage.getDomRef()){
-				jQuery.sap.log.info("NavContainer " + this.getId() + " already shown " + currentPage.getId() + " on target " + target);
+				SAP_LOG.info(this + " Page '" + currentPage.getId() + "' already shown on target '" + target + "'.");
 	
 				callback && callback({
 					target : target,
@@ -714,7 +709,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 				});
 			}
 			else{
-				throw new Error("RRR");
+				throw new Error(this + " Page '" + currentPage.getId() + "' doesn't have a dom reference.");
 			}
 			
 			return false;
@@ -743,7 +738,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			};
 		
 		if(this.getDomRef()){
-			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer already attached. Navigating now...");
+			SAP_LOG.debug(this + " Already attached. Navigating now ...");
 			//NavContainer is already attached to DOM
 			targetTransition.$next = _placePage(_this, target, page, true);
 			
@@ -752,7 +747,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			}, domAttachTimeout);
 		}
 		else{
-			jQuery.sap.log.debug("[NC#" + this.getId() + "] NavContainer not attached to DOM yet.");
+			SAP_LOG.debug(this + " Not attached to dom yet.");
 
 			//NavContainer not attached to DOM yet
 			//It will override all pending transitions on this target!
@@ -868,7 +863,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	* @Public
 	*/
 	NavContainerProto.onAfterRendering = function(){ 
-		//jQuery.sap.log.info("[NC#" + this.getId() + "] after rendering...");
+		//SAP_LOG.debug("[NC#" + this.getId() + "] after rendering...");
 		
 		var _pendingTransitions = this._pendingTransitions,
 			pendingTransitionsLength = _pendingTransitions.length,
@@ -884,7 +879,7 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 			}
 			else{
 				//TODO When does this ever happen?
-				console.log("NAPPEND");
+				SAP_LOG.warning("N-APPEND !!!");
 				//Reappend existing reference
 				jQuery('#' + _this.targetPagesDomId(targetTransition.target)).append(targetTransition.$next);
 			}
@@ -903,14 +898,26 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 	*/
 	
 	NavContainerProto.exit = function(){
+		SAP_LOG.info(this + " Destroying ...");
+		
 		for(var target in this.targets){
 			var oPage = this.targets[target];
 			
 			if(oPage){
-				var oUiArea = oPage.getParent();
+				//var $page = oPage.$().parent();
+				
+				var oUiArea = oPage.getParent(),
+					sAreaId = oUiArea.getId();
 			
+				//$page.detach();
+				
 				oUiArea.removeContent(oPage, true);
+				oUiArea.setRootNode(null);
 				oUiArea.destroy();
+				
+				SAP_LOG.info(this + " Destroyed UIArea '" + sAreaId + "' of Page '" + oPage.getId() + "'");
+				
+				//$page.remove();
 			}
 		}
 		
@@ -923,6 +930,9 @@ sap.ui.define(['./library', './ControlBase', './ResponsiveTransition', "./Utils"
 		this.targets = null;
 	};
 	
+	NavContainerProto.toString = function(){
+		return "{NavContainer id='" + this.getId() + "'}";
+	};
 
 	return NavContainer;
 });

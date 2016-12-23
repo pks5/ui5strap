@@ -40,7 +40,7 @@ sap.ui.define(["./library", "../viewer/Task"], function(ui5strapTaskLib, Task){
 	 * @extends pks.ui5strap.viewer.Task
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

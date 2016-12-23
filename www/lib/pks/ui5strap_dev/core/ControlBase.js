@@ -52,7 +52,7 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSu
 	 * @extends sap.ui.core.Control
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public
@@ -86,26 +86,36 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSu
 	 * 
 	 * @Private
 	 */
-	var _testCssReady = function(_this, callback, iTimeout) {
+	var _testCssReady = function(_this, callback, iTimeout, fnError) {
 		window.clearTimeout(_this._waitRenderingTimer);
 		_this._waitRenderingTimer = null;
 		
 		var oDomRef = _this.getDomRef();
 		
 		if(!oDomRef){
+			fnError && fnError({
+				error : "[" + _this.getId() + "] Cannot determine required css: control not rendered.",
+				reason : "no_dom_element"
+			});
+			
 			//No DOM reference, so cancel waiting.
 			return;
 		}
 		
 		if(ui5strapCoreLib.polyfill.isDocumentHidden()){
 			//Document is hidden
-			_this._waitForResume(callback);
+			_this._waitForResume(callback, null, fnError);
 			
 			return;
 		}
 		
 		if (_this._waitRenderingTime >= iTimeout) {
-			throw new Error("[" + _this.getId() + "] Cannot determine required CSS.");
+			fnError && fnError({
+				error : "[" + _this.getId() + "] Cannot determine required css: time out.",
+				reason : "timeout"
+			});
+			
+			return;
 		}
 		
 		//Test if the css is ready
@@ -119,7 +129,7 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSu
 
 			_this._waitRenderingTimer = window.setTimeout(
 					function() {
-						_testCssReady(_this, callback, iTimeout);
+						_testCssReady(_this, callback, iTimeout, fnError);
 					}, ui5strapCoreLib.options.intervalWaitForCss);
 			
 			_this._waitRenderingTime += ui5strapCoreLib.options.intervalWaitForCss;
@@ -130,7 +140,7 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSu
 		return -1 !== Utils.getComputedStyle(oDomRef, "width").indexOf("px") && jQuery(oDomRef).height() > 0;
 	};
 
-	ControlBaseProto._waitForResume = function(callback, iTimeout){
+	ControlBaseProto._waitForResume = function(callback, iTimeout, fnError){
 		jQuery.sap.log
 		.debug("Document is hidden. Waiting for resume...");
 		
@@ -141,7 +151,7 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSu
 				.debug("Document is visible again.");
 				document.removeEventListener(ui5strapCoreLib.polyfill.visibilityChange, fnListener, false);
 				
-				_this._waitForCss(callback, iTimeout);
+				_this._waitForCss(callback, iTimeout, fnError);
 			}
 		};
 		
@@ -155,7 +165,7 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSu
 	 * 
 	 * @Protected
 	 */
-	ControlBaseProto._waitForCss = function(callback, iTimeout) {
+	ControlBaseProto._waitForCss = function(callback, iTimeout, fnError) {
 		jQuery.sap.log
 		.debug("[" + this.getId() + "] Waiting for required css rules...");
 		
@@ -164,7 +174,7 @@ sap.ui.define(['./library', "sap/ui/core/Control", './BaseSupport', './OptionsSu
 		
 		//Check if a existing timer is running.
 		if(!this._waitRenderingTimer){
-			_testCssReady(this, callback, iTimeout || ui5strapCoreLib.options.timeoutWaitForCss);
+			_testCssReady(this, callback, iTimeout || ui5strapCoreLib.options.timeoutWaitForCss, fnError);
 		}
 	};
 	

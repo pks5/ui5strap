@@ -61,7 +61,7 @@ sap.ui.define(['./library', "./ControlBase", './SelectableSupport'], function(ui
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

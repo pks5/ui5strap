@@ -1,4 +1,4 @@
-Ui5Strap 1.0.0-RELEASE
+Ui5Strap 1.0.2-SNAPSHOT
 ========================
 
 Build apps with UI5 and Bootstrap.

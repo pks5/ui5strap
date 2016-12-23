@@ -41,7 +41,7 @@ sap.ui
 					 * Class that provides responsive transition support.
 					 * 
 					 * @author Jan Philipp Knoeller
-					 * @version 1.0.1-RELEASE
+					 * @version 1.0.2-SNAPSHOT
 					 * 
 					 * @constructor
 					 * @public
@@ -265,14 +265,14 @@ sap.ui
 						if (mStatus.skipped || mStatus.canceled) {
 							
 							jQuery.sap.log
-							.info("Transition skipped or canceled: " + this);
+							.debug(this + " skipped.");
 							
 							this.finishCurrent();
 							this.finishNext();
 							
 						} else {
 							jQuery.sap.log
-							.info("Executing transition: " + this);
+							.info(this + " Executing ...");
 							
 							// Current DOM element
 							if ($oCurrent) {

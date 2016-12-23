@@ -40,7 +40,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @protected
@@ -103,6 +103,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 * @alias pks.ui5strap.viewer.AppBase.prototype
 	 */
 	AppBaseProto = AppBase.prototype,
+	SAP_LOG = jQuery.sap.log,
 	APP_PREFIX_STYLE_CLASS = "ui5strapApp";
 
 	/**
@@ -173,7 +174,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @private
 	*/
 	var _preloadJavaScript = function(_this, callback){
-		_this.log.info("AppBase::_preloadJavaScript");
+		SAP_LOG.info(_this + " Preloading JavaScript ...");
 		
 		var scripts = _this.config.data.js;
 		if(scripts.length === 0){
@@ -212,7 +213,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 * @private
 	 */
 	var _preloadModels = function(_this, callback){
-		jQuery.sap.log.debug("AppBase::_preloadModels");
+		SAP_LOG.info(_this + " Preloading models ...");
 
 		//Models
 		var models = _this.config.data.models,
@@ -223,13 +224,13 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 				
 				if(callI >= 0){
 					if(oData.oModel !== loaded[oData.modelName]){
-						_this.log.debug("Loaded model '" + oData.modelName + "'");
+						SAP_LOG.debug(_this + " Loaded model '" + oData.modelName + "'.");
 						
 						_this.setRootModel(oData.oModel, oData.modelName);
 						loaded[oData.modelName] = oData.oModel;
 					}
 					else{
-						jQuery.sap.log.warning("Model already loaded: " + oData.modelName);
+						SAP_LOG.warning("Model already loaded: " + oData.modelName);
 					}
 				}
 				
@@ -405,7 +406,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 * @private
 	 */
 	var _preloadComponents = function(_this, callback){
-		jQuery.sap.log.debug("AppBase::_preloadComponents");
+		SAP_LOG.info(_this + " Preloading components ...");
 		
 		//Components
 		var components = _this.config.data.components,
@@ -501,7 +502,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 * @private
 	 */
 	var _preloadActions = function(_this, callback){
-		jQuery.sap.log.debug("AppBase::_preloadActions");
+		SAP_LOG.info(_this + " Preloading actions ...");
 		
 		var actions = _this.config.data.actions,
 			callI = actions.length;
@@ -540,7 +541,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 * @param callback {function} The callback function.
 	 */
 	AppBaseProto.preload = function(callback){
-		jQuery.sap.log.debug("AppBaseProto.preload");
+		SAP_LOG.info(this + " Starting preload ...");
 		
 		//Resolve Configuation
 		this.config.resolve();
@@ -578,7 +579,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 * @param callback {function} The callback function.
 	 */
 	AppBaseProto.load = function(callback){
-		jQuery.sap.log.debug("AppBaseProto.load");
+		SAP_LOG.info(this + " Loading ...");
 
 		var _this = this;
 		this.preload(function(){
@@ -596,7 +597,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.start = function(callback){
-		jQuery.sap.log.debug("AppBaseProto.start");
+		SAP_LOG.info(this + " Starting ...");
 
 		var _this = this;
 		if(this.isRunning){
@@ -624,14 +625,14 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.show = function(callback){
-		jQuery.sap.log.debug("AppBaseProto.show");
+		SAP_LOG.info(this + " Showing ...");
 
 		this.isVisible = true;
 		this.onShow(new sap.ui.base.Event("ui5strap.app.show", this, {}));
 
 		var isFirstTimeShow = !this.hasFirstShow;
 		if(isFirstTimeShow){
-			this.log.debug('FIRST SHOW');
+			SAP_LOG.debug(this + " First showing ...");
 		
 			this.hasFirstShow = true;
 			this.onFirstShow(new sap.ui.base.Event("ui5strap.app.firstShow", this, {}));
@@ -646,7 +647,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.shown = function(callback){
-		jQuery.sap.log.debug("AppBaseProto.shown");
+		SAP_LOG.info(this + " Shown ...");
 
 		var _this = this;
 
@@ -657,7 +658,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 
 			var isFirstTimeShown = !_this.hasFirstShown;
 			if(isFirstTimeShown){
-				_this.log.debug('FIRST SHOWN');
+				SAP_LOG.debug(_this + ' First shown ...');
 				_this.hasFirstShown = true;
 				_this.onFirstShown(new sap.ui.base.Event("ui5strap.app.firstShown", _this, {}));
 			}
@@ -672,7 +673,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.hide = function(callback){
-		jQuery.sap.log.debug("AppBaseProto.hide");
+		SAP_LOG.info(this + " Hiding ...");
 		
 		this.isVisible = false;
 		
@@ -687,12 +688,12 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.hidden = function(callback){
-		jQuery.sap.log.debug("AppBaseProto.hidden");
+		SAP_LOG.info(this + " Hidden ...");
 
 		var _this = this;
 		ui5strapCoreLib.polyfill.requestAnimationFrame(function(){
 			if(null === _this.domRef){
-				jQuery.sap.log.warning("AppBaseProto.stop seemed to be executed before AppBaseProto.hidden. This seems to be a bug.");
+				SAP_LOG.warning("AppBaseProto.stop seemed to be executed before AppBaseProto.hidden. This seems to be a bug.");
 			}
 			else{
 				_this.domRef.className = _createAppClass(_this, APP_PREFIX_STYLE_CLASS + " " + APP_PREFIX_STYLE_CLASS + "-inactive ui5strap-hidden");
@@ -710,7 +711,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.stop = function(callback){
-		jQuery.sap.log.debug("AppBaseProto.stop");
+		SAP_LOG.info(this + " Stopping ...");
 
 		if(!this.isRunning){
 			throw new Error(this + " is not running.");
@@ -731,7 +732,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @param callback {function} The callback function.
 	*/
 	AppBaseProto.unload = function(callback){
-		jQuery.sap.log.debug("AppBaseProto.unload");
+		SAP_LOG.info(this + " Unloading ...");
 		
 		Layer.unregister(this._overlayId);
 		Layer.unregister(this.config.createDomId('loader'));
@@ -935,7 +936,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @param actionGroupId {string|object} The action name or action definition.
 	*/
 	AppBaseProto.runEventAction = function (eventParameters, actionGroupId, callback){
-		this.log.debug("Executing event '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
+		SAP_LOG.debug(this + " Executing event '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
 		var actionParameters = {
 			"parameters" : actionGroupId,
 			callback : callback
@@ -1007,8 +1008,8 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 						var actionOrFunction = eventList[j];
 						if(typeof actionOrFunction === 'function'){
 							//Call the registered function with original event as parameter
-							_this.log.debug("Executing event function '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
-							actionOrFunction.call(this, eventParameters.orgEvent);
+							SAP_LOG.debug(_this + " Executing event function '" + eventParameters.scope + '/' + eventParameters.eventName + "' ...");
+							actionOrFunction.call(_this, eventParameters.orgEvent);
 							
 							nextAction(j+1);
 						}
@@ -1045,7 +1046,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			this._events[scope][eventName] = [];
 		}
 		
-		this.log.debug("Registered event '" + eventName + "' for scope '" + scope + "'");
+		SAP_LOG.debug(this + " Registered event '" + eventName + "' for scope '" + scope + "'.");
 		this._events[scope][eventName].push(actionOrFunction);
 	};
 
@@ -1178,7 +1179,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		var mPageType = this.config.getPageType(sPageType);
 		
 		if(mPageType.deprecated){
-			jQuery.sap.log.warning("Page type '" + sPageType + "' is deprecated. Use '" + mPageType.deprecated + "' instead.");
+			SAP_LOG.warning("Page type '" + sPageType + "' is deprecated. Use '" + mPageType.deprecated + "' instead.");
 		}
 		
 		if(pageId){
@@ -1202,14 +1203,25 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 				}
 				
 				if(bCached){
-					_this.log.debug("Returning cached page '" + pageId + "'.");
+					SAP_LOG.info(this + " Returning cached page '" + pageId + "'.");
 					return cachedPage;
 				}
 				else{
-					jQuery.sap.log.warning("Created a new page but a page with that id already exists. Destroying existing page...");
+					SAP_LOG.warning("Created a new page but a page with that id already exists. Destroying existing page...");
 					
 					this.destroyPage(cachedPage);
 				}
+			}
+		}
+		
+		var elPage = document.getElementById(pageId);
+		if(elPage){
+			if(elPage.parentNode.id === 'sap-ui-preserve'){
+				SAP_LOG.warning("Page has been previously rendered and still exists in sap-ui-preserve. Removing...");
+				elPage.remove();
+			}
+			else{
+				throw new Error("There is already an element in dom with id: " + pageId);
 			}
 		}
 		
@@ -1295,7 +1307,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		if(oParent){
 			if(oParent instanceof UIArea){
 				oParent.destroy();
-				jQuery.sap.log.warning("View " + pageId + " still attached to UIArea - destroyed both.");
+				SAP_LOG.warning(this + " Page '" + pageId + "' is still attached to a UIArea - destroyed both.");
 			}
 			else{
 				throw new Error("Cannot destroy View: still attached to " + oParent.getId());
@@ -1308,10 +1320,8 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			
 			//Destroy the Page
 			oView.destroy();
-			jQuery.sap.log.info("Destroyed view " + pageId);
+			SAP_LOG.info(this + " Destroyed Page '" + pageId + "'.");
 		}
-		
-		
 	};
 	
 	/**
@@ -1351,7 +1361,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		}
 		
 		if(!oApp || !oApp.getMetadata().isInstanceOf("pks.ui5strap.viewer.IApp")){
-			jQuery.sap.log.warning("Cannot determine app reference from view " + oController.getView().getId());
+			SAP_LOG.warning("Cannot determine app reference from view " + oController.getView().getId());
 			
 			return null;
 		}
@@ -1696,7 +1706,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @returns {string} The dom ID.
 	*/
 	AppBaseProto.getDomId = function(subElement){
-		jQuery.sap.log.warning("pks.ui5strap.viewer.App.prototype.getDomId is deprecated! Use pks.ui5strap.viewer.AppConfig.prototype.getAppDomId instead!");
+		SAP_LOG.warning("pks.ui5strap.viewer.App.prototype.getDomId is deprecated! Use pks.ui5strap.viewer.AppConfig.prototype.getAppDomId instead!");
 		return this.config.createDomId(subElement);
 	};
 
@@ -1773,7 +1783,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 */
 	AppBaseProto.attach = function(containerEl){
 		if(!this.isAttached){
-			jQuery.sap.log.debug("Attaching app '" + this.getId() + "' to DOM...");
+			SAP_LOG.info(this + " Attaching to dom ...");
 			
 			this.isAttached = true;
 			
@@ -1791,7 +1801,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @override
 	*/
 	AppBaseProto.toString = function(){
-		return '[' + this.getId() + ']';
+		return "{AppBase id='" + this.getId() + "'}";
 	};
 
 	/**
@@ -1799,7 +1809,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	* @override
 	*/
 	AppBaseProto.destroy = function(){
-		this.log.debug("Destroying app...");
+		SAP_LOG.info(this + " Destroying app ...");
 		
 		//Destroy Root Control
 		this._rootControl && this._rootControl.destroy();
@@ -1888,7 +1898,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			cssKey = 'css--' + this.getId() + '--' + cssKey;
 
 			if(! ( cssKey in this._runtimeData.css ) ){	
-				this.log.debug('LOADING CSS "' + cssPath + '"');
+				SAP_LOG.debug(this + " Loading stylesheet from '" + cssPath + "' ...");
 					
 				this._runtimeData.css[cssKey] = cssPath;
 				
@@ -1901,7 +1911,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			}
 			
 			else{
-				this.log.debug("Css stylesheet '" + cssPath + "' already included.");
+				SAP_LOG.debug(this + " Stylesheet '" + cssPath + "' already included.");
 				success();
 			}
 		}
@@ -1914,7 +1924,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		for(var cssKey in this._runtimeData.css){
 			jQuery('link#' + cssKey).remove();
 			delete this._runtimeData.css[cssKey];
-			this.log.info("Css stylesheet '" + cssKey + "' removed.");
+			SAP_LOG.info(this + " Css stylesheet '" + cssKey + "' removed.");
 		}
 	};
 
@@ -1935,7 +1945,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		//sap.ui.getCore().setThemeRoot(themeName, );
 		sap.ui.getCore().applyTheme(themeName, this.config.getEnvironment().pathToThemeRoot);
 
-		this.log.debug("Theme '" + themeName + "' set.");
+		SAP_LOG.debug(" Theme '" + themeName + "' set.");
 	};
 
 	//Return Module Constructor

@@ -40,7 +40,7 @@ sap.ui.define(['./library', "sap/ui/core/Control"], function(ui5strapBs3Lib, Con
 	 * @extends sap.ui.core.Control
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

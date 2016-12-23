@@ -17,7 +17,7 @@
         },
         {
             "id" : "com.ui5strap.apps.template",
-            "internal" : false,
+            "internal" : true,
             "name": "Template",
             "type" : "UI5STRAP",
             "icon": "/apps/template/img/ui5strap-template-icon.jpg",

@@ -1,6 +1,6 @@
 {
   "name": "ui5strap-server",
-  "version": "1.0.1-RELEASE",
+  "version": "1.0.2-SNAPSHOT",
   "devDependencies": {
     "body-parser": "*",
     "ejs": "*",

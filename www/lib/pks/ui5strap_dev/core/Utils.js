@@ -356,7 +356,7 @@ sap.ui.define([ './library'], function(ui5strapCoreLib) {
 				._getPropertiesToPropagate();
 
 		if (toControl.hasModel()) {
-			jQuery.sap.log.info("Propagated properties from " + fromControl.getId() + " to " + toControl.getId());
+			jQuery.sap.log.info("{Utils} Added propagation from '" + fromControl.getId() + "' to '" + toControl.getId() + "'.");
 			
 			toControl.updateBindingContext(false, true,
 					undefined, true);

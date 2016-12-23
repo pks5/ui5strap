@@ -40,7 +40,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	 * @extends sap.ui.base.Object
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public
@@ -58,7 +58,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	/**
 	 * @alias pks.ui5strap.viewer.AppConfig.prototype
 	 */
-	AppConfigProto = AppConfig.prototype;
+	AppConfigProto = AppConfig.prototype,
+	SAP_LOG = jQuery.sap.log;
 	
 	var _pageTypes = {
 		"sap.ui.core.mvc.XMLView" : {
@@ -147,7 +148,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			}
 			
 			//ControlID already has a app prefix, just return it.
-			jQuery.sap.log.debug("Control ID '" + sControlId + "' already have an app prefix.");
+			SAP_LOG.debug(this + " ID '" + sControlId + "' already prefixed.");
 			
 			return sControlId;
 		}
@@ -463,7 +464,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	*/
 	AppConfigProto.resolvePackage = function (packageString){
 		if(-1 === packageString.indexOf(".")){
-			jQuery.sap.log.warning("Please add a leading dot '.' to " + packageString);
+			SAP_LOG.warning(this + " Please prepend a dot ('.') to '" + packageString + "'.");
 			packageString = "." + packageString;
 		}
 		
@@ -515,7 +516,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		//Type
 		if(!appSection["type"]){
 			if(appSection.module){
-				jQuery.sap.log.warning("Config setting 'app.module' is deprecated! Use 'app.type' instead.")
+				SAP_LOG.warning(this + " Config setting 'app.module' is deprecated! Use 'app.type' instead.")
 				appSection["type"] = appSection.module;
 			}
 			else{
@@ -564,7 +565,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		//Views directory
 		if(!configDataJSON.pages){
 			if(configDataJSON.views){
-				jQuery.sap.log.warning("config data views is deprecated. use pages instead.");
+				SAP_LOG.warning(this + " Section 'views' is deprecated. Use 'pages' instead.");
 				configDataJSON.pages = configDataJSON.views;
 			}
 			else{
@@ -611,7 +612,11 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			configDataJSON.events = {};
 		}
 	};
-
+	
+	AppConfigProto.toString = function(){
+		return "{AppConfig}";
+	};
+	
 	/*
 	 * ----------
 	 * DEPRECATED
@@ -633,7 +638,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 	* @deprecated
 	*/
 	AppConfigProto.getAppDomId = function(subElement){
-		jQuery.sap.log.warning("getAppDomId is deprecated. Use createDomId instead.");
+		SAP_LOG.warning(this + " Function 'getAppDomId' is deprecated. Use 'createDomId' instead.");
 		
 		return subElement ? this.createDomId(subElement) : this.getDomId();
 	};

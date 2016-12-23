@@ -148,21 +148,24 @@ sap.ui.define(['pks/ui5strap/core/ControlBase'], function(ControlBase){
 		jQuery.sap.log.info("Updating HomeScreen Grid...");
 		
 		var _this = this;
-		try{
-			this._waitForCss(
-				function() {
-					_updateGrid(_this, _this._$homeScreen.width());
+		this._waitForCss(
+			function() {
+				_updateGrid(_this, _this._$homeScreen.width());
+				
+				callback && callback();
+			},
+			30000,
+			function(oError){
+				if(oError.reason === "timeout"){
+					jQuery.sap.log.warning("Could not determine home screen width. Now using 480px as fallback.")
+					
+					_updateGrid(_this, 480);
 					
 					callback && callback();
-				},
-				30000
-			);
-		}
-		catch(e){
-			_updateGrid(_this, 480);
-			
-			callback && callback();
-		}
+				}
+			}
+		);
+		
 	};
 	
 	/*

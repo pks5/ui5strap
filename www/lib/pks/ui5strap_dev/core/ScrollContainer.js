@@ -40,7 +40,7 @@ sap.ui.define(['./library', "./ControlBase"], function(ui5strapCoreLib, ControlB
 	 * @extends pks.ui5strap.core.ControlBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public

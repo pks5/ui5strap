@@ -40,7 +40,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	 * @extends pks.ui5strap.viewer.ViewerBase
 	 * 
 	 * @author Jan Philipp Knoeller
-	 * @version 1.0.1-RELEASE
+	 * @version 1.0.2-SNAPSHOT
 	 * 
 	 * @constructor
 	 * @public
@@ -52,6 +52,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	 * @alias pks.ui5strap.viewer.Viewer.prototype
 	 */
 	ViewerMultiProto = ViewerMulti.prototype,
+	SAP_LOG = jQuery.sap.log,
 	domAttachTimeout = 50;
 
 	//Private properties that are linked to the scope of the anonymous self executing function around this module
@@ -100,7 +101,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			
 			callback && callback();
 		} else {
-			jQuery.sap.log
+			SAP_LOG
 					.debug("Ui5Strap library CSS is not available yet...");
 
 			_this._waitCssTimer = window.setTimeout(
@@ -118,7 +119,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.start = function(callback, loadCallback, parameters){
-		jQuery.sap.log.info("Starting Ui5Strap Viewer...");
+		SAP_LOG.info("{Viewer} Starting ...");
 		
 		var _this = this;
 		this.init();
@@ -180,7 +181,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.executeApp = function(appDefinition, doNotShow, callback, loadCallback){
-		jQuery.sap.log.debug("ViewerProto.executeApp");
+		SAP_LOG.info("{Viewer} Executing app ...");
 		
 		var _this = this,
 			appType = appDefinition.type || "HTML5",
@@ -356,7 +357,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.loadApp = function(oConfigData, parameters, callback){
-		jQuery.sap.log.debug("ViewerProto.loadApp");
+		SAP_LOG.info("{Viewer} Loading app ...");
 		
 		var _this = this,
 			configAppSection = oConfigData.app;
@@ -365,7 +366,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			throw new Error("Invalid app configuration: attribute 'app' is missing.");
 		}
 		
-		configAppSection.logLevel && jQuery.sap.log.setLevel(configAppSection.logLevel);
+		configAppSection.logLevel && SAP_LOG.setLevel(configAppSection.logLevel);
 		
 		if(_m_loadedSapplicationsById[configAppSection.id]){
 			return callback(_m_loadedSapplicationsById[configAppSection.id]);
@@ -398,7 +399,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.createApp = function(appConfig, callback){
-		jQuery.sap.log.debug("ViewerProto.createApp");
+		SAP_LOG.info("{Viewer} Creating app instance ...");
 		
 		var oConfigData = appConfig.data,
 			libs = oConfigData.libraries,
@@ -431,7 +432,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.startApp = function(sappId, callback){
-		jQuery.sap.log.debug("ViewerProto.startApp");
+		SAP_LOG.info("{Viewer} Starting app ...");
 		
 		var appInstance = this.getApp(sappId);
 		
@@ -458,10 +459,10 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.showApp = function(sappId, transitionName, callback){
-		jQuery.sap.log.debug("ViewerProto.showApp");
+		SAP_LOG.info("{Viewer} Showing app ...");
 		
 		if(this._loadingApp){
-			jQuery.sap.log.warning("App '" + this._loadingApp + "' is currently loading."); 
+			SAP_LOG.warning("App '" + this._loadingApp + "' is currently loading."); 
 			
 			return;
 		}
@@ -506,7 +507,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		//Load app css
 		appInstance.includeStyle(function includeStyle_complete(){
 			
-			jQuery.sap.log.debug("Attaching root to DOM...");
+			SAP_LOG.info("{Viewer} Attaching to dom ...");
 			
 			//Append App to DOM is not yet
 			appInstance.attach(_this._dom.viewer);
@@ -542,7 +543,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 					if($currentRoot.length){
 						//Remove splash screen.
 						$currentRoot.remove();
-						jQuery.sap.log.info("Splash screen removed.");
+						SAP_LOG.info("{Viewer} Splash screen removed.");
 					}
 					
 					fnHidden();
@@ -596,7 +597,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.stopApp = function(sappId){
-		jQuery.sap.log.debug("ViewerProto.stopApp");
+		SAP_LOG.info("{Viewer} Stopping App '" + sappId + "' ...");
 		
 		var appInstance = this.getApp(sappId);
 
@@ -623,7 +624,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 	* @Public
 	*/
 	ViewerMultiProto.unloadApp = function(sappId){
-		jQuery.sap.log.debug("ViewerProto.unloadApp");
+		SAP_LOG.info("{Viewer} unloading App '" + sappId + "' ...");
 		
 		var appInstance = this.getApp(sappId);
 
@@ -671,7 +672,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			|| !appMessage.receiver 
 			|| !appMessage.sender
 			|| !appMessage.message){
-			//jQuery.sap.log.error("Cannot send message: parameters are missing.");
+			//SAP_LOG.error("Cannot send message: parameters are missing.");
 			return;
 		}
 		
@@ -688,7 +689,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 				app.onMessage(new sap.ui.base.Event("ui5strap.app.message", null, appMessage));
 			}
 			else{
-				jQuery.sap.log.error("Cannot send message to app " + receiverAppId);
+				SAP_LOG.error("Cannot send message to app " + receiverAppId);
 			}
 			
 	    }
@@ -749,7 +750,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		.on('keyup', function(e) {
 	      		var evtobj = window.event? window.event : e
 
-	      		jQuery.sap.log.debug("Key pressed: " + evtobj.keyCode);
+	      		SAP_LOG.debug("Key pressed: " + evtobj.keyCode);
 
 	      		if (evtobj.keyCode === 84){
 	      			var apps = _m_loadedSapplicationsById;

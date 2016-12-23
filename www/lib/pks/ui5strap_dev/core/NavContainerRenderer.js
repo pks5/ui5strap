@@ -43,8 +43,6 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 		}
 
 		this.endRender(rm, oControl);
-		
-		jQuery.sap.log.debug("[NC#" + oControl.getId() + "] RENDERED");
 	};
 
 	/*

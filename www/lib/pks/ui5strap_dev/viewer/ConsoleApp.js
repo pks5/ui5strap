@@ -44,7 +44,7 @@
 		 * @extends pks.ui5strap.viewer.AppBase
 		 * 
 		 * @author Jan Philipp Knoeller
-		 * @version 1.0.1-RELEASE
+		 * @version 1.0.2-SNAPSHOT
 		 * 
 		 * @constructor
 		 * @public

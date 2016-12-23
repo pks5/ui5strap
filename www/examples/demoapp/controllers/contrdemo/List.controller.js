@@ -38,7 +38,7 @@ sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 			},
 			
 			onAfterRendering : function(oEvent){
-				console.log("RENDERING LIST");
+				//console.log("RENDERING LIST");
 			},
 			
 			handleFeedTap : function(oEvent){
