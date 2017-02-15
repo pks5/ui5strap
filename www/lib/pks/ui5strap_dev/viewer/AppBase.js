@@ -1597,7 +1597,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		else{
 			//Load plain ui5 app in a Component Container
 			sap.ui.require(["sap/ui/core/ComponentContainer", "sap/ui/core/UIComponent"], function(ComponentContainer, UIComponent){
-				if(!rootComponent instanceof UIComponent){
+				if(!(rootComponent instanceof UIComponent)){
 					throw new Error("Could not create root control!");
 				}
 				
