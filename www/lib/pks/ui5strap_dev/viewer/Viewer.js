@@ -837,11 +837,12 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			}
 		);
 		
-		window.addEventListener(
-			"error", function(e) { 
-				_this.showFatalError(e);
-		}, false);
-		
+		if(this.options.errorToBrowser){
+			window.addEventListener(
+				"error", function(e) { 
+					_this.showFatalError(e);
+			}, false);
+		}
 	};
 	
 	return ViewerMulti;
