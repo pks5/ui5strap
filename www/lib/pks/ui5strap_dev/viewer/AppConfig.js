@@ -255,8 +255,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			throw new Error("No such environment: " + currentEnv);
 		}
 		
-		if(!(envData.pathToServerRoot && envData.pathToStaticRoot && envData.pathToThemeRoot)){
-			throw new Error("Environment definition must contain 'pathToServerRoot', 'pathToStaticRoot' and 'pathToThemeRoot'!");
+		if(!envData.pathToServerRoot || !envData.pathToStaticRoot){
+			throw new Error("Environment definition must contain 'pathToServerRoot' and 'pathToStaticRoot'.");
 		}
 		
 		return envData;

@@ -1868,9 +1868,9 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			cssKeys = Object.keys(configData.css),
 			callbackCount = cssKeys.length;
 
-		var themeName = this.config.data.app.theme;
-		if(themeName){ 
-			this.setTheme(themeName);
+		var sTheme = this.config.data.app.theme;
+		if(sTheme){ 
+			this.setTheme(sTheme);
 		}
 		
 		if(callbackCount === 0){
@@ -1930,22 +1930,27 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 
 	/**
 	* Sets the theme of the app
-	* @param themeName {string} The name of the new theme.
+	* 
+	* @param {string} sTheme - The name of the new theme.
 	*/
-	AppBaseProto.setTheme = function(themeName){
-		if(!themeName || "base" === themeName){
+	AppBaseProto.setTheme = function(sTheme){
+		if(!sTheme || "base" === sTheme){
 			sap.ui.getCore().applyTheme("base");
-			return;
 		}
-
-		if(jQuery.sap.startsWith(themeName, "sap_")){
-			sap.ui.getCore().applyTheme(themeName);
-			return;
+		else if(jQuery.sap.startsWith(sTheme, "ui5strap_")){
+			var mEnv = this.config.getEnvironment();
+			
+			if(!mEnv.pathToThemeRoot){
+				throw new Error("Environment attribute 'pathToThemeRoot' needs to be set.");
+			}
+			
+			sap.ui.getCore().applyTheme(sTheme, mEnv.pathToThemeRoot);
 		}
-		//sap.ui.getCore().setThemeRoot(themeName, );
-		sap.ui.getCore().applyTheme(themeName, this.config.getEnvironment().pathToThemeRoot);
-
-		SAP_LOG.debug(" Theme '" + themeName + "' set.");
+		else{
+			sap.ui.getCore().applyTheme(sTheme);
+		}
+		
+		SAP_LOG.debug(" Theme '" + sTheme + "' set.");
 	};
 
 	//Return Module Constructor
