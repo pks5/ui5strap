@@ -1950,7 +1950,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			sap.ui.getCore().applyTheme(sTheme);
 		}
 		
-		SAP_LOG.debug(" Theme '" + sTheme + "' set.");
+		SAP_LOG.debug("Theme '" + sTheme + "' set.");
 	};
 
 	//Return Module Constructor
