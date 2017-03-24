@@ -1,0 +1,31 @@
+<sapUiCoreMvc:View controllerName="com.ui5strap.apps.demoapp.controllers.bscon.Carousel" xmlns:ui5strapCore="pks.ui5strap.core" xmlns="pks.ui5strap.bs3" xmlns:ui5strapEx="pks.ui5strap.ex" xmlns:sapUiCoreMvc="sap.ui.core.mvc"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    
+    <ui5strapCore:ScrollContainer vertical="true">
+        <Container type="Fluid" full-height="true" class="example-carousel">
+            <Carousel id="carousel1" columnsExtraSmall="1" columnsSmall="2" controls="false" innerAlign="PullLeft">  
+                <Container type="Fluid" full-height="true" class="example-carousel-page"> 
+                    <Icon icon="cube" />  
+               </Container>
+               <Container type="Fluid" full-height="true" class="example-carousel-page"> 
+                    <Icon icon="cogs" />
+               </Container>
+               <Container type="Fluid" full-height="true" class="example-carousel-page"> 
+                    <Icon icon="chrome" />             
+               </Container>
+               <Container type="Fluid" full-height="true" class="example-carousel-page"> 
+                    <Icon icon="file" />             
+               </Container>
+               <Container type="Fluid" full-height="true" class="example-carousel-page"> 
+                    <Icon icon="star" />             
+               </Container>
+            </Carousel>
+            
+            <Paragraph>
+                   <Button severity="Primary" tap=".addItem" text="Add" />
+                   <Button severity="Danger" tap=".removeItem" text="Remove" />
+            </Paragraph>
+		</Container>
+    </ui5strapCore:ScrollContainer>
+    
+</sapUiCoreMvc:View>

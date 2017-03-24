@@ -209,6 +209,13 @@
             	"viewName" : ".views.bscon.Dialogs",
                 "route" : "bscontrols/dialogs"
             },
+            
+            {
+                "id" : "controlsCarousel",
+                "parentId" : "controls",
+                "viewName" : ".views.bscon.Carousel",
+                "route" : "bscontrols/carousel"
+            },
             "//END bscontrols",
             
             "//BEGIN cuscon",

@@ -99,7 +99,12 @@
 			"label" : "PAGE_CONTROLS_DIALOGS_TITLE",
 			"id" : "controlsDialogs",
 			"icon" : "clone"
-		}							
+		},
+        {
+            "label" : "PAGE_CONTROLS_CAROUSEL_TITLE",
+            "id" : "controlsCarousel",
+            "icon" : "exchange"
+        }       							
 	
 	],
 	

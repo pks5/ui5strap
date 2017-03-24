@@ -64,9 +64,11 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
 		        swipe : {
 		            type:"boolean", defaultValue : true
 		        },
-				controls : {
+				
+		        controls : {
 					type:"boolean", defaultValue : true
 				},
+				
 				pagination : {
 					type:"boolean", defaultValue : true
 				},
@@ -75,6 +77,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
 			        type: "pks.ui5strap.bs3.Alignment",
 			        defaultValue : ui5strapBs3Lib.Alignment.CenterBlock
 		        },
+		        
 		        innerOverflow : {
 		            type: "pks.ui5strap.bs3.CarouselOverflow",
 		            defaultValue : ui5strapBs3Lib.CarouselOverflow.Visible
@@ -106,10 +109,12 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
 		        speed : {
 		            type:"float", defaultValue : 0.5
 		        },
+		        
 		        cycle : {
 		            type:"boolean",
 		            defaultValue : false
 		        },
+		        
 		        interval : {
 		            type:"int", defaultValue : 0
 		        }
@@ -147,15 +152,17 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
             _this.timer = null;
         }
 		
-		this.items = null;
-		
+		this.pagination = null;
+	    this.items = null;
+	    this.$lane = null;
 	};
 	
   /**
    * @Private
    */
   var _setInterval = function(_this, newInterval){
-      if(_this.timer){
+      
+	   if(_this.timer){
             window.clearInterval(_this.timer);
        }
 
@@ -167,11 +174,6 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
           _this.nextPage();
        }, newInterval);
        
-       this.pagination = null;
-       this.items = null;
-       
-       this.$lane.destroy();
-       this.$lane = null;
   };
 
   /**
@@ -179,9 +181,11 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
    */
   var _findPart = function(_this, partId, index){
       var idString = '#' + _this.getId()+ '--carousel-' + partId;
+      
       if(index >= 0){
         idString += '-' + index;
       }
+      
       return _this.$().find(idString);
   };
 
@@ -192,9 +196,9 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
   CarouselProto.init = function(){
 		this.items = [];
 
-    if(!ui5strapCoreLib.polyfill.transitionEndEvent){
-      throw new Error('pks.ui5strap.bs3.Carousel requires "transitionEndEvent" support.');
-    }
+	    if(!ui5strapCoreLib.polyfill.transitionEndEvent){
+	      throw new Error('pks.ui5strap.bs3.Carousel requires "transitionEndEvent" support.');
+	    }
   };
 
   /**
@@ -202,38 +206,59 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
    */
   CarouselProto._cssClasses = function(){
       var cssClasses = "carousel carousel-advanced",
-      newIndex = this.getIndex(),
-      columsMedium = this.getColumnsMedium(),
-      columsLarge = this.getColumnsLarge(),
-      columsSmall = this.getColumnsSmall(),
-      columsExtraSmall = this.getColumnsExtraSmall();
+	      newIndex = this.getIndex(),
+	      iItemsLength = this.getItems().length,
+	      columsMedium = this.getColumnsMedium(),
+	      columsLarge = this.getColumnsLarge(),
+	      columsSmall = this.getColumnsSmall(),
+	      columsExtraSmall = this.getColumnsExtraSmall();
 
       cssClasses += this.getCycle() ? " carousel-cycle" : " carousel-ends";
       
-    if(0 < columsMedium){
-      cssClasses += " carousel-md-" + columsMedium;
-    }
-    if(0 < columsLarge){
-      cssClasses += " carousel-lg-" + columsLarge;
-    }
-    if(0 < columsSmall){
-      cssClasses += " carousel-sm-" + columsSmall;
-    }
-    if(0 < columsExtraSmall){
-      cssClasses += " carousel-xs-" + columsExtraSmall;
-    }
-
-    cssClasses += " carousel-overflow-" + this.getInnerOverflow().toLowerCase();
-    cssClasses += " carousel-align-" + ui5strapBs3Lib.BSAlignment[this.getInnerAlign()];
-       cssClasses += " carousel-current-" + newIndex;
+	    if(0 < columsMedium){
+	      cssClasses += " carousel-md-" + columsMedium;
+	    }
+	    
+	    if(0 < columsLarge){
+	      cssClasses += " carousel-lg-" + columsLarge;
+	    }
+	    
+	    if(0 < columsSmall){
+	      cssClasses += " carousel-sm-" + columsSmall;
+	    }
+	    
+	    if(0 < columsExtraSmall){
+	      cssClasses += " carousel-xs-" + columsExtraSmall;
+	    }
+	
+	    cssClasses += " carousel-overflow-" + this.getInnerOverflow().toLowerCase();
+	    cssClasses += " carousel-align-" + ui5strapBs3Lib.BSAlignment[this.getInnerAlign()];
+	    cssClasses += " carousel-current-" + newIndex;
+      
       if(newIndex === 0){
         cssClasses += " carousel-current-first";
       }
-      if(newIndex === this.items.length-1){
+      
+      if(newIndex === iItemsLength - 1){
         cssClasses += " carousel-current-last";
       }
 
       return cssClasses;
+  };
+  
+  CarouselProto.removeItem = function(oItem, bSuppressInvalidate){
+	  var oRemovedItem = this.removeAggregation("items", oItem, bSuppressInvalidate),
+	  	iIndex = this.getIndex(),
+	  	iItemsLength = this.getItems().length;
+	  
+	  if(iIndex >= iItemsLength){
+		  this.setIndex(iItemsLength - 1);
+	  }
+  };
+  
+  CarouselProto.onBeforeRendering = function(){
+	  this.$lane && this.$lane.off(ui5strapCoreLib.polyfill.transitionEndEvent);
+	  
   };
 
   /**
@@ -242,10 +267,10 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
    */
 	CarouselProto.onAfterRendering = function(){
 	    var _this = this,
-	    itemsLength = this.getItems().length;
+	    	iItemsLength = this.getItems().length;
 	
 	    //Store lane reference
-			this.$lane = _findPart(this, 'lane');
+		this.$lane = _findPart(this, 'lane');
 	
 	    if(ui5strapCoreLib.polyfill.transitionEndEvent){
 	        this.$lane.on(ui5strapCoreLib.polyfill.transitionEndEvent, function(){
@@ -256,7 +281,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
 	    this.pagination = [];
 	    this.items = [];
 	
-	    for(var i = 0; i < itemsLength; i++){
+	    for(var i = 0; i < iItemsLength; i++){
 	          this.pagination.push(_findPart(this, 'indicator', i));
 	          this.items.push(_findPart(this, 'item', i));
 	    }
@@ -270,10 +295,10 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
    * @Public
    * @Override
    */	
-  CarouselProto.setInterval = function(newInterval, noRefresh){
+  CarouselProto.setInterval = function(newInterval, bSuppressInvalidate){
   
       if(!this.getDomRef()){ 
-          this.setProperty('interval', newInterval, noRefresh);
+          this.setProperty('interval', newInterval, bSuppressInvalidate);
       }
       else{
           _setInterval(this, newInterval);
@@ -291,9 +316,10 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
       this.setProperty('index', newIndex, suppressInvalidate);
     }
     else{
+    	var iItemsLength = this.getItems().length;
 
-      if(newIndex < 0 || newIndex >= this.items.length){
-        return false;
+      if(newIndex < 0 || newIndex >= iItemsLength){
+    	  return false;
       }
       
       var oldIndex = this.getIndex();
@@ -308,7 +334,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
       }
       
       //Refresh CSS Classes
-      for(var i = 0; i < this.items.length; i++){
+      for(var i = 0; i < iItemsLength; i++){
           var newClass = null;
           
           if(i === newIndex){
@@ -346,9 +372,17 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
   * @Protected
   */
   CarouselProto._refreshLabel = function(){
-      var label = this.getLabel();
+      var label = this.getLabel(),
+      	  iItemsLength = this.getItems().length;
+      
       if("" !== label){
-        label = this.items.length > 0 ? label.replace("[index]", this.getIndex()).replace("[number]", this.getIndex() + 1).replace("[count]", this.items.length) : '';
+        label = iItemsLength > 0 
+        		? label
+        			.replace("[index]", this.getIndex())
+        			.replace("[number]", this.getIndex() + 1)
+        			.replace("[count]", iItemsLength) 
+        		: '';
+        			
         _findPart(this, 'label').html(label);
       }
   };
@@ -357,24 +391,28 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
   * Change to next page
   * @Public
   */
-  CarouselProto.nextPage = function(){
-      var newIndex = this.getIndex()+1;
-      if(this.getCycle() && newIndex >= this.items.length){
+  CarouselProto.nextPage = function(bSuppressInvalidate){
+      var newIndex = this.getIndex() + 1;
+      
+      if(this.getCycle() && newIndex >= this.getItems().length){
           newIndex = 0;
       }
-      this.setIndex(newIndex);
+      
+      this.setIndex(newIndex, bSuppressInvalidate);
   }; 
 
   /**
   * Change to previous page
   * @Public
   */
-  CarouselProto.previousPage = function(){
-      var newIndex = this.getIndex()-1;
+  CarouselProto.previousPage = function(bSuppressInvalidate){
+      var newIndex = this.getIndex() - 1;
+      
       if(this.getCycle() && newIndex < 0){
-          newIndex = this.items.length - 1;
+          newIndex = this.getItems().length - 1;
       }
-      this.setIndex(newIndex);
+      
+      this.setIndex(newIndex, bSuppressInvalidate);
   };
   
   /**
@@ -422,12 +460,13 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase"], function(
 	    }
   };
 
-  if(ui5strapBs3Lib.support.touch){
+  	if(ui5strapBs3Lib.support.touch){
 	    CarouselProto.ontap = CarouselProto._handlePress;
 	}
 	else{
 		CarouselProto.onclick = CarouselProto._handlePress;
 	}
 
-  return Carousel;
+  	//Return Constructor
+  	return Carousel;
 });
