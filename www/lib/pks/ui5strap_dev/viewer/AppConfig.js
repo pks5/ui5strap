@@ -539,7 +539,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 		}
 		
 		if(!appSection.environment){
-			appSection.environment = "local";
+			appSection.environment = this.options.environment;
 		}
 		
 		//Default App Transition
