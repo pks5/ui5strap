@@ -50,7 +50,8 @@
 	],
 	
 	"rootNavigation" : {
-	     "module" : "pks.ui5strap.ex.BarNavContainer",
+	     "type" : "pks.ui5strap.ex.BarNavContainer",
+         
          "settings" : {
          	"barSizeExtraSmall" : 1,
          	"barPlacementExtraSmall" : "Top",
