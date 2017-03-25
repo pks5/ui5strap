@@ -11,7 +11,7 @@
         {
             "type" : "HTML5",
             "icon": "/examples/home/img/ui5strap-docs-icon.jpg",
-            "url": "http://ui5strap.com/docs",
+            "url": "http://www.ui5strap.com/manual/",
             "id" : "com.ui5strap.docs",
             "name" : "Manual"
         },
