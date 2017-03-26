@@ -8,16 +8,16 @@
     "run-desktop": "nwbuild -r ../www",
     "run-android": "cd .. && cordova emulate android",
     
-    "build-ui5strap-themes": "grunt --gruntfile ../build/pks.ui5strap/ui5strap-themes.js",
+    "build-themes": "grunt --gruntfile ../build/pks.ui5strap/ui5prod-themes.js",
     
-    "clean-ui5strap-library": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5strap-library.js",
-    "build-ui5strap-library": "grunt --gruntfile ../build/pks.ui5strap/ui5strap-library.js",
-  	
-  	"clean-ui5strap-docs": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5strap-docs.js",
-  	"build-ui5strap-docs" : "grunt --gruntfile ../build/pks.ui5strap/ui5strap-docs.js",
-  	
-  	"clean-ui5strap-release": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5strap-release.js",
-    "build-ui5strap-release": "grunt --gruntfile ../build/pks.ui5strap/ui5strap-release.js",
+    "clean-library": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5prod-library.js",
+    "build-library": "grunt --gruntfile ../build/pks.ui5strap/ui5prod-library.js",
+    
+    "clean-docs": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5prod-docs.js",
+    "build-docs" : "grunt --gruntfile ../build/pks.ui5strap/ui5prod-docs.js",
+    
+    "clean-release": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5prod-release.js",
+    "build-release": "grunt --gruntfile ../build/pks.ui5strap/ui5prod-release.js",
     
     "build-demoapp-component": "grunt --gruntfile build-demoapp-preload.js"
     

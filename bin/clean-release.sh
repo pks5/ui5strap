@@ -14,7 +14,7 @@ echo Cleaning Ui5Strap release in docs ...
 
 cd "$(dirname "$0")"
 
-npm run clean-ui5strap-release
+npm run clean-release
 
 cd $curDir
 

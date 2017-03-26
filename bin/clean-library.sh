@@ -10,11 +10,11 @@ echo
 
 curDir=$(pwd)
 
-echo Building Ui5Strap Library ...
+echo Cleaning generated Ui5Strap libraries ...
 
 cd "$(dirname "$0")"
 
-npm run build-ui5strap-library
+npm run clean-library
 
 cd $curDir
 

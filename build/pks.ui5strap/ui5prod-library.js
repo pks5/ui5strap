@@ -1,25 +1,48 @@
-module.exports = function(grunt) {
+/*
+ * 
+ * UI5Prod
+ *
+ * Grunt file for building UI5 libraries.
+ * 
+ * @author Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Homepage: http://pksoftware.de
+ *
+ * Copyright (c) 2013-2014 Jan Philipp Knöller <info@pksoftware.de>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Released under Apache2 license: http://www.apache.org/licenses/LICENSE-2.0.txt
+ * 
+ */
 
+var ui5prodShared = require("./ui5prod-shared.js");
+
+module.exports = function(grunt) {
+	
+	"use strict";
+	
+	var oPackage = grunt.file.readJSON("package.json"),
+		oProdConfig = ui5prodShared.getProdConfig(oPackage.ui5prod),
+		sLibraries = oProdConfig.subPathLibAll,
+		aSubLibraries = oProdConfig.subLibraries;
+	
+	if(aSubLibraries.length){
+		sLibraries += "/*";
+	}
+	
+	
 	// Project configuration.
 	grunt.initConfig({
-		pkg: grunt.file.readJSON("package.json"),
-		
-		pathToLibRoot : "../../www/lib/",
-		libraryName : "pks/ui5strap",
-		
-		suffixDev : "_dev",
-		suffixAll : "_all",
-		suffixMin : "_min",
-		suffixPre : "_pre",
-		
-		libraryAll : "<%= libraryName %><%= suffixAll %>/*",
-		
-		folderDev : "<%= pathToLibRoot %><%= libraryName %><%= suffixDev %>/",
-		
-		folderAll : "<%= pathToLibRoot %><%= libraryName %><%= suffixAll %>/",
-		folderMin : "<%= pathToLibRoot %><%= libraryName %><%= suffixMin %>/",
-		folderPre : "<%= pathToLibRoot %><%= libraryName %><%= suffixPre %>/",
-		
 		
 		/*
 		 * Deletes all generated libraries.
@@ -30,9 +53,9 @@ module.exports = function(grunt) {
 			},
 			
 			cleanFoldersAllMinPre : {
-				src : [ "<%= folderAll %>",
-				        "<%= folderMin %>",
-				        "<%= folderPre %>"]
+				src : [ oProdConfig.folderLibAll,
+				        oProdConfig.folderLibMin,
+				        oProdConfig.folderLibPre]
 			}
 		},
 		
@@ -45,9 +68,9 @@ module.exports = function(grunt) {
 			 */
 			copyDevToAll : {
 				expand : true,
-				cwd : "<%= folderDev %>",
+				cwd : oProdConfig.folderLibDev,
 				src : [ '**' ],
-				dest : "<%= folderAll %>"
+				dest : oProdConfig.folderLibAll
 			},
 
 			/*
@@ -56,9 +79,9 @@ module.exports = function(grunt) {
 			 */
 			createDebugScriptsInAll : {
 				expand : true,
-				cwd : "<%= folderAll %>",
-				src : [ '**/*.js' ],
-				dest : "<%= folderAll %>",
+				cwd : oProdConfig.folderLibAll,
+				src : [ '**/*.js', '!**/library-preload.js' ],
+				dest : oProdConfig.folderLibAll,
 
 				rename : function(dest, src) {
 					return dest + src.replace('.js', '-dbg.js');
@@ -71,10 +94,10 @@ module.exports = function(grunt) {
 			 */
 			copyAllToMin : {
 				expand : true,
-				cwd : "<%= folderAll %>",
-				src : [ '**', '!*-dbg.js', //'!library-preload.js',
+				cwd : oProdConfig.folderLibAll,
+				src : [ '**', '!**/*-dbg.js', //'!library-preload.js',
 						'!**/*.less' ],
-				dest : "<%= folderMin %>"
+				dest : oProdConfig.folderLibMin
 			},
 			
 			/*
@@ -83,9 +106,9 @@ module.exports = function(grunt) {
 			 */
 			copyAllToPre : {
 				expand : true,
-				cwd : "<%= folderAll %>",
-				src : [ '**', '!*.js', '!**/*.less', "library-preload.js" ],
-				dest : "<%= folderPre %>"
+				cwd : oProdConfig.folderLibAll,
+				src : [ '**', '!**/*.js', '!**/*.less', "**/library-preload.js" ],
+				dest : oProdConfig.folderLibPre
 			}
 		},
 		
@@ -95,11 +118,11 @@ module.exports = function(grunt) {
 		openui5_preload : {
 			createPreloadFileInAll : {
 				options : {
-					resources : "<%= pathToLibRoot %>",
-					dest : "<%= pathToLibRoot %>",
+					resources : oProdConfig.pathToLibRoot,
+					dest : oProdConfig.pathToLibRoot,
 					compress : true
 				},
-				libraries : "<%= libraryAll %>"
+				libraries : sLibraries
 			}
 		},
 
@@ -114,9 +137,9 @@ module.exports = function(grunt) {
 			uglifyScriptsInAll : {
 				files : [ {
 					expand : true,
-					cwd : "<%= folderAll %>",
+					cwd : oProdConfig.folderLibAll,
 					src : [ '**/*.js', '!*-dbg.js', '!library-preload.js', '!*_min.js', '!*.min.js' ],
-					dest : "<%= folderAll %>",
+					dest : oProdConfig.folderLibAll,
 					ext : '.js'
 				} ]
 			}

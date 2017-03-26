@@ -1,7 +1,10 @@
 {
-  "name": "ui5strap-build",
-  "version": "1.0.2-SNAPSHOT",
+  "name": "filexui5-build",
+  
+  "version": "1.0.8-SNAPSHOT",
+  
   "author": "Jan Philipp Knoeller",
+  
   "devDependencies": {
     "grunt": "*",
     "grunt-cli": "*",
@@ -12,5 +15,12 @@
     "grunt-contrib-compress" : "*",
     "grunt-openui5": "*",
     "grunt-jsdoc" : "*"
+  },
+  
+  "ui5prod" : {
+  		"productName" : "ui5strap",
+  		"libraryName" : "pks.ui5strap",
+  		"productVersion" : "1.0.2-SNAPSHOT",
+  		"subLibraries" : ["bs3", "core", "ex", "task", "viewer"]
   }
 }

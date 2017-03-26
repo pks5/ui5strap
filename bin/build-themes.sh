@@ -14,7 +14,7 @@ echo Building Ui5Strap Themes ...
 
 cd "$(dirname "$0")"
 
-npm run build-ui5strap-themes
+npm run build-themes
 
 cd $curDir
 
