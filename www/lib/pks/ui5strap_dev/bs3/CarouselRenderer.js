@@ -141,9 +141,11 @@ sap.ui.define(['jquery.sap.global', "./library"], function(jQuery, ui5strapBs3Li
 
 		var content = oControl.getContent(),
 			contentLength = content.length;
+		
 		for(var i = 0; i < contentLength; i++){
 			rm.renderControl(content[i]);
 		}
+		
 		rm.write("</div>");
 	};
 	
