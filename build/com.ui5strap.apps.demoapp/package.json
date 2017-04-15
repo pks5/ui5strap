@@ -1,5 +1,5 @@
 {
-  "name": "pks.ui5strap.build",
+  "name": "com.ui5strap.apps.demoapp.build",
   
   "version": "1.0.2-SNAPSHOT",
   
@@ -15,12 +15,5 @@
     "grunt-contrib-compress" : "*",
     "grunt-openui5": "*",
     "grunt-jsdoc" : "*"
-  },
-  
-  "ui5prod" : {
-  		"productName" : "ui5strap",
-  		"libraryName" : "pks.ui5strap",
-  		"productVersion" : "1.0.2-SNAPSHOT",
-  		"subLibraries" : ["bs3", "core", "ex", "task", "viewer"]
   }
 }

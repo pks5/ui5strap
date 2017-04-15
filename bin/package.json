@@ -19,7 +19,7 @@
     "clean-release": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5prod-release.js",
     "build-release": "grunt --gruntfile ../build/pks.ui5strap/ui5prod-release.js",
     
-    "build-demoapp-component": "grunt --gruntfile build-demoapp-preload.js"
+    "build-demoapp-component": "grunt --gruntfile ../build/com.ui5strap.apps.demoapp/demoapp-component.js"
     
   },
   "devDependencies": {

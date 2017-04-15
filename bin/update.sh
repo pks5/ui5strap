@@ -36,6 +36,14 @@ cd ../build/pks.ui5strap
 
 npm update
 
+echo
+
+echo Updating node modules for /build/com.ui5strap.apps.demoapp ...
+
+cd ../com.ui5strap.apps.demoapp
+
+npm update
+
 cd $curDir
 
 echo

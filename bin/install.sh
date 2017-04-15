@@ -36,6 +36,14 @@ cd ../build/pks.ui5strap
 
 npm install
 
+echo
+
+echo Installing node modules for /build/com.ui5strap.apps.demoapp ...
+
+cd ../com.ui5strap.apps.demoapp
+
+npm install
+
 cd $curDir
 
 echo
