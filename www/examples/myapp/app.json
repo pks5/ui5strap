@@ -4,7 +4,7 @@
             "id" : "tld.domain.product.app",
             "package" : "tld__domain.product__app",
             "title" : "Ui5Strap",
-            "history" : true,
+            "history" : false,
             "logLevel" : 5
         },
 
@@ -67,7 +67,7 @@
         "pages" : [
             {
                 "viewName" : ".views.Intro",
-                "type" : "HTML",
+                "type" : "sap.ui.core.mvc.HTMLView",
                 
                 "id" : "my-app-intro",
                 "styleClass" : "page-intro",
@@ -82,7 +82,7 @@
 
             {
                 "viewName" : ".views.Page1",
-                "type" : "HTML",
+                "type" : "sap.ui.core.mvc.HTMLView",
                 
                 "id" : "my-app-page1",
                 "styleClass" : "page-white page-1",
@@ -95,7 +95,7 @@
 
             {
                 "viewName" : ".views.Page2",
-                "type" : "HTML",
+                "type" : "sap.ui.core.mvc.HTMLView",
                 
                 "id" : "my-app-page2",
                 "styleClass" : "page-white page-2",
@@ -108,7 +108,7 @@
 
             {
                 "viewName" : ".views.Page3",
-                "type" : "HTML",
+                "type" : "sap.ui.core.mvc.HTMLView",
                 
                 "id" : "my-app-page3",
                 "styleClass" : "page-white page-3",
@@ -121,7 +121,7 @@
             
             {
                 "viewName" : ".views.Overlay",
-                "type" : "HTML",
+                "type" : "sap.ui.core.mvc.HTMLView",
                 "id" : "my-app-overlay"
             }
         ],

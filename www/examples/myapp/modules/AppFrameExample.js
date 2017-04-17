@@ -171,7 +171,7 @@ sap.ui.define([
 				align : ui5strapBs3Lib.Alignment.NavBarRight
 			} 
 		);
-		toggle.addStyleClass("btn-toggle-navbar");
+		toggleRight.addStyleClass("btn-toggle-navbar");
 		toggleRight.addContent(new Icon( { icon : 'bars', size : ui5strapBs3Lib.IconSize.Large } ));
 
 		toggleRight.attachEvent('tap', {}, function(){
@@ -181,7 +181,7 @@ sap.ui.define([
 		navbar.addContentRight(toggleRight);
 
 		//Sidebar / Sidenav
-		var sidebar = new Bar({ "fullHeight" : true, "inverse" : true }),
+		var sidebar = new Bar({ type : ui5strapBs3Lib.BarType.Default, "fullHeight" : true, "inverse" : true }),
 			navSidebar = new Nav({ type : ui5strapBs3Lib.NavType.PillsStacked, align : ui5strapBs3Lib.Alignment.Sidebar });
 		
 		navSidebar.addStyleClass("sidebar-nav")
@@ -332,8 +332,6 @@ sap.ui.define([
 			&& currentPage 
 			&& viewConfig.id === currentPage.getId()
 		){
-			this.updatePage(currentPage, viewConfig.parameters);
-
 			this.app.log.debug('[APP_FRAME_EXAMPLE] Page is current: "' + viewConfig.id + '"');
 			
 			return false;

@@ -1,17 +1,19 @@
 {
-	
-	"BEGIN" : ["callControlMethod", "changeTheme"],
+    "BEGIN" : "changeTheme",
 
-	"callControlMethod" : {
-	   "TYPE" : "pks.ui5strap.task.CallControlMethodTask",
-		"scope" : "SELECTION",
-		"funcName" : "data",
-		"funcArgs" : ["theme"],
-		"tgtParam" : "parameters.changeTheme.theme"
-	},
-
-	"changeTheme" : {
-	   "TYPE" : "pks.ui5strap.task.ChangeThemeTask"
-	}
-	
+    "changeTheme" : {
+        "TYPE" : "pks.ui5strap.task.ChangeThemeTask",
+        
+        "CONTROLS" : {
+            "themeButton" : {
+                "SOURCE" : "Event",
+                "TYPE" : "pks.ui5strap.bs3.Button",
+                "parameter" : "button"
+            }
+        },
+        
+        "customDataKey" : "theme",
+        "theme" : "= .CONTROLS.themeButton.data(.customDataKey)"
+    }
+    
 }

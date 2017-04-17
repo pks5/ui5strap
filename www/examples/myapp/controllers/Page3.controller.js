@@ -1,34 +1,41 @@
 sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 		
 	return Controller.extend("tld__domain.product__app.controllers.Page3", {
+		
 		onInit : function(oEvent){
-			this.nc = this.getApp().getFrame().getRootControl(); 
+			
 		},
 	
 		toggleSidebar : function(oEvent){
-			var srcButton = oEvent.getSource();
+			var srcButton = oEvent.getSource(),
+				oFrame = this.getApp().getFrame();
 	
 			srcButton.setSelected(!srcButton.getSelected());
 	
-			this.nc.setOptionsEnabled({
+			oFrame.options.sidebar = srcButton.getSelected();
+			
+			oFrame.getRootControl().setOptionsEnabled({
 				"sidebar" : srcButton.getSelected()
 			});
 		},
 	
 		toggleSidenav : function(oEvent){
-			var srcButton = oEvent.getSource();
+			var srcButton = oEvent.getSource(),
+				oFrame = this.getApp().getFrame();
 	
 			srcButton.setSelected(!srcButton.getSelected());
+			
+			oFrame.options.sidenav = srcButton.getSelected();
 	
-			this.nc.setOptionsEnabled({
+			oFrame.getRootControl().setOptionsEnabled({
 				"sidenav" : srcButton.getSelected()
 			});
 		},
 	
 		toggleSidebarOptions : function(oEvent){
-			var srcButton = oEvent.getSource();
-	
-			var text = oEvent.getParameter("button").getText();
+			var srcButton = oEvent.getSource(),
+				oFrame = this.getApp().getFrame(),
+				text = oEvent.getParameter("button").getText();
 	
 			var options = {
 				"sidebar-small" : false,
@@ -39,15 +46,18 @@ sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 				options[text] = true;
 			}
 	
-			this.nc.setOptionsEnabled(options);
+			oFrame.getRootControl().setOptionsEnabled(options);
 		},
 	
 		toggleNavbar : function(oEvent){
-			var srcButton = oEvent.getSource();
-	
+			var srcButton = oEvent.getSource(),
+				oFrame = this.getApp().getFrame();
+			
 			srcButton.setSelected(!srcButton.getSelected());
-	
-			this.nc.setOptionsEnabled({
+			
+			oFrame.options.navbar = srcButton.getSelected();
+			
+			oFrame.getRootControl().setOptionsEnabled({
 				"navbar" : srcButton.getSelected()
 			});
 		},
@@ -56,5 +66,7 @@ sap.ui.define(['pks/ui5strap/viewer/Controller'], function(Controller){
 			
 			this.getApp().showOverlay({ "id" : "my-app-overlay" }, null, 'slide-ttb');
 		}
+	
 	});
+	
 });
