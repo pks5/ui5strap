@@ -33,12 +33,7 @@ module.exports = function(grunt) {
 	
 	var oPackage = grunt.file.readJSON("package.json"),
 		oProdConfig = ui5prodShared.getProdConfig(oPackage.ui5prod),
-		sLibraries = oProdConfig.subPathLibAll,
-		aSubLibraries = oProdConfig.subLibraries;
-	
-	if(aSubLibraries.length){
-		sLibraries += "/*";
-	}
+		sSubPathLib = oProdConfig.subPathLib;
 	
 	
 	// Project configuration.
@@ -118,11 +113,17 @@ module.exports = function(grunt) {
 		openui5_preload : {
 			createPreloadFileInAll : {
 				options : {
-					resources : oProdConfig.pathToLibRoot,
-					dest : oProdConfig.pathToLibRoot,
+					resources : [{ 
+						cwd : oProdConfig.folderLibAll,
+						prefix : sSubPathLib
+					}],
+					dest : oProdConfig.folderLibAll,
+					
 					compress : true
 				},
-				libraries : sLibraries
+				
+				
+				libraries : sSubPathLib + "/*"
 			}
 		},
 
