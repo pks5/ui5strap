@@ -33,7 +33,13 @@ module.exports = function(grunt) {
 	
 	var oPackage = grunt.file.readJSON("package.json"),
 		oProdConfig = ui5prodShared.getProdConfig(oPackage.ui5prod),
-		sSubPathLib = oProdConfig.subPathLib;
+		sSubPathLib = oProdConfig.subPathLib,
+		sLibraries = sSubPathLib,
+		aSubLibraries = oProdConfig.subLibraries;
+	
+		if(aSubLibraries.length){
+			sLibraries += "/*";
+		}
 	
 	
 	// Project configuration.
@@ -122,8 +128,7 @@ module.exports = function(grunt) {
 					compress : true
 				},
 				
-				
-				libraries : sSubPathLib + "/*"
+				libraries : sLibraries
 			}
 		},
 
