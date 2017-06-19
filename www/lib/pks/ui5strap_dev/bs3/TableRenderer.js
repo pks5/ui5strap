@@ -100,9 +100,9 @@ sap.ui.define(['jquery.sap.global', "./library"], function(jQuery, ui5strapBs3Li
 		    var text = oCell.getText();
 		    rm.writeEscaped(text);
 	
-		    var aontent = oCell.getContent();
+		    var aContent = oCell.getContent();
 	
-		    for(var i = 0; i < aontent.length; i++){
+		    for(var i = 0; i < aContent.length; i++){
 		    	rm.renderControl(aContent[i]);
 		    }
 		rm.write("</" + tagName + ">");
