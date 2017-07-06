@@ -68,27 +68,6 @@ sap.ui.define(['./library', './ListBase'], function(ui5strapCoreLib, ListBase){
 				} 
 			}
 
-		},
-		
-		renderer : function(rm, oControl) {
-			var items = oControl.getItems();
-			
-			var tagName = 'ul';
-			if(oControl.getType() === ui5strapCoreLib.PlainListType.Ordered){
-				tagName = 'ol';
-			}
-		
-			rm.write("<" + tagName);
-			rm.writeControlData(oControl);
-			rm.addClass(oControl._getStyleClass());
-			rm.writeClasses();
-			rm.write(">");
-			
-			for(var i = 0; i < items.length; i++){
-				rm.renderControl(items[i]);
-			}
-			
-			rm.write("</" + tagName + ">");
 		}
 	}),
 	/**

@@ -93,12 +93,27 @@
 					</ListGroup>
 				</Col>
 			</Row>
+			
+			<!-- PlainList -->
+            <Heading text="Plain Lists" />
+
+            <ui5strapCore:PlainList>
+                <ui5strapCore:PlainListItem text="Item 1" />
+                 <ui5strapCore:PlainListItem text="Item 2" />
+                  <ui5strapCore:PlainListItem text="Item 3" />
+            </ui5strapCore:PlainList>
+            
+            <ui5strapCore:PlainList type="Ordered">
+                <ui5strapCore:PlainListItem text="Item 1" />
+                 <ui5strapCore:PlainListItem text="Item 2" />
+                  <ui5strapCore:PlainListItem text="Item 3" />
+            </ui5strapCore:PlainList>
 
 			<!-- Wells -->
 			<Heading text="Wells" />
 			<Well text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur." />
 
-			<Well size="Large" text="Look, I'm in a large well!" />
+			<Well size="Large" text="Look, I'm in a large well!!" />
 			<Well size="Small" text="Look, I'm in a small well!" />
 
 </Container>

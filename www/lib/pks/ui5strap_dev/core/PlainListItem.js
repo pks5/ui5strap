@@ -70,21 +70,7 @@ sap.ui.define(['./library', './ListItemBase', "./Utils", "./RenderUtils"], funct
 	 * 
 	 */
 	var ListItem = ListItemBase.extend("pks.ui5strap.core.PlainListItem", /** @lends pks.ui5strap.core.PlainListItem.prototype */ {
-		metadata : _meta,
-		renderer : function(rm, oControl) {
-			rm.write("<li");
-			rm.writeControlData(oControl);
-			
-			rm.addClass(oControl._getStyleClass());
-
-			rm.writeClasses();
-
-			rm.write(">");
-
-			RenderUtils.renderContent(rm, oControl);
-
-			rm.write("</li>");
-		}
+		metadata : _meta
 	}),
 	/**
 	 * @alias pks.ui5strap.core.PlainListItem.prototype

@@ -71,22 +71,6 @@ sap.ui.define(['./library', "./ControlBase"], function(ui5strapCoreLib, ControlB
 			},
 			
 			defaultAggregation : "content"
-		},
-		
-		renderer : function(rm, oControl){
-			var content = oControl.getContent();
-
-			rm.write("<div");
-			rm.writeControlData(oControl);
-			rm.addClass(oControl._getStyleClass());
-			rm.writeClasses();
-			rm.write(">");
-			
-			for(var i = 0; i < content.length; i++){ 
-					rm.renderControl(content[i]);
-			}
-			
-			rm.write("</div>");
 		}
 	
 	}),
