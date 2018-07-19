@@ -97,6 +97,14 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 
 				viewer.sendMessage(appMessage);
 			};
+			
+			this._registerSharedComponent = function(oCompConfig, oComp){
+				viewer.registerSharedComponent(oCompConfig.id, oComp);
+			};
+			
+			this._getSharedComponent = function(sId){
+				return viewer.getSharedComponent(sId);
+			};
 		}
 	}),
 	/**
@@ -432,28 +440,48 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 					return;
 				}
 				
-				if(!compConfig.id || 
-					!(compConfig.module 
-						|| (compConfig["package"] && compConfig["location"]) 
-						|| compConfig["type"]
-					)){
-					throw new Error("Cannot load component #" + i + ": [module, type, or package & location] or id attribute missing!");
+				if(!compConfig.id){
+					throw new Error("Cannot load component #" + i + ": id attribute missing!");
 				}
 				
-				if(compConfig.module){
-					//App Component
-					//Deprecated soon!
-					var moduleName = _this.config.resolvePackage(compConfig.module);
+				if(compConfig["type"]){
+					var compSettings = { app : _this },
+						bViewerScope = "VIEWER" === compConfig.scope;
+				
+					jQuery.extend(compSettings, compConfig.settings);
 					
-					//TODO Async!
-					jQuery.sap.require(moduleName);
+					if(bViewerScope){
+						var oCompInstance = _this._getSharedComponent(compConfig.id);
+						
+						if(oCompInstance){
+							_initComponent(_this, compConfig, oCompInstance);
+							
+							then();
+							
+							return;
+						}
+					}
+						
 					
-					var ComponentConstructor = jQuery.sap.getObject(moduleName);
+					var sModulePath = _this.config.resolvePackage(compConfig["type"]).replace(/\./g, "/");
 					
-					_initComponent(_this, compConfig, new ComponentConstructor(_this, compConfig));
+					//General Class
+					//Use settings as first Parameter
+					sap.ui.require([sModulePath], function(ComponentConstructor){
+						var oCompInstance = new ComponentConstructor(compSettings);
+						
+						if(bViewerScope){
+							_this._registerSharedComponent(compConfig, oCompInstance);
+						}
+						
+						_initComponent(_this, compConfig, oCompInstance);
+						
+						then();
+					});
 					
-					then();
 				}
+				
+				//UI5 Components
 				else if(compConfig["package"]){
 					jQuery.sap.registerModulePath(
 							compConfig["package"], 
@@ -474,18 +502,25 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 						then();
 				    });
 				}
-				else if(compConfig["type"]){
-					//General Class
-					//Use settings as first Parameter
-					sap.ui.require([_this.config.resolvePackage(compConfig["type"]).replace(/\./g, "/")], function(ComponentConstructor){
-						var compSettings = { app : _this };
-						
-						jQuery.extend(compSettings, compConfig.settings);
-						
-						_initComponent(_this, compConfig, new ComponentConstructor(compSettings));
-						
-						then();
-					});
+				
+				//Old Ui5Strap Modules
+				else if(compConfig.module){
+					//App Component
+					//Deprecated soon!
+					var moduleName = _this.config.resolvePackage(compConfig.module);
+					
+					//TODO Async!
+					jQuery.sap.require(moduleName);
+					
+					var ComponentConstructor = jQuery.sap.getObject(moduleName);
+					
+					_initComponent(_this, compConfig, new ComponentConstructor(_this, compConfig));
+					
+					then();
+				}
+				
+				else{
+					throw new Error("Cannot load component '" + compConfig.id + "': type or package attribute missing!");
 				}
 				
 			}());

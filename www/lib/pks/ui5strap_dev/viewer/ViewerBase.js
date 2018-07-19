@@ -83,6 +83,8 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			if(options.console){
 				this._console = new Console({ logLevel : SAP_LOG.getLevel() });
 			}
+			
+			this.m_mSharedComponents = {};
 		}
 	}),
 	/**
@@ -166,6 +168,14 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 				SAP_LOG.fatal(message);
 			}
 		};
+	};
+	
+	ViewerBaseProto.registerSharedComponent = function(sId, oComp){
+		this.m_mSharedComponents[sId] = oComp;
+	};
+	
+	ViewerBaseProto.getSharedComponent = function(sId){
+		return this.m_mSharedComponents[sId];
 	};
 
 	/**
