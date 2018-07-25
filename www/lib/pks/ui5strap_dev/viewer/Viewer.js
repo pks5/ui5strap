@@ -228,7 +228,6 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			        	"name" : appDefinition.name,
 			            
 			        	"id" : appDefinition.id,
-			            "location" : appDefinition["location"] || Utils.getFileLocation(appDefinition.url),
 			            
 			            "type" : "pks.ui5strap.viewer.SandboxApp",
 			            
@@ -244,6 +243,7 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			);
 		}
 		else if("SAPUI5" === appType){
+			//This is not working properly. Remove?
 			//Now load the App
 			_this.loadApp(
 				{
