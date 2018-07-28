@@ -641,6 +641,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		
 		this.isRunning = true;
 
+		/*
 		window.addEventListener(
 			"message", 
 			function on_message(event){
@@ -648,6 +649,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			}, 
 			false
 		);
+		*/
 
 		this.onStart(new sap.ui.base.Event("ui5strap.app.start", _this, {}));
 
