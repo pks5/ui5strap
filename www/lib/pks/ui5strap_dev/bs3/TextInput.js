@@ -65,6 +65,10 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 					type:"string", 
 					defaultValue:""
 				},
+				valueType : {
+					type:"string", 
+					defaultValue:"text"
+				},
 				size : {
 					type: "pks.ui5strap.bs3.Size", 
 					defaultValue: ui5strapBs3Lib.Size.Default
@@ -116,7 +120,7 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 				
 				rm.writeControlData(oControl);
 				
-				rm.writeAttribute('type', "text");
+				rm.writeAttribute('type', oControl.getValueType());
 
 				rm.writeAttribute('placeholder', oControl.getPlaceholder());
 				rm.writeAttribute('value', oControl.getValue());

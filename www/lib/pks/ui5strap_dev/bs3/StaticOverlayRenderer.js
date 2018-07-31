@@ -38,7 +38,10 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	StaticOverlayRenderer.render = function(rm, oControl) {
 		this.startRender(rm, oControl);
 		
+		//TODO dont use the modal-dialog css class here.
+		rm.write("<div class='modal-dialog'>");
 		this.renderContent(rm, oControl);
+		rm.write("</div>");
 		
 		this.endRender(rm, oControl);
 	};
@@ -56,16 +59,11 @@ sap.ui.define(['jquery.sap.global'], function(jQuery) {
 	};	
 	
 	StaticOverlayRenderer.renderContent = function(rm, oControl){
-		//TODO dont use the modal-dialog css class here.
-		rm.write("<div class='modal-dialog'>");
-		
 		var content = oControl.getContent();
 		
 		for(var i = 0; i < content.length; i++){
 			rm.renderControl(content[i]);
 		}
-		
-		rm.write("</div>");
 	};
 	
 	StaticOverlayRenderer.endRender = function(rm, oControl) {
