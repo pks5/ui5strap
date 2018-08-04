@@ -25,7 +25,7 @@
  * 
  */
 
-sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/core/Control", "sap/ui/core/mvc/View", 'sap/ui/core/UIArea', './Action', "../core/Utils", "../core/Layer"], function(ui5strapViewerLib, ui5strapCoreLib, ObjectBase, ControlBase, ViewBase, UIArea, Action, Utils, Layer){
+sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/base/ManagedObject',"sap/ui/core/Control", "sap/ui/core/mvc/View", 'sap/ui/core/UIArea', './Action', "../core/Utils", "../core/Layer"], function(ui5strapViewerLib, ui5strapCoreLib, ObjectBase, ManagedObject, ControlBase, ViewBase, UIArea, Action, Utils, Layer){
 	
 	"use strict";
 	
@@ -334,7 +334,12 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 	 * @param oComp {object} The component instance.
 	 * @private
 	 */
-	var _initComponent = function(_this, compConfig, oComp){
+	var _initComponent = function(_this, compConfig, oComp, bSuppressInit){
+		//Init Component
+		if(!(oComp instanceof ManagedObject) && !bSuppressInit){
+			oComp.init();
+		}
+		
 		var componentId = compConfig.id,
 			compEvents = compConfig.events,
 			methodName = 'get' + jQuery.sap.charToUpperCase(componentId);
@@ -343,7 +348,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 		if(_this[methodName]){
 			throw new Error("Name Conflict! Please choose a different ID for component " + componentId);
 		}
-	
+		
 		//Register Component in App
 		_this.components[componentId] = oComp;
 		
@@ -374,8 +379,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 			}
 		}
 		
-		//Init Component
-		oComp.init();
+		
 	};
 	
 	/**
@@ -451,10 +455,13 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 					jQuery.extend(compSettings, compConfig.settings);
 					
 					if(bViewerScope){
+						jQuery.sap.log.info("Loading shared component: " + compConfig.id);
 						var oCompInstance = _this._getSharedComponent(compConfig.id);
 						
 						if(oCompInstance){
-							_initComponent(_this, compConfig, oCompInstance);
+							jQuery.sap.log.info("Shared component '" + compConfig.id + "' is already instantiated. Initializing...");
+							
+							_initComponent(_this, compConfig, oCompInstance, true);
 							
 							then();
 							
@@ -474,7 +481,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', "sap/ui/cor
 							_this._registerSharedComponent(compConfig, oCompInstance);
 						}
 						
-						_initComponent(_this, compConfig, oCompInstance);
+						_initComponent(_this, compConfig, oCompInstance, false);
 						
 						then();
 					});
