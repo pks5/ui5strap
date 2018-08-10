@@ -335,11 +335,6 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 	 * @private
 	 */
 	var _initComponent = function(_this, compConfig, oComp, bSuppressInit){
-		//Init Component
-		if(!(oComp instanceof ManagedObject) && !bSuppressInit){
-			oComp.init();
-		}
-		
 		var componentId = compConfig.id,
 			compEvents = compConfig.events,
 			methodName = 'get' + jQuery.sap.charToUpperCase(componentId);
@@ -356,7 +351,12 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 		_this[methodName] = function(){
 			return oComp;
 		};
-	
+		
+		//Init Component
+		if(!(oComp instanceof ManagedObject) && !bSuppressInit){
+			oComp.init();
+		}
+		
 		//Register Component Events
 		if(compEvents){
 			//Array of strings of format "scope.event"
