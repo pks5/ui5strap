@@ -489,8 +489,10 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 		var configAppSection = appInstance.config.data.app;
 			
 		//Set Browser Title
-		//TODO Is this good here?
-		document.title = configAppSection.name;
+		if(this.options.allowChangeTitle){
+			//TODO Is this good here?
+			document.title = configAppSection.name;
+		}
 		
 		//Store Previous App
 		var prevApp = this.getApp();
