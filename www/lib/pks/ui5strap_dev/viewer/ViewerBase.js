@@ -95,6 +95,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	
 	ViewerBase.OVERLAY_ID = "ui5strapGlobalOverlay";
 	ViewerBase.LOADER_ID = "ui5strapGlobalLoader";
+	ViewerBase.NETWORK_ERROR_ID = "ui5strapNetworkError";
 	ViewerBase.FATAL_ID = "ui5strapFatalError";
 	
 	/**
@@ -108,6 +109,7 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 		
 		//Register Loader Layer
 		Layer.register(ViewerBase.LOADER_ID);
+		Layer.register(ViewerBase.NETWORK_ERROR_ID);
   		
 		this._initOverlay();
 	};
@@ -243,6 +245,16 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 			elRootContainer.appendChild(elGlobalLoader);
 		}
 		
+		var elNetworkError = document.getElementById(ViewerBase.NETWORK_ERROR_ID);
+		
+		if(!elNetworkError){
+			elNetworkError = document.createElement("div");
+			elNetworkError.id = ViewerBase.NETWORK_ERROR_ID;
+			elNetworkError.className = "ui5strapLayer ui5strapNetworkError ui5strap-hidden";
+			
+			elRootContainer.appendChild(elNetworkError);
+		}
+		
 		var elFatalScreen = document.getElementById(ViewerBase.FATAL_ID);
 		
 		if(!elFatalScreen){
@@ -268,6 +280,10 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 		elErrorMessage.innerHTML = e.message + " in " + e.filename + " on line " + e.lineno;
 		elFatalScreen.appendChild(elErrorMessage);
 		elFatalScreen.className = "ui5strapLayer";
+	};
+	
+	ViewerBaseProto.setNetworkErrorVisible = function(bVisible, callback){
+		Layer.setVisible(ViewerBase.NETWORK_ERROR_ID, bVisible, callback);
 	};
 	
 	/**
