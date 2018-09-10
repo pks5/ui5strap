@@ -79,15 +79,27 @@ sap.ui.define(['./library', "../core/ControlBase"], function(ui5strapViewerLib, 
 	 */
 	SandboxProto = Sandbox.prototype;
 
+	SandboxProto._useWebView = function(){
+	    //return !!(window.chrome && chrome.runtime && chrome.runtime.id);
+	    
+	    return !!(navigator.userAgent.toLowerCase().indexOf(' electron/') > -1);
+	};
+	
 	/**
 	 * Initialize
 	 * @override
 	 */
 	SandboxProto.init = function(){
-		var iframe = document.createElement('iframe');
+		var bUseWebView = this._useWebView(),
+		    iframe = document.createElement(bUseWebView ? "webview" : "iframe");
+		
 		iframe.className = 'sandbox-iframe';
-		iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-pointer-lock'; //allow-popups
 		iframe.id = this.getId() + '----iframe';
+		
+		if(!bUseWebView){
+		    iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-pointer-lock'; //allow-popups
+	    }
+		
 		this.$iframe = jQuery(iframe);
 	};
 
