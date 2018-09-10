@@ -209,6 +209,10 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 	};
 
 	TextInputProto.setValue = function(sValue, bSuppressInvalidate) {
+		if(sValue === this._lastValue){
+			return this;
+		}
+		
 		if(this.getDomRef()){
 			this.setProperty("value", sValue, true);
 			
@@ -222,6 +226,8 @@ sap.ui.define(['./library', "../core/library", "../core/ControlBase", '../core/R
 		
 		this._lastValue = sValue;
 		this._lastLiveValue = sValue;
+	
+		return this;
 	};
 	
 	TextInputProto.onfocusin = function(oEvent){
