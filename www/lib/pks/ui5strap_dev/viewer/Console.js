@@ -29,7 +29,7 @@ sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, 
 	
 	"use strict";
 	
-	var defaultLogName = '__DEFAULT_LOG';
+	var sDefaultLogName = '__DEFAULT_LOG';
 	
 	/**
 	 * Constructor for a new Console instance.
@@ -60,7 +60,7 @@ sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, 
 				},
 				"currentLog" : {
 					type:"string",
-					defaultValue : defaultLogName
+					defaultValue : sDefaultLogName
 				}
 			},
 
@@ -97,42 +97,48 @@ sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, 
 	Console.MAX_SIZE = 200;
 	Console.MAX_LINES = 500;
 
-	//Object vars
-	ConsolePrototype._firstLineNr = null;
-	ConsolePrototype._scrollTimer = null;
-
 	ConsolePrototype.init = function(){
-		this._scrollTimer = null;
+		this.m_iScrollTimer = null;
 
-		this._firstLineNr = 0;
-		this._logs = {};
-		this._logs[defaultLogName] = [];
+		this.m_oLogs = {};
+		
+		this._createLog();
+	};
+	
+	ConsolePrototype._createLog = function(sLogName){
+	    if(!sLogName){
+            sLogName = sDefaultLogName;
+        }
+	    
+	    if(!this.m_oLogs[sLogName]){
+	        this.m_oLogs[sLogName] = {
+                    log: [],
+                    firstLine:0,
+                    lastLine: 0,
+                    logName: sLogName
+            };
+        }
 	};
 
-	ConsolePrototype.setCurrentLog = function(logName){
-		if(!logName){
-			logName = defaultLogName;
+	ConsolePrototype.setCurrentLog = function(sLogName){
+	    if(this.m_iScrollTimer){
+	        window.clearTimeout(this.m_iScrollTimer);
+	    }
+	    
+		if(!sLogName){
+			sLogName = sDefaultLogName;
 		}
 		
-		this.setProperty("currentLog", logName, true);
+		this._createLog(sLogName);
 		
-		if(!this._logs[logName]){
-			this._logs[logName] = [];
-		}
-
+		this.setProperty("currentLog", sLogName, true);
+		
+		this.flush();
 	};
 
 	ConsolePrototype.setLogLevel = function(newLogLevel){
 		this.setProperty("logLevel", newLogLevel, true);
 	}; 
-
-	ConsolePrototype.setBuffer = function(buffer){
-		this._logs = buffer;
-	};
-
-	ConsolePrototype.getBuffer = function(){
-		return this._logs;
-	};
 
 	Console.dateString = function(){
 	    var d = new Date();
@@ -155,119 +161,111 @@ sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, 
 	    return d.getFullYear() + '-' + dateMonth + '-' + dateDay + ' ' + dateHour + ':' + dateMinutes + ':' + dateSeconds;
 	};
 
-	ConsolePrototype.addLine = function(line, logType, logName){
-		if(typeof logType === 'undefined' || null === logType){
+	ConsolePrototype.addLine = function(sMessage, logType, sLogName){
+		if(!logType){
 			logType = 'info';
 		}
 
-		if(typeof logName === 'undefined' || null === logName){
-			logName = defaultLogName;
+		if(!sLogName){
+			sLogName = sDefaultLogName;
 		}
 
-		if(!(logName in this._logs)){
-			this._logs[logName] = [];
-		}
+		this._createLog(sLogName);
+		
+		var oLog = this.m_oLogs[sLogName];
 
-		this._logs[logName].push({
-			"logType" : logType,
-			"message" : line,
-			"date" : Console.dateString()
-		});
+		oLog.log.push({
+            "logType" : logType,
+            "message" : sMessage,
+            "date" : Console.dateString()
+        });
+		
+		//Delete old lines
+		var iLogLength = oLog.log.length;
+        
+        if(iLogLength > Console.MAX_SIZE){
+            var iLinesToDelete = iLogLength - Console.MAX_SIZE;
+            
+            oLog.firstLine += iLinesToDelete;
+            oLog.log.splice(0, iLinesToDelete);
+        }
 
-		if(null !== this._scrollTimer){
-			return;
-		}
-
-		this._scrollTimer = window.setTimeout(jQuery.proxy(function(){
-
-			
-
-			if(logName === this.getCurrentLog()){
-					this.flush();
-
-					this._scrollToBottom();
-					
-			}
-
-
-			if(this._logs[logName].length > Console.MAX_SIZE){
-				var toDelete = this._logs[logName].length - Console.MAX_SIZE;
-				this._firstLineNr += toDelete;
-				this._logs[logName].splice(0, toDelete);
-			}
-
-			this._scrollTimer = null;
-		}, this), 100);	
+        if(sLogName === this.getCurrentLog()){
+    		if(this.m_iScrollTimer){
+    			return;
+    		}
+    		
+    		var that = this;
+    		this.m_iScrollTimer = window.setTimeout(function(){
+    		    that.flush();
+    			
+    			that.m_iScrollTimer = null;
+    		}, 100);
+        }
 	};
 
-	ConsolePrototype.flush = function(){
-		var logName = this.getCurrentLog();
+	ConsolePrototype.flush = function(iScrollY){
+		var sLogName = this.getCurrentLog(),
+		    oLog = this.m_oLogs[sLogName];
 		
-		if(!(logName in this._logs)){
-			throw new Error("Cannot flush undefined log: '" + logName + "'");
-		}
-
-		//We dont need to flush an empty log
-		if(0 === this._logs[logName].length){
-			return;
+		if(!oLog){
+			throw new Error("Cannot flush undefined log: '" + sLogName + "'");
 		}
 
 		var $console = this.$().find('.ui5strap-console');
 		if($console.size() > 0){
 			var $consoleInner = $console.find('.ui5strap-console-inner');
 
-			var startAt = 0;
+			var iStartAt = 0;
 
 			if($consoleInner.size() > 0){
-				var oldLogName = $consoleInner.attr('data-log-name');
+				var sOldLogName = $consoleInner.attr('data-log-name');
 
-				if(oldLogName === logName){
-					var lastLineNo = parseInt($consoleInner.attr('data-last-line-no'));
+				if(sOldLogName === sLogName){
+					var iFirstLineNo = oLog.firstLine,
+					    iLastLineNo = oLog.lastLine;
 
-					if(lastLineNo >= this._firstLineNr){
-						startAt = lastLineNo - this._firstLineNr + 1;
+					if(iLastLineNo >= iFirstLineNo){
+						iStartAt = iLastLineNo - iFirstLineNo + 1;
 					}
 
 					$consoleInner.detach();
 				}
 				else{ 
 					$consoleInner.remove();
-					$consoleInner = jQuery('<div class="ui5strap-console-inner ui5strap-console-inner-' + logName + '" data-log-name="' + logName + '"></div>');
+					$consoleInner = jQuery('<div class="ui5strap-console-inner ui5strap-console-inner-' + sLogName + '" data-log-name="' + sLogName + '"></div>');
 					
 				}
 			}
 			else{ 
-				$consoleInner = jQuery('<div class="ui5strap-console-inner ui5strap-console-inner-' + logName + '" data-log-name="' + logName + '"></div>');
+				$consoleInner = jQuery('<div class="ui5strap-console-inner ui5strap-console-inner-' + sLogName + '" data-log-name="' + sLogName + '"></div>');
 				
 			}
 
-			
-
-			var lastLineNo = null;
-			for(var i = startAt; i < this._logs[logName].length; i++){
-				var line = this._logs[logName][i];
-				lastLineNo = i + this._firstLineNr;
-				$consoleInner.append('<div class="ui5strap-console-line ui5strap-console-line-' + line.logType  + '" data-line-no="' + lastLineNo + '">' + lastLineNo + ' ' + line.date + ' ' + line.message.replace(/\n/g, '<br />') + '</div>');
+			var iLastLineNo = null;
+			for(var i = iStartAt; i < oLog.log.length; i++){
+				var oLine = oLog.log[i];
+				iLastLineNo = i + oLog.firstLine;
+				$consoleInner.append('<div class="ui5strap-console-line ui5strap-console-line-' + oLine.logType  + '">' + iLastLineNo + ' ' + oLine.date + ' ' + oLine.message.replace(/\n/g, '<br />') + '</div>');
 			}
 
-			if(null !== lastLineNo){
-				$consoleInner.attr('data-last-line-no', lastLineNo);
+			if(null !== iLastLineNo){
+				oLog.lastLine = iLastLineNo;
 			}
 
-			
-			
 			//Remove old lines
+			var $lines = $consoleInner.find('.ui5strap-console-line'),
+			    i=0,
+			    iLinesToDelete = $lines.size() - Console.MAX_LINES;
 			
-			var $lines = $consoleInner.find('.ui5strap-console-line');
-			var i=0;
-			var toDelete = $lines.size() - Console.MAX_LINES;
-			while(i < toDelete){
+			while(i < iLinesToDelete){
 				$lines[i].remove();
 				i++;
 			}
 
 			$console.append($consoleInner);
 			
+			this._scrollToBottom(iScrollY);
 		}
 	};
 
@@ -278,53 +276,51 @@ sap.ui.define(['./library', '../core/ControlBase'], function(ui5strapViewerLib, 
 		}
 	};
 
-	ConsolePrototype.info = function(message, logName){
+	ConsolePrototype.info = function(sMessage, sLogName){
 		if(this.getLogLevel() >= jQuery.sap.log.Level.INFO){
-			this.addLine(message, 'info', logName);
+			this.addLine(sMessage, 'info', sLogName);
 		}
 	};
 
-	ConsolePrototype.debug = function(message, logName){
+	ConsolePrototype.debug = function(sMessage, sLogName){
 		if(this.getLogLevel() >= jQuery.sap.log.Level.DEBUG){
-			this.addLine(message, 'debug', logName);
+			this.addLine(sMessage, 'debug', sLogName);
 		}
 	};
 
-	ConsolePrototype.warning = function(message, logName){
+	ConsolePrototype.warning = function(sMessage, sLogName){
 		if(this.getLogLevel() >= jQuery.sap.log.Level.WARNING){
-			this.addLine(message, 'warning', logName);
+			this.addLine(sMessage, 'warning', sLogName);
 		}
 	};
 
-	ConsolePrototype.error = function(message, logName){
+	ConsolePrototype.error = function(sMessage, sLogName){
 		if(this.getLogLevel() >= jQuery.sap.log.Level.ERROR){
-			this.addLine(message, 'error', logName);
+			this.addLine(sMessage, 'error', sLogName);
 		}
 	};
 
-	ConsolePrototype.fatal = function(message, logName){
+	ConsolePrototype.fatal = function(sMessage, sLogName){
 		if(this.getLogLevel() >= jQuery.sap.log.Level.FATAL){
-			this.addLine(message, 'fatal', logName);
+			this.addLine(sMessage, 'fatal', sLogName);
 		}
 	};
 
 	ConsolePrototype.onBeforeRendering = function(){
         if(this.getDomRef()){
-            this._scrollTop = this.$().find('.ui5strap-console')[0].scrollTop;
+            this.m_iScrollTop = this.$().find('.ui5strap-console')[0].scrollTop;
 
-            this._$controlContent = this.$().children().first().detach();
+            this.m_$controlContent = this.$().children().first().detach();
 		}
 	};
 
 	ConsolePrototype.onAfterRendering = function(){
-        if(null !== this._$controlContent){
-            this._scrollToBottom(this._scrollTop);
-			
-			this.flush();
+        if(null !== this.m_$controlContent){
+            this.flush(this.m_iScrollTop);
+            
+            this.$().html(this.m_$controlContent);
 
-            this.$().html(this._$controlContent);
-
-            this._$controlContent = null;
+            this.m_$controlContent = null;
 		}
         else{
             this.flush();
