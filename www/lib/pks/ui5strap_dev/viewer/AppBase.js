@@ -1126,7 +1126,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 	* @param callback {function} The callback function.
 	* @param transitionName {string} The transition name.
 	*/
-	AppBaseProto.showOverlay = function(oPageConfigOrControl, callback, transitionName){
+	AppBaseProto.showOverlay = function(oPageConfigOrControl, callback, transitionName, fnCloseCallback){
 		var _this = this;
 		if(!(oPageConfigOrControl instanceof ControlBase)){
 			var viewParameters = oPageConfigOrControl.parameters;
@@ -1134,11 +1134,11 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 			oPageConfigOrControl = this.createPage(this.config.getPageConfig(oPageConfigOrControl));
 		
 			oPageConfigOrControl.loaded().then(function(){
-				_this._showOverlay(oPageConfigOrControl, callback, transitionName, viewParameters);
+				_this._showOverlay(oPageConfigOrControl, callback, transitionName, viewParameters, fnCloseCallback);
 			});
 		}
 		else{
-			this._showOverlay(oPageConfigOrControl, callback, transitionName);
+			this._showOverlay(oPageConfigOrControl, callback, transitionName, {}, fnCloseCallback);
 		}
 	};
 	
@@ -1151,10 +1151,12 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 	 * @param pageUpdateParameters {object} The parameters to pass to the pageUpdate event.
 	 * @protected
 	 */
-	AppBaseProto._showOverlay = function(oPage, callback, transitionName, pageUpdateParameters){
+	AppBaseProto._showOverlay = function(oPage, callback, transitionName, pageUpdateParameters, fnCloseCallback){
 		var navControl = this.getOverlayNavigator(),
 			target = navControl.defaultTarget,
 			_this = this;
+		
+		navControl.m_fnCloseCallback = fnCloseCallback;
 		
 		//Set target busy
 		navControl.setTargetBusy(target, true);
@@ -1182,7 +1184,7 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 	* @param callback {function} The callback function.
 	* @param transitionName {string} The name of the transition.
 	*/
-	AppBaseProto.hideOverlay = function(callback, transitionName){
+	AppBaseProto.hideOverlay = function(callback, transitionName, oCloseParameters){
 		if(!this.isOverlayVisible()){
 			throw new Error('Overlay is not visible!');
 		}
@@ -1192,7 +1194,11 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 			transitionName = transitionName || 'slide-btt';
 		
 		navigator.toPage(null, 'content', transitionName, function toPage_complete(){
-			Layer.setVisible(_this._overlayId, false, callback, true);
+			Layer.setVisible(_this._overlayId, false, function(){
+			    navigator.m_fnCloseCallback && navigator.m_fnCloseCallback(oCloseParameters);
+			    callback && callback(oCloseParameters);
+			    navigator.m_fnCloseCallback = null;
+			}, true);
 		});	
 	};
 
