@@ -88,8 +88,11 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 			
 			//Init Log
 			this._initLog(viewer);
-
-			/**
+			
+			 
+            this.m_sInstanceId = Utils.randomUUID();
+        
+            /**
 			 * Send an App Message.
 			 */
 			this.sendMessage = function(appMessage){
@@ -1727,6 +1730,13 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 	*/
 	AppBaseProto.getId = function(){
 		return this.config.data.app.id;
+	};
+	
+	/**
+	 * Returns the world unique UUID of this app instance.
+	 */
+	AppBaseProto.getInstanceId = function(){
+	    return this.m_sInstanceId;  
 	};
 	
 	/**
