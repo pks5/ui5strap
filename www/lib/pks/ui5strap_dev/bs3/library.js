@@ -51,7 +51,7 @@ sap.ui.define([ 'jquery.sap.global', 'sap/ui/Device', 'sap/ui/core/library',
 			{
 				name : "pks.ui5strap.bs3",
 
-				version : "1.0.2-SNAPSHOT",
+				version : "1.0.5-SNAPSHOT",
 
 				dependencies : [ "sap.ui.core", "pks.ui5strap.core" ],
 

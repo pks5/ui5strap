@@ -84,10 +84,41 @@
 * Z: 1K
 */
 #ui5strapFatalError{
-	z-index:1000;
-	padding:20px;
+  font-family: sans-serif;
+  z-index:1000;
 	color:white;
-	background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+
+#ui5strapFatalErrorWindow {
+  width:240px;
+  text-align:center;
+}
+
+#ui5strapFatalErrorImageContainer,
+#ui5strapFatalErrorMessage{
+  margin-bottom: 16px;
+}
+
+#ui5strapFatalErrorImage{
+  width:160px;
+}
+
+#ui5strapFatalErrorMessage{
+  font-size: 16px;
+  line-height:1.5;
+}
+
+#ui5strapFatalErrorButton{
+  padding:8px 16px;
+  font-size: 16px;
+  border:solid 1px white;
+  color:white;
+  background-color: transparent;
+  border-radius: 4px;
 }
 
 /*

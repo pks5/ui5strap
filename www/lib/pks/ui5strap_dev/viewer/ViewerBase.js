@@ -264,20 +264,48 @@ sap.ui.define(['./library', 'sap/ui/base/Object', "sap/ui/core/Control", "./Cons
 	
 	ViewerBaseProto.showFatalError = function(e){
 		var elFatalScreen = this._dom.fatalScreen,
-		elErrorMessage = document.createElement("div"),
-		elReloadButton = document.createElement("button");
-	
-		elFatalScreen.innerHTML = '';
+			elWindow = document.createElement("div"),
+			elErrorMessage = document.createElement("div"),
+			elReloadButton = document.createElement("button"),
+			sErrorMessage = e.message;
 		
-		elErrorMessage.innerHTML = e.message + " in " + e.filename + " on line " + e.lineno;
-		elFatalScreen.appendChild(elErrorMessage);
+		//Window
+		elWindow.id = "ui5strapFatalErrorWindow";
+
+		if(e.image){
+			//Image
+			var elImageContainer = document.createElement("div"),
+				elImage = document.createElement("img");
+			
+			elImageContainer.id = "ui5strapFatalErrorImageContainer";
+				
+			elImage.id = "ui5strapFatalErrorImage";
+			elImage.src = e.image;
+			elImageContainer.appendChild(elImage);
+
+			elWindow.appendChild(elImageContainer);
+		}
+
+		if(e.lineno){
+			sErrorMessage = e.message + " in " + e.filename + " on line " + e.lineno;
+		}
+
+		//Message
+		elErrorMessage.id = "ui5strapFatalErrorMessage";
+		elErrorMessage.innerHTML = sErrorMessage;
+		elWindow.appendChild(elErrorMessage);
 		
+		//Reload Button
+		elReloadButton.id = "ui5strapFatalErrorButton";
 		elReloadButton.innerHTML = "Reload";
 		elReloadButton.onclick = function(){
 			location.reload();
 		};
+		elWindow.appendChild(elReloadButton);
 		
-		elFatalScreen.appendChild(elReloadButton);
+		//Add window to screen
+		elFatalScreen.innerHTML = '';
+		elFatalScreen.appendChild(elWindow);
 		
 		Layer.setVisible(ViewerBase.FATAL_ID, true);
 	};

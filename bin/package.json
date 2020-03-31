@@ -7,30 +7,24 @@
     "run-web": "node ../server/server.js",
     "run-desktop": "nwbuild -r ../www",
     "run-android": "cd .. && cordova emulate android",
-    
     "build-themes": "grunt --gruntfile ../build/pks.ui5strap/ui5prod-themes.js",
-    
     "clean-library": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5prod-library.js",
     "build-library": "grunt --gruntfile ../build/pks.ui5strap/ui5prod-library.js",
-    
     "clean-docs": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5prod-docs.js",
-    "build-docs" : "grunt --gruntfile ../build/pks.ui5strap/ui5prod-docs.js",
-    
+    "build-docs": "grunt --gruntfile ../build/pks.ui5strap/ui5prod-docs.js",
     "clean-release": "grunt cleanup --gruntfile ../build/pks.ui5strap/ui5prod-release.js",
     "build-release": "grunt --gruntfile ../build/pks.ui5strap/ui5prod-release.js",
-    
     "build-demoapp-component": "grunt --gruntfile ../build/com.ui5strap.apps.demoapp/demoapp-component.js"
-    
   },
   "devDependencies": {
-    "cordova": "*",
-    "grunt": "*",
-    "grunt-cli": "*",
-    "grunt-contrib-concat": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-openui5": "*",
-    "http-server": "*",
-    "jsdoc": "*",
-    "nw-builder": "*"
+    "cordova": "^9.0.0",
+    "grunt": "^1.0.4",
+    "grunt-cli": "^1.3.2",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-openui5": "^0.16.0",
+    "http-server": "^0.12.1",
+    "jsdoc": "^3.6.3",
+    "nw-builder": "^3.5.7"
   }
 }

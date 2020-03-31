@@ -1319,17 +1319,26 @@ sap.ui.define(['./library', "../core/library", 'sap/ui/base/Object', 'sap/ui/bas
 			mControlConfig.viewName = this.config.resolvePackage(mPageConfig.viewName);
 			mControlConfig.viewData = mAdditionalData;
 			
-			//Create View
-			//Will crash if "viewName" or "type" attribute is missing!
-			oPage = new sap.ui.view(mControlConfig);
-			
-			oPage.attachBeforeExit(function(oEvent){
-				//clean up
-				var viewData = this.getViewData();
-				delete viewData.__ui5strap;
-			});
-			
-			oPage.loaded().then(fnLoaded);
+			var fnCreateView = function(){
+				//Create View
+				//Will crash if "viewName" or "type" attribute is missing!
+				oPage = new sap.ui.view(mControlConfig);
+				
+				oPage.attachBeforeExit(function(oEvent){
+					//clean up
+					var viewData = this.getViewData();
+					delete viewData.__ui5strap;
+				});
+				
+				oPage.loaded().then(fnLoaded);
+			};
+
+			if(this.config.data.app.rootComponent){
+				this._rootComponent.runAsOwner(fnCreateView);
+			}
+			else{
+				fnCreateView();
+			}
 		}
 		else if(mPageType.nature === "UIComponent"){
 			//TODO

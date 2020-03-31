@@ -76,11 +76,18 @@
 	transform: rotateY(@angle);
 }
 
-//Transform 3d
+//Scale 3d
 .ui5strapTransformScale3d(@x, @y, @z){
 	-webkit-transform: scale3d(@x, @y, @z);
 	-ms-transform: scale3d(@x, @y, @z);
 	transform: scale3d(@x, @y, @z);
+}
+
+//Scale 3d
+.ui5strapTransformScale(@x, @y){
+	-webkit-transform: scale(@x, @y);
+	-ms-transform: scale3d(@x, @y);
+	transform: scale3d(@x, @y);
 }
 
 .makeTransitionSize(@size){
@@ -390,7 +397,7 @@
 		}
 	
 		&.ui5strap-transition-next{
-			 .ui5strapTransformScale3d(0, 0, 0);
+			 .ui5strapTransformScale(0.001, 0.001);
 		}
 
 		&.ui5strap-transition-next-in{
@@ -423,7 +430,7 @@
 		}
 		
 		&.ui5strap-transition-current-out{
-			.ui5strapTransformScale3d(0, 0, 0);
+			.ui5strapTransformScale(0.001, 0.001);
 		}
 	
 		&.ui5strap-transition-next{

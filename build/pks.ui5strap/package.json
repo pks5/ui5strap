@@ -1,26 +1,28 @@
 {
   "name": "pks.ui5strap.build",
-  
   "version": "1.0.2-SNAPSHOT",
-  
   "author": "Jan Philipp Knoeller",
-  
   "devDependencies": {
-    "grunt": "*",
-    "grunt-cli": "*",
-    "grunt-contrib-clean": "*",
+    "grunt": "^1.0.4",
+    "grunt-cli": "^1.3.2",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-compress": "^1.6.0",
     "grunt-contrib-concat": "*",
     "grunt-contrib-copy": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-compress" : "*",
-    "grunt-openui5": "*",
-    "grunt-jsdoc" : "*"
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-jsdoc": "^2.4.1",
+    "grunt-openui5": "^0.16.0"
   },
-  
-  "ui5prod" : {
-  		"productName" : "ui5strap",
-  		"libraryName" : "pks.ui5strap",
-  		"productVersion" : "1.0.2-SNAPSHOT",
-  		"subLibraries" : ["bs3", "core", "ex", "task", "viewer"]
+  "ui5prod": {
+    "productName": "ui5strap",
+    "libraryName": "pks.ui5strap",
+    "productVersion": "1.0.2-SNAPSHOT",
+    "subLibraries": [
+      "bs3",
+      "core",
+      "ex",
+      "task",
+      "viewer"
+    ]
   }
 }

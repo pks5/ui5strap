@@ -62,7 +62,7 @@ sap.ui
 							{
 								name : "pks.ui5strap.task",
 
-								version : "1.0.2-SNAPSHOT",
+								version : "1.0.5-SNAPSHOT",
 
 								dependencies : [ "pks.ui5strap.core", "pks.ui5strap.viewer" ],
 
