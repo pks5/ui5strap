@@ -225,7 +225,8 @@ sap.ui.define(['./library', "../core/library", './ViewerBase', './App', './AppCo
 			_this.loadApp(
 				{
 			        "app" : {
-			        	"name" : appDefinition.name,
+						"name" : appDefinition.name,
+						"location" : appDefinition["location"] || Utils.getFileLocation(appDefinition.url),
 			            
 			        	"id" : appDefinition.id,
 			            
