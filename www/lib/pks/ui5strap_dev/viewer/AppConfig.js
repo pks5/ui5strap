@@ -427,8 +427,12 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			//Return relative (to html file) path unchanged
 			return path;
 		}
+		//Path starts with '/'
 		else if(jQuery.sap.startsWith(path, '/')){
-			if(envRoot.charAt(envRoot.length - 1) === "/"){
+			if(envRoot === "/"){
+				envRoot = "";
+			}
+			else if(envRoot.charAt(envRoot.length - 1) === "/"){
 				envRoot = envRoot.substr(0, envRoot.length - 1);
 			}
 			
@@ -445,12 +449,26 @@ sap.ui.define(['./library', 'sap/ui/base/Object', 'sap/ui/model/json/JSONModel']
 			}
 		}
 		
-		if(!jQuery.sap.startsWith(resourceLocation, "http")){
-			if(envRoot.charAt(envRoot.length - 1) !== "/" && resourceLocation.charAt(0) !== "/"){
+		if(jQuery.sap.startsWith(resourceLocation, "http")){
+			
+		}
+		else if(jQuery.sap.startsWith(resourceLocation, '/')){
+			if(envRoot === "/"){
+				envRoot = "";
+			}
+			else if(envRoot.charAt(envRoot.length - 1) === "/"){
+				envRoot = envRoot.substr(0, envRoot.length - 1);
+			}
+
+			resourceLocation = envRoot + resourceLocation;
+		}
+		else{
+			if(envRoot.charAt(envRoot.length - 1) !== "/"){
 				envRoot += "/";
 			}
 			resourceLocation = envRoot + resourceLocation;
 		}
+		
 		
 		if(resourceLocation.charAt(resourceLocation.length - 1) !== "/" && path.charAt(0) !== "/"){
 			resourceLocation += "/";
